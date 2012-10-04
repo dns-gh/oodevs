@@ -59,7 +59,7 @@
     </geometries>
     <contamination max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <propagation model="input"/>
+    <propagation model="shapefile-input"/>
   </object>
   <object name="NBC Cloud - External" point-size="5" type="nbc cloud (external model)">
     <geometries>
@@ -69,7 +69,7 @@
     <interaction-height height="100"/>
     <intoxication max-toxic="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <propagation model="input"/>
+    <propagation model="shapefile-input"/>
   </object>
   <object name="NBC Contaminated Area" type="nbc zone">
     <geometries>
@@ -857,4 +857,4 @@
     <time-limited/>
   </object>
 </objects>
-<!-- signature="3952697755" -->
+<!-- signature="2864560579" -->

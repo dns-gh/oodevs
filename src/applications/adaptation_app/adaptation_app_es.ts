@@ -4936,10 +4936,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished">Densidad</translation>
     </message>
     <message>
-        <source>Input</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fire</source>
         <translation type="unfinished">Fuego</translation>
     </message>
@@ -5118,6 +5114,14 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Log</source>
         <translation type="unfinished">Logística</translation>
+    </message>
+    <message>
+        <source>ASCII grid input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shapefile input</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

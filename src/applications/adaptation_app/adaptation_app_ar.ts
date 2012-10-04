@@ -4976,10 +4976,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Input</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5093,6 +5089,14 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASCII grid input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shapefile input</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

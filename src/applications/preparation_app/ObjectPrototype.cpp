@@ -147,7 +147,7 @@ namespace
         void AddPropagation( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& /*resolver*/, const tools::GeneralConfig& config, Object_ABC*& object )
         {
             std::string model( xis.attribute< std::string >( "model" ) );
-            if( model == "input" )
+            if( model == "shapefile-input" )
                 container.push_back( new InputPropagationPrototype( parent, config, object ) );
             else if( model == "fire" )
                 bHasFirePropagation_ = true;

@@ -103,7 +103,7 @@ namespace
         void AddPropagation( ObjectPrototype& prototype, xml::xistream& xis )
         {
             const std::string model( xis.attribute< std::string >( "model", std::string() ) );
-            if( model == "input" )
+            if( model == "shapefile-input" )
                 prototype.AddCapacity< PropagationCapacity_ABC >( new InputPropagationCapacity( xis ) );
             else if( model == "fire" )
             {

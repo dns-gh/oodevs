@@ -663,7 +663,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Population::WriteArchive( xml::xostream
 //! @name ADN_CapacityInfos_Propagation
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_Propagation::ADN_CapacityInfos_Propagation()
-    : nModel_( eInput )
+    : nModel_( eFire )
 {
     nModel_.SetParentNode( *this );
 }
