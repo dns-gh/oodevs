@@ -76,6 +76,8 @@ public:
     const kernel::Entity_ABC* GetNominalSuperior() const;
     const kernel::Entity_ABC* GetCurrentSuperior() const;
     const kernel::Entity_ABC& GetEntity() const;
+
+    LogisticLink* FindLogisticLink( const kernel::Entity_ABC& superior ) const;
     //@}
 
 private:
@@ -86,7 +88,6 @@ private:
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
 
     kernel::Entity_ABC* FindLogisticEntity( const sword::ParentEntity& message ) const;
-    LogisticLink*       FindLogisticLink  ( const kernel::Entity_ABC& superior ) const;
     //@}
 
 private:

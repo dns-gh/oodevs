@@ -11,7 +11,6 @@
 #define __SupplyQuotasWidget_h_
 
 #include "LogisticStatusWidget_ABC.h"
-
 #include "gaming/LogisticLinks.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
@@ -32,9 +31,11 @@ namespace kernel
 class SupplyQuotasWidget : public Q3VBox
                          , public tools::Observer_ABC
                          , public tools::ElementObserver_ABC< LogisticLinks >
-                         //, public tools::SelectionObserver< kernel::Entity_ABC >
+                         , public tools::SelectionObserver< kernel::Entity_ABC >
                          , private boost::noncopyable
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,15 +43,32 @@ public:
     virtual ~SupplyQuotasWidget();
     //@}
 
-private:
+public:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const LogisticLinks& a );
+    virtual void NotifyUpdated( const LogisticLinks& links );
+    virtual void NotifySelected( const kernel::Entity_ABC* pEntity );
+    //@}
+
+private slots:
+    //! @name Helpers
+    //@{
+    virtual void UpdateQuotas();
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual void UpdateSuperiors( const LogisticLinks& links );
+    virtual void UpdateQuotas( const LogisticLinks& links );
+    //@}
+
     kernel::Controllers& controllers_;
     gui::ValuedComboBox< const kernel::Entity_ABC* >* superior_;
+    QStandardItemModel* dataModel_;
+    Q3HBox* hboxSuperior_;
+    QTableView* tableView_;
+    const LogisticLinks* pLinks_;
 };
 
 #endif // __SupplyQuotasWidget_h_

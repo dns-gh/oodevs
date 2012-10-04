@@ -53,6 +53,8 @@ protected:
     //! @name Operations
     //@{
     bool ShouldUpdate( const Extension& a ) const;
+    virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    virtual void UpdateSelected( const kernel::Entity_ABC* entity );
     //@}
 
 private:
@@ -66,7 +68,6 @@ private:
     //@{
     virtual void polish();
     virtual void showEvent( QShowEvent* );
-    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const Extension& a ) = 0;
     //@}
 
@@ -150,6 +151,18 @@ void ResourcesListView_ABC< ConcreteDisplayer, Extension >::NotifySelected( cons
     }
     else
         hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC::UpdateSelected
+// Created: MMC 2012-10-02
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Extension >
+void ResourcesListView_ABC< ConcreteDisplayer, Extension >::UpdateSelected( const kernel::Entity_ABC* entity )
+{
+    selected_ = entity;
+    if( const Extension* extension = selected_ ? selected_->Retrieve< Extension >() : 0 )
+        NotifyUpdated( *extension );
 }
 
 #endif // __ResourcesListView_ABC_h_

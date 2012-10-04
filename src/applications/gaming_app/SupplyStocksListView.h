@@ -12,6 +12,11 @@
 
 #include "LogisticAvailabilitiesListView_ABC.h"
 
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 // =============================================================================
 /** @class  SupplyStocksListView
     @brief  SupplyStocksListView
@@ -27,10 +32,17 @@ public:
     virtual ~SupplyStocksListView();
     //@}
 
+public:
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const tools::Resolver< Dotation >& dotations );
+    virtual void NotifyUpdated( const SupplyStates& supplyStates );
+    //@}
+
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const SupplyStates& a );
+    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     //@}
 };
 

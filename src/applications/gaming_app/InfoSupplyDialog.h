@@ -23,6 +23,9 @@ namespace gui
     class ItemFactory_ABC;
 }
 
+class SupplyStocksListView;
+class SupplyQuotasWidget;
+
 // =============================================================================
 /** @class  InfoSupplyDialog
     @brief  InfoSupplyDialog
@@ -41,7 +44,16 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& entity ) const;
+    virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    QTabWidget* tabs_;
+    SupplyStocksListView* supplyStocksListView_;
+    SupplyQuotasWidget* supplyQuotasWidget_;
     //@}
 };
 

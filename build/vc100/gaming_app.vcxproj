@@ -1229,7 +1229,14 @@
     <ClInclude Include="..\..\src\applications\gaming_app\MedicalCollectAmbulancesListView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MedicalDoctorsListView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MedicalReliefAmbulancesListView.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\SupplyQuotasWidget.h" />
+    <CustomBuild Include="..\..\src\applications\gaming_app\SupplyQuotasWidget.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\SupplyStocksListView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\SupplyTransportersListView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\Properties.h" />
@@ -2172,7 +2179,9 @@
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl" />
     <None Include="..\..\src\applications\gaming_app\gaming_app_es.ts" />
-    <None Include="..\..\src\applications\gaming_app\gaming_app_fr.ts" />
+    <None Include="..\..\src\applications\gaming_app\gaming_app_fr.ts">
+      <SubType>Designer</SubType>
+    </None>
     <CustomBuild Include="..\..\src\applications\gaming_app\translator.pro">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose %(FullPath)
 lrelease -verbose %(FullPath)

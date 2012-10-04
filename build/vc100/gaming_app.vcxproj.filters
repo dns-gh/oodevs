@@ -849,9 +849,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\MedicalReliefAmbulancesListView.h">
       <Filter>Source Files\Panels\Logistic\lists\medical</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\SupplyQuotasWidget.h">
-      <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\SupplyStocksListView.h">
       <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
     </ClInclude>
@@ -1431,6 +1428,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\OrbatPanel.h">
       <Filter>Source Files\Panels\Preferences</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\SupplyQuotasWidget.h">
+      <Filter>Source Files\Panels\Logistic\lists\supply</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
