@@ -77,6 +77,15 @@ namespace movement
             entity[ "movement/position/x" ] = position.X();
             entity[ "movement/position/y" ] = position.Y();
         }
+        void ConfigureImpossiblePathfind()
+        {
+            MOCK_EXPECT( UsePathDebug ).returns( false );
+            MOCK_EXPECT( IsDestinationTrafficable ).returns( true );
+            MOCK_EXPECT( GetMaxPathFindComputationDuration ).returns( std::numeric_limits< unsigned int >::max() );
+            MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );
+            MOCK_EXPECT( ComputePathfind ).once().returns( false );
+            MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _2, boost::ref( pathfind ) ) );
+        }
         boost::shared_ptr< sword::movement::Path_ABC > CreatePathParameter( const geometry::Point2f& objective )
         {
             entity[ "identifier" ] = identifier; // $$$$ _RC_ SLI 2012-03-09: smell?
@@ -107,36 +116,7 @@ namespace movement
             UpdatePosition( points.front().first );
             return CreatePathParameter( points.back().first );
         }
-        void ComputePathfind( boost::shared_ptr< sword::movement::Path_ABC > path, const T_Points& points )
-        {
-            TerrainPathfinder pathfind;
-            MOCK_EXPECT( UsePathDebug ).returns( false );
-            MOCK_EXPECT( IsDestinationTrafficable ).returns( true );
-            MOCK_EXPECT( GetMaxPathFindComputationDuration ).returns( std::numeric_limits< unsigned int >::max() );
-            MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );
-            MOCK_EXPECT( ComputePathfind ).once().calls( bp::bind( &PathfindFixture::AddPoints, this, boost::ref( points ), bp::arg_names::arg10, bp::arg_names::arg11 ) );
-            MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _2, boost::ref( pathfind ) ) );
-            ComputePath( path );
-            mock::verify();
-        }
-        void ComputeImpossiblePathfind( boost::shared_ptr< sword::movement::Path_ABC > path )
-        {
-            TerrainPathfinder pathfind;
-            MOCK_EXPECT( UsePathDebug ).returns( false );
-            MOCK_EXPECT( IsDestinationTrafficable ).returns( true );
-            MOCK_EXPECT( GetMaxPathFindComputationDuration ).returns( std::numeric_limits< unsigned int >::max() );
-            MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );
-            MOCK_EXPECT( ComputePathfind ).once().returns( false );
-            MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _2, boost::ref( pathfind ) ) );
-            ComputePath( path );
-            mock::verify();
-        }
-        void ComputeUntrafficablePathfind( boost::shared_ptr< sword::movement::Path_ABC > path )
-        {
-            MOCK_EXPECT( IsDestinationTrafficable ).returns( false );
-            ComputePath( path );
-            mock::verify();
-        }
+        TerrainPathfinder pathfind;
         const unsigned int identifier;
         core::Model& entity;
     };

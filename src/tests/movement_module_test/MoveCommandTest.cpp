@@ -19,11 +19,20 @@ namespace
     {
         size_t StartMoveCommand( const T_Points& points )
         {
+            ConfigurePathfind( points );
             boost::shared_ptr< sword::movement::Path_ABC > path = CreatePathParameter( points.back().first );
-            ComputePathfind( path, points );
             return StartCommand( "move",
                 core::MakeModel( "identifier", identifier )
                                ( "path", core::MakeUserData( path ) ) );
+        }
+        void ConfigurePathfind( const T_Points& points )
+        {
+            MOCK_EXPECT( UsePathDebug ).returns( false );
+            MOCK_EXPECT( IsDestinationTrafficable ).returns( true );
+            MOCK_EXPECT( GetMaxPathFindComputationDuration ).returns( std::numeric_limits< unsigned int >::max() );
+            MOCK_EXPECT( IsNullAutomateFuseau ).returns( true );
+            MOCK_EXPECT( ComputePathfind ).once().calls( bp::bind( &PathfindFixture::AddPoints, this, boost::ref( points ), bp::arg_names::arg10, bp::arg_names::arg11 ) );
+            MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _2, boost::ref( pathfind ) ) );
         }
         void Step( double currentSpeed, bool hasResources, bool canMove )
         {
@@ -91,9 +100,9 @@ BOOST_FIXTURE_TEST_CASE( movement_command_sends_movement_environment_effect_when
 
 BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_does_not_move, MovementFixture )
 {
-    boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
+    MOCK_EXPECT( IsDestinationTrafficable ).returns( false );
     ExpectEvent( "movement report" );
-    ComputeUntrafficablePathfind( path );
+    boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
     command = StartCommand( "move",
         core::MakeModel( "identifier", identifier )
             ( "path", core::MakeUserData( path ) ) );
@@ -106,9 +115,9 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
 
 BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_and_does_not_move, MovementFixture )
 {
-    boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
+    ConfigureImpossiblePathfind();
     ExpectEvent( "movement report" );
-    ComputeImpossiblePathfind( path );
+    boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
     command = StartCommand( "move",
         core::MakeModel( "identifier", identifier )
             ( "path", core::MakeUserData( path ) ) );

@@ -356,17 +356,13 @@ namespace
     {
         assert( pEnd );
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        boost::shared_ptr< PathAdapter > pPath = PathAdapter::Add( entity, GET_HOOK( CreatePath )( core::Convert( &entity ), *pEnd, pathType ) );
-        pPath->ComputePath();
-        return pPath;
+        return PathAdapter::Add( entity, GET_HOOK( CreatePath )( core::Convert( &entity ), *pEnd, pathType ) );
     }
     boost::shared_ptr< DEC_Path_ABC > CreatePathToPointList( MIL_AgentPion& agent, const core::Model& model, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType  )
     {
         assert( !listPt.empty() );
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        boost::shared_ptr< PathAdapter > pPath = PathAdapter::Add( entity, GET_HOOK( CreatePathList )( core::Convert( &entity ), listPt, pathType ) );
-        pPath->ComputePath();
-        return pPath;
+        return PathAdapter::Add( entity, GET_HOOK( CreatePathList )( core::Convert( &entity ), listPt, pathType ) );
     }
     boost::shared_ptr< DEC_Path_ABC > CreatePathToPointBM( MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< MT_Vector2D > end, int pathType )
     {

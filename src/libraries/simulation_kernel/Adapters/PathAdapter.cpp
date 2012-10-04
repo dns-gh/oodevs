@@ -45,7 +45,6 @@ DECLARE_HOOK( CleanPathAfterComputation, void, ( const boost::shared_ptr< sword:
 DECLARE_HOOK( ExecutePathfind, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TerrainPathfinder& pathfind ) )
 DECLARE_HOOK( PathGetLength, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 DECLARE_HOOK( PathGetState, DEC_Path_ABC::E_State, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-DECLARE_HOOK( ComputePath, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 
 DECLARE_HOOK( AvoidEnemies, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 DECLARE_HOOK( GetEnemyCostAtSecurityRange, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
@@ -109,7 +108,6 @@ void PathAdapter::Initialize( core::Facade& facade )
     USE_HOOK( ExecutePathfind, facade );
     USE_HOOK( PathGetLength, facade );
     USE_HOOK( PathGetState, facade );
-    USE_HOOK( ComputePath, facade );
     USE_HOOK( AvoidEnemies, facade );
     USE_HOOK( GetEnemyCostAtSecurityRange, facade );
     USE_HOOK( GetEnemyCostOnContact, facade );
@@ -226,15 +224,6 @@ double PathAdapter::GetLength() const
 DEC_Path_ABC::E_State PathAdapter::GetState() const
 {
     return GET_HOOK( PathGetState )( path_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PathAdapter::ComputePath
-// Created: MCO 2012-03-23
-// -----------------------------------------------------------------------------
-void PathAdapter::ComputePath() const
-{
-    GET_HOOK( ComputePath )( path_ );
 }
 
 // -----------------------------------------------------------------------------

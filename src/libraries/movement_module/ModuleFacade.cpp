@@ -49,13 +49,17 @@ namespace
     {
         const PathType* pPathType = PathType::Find( pathType );
         assert( pPathType );
-        return boost::shared_ptr< Path_ABC >( new Agent_Path( model, vPosEnd, *pPathType ) );
+        boost::shared_ptr< Path_ABC > path( new Agent_Path( model, vPosEnd, *pPathType ) );
+        path->ComputePath( path ); // $$$$ MCO 2012-10-04: use shared_from_this
+        return path;
     }
     DEFINE_HOOK( CreatePathList, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) )
     {
         const PathType* pPathType = PathType::Find( pathType );
         assert( pPathType );
-        return boost::shared_ptr< Path_ABC >( new Agent_Path( model, points, *pPathType ) );
+        boost::shared_ptr< Path_ABC > path( new Agent_Path( model, points, *pPathType ) );
+        path->ComputePath( path ); // $$$$ MCO 2012-10-04: use shared_from_this
+        return path;
     }
     DEFINE_HOOK( PathGetLastPointOfPath, boost::shared_ptr< MT_Vector2D >, ( const boost::shared_ptr< sword::movement::Path_ABC >& pPath ) )
     {
@@ -67,10 +71,6 @@ namespace
     DEFINE_HOOK( ExecutePathfind, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TerrainPathfinder& pathfind ) )
     {
         path->Execute( pathfind );
-    }
-    DEFINE_HOOK( ComputePath, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
-    {
-        path->ComputePath( path );
     }
     DEFINE_HOOK( CleanPathAfterComputation, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {

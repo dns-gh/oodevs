@@ -53,7 +53,6 @@ namespace movement
     APPLY( CleanPathAfterComputation, 1, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( ComputeAgentFutureObjectCollision, 4, bool, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) ) \
     APPLY( CreatePath, 3, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, const MT_Vector2D& vPosEnd, int pathType ) ) \
-    APPLY( ComputePath, 1, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( CreatePathList, 3, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) ) \
     APPLY( ExecutePathfind, 2, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TerrainPathfinder& pathfind ) ) \
     APPLY( GetAgentFuturePosition, 3, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) ) \

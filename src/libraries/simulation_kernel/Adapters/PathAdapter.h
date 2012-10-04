@@ -75,8 +75,6 @@ public:
     virtual double GetLength() const;
     virtual E_State GetState() const;
 
-    void ComputePath() const;
-
     double GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) const;
     double GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to,
                            double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, // $$$$ MCO : all those configuration values should stay out of the movement module

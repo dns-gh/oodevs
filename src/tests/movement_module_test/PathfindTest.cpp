@@ -20,14 +20,16 @@ BOOST_FIXTURE_TEST_CASE( destination_not_trafficable_cancels_path_computation_an
 {
     ExpectEvent( "movement report", sword::test::MakeModel( "entity", identifier )
                                                           ( "code", static_cast< int >( MIL_Report::eReport_DifficultTerrain ) ) );
-    ComputeUntrafficablePathfind( CreateSimplePath() );
+    MOCK_EXPECT( IsDestinationTrafficable ).returns( false );
+    CreateSimplePath();
 }
 
 BOOST_FIXTURE_TEST_CASE( impossible_path_sends_difficult_terrain_report_event, PathfindFixture ) // $$$$ _RC_ SLI 2012-03-09: event is sent outside command
 {
     ExpectEvent( "movement report", sword::test::MakeModel( "entity", identifier )
                                                           ( "code", static_cast< int >( MIL_Report::eReport_DifficultTerrain ) ) );
-    ComputeImpossiblePathfind( CreateSimplePath() );
+    ConfigureImpossiblePathfind();
+    CreateSimplePath();
 }
 
 namespace
@@ -49,5 +51,5 @@ BOOST_FIXTURE_TEST_CASE( path_too_long_to_compute_sends_timeout_log, PathfindFix
     MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Pathfind computation aborted - timeout" ) );
     MOCK_EXPECT( ComputePathfind ).once().calls( bp::bind( &CheckShouldEndComputation, bp::arg_names::arg12, bp::arg_names::arg13 ) );
     MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _2, boost::ref( pathfind ) ) );
-    ComputePath( CreateSimplePath() );
+    CreateSimplePath();
 }
