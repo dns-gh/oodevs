@@ -329,6 +329,7 @@ namespace
     }
     void UpdateKnowledgeGroupBlackBoard( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
     {
+        knowledges.Clear();
         enemies.Clear();
         friends.Clear();
         typedef DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::value_type T_Agent;
