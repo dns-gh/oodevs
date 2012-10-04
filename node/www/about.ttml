@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="span9">
+        <dl class="dl-horizontal">
+            <dt> Sword Cloud </dt>
+            <dd><span class="label label-info"> 1.0.0.33300 </span></dd>
+            <dt> Sword Simulation </dt>
+            <dd><span class="label label-info"> 5.1.0.33300 </span></dd>
+        </dl>
+        <div class="alert alert-info alert-block">
+            <strong>Warning:</strong>
+MASA SWORD is a COTS constructive simulation software product created by MASA Group.
+This software program must have been purchased directly from MASA Group or one of its authorized
+resellers and cannot be reproduced or distributed in an unauthorized manner.
+        </div>
+    </div>
+</div>

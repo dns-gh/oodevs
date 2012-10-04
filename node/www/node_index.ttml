@@ -23,13 +23,18 @@
                             <li>
                                 <a href="/sword_client_vc100_setup.exe"><img alt="" width="32" height="32" src="img/tango/32x32/apps/system-installer.png" /> Get Client </a>
                             </li>
+                            [[ template "node_sidebar_item" sub "name" "About"    "item" "about"    "pg" .url.pg "img" "apps/help-browser" ]]
                         </ul>
                     </div>
                     [[ if eq .url.pg "sessions" ]]
                     [[ template "sessions_side_bar.ttml" . ]]
                     [[ end ]]
                     <hr />
-                    <p class="footer">&copy; MASA Group 2012</p>
+                    <p class="footer">
+                    <a href="http://www.masagroup.net">http://www.masagroup.net</a>
+                    <br/>
+                    &copy; MASA Group 2012
+                    </p>
                 </div>
                 <div class="span9">
                     [[ if eq .url.pg "sessions" ]]
@@ -45,6 +50,9 @@
                     [[ if eq .url.pg "users" ]]
                     [[ template "users.ttml" . ]]
                     [[ end ]]
+                    [[ end ]]
+                    [[ if eq .url.pg "about" ]]
+                    [[ template "about.ttml" . ]]
                     [[ end ]]
                 </div>
             </div>
