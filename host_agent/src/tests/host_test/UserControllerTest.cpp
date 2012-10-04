@@ -24,6 +24,7 @@
 #include <boost/date_time.hpp>
 #include <boost/foreach.hpp>
 #include <boost/uuid/nil_generator.hpp>
+#include <boost/uuid/string_generator.hpp>
 #include <cpplog/cpplog.hpp>
 
 using namespace host;
@@ -181,4 +182,14 @@ BOOST_FIXTURE_TEST_CASE( users_can_be_created_updated_deleted, Fixture )
     CheckUser( src, "zorg", "John Doe", "administrator", false, "eng" );
     BOOST_CHECK_EQUAL( users.CountUsers( boost::uuids::nil_uuid() ), size_t( 1 ) );
     BOOST_CHECK_THROW( users.IsAuthenticated( sid ), web::HttpException );
+}
+
+BOOST_FIXTURE_TEST_CASE( users_ids_are_unique, Fixture )
+{
+    users.CreateUser( boost::uuids::nil_uuid(), "zorg", "A", "zorg_pwd", web::USER_TYPE_ADMINISTRATOR, false );
+    BOOST_CHECK_THROW( users.CreateUser( boost::uuids::nil_uuid(), "zorg", "A", "zorg_pwd", web::USER_TYPE_ADMINISTRATOR, false ), web::HttpException );
+    BOOST_CHECK_THROW( users.CreateUser( boost::uuids::nil_uuid(), "zorg", "A", "dwp_groz", web::USER_TYPE_ADMINISTRATOR, false ), web::HttpException );
+    const Uuid node = boost::uuids::string_generator()( "0123456789abcdef0123456789abcdef" );
+    BOOST_CHECK_THROW( users.CreateUser( node, "zorg", "A", "zorg_pwd", web::USER_TYPE_USER, false ), web::HttpException );
+    BOOST_CHECK_THROW( users.CreateUser( node, "zorg", "A", "dwp_groz", web::USER_TYPE_USER, false ), web::HttpException );
 }

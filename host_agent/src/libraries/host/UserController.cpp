@@ -85,7 +85,7 @@ void MakeTables( Sql_ABC& db )
     Execute( *db.Prepare( *tr,
         "CREATE TABLE IF NOT EXISTS users ("
         "  id           INTEGER PRIMARY KEY"
-        ", username     TEXT NOT NULL"
+        ", username     TEXT UNIQUE NOT NULL"
         ", hash         TEXT NOT NULL"
         ", name         TEXT"
         ", type         TEXT NOT NULL"
