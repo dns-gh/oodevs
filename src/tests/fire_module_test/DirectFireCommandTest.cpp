@@ -18,7 +18,7 @@ namespace
         FireFixture()
         {
             ExpectCallback( 4 );
-            StartCommand( "direct fire command",
+            StartCommand( "direct fire",
                 core::MakeModel( "identifier", 42 )
                     ( "enemy", 51 )
                     ( "percentage", 0.07 )
@@ -249,7 +249,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
             ( "missed", false ) );
 
     ExpectCallback( 4 );
-    StartCommand( "direct fire command",
+    StartCommand( "direct fire",
         core::MakeModel( "identifier", 42 )
             ( "enemy", 51 )
             ( "percentage", 0.07 )

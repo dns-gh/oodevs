@@ -19,7 +19,7 @@ namespace
             : population( model[ "populations" ][ 53 ] )
         {
             ExpectCallback( 4 );
-            StartCommand( "direct fire population command",
+            StartCommand( "direct fire population",
                 core::MakeModel( "identifier", 42 )
                     ( "population", 53 )
                     ( "percentage", 1 )
@@ -190,7 +190,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_no_h
             ( "running", true ) );
 
     ExpectCallback( 4 );
-    StartCommand( "direct fire population command",
+    StartCommand( "direct fire population",
         core::MakeModel( "identifier", 42 )
             ( "population", 53 )
             ( "percentage", 1 )

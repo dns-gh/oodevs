@@ -67,6 +67,6 @@ DEFINE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* mod
 ModuleFacade::ModuleFacade()
 {
     module = this;
-    wrapper::RegisterCommand< DirectFireCommand >( "direct fire command", *this );
-    wrapper::RegisterCommand< DirectFireCommandPopulation >( "direct fire population command", *this );
+    wrapper::RegisterCommand< DirectFireCommand >( "direct fire", *this );
+    wrapper::RegisterCommand< DirectFireCommandPopulation >( "direct fire population", *this );
 }

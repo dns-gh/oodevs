@@ -448,7 +448,7 @@ namespace
         parameters[ "type" ] = firingType;
         parameters[ "major" ] = bFireOnlyOnMajorComposantes;
         parameters[ "dotation" ] = ammoDotationClass;
-        return sink.StartCommand( "direct fire command", parameters );
+        return sink.StartCommand( "direct fire", parameters );
     }
     unsigned int StartTirPopulation( Sink& sink, MIL_AgentPion& pion, unsigned int populationKnowledgeID, const std::string& ammoDotationClass )
     {
@@ -460,7 +460,7 @@ namespace
         parameters[ "type" ] = 0; // $$$$ MCO 2012-10-02: eFireUsingAllComposantes
         const PHY_AmmoDotationClass* pClass = PHY_AmmoDotationClass::Find( ammoDotationClass );
         parameters[ "dotation" ] = pClass ? pClass->GetID() : 0;
-        return sink.StartCommand( "direct fire population command", parameters );
+        return sink.StartCommand( "direct fire population", parameters );
     }
 }
 

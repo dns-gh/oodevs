@@ -66,7 +66,7 @@ namespace fire
     struct ModuleFixture : core::HookFixture
     {
         ModuleFixture()
-            : HookFixture( "fire_module", boost::assign::list_of( "direct fire command" )( "direct fire population command" ) )
+            : HookFixture( "fire_module", boost::assign::list_of( "direct fire" )( "direct fire population" ) )
             , entity   ( model[ "entities" ][ 42 ] )
             , firer    ( core::Convert( &entity ) )
             , target   ( model[ "knowledges" ][ 1242 ][ 51 ] )
