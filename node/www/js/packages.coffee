@@ -25,6 +25,7 @@ class Package extends Backbone.Model
 class PackageView extends Backbone.View
     el: $("#packages")
     enabled: true
+    counter: 0
 
     initialize: (obj) ->
         @model = new Package
@@ -32,11 +33,9 @@ class PackageView extends Backbone.View
         @model.fetch()
         setTimeout @delta, 5000
 
-    toggle_load: (enabled, group) =>
-        @enabled = enabled unless enabled
-        if group?
-            toggle_spinner $ group
-        @enabled = enabled
+    toggle_load: (group) =>
+        @counter++
+        toggle_spinner $ group if group
 
     delete_items: (list) =>
         next = []
@@ -44,14 +43,15 @@ class PackageView extends Backbone.View
             next.push $(it).parent().attr "data-rel"
         ajax "/api/delete_install", id: uuid, items: next.join ',',
             (item) =>
-                @toggle_load true, $ list
+                @toggle_load list
                 @model.set item
+                @enabled = true
             () =>
-                @toggle_load true, $ list
+                @toggle_load list
                 print_error "Unable to delete package(s)"
+                @enabled = true
 
     render: =>
-        return unless @enabled
         $(@el).empty()
         return unless @model.attributes.items?
 
@@ -66,7 +66,8 @@ class PackageView extends Backbone.View
                     =>
                         items = []
                         for btn in $(@el).find ".action .delete"
-                            @toggle_load false, btn
+                            @enabled = false
+                            @toggle_load btn
                             items.push btn
                         @delete_items items if items.length
 
@@ -84,18 +85,21 @@ class PackageView extends Backbone.View
                     accept: "Delete"
                     reject: "Cancel",
                     =>
-                        @toggle_load false, e.data
+                        @enabled = false
+                        @toggle_load e.data
                         @delete_items [e.data]
         return
 
     delta: =>
+        now  = @counter++
         list = new Package
         list.fetch
             success: =>
-                if list.attributes.items?
-                    @model.set list.attributes
-                else
-                    @model.clear()
+                if @enabled and now+1 == @counter
+                    if list.attributes.items?
+                        @model.set list.attributes
+                    else
+                        @model.clear()
                 setTimeout @delta, 5000
             error: =>
                 setTimeout @delta, 5000

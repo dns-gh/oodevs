@@ -533,6 +533,8 @@
 
     PackageView.prototype.enabled = true;
 
+    PackageView.prototype.counter = 0;
+
     PackageView.prototype.initialize = function(obj) {
       this.model = new Package;
       this.model.bind('change', this.render);
@@ -540,14 +542,11 @@
       return setTimeout(this.delta, 5000);
     };
 
-    PackageView.prototype.toggle_load = function(enabled, group) {
-      if (!enabled) {
-        this.enabled = enabled;
+    PackageView.prototype.toggle_load = function(group) {
+      this.counter++;
+      if (group) {
+        return toggle_spinner($(group));
       }
-      if (group != null) {
-        toggle_spinner($(group));
-      }
-      return this.enabled = enabled;
     };
 
     PackageView.prototype.delete_items = function(list) {
@@ -562,20 +561,19 @@
         id: uuid,
         items: next.join(',')
       }, function(item) {
-        _this.toggle_load(true, $(list));
-        return _this.model.set(item);
+        _this.toggle_load(list);
+        _this.model.set(item);
+        return _this.enabled = true;
       }, function() {
-        _this.toggle_load(true, $(list));
-        return print_error("Unable to delete package(s)");
+        _this.toggle_load(list);
+        print_error("Unable to delete package(s)");
+        return _this.enabled = true;
       });
     };
 
     PackageView.prototype.render = function() {
       var it, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3,
         _this = this;
-      if (!this.enabled) {
-        return;
-      }
       $(this.el).empty();
       if (this.model.attributes.items == null) {
         return;
@@ -595,7 +593,8 @@
             _ref1 = $(_this.el).find(".action .delete");
             for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
               btn = _ref1[_j];
-              _this.toggle_load(false, btn);
+              _this.enabled = false;
+              _this.toggle_load(btn);
               items.push(btn);
             }
             if (items.length) {
@@ -627,7 +626,8 @@
             accept: "Delete",
             reject: "Cancel"
           }, function() {
-            _this.toggle_load(false, e.data);
+            _this.enabled = false;
+            _this.toggle_load(e.data);
             return _this.delete_items([e.data]);
           });
         });
@@ -635,15 +635,18 @@
     };
 
     PackageView.prototype.delta = function() {
-      var list,
+      var list, now,
         _this = this;
+      now = this.counter++;
       list = new Package;
       return list.fetch({
         success: function() {
-          if (list.attributes.items != null) {
-            _this.model.set(list.attributes);
-          } else {
-            _this.model.clear();
+          if (_this.enabled && now + 1 === _this.counter) {
+            if (list.attributes.items != null) {
+              _this.model.set(list.attributes);
+            } else {
+              _this.model.clear();
+            }
           }
           return setTimeout(_this.delta, 5000);
         },
