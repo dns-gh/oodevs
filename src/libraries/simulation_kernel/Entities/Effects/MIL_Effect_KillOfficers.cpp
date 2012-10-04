@@ -41,12 +41,9 @@ MIL_Effect_KillOfficers::~MIL_Effect_KillOfficers()
 bool MIL_Effect_KillOfficers::Execute()
 {
     human::PHY_RoleInterface_Humans& role = target_.GetRole< human::PHY_RoleInterface_Humans >();
-    if( role.HasHumansAvailable( PHY_HumanRank::officier_ ) )
-        role.ChangeHumansAvailability( PHY_HumanRank::officier_, 0 );
-    else if( role.HasHumansAvailable( PHY_HumanRank::sousOfficier_ ) )
-        role.ChangeHumansAvailability( PHY_HumanRank::sousOfficier_, 0 );
-    else if( role.HasHumansAvailable( PHY_HumanRank::militaireDuRang_ ) )
-        role.ChangeHumansAvailability( PHY_HumanRank::militaireDuRang_, 0 );
+    if( role.ReduceHumansAvailability( PHY_HumanRank::officier_, 1 ) == 0 )
+        if( role.ReduceHumansAvailability( PHY_HumanRank::sousOfficier_, 1 ) == 0 )
+            role.ReduceHumansAvailability( PHY_HumanRank::militaireDuRang_, 1 );
     delete this;
     return false; // Effect must be stopped
 }

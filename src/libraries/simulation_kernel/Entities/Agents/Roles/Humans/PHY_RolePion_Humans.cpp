@@ -515,12 +515,20 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::HasHumansAvailable
-// Created: JSR 2012-03-12
+// Name: PHY_RolePion_Humans::ReduceHumansAvailability
+// Created: MMC 2012-10-04
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Humans::HasHumansAvailable( const PHY_HumanRank& rank )
+unsigned int PHY_RolePion_Humans::ReduceHumansAvailability( const PHY_HumanRank& rank, unsigned int reduce )
 {
-    return( GetNbrOperational( rank ) > 0 );
+    if( reduce == 0 )
+        return 0;
+    unsigned int count = GetNbrOperational( rank );
+    if( count == 0 )
+        return 0;
+    reduce = std::min( reduce, count );
+    ChangeHumansAvailability( rank, count - reduce );
+    unsigned int newCount = GetNbrOperational( rank );
+    return newCount < count ? count - newCount : 0;
 }
 
 // -----------------------------------------------------------------------------
