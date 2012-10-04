@@ -136,7 +136,7 @@ struct Metadata
 
     void Save( const FileSystem_ABC& fs, const Path& root ) const
     {
-        fs.WriteFile( root / GetFilename(), ToJson( GetProperties(), true ) );
+        fs.WriteFile( root / GetFilename(), ToJson( GetProperties() ) );
     }
 
     void TryUninstall( Async& async, const FileSystem_ABC& fs, const Path& root, const Path& tomb )

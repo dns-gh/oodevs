@@ -36,8 +36,8 @@ inline void EqualTree( const property_tree::T_Tree& src, const std::string& key,
 {
     property_tree::T_Tree::const_assoc_iterator it = src.find( key );
     BOOST_REQUIRE( it != src.not_found() );
-    const std::string actual = property_tree::ToJson( it->second );
-    BOOST_CHECK_EQUAL( actual, value );
+    const property_tree::T_Tree expected = property_tree::FromJson( value );
+    BOOST_CHECK( it->second == expected );
 }
 
 template< typename T >

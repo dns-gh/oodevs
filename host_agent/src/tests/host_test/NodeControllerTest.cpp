@@ -221,7 +221,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_upload_cache, Fixture<> )
     MOCK_EXPECT( idle->UploadCache ).once().with( mock::same( src ) );
     MOCK_EXPECT( idle->GetCache ).once().returns( Tree() );
     Tree tree = control.UploadCache( idIdle, src );
-    BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
+    BOOST_CHECK( tree.empty() );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_controller_get_cache, Fixture<> )
@@ -229,7 +229,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_get_cache, Fixture<> )
     Reload();
     MOCK_EXPECT( idle->GetCache ).once().returns( Tree() );
     Tree tree = control.GetCache( idIdle );
-    BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
+    BOOST_CHECK( tree.empty() );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_controller_delete_cache, Fixture<> )
@@ -237,7 +237,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_delete_cache, Fixture<> )
     Reload();
     MOCK_EXPECT( idle->DeleteCache ).once().returns( Tree() );
     Tree tree = control.DeleteCache( idIdle );
-    BOOST_CHECK_EQUAL( ToJson( tree ), "{}" );
+    BOOST_CHECK( tree.empty() );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_controller_cannot_create_node_with_duplicate_ident, Fixture<> )

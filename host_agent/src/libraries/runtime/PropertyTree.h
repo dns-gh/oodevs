@@ -22,11 +22,12 @@ namespace property_tree
 {
     typedef boost::property_tree::ptree T_Tree;
 
-    std::string ToJson( const T_Tree& T_Tree, bool isPretty = false );
-    T_Tree FromJson( const std::string& data );
-    T_Tree FromJson( io::Reader_ABC& stream );
-    std::string ToXml( const T_Tree& tree );
-    T_Tree FromXml( const std::string& data );
+    std::string ToJson  ( const T_Tree& T_Tree, bool isPretty = true );
+    T_Tree      FromJson( const std::string& data );
+    T_Tree      FromJson( io::Reader_ABC& stream );
+
+    std::string ToXml   ( const T_Tree& tree );
+    T_Tree      FromXml ( const std::string& data );
 
     template< typename T >
     T Get( const T_Tree& tree, const std::string& key, const T& def = T() )

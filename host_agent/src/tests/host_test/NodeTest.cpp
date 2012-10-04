@@ -209,7 +209,7 @@ BOOST_FIXTURE_TEST_CASE( node_can_start_twice, Fixture )
 BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
 {
     NodePtr node = MakeNode();
-    BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
+    BOOST_CHECK( node->GetCache().empty() );
 
     mock::reset( fs );
     MOCK_EXPECT( fs.MakeAnyPath ).returns( "" );
@@ -224,7 +224,6 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     MOCK_EXPECT( cache->Identify ).once().with( mock::same( *installed ) );
     Tree tree;
     tree.put( "some", "data" );
-    const std::string expected = ToJson( tree );
     MOCK_EXPECT( cache->GetProperties ).returns( tree );
     MOCK_EXPECT( cache->GetSize ).returns( 0 );
     MOCK_EXPECT( uuids.Create ).returns( boost::uuids::random_generator()() );
@@ -235,8 +234,8 @@ BOOST_FIXTURE_TEST_CASE( node_cache, Fixture )
     MOCK_EXPECT( fs.Rename ).returns( true );
     MOCK_EXPECT( fs.Remove ).returns( true );
     node->UploadCache( src );
-    BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), expected );
+    BOOST_CHECK( node->GetCache() ==  tree );
     MOCK_EXPECT( cache->GetPath ).once().returns( "" );
-    BOOST_CHECK_EQUAL( ToJson( node->DeleteCache() ), expected );
-    BOOST_CHECK_EQUAL( ToJson( node->GetCache() ), "{}" );
+    BOOST_CHECK( node->DeleteCache() == tree );
+    BOOST_CHECK( node->GetCache().empty() );
 }

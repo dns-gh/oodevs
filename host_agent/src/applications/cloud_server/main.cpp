@@ -410,7 +410,7 @@ Configuration ParseConfiguration( const runtime::Runtime_ABC& runtime, const Fil
     cfg.node.root             = Utf8( GetTree( tree, "node.root",    Utf8( bin / ".." / "www" ) ) );
     cfg.node.min_play_seconds = GetTree( tree, "node.min_play_s", 5*60 );
     cfg.session.apps          = Utf8( GetTree( tree, "session.apps", Utf8( bin ) ) );
-    fs.WriteFile( config, ToJson( tree, true ) );
+    fs.WriteFile( config, ToJson( tree ) );
 
     bool valid = cfg.Parse( log, argc, argv );
     if( !valid )

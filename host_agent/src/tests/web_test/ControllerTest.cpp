@@ -124,14 +124,19 @@ namespace
         MOCK_METHOD( Write, 2 );
     };
 
+    bool CompareTree( const std::string& actual, const std::string& expected )
+    {
+        return FromJson( actual ) == FromJson( expected );
+    }
+
     void ExpectReply( MockResponse& rpy, HttpStatus status, const std::string& data )
     {
         mock::reset( rpy );
         MOCK_EXPECT( rpy.SetStatus ).once().with( status );
-        MOCK_EXPECT( rpy.SetHeader ).once().with( "Content-Length", boost::lexical_cast< std::string >( data.size() ) );
+        MOCK_EXPECT( rpy.SetHeader ).once().with( "Content-Length", mock::any );
         MOCK_EXPECT( rpy.SetHeader );
         MOCK_EXPECT( rpy.WriteHeaders );
-        MOCK_EXPECT( rpy.WriteContent ).once().with( data ).returns( static_cast< int >( data.size() ) );
+        MOCK_EXPECT( rpy.WriteContent ).once().with( boost::bind( &CompareTree, _1, data ) ).returns( static_cast< int >( data.size() ) );
     }
 
     void ExpectList( MockResponse& rpy, HttpStatus status, const std::vector< Tree >& list )
