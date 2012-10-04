@@ -695,11 +695,7 @@
   $("#upload_form input:file").change(function() {
     var ctl;
     ctl = $("#upload_form .upload");
-    if (this.value != null) {
-      ctl.removeClass("disabled");
-    } else {
-      ctl.addClass("disabled");
-    }
+    ctl.toggleClass("disabled", !(this.value != null));
   });
 
   toggle_upload = function() {

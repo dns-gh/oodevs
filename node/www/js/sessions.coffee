@@ -108,15 +108,9 @@ set_ui_plugins = (data) ->
         next.contents?[0].active = true
     return
 
-set_attribute = (ui, key, enabled) ->
-    if enabled
-        ui.addClass key
-    else
-        ui.removeClass key
-
 link_button_to_checkbox = (ui, e) ->
     is_checked = $(e.target).is ":checked"
-    set_attribute ui, "disabled", !is_checked
+    ui.toggleClass "disabled", !is_checked
 
 attach_button_to_checkbox = (button, cbox) ->
     cbox.click (e) ->

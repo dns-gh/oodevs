@@ -137,10 +137,7 @@ set_spinner $(".spin_btn")
 
 $("#upload_form input:file").change ->
     ctl = $("#upload_form .upload")
-    if @value?
-        ctl.removeClass "disabled"
-    else
-        ctl.addClass "disabled"
+    ctl.toggleClass "disabled", !@value?
     return
 
 toggle_upload = ->
