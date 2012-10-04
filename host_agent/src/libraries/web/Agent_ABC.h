@@ -71,14 +71,15 @@ struct Agent_ABC : public boost::noncopyable
 
     //! @name Node Methods
     //@{
-    virtual std::vector< Tree > ListNodes ( int offset, int limit ) const = 0;
-    virtual size_t              CountNodes() const = 0;
-    virtual Tree                GetNode   ( const Uuid& id ) const = 0;
-    virtual Tree                CreateNode( const std::string& ident, const node::Config& cfg ) = 0;
-    virtual Tree                DeleteNode( const Uuid& id ) = 0;
-    virtual Tree                StartNode ( const Uuid& id ) const = 0;
-    virtual Tree                StopNode  ( const Uuid& id ) const = 0;
-    virtual Tree                UpdateNode( const Uuid& id, const Tree& cfg ) = 0;
+    virtual std::vector< Tree > ListNodes   ( int offset, int limit ) const = 0;
+    virtual size_t              CountNodes  () const = 0;
+    virtual Tree                GetNode     ( const Uuid& id ) const = 0;
+    virtual Tree                CreateNode  ( const std::string& ident, const node::Config& cfg ) = 0;
+    virtual Tree                DeleteNode  ( const Uuid& id ) = 0;
+    virtual Tree                StartNode   ( const Uuid& id ) const = 0;
+    virtual Tree                StopNode    ( const Uuid& id ) const = 0;
+    virtual Tree                UpdateNode  ( const Uuid& id, const Tree& cfg ) = 0;
+    virtual std::string         IdentifyNode( const Uuid& id ) const = 0;
     //@}
 
     //! @name Client Methods

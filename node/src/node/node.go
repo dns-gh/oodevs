@@ -176,7 +176,8 @@ func (it *Handler) ServeTemplate(w http.ResponseWriter, r *http.Request) {
 	if user == nil {
 		dst = "/login"
 	} else if it.node == "cluster" && user["type"] != "administrator" {
-		dst = "/login"
+		http.Redirect(w, r, "/"+user["node_ident"], http.StatusMovedPermanently)
+		return
 	} else if v, err := strconv.ParseBool(user["temporary"]); v && err == nil {
 		dst = "/update_login"
 	}

@@ -837,7 +837,9 @@ void Controller::UploadCache( Reply_ABC& rpy, Request_ABC& request )
 // -----------------------------------------------------------------------------
 void Controller::UserIsAuthenticated( Reply_ABC& rpy, const Request_ABC& request )
 {
-    WriteHttpReply( rpy, users_.IsAuthenticated( request.GetSid() ) );
+    Tree user = users_.IsAuthenticated( request.GetSid() );
+    user.put( "node_ident", agent_.IdentifyNode( Convert( Get< std::string >( user, "node" ) ) ) );
+    WriteHttpReply( rpy, user );
 }
 
 // -----------------------------------------------------------------------------

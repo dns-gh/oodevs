@@ -60,14 +60,15 @@ public:
 
     //! @name Node Methods
     //@{
-    virtual std::vector< Tree > ListNodes ( int offset, int limit ) const;
-    virtual size_t              CountNodes() const;
-    virtual Tree                GetNode   ( const Uuid& id ) const;
-    virtual Tree                CreateNode( const std::string& ident, const web::node::Config& cfg );
-    virtual Tree                DeleteNode( const Uuid& id );
-    virtual Tree                StartNode ( const Uuid& id ) const;
-    virtual Tree                StopNode  ( const Uuid& id ) const;
-    virtual Tree                UpdateNode( const Uuid& id, const Tree& cfg );
+    virtual std::vector< Tree > ListNodes   ( int offset, int limit ) const;
+    virtual size_t              CountNodes  () const;
+    virtual Tree                GetNode     ( const Uuid& id ) const;
+    virtual Tree                CreateNode  ( const std::string& ident, const web::node::Config& cfg );
+    virtual Tree                DeleteNode  ( const Uuid& id );
+    virtual Tree                StartNode   ( const Uuid& id ) const;
+    virtual Tree                StopNode    ( const Uuid& id ) const;
+    virtual Tree                UpdateNode  ( const Uuid& id, const Tree& cfg );
+    virtual std::string         IdentifyNode( const Uuid& id ) const;
     //@}
 
     //! @name Client Methods

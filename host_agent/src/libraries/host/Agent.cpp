@@ -232,6 +232,18 @@ Tree Agent::UpdateNode( const Uuid& id, const Tree& cfg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::IdentifyNode
+// Created: BAX 2012-10-04
+// -----------------------------------------------------------------------------
+std::string Agent::IdentifyNode( const Uuid& id ) const
+{
+    NodeController_ABC::T_Node ptr = nodes_.Get( id );
+    if( !ptr )
+        return std::string();
+    return ptr->GetIdent();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::GetClient
 // Created: BAX 2012-10-02
 // -----------------------------------------------------------------------------
