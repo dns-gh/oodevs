@@ -400,7 +400,7 @@ namespace
             return boost::shared_ptr< MT_Vector2D >();
         return GET_HOOK( PathGetLastPointOfPath )( adapter->Get() );
     }
-    unsigned int StartMovement( Sink& sink, MIL_AgentPion& pion, const std::string& command, boost::shared_ptr< DEC_Path_ABC > path )
+    unsigned int StartMovement( Sink& sink, MIL_AgentPion& pion, const std::string& command, const boost::shared_ptr< DEC_Path_ABC >& path )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();

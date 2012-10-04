@@ -54,7 +54,7 @@ public:
     //! @name Operations
     //@{
     virtual void Execute( TerrainPathfinder& pathfind );
-    virtual void ComputePath( boost::shared_ptr< Path_ABC > pPath ) = 0;
+    virtual void ComputePath( const boost::shared_ptr< Path_ABC >& pPath ) = 0;
     void Cancel();
     virtual void CleanAfterComputation();
 

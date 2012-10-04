@@ -243,7 +243,7 @@ MT_Vector2D ModuleFacade::GetFuturePosition( const wrapper::View& entity, double
 // Name: ModuleFacade::IsMovingOnPath
 // Created: MCO 2012-02-03
 // -----------------------------------------------------------------------------
-bool ModuleFacade::IsMovingOnPath( unsigned int entity, boost::shared_ptr< Path_ABC > path ) const
+bool ModuleFacade::IsMovingOnPath( unsigned int entity, const boost::shared_ptr< Path_ABC >& path ) const
 {
     if( ! path )
         return false;

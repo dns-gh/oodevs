@@ -179,7 +179,7 @@ namespace
 // Name: PathWalker::SetCurrentPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-PathWalker::E_ReturnCode PathWalker::SetCurrentPath( boost::shared_ptr< PathResult > pPath, const wrapper::View& model, const wrapper::View& entity ) const
+PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const
 {
     if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
@@ -476,7 +476,7 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
 // Created: NLD 2004-09-22
 // Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-int PathWalker::Move( boost::shared_ptr< PathResult > pPath, const wrapper::View& model, const wrapper::View& entity ) const
+int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const
 {
     if( bHasMoved_ )
         return eAlreadyMoving;
@@ -570,9 +570,9 @@ int PathWalker::Move( boost::shared_ptr< PathResult > pPath, const wrapper::View
 // Name: PathWalker::MoveSuspended
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void PathWalker::MoveSuspended( boost::shared_ptr< PathResult > pPath ) const
+void PathWalker::MoveSuspended( const boost::shared_ptr< PathResult >& pPath ) const
 {
-    if( !pCurrentPath_.get() && !bForcePathCheck_ )
+    if( !pCurrentPath_ && !bForcePathCheck_ )
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Move cannot be suspended" );
     if( pCurrentPath_.get() && pCurrentPath_ == pPath )
         bForcePathCheck_ = true;
@@ -582,7 +582,7 @@ void PathWalker::MoveSuspended( boost::shared_ptr< PathResult > pPath ) const
 // Name: PathWalker::MoveCanceled
 // Created: NLD 2005-03-16
 // -----------------------------------------------------------------------------
-void PathWalker::MoveCanceled( boost::shared_ptr< PathResult > pPath ) const
+void PathWalker::MoveCanceled( const boost::shared_ptr< PathResult >& pPath ) const
 {
     if( pCurrentPath_ == pPath )
     {

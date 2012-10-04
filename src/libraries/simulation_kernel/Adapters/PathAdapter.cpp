@@ -187,7 +187,7 @@ PathAdapter::~PathAdapter()
 // Name: PathAdapter::Get
 // Created: MCO 2012-01-26
 // -----------------------------------------------------------------------------
-boost::shared_ptr< movement::Path_ABC > PathAdapter::Get() const
+const boost::shared_ptr< movement::Path_ABC >& PathAdapter::Get() const
 {
     return path_;
 }

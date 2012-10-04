@@ -542,7 +542,7 @@ bool Agent_Path::IsWaypoint( const MT_Vector2D& point ) const
 // Name: Agent_Path::ComputePath
 // Created: LDC 2012-03-23
 // -----------------------------------------------------------------------------
-void Agent_Path::ComputePath( boost::shared_ptr< Path_ABC > pPath )
+void Agent_Path::ComputePath( const boost::shared_ptr< Path_ABC >& pPath )
 {
     if( ! GET_HOOK( IsDestinationTrafficable )( entity_, nextWaypoints_.empty() ? 0 : &nextWaypoints_[0], nextWaypoints_.size() ) )
     {

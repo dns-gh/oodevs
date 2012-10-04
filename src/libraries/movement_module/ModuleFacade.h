@@ -53,7 +53,7 @@ public:
 
     bool ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
     MT_Vector2D GetFuturePosition( const wrapper::View& entity, double rTime, bool bBoundOnPath ) const;
-    bool IsMovingOnPath( unsigned int entity, boost::shared_ptr< Path_ABC > path ) const;
+    bool IsMovingOnPath( unsigned int entity, const boost::shared_ptr< Path_ABC >& path ) const;
 
     void GetPoints( unsigned int entity, void(*callback)( const boost::shared_ptr< movement::PathPoint >& point, void* userData ), void* userData ) const;
     void AddPoints( unsigned int entity, const boost::shared_ptr< movement::PathPoint >& point );

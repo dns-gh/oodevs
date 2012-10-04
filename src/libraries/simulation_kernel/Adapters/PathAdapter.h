@@ -61,7 +61,7 @@ public:
 
     //! @name Accessors
     //@{
-    boost::shared_ptr< movement::Path_ABC > Get() const; // $$$$ MCO : to get rid of this we need to bind PathAdapter directly to DEC functions
+    const boost::shared_ptr< movement::Path_ABC >& Get() const; // $$$$ MCO : to get rid of this we need to bind PathAdapter directly to DEC functions
     //@}
 
     //! @name Operations

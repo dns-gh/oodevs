@@ -43,7 +43,7 @@ public:
     virtual void Execute( TerrainPathfinder& pathfind );
     virtual bool NeedRefine() const;
     virtual bool UseStrictClosest() const;
-    virtual void ComputePath( boost::shared_ptr< Path_ABC > pPath );
+    virtual void ComputePath( const boost::shared_ptr< Path_ABC >& pPath );
     //@}
 
     //! @name Accessors

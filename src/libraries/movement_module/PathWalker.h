@@ -63,9 +63,9 @@ public:
 
     //! @name Operations
     //@{
-    int Move( boost::shared_ptr< PathResult > pPath, const wrapper::View& model, const wrapper::View& entity ) const;
-    void MoveSuspended( boost::shared_ptr< PathResult > pPath ) const;
-    void MoveCanceled( boost::shared_ptr< PathResult > pPath ) const;
+    int Move( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const;
+    void MoveSuspended( const boost::shared_ptr< PathResult >& pPath ) const;
+    void MoveCanceled( const boost::shared_ptr< PathResult >& pPath ) const;
     void Clean();
     //@}
 
@@ -125,7 +125,7 @@ private:
     void ComputeCurrentSpeed( const wrapper::View& entity ) const;
     void InitializeEnvironment( const PathResult& path, const wrapper::View& entity ) const;
     bool GoToNextNavPoint( PathResult& path, const wrapper::View& entity ) const;
-    E_ReturnCode SetCurrentPath( boost::shared_ptr< PathResult > pPath, const wrapper::View& model, const wrapper::View& entity ) const;
+    E_ReturnCode SetCurrentPath( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const;
     void SetCurrentPathPoint( PathResult& path ) const;
     void SetEnvironmentType( const TerrainData& environment, const wrapper::View& entity ) const;
     void PostMovement( const wrapper::View& entity ) const;
