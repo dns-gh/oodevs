@@ -30,8 +30,6 @@ namespace gui
 // =============================================================================
 class InputPropagationPrototype_ABC : public ObjectAttributePrototype_ABC
 {
-    Q_OBJECT;  // $$$$ _RC_ JSR 2011-02-24: semble inutile?
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -1464,6 +1464,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\KeyModel.h">
       <Filter>Source Files\Preferences</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\InputPropagationPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
@@ -1622,9 +1625,6 @@
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\CrossingSitePrototype_ABC.h">
-      <Filter>Source Files\Creation\Objects\Attributes</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\InputPropagationPrototype_ABC.h">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\LogisticPrototype_ABC.h">
