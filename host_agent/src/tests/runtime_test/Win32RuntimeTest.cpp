@@ -15,6 +15,7 @@
 #include <runtime/win32/Runtime.h>
 #include <cpplog/cpplog.hpp>
 
+#include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/filesystem.hpp>
@@ -36,6 +37,28 @@ BOOST_AUTO_TEST_CASE( runtime_process_gets )
     BOOST_CHECK(ptr->GetName().find("runtime_test") != std::string::npos );
 }
 
+namespace
+{
+
+struct FileDeleter : boost::noncopyable
+{
+     FileDeleter( const boost::filesystem::path& p ): path( p ) {}
+    ~FileDeleter()
+    {
+        try
+        {
+            boost::filesystem::remove(path);
+        }
+        catch( const std::exception& )
+        {
+        }
+    }
+
+    const boost::filesystem::path path;
+};
+
+}  //namespace
+
 BOOST_AUTO_TEST_CASE( runtime_process_starts )
 {
     cpplog::OstreamLogger log( std::cout );
@@ -55,8 +78,8 @@ BOOST_AUTO_TEST_CASE( runtime_process_starts )
         = boost::assign::list_of( "hello" )( randarg.c_str() );
     const std::string dir = boost::filesystem::path( runtime.GetModuleFilename() )
         .parent_path().string();
-    const std::string logs =
-        (dir / boost::filesystem::path( "runtime_process_starts.log" )).string();
+    FileDeleter logDeleter(dir / boost::filesystem::path( "runtime_process_starts" + randarg + ".log" ));
+    const std::string logs = logDeleter.path.string();
     boost::shared_ptr< Process_ABC > p = runtime.Start( app, args, dir, logs );
     BOOST_CHECK( p );
     BOOST_CHECK_GT( p->GetPid(), 0 );
