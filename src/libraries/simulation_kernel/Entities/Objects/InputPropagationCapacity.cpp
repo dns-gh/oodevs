@@ -88,17 +88,6 @@ void InputPropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
 
-namespace
-{
-    void ConvertSimCoord( const TER_Localisation& location, T_PointVector& output )
-    {
-        const T_PointVector& points = location.GetPoints();
-        output.resize( points.size() );
-        for( unsigned int i = 0; i < points.size(); ++i )
-            TER_World::GetWorld().MosToSimMgrsCoord( points[i].rX_, points[i].rY_, output[ i ] );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: InputPropagationCapacity::Update
 // Created: JCR 2008-05-22
