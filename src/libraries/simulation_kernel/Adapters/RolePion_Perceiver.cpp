@@ -462,10 +462,6 @@ void RolePion_Perceiver::DisableFlyingShellDetection( int /*id*/ )
     throw std::runtime_error( __FUNCTION__ );
 }
 
-// =============================================================================
-// TOOLS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::GetMaxAgentPerceptionDistance
 // Created: NLD 2004-10-14
@@ -715,10 +711,6 @@ bool RolePion_Perceiver::HasDelayedPerceptions() const
 {
     throw std::runtime_error( __FUNCTION__ );
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::SendDebugState
