@@ -8,6 +8,7 @@
 
     <target name="configure">
         <update name="golang"/>
+        <update name="buildtools" version="1"/>
         <update name="sword" version="Defense/releases/internal/${branch}" package="SWORD_binaries_${platform}_${branch}"/>
     </target>
 
@@ -31,17 +32,42 @@
     </macrodef>
 
     <target name="plugins">
-        <xslt basedir="../out/${platform}/plugins"
-              includes="**/plugin.xml"
-              destdir="../out/${platform}/json"
-              style="../src/plugin.xsl" >
+        <xslt basedir="${out.dir}/plugins"
+            includes="**/plugin.xml"
+            destdir="${out.dir}/json"
+            style="${src.dir}/plugin.xsl" >
             <regexpmapper from="(\w+)[\\\/]+plugin.xml$" to="\1.json" />
         </xslt>
-        <pretty_json src="../out/${platform}/json" dst="../www" />
+        <pretty_json src="${out.dir}/json" dst="../www" />
     </target>
 
     <target name="build">
         <go module="node"/>
+    </target>
+
+    <macrodef name="get_version">
+        <attribute name="file"/>
+        <attribute name="output"/>
+        <sequential>
+            <exec taskname="version" executable="python" failonerror="true" outputproperty="@{output}.tmp">
+                <arg value="${bin.dir}/buildtools/getversion.py"/>
+                <arg value="@{file}"/>
+            </exec>
+            <propertyregex property="@{output}" input="${@{output}.tmp}"
+                regexp=".*(\d+\.\d+\.\d+\.\d+).*"
+                select="\1"/>
+        </sequential>
+    </macrodef>
+
+    <target name="about">
+        <sequential>
+            <get_version file="${out.dir}/simulation_app.exe" output="version.simulation"/>
+            <delete file="${root.dir}/www/about.ttml"/>
+            <copy file="${root.dir}/www/about.ttml.in" tofile="${root.dir}/www/about.ttml"/>
+            <replace file="${root.dir}/www/about.ttml">
+                <replacefilter token="SIMULATION_VERSION" value="${version.simulation}"/>
+            </replace>
+        </sequential>
     </target>
 
     <target name="all" depends="configure,plugins,build" />
