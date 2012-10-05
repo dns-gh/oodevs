@@ -490,7 +490,7 @@ double RolePion_Perceiver::GetMaxTheoreticalAgentPerceptionDistance() const
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::DisableAllPerceptions()
 {
-    // NOTHING
+    sink_.PostCommand( "disable all perceptions", core::MakeModel( "identifier", owner_.GetID() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -683,7 +683,7 @@ void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent, const P
 {
     sink_.PostCommand( "external perception", core::MakeModel( "identifier", owner_.GetID() )
                                                              ( "level", level.GetID() )
-                                                             ( "target", reinterpret_cast< size_t >( &agent ) ) );
+                                                             ( "target", reinterpret_cast< size_t >( &agent ) ) ); // $$$$ _RC_ SLI 2012-10-03: send model instead
 }
 
 // -----------------------------------------------------------------------------

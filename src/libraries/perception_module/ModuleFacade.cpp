@@ -9,6 +9,7 @@
 
 #include "ModuleFacade.h"
 #include "PerceptionCommand.h"
+#include "DisableAllPerceptionsCommand.h"
 #include "TogglePerceptionCommand.h"
 #include "ToggleRadarCommand.h"
 #include "ToggleLocalizedRadarCommand.h"
@@ -101,6 +102,7 @@ ModuleFacade::ModuleFacade()
     wrapper::RegisterCommand< VisionCommand >                   ( "vision" );
     wrapper::RegisterCommand< IdentifyAgentCommand >            ( "identify all agents in zone" );
     wrapper::RegisterCommand< ExternalPerceptionCommand >       ( "external perception" );
+    wrapper::RegisterCommand< DisableAllPerceptionsCommand >    ( "disable all perceptions" );
     PerceptionLevel::Initialize();
     RadarClass::Initialize();
 }

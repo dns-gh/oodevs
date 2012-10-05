@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\perception_module\DisableAllPerceptionsCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\ExternalPerceptionCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\IdentifyAgentCommand.h" />
     <ClInclude Include="..\..\src\libraries\perception_module\ListInCircleVisitor.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="..\..\src\libraries\perception_module\ZURBPerceptionComputer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\perception_module\DisableAllPerceptionsCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\ExternalPerceptionCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\IdentifyAgentCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\perception_module\ModuleFacade.cpp" />

@@ -137,8 +137,9 @@ namespace perception
                                                                       ( "toggle recognition point" )
                                                                       ( "toggle alat monitoring" )
                                                                       ( "vision" )
-                                                                      ( "identify all agents in zone" ) 
-                                                                      ( "external perception" ) )
+                                                                      ( "identify all agents in zone" )
+                                                                      ( "external perception" )
+                                                                      ( "disable all perceptions" ) )
         {}
     };
 }
