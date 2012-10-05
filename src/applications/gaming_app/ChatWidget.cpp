@@ -57,7 +57,7 @@ ChatWidget::~ChatWidget()
 // -----------------------------------------------------------------------------
 void ChatWidget::NotifyDeleted( const UserProfile& profile )
 {
-    T_Rooms::const_iterator it = rooms_.find( profile.GetLogin() );
+    T_Rooms::iterator it = rooms_.find( profile.GetLogin() );
     if( it != rooms_.end() )
     {
         tabs_->removePage( it->second );
