@@ -153,14 +153,13 @@ BOOST_FIXTURE_TEST_CASE( activating_localized_detection_localization_is_forwarde
     ExecuteCommands();
 }
 
-BOOST_FIXTURE_TEST_CASE( deactivating_localized_perception_removes_perception_node_and_sends_event, sword::perception::ModuleFixture )
+BOOST_FIXTURE_TEST_CASE( deactivating_localized_perception_removes_perception_node, sword::perception::ModuleFixture )
 {
     const unsigned int identifier = 42;
     const unsigned int perceptionId = 1337;
     core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/my-perception" ];
     perception[ perceptionId ];
     ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
-    ExpectEvent( "my-perception disabled", sword::test::MakeModel( "entity", identifier ) );
     StartCommand( "toggle localized perception",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )
@@ -302,13 +301,14 @@ BOOST_FIXTURE_TEST_CASE( activating_alat_monitoring_localization_computes_vision
     ExecuteCommands();
 }
 
-BOOST_FIXTURE_TEST_CASE( deactivating_alat_monitoring_perception_removes_perception_node, sword::perception::ModuleFixture )
+BOOST_FIXTURE_TEST_CASE( deactivating_alat_monitoring_perception_removes_perception_node_and_sends_event, sword::perception::ModuleFixture )
 {
     const unsigned int identifier = 42;
     const unsigned int perceptionId = 1337;
     core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/alat/monitoring" ];
     perception[ perceptionId ];
     ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
+    ExpectEvent( "alat monitoring disabled", sword::test::MakeModel( "entity", identifier ) );
     StartCommand( "toggle alat monitoring",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )

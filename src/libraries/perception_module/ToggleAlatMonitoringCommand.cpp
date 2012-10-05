@@ -11,6 +11,7 @@
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
 #include "wrapper/Effect.h"
+#include "wrapper/Event.h"
 #include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -58,7 +59,12 @@ void ToggleAlatMonitoringCommand::Execute( const wrapper::View& parameters, cons
         effect[ perceptionId ][ "localization" ] = parameters[ "localization" ];
     }
     else
+    {
         effect[ perceptionId ].MarkForRemove();
+        wrapper::Event event( "alat monitoring disabled" );
+        event[ "entity" ] = identifier;
+        event.Post();
+    }
     effect.Post();
 }
 

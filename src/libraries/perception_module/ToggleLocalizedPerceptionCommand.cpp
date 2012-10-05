@@ -37,12 +37,7 @@ void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& parameters,
     if( parameters[ "activated" ] )
         effect[ perceptionId ][ "localization" ] = parameters[ "localization" ];
     else
-    {
         effect[ perceptionId ].MarkForRemove();
-        wrapper::Event event( perception + " disabled" );
-        event[ "entity" ] = identifier;
-        event.Post();
-    }
     effect.Post();
 }
 

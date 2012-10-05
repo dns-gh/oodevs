@@ -19,7 +19,7 @@ using namespace sword;
 
 namespace
 {
-    const std::string event = "alat/monitoring disabled";
+    const std::string event = "alat monitoring disabled";
 }
 
 //-----------------------------------------------------------------------------
