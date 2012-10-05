@@ -119,6 +119,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ExternalPerceptionEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FireHooks.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FlyingShellPerceptionEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\RolePion_Decision.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\Sink.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\ListenerHelper.cpp" />
@@ -877,6 +878,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FireHooks.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModel.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FloodModelFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FlyingShellPerceptionEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Hook.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\KnowledgeCache.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Legacy\NullRoleAdapter.h" />

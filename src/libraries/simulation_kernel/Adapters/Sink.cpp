@@ -36,6 +36,7 @@
 #include "PerceptionCallbackEventListener.h"
 #include "MovementEventListener.h"
 #include "AlatMonitoringEventListener.h"
+#include "FlyingShellPerceptionEventListener.h"
 #include "PopulationFactory_ABC.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -241,6 +242,7 @@ void Sink::Initialize()
     listeners_.push_back( new AlatMonitoringEventListener( *model_, *facade_, agents_ ) );
     listeners_.push_back( new DirectFirePopulationAttackEventListener( *model_, *facade_ ) );
     listeners_.push_back( new DirectFirePopulationEventListener( *model_, *facade_, agents_ ) );
+    listeners_.push_back( new DirectFirePopulationAttackEventListener( *model_, *facade_ ) );
     listeners_.push_back( new DirectFirePopulationAttackEventListener( *model_, *facade_ ) );
     MovementHooks::Initialize( *facade_ );
     RolePion_Decision::Initialize( *facade_ );
