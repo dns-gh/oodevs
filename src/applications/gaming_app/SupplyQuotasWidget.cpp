@@ -18,6 +18,7 @@
 
 using namespace gui;
 using namespace kernel;
+using namespace EntityHelpers;
 
 // -----------------------------------------------------------------------------
 // Name: SupplyQuotasWidget constructor
@@ -159,7 +160,7 @@ void SupplyQuotasWidget::NotifyUpdated( const LogisticLinks& links )
 void SupplyQuotasWidget::NotifySelected( const Entity_ABC* pEntity )
 {
     pLinks_ = 0;
-    if( pEntity && EntityHelpers::IsLogisticBase( *pEntity ) )
+    if( pEntity && IsLogisticBase( *pEntity ) )
         pLinks_ = pEntity->Retrieve< LogisticLinks >();
     if( pLinks_ )
         NotifyUpdated( *pLinks_ );

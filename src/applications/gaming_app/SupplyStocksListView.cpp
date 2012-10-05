@@ -18,6 +18,7 @@
 #include <vector>
 
 using namespace kernel;
+using namespace EntityHelpers;
 
 namespace
 {
@@ -54,7 +55,7 @@ namespace
             while( tacticalChildIt.HasMoreElements() )
             {
                 const Entity_ABC& tacticalChild = tacticalChildIt.NextElement();
-                if( !EntityHelpers::IsLogisticBase( tacticalChild ) )
+                if( !IsLogisticBase( tacticalChild ) )
                     TotalizeStocks( tacticalChild, dotations );
             }
         }
@@ -112,7 +113,7 @@ void SupplyStocksListView::NotifySelected( const Entity_ABC* entity )
     {
         if( entity->Retrieve< SupplyStates >() )
             NotifyUpdated( entity->Get< SupplyStates >() );
-        else if( EntityHelpers::IsLogisticBase( *entity ) )
+        else if( IsLogisticBase( *entity ) )
         {
             TotalizeStocks( *entity, displayDotations );
             tools::Resolver< Dotation > dotations;

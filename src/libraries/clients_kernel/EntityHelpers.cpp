@@ -14,14 +14,18 @@
 #include "Formation_ABC.h"
 #include "LogisticLevel.h"
 
-
 using namespace kernel;
 
+namespace kernel
+{
+namespace EntityHelpers
+{
+
 // -----------------------------------------------------------------------------
-// Name: EntityHelpers::IsLogisticBase
+// Name: IsLogisticBase
 // Created: MMC 2012-10-02
 // -----------------------------------------------------------------------------
-bool EntityHelpers::IsLogisticBase( const Entity_ABC& entity )
+bool IsLogisticBase( const Entity_ABC& entity )
 {
     const Automat_ABC* pAutomat = dynamic_cast< const Automat_ABC* >( &entity );
     if( pAutomat && pAutomat->GetLogisticLevel() == LogisticLevel::logistic_base_ )
@@ -30,4 +34,7 @@ bool EntityHelpers::IsLogisticBase( const Entity_ABC& entity )
     if( pFormation && pFormation->GetLogisticLevel() == LogisticLevel::logistic_base_ )
         return true;
     return false;
+}
+
+}
 }
