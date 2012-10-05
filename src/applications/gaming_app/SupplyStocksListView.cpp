@@ -34,7 +34,7 @@ namespace
                 if( curDotation.type_ )
                 {
                     bool dotationFound = false;
-                    for( int i=0; i< dotations.size(); ++i )
+                    for( std::size_t i = 0; i < dotations.size(); ++i )
                         if( dotations[ i ].type_->GetId() == curDotation.type_->GetId() )
                         {
                             dotations[ i ].quantity_ += curDotation.quantity_;
@@ -116,7 +116,7 @@ void SupplyStocksListView::NotifySelected( const Entity_ABC* entity )
         {
             TotalizeStocks( *entity, displayDotations );
             tools::Resolver< Dotation > dotations;
-            for( int i=0; i<displayDotations.size(); ++i )
+            for( std::size_t i = 0; i < displayDotations.size(); ++i )
                 dotations.Register( displayDotations[ i ].type_->GetId(), displayDotations[ i ] );
             NotifyUpdated( dotations );
         }

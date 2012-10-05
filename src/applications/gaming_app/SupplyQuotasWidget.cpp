@@ -118,7 +118,7 @@ void SupplyQuotasWidget::UpdateQuotas( const LogisticLinks& links )
         if( LogisticLink* pLink = links.FindLogisticLink( *pSuperior ) )
         {
             const std::vector< Dotation >& dotations = pLink->GetQuotas();
-            for( int i=0; i<dotations.size(); ++i )
+            for( std::size_t i = 0; i < dotations.size(); ++i )
             {
                 if( !dotations[ i ].type_ )
                     continue;
