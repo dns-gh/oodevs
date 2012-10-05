@@ -405,10 +405,9 @@ namespace
         parameters[ "path" ].SetUserData( path );
         return sink.StartCommand( command, parameters );
     }
-    unsigned int StopAction( Sink& sink, PHY_Actor& actor, unsigned int command )
+    unsigned int StopAction( Sink& sink, unsigned int command )
     {
         sink.StopCommand( command );
-        actor.UnregisterAction( command );
         return 0u;
     }
 }
@@ -419,7 +418,8 @@ namespace
 // -----------------------------------------------------------------------------
 void RolePion_Decision::RegisterControlActions()
 {
-    RegisterCommand< unsigned int( unsigned int ) >( "DEC__StopAction", &StopAction, _1 );
+    RegisterFunction( "DEC__StopAction",
+        boost::function< unsigned int( unsigned int ) >( boost::bind( &StopAction, boost::ref( sink_ ), _1 ) ) );
     RegisterFunction( "DEC_PauseAction",
         boost::function< void( unsigned int ) >( boost::bind( &Sink::PauseCommand, &sink_, _1 ) ) );
     RegisterFunction( "DEC_ReprendAction",
