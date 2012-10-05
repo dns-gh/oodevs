@@ -68,7 +68,7 @@ public:
 
     //! @name Operations
     //@{
-    void ManageResident( MIL_AgentPion& pion );
+    void ManageResident( MIL_AgentPion& pion, MIL_AgentPion& transporter );
     void UnmanageResident( MIL_AgentPion& pion );
     //@}
 

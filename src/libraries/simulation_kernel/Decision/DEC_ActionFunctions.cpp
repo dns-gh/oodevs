@@ -72,7 +72,7 @@ void DEC_ActionFunctions::Prisoners_UnloadInCamp( MIL_AgentPion& callerAgent, bo
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return;
     callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pKnowledge->GetAgentKnown() );
-    pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Imprison( *pCampKnowledge->GetObjectKnown() );
+    pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().Imprison( *pCampKnowledge->GetObjectKnown(), callerAgent );
 }
 
 // -----------------------------------------------------------------------------

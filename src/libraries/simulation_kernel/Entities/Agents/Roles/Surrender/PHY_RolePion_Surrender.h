@@ -60,7 +60,7 @@ public:
     virtual void NotifySurrenderCanceled();
     virtual bool Capture                ( const MIL_AgentPion& pionTakingPrisoner );
     virtual bool Release                ();
-    virtual bool Imprison               ( const MIL_Object_ABC& camp );
+    virtual bool Imprison               ( const MIL_Object_ABC& camp, MIL_AgentPion& transporter );
     virtual void SetAsPrisoner          ();
     virtual void SetAsFree              ();
     //@}

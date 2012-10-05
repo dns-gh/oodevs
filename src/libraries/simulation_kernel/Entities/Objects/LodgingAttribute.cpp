@@ -168,7 +168,7 @@ bool LodgingAttribute::Update( const LodgingAttribute& rhs )
 // Name: LodgingAttribute::ManageResident
 // Created: MMC 2011-05-09
 // -----------------------------------------------------------------------------
-void LodgingAttribute::ManageResident( MIL_AgentPion& pion )
+void LodgingAttribute::ManageResident( MIL_AgentPion& pion, MIL_AgentPion& transporter )
 {
     if( std::find( Residents_.begin(), Residents_.end(), &pion ) != Residents_.end() )
         return;
@@ -177,7 +177,11 @@ void LodgingAttribute::ManageResident( MIL_AgentPion& pion )
     Residents_.push_back( &pion );
 
     if ( capacity_ <= nbrResidents )
+    {
+        MIL_Report::PostEvent( pion, MIL_Report::eReport_PrisonersCampFull );
+        MIL_Report::PostEvent( transporter, MIL_Report::eReport_PrisonersCampFull );
         return;
+    }
 
     PHY_RolePion_Refugee* pRefugeeRole = pion.RetrieveRole< PHY_RolePion_Refugee >();
     PHY_RolePion_Surrender* pSurrenderRole = pion.RetrieveRole< PHY_RolePion_Surrender >();
@@ -203,6 +207,7 @@ void LodgingAttribute::ManageResident( MIL_AgentPion& pion )
         if ( pSurrenderRole )
             pSurrenderRole->UpdateLodging( nbrFreeLodging );
         MIL_Report::PostEvent( pion, MIL_Report::eReport_PrisonersCampFull );
+        MIL_Report::PostEvent( transporter, MIL_Report::eReport_PrisonersCampFull );
     }
 }
 
