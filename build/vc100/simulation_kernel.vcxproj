@@ -112,6 +112,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CallbackEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CapacityFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePerceptionEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePopulationAttackEventListener.cpp" />
@@ -870,6 +871,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CallbackEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CapacityFactory.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CoreLogger.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePerceptionEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionAttackEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePionEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePopulationAttackEventListener.h" />

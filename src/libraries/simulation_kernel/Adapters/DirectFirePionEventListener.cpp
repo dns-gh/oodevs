@@ -9,23 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "DirectFirePionEventListener.h"
-#include "AlgorithmsFactories.h"
-#include "OnComponentFunctor_ABC.h"
-#include "OnComponentComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
-#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
-#include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -105,65 +96,6 @@ namespace
             }
         }
     }
-    class SensorFunctor : private boost::noncopyable
-    {
-    public:
-        SensorFunctor(const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target )
-            : perceiver_( perceiver ), target_( target ), isInside_( false )
-        {}
-        void operator() ( const PHY_Sensor& sensor )
-        {
-            const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
-            if( sensorTypeAgent )
-            {
-                MT_Vector2D targetPosition = target_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-                MT_Vector2D perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-                isInside_ = sensorTypeAgent->CanDetectFirer( targetPosition.Distance( perceiverPosition ) );
-            }
-        }
-        bool IsInside(){ return isInside_; }
-    private:
-        const MIL_Agent_ABC& perceiver_;
-        const MIL_Agent_ABC& target_;
-        bool                 isInside_;
-    };
-    class Functor : public OnComponentFunctor_ABC
-    {
-    public:
-        Functor( const MIL_Agent_ABC& perceiver, const MIL_Agent_ABC& target )
-            : perceiver_( perceiver )
-            , transport_( perceiver.RetrieveRole< transport::PHY_RoleAction_Loading >() )
-            , target_( target )
-            , isInside_( false )
-        {}
-        void operator() ( PHY_ComposantePion& composante )
-        {
-            if( !composante.CanPerceive( transport_ ) )
-                return;
-            SensorFunctor dataFunctor( perceiver_, target_ );
-            composante.ApplyOnSensors( dataFunctor );
-            if( !isInside_)
-                isInside_ = dataFunctor.IsInside();
-        }
-        bool IsInside(){ return isInside_; }
-
-    private:
-        const MIL_Agent_ABC& perceiver_;
-        const transport::PHY_RoleAction_Loading* transport_;
-        const MIL_Agent_ABC& target_;
-        bool isInside_;
-    };
-    void NotifyFirerPerception( MIL_AgentPion& pion, MIL_Agent_ABC& target ) // $$$$ MCO 2012-05-02: see how to hook this with perception module
-    {
-        Functor dataFunctor( target, pion );
-        std::auto_ptr< OnComponentComputer_ABC > dataComputer( target.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
-        target.Execute( *dataComputer );
-        if( dataFunctor.IsInside() )
-        {
-            PHY_RoleInterface_Perceiver& role = target.GetRole< PHY_RoleInterface_Perceiver >();
-            role.NotifyExternalPerception( pion, PHY_PerceptionLevel::recognized_ );
-        }
-    }
     void HandleCollateralDamage( PHY_FireResults_Pion* results, const MIL_AgentPion& pion, const MIL_Agent_ABC& target ) // $$$$ MCO 2012-09-05: move to a separate listener
     {
         // handle direct-indirect fire on populations
@@ -218,7 +150,6 @@ void DirectFirePionEventListener::Update( const core::Model& event )
         target.GetRole< PHY_RoleInterface_Composantes >().ApplyDirectFire( component, *category, *results );
         HandleCollateralDamage( results, pion, target ); // $$$$ MCO 2012-09-10: move to a separate listener
     }
-    NotifyFirerPerception( pion, target ); // $$$$ MCO 2012-09-10: move to a separate listener
     if( event[ "use-ph" ] )
     {
         target.GetRole< PHY_RoleInterface_ActiveProtection >().UseAmmunition( *category );
