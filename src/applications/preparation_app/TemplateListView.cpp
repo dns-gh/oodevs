@@ -11,6 +11,7 @@
 #include "TemplateListView.h"
 #include "moc_TemplateListView.cpp"
 #include "preparation/HierarchyTemplate.h"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/ValuedDragObject.h"
 #include <boost/filesystem/path.hpp>
@@ -56,8 +57,12 @@ TemplateListView::~TemplateListView()
 // -----------------------------------------------------------------------------
 void TemplateListView::CreateTemplate( const kernel::Entity_ABC& entity )
 {
-    templates_.push_back( new HierarchyTemplate( agents_, formations_, entity, true, colorController_ ) );
-    CreateItem( *templates_.back() );
+    HierarchyTemplate* pTemplate = new HierarchyTemplate( agents_, formations_, entity, true, colorController_ );
+    templates_.push_back( pTemplate );
+    ValuedListItem* item = CreateItem( *pTemplate );
+    std::string longName = LongNameHelper::GetEntityLongName( entity );
+    if( item && !longName.empty() )
+        Rename( *item, QString::fromStdString( longName ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,12 +109,9 @@ void TemplateListView::OnRename()
 // -----------------------------------------------------------------------------
 void TemplateListView::OnRename( Q3ListViewItem* item, int, const QString& newName )
 {
-    if( ValuedListItem* pItem = static_cast< ValuedListItem* >( item ) )
-    {
-        HierarchyTemplate* pTemplate = pItem->GetValue< HierarchyTemplate >();
-        pTemplate->Rename( newName );
-        item->setText( 0, newName );
-    }
+    ValuedListItem* pItem = dynamic_cast< ValuedListItem* >( item );
+    if( pItem )
+        Rename( *pItem, newName );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,12 +166,13 @@ void TemplateListView::ReadTemplate( xml::xistream& input )
 // Name: TemplateListView::CreateItem
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void TemplateListView::CreateItem( HierarchyTemplate& t )
+ValuedListItem* TemplateListView::CreateItem( HierarchyTemplate& t )
 {
     ValuedListItem* item = new ValuedListItem( this );
     item->Set( &t, t.GetName() );
     item->setDragEnabled( true );
     item->setRenameEnabled( 0, true );
+    return item;
 }
 
 // -----------------------------------------------------------------------------
@@ -205,4 +208,16 @@ void TemplateListView::keyPressEvent( QKeyEvent* evt )
     }
     else
         Q3ListView::keyPressEvent( evt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TemplateListView::Rename
+// Created: MMC 2012-10-05
+// -----------------------------------------------------------------------------
+void TemplateListView::Rename( ValuedListItem& item, const QString& newName )
+{
+    HierarchyTemplate* pTemplate = item.GetValue< HierarchyTemplate >();
+    if( pTemplate )
+        pTemplate->Rename( newName );
+    item.setText( 0, newName );
 }

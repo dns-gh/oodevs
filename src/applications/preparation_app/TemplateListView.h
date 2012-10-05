@@ -18,6 +18,11 @@ class ColorController;
 class FormationModel;
 class HierarchyTemplate;
 
+namespace gui
+{
+    class ValuedListItem;
+}
+
 // =============================================================================
 /** @class  TemplateListView
     @brief  TemplateListView
@@ -69,8 +74,9 @@ private:
     virtual Q3DragObject* dragObject();
     void Clear();
     void ReadTemplate( xml::xistream& input );
-    void CreateItem( HierarchyTemplate& t );
+    gui::ValuedListItem* CreateItem( HierarchyTemplate& t );
     virtual void keyPressEvent( QKeyEvent* event );
+    void Rename( gui::ValuedListItem& item, const QString& newName );
     //@}
 
 private:
