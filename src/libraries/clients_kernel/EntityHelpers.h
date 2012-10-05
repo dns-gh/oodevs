@@ -14,21 +14,10 @@ namespace kernel
 {
     class Entity_ABC;
 
-// =============================================================================
-/** @class  EntityHelpers
-    @brief  EntityHelpers
-*/
-// Created: MMC 2012-10-03
-// =============================================================================
-class EntityHelpers
+namespace EntityHelpers
 {
-public:
-    //! @name Helpers
-    //@{
-    static bool IsLogisticBase( const Entity_ABC& entity );
-    //@}
-};
-
+    bool IsLogisticBase( const Entity_ABC& entity );
+}
 }
 
 #endif // __EntityHelpers_h_

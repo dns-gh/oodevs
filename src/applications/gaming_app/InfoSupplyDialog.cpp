@@ -18,6 +18,7 @@
 #include "gaming/Tools.h"
 
 using namespace kernel;
+using namespace EntityHelpers;
 
 // -----------------------------------------------------------------------------
 // Name: InfoSupplyDialog constructor
@@ -56,7 +57,7 @@ InfoSupplyDialog::~InfoSupplyDialog()
 // -----------------------------------------------------------------------------
 bool InfoSupplyDialog::ShouldDisplay( const Entity_ABC& entity ) const
 {
-    return entity.Retrieve< SupplyStates >() || EntityHelpers::IsLogisticBase( entity );
+    return entity.Retrieve< SupplyStates >() || IsLogisticBase( entity );
 }
 
 // -----------------------------------------------------------------------------
