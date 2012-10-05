@@ -12,6 +12,7 @@
 #include "moc_TemplateListView.cpp"
 #include "preparation/HierarchyTemplate.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_gui/LongNameHelper.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <tools/XmlCrc32Signature.h>
@@ -50,8 +51,13 @@ TemplateListView::~TemplateListView()
 // -----------------------------------------------------------------------------
 void TemplateListView::CreateTemplate( const kernel::Entity_ABC& entity )
 {
-    templates_.push_back( new HierarchyTemplate( agents_, formations_, entity, true, colorController_ ) );
-    CreateItem( *templates_.back() );
+    HierarchyTemplate* pTemplate = new HierarchyTemplate( agents_, formations_, entity, true, colorController_ );
+    templates_.push_back( pTemplate );
+    std::string longName = gui::longname::GetEntityLongName( entity );
+    if( longName.empty() )
+        CreateItem( *pTemplate );
+    else
+        CreateItem( *pTemplate, QString::fromStdString( longName ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +159,16 @@ void TemplateListView::ReadTemplate( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void TemplateListView::CreateItem( HierarchyTemplate& t )
 {
-    dataModel_.AddRootDataItem( dataModel_.rowCount(), 0, t.GetName(), "", t, Qt::ItemIsDragEnabled | Qt::ItemIsEditable );
+    CreateItem( t, t.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TemplateListView::CreateItem
+// Created: AGE 2007-05-30
+// -----------------------------------------------------------------------------
+void TemplateListView::CreateItem( HierarchyTemplate& t, const QString& name )
+{
+    dataModel_.AddRootDataItem( dataModel_.rowCount(), 0, name, "", t, Qt::ItemIsDragEnabled | Qt::ItemIsEditable );
 }
 
 // -----------------------------------------------------------------------------

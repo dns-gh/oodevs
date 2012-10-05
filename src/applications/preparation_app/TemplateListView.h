@@ -70,6 +70,7 @@ private:
     void Clear();
     void ReadTemplate( xml::xistream& input );
     void CreateItem( HierarchyTemplate& t );
+    void CreateItem( HierarchyTemplate& t, const QString& name );
     virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
