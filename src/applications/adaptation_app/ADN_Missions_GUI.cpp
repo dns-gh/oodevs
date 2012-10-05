@@ -69,7 +69,6 @@ ADN_Missions_GUI::ADN_Missions_GUI( ADN_Missions_Data& data )
     , pAutomatMissionsWidget_( 0 )
     , pPopulationMissionsWidget_( 0 )
     , pFragOrderWidget_( 0 )
-        
 {
     // NOTHING
 }

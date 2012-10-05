@@ -265,7 +265,6 @@ public:
 
     virtual bool IsValidDatabase();
 
-
 private:
     void ReadArchive( xml::xistream& input );
     void ReadUnit( xml::xistream& input );

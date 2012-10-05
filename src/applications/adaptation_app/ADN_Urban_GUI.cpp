@@ -39,7 +39,6 @@ ADN_Urban_GUI::ADN_Urban_GUI( ADN_Urban_Data& data )
     , pAttritionTable_( 0 )
     , pListTemplate_( 0 )
     , pUsages_( 0 )
-        
 {
     // NOTHING
 }

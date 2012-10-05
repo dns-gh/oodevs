@@ -42,5 +42,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_GridDelegate_h__

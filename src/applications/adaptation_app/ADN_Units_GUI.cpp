@@ -52,7 +52,6 @@ ADN_Units_GUI::ADN_Units_GUI( ADN_Units_Data& data )
     , pInstallationGroup_( 0 )
     , pSymbolWidget_( 0 )
     , pNatureGui_( 0 )
-        
 {
     // NOTHING
 }

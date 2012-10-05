@@ -759,7 +759,6 @@ void ADN_ListView::FillSheetFromItem( QStandardItem* qItem, BasicExcelWorksheet&
         BasicExcelCell* cell = sheet.Cell( row, xlsCol );
 
         // Content
-        
         QString content = ItemText( qItem, col );
         bool ok = false;
         content.toInt( &ok );

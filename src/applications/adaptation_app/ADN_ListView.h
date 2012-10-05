@@ -97,7 +97,7 @@ protected:
 private:
     virtual QStringList MimeTypes() const { return QStringList(); }
     virtual void Drop( const QString& /*mimeType*/, void* /*data*/, QStandardItem& /*target*/ ) {}
-    virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; } 
+    virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; }
     bool ApplyFilterLine( ADN_ListViewItem* item );
     bool ApplyFilterList( ADN_ListViewItem* item );
     void ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > func );
