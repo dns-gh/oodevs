@@ -1850,6 +1850,7 @@
                 <include name="tests/Pathfind/**"/>
                 <include name="tests/TestPlanExercise/**"/>
                 <include name="tests/TestPlanExercise-ML/**"/>
+				<include name="tests/EmptyParis-ML/**"/>
             </zipfileset>
         </pack>
     </target>
