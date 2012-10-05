@@ -17,11 +17,11 @@
 // Name: UserProfilePopulationRights constructor
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-UserProfilePopulationRights::UserProfilePopulationRights( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
-    : gui::PopulationListView( pParent, controllers, factory, profile )
-    , UserProfileRights_ABC( this )
+UserProfilePopulationRights::UserProfilePopulationRights( QWidget* pParent, kernel::Controllers& controllers, const QString& name, const kernel::Profile_ABC& profile )
+    : gui::PopulationTreeView( controllers, profile, observer_, pParent )
+    , UserProfileRights_ABC( *this, dataModel_, name )
 {
-    connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
+    connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,32 +34,13 @@ UserProfilePopulationRights::~UserProfilePopulationRights()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfilePopulationRights::viewportResizeEvent
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-void UserProfilePopulationRights::viewportResizeEvent( QResizeEvent* e )
-{
-    Q3ScrollView::viewportResizeEvent( e );
-    setColumnWidth( 0, -1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfilePopulationRights::setColumnWidth
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-void UserProfilePopulationRights::setColumnWidth( int column, int w )
-{
-    Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) - columnWidth( 2 ) : w );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UserProfilePopulationRights::showEvent
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
 void UserProfilePopulationRights::showEvent( QShowEvent* event )
 {
     OnShow();
-    gui::PopulationListView::showEvent( event );
+    gui::PopulationTreeView::showEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,16 +50,16 @@ void UserProfilePopulationRights::showEvent( QShowEvent* event )
 void UserProfilePopulationRights::hideEvent( QHideEvent* event )
 {
     OnHide();
-    gui::PopulationListView::hideEvent( event );
+    gui::PopulationTreeView::hideEvent( event );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfilePopulationRights::OnItemClicked
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfilePopulationRights::OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column )
+void UserProfilePopulationRights::OnItemClicked( const QModelIndex& index )
 {
-    UserProfileRights_ABC::OnItemClicked( item, point, column );
+    UserProfileRights_ABC::OnItemClicked( index );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,10 +72,10 @@ bool UserProfilePopulationRights::NeedsCommit() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfilePopulationRights::OnContextMenuRequested
+// Name: UserProfilePopulationRights::contextMenuEvent
 // Created: JSR 2012-06-22
 // -----------------------------------------------------------------------------
-void UserProfilePopulationRights::OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int )
+void UserProfilePopulationRights::contextMenuEvent( QContextMenuEvent* /*event*/ )
 {
     // NOTHING
 }

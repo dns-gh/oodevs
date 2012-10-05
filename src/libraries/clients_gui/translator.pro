@@ -40,7 +40,6 @@ GisToolbar.cpp \
 GradientWidget.cpp \
 GraphicPreferences.cpp \
 HelpSystem.cpp \
-HierarchyListView_ABC.cpp \
 HighlightColorModifier.cpp \
 HtmlEditor.cpp \
 InhabitantPanel.cpp \

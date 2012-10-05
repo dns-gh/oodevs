@@ -178,9 +178,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
@@ -930,9 +927,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\PopulationPanel.h">
       <Filter>Source Files\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\DisplayBuilder.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
@@ -1469,9 +1463,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">
-      <Filter>Source Files\Lists</Filter>
-    </None>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">
       <Filter>Source Files\Tools</Filter>
     </None>
@@ -1538,9 +1529,6 @@
       <Filter>Source Files\Panels</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\EntityListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.h">
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ObjectListView.h">

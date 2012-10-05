@@ -10,31 +10,39 @@
 #include "gaming_app_pch.h"
 #include "UserProfileRights_ABC.h"
 #include "icons.h"
+#include "clients_gui/RichTreeView.h"
+#include "clients_gui/StandardModel.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/UserProfile.h"
-#include "clients_gui/ValuedListItem.h"
-
-using namespace gui;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileRights_ABC constructor
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-UserProfileRights_ABC::UserProfileRights_ABC( Q3ListView* listView )
-    : listView_       ( listView )
-    , selectedProfile_( 0 )
-    , needsSaving_    ( false )
-    , check_          ( MAKE_PIXMAP( check ) )
-    , check_grey_     ( MAKE_PIXMAP( check_grey ) )
+UserProfileRights_ABC::UserProfileRights_ABC( gui::RichTreeView& listView, gui::StandardModel& model, const QString& name )
+    : listView_( listView )
+    , model_( model )
+    , profile_( 0 )
+    , needsSaving_( false )
+    , check_( MAKE_PIXMAP( check ) )
+    , check_grey_( MAKE_PIXMAP( check_grey ) )
 {
-    listView_->header()->show();
-    listView_->addColumn( tools::translate( "UserProfileRights", "Read" ) , 40 );
-    listView_->addColumn( tools::translate( "UserProfileRights", "Write" ), 40 );
-    listView_->addColumn( "hidden", 0 );
-    listView_->header()->setResizeEnabled( false );
-    listView_->hideColumn( 3 );
-    listView_->setDisabled( true );
+    model_.setColumnCount( 3 );
+    listView_.setHeaderHidden( false );
+    listView_.setEditTriggers( 0 );
+    listView_.EnableDragAndDrop( false );
+
+    QStringList headers;
+    headers << name << tools::translate( "UserProfileRights", "Read" ) << tools::translate( "UserProfileRights", "Write" );
+    model_.setHorizontalHeaderLabels( headers );
+    listView_.header()->setMovable( false );
+    listView_.header()->setStretchLastSection( false );
+    listView_.header()->setResizeMode( 0, QHeaderView::Stretch );
+    listView_.header()->setResizeMode( 1, QHeaderView::Fixed );
+    listView_.header()->setResizeMode( 2, QHeaderView::Fixed );
+    listView_.header()->resizeSection( 1, 48 );
+    listView_.header()->resizeSection( 2, 48 );
+    listView_.setDisabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,28 +55,32 @@ UserProfileRights_ABC::~UserProfileRights_ABC()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileRights_ABC::Visit
+// Created: JSR 2012-10-04
+// -----------------------------------------------------------------------------
+void UserProfileRights_ABC::Visit( QStandardItem& item )
+{
+    kernel::Entity_ABC* entity = model_.GetDataFromItem< kernel::Entity_ABC >( item );
+    if( entity )
+    {
+        const Status status = Status( item.data( gui::StandardModel::OtherRole ).toInt() );
+        const bool isWriteable = status == eWrite;
+        const bool isReadable  = status == eReadOnly;
+        profile_->SetReadable ( *entity, isReadable && !isWriteable );
+        profile_->SetWriteable( *entity, isWriteable );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileRights_ABC::Commit
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::Commit( bool savedStatus )
 {
     needsSaving_ = savedStatus;
-    if( !selectedProfile_ )
+    if( !profile_ )
         return;
-    Q3ListViewItemIterator it( listView_ );
-    while( Q3ListViewItem* item = it.current() )
-    {
-        if( const ValuedListItem* value = static_cast< const ValuedListItem* >( item ) )
-        {
-            const Entity_ABC* entity = value->GetValue< const Entity_ABC >();
-            const Status status = Status( item->text( 3 ).toInt() );
-            const bool isWriteable = status == eWrite;
-            const bool isReadable  = status == eReadOnly;
-            selectedProfile_->SetReadable ( *entity, isReadable && !isWriteable );
-            selectedProfile_->SetWriteable( *entity, isWriteable );
-        }
-        ++it;
-    }
+    model_.Accept( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,16 +98,15 @@ void UserProfileRights_ABC::Reset()
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::Display( UserProfile& profile )
 {
-    CloseAll();
-    listView_->setDisabled( false );
+    listView_.collapseAll();
+    listView_.setDisabled( false );
     needsSaving_ = false;
-    selectedProfile_ = &profile;
-    ValuedListItem* value = static_cast< ValuedListItem* >( listView_->firstChild() );
-    while( value )
+    profile_ = &profile;
+    for( int i = 0; i < model_.rowCount(); ++i )
     {
-        SetStatus( value, false, false );
-        EnsureVisible( value );
-        value = static_cast< ValuedListItem* >( value->nextSibling() );
+        QStandardItem* item = model_.item( i );
+        SetStatus( item, false, false );
+        EnsureVisible( item );
     }
 }
 
@@ -103,22 +114,22 @@ void UserProfileRights_ABC::Display( UserProfile& profile )
 // Name: UserProfileRights_ABC::OnItemClicked
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&, int column )
+void UserProfileRights_ABC::OnItemClicked( const QModelIndex& index )
 {
-    if( column == 0 || !item )
+    if( !index.isValid() || index.column() == 0 )
         return;
 
-    const Status status = Status( item->text( 3 ).toInt() );
-
-    if( status == eWriteInherited || ( column == 1 && status == eReadInherited ) )
+    QStandardItem* item = model_.GetItemFromIndex( model_.GetMainModelIndex( index ) );
+    const Status status = Status( item->data( gui::StandardModel::OtherRole ).toInt() );
+    if( status == eWriteInherited || ( index.column() == 1 && status == eReadInherited ) )
         return;
     bool write = status == eWrite;
-    if( column == 2 )
+    if( index.column() == 2 )
         write = !write;
     bool read = status == eWrite || status == eReadOnly;
-    if( column == 1 )
+    if( index.column() == 1 )
         read = !read;
-    SetStatus( static_cast< ValuedListItem* >( item ), read, write, false, false );
+    SetStatus( item, read, write, false, false );
     needsSaving_ = true;
 }
 
@@ -128,8 +139,8 @@ void UserProfileRights_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&, 
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::OnShow()
 {
-    if( selectedProfile_ )
-        Display( *selectedProfile_ );
+    if( profile_ )
+        Display( *profile_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,47 +153,42 @@ void UserProfileRights_ABC::OnHide()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::CloseAll
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-void UserProfileRights_ABC::CloseAll()
-{
-    for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
-        listView_->setOpen( *it, false );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UserProfileRights_ABC::SetStatus
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetStatus( Q3ListViewItem* item, Status status )
+void UserProfileRights_ABC::SetStatus( QStandardItem* item, Status status )
 {
-    QLocale locale;
-    item->setText( 3, locale.toString( status ) );
+    assert( item->column() == 0 );
+    item->setData( static_cast< int >( status ), gui::StandardModel::OtherRole );
+    const QModelIndex index = model_.indexFromItem( item );
+    const QModelIndex index1 = model_.index( index.row(), 1, index.parent() );
+    const QModelIndex index2 = model_.index( index.row(), 2, index.parent() );
+    QStandardItem* item1 = model_.itemFromIndex( index1 );
+    QStandardItem* item2 = model_.itemFromIndex( index2 );
     if( status == eNothing )
     {
-        item->setPixmap( 1, QPixmap() );
-        item->setPixmap( 2, QPixmap() );
+        item1->setIcon( QPixmap() );
+        item2->setIcon( QPixmap() );
     }
     else if( status == eReadOnly )
     {
-        item->setPixmap( 1, check_ );
-        item->setPixmap( 2, QPixmap() );
+        item1->setIcon( check_ );
+        item2->setIcon( QPixmap() );
     }
     else if( status == eReadInherited )
     {
-        item->setPixmap( 1, check_grey_ );
-        item->setPixmap( 2, QPixmap() );
+        item1->setIcon( check_grey_ );
+        item2->setIcon( QPixmap() );
     }
     else if( status == eWrite )
     {
-        item->setPixmap( 1, check_ );
-        item->setPixmap( 2, check_ );
+        item1->setIcon( check_ );
+        item2->setIcon( check_ );
     }
     else if( status == eWriteInherited )
     {
-        item->setPixmap( 1, check_grey_ );
-        item->setPixmap( 2, check_grey_ );
+        item1->setIcon( check_grey_ );
+        item2->setIcon( check_grey_ );
     }
 }
 
@@ -190,13 +196,14 @@ void UserProfileRights_ABC::SetStatus( Q3ListViewItem* item, Status status )
 // Name: UserProfileRights_ABC::SetStatus
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool inheritsReadable, bool inheritsWriteable )
+void UserProfileRights_ABC::SetStatus( QStandardItem* item, bool inheritsReadable, bool inheritsWriteable )
 {
-    const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
+    assert( item->column() == 0 );
+    kernel::Entity_ABC* entity = model_.GetDataFromItem< kernel::Entity_ABC >( *item );
     if( !entity )
         return;
-    const bool isWriteable = selectedProfile_->IsWriteable( *entity );
-    const bool isReadable  = isWriteable || selectedProfile_->IsReadable( *entity );
+    const bool isWriteable = profile_->IsWriteable( *entity );
+    const bool isReadable  = isWriteable || profile_->IsReadable( *entity );
 
     SetStatus( item, isReadable, isWriteable, inheritsReadable, inheritsWriteable );
 }
@@ -205,15 +212,14 @@ void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool inheritsR
 // Name: UserProfileRights_ABC::SetStatus
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable )
+void UserProfileRights_ABC::SetStatus( QStandardItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable )
 {
+    assert( item->column() == 0 );
     SetStatus( item, MakeStatus( isReadable, isWriteable, inheritsReadable, inheritsWriteable ) );
-
-    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-    while( value )
+    for( int i = 0; i < item->rowCount(); ++i )
     {
+        QStandardItem* value = item->child( i );
         SetStatus( value, isReadable || inheritsReadable, isWriteable || inheritsWriteable );
-        value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
 }
 
@@ -221,21 +227,18 @@ void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool isReadabl
 // Name: UserProfileRights_ABC::EnsureVisible
 // Created: LDC 2012-04-30
 // -----------------------------------------------------------------------------
-void UserProfileRights_ABC::EnsureVisible( gui::ValuedListItem* item )
+void UserProfileRights_ABC::EnsureVisible( QStandardItem* item )
 {
-    const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
+    assert( item->column() == 0 );
+    kernel::Entity_ABC* entity = model_.GetDataFromItem< kernel::Entity_ABC >( *item );
     if( !entity )
         return;
-    const bool isWriteable = selectedProfile_->IsWriteable( *entity );
-    const bool isReadable  = isWriteable || selectedProfile_->IsReadable( *entity );
+    const bool isWriteable = profile_->IsWriteable( *entity );
+    const bool isReadable  = isWriteable || profile_->IsReadable( *entity );
     if( isReadable || isWriteable )
-        listView_->ensureItemVisible( item );
-    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-    while( value )
-    {
-        EnsureVisible( value );
-        value = static_cast< ValuedListItem* >( value->nextSibling() );
-    }
+        listView_.expand( model_.indexFromItem( item ) );
+    for( int i = 0; i < item->rowCount(); ++i )
+        EnsureVisible( item->child( i ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,18 +257,6 @@ UserProfileRights_ABC::Status UserProfileRights_ABC::MakeStatus( bool read, bool
     else if( inheritedRead )
         status = eReadInherited;
     return status;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileRights_ABC::SetInheritedStatus
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-void UserProfileRights_ABC::SetInheritedStatus( Q3ListViewItem* item, Status status )
-{
-    if( !item )
-        return;
-    for( Q3ListViewItem* child = item->firstChild(); child; child = child->nextSibling() )
-        SetStatus( child, status );
 }
 
 // -----------------------------------------------------------------------------

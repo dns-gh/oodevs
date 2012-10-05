@@ -166,7 +166,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Panels.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityListView.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DecimalSpinBoxAndSlider.cpp" />
@@ -780,25 +779,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\PanelStack_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PopulationPanel.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\EntityListView.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyListView.h" />
-    <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
@@ -2503,7 +2483,6 @@
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
     <None Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityTreeView.inl" />
-    <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl" />
     <None Include="..\..\src\libraries\clients_gui\resources_gradients_ar.ts" />

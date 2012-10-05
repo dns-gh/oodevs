@@ -10,23 +10,21 @@
 #include "gaming_app_pch.h"
 #include "UserProfileUnitRights.h"
 #include "moc_UserProfileUnitRights.cpp"
+#include "clients_gui/LongNameHelper.h"
 #include "clients_kernel/Entity_ABC.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
-
-using namespace gui;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, EntitySymbols& icons )
-    : HierarchyListView< TacticalHierarchies >( parent, controllers, factory, profile, icons )
-    , UserProfileRights_ABC( this )
+UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile )
+    : HierarchyTreeView< kernel::TacticalHierarchies >( controllers, profile, observer_, icons, parent )
+    , UserProfileRights_ABC( *this, dataModel_, name )
 {
-    controllers_.Register( *this );
-    connect( this, SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnItemClicked( Q3ListViewItem*, const QPoint&, int ) ) );
+    controllers_.Update( *this );
+    connect( this, SIGNAL( clicked( const QModelIndex& ) ), SLOT( OnItemClicked( const QModelIndex& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,25 +34,6 @@ UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& cont
 UserProfileUnitRights::~UserProfileUnitRights()
 {
     controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::viewportResizeEvent
-// Created: SBO 2006-11-30
-// -----------------------------------------------------------------------------
-void UserProfileUnitRights::viewportResizeEvent( QResizeEvent* e )
-{
-    Q3ScrollView::viewportResizeEvent( e );
-    setColumnWidth( 0, -1 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::setColumnWidth
-// Created: SBO 2006-11-30
-// -----------------------------------------------------------------------------
-void UserProfileUnitRights::setColumnWidth( int column, int w )
-{
-    Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) - columnWidth( 2 ) : w );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,9 +60,9 @@ void UserProfileUnitRights::hideEvent( QHideEvent* event )
 // Name: UserProfileUnitRights::OnItemClicked
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column )
+void UserProfileUnitRights::OnItemClicked( const QModelIndex& index )
 {
-    UserProfileRights_ABC::OnItemClicked( item, point, column );
+    UserProfileRights_ABC::OnItemClicked( index );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,20 +75,33 @@ bool UserProfileUnitRights::NeedsCommit() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UserProfileUnitRights::AdditionalUpdateItem
+// Created: JSR 2012-10-05
+// -----------------------------------------------------------------------------
+void UserProfileUnitRights::AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
+{
+    gui::longname::SetItemLongName( entity, entityItem );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UserProfileUnitRights::NotifyUpdated
 // Created: SBO 2008-08-26
 // -----------------------------------------------------------------------------
 void UserProfileUnitRights::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
-    if( gui::ValuedListItem* item = FindItem( &entity, firstChild() ) )
-        item->SetNamed( entity );
+    QStandardItem* item = dataModel_.FindDataItem( entity );
+    if( item )
+    {
+        gui::longname::SetItemLongName( entity, *item);
+        proxyModel_->invalidate();
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileUnitRights::OnContextMenuRequested
+// Name: UserProfileUnitRights::contextMenuEvent
 // Created: JSR 2012-06-22
 // -----------------------------------------------------------------------------
-void UserProfileUnitRights::OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int )
+void UserProfileUnitRights::contextMenuEvent( QContextMenuEvent* /*event*/ )
 {
     // NOTHING
 }

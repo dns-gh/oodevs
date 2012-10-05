@@ -241,7 +241,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
-    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, *pProfile_, *icons, model_.userProfileFactory_ );
+    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *pProfile_, *icons, model_.userProfileFactory_ );
 
     // Agent list panel
     orbatDockWidget_ = new OrbatDockWidget( controllers_, this, "agentList", tr( "Orbat" ), *pProfile_, *automatsLayer, *formationLayer, model_.actions_, staticModel, simulation, *icons );

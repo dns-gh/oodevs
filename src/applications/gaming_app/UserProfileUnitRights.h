@@ -10,13 +10,14 @@
 #ifndef __UserProfileUnitRights_h_
 #define __UserProfileUnitRights_h_
 
-#include "clients_gui/HierarchyListView.h"
+#include "clients_gui/HierarchyTreeView.h"
+#include "clients_gui/DummyModelObserver.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "UserProfileRights_ABC.h"
 
 namespace
 {
-    typedef gui::HierarchyListView< kernel::TacticalHierarchies > T_Parent;
+    typedef gui::HierarchyTreeView< kernel::TacticalHierarchies > T_Parent;
 }
 
 // =============================================================================
@@ -27,43 +28,41 @@ namespace
 // =============================================================================
 class UserProfileUnitRights : public ::T_Parent
                             , public UserProfileRights_ABC
-                            , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileUnitRights( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             UserProfileUnitRights( QWidget* parent, kernel::Controllers& controllers, const gui::EntitySymbols& icons, const QString& name, const kernel::Profile_ABC& profile );
     virtual ~UserProfileUnitRights();
     //@}
 
     //! @name Operations
     //@{
     virtual bool NeedsCommit() const;
+    virtual void AdditionalUpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnItemClicked( Q3ListViewItem*, const QPoint&, int );
+    void OnItemClicked( const QModelIndex& index );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfileUnitRights( const UserProfileUnitRights& );            //!< Copy constructor
-    UserProfileUnitRights& operator=( const UserProfileUnitRights& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void viewportResizeEvent( QResizeEvent* e );
-    virtual void setColumnWidth( int column, int w );
     virtual void showEvent( QShowEvent* event );
     virtual void hideEvent( QHideEvent* event );
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
-    virtual void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
+    virtual void contextMenuEvent( QContextMenuEvent* event );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    gui::DummyModelObserver observer_;
     //@}
 };
 

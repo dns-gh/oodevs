@@ -18,7 +18,7 @@
 // Name: UserProfileWidget constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : QTabWidget( parent, "UserProfileWidget" )
     , selectedProfile_( controllers )
 {
@@ -38,10 +38,10 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     Q3HBox* holder = new Q3HBox( group );
     supervisor_ = new QCheckBox( tr( "Supervisor actions" ), holder );
     QTabWidget* tabs = new QTabWidget( group );
-    UserProfileUnitRights* unitRights = new UserProfileUnitRights( tabs, controllers, itemFactory, profile, icons );
+    UserProfileUnitRights* unitRights = new UserProfileUnitRights( tabs, controllers, icons, tr( "Units" ), profile );
     tabs->addTab( unitRights, tr( "Units" ) );
     unitRights_ = unitRights;
-    UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, itemFactory, profile );
+    UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, tr( "Crowds" ), profile );
     tabs->addTab( populationRights, tr( "Crowds" ) );
     populationRights_ = populationRights;
     addTab( box, tr( "Permissions" ) );

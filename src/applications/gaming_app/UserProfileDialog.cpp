@@ -19,7 +19,7 @@
 // Name: UserProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileDialog::UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, UserProfileFactory_ABC& factory )
+UserProfileDialog::UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, UserProfileFactory_ABC& factory )
     : QDialog( parent, "UserProfileDialog" )
 {
     setCaption( tr( "User profiles" ) );
@@ -47,7 +47,7 @@ UserProfileDialog::UserProfileDialog( QWidget* parent, kernel::Controllers& cont
 
     box = new Q3VBox( this );
     box->setMargin( 5 );
-    pages_ = new UserProfileWidget( box, controllers, itemFactory, profile, icons );
+    pages_ = new UserProfileWidget( box, controllers, profile, icons );
     pages_->setMargin( 5 );
     grid->addWidget( box, 1, 1 );
 

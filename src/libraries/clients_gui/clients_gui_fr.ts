@@ -717,13 +717,6 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
-    <name>gui::HierarchyListView_ABC</name>
-    <message>
-        <source>Units</source>
-        <translation>Unités</translation>
-    </message>
-</context>
-<context>
     <name>gui::HighlightColorModifier</name>
     <message>
         <source>Highlight</source>

@@ -18,7 +18,6 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
     class EntitySymbols;
 }
 
@@ -35,12 +34,12 @@ class Profile;
 // =============================================================================
 class UserProfileDialog : public QDialog
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, UserProfileFactory_ABC& factory );
+             UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, UserProfileFactory_ABC& factory );
     virtual ~UserProfileDialog();
     //@}
 
@@ -55,13 +54,6 @@ private slots:
     //@{
     void OnAccept();
     void OnReject();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfileDialog( const UserProfileDialog& );            //!< Copy constructor
-    UserProfileDialog& operator=( const UserProfileDialog& ); //!< Assignment operator
     //@}
 
 private:

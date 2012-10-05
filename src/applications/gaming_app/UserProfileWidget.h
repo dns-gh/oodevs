@@ -20,7 +20,6 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
     class EntitySymbols;
 }
 
@@ -35,12 +34,12 @@ class UserProfileRights_ABC;
 // =============================================================================
 class UserProfileWidget : public QTabWidget
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~UserProfileWidget();
     //@}
 
@@ -53,12 +52,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UserProfileWidget( const UserProfileWidget& );            //!< Copy constructor
-    UserProfileWidget& operator=( const UserProfileWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     bool NeedsSaving() const;
