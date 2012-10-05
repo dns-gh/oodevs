@@ -212,9 +212,9 @@ void PHY_ActionMove::StopAction()
 {
     if( pMainPath_.get() )
     {
-    role_.MoveCanceled( pMainPath_ );
+        role_.MoveCanceled( pMainPath_ );
         pMainPath_->DecRef();
         executionSuspended_ = false;
-}
-    Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
     }
+    Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
+}
