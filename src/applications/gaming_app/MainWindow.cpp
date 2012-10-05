@@ -197,18 +197,18 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     QDockWidget* pLogDockWnd_ = new QDockWidget( "log", this );
     pLogDockWnd_->setObjectName( "log" );
     addDockWidget( Qt::BottomDockWidgetArea, pLogDockWnd_ );
-    gui::Logger* pLogPanel_ = new gui::Logger( pLogDockWnd_, *factory, simulation, "./Debug/Gaming.log" );
-    pLogDockWnd_->setWidget( pLogPanel_ );
+    gui::Logger* pLogPanel = new gui::Logger( pLogDockWnd_, simulation, "./Debug/Gaming.log" );
+    pLogDockWnd_->setWidget( pLogPanel );
     pLogDockWnd_->setWindowTitle( tr( "Log" ) );
     pLogDockWnd_->hide();
-    logger.SetLogger( *pLogPanel_ );
+    logger.SetLogger( *pLogPanel );
 
     // Standard toolbars
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     gui::GisToolbar* gToolBar = new gui::GisToolbar( this, controllers, staticModel_.detection_ );
     EventToolbar* eToolBar = new EventToolbar( this, controllers, *pProfile_ );
     gui::DisplayToolbar* dToolBar = new gui::DisplayToolbar( this, controllers );
-    SIMControlToolbar* sToolBar = new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
+    SIMControlToolbar* sToolBar = new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel );
 
     addToolBar( sToolBar );
     addToolBar( dToolBar );

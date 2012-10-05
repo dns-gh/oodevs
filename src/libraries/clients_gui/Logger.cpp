@@ -12,8 +12,6 @@
 #include "clients_gui_pch.h"
 #include "Logger.h"
 #include "moc_Logger.cpp"
-#include "ValuedListItem.h"
-#include "ItemFactory_ABC.h"
 #include "clients_kernel\Time_ABC.h"
 #include "clients_kernel\ContextMenu.h"
 
@@ -23,27 +21,33 @@ using namespace gui;
 // Name: Logger constructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const kernel::Time_ABC& simulation, const std::string& filename )
-    : Q3ListView  ( pParent )
-    , factory_   ( factory )
+Logger::Logger( QWidget* pParent, const kernel::Time_ABC& simulation, const std::string& filename )
+    : RichTreeView( pParent )
     , simulation_( simulation )
-    , log_       ( filename.c_str(), std::ios::out | std::ios::app )
-    , popupMenu_ ( new kernel::ContextMenu() )
+    , log_( filename.c_str(), std::ios::out | std::ios::app )
+    , popupMenu_( new kernel::ContextMenu( this ) )
+    , counter_( 0 )
 {
     setBackgroundColor( Qt::white );
     setMinimumSize( 40, 40 );
-    setShowSortIndicator( true );
-    setSorting( -1 );
+    header()->setSortIndicatorShown( true );
     setRootIsDecorated( true );
-    addColumn( tr( "Real time" ) );
-    addColumn( tr( "Simulation time" ) );
-    addColumn( tr( "Message" ) );
-    setResizeMode( Q3ListView::LastColumn );
-    setAllColumnsShowFocus ( true );
+    dataModel_.setColumnCount( 3 );
+    setHeaderHidden( false );
+    setEditTriggers( 0 );
+    EnableDragAndDrop( false );
 
-    popupMenu_->insertItem( tr( "Clear list" ), this, SLOT( clear() ) );
+    QStringList headers;
+    headers << tr( "Real time" ) << tr( "Simulation time" ) << tr( "Message" );
+    dataModel_.setHorizontalHeaderLabels( headers );
+    header()->setMovable( false );
+    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 2, QHeaderView::Stretch );
 
-    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint& ) ) );
+    setAllColumnsShowFocus( true );
+
+    popupMenu_->insertItem( tr( "Clear list" ), this, SLOT( Clear() ) );
 }
 
 namespace
@@ -60,7 +64,6 @@ namespace
 // -----------------------------------------------------------------------------
 Logger::~Logger()
 {
-    delete popupMenu_;
     MakeHeader( log_, simulation_ );
     log_ << "----------------------------------------------------------------" << std::endl;
 }
@@ -72,7 +75,7 @@ Logger::~Logger()
 Logger::LogElement Logger::Info()
 {
     MakeHeader( log_, simulation_ );
-    return StartLog( Qt::black, false );
+    return StartLog( Qt::black );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +86,7 @@ Logger::LogElement Logger::Warning()
 {
     MakeHeader( log_, simulation_ );
     log_ << "Warning - ";
-    return StartLog( Qt::darkRed, true );
+    return StartLog( Qt::darkRed );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,21 +97,32 @@ Logger::LogElement Logger::Error()
 {
     MakeHeader( log_, simulation_ );
     log_ << "Error - ";
-    return StartLog( Qt::red, true );
+    return StartLog( Qt::red );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Logger::Clear
+// Created: JSR 2012-10-05
+// -----------------------------------------------------------------------------
+void Logger::Clear()
+{
+    counter_ = 0;
+    dataModel_.removeRows( 0, dataModel_.rowCount() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Logger::StartLog
 // Created: AGE 2008-05-16
 // -----------------------------------------------------------------------------
-Logger::LogElement Logger::StartLog( const QColor& color, bool popup )
+Logger::LogElement Logger::StartLog( const QColor& color )
 {
-    ValuedListItem* pItem = factory_.CreateItem( this );
-    pItem->setText( 0, QTime::currentTime().toString() );
-    pItem->setText( 1, simulation_.GetTimeAsString() );
-    pItem->SetFontColor( color );
     std::stringstream* output = new std::stringstream();
-    items_[ output ] = T_Item( pItem, popup );
+    const int rowCount = dataModel_.rowCount();
+    QStandardItem* item = dataModel_.AddRootDataItem( rowCount, 0, QTime::currentTime().toString(), "", *output );
+    item->setForeground( color );
+    item->setData( counter_++, StandardModel::OtherRole );
+    dataModel_.AddRootTextItem( rowCount, 1, simulation_.GetTimeAsString(), "" )->setForeground( color );
+    dataModel_.AddRootItem( rowCount, 2 )->setForeground( color );
     return LogElement( *this, *output );
 }
 
@@ -119,18 +133,38 @@ Logger::LogElement Logger::StartLog( const QColor& color, bool popup )
 void Logger::End( std::stringstream& output )
 {
     log_ << output.str() << std::endl;
-    T_Item& item = items_[ &output ];
-    if( item.first )
-        item.first->setText( 2, output.str().c_str() );
-    items_.erase( &output );
+    QStandardItem* item = dataModel_.FindDataItem( output, dataModel_.invisibleRootItem() );
+    if( item )
+    {
+        QModelIndex index = dataModel_.index( item->row(), 2, dataModel_.indexFromItem( item->parent() ) );
+        QStandardItem* msgItem = dataModel_.GetItemFromIndex( index );
+        if( msgItem )
+            msgItem->setText( output.str().c_str() );
+    }
     delete &output;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Logger::OnRequestPopup
-// Created: APE 2004-06-02
+// Name: Logger::contextMenuEvent
+// Created: JSR 2012-10-05
 // -----------------------------------------------------------------------------
-void Logger::OnRequestPopup( Q3ListViewItem* /*pItem*/, const QPoint& pos )
+void Logger::contextMenuEvent( QContextMenuEvent* event )
 {
-    popupMenu_->popup( pos );
+    popupMenu_->popup( event->globalPos() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Logger::LessThan
+// Created: JSR 2012-10-05
+// -----------------------------------------------------------------------------
+bool Logger::LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const
+{
+    QStandardItem* itemLeft = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( left ) );
+    QStandardItem* itemRight = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( right ) );
+    if( itemLeft && itemRight)
+    {
+        valid = true;
+        return itemLeft->data( StandardModel::OtherRole ).toUInt() < itemRight->data( StandardModel::OtherRole ).toUInt();
+    }
+    return false;
 }

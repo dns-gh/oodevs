@@ -31,9 +31,9 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual QStringList MimeTypes() const = 0;
-    virtual void Drop( const QString& mimeType, void* data, QStandardItem& target ) = 0;
-    virtual QMimeData* MimeData( const QModelIndexList& indexes, bool& overriden ) const = 0;
+    virtual QStringList MimeTypes() const { return QStringList(); }
+    virtual void Drop( const QString& /*mimeType*/, void* /*data*/, QStandardItem& /*target*/ ) {}
+    virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; }
     //@}
 };
 

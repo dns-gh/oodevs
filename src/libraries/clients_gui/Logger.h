@@ -10,6 +10,7 @@
 #ifndef __Logger_h_
 #define __Logger_h_
 
+#include "RichTreeView.h"
 #include "Types.h"
 #include "clients_kernel/Logger_ABC.h"
 #include <fstream>
@@ -22,7 +23,6 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  Logger
@@ -30,14 +30,15 @@ namespace gui
 */
 // Created: APE 2004-06-02
 // =============================================================================
-class Logger : public Q3ListView, public kernel::Logger_ABC
+class Logger : public RichTreeView
+             , public kernel::Logger_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Logger( QWidget* pParent, ItemFactory_ABC& factory, const kernel::Time_ABC& simulation, const std::string& filename );
+             Logger( QWidget* pParent, const kernel::Time_ABC& simulation, const std::string& filename );
     virtual ~Logger();
     //@}
 
@@ -48,39 +49,34 @@ public:
     virtual LogElement Error();
     //@}
 
+public slots:
+    //! @name Slots
+    //@{
+    void Clear();
+    //@}
+
 protected:
     //! @name Operations
     //@{
     virtual void End( std::stringstream& output );
     QSize sizeHint() const { return QSize( 400, 250 ); }
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnRequestPopup( Q3ListViewItem* pItem, const QPoint& pos );
+    virtual void contextMenuEvent( QContextMenuEvent* event );
+    virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::pair< Q3ListViewItem*, bool >      T_Item;
-    typedef std::map< std::stringstream*, T_Item > T_Items;
-    //@}
-
     //! @name Helpers
     //@{
-    LogElement StartLog( const QColor& color, bool popup );
+    LogElement StartLog( const QColor& color );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ItemFactory_ABC& factory_;
     const kernel::Time_ABC& simulation_;
     kernel::ContextMenu* popupMenu_;
-    T_Items items_;
     std::ofstream log_;
+    unsigned int counter_;
     //@}
 };
 
