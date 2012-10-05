@@ -35,6 +35,22 @@
 						<call method="sword.military.queries.miscellaneous.getFragOrders"/>
 					</value>
 				</parameter>
+				<parameter name="entities">
+					<value>
+						<call method="sword.military.company.queries.getCommanding">
+							<parameter name="role">
+								<value>
+									<string>none</string>
+								</value>
+							</parameter>
+							<parameter name="withPC">
+								<value>
+									<boolean>true</boolean>
+								</value>
+							</parameter>
+						</call>
+					</value>
+				</parameter>
 			</skill>
 			<skill name="sword.military.company.skills.ReactToNBC"/>
 		</skills>

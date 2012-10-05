@@ -43,10 +43,13 @@ rootnode
             if fragOrder:mustBePropagate() then
                 local typeOrder = fragOrder.source:GetType()
                 local send = typeOrder ~= "Rep_OrderConduite_Deboucher"
-                local sendFirstEchelon = typeOrder == "Rep_OrderConduite_AttendreSePoster"               
-                local entities = sword.military.company.queries.getCommanding[ "execute" ]({role = "none", withPC = true})
+                local sendFirstEchelon = typeOrder == "Rep_OrderConduite_AttendreSePoster"
+                local entities = self.params.entities
+                local entitiesToSwitchOffRadio = {}
                 if typeOrder == "Rep_OrderConduite_ArreterSilenceRadio" then -- Il faut enlever le silence radio à tous les pions
-                    entities = integration.getEntitiesFromAutomat( meKnowledge, "none", true )
+                    local automatkn = CreateKnowledge( sword.military.world.Company, DEC_GetAutomate( entities[1].source ) ) -- les pions passés en paramètre sont forcément dans le même automate pour cet prdre de conduite
+                    entitiesToSwitchOffRadio = integration.getEntitiesFromAutomat( automatkn, "none", true )
+                    entities = entitiesToSwitchOffRadio
                 end
                 for _, entity in pairs( entities ) do
                     local echelon =  F_Pion_GeteEtatEchelon( entity.source )

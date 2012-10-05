@@ -10,5 +10,13 @@
 				</list>
 			</type>
 		</parameter>
+		<parameter name="entities">
+			<description>Les unités à qui propager les ordres</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Commanding"/>
+				</list>
+			</type>
+		</parameter>
 	</parameters>
 </skill>
