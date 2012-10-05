@@ -21,8 +21,6 @@ using namespace EntityHelpers;
 
 namespace
 {
-    std::vector< Dotation > displayDotations;
-
     void TotalizeStocks( const Entity_ABC& entity, std::vector< Dotation >& dotations )
     {
         if( entity.Retrieve< SupplyStates >() )
@@ -107,17 +105,17 @@ void SupplyStocksListView::NotifyUpdated( const SupplyStates& supplyStates )
 // -----------------------------------------------------------------------------
 void SupplyStocksListView::NotifySelected( const Entity_ABC* entity )
 {
-    displayDotations.clear();
+    dotations_.clear();
     if( entity )
     {
         if( entity->Retrieve< SupplyStates >() )
             NotifyUpdated( entity->Get< SupplyStates >() );
         else if( IsLogisticBase( *entity ) )
         {
-            TotalizeStocks( *entity, displayDotations );
+            TotalizeStocks( *entity, dotations_ );
             tools::Resolver< Dotation > dotations;
-            for( std::size_t i = 0; i < displayDotations.size(); ++i )
-                dotations.Register( displayDotations[ i ].type_->GetId(), displayDotations[ i ] );
+            for( std::size_t i = 0; i < dotations_.size(); ++i )
+                dotations.Register( dotations_[ i ].type_->GetId(), dotations_[ i ] );
             NotifyUpdated( dotations );
         }
         show();
