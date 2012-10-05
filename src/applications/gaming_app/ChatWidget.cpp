@@ -62,6 +62,7 @@ void ChatWidget::NotifyDeleted( const UserProfile& profile )
     {
         tabs_->removePage( it->second );
         delete it->second; // $$$$ SBO 2008-06-11: maybe disable only
+        rooms_.erase( it );
     }
 }
 
