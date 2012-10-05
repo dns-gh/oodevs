@@ -54,7 +54,7 @@ void ExternalPerceptionEventListener::Notify( const core::Model& event )
     try
     {
         MIL_AgentPion& pion = resolver_.Get( static_cast< unsigned int >( event[ "identifier" ] ) );
-        MIL_Agent_ABC& target = *reinterpret_cast< MIL_Agent_ABC* >( static_cast< size_t >( event[ "target" ] ) );
+        MIL_Agent_ABC& target = event[ "target/data" ].GetUserData< MIL_AgentPion >();
         const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( event[ "level" ] );
         pion.GetKnowledge().GetKsPerception().NotifyExternalPerception( target, level );
     }
