@@ -62,7 +62,7 @@ SupplyConveyor_ABC* SupplyConvoy::CreateConveyor( const T& constraint )
     if( !transportersProvider_.SupplyGetAvailableConvoyTransporter( conveyorComposante, conveyorPion, constraint ) )
         return 0;
     SupplyConveyor_ABC* conveyor = new SupplyConveyor( *conveyorComposante, *conveyorPion );
-    conveyors_.insert( std::make_pair( conveyorComposante, conveyor ) ).second;
+    conveyors_.insert( std::make_pair( conveyorComposante, conveyor ) );
     return conveyor;
 }
 
