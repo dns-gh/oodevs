@@ -1012,7 +1012,7 @@ namespace
             return 0;
         const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( dotation );
         if( ! category )
-            MT_LOG_ERROR_MSG( "Unknown dotation category in DirectFirePionEventListener : " << dotation );
+            MT_LOG_ERROR_MSG( "Unknown dotation category in GetAmmunitionForIndirectFire : " << dotation );
         return category;
     }
 }
