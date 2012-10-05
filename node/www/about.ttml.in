@@ -2,7 +2,7 @@
     <div class="span9">
         <dl class="dl-horizontal">
             <dt> Sword Cloud </dt>
-            <dd><span class="label label-info"> 1.0.0.33300 </span></dd>
+            <dd><span class="label label-info"> CLOUD_VERSION </span></dd>
             <dt> Sword Simulation </dt>
             <dd><span class="label label-info"> SIMULATION_VERSION </span></dd>
         </dl>

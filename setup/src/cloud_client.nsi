@@ -7,7 +7,7 @@
 ;
 ; ------------------------------------------------------------------------------
 
-!define ROOT "..\out\${PLATFORM}"
+!define ROOT "${OUTDIR}\..\${PLATFORM}"
 
 !if ${PLATFORM} == "vc100_x64"
 !define PRG $PROGRAMFILES64

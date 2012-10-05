@@ -7,7 +7,7 @@
 ;
 ; ------------------------------------------------------------------------------
 
-!define ROOT  "..\out\${PLATFORM}"
+!define ROOT "${OUTDIR}\..\${PLATFORM}"
 !define CLOUD "${ROOT}\cloud"
 !define SWORD "${ROOT}\sword"
 
@@ -122,9 +122,9 @@ Section $(^Name)
     ; gaming
     SetOutPath "$INSTDIR\client\bin32"
     !ifdef SUB_PLATFORM
-        File /r "..\out\${SUB_PLATFORM}\gaming\*"
+        File /r "${OUTDIR}\..\${SUB_PLATFORM}\gaming\*"
     !else
-        File /r "..\out\${PLATFORM}\gaming\*"
+        File /r "${OUTDIR}\..\${PLATFORM}\gaming\*"
     !endif
 
     ; website
@@ -137,7 +137,7 @@ Section $(^Name)
     File /r /x ".svn" "${CLOUD}\www\*.ttml"
     File /r /x ".svn" "${CLOUD}\www\img"
     !ifdef SUB_PLATFORM
-        File "..\out\${SUB_PLATFORM}\sword_client_${SUB_PLATFORM}_setup.exe"
+        File "${OUTDIR}\..\${SUB_PLATFORM}\sword_client_${SUB_PLATFORM}_setup.exe"
     !else
         File "${DISTDIR}\sword_client_${PLATFORM}_setup.exe"
     !endif
