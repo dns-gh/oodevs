@@ -137,7 +137,7 @@ void PHY_RolePion_Refugee::ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Ob
     bHasChanged_ = true;
     owner_.GetAutomate().NotifyRefugeeReleased( camp );
     callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicUnloadPion, owner_ );
-    ManageLodgingCamp();
+    ManageLodgingCamp( callerAgent );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,14 +248,14 @@ bool PHY_RolePion_Refugee::IsManaged() const
 // Name: PHY_RolePion_Refugee::ManagedLodgingCamp
 // Created: MMC 2011-05-09
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Refugee::ManageLodgingCamp()
+void PHY_RolePion_Refugee::ManageLodgingCamp( MIL_AgentPion& transporter )
 {
     if( !pCamp_ )
         UpdateLodging( 0 );
 
     LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
     if( pLodgingAttribute )
-        pLodgingAttribute->ManageResident( owner_ );
+        pLodgingAttribute->ManageResident( owner_, transporter );
 
     UpdateHealthSatisfaction();
 }

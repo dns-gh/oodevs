@@ -78,7 +78,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ManageLodgingCamp();
+    void ManageLodgingCamp( MIL_AgentPion& transporter );
     void UnmanageLodgingCamp();
     void UpdateSecuritySatisfaction();
     void UpdateHealthSatisfaction();

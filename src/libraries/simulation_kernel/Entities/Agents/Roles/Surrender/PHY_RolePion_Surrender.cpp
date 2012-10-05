@@ -171,7 +171,7 @@ bool PHY_RolePion_Surrender::Release()
 // Name: PHY_RolePion_Surrender::Imprison
 // Created: NLD 2007-02-14
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp )
+bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp, MIL_AgentPion& transporter )
 {
     if( !IsSurrendered() || !bPrisoner_ )
         return false;
@@ -179,7 +179,7 @@ bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp )
 
     LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pPrison_ )->RetrieveAttribute< LodgingAttribute >();
     if( pLodgingAttribute )
-        pLodgingAttribute->ManageResident( owner_ );
+        pLodgingAttribute->ManageResident( owner_, transporter );
 
     owner_.GetAutomate().NotifyImprisoned( camp );
     return true;

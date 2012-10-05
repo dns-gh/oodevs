@@ -62,7 +62,7 @@ public:
     virtual void NotifySurrenderCanceled() = 0;
     virtual bool Capture( const MIL_AgentPion& pionTakingPrisoner ) = 0;
     virtual bool Release() = 0;
-    virtual bool Imprison( const MIL_Object_ABC& camp ) = 0;
+    virtual bool Imprison( const MIL_Object_ABC& camp, MIL_AgentPion& transporter ) = 0;
     virtual void Update( bool bIsDead ) = 0;
     virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
