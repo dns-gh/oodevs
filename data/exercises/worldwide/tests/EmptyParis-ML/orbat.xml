@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+  <parties>
+    <party id="1396" name="Allies" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="1399" level="iii" name="Infantry">
+          <automat engaged="true" id="1421" knowledge-group="1422" name="Infantry company [1420]" type="Infantry company">
+            <unit command-post="true" id="1423" name="Infantry company CP" position="30UXU4090036134" type="Infantry company CP"/>
+            <unit command-post="false" id="1424" name="Mechanized infantry platoon" position="30UXU4141935653" type="Mechanized infantry platoon"/>
+            <unit command-post="false" id="1425" name="MRA troop" position="30UXU4093635136" type="MRA troop"/>
+            <unit command-post="false" id="1426" name="Mortar troop" position="30UXU4041735617" type="Mortar troop"/>
+            <unit command-post="false" id="1427" name="Light armored platoon" position="30UXU4140036152" type="Light armored platoon"/>
+            <unit command-post="false" id="1428" name="Infantry platoon" position="30UXU4162635661" type="Infantry platoon"/>
+          </automat>
+        </formation>
+        <formation id="1400" level="iii" name="Engineer">
+          <automat engaged="true" id="1431" knowledge-group="1422" name="Countermobility company [1430]" type="Countermobility company">
+            <unit command-post="true" id="1432" name="Countermobility platoon" position="30UXU3901036443" type="Countermobility platoon"/>
+            <unit command-post="false" id="1433" name="Countermobility platoon" position="30UXU3952835962" type="Countermobility platoon"/>
+            <unit command-post="false" id="1434" name="Countermobility platoon" position="30UXU3904635445" type="Countermobility platoon"/>
+          </automat>
+        </formation>
+        <formation id="1435" level="iii" name="Logistic">
+          <automat engaged="true" id="1436" knowledge-group="1422" logistic-level="logistic-base" name="Armored battalion combat train [1435]" type="Armored battalion combat train">
+            <unit command-post="true" id="1437" name="Teeth arms battalion CT" position="30UXU4015037612" type="Teeth arms battalion CT"/>
+          </automat>
+          <automat engaged="true" id="1456" knowledge-group="1422" logistic-level="logistic-base" name="Armored battalion combat train [1456]" type="Armored battalion combat train">
+            <unit command-post="true" id="1457" name="Teeth arms battalion CT" position="30UXU4090338033" type="Teeth arms battalion CT"/>
+          </automat>
+        </formation>
+        <formation id="1438" level="iii" name="Armored allies">
+          <automat engaged="true" id="1439" knowledge-group="1422" name="MBT squadron [1438]" type="MBT squadron">
+            <unit command-post="true" id="1440" name="Armored squadron CP" position="30UXU3994937450" type="Armored squadron CP"/>
+            <unit command-post="false" id="1441" name="MBT platoon" position="30UXU4046836969" type="MBT platoon"/>
+            <unit command-post="false" id="1442" name="MBT platoon" position="30UXU3998536452" type="MBT platoon"/>
+            <unit command-post="false" id="1443" name="MBT platoon" position="30UXU3946736933" type="MBT platoon"/>
+            <unit command-post="false" id="1444" name="MBT platoon" position="30UXU4045037468" type="MBT platoon"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1422" name="Knowledge group [1421]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants>
+        <inhabitant id="1455" name="the bobs" type="popType1">
+          <composition dead="0" healthy="1000000000" wounded="0"/>
+          <health-need quantity="1e+006"/>
+          <information></information>
+          <living-area>
+            <urban-block id="21"/>
+            <urban-block id="20"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1396" value="0"/>
+            <adhesion party="1397" value="0"/>
+            <adhesion party="1398" value="0"/>
+          </adhesions>
+        </inhabitant>
+      </inhabitants>
+      <logistics/>
+    </party>
+    <party color="0xff0000" id="1397" name="Enemies" type="enemy">
+      <objects/>
+      <tactical>
+        <formation color="0xff0000" id="1401" level="iii" name="Armored enemies">
+          <automat color="0xff0000" engaged="true" id="1445" knowledge-group="1446" name="MBT squadron [1444]" type="MBT squadron">
+            <unit color="0xff0000" command-post="true" id="1447" name="Armored squadron CP" position="30UXU5514319320" type="Armored squadron CP"/>
+            <unit color="0xff0000" command-post="false" id="1448" name="MBT platoon" position="30UXU5566218839" type="MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1449" name="MBT platoon" position="30TXU5517918322" type="MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1450" name="MBT platoon" position="30UXU5466118803" type="MBT platoon"/>
+            <unit color="0xff0000" command-post="false" id="1451" name="MBT platoon" position="30UXU5564419338" type="MBT platoon"/>
+          </automat>
+        </formation>
+        <formation color="0xff0000" id="1402" level="iii" name="Terrorists">
+          <automat color="0xff0000" engaged="true" id="1452" knowledge-group="1446" name="Terrorists [1451]" type="Terrorists">
+            <unit color="0xff0000" command-post="true" id="1453" name="Terrorist" position="30TXU5055715680" type="Terrorist"/>
+            <unit color="0xff0000" command-post="false" id="1454" name="Terrorist Bombmaker" position="30TXU5107515199" type="Terrorist Bombmaker"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1446" name="Knowledge group [1445]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party color="0x55ff00" id="1398" name="Neutrals" type="neutral">
+      <objects/>
+      <tactical>
+        <formation color="0x55ff00" id="1405" level="iii" name="Formation [1404]">
+          <automat color="0x55ff00" engaged="true" id="1406" knowledge-group="1407" name="Journalists [1405]" type="Journalists">
+            <unit color="0x55ff00" command-post="true" id="1408" name="Journalist" position="30UXU4769625958" type="Journalist"/>
+            <unit color="0x55ff00" command-post="false" id="1409" name="Journalist" position="30UXU4821525477" type="Journalist"/>
+            <unit color="0x55ff00" command-post="false" id="1410" name="Journalist" position="30UXU4773224960" type="Journalist"/>
+          </automat>
+          <automat color="0x55ff00" engaged="true" id="1411" knowledge-group="1407" name="Refugees [1410]" type="Refugees">
+            <unit color="0x55ff00" command-post="true" id="1412" name="Refugee" position="30UXU4748924116" type="Refugee"/>
+          </automat>
+          <automat color="0x55ff00" engaged="true" id="1413" knowledge-group="1407" name="Riotters [1412]" type="Riotters">
+            <unit color="0x55ff00" command-post="true" id="1414" name="Riotters" position="30UXU4642723996" type="Riotters"/>
+            <unit color="0x55ff00" command-post="false" id="1415" name="Riotters" position="30UXU4694623515" type="Riotters"/>
+            <unit color="0x55ff00" command-post="false" id="1416" name="Riotters" position="30UXU4646322998" type="Riotters"/>
+            <unit color="0x55ff00" command-post="false" id="1417" name="Riotters" position="30UXU4594523479" type="Riotters"/>
+            <unit color="0x55ff00" command-post="false" id="1418" name="Riotters" position="30UXU4692824014" type="Riotters"/>
+            <unit color="0x55ff00" command-post="false" id="1419" name="Riotters" position="30UXU4715323523" type="Riotters"/>
+            <unit color="0x55ff00" command-post="false" id="1420" name="Riotters" position="30UXU4696423016" type="Riotters"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1407" name="Knowledge group [1406]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="1404" name="Standard Crowd [1403]" position="30UXU4340225389" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="100000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1396" value="0"/>
+            <adhesion party="1397" value="0"/>
+            <adhesion party="1398" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1396">
+      <relationship diplomacy="enemy" party="1397"/>
+      <relationship diplomacy="neutral" party="1398"/>
+    </party>
+    <party id="1397">
+      <relationship diplomacy="enemy" party="1396"/>
+      <relationship diplomacy="neutral" party="1398"/>
+    </party>
+    <party id="1398">
+      <relationship diplomacy="neutral" party="1396"/>
+      <relationship diplomacy="neutral" party="1397"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="3515392554" -->

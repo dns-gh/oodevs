@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<scores model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/scores.xsd">
+  <score name="Blue Counter-attack">
+    <formula><![CDATA[mean( domain( operational-state(), $Blue_Cattack ) )]]></formula>
+    <gauge type="Smileys">
+      <interval key="0" max="0.2" min="0"/>
+      <interval key="0.25" max="0.4" min="0.2"/>
+      <interval key="0.5" max="0.6" min="0.4"/>
+      <interval key="0.75" max="0.8" min="0.6"/>
+      <interval key="1" max="1" min="0.8"/>
+    </gauge>
+    <constants>
+      <constant id="$Blue_Cattack" type="unit list" value="981,977,978,979,1092,1093,847,849,850,851,852,982,853,855,856,857,858,859,861,862,863,864,983,865,867,868,869,870,871,873,874,875,876,984,877,985,1090,1091,975,976"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="operational-state" id="1"/>
+        <transform function="domain" id="2" input="1" select="981,977,978,979,1092,1093,847,849,850,851,852,982,853,855,856,857,858,859,861,862,863,864,983,865,867,868,869,870,871,873,874,875,876,984,877,985,1090,1091,975,976" type="float"/>
+        <reduce function="mean" id="3" input="2" type="float"/>
+        <result function="indicator" input="3" name="Blue Counter-attack" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Blue Defense">
+    <formula><![CDATA[mean (domain(operational-state(),$Blue_Defense))]]></formula>
+    <gauge type="Smileys">
+      <interval key="0" max="0.2" min="0"/>
+      <interval key="0.25" max="0.4" min="0.2"/>
+      <interval key="0.5" max="0.6" min="0.4"/>
+      <interval key="0.75" max="0.8" min="0.6"/>
+      <interval key="1" max="1" min="0.8"/>
+    </gauge>
+    <constants>
+      <constant id="$Blue_Defense" type="unit list" value="745,755,700,701,702,703,704,706,707,708,709,746,710,747,748,749,751,752,753,754"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="operational-state" id="1"/>
+        <transform function="domain" id="2" input="1" select="745,755,700,701,702,703,704,706,707,708,709,746,710,747,748,749,751,752,753,754" type="float"/>
+        <reduce function="mean" id="3" input="2" type="float"/>
+        <result function="indicator" input="3" name="Blue Defense" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Blue Total">
+    <formula><![CDATA[mean( domain( operational-state(), $Blue_Total ) )]]></formula>
+    <gauge type="Smileys">
+      <interval key="0" max="0.2" min="0"/>
+      <interval key="0.25" max="0.4" min="0.2"/>
+      <interval key="0.5" max="0.6" min="0.4"/>
+      <interval key="0.75" max="0.8" min="0.6"/>
+      <interval key="1" max="1" min="0.8"/>
+    </gauge>
+    <constants>
+      <constant id="$Blue_Total" type="unit list" value="700,710,712,713,714,716,717,718,721,722,723,701,725,726,727,745,746,747,748,749,751,752,702,753,754,755,975,976,977,978,979,1092,1093,703,981,982,983,984,985,1090,1091,847,849,850,704,851,852,853,855,856,857,858,859,861,862,706,863,864,865,867,868,869,870,871,873,874,707,875,876,877,708,709"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="operational-state" id="1"/>
+        <transform function="domain" id="2" input="1" select="700,710,712,713,714,716,717,718,721,722,723,701,725,726,727,745,746,747,748,749,751,752,702,753,754,755,975,976,977,978,979,1092,1093,703,981,982,983,984,985,1090,1091,847,849,850,704,851,852,853,855,856,857,858,859,861,862,706,863,864,865,867,868,869,870,871,873,874,707,875,876,877,708,709" type="float"/>
+        <reduce function="mean" id="3" input="2" type="float"/>
+        <result function="indicator" input="3" name="Blue Total" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+  <score name="Red Attack">
+    <formula><![CDATA[mean (domain (operational-state(), $Red_Attack))]]></formula>
+    <gauge type="Smileys">
+      <interval key="1" max="0.5" min="0"/>
+      <interval key="0.75" max="0.65" min="0.5"/>
+      <interval key="0.5" max="0.75" min="0.65"/>
+      <interval key="0.25" max="0.9" min="0.75"/>
+      <interval key="0" max="1" min="0.9"/>
+    </gauge>
+    <constants>
+      <constant id="$Red_Attack" type="unit list" value="1019,1047,1025,1026,1027,1028,1029,1071,1072,1031,1032,1020,1033,1034,1035,1073,1074,953,954,955,956,957,1021,1076,1077,1078,1079,1080,917,918,919,920,921,1022,1081,1082,923,924,925,926,927,1083,1084,1023,1043,1044,1045,1046"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="operational-state" id="1"/>
+        <transform function="domain" id="2" input="1" select="1019,1047,1025,1026,1027,1028,1029,1071,1072,1031,1032,1020,1033,1034,1035,1073,1074,953,954,955,956,957,1021,1076,1077,1078,1079,1080,917,918,919,920,921,1022,1081,1082,923,924,925,926,927,1083,1084,1023,1043,1044,1045,1046" type="float"/>
+        <reduce function="mean" id="3" input="2" type="float"/>
+        <result function="indicator" input="3" name="Red Attack" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+</scores>
+<!-- signature="4130974703" -->
