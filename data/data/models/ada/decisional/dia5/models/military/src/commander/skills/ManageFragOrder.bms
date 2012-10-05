@@ -36,9 +36,12 @@ rootnode
                 local typeOrder = fragOrder.source:GetType()
                 local send = typeOrder ~= "Rep_OrderConduite_Deboucher"
                 local sendFirstEchelon = typeOrder == "Rep_OrderConduite_AttendreSePoster"
-                local entities = commander.queries.getCommanding[ "execute" ]( { role = "none", withPC = true } )
+                local entities = self.params.entities
+                local entitiesToSwitchOffRadio = {}
                 if typeOrder == "Rep_OrderConduite_ArreterSilenceRadio" or "ActivateRadioCommunication" then -- Il faut enlever le silence radio à tous les pions
-                    entities = integration.getEntitiesFromAutomat( meKnowledge, "none", true )
+                    local automatkn = CreateKnowledge( sword.military.world.Company, DEC_GetAutomate( entities[1].source ) )
+                    entitiesToSwitchOffRadio = integration.getEntitiesFromAutomat( automatkn, "none", true )
+                    entities = entitiesToSwitchOffRadio
                 end
                 for _, entity in pairs( entities ) do
                     local echelon =  F_Pion_GeteEtatEchelon( entity.source )

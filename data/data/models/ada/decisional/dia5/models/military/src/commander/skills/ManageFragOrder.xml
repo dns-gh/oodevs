@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.skills.ManageFragOrder" source-version="1.0.0">
-    <description>Distribution des ordres de conduite aux pions</description>
-    <parameters>
-        <parameter name="fragOrders">
-            <description>Les ordres de conduite à propager</description>
-            <type>
-                <list>
-                    <class name="world.FragOrder"/>
-                </list>
-            </type>
-        </parameter>
-    </parameters>
+	<description>Distribution des ordres de conduite aux pions</description>
+	<parameters>
+		<parameter name="fragOrders">
+			<description>Les ordres de conduite à propager</description>
+			<type>
+				<list>
+					<class name="world.FragOrder"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="entities">
+			<description>units to propage fragorder</description>
+			<type>
+				<list>
+					<class name="properties.Commanding"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
 </skill>
