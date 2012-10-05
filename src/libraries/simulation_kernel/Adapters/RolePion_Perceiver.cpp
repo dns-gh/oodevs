@@ -177,8 +177,6 @@ RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MI
     , bRadarStateHasChanged_         ( true )
 {
     entity[ "perceptions/peripherical-vision/next-tick" ] = ++nNbr % nNbrStepsBetweenPeriphericalVision;
-    entity[ "perceptions/max-agent-perception-distance" ] = 0;
-    entity[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/record-mode/activated" ] ), boost::bind( &ToggleRecordMode, _1, boost::ref( owner_.GetKnowledge().GetKsPerception() ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
