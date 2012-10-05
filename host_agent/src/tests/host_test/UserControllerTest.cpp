@@ -22,6 +22,7 @@
 #include "web/HttpException.h"
 
 #include <boost/date_time.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
 #include <boost/uuid/nil_generator.hpp>
 #include <boost/uuid/string_generator.hpp>
@@ -38,7 +39,12 @@ struct SubFixture
     SubFixture()
         : log( std::cout )
         , fs ( log )
-        , db ( BOOST_RESOLVE( "user_controller_test.db" ) )
+        , db ( boost::filesystem::unique_path( BOOST_RESOLVE( "%%%%%%%%.db" ) ) )
+    {
+        // NOTHING
+    }
+
+    ~SubFixture()
     {
         fs.Remove( db );
     }
