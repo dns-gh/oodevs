@@ -55,7 +55,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
                             const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
-                            const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
+                            const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, tools::ExerciseConfig& config )
     : QDockWidget              ( "mission", pParent )
     , controllers_             ( controllers )
     , static_                  ( model )
@@ -65,9 +65,10 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , commandPublisher_        ( new CommandPublisher( controllers_, publisher, profile_ ) )
     , pMissionInterface_       ( 0 )
     , selectedEntity_          ( controllers )
-    , isPlanifMode_            ( false )
     , simulation_              ( simulation )
     , interfaceBuilder_        ( interfaceBuilder )
+    , config_                  ( config )
+    , isPlanifMode_            ( false )
 {
     setObjectName( "missionPanel" );
     setFloating( true );
@@ -311,7 +312,7 @@ void MissionPanel::ActivateAgentMission( int id )
 {
     SetInterface( 0 );
     const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
-    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, interfaceBuilder_, actionsModel_, config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -325,7 +326,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
-    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, interfaceBuilder_, actionsModel_, config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -336,7 +337,7 @@ void MissionPanel::ActivatePopulationMission( int id )
 {
     SetInterface( 0 );
     const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
-    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, interfaceBuilder_, actionsModel_, config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -355,7 +356,7 @@ void MissionPanel::ActivateFragOrder( int id )
             if( decisions->IsEmbraye() )
                 entity = superior;
     }
-    SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_.actions_, interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_.actions_, interfaceBuilder_, actionsModel_, config_ ) );
 }
 
 // -----------------------------------------------------------------------------

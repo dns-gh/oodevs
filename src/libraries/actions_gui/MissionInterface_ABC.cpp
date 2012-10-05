@@ -10,12 +10,14 @@
 #include "actions_gui_pch.h"
 #include "MissionInterface_ABC.h"
 #include "moc_MissionInterface_ABC.cpp"
+#include "actions_gui/resources.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "actions_gui/resources.h"
+#include "tools/ExerciseConfig.h"
 #include "ParamComboBox.h"
+#include <QtGui/QTextBrowser.h>
 
 using namespace actions::gui;
 
@@ -48,7 +50,7 @@ namespace
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, tools::ExerciseConfig& config )
     : Q3VBox            ( parent )
     , ParamInterface_ABC()
     , title_     ( order.GetName().c_str() )
@@ -62,20 +64,17 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
     optionalTab_ = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Optional" ) );
     {
         const std::string doctrine = order.GetDoctrineInformation();
-        const std::string usage = order.GetUsageInformation();
-        Q3VBox* helpTab = CreateTab( tabs_, tools::translate( "MissionInterface_ABC", "Help" ), !doctrine.empty() || !usage.empty() );
-        if( !doctrine.empty() )
-        {
-            Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Doctrine" ), helpTab );
-            QLabel* label = new QLabel( doctrine.c_str(), box );
-            label->setAlignment( Qt::TextWordWrap );
-        }
-        if( !usage.empty() )
-        {
-            Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "MissionInteface_ABC", "Usage" ), helpTab );
-            QLabel* label = new QLabel( usage.c_str(), box );
-            label->setAlignment( Qt::TextWordWrap );
-        }
+        std::string usage = order.GetUsageInformation();
+        QWidget* helpTab = new QWidget(tabs_);
+        tabs_->addTab( helpTab, tools::translate( "MissionInterface_ABC", "Help" ) );
+        std::string path = config.BuildPhysicalChildFile( "FichesMission/index.html" );
+        if( usage.empty() )
+            usage = "<a href=\"" + path + "\">Fiches Mission</a>";
+        QVBoxLayout* helpLayout = new QVBoxLayout( helpTab );
+        QTextBrowser* missionSheetText = new QTextBrowser();
+        missionSheetText->setHtml( QString( usage.c_str() ) );
+        missionSheetText->setReadOnly( true );
+        helpLayout->addWidget( missionSheetText );
     }
     CreateOkCancelButtons();
 }

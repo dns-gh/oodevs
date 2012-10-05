@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              UnitMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::ActionController& controller,
-                                   actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model );
+                                   actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model, tools::ExerciseConfig& config );
     virtual ~UnitMissionInterface();
     //@}
 

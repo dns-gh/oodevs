@@ -26,6 +26,11 @@ namespace actions
     }
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 // =============================================================================
 /** @class  AutomateMissionInterface
     @brief  Mission interface builder
@@ -38,7 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomateMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::ActionController& controller,
-                                       actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model );
+                                       actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model, tools::ExerciseConfig& config );
     virtual ~AutomateMissionInterface();
     //@}
 

@@ -24,6 +24,10 @@ namespace actions
         class InterfaceBuilder_ABC;
     }
 }
+namespace tools
+{
+    class ExerciseConfig;
+}
 
 // =============================================================================
 /** @class  PopulationMissionInterface
@@ -37,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PopulationMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::ActionController& controller,
-                                         actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model );
+                                         actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model, tools::ExerciseConfig& config );
     virtual ~PopulationMissionInterface();
     //@}
 

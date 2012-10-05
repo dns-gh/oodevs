@@ -25,6 +25,11 @@ namespace kernel
     class Viewport_ABC;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class QTabWidget;
 class QPushButton;
 
@@ -51,7 +56,7 @@ class MissionInterface_ABC : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller );
+             MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller, tools::ExerciseConfig& config );
     virtual ~MissionInterface_ABC();
     //@}
 

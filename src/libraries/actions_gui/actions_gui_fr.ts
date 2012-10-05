@@ -39,17 +39,6 @@
     </message>
 </context>
 <context>
-    <name>MissionInteface_ABC</name>
-    <message>
-        <source>Doctrine</source>
-        <translation>Doctrine</translation>
-    </message>
-    <message>
-        <source>Usage</source>
-        <translation>Utilisation</translation>
-    </message>
-</context>
-<context>
     <name>MissionInterface_ABC</name>
     <message>
         <source>Mandatory</source>

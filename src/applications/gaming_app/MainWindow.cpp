@@ -333,7 +333,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Interface Builder
     interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers_, *parameters_, staticModel_, &model_.agentKnowledgeConverter_, &model_.objectKnowledgeConverter_, &simulation ) );
     // Mission panel
-    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *glProxy_, profile, model_.actions_, simulation, *interfaceBuilder_ );
+    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *glProxy_, profile, model_.actions_, simulation, *interfaceBuilder_, config );
     addDockWidget( Qt::LeftDockWidgetArea, pMissionPanel_ );
     pMissionPanel_->setProperty( "notAppropriate", QVariant( true ) );
     pMissionPanel_->hide();

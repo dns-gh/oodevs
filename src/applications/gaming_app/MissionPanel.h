@@ -16,6 +16,7 @@
 #include "tools/Iterator.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
+#include "tools/ExerciseConfig.h"
 
 namespace kernel
 {
@@ -50,6 +51,11 @@ namespace actions
     }
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class kernel::ContextMenu;
 class Decisions_ABC;
 class Decisions;
@@ -79,7 +85,7 @@ public:
     //@{
     MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
                   const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
-                  const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
+                  const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder, tools::ExerciseConfig& config );
     virtual ~MissionPanel();
     //@}
 
@@ -140,6 +146,7 @@ private:
     actions::gui::MissionInterface_ABC* pMissionInterface_;
     actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    tools::ExerciseConfig& config_;
     bool isPlanifMode_;
     //@}
 };

@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              FragmentaryOrderInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::ActionController& controller,
-                                        actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model );
+                                        actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model, tools::ExerciseConfig& config );
     virtual ~FragmentaryOrderInterface();
     //@}
 

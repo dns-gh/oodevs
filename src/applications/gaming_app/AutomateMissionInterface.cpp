@@ -23,8 +23,8 @@ using namespace actions;
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
 AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller,
-                                                    actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model )
-    : actions::gui::MissionInterface_ABC( parent, mission, entity, controller )
+                                                    actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model, tools::ExerciseConfig& config )
+    : actions::gui::MissionInterface_ABC( parent, mission, entity, controller, config )
     , model_ ( model )
     , mission_ ( mission )
 {
