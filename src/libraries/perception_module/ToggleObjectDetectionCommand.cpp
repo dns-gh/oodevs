@@ -18,7 +18,7 @@ using namespace sword::perception;
 // Name: ToggleObjectDetectionCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }

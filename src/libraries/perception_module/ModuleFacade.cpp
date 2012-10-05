@@ -89,18 +89,18 @@ namespace
 // -----------------------------------------------------------------------------
 ModuleFacade::ModuleFacade()
 {
-    wrapper::RegisterCommand< PerceptionCommand >               ( "perception", *this );
-    wrapper::RegisterCommand< TogglePerceptionCommand >         ( "toggle perception", *this );
-    wrapper::RegisterCommand< ToggleRadarCommand >              ( "toggle radar", *this );
-    wrapper::RegisterCommand< ToggleLocalizedRadarCommand >     ( "toggle localized radar", *this );
-    wrapper::RegisterCommand< ToggleLocalizedPerceptionCommand >( "toggle localized perception", *this );
-    wrapper::RegisterCommand< ToggleRecoCommand >               ( "toggle reco", *this );
-    wrapper::RegisterCommand< ToggleObjectDetectionCommand >    ( "toggle object detection", *this );
-    wrapper::RegisterCommand< ToggleRecognitionPointCommand >   ( "toggle recognition point", *this );
-    wrapper::RegisterCommand< ToggleAlatMonitoringCommand >     ( "toggle alat monitoring", *this );
-    wrapper::RegisterCommand< VisionCommand >                   ( "vision", *this );
-    wrapper::RegisterCommand< IdentifyAgentCommand >            ( "identify all agents in zone", *this );
-    wrapper::RegisterCommand< ExternalPerceptionCommand >       ( "external perception", *this );
+    wrapper::RegisterCommand< PerceptionCommand >               ( "perception" );
+    wrapper::RegisterCommand< TogglePerceptionCommand >         ( "toggle perception" );
+    wrapper::RegisterCommand< ToggleRadarCommand >              ( "toggle radar" );
+    wrapper::RegisterCommand< ToggleLocalizedRadarCommand >     ( "toggle localized radar" );
+    wrapper::RegisterCommand< ToggleLocalizedPerceptionCommand >( "toggle localized perception" );
+    wrapper::RegisterCommand< ToggleRecoCommand >               ( "toggle reco" );
+    wrapper::RegisterCommand< ToggleObjectDetectionCommand >    ( "toggle object detection" );
+    wrapper::RegisterCommand< ToggleRecognitionPointCommand >   ( "toggle recognition point" );
+    wrapper::RegisterCommand< ToggleAlatMonitoringCommand >     ( "toggle alat monitoring" );
+    wrapper::RegisterCommand< VisionCommand >                   ( "vision" );
+    wrapper::RegisterCommand< IdentifyAgentCommand >            ( "identify all agents in zone" );
+    wrapper::RegisterCommand< ExternalPerceptionCommand >       ( "external perception" );
     PerceptionLevel::Initialize();
     RadarClass::Initialize();
 }

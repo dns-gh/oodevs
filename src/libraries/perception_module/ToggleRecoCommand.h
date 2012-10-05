@@ -21,8 +21,6 @@ namespace wrapper
 
 namespace perception
 {
-    class ModuleFacade;
-
 // =============================================================================
 /** @class  ToggleRecoCommand
     @brief  Toggle reco command
@@ -34,7 +32,7 @@ class ToggleRecoCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleRecoCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleRecoCommand(const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Operations

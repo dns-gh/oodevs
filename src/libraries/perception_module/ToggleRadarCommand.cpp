@@ -20,7 +20,7 @@ using namespace sword::perception;
 // Name: ToggleRadarCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleRadarCommand::ToggleRadarCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+ToggleRadarCommand::ToggleRadarCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }

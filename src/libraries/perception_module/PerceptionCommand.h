@@ -21,8 +21,6 @@ namespace wrapper
 
 namespace perception
 {
-    class ModuleFacade;
-
 // =============================================================================
 /** @class  PerceptionCommand
     @brief  Perception command
@@ -34,7 +32,7 @@ class PerceptionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    PerceptionCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    PerceptionCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Operations

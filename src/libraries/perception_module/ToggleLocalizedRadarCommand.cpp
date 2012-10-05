@@ -37,7 +37,7 @@ namespace
 // Name: ToggleLocalizedRadarCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleLocalizedRadarCommand::ToggleLocalizedRadarCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+ToggleLocalizedRadarCommand::ToggleLocalizedRadarCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }

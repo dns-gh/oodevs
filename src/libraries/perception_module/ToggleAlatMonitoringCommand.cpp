@@ -31,7 +31,7 @@ namespace
 // Name: ToggleAlatMonitoringCommand constructor
 // Created: SLI 2012-07-26
 // -----------------------------------------------------------------------------
-ToggleAlatMonitoringCommand::ToggleAlatMonitoringCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+ToggleAlatMonitoringCommand::ToggleAlatMonitoringCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }

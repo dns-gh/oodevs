@@ -21,8 +21,6 @@ namespace wrapper
 
 namespace perception
 {
-    class ModuleFacade;
-
 // =============================================================================
 /** @class  ToggleObjectDetectionCommand
     @brief  Toggle object detection command
@@ -34,7 +32,7 @@ class ToggleObjectDetectionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleObjectDetectionCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleObjectDetectionCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Operations

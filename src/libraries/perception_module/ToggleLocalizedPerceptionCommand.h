@@ -20,8 +20,6 @@ namespace wrapper
 }
 namespace perception
 {
-    class ModuleFacade;
-
 // =============================================================================
 /** @class  ToggleLocalizedPerceptionCommand
     @brief  Toggle localized perception command
@@ -33,7 +31,7 @@ class ToggleLocalizedPerceptionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleLocalizedPerceptionCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleLocalizedPerceptionCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Operations

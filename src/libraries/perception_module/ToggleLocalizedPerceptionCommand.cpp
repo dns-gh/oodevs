@@ -19,7 +19,7 @@ using namespace sword::perception;
 // Name: ToggleLocalizedPerceptionCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleLocalizedPerceptionCommand::ToggleLocalizedPerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+ToggleLocalizedPerceptionCommand::ToggleLocalizedPerceptionCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }

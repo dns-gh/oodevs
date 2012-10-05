@@ -22,7 +22,7 @@ DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, c
 // Name: IdentifyAgentCommand constructor
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-IdentifyAgentCommand::IdentifyAgentCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+IdentifyAgentCommand::IdentifyAgentCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }

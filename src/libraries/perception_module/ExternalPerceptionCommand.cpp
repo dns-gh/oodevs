@@ -19,7 +19,7 @@ using namespace sword::perception;
 // Name: ExternalPerceptionCommand constructor
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-ExternalPerceptionCommand::ExternalPerceptionCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+ExternalPerceptionCommand::ExternalPerceptionCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
 {
     // NOTHING
 }

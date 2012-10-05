@@ -22,8 +22,6 @@ namespace wrapper
 
 namespace perception
 {
-    class ModuleFacade;
-
 // =============================================================================
 /** @class  ToggleRadarCommand
     @brief  Toggle radar command
@@ -35,7 +33,7 @@ class ToggleRadarCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleRadarCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleRadarCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Operations

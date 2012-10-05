@@ -25,8 +25,6 @@ namespace wrapper
 }
 namespace perception
 {
-    class ModuleFacade;
-
 // =============================================================================
 /** @class  ToggleAlatMonitoringCommand
     @brief  Toggle Alat monitoring command
@@ -38,7 +36,7 @@ class ToggleAlatMonitoringCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleAlatMonitoringCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleAlatMonitoringCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
     //@}
 
     //! @name Initialization
