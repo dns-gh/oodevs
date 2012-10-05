@@ -44,6 +44,12 @@ private:
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::vector< Dotation > dotations_;
+    //@}
 };
 
 #endif // __SupplyStocksListView_h_
