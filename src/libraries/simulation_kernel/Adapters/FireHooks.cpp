@@ -227,8 +227,7 @@ namespace
     }
     DEFINE_HOOK( IsAgentKnowledgeValid, bool, ( const SWORD_Model* knowledge ) )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
-        return agent->IsValid();
+        return (*core::Convert( knowledge ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->IsValid();
     }
     DEFINE_HOOK( IsPopulationKnowledgeValid, bool, ( const SWORD_Model* entity, const SWORD_Model* knowledge ) )
     {
