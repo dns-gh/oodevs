@@ -48,6 +48,7 @@ public:
     //! @name Accessors
     //@{
     const kernel::Entity_ABC& GetSuperior() const { return superior_; }
+    const std::vector< Dotation >& GetQuotas() const { return quotas_; }
     //@}
 
 private:

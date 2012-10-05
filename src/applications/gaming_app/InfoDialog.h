@@ -90,6 +90,12 @@ public:
     virtual ~InfoDialog();
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -100,7 +106,6 @@ private:
     //! @name Helpers
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& element ) const;
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}
 
 private:

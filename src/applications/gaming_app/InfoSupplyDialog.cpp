@@ -13,27 +13,31 @@
 #include "SupplyConsignsWidget.h"
 #include "SupplyStocksListView.h"
 #include "SupplyQuotasWidget.h"
+#include "clients_kernel/EntityHelpers.h"
 #include "SupplyTransportersListView.h"
 #include "clients_kernel/Tools.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: InfoSupplyDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory )
     : InfoDialog< SupplyStates >( parent, controllers, tools::translate( "InfoSupplyDialog", "Supply system" ) )
 {
-    QTabWidget* tabs = new QTabWidget( RootWidget() );
-    tabs->addTab( new SupplyConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
-    Q3VBox* sqbox = new Q3VBox( tabs );
-    new SupplyStocksListView( sqbox, controllers, factory );
-    //new SupplyQuotasListView( sqbox, controllers, factory );
+    tabs_ = new QTabWidget( RootWidget() );
+    tabs_->addTab( new SupplyConsignsWidget( tabs_, controllers, factory ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
+    
+    Q3VBox* sqbox = new Q3VBox( tabs_ );
+    supplyStocksListView_ = new SupplyStocksListView( sqbox, controllers, factory );
+    supplyQuotasWidget_ = new SupplyQuotasWidget( sqbox, controllers, factory );
+    tabs_->addTab( sqbox, tools::translate( "InfoSupplyDialog", "Stocks && Quotas" ) );
 
-    new SupplyQuotasWidget( sqbox, controllers, factory );
-    tabs->addTab( sqbox, tools::translate( "InfoSupplyDialog", "Stocks && Quotas" ) );
-    Q3VBox* tbox = new Q3VBox( tabs );
+    Q3VBox* tbox = new Q3VBox( tabs_ );
     new SupplyTransportersListView( tbox, controllers, factory );
-    tabs->addTab( tbox, tools::translate( "InfoSupplyDialog", "Transporters" ) );
+    tabs_->addTab( tbox, tools::translate( "InfoSupplyDialog", "Transporters" ) );
+    
     new SupplyStatusWidget( RootWidget(), controllers, factory );
 }
 
@@ -50,11 +54,17 @@ InfoSupplyDialog::~InfoSupplyDialog()
 // Name: InfoSupplyDialog::ShouldDisplay
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
-bool InfoSupplyDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
+bool InfoSupplyDialog::ShouldDisplay( const Entity_ABC& entity ) const
 {
-    const LogSupplyConsigns* consigns = element.Retrieve< LogSupplyConsigns >();
-    //const Quotas* quotas = element.Retrieve< Quotas >();
-    return ( consigns && consigns->IsRelevant() )
-      //  || ( quotas && quotas->IsRelevant() )
-        || element.Retrieve< SupplyStates >();
+    return entity.Retrieve< SupplyStates >() || EntityHelpers::IsLogisticBase( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoSupplyDialog::NotifySelected
+// Created: MMC 2012-10-01
+// -----------------------------------------------------------------------------
+void InfoSupplyDialog::NotifySelected( const kernel::Entity_ABC* entity )
+{
+    InfoDialog< SupplyStates >::NotifySelected( entity );
+    tabs_->setCurrentIndex( 0 );
 }
