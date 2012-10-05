@@ -2637,6 +2637,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePopulationEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationAttribute.cpp">
+      <Filter>Source Files\Entities\Objects\Attributes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5398,6 +5401,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ModelCounter.h">
       <Filter>Source Files\Adapters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationAttribute.h">
+      <Filter>Source Files\Entities\Objects\Attributes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
