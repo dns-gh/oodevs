@@ -9,8 +9,6 @@
 
 #include "preparation_pch.h"
 #include "InputToxicCloudAttribute.h"
-#include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -21,8 +19,11 @@ using namespace kernel;
 // Name: InputToxicCloudAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-InputToxicCloudAttribute::InputToxicCloudAttribute( kernel::PropertiesDictionary& dictionary )
-    : bExport_( true )
+InputToxicCloudAttribute::InputToxicCloudAttribute( kernel::PropertiesDictionary& dictionary, const QString& source,
+                                                    const QString& dataField, bool bExport )
+    : source_   ( source )
+    , dataField_( dataField )
+    , bExport_  ( bExport )
 {
     CreateDictionary( dictionary );
 }
@@ -55,25 +56,6 @@ InputToxicCloudAttribute::~InputToxicCloudAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputToxicCloudAttribute::SetExportData
-// Created: JCR 2008-08-28
-// -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SetExportData( bool bExport )
-{
-    bExport_ = bExport;
-}
-
-// -----------------------------------------------------------------------------
-// Name: InputToxicCloudAttribute::SetSource
-// Created: JCR 2008-06-30
-// -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SetSource( const std::string& source, const std::string& dataField )
-{
-    source_ = source.c_str();
-    dataField_ = dataField.c_str();
-}
-
-// -----------------------------------------------------------------------------
 // Name: InputToxicCloudAttribute::SerializeObjectAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
@@ -93,8 +75,7 @@ void InputToxicCloudAttribute::SerializeObjectAttributes( xml::xostream& xos ) c
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-//    dico.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters" ), "Input cloud model" );
-    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data source" ), source_ );
-    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data field" ), dataField_ );
+    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data source" ), source_, true );
+    dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data field" ), dataField_, true );
     dictionary.Register( *this, tools::translate( "ToxicCloudAttribute", "Info/Cloud parameters/Data export" ), bExport_ );
 }

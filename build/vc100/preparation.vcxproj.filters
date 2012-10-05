@@ -556,6 +556,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\GhostCommandPostAttributes.cpp">
       <Filter>Source Files\Model\Ghosts\Extensions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InputPropagationAttribute.cpp">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -1040,6 +1043,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\GhostCommandPostAttributes.h">
       <Filter>Source Files\Model\Ghosts\Extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InputPropagationAttribute.h">
+      <Filter>Source Files\Model\Object\Extensions\Attributes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

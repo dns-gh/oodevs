@@ -20,6 +20,7 @@ GhostPositions.cpp \
 InfrastructureAttribute.cpp \
 Inhabitant.cpp \
 InhabitantPositions.cpp \
+InputPropagationAttribute.cpp \
 InputToxicCloudAttribute.cpp \
 KnowledgeGroup.cpp \
 Lima.cpp \

@@ -144,11 +144,11 @@ namespace
             container.push_back( pFirePrototype_ );
         }
 
-        void AddPropagation( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& /*resolver*/, const tools::GeneralConfig& config, Object_ABC*& object )
+        void AddPropagation( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const tools::GeneralConfig& config, Object_ABC*& object )
         {
             std::string model( xis.attribute< std::string >( "model" ) );
-            if( model == "shapefile-input" )
-                container.push_back( new InputPropagationPrototype( parent, config, object ) );
+            if( model == "shapefile-input" || model == "ascii-grid-input" )
+                container.push_back( new InputPropagationPrototype( parent, config, object, model ) );
             else if( model == "fire" )
                 bHasFirePropagation_ = true;
         }
@@ -236,7 +236,7 @@ namespace
 
         boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
         factory->Register( "burn"                      , boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
-        factory->Register( "propagation"               , boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
+        factory->Register( "propagation"               , boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1, _2, _3, boost::ref( config ), boost::ref( object ) ) );
 
         factory->RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders ) );
 

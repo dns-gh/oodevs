@@ -254,6 +254,11 @@
 					<xs:attribute name="export"/>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="input-propagation" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="source" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="stock" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>

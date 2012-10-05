@@ -208,6 +208,13 @@
     </message>
 </context>
 <context>
+    <name>InputPropagationAttribute</name>
+    <message>
+        <source>Info/Data source</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeGroup</name>
     <message>
         <source>Knowledge group [%L1]</source>

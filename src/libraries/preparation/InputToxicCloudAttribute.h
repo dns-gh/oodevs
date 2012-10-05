@@ -16,8 +16,6 @@
 
 namespace kernel
 {
-    class Displayer_ABC;
-    class NBCAgent;
     class PropertiesDictionary;
 }
 
@@ -38,7 +36,8 @@ class InputToxicCloudAttribute : public kernel::ToxicCloudAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InputToxicCloudAttribute( kernel::PropertiesDictionary& dictionary );
+             InputToxicCloudAttribute( kernel::PropertiesDictionary& dictionary, const QString& source,
+                                       const QString& dataField, bool bExport );
              InputToxicCloudAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~InputToxicCloudAttribute();
     //@}
@@ -46,12 +45,6 @@ public:
     //! @name Operations
     //@{
     virtual void SerializeObjectAttributes( xml::xostream& xos ) const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    void SetExportData( bool bExport );
-    void SetSource( const std::string& source, const std::string& dataField );
     //@}
 
 private:
@@ -66,7 +59,7 @@ private:
     void CreateDictionary( kernel::PropertiesDictionary& dictionary );
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
     QString source_;

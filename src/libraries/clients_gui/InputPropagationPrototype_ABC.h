@@ -33,7 +33,8 @@ class InputPropagationPrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config );
+             InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config,
+                                            const std::string& model );
     virtual ~InputPropagationPrototype_ABC();
     //@}
 
@@ -56,6 +57,7 @@ protected:
     ValuedComboBox< std::string >* propagationFiles_;
     ValuedComboBox< std::string >* dataField_;
     QCheckBox* exportData_;
+    const std::string model_;
     //@}
 };
 
