@@ -72,5 +72,8 @@
         <script src="js/users.js"></script>
         [[ end ]]
         [[ end ]]
+        [[ if eq .url.pg "about" ]]
+        <script src="js/utils.js"></script>
+        [[ end ]]
     </body>
 </html>
