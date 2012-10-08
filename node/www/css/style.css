@@ -75,8 +75,8 @@ body{padding-top:60px;padding-bottom:40px;}
 .plugin_left_col{margin-left:69px !important;}
 .plugin_edit{padding-left:10px;}
 #settings_slide{margin-bottom:0;}
-.modal_confirm .alert{margin-bottom:0;}
-.modal_confirm .buttons{position:absolute;bottom:10px;right:10px;}
+.modal_confirm .alert{margin-bottom:0;padding-right:14px;}
+.modal_confirm .buttons{text-align:right;}
 #tab_plugins .control-group:last-child{margin-bottom:0;}
 .modal_redirect .modal-header{text-align:center;}
 .modal_redirect .btn{min-width:120px;}
