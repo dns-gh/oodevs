@@ -84,3 +84,12 @@ void Automat_ABC::Activate( ActionController& controller ) const
 {
     controller.Activate( *this, *(const Entity_ABC*)this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Automat_ABC::NotifyChange
+// Created: LDC 2012-10-08
+// -----------------------------------------------------------------------------
+void Automat_ABC::NotifyChange()
+{
+    // NOTHING
+}

@@ -84,3 +84,12 @@ void Formation_ABC::Activate( ActionController& controller ) const
 {
     controller.Activate( *this, *(const Entity_ABC*)this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Formation_ABC::NotifyChange
+// Created: LDC 2012-10-08
+// -----------------------------------------------------------------------------
+void Formation_ABC::NotifyChange()
+{
+    // NOTHING
+}

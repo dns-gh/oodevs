@@ -407,7 +407,9 @@ void AgentServerMsgMgr::OnReceiveUnitAttributes( const sword::UnitAttributes& me
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveAutomatAttributes( const sword::AutomatAttributes& message )
 {
-    GetModel().agents_.GetAutomat( message.automat().id() ).Update( message );
+    kernel::Automat_ABC& automat = GetModel().agents_.GetAutomat( message.automat().id() );
+    automat.Update( message );
+    automat.NotifyChange();
 }
 
 // -----------------------------------------------------------------------------
@@ -680,7 +682,9 @@ void AgentServerMsgMgr::OnReceiveFormationCreation( const sword::FormationCreati
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveFormationUpdate( const sword::FormationUpdate& message )
 {
-    GetModel().teams_.GetFormation( message.formation().id() ).Update( message );
+    kernel::Formation_ABC& formation = GetModel().teams_.GetFormation( message.formation().id() );
+    formation.Update( message );
+    formation.NotifyChange();
 }
 
 // -----------------------------------------------------------------------------

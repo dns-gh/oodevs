@@ -119,12 +119,37 @@ void ChangeLogisticLinksDialog::Show()
 // Name: ChangeLogisticLinksDialog::NotifyCreated
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
+// $$$$ RC LDC 2012-10-08 Should be template or GetLogisticLevel should be put on Entity_ABC in order to factor the code.
 void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 {
     if( agent.GetLogisticLevel() == LogisticLevel::none_ )
         return;
     nominalSuperiorCombo_->AddItem( agent.GetName(), &agent );
     currentSuperiorCombo_->AddItem( agent.GetName(), &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeLogisticLinksDialog::NotifyUpdated
+// Created: LDC 2012-10-08
+// -----------------------------------------------------------------------------
+void ChangeLogisticLinksDialog::NotifyUpdated( const kernel::Automat_ABC& agent )
+{
+    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
+        return;
+    nominalSuperiorCombo_->ChangeItem( agent.GetName(), &agent );
+    currentSuperiorCombo_->ChangeItem( agent.GetName(), &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeLogisticLinksDialog::NotifyUpdated
+// Created: LDC 2012-10-08
+// -----------------------------------------------------------------------------
+void ChangeLogisticLinksDialog::NotifyUpdated( const kernel::Formation_ABC& agent )
+{
+    if( agent.GetLogisticLevel() == LogisticLevel::none_ )
+        return;
+    nominalSuperiorCombo_->ChangeItem( agent.GetName(), &agent );
+    currentSuperiorCombo_->ChangeItem( agent.GetName(), &agent );
 }
 
 // -----------------------------------------------------------------------------

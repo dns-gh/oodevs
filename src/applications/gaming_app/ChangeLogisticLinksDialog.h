@@ -60,9 +60,11 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyCreated( const kernel::Automat_ABC& agent );
+    virtual void NotifyUpdated( const kernel::Automat_ABC& agent );
     virtual void NotifyDeleted( const kernel::Automat_ABC& agent );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyCreated( const kernel::Formation_ABC& agent );
+    virtual void NotifyUpdated( const kernel::Formation_ABC& agent );
     virtual void NotifyDeleted( const kernel::Formation_ABC& agent );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     //@}
