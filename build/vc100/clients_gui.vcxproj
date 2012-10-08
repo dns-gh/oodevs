@@ -165,9 +165,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Panels.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationPanel.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\EntityListView.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectListView.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\PopulationListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DecimalSpinBoxAndSlider.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DisplayBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ElevationExtrema.cpp" />
@@ -778,60 +775,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\PanelStack_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\PopulationPanel.h" />
-    <CustomBuild Include="..\..\src\libraries\clients_gui\EntityListView.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\ObjectListView.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Performing Custom Build Step</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Performing Custom Build Step</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
-      </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
-      </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Performing Custom Build Step</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Performing Custom Build Step</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">
-      </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">
-      </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationListView.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Performing Custom Build Step</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Performing Custom Build Step</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
-      </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
-      </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">Performing Custom Build Step</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">Performing Custom Build Step</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">
-      </Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">
-      </Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DecimalSpinBoxAndSlider.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>

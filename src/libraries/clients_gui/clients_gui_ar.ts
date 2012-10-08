@@ -1196,13 +1196,6 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
-    <name>gui::ObjectListView</name>
-    <message>
-        <source>Objects</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::ObjectPanel</name>
     <message>
         <source>Object state</source>
@@ -1283,13 +1276,6 @@ Do you want to remove it?</source>
     <name>gui::OptionsPanel</name>
     <message>
         <source>3D metric computation</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::PopulationListView</name>
-    <message>
-        <source>Crowds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

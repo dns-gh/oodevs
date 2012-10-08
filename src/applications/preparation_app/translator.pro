@@ -32,7 +32,6 @@ InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
 LivingAreaPanel.cpp \
-ListViewsPanel.cpp \
 LogisticLinksEditor.cpp \
 LongNameEditor.cpp\
 LogisticStockEditor.cpp \
@@ -42,11 +41,9 @@ ModelBuilder.cpp \
 ModelConsistencyDialog.cpp \
 NewProfileDialog.cpp \
 ObjectCreationPanel.cpp \
-ObjectListView.cpp \
 OrbatPanel.cpp \
 PeopleAffinitiesDialog.cpp \
 PerformanceDialog.cpp \
-PopulationListView.cpp \
 PopulationRepartitionEditor.cpp \
 PositionEditor.cpp \
 ProfileDialog.cpp \
@@ -78,7 +75,6 @@ UnitStateDialog.cpp \
 UnitStateTableResource.cpp \
 UrbanColorEditor.cpp \
 UrbanInfosDockWidget.cpp \
-UrbanListView.cpp \
 UrbanTreeView.cpp \
 UsagesDockWidget.cpp \
 UserProfileList.cpp \

@@ -60,12 +60,10 @@ MinePrototype_ABC.cpp \
 MiniViews.cpp \
 NBCPrototype_ABC.cpp \
 NumericLimitsEditor.cpp \
-ObjectListView.cpp \
 ObjectPanel.cpp \
 ObjectPrototype_ABC.cpp \
 ObstaclePrototype_ABC.cpp \
 OptionsPanel.cpp \
-PopulationListView.cpp \
 PopulationPanel.cpp \
 PopulationsPanel.cpp \
 PreferencesDialog.cpp \
@@ -75,7 +73,6 @@ PropertiesPanel.cpp \
 ResourceLinksDialog_ABC.cpp \
 ResourceNetworkPrototype_ABC.cpp \
 SearchLineEdit.cpp \
-SearchListView.cpp \
 StatusBar.cpp \
 StockPrototype_ABC.cpp \
 SupplyRoutePrototype_ABC.cpp \
@@ -86,7 +83,6 @@ TerrainProfile.cpp \
 TerrainProfiler.cpp \
 TrafficabilityPrototype_ABC.cpp \
 UndergroundPrototype_ABC.cpp \
-UnitListView.cpp \
 UnitPreviewIcon.cpp \
 UnitsPanel.cpp \
 UnitStateDialog.cpp \
