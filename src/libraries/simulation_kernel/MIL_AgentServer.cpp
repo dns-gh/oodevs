@@ -78,6 +78,8 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     config_.AddFileToCRC( config_.GetExerciseFile() );
     config_.GetLoader().LoadFile( config_.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, settings_, _1 ) );
     ReadStaticData();
+    if( !config_.IsDataTestMode() )
+        pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
     if( config_.HasCheckpoint() )
     {
         MIL_CheckPointManager::LoadCheckPoint( config_, *pObjectFactory_ );
@@ -95,8 +97,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pEntityManager_->Finalize();
         Resume( nextPause_ );
     }
-    if( !config_.IsDataTestMode() )
-        pPathFindManager_ = new DEC_PathFind_Manager( config_, pObjectFactory_->GetMaxAvoidanceDistance(), pObjectFactory_->GetDangerousObjects() );
     timerManager_.Register( *this );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "---- SIM Initialized ----" );
