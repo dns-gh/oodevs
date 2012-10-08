@@ -11,13 +11,11 @@
 #define __NotesPanel_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "clients_gui/ListDisplayer.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "NoteDialog.h"
 
-namespace gui
+namespace kernel
 {
-    class ItemFactory_ABC;
+    class Controller;
 }
 
 class Note;
@@ -33,13 +31,14 @@ class Publisher_ABC;
 class NotesPanel : public QDockWidget
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< Note >
-                 , public tools::ElementObserver_ABC< Simulation >{
-   Q_OBJECT;
+                 , public tools::ElementObserver_ABC< Simulation >
+{
+   Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             NotesPanel( QMainWindow* mainWindow, kernel::Controller& controllers, gui::ItemFactory_ABC& factory, NotesModel& model, Publisher_ABC &publisher );
+             NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller, NotesModel& model, Publisher_ABC &publisher );
     virtual ~NotesPanel();
     //@}
 
@@ -54,12 +53,6 @@ public:
      //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    NotesPanel( const NotesPanel& );            //!< Copy constructor
-    NotesPanel& operator=( const NotesPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Note& element );
@@ -83,10 +76,9 @@ private:
     //@{
     kernel::Controller& controller_;
     Q3ListView* notes_;
-    gui::ItemFactory_ABC& factory_;
     NoteDialog* noteDialog_;
     NotesModel& model_;
-    Publisher_ABC &publisher_;
+    Publisher_ABC& publisher_;
     T_Items itemsList_;
     //@}
 };

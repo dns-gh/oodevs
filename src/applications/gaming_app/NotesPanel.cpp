@@ -10,26 +10,21 @@
 #include "gaming_app_pch.h"
 #include "NotesPanel.h"
 #include "moc_NotesPanel.cpp"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Note.h"
 #include "gaming/Simulation.h"
 #include "gaming/NotesModel.h"
 #include "protocol/ServerPublisher_ABC.h"
-#include "protocol/MessengerSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel constructor
-/** @param  mainWindow
-    @param  controllers
-    @param  factory
-*/
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
-NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller, gui::ItemFactory_ABC& factory, NotesModel& model, Publisher_ABC &publisher)
+NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller, NotesModel& model, Publisher_ABC &publisher)
     : QDockWidget( "Notation", mainWindow )
     , controller_ ( controller )
-    , factory_ ( factory )
     , model_ ( model )
     , publisher_( publisher )
 {

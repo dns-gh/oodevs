@@ -353,7 +353,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     }
     // Notes panel
     {
-        NotesPanel* notePanel = new NotesPanel( this, controllers_.controller_, *factory, model_.notes_, publisher );
+        NotesPanel* notePanel = new NotesPanel( this, controllers_.controller_, model_.notes_, publisher );
         addDockWidget( Qt::RightDockWidgetArea, notePanel );
     }
     // Message panel
