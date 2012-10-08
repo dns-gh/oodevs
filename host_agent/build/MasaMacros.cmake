@@ -7,17 +7,27 @@
 #
 #*****************************************************************************
 
+macro( set_flag property regexp value )
+    if( ${property} MATCHES ${regexp} )
+        string( REGEX REPLACE ${regexp} ${value} ${property} "${${property}}" )
+    else()
+        set( ${property} "${${property}} ${value}" )
+    endif()
+endmacro()
+
+macro( add_flag property value )
+    set_flag( ${property} ${value} ${value} )
+endmacro()
+
 if( MSVC )
     set_property( GLOBAL PROPERTY USE_FOLDERS ON )
     # 4127 conditional expression is constant
     # 4505 'function' : unreferenced local function has been removed
-    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /wd4127 /wd4505 /WX" )
-    if( CMAKE_CXX_FLAGS MATCHES "/W[0-4]" )
-        string( REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" )
-    else()
-        set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4" )
-    endif()
-    set( CMAKE_RC_FLAGS "${CMAKE_RC_FLAGS} /nologo" )
+    add_flag( CMAKE_CXX_FLAGS "/wd4127" )
+    add_flag( CMAKE_CXX_FLAGS "/wd4505" )
+    add_flag( CMAKE_CXX_FLAGS "/WX" )
+    set_flag( CMAKE_CXX_FLAGS "/W[0-4]" "/W4" )
+    add_flag( CMAKE_RC_FLAGS "/nologo" )
     math( EXPR msvc_platform "(${MSVC_VERSION} - 600) / 10" )
     set( msvc_suffix "_x64" )
     if( ${CMAKE_SIZEOF_VOID_P} EQUAL 4 )
