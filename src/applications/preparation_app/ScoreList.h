@@ -11,7 +11,6 @@
 #define __ScoreList_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "clients_gui/ListDisplayer.h"
 
 namespace actions
 {
@@ -23,6 +22,7 @@ namespace actions
 
 namespace gui
 {
+    class ItemFactory_ABC;
     class ParametersLayer;
 }
 
@@ -35,6 +35,8 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
+    class GlTools_ABC;
+    class Viewport_ABC;
 }
 
 namespace tools
@@ -90,18 +92,11 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScoreList( const ScoreList& );            //!< Copy constructor
-    ScoreList& operator=( const ScoreList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Score_ABC& element );
     virtual void NotifyUpdated( const Score_ABC& element );
     virtual void NotifyDeleted( const Score_ABC& element );
-    void Display( const Score_ABC& score, gui::ValuedListItem* item );
     Score_ABC* FindSelected() const;
     //@}
 
@@ -111,7 +106,7 @@ private:
     kernel::Controllers&             controllers_;
     gui::ItemFactory_ABC&            factory_;
     ScoresModel&                     model_;
-    gui::ListDisplayer< ScoreList >* scores_;
+    QTreeWidget*                     scores_;
     ScoreEditor*                     editor_;
     const tools::ExerciseConfig&     config_;
     Q3HBox*                          generatorBox_;

@@ -61,7 +61,7 @@ class ScoreEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const ScoresModel& model,
+             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model,
                           const ::StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreEditor();
     //@}
@@ -88,6 +88,7 @@ private slots:
     void OnSelectPrimitive( const indicators::Primitive& indicator );
     void CheckFormula();
     void AllowCommit( bool base = true );
+    void NameChanged();
     //@}
 
 private:
@@ -100,6 +101,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ScoresModel& model_;
     Score_ABC* current_;
     QLineEdit* name_;
     Q3TextEdit* formula_;
@@ -110,6 +112,7 @@ private:
     ScoreGaugeConfiguration* gauge_;
     ScoreProfilesPage* profiles_;
     const kernel::GlTools_ABC& tools_;
+    bool nameChanged_;
     //@}
 };
 

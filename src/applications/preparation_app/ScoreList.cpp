@@ -20,6 +20,8 @@
 
 namespace bfs = boost::filesystem;
 
+Q_DECLARE_METATYPE( const Score_ABC* )
+
 // -----------------------------------------------------------------------------
 // Name: ScoreList constructor
 // Created: SBO 2009-04-20
@@ -30,12 +32,13 @@ ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::It
     , controllers_( controllers )
     , factory_    ( factory )
     , model_      ( model )
-    , scores_     ( new gui::ListDisplayer< ScoreList >( this, *this, factory ) )
+    , scores_     ( new QTreeWidget( this ) )
     , editor_     ( new ScoreEditor( this, controllers, factory, model, staticModel, tools, builder ) )
     , config_     ( config )
 {
     layout()->setAlignment( Qt::AlignRight );
-    scores_->AddColumn( tr( "Name" ) );
+    scores_->setHeaderLabels( QStringList( tr( "Name" ) ) );
+    scores_->setRootIsDecorated( false );
     {
         Q3HBox* box = new Q3HBox( this );
         QPushButton* editButton = new QPushButton( tr( "Edit..." ), box );
@@ -49,7 +52,7 @@ ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::It
         connect( defaultIndicators, SIGNAL( clicked() ), SLOT( OnGenerate() ) );
         generatorBox_->hide();
     }
-    connect( scores_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnEdit() ) );
+    connect( scores_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnEdit() ) );
     connect( editor_, SIGNAL( Show() ), SIGNAL( Hide() ) );
     connect( editor_, SIGNAL( Hide() ), SIGNAL( Show() ) );
     controllers_.Register( *this );
@@ -101,8 +104,10 @@ void ScoreList::OnGenerate()
 // -----------------------------------------------------------------------------
 void ScoreList::NotifyCreated( const Score_ABC& element )
 {
-    gui::ValuedListItem* item = factory_.CreateItem( scores_ );
-    Display( element, item );
+    QTreeWidgetItem* item = new QTreeWidgetItem();
+    item->setText( 0, element.GetName() );
+    item->setData( 0, Qt::UserRole + 1, QVariant::fromValue( &element ) );
+    scores_->addTopLevelItem( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,8 +116,13 @@ void ScoreList::NotifyCreated( const Score_ABC& element )
 // -----------------------------------------------------------------------------
 void ScoreList::NotifyUpdated( const Score_ABC& element )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &element, scores_->firstChild() ) )
-        Display( element, item );
+    QTreeWidgetItem* top = scores_->invisibleRootItem();
+    for( int i = 0; i < top->childCount(); ++i )
+    {
+        QTreeWidgetItem* item = top->child( i );
+        if( item->data( 0, Qt::UserRole + 1 ).value< const Score_ABC* >() == &element )
+            item->setText( 0, element.GetName() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -121,17 +131,16 @@ void ScoreList::NotifyUpdated( const Score_ABC& element )
 // -----------------------------------------------------------------------------
 void ScoreList::NotifyDeleted( const Score_ABC& element )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &element, scores_->firstChild() ) )
-        scores_->removeItem( item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScoreList::Display
-// Created: SBO 2009-04-20
-// -----------------------------------------------------------------------------
-void ScoreList::Display( const Score_ABC& score, gui::ValuedListItem* item )
-{
-    item->SetNamed( score );
+    QTreeWidgetItem* top = scores_->invisibleRootItem();
+    for( int i = 0; i < top->childCount(); ++i )
+    {
+        QTreeWidgetItem* item = top->child( i );
+        if( item->data( 0, Qt::UserRole + 1 ).value< const Score_ABC* >() == &element )
+        {
+            delete item;
+            return;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -140,8 +149,8 @@ void ScoreList::Display( const Score_ABC& score, gui::ValuedListItem* item )
 // -----------------------------------------------------------------------------
 Score_ABC* ScoreList::FindSelected() const
 {
-    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( scores_->selectedItem() ) )
-        return item->GetValue< Score_ABC >();
+    if( QTreeWidgetItem* selected = scores_->currentItem() )
+        return const_cast< Score_ABC* >( selected->data( 0, Qt::UserRole + 1 ).value< const Score_ABC* >() );
     return 0;
 }
 

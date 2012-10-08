@@ -109,11 +109,13 @@ namespace
 // Name: ScoreEditor constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const ScoresModel& model,
+ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model,
                           const ::StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : QDialog( parent, "ScoreEditor" )
+    , model_( model )
     , current_( 0 )
     , tools_( tools )
+    , nameChanged_( false )
 {
     setCaption( tr( "Score editor" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 1, 0, 5 );
@@ -125,7 +127,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         name_ = new QLineEdit( box );
         name_->setValidator( new NameValidator( name_, model, current_ ) );
         grid->addWidget( box, 0, 0 );
-        connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( AllowCommit() ) );
+        connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( NameChanged() ) );
     }
     {
         QTabWidget* tabs = new QTabWidget( this );
@@ -230,6 +232,12 @@ void ScoreEditor::Commit()
 // -----------------------------------------------------------------------------
 void ScoreEditor::CommitTo( Score_ABC& score )
 {
+    if( nameChanged_ )
+    {
+        model_.Remove( score.GetName() );
+        model_.Register( name_->text(), score );
+        nameChanged_ = false;
+    }
     Score& concrete = static_cast< Score& >( score ); // $$$$ SBO 2009-05-07: use a command pattern or something to apply modifications
     concrete.SetName( name_->text() );
     concrete.SetFormula( formula_->text() );
@@ -336,6 +344,17 @@ void ScoreEditor::AllowCommit( bool base /* = true*/ )
 {
     ok_->setEnabled( base && name_->hasAcceptableInput() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ScoreEditor::NameChanged
+// Created: JSR 2012-10-08
+// -----------------------------------------------------------------------------
+void ScoreEditor::NameChanged()
+{
+    nameChanged_ = true;
+    AllowCommit();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ScoreEditor::Draw
