@@ -68,13 +68,19 @@ AutomatCreater::~AutomatCreater()
 // Name: AutomatCreater::Notify
 // Created: SLI 2011-09-14
 // -----------------------------------------------------------------------------
-void AutomatCreater::Notify( const sword::FormationCreation& message, const std::string& /*identifier*/ )
+void AutomatCreater::Notify( const sword::FormationCreation& message, const std::string& identifier )
 {
+    if( identifier != "default_remote_formation" )
+        return;
     simulation::UnitMagicAction automatCreationMessage;
     automatCreationMessage().mutable_tasker()->mutable_formation()->set_id( message.formation().id() );            // parent
     automatCreationMessage().set_type( sword::UnitMagicAction::automat_creation );
     automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_identifier( automatType_ );        // type
     automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_identifier( identifiers_[ message.party().id() ] );      // knowledge group
     automatCreationMessage().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant automat" ); // name
-    automatCreation_.Send( automatCreationMessage, boost::lexical_cast< std::string >( message.formation().id() ) );
+    sword::Extension* ext = automatCreationMessage().mutable_parameters()->add_elem()->add_value()->mutable_extensionlist();
+    sword::Extension_Entry* entry = ext->add_entries(); // extension
+    entry->set_name( "RemoteEntity" );
+    entry->set_value( "true" );
+    automatCreation_.Send( automatCreationMessage, "default_remote_automat" );
 }

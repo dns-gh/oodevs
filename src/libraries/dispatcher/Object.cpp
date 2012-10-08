@@ -32,6 +32,9 @@ Object::Object( Model_ABC& model, const sword::ObjectCreation& msg, const tools:
     side_.Register( *this );
     RegisterSelf( *this );
     optionals_.localisationPresent = 0;
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +73,12 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( side_.GetId() );
     localisation_.Send( *asn().mutable_location() );
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
+    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    {
+        sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
+    }
     asn.Send( publisher );
 }
 
@@ -150,4 +159,17 @@ std::string Object::GetSymbol() const
 const Localisation& Object::GetLocalisation() const
 {
     return localisation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetExtension
+// Created: AHC 2012-10-04
+// -----------------------------------------------------------------------------
+bool Object::GetExtension( const std::string& key, std::string& result ) const
+{
+    std::map< std::string, std::string >::const_iterator it = extensions_.find( key );
+    if( it == extensions_.end() )
+        return false;
+    result = it->second;
+    return true;
 }

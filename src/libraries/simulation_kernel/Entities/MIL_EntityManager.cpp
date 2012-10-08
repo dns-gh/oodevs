@@ -93,6 +93,7 @@
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_DictionaryExtensions.h"
 #include "tools/SchemaWriter.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
@@ -631,9 +632,10 @@ void MIL_EntityManager::CreateAutomat( xml::xistream& xis, MIL_Entity_ABC& paren
 // Name: MIL_EntityManager::CreateAutomat
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::CreateAutomat( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx )
+void MIL_EntityManager::CreateAutomat( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx,
+        const MIL_DictionaryExtensions& extensions )
 {
-    automateFactory_->Create( type, knowledgeGroup, name, parent, nCtx );
+    automateFactory_->Create( type, knowledgeGroup, name, parent, nCtx, extensions );
 }
 
 // -----------------------------------------------------------------------------
@@ -665,11 +667,13 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // Name: MIL_EntityManager::CreatePion
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx )
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx,
+    const MIL_DictionaryExtensions& extensions )
 {
     MIL_AgentPion* pPion = sink_->Create( type, automate, vPosition, name );
     if( !pPion )
         throw std::runtime_error( "Pion couldn't be created." );
+    pPion->SetExtensions( extensions );
     pPion->SendCreation ( nCtx );
     pPion->SendFullState( nCtx );
     pPion->SendKnowledge( nCtx );
@@ -1141,7 +1145,12 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
             name = nameParam.value().Get( 0 ).acharstr();
         }
 
-        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, theGroupId, name, entity, nCtx ); // auto-registration
+        MIL_DictionaryExtensions extensions;
+        if( msg.parameters().elem_size() > 3 )
+        {
+            extensions.ReadExtensions( msg.parameters().elem( 3 ).value().Get(0).extensionlist() );
+        }
+        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, theGroupId, name, entity, nCtx, extensions ); // auto-registration
     }
     catch( std::runtime_error& e )
     {
@@ -1167,16 +1176,26 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
         }
         army = &(formation->GetArmy());
     }
-    if( !message.has_parameters() || message.parameters().elem_size() != 3 || !( message.parameters().elem( 0 ).value_size() == 1 ) || !message.parameters().elem( 0 ).value().Get( 0 ).has_areal() )
+    if( !message.has_parameters() || message.parameters().elem_size() < 3 || message.parameters().elem_size() > 4 || !( message.parameters().elem( 0 ).value_size() == 1 ) || !message.parameters().elem( 0 ).value().Get( 0 ).has_areal() )
     {
         ack().set_error_code( MagicActionAck::error_invalid_parameter );
         return;
     }
+    if( message.parameters().elem_size() >= 4 )
+       if( message.parameters().elem( 3 ).value_size() != 1 || !message.parameters().elem( 3 ).value().Get(0).has_extensionlist() )
+       {
+           ack().set_error_code( MagicActionAck::error_invalid_parameter );
+           return;
+       }
+
     const ::MissionParameters& parameters = message.parameters();
     int level = static_cast< int >( parameters.elem( 0 ).value().Get( 0 ).areal() );
     std::string name = ( parameters.elem( 1 ).value_size() == 1 && parameters.elem( 1 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 1 ).value().Get( 0 ).acharstr() : std::string();
     std::string logLevel = ( parameters.elem( 2 ).value_size() == 1 && parameters.elem( 2 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 2 ).value().Get( 0 ).acharstr() : std::string();;
     MIL_Formation& newFormation = formationFactory_->Create( level, name, logLevel, *army, formation );
+    if( message.parameters().elem_size() >= 4 )
+        newFormation.SetExtensions( message.parameters().elem( 3 ) );
+
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
     newFormation.SendCreation( nCtx );
 }

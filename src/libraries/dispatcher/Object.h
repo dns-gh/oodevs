@@ -54,6 +54,7 @@ public:
     virtual const Team_ABC& GetTeam() const;
     std::string GetSymbol() const;
     virtual const Localisation& GetLocalisation() const;
+    virtual bool GetExtension( const std::string& key, std::string& result ) const;
     //@}
 
 private:
@@ -80,6 +81,7 @@ private:
     Team_ABC& side_;
     ObjectAttributeContainer attributes_;
     T_Optionals optionals_;
+    std::map< std::string, std::string >       extensions_;
 };
 
 }

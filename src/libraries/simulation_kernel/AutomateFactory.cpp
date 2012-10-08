@@ -68,9 +68,9 @@ MIL_Automate& AutomateFactory::Create( xml::xistream& xis, MIL_Entity_ABC& paren
 // Name: AutomateFactory::Create
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-MIL_Automate& AutomateFactory::Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int context )
+MIL_Automate& AutomateFactory::Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int context, const MIL_DictionaryExtensions& extensions )
 {
-    MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, gcPause_, gcMult_, context );
+    MIL_Automate& automate = type.InstanciateAutomate( idManager_.GetFreeId(), parent, knowledgeGroup, name, gcPause_, gcMult_, context, extensions );
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
     return automate;

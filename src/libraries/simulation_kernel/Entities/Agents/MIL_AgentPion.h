@@ -154,6 +154,7 @@ public:
     void OnReceiveMagicSurrender();
     void OnReceiveMagicCancelSurrender();
     void OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate
+    void SetExtensions( const MIL_DictionaryExtensions& ext );
     //@}
 
     //! @name Misc operations

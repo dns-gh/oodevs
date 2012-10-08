@@ -30,6 +30,7 @@ MOCK_BASE_CLASS( MockTeam, Team_ABC )
     MOCK_METHOD( SendDestruction, 1 );
     MOCK_METHOD( Accept, 1 );
     MOCK_METHOD( GetKarma, 0 );
+    MOCK_METHOD( GetExtension, 2 );
     MOCK_METHOD_EXT( Register, 1, void( dispatcher::Formation_ABC& ), RegisterFormation );
     MOCK_METHOD_EXT( Remove  , 1, void( dispatcher::Formation_ABC& ), RemoveFormation );
     MOCK_METHOD_EXT( Register, 1, void( dispatcher::Population_ABC& ), RegisterPopulation );

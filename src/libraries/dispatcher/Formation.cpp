@@ -42,6 +42,9 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
         team_.Register( *this );
     if( msg.has_color() )
         color_ = msg.color();
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.logistic_level() != sword::none )
     {
         logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
@@ -134,6 +137,12 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
         *message().mutable_color() = color_;
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
+    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    {
+        sword::Extension_Entry* entry = message().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
+    }
     message.Send( publisher );
 }
 

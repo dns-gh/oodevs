@@ -121,3 +121,42 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: Team_CanBeCreatedWithExtensions
+// Created: AHC 2012-10-08
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Team_CanBeCreatedWithExtensions )
+{
+    // sides
+    tools::Resolver< dispatcher::Team_ABC > sides;
+
+    MockModel model;
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    {
+        sword::SimToClient expected;
+        expected.set_context( 0 );
+        sword::PartyCreation& message = *expected.mutable_message()->mutable_party_creation();
+        message.mutable_party()->set_id( 1 );
+        message.set_name( "test" );
+        message.set_type( sword::friendly );
+        sword::Extension_Entry* entry = message.mutable_extension()->add_entries();
+        entry->set_name( "extension" );
+        entry->set_value( "value" );
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
+        // creation
+        dispatcher::Side result(  model, message );
+
+        std::string extVal;
+        BOOST_CHECK( result.GetExtension( "extension", extVal ) );
+        BOOST_CHECK_EQUAL( extVal, "value" );
+
+        // network serialization
+        MockClientPublisher publisher;
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
+        result.SendCreation( publisher );
+        mock::verify( publisher );
+    }
+
+}

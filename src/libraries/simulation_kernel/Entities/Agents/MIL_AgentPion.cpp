@@ -718,6 +718,7 @@ void MIL_AgentPion::SendCreation( unsigned int nCtx ) const
             creationMsg().set_level( nature->GetAsnID() );
     if( !app6Symbol_.empty() )
         creationMsg().set_app6symbol( app6Symbol_ );
+    pExtensions_->SendFullState( creationMsg );
     creationMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
@@ -1769,3 +1770,11 @@ void MIL_AgentPion::OnReceiveFinishLogisticHandlings()
         roleMedical->FinishAllHandlingsSuccessfullyWithoutDelay();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::SetExtensions
+// Created: AHC 2012-10-01
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::SetExtensions( const MIL_DictionaryExtensions& ext )
+{
+    pExtensions_.reset( new MIL_DictionaryExtensions( ext ) );
+}

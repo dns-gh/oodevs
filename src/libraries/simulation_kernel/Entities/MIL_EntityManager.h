@@ -64,6 +64,7 @@ class MIL_Automate;
 class MIL_AutomateLOG;
 class MIL_Config;
 class MIL_Entity_ABC;
+class MIL_DictionaryExtensions;
 class MIL_Formation;
 class MIL_IDManager;
 class MIL_KnowledgeGroup;
@@ -81,6 +82,7 @@ class PopulationFactory_ABC;
 class TER_Localisation;
 class MIL_UrbanObject_ABC;
 class KnowledgesVisitor_ABC;
+class MIL_DictionaryExtensions;
 
 void TerminatePhysicalSingletons();
 void TerminateMilitarySingletons();
@@ -101,11 +103,11 @@ public:
     //! @name Factory
     //@{
     void CreateAutomat( xml::xistream& xis, MIL_Entity_ABC&  parent );
-    void CreateAutomat( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx );
+    void CreateAutomat( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int nCtx, const MIL_DictionaryExtensions& extensions );
     void CreateIntelligence( xml::xistream& xis, MIL_Formation& formation );
     MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate&  automate , xml::xistream& xis );
     MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, unsigned int nCtx );
-    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx );
+    MIL_AgentPion& CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx, const MIL_DictionaryExtensions& extensions );
     void CreateObject( xml::xistream& xis, MIL_Army_ABC* army );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC* army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier = 0u, const std::string& name = std::string(), double density = 0. );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC* army, const TER_Localisation& localisation );

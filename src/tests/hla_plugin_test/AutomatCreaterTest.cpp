@@ -100,11 +100,11 @@ BOOST_FIXTURE_TEST_CASE( automat_creater_sends_automat_creation_message_when_rec
     BOOST_REQUIRE( formationCreationHandler );
     simulation::UnitMagicAction actual;
     MOCK_EXPECT( automatCreation.Send ).once().with( mock::retrieve( actual ), mock::any );
-    formationCreationHandler->Notify( MakeFormationCreationMessage(), "formation" );
+    formationCreationHandler->Notify( MakeFormationCreationMessage(), "default_remote_formation" );
     const sword::UnitMagicAction& action = actual();
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::automat_creation );
     BOOST_CHECK_EQUAL( action.tasker().formation().id(), formation );
-    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
+    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 4 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 42u );
     BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value( 0 ).identifier(), party );
     BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA distant automat" );

@@ -178,3 +178,37 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Object_IsCreatedWithExtensions
+// Created: AHC 2012-10-08
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Object_IsCreatedWithExtensions, Fixture )
+{
+    sword::ObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
+    message.mutable_object()->set_id( 1 );
+    message.mutable_type()->set_id( "my_type" );
+    message.set_name( "test" );
+    message.mutable_party()->set_id( team.GetId() );
+    message.mutable_location()->set_type( sword::Location::point );
+    message.mutable_location()->mutable_coordinates()->add_elem();
+    message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
+    message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
+    message.mutable_attributes();
+    sword::Extension_Entry* entry = message.mutable_extension()->add_entries();
+    entry->set_name( "extension" );
+    entry->set_value( "value" );
+    BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
+    MOCK_EXPECT( team.RegisterObject ).once();
+    result.reset( new dispatcher::Object( model, message, types ) );
+    
+    std::string extVal;
+    BOOST_CHECK( result->GetExtension( "extension", extVal ) );
+    BOOST_CHECK_EQUAL( extVal, "value" );
+
+    MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
+    result->SendCreation( publisher );
+    mock::verify( publisher );
+    MOCK_EXPECT( team.RemoveObject ).once().with( mock::same( *result ) );
+    expected.mutable_message()->Clear();
+}

@@ -282,6 +282,7 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
     message().set_level( pLevel_->GetAsnID() );
     message().set_app6symbol( symbol_ );
     pColor_->SendFullState( message );
+    pExtensions_->SendFullState( message );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )
@@ -485,4 +486,15 @@ void MIL_Formation::Clean()
 {
     if( pBrainLogistic_.get() )
         pBrainLogistic_->Clean();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::SetExtensions
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void MIL_Formation::SetExtensions( const sword::MissionParameter& msg )
+{
+    if( !msg.value().Get(0).has_extensionlist() )
+        return;
+    pExtensions_->ReadExtensions( msg.value().Get(0).extensionlist() );
 }

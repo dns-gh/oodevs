@@ -729,6 +729,8 @@ message FormationCreation {
     required EnumLogisticLevel logistic_level        = 8;
     //! The formation color @see RgbColor
     optional RgbColor          color                 = 9;
+    //! The extension fields
+    optional Extension         extension             = 10;
 }
 
 /** @struct FormationUpdate
@@ -770,6 +772,8 @@ message AutomatCreation {
     required EnumLogisticLevel logistic_level  = 8;
     //! The automat color @see RgbColor
     optional RgbColor          color           = 9;
+    //! The extension fields
+    optional Extension         extension       = 10;
 }
 
 /** @struct RulesOfEngagement
@@ -891,6 +895,8 @@ message UnitCreation {
     optional EnumNatureLevel  level       = 8;
     //! The unit APP-6 symbol
     optional string           app6symbol  = 9;
+    //! The extension fields
+    optional Extension        extension   = 10;
 }
 
 /** @struct BorrowedEquipments
@@ -1915,6 +1921,8 @@ message ObjectCreation {
     required ObjectAttributes attributes          = 6;
     //! The external identifier
     optional int32            external_identifier = 7;
+    //! The extension fields
+    optional Extension        extension           = 8;
 }
 
 /** @struct ObjectDestruction

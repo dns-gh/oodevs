@@ -239,3 +239,56 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
         MOCK_EXPECT( automat.RemoveAgent ).once().with( mock::same( *result ) );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent_IsCreatedWithExtensions
+// Created: AHC 2012-10-08
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Agent_IsCreatedWithExtensions )
+{
+    // automats
+    tools::Resolver< dispatcher::Automat_ABC > automats;
+    MockAutomat automat( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
+    automats.Register( automat.GetId(), automat );
+
+    // agent types
+    tools::Resolver< kernel::AgentType > types;
+    std::auto_ptr< kernel::AgentType > type( MakeAgentType() );
+    types.Register( type->GetId(), *type );
+
+    // models
+    MockModel model;
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    {
+        sword::SimToClient expected;
+        expected.set_context( 0 );
+        sword::UnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
+        message.mutable_unit()->set_id( 1 );
+        message.mutable_type()->set_id( 42 );
+        message.set_name( "test" );
+        message.mutable_automat()->set_id( automat.GetId() );
+        message.set_pc( false );
+        sword::Extension_Entry* entry = message.mutable_extension()->add_entries();
+        entry->set_name( "extension" );
+        entry->set_value( "value" );
+        BOOST_REQUIRE( message.IsInitialized() );
+
+        // creation
+        MOCK_EXPECT( automat.RegisterAgent ).once();
+        dispatcher::Agent result( model, message, types );
+
+        std::string extVal;
+        BOOST_CHECK( result.GetExtension( "extension", extVal ) );
+        BOOST_CHECK_EQUAL( extVal, "value" );
+
+        // network serialization
+        MockClientPublisher publisher;
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
+        result.SendCreation( publisher );
+        mock::verify( publisher );
+
+        // cleaning
+        MOCK_EXPECT( automat.RemoveAgent ).once().with( mock::same( result ) );
+    }
+}

@@ -586,3 +586,76 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
         MOCK_EXPECT( knowledgeGroup.RemoveAutomat ).once();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: Automat_CreationWithExtensions
+// Created: AHC 2012-10-08
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( Automat_CreationWithExtensions )
+{
+    // sides
+    tools::Resolver< dispatcher::Team_ABC > sides;
+    MockSide side( 2 );
+    MOCK_EXPECT( side.GetId ).returns( 2 );
+    sides.Register( side.GetId(), side );
+
+    // formations
+    tools::Resolver< dispatcher::Formation_ABC > formations;
+    MockFormation formation( 52 );
+    MOCK_EXPECT( formation.GetId ).returns( 52 );
+    formations.Register( formation.GetId(), formation );
+
+    // automats
+    tools::Resolver< dispatcher::Automat_ABC > automats;
+    MockAutomat automat( 51 );
+    MOCK_EXPECT( automat.GetId ).returns( 51 );
+    automats.Register( automat.GetId(), automat );
+
+    // knowledge groups
+    tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
+    MockKnowledgeGroup knowledgeGroup( 3 );
+    MOCK_EXPECT( knowledgeGroup.GetId ).returns( 3 );
+    knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
+
+    MockModel model;
+    MOCK_EXPECT( model.Sides ).returns( boost::ref( sides ) );
+    MOCK_EXPECT( model.Formations ).returns( boost::ref( formations ) );
+    MOCK_EXPECT( model.Automats ).returns( boost::ref( automats ) );
+    MOCK_EXPECT( model.KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
+    {
+        sword::SimToClient expected;
+        expected.set_context( 0 );
+        sword::AutomatCreation& message = *expected.mutable_message()->mutable_automat_creation();
+        message.mutable_automat()->set_id( 1 );
+        message.mutable_type()->set_id( 42 );
+        message.set_name( "test" );
+        message.mutable_parent()->mutable_formation()->set_id( formation.GetId() );
+        message.mutable_party()->set_id( side.GetId() );
+        message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
+        message.set_logistic_level( sword::none );
+        message.set_app6symbol( "sfgpu----------" );
+        sword::Extension_Entry* entry = message.mutable_extension()->add_entries();
+        entry->set_name( "extension" );
+        entry->set_value( "value" );
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
+        // creation
+        MOCK_EXPECT( formation.RegisterAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RegisterAutomat ).once();
+        dispatcher::Automat result( model, message, "brain" );
+
+        std::string extVal;
+        BOOST_CHECK( result.GetExtension( "extension", extVal ) );
+        BOOST_CHECK_EQUAL( extVal, "value" );
+
+        // network serialization
+        MockClientPublisher publisher;
+        MOCK_EXPECT( publisher.SendSimToClient ).once().with( expected );
+        result.SendCreation( publisher );
+        mock::verify( publisher );
+
+        // cleaning
+        MOCK_EXPECT( formation.RemoveAutomat ).once();
+        MOCK_EXPECT( knowledgeGroup.RemoveAutomat ).once();
+    }
+}

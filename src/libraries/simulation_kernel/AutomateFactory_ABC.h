@@ -14,6 +14,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 
 class MIL_AutomateType;
+class MIL_DictionaryExtensions;
 class MIL_Formation;
 
 namespace xml
@@ -39,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual MIL_Automate& Create( xml::xistream& xis, MIL_Entity_ABC& parent ) = 0;
-    virtual MIL_Automate& Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int context ) = 0;
+    virtual MIL_Automate& Create( const MIL_AutomateType& type, unsigned int knowledgeGroup, const std::string& name, MIL_Entity_ABC& parent, unsigned int context, const MIL_DictionaryExtensions& extensions ) = 0;
     //@}
 
     //! @name CheckPoint

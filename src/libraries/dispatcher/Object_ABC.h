@@ -38,6 +38,7 @@ public:
     //@{
     virtual const dispatcher::Team_ABC& GetTeam() const = 0;
     virtual const Localisation& GetLocalisation() const = 0;
+    virtual bool GetExtension( const std::string& key, std::string& result ) const = 0;
     //@}
 };
 

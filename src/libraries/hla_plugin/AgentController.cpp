@@ -90,7 +90,9 @@ void AgentController::Create( dispatcher::Agent& entity )
 // -----------------------------------------------------------------------------
 void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
 {
-    bool isLocal( !boost::algorithm::starts_with( agent.GetName().ascii(), "HLA_" ) );// $$$$ _RC_ SLI 2011-09-22: refactor this...
+    std::string remoteExt;
+    bool isRemote = agent.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
+
     T_Agent proxy( new AgentProxy( agent, componentTypes_, componentTypeResolver_, doDisaggregation_ ) );
     agents_.insert( T_Agents::value_type( agent.GetId(), proxy ) );
     const kernel::AgentType& agentType = agent.GetType();
@@ -98,8 +100,8 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
     const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
     const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( agent.GetSuperior().GetTeam() );
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->AggregateCreated( *proxy, agent.GetId(), std::string( agent.GetName().ascii() ), forceIdentifier, entityType, agentType.GetSymbol(), isLocal, agentType.GetId() );
-    if( isLocal && doDisaggregation_ )
+        (*it)->AggregateCreated( *proxy, agent.GetId(), std::string( agent.GetName().ascii() ), forceIdentifier, entityType, agentType.GetSymbol(), !isRemote, agentType.GetId() );
+    if( !isRemote && doDisaggregation_ )
             adapters_.push_back( T_AgentAdapter( new AgentAdapter( factory_, converter_, agent,
                     AgentAdapter::T_NotificationCallback( boost::bind( &AgentController::NotifyPlatformCreation, boost::ref( *this ), _1, _2, _3, _4 ) ) ) ) );
 }

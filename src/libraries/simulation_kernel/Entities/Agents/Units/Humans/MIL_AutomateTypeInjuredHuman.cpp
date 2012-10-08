@@ -68,9 +68,9 @@ MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( unsigned int nI
 // Name: MIL_AutomateTypeInjuredHuman::InstanciateAutomate
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context ) const
+MIL_Automate& MIL_AutomateTypeInjuredHuman::InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context, const MIL_DictionaryExtensions& extensions ) const
 {
-    return *new MIL_AutomateInjuredHuman( *this, nID, parent, knowledgeGroup, name, gcPause, gcMult, context );
+    return *new MIL_AutomateInjuredHuman( *this, nID, parent, knowledgeGroup, name, gcPause, gcMult, context, extensions );
 }
 
 // -----------------------------------------------------------------------------

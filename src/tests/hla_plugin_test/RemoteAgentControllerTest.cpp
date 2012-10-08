@@ -114,7 +114,7 @@ namespace
             MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
             remoteClassListener->RemoteCreated( "identifier", hlaClass, object );
             BOOST_REQUIRE( remoteAgentListener );
-            automatCreationHandler->Notify( MakeAutomatCreationMessage( party, automat ), "automat" );
+            automatCreationHandler->Notify( MakeAutomatCreationMessage( party, automat ), "default_remote_automat" );
         }
         sword::AutomatCreation MakeAutomatCreationMessage( unsigned long party, unsigned long automat )
         {
@@ -149,14 +149,14 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     const sword::UnitMagicAction& action = actual();
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::unit_creation );
     BOOST_CHECK_EQUAL( action.tasker().automat().id(), automat );
-    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
+    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 5 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), agentTypeId );
     const sword::Location& location = action.parameters().elem( 1 ).value( 0 ).point().location();
     BOOST_CHECK_EQUAL( location.type(), sword::Location::point );
     BOOST_CHECK_EQUAL( location.coordinates().elem_size(), 1 );
     BOOST_CHECK_EQUAL( location.coordinates().elem( 0 ).latitude(), latitude );
     BOOST_CHECK_EQUAL( location.coordinates().elem( 0 ).longitude(), longitude );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "HLA_name" );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "name" );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_second_moved_event, AutomatFixture )

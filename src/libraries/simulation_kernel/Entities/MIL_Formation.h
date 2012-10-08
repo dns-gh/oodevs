@@ -25,6 +25,7 @@ namespace xml
 namespace sword
 {
     class UnitMagicAction;
+    class MissionParameter;
 }
 
 class PHY_NatureLevel;
@@ -95,6 +96,7 @@ public:
     void SendCreation( unsigned int context = 0 ) const;
     void SendFullState( unsigned int context = 0 ) const;
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg );
+    void SetExtensions( const sword::MissionParameter& msg );
     //@}
 
     //! @name TMP - Renettoyer les boucles d'updates .. Cf. Scipio

@@ -33,6 +33,7 @@ MOCK_BASE_CLASS( MockObject, dispatcher::Object_ABC )
     // kernel::Object_ABC
     MOCK_METHOD( Display, 1 );
     MOCK_METHOD( GetType, 0 );
+    MOCK_METHOD( GetExtension, 2 );
 
     // dispatcher::Sendable< kernel::Object_ABC >
     MOCK_METHOD( SendCreation, 1 );

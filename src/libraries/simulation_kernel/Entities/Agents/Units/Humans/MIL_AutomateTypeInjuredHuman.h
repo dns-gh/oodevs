@@ -39,7 +39,7 @@ public:
     //! @name Instanciation
     //@{
     virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult ) const;
-    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context ) const;
+    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context, const MIL_DictionaryExtensions& extensions ) const;
     //@}
 
     //! @name Main

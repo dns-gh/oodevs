@@ -155,6 +155,7 @@ namespace
         virtual void SendCreation   ( ClientPublisher_ABC& ) const      {}
         virtual void SendFullUpdate ( ClientPublisher_ABC& ) const      {}
         virtual void SendDestruction( ClientPublisher_ABC& ) const      {}
+        virtual bool GetExtension( const std::string&, std::string& ) const { return false; }
 
     private:
         tools::Resolver< dispatcher::Object_ABC > objects_;

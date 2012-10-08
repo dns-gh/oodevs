@@ -34,7 +34,11 @@ FormationCreater::FormationCreater( const tools::Resolver_ABC< dispatcher::Team_
             message().mutable_parameters()->add_elem()->add_value()->set_areal( 6 );                          // hierarchy level
             message().mutable_parameters()->add_elem()->add_value()->set_acharstr( "HLA distant formation" ); // name
             message().mutable_parameters()->add_elem()->set_null_value( true );                               // logistic level
-            contextHandler.Send( message, boost::lexical_cast< std::string >( side ) );
+            sword::Extension* ext = message().mutable_parameters()->add_elem()->add_value()->mutable_extensionlist();
+            sword::Extension_Entry* entry = ext->add_entries(); // extension
+            entry->set_name( "RemoteEntity" );
+            entry->set_value( "true" );
+            contextHandler.Send( message, "default_remote_formation" );
         }
     }
 }

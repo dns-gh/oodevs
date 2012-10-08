@@ -71,7 +71,10 @@ RemoteAgentController::~RemoteAgentController()
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Notify( const sword::AutomatCreation& message, const std::string& identifier )
 {
-    logger_.LogInfo( "parties[ " + boost::lexical_cast< std::string >( message.party().id() ) + " ] = " + boost::lexical_cast< std::string >( message.automat().id() ) + " (" + identifier + ")" );
+    if( identifier != "default_remote_automat" )
+        return;
+
+    logger_.LogInfo( "parties[ " + boost::lexical_cast< std::string >( message.party().id() ) + " ] = " + boost::lexical_cast< std::string >( message.automat().id() ) );
     parties_[ message.party().id() ] = message.automat().id();
     BOOST_FOREACH( const T_WaitingAutomats::value_type& waiting, waitingAutomats_ )
         SideChanged( waiting.first, waiting.second );
@@ -91,6 +94,14 @@ void RemoteAgentController::RemoteCreated( const std::string& identifier, HlaCla
     message().mutable_parameters()->add_elem(); // type
     message().mutable_parameters()->add_elem(); // position
     message().mutable_parameters()->add_elem(); // name
+    message().mutable_parameters()->add_elem()->add_value()->set_booleanvalue( false ); // isPC
+    sword::Extension* ext = message().mutable_parameters()->add_elem()->add_value()->mutable_extensionlist();
+    sword::Extension_Entry* entry = ext->add_entries(); // extension
+    entry->set_name( "RemoteEntity" );
+    entry->set_value( "true" );
+    entry = ext->add_entries(); // extension
+    entry->set_name( "HLA_ObjectID" );
+    entry->set_value( identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +162,7 @@ void RemoteAgentController::NameChanged( const std::string& identifier, const st
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
-    message().mutable_parameters()->mutable_elem( 2 )->add_value()->set_acharstr( "HLA_" + name );
+    message().mutable_parameters()->mutable_elem( 2 )->add_value()->set_acharstr( name );
     Send( message, identifier );
 }
 

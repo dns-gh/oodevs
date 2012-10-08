@@ -104,6 +104,9 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
         level_ = static_cast< E_NatureLevel >( msg.level() );
     if( msg.has_app6symbol() )
         app6Symbol_ = msg.app6symbol();
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
 
     RegisterSelf( *this );
 }
@@ -492,6 +495,12 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
         message().set_app6symbol( app6Symbol_ );
     if( level_ != eNatureLevel_None )
         message().set_level( sword::EnumNatureLevel( level_ ) );
+    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    {
+        sword::Extension_Entry* entry = message().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
+    }
     message.Send( publisher );
 }
 

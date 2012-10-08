@@ -58,6 +58,9 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const std
         parentFormation_->Register( *this );
     else if( parentAutomat_ )
         parentAutomat_->Register( *this );
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
 
     if( msg.logistic_level() != sword::none )
     {
@@ -290,6 +293,12 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         asn().set_logistic_level( sword::none );
     if( color_.IsInitialized() )
         *asn().mutable_color() = color_;
+    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    {
+        sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
+    }
     asn.Send( publisher );
 }
 

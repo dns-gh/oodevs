@@ -37,6 +37,9 @@ Side::Side( const Model_ABC& model, const sword::PartyCreation& msg )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( msg.has_color() )
          color_ = msg.color();
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     switch( nType_ )
     {
         case sword::unknown: karma_ = kernel::Karma::unknown_; break;
@@ -242,4 +245,17 @@ void Side::Register( dispatcher::KnowledgeGroup_ABC& knGroup )
 void Side::Remove( dispatcher::KnowledgeGroup_ABC& knGroup )
 {
     knowledgeGroups_.Remove( knGroup.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Side::GetExtension
+// Created: AHC 2012-10-04
+// -----------------------------------------------------------------------------
+bool Side::GetExtension( const std::string& key, std::string& result ) const
+{
+    std::map< std::string, std::string >::const_iterator it = extensions_.find( key );
+    if( it == extensions_.end() )
+        return false;
+    result = it->second;
+    return true;
 }

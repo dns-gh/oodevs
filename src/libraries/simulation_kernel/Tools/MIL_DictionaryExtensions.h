@@ -15,6 +15,7 @@
 namespace sword
 {
     class UnitMagicAction;
+    class Extension;
 }
 
 namespace xml
@@ -36,6 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_DictionaryExtensions();
+             MIL_DictionaryExtensions( const MIL_DictionaryExtensions& other );
     explicit MIL_DictionaryExtensions( xml::xistream& xis );
     virtual ~MIL_DictionaryExtensions();
     //@}
@@ -48,6 +50,7 @@ public:
     template< typename T >
     void UpdateNetwork( T& msg );
     void OnReceiveMsgChangeExtensions( const sword::UnitMagicAction& msg );
+    void ReadExtensions( const sword::Extension& extensions );
     bool HasChanged() const;
     bool IsEmpty() const;
     //@}

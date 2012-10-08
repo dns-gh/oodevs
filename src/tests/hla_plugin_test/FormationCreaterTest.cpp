@@ -62,7 +62,7 @@ BOOST_FIXTURE_TEST_CASE( formation_creater_creates_formation_for_each_party, Fix
     const sword::UnitMagicAction& action = actual();
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::formation_creation );
     BOOST_CHECK_EQUAL( action.tasker().party().id(), party );
-    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 3 );
+    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 4 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).areal(), 6 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value( 0 ).acharstr(), "HLA distant formation" );
     BOOST_CHECK( action.parameters().elem( 2 ).null_value() );

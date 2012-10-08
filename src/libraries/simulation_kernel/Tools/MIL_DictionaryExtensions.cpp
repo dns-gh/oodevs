@@ -26,6 +26,16 @@ MIL_DictionaryExtensions::MIL_DictionaryExtensions()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DictionaryExtensions constructor
+// Created: AHC 2012-10-04
+// -----------------------------------------------------------------------------
+MIL_DictionaryExtensions::MIL_DictionaryExtensions( const MIL_DictionaryExtensions& other )
+    : extensions_( other.extensions_ )
+    , hasChanged_( false )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DictionaryExtensions constructor
 // Created: ABR 2011-05-11
 // -----------------------------------------------------------------------------
 MIL_DictionaryExtensions::MIL_DictionaryExtensions( xml::xistream& xis )
@@ -142,4 +152,18 @@ bool MIL_DictionaryExtensions::HasChanged() const
 bool MIL_DictionaryExtensions::IsEmpty() const
 {
     return extensions_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DictionaryExtensions::ReadExtensions
+// Created: AHC 2012-10-01
+// -----------------------------------------------------------------------------
+void MIL_DictionaryExtensions::ReadExtensions( const sword::Extension& extensions )
+{
+    for( int i = 0; i < extensions.entries().size(); ++i )
+    {
+        const sword::Extension::Entry& entry = extensions.entries().Get( i );
+        hasChanged_ = hasChanged_ || extensions_[ entry.name() ] != entry.value();
+        extensions_[ entry.name() ] = entry.value();
+    }
 }

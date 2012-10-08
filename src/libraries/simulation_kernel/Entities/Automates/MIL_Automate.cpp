@@ -155,7 +155,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name,
-                            unsigned int gcPause, unsigned int gcMult, unsigned int context )
+                            unsigned int gcPause, unsigned int gcMult, unsigned int context, const MIL_DictionaryExtensions& extensions )
     : MIL_Entity_ABC                 ( name )
     , pType_                         ( &type )
     , nID_                           ( nID )
@@ -175,7 +175,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pArmySurrenderedTo_            ( 0 )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
-    , pExtensions_                   ( new MIL_DictionaryExtensions() )
+    , pExtensions_                   ( new MIL_DictionaryExtensions( extensions ) )
 {
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( knowledgeGroup );
     if( !pKnowledgeGroup_ )
@@ -824,6 +824,7 @@ void MIL_Automate::SendCreation( unsigned int context ) const
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     message().set_name( GetName() );
     pColor_->SendFullState( message );
+    pExtensions_->SendFullState( message );
     assert( pParentAutomate_ || pParentFormation_ );
     if( pParentAutomate_ )
         message().mutable_parent()->mutable_automat()->set_id( pParentAutomate_->GetID() );
@@ -929,7 +930,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
 {
     if( msg.type() != sword::UnitMagicAction_Type_unit_creation )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    if( !msg.has_parameters() || msg.parameters().elem_size() < 2 || msg.parameters().elem_size() > 4 )
+    if( !msg.has_parameters() || msg.parameters().elem_size() < 2 || msg.parameters().elem_size() > 5 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& id = msg.parameters().elem( 0 );
     if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
@@ -951,6 +952,9 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
     if( msg.parameters().elem_size() >= 4 )
         if( msg.parameters().elem( 3 ).value_size() != 1 || !msg.parameters().elem( 3 ).value().Get(0).has_booleanvalue() )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    if( msg.parameters().elem_size() >= 5 )
+        if( msg.parameters().elem( 4 ).value_size() != 1 || !msg.parameters().elem( 4 ).value().Get(0).has_extensionlist() )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
     MT_Vector2D position;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
@@ -958,8 +962,14 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
     {
         if( msg.parameters().elem_size() >= 3 )
         {
+            MIL_DictionaryExtensions extensions;
+            if( msg.parameters().elem_size() >= 5 )
+            {
+                extensions.ReadExtensions( msg.parameters().elem( 4 ).value( 0 ).extensionlist() );
+            }
+
             std::string name = msg.parameters().elem( 2 ).value().Get( 0 ).acharstr();
-            MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, name, nCtx ); // Auto-registration
+            MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, name, nCtx, extensions ); // Auto-registration
 
             if( msg.parameters().elem_size() >= 4 )
             {

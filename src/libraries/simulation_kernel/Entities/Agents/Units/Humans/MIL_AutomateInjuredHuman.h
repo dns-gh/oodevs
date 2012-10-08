@@ -42,7 +42,7 @@ public:
                                         , xml::xistream& xis
                                         , unsigned int gcPause
                                         , unsigned int gcMult );
-             MIL_AutomateInjuredHuman( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context );
+             MIL_AutomateInjuredHuman( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context, const MIL_DictionaryExtensions& extensions );
 
     virtual ~MIL_AutomateInjuredHuman();
 

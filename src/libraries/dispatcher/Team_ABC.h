@@ -47,6 +47,7 @@ public:
     //! @name Accessors
     //@{
     virtual const kernel::Karma& GetKarma() const = 0;
+    virtual bool GetExtension( const std::string& key, std::string& result ) const = 0;
     //@}
 
     //! @name Operations

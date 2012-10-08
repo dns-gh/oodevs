@@ -91,7 +91,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_point_object,
     BOOST_CHECK_EQUAL( action.parameters().elem( 3 ).value( 0 ).party().id(), team.GetId() );
     const sword::Location& loc = action.parameters().elem( 1 ).value( 0 ).location();
     BOOST_CHECK_EQUAL( loc.type(), sword::Location_Geometry_point );
-    BOOST_CHECK_EQUAL( loc.coordinates().elem_size(), v.size() );
+    BOOST_CHECK_EQUAL( loc.coordinates().elem_size(), (int)v.size() );
     const sword::CoordLatLong& c( loc.coordinates().elem( 0 ) );
     BOOST_CHECK_EQUAL( c.latitude(), 42.0 );
     BOOST_CHECK_EQUAL( c.longitude(), 42.1 );
@@ -135,5 +135,5 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_polygon_objec
     BOOST_CHECK_EQUAL( action.parameters().elem( 3 ).value( 0 ).party().id(), team.GetId() );
     const sword::Location& loc = action.parameters().elem( 1 ).value( 0 ).location();
     BOOST_CHECK_EQUAL( loc.type(), sword::Location_Geometry_polygon );
-    BOOST_CHECK_EQUAL( loc.coordinates().elem_size(), v.size() );
+    BOOST_CHECK_EQUAL( loc.coordinates().elem_size(), (int)v.size() );
 }
