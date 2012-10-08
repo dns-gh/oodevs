@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="properties.Motile" source-version="1.0.0" extends="properties.Reachable">
-    <description>Define all elements of the simulation able to move by itself. Motile elements are other agents, crowds and companies...</description>
-    <methods>
-        <method name="canBeFollowed">
-            <description>Returns &quot;true&quot; if this element can be followed by the agent, 'false' otherwise.</description>
-        </method>
-        <method name="isMoving">
-            <description>Returns 'true' if this element is moving, 'false' otherwise.</description>
-        </method>
-        <method name="getName">
-            <description>Returns the name of the motile element.</description>
-            <return>
-                <type>
-                    <simple name="string"/>
-                </type>
-            </return>
-        </method>
-    </methods>
+	<description>Define all elements of the simulation able to move by itself. Motile elements are other agents, crowds and companies...</description>
+	<methods>
+		<method name="canBeFollowed">
+			<description>Returns &quot;true&quot; if this element can be followed by the agent, 'false' otherwise.</description>
+		</method>
+		<method name="isMoving">
+			<description>Returns 'true' if this element is moving, 'false' otherwise.</description>
+		</method>
+	</methods>
 </interface>

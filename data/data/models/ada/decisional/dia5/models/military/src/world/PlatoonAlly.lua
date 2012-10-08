@@ -974,6 +974,6 @@ return
         end
     } ),
     getName = function( self )
-        return integration.getName( self )
+        return integration.getAgentName( self )
     end
 }

@@ -388,8 +388,5 @@ return
     end,
     dischargeItIn = function( self, camp )
         return integration.dischargeAgentKnowledge( self, camp )
-    end,
-    getName = function( self )
-        return integration.getName( self )
     end
 }

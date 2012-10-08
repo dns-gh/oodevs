@@ -344,6 +344,6 @@ return
         meKnowledge:sendDataToNewUnitInAutomat( unit, saintRegimeTravail, santePrioritesTact, maintPrioritesTact, maintPriorites, santePriorites, etatROEPopulation, etatROE )
     end,
     getName = function( self )
-        return integration.getName( self )
+        return integration.getAgentName( self )
     end
 }

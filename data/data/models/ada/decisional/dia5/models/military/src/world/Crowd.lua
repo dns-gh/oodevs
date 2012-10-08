@@ -137,9 +137,7 @@ return
     canBeFollowed = function( self )
         return true
     end,
-    getName = function( self )
-        return "crowd agent"
-    end,
+
     -- -------------------------------------------------------------------------------- 
     -- Attributes
     -- --------------------------------------------------------------------------------

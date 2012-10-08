@@ -18,7 +18,7 @@ rootnode
                 if entity:canBeFollowed() then -- see method implementations in classes that realizes the "Motile" type.
                     self.entities[ #self.entities + 1 ] = entity
                 else
-                    meKnowledge:RC( eRC_FollowingUnitIsDead, entity:getName() )
+                    meKnowledge:RC( eRC_FollowingUnitIsDead )
                 end
             end -- else...the knowldedge of the entity is lost. Can't follow it
         end
