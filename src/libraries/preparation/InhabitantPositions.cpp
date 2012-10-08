@@ -262,7 +262,7 @@ void InhabitantPositions::UpdateDictionary()
         nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
         if( const kernel::Infrastructure_ABC* infra = pProxy->Retrieve< kernel::Infrastructure_ABC >() )
         {
-            if( infra->GetType() && infra->GetType()->GetName() == "Hopital"  )
+            if( infra->GetType() && infra->GetType()->FindCapacity( "medical" ) )
                 ++medicalInfrastructures_;
             else
                 ++infrastructures_;
