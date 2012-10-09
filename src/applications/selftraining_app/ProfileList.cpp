@@ -106,7 +106,7 @@ void ProfileList::ReadProfile( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ProfileList::OnSelect( int index )
 {
-    if( index < int( profiles_.size() ) )
+    if( index < int( profiles_.size() ) && index >= 0 )
         emit Select( profiles_[index] );
     else
         emit Select( frontend::Profile::Invalid );
