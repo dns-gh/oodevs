@@ -1,4 +1,4 @@
- -- **************************************************************************** 
+-- **************************************************************************** 
 -- ManageFragOrder.
 -- self.params.entity: the unit to interrogate
 -- ****************************************************************************
@@ -33,15 +33,19 @@ rootnode
             end
             fragOrder:setAutomatFragOrder()
             if fragOrder:mustBePropagate() then
+            
                 local typeOrder = fragOrder.source:GetType()
+                DEC_Trace( "typeOrder = "..tostring( typeOrder ) )
                 local send = typeOrder ~= "Rep_OrderConduite_Deboucher"
                 local sendFirstEchelon = typeOrder == "Rep_OrderConduite_AttendreSePoster"
                 local entities = self.params.entities
-                local entitiesToSwitchOffRadio = {}
-                if typeOrder == "Rep_OrderConduite_ArreterSilenceRadio" or "ActivateRadioCommunication" then -- Il faut enlever le silence radio à tous les pions
-                    local automatkn = CreateKnowledge( sword.military.world.Company, DEC_GetAutomate( entities[1].source ) )
-                    entitiesToSwitchOffRadio = integration.getEntitiesFromAutomat( automatkn, "none", true )
-                    entities = entitiesToSwitchOffRadio
+                if typeOrder == "Rep_OrderConduite_ArreterSilenceRadio" 
+                             or "ActivateRadioCommunication" 
+                             or "Rep_OrderConduite_MettreTenueNBC" 
+                             or "ActivateNBCProtection"  then -- Il faut enlever le silence radio à tous les pions
+                    local automatkn = CreateKnowledge( world.Company, DEC_GetAutomate( entities[1].source ) )
+                    local allEntities = integration.getEntitiesFromAutomat( automatkn, "none", true )
+                    entities = allEntities
                 end
                 for _, entity in pairs( entities ) do
                     local echelon =  F_Pion_GeteEtatEchelon( entity.source )
@@ -62,6 +66,6 @@ rootnode
 node "SendFragOrder"
 {
     select = function( self )
-        meKnowledge:sendFragOrder( self.params.entity, self.params.fragOrder  )
+        meKnowledge:sendFragOrder( self.params.entity, self.params.fragOrder )
     end
 }

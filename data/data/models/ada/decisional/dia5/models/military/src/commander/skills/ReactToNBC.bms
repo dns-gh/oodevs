@@ -1,37 +1,34 @@
--------------------------------------------------------------------------------
--- ReactToNBC
--- @author MGD
--- @created 2011-01-20
+-- **************************************************************************** 
+-- React to nbc: order subordinate units to self protect from NBC contamination
 --
--- This file is part of a MASA library or program.
--- Refer to the included end-user license agreement for restrictions.
---
--- Copyright (c) 2010 MASA Group
-------------------------------------------------------------------------------
-
+-- ****************************************************************************
 rootnode
 {
-    connections = { skill.nodes.sendFragOrder },
+    connections = { skill.nodes.SendFragOrder },
 
-    done = function( self ) end,
-    
     activate = function( self )
         local Activate = Activate
-        
         if meKnowledge:isCommanding() and ( meKnowledge:isContaminated() or meKnowledge:isPoisoned() ) then
-            Activate( skill.nodes.sendFragOrder, 1 ) 
+            Activate( skill.nodes.SendFragOrder, 1 ) 
         end
     end
 }
 
-node "sendFragOrder"
+-- **************************************************************************** 
+-- SendFragOrder
+--
+-- ****************************************************************************
+node "SendFragOrder"
 {
-    connections = { skill.links.manageFragOrder };
-    
+    connections = { skill.links.manageFragOrder },
+
     create = function( self )
-        local fragOrder = CreateFragOrder("Rep_OrderConduite_MettreTenueNBC")
-        local fragOrderKn = CreateKnowledge( world.FragOrder, fragOrder )       
-            
-        Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = integration.defaultPlatoonInCompany () } )
+        local subordinates = commander.queries.getSubordinateUnits[ "execute" ]( {} )
+        if next( subordinates ) then -- if subordinate order them to self protect from nbc contamination
+            local fragOrders = commander.queries.getNBCFragOrders[ "execute" ]( {} )
+            if #fragOrders > 0 then
+                Activate( skill.links.manageFragOrder, 1, { fragOrders = fragOrders , entities = subordinates } )
+            end
+        end
     end
 }

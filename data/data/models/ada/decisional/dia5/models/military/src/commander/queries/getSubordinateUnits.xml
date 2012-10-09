@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.queries.getSubordinateUnits" source-version="1.0.0">
+	<description>Returns the commanding agent of the company (all subordinate units).</description>
+	<target name="subordinateUnit">
+		<type>
+			<class name="world.PlatoonAlly"/>
+		</type>
+	</target>
+</query>
