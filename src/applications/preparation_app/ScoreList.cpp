@@ -115,10 +115,9 @@ void ScoreList::NotifyCreated( const Score_ABC& element )
 // -----------------------------------------------------------------------------
 void ScoreList::NotifyUpdated( const Score_ABC& element )
 {
-    QTreeWidgetItem* top = scores_->invisibleRootItem();
-    for( int i = 0; i < top->childCount(); ++i )
+    for( int i = 0; i < scores_->topLevelItemCount(); ++i )
     {
-        QTreeWidgetItem* item = top->child( i );
+        QTreeWidgetItem* item = scores_->topLevelItem( i );
         if( item->data( 0, Qt::UserRole + 1 ).value< const Score_ABC* >() == &element )
             item->setText( 0, element.GetName() );
     }
@@ -130,10 +129,9 @@ void ScoreList::NotifyUpdated( const Score_ABC& element )
 // -----------------------------------------------------------------------------
 void ScoreList::NotifyDeleted( const Score_ABC& element )
 {
-    QTreeWidgetItem* top = scores_->invisibleRootItem();
-    for( int i = 0; i < top->childCount(); ++i )
+    for( int i = 0; i < scores_->topLevelItemCount(); ++i )
     {
-        QTreeWidgetItem* item = top->child( i );
+        QTreeWidgetItem* item = scores_->topLevelItem( i );
         if( item->data( 0, Qt::UserRole + 1 ).value< const Score_ABC* >() == &element )
         {
             delete item;

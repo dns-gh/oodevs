@@ -49,7 +49,7 @@
 DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel, const kernel::Profile_ABC& profile,
                                   gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
                                   const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::LightingProxy& lighting, const gui::Painter_ABC& painter,
-                                  gui::ItemFactory_ABC& factory, gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools, gui::GlSelector& selector )
+                                  gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools, gui::GlSelector& selector )
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, profile );
@@ -68,7 +68,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     profileDialog_ = new ProfileDialog( parent, controllers, symbols, model, staticModel.extensions_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
     scoreDialog_ = new ScoreDialog( parent, controllers, model.scores_, paramLayer, staticModel, config, tools );
-    successFactorDialog_ = new SuccessFactorDialog( parent, controllers, model.successFactors_, factory, staticModel.successFactorActionTypes_, model.scores_ );
+    successFactorDialog_ = new SuccessFactorDialog( parent, controllers, model.successFactors_, staticModel.successFactorActionTypes_, model.scores_ );
     exerciseDialog_ = new ExerciseDialog( parent, controllers, model.exercise_, config );
     consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, const_cast< tools::RealFileLoaderObserver_ABC& >( static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() ) );
     performanceDialog_ = new PerformanceDialog( parent, model, staticModel );

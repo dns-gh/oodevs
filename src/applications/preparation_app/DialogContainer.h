@@ -26,7 +26,6 @@ namespace gui
     class ConsistencyDialog_ABC;
     class EntitySymbols;
     class GlSelector;
-    class ItemFactory_ABC;
     class LightingProxy;
     class Painter_ABC;
     class ParametersLayer;
@@ -65,7 +64,7 @@ public:
              DialogContainer( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, const kernel::Profile_ABC& profile,
                               gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
                               const tools::ExerciseConfig& config, gui::SymbolIcons& icons, gui::LightingProxy& lighting, const gui::Painter_ABC& painter,
-                              gui::ItemFactory_ABC& factory, gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools, gui::GlSelector& selector );
+                              gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools, gui::GlSelector& selector );
     virtual ~DialogContainer();
     //@}
 

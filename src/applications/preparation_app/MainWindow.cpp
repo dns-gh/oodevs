@@ -180,7 +180,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::RichItemFactory* factory = new gui::RichItemFactory( this );
 
     // Dialogs
-    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, *symbols, *lighting_, *pPainter_, *factory, *paramLayer, *glProxy_, *selector_ ) );
+    dialogContainer_.reset( new DialogContainer( this, controllers, model_, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, *symbols, *lighting_, *pPainter_, *paramLayer, *glProxy_, *selector_ ) );
 
     // ToolBars
     toolbarContainer_.reset( new ToolbarContainer( this, controllers, staticModel, *glProxy_, *locationsLayer, *eventStrategy_, *paramLayer, model_.urban_, dialogContainer_->GetRemoveBlocksDialog() ) );

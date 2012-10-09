@@ -36,7 +36,7 @@ namespace
 // Name: SuccessFactorDialog constructor
 // Created: SBO 2009-06-12
 // -----------------------------------------------------------------------------
-SuccessFactorDialog::SuccessFactorDialog( QWidget* parent, kernel::Controllers& controllers, SuccessFactorsModel& model, gui::ItemFactory_ABC& factory, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores )
+SuccessFactorDialog::SuccessFactorDialog( QWidget* parent, kernel::Controllers& controllers, SuccessFactorsModel& model, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores )
     : QDialog( parent, "SuccessFactorDialog" )
     , model_( model )
     , scores_( scores )
@@ -47,7 +47,7 @@ SuccessFactorDialog::SuccessFactorDialog( QWidget* parent, kernel::Controllers& 
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 4 );
     {
-        SuccessFactorList* factors = new SuccessFactorList( this, controllers, factory, actionTypes, scores );
+        SuccessFactorList* factors = new SuccessFactorList( this, controllers, actionTypes, scores, model );
         grid->addWidget( factors, 0, 0 );
         connect( factors, SIGNAL( Deleted( const SuccessFactor& ) ), SLOT( OnDelete( const SuccessFactor& ) ) );
     }

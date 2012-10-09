@@ -42,7 +42,6 @@ class Publisher_ABC;
 class QLineEdit;
 class Q3VBox;
 class QSpinBox;
-class Q3ListBox;
 
 // =============================================================================
 /** @class  MedicalCapacityUpdateDialog

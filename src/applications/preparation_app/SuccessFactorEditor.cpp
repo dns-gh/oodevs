@@ -14,14 +14,17 @@
 #include "SuccessFactorConditionsEditor.h"
 #include "SuccessFactorProfileList.h"
 #include "preparation/SuccessFactor.h"
+#include "preparation/SuccessFactorsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorEditor constructor
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& controllers, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores )
+SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& controllers, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores, SuccessFactorsModel& success )
     : QDialog( parent, "SuccessFactorEditor" )
+    , success_( success )
     , current_( 0 )
+    , nameChanged_( false )
 {
     setCaption( tr( "Success factor editor" ) );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
@@ -33,6 +36,7 @@ SuccessFactorEditor::SuccessFactorEditor( QWidget* parent, kernel::Controllers& 
         new QLabel( tr( "Name:" ), box );
         name_ = new QLineEdit( box );
         grid->addMultiCellWidget( box, 0, 0, 0, 1 );
+        connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( NameChanged() ) );
     }
     {
         Q3GroupBox* box = new Q3HGroupBox( tr( "Profiles" ), this );
@@ -91,7 +95,13 @@ void SuccessFactorEditor::Commit()
 {
     if( current_ )
     {
-        current_->SetName( name_->text() );
+        if( nameChanged_ )
+        {
+            success_.Remove( current_->GetName() );
+            current_->SetName( name_->text() );
+            success_.Register( current_->GetName(), *current_ );
+            nameChanged_ = false;
+        }
         profiles_->CommitTo( current_->GetProfiles() );
         conditions_->CommitTo( current_->GetConditions() );
         actions_->CommitTo( current_->GetActions() );
@@ -106,6 +116,15 @@ void SuccessFactorEditor::Commit()
 void SuccessFactorEditor::Cancel()
 {
     reject();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SuccessFactorEditor::NameChanged
+// Created: JSR 2012-10-09
+// -----------------------------------------------------------------------------
+void SuccessFactorEditor::NameChanged()
+{
+    nameChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------

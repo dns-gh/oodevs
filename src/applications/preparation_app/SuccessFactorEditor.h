@@ -17,6 +17,7 @@ namespace kernel
 
 class ScoresModel;
 class SuccessFactor;
+class SuccessFactorsModel;
 class SuccessFactorActionsEditor;
 class SuccessFactorActionTypes;
 class SuccessFactorConditionsEditor;
@@ -35,7 +36,7 @@ class SuccessFactorEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorEditor( QWidget* parent, kernel::Controllers& controllers, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores );
+             SuccessFactorEditor( QWidget* parent, kernel::Controllers& controllers, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores, SuccessFactorsModel& success );
     virtual ~SuccessFactorEditor();
     //@}
 
@@ -49,6 +50,7 @@ private slots:
     //@{
     void Commit();
     void Cancel();
+    void NameChanged();
     //@}
 
 private:
@@ -66,12 +68,14 @@ private:
 private:
     //! @name Member data
     //@{
+    SuccessFactorsModel& success_;
     SuccessFactor* current_;
     QLineEdit* name_;
     SuccessFactorProfileList* profiles_;
     SuccessFactorConditionsEditor* conditions_;
     SuccessFactorActionsEditor* actions_;
     QPushButton* ok_;
+    bool nameChanged_;
     //@}
 };
 

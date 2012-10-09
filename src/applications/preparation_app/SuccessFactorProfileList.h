@@ -26,7 +26,7 @@ class UserProfile;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorProfileList : public Q3ListBox
+class SuccessFactorProfileList : public QListWidget
                                , public tools::Observer_ABC
                                , public tools::ElementObserver_ABC< UserProfile >
 {
@@ -44,12 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SuccessFactorProfileList( const SuccessFactorProfileList& );            //!< Copy constructor
-    SuccessFactorProfileList& operator=( const SuccessFactorProfileList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Select( const UserProfile& profile );

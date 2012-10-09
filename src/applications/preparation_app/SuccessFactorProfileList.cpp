@@ -18,10 +18,10 @@
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
 SuccessFactorProfileList::SuccessFactorProfileList( QWidget* parent, kernel::Controllers& controllers )
-    : Q3ListBox( parent )
+    : QListWidget( parent )
     , controllers_( controllers )
 {
-    setSelectionMode( Q3ListBox::Multi );
+    setSelectionMode( QAbstractItemView::MultiSelection );
     controllers_.Register( *this );
 }
 
@@ -40,7 +40,7 @@ SuccessFactorProfileList::~SuccessFactorProfileList()
 // -----------------------------------------------------------------------------
 void SuccessFactorProfileList::StartEdit( const ProfileSelection& profiles )
 {
-    clearSelection();
+    selectionModel()->clearSelection();
     tools::Iterator< const UserProfile& > it( profiles.CreateIterator() );
     while( it.HasMoreElements() )
         Select( it.NextElement() );
@@ -53,8 +53,9 @@ void SuccessFactorProfileList::StartEdit( const ProfileSelection& profiles )
 void SuccessFactorProfileList::CommitTo( ProfileSelection& profiles ) const
 {
     profiles.Clear();
-    for( unsigned int i = 0; i < count() && i < profiles_.size(); ++i )
-        if( isSelected( i ) )
+    const int profileSize = static_cast< int >( profiles_.size() );
+    for( int i = 0; i < count() && i < profileSize; ++i )
+        if( item( i )->isSelected() )
             if( const UserProfile* profile = profiles_.at( i ) )
                 profiles.Register( profile->GetLogin(), *profile );
 }
@@ -67,7 +68,7 @@ void SuccessFactorProfileList::Select( const UserProfile& profile )
 {
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
-        setSelected( static_cast< int >( std::distance( profiles_.begin(), it ) ), true );
+        item( static_cast< int >( std::distance( profiles_.begin(), it ) ) )->setSelected( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +78,7 @@ void SuccessFactorProfileList::Select( const UserProfile& profile )
 void SuccessFactorProfileList::NotifyCreated( const UserProfile& profile )
 {
     profiles_.push_back( &profile );
-    insertItem( profile.GetLogin() );
+    addItem( profile.GetLogin() );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,8 +91,7 @@ void SuccessFactorProfileList::NotifyUpdated( const UserProfile& profile )
     if( it != profiles_.end() )
     {
         const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
-        if( text( index ) != profile.GetLogin() )
-            changeItem( profile.GetLogin(), index );
+        item( index )->setText( profile.GetLogin() );
     }
 }
 
@@ -104,7 +104,7 @@ void SuccessFactorProfileList::NotifyDeleted( const UserProfile& profile )
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
     {
-        removeItem( static_cast< int >( std::distance( profiles_.begin(), it ) ) );
+        delete takeItem( static_cast< int >( std::distance( profiles_.begin(), it ) ) );
         profiles_.erase( it );
     }
 }

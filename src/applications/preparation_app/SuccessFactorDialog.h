@@ -10,11 +10,6 @@
 #ifndef __SuccessFactorDialog_h_
 #define __SuccessFactorDialog_h_
 
-namespace gui
-{
-    class ItemFactory_ABC;
-}
-
 namespace kernel
 {
     class Controllers;
@@ -38,7 +33,7 @@ class SuccessFactorDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorDialog( QWidget* parent, kernel::Controllers& controllers, SuccessFactorsModel& model, gui::ItemFactory_ABC& factory, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores );
+             SuccessFactorDialog( QWidget* parent, kernel::Controllers& controllers, SuccessFactorsModel& model, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores );
     virtual ~SuccessFactorDialog();
     //@}
 

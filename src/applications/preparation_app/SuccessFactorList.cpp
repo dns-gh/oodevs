@@ -14,19 +14,21 @@
 #include "clients_kernel/Controllers.h"
 #include "preparation/SuccessFactor.h"
 
+Q_DECLARE_METATYPE( const SuccessFactor* )
+
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorList constructor
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-SuccessFactorList::SuccessFactorList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores )
+SuccessFactorList::SuccessFactorList( QWidget* parent, kernel::Controllers& controllers, const SuccessFactorActionTypes& actionTypes, const ScoresModel& scores, SuccessFactorsModel& success )
     : Q3VBox( parent )
     , controllers_( controllers )
-    , factory_( factory )
-    , factors_( new gui::ListDisplayer< SuccessFactorList >( this, *this, factory ) )
-    , editor_( new SuccessFactorEditor( this, controllers_, actionTypes, scores ) )
+    , factors_( new QTreeWidget( this ) )
+    , editor_( new SuccessFactorEditor( this, controllers_, actionTypes, scores, success ) )
 {
     layout()->setAlignment( Qt::AlignRight );
-    factors_->AddColumn( tr( "Name" ) );
+    factors_->setHeaderLabels( QStringList( tr( "Name" ) ) );
+    factors_->setRootIsDecorated( false );
     {
         Q3HBox* box = new Q3HBox( this );
         editButton_ = new QPushButton( tr( "Edit..." ), box );
@@ -34,7 +36,7 @@ SuccessFactorList::SuccessFactorList( QWidget* parent, kernel::Controllers& cont
         connect( editButton_, SIGNAL( clicked() ), SLOT( OnEdit() ) );
         connect( deleteButton_, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     }
-    connect( factors_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnEdit() ) );
+    connect( factors_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnEdit() ) );
     controllers_.Register( *this );
 }
 
@@ -74,8 +76,10 @@ void SuccessFactorList::OnDelete()
 // -----------------------------------------------------------------------------
 void SuccessFactorList::NotifyCreated( const SuccessFactor& element )
 {
-    gui::ValuedListItem* item = factory_.CreateItem( factors_ );
-    Display( element, item );
+    QTreeWidgetItem* item = new QTreeWidgetItem();
+    item->setText( 0, element.GetName() );
+    item->setData( 0, Qt::UserRole + 1, QVariant::fromValue( &element ) );
+    factors_->addTopLevelItem( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,8 +88,12 @@ void SuccessFactorList::NotifyCreated( const SuccessFactor& element )
 // -----------------------------------------------------------------------------
 void SuccessFactorList::NotifyUpdated( const SuccessFactor& element )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &element, factors_->firstChild() ) )
-        Display( element, item );
+    for( int i = 0; i < factors_->topLevelItemCount(); ++i )
+    {
+        QTreeWidgetItem* item = factors_->topLevelItem( i );
+        if( item->data( 0, Qt::UserRole + 1 ).value< const SuccessFactor* >() == &element )
+            item->setText( 0, element.GetName() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -94,17 +102,15 @@ void SuccessFactorList::NotifyUpdated( const SuccessFactor& element )
 // -----------------------------------------------------------------------------
 void SuccessFactorList::NotifyDeleted( const SuccessFactor& element )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &element, factors_->firstChild() ) )
-        factors_->removeItem( item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SuccessFactorList::Display
-// Created: SBO 2009-06-15
-// -----------------------------------------------------------------------------
-void SuccessFactorList::Display( const SuccessFactor& factor, gui::ValuedListItem* item )
-{
-    item->SetNamed( factor );
+    for( int i = 0; i < factors_->topLevelItemCount(); ++i )
+    {
+        QTreeWidgetItem* item = factors_->topLevelItem( i );
+        if( item->data( 0, Qt::UserRole + 1 ).value< const SuccessFactor* >() == &element )
+        {
+            delete item;
+            return;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +119,7 @@ void SuccessFactorList::Display( const SuccessFactor& factor, gui::ValuedListIte
 // -----------------------------------------------------------------------------
 SuccessFactor* SuccessFactorList::FindSelected() const
 {
-    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( factors_->selectedItem() ) )
-        return item->GetValue< SuccessFactor >();
+    if( QTreeWidgetItem* selected = factors_->currentItem() )
+        return const_cast< SuccessFactor* >( selected->data( 0, Qt::UserRole + 1 ).value< const SuccessFactor* >() );
     return 0;
 }

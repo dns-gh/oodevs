@@ -367,7 +367,6 @@ void ScoreEditor::NameChanged()
     AllowCommit();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ScoreEditor::Draw
 // Created: FPO 2011-07-18
