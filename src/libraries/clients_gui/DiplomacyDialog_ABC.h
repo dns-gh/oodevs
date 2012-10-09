@@ -82,6 +82,7 @@ private:
     const kernel::Profile_ABC& profile_;
     QTableWidget* table_;
     T_Teams teams_;
+    int minCellWidth_;
     //@}
 };
 

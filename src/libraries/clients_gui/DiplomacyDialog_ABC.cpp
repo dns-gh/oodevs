@@ -19,20 +19,26 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "Tools.h"
 
+using namespace kernel;
 using namespace gui;
 
-Q_DECLARE_METATYPE( const kernel::Karma* )
+Q_DECLARE_METATYPE( const Karma* )
 
 #define KarmaRole ( Qt::UserRole + 1 )
 #define ValueSetRole ( Qt::UserRole + 2 )
 
 namespace
 {
-    QColor GetColor( const kernel::Karma& karma )
+    const int rowHeight = 40;
+    const int textMargin = 27;
+    const int maxWidth = 1024;
+    const int maxHeight = 768;
+
+    QColor GetColor( const Karma& karma )
     {
-        if( karma == kernel::Karma::friend_ )
+        if( karma == Karma::friend_ )
             return QColor( 200, 200, 255 );
-        if( karma == kernel::Karma::enemy_ )
+        if( karma == Karma::enemy_ )
             return QColor( 255, 200, 200 );
         return QColor( 200, 255, 200 );
     }
@@ -50,28 +56,28 @@ namespace
              // NOTHING
          }
 
-        virtual QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
+        virtual QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index ) const
         {
             if( index.row() == index.column() )
                 return 0;
             QComboBox* editor = new QComboBox( parent );
-            editor->addItem( kernel::Karma::friend_ .GetName(), QVariant::fromValue( static_cast< const kernel::Karma* >( &kernel::Karma::friend_ ) ) );
-            editor->addItem( kernel::Karma::enemy_  .GetName(), QVariant::fromValue( static_cast< const kernel::Karma* >( &kernel::Karma::enemy_ ) ) );
-            editor->addItem( kernel::Karma::neutral_.GetName(), QVariant::fromValue( static_cast< const kernel::Karma* >( &kernel::Karma::neutral_ ) ) );
+            editor->addItem( Karma::friend_ .GetName(), QVariant::fromValue( static_cast< const Karma* >( &Karma::friend_ ) ) );
+            editor->addItem( Karma::enemy_  .GetName(), QVariant::fromValue( static_cast< const Karma* >( &Karma::enemy_ ) ) );
+            editor->addItem( Karma::neutral_.GetName(), QVariant::fromValue( static_cast< const Karma* >( &Karma::neutral_ ) ) );
             return editor;
         }
 
-        virtual void setEditorData( QWidget *editor, const QModelIndex &index) const
+        virtual void setEditorData( QWidget *editor, const QModelIndex &index ) const
         {
             QComboBox* comboBox = static_cast< QComboBox* >( editor );
-            const kernel::Karma* karma = index.model()->data( index, KarmaRole ).value< const kernel::Karma* >();
+            const Karma* karma = index.model()->data( index, KarmaRole ).value< const Karma* >();
             comboBox->setCurrentIndex( comboBox->findData( QVariant::fromValue( karma ) ) );
         }
 
         virtual void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const
         {
             QComboBox* comboBox = static_cast< QComboBox* >( editor );
-            const kernel::Karma* karma = comboBox->itemData( comboBox->currentIndex() ).value< const kernel::Karma* >();
+            const Karma* karma = comboBox->itemData( comboBox->currentIndex() ).value< const Karma* >();
             model->setData( index, karma->GetName(),  Qt::DisplayRole);
             model->setData( index, QVariant::fromValue( karma ), KarmaRole );
             model->setData( index, GetColor( *karma ), Qt::BackgroundColorRole );
@@ -96,14 +102,15 @@ namespace
 // Name: DiplomacyDialog_ABC constructor
 // Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
-DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
+DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, Controllers& controllers, const Profile_ABC& profile )
     : ModalDialog( parent, "ChangeDiplomacyDialog" )
     , controllers_( controllers )
     , profile_    ( profile )
+    , minCellWidth_( 0 )
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     setCaption( tools::translate( "gui::DiplomacyDialog_ABC", "Diplomacy" ) );
-    setMaximumSize( 1024, 768);
+    setMaximumSize( maxWidth, maxHeight );
 
     // Table
     table_ = new QTableWidget( this );
@@ -111,6 +118,13 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& 
     table_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     table_->verticalHeader()->setResizeMode( QHeaderView::Stretch );
     table_->setItemDelegate( new DiplomacyItemDelegate() );
+    table_->setEditTriggers( QAbstractItemView::SelectedClicked | QAbstractItemView::DoubleClicked | QAbstractItemView::CurrentChanged );
+
+    QFontMetrics fm( table_->fontMetrics() );
+    minCellWidth_ = std::max( fm.width( Karma::friend_.GetName() ), minCellWidth_ );
+    minCellWidth_ = std::max( fm.width( Karma::enemy_.GetName() ), minCellWidth_ );
+    minCellWidth_ = std::max( fm.width( Karma::neutral_.GetName() ), minCellWidth_ );
+    minCellWidth_ = std::max( fm.width( Karma::unknown_.GetName() ), minCellWidth_ );
 
     // Buttons
     QPushButton* okBtn     = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Ok" ), this );
@@ -150,15 +164,16 @@ DiplomacyDialog_ABC::~DiplomacyDialog_ABC()
 // -----------------------------------------------------------------------------
 void DiplomacyDialog_ABC::Validate()
 {
-    for( unsigned int i = 0; i < teams_.size(); ++i )
-        for( unsigned int j = 0; j < teams_.size(); ++j )
+    const int nTeams = static_cast< int >( teams_.size() );
+    for( int i = 0; i < nTeams; ++i )
+        for( int j = 0; j < nTeams; ++j )
         {
             if( i == j )
                 continue;
-            kernel::Karma karma = kernel::Karma::neutral_;
+            Karma karma = Karma::neutral_;
             QTableWidgetItem* item = table_->item( i, j );
             if( item && item->data( KarmaRole ).isValid() )
-                karma = *item->data( KarmaRole ).value< const kernel::Karma* >();
+                karma = *item->data( KarmaRole ).value< const Karma* >();
             SetDiplomacy( *teams_[ i ], *teams_[ j ], karma );
         }
     hide();
@@ -177,7 +192,7 @@ void DiplomacyDialog_ABC::Reject()
 // Name: DiplomacyDialog_ABC::NotifyCreated
 // Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
-void DiplomacyDialog_ABC::NotifyCreated( const kernel::Team_ABC& team )
+void DiplomacyDialog_ABC::NotifyCreated( const Team_ABC& team )
 {
     teams_.push_back( &team );
 }
@@ -186,7 +201,7 @@ void DiplomacyDialog_ABC::NotifyCreated( const kernel::Team_ABC& team )
 // Name: DiplomacyDialog_ABC::NotifyDeleted
 // Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
-void DiplomacyDialog_ABC::NotifyDeleted( const kernel::Team_ABC& team )
+void DiplomacyDialog_ABC::NotifyDeleted( const Team_ABC& team )
 {
     T_Teams::iterator it = std::find( teams_.begin(), teams_.end(), &team );
     if( it != teams_.end() )
@@ -197,7 +212,7 @@ void DiplomacyDialog_ABC::NotifyDeleted( const kernel::Team_ABC& team )
 // Name: DiplomacyDialog_ABC::NotifyContextMenu
 // Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
-void DiplomacyDialog_ABC::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
+void DiplomacyDialog_ABC::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
 {
     if( profile_.CanDoMagic( team ) )
         menu.InsertItem( "Command", tools::translate( "gui::DiplomacyDialog_ABC", "Diplomacy" ), this, SLOT( show() ) );
@@ -210,8 +225,9 @@ void DiplomacyDialog_ABC::NotifyContextMenu( const kernel::Team_ABC& team, kerne
 void DiplomacyDialog_ABC::showEvent( QShowEvent* )
 {
     UpdateTable();
-    for( unsigned int i = 0; i < teams_.size(); ++i )
-        for( unsigned int j = 0; j < teams_.size(); ++j )
+    const int nTeams = static_cast< int >( teams_.size() );
+    for( int i = 0; i < nTeams; ++i )
+        for( int j = 0; j < nTeams; ++j )
         {
             if( i == j )
             {
@@ -220,12 +236,12 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
             }
             else
             {
-                const kernel::Karma& diplomacy = teams_[ i ]->Get< kernel::Diplomacies_ABC >().GetDiplomacy( *teams_[ j ] );
-                const kernel::Karma* karma = &kernel::Karma::neutral_;
-                if( diplomacy == kernel::Karma::friend_ )
-                    karma = &kernel::Karma::friend_;
-                if( diplomacy == kernel::Karma::enemy_ )
-                    karma = &kernel::Karma::enemy_;
+                const Karma& diplomacy = teams_[ i ]->Get< Diplomacies_ABC >().GetDiplomacy( *teams_[ j ] );
+                const Karma* karma = &Karma::neutral_;
+                if( diplomacy == Karma::friend_ )
+                    karma = &Karma::friend_;
+                if( diplomacy == Karma::enemy_ )
+                    karma = &Karma::enemy_;
                 QTableWidgetItem* item = table_->item( i, j );
                 if( !item )
                 {
@@ -239,7 +255,7 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
                 item->setData( Qt::BackgroundColorRole, GetColor( *karma ) );
             }
         }
-    table_->adjustSize();
+    adjustSize();
 }
 
 // -----------------------------------------------------------------------------
@@ -248,19 +264,21 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void DiplomacyDialog_ABC::UpdateTable()
 {
-    table_->setColumnCount( static_cast< int >( teams_.size() ) );
-    table_->setRowCount( static_cast< int >( teams_.size() ) );
-    int maxName = 0;
+    const int nTeams = static_cast< int >( teams_.size() );
+    table_->setColumnCount( static_cast< int >( nTeams ) );
+    table_->setRowCount( static_cast< int >( nTeams ) );
+    int maxNameWidth = 0;
     QStringList list;
-    for( unsigned i = 0; i < teams_.size(); ++i )
+    for( std::size_t i = 0; i < nTeams; ++i )
     {
         const QString name = teams_.at( i )->GetName();
         list << name;
-        maxName = std::max< int >( name.size(), maxName );
+        maxNameWidth = std::max( table_->fontMetrics().width( name ), maxNameWidth );
     }
     table_->setVerticalHeaderLabels( list );
     table_->setHorizontalHeaderLabels( list );
-    int newWidth = static_cast< int >( teams_.size() * maxName * 10 );
-    int newHeight = static_cast< int >( teams_.size() * 40 );
-    table_->setMinimumSize( newWidth < maximumWidth() - 20 ? newWidth : maximumWidth() - 20, newHeight < maximumHeight() - 80 ? newHeight : maximumHeight() - 80 );
+    int cellWidth = std::max( maxNameWidth, minCellWidth_ ) + textMargin;
+    int newWidth = std::min( ( nTeams + 1 ) * cellWidth, maxWidth );
+    int newHeight = std::min( ( nTeams + 1 ) * rowHeight, maxHeight );
+    table_->setMinimumSize( newWidth, newHeight );
 }
