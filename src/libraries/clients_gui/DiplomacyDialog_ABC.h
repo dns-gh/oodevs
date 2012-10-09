@@ -86,7 +86,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Profile_ABC& profile_;
-    Q3Table* table_;
+    QTableWidget* table_;
     T_Teams teams_;
     //@}
 };

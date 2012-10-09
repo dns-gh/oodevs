@@ -724,9 +724,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\AboutDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\DiplomacyCell.cpp">
-      <Filter>Source Files\Dialogs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\DiplomacyDialog_ABC.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
@@ -1637,9 +1634,6 @@
       <Filter>Source Files\Preferences\Density</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\AboutDialog.h">
-      <Filter>Source Files\Dialogs</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\DiplomacyCell.h">
       <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DiplomacyDialog_ABC.h">
