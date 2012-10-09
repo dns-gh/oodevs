@@ -14,22 +14,24 @@
 #include "indicators/Primitive.h"
 #include "indicators/Primitives.h"
 
+Q_DECLARE_METATYPE( const indicators::Primitive* )
+
 // -----------------------------------------------------------------------------
 // Name: ScorePrimitivesPage constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& primitives, const T_Filter& filter )
+ScorePrimitivesPage::ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, const indicators::Primitives& primitives, const T_Filter& filter )
     : Q3VBox( parent )
     , controllers_( controllers )
     , filter_( filter )
     , primitives_( primitives )
-    , list_( new gui::ListDisplayer< ScorePrimitivesPage >( this, *this, factory ) )
+    , list_( new QTreeWidget( this ) )
 {
     {
-        list_->AddColumn( tr( "Name" ) );
-        list_->header()->hide();
-        connect( list_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChanged() ) );
-        connect( list_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnInsert() ) );
+        list_->setRootIsDecorated( false );
+        list_->setHeaderHidden( true );
+        connect( list_, SIGNAL( itemSelectionChanged() ), SLOT( OnSelectionChanged() ) );
+        connect( list_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnInsert() ) );
     }
     {
         QPushButton* insert = new QPushButton( tr( "Insert" ), this );
@@ -48,22 +50,13 @@ ScorePrimitivesPage::~ScorePrimitivesPage()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScorePrimitivesPage::Display
-// Created: SBO 2009-04-20
-// -----------------------------------------------------------------------------
-void ScorePrimitivesPage::Display( const indicators::Primitive& primitive, kernel::Displayer_ABC& /*displayer*/, gui::ValuedListItem* item )
-{
-    item->SetNamed( primitive );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ScorePrimitivesPage::OnInsert
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
 void ScorePrimitivesPage::OnInsert()
 {
-    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
-        if( const indicators::Primitive* primitive = item->GetValue< indicators::Primitive >() )
+     if( QTreeWidgetItem* item = list_->currentItem() )
+         if( const indicators::Primitive* primitive = item->data( 0, Qt::UserRole + 1 ).value< const indicators::Primitive* >() )
             emit Insert( primitive->GetPrototype() );
 }
 
@@ -73,15 +66,18 @@ void ScorePrimitivesPage::OnInsert()
 // -----------------------------------------------------------------------------
 void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelLoaded& )
 {
-    tools::Resolver< const indicators::Primitive, QString > subset;
     tools::Iterator< const indicators::Primitive& > it( primitives_.CreateIterator() );
     while( it.HasMoreElements() )
     {
         const indicators::Primitive& element = it.NextElement();
         if( filter_( element ) )
-            subset.Register( element.GetName(), element );
+        {
+            QTreeWidgetItem* item = new QTreeWidgetItem();
+            item->setText( 0, element.GetName() );
+            item->setData( 0, Qt::UserRole + 1, QVariant::fromValue( &element ) );
+            list_->addTopLevelItem( item );
+        }
     }
-    list_->DeleteTail( list_->DisplayList( subset.CreateIterator() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +86,7 @@ void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelLoaded& )
 // -----------------------------------------------------------------------------
 void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
-    list_->clear();
+    list_->model()->removeRows( 0, list_->model()->columnCount() );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +95,7 @@ void ScorePrimitivesPage::NotifyUpdated( const kernel::ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void ScorePrimitivesPage::OnSelectionChanged()
 {
-    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( list_->selectedItem() ) )
-        if( const indicators::Primitive* primitive = item->GetValue< indicators::Primitive >() )
+    if( QTreeWidgetItem* item = list_->currentItem() )
+        if( const indicators::Primitive* primitive = item->data( 0, Qt::UserRole + 1 ).value< const indicators::Primitive* >() )
             emit Selected( *primitive );
 }

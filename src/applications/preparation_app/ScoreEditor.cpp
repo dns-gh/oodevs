@@ -127,7 +127,6 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
         name_ = new QLineEdit( box );
         name_->setValidator( new NameValidator( name_, model, current_ ) );
         grid->addWidget( box, 0, 0 );
-        connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( NameChanged() ) );
     }
     {
         QTabWidget* tabs = new QTabWidget( this );
@@ -147,7 +146,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
                 connect( formula_, SIGNAL( textChanged() ), SLOT( CheckFormula() ) );
             }
             {
-                ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( page, controllers, factory, staticModel.indicators_ );
+                ScorePrimitivesLibrary* library = new ScorePrimitivesLibrary( page, controllers, staticModel.indicators_ );
                 pageLayout->addWidget( library, 1, 0 );
                 connect( library, SIGNAL( Selected( const indicators::Primitive& ) ), SLOT( OnSelectPrimitive( const indicators::Primitive& ) ) );
                 connect( library, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
@@ -207,6 +206,7 @@ void ScoreEditor::StartEdit( Score_ABC& score )
     current_ = &score;
     setCaption( tr( "Score edition - %1 " ).arg( score.GetName() ) );
     name_->setText( score.GetName() );
+    connect( name_, SIGNAL( textChanged( const QString& ) ), SLOT( NameChanged() ) );
     variables_->StartEdit( score.GetVariables() );
     gauge_->StartEdit( score.GetGauge() );
     profiles_->StartEdit( score.GetProfiles() );
@@ -232,7 +232,7 @@ void ScoreEditor::Commit()
 // -----------------------------------------------------------------------------
 void ScoreEditor::CommitTo( Score_ABC& score )
 {
-    if( nameChanged_ )
+    if( &score == current_ && nameChanged_ )
     {
         model_.Remove( score.GetName() );
         model_.Register( name_->text(), score );
@@ -262,6 +262,7 @@ void ScoreEditor::Cancel()
 // -----------------------------------------------------------------------------
 void ScoreEditor::closeEvent( QCloseEvent* e )
 {
+    disconnect( name_, SIGNAL( textChanged( const QString& ) ) );
     QDialog::closeEvent( e );
     emit Hide();
 }

@@ -17,11 +17,6 @@ namespace kernel
     class Controllers;
 }
 
-namespace gui
-{
-    class ItemFactory_ABC;
-}
-
 namespace indicators
 {
     class Primitive;
@@ -44,7 +39,7 @@ class ScorePrimitivesLibrary : public QTabWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& primitives );
+             ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, const indicators::Primitives& primitives );
     virtual ~ScorePrimitivesLibrary();
     //@}
 

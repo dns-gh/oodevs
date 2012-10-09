@@ -32,11 +32,11 @@ namespace
 // Name: ScorePrimitivesLibrary constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScorePrimitivesLibrary::ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& primitives )
+ScorePrimitivesLibrary::ScorePrimitivesLibrary( QWidget* parent, kernel::Controllers& controllers, const indicators::Primitives& primitives )
     : QTabWidget( parent )
 {
-    AddPage( tr( "Data" )     , new ScorePrimitivesPage( this, controllers, factory, primitives, boost::bind( &::FilterExtractors, _1 ) ) );
-    AddPage( tr( "Functions" ), new ScorePrimitivesPage( this, controllers, factory, primitives, boost::bind( &::FilterUserFunctions, _1 ) ) );
+    AddPage( tr( "Data" )     , new ScorePrimitivesPage( this, controllers, primitives, boost::bind( &::FilterExtractors, _1 ) ) );
+    AddPage( tr( "Functions" ), new ScorePrimitivesPage( this, controllers, primitives, boost::bind( &::FilterUserFunctions, _1 ) ) );
 }
 
 // -----------------------------------------------------------------------------

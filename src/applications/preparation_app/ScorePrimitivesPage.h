@@ -11,7 +11,6 @@
 #define __ScorePrimitivesPage_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "clients_gui/ListDisplayer.h"
 #include <boost/function.hpp>
 
 namespace kernel
@@ -49,13 +48,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const indicators::Primitives& primitives, const T_Filter& filter );
+             ScorePrimitivesPage( QWidget* parent, kernel::Controllers& controllers, const indicators::Primitives& primitives, const T_Filter& filter );
     virtual ~ScorePrimitivesPage();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Display( const indicators::Primitive& primitive, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 signals:
@@ -73,12 +67,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScorePrimitivesPage( const ScorePrimitivesPage& );            //!< Copy constructor
-    ScorePrimitivesPage& operator=( const ScorePrimitivesPage& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
@@ -91,7 +79,7 @@ private:
     kernel::Controllers& controllers_;
     T_Filter filter_;
     const indicators::Primitives& primitives_;
-    gui::ListDisplayer< ScorePrimitivesPage >* list_;
+    QTreeWidget* list_;
     //@}
 };
 

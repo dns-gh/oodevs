@@ -2057,10 +2057,6 @@ This data can&apos;t be projected.</source>
 <context>
     <name>ScorePrimitivesPage</name>
     <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2058,10 +2058,6 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>ScorePrimitivesPage</name>
     <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
         <source>Insert</source>
         <translation>Insérer</translation>
     </message>
