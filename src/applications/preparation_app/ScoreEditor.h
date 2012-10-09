@@ -36,7 +36,6 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
     class ParametersLayer;
 }
 
@@ -61,7 +60,7 @@ class ScoreEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model,
+             ScoreEditor( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           const ::StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreEditor();
     //@}
@@ -104,7 +103,7 @@ private:
     ScoresModel& model_;
     Score_ABC* current_;
     QLineEdit* name_;
-    Q3TextEdit* formula_;
+    QTextEdit* formula_;
     QLabel* checkResult_;
     QPushButton* ok_;
     QLabel* help_;

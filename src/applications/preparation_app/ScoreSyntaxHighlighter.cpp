@@ -17,8 +17,8 @@
 // Name: ScoreSyntaxHighlighter constructor
 // Created: SBO 2009-05-07
 // -----------------------------------------------------------------------------
-ScoreSyntaxHighlighter::ScoreSyntaxHighlighter( Q3TextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives )
-    : Q3SyntaxHighlighter( editor )
+ScoreSyntaxHighlighter::ScoreSyntaxHighlighter( QTextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives )
+    : QSyntaxHighlighter( editor )
     , controllers_( controllers )
     , primitives_( primitives )
     , varColor_( 44, 146, 30 )
@@ -41,16 +41,15 @@ ScoreSyntaxHighlighter::~ScoreSyntaxHighlighter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreSyntaxHighlighter::highlightParagraph
+// Name: ScoreSyntaxHighlighter::highlightBlock
 // Created: SBO 2009-05-07
 // -----------------------------------------------------------------------------
-int ScoreSyntaxHighlighter::highlightParagraph( const QString& text, int endStateOfLastPara )
+void ScoreSyntaxHighlighter::highlightBlock( const QString& text )
 {
-    setFormat( 0, text.length(), QFont(), Qt::black );
+    setFormat( 0, text.length(), Qt::black );
     Highlight( QString( "\\$\\w+" ), text, varFont_, varColor_ );
     Highlight( extractors_, text, extractorFont_, extractorColor_ );
     Highlight( functions_, text, functionFont_, functionColor_ );
-    return endStateOfLastPara;
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +63,8 @@ void ScoreSyntaxHighlighter::Highlight( const QString& regexp, const QString& te
     while( ( pos = rx.search( text, pos ) ) != -1 )
     {
         const int count = rx.matchedLength();
-        setFormat( pos, count, font, color );
+        setFormat( pos, count, font );
+        setFormat( pos, count, color );
         pos += count;
     }
 }

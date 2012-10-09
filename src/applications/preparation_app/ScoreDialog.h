@@ -35,7 +35,6 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
     class ParametersLayer;
 }
 
@@ -63,7 +62,7 @@ class ScoreDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model,
+             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config,
                           const kernel::GlTools_ABC& tools );
     virtual ~ScoreDialog();

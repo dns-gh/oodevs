@@ -30,7 +30,7 @@ namespace indicators
 */
 // Created: SBO 2009-05-07
 // =============================================================================
-class ScoreSyntaxHighlighter : public Q3SyntaxHighlighter
+class ScoreSyntaxHighlighter : public QSyntaxHighlighter
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                              , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
@@ -38,22 +38,16 @@ class ScoreSyntaxHighlighter : public Q3SyntaxHighlighter
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreSyntaxHighlighter( Q3TextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives );
+             ScoreSyntaxHighlighter( QTextEdit* editor, kernel::Controllers& controllers, const indicators::Primitives& primitives );
     virtual ~ScoreSyntaxHighlighter();
     //@}
 
     //! @name Operations
     //@{
-    virtual int highlightParagraph( const QString& text, int endStateOfLastPara );
+    virtual void highlightBlock( const QString& text );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScoreSyntaxHighlighter( const ScoreSyntaxHighlighter& );            //!< Copy constructor
-    ScoreSyntaxHighlighter& operator=( const ScoreSyntaxHighlighter& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Highlight( const QString& regexp, const QString& text, const QFont& font, const QColor& color );

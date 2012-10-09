@@ -25,21 +25,22 @@
 // Name: ScoreVariablesList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers,
-                                        const StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
-    : Q3VBox   ( parent )
-    , factory_( factory )
-    , tools_  ( tools )
-    , wizard_ ( new ScoreVariableCreationWizard( this, controllers, tools_, builder ) )
-    , list_   ( new gui::ListDisplayer< ScoreVariablesList >( this, *this, factory ) )
-    , parser_ ( new gui::UtmParser( controllers, staticModel.coordinateConverter_ ) )
+ScoreVariablesList::ScoreVariablesList( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
+                                        const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
+    : Q3VBox( parent )
+    , tools_( tools )
+    , wizard_( new ScoreVariableCreationWizard( this, controllers, tools_, builder ) )
+    , list_( new QTreeWidget( this) )
+    , parser_( new gui::UtmParser( controllers, staticModel.coordinateConverter_ ) )
 {
     setMargin( 5 );
     {
-        list_->AddColumn( tr( "Name" ) );
-        list_->AddColumn( tr( "Type" ) );
-        list_->AddColumn( tr( "Value" ) );
-        connect( list_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnPaste() ) );
+        list_->setColumnCount( 3 );
+        QStringList headers;
+        headers << tr( "Name" ) << tr( "Type" ) << tr( "Value" );
+        list_->setHeaderLabels( headers );
+        list_->setRootIsDecorated( false );
+        connect( list_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnPaste() ) );
     }
     {
         Q3HBox* box = new Q3HBox( this );
@@ -52,7 +53,7 @@ ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& f
     }
     connect( wizard_, SIGNAL( VariableCreated( const indicators::Element_ABC& ) ), SLOT( AddVariable( const indicators::Element_ABC& ) ) );
     connect( wizard_, SIGNAL( Closed() ), SIGNAL( EndEdit() ) );
-    connect( list_, SIGNAL( selectionChanged() ), SLOT( OnItemClick() ) );
+    connect( list_, SIGNAL( itemSelectionChanged() ), SLOT( OnItemClick() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +71,7 @@ ScoreVariablesList::~ScoreVariablesList()
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::StartEdit( const indicators::Variables& variables )
 {
-    list_->clear();
+    list_->model()->removeRows( 0, list_->model()->rowCount() );
     location_.reset();
     tools::Iterator< const indicators::Element_ABC& > it = variables.CreateIterator();
     while( it.HasMoreElements() )
@@ -83,8 +84,10 @@ void ScoreVariablesList::StartEdit( const indicators::Variables& variables )
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::AddVariable( const indicators::Element_ABC& variable )
 {
-    gui::ValuedListItem* item = factory_.CreateItem( list_ );
-    Display( variable, item );
+    QStringList list;
+    list << variable.GetInput().c_str() << variable.GetType().ToString().c_str() << variable.GetValue().c_str();
+    QTreeWidgetItem* item = new QTreeWidgetItem( list );
+    list_->addTopLevelItem( item );
     emit Updated();
 }
 
@@ -96,28 +99,16 @@ indicators::Variables ScoreVariablesList::GetValue() const
 {
     indicators::Variables result;
     indicators::DataTypeFactory types;
-    for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
-        if( const gui::ValuedListItem* item = static_cast< const gui::ValuedListItem* >( *it ) )
-        {
-            const QString name  = item->text( 0 ).remove( 0, 1 );
-            const QString type  = item->text( 1 );
-            const QString value = item->text( 2 );
-            boost::shared_ptr< indicators::Element_ABC > variable( new indicators::Variable( name.toAscii().constData(), types.Instanciate( type.toAscii().constData() ), value.toAscii().constData() ) );
-            result.Register( name.toAscii().constData(), variable );
-        }
+    for( int i = 0; i < list_->topLevelItemCount(); ++i )
+    {
+        QTreeWidgetItem* item = list_->topLevelItem( i );
+        const QString name  = item->text( 0 ).remove( 0, 1 );
+        const QString type  = item->text( 1 );
+        const QString value = item->text( 2 );
+        boost::shared_ptr< indicators::Element_ABC > variable( new indicators::Variable( name.toAscii().constData(), types.Instanciate( type.toAscii().constData() ), value.toAscii().constData() ) );
+        result.Register( name.toAscii().constData(), variable );
+    }
     return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScoreVariablesList::Display
-// Created: SBO 2009-04-21
-// -----------------------------------------------------------------------------
-void ScoreVariablesList::Display( const indicators::Element_ABC& variable, gui::ValuedListItem* item )
-{
-    // $$$$ SBO 2009-04-24: TODO use a displayer
-    item->setText( 0, variable.GetInput().c_str() );
-    item->setText( 1, variable.GetType().ToString().c_str() );
-    item->setText( 2, variable.GetValue().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,9 +127,9 @@ void ScoreVariablesList::OnAdd()
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::OnDelete()
 {
-    if( Q3ListViewItem* item = list_->selectedItem() )
+    if( QTreeWidgetItem* item = list_->currentItem() )
     {
-        list_->removeItem( item );
+        delete item;
         emit Updated();
         location_.reset();
     }
@@ -150,7 +141,7 @@ void ScoreVariablesList::OnDelete()
 // -----------------------------------------------------------------------------
 void ScoreVariablesList::OnPaste()
 {
-    if( Q3ListViewItem* item = list_->selectedItem() )
+    if( QTreeWidgetItem* item = list_->currentItem() )
         emit Insert( item->text( 0 ) );
 }
 
@@ -175,7 +166,7 @@ void ScoreVariablesList::Draw( kernel::Viewport_ABC& viewport )
 void ScoreVariablesList::OnItemClick()
 {
     location_.reset();
-    if( Q3ListViewItem* item = list_->selectedItem() )
+    if( QTreeWidgetItem* item = list_->currentItem() )
     {
         if( item->text( 1 ) == "zone" )
         {

@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ScoreEditor.h"
 #include "moc_ScoreEditor.cpp"
+#include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/SimpleLocationDrawer.h"
 #include "ScoreGaugeConfiguration.h"
 #include "ScorePrimitivesLibrary.h"
@@ -29,11 +30,11 @@ using namespace kernel;
 
 namespace
 {
-    class FormulaLineEdit : public Q3TextEdit
+    class FormulaLineEdit : public QTextEdit
     {
     public:
         explicit FormulaLineEdit( QWidget* parent )
-            : Q3TextEdit( parent )
+            : QTextEdit( parent )
         {
             setMaximumHeight( 50 );
         }
@@ -41,16 +42,24 @@ namespace
 
         virtual void focusOutEvent( QFocusEvent* e )
         {
-            int paraFrom = 0, indexFrom = 0, paraTo = 0, indexTo = 0;
-            getSelection( &paraFrom, &indexFrom, &paraTo, &indexTo );
-            Q3TextEdit::focusOutEvent( e );
-            setSelection( paraFrom, indexFrom, paraTo, indexTo );
+            if( textCursor().hasSelection() )
+            {
+                QTextCursor cursor = textCursor();
+                int selectionStart = cursor.selectionStart();
+                int selectionEnd = cursor.selectionEnd();
+                QTextEdit::focusOutEvent( e );
+                cursor.setPosition( selectionStart );
+                cursor.setPosition( selectionEnd, QTextCursor::KeepAnchor );
+                setTextCursor( cursor );
+            }
+            else
+                QTextEdit::focusOutEvent( e );
         }
 
-        virtual void contentsMousePressEvent( QMouseEvent* e )
+        virtual void mousePressEvent( QMouseEvent* e )
         {
-            Q3TextEdit::contentsMousePressEvent( e );
-            contentsMouseDoubleClickEvent( e );
+            QTextEdit::mousePressEvent( e );
+            mouseDoubleClickEvent( e );
         }
 
         bool isBoundary( const QChar c ) const
@@ -58,20 +67,22 @@ namespace
             return c.isSpace() || ( c.isPunct() && c != '-' );
         }
 
-        virtual void contentsMouseDoubleClickEvent( QMouseEvent* e )
+        virtual void mouseDoubleClickEvent( QMouseEvent* e )
         {
             if( e->button() != Qt::LeftButton )
             {
                 e->ignore();
                 return;
             }
-            int para = 0;
-            unsigned int findex = charAt( e->pos(), &para );
-            unsigned int bindex = findex;
-            const QString str = text( para );
-            while( bindex > 0 && ! isBoundary( str.at( bindex - 1 ) ) ) --bindex;
-            while( static_cast<int>(findex) < str.length() && ! isBoundary( str.at( findex ) ) ) ++findex;
-            setSelection( para, bindex, para, findex );
+            int start = cursorForPosition( e->pos() ).position();
+            int end = start;
+            const QString str = text();
+            while( start > 0 && !isBoundary( str.at( start - 1 ) ) ) --start;
+            while( end < str.length() && !isBoundary( str.at( end ) ) ) ++end;
+            QTextCursor cursor = textCursor();
+            cursor.setPosition( start );
+            cursor.setPosition( end, QTextCursor::KeepAnchor );
+            setTextCursor( cursor );
             e->accept();
         }
     };
@@ -109,7 +120,7 @@ namespace
 // Name: ScoreEditor constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model,
+ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           const ::StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : QDialog( parent, "ScoreEditor" )
     , model_( model )
@@ -153,7 +164,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
             }
             {
                 Q3GroupBox* box = new Q3HGroupBox( tr( "Variables" ), page );
-                variables_ = new ScoreVariablesList( box, factory, controllers, staticModel, tools, builder );
+                variables_ = new ScoreVariablesList( box, controllers, staticModel, tools, builder );
                 pageLayout->addWidget( box, 1, 1 );
                 connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
                 connect( variables_, SIGNAL( Updated() ), SLOT( CheckFormula() ) );

@@ -67,7 +67,7 @@ DialogContainer::DialogContainer( QWidget* parent, kernel::Controllers& controll
     prefDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog_, controllers ) );
     profileDialog_ = new ProfileDialog( parent, controllers, symbols, model, staticModel.extensions_ );
     profileWizardDialog_ = new ProfileWizardDialog( parent, model );
-    scoreDialog_ = new ScoreDialog( parent, controllers, factory, model.scores_, paramLayer, staticModel, config, tools );
+    scoreDialog_ = new ScoreDialog( parent, controllers, model.scores_, paramLayer, staticModel, config, tools );
     successFactorDialog_ = new SuccessFactorDialog( parent, controllers, model.successFactors_, factory, staticModel.successFactorActionTypes_, model.scores_ );
     exerciseDialog_ = new ExerciseDialog( parent, controllers, model.exercise_, config );
     consistencyDialog_ = new ModelConsistencyDialog( parent, model, staticModel, controllers, const_cast< tools::RealFileLoaderObserver_ABC& >( static_cast< const tools::DefaultLoader& >( config.GetLoader() ).GetObserver() ) );

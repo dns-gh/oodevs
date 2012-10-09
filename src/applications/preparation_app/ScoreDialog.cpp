@@ -40,7 +40,7 @@ namespace
 // Name: ScoreDialog constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model,
+ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, ScoresModel& model,
                           gui::ParametersLayer& layer, const ::StaticModel& staticModel, const tools::ExerciseConfig& config,
                           const kernel::GlTools_ABC& tools)
     : QDialog( parent, "ScoreDialog" )
@@ -55,7 +55,7 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
     grid->setRowStretch( 0, 4 );
     {
         Q3GroupBox* box = new Q3HGroupBox( tr( "Scores" ), this );
-        scores_ = new ScoreList( box, controllers, factory, model, config, staticModel, tools_, *builder_ );
+        scores_ = new ScoreList( box, controllers, model, config, staticModel, tools_, *builder_ );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
         connect( scores_, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
         connect( scores_, SIGNAL( Show() ), SLOT( show() ) );

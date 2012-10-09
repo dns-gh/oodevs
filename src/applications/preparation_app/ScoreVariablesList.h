@@ -10,9 +10,6 @@
 #ifndef __ScoreVariablesList_h_
 #define __ScoreVariablesList_h_
 
-#include "clients_gui/ListDisplayer.h"
-#include <boost/noncopyable.hpp>
-
 namespace actions
 {
     namespace gui
@@ -36,7 +33,9 @@ namespace indicators
 namespace kernel
 {
     class Controllers;
+    class GlTools_ABC;
     class Location_ABC;
+    class Viewport_ABC;
 }
 
 class ScoreVariableCreationWizard;
@@ -49,15 +48,14 @@ class StaticModel;
 // Created: SBO 2009-04-20
 // =============================================================================
 class ScoreVariablesList : public Q3VBox
-                         , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers,
-                                 const StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
+             ScoreVariablesList( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel,
+                                 const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreVariablesList();
     //@}
 
@@ -93,18 +91,11 @@ private slots:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void Display( const indicators::Element_ABC& variable, gui::ValuedListItem* item );
-    //@}
-
-private:
     //! @name Member data
     //@{
-    gui::ItemFactory_ABC& factory_;
     const kernel::GlTools_ABC& tools_;
     ScoreVariableCreationWizard* wizard_;
-    gui::ListDisplayer< ScoreVariablesList >* list_;
+    QTreeWidget* list_;
     std::auto_ptr< kernel::Location_ABC > location_;
     std::auto_ptr< gui::UtmParser > parser_;
     //@}
