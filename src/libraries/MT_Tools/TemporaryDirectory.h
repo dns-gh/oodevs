@@ -13,6 +13,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/noncopyable.hpp>
 #include <string>
+#include <vector>
 
 class TemporaryDirectory: private boost::noncopyable
 {
@@ -21,6 +22,7 @@ public:
     ~TemporaryDirectory();
 
     const boost::filesystem::path& path() const;
+    void ListDir( std::vector< std::string >& files ) const;
 
 private:
     boost::filesystem::path path_;

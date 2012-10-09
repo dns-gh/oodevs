@@ -117,19 +117,6 @@ boost::shared_ptr<LogisticPlugin> CreateLogisticPlugin( const bfs::path& tempDir
         "en" ));
 }
 
-typedef std::vector< std::string > T_FileList;
-void ListDir( const bfs::path& path, T_FileList& files )
-{
-    files.clear();
-    bfs::recursive_directory_iterator end;
-    for( bfs::recursive_directory_iterator entry(path) ; entry != end ; ++entry )
-    {
-        if( bfs::is_regular_file( entry->status() ) )
-            files.push_back( NormalizePath( entry->path().string() ) );
-    }
-    std::sort( files.begin(), files.end() );
-}
-
 typedef std::vector< std::string > T_Lines;
 void CheckFileContent( T_Lines expected, const std::string& path )
 {
@@ -150,7 +137,7 @@ struct LogFile
     T_Lines lines;
 };
 
-void CheckRegexps( const std::vector< LogFile >& logFiles, const T_FileList& files )
+void CheckRegexps( const std::vector< LogFile >& logFiles, const std::vector< std::string >& files )
 {
     BOOST_CHECK_EQUAL( logFiles.size(), files.size() );
     for( size_t i = 0; i != files.size(); ++i )
@@ -484,8 +471,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         BOOST_CHECK_EQUAL( plugin->GetConsignCount( LogisticPlugin::eLogisticType_Supply ), 0 );
     }
 
-    T_FileList files;
-    ListDir( tempDir.path(), files );
+    std::vector< std::string > files;
+    tempDir.ListDir( files );
 
     std::vector< LogFile > expecteds;
 
@@ -595,8 +582,8 @@ BOOST_AUTO_TEST_CASE( TestLogisticPluginRestart )
     plugin = CreateLogisticPlugin( tempDir.path() );
     PushFuneralMessage( plugin.get() );
   
-    T_FileList files;
-    ListDir( tempDir.path(), files );
+    std::vector< std::string > files;
+    tempDir.ListDir( files );
     std::vector< LogFile > expected;
     {
         T_Lines expectedLines;

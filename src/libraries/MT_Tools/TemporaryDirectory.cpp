@@ -9,6 +9,7 @@
 
 #include "TemporaryDirectory.h"
 #include <boost/lexical_cast.hpp>
+#include <algorithm>
 #include <cstdlib>
 
 namespace bfs = boost::filesystem;
@@ -54,4 +55,16 @@ TemporaryDirectory::~TemporaryDirectory()
 const bfs::path& TemporaryDirectory::path() const
 {
     return path_;
+}
+
+void TemporaryDirectory::ListDir( std::vector< std::string >& files ) const
+{
+    files.clear();
+    bfs::recursive_directory_iterator end;
+    for( bfs::recursive_directory_iterator entry( path() ) ; entry != end ; ++entry )
+    {
+        if( bfs::is_regular_file( entry->status() ) )
+            files.push_back( NormalizePath( entry->path().string() ) );
+    }
+    std::sort( files.begin(), files.end() );
 }
