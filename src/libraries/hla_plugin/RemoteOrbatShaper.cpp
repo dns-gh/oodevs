@@ -114,7 +114,7 @@ void RemoteOrbatShaper::RemoteCreated(  const std::string& identifier, HlaClass_
 // -----------------------------------------------------------------------------
 void RemoteOrbatShaper::RemoteDestroyed( const std::string& identifier )
 {
-    T_UnitsData::const_iterator it( units_.find( identifier ) );
+    T_UnitsData::iterator it( units_.find( identifier ) );
     if( units_.end() == it )
         return;
     units_.erase( it );
@@ -138,7 +138,7 @@ void RemoteOrbatShaper::SideChanged( const std::string& identifier, rpr::ForceId
     T_UnitsData::const_iterator it( units_.find( identifier ) );
     if( units_.end() == it )
         return;
-    it->second->SetTeam( sideResolver_.ResolveTeam( side ).GetId() );
+    it->second->SetTeam( sideResolver_.ResolveTeam( side ) );
 }
 
 // -----------------------------------------------------------------------------
