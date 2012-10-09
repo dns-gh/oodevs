@@ -47,8 +47,8 @@ protected:
     //! @name Member data
     //@{
     std::vector< const Entity* > entities_;
-    std::vector< Entity* >*      values_;
-    Q3ListBox*                   listBox_;
+    std::vector< Entity* >* values_;
+    QListWidget* listBox_;
     //@}
 };
 

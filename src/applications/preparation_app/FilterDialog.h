@@ -80,7 +80,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< FilterManager > filterManager_;
-    Q3ListBox*                     list_;
+    QListWidget*                   list_;
     QLabel*                        description_;
     QPushButton*                   okButton_;
     Q3WidgetStack*                 stack_;

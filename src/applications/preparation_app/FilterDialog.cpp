@@ -30,8 +30,8 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
     // Filters list box
     {
         Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterDialog", "Select filter:" ), this, "FilterDialog_FiltersGroupBox" );
-        list_ = new Q3ListBox( box, "FilterDialog_FiltersListBox" );
-        connect( list_, SIGNAL( highlighted( int ) ), SLOT( OnSelectFilter( int ) ) );
+        list_ = new QListWidget( box );
+        connect( list_, SIGNAL( currentRowChanged( int ) ), SLOT( OnSelectFilter( int ) ) );
         mainLayout->addWidget( box );
     }
     // Descriptions
@@ -45,7 +45,7 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
     // Parameters
     {
         stack_ = new Q3WidgetStack( this, "FilterDialog_ParametersStack" );
-        connect( list_, SIGNAL( highlighted( int ) ), stack_, SLOT( raiseWidget( int ) ) );
+        connect( list_, SIGNAL( currentRowChanged( int ) ), stack_, SLOT( raiseWidget( int ) ) );
         mainLayout->addWidget( stack_ );
     }
     // Buttons
@@ -112,7 +112,7 @@ void FilterDialog::OnAccept()
 {
     try
     {
-        Filter_ABC& filter = filterManager_->GetFilter( list_->currentItem() );
+        Filter_ABC& filter = filterManager_->GetFilter( list_->currentRow() );
         assert( filter.IsValid() );
         if( filter.NeedToReloadExercise() && static_cast< MainWindow* >( parent() )->CheckSaving() == QMessageBox::Cancel )
             return;

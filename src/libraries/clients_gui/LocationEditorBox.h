@@ -55,12 +55,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LocationEditorBox( const LocationEditorBox& );            //!< Copy constructor
-    LocationEditorBox& operator=( const LocationEditorBox& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void UpdateParamZone( int index );
@@ -82,7 +76,7 @@ private:
     kernel::ContextMenu* parserMenu_;
     QLineEdit* singleField_;
     QMenu* subMenu_;
-    Q3ListBox* list_;
+    QListWidget* list_;
     Q3HBox* coordBox_;
     Q3HBox* valueBox_;
     int parserSelected_;

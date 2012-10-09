@@ -24,8 +24,8 @@ using namespace gui;
 // Name: LocationEditorBox constructor
 // Created: AME 2010-03-12
 // -----------------------------------------------------------------------------
-LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter ) :
-    Q3HBox( parent )
+LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
+    : Q3HBox( parent )
     , controllers_( controllers )
     , converter_( converter )
     , coordinateSystems_ ( converter.GetCoordSystem() )
@@ -61,14 +61,11 @@ LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& cont
     SelectParser( converter.GetCoordSystem().defaultCoordinateSystem_ );
 
     subMenu_ = new kernel::ContextMenu();
-    list_ = new Q3ListBox( subMenu_ );
-    list_->setColumnMode( Q3ListBox::Variable );
-    list_->setRowMode( Q3ListBox::Variable );
-    list_->setFrameStyle( Q3Frame::NoFrame );
+    list_ = new QListWidget( subMenu_ );
     subMenu_->hide();
 
     connect( parserMenu_, SIGNAL( activated( int ) ), SLOT( SelectParser( int ) ) );
-    connect( list_, SIGNAL( selected( int ) ), SLOT( GetSelectedItemInSubList( int ) ) );
+    connect( list_, SIGNAL( currentRowChanged( int ) ), SLOT( GetSelectedItemInSubList( int ) ) );
 }
 // -----------------------------------------------------------------------------
 // Name: LocationEditorBox destructor
@@ -194,7 +191,7 @@ void LocationEditorBox::SetAspect( bool oneValue, bool red )
 // -----------------------------------------------------------------------------
 void LocationEditorBox::GetSelectedItemInSubList( int index )
 {
-    singleField_->setText( list_->text( index ) );
+    singleField_->setText( list_->item( index )->text() );
     singleField_->setFocus();
     subMenu_->hide();
 }
@@ -223,7 +220,7 @@ bool LocationEditorBox::GetPosition( geometry::Point2f& result )
             else
             {
                 list_->clear();
-                list_->insertStringList( hint );
+                list_->addItems( hint );
                 list_->setMinimumSize( 110, 12 );
                 const QPoint topLeft = singleField_->mapToGlobal( QPoint( 0, 0 ) );
                 subMenu_->popup( QPoint( topLeft.x(), topLeft.y() + singleField_->height() ) );

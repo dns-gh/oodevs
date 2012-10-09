@@ -22,13 +22,13 @@ MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( QWidget* par
     setMinimumSize( 250, 250 );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     // List
-    listBox_ = new Q3ListBox();
-    listBox_->setSelectionMode( Q3ListBox::Multi );
+    listBox_ = new QListWidget();
+    listBox_->setSelectionMode( QAbstractItemView::MultiSelection );
     tools::Iterator< const Entity& > it = resolver.CreateIterator();
     while( it.HasMoreElements() )
     {
         const Entity& entity = it.NextElement();
-        listBox_->insertItem( entity.GetName().c_str() );
+        listBox_->addItem( entity.GetName().c_str() );
         entities_.push_back( &entity );
     }
     // Buttons
@@ -62,8 +62,8 @@ template< typename Entity, typename Resolver >
 void MultipleResolverEditor< Entity, Resolver >::SetCurrentItem( std::vector< Entity* >& entity )
 {
     values_ = &entity;
-    for( unsigned int i = 0; i < listBox_->count(); ++i )
-        listBox_->setSelected( i, std::find( entity.begin(), entity.end(), entities_[i] ) != entity.end() );
+    for( int i = 0; i < listBox_->count(); ++i )
+        listBox_->item( i )->setSelected( std::find( entity.begin(), entity.end(), entities_[i] ) != entity.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,8 +84,8 @@ template< typename Entity, typename Resolver >
 void MultipleResolverEditor< Entity, Resolver >::accept()
 {
     values_->clear();
-    for( unsigned int i = 0; i < listBox_->count(); ++i )
-        if( listBox_->isSelected( i ) )
+    for( int i = 0; i < listBox_->count(); ++i )
+        if( listBox_->item( i )->isSelected() )
             values_->push_back( const_cast< Entity* >( entities_[i] ) );
     QDialog::accept();
 }
