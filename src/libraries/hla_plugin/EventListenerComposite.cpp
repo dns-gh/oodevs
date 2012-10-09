@@ -99,3 +99,23 @@ void EventListenerComposite::PlatformAdded( const std::string& name, unsigned in
     BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
         listener->PlatformAdded( name, id );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EventListenerComposite::PlatformAdded
+// Created: AHC 2012-07-30
+// -----------------------------------------------------------------------------
+void EventListenerComposite::ChildrenChanged( const T_ChildrenIds& children )
+{
+    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
+        listener->ChildrenChanged( children );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventListenerComposite::PlatformAdded
+// Created: AHC 2012-07-30
+// -----------------------------------------------------------------------------
+void EventListenerComposite::ParentChanged( const std::string& parentId )
+{
+    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
+        listener->ParentChanged( parentId );
+}

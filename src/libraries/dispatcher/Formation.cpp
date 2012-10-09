@@ -318,3 +318,12 @@ bool Formation::GetExtension( const std::string& key, std::string& result ) cons
     result = it->second;
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetApp6Symbol
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+const std::string& Formation::GetApp6Symbol() const
+{
+    return app6symbol_; 
+}

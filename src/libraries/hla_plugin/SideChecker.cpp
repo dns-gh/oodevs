@@ -233,3 +233,30 @@ void SideChecker::PerimeterChanged( const std::string& /*identifier*/, const std
 {
     // NOTHING
 }
+// -----------------------------------------------------------------------------
+// Name: SideChecker::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void SideChecker::ParentChanged( const std::string& /*rtiIdentifier*/, const std::string& /*parentRtiId*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SideChecker::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void SideChecker::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SideChecker::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void SideChecker::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
+{
+    // NOTHING
+}
+

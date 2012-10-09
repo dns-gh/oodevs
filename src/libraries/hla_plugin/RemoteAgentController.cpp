@@ -90,7 +90,6 @@ void RemoteAgentController::RemoteCreated( const std::string& identifier, HlaCla
     remoteObjects_[ identifier ] = &object;
     unitCreations_[ identifier ] = T_UnitCreation( new simulation::UnitMagicAction() );
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
-    message().set_type( sword::UnitMagicAction::unit_creation );
     message().mutable_parameters()->add_elem(); // type
     message().mutable_parameters()->add_elem(); // position
     message().mutable_parameters()->add_elem(); // name
@@ -212,7 +211,8 @@ void RemoteAgentController::CallsignChanged( const std::string& /*identifier*/, 
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Send( simulation::UnitMagicAction& message, const std::string& identifier )
 {
-    if( message().has_tasker() &&
+    if( message().has_type() && 
+        message().has_tasker() &&
         message().parameters().elem( 0 ).value_size() > 0 &&
         message().parameters().elem( 1 ).value_size() > 0 &&
         message().parameters().elem( 2 ).value_size() > 0 )
@@ -349,6 +349,43 @@ void RemoteAgentController::PlatformCreated( Agent_ABC& /*agent*/, unsigned int 
 // Created: AHC 2012-09-07
 // -----------------------------------------------------------------------------
 void RemoteAgentController::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::ParentChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void RemoteAgentController::ParentChanged( const std::string& /*rtiIdentifier*/, const std::string& /*parentRtiId*/ )
+{
+    //  NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::SubAgregatesChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void RemoteAgentController::SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children )
+{
+    T_UnitCreations::const_iterator it( unitCreations_.find( rtiIdentifier ) );
+    if( unitCreations_.end() == it )
+        return;
+    if( !children.empty() ) // FIXME heuristic to determine if aggregate is a platoon
+        unitCreations_.erase( rtiIdentifier );
+    else
+    {
+        simulation::UnitMagicAction& message = *(it->second);
+        message().set_type( sword::UnitMagicAction::unit_creation );
+        Send( message, rtiIdentifier );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentController::SubEntitiesChanged
+// Created: AHC 2012-10-04
+// -----------------------------------------------------------------------------
+void RemoteAgentController::SubEntitiesChanged(const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
 {
     // NOTHING
 }

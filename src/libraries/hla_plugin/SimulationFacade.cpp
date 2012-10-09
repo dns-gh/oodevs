@@ -19,6 +19,7 @@
 #include "NetnRemoteCallsignListener.h"
 #include "AutomatTypeResolver.h"
 #include "EquipmentUpdater.h"
+#include "RemoteOrbatShaper.h"
 #include "RemoteTacticalObjectController.h"
 #include "protocol/Simulation.h"
 #include "dispatcher/Model_ABC.h"
@@ -86,6 +87,8 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
     , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, publisher, remoteTacticalSubject ) )
+    , pRemoteOrbatShaper_         ( new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher ) )
+
 {
     // NOTHING
 }

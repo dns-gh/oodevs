@@ -47,3 +47,20 @@ void PlatformProxy::SpatialChanged( double latitude, double longitude, float alt
 {
     listeners_.SpatialChanged( latitude, longitude, altitude, speed, direction );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PlatformProxy::AddSubordinate
+// Created: AHC 2012-10-08
+// -----------------------------------------------------------------------------
+void PlatformProxy::AddSubordinate( unsigned int /*id*/, Agent_ABC& /*agent*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PlatformProxy::RemoveSubordinate
+// Created: AHC 2012-10-08
+// -----------------------------------------------------------------------------
+void PlatformProxy::RemoveSubordinate( unsigned int /*id*/ )
+{
+}

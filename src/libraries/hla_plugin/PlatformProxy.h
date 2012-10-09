@@ -36,6 +36,8 @@ public:
     //@{
     virtual void Register( EventListener_ABC& listener );
     virtual void Unregister( EventListener_ABC& listener );
+    virtual void AddSubordinate( unsigned int id, Agent_ABC& agent );
+    virtual void RemoveSubordinate( unsigned int id );
     void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     //@}
 

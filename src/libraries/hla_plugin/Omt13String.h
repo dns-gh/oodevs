@@ -79,6 +79,7 @@ public:
     //! @name Operations
     //@{
     void Add( const std::string& name );
+    void Clear();
 
     template< typename Archive >
     void Serialize( Archive& archive ) const
@@ -98,6 +99,7 @@ public:
             archive >> *it;
     }
     std::string str() const;
+    const std::vector< Omt13String >& GetValues() const;
     //@}
 
 private:

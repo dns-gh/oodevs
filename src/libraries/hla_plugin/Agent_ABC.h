@@ -37,6 +37,8 @@ public:
     //@{
     virtual void Register( EventListener_ABC& listener ) = 0;
     virtual void Unregister( EventListener_ABC& listener ) = 0;
+    virtual void AddSubordinate( unsigned int id, Agent_ABC& agent ) = 0;
+    virtual void RemoveSubordinate( unsigned int id ) = 0;
     //@}
 };
 

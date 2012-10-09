@@ -67,6 +67,7 @@ namespace hla
     class SideResolver_ABC;
     class RemoteTacticalObjectController;
     class RemoteTacticalObjectSubject_ABC;
+    class RemoteOrbatShaper;
 
 // =============================================================================
 /** @class  SimulationFacade
@@ -111,6 +112,7 @@ private:
     std::auto_ptr< RemoteAgentController > pRemoteAgentController_;
     std::auto_ptr< NetnRemoteCallsignListener > pNetnRemoteCallsignListener_;
     std::auto_ptr< RemoteTacticalObjectController > pRemoteTacticalObjectController_;
+    std::auto_ptr< RemoteOrbatShaper > pRemoteOrbatShaper_;
     //@}
 };
 

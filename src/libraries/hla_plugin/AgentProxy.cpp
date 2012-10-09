@@ -12,8 +12,10 @@
 #include "EventListener_ABC.h"
 #include "ComponentTypes_ABC.h"
 #include "ComponentTypeVisitor_ABC.h"
+#include "LocalAgentResolver_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "dispatcher/Agent_ABC.h"
+#include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Equipment.h"
 #include "protocol/Protocol.h"
 #include "rpr/EntityTypeResolver_ABC.h"
@@ -62,12 +64,14 @@ namespace
 // Name: AgentProxy constructor
 // Created: SLI 2011-02-04
 // -----------------------------------------------------------------------------
-AgentProxy::AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver, bool doDisaggregation )
+AgentProxy::AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
+    const LocalAgentResolver_ABC& localAgentResolver, bool doDisaggregation )
     : dispatcher::Observer< sword::UnitAttributes >( agent )
     , dispatcher::Observer< sword::UnitEnvironmentType >( agent )
     , agent_                ( agent )
     , componentTypes_       ( componentTypes )
     , componentTypeResolver_( componentTypeResolver )
+    , localAgentResolver_( localAgentResolver )
     , doDisaggregation_       ( doDisaggregation )
 {
     // NOTHING
@@ -92,6 +96,9 @@ void AgentProxy::Register( EventListener_ABC& listener )
     listener.SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
                              agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
     agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listener ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId() ) );
+    std::string parentId( localAgentResolver_.Resolve( agent_.GetSuperior().GetId() ) );
+    if( parentId.size() > 0 )
+        listener.ParentChanged( parentId );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,4 +151,21 @@ void AgentProxy::Notify( const sword::UnitEnvironmentType& message )
 void AgentProxy::PlatformAdded( const std::string& name, unsigned int id )
 {
     listeners_.PlatformAdded( name, id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentProxy::AddSubordinate
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void AgentProxy::AddSubordinate( unsigned int id, Agent_ABC& /*agent*/ )
+{
+    listeners_.PlatformAdded( "TODO", id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentProxy::RemoveSubordinate
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void AgentProxy::RemoveSubordinate( unsigned int /*id*/ )
+{
 }

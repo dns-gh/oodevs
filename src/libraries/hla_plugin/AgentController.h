@@ -26,7 +26,12 @@ namespace dispatcher
 {
     class Model_ABC;
     class Agent;
-    class Agent_ABC;
+    class Agent_ABC;    
+    class Formation_ABC;
+    class Formation;
+    class Automat_ABC;
+    class Automat;
+
 }
 
 namespace rpr
@@ -53,7 +58,7 @@ namespace hla
     class AgentProxy;
     class ComponentTypes_ABC;
     class SideResolver_ABC;
-
+    class LocalAgentResolver_ABC;
     class AgentAdapter;
 
 // =============================================================================
@@ -64,6 +69,8 @@ namespace hla
 // =============================================================================
 class AgentController : public AgentSubject_ABC
                       , private dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
+                      , private dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
+                      , private dispatcher::ExtensionFactory_ABC< dispatcher::Formation >
 {
 public:
     //! @name Constructors/Destructor
@@ -71,7 +78,7 @@ public:
              AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
                               const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
                               tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter, bool sendPlatforms,
-                              const SideResolver_ABC& sideResolver );
+                              const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver );
     virtual ~AgentController();
     //@}
 
@@ -86,12 +93,17 @@ private:
     //! @name Operations
     //@{
     virtual void Create( dispatcher::Agent& entity );
+    virtual void Create( dispatcher::Automat& entity );
+    virtual void Create( dispatcher::Formation& entity );
+
     //@}
 
 private:
     //! @name Helpers
     //@{
     void CreateAgent( dispatcher::Agent_ABC& agent );
+    void CreateAutomat( dispatcher::Automat_ABC& agent );
+    void CreateFormation( dispatcher::Formation_ABC& agent );
     void NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agent_ABC&, const tic::Platform_ABC&, int childIndex );
     //@}
 
@@ -100,8 +112,9 @@ private:
     //@{
     typedef std::vector< AgentListener_ABC* > T_Listeners;
     typedef T_Listeners::const_iterator     CIT_Listeners;
-    typedef boost::shared_ptr< AgentProxy > T_Agent;
+    typedef boost::shared_ptr< Agent_ABC > T_Agent;
     typedef std::map< unsigned long, T_Agent >         T_Agents;
+    typedef std::map< unsigned long, unsigned long > T_Parents;
     typedef boost::shared_ptr< AgentAdapter > T_AgentAdapter;
     typedef std::vector< T_AgentAdapter >     T_AgentAdapters;
     //@}
@@ -117,9 +130,11 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     bool doDisaggregation_;
     const SideResolver_ABC& sideResolver_;
+    const LocalAgentResolver_ABC& localAgentResolver_;
     T_Listeners listeners_;
     T_Agents agents_;
     T_AgentAdapters adapters_;
+    T_Parents parents_;
     //@}
 };
 

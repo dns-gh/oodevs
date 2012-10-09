@@ -37,6 +37,7 @@ namespace dispatcher
         MOCK_METHOD( SendFullUpdate, 1 );
         MOCK_METHOD( SendDestruction, 1 );
         MOCK_METHOD( Accept, 1 );
+        MOCK_METHOD( GetApp6Symbol, 0 );
         MOCK_METHOD_EXT( Send, 1, void( sword::ParentEntity& ), Send );
         MOCK_METHOD_EXT( Register   , 1, void( dispatcher::Automat_ABC& ), RegisterAutomat );
         MOCK_METHOD_EXT( Remove     , 1, void( dispatcher::Automat_ABC& ), RemoveAutomat );

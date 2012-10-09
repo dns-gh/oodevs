@@ -13,6 +13,7 @@
 #include "hla_plugin/AggregateMarking.h"
 #include "hla_plugin/SerializationTools.h"
 #include "hla_plugin/SilentEntity.h"
+#include "hla_plugin/IsPartOfStruct.h"
 #include "rpr/EntityType.h"
 #include "MockUpdateFunctor.h"
 #include "MockObjectListener.h"
@@ -113,4 +114,42 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute
         ::hla::Deserializer deserializer( Deserialize() );
         aggregate.Deserialize( "SilentEntities", deserializer );
     }
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_ispartort_attribute_and_notifies_listener, Fixture )
+{
+    IsPartOfStruct v;
+    v.rtiId_ = Omt13String( "an_rti_id" );
+    v.Serialize( serializer );
+    MOCK_EXPECT( listener.ParentChanged ).once().with( "identifier", "an_rti_id" );
+    ::hla::Deserializer deserializer( Deserialize() );
+    aggregate.Deserialize( "IsPartOf", deserializer );
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_sub_aggregates_attribute_and_notifies_listener, Fixture )
+{
+    plugins::hla::ObjectListener_ABC::T_EntityIDs ids;
+    ids.insert( "id1" ); ids.insert( "id2" );
+    Omt13StringArray subAggr;
+    BOOST_FOREACH( const plugins::hla::ObjectListener_ABC::T_EntityIDs::value_type v, ids )
+        subAggr.Add( v );
+    
+    subAggr.Serialize( serializer );
+    MOCK_EXPECT( listener.SubAgregatesChanged ).once().with( "identifier", ids );
+    ::hla::Deserializer deserializer( Deserialize() );
+    aggregate.Deserialize( "SubAggregateIdentifiers", deserializer );
+}
+
+BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_sub_entities_attribute_and_notifies_listener, Fixture )
+{
+    plugins::hla::ObjectListener_ABC::T_EntityIDs ids;
+    ids.insert( "id1" ); ids.insert( "id2" );
+    Omt13StringArray subAggr;
+    BOOST_FOREACH( const plugins::hla::ObjectListener_ABC::T_EntityIDs::value_type v, ids )
+        subAggr.Add( v );
+    
+    subAggr.Serialize( serializer );
+    MOCK_EXPECT( listener.SubEntitiesChanged ).once().with( "identifier", ids );
+    ::hla::Deserializer deserializer( Deserialize() );
+    aggregate.Deserialize( "EntityIdentifiers", deserializer );
 }

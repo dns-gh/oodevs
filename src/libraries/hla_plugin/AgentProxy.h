@@ -36,6 +36,7 @@ namespace plugins
 namespace hla
 {
     class ComponentTypes_ABC;
+    class LocalAgentResolver_ABC;
 
 // =============================================================================
 /** @class  AgentProxy
@@ -51,7 +52,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
-                     bool doDisaggregation );
+                     const LocalAgentResolver_ABC& localAgentResolver, bool doDisaggregation );
     virtual ~AgentProxy();
     //@}
 
@@ -59,6 +60,8 @@ public:
     //@{
     virtual void Register( EventListener_ABC& listener );
     virtual void Unregister( EventListener_ABC& listener );
+    virtual void AddSubordinate( unsigned int id, Agent_ABC& agent );
+    virtual void RemoveSubordinate( unsigned int id );
     //@}
 
     void PlatformAdded( const std::string& name, unsigned int id );
@@ -71,14 +74,13 @@ private:
     //@}
 
 private:
-
-private:
     //! @name Member data
     //@{
     bool doDisaggregation_;
     const dispatcher::Agent_ABC& agent_;
     const ComponentTypes_ABC& componentTypes_;
     const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
+    const LocalAgentResolver_ABC& localAgentResolver_;
     EventListenerComposite listeners_;
     //@}
 };

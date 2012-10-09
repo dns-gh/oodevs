@@ -97,6 +97,7 @@ public:
     virtual const tools::Resolver< dispatcher::Agent_ABC >& GetAgents() const;
     virtual dispatcher::Automat_ABC* GetParentAutomat() const;
     virtual dispatcher::Formation_ABC* GetFormation() const;
+    virtual const std::string& GetApp6Symbol() const;
     //@}
 
 private:

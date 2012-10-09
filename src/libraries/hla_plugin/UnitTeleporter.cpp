@@ -290,3 +290,29 @@ void UnitTeleporter::PerimeterChanged( const std::string& /*identifier*/, const 
 {
     // NOTHING
 }
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void UnitTeleporter::ParentChanged( const std::string& /*rtiIdentifier*/, const std::string& /*parentRtiId*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void UnitTeleporter::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTeleporter::PerimeterChanged
+// Created: AHC 2010-09-07
+// -----------------------------------------------------------------------------
+void UnitTeleporter::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
+{
+    // NOTHING
+}

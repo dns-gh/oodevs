@@ -12,11 +12,16 @@
 #include "AgentListener_ABC.h"
 #include "AgentProxy.h"
 #include "AgentAdapter.h"
+#include "AutomatProxy.h"
+#include "FormationProxy.h"
+#include "LocalAgentResolver_ABC.h"
 #include "SideResolver_ABC.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Agent.h"
+#include "dispatcher/Automat.h"
+#include "dispatcher/Formation.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Karma.h"
@@ -26,6 +31,7 @@
 
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <limits>
@@ -40,7 +46,7 @@ using namespace plugins::hla;
 AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
                                   const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
                                   tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter,
-                                  bool sendPlatforms, const SideResolver_ABC& sideResolver )
+                                  bool sendPlatforms, const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver )
     : model_                 ( model )
     , aggregatesResolver_    ( aggregatesResolver )
     , componentTypeResolver_ ( componentTypeResolver )
@@ -49,6 +55,7 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
     , converter_             ( converter )
     , doDisaggregation_      ( sendPlatforms )
     , sideResolver_          ( sideResolver )
+    , localAgentResolver_    ( localAgentResolver )
 {
     model_.RegisterFactory( *this );
 }
@@ -60,6 +67,14 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
 AgentController::~AgentController()
 {
     model_.UnregisterFactory( *this );
+    BOOST_FOREACH( const T_Parents::value_type& v, parents_ )
+    {
+        unsigned long childId = v.first;
+        unsigned long parentId = v.second;
+        T_Agents::const_iterator itP( agents_.find( parentId ) );
+        if( agents_.end() != itP )
+            itP->second->RemoveSubordinate( childId );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -68,6 +83,17 @@ AgentController::~AgentController()
 // -----------------------------------------------------------------------------
 void AgentController::Visit( dispatcher::Model_ABC& model )
 {
+    for( tools::Iterator< const dispatcher::Formation_ABC& > it = model.Formations().CreateIterator(); it.HasMoreElements(); )
+    {
+        dispatcher::Formation_ABC& agent = const_cast< dispatcher::Formation_ABC& >( it.NextElement() ); // $$$$ _RC_ SLI 2011-09-28: erk...
+        CreateFormation( agent );
+    }
+    for( tools::Iterator< const dispatcher::Automat_ABC& > it = model.Automats().CreateIterator(); it.HasMoreElements(); )
+    {
+        dispatcher::Automat_ABC& agent = const_cast< dispatcher::Automat_ABC& >( it.NextElement() ); // $$$$ _RC_ SLI 2011-09-28: erk...
+        CreateAutomat( agent );
+    }
+
     for( tools::Iterator< const dispatcher::Agent_ABC& > it = model.Agents().CreateIterator(); it.HasMoreElements(); )
     {
         dispatcher::Agent_ABC& agent = const_cast< dispatcher::Agent_ABC& >( it.NextElement() ); // $$$$ _RC_ SLI 2011-09-28: erk...
@@ -93,7 +119,7 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
     std::string remoteExt;
     bool isRemote = agent.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
 
-    T_Agent proxy( new AgentProxy( agent, componentTypes_, componentTypeResolver_, doDisaggregation_ ) );
+    T_Agent proxy( new AgentProxy( agent, componentTypes_, componentTypeResolver_, localAgentResolver_, doDisaggregation_ ) );
     agents_.insert( T_Agents::value_type( agent.GetId(), proxy ) );
     const kernel::AgentType& agentType = agent.GetType();
     const std::string typeName = agentType.GetName();
@@ -104,6 +130,20 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
     if( !isRemote && doDisaggregation_ )
             adapters_.push_back( T_AgentAdapter( new AgentAdapter( factory_, converter_, agent,
                     AgentAdapter::T_NotificationCallback( boost::bind( &AgentController::NotifyPlatformCreation, boost::ref( *this ), _1, _2, _3, _4 ) ) ) ) );
+    // Must be done after HLA object was created
+    if( !isRemote )
+    {
+        unsigned long parentId = agent.GetSuperior().GetId();
+        if( parentId != 0)
+        {
+            T_Agents::const_iterator parentIt( agents_.find( parentId ) );
+            if( agents_.end() != parentIt )
+            {
+                parents_[ agent.GetId() ] = parentId;
+                parentIt->second->AddSubordinate( agent.GetId(), *proxy );
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +184,87 @@ void AgentController::NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agen
     T_Agents::const_iterator itAgent( agents_.find( parent.GetId() ) );
     if( agents_.end() !=  itAgent )
     {
-        AgentProxy& proxy( *itAgent->second );
-        proxy.PlatformAdded( name, identifier );
+        Agent_ABC& proxy( *itAgent->second );
+        proxy.AddSubordinate( identifier, agent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentController::Create
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void AgentController::Create( dispatcher::Automat& entity )
+{
+    CreateAutomat( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentController::Create
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void AgentController::Create( dispatcher::Formation& entity )
+{
+    CreateFormation( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentController::CreateAutomat
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void AgentController::CreateAutomat( dispatcher::Automat_ABC& entity )
+{    
+    std::string remoteExt;
+    bool isRemote = entity.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
+    if( !isRemote ) 
+    {
+        T_Agent proxy( new AutomatProxy( entity, localAgentResolver_ ) );
+        agents_.insert( T_Agents::value_type( entity.GetId(), proxy ) );
+		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam() );
+        const rpr::EntityType entityType = aggregatesResolver_.Find( "automat" ); // FIXME AHC
+        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+            (*it)->AggregateCreated( *proxy, entity.GetId(), entity.GetName().toStdString(), forceIdentifier, entityType, entity.GetApp6Symbol(), true, 116 /* FIXME AHC */ );
+        // Must be done after HLA object was created
+        unsigned long parentId = entity.GetFormation() != 0 ? 
+            entity.GetFormation()->GetId() :
+            ( entity.GetParentAutomat() != 0 ? entity.GetParentAutomat()->GetId() : 0 );
+        if( parentId != 0)
+        {
+            T_Agents::const_iterator parentIt( agents_.find( parentId ) );
+            if( agents_.end() != parentIt )
+            {
+                parents_[ entity.GetId() ] = parentId;
+                parentIt->second->AddSubordinate( entity.GetId(), *proxy );
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentController::CreateFormation
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void AgentController::CreateFormation( dispatcher::Formation_ABC& entity )
+{
+    std::string remoteExt;
+    bool isRemote = entity.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
+    if( !isRemote ) 
+    {
+        T_Agent proxy( new FormationProxy( entity, localAgentResolver_ ) );
+        agents_.insert( T_Agents::value_type( entity.GetId(), proxy ) );
+		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam() );
+        const rpr::EntityType entityType = aggregatesResolver_.Find( "formation" ); // FIXME AHC
+        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+            (*it)->AggregateCreated( *proxy, entity.GetId(), entity.GetName().toStdString(), forceIdentifier, entityType, entity.GetApp6Symbol(), true, 116 /* FIXME AHC */ );
+        // Must be done after HLA object was created
+        unsigned long parentId = entity.GetParent() != 0 ? entity.GetParent()->GetId() : 0;
+        if( parentId != 0)
+        {
+            T_Agents::const_iterator parentIt( agents_.find( parentId ) );
+            if( agents_.end() != parentIt )
+            {
+                parents_[ entity.GetId() ] = parentId;
+                parentIt->second->AddSubordinate( entity.GetId(), *proxy );
+            }
+        }
     }
 }

@@ -79,6 +79,9 @@ private:
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units );
     virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter );
+    virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId );
+    virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
+    virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
     void DoCheck();
     //@}
 
@@ -307,6 +310,33 @@ void LocationOwnershipPolicy::OwnershipState::EmbeddedUnitListChanged( const std
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
 void LocationOwnershipPolicy::OwnershipState::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationOwnershipPolicy::OwnershipState::ParentChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void LocationOwnershipPolicy::OwnershipState::ParentChanged( const std::string& /*rtiIdentifier*/, const std::string& /*parentRtiId*/ )
+{
+    //  NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationOwnershipPolicy::OwnershipState::SubAgregatesChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void LocationOwnershipPolicy::OwnershipState::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationOwnershipPolicy::OwnershipState::SubEntitiesChanged
+// Created: AHC 2012-10-04
+// -----------------------------------------------------------------------------
+void LocationOwnershipPolicy::OwnershipState::SubEntitiesChanged(const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
 {
     // NOTHING
 }

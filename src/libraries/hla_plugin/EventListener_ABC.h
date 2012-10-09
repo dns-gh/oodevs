@@ -11,6 +11,7 @@
 #define plugins_hla_EventListener_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <set>
 
 namespace rpr
 {
@@ -29,7 +30,12 @@ namespace hla
 // =============================================================================
 class EventListener_ABC : private boost::noncopyable
 {
-public:
+public:    
+    //! @name Types
+    //@{
+    typedef std::set< std::string > T_ChildrenIds;
+    //@}
+
     //! @name Constructors/Destructor
     //@{
              EventListener_ABC() {}
@@ -43,6 +49,9 @@ public:
     virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available ) = 0;
     virtual void EmbarkmentChanged( bool mounted ) = 0;
     virtual void PlatformAdded( const std::string& name, unsigned int id ) = 0;
+    virtual void ChildrenChanged( const T_ChildrenIds& children ) = 0;
+    virtual void ParentChanged( const std::string& parentId ) = 0;
+
     //@}
 };
 

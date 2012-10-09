@@ -81,7 +81,8 @@ BOOST_FIXTURE_TEST_CASE( agregate_entity_serializes_all_its_attributes, Register
                                                                         ( "SilentAggregates" )
                                                                         ( "SubAggregateIdentifiers" )
                                                                         ( "EntityIdentifiers" )
-                                                                        ( "NumberOfVariableDatums" );
+                                                                        ( "NumberOfVariableDatums" )
+                                                                        ( "IsPartOf" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;

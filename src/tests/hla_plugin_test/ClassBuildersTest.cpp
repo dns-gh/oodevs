@@ -64,7 +64,7 @@ BOOST_FIXTURE_TEST_CASE( aggegate_entity_builder_registers_attributes, Fixture )
                                        ( "NumberOfVariableDatums" )
                                        ( "RelativeSpatial" )
                                        ( "EntityIdentifiers" )
-                                       ( "VariableDatums" ) ;
+                                       ( "VariableDatums" );
     Check( builder, "BaseEntity.AggregateEntity", true, true );
 }
 

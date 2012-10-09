@@ -61,7 +61,6 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const std
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
-
     if( msg.logistic_level() != sword::none )
     {
         logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
@@ -503,4 +502,13 @@ bool Automat::GetExtension( const std::string& key, std::string& result ) const
         return false;
     result = it->second;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetApp6Symbol
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+const std::string& Automat::GetApp6Symbol() const
+{
+    return app6symbol_; 
 }

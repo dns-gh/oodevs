@@ -169,3 +169,21 @@ void GroundVehicle::ResetAttributes()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: GroundVehicle::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void GroundVehicle::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: GroundVehicle::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void GroundVehicle::ParentChanged( const std::string& /*parentId*/ )
+{
+    // NOTHING
+}

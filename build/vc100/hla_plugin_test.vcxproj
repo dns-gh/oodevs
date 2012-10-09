@@ -183,6 +183,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentControllerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentResolverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAggregateTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteOrbatShaperTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteTacticalObjectControllerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprDeserializationTest.cpp" />

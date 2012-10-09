@@ -98,8 +98,10 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatCreater.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatDisengager.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\CallsignResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ChildListener.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ClassListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ComponentTypes.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ContextFactory.cpp" />
@@ -112,6 +114,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\EventListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FOM_Serializer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FormationProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\GroundVehicle.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaClass.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\HlaObjectNameFactory.cpp" />
@@ -128,6 +131,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireReceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\IndirectFireSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\InteractionBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\IsPartOfStruct.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\LocationOwnershipPolicy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MarkingFactory.cpp" />
@@ -140,6 +144,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnSurfaceVessel.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NETNv1_InteractionBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NETNv2_InteractionBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NullTerminatedAsciiString.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NullTransferSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Omt13String.cpp" />
@@ -148,6 +153,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\PlatformProxy.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteOrbatShaper.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteTacticalObjectController.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\RprTransferSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\SideChecker.cpp" />
@@ -193,10 +199,12 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatCreater.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatDisengager.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatProxy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\CallsignResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\CallsignResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ChildListener.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilders.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassBuilder_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ClassListenerComposite.h" />
@@ -222,6 +230,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\FOM_Serializer.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FOM_Serializer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FormationProxy.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\GroundVehicle.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\HlaClass_ABC.h" />
@@ -244,6 +253,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsNetn.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\IsPartOfStruct.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocationOwnershipPolicy.h" />
@@ -260,6 +270,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\NETNv1_InteractionBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NETNv2_InteractionBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NETN_InteractionBuilder_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NullTerminatedAsciiString.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NullTransferSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListenerComposite.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ObjectListener_ABC.h" />
@@ -276,6 +287,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAgentSubject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteAggregateListener_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteHlaObjectFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteOrbatShaper.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteTacticalObjectController.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteTacticalObjectSubject_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\ResponseObserver_ABC.h" />

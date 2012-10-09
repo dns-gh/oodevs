@@ -12,6 +12,7 @@
 #include <rpr/ForceIdentifier.h>
 #include <string>
 #include <vector>
+#include <set>
 
 namespace rpr
 {
@@ -33,6 +34,11 @@ namespace hla
 class ObjectListener_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::set< std::string > T_EntityIDs;
+    //@}
+
     //! @name Constructors/Destructor
     //@{
     virtual ~ObjectListener_ABC() {}
@@ -49,6 +55,10 @@ public:
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign ) = 0;
     virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& embeddedUnits ) = 0;
     virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter ) = 0;
+    virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId ) = 0;
+    virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const T_EntityIDs& children ) = 0;
+    virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const T_EntityIDs& children ) = 0;
+
     //@}
 };
 }

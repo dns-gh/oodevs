@@ -223,4 +223,20 @@ void Aircraft::PlatformAdded( const std::string& /*name*/, unsigned int /*id*/ )
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: Aircraft::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void Aircraft::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& /*children*/ )
+{
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: Aircraft::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void Aircraft::ParentChanged( const std::string& /*parentId*/ )
+{
+    // NOTHING
+}

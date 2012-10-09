@@ -213,3 +213,20 @@ void NetnAggregate::PlatformAdded( const std::string& /*name*/, unsigned int /*i
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void NetnAggregate::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void NetnAggregate::ParentChanged( const std::string& /*parentId*/ )
+{
+    // NOTHING
+}

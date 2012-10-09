@@ -263,3 +263,30 @@ void RemoteTacticalObjectController::Send( simulation::ObjectMagicAction& messag
         message.Send( publisher_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteTacticalObjectController::ParentChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void RemoteTacticalObjectController::ParentChanged( const std::string& /*rtiIdentifier*/, const std::string& /*parentRtiId*/ )
+{
+    //  NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteTacticalObjectController::SubAgregatesChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void RemoteTacticalObjectController::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteTacticalObjectController::SubEntitiesChanged
+// Created: AHC 2012-10-04
+// -----------------------------------------------------------------------------
+void RemoteTacticalObjectController::SubEntitiesChanged(const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+{
+    // NOTHING
+}

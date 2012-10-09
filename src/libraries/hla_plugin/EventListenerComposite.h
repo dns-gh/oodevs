@@ -32,6 +32,8 @@ public:
     virtual void EquipmentChanged( unsigned int type, const rpr::EntityType& entityType, unsigned int available );
     virtual void EmbarkmentChanged( bool mounted );
 	virtual void PlatformAdded( const std::string& name, unsigned int id );
+    virtual void ChildrenChanged( const T_ChildrenIds& children );
+    virtual void ParentChanged( const std::string& parentId );
     //@}
 
 private:

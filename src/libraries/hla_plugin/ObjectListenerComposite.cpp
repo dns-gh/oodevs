@@ -8,6 +8,7 @@
 
 #include "hla_plugin_pch.h"
 #include "ObjectListenerComposite.h"
+#include "rpr/Coordinates.h"
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <vector>
@@ -138,7 +139,34 @@ void ObjectListenerComposite::EmbeddedUnitListChanged( const std::string& identi
 // Name: ObjectListenerComposite::PerimeterChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void ObjectListenerComposite::PerimeterChanged( const std::string& /*identifier*/, const std::vector< rpr::PerimeterPoint >& /*perimeter*/ )
+void ObjectListenerComposite::PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter )
 {
-    // NOTHING
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::PerimeterChanged, _1, identifier, perimeter ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListenerComposite::ParentChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void ObjectListenerComposite::ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId )
+{
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::ParentChanged, _1, rtiIdentifier, parentRtiId ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListenerComposite::SubAgregatesChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void ObjectListenerComposite::SubAgregatesChanged( const std::string& rtiIdentifier, const  ObjectListener_ABC::T_EntityIDs& children )
+{
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::SubAgregatesChanged, _1, rtiIdentifier, children ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListenerComposite::SubEntitiesChanged
+// Created: AHC 2012-10-04
+// -----------------------------------------------------------------------------
+void ObjectListenerComposite::SubEntitiesChanged(const std::string& rtiIdentifier, const  ObjectListener_ABC::T_EntityIDs& children )
+{
+    copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::SubEntitiesChanged, _1, rtiIdentifier, children ) );
 }

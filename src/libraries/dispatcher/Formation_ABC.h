@@ -46,6 +46,7 @@ public:
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const = 0;
     virtual LogisticEntity_ABC* GetLogisticEntity() const = 0;
     virtual bool GetExtension( const std::string& , std::string& ) const { return false; }
+    virtual const std::string& GetApp6Symbol() const = 0;
     //@}
 
     //! @name Operations

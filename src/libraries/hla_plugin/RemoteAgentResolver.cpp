@@ -213,3 +213,30 @@ void RemoteAgentResolver::PerimeterChanged( const std::string& /*identifier*/, c
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::ParentChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::ParentChanged( const std::string& /*rtiIdentifier*/, const std::string& /*parentRtiId*/ )
+{
+    //  NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::SubAgregatesChanged
+// Created: AHC 2012-10-03
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteAgentResolver::SubEntitiesChanged
+// Created: AHC 2012-10-04
+// -----------------------------------------------------------------------------
+void RemoteAgentResolver::SubEntitiesChanged(const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+{
+    // NOTHING
+}

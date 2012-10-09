@@ -313,6 +313,24 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteTacticalObjectController.cpp">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\IsPartOfStruct.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NullTerminatedAsciiString.cpp">
+      <Filter>Source Files\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatProxy.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FormationProxy.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\ChildListener.cpp">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteOrbatShaper.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -758,6 +776,24 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteTacticalObjectSubject_ABC.h">
       <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\IsPartOfStruct.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NullTerminatedAsciiString.h">
+      <Filter>Source Files\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatProxy.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FormationProxy.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\ChildListener.h">
+      <Filter>Source Files\Dispatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\RemoteOrbatShaper.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

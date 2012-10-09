@@ -29,6 +29,27 @@
 
 using namespace plugins::hla;
 
+namespace
+{
+    void ReadSubIdentifiers( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, 
+        void (ObjectListener_ABC::*callback)( const std::string&, const std::set< std::string >& ), Omt13StringArray& var )
+    {
+        var.Deserialize( deserializer );
+        std::set< std::string > s;
+        BOOST_FOREACH( const Omt13String& v, var.GetValues() )
+        {
+            s.insert( v.str() );
+        }
+        (listener.*callback)( identifier, s );
+    }
+    void ReadIsPartOf( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, IsPartOfStruct& var )
+    {
+        var.Deserialize( deserializer );
+        listener.ParentChanged( identifier, var.rtiId_.str() ) ;
+    }
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity constructor
 // Created: SBO 2008-02-18
@@ -194,9 +215,10 @@ void AggregateEntity::RegisterAttributes( )
     attributesUpdater_->Register( "NumberOfSilentEntities", boost::bind( &FOM_Serializer_ABC::ReadNumberOfSilentEntities, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< unsigned short >( 0 ) );
     attributesUpdater_->Register( "SilentEntities", boost::bind( &FOM_Serializer_ABC::ReadSilentEntities, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( numberOfSilentEntities_ ) ), Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
     attributesUpdater_->Register( "SilentAggregates", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no aggregates
-    attributesUpdater_->Register( "SubAggregateIdentifiers", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no sub aggregates identifiers
-    attributesUpdater_->Register( "EntityIdentifiers", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), entities_ ); // no entity identifiers
+    attributesUpdater_->Register( "SubAggregateIdentifiers", boost::bind( &ReadSubIdentifiers, _1, _2, _3, &ObjectListener_ABC::SubAgregatesChanged, boost::ref( subAggregates_ ) ), subAggregates_ ); // no sub aggregates identifiers
+    attributesUpdater_->Register( "EntityIdentifiers", boost::bind( &ReadSubIdentifiers, _1, _2, _3, &ObjectListener_ABC::SubEntitiesChanged, boost::ref( entities_ ) ), entities_ ); // no entity identifiers
     attributesUpdater_->Register( "NumberOfVariableDatums", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no variable datums
+    attributesUpdater_->Register( "IsPartOf", boost::bind( &ReadIsPartOf, _1, _2, _3, boost::ref( isPartOf_ ) ), isPartOf_ ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -255,3 +277,24 @@ void AggregateEntity::PlatformAdded( const std::string& name, unsigned int /*id*
     attributesUpdater_->Update( "EntityIdentifiers", entities_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void AggregateEntity::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& children )
+{
+    subAggregates_.Clear();
+    BOOST_FOREACH( const EventListener_ABC::T_ChildrenIds::value_type& v, children )
+        subAggregates_.Add( v );
+    attributesUpdater_->Update( "SubAggregateIdentifiers", subAggregates_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void AggregateEntity::ParentChanged( const std::string& parentId )
+{
+    isPartOf_.rtiId_ = Omt13String( parentId );
+    attributesUpdater_->Update( "IsPartOf", isPartOf_ );
+}

@@ -8,88 +8,89 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "Omt13String.h"
+#include "ChildListener.h"
 
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: Omt13String constructor
-// Created: SLI 2011-09-22
+// Name: ChildListener Constructor
+// Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-Omt13String::Omt13String()
+ChildListener::ChildListener( boost::function< void() > callback ) 
+    : locationCallback_( callback ) 
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Omt13String constructor
-// Created: SLI 2011-09-22
+// Name: ChildListener::SpatialChanged
+// Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-Omt13String::Omt13String( const std::string& data )
-    : data_( data )
+void ChildListener::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
+{
+    location_ = LocationStruct( latitude, longitude, altitude, speed, direction );
+    locationCallback_();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChildListener::FormationChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void ChildListener::FormationChanged( bool /*isOnRoad*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Omt13String destructor
-// Created: SLI 2011-09-22
+// Name: ChildListener::EquipmentChanged
+// Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-Omt13String::~Omt13String()
+void ChildListener::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*entityType*/, unsigned int /*available*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Omt13String::str
-// Created: SLI 2011-09-22
+// Name: ChildListener::EmbarkmentChanged
+// Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-std::string Omt13String::str() const
-{
-    return data_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Omt13StringArray constructor
-// Created: AHC 2012-07-30
-// -----------------------------------------------------------------------------
-Omt13StringArray::Omt13StringArray()
+void ChildListener::EmbarkmentChanged( bool /*mounted*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Omt13StringArray destructor
-// Created: AHC 2012-07-30
+// Name: ChildListener::ChildrenChanged
+// Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-Omt13StringArray::~Omt13StringArray()
+void ChildListener::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& /*children*/ )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Omt13StringArray::Add
-// Created: AHC 2012-07-30
+// Name: ChildListener::ParentChanged
+// Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-void Omt13StringArray::Add( const std::string& name )
+void ChildListener::ParentChanged( const std::string& /*parentId*/ )
 {
-    values_.push_back( Omt13String( name ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Omt13StringArray::GetValues
-// Created: AHC 2012-07-30
+// Name: ChildListener::GetLocation
+// Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-const std::vector< Omt13String >& Omt13StringArray::GetValues() const
+const  ChildListener::LocationStruct&  ChildListener::GetLocation() const
 {
-    return values_;
+    return location_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Omt13StringArray::Clear
-// Created: AHC 2012-10-09
+// Name: ChildListener::ParentChanged
+// Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-void Omt13StringArray::Clear()
+void ChildListener::PlatformAdded( const std::string& /*name*/, unsigned int /*id*/ )
 {
-    values_.clear();
+    // NOTHING
 }

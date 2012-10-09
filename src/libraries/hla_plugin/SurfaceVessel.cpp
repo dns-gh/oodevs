@@ -222,3 +222,20 @@ void SurfaceVessel::PlatformAdded( const std::string& /*name*/, unsigned int /*i
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: SurfaceVessel::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void SurfaceVessel::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& /*children*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SurfaceVessel::ChildrenChanged
+// Created: AHC 2012-10-02
+// -----------------------------------------------------------------------------
+void SurfaceVessel::ParentChanged( const std::string& /*parentId*/ )
+{
+    // NOTHING
+}
