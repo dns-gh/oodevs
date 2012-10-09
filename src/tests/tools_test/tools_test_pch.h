@@ -26,6 +26,7 @@
 std::string BOOST_RESOLVE( const std::string& filename );
 
 extern unsigned short PORT;
+extern std::string temp_directory;
 
 void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actual );
 

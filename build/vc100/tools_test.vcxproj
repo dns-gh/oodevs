@@ -85,6 +85,10 @@
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)  --temp_directory=../../out/tmp</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
@@ -93,6 +97,10 @@
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)  --temp_directory=../../out/tmp</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
@@ -101,6 +109,10 @@
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)  --temp_directory=../../out/tmp</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile />
@@ -109,11 +121,16 @@
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)  --temp_directory=../../out/tmp</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\tools_test\ClientNetworkerTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\FileMatcherTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\FileMigrationTest.cpp" />
+    <ClCompile Include="..\..\src\tests\tools_test\LoggerTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\MessageObserverTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\RealFileLoaderTest.cpp" />
     <ClCompile Include="..\..\src\tests\tools_test\SchemaVersionExtractorTest.cpp" />
