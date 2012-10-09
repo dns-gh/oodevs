@@ -54,16 +54,23 @@ ResourceLinksDialog::~ResourceLinksDialog()
 // Name: ResourceLinksDialog::DoValidate
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog::DoValidate()
+void ResourceLinksDialog::DoValidate( kernel::Entity_ABC* element /*= 0*/ )
 {
+    unsigned int id = id_;
+    ResourceNetwork_ABC::T_ResourceNodes resourceNodes = resourceNodes_;
+    if( element )
+    {
+        id = element->GetId();
+        resourceNodes = element->Get< kernel::ResourceNetwork_ABC >().GetResourceNodes();
+    }
     // $$$$ _RC_ JSR 2011-02-24: TODO passer dans la factory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_resource_links" );
     MagicAction* action = new MagicAction( actionType, controllers_.controller_, tr( "Change resource links"), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new Identifier( it.NextElement(), id_ ) );
+    action->AddParameter( *new Identifier( it.NextElement(), id ) );
     ParameterList* nodes = new ParameterList( it.NextElement() );
     action->AddParameter( *nodes );
-    for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+    for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes.begin(); it != resourceNodes.end(); ++it )
     {
         const ResourceNetwork_ABC::ResourceNode& resource = it->second;
         ParameterList& node = nodes->AddList( "Node" );

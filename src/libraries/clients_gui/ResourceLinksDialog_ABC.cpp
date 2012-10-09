@@ -342,7 +342,7 @@ void ResourceLinksDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC& ent
     const ResourceNetwork_ABC* node = entity.Retrieve< ResourceNetwork_ABC >();
     if( !node || selected_.empty() )
         return;
-    sourceNode_ = const_cast< ResourceNetwork_ABC* >( node );
+    sourceNode_ = const_cast< kernel::Entity_ABC* >( &entity );
     ContextMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
     tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
     int resourceId = 0;
@@ -418,6 +418,9 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
 {
     if( sourceNode_ == 0 )
         return;
+    kernel::ResourceNetwork_ABC* node = sourceNode_->Retrieve< kernel::ResourceNetwork_ABC >();
+    if( !node )
+        return;
     typedef ResourceNetwork_ABC::ResourceNode ResourceNode;
     typedef ResourceNetwork_ABC::ResourceLink ResourceLink;
     typedef ResourceNetwork_ABC::T_ResourceNodes T_ResourceNodes;
@@ -428,11 +431,11 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
         const ResourceNetworkType& resource = it.NextElement();
         if( index++ == resourceId )
         {
-            ResourceNode& sourceNode = sourceNode_->FindOrCreateResourceNode( resource.GetName() );
+            ResourceNode& sourceNode = node->FindOrCreateResourceNode( resource.GetName() );
             for( std::vector< kernel::Entity_ABC* >::iterator it = selected_.begin(); it != selected_.end(); ++it )
             {
                 kernel::Entity_ABC& dest = **it;
-                if( dest.Retrieve< ResourceNetwork_ABC >() == sourceNode_ )
+                if( dest.Retrieve< ResourceNetwork_ABC >() == node )
                     continue;
                 dest.Get< ResourceNetwork_ABC >().FindOrCreateResourceNode( resource.GetName() );
                 bool destUrban = ( dynamic_cast< kernel::UrbanObject_ABC* >( &dest ) != 0 );
@@ -446,13 +449,13 @@ void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
                 else
                     sourceNode.links_.erase( itLink );
             }
-            controllers_.controller_.Update( *sourceNode_ );
+            controllers_.controller_.Update( *node );
             break;
         }
     }
-    sourceNode_ = 0;
     Show();
-    DoValidate();
+    DoValidate( sourceNode_ );
+    sourceNode_ = 0;
 }
 
 // -----------------------------------------------------------------------------
