@@ -2,7 +2,7 @@ cmake_minimum_required( VERSION 2.8 )
 project( host_agent )
 enable_testing()
 
-include( MasaMacros.cmake )
+include( ${MASA_MACROS} )
 
 set( root_dir ${CMAKE_SOURCE_DIR}/.. )
 
