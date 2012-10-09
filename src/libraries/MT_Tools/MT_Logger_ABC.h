@@ -96,9 +96,9 @@ protected:
     /** @name Tools */
     //-------------------------------------------------------------------------
     //@{
-    const char* GetTimestampAsString();
-    const char* GetTypeAsString();
-    const char* GetLogLevelAsString( E_LogLevel nLevel);
+    const char* GetTimestampAsString() const;
+    const char* GetTypeAsString() const;
+    const char* GetLogLevelAsString( E_LogLevel nLevel) const;
     //@}
 
 private:

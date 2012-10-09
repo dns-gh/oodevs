@@ -50,7 +50,7 @@ void MT_Logger_ABC::Log( E_LogLevel nLevel, const char* strMessage, const char* 
 */
 // Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
-const char* MT_Logger_ABC::GetTimestampAsString()
+const char* MT_Logger_ABC::GetTimestampAsString() const
 {
     static char buffer[256];
     time_t nTime = time( NULL );
@@ -63,7 +63,7 @@ const char* MT_Logger_ABC::GetTimestampAsString()
 // Name: MT_Logger_ABC::GetTypeAsString
 // Created: LGY 2011-10-07
 // -----------------------------------------------------------------------------
-const char* MT_Logger_ABC::GetTypeAsString()
+const char* MT_Logger_ABC::GetTypeAsString() const
 {
     switch( type_ )
     {
@@ -85,7 +85,7 @@ const char* MT_Logger_ABC::GetTypeAsString()
 */
 // Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
-const char* MT_Logger_ABC::GetLogLevelAsString( E_LogLevel nLevel )
+const char* MT_Logger_ABC::GetLogLevelAsString( E_LogLevel nLevel ) const
 {
     switch( nLevel )
     {
