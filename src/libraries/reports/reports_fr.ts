@@ -35,19 +35,4 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
-<context>
-    <name>ReportListView</name>
-    <message>
-        <source>Report</source>
-        <translation>Compte-rendu</translation>
-    </message>
-    <message>
-        <source>ISO Date</source>
-        <translation>Date ISO</translation>
-    </message>
-    <message>
-        <source>Received</source>
-        <translation>Reçu</translation>
-    </message>
-</context>
 </TS>

@@ -14,7 +14,9 @@
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #include <QtCore/qdatetime.h>
+#include <QtCore/qlist.h>
 #include <QtGui/qcolor.h>
+#include <QtGui/qstandarditemmodel.h>
 #pragma warning( pop )
 
 namespace kernel
@@ -44,6 +46,9 @@ public:
         eWarning = 1004
     };
 
+    static const int ReportRole;
+    static const int TypeFilterRole;
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -54,14 +59,15 @@ public:
     //! @name Operations
     //@{
     void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
-    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     void Read();
     //@}
 
     //! @name Accessors
     //@{
     const kernel::Entity_ABC& GetOwner() const;
+    QList< QStandardItem* > GetReportData() const;
     E_Type GetType () const;
+    const QDateTime& GetDateTime() const; 
     //@}
 
 private:

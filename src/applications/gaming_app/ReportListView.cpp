@@ -9,51 +9,100 @@
 
 #include "gaming_app_pch.h"
 #include "ReportListView.h"
-
-#include "reports/Report.h"
-#include "ReportFilterOptions.h"
+#include "moc_ReportListView.cpp"
 #include "gaming/Reports.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ItemFactory_ABC.h"
 
+Q_DECLARE_METATYPE( const Report* )
+
 using namespace kernel;
 using namespace gui;
 
-#include "moc_ReportListView.cpp"
+namespace
+{
+    class CustomSortFilterProxyModel : public QSortFilterProxyModel
+    {
+    public:
+        CustomSortFilterProxyModel( QObject* parent )
+            : QSortFilterProxyModel( parent )
+        {
+            // NOTHING
+        }
+        ~CustomSortFilterProxyModel()
+        {
+            // NOTHING
+        }
+    protected:
+        virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
+        {
+            QStandardItemModel* model = static_cast< QStandardItemModel* >( sourceModel() );
+            if( left.isValid() && right.isValid() )
+            {
+                //getting second column modelIndex for each 
+                QModelIndex leftIndex = model->index( model->itemFromIndex( left )->row(), 1 );
+                QModelIndex rightIndex = model->index( model->itemFromIndex( right )->row(), 1 );
+
+                //getting report pointer and time value
+                QDateTime timeLeft  = model->data( leftIndex, Report::ReportRole ).value< const Report* >()->GetDateTime();
+                QDateTime timeRight = model->data( rightIndex, Report::ReportRole ).value< const Report* >()->GetDateTime();
+                return timeLeft < timeRight;
+            }
+            return false;
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView constructor
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, const ReportFilterOptions& filter, ItemFactory_ABC& factory )
-    : ListDisplayer< ReportListView >( pParent, *this, factory )
+ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+    : QTreeView( pParent )
     , controllers_( controllers )
-    , filter_( filter )
     , factory_( factory )
     , selected_( controllers )
     , menu_( new kernel::ContextMenu( this ) )
     , readTimer_( new QTimer( this ) )
+    , proxyFilter_ ( new CustomSortFilterProxyModel( this ) )
 {
-    setFrameStyle( Q3Frame::Plain );
-    setMargin( 2 );
-    AddColumn( tr( "ISO Date" ) );
-    AddColumn( tr( "Received" ) );
-    AddColumn( tr( "Report" ) );
-    setColumnWidthMode( 0, Q3ListView::Manual );
-    setColumnWidth( 0, -1 );
-    setColumnWidth( 1, 130 );
-    setColumnAlignment( 1, Qt::AlignTop );
-    setColumnAlignment( 2, Qt::AlignTop );
+    //filter regexp
+    toDisplay_.insert( Report::eRC );
+    toDisplay_.insert( Report::eTrace );
+    toDisplay_.insert( Report::eEvent );
+    toDisplay_.insert( Report::eMessage );
+    toDisplay_.insert( Report::eWarning );
 
-    // Set a descending sorting order, then disable user sorting.
-    setSorting( 0, false );
+    //configure treeview
+    setModel( proxyFilter_ );
+    setRootIsDecorated( false );
+    setEditTriggers( 0 );
+    setAlternatingRowColors( true );
+    proxyFilter_->setFilterKeyColumn( 1 );
+    proxyFilter_->setSourceModel( &reportModel_ );
+    proxyFilter_->setFilterRole( Report::TypeFilterRole );
+    SetFilterRegexp();
+    proxyFilter_->setDynamicSortFilter( true );
+    setSortingEnabled( true );
 
-    connect( this,       SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint&, int ) ) );
-    connect( this,       SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ),        this, SLOT( OnRequestCenter() ) );
-    connect( this,       SIGNAL( spacePressed( Q3ListViewItem* ) ),                             this, SLOT( OnRequestCenter() ) );
-    connect( this,       SIGNAL( selectionChanged() ),                                         this, SLOT( OnSelectionChanged() ) );
-    connect( readTimer_, SIGNAL( timeout() ),                                                  this, SLOT( OnReadTimerOut() ) );
+    //Add alternative palette
+    QPalette p( palette() );
+    p.setColor( QPalette::Base              , Qt::white );
+    p.setColor( QPalette::AlternateBase     , QColor( 240, 240, 240 ) );
+    setPalette( p );
+
+    //configure the model
+    reportModel_.setColumnCount( 2 );
+    setHeaderHidden( true );
+    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 1, QHeaderView::Stretch );
+
+    //connections
+    connect( this, SIGNAL( doubleClicked( const QModelIndex& ) ), this, SLOT( OnRequestCenter() ) );
+    connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
+    connect( readTimer_, SIGNAL( timeout() ), this, SLOT( OnReadTimerOut() ) );
+    connect( menu_, SIGNAL( triggered( QAction* ) ), SLOT( OnToggle( QAction* ) ) );
 
     controllers_.Register( *this );
 }
@@ -79,14 +128,12 @@ void ReportListView::showEvent( QShowEvent* )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ReportListView::OnOptionsChanged
-// Created: AGE 2006-03-09
+// Name: ReportListView::contextMenuEvent
+// Created: NPT 2012-10-05
 // -----------------------------------------------------------------------------
-void ReportListView::OnOptionsChanged()
+void ReportListView::contextMenuEvent( QContextMenuEvent * e )
 {
-    const Entity_ABC* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
+    OnRequestPopup( e->globalPos() );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +150,7 @@ void ReportListView::NotifySelected( const Entity_ABC* element )
         if( reports )
             NotifyUpdated( *reports );
         else
-            clear();
+            reportModel_.removeRows( 0, reportModel_.rowCount() );
     }
 }
 
@@ -127,39 +174,12 @@ void ReportListView::NotifyUpdated( const Reports& reports )
     if( ! ShouldUpdate( reports ) )
         return;
 
-    ValuedListItem* item = DisplayList( reports.CreateIterator() );
-                    item = DisplayList( reports.traces_.rbegin(), reports.traces_.rend(), this, item );
-    DeleteTail( item );
-    sort();
-    for( Q3ListViewItem* item = firstChild(); item != 0; item = item->nextSibling() )
-        static_cast< gui::ValuedListItem* >( item )->SetBackgroundColor( Qt::white, QColor( 240, 240, 240 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::Display
-// Created: AGE 2006-03-09
-// -----------------------------------------------------------------------------
-void ReportListView::Display( const Report* report, Displayer_ABC& displayer, ValuedListItem* item )
-{
-    if( report )
-        Display( *report, displayer, item );
-    else
-        RemoveItem( item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ReportListView::Display
-// Created: AGE 2007-10-22
-// -----------------------------------------------------------------------------
-void ReportListView::Display( const Report& report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item )
-{
-    if( &report.GetOwner() == selected_ && filter_.ShouldDisplay( report ) )
-    {
-        item->SetValue( &report );
-        report.Display( displayer );
-    }
-    else
-        RemoveItem( item );
+    reportModel_.removeRows( 0, reportModel_.rowCount() );
+    tools::Iterator< const Report& > iterator = reports.CreateIterator();
+    while( iterator.HasMoreElements() )
+        reportModel_.appendRow( iterator.NextElement().GetReportData() );
+    for( int i = 0; i < reports.traces_.size(); ++i )
+        reportModel_.appendRow( reports.traces_[ i ]->GetReportData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,13 +188,11 @@ void ReportListView::Display( const Report& report, kernel::Displayer_ABC& displ
 // -----------------------------------------------------------------------------
 void ReportListView::NotifyCreated( const Report& report )
 {
-    if( ! isVisible() || & report.GetOwner() != selected_ )
+    if( !isVisible() || & report.GetOwner() != selected_ )
         return;
-    if( ! filter_.ShouldDisplay( report ) )
+    if( toDisplay_.find( report.GetType() ) == toDisplay_.end() )
         return;
-    ValuedListItem* item = factory_.CreateItem( this );
-    item->SetValue( &report );
-    report.Display( GetItemDisplayer( item ) );
+    reportModel_.appendRow( report.GetReportData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +201,8 @@ void ReportListView::NotifyCreated( const Report& report )
 // -----------------------------------------------------------------------------
 void ReportListView::OnSelectionChanged()
 {
-    readTimer_->start( 1500, true );
+    readTimer_->start( 1500 );
+    readTimer_->setSingleShot( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -192,29 +211,32 @@ void ReportListView::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void ReportListView::OnReadTimerOut()
 {
-    ValuedListItem* item = (ValuedListItem*)( selectedItem() );
-    if( item )
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item1 = reportModel_.itemFromIndex( proxyFilter_->mapToSource( index ) );
+    QStandardItem* item2 = reportModel_.item( item1->row(), item1->column() == 0 ? 1 : 0 );
+    if( item1 && item2 )
     {
-        const Report* report = item->GetValue< const Report >();
-        const_cast< Report* >( report )->Read();
-        report->Display( GetItemDisplayer( item ) );
+        const_cast< Report* >( reportModel_.item( item1->row(), 1 )->data( Report::ReportRole ).value< const Report* >() )->Read();
+        item1->setFont( QFont( "Calibri", 10, QFont::Normal ) );
+        item2->setFont( QFont( "Calibri", 10, QFont::Normal ) );
     }
+
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportListView::OnRequestPopup
 // Created: AGE 2006-09-18
 // -----------------------------------------------------------------------------
-void ReportListView::OnRequestPopup( Q3ListViewItem* /*item*/, const QPoint& pos, int /*column*/ )
+void ReportListView::OnRequestPopup( const QPoint& pos )
 {
     if( !selected_ )
         return;
     menu_->clear();
     menu_->insertItem( tr( "Clear" ),        this, SLOT( OnClearAll() ) );
     menu_->insertItem( tr( "Clear traces" ), this, SLOT( OnClearTrace() ) );
-    filter_.AddContextMenu( menu_ );
-//    if( item )
-//        menu_->insertItem( tr( "Effacer jusqu'ici" ), this, SLOT( OnClearUpTo() ) );
+    AddContextMenu();
     menu_->popup( pos );
 }
 
@@ -227,6 +249,25 @@ void ReportListView::MarkReportsAsRead()
     const Reports* reports = 0;
     if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
         const_cast< Reports* >( reports )->MarkAsRead(); // $$$$ AGE 2006-09-18:
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::SetFilterRegexp
+// Created: NPT 2012-10-08
+// -----------------------------------------------------------------------------
+void ReportListView::SetFilterRegexp()
+{
+    QString regexp( "\\b(" );
+    if( toDisplay_.empty() )
+        regexp += "noSelection";
+    for( std::set< Report::E_Type >::const_iterator it = toDisplay_.begin(); it != toDisplay_.end(); ++it )
+    {
+        if( it != toDisplay_.begin() )
+            regexp += '|';
+        regexp += QString::number( *it );
+    }
+    regexp += ")\\b";
+    proxyFilter_->setFilterRegExp( regexp );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,9 +298,56 @@ void ReportListView::OnClearTrace()
 // -----------------------------------------------------------------------------
 void ReportListView::OnRequestCenter()
 {
-    if( selectedItem() )
-    {
-        ValuedListItem* item = (ValuedListItem*)( selectedItem() );
-        item->Activate( controllers_.actions_ );
-    }
+    const QModelIndex index = selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = reportModel_.itemFromIndex( proxyFilter_->mapToSource( index ) );
+    if( item && item->data( Report::ReportRole ).isValid() )
+        item->data().value< const Report* >()->GetOwner().Activate( controllers_.actions_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::OnToggle
+// Created: NPT 2012-10-08
+// -----------------------------------------------------------------------------
+void ReportListView::OnToggle( QAction* action )
+{
+    if( !action->data().isValid() )
+        return;
+    Report::E_Type type = static_cast< Report::E_Type >( action->data().toInt() );
+    if( toDisplay_.find( type ) == toDisplay_.end() )
+        toDisplay_.insert( type );
+    else
+        toDisplay_.erase( type );
+    SetFilterRegexp();
+
+    const Entity_ABC* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::AddMenuItem
+// Created: SBO 2007-02-06
+// -----------------------------------------------------------------------------
+void ReportListView::AddMenuItem( const QString& name, Report::E_Type type ) const
+{
+    QAction* action = menu_->addAction( name );
+    action->setData( type );
+    action->setCheckable( true );
+    action ->setChecked( toDisplay_.find( type ) != toDisplay_.end() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::AddContextMenu
+// Created: SBO 2007-02-06
+// -----------------------------------------------------------------------------
+void ReportListView::AddContextMenu() const
+{
+    menu_->insertSeparator();
+    AddMenuItem( tr( "Show reports" ) , Report::eRC      );
+    AddMenuItem( tr( "Show traces" )  , Report::eTrace   );
+    AddMenuItem( tr( "Show events" )  , Report::eEvent   );
+    AddMenuItem( tr( "Show messages" ), Report::eMessage );
+    AddMenuItem( tr( "Show warnings" ), Report::eWarning );
 }

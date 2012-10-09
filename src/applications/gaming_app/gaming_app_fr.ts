@@ -2736,26 +2736,14 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>ReportFilterOptions</name>
+    <name>ReportListView</name>
     <message>
-        <source>Display reports</source>
-        <translation>Afficher les comptes-rendus</translation>
+        <source>Clear</source>
+        <translation>Tout effacer</translation>
     </message>
     <message>
-        <source>Display traces</source>
-        <translation>Afficher les traces</translation>
-    </message>
-    <message>
-        <source>Display events</source>
-        <translation>Afficher les évènements</translation>
-    </message>
-    <message>
-        <source>Display messages</source>
-        <translation>Afficher les messages</translation>
-    </message>
-    <message>
-        <source>Display warnings</source>
-        <translation>Afficher les avertissements</translation>
+        <source>Clear traces</source>
+        <translation>Effacer les traces</translation>
     </message>
     <message>
         <source>Show reports</source>
@@ -2776,29 +2764,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Show warnings</source>
         <translation>Montrer les avertissements</translation>
-    </message>
-</context>
-<context>
-    <name>ReportListView</name>
-    <message>
-        <source>Report</source>
-        <translation>Compte-rendu</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Tout effacer</translation>
-    </message>
-    <message>
-        <source>Clear traces</source>
-        <translation>Effacer les traces</translation>
-    </message>
-    <message>
-        <source>ISO Date</source>
-        <translation>Date ISO</translation>
-    </message>
-    <message>
-        <source>Received</source>
-        <translation>Reçu</translation>
     </message>
 </context>
 <context>

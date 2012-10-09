@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "InfoReportsTab.h"
 #include "ReportListView.h"
-#include "ReportFilterOptions.h"
 #include "clients_gui/ItemFactory_ABC.h"
 #include "gaming/Reports.h"
 
@@ -71,11 +70,8 @@ InfoReportsTab::InfoReportsTab( QTabWidget* parent, kernel::Controllers& control
     , factory_( new AlternatingItemFactory( factory ) )
 {
     setMargin( 0 );
-    ReportFilterOptions* filter  = new ReportFilterOptions( this );
-    ReportListView*      reports = new ReportListView( this, controllers, *filter, *factory_ );
-    filter->hide();
-    reports->header()->hide();
-    connect( filter, SIGNAL( OptionsChanged() ), reports, SLOT( OnOptionsChanged() ) );
+    ReportListView* reports = new ReportListView( this, controllers, *factory_ );
+    reports->setHeaderHidden( true );
     controllers_.Register( *this );
 }
 

@@ -35,19 +35,4 @@
         <translation>Tipo de parámetro de reporte no válido: &apos;%1&apos;.</translation>
     </message>
 </context>
-<context>
-    <name>ReportListView</name>
-    <message>
-        <source>Report</source>
-        <translation>Reporte</translation>
-    </message>
-    <message>
-        <source>ISO Date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Received</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
 </TS>

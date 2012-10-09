@@ -105,7 +105,6 @@ ProfilingPanel.cpp \
 ProfilesPanel.cpp \
 RcEntityResolver.cpp \
 ReplayerToolbar.cpp \
-ReportFilterOptions.cpp \
 ReportListView.cpp \
 ResourceLinksDialog.cpp \
 SIMControlToolbar.cpp \

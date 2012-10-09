@@ -15,14 +15,13 @@
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/AgentSelectionObserver.h"
+#include "reports/Report.h"
 
 namespace kernel
 {
     class Controllers;
 }
 
-class Report;
-class ReportFilterOptions;
 class Reports;
 
 // =============================================================================
@@ -31,7 +30,7 @@ class Reports;
 */
 // Created: APE 2004-03-10
 // =============================================================================
-class ReportListView : public gui::ListDisplayer< ReportListView >
+class ReportListView : public QTreeView
                      , public tools::Observer_ABC
                      , public AgentSelectionObserver
                      , public tools::ElementObserver_ABC< Reports >
@@ -41,58 +40,51 @@ class ReportListView : public gui::ListDisplayer< ReportListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportListView( QWidget* pParent, kernel::Controllers& controllers, const ReportFilterOptions& filter, gui::ItemFactory_ABC& factory );
+             ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~ReportListView();
     //@}
 
     //! @name Operations
     //@{
     virtual void showEvent( QShowEvent* );
-    void Display( const Report* report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    void Display( const Report& report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    //@}
+    virtual void contextMenuEvent ( QContextMenuEvent * e );
+    void AddMenuItem( const QString& name, Report::E_Type type ) const;
+    void AddContextMenu() const;
 
 public slots:
     //! @name Slots
     //@{
-    void OnOptionsChanged();
-    void OnRequestPopup( Q3ListViewItem*, const QPoint&, int );
+    void OnRequestPopup( const QPoint& pos );
     void OnSelectionChanged();
     void OnReadTimerOut();
     void OnClearAll();
     void OnClearTrace();
     void OnRequestCenter();
+    void OnToggle( QAction* action );
     //@}
 
 private:
-    //! @name Slots
+    //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-
     virtual void NotifyUpdated( const Reports& reports );
     virtual void NotifyCreated( const Report& report );
-
     bool ShouldUpdate( const Reports& reports );
-
     void MarkReportsAsRead();
+    void SetFilterRegexp();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ReportListView( const ReportListView& );
-    ReportListView& operator=( const ReportListView& );
-    //@}
-
     //! @name Member data
     //@{
-    kernel::Controllers&       controllers_;
-    gui::ItemFactory_ABC&      factory_;
-    const ReportFilterOptions& filter_;
-
+    kernel::Controllers& controllers_;
+    gui::ItemFactory_ABC& factory_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    kernel::ContextMenu*                               menu_;
-    QTimer*                                   readTimer_;
+    kernel::ContextMenu* menu_;
+    QTimer* readTimer_;
+    QStandardItemModel reportModel_;
+    QSortFilterProxyModel* proxyFilter_;
+    std::set< Report::E_Type > toDisplay_;
     //@}
 };
 

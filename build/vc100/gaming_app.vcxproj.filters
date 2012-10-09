@@ -301,9 +301,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\FireResultListView.cpp">
       <Filter>Source Files\Panels\Reports</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\ReportFilterOptions.cpp">
-      <Filter>Source Files\Panels\Reports</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\ReportListView.cpp">
       <Filter>Source Files\Panels\Reports</Filter>
     </ClCompile>
@@ -1268,9 +1265,6 @@
       <Filter>Source Files\Panels</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\FireResultListView.h">
-      <Filter>Source Files\Panels\Reports</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\ReportFilterOptions.h">
       <Filter>Source Files\Panels\Reports</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\ReportListView.h">

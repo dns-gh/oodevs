@@ -35,6 +35,9 @@
 #include <QtCore/qsettings.h>
 #include <QtCore/qsignalmapper.h>
 #include <QtCore/qfile.h>
+#include <QtGui/qtreeview.h>
+#include <QtGui/qstandarditemmodel.h>
+#include <QtGui/qitemselectionmodel.h>
 
 #include <Qt3Support/q3action.h>
 #include <Qt3Support/q3grid.h>

@@ -2728,25 +2728,13 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>ReportFilterOptions</name>
+    <name>ReportListView</name>
     <message>
-        <source>Display reports</source>
+        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Display traces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display events</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display warnings</source>
+        <source>Clear traces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2767,29 +2755,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Show warnings</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ReportListView</name>
-    <message>
-        <source>ISO Date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Received</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear traces</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

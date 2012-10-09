@@ -2733,54 +2733,7 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>ReportFilterOptions</name>
-    <message>
-        <source>Display reports</source>
-        <translation>Visualizar reportes</translation>
-    </message>
-    <message>
-        <source>Display traces</source>
-        <translation>Visualizar trazos</translation>
-    </message>
-    <message>
-        <source>Display events</source>
-        <translation>Visualizar eventos</translation>
-    </message>
-    <message>
-        <source>Display messages</source>
-        <translation>Visualizar mensajes</translation>
-    </message>
-    <message>
-        <source>Display warnings</source>
-        <translation>Visualizar alertas</translation>
-    </message>
-    <message>
-        <source>Show reports</source>
-        <translation>Mostrar reportes</translation>
-    </message>
-    <message>
-        <source>Show traces</source>
-        <translation>Mostrar trazos</translation>
-    </message>
-    <message>
-        <source>Show events</source>
-        <translation>Mostrar eventos</translation>
-    </message>
-    <message>
-        <source>Show messages</source>
-        <translation>Mostrar eventos</translation>
-    </message>
-    <message>
-        <source>Show warnings</source>
-        <translation>Mostrar alertas</translation>
-    </message>
-</context>
-<context>
     <name>ReportListView</name>
-    <message>
-        <source>Report</source>
-        <translation>Reporte</translation>
-    </message>
     <message>
         <source>Clear</source>
         <translation>Limpiar</translation>
@@ -2790,12 +2743,24 @@ This data can&apos;t be projected.</source>
         <translation>Limpiar trazos</translation>
     </message>
     <message>
-        <source>ISO Date</source>
-        <translation type="unfinished"></translation>
+        <source>Show reports</source>
+        <translation type="unfinished">Mostrar reportes</translation>
     </message>
     <message>
-        <source>Received</source>
-        <translation type="unfinished"></translation>
+        <source>Show traces</source>
+        <translation type="unfinished">Mostrar trazos</translation>
+    </message>
+    <message>
+        <source>Show events</source>
+        <translation type="unfinished">Mostrar eventos</translation>
+    </message>
+    <message>
+        <source>Show messages</source>
+        <translation type="unfinished">Mostrar eventos</translation>
+    </message>
+    <message>
+        <source>Show warnings</source>
+        <translation type="unfinished">Mostrar alertas</translation>
     </message>
 </context>
 <context>
