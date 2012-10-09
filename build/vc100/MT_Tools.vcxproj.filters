@@ -141,6 +141,9 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Sector.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\TemporaryDirectory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\MT_Tools\MT_Converter.inl">
@@ -253,5 +256,6 @@
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_LogManager.cpp">
       <Filter>Source Files\Logger</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\TemporaryDirectory.cpp" />
   </ItemGroup>
 </Project>

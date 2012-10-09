@@ -10,6 +10,7 @@
 #include "plugins_test_pch.h"
 #include "logistic_plugin/NameResolver_ABC.h"
 #include "logistic_plugin/LogisticPlugin.h"
+#include "MT_Tools/TemporaryDirectory.h"
 #include "protocol/Protocol.h"
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -40,40 +41,6 @@ std::string NormalizePath( std::string path )
     }
     return path;
 }
-
-class TemporaryDirectory: private boost::noncopyable
-{
-public:
-    TemporaryDirectory( const std::string& namePrefix, const std::string& basePath )
-    {
-        const std::string suffix = boost::lexical_cast< std::string >( rand() );
-        const std::string name = namePrefix + suffix;
-        const bfs::path path = bfs::path( basePath ) / name;
-        if( bfs::exists( path ) )
-            bfs::remove_all( path );
-        bfs::create_directories( path );
-        path_ = bfs::path( NormalizePath( path.string() ) );
-    }
-
-    ~TemporaryDirectory()
-    {
-        try
-        {
-            bfs::remove_all( path_ );
-        }
-        catch( const bfs::filesystem_error& )
-        {
-        }
-    }
-
-    const bfs::path& path() const
-    {
-        return path_;
-    }
-
-private:
-    bfs::path path_;
-};
 
 class SimpleNameResolver : public NameResolver_ABC
 {
