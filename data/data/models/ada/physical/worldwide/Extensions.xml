@@ -27,6 +27,21 @@
         <label language="fr" text="Information"/>
       </labels>
     </attribute>
+    <attribute extends="unit;formation;automat;crowd;population;party;object" name="HLA_ObjectID" type="string">
+      <labels>
+        <label language="fr" text="HLA Object ID"/>
+      </labels>
+    </attribute>
+    <attribute extends="unit;formation;automat;crowd;population;party;object" name="RemoteEntity" type="boolean">
+      <labels>
+        <label language="fr" text="Entite distante"/>
+      </labels>
+    </attribute>
+    <attribute extends="party" name="HlaForceIdentifier" type="numeric">
+      <labels>
+        <label language="fr" text="HLA Force Identifier"/>
+      </labels>
+    </attribute>
   </orbat-attributes>
   <profile-attributes/>
 </extensions>

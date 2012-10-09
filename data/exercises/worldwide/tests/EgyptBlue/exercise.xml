@@ -22,7 +22,8 @@
   <orbat file="orbat.xml"/>
   <weather file="weather.xml"/>
   <model dataset="ada" physical="worldwide"/>
+  <urban file="urban.xml"/>
   <settings file="settings.xml"/>
   <terrain name="Nord egypt"/>
 </exercise>
-<!-- signature="1983289896" -->
+<!-- signature="2778594143" -->

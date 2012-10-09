@@ -41,6 +41,11 @@
       </communication>
       <populations/>
       <inhabitants/>
+      <extensions>
+        <entry key="HLA_ObjectID" value=""/>
+        <entry key="HlaForceIdentifier" value="5"/>
+        <entry key="RemoteEntity" value="false"/>
+      </extensions>
       <logistics/>
     </party>
     <party id="3" name="Friend forces" type="friend">
@@ -51,6 +56,11 @@
       </communication>
       <populations/>
       <inhabitants/>
+      <extensions>
+        <entry key="HLA_ObjectID" value=""/>
+        <entry key="HlaForceIdentifier" value="4"/>
+        <entry key="RemoteEntity" value="false"/>
+      </extensions>
       <logistics/>
     </party>
     <party id="35" name="Population" type="neutral">
@@ -70,6 +80,11 @@
         </population>
       </populations>
       <inhabitants/>
+      <extensions>
+        <entry key="HLA_ObjectID" value=""/>
+        <entry key="HlaForceIdentifier" value="6"/>
+        <entry key="RemoteEntity" value="false"/>
+      </extensions>
       <logistics/>
     </party>
   </parties>
@@ -88,4 +103,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3690210693" -->
+<!-- signature="0379358519" -->

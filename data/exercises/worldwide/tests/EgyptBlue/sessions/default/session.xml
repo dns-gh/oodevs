@@ -5,7 +5,7 @@
       <network client="localhost:10000" server="10001"/>
       <plugins>
         <recorder fragmentfreq="200" keyframesfreq="100"/>
-        <hla accept-external-transfer="negotiated" attribute-ownership-negotiation="0" configuration="configuration.xml" creation="1" debug="1" destruction="1" federation="MyFederation" fom="ASI_FOM_v2.0.8_2010.xml" host="localhost" library="hla_plugin-vc100-mt.dll" lookahead="10" name="SWORD-Blue" netn="1" port="8989" protocol="hla-1516e" time-constrained="1" time-regulating="1" dis-site="1" dis-application="1" transfer-sender="rpr"/>
+        <hla accept-external-transfer="negotiated" attribute-ownership-negotiation="0" configuration="configuration.xml" creation="1" debug="1" destruction="1" dis-application="1" dis-site="1" disaggregate="0" federation="MyFederation" fom="ASI_FOM_v2.0.8_2010.xml" handle-objects="0" host="localhost" library="hla_plugin-vc100-mt.dll" lookahead="10" name="SWORD-Blue" netn="1" netn-subscribe-rpr="0" netn-version="1" port="8989" protocol="hla-1516e" time-constrained="1" time-regulating="1" transfer-sender="rpr" send-full-orbat="1"/>
       </plugins>
     </dispatcher>
     <gaming>

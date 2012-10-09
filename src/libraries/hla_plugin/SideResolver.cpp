@@ -14,24 +14,13 @@
 #include "clients_kernel/Karma.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Logger_ABC.h"
+
+#include <boost/lexical_cast.hpp>
+
 #include <sstream>
+#include <set>
 
 using namespace plugins::hla;
-
-namespace
-{
-    rpr::ForceIdentifier GetForce( const kernel::Karma& karma )
-    {
-        // FIXME
-        if( karma == kernel::Karma::friend_ )
-            return rpr::Friendly;
-        if( karma == kernel::Karma::enemy_ )
-            return rpr::Opposing;
-        if( karma == kernel::Karma::neutral_ )
-            return rpr::Neutral;
-        return rpr::Other;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: SideResolver constructor
@@ -40,12 +29,77 @@ namespace
 SideResolver::SideResolver( dispatcher::Model_ABC& dynamicModel, dispatcher::Logger_ABC& logger )
     : logger_( logger )
 {
+    std::set< rpr::ForceIdentifier > friends;
+    std::set< rpr::ForceIdentifier > neutrals;
+    std::set< rpr::ForceIdentifier > enemies;
+    for( unsigned int i=0; i<10; ++i)
+    {
+        friends.insert( static_cast< rpr::ForceIdentifier >( i*3 + 1 ) );
+        enemies.insert( static_cast< rpr::ForceIdentifier >( i*3 + 2 ) );
+        neutrals.insert( static_cast< rpr::ForceIdentifier >( i*3 + 3 ) );
+    }
+
     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides( dynamicModel.Sides() );
     for( tools::Iterator< const dispatcher::Team_ABC& > it = sides.CreateIterator(); it.HasMoreElements(); )
     {
         const dispatcher::Team_ABC& team = it.NextElement();
+        std::string forceExt;
+        if( team.GetExtension( "HlaForceIdentifier", forceExt ) )
+        {
+            unsigned long id = boost::lexical_cast< unsigned long >( forceExt );
+            rpr::ForceIdentifier fId = static_cast< rpr::ForceIdentifier >( id );
+            teams_.insert( T_Teams::value_type( team.GetId(), fId ) );
+            friends.erase( fId ) ;
+            enemies.erase( fId ) ;
+            neutrals.erase( fId ) ;
+            continue;
+        }
+
         if( team.GetId() )
-            teams_.insert( T_Teams::value_type( team.GetId(), GetForce( team.GetKarma() ) ) );
+        {
+            rpr::ForceIdentifier fId;
+            const kernel::Karma& karma( team.GetKarma() );
+            if( karma == kernel::Karma::friend_ )
+            {
+                if( friends.empty() )
+                {
+                    logger_.LogError( std::string( "Too many friend teams in Sword exercice, using 'Friendly' for team ") + team.GetName().toStdString() );
+                    fId = rpr::Friendly;
+                }
+                else
+                {
+                    fId = *friends.begin();
+                    friends.erase( friends.begin() );
+                }
+            }
+            else if( karma == kernel::Karma::neutral_ )
+            {
+                if( friends.empty() )
+                {
+                    logger_.LogError( std::string( "Too many neutral teams in Sword exercice, using 'Neutral' for team " ) + team.GetName().toStdString() );
+                    fId = rpr::Neutral;
+                }
+                else
+                {
+                    fId = *neutrals.begin();
+                    neutrals.erase( neutrals.begin() );
+                }
+            }
+            else if( karma == kernel::Karma::enemy_ )
+            {
+                if( friends.empty() )
+                {
+                    logger_.LogError( std::string( "Too many enemy teams in Sword exercice, using 'Opposing' for team ") + team.GetName().toStdString() );
+                    fId = rpr::Opposing;
+                }
+                else
+                {
+                    fId = *enemies.begin();
+                    enemies.erase( enemies.begin() );
+                }
+            }
+            teams_.insert( T_Teams::value_type( team.GetId(), fId ) );
+        }
     }
 }
 
