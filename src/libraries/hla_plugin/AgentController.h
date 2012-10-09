@@ -78,7 +78,7 @@ public:
              AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
                               const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
                               tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter, bool sendPlatforms,
-                              const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver );
+                              const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver, bool fullOrbat );
     virtual ~AgentController();
     //@}
 
@@ -129,6 +129,7 @@ private:
     tic::PlatformDelegateFactory_ABC& factory_;
     const kernel::CoordinateConverter_ABC& converter_;
     bool doDisaggregation_;
+    bool fullOrbat_;
     const SideResolver_ABC& sideResolver_;
     const LocalAgentResolver_ABC& localAgentResolver_;
     T_Listeners listeners_;

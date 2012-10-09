@@ -136,7 +136,7 @@ void RemoteTacticalObjectController::SideChanged( const std::string& identifier,
     if( objectCreations_.end() == it)
         return;
     simulation::ObjectMagicAction& message = *it->second;
-    message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->Add()->mutable_party()->set_id( sideResolver_.ResolveTeam( side ).GetId() );
+    message().mutable_parameters()->mutable_elem( 3 )->mutable_value()->Add()->mutable_party()->set_id( sideResolver_.ResolveTeam( side ) );
     Send( message, identifier );
 }
 

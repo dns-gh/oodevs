@@ -15,6 +15,8 @@
 #include <boost/noncopyable.hpp>
 #pragma warning( push, 0 )
 #include <boost/bimap.hpp>
+#include <boost/bimap/set_of.hpp>
+#include <boost/bimap/multiset_of.hpp>
 #pragma warning( pop )
 
 namespace dispatcher
@@ -46,14 +48,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual const dispatcher::Team_ABC& ResolveTeam( rpr::ForceIdentifier f ) const;
-    virtual rpr::ForceIdentifier ResolveForce( const dispatcher::Team_ABC& ) const;
+    virtual unsigned long ResolveTeam( rpr::ForceIdentifier f ) const;
+    virtual rpr::ForceIdentifier ResolveForce( unsigned long ) const;
     //@}
 
 private:
     //! @name Typedefs
     //@{
-    typedef boost::bimap< const dispatcher::Team_ABC*, rpr::ForceIdentifier > T_Teams;
+    typedef boost::bimap< boost::bimaps::set_of< unsigned long >, boost::bimaps::multiset_of< rpr::ForceIdentifier > > T_Teams;
     typedef T_Teams::left_const_iterator CIT_Teams;
     typedef T_Teams::right_const_iterator CIT_Forces;
     //@}

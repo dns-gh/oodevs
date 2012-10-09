@@ -87,7 +87,8 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
     , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, publisher, remoteTacticalSubject ) )
-    , pRemoteOrbatShaper_         ( new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher ) )
+    , pRemoteOrbatShaper_         ( xis.attribute< bool >( "send-full-orbat", false ) ?
+                                    new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher ) : 0 )
 
 {
     // NOTHING

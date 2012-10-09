@@ -74,7 +74,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_point_object,
 
     objectListener->Moved( "an_object", 42.0, 42.1 );
 
-    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     objectListener->SideChanged( "an_object", rpr::Friendly );
     objectListener->NameChanged( "an_object", "an_object_name");
     
@@ -118,7 +118,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_polygon_objec
 
     objectListener->Moved( "an_object", 42.0, 42.1 );
 
-    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     objectListener->SideChanged( "an_object", rpr::Friendly );
     objectListener->NameChanged( "an_object", "an_object_name");
     

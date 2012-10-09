@@ -133,14 +133,14 @@ BOOST_FIXTURE_TEST_CASE( remote_orbat_shaper_creates_automat, ShaperFixture )
     remoteClassListener->RemoteCreated( childRtiId, clazz, child );
     BOOST_REQUIRE( childListener );
     childListener->ParentChanged( childRtiId, parentRtiId );
-    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     childListener->SideChanged( childRtiId, rpr::Friendly );
 
     MOCK_EXPECT( parent.Register ).once().with( mock::retrieve( parentListener ) );
     remoteClassListener->RemoteCreated( parentRtiId, clazz, parent );
     BOOST_REQUIRE( parentListener );
     parentListener->NameChanged( parentRtiId, "parent" );
-    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     parentListener->SideChanged( parentRtiId, rpr::Friendly );
 
     sword::UnitCreation message;
@@ -176,14 +176,14 @@ namespace
             remoteClassListener->RemoteCreated( childRtiId, clazz, child );
             BOOST_REQUIRE( childListener );
             childListener->ParentChanged( childRtiId, parentRtiId );
-            MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+            MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
             childListener->SideChanged( childRtiId, rpr::Friendly );
 
             MOCK_EXPECT( parent.Register ).once().with( mock::retrieve( parentListener ) );
             remoteClassListener->RemoteCreated( parentRtiId, clazz, parent );
             BOOST_REQUIRE( parentListener );
             parentListener->NameChanged( parentRtiId, "parent" );
-            MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+            MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
             parentListener->SideChanged( parentRtiId, rpr::Friendly );
 
             sword::UnitCreation message;
@@ -225,7 +225,7 @@ BOOST_FIXTURE_TEST_CASE( remote_orbat_shaper_creates_formation, AutomatFixture )
     remoteClassListener->RemoteCreated( formationRtiId, clazz, formationHla );
     BOOST_REQUIRE( formationListener );
     formationListener->NameChanged( formationRtiId, "a_formation" );
-    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     formationListener->SideChanged( formationRtiId, rpr::Friendly );
 
     parentListener->ParentChanged( parentRtiId, formationRtiId );
@@ -261,7 +261,7 @@ namespace
             remoteClassListener->RemoteCreated( formationRtiId, clazz, formationHla );
             BOOST_REQUIRE( formationListener );
             formationListener->NameChanged( formationRtiId, "a_formation" );
-            MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+            MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
             formationListener->SideChanged( formationRtiId, rpr::Friendly );
 
             parentListener->ParentChanged( parentRtiId, formationRtiId );

@@ -128,7 +128,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     const rpr::EntityType entityType( "1 2" );
     const unsigned long agentTypeId = 4343;
     dispatcher::MockTeam team( 42 );
-    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().with( mock::same( entityType ) ).returns( agentTypeId );
@@ -155,7 +155,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_second_moved_event, AutomatFixture )
 {
     dispatcher::MockTeam team( 42 );
-    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().returns( 4242 );
@@ -171,7 +171,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_s
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_out_of_bounds_agent_only_when_moving_inside_extent, AutomatFixture )
 {
     dispatcher::MockTeam team( 42 );
-    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().returns( 4242 );
@@ -188,7 +188,7 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_out_of_bounds_agent_onl
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_create_agent_with_subaggregate, AutomatFixture )
 {
     dispatcher::MockTeam team( 42 );
-    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( boost::cref( team ) );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
     remoteAgentListener->NameChanged( "identifier", "name" );
     MOCK_EXPECT( unitTypeResolver.Resolve ).once().returns( 4242 );

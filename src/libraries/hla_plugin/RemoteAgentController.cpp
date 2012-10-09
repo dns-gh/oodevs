@@ -229,7 +229,7 @@ void RemoteAgentController::Send( simulation::UnitMagicAction& message, const st
 // -----------------------------------------------------------------------------
 unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) const
 {
-    unsigned long teamId = sideResolver_.ResolveTeam( force ).GetId();
+    unsigned long teamId = sideResolver_.ResolveTeam( force );
     T_Parties::const_iterator itParty = parties_.find( teamId );
     if( itParty == parties_.end() )
     {

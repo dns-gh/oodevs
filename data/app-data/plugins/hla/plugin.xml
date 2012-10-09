@@ -164,16 +164,22 @@
                         <description lang="fr" name="Accepter les tansfert"><![CDATA[]]>Détermine s'il faut accepter les demandes de transfert externes.</description>
                     </descriptions>
                 </setting>
-				<setting attribute="@attribute-ownership-negotiation" type="boolean" default="false">
+                <setting attribute="@attribute-ownership-negotiation" type="boolean" default="false">
                     <descriptions>
                         <description lang="en" name="Use HLA ownership negotiation"><![CDATA[]]>Specify whether RTI attribute negotiation should be used.</description>
                         <description lang="fr" name="Negotiation ownership HLA"><![CDATA[]]>Détermine s'il faut utiliser la négotiation de transfert HLA.</description>
                     </descriptions>
                 </setting>
-				<setting attribute="@handle-objects" type="boolean" default="false">
+                <setting attribute="@handle-objects" type="boolean" default="false">
                     <descriptions>
                         <description lang="en" name="Publish tactical objects on HLA"><![CDATA[]]>Specify whether tactical objects shall be published.</description>
                         <description lang="fr" name="Publier les objets tactiques"><![CDATA[]]>Détermine s'il faut publier les objets tactiques.</description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@send-full-orbat" type="boolean" default="false">
+                    <descriptions>
+                        <description lang="en" name="Publish complete ORBAT on HLA"><![CDATA[]]>Specify whether all orbat shall be published.</description>
+                        <description lang="fr" name="Publier l'ODB complet"><![CDATA[]]>Détermine s'il faut publier l'ODB complet.</description>
                     </descriptions>
                 </setting>
             </settings>

@@ -14,7 +14,6 @@
 #include "clients_kernel/Karma.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/Logger_ABC.h"
-
 #include <sstream>
 
 using namespace plugins::hla;
@@ -46,7 +45,7 @@ SideResolver::SideResolver( dispatcher::Model_ABC& dynamicModel, dispatcher::Log
     {
         const dispatcher::Team_ABC& team = it.NextElement();
         if( team.GetId() )
-            teams_.insert( T_Teams::value_type( &team, GetForce( team.GetKarma() ) ) );
+            teams_.insert( T_Teams::value_type( team.GetId(), GetForce( team.GetKarma() ) ) );
     }
 }
 
@@ -63,7 +62,7 @@ SideResolver::~SideResolver()
 // Name: SideResolver constructor
 // Created: AHC 2012-09-07
 // -----------------------------------------------------------------------------
-const dispatcher::Team_ABC& SideResolver::ResolveTeam( rpr::ForceIdentifier f ) const
+unsigned long SideResolver::ResolveTeam( rpr::ForceIdentifier f ) const
 {
     CIT_Forces it( teams_.right.find( f ) );
     if( teams_.right.end() == it )
@@ -75,17 +74,17 @@ const dispatcher::Team_ABC& SideResolver::ResolveTeam( rpr::ForceIdentifier f ) 
         ss << "SideResolver: Using default team for force " << f;
         logger_.LogError( ss.str() );
     }
-    return *it->second;
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SideResolver constructor
 // Created: AHC 2012-09-07
 // -----------------------------------------------------------------------------
-rpr::ForceIdentifier SideResolver::ResolveForce( const dispatcher::Team_ABC& t ) const
+rpr::ForceIdentifier SideResolver::ResolveForce( unsigned long t ) const
 {
-    CIT_Teams it( teams_.left.find( &t ) );
-    if( teams_.left.end() == it )
+    CIT_Teams it( teams_.left.find( t ) );
+    if( it == teams_.left.end() )
         throw std::runtime_error( "Cannot find force for team " );
     return it->second;
 }

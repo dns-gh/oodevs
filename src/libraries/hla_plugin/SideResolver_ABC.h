@@ -36,8 +36,8 @@ public:
     //@}
     //! @name Operations
     //@}
-    virtual const dispatcher::Team_ABC& ResolveTeam( rpr::ForceIdentifier f ) const = 0;
-    virtual rpr::ForceIdentifier ResolveForce( const dispatcher::Team_ABC& ) const = 0;
+    virtual unsigned long ResolveTeam( rpr::ForceIdentifier f ) const = 0;
+    virtual rpr::ForceIdentifier ResolveForce( unsigned long ) const = 0;
     //@}
 };
 
