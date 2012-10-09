@@ -64,6 +64,7 @@ node "TakePosition"
     end,
 }
 
+
 -- ****************************************************************************
 -- Simple action uses to move toward a reachable element
 -- self.params.position: the reachable element
@@ -73,6 +74,13 @@ node "MoveTo"
     acquire = { [ skill.resources.move ] = 1 },
 
     select = function( self )
+        -- if selected position is in an nbc contaminated area, the agent can selfprotect from contamination
+        -- by equip itself with nbc protection.
+        if self.params.position:isContaminated() and skill.modifiers.selfProtectFromContamination then
+            meKnowledge:equipNBCOutfit()
+        end
+
+        -- moving to position
         if self.params.position:moveToIt( self.params.pathType ) then
             Feedback( self.feedbacks.done, { reason = "arrived",
                                              element = self.params.position } )

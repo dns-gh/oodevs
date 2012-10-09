@@ -55,3 +55,17 @@ integration.isParked = function( self )
     end
     return false
 end
+
+-- Returns "true" if the issued position is in a contaminating object.
+integration.isPositionContaminated = function( position )
+    return DEC_ObjectKnowledge_IsPositionInside( myself ,"contamination", position:getPosition() )
+end
+
+-- Returns "true" if the last position of the itinerary is in a contaminating object.
+integration.isItineraryContaminated = function( itinerary )
+    local pos = DEC_Itineraire_DernierPoint( itinerary.source )
+    if pos then
+        return DEC_ObjectKnowledge_IsPositionInside( myself ,"contamination", pos )
+    end
+    return false
+end

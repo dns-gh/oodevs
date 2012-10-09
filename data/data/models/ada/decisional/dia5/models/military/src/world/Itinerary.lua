@@ -56,7 +56,7 @@ return
     getPosition = function( self )
         return integration.getItineraryPosition( self ) -- nil if the pathfind is not found
     end,
-     getPositions = function( self )
+    getPositions = function( self )
         return self:getPosition()
     end,
     getProximity = function( self, reachable )
@@ -70,5 +70,8 @@ return
     end,
     takeUpPosition = function( self )
         return integration.takeUpPosition( self )
+    end,
+    isContaminated = function( self )
+        
     end
 }

@@ -1,164 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.roles.Platoon" source-version="1.0.0">
-    <description>The role of a 'military platoon' agent.</description>
-    <body-type>
-        <class name="world.PlatoonAlly"/>
-    </body-type>
-    <skills>
-        <skill name="agent.skills.Engage"/>
-        <skill name="agent.skills.primitives.Support"/>
-        <skill name="agent.skills.primitives.TakeCover"/>
-        <skill name="agent.skills.primitives.Reconnoitre"/>
-        <skill name="agent.skills.primitives.Destroy"/>
-        <skill name="agent.skills.primitives.Neutralize"/>
-        <skill name="agent.skills.primitives.Identify"/>
-        <skill name="agent.skills.primitives.MoveToward"/>
-        <skill name="agent.skills.actions.MoveAndTakePosition"/>
-        <skill name="agent.skills.actions.Observe"/>
-        <skill name="agent.skills.primitives.ObserveToward"/>
-        <skill name="agent.skills.Support"/>
-        <skill name="agent.skills.BuildWithoutReinforcement"/>
-        <skill name="agent.skills.BuildWithReinforcement"/>
-        <skill name="agent.skills.Bypass"/>
-        <skill name="agent.skills.Activate"/>
-        <skill name="agent.skills.primitives.Activate"/>
-        <skill name="agent.skills.primitives.Build"/>
-        <skill name="agent.skills.primitives.Bypass"/>
-        <skill name="agent.skills.primitives.Remove"/>
-        <skill name="agent.skills.primitives.Improve"/>
-        <skill name="agent.skills.RemoveWithoutReinforcement"/>
-        <skill name="agent.skills.RemoveWithReinforcement"/>
-        <skill name="agent.skills.Fix"/>
-        <skill name="agent.skills.GetDecontaminated"/>
-        <skill name="agent.skills.ManageFragOrder"/>
-        <skill name="agent.skills.SetPace"/>
-        <skill name="agent.skills.actions.EquipNBCOutfit"/>
-        <skill name="agent.skills.actions.UnequipNBCOutfit"/>
-        <skill name="agent.skills.primitives.Illuminate"/>
-        <skill name="agent.skills.ApplyIndirectFire"/>
-        <skill name="agent.skills.actions.ObserveRadarSilence"/>
-        <skill name="agent.skills.actions.ActivateRadar"/>
-        <skill name="agent.skills.actions.ActivateRadio"/>
-        <skill name="agent.skills.actions.ObservePartialRadioSilence"/>
-        <skill name="agent.skills.actions.ObserveRadioSilence"/>
-        <skill name="agent.skills.primitives.Reinforce"/>
-        <skill name="agent.skills.primitives.Search"/>
-        <skill name="agent.skills.ReactToCoordinationLine"/>
-        <skill name="agent.skills.ReactToObstacles"/>
-        <skill name="agent.skills.ReconnoiterRoute"/>
-        <skill name="agent.skills.Relieve"/>
-        <skill name="agent.skills.MoveToward"/>
-        <skill name="agent.skills.primitives.StayClose"/>
-        <skill name="agent.skills.SelfProtect">
-            <modifier name="importance">
-                <value>10</value>
-            </modifier>
-        </skill>
-        <skill name="agent.skills.SwitchToSafety"/>
-        <skill name="agent.skills.SwitchToSpeed"/>
-        <skill name="agent.skills.actions.Dismount"/>
-        <skill name="agent.skills.actions.Mount"/>
-        <skill name="agent.skills.Control"/>
-        <skill name="agent.skills.MoveAlong"/>
-        <skill name="agent.skills.Default"/>
-        <skill name="agent.skills.Delay"/>
-        <skill name="agent.skills.Screen"/>
-        <skill name="agent.skills.ReachFurthest"/>
-        <skill name="agent.skills.SealOff"/>
-        <skill name="agent.skills.primitives.Respond"/>
-        <skill name="agent.skills.primitives.Load"/>
-        <skill name="agent.skills.primitives.Unload"/>
-        <skill name="agent.skills.DischargeIn"/>
-        <skill name="agent.skills.Interrogate"/>
-        <skill name="agent.skills.TakePrisoner"/>
-        <skill name="agent.skills.TakeHostage"/>
-        <skill name="agent.skills.TakeRefugee"/>
-        <skill name="agent.skills.InquireAbout"/>
-        <skill name="agent.skills.Filter"/>
-        <skill name="agent.skills.ControlCrowds"/>
-        <skill name="agent.skills.Deploy"/>
-        <skill name="agent.skills.Patrol"/>
-        <skill name="agent.skills.ControlCrowd"/>
-        <skill name="agent.skills.ReactToCrowds"/>
-        <skill name="agent.skills.RespondToCrowd"/>
-        <skill name="agent.skills.ProduceResource"/>
-        <skill name="agent.skills.DeactivateNetwork"/>
-        <skill name="agent.skills.ActivateNetwork"/>
-        <skill name="agent.skills.Improve"/>
-        <skill name="agent.skills.MobilitySupport"/>
-        <skill name="agent.skills.ReactToContamination"/>
-        <skill name="agent.skills.ReactToFireArea"/>
-        <skill name="agent.skills.GoGetDecontaminated"/>
-        <skill name="agent.skills.actions.ApplyMortarFires"/>
-        <skill name="agent.skills.UnloadTransportedUnits"/>
-        <skill name="agent.skills.Settle"/>
-        <skill name="agent.skills.GetTransported"/>
-        <skill name="agent.skills.Transport"/>
-        <skill name="agent.skills.Bridge"/>
-        <skill name="agent.skills.Reconnoiter"/>
-        <skill name="agent.skills.Follow"/>
-        <skill name="agent.skills.TransportACrowd"/>
-        <skill name="agent.skills.TransportPrisoners"/>
-        <skill name="agent.skills.Operate"/>
-        <skill name="agent.skills.Build"/>
-    </skills>
-    <resources>
-        <resource name="agent.resources.EngageCapacity"/>
-        <resource name="agent.resources.MoveCapacity"/>
-        <resource name="agent.resources.ObserveCapacity"/>
-        <resource name="agent.resources.MountCapacity"/>
-        <resource name="agent.resources.AnimationCapacity"/>
-        <resource name="agent.resources.IlluminationCapacity"/>
-        <resource name="agent.resources.IndirectFireCapacity"/>
-        <resource name="agent.resources.NBCProtectionCapacity"/>
-        <resource name="agent.resources.RadioCapacity"/>
-        <resource name="agent.resources.RadarCapacity"/>
-        <resource name="agent.resources.BuildCapacity"/>
-        <resource name="agent.resources.ActivationCapacity"/>
-        <resource name="agent.resources.TransportationCapacity"/>
-    </resources>
-    <default-task permanent="true">
-        <goal>
-            <description>Gestion et affectation des ordres de conduite et de la sauvegarde</description>
-        </goal>
-        <let name="fragOrdersToManage">
-            <value>
-                <call method="queries.getFragOrders"/>
-            </value>
-        </let>
-        <let name="attackingCrowds">
-            <value>
-                <call method="queries.getAttackingCrowds"/>
-            </value>
-        </let>
-        <skills>
-            <skill name="agent.skills.Default"/>
-            <skill name="agent.skills.ReactToObstacles"/>
-            <skill name="agent.skills.SetPace"/>
-            <skill name="agent.skills.ManageFragOrder">
-                <parameter name="fragOrders">
-                    <value>
-                        <parameter>fragOrdersToManage</parameter>
-                    </value>
-                </parameter>
-            </skill>
-            <skill name="agent.skills.ReactToCoordinationLine">
-                <parameter name="limas">
-                    <value>
-                        <call method="queries.getLimaOnPath"/>
-                    </value>
-                </parameter>
-            </skill>
-            <skill name="agent.skills.SelfProtect"/>
-            <skill name="agent.skills.ReactToCrowds">
-                <parameter name="crowds">
-                    <value>
-                        <parameter>attackingCrowds</parameter>
-                    </value>
-                </parameter>
-            </skill>
-            <skill name="agent.skills.ReactToContamination"/>
-            <skill name="agent.skills.ReactToFireArea"/>
-        </skills>
-    </default-task>
+	<description>The role of a 'military platoon' agent.</description>
+	<body-type>
+		<class name="world.PlatoonAlly"/>
+	</body-type>
+	<skills>
+		<skill name="agent.skills.Engage"/>
+		<skill name="agent.skills.primitives.Support"/>
+		<skill name="agent.skills.primitives.TakeCover"/>
+		<skill name="agent.skills.primitives.Reconnoitre"/>
+		<skill name="agent.skills.primitives.Destroy"/>
+		<skill name="agent.skills.primitives.Neutralize"/>
+		<skill name="agent.skills.primitives.Identify"/>
+		<skill name="agent.skills.primitives.MoveToward"/>
+		<skill name="agent.skills.actions.MoveAndTakePosition">
+			<modifier name="selfProtectFromContamination">
+				<value>true</value>
+			</modifier>
+		</skill>
+		<skill name="agent.skills.actions.Observe"/>
+		<skill name="agent.skills.primitives.ObserveToward"/>
+		<skill name="agent.skills.Support"/>
+		<skill name="agent.skills.BuildWithoutReinforcement"/>
+		<skill name="agent.skills.BuildWithReinforcement"/>
+		<skill name="agent.skills.Bypass"/>
+		<skill name="agent.skills.Activate"/>
+		<skill name="agent.skills.primitives.Activate"/>
+		<skill name="agent.skills.primitives.Build"/>
+		<skill name="agent.skills.primitives.Bypass"/>
+		<skill name="agent.skills.primitives.Remove"/>
+		<skill name="agent.skills.primitives.Improve"/>
+		<skill name="agent.skills.RemoveWithoutReinforcement"/>
+		<skill name="agent.skills.RemoveWithReinforcement"/>
+		<skill name="agent.skills.Fix"/>
+		<skill name="agent.skills.GetDecontaminated"/>
+		<skill name="agent.skills.ManageFragOrder"/>
+		<skill name="agent.skills.SetPace"/>
+		<skill name="agent.skills.actions.EquipNBCOutfit"/>
+		<skill name="agent.skills.actions.UnequipNBCOutfit"/>
+		<skill name="agent.skills.primitives.Illuminate"/>
+		<skill name="agent.skills.ApplyIndirectFire"/>
+		<skill name="agent.skills.actions.ObserveRadarSilence"/>
+		<skill name="agent.skills.actions.ActivateRadar"/>
+		<skill name="agent.skills.actions.ActivateRadio"/>
+		<skill name="agent.skills.actions.ObservePartialRadioSilence"/>
+		<skill name="agent.skills.actions.ObserveRadioSilence"/>
+		<skill name="agent.skills.primitives.Reinforce"/>
+		<skill name="agent.skills.primitives.Search"/>
+		<skill name="agent.skills.ReactToCoordinationLine"/>
+		<skill name="agent.skills.ReactToObstacles"/>
+		<skill name="agent.skills.ReconnoiterRoute"/>
+		<skill name="agent.skills.Relieve"/>
+		<skill name="agent.skills.MoveToward"/>
+		<skill name="agent.skills.primitives.StayClose"/>
+		<skill name="agent.skills.SelfProtect">
+			<modifier name="importance">
+				<value>10</value>
+			</modifier>
+		</skill>
+		<skill name="agent.skills.SwitchToSafety"/>
+		<skill name="agent.skills.SwitchToSpeed"/>
+		<skill name="agent.skills.actions.Dismount"/>
+		<skill name="agent.skills.actions.Mount"/>
+		<skill name="agent.skills.Control"/>
+		<skill name="agent.skills.MoveAlong"/>
+		<skill name="agent.skills.Default"/>
+		<skill name="agent.skills.Delay"/>
+		<skill name="agent.skills.Screen"/>
+		<skill name="agent.skills.ReachFurthest"/>
+		<skill name="agent.skills.SealOff"/>
+		<skill name="agent.skills.primitives.Respond"/>
+		<skill name="agent.skills.primitives.Load"/>
+		<skill name="agent.skills.primitives.Unload"/>
+		<skill name="agent.skills.DischargeIn"/>
+		<skill name="agent.skills.Interrogate"/>
+		<skill name="agent.skills.TakePrisoner"/>
+		<skill name="agent.skills.TakeHostage"/>
+		<skill name="agent.skills.TakeRefugee"/>
+		<skill name="agent.skills.InquireAbout"/>
+		<skill name="agent.skills.Filter"/>
+		<skill name="agent.skills.ControlCrowds"/>
+		<skill name="agent.skills.Deploy"/>
+		<skill name="agent.skills.Patrol"/>
+		<skill name="agent.skills.ControlCrowd"/>
+		<skill name="agent.skills.ReactToCrowds"/>
+		<skill name="agent.skills.RespondToCrowd"/>
+		<skill name="agent.skills.ProduceResource"/>
+		<skill name="agent.skills.DeactivateNetwork"/>
+		<skill name="agent.skills.ActivateNetwork"/>
+		<skill name="agent.skills.Improve"/>
+		<skill name="agent.skills.MobilitySupport"/>
+		<skill name="agent.skills.ReactToContamination"/>
+		<skill name="agent.skills.ReactToFireArea"/>
+		<skill name="agent.skills.GoGetDecontaminated"/>
+		<skill name="agent.skills.actions.ApplyMortarFires"/>
+		<skill name="agent.skills.UnloadTransportedUnits"/>
+		<skill name="agent.skills.Settle"/>
+		<skill name="agent.skills.GetTransported"/>
+		<skill name="agent.skills.Transport"/>
+		<skill name="agent.skills.Bridge"/>
+		<skill name="agent.skills.Reconnoiter"/>
+		<skill name="agent.skills.Follow"/>
+		<skill name="agent.skills.TransportACrowd"/>
+		<skill name="agent.skills.TransportPrisoners"/>
+		<skill name="agent.skills.Operate"/>
+		<skill name="agent.skills.Build"/>
+	</skills>
+	<resources>
+		<resource name="agent.resources.EngageCapacity"/>
+		<resource name="agent.resources.MoveCapacity"/>
+		<resource name="agent.resources.ObserveCapacity"/>
+		<resource name="agent.resources.MountCapacity"/>
+		<resource name="agent.resources.AnimationCapacity"/>
+		<resource name="agent.resources.IlluminationCapacity"/>
+		<resource name="agent.resources.IndirectFireCapacity"/>
+		<resource name="agent.resources.NBCProtectionCapacity"/>
+		<resource name="agent.resources.RadioCapacity"/>
+		<resource name="agent.resources.RadarCapacity"/>
+		<resource name="agent.resources.BuildCapacity"/>
+		<resource name="agent.resources.ActivationCapacity"/>
+		<resource name="agent.resources.TransportationCapacity"/>
+	</resources>
+	<default-task permanent="true">
+		<goal>
+			<description>Gestion et affectation des ordres de conduite et de la sauvegarde</description>
+		</goal>
+		<let name="fragOrdersToManage">
+			<value>
+				<call method="queries.getFragOrders"/>
+			</value>
+		</let>
+		<let name="attackingCrowds">
+			<value>
+				<call method="queries.getAttackingCrowds"/>
+			</value>
+		</let>
+		<skills>
+			<skill name="agent.skills.Default"/>
+			<skill name="agent.skills.ReactToObstacles"/>
+			<skill name="agent.skills.SetPace"/>
+			<skill name="agent.skills.ManageFragOrder">
+				<parameter name="fragOrders">
+					<value>
+						<parameter>fragOrdersToManage</parameter>
+					</value>
+				</parameter>
+			</skill>
+			<skill name="agent.skills.ReactToCoordinationLine">
+				<parameter name="limas">
+					<value>
+						<call method="queries.getLimaOnPath"/>
+					</value>
+				</parameter>
+			</skill>
+			<skill name="agent.skills.SelfProtect"/>
+			<skill name="agent.skills.ReactToCrowds">
+				<parameter name="crowds">
+					<value>
+						<parameter>attackingCrowds</parameter>
+					</value>
+				</parameter>
+			</skill>
+			<skill name="agent.skills.ReactToContamination"/>
+			<skill name="agent.skills.ReactToFireArea"/>
+		</skills>
+	</default-task>
 </role>

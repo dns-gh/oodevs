@@ -267,9 +267,6 @@ integration.startMoveToIt = function( objective, pathType )
     -- Terrain management: reach a accessible position if position is not accessible 
     -- with a mounted agent.
     -- --------------------------------------------------------------------------------
-    if DEC_ObjectKnowledge_IsPositionInside(meKnowledge.source,"contamination", objective:getPosition()) then
-        meKnowledge:equipNBCOutfit()
-    end
     objective.initialeDestination = DEC_Geometrie_CopiePoint( objective:getPosition() )
     if not DEC_IsPointInUrbanBlockTrafficable( objective.initialeDestination )
        and not pointsInsideSameUrbanBlock( objective.initialeDestination, DEC_Agent_Position() ) then

@@ -56,4 +56,7 @@ return
         return ( self:proximityLevel() / 100 + meKnowledge:
                    computeBuildCapability( objective, self ) ) / 100
     end,
+    isContaminated = function( self )
+        return integration.isPositionContaminated( self )
+    end
 }
