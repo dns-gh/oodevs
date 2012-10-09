@@ -150,7 +150,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     ADN_SearchListView< ADN_Equipement_GenericListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_GenericListView >( this, nType, data_.GetDotation( nType ).categories_, vConnectors, nType );
     pSearchListView->GetListView()->setObjectName( builderName + "List" );
     vListViews_.push_back( pSearchListView->GetListView() );
-    assert( nType == vListViews_.size() - 1 );
+    assert( nType == static_cast< int >( vListViews_.size() - 1) );
 
     // Main page
     QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
