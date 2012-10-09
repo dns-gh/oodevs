@@ -15,7 +15,6 @@ return
     end,
 
     getObstaclesParameter = function( self, params )
-        DEC_Trace( "objects = "..tostring( params.objects ) )
         return params.objects
     end,
 

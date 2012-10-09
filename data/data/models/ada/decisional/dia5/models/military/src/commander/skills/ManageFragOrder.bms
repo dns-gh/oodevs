@@ -35,7 +35,6 @@ rootnode
             if fragOrder:mustBePropagate() then
             
                 local typeOrder = fragOrder.source:GetType()
-                DEC_Trace( "typeOrder = "..tostring( typeOrder ) )
                 local send = typeOrder ~= "Rep_OrderConduite_Deboucher"
                 local sendFirstEchelon = typeOrder == "Rep_OrderConduite_AttendreSePoster"
                 local entities = self.params.entities

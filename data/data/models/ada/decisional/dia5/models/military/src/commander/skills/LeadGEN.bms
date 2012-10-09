@@ -124,7 +124,6 @@ end
 -- @modifier LMT
 -- @release 2010-12-03
 findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, retrogradeContext, isMain, objectif )
-    DEC_Trace( "entities = "..tostring( #entities ) )
     local bestList = {}
     local size = 1
     local bestTask = nil

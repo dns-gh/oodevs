@@ -95,8 +95,8 @@ rootnode
             Activate( skill.links.improve, 1, { entities  = { self.toImprove }, 
                                           positions = self.params.positions } )
         else
-            Activate( skill.links.build, 1, { entities  = {self.params.entities[self.nextTargetIndex]}, 
-                                          positions = self.params.positions } )
+            Activate( skill.links.build, 1, { entities  = {self.params.entities[ self.nextTargetIndex ] }, 
+                                              positions = self.params.positions } )
         end
 
         self.alltry = false

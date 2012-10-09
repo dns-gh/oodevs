@@ -7,7 +7,16 @@ rootnode
 {
     connections = { skill.nodes.BuildElement },
 
-    feedbacks = { "elementBuilt", "elementNotActivated", "elementFailed", "elementImproved", "elementCancelled", "elementNotImprovable" },
+    feedbacks = 
+    { 
+        "elementBuilt", 
+        "elementNotActivated", 
+        "elementFailed", 
+        "elementImproved", 
+        "elementCancelled", 
+        "elementNotImprovable"
+    },
+
     -- -------------------------------------------------------------------------------- 
     -- Feedback when position reached and when occupied 
     -- --------------------------------------------------------------------------------
@@ -118,10 +127,8 @@ node "BuildElement"
                 end
             else
                 if not self.params.entity:buildingCapacity() then
-                    DEC_Trace("no capacity")
                     Feedback( self.feedbacks.failed, { element = toBuild, reason = eRC_ConstructionObjetImpossible } )
                 elseif not self.params.entity:buildingDotation() then
-                    DEC_Trace("not building dotation")
                     Feedback( self.feedbacks.failed, { element = toBuild, reason = eRC_PasDotationConstructionObjet } )
                 end
             end
