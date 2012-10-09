@@ -208,7 +208,7 @@ bool ReadPlugins( session::Config::T_Plugins& dst, const Plugins& plugins, const
 // Name: WritePluginConfig
 // Created: BAX 2012-08-28
 // -----------------------------------------------------------------------------
-void WritePluginConfig( Tree& dst, const std::string& prefix, const session::PluginConfig cfg )
+void WritePluginConfig( Tree& dst, const std::string& prefix, const session::PluginConfig& cfg )
 {
     dst.put( prefix + "enabled", cfg.enabled );
     BOOST_FOREACH( const session::PluginConfig::T_Parameters::value_type& value, cfg.parameters )
