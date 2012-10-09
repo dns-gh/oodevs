@@ -313,11 +313,13 @@ namespace
         {
             assert( components2.GetSize() == composantes.size() );
             core::Model& component = components.AddElement();
-            component[ "volume" ] = composantes[ i ].GetType().GetVolume().GetID();
-            component[ "score" ] = composantes[ i ].GetMajorScore();
-            component[ "major" ] = composantes[ i ].IsMajor();
-            component[ "component" ] = components2.GetElement( i )[ "component" ];
-            component[ "weapons" ] = components2.GetElement( i )[ "weapons" ]; // $$$$ MCO 2012-07-02: could be a link because that info is 'static'
+            const DEC_Knowledge_AgentComposante& composante = composantes[ i ];
+            component[ "volume" ] = composante.GetType().GetVolume().GetID();
+            component[ "score" ] = composante.GetMajorScore();
+            component[ "major" ] = composante.IsMajor();
+            const core::Model& component2 = components2.GetElement( i );
+            component[ "component" ] = component2[ "component" ];
+            component[ "weapons" ] = component2[ "weapons" ]; // $$$$ MCO 2012-07-02: could be a link because that info is 'static'
         }
     }
     void UpdateKnowledgeRelations( core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group, boost::shared_ptr< DEC_Knowledge_Agent > knowledge )
