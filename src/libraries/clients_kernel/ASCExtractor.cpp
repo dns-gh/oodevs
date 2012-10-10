@@ -25,9 +25,9 @@ namespace
         return OGRCreateCoordinateTransformation( &oSourceSRS, &oTargetSRS );
     }
 
-    float Convert( float value, float noValueData_ )
+    float Convert( float value, float noValueData )
     {
-        if( value == noValueData_ )
+        if( value == noValueData )
             return 0.f;
         return value;
     }
