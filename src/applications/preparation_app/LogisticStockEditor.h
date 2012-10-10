@@ -55,7 +55,7 @@ class LogisticStockEditor : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-    LogisticStockEditor( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel );
+    LogisticStockEditor( QWidget* parent, kernel::Controllers& controllers, const ::StaticModel& staticModel );
     virtual ~LogisticStockEditor();
     //@}
 
@@ -115,7 +115,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    const StaticModel& staticModel_;
+    const ::StaticModel& staticModel_;
     QStandardItemModel* dataModel_;
     gui::CommonDelegate* delegate_;
     QTableView* tableView_;
