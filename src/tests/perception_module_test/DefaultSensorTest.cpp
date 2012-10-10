@@ -27,7 +27,8 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
                                                ( "movement/position/x", 5 )
                                                ( "movement/position/y", 5 )
                                                ( "is-dead", false )
-                                               ( "identifier", 1337u );
+                                               ( "identifier", 1337u )
+                                               ( "is-civilian", false );
     const SWORD_Model* perceiver = core::Convert( &entity );
     const PHY_Volume* significantVolume = reinterpret_cast< const PHY_Volume* >( 1337 );
     MOCK_RESET( GetAgentListWithinCircle );
@@ -42,7 +43,6 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
     MOCK_EXPECT( GetAltitude ).once().with( 0, 1 ).returns( 0u );
     MOCK_EXPECT( GetAltitude ).once().with( 5, 5 ).returns( 0u );
     MOCK_EXPECT( ComputeRayTrace ).once().returns( 5000 );
-    MOCK_EXPECT( IsCivilian ).once().returns( false );
     ExpectNotifications( "agents", sword::test::MakeModel()
                                        [ sword::test::MakeModel( "target/data", 43 )
                                                                ( "level", 3 ) // identified

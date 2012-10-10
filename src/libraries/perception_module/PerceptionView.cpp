@@ -37,7 +37,6 @@ DECLARE_HOOK( GetPopulationElementPerceptionLevel, int, ( const SWORD_Model* per
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( CanPopulationElementBePerceived, bool, ( const SWORD_Model* element ) )
-DECLARE_HOOK( IsCivilian, bool, ( const SWORD_Model* agent ) )
 DECLARE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
 DECLARE_HOOK( IsPopulationElementNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* element, int level ) )
 DECLARE_HOOK( IsObjectUniversal, bool, ( const SWORD_Model* object ) )
@@ -151,7 +150,7 @@ void PerceptionView::ExecuteAgents( const wrapper::View& model, const wrapper::V
                 const PerceptionLevel& level = ComputeAgent( model, perceiver, surfaces, agent );
                 observer_.NotifyAgentPerception( agent, level );
                 if( GET_HOOK( IsAgentNewlyPerceived )( perceiver, agent, level.GetID() ) 
-                    && !civiliansEncountered && GET_HOOK( IsCivilian )( agent ) )
+                    && !civiliansEncountered && agent[ "is-civilian" ] )
                 {
                     PostReport( identifier_, MIL_Report::eReport_CiviliansEncountered );
                     civiliansEncountered = true;

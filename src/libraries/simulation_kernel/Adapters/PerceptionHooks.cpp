@@ -483,10 +483,6 @@ namespace
     {
         return GET_DATA( element, MIL_PopulationElement_ABC ).CanBePerceived();
     }
-    DEFINE_HOOK( IsCivilian, bool, ( const SWORD_Model* agent ) )
-    {
-        return GET_PION( agent ).IsCivilian();
-    }
     DEFINE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
     {
         if( PHY_PerceptionLevel::FindPerceptionLevel( level ) == PHY_PerceptionLevel::notSeen_ )
@@ -643,7 +639,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( CanBeSeen, facade );
     REGISTER_HOOK( CanObjectBePerceived, facade );
     REGISTER_HOOK( CanPopulationElementBePerceived, facade );
-    REGISTER_HOOK( IsCivilian, facade );
     REGISTER_HOOK( IsAgentNewlyPerceived, facade );
     REGISTER_HOOK( IsPopulationElementNewlyPerceived, facade );
     REGISTER_HOOK( ConvertSecondsToSim, facade );

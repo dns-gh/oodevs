@@ -51,7 +51,6 @@ class PHY_Volume;
     APPLY( CanBeSeen, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
     APPLY( CanObjectBePerceived, 1, bool, ( const SWORD_Model* object ) ) \
     APPLY( CanPopulationElementBePerceived, 1, bool, ( const SWORD_Model* element ) ) \
-    APPLY( IsCivilian, 1, bool, ( const SWORD_Model* agent ) ) \
     APPLY( IsAgentNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) ) \
     APPLY( IsPopulationElementNewlyPerceived, 3, bool, ( const SWORD_Model* perceiver, const SWORD_Model* element, int level ) ) \
     APPLY( ConvertSecondsToSim, 1, double, ( double seconds ) ) \
