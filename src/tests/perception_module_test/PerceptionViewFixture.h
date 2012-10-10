@@ -21,7 +21,6 @@ namespace perception
         PerceptionViewFixture()
         {
             MOCK_EXPECT( IsInCity ).returns( false );
-            MOCK_EXPECT( CanComponentPerceive ).returns( true );
             MOCK_EXPECT( GetLastPostureIdentifier ).returns( 0u );
             MOCK_EXPECT( GetCurrentPostureIdentifier ).returns( 0u );
             MOCK_EXPECT( GetPostureCompletionPercentage ).returns( 1. );

@@ -516,10 +516,6 @@ namespace
     {
         return GET_DATA( object, MIL_Object_ABC* )->IsUniversal();
     }
-    DEFINE_HOOK( CanComponentPerceive, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) )
-    {
-        return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanPerceive( &GET_ROLE( entity, PHY_RoleAction_Loading ) );
-    }
     DEFINE_HOOK( GetTransporter, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) )
     {
         const MIL_Agent_ABC* transporter = GET_ROLE( agent, PHY_RoleInterface_Transported ).GetTransporter();
@@ -636,7 +632,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( FindConsumptionType, facade );
     REGISTER_HOOK( GetConsumptionMode, facade );
     REGISTER_HOOK( IsObjectUniversal, facade );
-    REGISTER_HOOK( CanComponentPerceive, facade );
     REGISTER_HOOK( GetTransporter, facade );
     REGISTER_HOOK( GetVisionObjectsInSurface, facade );
     REGISTER_HOOK( GetVisionObject, facade );

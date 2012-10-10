@@ -50,7 +50,6 @@
 using namespace sword;
 using namespace sword::perception;
 
-DECLARE_HOOK( CanComponentPerceive, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) )
 DECLARE_HOOK( ComputePerceptionDistanceFactor, double, ( const SWORD_Model* entity ) );
 DECLARE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
 DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
@@ -140,7 +139,7 @@ namespace
             for( std::size_t i = 0; i < view[ "components" ].GetSize(); ++i )
             {
                 const wrapper::View& component = view[ "components" ].GetElement( i );
-                if( !GET_HOOK( CanComponentPerceive )( entity, component ) )
+                if( !component[ "can-perceive" ] )
                     continue;
                 for( std::size_t j = 0; j < component[ "sensors" ].GetSize(); ++j )
                 {
@@ -232,7 +231,7 @@ namespace
             for( std::size_t i = 0; i < entity[ "components" ].GetSize(); ++i )
             {
                 const wrapper::View& component = entity[ "components" ].GetElement( i );
-                if( !GET_HOOK( CanComponentPerceive )( entity, component ) )
+                if( !component[ "can-perceive" ] )
                     continue;
                 MT_Vector2D vComposantePerceptionDirection( vMainPerceptionDirection );
                 if( nRotationIdx == 0 )

@@ -98,7 +98,6 @@ class PHY_Volume;
     APPLY( HasUrbanObjectArchitecture, 1, bool, ( const SWORD_Model* urbanObject ) ) \
     APPLY( CanUrbanBlockBeSeen, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* urbanBlock ) ) \
     APPLY( IsPostureStationed, 1, bool, ( const SWORD_Model* entity ) ) \
-    APPLY( CanComponentPerceive, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) ) \
     APPLY( GetTransporter, 2, const SWORD_Model*, ( const SWORD_Model* model, const SWORD_Model* agent ) ) \
     APPLY( GetVisionObjectsInSurface, 4, void, ( const SWORD_Model* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) ) \
     APPLY( GetVisionObject, 1, unsigned char, ( const MT_Vector2D* point ) ) \

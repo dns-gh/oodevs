@@ -46,6 +46,7 @@
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
@@ -419,11 +420,13 @@ namespace
         movement[ "can-move" ] = pion.GetRole< RoleAction_Moving >().CanMove();
         entity[ "knowledges" ] = pion.GetKnowledgeGroup()->GetId();
         core::Model& components = entity[ "components" ];
+        const transport::PHY_RoleAction_Loading* loading = pion.RetrieveRole< transport::PHY_RoleAction_Loading >();
         for( std::size_t c = 0; c < components.GetSize(); ++c )
         {
             core::Model& component = components.GetElement( c );
             const PHY_ComposantePion& composante = component[ "component" ].GetUserData< PHY_ComposantePion >();
             component[ "score" ] = composante.GetMajorScore();
+            component[ "can-perceive" ] = composante.CanPerceive( loading );
         }
     }
     template< typename T >

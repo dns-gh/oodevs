@@ -69,6 +69,7 @@ namespace perception
             entity[ "perceptions/localized-radars/tapping-radar" ];
             entity[ "perceptions/record-mode/activated" ] = false;
             core::Model& component = entity[ "components"].AddElement();
+            component[ "can-perceive" ] = true;
             component[ "type/sensor-rotation-angle" ] = 3;
             core::Model& sensor = component[ "sensors" ].AddElement();
             sensor[ "height" ] = 0;

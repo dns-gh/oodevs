@@ -20,7 +20,6 @@
 using namespace sword;
 using namespace sword::perception;
 
-DECLARE_HOOK( CanComponentPerceive, bool, ( const SWORD_Model* entity, const SWORD_Model* component ) )
 DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
 
 // -----------------------------------------------------------------------------
@@ -84,7 +83,7 @@ void PerceptionRadar::PrepareRadarData( const wrapper::View& entity, T_RadarType
     for( std::size_t i = 0; i < entity[ "components" ].GetSize(); ++i )
     {
         const wrapper::View& component = entity[ "components" ].GetElement( i );
-        if( !GET_HOOK( CanComponentPerceive )( entity, component ) )
+        if( !component[ "can-perceive" ] )
             break;
         for( std::size_t j = 0; j < component[ "radars" ].GetSize(); ++j )
         {
