@@ -22,6 +22,36 @@
 
 using namespace plugins::hla;
 
+namespace
+{
+    struct Helper : boost::noncopyable
+    {
+        Helper( std::set< rpr::ForceIdentifier >& ids, rpr::ForceIdentifier defVal )
+            : rprIds( ids )
+            , defaultValue( defVal )
+        {
+            // NOTHING
+        }
+        bool apply( rpr::ForceIdentifier& fId )
+        {   
+            bool retval (true );
+            if( rprIds.empty() )
+            {
+                fId = defaultValue;
+                retval = false;
+            }
+            else
+            {
+                fId = *rprIds.begin();
+                rprIds.erase( rprIds.begin() );
+            }
+            return retval;
+        }
+        std::set< rpr::ForceIdentifier >& rprIds;
+        rpr::ForceIdentifier defaultValue;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: SideResolver constructor
 // Created: AHC 2012-09-07
@@ -38,6 +68,10 @@ SideResolver::SideResolver( dispatcher::Model_ABC& dynamicModel, dispatcher::Log
         enemies.insert( static_cast< rpr::ForceIdentifier >( i*3 + 2 ) );
         neutrals.insert( static_cast< rpr::ForceIdentifier >( i*3 + 3 ) );
     }
+    std::map< kernel::Karma, boost::shared_ptr< Helper > > helpers;
+    helpers[ kernel::Karma::friend_ ] = boost::shared_ptr< Helper >( new Helper( friends, rpr::Friendly ) );
+    helpers[ kernel::Karma::neutral_ ] = boost::shared_ptr< Helper >( new Helper( neutrals, rpr::Neutral ) );
+    helpers[ kernel::Karma::enemy_ ] = boost::shared_ptr< Helper >( new Helper( enemies, rpr::Opposing ) );
 
     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides( dynamicModel.Sides() );
     for( tools::Iterator< const dispatcher::Team_ABC& > it = sides.CreateIterator(); it.HasMoreElements(); )
@@ -59,44 +93,15 @@ SideResolver::SideResolver( dispatcher::Model_ABC& dynamicModel, dispatcher::Log
         {
             rpr::ForceIdentifier fId;
             const kernel::Karma& karma( team.GetKarma() );
-            if( karma == kernel::Karma::friend_ )
+            std::map< kernel::Karma, boost::shared_ptr< Helper > >::iterator itH( helpers.find( karma ) );
+            if( helpers.end() == itH )
             {
-                if( friends.empty() )
-                {
-                    logger_.LogError( std::string( "Too many friend teams in Sword exercice, using 'Friendly' for team ") + team.GetName().toStdString() );
-                    fId = rpr::Friendly;
-                }
-                else
-                {
-                    fId = *friends.begin();
-                    friends.erase( friends.begin() );
-                }
+                logger_.LogError( std::string( "Unknown karma " ) + karma.GetId() + " for team " + team.GetName().toStdString() );
+                continue;
             }
-            else if( karma == kernel::Karma::neutral_ )
+            if( !itH->second->apply( fId ) )
             {
-                if( friends.empty() )
-                {
-                    logger_.LogError( std::string( "Too many neutral teams in Sword exercice, using 'Neutral' for team " ) + team.GetName().toStdString() );
-                    fId = rpr::Neutral;
-                }
-                else
-                {
-                    fId = *neutrals.begin();
-                    neutrals.erase( neutrals.begin() );
-                }
-            }
-            else if( karma == kernel::Karma::enemy_ )
-            {
-                if( friends.empty() )
-                {
-                    logger_.LogError( std::string( "Too many enemy teams in Sword exercice, using 'Opposing' for team ") + team.GetName().toStdString() );
-                    fId = rpr::Opposing;
-                }
-                else
-                {
-                    fId = *enemies.begin();
-                    enemies.erase( enemies.begin() );
-                }
+                logger_.LogError( std::string( "Too many ") + itH->first.GetId()  + (" teams in Sword exercice, using default for team ") + team.GetName().toStdString() );
             }
             teams_.insert( T_Teams::value_type( team.GetId(), fId ) );
         }

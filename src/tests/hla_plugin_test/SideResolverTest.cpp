@@ -22,7 +22,8 @@ namespace
 {
     struct Fixture
     {
-        typedef std::vector< dispatcher::MockTeam* > TeamContainer;
+        typedef boost::shared_ptr< dispatcher::MockTeam > MockTeamPtr;
+        typedef std::vector< MockTeamPtr > TeamContainer;
 
         dispatcher::MockModel model_;
         dispatcher::MockLogger logger_;
@@ -91,7 +92,7 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE( side_resolver_creates_default_mapping, T, test
     tools::MockResolver< dispatcher::Team_ABC > teamResolver;
     TeamContainer emptyTeams;
 
-    dispatcher::MockTeam* fr1( new dispatcher::MockTeam( 42 ) );
+    MockTeamPtr fr1( new dispatcher::MockTeam( 42 ) );
     MOCK_EXPECT( fr1->GetExtension ).once().calls( boost::bind( &ReturnExtension, _1, _2, "HlaForceIdentifier", "4", false ) );
     MOCK_EXPECT( fr1->GetKarma ).once().returns( T::GetKarma() );
     emptyTeams.push_back( fr1 );
@@ -114,17 +115,39 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE( side_resolver_creates_default_mapping, T, test
     BOOST_CHECK_THROW( sideResolver.ResolveForce( t2.GetId() ), std::runtime_error );
 }
 
+BOOST_FIXTURE_TEST_CASE_TEMPLATE( side_resolver_creates_default_mapping_overflow, T, test_types, Fixture )
+{
+    tools::MockResolver< dispatcher::Team_ABC > teamResolver;
+    TeamContainer emptyTeams;
+
+    for(int i=0; i<11; ++i)
+    {
+        MockTeamPtr fr1( new dispatcher::MockTeam( 42 ) );
+        MOCK_EXPECT( fr1->GetExtension ).once().calls( boost::bind( &ReturnExtension, _1, _2, "HlaForceIdentifier", "4", false ) );
+        MOCK_EXPECT( fr1->GetKarma ).once().returns( T::GetKarma() );
+        emptyTeams.push_back( fr1 );
+    }
+
+    tools::SimpleIterator< const dispatcher::Team_ABC&, TeamContainer >* teamsIt = new tools::SimpleIterator< const dispatcher::Team_ABC&, TeamContainer >( emptyTeams );
+    tools::Iterator< const dispatcher::Team_ABC& > it( teamsIt );
+
+    MOCK_EXPECT( model_.Sides ).once().returns( boost::ref( teamResolver ) );
+    MOCK_EXPECT( teamResolver.CreateIterator ).once().returns( it );
+    MOCK_EXPECT( logger_.LogError ).once();
+    SideResolver sideResolver( model_, logger_ );
+}
+
 BOOST_FIXTURE_TEST_CASE( side_resolver_creates_default_with_collision, Fixture )
 {
     tools::MockResolver< dispatcher::Team_ABC > teamResolver;
     TeamContainer emptyTeams;
 
-    dispatcher::MockTeam* fr1( new dispatcher::MockTeam( 42 ) );
+    MockTeamPtr fr1( new dispatcher::MockTeam( 42 ) );
     MOCK_EXPECT( fr1->GetExtension ).once().calls( boost::bind( &ReturnExtension, _1, _2, "HlaForceIdentifier", "4", false ) );
     MOCK_EXPECT( fr1->GetKarma ).once().returns( kernel::Karma::friend_ );
     emptyTeams.push_back( fr1 );
 
-    dispatcher::MockTeam* fr2( new dispatcher::MockTeam( 43 ) );
+    MockTeamPtr fr2( new dispatcher::MockTeam( 43 ) );
     MOCK_EXPECT( fr2->GetExtension ).once().calls( boost::bind( &ReturnExtension, _1, _2, "HlaForceIdentifier", "4", false ) );
     MOCK_EXPECT( fr2->GetKarma ).once().returns( kernel::Karma::friend_ );
     emptyTeams.push_back( fr2 );
@@ -148,9 +171,9 @@ BOOST_FIXTURE_TEST_CASE( side_resolver_reads_mapping_and_uses_default, Fixture )
     tools::MockResolver< dispatcher::Team_ABC > teamResolver;
     TeamContainer emptyTeams;
 
-    dispatcher::MockTeam* team1( new dispatcher::MockTeam( 42 ) );
-    dispatcher::MockTeam* team2( new dispatcher::MockTeam( 43 ) );
-    dispatcher::MockTeam* team3( new dispatcher::MockTeam( 44 ) );
+    MockTeamPtr team1( new dispatcher::MockTeam( 42 ) );
+    MockTeamPtr team2( new dispatcher::MockTeam( 43 ) );
+    MockTeamPtr team3( new dispatcher::MockTeam( 44 ) );
     
     MOCK_EXPECT( team1->GetExtension ).once().calls( boost::bind( &ReturnExtension, _1, _2, "HlaForceIdentifier", "4", true ) ); // rpr::Friendly_2
     MOCK_EXPECT( team2->GetExtension ).once().calls( boost::bind( &ReturnExtension, _1, _2, "HlaForceIdentifier", "5", true ) ); // rpr::Opposing_2
