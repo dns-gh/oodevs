@@ -50,13 +50,9 @@ UrbanTreeView::UrbanTreeView( kernel::Controllers& controllers, const kernel::Pr
 {
     dataModel_.setColumnCount( 2 );
     setUniformRowHeights( true );
-    header()->setStretchLastSection( false );
-    header()->setResizeMode( 0, QHeaderView::Stretch );
-    header()->setResizeMode( 1, QHeaderView::Fixed );
-    header()->resizeSection( 1, 24 );
-
+    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 1, QHeaderView::Stretch );
     setItemDelegateForColumn( 1, new gui::ItemPixmapDelegate( dataModel_, boost::bind( &UrbanTreeView::GetEntityPixmap, this, _1 ), this, 24 ) );
-
     controllers_.Update( *this );
 }
 

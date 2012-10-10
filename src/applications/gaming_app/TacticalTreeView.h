@@ -70,7 +70,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
+    virtual void drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const;
     //@}
 
 private:

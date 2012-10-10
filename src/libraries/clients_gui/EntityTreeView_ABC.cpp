@@ -30,8 +30,13 @@ EntityTreeView_ABC::EntityTreeView_ABC( kernel::Controllers& controllers, const 
     , modelObserver_( modelObserver )
     , blockSelect_( false )
 {
+    dataModel_.setColumnCount( 1 );
     setHeaderHidden( true );
     setEditTriggers( SelectedClicked | EditKeyPressed );
+    setAllColumnsShowFocus( true );
+    setUniformRowHeights( true );
+    header()->setStretchLastSection( false );
+    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
 
     connect( this,             SIGNAL( activated       ( const QModelIndex& ) ),                           this, SLOT( OnActivate( const QModelIndex& ) ) );
     connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelect  ( const QItemSelection&, const QItemSelection& ) ) );

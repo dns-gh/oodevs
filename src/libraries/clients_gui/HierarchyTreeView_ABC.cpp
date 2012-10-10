@@ -100,7 +100,7 @@ void HierarchyTreeView_ABC::InternalNotifyCreated( const kernel::Hierarchies& hi
         entityItem = AddItem( 0, entity );
 
     if( entityItem )
-        UpdateItem( *entityItem, entity );
+        AdditionalUpdateItem( *entityItem, entity );
 }
 
 
@@ -152,7 +152,7 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
     QStandardItem* entityItem = dataModel_.FindDataItem( entity );
     if( entityItem )
     {
-        UpdateItem( *entityItem, entity );
+        AdditionalUpdateItem( *entityItem, entity );
 
         // Update superior if needed
         const kernel::Entity_ABC* newSuperior = hierarchy.GetSuperior();
@@ -177,28 +177,38 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyTreeView_ABC::UpdateItem
-// Created: JSR 2012-09-13
+// Name: HierarchyTreeView_ABC::drawRow
+// Created: JSR 2012-10-10
 // -----------------------------------------------------------------------------
-void HierarchyTreeView_ABC::UpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
-{
-    UpdateBackgroundColor( entityItem, entity );
-    AdditionalUpdateItem( entityItem, entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyTreeView_ABC::GetDecoration
-// Created: ABR 2012-09-14
-// -----------------------------------------------------------------------------
-void HierarchyTreeView_ABC::UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
+void HierarchyTreeView_ABC::drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const
 {
     // TODO Move following to preparation or gui reimplementation, no ghost on gaming ... or not, all color could also be handle here (log missing, tacticaly destroyed, etc.), options are permissive for that, and it anticipate a gaming/prepa merge
-    QColor color = Qt::transparent;
-    if( dynamic_cast< const kernel::Ghost_ABC* >( &entity ) != 0 )
-        color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
-    entityItem.setBackground( QBrush( color ) );
+    QStandardItem* item = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( index ) );
+    if( item && item->data( StandardModel::MimeTypeRole).isValid() )
+    {
+        if( item->data( StandardModel::MimeTypeRole).toString() == typeid( kernel::Ghost_ABC ).name() )
+        {
+            QColor color( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
+            painter->fillRect( options.rect, color );
+        }
+    }
+    RichTreeView::drawRow( painter, options, index );
 }
 
+namespace
+{
+
+    QPixmap* GetEmptyPixmap()
+    {
+        static QPixmap* emptyPixmap = 0;
+        if( !emptyPixmap )
+        {
+            emptyPixmap = new QPixmap( 1, 32 );
+            emptyPixmap->fill( Qt::transparent );
+        }
+        return emptyPixmap;
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: HierarchyTreeView_ABC::GetDecoration
 // Created: JSR 2012-09-14
@@ -219,10 +229,9 @@ const QPixmap* HierarchyTreeView_ABC::GetDecoration( const QModelIndex &index )
                 if( !pixmap.isNull() )
                     return &pixmap;
                 const_cast< HierarchyTreeView_ABC* >( this )->doItemsLayout();
-                static const QPixmap emptyPixmap( 32, 32 );
-                return &emptyPixmap;
             }
         }
+        return GetEmptyPixmap();
     }
     return 0;
 }

@@ -66,8 +66,17 @@ QSize ItemPixmapDelegate::sizeHint( const QStyleOptionViewItem &option, const QM
 void ItemPixmapDelegate::DrawPixmap( QPainter* painter, const QRect& rect, const QPixmap& pixmap ) const
 {
     painter->save();
-    QPoint p = rect.topRight();
-    p.rx() -= pixmap.width() + 5;
+    QPoint p;
+    if( qApp->layoutDirection() == Qt::RightToLeft )
+    {
+        p = rect.topLeft();
+        p.rx() += 5;
+    }
+    else
+    {
+        p = rect.topRight();
+        p.rx() -= pixmap.width() + 5;
+    }
     p.ry() += ( rect.height() - pixmap.height() ) / 2;
     painter->drawPixmap( p, pixmap );
     painter->restore();

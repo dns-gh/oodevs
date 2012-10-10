@@ -73,22 +73,29 @@ void TacticalTreeView::NotifyUpdated( const kernel::AutomatDecisions_ABC& /*deci
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalTreeView::UpdateBackgroundColor
-// Created: JSR 2012-09-27
+// Name: TacticalTreeView::drawRow
+// Created: JSR 2012-10-10
 // -----------------------------------------------------------------------------
-void TacticalTreeView::UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity )
+void TacticalTreeView::drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const
 {
-    QColor color = Qt::transparent;
-    if( const Attributes* attributes = static_cast< const Attributes* >( entity.Retrieve< kernel::Attributes_ABC >() ) )
+    QStandardItem* item = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( index ) );
+    if( item && item->data( gui::StandardModel::MimeTypeRole).isValid() &&
+        item->data( gui::StandardModel::MimeTypeRole).toString() == typeid( kernel::Agent_ABC ).name() )
     {
-        if( attributes->bNeutralized_ )
-            color = QColor( controllers_.options_.GetOption( "Color/Neutralized", QString( "" ) ).To< QString >() );
-        if( attributes->nOpState_ == eOperationalStatus_DetruitTactiquement )
-            color = QColor( controllers_.options_.GetOption( "Color/TacticallyDestroyed", QString( "" ) ).To< QString >() );
-        if( attributes->nOpState_ == eOperationalStatus_DetruitTotalement )
-            color = QColor( controllers_.options_.GetOption( "Color/TotallyDestroyed", QString( "" ) ).To< QString >() );
+        if( const kernel::Agent_ABC* agent = dataModel_.GetDataFromItem< const kernel::Agent_ABC >( *item ) )
+        {
+            if( const Attributes* attributes = static_cast< const Attributes* >( agent->Retrieve< kernel::Attributes_ABC >() ) )
+            {
+                if( attributes->nOpState_ == eOperationalStatus_DetruitTotalement )
+                    painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/TotallyDestroyed", QString( "" ) ).To< QString >() ) );
+                else if( attributes->nOpState_ == eOperationalStatus_DetruitTactiquement )
+                    painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/TacticallyDestroyed", QString( "" ) ).To< QString >() ) );
+                if( attributes->bNeutralized_ )
+                    painter->fillRect( options.rect, QColor( controllers_.options_.GetOption( "Color/Neutralized", QString( "" ) ).To< QString >() ) );
+            }
+        }
     }
-    entityItem.setBackground( QBrush( color ) );
+    gui::TacticalTreeView::drawRow( painter, options, index );
 }
 
 // -----------------------------------------------------------------------------

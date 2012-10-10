@@ -62,8 +62,6 @@ protected:
     void InternalNotifyCreated( const kernel::Hierarchies& hierarchy );
     void InternalNotifyUpdated( const kernel::Hierarchies& hierarchy );
     QStandardItem* AddItem( QStandardItem* parent, const kernel::Entity_ABC& entity );
-    void UpdateItem( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
-    virtual void UpdateBackgroundColor( QStandardItem& entityItem, const kernel::Entity_ABC& entity );
     virtual void AdditionalUpdateItem( QStandardItem& /*entityItem*/, const kernel::Entity_ABC& /*entity*/ ) {}
     template< typename Entity >
     bool AddItemIfPossible( const kernel::Entity_ABC& entity, QStandardItem* parent, QStandardItem*& ret );
@@ -73,6 +71,7 @@ protected:
     //@{
     virtual const QPixmap* GetDecoration( const QModelIndex &index );
     virtual void focusInEvent( QFocusEvent* event );
+    virtual void drawRow( QPainter* painter, const QStyleOptionViewItem& options, const QModelIndex &index ) const;
     //@}
 
 protected:
