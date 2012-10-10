@@ -87,7 +87,6 @@ class PHY_Volume;
     APPLY( GetVolumeIdentifier, 2, bool, ( const char* type, size_t* identifier ) ) \
     APPLY( GetPrecipitationIdentifier, 2, bool, ( const char* type, size_t* identifier ) ) \
     APPLY( GetLightingIdentifier, 2, bool, ( const char* type, size_t* identifier ) ) \
-    APPLY( IsObjectUniversal, 1, bool, ( const SWORD_Model* object ) ) \
     APPLY( GetPerceptionRandom, 0, double, () ) \
     APPLY( IsKnown, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) ) \
     APPLY( ComputeAgentRatioInsidePerceptionPolygon, 4, double, ( const SWORD_Model* perceiver, const SWORD_Model* target, double distance, double roll ) ) \

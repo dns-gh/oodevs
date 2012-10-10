@@ -402,6 +402,7 @@ namespace
             object[ "data" ].SetUserData( it.second );
             object[ "type/real-name" ] = it.second->GetType().GetRealName();
             object[ "type/identifier" ] = it.second->GetType().GetID();
+            object[ "is-universal" ] = it.second->IsUniversal();
         }
     }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )

@@ -39,7 +39,6 @@ DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( CanPopulationElementBePerceived, bool, ( const SWORD_Model* element ) )
 DECLARE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
 DECLARE_HOOK( IsPopulationElementNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* element, int level ) )
-DECLARE_HOOK( IsObjectUniversal, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( GetPerceptionRandom, double, () )
 
 using namespace sword;
@@ -179,7 +178,7 @@ namespace
         if( !isEnabled || !GET_HOOK( CanObjectBePerceived )( target ) )
             return PerceptionLevel::notSeen_;
 
-        if( GET_HOOK( IsObjectUniversal )( target ) )
+        if( target[ "is-universal" ] )
             return PerceptionLevel::identified_;
 
         PerceptionComputer< SurfacesObjectVisitor_ABC, PerceptionSurfaceObject > computer( boost::bind( &PerceptionSurfaceObject::ComputeObjectPerception, _1, perceiver, target ) );
