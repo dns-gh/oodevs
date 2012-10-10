@@ -398,7 +398,7 @@ namespace
             return boost::shared_ptr< MT_Vector2D >();
         return GET_HOOK( PathGetLastPointOfPath )( adapter->Get() );
     }
-    unsigned int StartMovement( Sink& sink, MIL_AgentPion& pion, const std::string& command, const boost::shared_ptr< DEC_Path_ABC >& path )
+    unsigned int StartMovement( Sink& sink, MIL_AgentPion& pion, const boost::shared_ptr< DEC_Path_ABC >& path )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
@@ -468,7 +468,7 @@ namespace
 // -----------------------------------------------------------------------------
 void RolePion_Decision::RegisterActions()
 {
-    RegisterCommand< unsigned int( const boost::shared_ptr< DEC_Path_ABC >& ) >( "DEC_StartDeplacement", &StartMovement, "move", _1 );
+    RegisterCommand< unsigned int( const boost::shared_ptr< DEC_Path_ABC >& ) >( "DEC_StartDeplacement", &StartMovement, _1 );
     RegisterCommand< void( boost::shared_ptr< MT_Vector2D > ) >( "DEC_Orientate", &Orientate, _1 );
     RegisterFunction( "DEC_StartTirDirect",
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 0, _4, false ) ) ); // $$$$ MCO 2012-09-14: 0 => eFireUsingAllComposantes
