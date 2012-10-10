@@ -108,6 +108,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Action.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\AlatMonitoringEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CallbackEventListener.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\CapacityFactory.cpp" />
@@ -867,6 +868,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\decision\DEC_Model_ABC.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Action.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\AlatMonitoringEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CallbackEventListener.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\CapacityFactory.h" />

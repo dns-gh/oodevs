@@ -2646,6 +2646,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePerceptionEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Action.cpp">
+      <Filter>Source Files\Adapters\Roles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5416,6 +5419,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePerceptionEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Action.h">
+      <Filter>Source Files\Adapters\Roles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@
 #include "RolePion_Decision.h"
 #include "Hook.h"
 #include "Sink.h"
+#include "Action.h"
 #include "PathAdapter.h"
 #include "KnowledgeCache.h"
 #include "PathPointAdapter.h"
@@ -398,17 +399,36 @@ namespace
             return boost::shared_ptr< MT_Vector2D >();
         return GET_HOOK( PathGetLastPointOfPath )( adapter->Get() );
     }
+    unsigned int StartCommand( Sink& sink, MIL_AgentPion& pion, const std::string& name, const core::Model& parameters )
+    {
+        std::size_t id = sink.StartCommand( name, parameters );
+        boost::shared_ptr< PHY_Action_ABC > action( new sword::Action( sink, pion, id ) );
+        pion.RegisterAction( action );
+        return action->GetId();
+    }
     unsigned int StartMovement( Sink& sink, MIL_AgentPion& pion, const boost::shared_ptr< DEC_Path_ABC >& path )
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "path" ].SetUserData( path );
-        return sink.StartCommand( command, parameters );
+        return StartCommand( sink, pion, "move", parameters );
     }
-    unsigned int StopAction( Sink& sink, unsigned int command )
+    unsigned int StopAction( MIL_AgentPion& pion, unsigned int action )
     {
-        sink.StopCommand( command );
+        pion.UnregisterAction( action );
         return 0u;
+    }
+    void PauseAction( const MIL_AgentPion& pion, unsigned int action )
+    {
+        boost::shared_ptr< PHY_Action_ABC > pAction = pion.GetAction( action );
+        if( pAction )
+            pAction->Suspend();
+    }
+    void ResumeAction( const MIL_AgentPion& pion, unsigned int action )
+    {
+        boost::shared_ptr< PHY_Action_ABC > pAction = pion.GetAction( action );
+        if( pAction )
+            pAction->Resume();
     }
 }
 
@@ -419,11 +439,11 @@ namespace
 void RolePion_Decision::RegisterControlActions()
 {
     RegisterFunction( "DEC__StopAction",
-        boost::function< unsigned int( unsigned int ) >( boost::bind( &StopAction, boost::ref( sink_ ), _1 ) ) );
+        boost::function< unsigned int( unsigned int ) >( boost::bind( &StopAction, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_PauseAction",
-        boost::function< void( unsigned int ) >( boost::bind( &Sink::PauseCommand, &sink_, _1 ) ) );
+        boost::function< void( unsigned int ) >( boost::bind( &PauseAction, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_ReprendAction",
-        boost::function< void( unsigned int ) >( boost::bind( &Sink::ResumeCommand, &sink_, _1 ) ) );
+        boost::function< void( unsigned int ) >( boost::bind( &ResumeAction, boost::ref( GetPion() ), _1 ) ) );
 }
 
 namespace
@@ -446,7 +466,7 @@ namespace
         parameters[ "type" ] = firingType;
         parameters[ "major" ] = bFireOnlyOnMajorComposantes;
         parameters[ "dotation" ] = ammoDotationClass;
-        return sink.StartCommand( "direct fire", parameters );
+        return StartCommand( sink, pion, "direct fire", parameters );
     }
     unsigned int StartTirPopulation( Sink& sink, MIL_AgentPion& pion, unsigned int populationKnowledgeID, const std::string& ammoDotationClass )
     {
@@ -458,7 +478,7 @@ namespace
         parameters[ "type" ] = 0; // $$$$ MCO 2012-10-02: eFireUsingAllComposantes
         const PHY_AmmoDotationClass* pClass = PHY_AmmoDotationClass::Find( ammoDotationClass );
         parameters[ "dotation" ] = pClass ? pClass->GetID() : 0;
-        return sink.StartCommand( "direct fire population", parameters );
+        return StartCommand( sink, pion, "direct fire population", parameters );
     }
 }
 

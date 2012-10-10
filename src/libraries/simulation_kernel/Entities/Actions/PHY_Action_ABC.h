@@ -36,8 +36,8 @@ public:
     //! @name Operations
     //@{
     unsigned int GetId() const;
-    void Suspend();
-    void Resume();
+    virtual void Suspend();
+    virtual void Resume();
     void Update();
     virtual void Stop();
     //@}
