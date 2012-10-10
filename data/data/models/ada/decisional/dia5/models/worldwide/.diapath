@@ -4,6 +4,6 @@
     <buildpathentry kind="prj" path="/Common"/>
     <buildpathentry kind="prj" path="/Crowd"/>
     <buildpathentry kind="prj" path="/Military"/>
-    <buildpathentry kind="var" path="BRAIN_CORE/directia.core.bml"/>
-    <buildpathentry kind="output" path="bin"/>
+    <buildpathentry kind="var" path="BRAIN_CORE"/>
+    <buildpathentry kind="output" path="src"/>
 </buildpath>
