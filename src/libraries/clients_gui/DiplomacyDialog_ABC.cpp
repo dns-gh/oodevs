@@ -29,6 +29,11 @@ Q_DECLARE_METATYPE( const Karma* )
 
 namespace
 {
+    const int rowHeight = 40;
+    const int textMargin = 27;
+    const int maxWidth = 1024;
+    const int maxHeight = 768;
+
     QColor GetColor( const Karma& karma )
     {
         if( karma == Karma::friend_ )
@@ -51,7 +56,7 @@ namespace
             // NOTHING
         }
 
-        virtual QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index) const
+        virtual QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& index ) const
         {
             if( index.row() == index.column() )
                 return 0;
@@ -62,7 +67,7 @@ namespace
             return editor;
         }
 
-        virtual void setEditorData( QWidget *editor, const QModelIndex &index) const
+        virtual void setEditorData( QWidget *editor, const QModelIndex &index ) const
         {
             QComboBox* comboBox = static_cast< QComboBox* >( editor );
             const Karma* karma = index.model()->data( index, KarmaRole ).value< const Karma* >();
@@ -101,10 +106,11 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, Controllers& controll
     : ModalDialog( parent, "ChangeDiplomacyDialog" )
     , controllers_( controllers )
     , profile_    ( profile )
+    , minCellWidth_( 0 )
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     setCaption( tools::translate( "gui::DiplomacyDialog_ABC", "Diplomacy" ) );
-    setMaximumSize( 1024, 768);
+    setMaximumSize( maxWidth, maxHeight );
 
     // Table
     table_ = new QTableWidget( this );
@@ -112,6 +118,13 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, Controllers& controll
     table_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     table_->verticalHeader()->setResizeMode( QHeaderView::Stretch );
     table_->setItemDelegate( new DiplomacyItemDelegate() );
+    table_->setEditTriggers( QAbstractItemView::SelectedClicked | QAbstractItemView::DoubleClicked | QAbstractItemView::CurrentChanged );
+
+    QFontMetrics fm( table_->fontMetrics() );
+    minCellWidth_ = std::max( fm.width( Karma::friend_.GetName() ), minCellWidth_ );
+    minCellWidth_ = std::max( fm.width( Karma::enemy_.GetName() ), minCellWidth_ );
+    minCellWidth_ = std::max( fm.width( Karma::neutral_.GetName() ), minCellWidth_ );
+    minCellWidth_ = std::max( fm.width( Karma::unknown_.GetName() ), minCellWidth_ );
 
     // Buttons
     QPushButton* okBtn     = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Ok" ), this );
@@ -121,9 +134,9 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, Controllers& controll
     cancelBtn->setMaximumWidth( 100 );
 
     // Layouts
-    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this, 5, 5 );
+    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->addWidget( table_ );
-    Q3HBoxLayout* pButtonLayout = new Q3HBoxLayout( pMainLayout, 5 );
+    QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
     pButtonLayout->setAlignment( Qt::AlignCenter );
     pButtonLayout->addWidget( okBtn );
     pButtonLayout->addWidget( cancelBtn );
@@ -151,8 +164,9 @@ DiplomacyDialog_ABC::~DiplomacyDialog_ABC()
 // -----------------------------------------------------------------------------
 void DiplomacyDialog_ABC::Validate()
 {
-    for( unsigned int i = 0; i < teams_.size(); ++i )
-        for( unsigned int j = 0; j < teams_.size(); ++j )
+    const int nTeams = static_cast< int >( teams_.size() );
+    for( int i = 0; i < nTeams; ++i )
+        for( int j = 0; j < nTeams; ++j )
         {
             if( i == j )
                 continue;
@@ -162,7 +176,6 @@ void DiplomacyDialog_ABC::Validate()
                 karma = *item->data( KarmaRole ).value< const Karma* >();
             SetDiplomacy( *teams_[ i ], *teams_[ j ], karma );
         }
-
     hide();
 }
 
@@ -212,8 +225,9 @@ void DiplomacyDialog_ABC::NotifyContextMenu( const Team_ABC& team, ContextMenu& 
 void DiplomacyDialog_ABC::showEvent( QShowEvent* )
 {
     UpdateTable();
-    for( unsigned int i = 0; i < teams_.size(); ++i )
-        for( unsigned int j = 0; j < teams_.size(); ++j )
+    const int nTeams = static_cast< int >( teams_.size() );
+    for( int i = 0; i < nTeams; ++i )
+        for( int j = 0; j < nTeams; ++j )
         {
             if( i == j )
             {
@@ -241,8 +255,7 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
                 item->setData( Qt::BackgroundColorRole, GetColor( *karma ) );
             }
         }
-
-    table_->adjustSize();
+    adjustSize();
 }
 
 // -----------------------------------------------------------------------------
@@ -251,19 +264,25 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void DiplomacyDialog_ABC::UpdateTable()
 {
-    table_->setColumnCount( static_cast< int >( teams_.size() ) );
-    table_->setRowCount( static_cast< int >( teams_.size() ) );
-    int maxName = 0;
+    const int nTeams = static_cast< int >( teams_.size() );
+    table_->clearContents();
+    table_->setColumnCount( static_cast< int >( nTeams ) );
+    table_->setRowCount( static_cast< int >( nTeams ) );
+    int maxNameWidth = 0;
     QStringList list;
-    for( unsigned i = 0; i < teams_.size(); ++i )
+    for( std::size_t i = 0; i < nTeams; ++i )
     {
         const QString name = teams_.at( i )->GetName();
         list << name;
-        maxName = std::max< int >( name.size(), maxName );
+        maxNameWidth = std::max( table_->fontMetrics().width( name ), maxNameWidth );
     }
     table_->setVerticalHeaderLabels( list );
     table_->setHorizontalHeaderLabels( list );
-    int newWidth = static_cast< int >( teams_.size() * maxName * 10 );
-    int newHeight = static_cast< int >( teams_.size() * 40 );
-    table_->setMinimumSize( newWidth < maximumWidth() - 20 ? newWidth : maximumWidth() - 20, newHeight < maximumHeight() - 80 ? newHeight : maximumHeight() - 80 );
+    int cellWidth = std::max( maxNameWidth, minCellWidth_ ) + textMargin;
+    int newWidth = std::min( ( nTeams + 1 ) * cellWidth, maxWidth );
+    int newHeight = std::min( ( nTeams + 1 ) * rowHeight, maxHeight );
+    table_->setMinimumSize( newWidth, newHeight );
+    table_->resize( newWidth, newHeight );
+    for( int i = 0; i < table_->columnCount(); ++i )
+        table_->setColumnWidth( i, cellWidth );
 }
