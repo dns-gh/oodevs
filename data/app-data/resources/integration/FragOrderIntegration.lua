@@ -39,6 +39,7 @@ integration.isTask = function( self )
          orderType == "platoon.tasks.RejoindreAToutPrix" or
          orderType == "platoon.tasks.DeposerUnite" or
          orderType == "Rep_OrderConduite_Interrompre" or
+         orderType == "CancelMission" or
          orderType == "Rep_OrderConduite_AttendreSePoster" or
          orderType == "Rep_OrderConduite_RecupererTransporteurs" or
          orderType == "Rep_OrderConduite_SArreter" or
@@ -123,7 +124,8 @@ integration.mustBePropagate = function( self )
          orderType == "ActivateNBCProtection" or        -- WW
          orderType == "DeactivateNBCProtection" or      -- WW
          orderType == "ChangeAttitude" or               -- WW
-         orderType == "GoTo"                            -- WW
+         orderType == "GoTo" or                         -- WW
+         orderType == "CancelMission"                   -- WW
 end
 
 integration.setAutomatFragOrder = function( self )
@@ -296,15 +298,24 @@ integration.startFragOrderTask = function( self )
             local missionCourante = DEC_GetMission( meKnowledge.source )
             if missionCourante.meetingPoint and missionCourante.meetingPoint ~= NIL then
                 mission.objectives = { CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_CopiePoint( missionCourante.meetingPoint.source ) ) }
-                integration.communication.StartMissionPionVersPion( {mission_type = "platoon.tasks.FaireMouvement", 
-                                                              mission_objectives = { objectives = mission.objectives}, 
-                                                              echelon = eEtatEchelon_None } )
+                integration.communication.StartMissionPionVersPion( { mission_type = "platoon.tasks.FaireMouvement", 
+                                                                      mission_objectives = { objectives = mission.objectives }, 
+                                                                      echelon = eEtatEchelon_None } )
             else
                 masalife.brain.core.stopTasks()
             end
         end
         integration.cleanFragOrder( self )
         return
+
+    -- WW
+    elseif orderType =="CancelMission" then
+        if myself.currentMission then
+                masalife.brain.core.stopTasks()
+        end
+        integration.cleanFragOrder( self )
+        return
+
     -- ----------------------------------------------------------------------------
     -- Radar activation / Deactivation
     -- ----------------------------------------------------------------------------
