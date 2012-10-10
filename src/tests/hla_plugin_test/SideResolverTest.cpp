@@ -122,7 +122,7 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE( side_resolver_creates_default_mapping_overflow
 
     for(int i=0; i<11; ++i)
     {
-        MockTeamPtr fr1( new dispatcher::MockTeam( 42 ) );
+        MockTeamPtr fr1( new dispatcher::MockTeam( 42+i ) );
         MOCK_EXPECT( fr1->GetExtension ).once().calls( boost::bind( &ReturnExtension, _1, _2, "HlaForceIdentifier", "4", false ) );
         MOCK_EXPECT( fr1->GetKarma ).once().returns( T::GetKarma() );
         emptyTeams.push_back( fr1 );
@@ -135,6 +135,16 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE( side_resolver_creates_default_mapping_overflow
     MOCK_EXPECT( teamResolver.CreateIterator ).once().returns( it );
     MOCK_EXPECT( logger_.LogError ).once();
     SideResolver sideResolver( model_, logger_ );
+
+    for(int i=0; i<10; ++i)
+    {       
+        MockTeamPtr fr = emptyTeams[ i ];
+        rpr::ForceIdentifier fId = static_cast< rpr::ForceIdentifier >( static_cast< int >( T::forceId ) + i*3 ); 
+        BOOST_CHECK_EQUAL( sideResolver.ResolveTeam( fId ), fr->GetId() );
+        BOOST_CHECK_EQUAL( sideResolver.ResolveForce( fr->GetId() ), fId );
+    }
+    MockTeamPtr fr = emptyTeams[ 10 ];
+    BOOST_CHECK_EQUAL( sideResolver.ResolveForce( fr->GetId() ), T::forceId );
 }
 
 BOOST_FIXTURE_TEST_CASE( side_resolver_creates_default_with_collision, Fixture )
