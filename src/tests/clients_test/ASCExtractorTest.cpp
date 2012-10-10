@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE( extract_ascii_grid )
     BOOST_CHECK_EQUAL( pixelSire.Y(), -50 );
 
     kernel::ASCExtractor::T_Tiles tiles = extractor.GetTiles();
-    BOOST_CHECK_EQUAL( tiles.size(), 20 );
+    BOOST_CHECK_EQUAL( tiles.size(), 20u );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,5 +62,5 @@ BOOST_AUTO_TEST_CASE( extract_ascii_grid_with_size_factor )
     BOOST_CHECK_EQUAL( pixelSire.Y(), -50 );
 
     kernel::ASCExtractor::T_Tiles tiles = extractor.GetTiles();
-    BOOST_CHECK_EQUAL( tiles.size(), 6 );
+    BOOST_CHECK_EQUAL( tiles.size(), 6u );
 }
