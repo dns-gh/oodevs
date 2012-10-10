@@ -867,7 +867,7 @@ void LogisticSupplyPullFlowDialog::OnResourcesValueChanged( int row, int col )
 
     Q3TableItem& itemAVailable = *resourcesTable_->item( row, 1 );
     gui::SpinTableItem< int >& itemValue = *static_cast< gui::SpinTableItem< int >* >( resourcesTable_->item( row, 2 ) );
-    int newValue = itemValue.text().toInt();
+    int newValue = locale().toInt( itemValue.text() );
 
     const Dotation& dotationSelected = supplies_[ selection ];
     if( row == static_cast< int >( supplierSupplies_.size() ))
@@ -940,7 +940,7 @@ void LogisticSupplyPullFlowDialog::OnCarriersValueChanged( int row, int col )
         selection = item->CurrentText();
     Q3TableItem& itemAVailable = *carriersTable_->item( row, 1 );
     gui::SpinTableItem< int >& itemValue = *static_cast< gui::SpinTableItem< int >* >( carriersTable_->item( row, 2 ) );
-    int newValue = itemValue.text().toInt();
+    int newValue = locale().toInt( itemValue.text() );
 
     unsigned int equipementSelectedAvailable = carriersTypes_[ selection ];
     if( row == static_cast< int >( carriers_.size() ))
