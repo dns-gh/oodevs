@@ -24,10 +24,6 @@ queryImplementation "getPositionsToFollow"
             end
         end
         -- affichePositions( allRes )
-        -- NO Reaching POSITIONS to follow
-        if next( params.elementsToFollow ) and not next( allRes ) then
-            meKnowledge:RC( eRC_NoPositionsToReachTargets )
-        end
         return allRes
     end
 }

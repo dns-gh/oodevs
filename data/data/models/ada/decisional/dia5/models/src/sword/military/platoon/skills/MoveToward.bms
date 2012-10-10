@@ -4,7 +4,7 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.links.moveToward },
+    connections = { skill.links.moveToward, skill.nodes.CR },
 
     -- -------------------------------------------------------------------------------- 
     -- Main effect is reached: send feedback with the position occupied, when 
@@ -53,5 +53,18 @@ rootnode
         Activate( skill.links.moveToward, 1, { entities  = self.entities , 
                                                positions = self.positions, 
                                                pathType = self.pathType } )
+        if self.positions == 0 then
+            Activate( skill.nodes.CR, 1, { RC = eRC_NoPositionsToReachTargets } ) 
+        end
+    end
+}    
+
+-- **************************************************************************** 
+-- CR 
+-- ****************************************************************************
+node "CR"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
     end
 }

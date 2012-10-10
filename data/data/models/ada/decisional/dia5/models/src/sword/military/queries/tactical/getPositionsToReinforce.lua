@@ -23,10 +23,6 @@ queryImplementation "getPositionsToReinforce"
                 end
             end
         end
-        -- NO Reaching POSITIONS to reinforce
-        if next( params.elementsToReinforce ) and not next( allRes ) then
-            meKnowledge:RC( eRC_NoPositionsToReachTargets )
-        end
         return allRes
     end
 }

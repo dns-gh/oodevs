@@ -4,7 +4,7 @@
 rootnode
 {
     connections = { skill.links.moveAndTakePosition, skill.nodes.reinforce,
-                    skill.links.observe, skill.links.dismount, skill.links.mount },
+                    skill.links.observe, skill.links.dismount, skill.links.mount, skill.nodes.CR },
 
      -- -------------------------------------------------------------------------------- 
     -- For each objective of the skill, try to reinforce it. 
@@ -61,6 +61,9 @@ rootnode
         else 
            positions = sword.military.queries.tactical.getPositionsToReinforce[ "execute" ]({ elementsToReinforce = { self.params.entity } })
         end
+        if #positions == 0 then
+            Activate( skill.nodes.CR, 1, { RC = eRC_NoPositionsToReachTargets } ) 
+        end
         for _,position in pairs( positions ) do
             Activate( skill.links.moveAndTakePosition, 
                 position:reinforcementEfficiency( self.params.entity ), { entity = position } )
@@ -81,5 +84,15 @@ node "reinforce"
         if self.params.entity:reinforceIt() then
             Feedback( self.feedbacks.done, { state = "reinforced" } )
         end
+    end
+}
+
+-- **************************************************************************** 
+-- CR 
+-- ****************************************************************************
+node "CR"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
     end
 }

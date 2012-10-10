@@ -39,10 +39,6 @@ queryImplementation "getPositionsToReach"
             end
         end
        -- affichePositions( newResult )
-        -- NO Reaching POSITIONS
-        if next( params.elementsToReach ) and not next( newResult ) then
-             meKnowledge:RC( eRC_NoPositionsToReachTargets )
-        end
         return newResult
     end
 }

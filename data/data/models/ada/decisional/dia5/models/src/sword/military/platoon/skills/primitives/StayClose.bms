@@ -5,7 +5,7 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.nodes.StayCloseToElement },
+    connections = { skill.nodes.StayCloseToElement, skill.nodes.CR },
 
     create = function( self )
         self.entities = copyTable( self.params.entities )
@@ -22,7 +22,10 @@ rootnode
         else
             positions = self.params.positions
         end
-
+        
+        if #positions == 0 then
+            Activate( skill.nodes.CR, 1, { RC = eRC_NoPositionsToReachTargets } ) 
+        end
         for _, entity in pairs( self.entities ) do
             Activate( skill.nodes.StayCloseToElement, entity:reachPriority(),
                                                     { entity = entity, positions = positions } )
@@ -51,5 +54,15 @@ node "StayCloseToElement"
                 Activate( skill.links.moveAndTakePosition,
                     position:reachEfficiency( self.params.entity ), { entity = position } )
         end
+    end
+}
+
+-- **************************************************************************** 
+-- CR 
+-- ****************************************************************************
+node "CR"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
     end
 }
