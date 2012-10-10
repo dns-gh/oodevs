@@ -494,10 +494,6 @@ namespace
     {
         return MIL_Tools::GetLandTypeName( terrain ).c_str();
     }
-    DEFINE_HOOK( GetObjectRealName, const char*, ( const SWORD_Model* object ) )
-    {
-        return GET_DATA( object, MIL_Object_ABC ).GetType().GetRealName().c_str();
-    }
     DEFINE_HOOK( GetKnowledgeObjectRealName, const char*, ( boost::shared_ptr< DEC_Knowledge_Object > object ) )
     {
         return object->GetType().GetRealName().c_str();
@@ -551,7 +547,6 @@ void MovementHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( CancelPathFindJob, facade );
     REGISTER_HOOK( GetMaxSpeedWithReinforcement, facade );
     REGISTER_HOOK( GetObjectKnownId, facade );
-    REGISTER_HOOK( GetObjectRealName, facade );
     REGISTER_HOOK( GetPathfindCurrentThread, facade );
     REGISTER_HOOK( GetSpeedWithReinforcement, facade );
     REGISTER_HOOK( GetSpeedWithReinforcementObject, facade );

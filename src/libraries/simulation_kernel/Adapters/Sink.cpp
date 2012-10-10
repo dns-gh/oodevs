@@ -50,6 +50,7 @@
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -393,8 +394,12 @@ namespace
     void UpdateObjects( core::Model& objects, const T& factory )
     {
         objects.Clear();
-        BOOST_FOREACH( const T::value_type& object, factory )
-            objects[ object.first ][ "data" ].SetUserData( object.second );
+        BOOST_FOREACH( const T::value_type& it, factory )
+        {
+            core::Model& object = objects[ it.first ];
+            object[ "data" ].SetUserData( it.second );
+            object[ "type/real-name" ] = it.second->GetType().GetRealName();
+        }
     }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )
     {

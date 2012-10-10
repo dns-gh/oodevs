@@ -24,7 +24,6 @@ using namespace sword::movement;
 DECLARE_HOOK( CanMove, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
 DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
-DECLARE_HOOK( GetObjectRealName, const char*, ( const SWORD_Model* object ) )
 DECLARE_HOOK( GetSpeedWithReinforcement, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
 DECLARE_HOOK( GetSpeedWithReinforcementObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
 DECLARE_HOOK( GetWorldWeldValue, double, () ) // $$$$ MCO : "static data" which amazingly is hard-coded to 10 in simulation_terrain
@@ -205,7 +204,7 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< Pa
         {
             if( GET_HOOK( ObjectIsInside )( *it, lastWaypoint ) )
             {
-                PostReport( entity_, MIL_Report::eReport_DifficultMovementProgression, GET_HOOK( GetObjectRealName )( *it ) );
+                PostReport( entity_, MIL_Report::eReport_DifficultMovementProgression, (*it)[ "type/real-name" ] );
                 isInsideObject = true;
                 break;
             }
