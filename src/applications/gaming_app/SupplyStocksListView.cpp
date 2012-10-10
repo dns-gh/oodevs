@@ -14,51 +14,14 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/Dotation.h"
+#include "gaming/LogisticHelpers.h"
 #include "gaming/Tools.h"
+#include <boost/bind.hpp>
 #include <vector>
 
 using namespace kernel;
 using namespace EntityHelpers;
-
-namespace
-{
-    void TotalizeStocks( const Entity_ABC& entity, std::vector< Dotation >& dotations )
-    {
-        if( entity.Retrieve< SupplyStates >() )
-        {
-            tools::Iterator< const Dotation& > it = entity.Get< SupplyStates >().CreateIterator();
-            while( it.HasMoreElements() )
-            {
-                const Dotation& curDotation = it.NextElement();
-                if( curDotation.type_ )
-                {
-                    bool dotationFound = false;
-                    for( std::size_t i = 0; i < dotations.size(); ++i )
-                        if( dotations[ i ].type_->GetId() == curDotation.type_->GetId() )
-                        {
-                            dotations[ i ].quantity_ += curDotation.quantity_;
-                            dotationFound = true;
-                            break;
-                        }
-                    if( !dotationFound )
-                        dotations.push_back( Dotation( *curDotation.type_, curDotation.quantity_ ) );
-                }
-            }
-            return;
-        }
-
-        if( entity.Retrieve< TacticalHierarchies >() )
-        {
-            tools::Iterator< const Entity_ABC& > tacticalChildIt = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
-            while( tacticalChildIt.HasMoreElements() )
-            {
-                const Entity_ABC& tacticalChild = tacticalChildIt.NextElement();
-                if( !IsLogisticBase( tacticalChild ) )
-                    TotalizeStocks( tacticalChild, dotations );
-            }
-        }
-    }
-}
+using namespace logistic_helpers;
 
 // -----------------------------------------------------------------------------
 // Name: SupplyStocksListView constructor
@@ -106,17 +69,17 @@ void SupplyStocksListView::NotifyUpdated( const SupplyStates& supplyStates )
 // -----------------------------------------------------------------------------
 void SupplyStocksListView::NotifySelected( const Entity_ABC* entity )
 {
-    dotations_.clear();
     if( entity )
     {
         if( entity->Retrieve< SupplyStates >() )
             NotifyUpdated( entity->Get< SupplyStates >() );
         else if( IsLogisticBase( *entity ) )
         {
-            TotalizeStocks( *entity, dotations_ );
+            dotations_.clear();
             tools::Resolver< Dotation > dotations;
-            for( std::size_t i = 0; i < dotations_.size(); ++i )
-                dotations.Register( dotations_[ i ].type_->GetId(), dotations_[ i ] );
+            VisitBaseStocksDotations( *entity, boost::bind( &SupplyStocksListView::TotalizeStocks, this, _1 ) );
+            for( std::map< unsigned long, Dotation >::iterator it = dotations_.begin(); it != dotations_.end(); ++it )
+                dotations.Register( it->second.type_->GetId(), it->second );
             NotifyUpdated( dotations );
         }
         show();
@@ -124,4 +87,18 @@ void SupplyStocksListView::NotifySelected( const Entity_ABC* entity )
     else
         hide();
     SupplyAvailabilitiesListView_ABC::UpdateSelected( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoSupplyDialog::TotalizeStocks
+// Created: MMC 2012-10-10
+// -----------------------------------------------------------------------------
+void SupplyStocksListView::TotalizeStocks( const Dotation& dotation )
+{
+    if( dotation.type_ )
+    {
+        Dotation& foundDotation = dotations_[ dotation.type_->GetId() ];
+        foundDotation.type_ = dotation.type_;
+        foundDotation.quantity_ += dotation.quantity_;
+    }
 }
