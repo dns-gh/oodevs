@@ -37,11 +37,11 @@ namespace
         void Step( double currentSpeed, bool hasResources, bool canMove )
         {
             const bool obstaclesChange = false;
+            entity[ "movement/has-resources" ] = hasResources;
+            entity[ "movement/can-move" ] = canMove;
             MOCK_EXPECT( GetWorldWeldValue ).returns( 1000 );
             MOCK_EXPECT( GetLimas );
             MOCK_EXPECT( GetSpeedWithReinforcement ).returns( currentSpeed );
-            MOCK_EXPECT( CanMove ).returns( canMove );
-            MOCK_EXPECT( HasResources ).returns( hasResources );
             MOCK_EXPECT( GetObjectListWithinCircle );
             MOCK_EXPECT( UpdateObjectsToAvoid ).returns( obstaclesChange );
             ExecuteCommands();

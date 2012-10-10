@@ -21,13 +21,11 @@
 using namespace sword;
 using namespace sword::movement;
 
-DECLARE_HOOK( CanMove, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
 DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
 DECLARE_HOOK( GetSpeedWithReinforcement, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
 DECLARE_HOOK( GetSpeedWithReinforcementObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
 DECLARE_HOOK( GetWorldWeldValue, double, () ) // $$$$ MCO : "static data" which amazingly is hard-coded to 10 in simulation_terrain
-DECLARE_HOOK( HasResources, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) )
 DECLARE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
 DECLARE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) )
@@ -496,7 +494,7 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
     vNewPos_ = MT_Vector2D( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
     vNewDir_ = MT_Vector2D( entity[ "movement/direction/x" ], entity[ "movement/direction/y" ] );
 
-    if( rCurrentSpeed_ == 0. || ! GET_HOOK( CanMove )( entity ) )
+    if( rCurrentSpeed_ == 0. || ! entity[ "movement/can-move" ] )
     {
         rCurrentSpeed_ = 0.;
         PostMovement( entity );
@@ -510,7 +508,7 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
         return eFinished;
     }
 
-    if( ! GET_HOOK( HasResources )( entity ) )
+    if( ! entity[ "movement/has-resources" ] )
     {
         rCurrentSpeed_ = 0.;
         if( !bFuelReportSent_ )

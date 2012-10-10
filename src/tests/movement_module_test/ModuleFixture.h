@@ -104,13 +104,11 @@ namespace movement
     APPLY( ComputeObjectCollision, 8, void, ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, std::size_t size, bool blockedByObject, bool applyScale ) ) \
     APPLY( GetWorldWeldValue, 0, double, () ) \
     APPLY( ComputePathfind, 13, bool, ( TerrainPathfinder& pathfind, bool needRefine, bool strictClosest, const geometry::Point2f& from, const geometry::Point2f& to, PathfindEvaluateCost evaluate, void* evaluateData, PathfindGetCost get, void* getData, PathfindHandlePathPoint handler, void* handlerData, PathfindShouldEndComputation termination, void* terminationData ) ) \
-    APPLY( CanMove, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( CanObjectInteractWith, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
     APPLY( GetObjectListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) ) \
     APPLY( GetSpeedWithReinforcement, 2, double, ( const SWORD_Model* entity, const TerrainData& environment ) ) \
     APPLY( GetMaxSpeedWithReinforcement, 1, double, ( const SWORD_Model* entity ) ) \
     APPLY( GetSpeedWithReinforcementObject, 3, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) ) \
-    APPLY( HasResources, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( NotifyMovingInsideObject, 2, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
     APPLY( NotifyMovingOnPathPoint, 2, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) \
     APPLY( NotifyMovingOutsideObject, 2, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \

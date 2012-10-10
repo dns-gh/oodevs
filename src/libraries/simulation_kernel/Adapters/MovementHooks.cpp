@@ -430,14 +430,6 @@ namespace
     {
         return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingOutsideObject( GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( CanMove, bool, ( const SWORD_Model* entity ) )
-    {
-        return GET_ROLE( entity, RoleAction_Moving ).CanMove();
-    }
-    DEFINE_HOOK( HasResources, bool, ( const SWORD_Model* entity ) )
-    {
-        return GET_ROLE( entity, RoleAction_Moving ).HasResources();
-    }
     DEFINE_HOOK( GetObjectKnownId, int, ( boost::shared_ptr< DEC_Knowledge_Object > obstacle ) )
     {
         assert( obstacle && obstacle->IsValid() );
@@ -522,7 +514,6 @@ namespace
 // -----------------------------------------------------------------------------
 void MovementHooks::Initialize( core::Facade& facade )
 {
-    REGISTER_HOOK( CanMove, facade );
     REGISTER_HOOK( CanObjectInteractWith, facade );
     REGISTER_HOOK( ComputeObjectCollision, facade );
     REGISTER_HOOK( ComputePathfind, facade );
@@ -551,7 +542,6 @@ void MovementHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetSpeedWithReinforcement, facade );
     REGISTER_HOOK( GetSpeedWithReinforcementObject, facade );
     REGISTER_HOOK( GetWorldWeldValue, facade );
-    REGISTER_HOOK( HasResources, facade );
     REGISTER_HOOK( IsDestinationTrafficable, facade );
     REGISTER_HOOK( IsNullAutomateFuseau, facade );
     REGISTER_HOOK( IsValidPosition, facade );
