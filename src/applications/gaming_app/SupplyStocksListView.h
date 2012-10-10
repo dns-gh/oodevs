@@ -43,12 +43,13 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    void TotalizeStocks( const Dotation& dotations );
     //@}
 
 private:
     //! @name Member data
     //@{
-        std::vector< Dotation > dotations_;
+        std::map< unsigned long, Dotation > dotations_;
     //@}
 };
 
