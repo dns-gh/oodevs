@@ -15,6 +15,9 @@
 #include "clients_kernel/Controllers.h"
 #include "ENT/ENT_Enums_Gen.h"
 
+#define ICON_RIGHT QIcon( "resources/images/preparation/double_arrow_right.png" )
+#define ICON_LEFT  QIcon( "resources/images/preparation/double_arrow_left.png" )
+
 // -----------------------------------------------------------------------------
 // Name: OrbatDockWidget constructor
 // Created: LGY 2012-06-27
@@ -24,8 +27,8 @@ OrbatDockWidget::OrbatDockWidget( kernel::Controllers& controllers, QWidget* par
     gui::EntitySymbols& icons, ModelBuilder& modelBuilder, Model& model, StaticModel& staticModel, std::vector< gui::SearchTreeView_ABC* >& treeViews, gui::SymbolIcons& symbols )
     : gui::RichDockWidget( controllers, parent, objectName, windowTitle )
     , pTreeViewPanel_( 0 )
-    , expandIcon_  ( QIcon( "resources/images/preparation/double_arrow_right.png" ) )
-    , collapseIcon_( QIcon( "resources/images/preparation/double_arrow_left.png" ) )
+    , expandIcon_  ( qApp->layoutDirection() == Qt::RightToLeft ? ICON_LEFT : ICON_RIGHT )
+    , collapseIcon_( qApp->layoutDirection() == Qt::RightToLeft ? ICON_RIGHT : ICON_LEFT )
     , expanded_    ( false )
     , oldMinWith_  ( 0 )
     , oldMaxWith_  ( 0 )
