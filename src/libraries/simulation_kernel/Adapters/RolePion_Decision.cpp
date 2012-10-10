@@ -370,7 +370,7 @@ namespace
     {
         return CreatePathToPoint( agent, model, end.get(), pathType );
     }
-    bool ShouldEmbark( MIL_AgentPion& agent, boost::shared_ptr< DEC_Path_ABC > path )
+    bool ShouldEmbark( MIL_AgentPion& agent, const boost::shared_ptr< DEC_Path_ABC >& path )
     {
         if( !path )
             throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
@@ -468,7 +468,7 @@ namespace
 // -----------------------------------------------------------------------------
 void RolePion_Decision::RegisterActions()
 {
-    RegisterCommand< unsigned int( boost::shared_ptr< DEC_Path_ABC > ) >( "DEC_StartDeplacement", &StartMovement, "move", _1 );
+    RegisterCommand< unsigned int( const boost::shared_ptr< DEC_Path_ABC >& ) >( "DEC_StartDeplacement", &StartMovement, "move", _1 );
     RegisterCommand< void( boost::shared_ptr< MT_Vector2D > ) >( "DEC_Orientate", &Orientate, _1 );
     RegisterFunction( "DEC_StartTirDirect",
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &StartTirDirect, boost::ref( sink_ ), boost::ref( GetPion() ), _1, _2, _3, 0, _4, false ) ) ); // $$$$ MCO 2012-09-14: 0 => eFireUsingAllComposantes
@@ -505,7 +505,7 @@ void RolePion_Decision::RegisterPath()
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( const DEC_Decision_ABC&, boost::shared_ptr< DEC_Knowledge_Object >, float ) >(
         boost::bind( &GetNextRemovableObjectOnPath, boost::cref( model_ ), _1, _2 ) ) );
     RegisterFunction( "DEC_ShouldEmbark",
-        boost::function< bool( boost::shared_ptr< DEC_Path_ABC > ) >( boost::bind( &ShouldEmbark, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< bool( const boost::shared_ptr< DEC_Path_ABC >& ) >( boost::bind( &ShouldEmbark, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Itineraire_Etat",
         boost::function< int ( DEC_Path_ABC* ) >( boost::bind( &GetPathState, _1 ) ) );
 }
