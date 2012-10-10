@@ -36,7 +36,6 @@ DECLARE_HOOK( GetObjectPerceptionLevel, int, ( const SWORD_Model* perceiver, con
 DECLARE_HOOK( GetPopulationElementPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* element ) )
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
 DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
-DECLARE_HOOK( CanPopulationElementBePerceived, bool, ( const SWORD_Model* element ) )
 DECLARE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
 DECLARE_HOOK( IsPopulationElementNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* element, int level ) )
 DECLARE_HOOK( GetPerceptionRandom, double, () )
@@ -215,7 +214,7 @@ void PerceptionView::ExecuteObjects( const wrapper::View& /*model*/, const wrapp
 // -----------------------------------------------------------------------------
 const PerceptionLevel& PerceptionView::ComputeFlow( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& flow, T_PointVector& shape ) const
 {
-    if( !IsEnabled( perceiver ) || !GET_HOOK( CanPopulationElementBePerceived )( flow ) )
+    if( !IsEnabled( perceiver ) || !flow[ "can-be-perceived" ] )
         return PerceptionLevel::notSeen_;
     struct PerceptionComputer : public SurfacesAgentVisitor_ABC
     {
@@ -276,12 +275,12 @@ void PerceptionView::ExecuteFlows( const wrapper::View& perceiver, const Surface
 // Name: PerceptionView::ComputeConcentration
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionView::ComputeConcentration( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionView::ComputeConcentration( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& concentration ) const
 {
-    if( !IsEnabled( perceiver ) || !GET_HOOK( CanPopulationElementBePerceived )( target ) )
+    if( !IsEnabled( perceiver ) || !concentration[ "can-be-perceived" ] )
         return PerceptionLevel::notSeen_;
 
-    PerceptionComputer< SurfacesAgentVisitor_ABC, PerceptionSurfaceAgent > computer( boost::bind( &PerceptionSurfaceAgent::ComputeConcentrationPerception, _1, perceiver, target ) );
+    PerceptionComputer< SurfacesAgentVisitor_ABC, PerceptionSurfaceAgent > computer( boost::bind( &PerceptionSurfaceAgent::ComputeConcentrationPerception, _1, perceiver, concentration ) );
     surfaces.Apply( computer );
     return computer.GetLevel();
 }

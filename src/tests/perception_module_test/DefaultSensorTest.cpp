@@ -89,16 +89,17 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
                                                                    ( MT_Vector2D( 1., 1. ) )
                                                                    ( MT_Vector2D( 2., 0. ) );
     const SWORD_Model* flow = core::Convert( &model[ "populations/some-population/flows/the-flow" ] );
-    model[ "populations/some-population/flows/the-flow" ] = core::MakeModel( "data", 42 );
+    model[ "populations/some-population/flows/the-flow" ] = core::MakeModel( "data", 42 )
+                                                                           ( "can-be-perceived", true );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetFlowListWithinCircle );
     MOCK_EXPECT( GetFlowListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, flow, _5 ) );
     MOCK_EXPECT( IsPopulationElementPerceptionDistanceHacked ).once().with( perceiver, flow ).returns( false );
     MOCK_EXPECT( PopulationElementIntersectWithCircle ).once().calls( boost::bind( &AddPoints, boost::cref( shape ), _4, _5 ) );
-    MOCK_EXPECT( CanPopulationElementBePerceived ).once().with( flow ).returns( true );
     MOCK_EXPECT( IsPopulationElementNewlyPerceived ).once().with( perceiver, flow, mock::any ).returns( true );
     ExpectNotifications( "population-flows",
         sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
+                                                        ( "target/can-be-perceived", true )
                                                         ( "level", 3 ) // identified
                                                         ( "recorded", false )
                                                         ( "shape", sword::test::MakeModel()[ sword::test::MakeModel( "x", 0. )( "y", 0. ) ]
@@ -113,15 +114,16 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
 BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_default_sensor, PerceptionCommandFixture )
 {
     const SWORD_Model* concentration = core::Convert( &model[ "populations/some-population/elements/the-concentration" ] );
-    model[ "populations/some-population/elements/the-concentration" ] = core::MakeModel( "data", 42 );
+    model[ "populations/some-population/elements/the-concentration" ] = core::MakeModel( "data", 42 )
+                                                                                       ( "can-be-perceived", true );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetConcentrationListWithinCircle );
     MOCK_EXPECT( GetConcentrationListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, concentration, _5 ) );
     MOCK_EXPECT( IsPopulationElementPerceptionDistanceHacked ).once().with( perceiver, concentration ).returns( false );
-    MOCK_EXPECT( CanPopulationElementBePerceived ).once().with( concentration ).returns( true );
     MOCK_EXPECT( PopulationElementIntersectWithCircle ).once().returns( true );
     MOCK_EXPECT( IsPopulationElementNewlyPerceived ).once().with( perceiver, concentration, mock::any ).returns( true );
     ExpectNotifications( "population-concentrations", sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
+                                                                                                      ( "target/can-be-perceived", true )
                                                                                                       ( "level", 3 ) // identified
                                                                                                       ( "recorded", false ) ] );
     ExpectEvent( "report", sword::test::MakeModel( "entity", identifier )

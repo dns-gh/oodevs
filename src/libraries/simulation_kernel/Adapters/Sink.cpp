@@ -377,6 +377,7 @@ namespace
         virtual void Visit( const MIL_PopulationElement_ABC& element )
         {
             elements_[ element.GetID() ][ "data" ].SetUserData( &element );
+            elements_[ element.GetID() ][ "can-be-perceived" ] = element.CanBePerceived();
         }
         core::Model& elements_;
     };
