@@ -23,7 +23,7 @@ Because tha agent can only transports crowds' concentrations, this skill needs a
             </type>
         </parameter>
         <parameter name="minDistance">
-            <description>The  minimum distance (in METERS) between the loading position and the crowd's concentration which is used to verifiy that the concentration to transport is not moving. If distance between the crowd concentration to transport and the loading position is greater than the 'minDistance' value, the agent waits the crowd to get closer.</description>
+            <description>The  minimum distance (in METERS) between the loading position and the crowd's concentration. The loading position is used to verifiy that the concentration to transport is not moving. If the distance between the crowd concentration to transport and the loading position is greater than the 'minDistance' value, the agent waits the crowd to get closer.</description>
             <type>
                 <simple name="numeric"/>
             </type>
