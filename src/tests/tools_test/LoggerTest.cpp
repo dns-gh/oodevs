@@ -26,7 +26,7 @@ std::string FixLogLine( std::string& line )
 void ParseLog( const std::string& path, std::vector< std::string >& lines )
 {
     lines.clear();
-    std::fstream file( path, std::ios::in );
+    std::fstream file( path.c_str(), std::ios::in );
     std::string line;
     while( std::getline( file, line ))
     {
