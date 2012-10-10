@@ -20,6 +20,7 @@
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
+#include "gaming/LogisticHelpers.h"
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -43,8 +44,9 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/SpinTableItem.h"
 #include "protocol/SimulationSenders.h"
-#include <boost/noncopyable.hpp>
+#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
+#include <boost/noncopyable.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -71,9 +73,9 @@ namespace
 // Name: LogisticSupplyPullFlowDialog constructor
 // Created : AHC 2010-10-14
 // -----------------------------------------------------------------------------
-LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel,
-        const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ::gui::ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats,
-        const tools::Resolver_ABC< kernel::Formation_ABC >& formations, const Profile_ABC& profile )
+LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel,
+    const ::StaticModel& staticModel, const Time_ABC& simulation, ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats,
+    const tools::Resolver_ABC< Formation_ABC >& formations, const Profile_ABC& profile )
     : QDialog( parent, tr( "Pull supply flow" ) )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -222,7 +224,7 @@ void LogisticSupplyPullFlowDialog::NotifyContextMenu( const Automat_ABC& agent, 
 {
     if( profile_.CanBeOrdered( agent ) )
     {
-        if( agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+        if( agent.GetLogisticLevel() != LogisticLevel::none_ )
         {
             selected_ = &agent;
             menu.InsertItem( "Command", tr( "Pull supply flow" ), this, SLOT( Show() ) );
@@ -282,9 +284,9 @@ void LogisticSupplyPullFlowDialog::Validate()
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Log Supply Pull Flow" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
-    parameters::PullFlowParameters* pullFlowParameters = new parameters::PullFlowParameters( it.NextElement(), static_.coordinateConverter_ );
-    const kernel::Automat_ABC* pSupplierAutomat = dynamic_cast< const kernel::Automat_ABC* >( supplier_ );
-    const kernel::Formation_ABC* pSupplierFormation = dynamic_cast< const kernel::Formation_ABC* >( supplier_ );
+    PullFlowParameters* pullFlowParameters = new PullFlowParameters( it.NextElement(), static_.coordinateConverter_ );
+    const Automat_ABC* pSupplierAutomat = dynamic_cast< const Automat_ABC* >( supplier_ );
+    const Formation_ABC* pSupplierFormation = dynamic_cast< const Formation_ABC* >( supplier_ );
     assert( pSupplierAutomat || pSupplierFormation );
     if( pSupplierAutomat )
         pullFlowParameters->SetSupplier( *pSupplierAutomat );
@@ -370,44 +372,22 @@ void LogisticSupplyPullFlowDialog::closeEvent( QCloseEvent* /*pEvent*/ )
     Reject();
 }
 
-namespace
-{
-    struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>, boost::noncopyable
-    {
-        SupplyStatesVisitor( LogisticSupplyPullFlowDialog& dlg, void (LogisticSupplyPullFlowDialog::*pFunc)(const SupplyStates&) )
-                : dlg_(dlg), pFunc_ ( pFunc ) {}
-
-        void Visit( const SupplyStates& extension )
-        {
-            (dlg_.*pFunc_)(extension);
-        }
-    private:
-        LogisticSupplyPullFlowDialog& dlg_;
-        void (LogisticSupplyPullFlowDialog::*pFunc_)(const SupplyStates&);
-
-    };
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPullFlowDialog::AddDotation
 // Created : AHC 2010-10-14
 // -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::AddDotation( const SupplyStates& states )
+void LogisticSupplyPullFlowDialog::AddDotation( const Dotation& dotation )
 {
-    tools::Iterator< const Dotation& > it = states.CreateIterator();
-    while( it.HasMoreElements() )
+    if( !dotation.type_ )
+        return;
+    const QString type = dotation.type_->GetName().c_str();
+    Dotation& supply = supplies_[ type ];
+    if( ! supply.type_ )
     {
-        const Dotation& dotation = it.NextElement();
-        const QString type = dotation.type_->GetName().c_str();
-        Dotation& supply = supplies_[ type ];
-        if( ! supply.type_ )
-        {
-            dotationTypes_.append( type );
-            supply.type_ = dotation.type_;
-        }
-        supply.quantity_ += dotation.quantity_;
+        dotationTypes_.append( type );
+        supply.type_ = dotation.type_;
     }
+    supply.quantity_ += dotation.quantity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -438,7 +418,7 @@ void LogisticSupplyPullFlowDialog::AddResourceItem()
     resourcesTable_->setNumRows( rows + 1 );
     resourcesTable_->setItem( rows, 0, new ExclusiveComboTableItem( resourcesTable_, resourcesList ) );
     resourcesTable_->setItem( rows, 1, new Q3TableItem( resourcesTable_, Q3TableItem::Never, QString() ) );
-    resourcesTable_->setItem( rows, 2, new gui::SpinTableItem< int >( resourcesTable_, 0, std::numeric_limits< int >::max(), 1 ) );
+    resourcesTable_->setItem( rows, 2, new SpinTableItem< int >( resourcesTable_, 0, std::numeric_limits< int >::max(), 1 ) );
     resourcesTable_->setCurrentCell( rows, 1 );
 
     if( curItem )
@@ -460,7 +440,7 @@ void LogisticSupplyPullFlowDialog::AddResourceItem( QString dotationName, int Av
         item->SetCurrentText( dotationName );
     resourcesTable_->item( rowIndex, 1 )->setText( locale().toString( Available ) );
     resourcesTable_->item( rowIndex, 2 )->setText( locale().toString( qtySupply ) );
-    static_cast< gui::SpinTableItem< int >* >( resourcesTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
+    static_cast< SpinTableItem< int >* >( resourcesTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
 }
 
 // -----------------------------------------------------------------------------
@@ -486,7 +466,7 @@ void LogisticSupplyPullFlowDialog::AddCarrierItem()
     carriersTable_->setNumRows( rows + 1 );
     carriersTable_->setItem( rows, 0, new ExclusiveComboTableItem( carriersTable_, carriersList ) );
     carriersTable_->setItem( rows, 1, new Q3TableItem( carriersTable_, Q3TableItem::Never, QString() ) );
-    carriersTable_->setItem( rows, 2, new gui::SpinTableItem< int >( carriersTable_, 0, std::numeric_limits< int >::max(), 1 ) );
+    carriersTable_->setItem( rows, 2, new SpinTableItem< int >( carriersTable_, 0, std::numeric_limits< int >::max(), 1 ) );
     carriersTable_->setCurrentCell( rows, 1 );
 
     if( curItem )
@@ -508,7 +488,7 @@ void LogisticSupplyPullFlowDialog::AddCarrierItem( QString dotationName, int Ava
         item->SetCurrentText( dotationName );
     carriersTable_->item( rowIndex, 1 )->setText( locale().toString( Available ) );
     carriersTable_->item( rowIndex, 2 )->setText( locale().toString( qtySupply ) );
-    static_cast< gui::SpinTableItem< int >* >( carriersTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
+    static_cast< SpinTableItem< int >* >( carriersTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
 }
 
 // -----------------------------------------------------------------------------
@@ -702,7 +682,7 @@ void LogisticSupplyPullFlowDialog::EraseSupplierData()
 // Name: LogisticSupplyPullFlowDialog::addCarryingEquipment
 // Created: MMC 2011-09-21
 // -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::AddCarryingEquipment( const kernel::Entity_ABC& entity )
+void LogisticSupplyPullFlowDialog::AddCarryingEquipment( const Entity_ABC& entity )
 {
     if( const Equipments* equipments = entity.Retrieve< Equipments >() )
     {
@@ -736,12 +716,12 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableCarriers( QStringList& carrie
     carriersNames.append( QString() );
     carriersTypeNames_.clear();
 
-    const kernel::TacticalHierarchies* pTacticalHierarchies = selected_->Retrieve< kernel::TacticalHierarchies >();
+    const TacticalHierarchies* pTacticalHierarchies = selected_->Retrieve< TacticalHierarchies >();
     if( !pTacticalHierarchies )
         return;
 
     AddCarryingEquipment( *selected_ );
-    tools::Iterator< const kernel::Entity_ABC& > itEnt = pTacticalHierarchies->CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > itEnt = pTacticalHierarchies->CreateSubordinateIterator();
     while( itEnt.HasMoreElements() )
         AddCarryingEquipment( itEnt.NextElement() );
 
@@ -791,10 +771,7 @@ void LogisticSupplyPullFlowDialog::OnSupplierSelectionChanged()
     {
         supplies_.clear();
         ClearResourcesTable();
-
-        SupplyStatesVisitor visitor( *this, &LogisticSupplyPullFlowDialog::AddDotation );
-        selected_->Get< kernel::TacticalHierarchies >().Accept< SupplyStates >( visitor );
-
+        logistic_helpers::VisitBaseStocksDotations( *supplier_, boost::bind( &LogisticSupplyPullFlowDialog::AddDotation, this, _1 ) );
         for( int i=0; i < supplierSupplies_.size(); ++i )
         {
             const QString& dotationName = supplierSupplies_[i].objectName_;
@@ -804,7 +781,6 @@ void LogisticSupplyPullFlowDialog::OnSupplierSelectionChanged()
                 available = itDotation->second.quantity_;
             AddResourceItem( dotationName, available, supplierSupplies_[i].quantity_ );
         }
-
         AddResourceItem();
     }
 }
@@ -817,7 +793,7 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableSuppliers()
 {
     suppliersNames_.clear();
 
-    const kernel::Entity_ABC& team = selected_->Get< kernel::TacticalHierarchies >().GetTop();
+    const Entity_ABC& team = selected_->Get< TacticalHierarchies >().GetTop();
     {
         tools::Iterator< const Automat_ABC& > it = automats_.CreateIterator();
         while( it.HasMoreElements() )
@@ -825,7 +801,7 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableSuppliers()
             const Automat_ABC& automat = it.NextElement();
             if( &automat != selected_ )
             {
-                if( automat.GetLogisticLevel()!=kernel::LogisticLevel::none_ && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
+                if( automat.GetLogisticLevel() != LogisticLevel::none_ && &automat.Get< TacticalHierarchies >().GetTop() == &team )
                     suppliersNames_[ automat.GetName() ] = &automat;
             }
         }
@@ -835,7 +811,7 @@ void LogisticSupplyPullFlowDialog::ComputeAvailableSuppliers()
         while( it.HasMoreElements() )
         {
             const Formation_ABC& formation = it.NextElement();
-            if( formation.GetLogisticLevel()!=kernel::LogisticLevel::none_ && &formation.Get< kernel::TacticalHierarchies >().GetTop() == &team )
+            if( formation.GetLogisticLevel() != LogisticLevel::none_ && &formation.Get< TacticalHierarchies >().GetTop() == &team )
                 suppliersNames_[ formation.GetName() ] = &formation;
         }
     }
@@ -858,7 +834,7 @@ void LogisticSupplyPullFlowDialog::OnResourcesValueChanged( int row, int col )
         return;
 
     Q3TableItem& itemAVailable = *resourcesTable_->item( row, 1 );
-    gui::SpinTableItem< int >& itemValue = *static_cast< gui::SpinTableItem< int >* >( resourcesTable_->item( row, 2 ) );
+    SpinTableItem< int >& itemValue = *static_cast< SpinTableItem< int >* >( resourcesTable_->item( row, 2 ) );
     int newValue = locale().toInt( itemValue.text() );
 
     const Dotation& dotationSelected = supplies_[ selection ];
@@ -923,15 +899,15 @@ void LogisticSupplyPullFlowDialog::OnCarriersUseCheckStateChanged()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPullFlowDialog::OnCarriersValueChanged( int row, int col )
 {
-     if( row == -1 || col == -1 )
-         return;
+    if( row == -1 || col == -1 )
+        return;
 
     ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( row, 0 ) );
     QString selection;
     if( item )
         selection = item->CurrentText();
     Q3TableItem& itemAVailable = *carriersTable_->item( row, 1 );
-    gui::SpinTableItem< int >& itemValue = *static_cast< gui::SpinTableItem< int >* >( carriersTable_->item( row, 2 ) );
+    SpinTableItem< int >& itemValue = *static_cast< SpinTableItem< int >* >( carriersTable_->item( row, 2 ) );
     int newValue = locale().toInt( itemValue.text() );
 
     unsigned int equipementSelectedAvailable = carriersTypes_[ selection ];
@@ -1016,7 +992,7 @@ void LogisticSupplyPullFlowDialog::OnWaypointRowChanged()
 // Name: LogisticSupplyPullFlowDialog::Handle
 // Created: MMC 2011-09-21
 // -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::Handle( kernel::Location_ABC& location )
+void LogisticSupplyPullFlowDialog::Handle( Location_ABC& location )
 {
     if( startWaypointLocation_ && location.IsValid() )
     {
@@ -1081,7 +1057,7 @@ void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
     if( !supplier_ )
         return;
 
-    const kernel::Positions* startPos = static_cast< const kernel::Positions* >( selected_->Retrieve< kernel::Positions >() );
+    const Positions* startPos = static_cast< const Positions* >( selected_->Retrieve< Positions >() );
     if( startPos )
         routeDrawpoints_.push_back( startPos->GetPosition() );
 
@@ -1090,11 +1066,11 @@ void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
             routeDrawpoints_.push_back( route[i].point_ );
         else
         {
-            const kernel::Positions* pos = static_cast< const kernel::Positions* >( supplier_->Retrieve< kernel::Positions >() );
+            const Positions* pos = static_cast< const Positions* >( supplier_->Retrieve< Positions >() );
             if( pos )
                 routeDrawpoints_.push_back( pos->GetPosition() );
         }
-    
+
     if( startPos )
         routeDrawpoints_.push_back( startPos->GetPosition() );
 }
@@ -1103,7 +1079,7 @@ void LogisticSupplyPullFlowDialog::UpdateRouteDrawpoints()
 // Name: LogisticSupplyPullFlowDialog::Draw
 // Created: MMC 2011-09-22
 // -----------------------------------------------------------------------------
-void LogisticSupplyPullFlowDialog::Draw( const kernel::Location_ABC& /*location*/, const geometry::Rectangle2f& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void LogisticSupplyPullFlowDialog::Draw( const Location_ABC& /*location*/, const geometry::Rectangle2f& /*viewport*/, const GlTools_ABC& tools ) const
 {
     if( startWaypointLocation_ || routeDrawpoints_.empty() )
         return;
