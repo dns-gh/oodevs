@@ -9,11 +9,6 @@
 
 #include "clients_test_pch.h"
 #include "clients_kernel/ASCExtractor.h"
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-
-#include <boost/filesystem.hpp>
-#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: extract_ascii_grid
