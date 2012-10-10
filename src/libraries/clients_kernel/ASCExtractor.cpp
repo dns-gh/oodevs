@@ -94,8 +94,8 @@ ASCExtractor::ASCExtractor( const std::string& file, unsigned int sizeFactor )
 
     int nXBlockSize, nYBlockSize, XOffset, YOffset;
     int tileSizeX = sizeFactor, tileSizeY = sizeFactor;
-    int nXBlocks = static_cast< int >( std::floor( static_cast< double >( ncols_ ) / tileSizeX ) );
-    int nYBlocks = static_cast< int >( std::floor( static_cast< double >( nrows_ ) / tileSizeY ) );
+    int nXBlocks = ncols_ / tileSizeX;
+    int nYBlocks = nrows_ / tileSizeY;
     for( int i = 0; i <= nYBlocks; ++i )
     {
         if( !Configure( i, tileSizeX, tileSizeY, YOffset, nYBlockSize, nYBlocks, nrows_ ) )
