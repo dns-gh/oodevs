@@ -505,7 +505,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.cpp">
       <Filter>Source Files\Model\Entities\Properties</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\EntityHelpers.cpp">
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ASCExtractor.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1203,7 +1203,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\KnowledgeGroupFactory_ABC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHelpers.h">
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ASCExtractor.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>

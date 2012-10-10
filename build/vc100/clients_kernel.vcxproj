@@ -103,6 +103,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\ASCExtractor.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Availability.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Architecture.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
@@ -250,6 +251,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\XmlDescription.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\ASCExtractor.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AutomatDecisions_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Availability.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Architecture.h" />

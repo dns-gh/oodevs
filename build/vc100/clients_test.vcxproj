@@ -174,8 +174,13 @@
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>cd $(RunDir)
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --run_test=extract_ascii_grid</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\tests\clients_test\ASCExtractorTest.cpp" />
     <ClCompile Include="..\..\src\tests\clients_test\clients_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -227,6 +232,9 @@
     <ProjectReference Include="tools.vcxproj">
       <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram11.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
