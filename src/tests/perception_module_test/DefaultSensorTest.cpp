@@ -57,16 +57,17 @@ BOOST_FIXTURE_TEST_CASE( objects_in_list_are_identified_with_default_sensor, Per
     const SWORD_Model* object = core::Convert( &model[ "objects/some-object" ] );
     model[ "objects/some-object" ] = core::MakeModel( "data", 42 )
                                                     ( "is-universal", false )
+                                                    ( "can-be-perceived", true )
                                                     ( "type/identifier", 0 );
     const SWORD_Model* perceiver = core::Convert( &entity );
     MOCK_RESET( GetObjectListWithinCircle );
     MOCK_EXPECT( GetObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, object, _5 ) );
     MOCK_EXPECT( IsObjectPerceptionDistanceHacked ).once().with( perceiver, object ).returns( false );
-    MOCK_EXPECT( CanObjectBePerceived ).once().with( object ).returns( true );
     MOCK_EXPECT( ObjectIntersectWithCircle ).once().returns( true );
     ExpectNotifications( "objects", sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
                                                                                     ( "target/is-universal", false )
                                                                                     ( "target/type/identifier", 0 )
+                                                                                    ( "target/can-be-perceived", true )
                                                                                     ( "level", 3 ) // identified
                                                                                     ( "recorded", false ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );

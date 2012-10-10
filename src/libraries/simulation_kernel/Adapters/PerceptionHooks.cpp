@@ -470,10 +470,6 @@ namespace
         GET_PION( target ).Execute( *detectionComputer );
         return detectionComputer->CanBeSeen();
     }
-    DEFINE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
-    {
-        return GET_DATA( object, MIL_Object_ABC )().CanBePerceived();
-    }
     DEFINE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
     {
         if( PHY_PerceptionLevel::FindPerceptionLevel( level ) == PHY_PerceptionLevel::notSeen_ )
@@ -615,7 +611,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetObjectPerceptionLevel, facade );
     REGISTER_HOOK( GetPopulationElementPerceptionLevel, facade );
     REGISTER_HOOK( CanBeSeen, facade );
-    REGISTER_HOOK( CanObjectBePerceived, facade );
     REGISTER_HOOK( IsAgentNewlyPerceived, facade );
     REGISTER_HOOK( IsPopulationElementNewlyPerceived, facade );
     REGISTER_HOOK( ConvertSecondsToSim, facade );

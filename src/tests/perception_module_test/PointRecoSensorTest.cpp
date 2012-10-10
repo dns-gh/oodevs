@@ -47,7 +47,8 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_point_sensor_identifies_all_objects_in_
 {
     const double growthSpeed = 2;
     const SWORD_Model* object = core::Convert( &model[ "objects/some-object" ] );
-    model[ "objects/some-object" ] = core::MakeModel( "data", 666 );
+    model[ "objects/some-object" ] = core::MakeModel( "data", 666 )
+                                                    ( "can-be-perceived", true );
     entity[ "perceptions/sensor/activated" ] = false;
     const std::size_t perceptionId = 42;
     core::Model& perception = entity[ "perceptions/recognition-point" ][ perceptionId ];
@@ -61,10 +62,10 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_point_sensor_identifies_all_objects_in_
     MOCK_RESET( GetObjectListWithinCircle );
     MOCK_EXPECT( GetObjectListWithinCircle ).once();
     MOCK_EXPECT( GetObjectListWithinCircle ).once().with( mock::any, mock::any, growthSpeed, mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _4, object, _5 ) );
-    MOCK_EXPECT( CanObjectBePerceived ).once().with( object ).returns( true );
     ExpectEffect( perception[ "radius" ], sword::test::MakeModel( growthSpeed ) );
     ExpectNotifications( "objects", sword::test::MakeModel()
                                     [ sword::test::MakeModel( "target/data", 666 )
+                                                            ( "target/can-be-perceived", true )
                                                             ( "level", 3 ) // identified
                                                             ( "recorded", false ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );

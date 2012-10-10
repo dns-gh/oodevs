@@ -19,7 +19,6 @@
 using namespace sword;
 using namespace sword::perception;
 
-DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( IsLocalizationInsideCircle, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius ) )
 DECLARE_HOOK( IsKnowledgeObjectInsidePerception, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) )
 DECLARE_HOOK( IsObjectIntersectingLocalization, bool, ( const SWORD_Model* localization, const SWORD_Model* object ) )
@@ -128,7 +127,7 @@ void PerceptionRecoObjects::ExecuteObjects( const wrapper::View& model, const wr
         for( T_ObjectVector::const_iterator it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             const wrapper::View& object = *it;
-            if( GET_HOOK( CanObjectBePerceived )( object ) )
+            if( object[ "can-be-perceived" ] )
                 observer_.NotifyObjectPerception( object, PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }

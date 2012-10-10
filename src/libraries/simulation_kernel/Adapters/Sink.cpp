@@ -53,6 +53,7 @@
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -404,6 +405,7 @@ namespace
             object[ "type/real-name" ] = it.second->GetType().GetRealName();
             object[ "type/identifier" ] = it.second->GetType().GetID();
             object[ "is-universal" ] = it.second->IsUniversal();
+            object[ "can-be-perceived" ] = (*it.second)().CanBePerceived();
         }
     }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )

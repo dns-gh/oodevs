@@ -23,7 +23,6 @@ using namespace sword::perception;
 DECLARE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
 DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( IsKnowledgeObjectIntersectingWithCircle, bool, ( const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) )
 
 // -----------------------------------------------------------------------------
@@ -162,7 +161,7 @@ void PerceptionRecoPoint::ExecuteObjects( const wrapper::View& model, const wrap
         for( T_ObjectVector::const_iterator it = perceivableObjects.begin(); it != perceivableObjects.end(); ++it )
         {
             const wrapper::View& object = *it;
-            if( GET_HOOK( CanObjectBePerceived )( object ) )
+            if( object[ "can-be-perceived" ] )
                 observer_.NotifyObjectPerception( object, PerceptionLevel::identified_ ); // Identifié ou not seen pour les objets
         }
     }

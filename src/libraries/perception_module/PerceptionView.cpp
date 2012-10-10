@@ -35,7 +35,6 @@ DECLARE_HOOK( GetHackedPerceptionLevel, int, ( const SWORD_Model* perceiver, con
 DECLARE_HOOK( GetObjectPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* object ) )
 DECLARE_HOOK( GetPopulationElementPerceptionLevel, int, ( const SWORD_Model* perceiver, const SWORD_Model* element ) )
 DECLARE_HOOK( CanBeSeen, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target ) )
-DECLARE_HOOK( CanObjectBePerceived, bool, ( const SWORD_Model* object ) )
 DECLARE_HOOK( IsAgentNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* target, int level ) )
 DECLARE_HOOK( IsPopulationElementNewlyPerceived, bool, ( const SWORD_Model* perceiver, const SWORD_Model* element, int level ) )
 DECLARE_HOOK( GetPerceptionRandom, double, () )
@@ -174,7 +173,7 @@ namespace
 {
     const PerceptionLevel& ComputeObject( const wrapper::View& perceiver, const SurfacesObject_ABC& surfaces, const wrapper::View& target, bool isEnabled )
     {
-        if( !isEnabled || !GET_HOOK( CanObjectBePerceived )( target ) )
+        if( !isEnabled || !target[ "can-be-perceived" ] )
             return PerceptionLevel::notSeen_;
 
         if( target[ "is-universal" ] )
