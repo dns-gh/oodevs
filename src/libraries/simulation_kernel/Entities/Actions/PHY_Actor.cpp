@@ -87,16 +87,7 @@ void PHY_Actor::CancelAllActions()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Actor::HasAction
-// Created: NLD 2004-09-14
-// -----------------------------------------------------------------------------
-bool PHY_Actor::HasAction( unsigned int actionId ) const
-{
-    return actions_.find( actionId ) != actions_.end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Actor::HasAction
+// Name: PHY_Actor::GetAction
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 boost::shared_ptr< PHY_Action_ABC > PHY_Actor::GetAction( unsigned int actionId ) const
