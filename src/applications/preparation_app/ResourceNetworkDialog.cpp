@@ -70,7 +70,7 @@ bool ResourceNetworkDialog::DoGenerateProduction()
 {
     if( id_ == 0 )
         return false;
-    std::string resource = dotationList_->selectedItem()->text().toAscii().constData();
+    std::string resource = dotationList_->currentItem()->text().toStdString();
     std::set< unsigned int > array;
     array.insert( id_ );
     if( !IsNetworkValid( resourceNodes_[ resource ], id_, resource, array ) )

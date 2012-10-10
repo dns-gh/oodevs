@@ -63,7 +63,7 @@ private slots:
     void OnCriticalChanged( bool on );
     void OnMaxStockChanged( int value );
     void OnStockChanged( int value );
-    void OnValueChanged( int i, int j );
+    void OnValueChanged();
     void Validate();
     void OnChangeLink( int resourceId );
     void OnCreateNode( int resourceId );
@@ -96,13 +96,14 @@ protected:
     //@{
     kernel::Controllers& controllers_;
     std::vector< kernel::Entity_ABC* > selected_;
-    Q3ListBoxItem* selectedItem_;
+    QListWidgetItem* selectedItem_;
+    bool blockSlot_;
     const tools::StringResolver< kernel::ResourceNetworkType >& resources_;
     kernel::Entity_ABC* sourceNode_;
     unsigned int id_;
     kernel::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;
     Q3VBox* pMainLayout_;
-    Q3ListBox* dotationList_;
+    QListWidget* dotationList_;
     Q3GroupBox* groupBox_;
     QSpinBox* production_;
     QPushButton* generateProduction_;
@@ -111,7 +112,7 @@ protected:
     Q3HBox* stockBox_;
     QSpinBox* maxStock_;
     QSpinBox* stock_;
-    Q3Table* table_;
+    QTableWidget* table_;
     //@}
 };
 
