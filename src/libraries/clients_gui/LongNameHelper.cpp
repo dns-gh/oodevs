@@ -30,6 +30,14 @@ std::string GetEntityLongName( const kernel::Entity_ABC& entity )
     return std::string();
 }
 
+std::string GetBestName( const kernel::Entity_ABC& entity )
+{
+    std::string result = GetEntityLongName( entity );
+    if( result.empty() )
+        return entity.GetName().toStdString();
+    return result;
+}
+
 bool SetItemLongName( const kernel::Entity_ABC& entity, gui::ValuedListItem& item )
 {
     std::string longName = longname::GetEntityLongName( entity );
