@@ -5,7 +5,7 @@
             <div class="control-group">
                 <div class="controls">
                     <input id="node_ident" type="text" placeholder="Identifier..."/>
-                    <a id="node_edit" class="btn"><i class="icon-cog"></i></a>
+                    <a title="Settings..." id="node_edit" class="btn"><i class="icon-cog"></i></a>
                     <a id="node_create" class="btn"><i class="icon-plus"></i> Add</a>
                 </div>
             </div>
@@ -66,7 +66,7 @@
             <div class="node_buttons">
                 <div class="btn-group">
                     {{#is_option status running=""}}
-                    <a target="{{{ident}}}" href="/{{{ident}}}/" title="Go..." class="btn"><i class="icon-share"></i></a>
+                    <a target="{{{ident}}}" href="/{{{ident}}}/" title="Open..." class="btn"><i class="icon-share"></i></a>
                     {{/is_option}}
                     {{#is_option status stopped=""}}
                     <a title="Play" class="btn play"><i class="icon-play"></i></a>

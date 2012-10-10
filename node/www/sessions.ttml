@@ -288,7 +288,7 @@
 <!-- session_edit_btn -->
 [[ define "session_edit_btn" ]]
 {{#is_option status stopped="" waiting=""}}
-<a title="Settings" class="btn edit"><i class="icon-cog"></i> </a>
+<a title="Settings..." class="btn edit"><i class="icon-cog"></i> </a>
 {{/is_option}}
 [[ end ]]
 <!-- session_clone_btn -->
