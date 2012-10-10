@@ -20,6 +20,7 @@
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
+#include "gaming/LogisticHelpers.h"
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -53,6 +54,7 @@
 using namespace kernel;
 using namespace gui;
 using namespace actions;
+using namespace longname;
 using namespace parameters;
 
 namespace
@@ -75,7 +77,7 @@ namespace
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ::gui::ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel, const ::StaticModel& staticModel, const Time_ABC& simulation, ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
     : QDialog( parent, tr( "Push supply flow" ), 0, Qt::WStyle_Customize | Qt::WStyle_Title )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -223,8 +225,8 @@ LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::OnRecipientContextMenu( Q3ListViewItem* item, const QPoint& point, int /*column*/ )
 {
-    kernel::ContextMenu menu( this );
-    kernel::ContextMenu subMenu( &menu );
+    ContextMenu menu( this );
+    ContextMenu subMenu( &menu );
     menu.insertItem( tr( "Add recipient" ), &subMenu );
 
     QString recipient;
@@ -250,7 +252,7 @@ void LogisticSupplyPushFlowDialog::OnRecipientContextMenu( Q3ListViewItem* item,
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != LogisticLevel::none_ )
         InsertMenuEntry( agent, menu );
 }
 
@@ -260,7 +262,7 @@ void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Automat_ABC& agent, 
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Formation_ABC& agent, ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != LogisticLevel::none_ )
         InsertMenuEntry( agent, menu );
 }
 
@@ -268,7 +270,7 @@ void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Formation_ABC& agent
 // Name: LogisticSupplyPushFlowDialog::InsertMenuEntry
 // Created: ABR 2011-06-29
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu )
+void LogisticSupplyPushFlowDialog::InsertMenuEntry( const Entity_ABC& agent, ContextMenu& menu )
 {
     selected_ = &agent;
     menu.InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( Show() ) );
@@ -315,7 +317,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
-    parameters::PushFlowParameters* pushFlowParameters = new parameters::PushFlowParameters( it.NextElement(), static_.coordinateConverter_ );
+    PushFlowParameters* pushFlowParameters = new PushFlowParameters( it.NextElement(), static_.coordinateConverter_ );
     BOOST_FOREACH( const T_RecipientSupplies::value_type& recipientSupply, recipientSupplies_ )
     {
         BOOST_FOREACH( const ObjectQuantity& resource, recipientSupply.second )
@@ -332,7 +334,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     customStringListModel* pModel = static_cast< customStringListModel* >( waypointList_->model() );
     QStringList waypoints = pModel->stringList();
     T_PointVector currentPath;
-    const kernel::Automat_ABC* currentRecipient = 0;
+    const Automat_ABC* currentRecipient = 0;
     for( QStringList::iterator it = waypoints.begin(); it != waypoints.end(); ++it )
     {
         QString str = *it;
@@ -380,39 +382,22 @@ void LogisticSupplyPushFlowDialog::closeEvent( QCloseEvent* /*pEvent*/ )
     Reject();
 }
 
-namespace
-{
-    struct SupplyStatesVisitor : private boost::noncopyable
-                               , public kernel::ExtensionVisitor_ABC<SupplyStates>
-    {
-        SupplyStatesVisitor( LogisticSupplyPushFlowDialog& dlg, void (LogisticSupplyPushFlowDialog::*pFunc)(const SupplyStates&) )
-                : dlg_(dlg), pFunc_ ( pFunc ) {}
-
-        void Visit( const SupplyStates& extension )
-        {
-            (dlg_.*pFunc_)(extension);
-        }
-    private:
-        LogisticSupplyPushFlowDialog& dlg_;
-        void (LogisticSupplyPushFlowDialog::*pFunc_)(const SupplyStates&);
-
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::AddDotation
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::AddDotation( const SupplyStates& states )
+void LogisticSupplyPushFlowDialog::AddDotation( const Dotation& dotation )
 {
-    tools::Iterator< const Dotation& > it = states.CreateIterator();
-    while( it.HasMoreElements() )
+    if( !dotation.type_ )
+        return;
+    const QString type = dotation.type_->GetName().c_str();
+    Dotation& supply = supplies_[ type ];
+    if( !supply.type_ )
     {
-        const Dotation& dotation = it.NextElement();
-        DoAddDotation( dotation );
+        dotationTypes_.append( type );
+        supply.type_ = dotation.type_;
     }
-    if( Dotation* connected = states.GetConnectedNetworkStock() )
-        DoAddDotation( *connected );
+    supply.quantity_ += dotation.quantity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -441,7 +426,7 @@ void LogisticSupplyPushFlowDialog::AddRecipient( const QString& recipientName )
     pListViewItem->setText( 0 , recipientName );
     recipientsList_->insertItem( pListViewItem );
 
-    const kernel::Automat_ABC* pRecipient = recipientsNames_[ recipientName ];
+    const Automat_ABC* pRecipient = recipientsNames_[ recipientName ];
     if( !pRecipient )
         return;
     if( recipientSupplies_.find( pRecipient ) == recipientSupplies_.end() )
@@ -502,7 +487,7 @@ void LogisticSupplyPushFlowDialog::AddResourceItem()
     resourcesTable_->setNumRows( rows + 1 );
     resourcesTable_->setItem( rows, 0, new ExclusiveComboTableItem( resourcesTable_, resourcesList ) );
     resourcesTable_->setItem( rows, 1, new Q3TableItem( resourcesTable_, Q3TableItem::Never, QString() ) );
-    resourcesTable_->setItem( rows, 2, new gui::SpinTableItem< int >( resourcesTable_, 0, std::numeric_limits< int >::max(), 1 ) );
+    resourcesTable_->setItem( rows, 2, new SpinTableItem< int >( resourcesTable_, 0, std::numeric_limits< int >::max(), 1 ) );
     resourcesTable_->setCurrentCell( rows, 1 );
 
     if( curItem )
@@ -524,7 +509,7 @@ void LogisticSupplyPushFlowDialog::AddResourceItem( const QString& dotationName,
         curItem->SetCurrentText( dotationName );
     resourcesTable_->item( rowIndex, 1 )->setText( locale().toString( Available ) );
     resourcesTable_->item( rowIndex, 2 )->setText( locale().toString( qtySupply ) );
-    static_cast< gui::SpinTableItem< int >* >( resourcesTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
+    static_cast< SpinTableItem< int >* >( resourcesTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
 }
 
 // -----------------------------------------------------------------------------
@@ -550,7 +535,7 @@ void LogisticSupplyPushFlowDialog::AddCarrierItem()
     carriersTable_->setNumRows( rows + 1 );
     carriersTable_->setItem( rows, 0, new ExclusiveComboTableItem( carriersTable_, carriersList ) );
     carriersTable_->setItem( rows, 1, new Q3TableItem( carriersTable_, Q3TableItem::Never, QString() ) );
-    carriersTable_->setItem( rows, 2, new gui::SpinTableItem< int >( carriersTable_, 0, std::numeric_limits< int >::max(), 1 ) );
+    carriersTable_->setItem( rows, 2, new SpinTableItem< int >( carriersTable_, 0, std::numeric_limits< int >::max(), 1 ) );
     carriersTable_->setCurrentCell( rows, 1 );
 
     if( curItem )
@@ -572,7 +557,7 @@ void LogisticSupplyPushFlowDialog::AddCarrierItem( const QString& dotationName, 
         curItem->SetCurrentText( dotationName );
     carriersTable_->item( rowIndex, 1 )->setText( locale().toString( Available ) );
     carriersTable_->item( rowIndex, 2 )->setText( locale().toString( qtySupply ) );
-    static_cast< gui::SpinTableItem< int >* >( carriersTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
+    static_cast< SpinTableItem< int >* >( carriersTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
 }
 
 // -----------------------------------------------------------------------------
@@ -583,8 +568,8 @@ void LogisticSupplyPushFlowDialog::AddWaypoint()
 {
     if( !startWaypointLocation_ )
     {
-       controllers_.Unregister( *routeLocationCreator_ );
-       controllers_.Update( *waypointLocationCreator_ );
+        controllers_.Unregister( *routeLocationCreator_ );
+        controllers_.Update( *waypointLocationCreator_ );
     }
     startWaypointLocation_ = true;
     waypointLocationCreator_->StartPoint();
@@ -765,7 +750,7 @@ void LogisticSupplyPushFlowDialog::ClearRouteData()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::EraseRecipientData( const QString& recipient )
 {
-    const kernel::Automat_ABC* pRecipient = recipientsNames_[ recipient ];
+    const Automat_ABC* pRecipient = recipientsNames_[ recipient ];
     recipients_.erase( std::remove( recipients_.begin(), recipients_.end(), pRecipient ), recipients_.end() );
 
     T_RecipientSupplies::iterator itSupplies = recipientSupplies_.begin();
@@ -796,7 +781,7 @@ void LogisticSupplyPushFlowDialog::EraseRecipientData( int index )
 // Name: LogisticSupplyPushFlowDialog::addCarryingEquipment
 // Created: MMC 2011-09-21
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::AddCarryingEquipment( const kernel::Entity_ABC& entity )
+void LogisticSupplyPushFlowDialog::AddCarryingEquipment( const Entity_ABC& entity )
 {
     if( const Equipments* equipments = entity.Retrieve< Equipments >() )
     {
@@ -830,12 +815,12 @@ void LogisticSupplyPushFlowDialog::ComputeAvailableCarriers( QStringList& carrie
     carriersNames.append( QString() );
     carriersTypeNames_.clear();
 
-    const kernel::TacticalHierarchies* pTacticalHierarchies = selected_->Retrieve< kernel::TacticalHierarchies >();
+    const TacticalHierarchies* pTacticalHierarchies = selected_->Retrieve< TacticalHierarchies >();
     if( !pTacticalHierarchies )
         return;
 
     AddCarryingEquipment( *selected_ );
-    tools::Iterator< const kernel::Entity_ABC& > itEnt = pTacticalHierarchies->CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > itEnt = pTacticalHierarchies->CreateSubordinateIterator();
     while( itEnt.HasMoreElements() )
         AddCarryingEquipment( itEnt.NextElement() );
 
@@ -855,14 +840,10 @@ void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( Q3ListViewItem* 
     pRecipientSelected_ = item? recipientsNames_[ item->text( 0 ) ] : 0;
     if( !pRecipientSelected_ )
         return;
-
     T_RecipientSupplies::iterator it = recipientSupplies_.find( pRecipientSelected_ );
     if( it == recipientSupplies_.end() )
         return;
-
-    SupplyStatesVisitor visitor( *this, &LogisticSupplyPushFlowDialog::AddDotation );
-    selected_->Get< kernel::TacticalHierarchies >().Accept< SupplyStates >( visitor );
-
+    logistic_helpers::VisitBaseStocksDotations( *selected_, boost::bind( &LogisticSupplyPushFlowDialog::AddDotation, this, _1 ) );
     T_SuppliesVector& supplies = it->second;
     for( std::size_t i=0; i < supplies.size(); ++i )
     {
@@ -873,17 +854,7 @@ void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( Q3ListViewItem* 
             available = itDotation->second.quantity_;
         AddResourceItem( dotationName, available, supplies[i].quantity_ );
     }
-
     AddResourceItem();
-}
-
-namespace
-{
-    QString GetDisplayName( const kernel::Entity_ABC& entity )
-    {
-        std::string longName = longname::GetEntityLongName( entity );
-        return longName.empty() ? entity.GetName() : longName.c_str();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -894,15 +865,15 @@ void LogisticSupplyPushFlowDialog::ComputeRecipients()
 {
     recipientsNames_.clear();
     tools::Iterator< const Automat_ABC& > it = automats_.CreateIterator();
-    const kernel::Entity_ABC& team = selected_->Get< kernel::TacticalHierarchies >().GetTop();
+    const Entity_ABC& team = selected_->Get< TacticalHierarchies >().GetTop();
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
         if( (const Entity_ABC*)&automat != selected_ )
         {
-            const kernel::AutomatType& type = automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType();
-            if( type.IsLogisticSupply() && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
-                recipientsNames_[ GetDisplayName( automat ) + QString( " [" ) + QString::number( automat.GetId() ) + QString( "]" ) ] = &automat;
+            const AutomatType& type = automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType();
+            if( type.IsLogisticSupply() && &automat.Get< TacticalHierarchies >().GetTop() == &team )
+                recipientsNames_[ QString::fromStdString( GetBestName( automat ) ) + QString( " [" ) + QString::number( automat.GetId() ) + QString( "]" ) ] = &automat;
         }
     }
 }
@@ -939,7 +910,7 @@ void LogisticSupplyPushFlowDialog::OnResourcesValueChanged( int row, int col )
     if( selection.isEmpty() && ( row + 1 == resourcesTable_->numRows() ) )
         return;
     Q3TableItem& itemAVailable = *resourcesTable_->item( row, 1 );
-    gui::SpinTableItem< int >& itemValue = *static_cast< gui::SpinTableItem< int >* >( resourcesTable_->item( row, 2 ) );
+    SpinTableItem< int >& itemValue = *static_cast< SpinTableItem< int >* >( resourcesTable_->item( row, 2 ) );
     int newValue = locale().toInt( itemValue.text() );
 
     const Dotation& dotationSelected = supplies_[ selection ];
@@ -1012,7 +983,7 @@ void LogisticSupplyPushFlowDialog::OnCarriersValueChanged( int row, int col )
     if( item )
         selection = item->CurrentText();
     Q3TableItem& itemAVailable = *carriersTable_->item( row, 1 );
-    gui::SpinTableItem< int >& itemValue = *static_cast< gui::SpinTableItem< int >* >( carriersTable_->item( row, 2 ) );
+    SpinTableItem< int >& itemValue = *static_cast< SpinTableItem< int >* >( carriersTable_->item( row, 2 ) );
     int newValue = locale().toInt( itemValue.text() );
 
     unsigned int equipementSelectedAvailable = carriersTypes_[ selection ];
@@ -1097,7 +1068,7 @@ void LogisticSupplyPushFlowDialog::OnWaypointRowChanged()
 // Name: LogisticSupplyPushFlowDialog::Handle
 // Created: MMC 2011-09-21
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::Handle( kernel::Location_ABC& location )
+void LogisticSupplyPushFlowDialog::Handle( Location_ABC& location )
 {
     if( startWaypointLocation_ && location.IsValid() )
     {
@@ -1159,20 +1130,20 @@ void LogisticSupplyPushFlowDialog::UpdateRouteDrawpoints()
     T_Route route;
     ComputeRoute( route );
 
-    const kernel::Positions* startPos = static_cast< const kernel::Positions* >( selected_->Retrieve< kernel::Positions >() );
+    const Positions* startPos = static_cast< const Positions* >( selected_->Retrieve< Positions >() );
     if( startPos )
         routeDrawpoints_.push_back( startPos->GetPosition() );
 
     for( std::size_t i = 0; i < route.size(); ++i )
         if( route[i].isPoint() )
             routeDrawpoints_.push_back( route[i].point_ );
-         else
-         {
-            const kernel::Automat_ABC* pRecipient = route[i].pRecipient_;
-            const kernel::Positions* pos = static_cast< const kernel::Positions* >( pRecipient->Retrieve< kernel::Positions >() );
+        else
+        {
+            const Automat_ABC* pRecipient = route[i].pRecipient_;
+            const Positions* pos = static_cast< const Positions* >( pRecipient->Retrieve< Positions >() );
             if( pos )
                 routeDrawpoints_.push_back( pos->GetPosition() );
-         }
+        }
 
     if( startPos )
         routeDrawpoints_.push_back( startPos->GetPosition() );
@@ -1182,7 +1153,7 @@ void LogisticSupplyPushFlowDialog::UpdateRouteDrawpoints()
 // Name: LogisticSupplyPushFlowDialog::Draw
 // Created: MMC 2011-09-22
 // -----------------------------------------------------------------------------
-void LogisticSupplyPushFlowDialog::Draw( const kernel::Location_ABC& /*location*/, const geometry::Rectangle2f& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void LogisticSupplyPushFlowDialog::Draw( const Location_ABC& /*location*/, const geometry::Rectangle2f& /*viewport*/, const GlTools_ABC& tools ) const
 {
     if( startWaypointLocation_ || routeDrawpoints_.empty() )
         return;

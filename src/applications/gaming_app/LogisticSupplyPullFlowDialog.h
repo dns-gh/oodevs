@@ -109,7 +109,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddDotation( const SupplyStates& states );
+    void AddDotation( const Dotation& dotation );
     void DoAddDotation( const Dotation& dotation );
     void AddResourceItem();
     void AddResourceItem( QString dotationName, int Available, int qtySupply );
