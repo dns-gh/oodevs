@@ -32,7 +32,8 @@ SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, c
     setSpacing( 5 );
     {
         sessionLabel_ = new QLabel( this );
-        list_ = new Q3ListBox( this );
+        list_ = new QListWidget( this );
+        list_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
         connect( list_, SIGNAL( highlighted( int ) ), this, SLOT( SelectSession( int ) ) );
     }
     {
@@ -72,8 +73,8 @@ void SessionList::Update( const QString& exercise )
         exercise_ = exercise;
         comments_->clear();
         list_->clear();
-        list_->insertStringList( frontend::commands::ListSessions( config_, exercise.toAscii().constData() ) );
-        list_->setSelected( 0, true );
+        list_->addItems( frontend::commands::ListSessions( config_, exercise.toAscii().constData() ) );
+        list_->setCurrentRow( 0 );
     }
 }
 
@@ -83,7 +84,7 @@ void SessionList::Update( const QString& exercise )
 // -----------------------------------------------------------------------------
 void SessionList::SelectSession( int index )
 {
-    const QString session = index < int( list_->count() ) ? list_->text( index ) : "";
+    const QString session = index < int( list_->count() ) ? list_->item( index )->text() : "";
     ReadComments( session );
     emit Select( session );
 }

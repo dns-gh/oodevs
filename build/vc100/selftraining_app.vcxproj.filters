@@ -133,9 +133,6 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\Side.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\selftraining_app\SideList.cpp">
-      <Filter>Source Files\Widgets</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\selftraining_app\CompositeProcessWrapper.cpp">
       <Filter>Source Files\Processes</Filter>
     </ClCompile>
@@ -284,9 +281,6 @@
       <Filter>Source Files\Widgets</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\SessionList.h">
-      <Filter>Source Files\Widgets</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\selftraining_app\SideList.h">
       <Filter>Source Files\Widgets</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\TrayMenu.h">

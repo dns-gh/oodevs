@@ -177,7 +177,6 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\ProfileList.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\SessionList.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\Side.cpp" />
-    <ClCompile Include="..\..\src\applications\selftraining_app\SideList.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\CompositeProcessWrapper.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\SessionTray.cpp" />
     <ClCompile Include="..\..\src\applications\selftraining_app\TrayMenu.cpp" />
@@ -663,24 +662,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\selftraining_app\Side.h" />
-    <CustomBuild Include="..\..\src\applications\selftraining_app\SideList.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
     <ClInclude Include="..\..\src\applications\selftraining_app\CompositeProcessWrapper.h" />
     <ClInclude Include="..\..\src\applications\selftraining_app\SessionTray.h" />
     <CustomBuild Include="..\..\src\applications\selftraining_app\TrayMenu.h">

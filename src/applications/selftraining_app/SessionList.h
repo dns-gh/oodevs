@@ -66,7 +66,7 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC& fileLoader_;
-    Q3ListBox* list_;
+    QListWidget* list_;
     Q3TextEdit* comments_;
     QString exercise_;
     QLabel* sessionLabel_;

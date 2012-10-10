@@ -80,7 +80,6 @@ private:
     const frontend::Exercise_ABC* exercise_;
     frontend::Profile profile_;
     QString session_;
-    Q3ListBox* sessionList_;
     //@}
 };
 
