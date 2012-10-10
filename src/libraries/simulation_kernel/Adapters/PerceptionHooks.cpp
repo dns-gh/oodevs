@@ -30,7 +30,6 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -517,10 +516,6 @@ namespace
     {
         return GET_ROLE( entity, PHY_RoleInterface_Dotations ).GetConsumptionMode().GetID();
     }
-    DEFINE_HOOK( CanEmit, bool, ( const SWORD_Model* entity ) )
-    {
-        return GET_ROLE( entity, PHY_RoleInterface_Communications ).CanEmit();
-    }
     DEFINE_HOOK( IsObjectUniversal, bool, ( const SWORD_Model* object ) )
     {
         return GET_DATA( object, MIL_Object_ABC* )->IsUniversal();
@@ -645,7 +640,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetConsumptionTypeSize, facade );
     REGISTER_HOOK( FindConsumptionType, facade );
     REGISTER_HOOK( GetConsumptionMode, facade );
-    REGISTER_HOOK( CanEmit, facade );
     REGISTER_HOOK( IsObjectUniversal, facade );
     REGISTER_HOOK( CanComponentPerceive, facade );
     REGISTER_HOOK( GetTransporter, facade );

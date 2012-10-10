@@ -137,6 +137,7 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
     entity_[ "is-autonomous" ] = pion.IsAutonomous();
     entity_[ "is-pc" ] = pion.IsPC();
     entity_[ "is-civilian" ] = pion.IsCivilian();
+    entity_[ "can-emit" ] = true;
     entity_[ "perceptions/cones" ];
     entity_[ "perceptions/peripherical-vision/activated" ] = false;
     entity_[ "perceptions/scan/activated" ] = false;

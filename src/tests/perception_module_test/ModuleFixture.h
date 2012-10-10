@@ -62,7 +62,6 @@ class PHY_Volume;
                                           const double* urbanBlockFactors, const double* lightingFactors, const double* precipitationFactors, \
                                           double(*FindEnvironmentFactor)( unsigned int environment, const void* userData ), const void* userData ) ) \
     APPLY( GetPostureSize, 0, size_t, () ) \
-    APPLY( CanEmit, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( GetPostureIdentifier, 2, bool, ( const char* type, size_t* identifier ) ) \
     APPLY( PostureCanModifyDetection, 1, bool, ( const char* type ) ) \
     APPLY( GetLastPostureIdentifier, 1, size_t, ( const SWORD_Model* entity ) ) \

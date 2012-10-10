@@ -45,6 +45,7 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
+#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
@@ -408,6 +409,7 @@ namespace
         entity[ "is-transported" ] = pion.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
         entity[ "is-dead" ] = pion.IsDead();
         entity[ "is-underground" ] = pion.GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground();
+        entity[ "can-emit" ] = pion.GetRole< PHY_RoleInterface_Communications >().CanEmit();
         entity[ "danger/x" ] = pion.GetOrderManager().GetDirDanger().rX_;
         entity[ "danger/y" ] = pion.GetOrderManager().GetDirDanger().rY_;
         core::Model& movement = entity[ "movement" ];

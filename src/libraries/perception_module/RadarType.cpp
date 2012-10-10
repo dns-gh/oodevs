@@ -23,7 +23,6 @@ DECLARE_HOOK( ConvertSecondsToSim, double, ( double seconds ) )
 DECLARE_HOOK( GetConsumptionTypeSize, size_t, () )
 DECLARE_HOOK( FindConsumptionType, void, ( const char* consumptionType, void(*callback)( unsigned int identifier, void* userData ), void* userData ) )
 DECLARE_HOOK( GetConsumptionMode, unsigned int, ( const SWORD_Model* entity ) )
-DECLARE_HOOK( CanEmit, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
 
 RadarType::T_RadarTypeMap RadarType::radarTypes_;
@@ -316,7 +315,7 @@ bool RadarType::CanAcquire( const wrapper::View& perceiver, const wrapper::View&
     if( rTargetHeight > rMaxHeight_ || rTargetHeight < rMinHeight_ )
         return false;
 
-    if( class_ == RadarClass::tapping_ && !GET_HOOK( CanEmit )( target ) )
+    if( class_ == RadarClass::tapping_ && !target[ "can-emit" ] )
         return false;
 
     if( class_ == RadarClass::tappingRadar_ && !GET_HOOK( IsUsingActiveRadar )( target ) )
