@@ -100,6 +100,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\HumanState.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogFuneralConsign.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticHelpers.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\PhysicalAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\statusicons.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\SupplyRecipientResourcesRequest.cpp" />
@@ -322,6 +323,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\HumanState.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticHelpers.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ModeController.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PhysicalAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\statusicons.h" />

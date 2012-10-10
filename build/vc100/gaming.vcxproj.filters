@@ -799,6 +799,9 @@
     <ClCompile Include="..\..\src\libraries\gaming\PhysicalAttribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\gaming\LogisticHelpers.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h">
@@ -1514,6 +1517,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\ModeController.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\gaming\LogisticHelpers.h">
+      <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
