@@ -430,10 +430,6 @@ namespace
     {
         return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingOutsideObject( GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( GetObjectId, int, ( const SWORD_Model* object ) )
-    {
-        return GET_DATA( object, MIL_Object_ABC ).GetID();
-    }
     DEFINE_HOOK( CanMove, bool, ( const SWORD_Model* entity ) )
     {
         return GET_ROLE( entity, RoleAction_Moving ).CanMove();
@@ -554,7 +550,6 @@ void MovementHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetMaxPathFindComputationDuration, facade );
     REGISTER_HOOK( CancelPathFindJob, facade );
     REGISTER_HOOK( GetMaxSpeedWithReinforcement, facade );
-    REGISTER_HOOK( GetObjectId, facade );
     REGISTER_HOOK( GetObjectKnownId, facade );
     REGISTER_HOOK( GetObjectRealName, facade );
     REGISTER_HOOK( GetPathfindCurrentThread, facade );

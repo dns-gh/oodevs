@@ -107,7 +107,6 @@ namespace movement
     APPLY( CanMove, 1, bool, ( const SWORD_Model* entity ) ) \
     APPLY( CanObjectInteractWith, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) ) \
     APPLY( GetObjectListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) ) \
-    APPLY( GetObjectId, 1, int, ( const SWORD_Model* object ) ) \
     APPLY( GetObjectRealName, 1, const char*, ( const SWORD_Model* object ) ) \
     APPLY( GetSpeedWithReinforcement, 2, double, ( const SWORD_Model* entity, const TerrainData& environment ) ) \
     APPLY( GetMaxSpeedWithReinforcement, 1, double, ( const SWORD_Model* entity ) ) \

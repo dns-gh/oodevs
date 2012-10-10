@@ -18,15 +18,12 @@
 #include <module_api/Log.h>
 #include <boost/foreach.hpp>
 
-namespace sword
-{
-namespace movement
-{
+using namespace sword;
+using namespace sword::movement;
 
 DECLARE_HOOK( CanMove, bool, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
 DECLARE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
-DECLARE_HOOK( GetObjectId, int, ( const SWORD_Model* object ) )
 DECLARE_HOOK( GetObjectRealName, const char*, ( const SWORD_Model* object ) )
 DECLARE_HOOK( GetSpeedWithReinforcement, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
 DECLARE_HOOK( GetSpeedWithReinforcementObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
@@ -641,7 +638,4 @@ void PathWalker::PostEnvironment( const wrapper::View& entity, const TerrainData
     effect[ "right" ] = environment.Right();
     effect[ "linear" ] = environment.Linear();
     effect.Post();
-}
-
-}
 }
