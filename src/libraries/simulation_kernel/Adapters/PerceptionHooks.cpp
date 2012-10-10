@@ -268,10 +268,6 @@ namespace
         *identifier = it->second->GetID();
         return true;
     }
-    DEFINE_HOOK( GetObjectType, size_t, ( const SWORD_Model* object ) )
-    {
-        return GET_DATA( object, MIL_Object_ABC ).GetType().GetID();
-    }
     DEFINE_HOOK( GetKnowledgeObjectType, size_t, ( const SWORD_Model* object ) )
     {
         return GET_DATA( object, DEC_Knowledge_Object ).GetType().GetID();
@@ -609,7 +605,6 @@ void PerceptionHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetCollidingPopulationDensity, facade );
     REGISTER_HOOK( ObjectIntersectWithCircle, facade );
     REGISTER_HOOK( KnowledgeObjectIntersectWithCircle, facade );
-    REGISTER_HOOK( GetObjectType, facade );
     REGISTER_HOOK( GetKnowledgeObjectType, facade );
     REGISTER_HOOK( GetEnvironmentAssociation, facade );
     REGISTER_HOOK( GetPerceptionRandom, facade );

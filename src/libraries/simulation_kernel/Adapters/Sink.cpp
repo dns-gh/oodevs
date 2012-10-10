@@ -400,6 +400,7 @@ namespace
             core::Model& object = objects[ it.first ];
             object[ "data" ].SetUserData( it.second );
             object[ "type/real-name" ] = it.second->GetType().GetRealName();
+            object[ "type/identifier" ] = it.second->GetType().GetID();
         }
     }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )

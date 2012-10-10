@@ -72,7 +72,6 @@ class PHY_Volume;
     APPLY( ObjectIntersectWithCircle, 3, bool, ( const SWORD_Model* object, const MT_Vector2D& center, double radius ) ) \
     APPLY( KnowledgeObjectIntersectWithCircle, 3, bool, ( const SWORD_Model* knowledgeObject, const MT_Vector2D& center, double radius ) ) \
     APPLY( FindObjectType, 1, unsigned int, ( const char* type ) ) \
-    APPLY( GetObjectType, 1, size_t, ( const SWORD_Model* object ) ) \
     APPLY( GetKnowledgeObjectType, 1, size_t, ( const SWORD_Model* object ) ) \
     APPLY( GetEnvironmentAssociation, 1, size_t, ( const char* environment ) ) \
     APPLY( GetAltitude, 2, double, ( double x, double y ) ) \

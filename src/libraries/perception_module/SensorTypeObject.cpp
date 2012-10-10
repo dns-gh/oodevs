@@ -19,7 +19,6 @@ using namespace sword;
 using namespace sword::perception;
 
 DECLARE_HOOK( FindObjectType, unsigned int, ( const char* type ) )
-DECLARE_HOOK( GetObjectType, size_t, ( const SWORD_Model* object ) )
 DECLARE_HOOK( GetKnowledgeObjectType, size_t, ( const SWORD_Model* object ) )
 
 // -----------------------------------------------------------------------------
@@ -74,7 +73,7 @@ SensorTypeObject::~SensorTypeObject()
 // -----------------------------------------------------------------------------
 const PerceptionLevel& SensorTypeObject::ComputeObjectPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const
 {
-    const size_t type = GET_HOOK( GetObjectType )( target );
+    const size_t type = target[ "type/identifier" ];
     if( objectData_.size() <= type )
         return PerceptionLevel::notSeen_;
     const SensorTypeObjectData* pObjectData = objectData_[ type ];
