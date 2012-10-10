@@ -98,7 +98,7 @@ void Application::InitializeStyle()
 // -----------------------------------------------------------------------------
 int Application::Run()
 {
-    if( !launcher_->IsInitialized() )
+    if( !launcher_.get() || !launcher_->IsInitialized() )
     {
         QMessageBox::critical( mainWindow_, tools::translate( "Application", "Error" ), tools::translate( "Application", "Launcher service cannot be started: %1."  ).arg( launcher_->GetLastError().c_str() ) );
         return EXIT_FAILURE;
