@@ -389,7 +389,7 @@ namespace
     {
         return GET_ROLE( entity, RoleAction_Moving ).GetMaxSpeedWithReinforcement();
     }
-    DEFINE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
+    DEFINE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
     {
         GET_ROLE( entity, RoleAction_Moving ).NotifyMovingOnPathPoint( point );
     }
@@ -422,11 +422,11 @@ namespace
     {
         return GET_ROLE( entity, RoleAction_Moving ).CanObjectInteractWith( GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) )
+    DEFINE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
     {
         return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingInsideObject( GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) )
+    DEFINE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
     {
         return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingOutsideObject( GET_DATA( object, MIL_Object_ABC ) );
     }
