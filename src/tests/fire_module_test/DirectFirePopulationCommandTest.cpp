@@ -152,7 +152,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_hits, FiringFixture )
 {
     MOCK_EXPECT( ComputeKilledHumans ).once().with( firer, core::Convert( &element ) ).returns( 3 );
-    MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3 ).returns( 2 ); // $$$$ MCO 2012-09-21: for some reason we fire 1 round per killed human ?
+    MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3u ).returns( 2u ); // $$$$ MCO 2012-09-21: for some reason we fire 1 round per killed human ?
     MOCK_EXPECT( GetPopulationElementPh ).once().with( firer, core::Convert( &element ) ).returns( 0.9 );
     MOCK_EXPECT( GetFireRandomNumber ).exactly( 2 ).returns( 0 ); // $$$$ MCO 2012-09-21: one random per reserved ammo
     ExpectCallback( 4 );

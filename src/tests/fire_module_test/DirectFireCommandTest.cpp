@@ -194,7 +194,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_fir
     MOCK_EXPECT( ModifyDangerosity ).once().with( core::Convert( &component_2 ), ammo_1 ).returns( 1 );
     MOCK_EXPECT( ModifyPh ).at_least( 1 ).with( firer, enemy, ammo_1, 0.5 ).returns( 0.9 );
     MOCK_EXPECT( GetPhModificator ).at_least( 1 ).with( firer, enemy, std::string( "launcher_1" ) ).returns( 1 );
-    MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3 ).returns( 2 );
+    MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3u ).returns( 2u );
     MOCK_EXPECT( GetFireRandomNumber ).once().returns( 0 );
     ExpectCallback( 4 );
     ExpectEvent( "direct fire pion attack",
@@ -218,7 +218,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing
     MOCK_EXPECT( ModifyDangerosity ).once().with( core::Convert( &component_2 ), ammo_1 ).returns( 1 );
     MOCK_EXPECT( ModifyPh ).at_least( 1 ).with( firer, enemy, ammo_1, 0.5 ).returns( 0.9 );
     MOCK_EXPECT( GetPhModificator ).at_least( 1 ).with( firer, enemy, std::string( "launcher_1" ) ).returns( 1 );
-    MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3 ).returns( 2 );
+    MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3u ).returns( 2u );
     MOCK_EXPECT( GetFireRandomNumber ).once().returns( 1 );
     ExpectCallback( 4 );
     ExpectEvent( "direct fire pion attack",
@@ -242,7 +242,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
     MOCK_EXPECT( ModifyDangerosity ).returns( 1 );
     MOCK_EXPECT( ModifyPh ).returns( 1 );
     MOCK_EXPECT( GetPhModificator ).returns( 1 );
-    MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3 ).returns( 2 );
+    MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3u ).returns( 2u );
     MOCK_EXPECT( GetFireRandomNumber ).returns( 1 );
     ExpectCallback( 4 );
     ExpectEvent( "direct fire pion attack",
