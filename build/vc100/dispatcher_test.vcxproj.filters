@@ -49,7 +49,7 @@
     <ClCompile Include="..\..\src\tests\dispatcher_test\UrbanObjectTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\dispatcher_test\Helpers .cpp">
+    <ClCompile Include="..\..\src\tests\dispatcher_test\Helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
