@@ -24,6 +24,7 @@
 #include "dispatcher/Formation.h"
 #include "dispatcher/Logger_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Karma.h"
 #include "rpr/EntityTypeResolver_ABC.h"
@@ -248,7 +249,7 @@ void AgentController::CreateAutomat( dispatcher::Automat_ABC& entity )
         T_Agent proxy( new AutomatProxy( entity, localAgentResolver_ ) );
         agents_.insert( T_Agents::value_type( entity.GetId(), proxy ) );
 		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );
-        std::string typeName = "automat"; // FIXME AHC
+        std::string typeName = entity.GetType().GetName();
         rpr::EntityType entityType = ComputeEntityType( entity, logger_, automatEntityTypeResolver_, typeName );
         for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->AggregateCreated( *proxy, entity.GetId(), entity.GetName().toStdString(), forceIdentifier, entityType, entity.GetApp6Symbol(), true, 116 /* FIXME AHC */ );
