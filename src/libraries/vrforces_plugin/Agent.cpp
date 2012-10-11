@@ -87,7 +87,9 @@ Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade
 {
     std::stringstream name;
     name << message.automat().id() << ":"<< id_ << "/" << message.name().c_str();
-    DtEntityType type( ToString( entityTypes_.Find( agent.GetType().GetName() ) ).c_str() );
+    rpr::EntityType et;
+    entityTypes_.Find( agent.GetType().GetName(), et );
+    DtEntityType type( ToString( et ).c_str() );
     aggregatePublisher_.reset( new DtAggregatePublisher( type, &connection_, DtDrStatic, forces.Resolve( id_ ), name.str().c_str() ) );
     aggregatePublisher_->asr()->setMarkingText( name.str().c_str() );
     CreateSubordinates( type_ );
@@ -145,7 +147,9 @@ void Agent::CreateSubordinates( const kernel::AgentType& type )
 void Agent::AddSubordinates( unsigned int index, unsigned int count, const kernel::ComponentType& type )
 {
     DtSilentEntityList* list = new DtSilentEntityList();
-    list->setEntityType( ToString( entityTypes_.Find( type.GetName() ) ).c_str() );
+    rpr::EntityType et;
+    entityTypes_.Find( type.GetName(), et );
+    list->setEntityType( ToString( et ).c_str() );
     list->setNumberOfEntities( count );
     aggregatePublisher_->asr()->setSilentEntityList( index, *list );
 }
@@ -301,7 +305,9 @@ void Agent::DestroyPseudoAggregate()
         position_->Clear();
         subordinates_.clear();
         DtAggregateStateRepository* copy = new DtAggregateStateRepository( *reflected_->asr() );
-        DtEntityType type( ToString( entityTypes_.Find( type_.GetName() ) ).c_str() );
+        rpr::EntityType et;
+        entityTypes_.Find( type_.GetName(), et );
+        DtEntityType type( ToString( et ).c_str() );
         copy->setAggregateType( type );
         copy->setAlgorithm( DtDrStatic );
         aggregatePublisher_.reset( new DtAggregatePublisher( copy, &connection_ ) );
