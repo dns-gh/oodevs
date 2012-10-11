@@ -111,35 +111,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\movement_module\Agent_Path.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\src\libraries\movement_module\Agent_PathClass.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\src\libraries\movement_module\Path_ABC.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\src\libraries\movement_module\PathPoint.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\src\libraries\movement_module\PathResult.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\src\libraries\movement_module\PathSection_ABC.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\src\libraries\movement_module\PathType.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\src\libraries\movement_module\PathWalker.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="..\..\src\libraries\movement_module\Rep_PathPoint.inl">
-      <Filter>Source Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\src\libraries\movement_module\Speeds.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

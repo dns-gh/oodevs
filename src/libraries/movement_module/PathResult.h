@@ -96,8 +96,6 @@ private:
     //@}
 };
 
-#include "PathResult.inl"
-
 }
 }
 

@@ -59,3 +59,12 @@ void Rep_PathPoint::RemoveFromDIA( boost::shared_ptr< PathPoint > self )
     if( entity_ )
         GET_HOOK( RemovePathPoint )( *entity_, self );
 }
+
+//-----------------------------------------------------------------------------
+// Name: Rep_PathPoint::GetTypeTerrain
+// Created: AGN 03-03-25
+//-----------------------------------------------------------------------------
+const TerrainData& Rep_PathPoint::GetTypeTerrain() const
+{
+    return nTypeTerrain_;
+}

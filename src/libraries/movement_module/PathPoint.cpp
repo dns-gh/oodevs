@@ -138,3 +138,39 @@ const TerrainData& PathPoint::GetTypeTerrain() const
 {
     throw std::runtime_error( "GetTypeLima cannot be called for this Point class" );
 }
+
+//-----------------------------------------------------------------------------
+// Name: PathPoint::GetPos
+// Created: JVT 02-12-04
+//-----------------------------------------------------------------------------
+const MT_Vector2D& PathPoint::GetPos() const
+{
+    return vPos_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PathPoint::GetType
+// Created: JVT 02-12-04
+//-----------------------------------------------------------------------------
+PathPoint::E_Type PathPoint::GetType() const
+{
+    return nType_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PathPoint::GetObjectTypes
+// Created: JVT 02-12-06
+//-----------------------------------------------------------------------------
+const TerrainData& PathPoint::GetObjectTypes() const
+{
+    return nObjectTypes_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PathPoint::GetObjectTypesToNextPoint
+// Created: JVT 02-12-06
+//-----------------------------------------------------------------------------
+const TerrainData& PathPoint::GetObjectTypesToNextPoint() const
+{
+    return nObjectTypesToNextPoint_;
+}

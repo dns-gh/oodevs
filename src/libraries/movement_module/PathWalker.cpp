@@ -636,3 +636,14 @@ void PathWalker::PostEnvironment( const wrapper::View& entity, const TerrainData
     effect[ "linear" ] = environment.Linear();
     effect.Post();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PathWalker::Clean
+// Created: NLD 2005-09-30
+// -----------------------------------------------------------------------------
+void PathWalker::Clean()
+{
+    if( !bHasMoved_ )
+        bForcePathCheck_ = true;
+    bHasMoved_ = false;
+}

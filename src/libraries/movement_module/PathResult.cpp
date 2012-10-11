@@ -209,3 +209,12 @@ const PathResult::T_PathPointList& PathResult::GetResult( bool useCheck ) const
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Path is being computed" );
     return resultList_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PathResult::GetPathType
+// Created: CMA 2012-03-29
+// -----------------------------------------------------------------------------
+const PathType& PathResult::GetPathType() const
+{
+    return pathType_;
+}

@@ -153,17 +153,6 @@
     <ClInclude Include="..\..\src\libraries\movement_module\Speeds.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\movement_module\Agent_Path.inl" />
-    <None Include="..\..\src\libraries\movement_module\Agent_PathClass.inl" />
-    <None Include="..\..\src\libraries\movement_module\PathPoint.inl" />
-    <None Include="..\..\src\libraries\movement_module\PathResult.inl" />
-    <None Include="..\..\src\libraries\movement_module\PathSection_ABC.inl" />
-    <None Include="..\..\src\libraries\movement_module\PathType.inl" />
-    <None Include="..\..\src\libraries\movement_module\PathWalker.inl" />
-    <None Include="..\..\src\libraries\movement_module\Path_ABC.inl" />
-    <None Include="..\..\src\libraries\movement_module\Rep_PathPoint.inl" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="wrapper.vcxproj">
       <Project>{f1da0bc2-b36e-4fae-a762-5f7edb2a95b9}</Project>
     </ProjectReference>

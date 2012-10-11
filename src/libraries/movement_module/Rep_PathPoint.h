@@ -44,11 +44,12 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     TerrainData nTypeTerrain_;
     mutable boost::optional< unsigned int > entity_;
+    //@}
 };
-
-#include "Rep_PathPoint.inl"
 
 }
 }

@@ -124,8 +124,6 @@ private:
     static unsigned int nIDIdx_;
 };
 
-#include "Path_ABC.inl"
-
 }
 }
 

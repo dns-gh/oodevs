@@ -99,8 +99,6 @@ protected:
     //@}
 };
 
-#include "PathPoint.inl"
-
 }
 }
 

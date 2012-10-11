@@ -165,7 +165,6 @@ bool Agent_Path::IsPointAvant( const TerrainData& nObjectTypesBefore, const Terr
 // Name: Agent_Path::GetPreviousWaypointOnDifferentLocation
 // Created: JVT 2005-07-08
 // -----------------------------------------------------------------------------
-inline
 Agent_Path::IT_PathPointList Agent_Path::GetPreviousWaypointOnDifferentLocation( IT_PathPointList itCurrent )
 {
     if( itCurrent == resultList_.end() )
@@ -588,4 +587,31 @@ const MT_Vector2D* Agent_Path::GetFirstPoint() const
 const Agent_PathClass& Agent_Path::GetClass() const
 {
     return pathClass_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent_Path::GetPathClass
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+const Agent_PathClass& Agent_Path::GetPathClass() const
+{
+    return pathClass_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent_Path::GetUnitSpeeds
+// Created: NLD 2005-02-22
+// -----------------------------------------------------------------------------
+const Speeds& Agent_Path::GetUnitSpeeds() const
+{
+    return unitSpeeds_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent_Path::GetNextWaypoints
+// Created: CMA 2012-02-20
+// -----------------------------------------------------------------------------
+const T_PointVector& Agent_Path::GetNextWaypoints() const
+{
+    return nextWaypoints_;
 }

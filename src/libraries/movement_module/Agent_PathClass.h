@@ -176,8 +176,6 @@ private:
     static T_Rules rules_;
 };
 
-#include "Agent_PathClass.inl"
-
 }
 }
 

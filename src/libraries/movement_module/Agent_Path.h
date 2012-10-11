@@ -104,8 +104,6 @@ private:
     //@}
 };
 
-#include "Agent_Path.inl"
-
 }
 }
 

@@ -82,7 +82,7 @@ private:
     //@}
 
 private:
-     PathType( E_PathType nType, const std::string& strName );
+             PathType( E_PathType nType, const std::string& strName );
     virtual ~PathType();
 
 private:
@@ -93,8 +93,6 @@ private:
     static T_PathTypeFromIDVector pathTypesFromID_;
     static T_PathTypeMap          pathTypes_;
 };
-
-#include "PathType.inl"
 
 }
 }

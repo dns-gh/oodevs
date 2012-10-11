@@ -162,8 +162,6 @@ private:
     //@}
 };
 
-#include "PathWalker.inl"
-
 }
 }
 
