@@ -3,7 +3,7 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.links.moveToward, skill.nodes.Assassinate },
+    connections = { skill.links.moveToward, skill.nodes.Assassinate, skill.nodes.CR_TargetInvalid },
 
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks
@@ -27,7 +27,11 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-
+        if not self.params.unit:isValid() then -- Check if unit is valid
+            Activate( skill.nodes.CR_TargetInvalid, 1, { RC = eRC_InvalidTarget } )
+            Feedback( self.feedbacks.done )
+            return
+        end
         Activate( skill.links.moveToward, 1, { entities = { self.params.unit } } )
         if self.arrived then
             Activate( skill.nodes.Assassinate, 1, { unit = self.params.unit } )
@@ -47,5 +51,15 @@ node "Assassinate"
         if self.params.unit:killOfficersWithin() then
             Feedback( self.feedbacks.commited )
         end
+    end
+}
+
+-- ****************************************************************************
+-- CR
+-- ****************************************************************************
+node "CR_TargetInvalid"
+{
+    create = function( self )
+        meKnowledge:RC( eRC_InvalidTarget )
     end
 }
