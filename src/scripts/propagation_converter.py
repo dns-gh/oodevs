@@ -18,8 +18,12 @@ def writefile(path, root):
     xml.ElementTree(root).write(file)
     file.close()
 
-def writeconfig(path, ascfiles):
+def writeconfig(path, ascfiles, projectionfile):
     config = xml.Element('config')
+    if not projectionfile == "":
+        projection = xml.Element('projection')
+        projection.text = projectionfile
+        config.append( projection )
     files = xml.Element('files')
     config.append(files)
     for f in ascfiles:
@@ -31,6 +35,9 @@ def writeconfig(path, ascfiles):
 
 if __name__ == '__main__':
     rootdir = sys.argv[1]
+    projectionfile = ""
+    if len(sys.argv) > 2:
+        projectionfile = sys.argv[2]
     refdate = datetime.datetime.strptime('2012-10-10 12:24:48', '%Y-%m-%d %H:%M:%S')
     files = listascfiles(refdate, rootdir)
-    writeconfig(rootdir, files)
+    writeconfig(rootdir, files, projectionfile)
