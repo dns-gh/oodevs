@@ -37,7 +37,7 @@ GaugeType::~GaugeType()
 // Name: GaugeType::GetName
 // Created: SBO 2009-05-05
 // -----------------------------------------------------------------------------
-QString GaugeType::GetName() const
+const QString& GaugeType::GetName() const
 {
     return name_;
 }

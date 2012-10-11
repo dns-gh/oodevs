@@ -11,7 +11,6 @@
 #define __ScoreGaugeConfiguration_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
 
 namespace indicators
@@ -39,7 +38,7 @@ class ScoreGaugeConfiguration : public Q3VBox
                               , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                               , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -65,12 +64,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScoreGaugeConfiguration( const ScoreGaugeConfiguration& );            //!< Copy constructor
-    ScoreGaugeConfiguration& operator=( const ScoreGaugeConfiguration& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void AddInterval( double min = 0, double max = 0, double key = 0 );

@@ -33,7 +33,6 @@ DotationsEditor::DotationsEditor( QWidget* parent, const kernel::ObjectTypes& ob
     , equipments_( objectTypes )
     , dotations_( objectTypes )
     , value_( 0 )
-    , blockSlot_( false )
 {
     setCaption( tr( "Resources editor" ) );
     setMinimumSize( 500, 500 );
@@ -268,9 +267,6 @@ DotationsItem* DotationsEditor::GetValue()
 // -----------------------------------------------------------------------------
 void DotationsEditor::OnValueChanged( int row, int col )
 {
-    if( blockSlot_ )
-        return;
-    blockSlot_ = true;
     if( col == 0 )
     {
         QTableWidgetItem* item = table_->item( row, 0 );
@@ -278,7 +274,6 @@ void DotationsEditor::OnValueChanged( int row, int col )
         {
             table_->removeRow( row );
             table_->setCurrentCell( table_->rowCount() - 1, 1, QItemSelectionModel::ClearAndSelect );
-            blockSlot_ = false;
             return;
         }
         if( !item->text().isEmpty() && row == table_->rowCount() - 1 && table_->rowCount() < static_cast< int >( dotations_.Count() - 1 ) )
@@ -289,7 +284,6 @@ void DotationsEditor::OnValueChanged( int row, int col )
         }
         table_->setCurrentCell( row, 1 );
     }
-    blockSlot_ = false;
     UpdateInfos();
 }
 
@@ -299,7 +293,7 @@ void DotationsEditor::OnValueChanged( int row, int col )
 // -----------------------------------------------------------------------------
 void DotationsEditor::AddItem( int row, const Dotation* dotation /* =0*/ )
 {
-    blockSlot_ = true;
+    table_->blockSignals( true );
     table_->setItem( row, 0, new QTableWidgetItem() );
     table_->setItem( row, 1, new QTableWidgetItem() );
     if( dotation )
@@ -310,7 +304,7 @@ void DotationsEditor::AddItem( int row, const Dotation* dotation /* =0*/ )
     else 
         table_->item( row, 1 )->setText( locale().toString( 0 ) );
     table_->setCurrentCell( row, 1 );
-    blockSlot_ = false;
+    table_->blockSignals( false );
 }
 
 // -----------------------------------------------------------------------------

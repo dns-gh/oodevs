@@ -10,10 +10,10 @@
 #ifndef __GaugeType_h_
 #define __GaugeType_h_
 
-#pragma warning( push, 0 )
+#include <boost/noncopyable.hpp>
+
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
-#pragma warning( pop )
 #pragma warning( pop )
 
 namespace kernel
@@ -34,7 +34,7 @@ namespace indicators
 */
 // Created: SBO 2009-05-05
 // =============================================================================
-class GaugeType
+class GaugeType : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -45,19 +45,12 @@ public:
 
     //! @name Accessors
     //@{
-    QString GetName() const;
+    const QString& GetName() const;
     //@}
 
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer, double value ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    GaugeType( const GaugeType& );            //!< Copy constructor
-    GaugeType& operator=( const GaugeType& ); //!< Assignment operator
     //@}
 
 private:

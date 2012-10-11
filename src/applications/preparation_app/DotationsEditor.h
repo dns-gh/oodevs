@@ -87,7 +87,6 @@ private:
     QTableWidget* table_;
     QTableWidget* infosTable_;
     QLabel* infosLabel_;
-    bool blockSlot_;
     //@}
 };
 

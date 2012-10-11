@@ -39,12 +39,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    IconsGaugeType( const IconsGaugeType& );            //!< Copy constructor
-    IconsGaugeType& operator=( const IconsGaugeType& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void LoadIcons( xml::xistream& xis );

@@ -10,7 +10,6 @@
 #ifndef __ValuedComboBox_h_
 #define __ValuedComboBox_h_
 
-#include <boost/noncopyable.hpp>
 #pragma warning( push, 0 )
 #include <QtGui/qcombobox.h>
 #pragma warning( pop )
@@ -26,7 +25,6 @@ namespace gui
 // =============================================================================
 template< typename T >
 class ValuedComboBox : public QComboBox
-                     , private boost::noncopyable
 {
 
 private:
