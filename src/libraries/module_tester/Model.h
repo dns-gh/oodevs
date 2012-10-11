@@ -84,7 +84,7 @@ public:
     {
         return operator[]( std::string( key ) );
     }
-    Model& operator[]( unsigned int key )
+    Model& operator[]( std::size_t key )
     {
         return operator[]( boost::lexical_cast< std::string >( key ) );
     }
@@ -252,7 +252,7 @@ private:
             valid_ = it != expected_->children_.end() && it->second.Check( child );
             ++count_;
         }
-        virtual void Visit( unsigned int key, const core::Model& child )
+        virtual void Visit( std::size_t key, const core::Model& child )
         {
             Visit( boost::lexical_cast< std::string >( key ), child );
         }

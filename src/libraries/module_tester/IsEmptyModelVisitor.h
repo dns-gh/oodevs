@@ -69,7 +69,7 @@ private:
     {
         empty_ = false;
     }
-    virtual void Visit( unsigned int /*key*/, const core::Model& /*child*/ )
+    virtual void Visit( std::size_t /*key*/, const core::Model& /*child*/ )
     {
         empty_ = false;
     }

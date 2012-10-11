@@ -219,12 +219,12 @@ void View::VisitIdentifiedChildren( T_IdentifiedChildrenVisitor visitor ) const
         explicit ChildrenVisitor( T_IdentifiedChildrenVisitor visitor )
             : visitor_( visitor )
         {}
-        static void Visit( unsigned int key, const SWORD_Model* child, void* userData )
+        static void Visit( std::size_t key, const SWORD_Model* child, void* userData )
         {
             static_cast< ChildrenVisitor* >( userData )->visitor_( key, child );
         }
         T_IdentifiedChildrenVisitor visitor_;
     } childrenVisitor( visitor );
     if( ! SWORD_VisitIdentifiedChildren( model_, &ChildrenVisitor::Visit, &childrenVisitor ) )
-        throw std::runtime_error( "could not visit integer children" );
+        throw std::runtime_error( "could not visit identified children" );
 }

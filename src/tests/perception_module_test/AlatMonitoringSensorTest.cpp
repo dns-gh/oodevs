@@ -16,7 +16,7 @@ BOOST_FIXTURE_TEST_CASE( alat_monitoring_sensor_recognized_all_agents_in_locatio
 {
     const unsigned char eVisionEmpty = 0;
     entity[ "perceptions/sensor/activated" ] = false;
-    entity[ "perceptions/alat/monitoring" ][ 0u ] = core::MakeModel( "localization", 0 )
+    entity[ "perceptions/alat/monitoring" ][ 42 ] = core::MakeModel( "localization", 0 )
                                                                    ( "empty-detection-time-step", 0 )
                                                                    ( "forest-detection-time-step", 1 )
                                                                    ( "urban-detection-time-step", 2 );

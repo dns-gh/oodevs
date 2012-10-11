@@ -62,7 +62,7 @@ public:
 
     typedef boost::function< void( const std::string& key, const View& child ) > T_NamedChildrenVisitor;
     void VisitNamedChildren( T_NamedChildrenVisitor visitor ) const;
-    typedef boost::function< void( unsigned int key, const View& child ) > T_IdentifiedChildrenVisitor;
+    typedef boost::function< void( std::size_t key, const View& child ) > T_IdentifiedChildrenVisitor;
     void VisitIdentifiedChildren( T_IdentifiedChildrenVisitor visitor ) const;
     //@}
 

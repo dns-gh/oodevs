@@ -15,8 +15,9 @@ using namespace sword::perception;
 BOOST_FIXTURE_TEST_CASE( alat_reco_sensor_recognized_all_agents_in_location_depending_max_perception_distance, PerceptionCommandFixture )
 {
     const unsigned char eVisionEmpty = 0;
+    const std::size_t uniqueReco = 0;
     entity[ "perceptions/sensor/activated" ] = false;
-    entity[ "perceptions/alat/reco" ][ 0u ][ "localization" ];
+    entity[ "perceptions/alat/reco" ][ uniqueReco ][ "localization" ];
     const SWORD_Model* other = core::Convert( &model[ "entities" ][ target ] );
     model[ "entities" ][ target ][ "pion" ] = 43;
     model[ "entities" ][ target ][ "movement/position/x" ] = 5;

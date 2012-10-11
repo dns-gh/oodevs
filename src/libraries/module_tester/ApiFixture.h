@@ -245,7 +245,7 @@ namespace core
             CATCH
             return false;
         }
-        static const SWORD_Model* SWORD_GetIdentifiedChild( const SWORD_Model* parent, unsigned int key )
+        static const SWORD_Model* SWORD_GetIdentifiedChild( const SWORD_Model* parent, size_t key )
         {
             TRY
                 BOOST_REQUIRE( parent );
@@ -253,7 +253,7 @@ namespace core
             CATCH
             return 0;
         }
-        static SWORD_Model* SWORD_SetIdentifiedChild( SWORD_Model* parent, unsigned int key )
+        static SWORD_Model* SWORD_SetIdentifiedChild( SWORD_Model* parent, size_t key )
         {
             TRY
                 BOOST_REQUIRE( parent );

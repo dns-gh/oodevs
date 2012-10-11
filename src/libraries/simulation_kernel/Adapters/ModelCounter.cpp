@@ -82,7 +82,7 @@ void ModelCounter::Visit( const std::string& /*key*/, const core::Model& child )
 // Name: ModelCounter::Visit
 // Created: MCO 2012-09-28
 // -----------------------------------------------------------------------------
-void ModelCounter::Visit( unsigned int /*key*/, const core::Model& child )
+void ModelCounter::Visit( std::size_t /*key*/, const core::Model& child )
 {
     ++count_;
     child.Accept( *this );

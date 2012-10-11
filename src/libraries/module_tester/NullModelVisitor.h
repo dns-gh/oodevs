@@ -45,7 +45,7 @@ public:
 
     virtual void Visit( const std::string& /*key*/, const core::Model& /*child*/ )
     {}
-    virtual void Visit( unsigned int /*key*/, const core::Model& /*child*/ )
+    virtual void Visit( std::size_t /*key*/, const core::Model& /*child*/ )
     {}
 
     virtual void Visit( const core::Model& /*element*/ )
