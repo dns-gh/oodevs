@@ -20,7 +20,7 @@ def writefile(path, root):
 
 def writeconfig(path, ascfiles, projectionfile):
     config = xml.Element('config')
-    if not projectionfile == "":
+    if projectionfile:
         projection = xml.Element('projection')
         projection.text = projectionfile
         config.append( projection )
@@ -35,7 +35,7 @@ def writeconfig(path, ascfiles, projectionfile):
 
 if __name__ == '__main__':
     rootdir = sys.argv[1]
-    projectionfile = ""
+    projectionfile = None
     if len(sys.argv) > 2:
         projectionfile = sys.argv[2]
     refdate = datetime.datetime.strptime('2012-10-10 12:24:48', '%Y-%m-%d %H:%M:%S')
