@@ -37,8 +37,6 @@ public:
     explicit MT_ConsoleLogger( int nLogLevels = eLogLevel_All );
     virtual ~MT_ConsoleLogger();
 
-    void EnableTimeStamps( bool );
-
 private:
     //-------------------------------------------------------------------------
     /** @name Main methods */
@@ -49,7 +47,6 @@ private:
 
 private:
     boost::mutex mutex_;
-    bool bDumpTimeStamps_;
 };
 
 #endif // __MT_ConsoleLogger_h_

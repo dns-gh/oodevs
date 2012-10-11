@@ -16,7 +16,6 @@
 //-----------------------------------------------------------------------------
 MT_ConsoleLogger::MT_ConsoleLogger( int nLogLevels )
     : MT_Logger_ABC( nLogLevels )
-    , bDumpTimeStamps_( true )
 {
     // NOTHING
 }
@@ -31,17 +30,6 @@ MT_ConsoleLogger::~MT_ConsoleLogger()
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_ConsoleLogger::EnableTimeStamps
-/**
-*/
-// Created: CBX 2003-02-13
-//-----------------------------------------------------------------------------
-void MT_ConsoleLogger::EnableTimeStamps( bool bEnabled )
-{
-    bDumpTimeStamps_ = bEnabled;
-}
-
-//-----------------------------------------------------------------------------
 // Name: MT_ConsoleLogger::LogString
 // Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
@@ -50,8 +38,7 @@ void MT_ConsoleLogger::LogString( E_LogLevel level, const char* strMessage, cons
     boost::mutex::scoped_lock locker( mutex_ );
 
     // Time
-    if( bDumpTimeStamps_ )
-        printf( "[%s]", GetTimestampAsString() );
+    printf( "[%s]", GetTimestampAsString() );
 
     // Log level name
     if( level != eLogLevel_None )
