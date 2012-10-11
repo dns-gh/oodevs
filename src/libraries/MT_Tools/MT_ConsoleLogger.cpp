@@ -36,26 +36,7 @@ MT_ConsoleLogger::~MT_ConsoleLogger()
 void MT_ConsoleLogger::LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-
-    // Time
-    printf( "[%s]", GetTimestampAsString() );
-
-    // Log level name
-    printf( " %s -", GetLogLevelAsString(level) );
-
-    // Message
-    if( strMessage )
-        printf( " %s", strMessage );
-    else
-        printf( " " );
-
-    // Code
-    if( nCode != -1 )
-        printf( " (%d)", nCode );
-
-    // Context
-    if( strContext != NULL )
-        printf( " [Context: %s]", strContext );
-
-    printf("\n");
+    std::stringstream output;
+    MakeString( level, strMessage, strContext, nCode, output );
+    printf( "%s", output.str().c_str() );
 }
