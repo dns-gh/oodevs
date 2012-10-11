@@ -63,7 +63,7 @@ namespace
     }
     DEFINE_HOOK( GetFireRandomInteger, size_t, ( size_t min, size_t max ) )
     {
-        return MIL_Random::rand32_io( min, max, MIL_Random::eFire );
+        return MIL_Random::rand32_io( static_cast< long >( min ), static_cast< long >( max ), MIL_Random::eFire );
     }
     DEFINE_HOOK( IsTemporarilyBlocked, bool, ( const SWORD_Model* entity, std::size_t nUrbanCoefficient ) )
     {
