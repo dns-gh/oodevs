@@ -22,7 +22,7 @@ BOOST_FIXTURE_TEST_CASE( identify_all_agents_in_zone_command_notifies_perception
     MOCK_EXPECT( GetAgentListWithinLocalisation ).once().calls( boost::bind( boost::apply< void >(), _3, other, _4 ) );
     ExpectEffect( zone, sword::test::MakeModel()
                           [ sword::test::MakeModel( "level", 3 )
-                                                  ( "target/data", 43 )
+                                                  ( "target", mock::any )
                                                   ( "recorded", false ) ] );
     StartCommand( "identify all agents in zone",
         core::MakeModel( "identifier", identifier )

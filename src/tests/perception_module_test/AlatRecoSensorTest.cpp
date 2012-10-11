@@ -27,7 +27,7 @@ BOOST_FIXTURE_TEST_CASE( alat_reco_sensor_recognized_all_agents_in_location_depe
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
     MOCK_EXPECT( GetVisionObject ).once().returns( eVisionEmpty );
     ExpectNotifications( "agents", sword::test::MakeModel()
-                                    [ sword::test::MakeModel( "target/data", 43 )
+                                    [ sword::test::MakeModel( "target", mock::any )
                                                             ( "level", 2 ) // recognized
                                                             ( "recorded", false ) ]
                                     [ sword::test::MakeModel( mock::any ) ] );

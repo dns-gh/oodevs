@@ -100,7 +100,7 @@ void PerceptionFlyingShell::ExecuteAgents( const wrapper::View& model, const wra
                 {
                     wrapper::Event event( "flying shell detection" );
                     event[ "flying-shell" ] = flyingShell;
-                    event[ "entity/data" ] = perceiver[ "data" ];
+                    event[ "entity" ] = perceiver;
                     event.Post();
                 }
             }

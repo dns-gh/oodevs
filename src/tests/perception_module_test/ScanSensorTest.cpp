@@ -32,7 +32,7 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_recognized_with_scan_sensor, Percept
     entity[ "perceptions/drill-blow/width" ] = scanWidth;
     entity[ "perceptions/drill-blow/length" ] = scanLength;
     ExpectNotifications( "agents", sword::test::MakeModel()
-                                       [ sword::test::MakeModel( "target/data", 43 )
+                                       [ sword::test::MakeModel( "target", mock::any )
                                                                ( "level", 2 ) // recognized
                                                                ( "recorded", false ) ]
                                        [ sword::test::MakeModel( mock::any ) ] );

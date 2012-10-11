@@ -37,8 +37,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
     ExpectEvent( "perception callback", sword::test::MakeModel( "entity", identifier )
                                                               ( "perception", perceptionId ) );
     ExpectNotifications( "objects", sword::test::MakeModel()
-                                    [ sword::test::MakeModel( "target/data", 666 )
-                                                            ( "target/can-be-perceived", true )
+                                    [ sword::test::MakeModel( "target", mock::any )
                                                             ( "level", 3 ) // identified
                                                             ( "recorded", false ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
