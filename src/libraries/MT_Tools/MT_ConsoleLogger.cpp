@@ -41,8 +41,7 @@ void MT_ConsoleLogger::LogString( E_LogLevel level, const char* strMessage, cons
     printf( "[%s]", GetTimestampAsString() );
 
     // Log level name
-    if( level != eLogLevel_None )
-        printf( " %s -", GetLogLevelAsString(level) );
+    printf( " %s -", GetLogLevelAsString(level) );
 
     // Message
     if( strMessage )
