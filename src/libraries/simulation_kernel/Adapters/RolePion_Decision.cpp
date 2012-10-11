@@ -241,6 +241,47 @@ void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, 
 {
     RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( sink_ ), boost::ref( GetPion() ), arg1, arg2, arg3 ) ) );
 }
+namespace
+{
+    unsigned int StartCommand( Sink& sink, MIL_AgentPion& pion, const std::string& name, const core::Model& parameters )
+    {
+        std::size_t id = sink.StartCommand( name, parameters );
+        boost::shared_ptr< PHY_Action_ABC > action( new sword::Action( sink, pion, id ) );
+        pion.RegisterAction( action );
+        return action->GetId();
+    }
+    unsigned int StopAction( MIL_AgentPion& pion, unsigned int action )
+    {
+        pion.UnregisterAction( action );
+        return 0u;
+    }
+    void PauseAction( const MIL_AgentPion& pion, unsigned int action )
+    {
+        boost::shared_ptr< PHY_Action_ABC > pAction = pion.GetAction( action );
+        if( pAction )
+            pAction->Suspend();
+    }
+    void ResumeAction( const MIL_AgentPion& pion, unsigned int action )
+    {
+        boost::shared_ptr< PHY_Action_ABC > pAction = pion.GetAction( action );
+        if( pAction )
+            pAction->Resume();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Decision::RegisterControlActions
+// Created: SLI 2012-03-20
+// -----------------------------------------------------------------------------
+void RolePion_Decision::RegisterControlActions()
+{
+    RegisterFunction( "DEC__StopAction",
+        boost::function< unsigned int( unsigned int ) >( boost::bind( &StopAction, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_PauseAction",
+        boost::function< void( unsigned int ) >( boost::bind( &PauseAction, boost::ref( GetPion() ), _1 ) ) );
+    RegisterFunction( "DEC_ReprendAction",
+        boost::function< void( unsigned int ) >( boost::bind( &ResumeAction, boost::ref( GetPion() ), _1 ) ) );
+}
 
 namespace core
 {
@@ -294,7 +335,6 @@ namespace
         result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
         return result;
     }
-
     std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( const MIL_Agent_ABC& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Object > oId, const std::vector< std::string >& params )
     {
         if( params.empty() )
@@ -399,13 +439,6 @@ namespace
             return boost::shared_ptr< MT_Vector2D >();
         return GET_HOOK( PathGetLastPointOfPath )( adapter->Get() );
     }
-    unsigned int StartCommand( Sink& sink, MIL_AgentPion& pion, const std::string& name, const core::Model& parameters )
-    {
-        std::size_t id = sink.StartCommand( name, parameters );
-        boost::shared_ptr< PHY_Action_ABC > action( new sword::Action( sink, pion, id ) );
-        pion.RegisterAction( action );
-        return action->GetId();
-    }
     unsigned int StartMovement( Sink& sink, MIL_AgentPion& pion, const boost::shared_ptr< DEC_Path_ABC >& path )
     {
         core::Model parameters;
@@ -413,41 +446,6 @@ namespace
         parameters[ "path" ].SetUserData( path );
         return StartCommand( sink, pion, "move", parameters );
     }
-    unsigned int StopAction( MIL_AgentPion& pion, unsigned int action )
-    {
-        pion.UnregisterAction( action );
-        return 0u;
-    }
-    void PauseAction( const MIL_AgentPion& pion, unsigned int action )
-    {
-        boost::shared_ptr< PHY_Action_ABC > pAction = pion.GetAction( action );
-        if( pAction )
-            pAction->Suspend();
-    }
-    void ResumeAction( const MIL_AgentPion& pion, unsigned int action )
-    {
-        boost::shared_ptr< PHY_Action_ABC > pAction = pion.GetAction( action );
-        if( pAction )
-            pAction->Resume();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: RolePion_Decision::RegisterControlActions
-// Created: SLI 2012-03-20
-// -----------------------------------------------------------------------------
-void RolePion_Decision::RegisterControlActions()
-{
-    RegisterFunction( "DEC__StopAction",
-        boost::function< unsigned int( unsigned int ) >( boost::bind( &StopAction, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_PauseAction",
-        boost::function< void( unsigned int ) >( boost::bind( &PauseAction, boost::ref( GetPion() ), _1 ) ) );
-    RegisterFunction( "DEC_ReprendAction",
-        boost::function< void( unsigned int ) >( boost::bind( &ResumeAction, boost::ref( GetPion() ), _1 ) ) );
-}
-
-namespace
-{
     void Orientate( Sink& sink, MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D > direction )
     {
         core::Model parameters;
