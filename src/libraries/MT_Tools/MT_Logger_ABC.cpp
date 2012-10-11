@@ -45,7 +45,9 @@ void MT_Logger_ABC::Log( E_LogLevel nLevel, const char* strMessage, const char* 
 
     char timestamp[100];
     const time_t nTime = time( NULL );
-    strftime( timestamp, sizeof( timestamp )/sizeof( *timestamp ), strTimestamp_.c_str(), localtime( &nTime ) );
+    const size_t written = strftime( timestamp, sizeof( timestamp )/sizeof( *timestamp ),
+        strTimestamp_.c_str(), localtime( &nTime ) );
+    timestamp[written] = '\0';
 
     std::stringstream output;
     output << "[" << timestamp << "] ";
