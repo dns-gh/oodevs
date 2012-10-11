@@ -31,6 +31,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Automat::Automat( const AutomatType& type, Controller& controller, tools::IdManager& idManager, const QString& name )
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
+    , type_( type )
 {
     name_ = name.isEmpty() ? type.GetName().c_str() : name;
     RegisterSelf( *this );
@@ -40,8 +41,9 @@ Automat::Automat( const AutomatType& type, Controller& controller, tools::IdMana
 // Name: Automat constructor
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-Automat::Automat( xml::xistream& xis, Controller& controller, tools::IdManager& idManager )
+Automat::Automat( xml::xistream& xis, Controller& controller, tools::IdManager& idManager, const AutomatType& type )
     : EntityImplementation< Automat_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
+    , type_ ( type )
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
@@ -93,4 +95,13 @@ void Automat::InitializeSymbol() const
 const LogisticLevel& Automat::GetLogisticLevel() const
 {
     return Get< LogisticLevelAttritube >().GetLogisticLevel();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetLogisticLevel
+// Created: AHC 2010-10-07
+// -----------------------------------------------------------------------------
+const AutomatType& Automat::GetType() const
+{
+    return type_;
 }

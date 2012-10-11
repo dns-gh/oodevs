@@ -155,6 +155,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\dispatcher_test\FormationTest.cpp" />
+    <ClCompile Include="..\..\src\tests\dispatcher_test\Helpers .cpp" />
     <ClCompile Include="..\..\src\tests\dispatcher_test\KnowledgeGroupTest.cpp" />
     <ClCompile Include="..\..\src\tests\dispatcher_test\ObjectKnowledgeTest.cpp" />
     <ClCompile Include="..\..\src\tests\dispatcher_test\ObjectTest.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="..\..\src\tests\dispatcher_test\MockModel.h" />
     <ClInclude Include="..\..\src\tests\dispatcher_test\MockObject.h" />
     <ClInclude Include="..\..\src\tests\dispatcher_test\MockObjectKnowledge.h" />
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockResolver.h" />
     <ClInclude Include="..\..\src\tests\dispatcher_test\MockSide.h" />
     <ClInclude Include="..\..\src\tests\dispatcher_test\MockUrbanObject.h" />
   </ItemGroup>

@@ -31,6 +31,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Automat::Automat( const sword::AutomatCreation& message, Controller& controller, const kernel::AutomatType& type )
     : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ), true )
+    , type_( type )
     , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
@@ -98,4 +99,13 @@ void Automat::InitializeSymbol() const
 const kernel::LogisticLevel& Automat::GetLogisticLevel() const
 {
     return *logisticLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetType
+// Created: AHC 2012-10-11
+// -------------------------------------------------------------------------------
+const kernel::AutomatType& Automat::GetType() const
+{
+    return type_;
 }

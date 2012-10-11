@@ -18,45 +18,9 @@
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/MissionFactory.h"
 #include "clients_kernel/MissionType.h"
-#include "clients_kernel/SymbolFactory.h"
 #include "dispatcher/Agent.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
-
-namespace
-{
-    std::auto_ptr< kernel::DecisionalModel > MakeDecisionalModel()
-    {
-        const tools::Resolver< kernel::FragOrderType, std::string > fragOrdersResolver;
-        const tools::Resolver< kernel::MissionType, std::string > missionResolver;
-        kernel::MissionFactory factory( missionResolver, missionResolver, missionResolver, fragOrdersResolver );
-        const tools::Resolver< kernel::FragOrderType > fragOrders;
-        const std::string xml( "<model name='my_model'/>" );
-        xml::xistringstream xis( xml );
-        xis >> xml::start( "model" );
-        return std::auto_ptr< kernel::DecisionalModel >( new kernel::DecisionalModel( xis, factory, &kernel::MissionFactory::CreateAgentMission, fragOrders ) );
-    }
-
-    std::auto_ptr< kernel::DecisionalModel > model( MakeDecisionalModel() );
-
-    std::auto_ptr< kernel::AgentType > MakeAgentType()
-    {
-        const tools::Resolver< kernel::ComponentType, std::string > componentResolver;
-        tools::Resolver< kernel::DecisionalModel, std::string > modelResolver;
-        modelResolver.Register( model->GetName(), *model );
-        const kernel::SymbolFactory symbolFactory;
-        const std::string xml(
-            "<type name='my_name' type='my_type' id='42' decisional-model='my_model'>"
-                "<nature level='iii' nature-app6='undefined/undefined' atlas-nature='none'/>"
-                "<equipments/>"
-                "<crew-ranks/>"
-            "</type>"
-        );
-        xml::xistringstream xis( xml );
-        xis >> xml::start( "type" );
-        return std::auto_ptr< kernel::AgentType >( new kernel::AgentType( xis, componentResolver, modelResolver, symbolFactory ) );
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: Agent_IsCreatedUnderAnAutomat
@@ -64,6 +28,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
 {
+    dispatcher_test::StaticModel staticModel;
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
@@ -72,7 +37,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
 
     // agent types
     tools::Resolver< kernel::AgentType > types;
-    std::auto_ptr< kernel::AgentType > type( MakeAgentType() );
+    boost::shared_ptr< kernel::AgentType > type( staticModel.MakeAgentType() );
     types.Register( type->GetId(), *type );
 
     // models
@@ -110,6 +75,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
 {
+    dispatcher_test::StaticModel staticModel;
     // agents
     tools::Resolver< dispatcher::Agent_ABC > agents;
 
@@ -121,7 +87,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
 
     // agent types
     tools::Resolver< kernel::AgentType > types;
-    std::auto_ptr< kernel::AgentType > type( MakeAgentType() );
+    boost::shared_ptr< kernel::AgentType > type( staticModel.MakeAgentType() );
     types.Register( type->GetId(), *type );
 
     // models
@@ -246,6 +212,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Agent_IsCreatedWithExtensions )
 {
+    dispatcher_test::StaticModel staticModel;
     // automats
     tools::Resolver< dispatcher::Automat_ABC > automats;
     MockAutomat automat( 51 );
@@ -254,7 +221,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedWithExtensions )
 
     // agent types
     tools::Resolver< kernel::AgentType > types;
-    std::auto_ptr< kernel::AgentType > type( MakeAgentType() );
+    boost::shared_ptr< kernel::AgentType > type( staticModel.MakeAgentType() );
     types.Register( type->GetId(), *type );
 
     // models

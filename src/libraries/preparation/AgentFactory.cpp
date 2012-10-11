@@ -257,7 +257,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     const kernel::AutomatType* type = static_.types_.Resolver< kernel::AutomatType, std::string >::Find( xis.attribute< std::string >( "type" ) );
     if( !type )
         return 0;
-    Automat* result = new Automat( xis, controllers_.controller_, idManager_ );
+    Automat* result = new Automat( xis, controllers_.controller_, idManager_, *type );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach( *new kernel::EntityType< kernel::AutomatType >( *result, *type, dictionary ) );
     result->Attach< kernel::Positions >( *new AutomatPositions( *result ) );

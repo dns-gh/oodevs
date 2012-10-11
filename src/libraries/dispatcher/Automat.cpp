@@ -19,6 +19,8 @@
 #include "LogisticEntity.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/DecisionalModel.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/bind.hpp>
@@ -29,11 +31,11 @@ using namespace dispatcher;
 // Name: Automat constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const std::string& decisionalModel )
+Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const tools::Resolver_ABC< kernel::AutomatType >& types )
     : Automat_ABC       ( msg.automat().id(), QString( msg.name().c_str() ) )
     , model_            ( model )
     , decisionalInfos_  ( model )
-    , type_             ( msg.type().id() )
+    , type_             ( types.Get( msg.type().id() ) )
     , team_             ( model.Sides().Get( msg.party().id() ) )
     , parentFormation_  ( msg.parent().has_formation() ? &model.Formations().Get( msg.parent().formation().id() ) : 0 )
     , parentAutomat_    ( msg.parent().has_automat() ? &model.Automats().Get( msg.parent().automat().id() ) : 0 )
@@ -47,7 +49,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const std
     , nRoe_             ( sword::RulesOfEngagement::fire_upon_order )
     , order_            ( 0 )
     , app6symbol_       ( msg.app6symbol() )
-    , decisionalModel_  ( decisionalModel )
+    , decisionalModel_  ( type_.GetDecisionalModel().GetName() )
 {
     if( ! parentFormation_ && ! parentAutomat_ )
         throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.name() );
@@ -277,7 +279,7 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::AutomatCreation asn;
     asn().mutable_automat()->set_id( GetId() );
-    asn().mutable_type()->set_id( type_ );
+    asn().mutable_type()->set_id( type_.GetId() );
     asn().set_name( GetName() );
     asn().mutable_party()->set_id( team_.GetId() );
     asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
@@ -511,4 +513,13 @@ bool Automat::GetExtension( const std::string& key, std::string& result ) const
 const std::string& Automat::GetApp6Symbol() const
 {
     return app6symbol_; 
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetType
+// Created: AHC 2012-10-11
+// -----------------------------------------------------------------------------
+const kernel::AutomatType& Automat::GetType() const
+{
+    return type_;
 }

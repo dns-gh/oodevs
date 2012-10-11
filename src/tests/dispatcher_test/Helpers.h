@@ -11,6 +11,15 @@
 #define __Helpers_h_
 
 #include "protocol/ClientSenders.h"
+#include <boost/shared_ptr.hpp>
+#include <vector>
+
+namespace kernel
+{
+    class DecisionalModel;
+    class AgentType;
+    class AutomatType;
+}
 
 // =============================================================================
 /** @class  Helpers
@@ -25,6 +34,20 @@ namespace sword
         BOOST_CHECK_EQUAL( lhs.DebugString(), rhs.DebugString() );
         return true;
     }
+}
+
+namespace dispatcher_test
+{
+    class StaticModel
+    {
+    public:
+        boost::shared_ptr< kernel::DecisionalModel > MakeDecisionalModel();
+        boost::shared_ptr< kernel::AgentType > MakeAgentType();
+        boost::shared_ptr< kernel::AutomatType > MakeAutomatType();
+    private:
+        std::vector< boost::shared_ptr< kernel::DecisionalModel > > decisionalModels_;
+        std::vector< boost::shared_ptr< kernel::AgentType > > agents_;
+    };
 }
 
 #endif // __Helpers_h_

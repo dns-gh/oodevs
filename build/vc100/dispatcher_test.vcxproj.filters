@@ -49,6 +49,9 @@
     <ClCompile Include="..\..\src\tests\dispatcher_test\UrbanObjectTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\Helpers .cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\dispatcher_test\dispatcher_test_pch.h">
@@ -88,6 +91,9 @@
       <Filter>Source Files\Mocks</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\dispatcher_test\MockUrbanObject.h">
+      <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\dispatcher_test\MockResolver.h">
       <Filter>Source Files\Mocks</Filter>
     </ClInclude>
   </ItemGroup>

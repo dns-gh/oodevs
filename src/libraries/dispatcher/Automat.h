@@ -14,6 +14,7 @@
 #include "DecisionalState.h"
 #include "LogisticHierarchy.h"
 #include "protocol/SimulationSenders.h"
+#include "tools/Resolver_ABC.h"
 
 namespace sword
 {
@@ -59,12 +60,13 @@ class Automat : public Automat_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( Model_ABC& model, const sword::AutomatCreation& msg, const std::string& decisionalModel );
+             Automat( Model_ABC& model, const sword::AutomatCreation& msg, const tools::Resolver_ABC< kernel::AutomatType >& types );
     virtual ~Automat();
     //@}
 
     //! @name Accessors
     //@{
+    virtual const kernel::AutomatType& GetType() const;
     virtual bool IsEngaged() const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     virtual LogisticEntity_ABC* GetLogisticEntity() const;
@@ -124,7 +126,7 @@ private:
     //! @name Member data
     //@{
     Model_ABC& model_;
-    const unsigned long type_; // XML reference - no resolved by dispatcher
+    const kernel::AutomatType& type_;
     dispatcher::Team_ABC& team_;
     dispatcher::Formation_ABC* parentFormation_;
     dispatcher::Automat_ABC* parentAutomat_;

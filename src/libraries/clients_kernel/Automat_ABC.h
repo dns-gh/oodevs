@@ -40,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual const AutomatType& GetType() const = 0;
     virtual const LogisticLevel& GetLogisticLevel() const = 0;
 
     virtual const std::string& GetTypeName() const;

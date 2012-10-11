@@ -49,6 +49,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual const kernel::AutomatType& GetType() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
@@ -67,6 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::AutomatType& type_;
     mutable std::string symbol_; // $$$$ RC LDC: code duplication with preparation
     mutable std::string level_;
     const kernel::LogisticLevel* logisticLevel_;

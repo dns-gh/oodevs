@@ -288,8 +288,7 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_unit_destruction() )
         Destroy( agents_, message.unit_destruction().unit().id(), message.unit_destruction() );
     else if( message.has_automat_creation() )
-        CreateUpdate< Automat >( automats_, message.automat_creation().automat().id(), message.automat_creation(),
-                static_cast<const tools::Resolver< kernel::AutomatType >& >(staticModel_.types_).Get( message.automat_creation().type().id() ).GetDecisionalModel().GetName() );
+        CreateUpdate< Automat >( automats_, message.automat_creation().automat().id(), message.automat_creation(), staticModel_.types_ );
     else if( message.has_automat_destruction() )
         Destroy( automats_, message.automat_destruction().automat().id(), message.automat_destruction() );
     else if( message.has_unit_attributes() )

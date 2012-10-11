@@ -45,13 +45,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              Automat( const kernel::AutomatType& type, kernel::Controller& controller, tools::IdManager& idManager, const QString& name );
-             Automat( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager );
+             Automat( xml::xistream& xis, kernel::Controller& controller, tools::IdManager& idManager, const kernel::AutomatType& type );
     virtual ~Automat();
     //@}
 
     //! @name Operations
     //@{
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
+    const kernel::AutomatType& GetType() const;
     //@}
 
     //! @name Extensions
@@ -74,6 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::AutomatType& type_;
     mutable std::string symbol_;
     mutable std::string level_;
     //@}
