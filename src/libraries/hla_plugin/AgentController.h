@@ -79,7 +79,7 @@ public:
                               const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
                               tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter, bool sendPlatforms,
                               const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver, bool fullOrbat,
-                              dispatcher::Logger_ABC& logger );
+                              dispatcher::Logger_ABC& logger, const rpr::EntityTypeResolver_ABC& automatEntityTypeResolver );
     virtual ~AgentController();
     //@}
 
@@ -134,6 +134,7 @@ private:
     const SideResolver_ABC& sideResolver_;
     const LocalAgentResolver_ABC& localAgentResolver_;
     dispatcher::Logger_ABC& logger_;
+    const rpr::EntityTypeResolver_ABC& automatEntityTypeResolver_;
     T_Listeners listeners_;
     T_Agents agents_;
     T_AgentAdapters adapters_;
