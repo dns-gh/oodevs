@@ -90,14 +90,7 @@ void SIM_NetworkLogger::LogString( E_LogLevel nLevel, const char* szMsg, const c
 {
     boost::lock_guard< boost::mutex > locker( *mutex_ );
     std::stringstream s;
-    s << "[" << GetTimestampAsString() << "]";
-    s << " " << GetLogLevelAsString( nLevel ) << " -";
-    s << " " << szMsg;
-    if( nCode != -1 )
-        s << " (" << nCode << ")";
-    if( strContext )
-        s << " [Context: " << strContext << "]";
-    s << std::endl;
+    MakeString( nLevel, szMsg, strContext, nCode, s );
     for( CIT_Sockets it = sockets_.begin(); it != sockets_.end(); ++it )
         boost::asio::async_write( **it, boost::asio::buffer( s.str().data(), s.str().size() ),
                                   boost::bind( &SIM_NetworkLogger::OnWrite, this, *it, boost::asio::placeholders::error ) ) ;
