@@ -51,7 +51,7 @@ MessageLoader::MessageLoader( const Config& config, bool threaded, ClientPublish
         cpu_.reset ( new tools::thread::ThreadPool( 1 ) );
     }
     folderObserver_.reset( new boost::thread( boost::bind( &MessageLoader::ScanData, this ) ) );
-    boost::unique_lock< boost::mutex > lock( initMutex_ );
+    boost::mutex::scoped_lock lock( initMutex_ );
     while( !initReady_ )
         initCondition_.wait( lock );
 }
