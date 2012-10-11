@@ -91,7 +91,8 @@ void SIM_NetworkLogger::LogString( E_LogLevel nLevel, const char* szMsg, const c
     boost::lock_guard< boost::mutex > locker( *mutex_ );
     std::stringstream s;
     MakeString( nLevel, szMsg, strContext, nCode, s );
+    std::string str = s.str();
     for( CIT_Sockets it = sockets_.begin(); it != sockets_.end(); ++it )
-        boost::asio::async_write( **it, boost::asio::buffer( s.str().data(), s.str().size() ),
+        boost::asio::async_write( **it, boost::asio::buffer( str.data(), str.size() ),
                                   boost::bind( &SIM_NetworkLogger::OnWrite, this, *it, boost::asio::placeholders::error ) ) ;
 }
