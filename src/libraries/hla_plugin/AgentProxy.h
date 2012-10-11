@@ -18,6 +18,7 @@
 namespace dispatcher
 {
     class Agent_ABC;
+    class Logger_ABC;
 }
 
 namespace rpr
@@ -52,7 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
-                     const LocalAgentResolver_ABC& localAgentResolver, bool doDisaggregation );
+                     const LocalAgentResolver_ABC& localAgentResolver, bool doDisaggregation, dispatcher::Logger_ABC& logger );
     virtual ~AgentProxy();
     //@}
 
@@ -81,6 +82,7 @@ private:
     const ComponentTypes_ABC& componentTypes_;
     const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
     const LocalAgentResolver_ABC& localAgentResolver_;
+    dispatcher::Logger_ABC& logger_;
     EventListenerComposite listeners_;
     //@}
 };

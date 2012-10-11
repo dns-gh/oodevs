@@ -34,7 +34,9 @@ BOOST_AUTO_TEST_CASE( entity_type_resolver_finds_exactly_type )
                              "    <entry name='exact' dis='1'/>"
                              "</dis-mapping>" );
     const EntityTypeResolver resolver( xis );
-    BOOST_CHECK_EQUAL( EntityType( "1" ), resolver.Find( "exact" ) );
+    rpr::EntityType val;
+    BOOST_REQUIRE( resolver.Find( "exact", val ) );
+    BOOST_CHECK_EQUAL( EntityType( "1" ), val );
 }
 
 BOOST_AUTO_TEST_CASE( entity_type_resolver_finds_approxymatly_type )
@@ -43,14 +45,18 @@ BOOST_AUTO_TEST_CASE( entity_type_resolver_finds_approxymatly_type )
                              "    <entry name='exactly' dis='1'/>"
                              "</dis-mapping>" );
     const EntityTypeResolver resolver( xis );
-    BOOST_CHECK_EQUAL( EntityType( "1" ), resolver.Find( "other" ) );
+    rpr::EntityType val;
+    BOOST_REQUIRE( resolver.Find( "other", val ) );
+    BOOST_CHECK_EQUAL( EntityType( "1" ), val );
 }
 
 BOOST_AUTO_TEST_CASE( entity_type_resolver_returns_default_type_if_nothing_matchs )
 {
     xml::xistringstream xis( "<dis-mapping default-type='0' default-name='default' threshold='0'/>" );
     const EntityTypeResolver resolver( xis );
-    BOOST_CHECK_EQUAL( EntityType( "0" ), resolver.Find( "other" ) );
+    rpr::EntityType val;
+    BOOST_REQUIRE( !resolver.Find( "other", val ) );
+    BOOST_CHECK_EQUAL( EntityType( "0" ), val );
 }
 
 BOOST_AUTO_TEST_CASE( entity_type_resolver_resolves_name_from_exact_type )
@@ -59,8 +65,11 @@ BOOST_AUTO_TEST_CASE( entity_type_resolver_resolves_name_from_exact_type )
                              "    <entry name='exact' dis='1 2 3'/>"
                              "</dis-mapping>" );
     const EntityTypeResolver resolver( xis );
-    BOOST_CHECK_EQUAL( "exact", resolver.Resolve( EntityType( "1 2 3" ) ) );
-    BOOST_CHECK_EQUAL( "default", resolver.Resolve( EntityType( "1 2 4" ) ) );
+    std::string val;
+    BOOST_REQUIRE( resolver.Resolve( EntityType( "1 2 3" ), val ) );
+    BOOST_CHECK_EQUAL( "exact", val );
+    resolver.Resolve( EntityType( "1 2 4" ), val );
+    BOOST_CHECK_EQUAL( "default", val );
 }
 
 BOOST_AUTO_TEST_CASE( entity_type_resolver_resolves_name_from_best_matching_type )
@@ -70,10 +79,15 @@ BOOST_AUTO_TEST_CASE( entity_type_resolver_resolves_name_from_best_matching_type
                              "    <entry name='other' dis='1 2 3'/>"
                              "</dis-mapping>" );
     const EntityTypeResolver resolver( xis );
-    BOOST_CHECK_EQUAL( "other", resolver.Resolve( EntityType( "1 2" ) ) );
-    BOOST_CHECK_EQUAL( "other", resolver.Resolve( EntityType( "1 2 0 0 0 0" ) ) );
-    BOOST_CHECK_EQUAL( "other", resolver.Resolve( EntityType( "1 2 3 4 5" ) ) );
-    BOOST_CHECK_EQUAL( "other", resolver.Resolve( EntityType( "1 2 4" ) ) );
+    std::string val;
+    BOOST_REQUIRE( resolver.Resolve( EntityType( "1 2" ), val ) );
+    BOOST_CHECK_EQUAL( "other", val );
+    BOOST_REQUIRE( resolver.Resolve( EntityType( "1 2 0 0 0 0" ), val ) );
+    BOOST_CHECK_EQUAL( "other", val );
+    BOOST_REQUIRE( resolver.Resolve( EntityType( "1 2 3 4 5" ), val ) );
+    BOOST_CHECK_EQUAL( "other", val );
+    BOOST_REQUIRE( resolver.Resolve( EntityType( "1 2 4" ), val ) );
+    BOOST_CHECK_EQUAL( "other", val );
 }
 
 BOOST_AUTO_TEST_CASE( entity_type_resolver_returns_default_name_if_nothing_matchs_with_realistic_threshold )
@@ -83,5 +97,7 @@ BOOST_AUTO_TEST_CASE( entity_type_resolver_returns_default_name_if_nothing_match
                              "    <entry name='no-match' dis='4 5 6'/>"
                              "</dis-mapping>" );
     const EntityTypeResolver resolver( xis );
-    BOOST_CHECK_EQUAL( "default", resolver.Resolve( EntityType( "7 8 9" ) ) );
+    std::string val;
+    BOOST_REQUIRE( !resolver.Resolve( EntityType( "7 8 9" ), val ) );
+    BOOST_CHECK_EQUAL( "default", val );
 }

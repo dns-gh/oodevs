@@ -18,6 +18,7 @@
 #include "MockHlaObject.h"
 #include "MockHlaClass.h"
 #include "MockTeam.h"
+#include "MockLogger.h"
 
 #include "protocol/SimulationSenders.h"
 
@@ -41,12 +42,13 @@ struct Fixture
     dispatcher::MockSimulationPublisher publisher;
     MockRemoteTacticalObjectSubject remoteSubject;
     ClassListener_ABC* remoteListener;
+    dispatcher::MockLogger logger;
 };
 
 struct ControllerFixture : Fixture
 {
     ControllerFixture()
-        : controller( extent, sideResolver, objectTypeResolver, publisher, remoteSubject )
+        : controller( extent, sideResolver, objectTypeResolver, publisher, remoteSubject, logger )
     {
         BOOST_CHECK( remoteListener );
     }
@@ -69,7 +71,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_point_object,
     remoteListener->RemoteCreated( "an_object", clazz, object ); 
     BOOST_CHECK( objectListener );
 
-    MOCK_EXPECT( objectTypeResolver.Resolve ).once().with( mock::same( objectType ) ).returns( "an_object_type" );
+    MOCK_EXPECT( objectTypeResolver.Resolve ).once().with( mock::same( objectType ), mock::assign( "an_object_type" ) ).returns( true );
     objectListener->TypeChanged( "an_object", objectType );
 
     objectListener->Moved( "an_object", 42.0, 42.1 );
@@ -113,7 +115,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_polygon_objec
     remoteListener->RemoteCreated( "an_object", clazz, object ); 
     BOOST_CHECK( objectListener );
 
-    MOCK_EXPECT( objectTypeResolver.Resolve ).once().with( mock::same( objectType ) ).returns( "an_object_type" );
+    MOCK_EXPECT( objectTypeResolver.Resolve ).once().with( mock::same( objectType ), mock::assign( "an_object_type" ) ).returns( true );
     objectListener->TypeChanged( "an_object", objectType );
 
     objectListener->Moved( "an_object", 42.0, 42.1 );

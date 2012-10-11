@@ -39,7 +39,7 @@ AutomatTypeResolver::~AutomatTypeResolver()
 // -----------------------------------------------------------------------------
 unsigned long AutomatTypeResolver::Resolve( const std::string& automatTypeName ) const
 {
-    kernel::AutomatType* type = automatTypes_.Find( automatTypeName );
+    kernel::AutomatType* type = automatTypes_.Find( automatTypeName ); 
     if( type == 0 )
         return 0;
     return type->GetId();

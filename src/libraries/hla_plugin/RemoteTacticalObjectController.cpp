@@ -15,6 +15,7 @@
 #include "RemoteTacticalObjectSubject_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/Team_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include "rpr/EntityTypeResolver_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -29,12 +30,13 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 RemoteTacticalObjectController::RemoteTacticalObjectController( const ExtentResolver_ABC& extent, const SideResolver_ABC& sideResolver,
     const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, dispatcher::SimulationPublisher_ABC& publisher,
-    RemoteTacticalObjectSubject_ABC& subject )
+    RemoteTacticalObjectSubject_ABC& subject, dispatcher::Logger_ABC& logger )
     : extent_( extent )
     , sideResolver_( sideResolver )
     , objectEntityTypeResolver_( objectEntityTypeResolver )
     , publisher_( publisher )
     , subject_( subject )
+    , logger_( logger )
 {
     subject_.RegisterTactical( *this );
 }
@@ -164,7 +166,9 @@ void RemoteTacticalObjectController::TypeChanged( const std::string& identifier,
     if( objectCreations_.end() == it)
         return;
     simulation::ObjectMagicAction& message = *it->second;
-    std::string objTypeName ( objectEntityTypeResolver_.Resolve( type ) );
+    std::string objTypeName;
+    if( !objectEntityTypeResolver_.Resolve( type, objTypeName ) )
+        logger_.LogWarning( std::string( "Could not find object for EntityType: ") + type.str() );
     message().mutable_parameters()->mutable_elem( 0 )->mutable_value()->Add()->set_acharstr( objTypeName.c_str() );
     Send( message, identifier );
 }

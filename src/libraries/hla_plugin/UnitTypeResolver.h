@@ -12,6 +12,11 @@
 
 #include "UnitTypeResolver_ABC.h"
 
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace rpr
 {
     class EntityTypeResolver_ABC;
@@ -42,7 +47,8 @@ class UnitTypeResolver : public UnitTypeResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::AgentType, std::string >& agentTypeResolver );
+             UnitTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::AgentType, std::string >& agentTypeResolver,
+                               dispatcher::Logger_ABC& logger );
     virtual ~UnitTypeResolver();
     //@}
 
@@ -56,6 +62,7 @@ private:
     //@{
     const rpr::EntityTypeResolver_ABC& entityTypeResolver_;
     const tools::Resolver_ABC< kernel::AgentType, std::string >& agentTypeResolver_;
+    dispatcher::Logger_ABC& logger_;
     const unsigned long defaultType_;
     //@}
 };

@@ -23,7 +23,9 @@ namespace
     void readResource( xml::xistream& xis, const rpr::EntityTypeResolver_ABC& dotationResolver, std::vector< rpr::EntityType >& resources )
     {
         const std::string name( xis.attribute< std::string >( "name" ) );
-        resources.push_back( dotationResolver.Find( name ) );
+        rpr::EntityType val;
+        dotationResolver.Find( name, val );
+        resources.push_back( val );
     }
 }
 

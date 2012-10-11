@@ -22,6 +22,7 @@
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
+    class Logger_ABC;
 }
 
 namespace tools
@@ -67,7 +68,8 @@ public:
              EquipmentUpdater( RemoteAgentSubject_ABC& subject, ContextHandler_ABC< sword::UnitCreation >& handler,
                                dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory,
                                const rpr::EntityTypeResolver_ABC& resolver, const ComponentTypes_ABC& componentTypes,
-                               tools::MessageController_ABC< sword::SimToClient_Content >& messageController );
+                               tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
+                               dispatcher::Logger_ABC& logger );
     virtual ~EquipmentUpdater();
     //@}
 
@@ -119,10 +121,11 @@ private:
     dispatcher::SimulationPublisher_ABC& publisher_;
     const ContextFactory_ABC& factory_;
     const rpr::EntityTypeResolver_ABC& resolver_;
+    const ComponentTypes_ABC& componentTypes_;
+    dispatcher::Logger_ABC& logger_;
     T_Identifiers identifiers_;
     T_Agents remoteAgents_;
     T_Agents agentTypes_;
-    const ComponentTypes_ABC& componentTypes_;
     //@}
 };
 

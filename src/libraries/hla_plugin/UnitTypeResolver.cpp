@@ -9,6 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "UnitTypeResolver.h"
+#include "dispatcher/Logger_ABC.h"
 #include "rpr/EntityTypeResolver_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/AgentType.h"
@@ -19,7 +20,8 @@ namespace
 {
     unsigned long GetDefault( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::AgentType, std::string >& agentTypeResolver )
     {
-        const std::string defaultType = entityTypeResolver.Resolve( rpr::EntityType() );
+        std::string defaultType;
+        entityTypeResolver.Resolve( rpr::EntityType(), defaultType );
         const kernel::AgentType* agentType = agentTypeResolver.Find( defaultType );
         if( agentType == 0 )
             throw std::runtime_error( "Agent type identifier '" + defaultType + "' not found, please check your physical model." );
@@ -31,10 +33,12 @@ namespace
 // Name: UnitTypeResolver constructor
 // Created: SLI 2011-09-15
 // -----------------------------------------------------------------------------
-UnitTypeResolver::UnitTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::AgentType, std::string >& agentTypeResolver )
+UnitTypeResolver::UnitTypeResolver( const rpr::EntityTypeResolver_ABC& entityTypeResolver, const tools::Resolver_ABC< kernel::AgentType, std::string >& agentTypeResolver,
+                                dispatcher::Logger_ABC& logger )
     : entityTypeResolver_( entityTypeResolver )
     , agentTypeResolver_ ( agentTypeResolver )
     , defaultType_       ( GetDefault( entityTypeResolver, agentTypeResolver ) )
+    , logger_            ( logger )
 {
     // NOTHING
 }
@@ -54,7 +58,9 @@ UnitTypeResolver::~UnitTypeResolver()
 // -----------------------------------------------------------------------------
 unsigned long UnitTypeResolver::Resolve( const rpr::EntityType& type ) const
 {
-    const std::string defaultType = entityTypeResolver_.Resolve( type );
+    std::string defaultType;
+    if( !entityTypeResolver_.Resolve( type, defaultType ) )
+        logger_.LogWarning( std::string( "Could not find Unit for EntityType ") + type.str() );
     const kernel::AgentType* agentType = agentTypeResolver_.Find( defaultType );
     if( agentType == 0 )
         return defaultType_;

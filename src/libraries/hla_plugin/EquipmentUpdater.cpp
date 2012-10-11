@@ -16,6 +16,7 @@
 #include "ComponentTypeVisitor_ABC.h"
 #include "HlaObject_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include "rpr/EntityTypeResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "tools/MessageController_ABC.h"
@@ -30,13 +31,15 @@ using namespace plugins::hla;
 EquipmentUpdater::EquipmentUpdater( RemoteAgentSubject_ABC& subject, ContextHandler_ABC< sword::UnitCreation >& handler,
                                     dispatcher::SimulationPublisher_ABC& publisher, const ContextFactory_ABC& factory,
                                     const rpr::EntityTypeResolver_ABC& resolver, const ComponentTypes_ABC& componentTypes,
-                                    tools::MessageController_ABC< sword::SimToClient_Content >& messageController )
+                                    tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
+                                    dispatcher::Logger_ABC& logger )
     : subject_       ( subject )
     , handler_       ( handler )
     , publisher_     ( publisher )
     , factory_       ( factory )
     , resolver_      ( resolver )
     , componentTypes_( componentTypes )
+    , logger_        ( logger )
 {
     subject_.Register( *this );
     handler_.Register( *this );
@@ -177,7 +180,9 @@ void EquipmentUpdater::TypeChanged( const std::string& /*identifier*/, const rpr
 // -----------------------------------------------------------------------------
 void EquipmentUpdater::EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number )
 {
-    const std::string equipmentName = resolver_.Resolve( equipmentType );
+    std::string equipmentName;
+    if (! resolver_.Resolve( equipmentType, equipmentName ) )
+        logger_.LogWarning( std::string( "Could not find equipment for EntityType: ") + equipmentType.str() );
     T_Component& component = remoteAgents_[ identifier ][ equipmentName ];
     if( component.second == number )
         return;

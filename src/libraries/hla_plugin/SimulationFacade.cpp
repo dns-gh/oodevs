@@ -83,10 +83,10 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pFormationCreater_          ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
     , pAutomatCreater_            ( new AutomatCreater( xis, *pFormationHandler_, *pAutomatHandler_, *pAutomatTypeResolver_, dynamicModel.KnowledgeGroups() ) )
     , pUnitTeleporter_            ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, localResolver, callsignResolver, logger ) )
-    , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController ) )
+    , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController, logger ) )
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
-    , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, publisher, remoteTacticalSubject ) )
+    , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, publisher, remoteTacticalSubject, logger ) )
     , pRemoteOrbatShaper_         ( xis.attribute< bool >( "send-full-orbat", false ) ?
                                     new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher ) : 0 )
 

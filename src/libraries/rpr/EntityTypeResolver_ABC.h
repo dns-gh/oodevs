@@ -32,8 +32,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual rpr::EntityType Find( const std::string& name ) const = 0;
-    virtual std::string Resolve( const rpr::EntityType& type ) const = 0;
+    virtual bool Find( const std::string& name, rpr::EntityType& result ) const = 0; // returns false if default value was used
+    virtual bool Resolve( const rpr::EntityType& type, std::string& result ) const = 0; // returns false if default value was used
     //@}
 };
 

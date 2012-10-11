@@ -45,7 +45,9 @@ DotationTypeResolver::~DotationTypeResolver()
 rpr::EntityType DotationTypeResolver::Resolve( unsigned int munitionIdentifier ) const
 {
     const kernel::DotationType& dotationType = dotationTypeResolver_.Get( munitionIdentifier );
-    return entityTypeResolver_.Find( dotationType.GetName() );
+    rpr::EntityType result;
+    entityTypeResolver_.Find( dotationType.GetName(), result );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -54,6 +56,7 @@ rpr::EntityType DotationTypeResolver::Resolve( unsigned int munitionIdentifier )
 // -----------------------------------------------------------------------------
 unsigned int DotationTypeResolver::Resolve( const rpr::EntityType& munitionType ) const
 {
-    const std::string munitionName = entityTypeResolver_.Resolve( munitionType );
+    std::string munitionName;
+    entityTypeResolver_.Resolve( munitionType, munitionName );
     return dotationNameResolver_.Get( munitionName ).GetId();
 }

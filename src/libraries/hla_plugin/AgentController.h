@@ -31,7 +31,7 @@ namespace dispatcher
     class Formation;
     class Automat_ABC;
     class Automat;
-
+    class Logger_ABC;
 }
 
 namespace rpr
@@ -78,7 +78,8 @@ public:
              AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
                               const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
                               tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter, bool sendPlatforms,
-                              const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver, bool fullOrbat );
+                              const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver, bool fullOrbat,
+                              dispatcher::Logger_ABC& logger );
     virtual ~AgentController();
     //@}
 
@@ -132,6 +133,7 @@ private:
     bool fullOrbat_;
     const SideResolver_ABC& sideResolver_;
     const LocalAgentResolver_ABC& localAgentResolver_;
+    dispatcher::Logger_ABC& logger_;
     T_Listeners listeners_;
     T_Agents agents_;
     T_AgentAdapters adapters_;

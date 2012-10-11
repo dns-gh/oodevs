@@ -22,6 +22,7 @@
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
+    class Logger_ABC;
 }
 namespace rpr
 {
@@ -58,7 +59,7 @@ public:
     //! @name Contructors destructors
     //@{
     RemoteTacticalObjectController( const ExtentResolver_ABC& extent, const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver,
-            dispatcher::SimulationPublisher_ABC& publisher_, RemoteTacticalObjectSubject_ABC& subject );
+            dispatcher::SimulationPublisher_ABC& publisher_, RemoteTacticalObjectSubject_ABC& subject, dispatcher::Logger_ABC& logger );
     virtual ~RemoteTacticalObjectController();
     //@}
 
@@ -107,6 +108,7 @@ private:
     const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver_;
     dispatcher::SimulationPublisher_ABC& publisher_;
     RemoteTacticalObjectSubject_ABC& subject_;
+    dispatcher::Logger_ABC& logger_;
     T_ObjectCreations objectCreations_;
     T_Centers centers_;
     T_Perimeters perimeters_;

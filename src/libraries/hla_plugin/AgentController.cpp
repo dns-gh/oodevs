@@ -22,6 +22,7 @@
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Formation.h"
+#include "dispatcher/Logger_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Karma.h"
@@ -47,7 +48,7 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
                                   const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
                                   tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter,
                                   bool sendPlatforms, const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver,
-                                  bool fullOrbat )
+                                  bool fullOrbat, dispatcher::Logger_ABC& logger )
     : model_                 ( model )
     , aggregatesResolver_    ( aggregatesResolver )
     , componentTypeResolver_ ( componentTypeResolver )
@@ -58,6 +59,7 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
     , fullOrbat_             ( fullOrbat )
     , sideResolver_          ( sideResolver )
     , localAgentResolver_    ( localAgentResolver )
+    , logger_                ( logger )
 {
     model_.RegisterFactory( *this );
 }
@@ -121,11 +123,13 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
     std::string remoteExt;
     bool isRemote = agent.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
 
-    T_Agent proxy( new AgentProxy( agent, componentTypes_, componentTypeResolver_, localAgentResolver_, doDisaggregation_ ) );
+    T_Agent proxy( new AgentProxy( agent, componentTypes_, componentTypeResolver_, localAgentResolver_, doDisaggregation_, logger_ ) );
     agents_.insert( T_Agents::value_type( agent.GetId(), proxy ) );
     const kernel::AgentType& agentType = agent.GetType();
     const std::string typeName = agentType.GetName();
-    const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
+    rpr::EntityType entityType;
+    if( !aggregatesResolver_.Find( typeName, entityType ) )
+        logger_.LogWarning( std::string( "Could not find EntityType for agent type: " ) + typeName );
     const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( agent.GetSuperior().GetTeam().GetId() );
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
         (*it)->AggregateCreated( *proxy, agent.GetId(), std::string( agent.GetName().ascii() ), forceIdentifier, entityType, agentType.GetSymbol(), !isRemote, agentType.GetId() );
@@ -175,7 +179,9 @@ void AgentController::NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agen
     static unsigned int identifier_factory = std::numeric_limits< short >::max();
     const std::string symbol( parent.GetType().GetSymbol() ); // FIXME
     const std::string typeName = platform.GetType().GetName();
-    const rpr::EntityType entityType = componentTypeResolver_.Find( typeName );
+    rpr::EntityType entityType;
+    if( !aggregatesResolver_.Find( typeName, entityType ) )
+        logger_.LogWarning( std::string( "Could not find EntityType for equipment type: " ) + typeName );
     const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( parent.GetSuperior().GetTeam().GetId() );
     unsigned int identifier = --identifier_factory;  // FIXME
     const std::string name( std::string( parent.GetName().toAscii().constData() ) + "_" + typeName + " " + boost::lexical_cast< std::string >( childIndex ) );
@@ -225,7 +231,10 @@ void AgentController::CreateAutomat( dispatcher::Automat_ABC& entity )
         T_Agent proxy( new AutomatProxy( entity, localAgentResolver_ ) );
         agents_.insert( T_Agents::value_type( entity.GetId(), proxy ) );
 		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );
-        const rpr::EntityType entityType = aggregatesResolver_.Find( "automat" ); // FIXME AHC
+        std::string typeName = "automat"; // FIXME AHC
+        rpr::EntityType entityType;
+        if( !aggregatesResolver_.Find( typeName, entityType ) )
+            logger_.LogWarning( std::string( "Could not find EntityType for automat type: " ) + typeName );
         for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->AggregateCreated( *proxy, entity.GetId(), entity.GetName().toStdString(), forceIdentifier, entityType, entity.GetApp6Symbol(), true, 116 /* FIXME AHC */ );
         // Must be done after HLA object was created
@@ -259,7 +268,10 @@ void AgentController::CreateFormation( dispatcher::Formation_ABC& entity )
         T_Agent proxy( new FormationProxy( entity, localAgentResolver_ ) );
         agents_.insert( T_Agents::value_type( entity.GetId(), proxy ) );
 		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );
-        const rpr::EntityType entityType = aggregatesResolver_.Find( "formation" ); // FIXME AHC
+        std::string typeName = "formation"; // FIXME AHC
+        rpr::EntityType entityType;
+        if( !aggregatesResolver_.Find( typeName, entityType ) )
+            logger_.LogWarning( std::string( "Could not find EntityType for formation type: " ) + typeName );
         for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->AggregateCreated( *proxy, entity.GetId(), entity.GetName().toStdString(), forceIdentifier, entityType, entity.GetApp6Symbol(), true, 116 /* FIXME AHC */ );
         // Must be done after HLA object was created

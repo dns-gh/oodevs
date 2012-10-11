@@ -23,8 +23,8 @@ namespace rpr
 // =============================================================================
 MOCK_BASE_CLASS( MockEntityTypeResolver, EntityTypeResolver_ABC )
 {
-    MOCK_METHOD( Find, 1 )
-    MOCK_METHOD( Resolve, 1 )
+    MOCK_METHOD( Find, 2 )
+    MOCK_METHOD( Resolve, 2 )
 };
 
 }

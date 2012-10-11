@@ -110,7 +110,9 @@ void AgentProxy::AddPlatform( const tic::Platform_ABC& platform )
     EntityStatePDU pdu( time_.GetTime(), exercise_, it->second );
     pdu.SetForceId   ( forceId_ );
     pdu.SetEntityName( MakeName( holder_, platform ) );
-    pdu.SetEntityType( resolver_.Find( platform.GetType().GetName() ) );
+    rpr::EntityType entityType;
+    resolver_.Find( platform.GetType().GetName(), entityType );
+    pdu.SetEntityType( entityType );
     switch( platform.GetState() )
     {
     default:

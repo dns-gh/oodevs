@@ -45,25 +45,28 @@ EntityTypeResolver::~EntityTypeResolver()
 // Name: EntityTypeResolver::Find
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-rpr::EntityType EntityTypeResolver::Find( const std::string& name ) const
+bool EntityTypeResolver::Find( const std::string& name, rpr::EntityType& result ) const
 {
-    rpr::EntityType& type = resolvedTypes_[ name ];
-    if( type == rpr::EntityType() )
+    bool retval = true;
+    result = resolvedTypes_[ name ];
+    if( result == rpr::EntityType() )
     {
         const rpr::EntityType* resolved = types_.Find( name );
-        type = resolved ? *resolved : defaultType_;
+        retval = ( resolved != 0 );
+        result = retval ? *resolved : defaultType_;
     }
-    return type;
+    return retval;
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityTypeResolver::Resolve
 // Created: SLI 2011-09-14
 // -----------------------------------------------------------------------------
-std::string EntityTypeResolver::Resolve( const rpr::EntityType& type ) const
+bool EntityTypeResolver::Resolve( const rpr::EntityType& type, std::string& result ) const
 {
     rpr::EntityType distance = type - rpr::EntityType( defaultType_ );
-    std::string result = defaultName_;
+    result = defaultName_;
+
     BOOST_FOREACH( const T_Name& name, names_ )
     {
         rpr::EntityType current = type - name.type_;
@@ -74,8 +77,9 @@ std::string EntityTypeResolver::Resolve( const rpr::EntityType& type ) const
         }
     }
     if( distance <= threshold_ )
-        return result;
-    return defaultName_;
+        return true;
+    result = defaultName_;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

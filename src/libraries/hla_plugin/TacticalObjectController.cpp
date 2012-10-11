@@ -15,6 +15,7 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Object.h"
 #include "dispatcher/Team_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Karma.h"
@@ -31,11 +32,13 @@ using namespace plugins::hla;
 // Name: TacticalObjectController::Register
 // Created: AHC 2012-08-08
 // -----------------------------------------------------------------------------
-TacticalObjectController::TacticalObjectController( dispatcher::Model_ABC& model, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver_ABC& objectResolver, const rpr::EntityTypeResolver_ABC& dotationResolver )
+TacticalObjectController::TacticalObjectController( dispatcher::Model_ABC& model, const kernel::CoordinateConverter_ABC& converter, 
+        const rpr::EntityTypeResolver_ABC& objectResolver, const rpr::EntityTypeResolver_ABC& dotationResolver, dispatcher::Logger_ABC& logger )
     : model_( model )
     , converter_( converter )
     , objectResolver_( objectResolver )
     , dotationResolver_( dotationResolver )
+    , logger_( logger )
 {
     // TODO
 }
@@ -116,9 +119,12 @@ void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
         T_Objects::iterator itObject( objects_.insert( T_Objects::value_type( object.GetId(), T_Object( new TacticalObjectProxy( object, dotationResolver_ ) ) ) ).first );
         const kernel::ObjectType& objectType = object.GetType();
         const std::string typeName = objectType.GetName();
-        const rpr::EntityType entityType ( objectResolver_.Find( typeName ) );
+        rpr::EntityType entityType;
+        if( !objectResolver_.Find( typeName, entityType ) )
+            logger_.LogWarning( std::string( "Could not find EntityType for object type " ) + typeName );
         const rpr::ForceIdentifier forceIdentifier = GetForce( object );
         for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->ObjectCreated( *(itObject->second), object.GetId(), object.GetName().toAscii().constData(), forceIdentifier, entityType );
     }
 }
+

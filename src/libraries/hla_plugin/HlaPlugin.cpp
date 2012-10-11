@@ -94,7 +94,10 @@ namespace
             : logger_( logger )
         {}
         virtual void LogInfo( const std::string& /*message*/ ) {}
-        virtual void LogWarning( const std::string& /*message*/ ) {}
+        virtual void LogWarning( const std::string& message ) 
+        { 
+            logger_.LogWarning( message );
+        }
         virtual void LogError( const std::string& message )
         {
             logger_.LogError( message );
@@ -188,7 +191,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "munition" ) ) ) )
     , pEntityObjectTypeResolver_  ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "object" ) ) ) )
     , pComponentTypes_            ( new ComponentTypes( staticModel.types_ ) )
-    , pUnitTypeResolver_          ( new UnitTypeResolver( *pAggregateTypeResolver_, staticModel.types_ ) )
+    , pUnitTypeResolver_          ( new UnitTypeResolver( *pAggregateTypeResolver_, staticModel.types_, logger ) )
     , pMunitionTypeResolver_      ( new DotationTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pLocalAgentResolver_        ( new LocalAgentResolver() )
     , pCallsignResolver_          ( new CallsignResolver() )
@@ -244,8 +247,8 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pFomSerializer_.reset( new FOM_Serializer( pXis_->attribute< int >( "netn-version", 1 ) ) );
             pSubject_.reset( new AgentController( dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_,
                                                     *platforms_, *pConverter_, pXis_->attribute< bool >( "disaggregate", false ), 
-                                                    *pSideResolver_, *pLocalAgentResolver_, pXis_->attribute< bool >( "send-full-orbat", false ) ) );
-            pTacticalObjectSubject_.reset( new TacticalObjectController ( dynamicModel_, *pConverter_, *pEntityObjectTypeResolver_, *pEntityMunitionTypeResolver_ ) );
+                                                    *pSideResolver_, *pLocalAgentResolver_, pXis_->attribute< bool >( "send-full-orbat", false ), logger_ ) );
+            pTacticalObjectSubject_.reset( new TacticalObjectController ( dynamicModel_, *pConverter_, *pEntityObjectTypeResolver_, *pEntityMunitionTypeResolver_, logger_ ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,

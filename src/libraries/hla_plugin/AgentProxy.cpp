@@ -16,6 +16,7 @@
 #include "clients_kernel/AgentType.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Automat_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include "dispatcher/Equipment.h"
 #include "protocol/Protocol.h"
 #include "rpr/EntityTypeResolver_ABC.h"
@@ -31,11 +32,13 @@ namespace
     class ComponentVisitor : public ComponentTypeVisitor_ABC
     {
     public:
-        ComponentVisitor( unsigned int componentTypeIdentifier, unsigned int available, const rpr::EntityTypeResolver_ABC& componentTypeResolver, EventListener_ABC& listener )
+        ComponentVisitor( unsigned int componentTypeIdentifier, unsigned int available, const rpr::EntityTypeResolver_ABC& componentTypeResolver, 
+                          EventListener_ABC& listener, dispatcher::Logger_ABC& logger )
             : componentTypeIdentifier_( componentTypeIdentifier )
             , available_              ( available )
             , componentTypeResolver_  ( componentTypeResolver )
             , listener_               ( listener )
+            , logger_                 ( logger )
         {
             // NOTHING
         }
@@ -43,7 +46,9 @@ namespace
         {
             if( typeIdentifier == componentTypeIdentifier_ )
             {
-                const rpr::EntityType entityType = componentTypeResolver_.Find( typeName );
+                rpr::EntityType entityType;
+                if( ! componentTypeResolver_.Find( typeName, entityType ) )
+                    logger_.LogWarning( std::string( "Could not find EntityType for equipment: " ) + typeName );
                 listener_.EquipmentChanged( typeIdentifier, entityType, available_ );
             }
         }
@@ -52,10 +57,12 @@ namespace
         const unsigned int available_;
         const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
         EventListener_ABC& listener_;
+        dispatcher::Logger_ABC& logger_;
     };
-    void NotifyEquipment( EventListener_ABC& listener, const dispatcher::Equipment& equipment, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver, unsigned long agentTypeIdentifier )
+    void NotifyEquipment( EventListener_ABC& listener, const dispatcher::Equipment& equipment, const ComponentTypes_ABC& componentTypes, 
+                        const rpr::EntityTypeResolver_ABC& componentTypeResolver, unsigned long agentTypeIdentifier, dispatcher::Logger_ABC& logger )
     {
-        ComponentVisitor visitor( equipment.nEquipmentType_, equipment.nNbrAvailable_, componentTypeResolver, listener );
+        ComponentVisitor visitor( equipment.nEquipmentType_, equipment.nNbrAvailable_, componentTypeResolver, listener, logger );
         componentTypes.Apply( agentTypeIdentifier, visitor );
     }
 }
@@ -65,7 +72,7 @@ namespace
 // Created: SLI 2011-02-04
 // -----------------------------------------------------------------------------
 AgentProxy::AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& componentTypes, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
-    const LocalAgentResolver_ABC& localAgentResolver, bool doDisaggregation )
+    const LocalAgentResolver_ABC& localAgentResolver, bool doDisaggregation, dispatcher::Logger_ABC& logger )
     : dispatcher::Observer< sword::UnitAttributes >( agent )
     , dispatcher::Observer< sword::UnitEnvironmentType >( agent )
     , agent_                ( agent )
@@ -73,6 +80,7 @@ AgentProxy::AgentProxy( dispatcher::Agent_ABC& agent, const ComponentTypes_ABC& 
     , componentTypeResolver_( componentTypeResolver )
     , localAgentResolver_( localAgentResolver )
     , doDisaggregation_       ( doDisaggregation )
+    , logger_ ( logger )
 {
     // NOTHING
 }
@@ -95,7 +103,7 @@ void AgentProxy::Register( EventListener_ABC& listener )
     listeners_.Register( listener );
     listener.SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
                              agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
-    agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listener ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId() ) );
+    agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listener ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId(), boost::ref( logger_ ) ) );
     std::string parentId( localAgentResolver_.Resolve( agent_.GetSuperior().GetId() ) );
     if( parentId.size() > 0 )
         listener.ParentChanged( parentId );
@@ -119,7 +127,7 @@ void AgentProxy::Notify( const sword::UnitAttributes& attributes )
         listeners_.SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
                                       agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
     if( attributes.has_equipment_dotations() && !doDisaggregation_ )
-        agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listeners_ ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId() ) );
+        agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( listeners_ ), _1, boost::cref( componentTypes_ ), boost::cref( componentTypeResolver_ ), agent_.GetType().GetId(), boost::ref( logger_ ) ) );
     if( attributes.has_embarked() )
         listeners_.EmbarkmentChanged( agent_.IsMounted() );
 }

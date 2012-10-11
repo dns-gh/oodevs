@@ -23,6 +23,7 @@ namespace dispatcher
     class Model_ABC;
     class Object_ABC;
     class Object;
+    class Logger_ABC;
 }
 
 namespace kernel
@@ -56,7 +57,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     TacticalObjectController( dispatcher::Model_ABC& model, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver_ABC& objectResolver,
-            const rpr::EntityTypeResolver_ABC& dotationResolver );
+            const rpr::EntityTypeResolver_ABC& dotationResolver, dispatcher::Logger_ABC& logger );
     virtual ~TacticalObjectController();
     //@}
 
@@ -88,6 +89,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     const rpr::EntityTypeResolver_ABC& objectResolver_;
     const rpr::EntityTypeResolver_ABC& dotationResolver_;
+    dispatcher::Logger_ABC& logger_;
     T_Listeners listeners_;
     T_Objects objects_;
     //@}
