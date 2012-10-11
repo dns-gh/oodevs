@@ -308,7 +308,7 @@ BOOST_FIXTURE_TEST_CASE( deactivating_alat_monitoring_perception_removes_percept
     core::Model& perception = model[ "entities" ][ identifier ][ "perceptions/alat/monitoring" ];
     perception[ perceptionId ];
     ExpectEffect( perception, sword::test::MakeModel( perceptionId, sword::test::MarkForRemove() ) );
-    ExpectEvent( "alat monitoring disabled", sword::test::MakeModel( "entity", identifier ) );
+    ExpectEvent( "alat monitoring disabled", sword::test::MakeModel( "entity", mock::any ) );
     StartCommand( "toggle alat monitoring",
         core::MakeModel( "identifier", identifier )
                        ( "activated", false )

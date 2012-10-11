@@ -10,11 +10,7 @@
 #ifndef SWORD_ALAT_MONITORING_EVENT_LISTENER_H
 #define SWORD_ALAT_MONITORING_EVENT_LISTENER_H
 
-#include "tools/Resolver.h"
 #include <core/EventListener_ABC.h>
-#include <map>
-
-class MIL_AgentPion;
 
 namespace core
 {
@@ -34,7 +30,7 @@ class AlatMonitoringEventListener : public core::EventListener_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             AlatMonitoringEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver );
+             AlatMonitoringEventListener( const core::Model& model, core::Facade& facade );
     virtual ~AlatMonitoringEventListener();
     //@}
 
@@ -48,7 +44,6 @@ private:
     //@{
     const core::Model& model_;
     core::Facade& facade_;
-    tools::Resolver< MIL_AgentPion >& resolver_;
     //@}
 };
 
