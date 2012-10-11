@@ -509,36 +509,36 @@
     </target>
 
     <target name="movement_module" description="build movement module">
-        <build-lib name="movement_module">
+        <build-lib name="movement_module" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
 
     <target name="movement_module_dll" depends="MT_Tools,wrapper,movement_module" description="build movement module dll">
-        <build-lib name="movement_module_dll" outtype="shared" pattern="movement_module" depends="terrain,boost,xerces"
+        <build-lib name="movement_module_dll" outtype="shared" pattern="movement_module" depends="terrain,boost,xerces" failonwarning="${failonwarning}"
                    libs="movement_module@{suffix},wrapper@{suffix},lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"/>
     </target>
 
     <target name="movement_module_test" depends="movement_module_dll">
-        <build-test name="movement_module" depends="boost,xerces,terrain" libs="movement_module@{suffix},core@{suffix}">
+        <build-test name="movement_module" depends="boost,xerces,terrain" libs="movement_module@{suffix},core@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
     </target>
 
     <target name="perception_module" description="build perception module">
-        <build-lib name="perception_module">
+        <build-lib name="perception_module" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
 
     <target name="perception_module_dll" depends="wrapper,perception_module" description="build perception module dll">
         <build-lib name="perception_module_dll" outtype="shared" pattern="perception_module" depends="boost,xerces"
-                   libs="perception_module@{suffix},wrapper@{suffix}"/>
+                   libs="perception_module@{suffix},wrapper@{suffix}" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="perception_module_test" depends="perception_module_dll">
-        <build-test name="perception_module" depends="boost" libs="perception_module@{suffix},core@{suffix}">
+        <build-test name="perception_module" depends="boost" libs="perception_module@{suffix},core@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
@@ -552,11 +552,11 @@
 
     <target name="fire_module_dll"  depends="wrapper,fire_module" description="build fire module dll">
         <build-lib name="fire_module_dll" outtype="shared" pattern="fire_module" depends="boost,xerces"
-                   libs="fire_module@{suffix},wrapper@{suffix}"/>
+                   libs="fire_module@{suffix},wrapper@{suffix}" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="fire_module_test" depends="fire_module_dll">
-        <build-test name="fire_module" depends="boost" libs="fire_module@{suffix},core@{suffix}">
+        <build-test name="fire_module" depends="boost" libs="fire_module@{suffix},core@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <compilerarg value="-Zm500"/>
         </build-test>
