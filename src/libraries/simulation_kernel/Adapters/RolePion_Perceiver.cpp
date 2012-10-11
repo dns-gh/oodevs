@@ -508,7 +508,8 @@ const PHY_PerceptionLevel& RolePion_Perceiver::ComputePerception( const DEC_Know
 {
     core::Model model;
     model[ "data" ].SetUserData( &knowledge );
-    return PHY_PerceptionLevel::FindPerceptionLevel( GET_HOOK( ComputeKnowledgeObjectPerception )( core::Convert( &model_ ), core::Convert( &entity_ ), core::Convert( &model ) ) );
+    const unsigned int level = static_cast< unsigned int >( GET_HOOK( ComputeKnowledgeObjectPerception )( core::Convert( &model_ ), core::Convert( &entity_ ), core::Convert( &model ) ) );
+    return PHY_PerceptionLevel::FindPerceptionLevel( level );
 }
 
 // -----------------------------------------------------------------------------
