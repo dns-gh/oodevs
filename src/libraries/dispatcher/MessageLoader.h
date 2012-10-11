@@ -88,17 +88,6 @@ private:
     //@}
 
 private:
-    //! @name Static member data
-    //@{
-    static const std::string infoFileName_;
-    static const std::string indexFileName_;
-    static const std::string keyIndexFileName_;
-    static const std::string keyFileName_;
-    static const std::string updateFileName_;
-    static boost::mutex filesAccessMutex_;
-    //@}
-
-private:
     //! @name Member data
     //@{
     const Config& config_;
@@ -123,7 +112,6 @@ private:
     bool synchronisation_;
     //@}
 };
-
 }
 
 #endif // __MessageLoader_h_

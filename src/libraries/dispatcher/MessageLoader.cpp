@@ -23,16 +23,14 @@
 namespace bfs = boost::filesystem;
 using namespace dispatcher;
 
-const std::string MessageLoader::infoFileName_( "info" );
-const std::string MessageLoader::indexFileName_( "index" );
-const std::string MessageLoader::keyIndexFileName_( "keyindex" );
-const std::string MessageLoader::keyFileName_( "key" );
-const std::string MessageLoader::updateFileName_( "update" );
-boost::mutex MessageLoader::filesAccessMutex_;
-
-
 namespace
 {
+    boost::mutex filesAccessMutex_;
+    const std::string infoFileName( "info" );
+    const std::string indexFileName( "index" );
+    const std::string keyIndexFileName( "keyindex" );
+    const std::string keyFileName( "key" );
+    const std::string updateFileName( "update" );
     const std::string currentFolderName( "current" );
 }
 
@@ -55,7 +53,7 @@ MessageLoader::MessageLoader( const Config& config, bool threaded, ClientPublish
     folderObserver_.reset( new boost::thread( boost::bind( &MessageLoader::ScanData, this ) ) );
     boost::unique_lock< boost::mutex > lock( initMutex_ );
     while( !initReady_ )
-        initCondition_.wait(lock);
+        initCondition_.wait( lock );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +183,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
                     unsigned int end;
                     std::string simTime;
                     std::string realTime;
-                    if( OpenFile( infoFile, it->first, infoFileName_ ) )
+                    if( OpenFile( infoFile, it->first, infoFileName ) )
                     {
                         tools::InputBinaryWrapper wrapper( infoFile );
                         wrapper >> start;
@@ -294,7 +292,7 @@ void MessageLoader::AddFolder( const std::string& folderName )
     std::ifstream infoFile;
     unsigned int start;
     unsigned int end;
-    if( !OpenFile( infoFile, folderName, infoFileName_ ) )
+    if( !OpenFile( infoFile, folderName, infoFileName ) )
         return;
     tools::InputBinaryWrapper wrapper( infoFile );
     wrapper >> start;
@@ -405,10 +403,10 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
             {
                 currentOpenFolder_ = it->first;
                 boost::mutex::scoped_lock lock( filesAccessMutex_ );
-                OpenFile( index_, currentOpenFolder_, indexFileName_ );
-                OpenFile( keyIndex_, currentOpenFolder_, keyIndexFileName_ );
-                OpenFile( updates_, currentOpenFolder_, updateFileName_ );
-                OpenFile( keys_, currentOpenFolder_, keyFileName_ );
+                OpenFile( index_, currentOpenFolder_, indexFileName );
+                OpenFile( keyIndex_, currentOpenFolder_, keyIndexFileName );
+                OpenFile( updates_, currentOpenFolder_, updateFileName );
+                OpenFile( keys_, currentOpenFolder_, keyFileName );
                 LoadIndexes( frames_, index_ );
                 LoadIndexes( keyFrames_, keyIndex_ );
                 return true;
@@ -462,14 +460,14 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
 {
     boost::mutex::scoped_lock fileLock( filesAccessMutex_ );
     std::ifstream index;
-    OpenFile( index, folder, indexFileName_ );
+    OpenFile( index, folder, indexFileName );
     T_Frames frames;
     LoadIndexes( frames, index );
     index.close();
     boost::mutex::scoped_lock dataLock( dataAccessMutex_ );
     const Frame& current = frames[ frameNumber - fragmentsInfos_[ folder ].first ];
     std::ifstream file;
-    OpenFile( file, folder, updateFileName_ );
+    OpenFile( file, folder, updateFileName );
     file.seekg( current.offset_ );
     boost::shared_ptr< Buffer > buffer( new Buffer( current.size_, file ) );
     file.close();
@@ -485,7 +483,7 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
 {
     boost::mutex::scoped_lock lock( filesAccessMutex_ );
     std::ifstream index;
-    OpenFile( index, folder, keyIndexFileName_ );
+    OpenFile( index, folder, keyIndexFileName );
     T_KeyFrames keyFrames;
     LoadIndexes( keyFrames, index );
     index.close();
@@ -493,7 +491,7 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     for( CIT_KeyFrames it = keyFrames.begin(); it != keyFrames.end() && it->frameNumber_ <= frameNumber; ++it )
         keyFrame = *it;
     std::ifstream file;
-    OpenFile( file, folder, keyFileName_ );
+    OpenFile( file, folder, keyFileName );
     file.seekg( keyFrame.offset_ );
     boost::shared_ptr< Buffer > buffer( new Buffer( keyFrame.size_, file ) );
     file.close();
