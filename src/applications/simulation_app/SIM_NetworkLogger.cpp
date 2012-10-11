@@ -91,8 +91,7 @@ void SIM_NetworkLogger::LogString( E_LogLevel nLevel, const char* szMsg, const c
     boost::lock_guard< boost::mutex > locker( *mutex_ );
     std::stringstream s;
     s << "[" << GetTimestampAsString() << "]";
-    if( nLevel != eLogLevel_None )
-        s << " " << GetLogLevelAsString( nLevel ) << " -";
+    s << " " << GetLogLevelAsString( nLevel ) << " -";
     s << " " << szMsg;
     if( nCode != -1 )
         s << " (" << nCode << ")";
