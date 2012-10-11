@@ -35,7 +35,7 @@ public:
 
     //! @name Member data
     //@{
-    std::map< const SWORD_Model*, std::pair< double, unsigned int > > weapons;
+    std::map< const SWORD_Model*, std::pair< double, std::size_t > > weapons;
     //@}
 };
 

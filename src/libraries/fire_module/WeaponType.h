@@ -67,11 +67,11 @@ public:
 
     //! @name Operations
     //@{
-    unsigned int ReserveAmmunition( const wrapper::View& firer, unsigned int nNbrAmmoToFire );
+    std::size_t ReserveAmmunition( const wrapper::View& firer, std::size_t ammos );
 
 //    void     IndirectFire       ( MIL_Effect_IndirectFire& effect, unsigned int nNbrAmmoReserved ) const;
     void     DirectFire         ( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const;
-    void     DirectFire         ( const wrapper::View& firer, const wrapper::View& element, unsigned int nNbrAmmoReserved ) const;
+    void     DirectFire         ( const wrapper::View& firer, const wrapper::View& element, std::size_t ammos ) const;
 //    void     ThrowSmoke         ( MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo, PHY_FireResults_ABC& fireResult ) const;
 
     double GetDangerosity     ( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH, bool checkAmmo ) const;

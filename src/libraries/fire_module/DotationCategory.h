@@ -51,7 +51,7 @@ public:
     double ModifyPh( const wrapper::View& firer, const wrapper::View& target, double ph ) const;
     double ModifyDangerosity( const wrapper::View& compTarget ) const;
 
-    unsigned int ReserveAmmunition( const wrapper::View& firer, unsigned int nNbrAmmoToFire );
+    std::size_t ReserveAmmunition( const wrapper::View& firer, std::size_t ammos );
     //@}
 
     //! @name Accessors

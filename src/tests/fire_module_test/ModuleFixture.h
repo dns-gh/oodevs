@@ -37,7 +37,7 @@
     APPLY( CanFire, 3, bool, ( const SWORD_Model* component, const char* dotation, const SWORD_Model* parameters ) ) \
     APPLY( CanComponentFire, 1, bool, ( const SWORD_Model* component ) ) \
     APPLY( GetWeaponReloadingDuration, 2, double, ( const SWORD_Model* firer, double rDuration ) ) \
-    APPLY( ReserveAmmunition, 3, unsigned int, ( const SWORD_Model* firer, const char* dotation, double nNbrAmmoToFire ) ) \
+    APPLY( ReserveAmmunition, 3, size_t, ( const SWORD_Model* firer, const char* dotation, size_t ammos ) ) \
     APPLY( GetDistance, 2, double, ( const SWORD_Model* firer, const SWORD_Model* target ) ) \
     APPLY( ModifyPh, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* dotation, double rPh ) ) \
     APPLY( ModifyDangerosity, 2, double, ( const SWORD_Model* compTarget, const char* dotation ) ) \

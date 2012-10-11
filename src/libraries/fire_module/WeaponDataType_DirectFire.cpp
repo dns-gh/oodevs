@@ -268,11 +268,11 @@ void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper:
 // Name: WeaponDataType_DirectFire::Fire
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper::View& element, unsigned int nNbrAmmoReserved ) const
+void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper::View& element, std::size_t ammos ) const
 {
     const double ph = GET_HOOK( GetPopulationElementPh )( firer, element );
-    unsigned int hits = 0;
-    for( unsigned int i = 0; i < nNbrAmmoReserved; ++i )
+    std::size_t hits = 0;
+    for( std::size_t i = 0; i < ammos; ++i )
         if( GET_HOOK( GetFireRandomNumber )( 0, 1 ) < ph )
             ++hits;
     wrapper::Event event( "direct fire population" );

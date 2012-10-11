@@ -56,7 +56,7 @@ public:
     double GetMinRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, double rWantedPH ) const;
 
     void Fire( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const;
-    void Fire( const wrapper::View& firer, const wrapper::View& element, unsigned int nNbrAmmoReserved ) const;
+    void Fire( const wrapper::View& firer, const wrapper::View& element, std::size_t ammos ) const;
     //@}
 
 private:

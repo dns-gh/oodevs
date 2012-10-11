@@ -167,10 +167,10 @@ void WeaponType::DirectFire( const wrapper::View& firer, const wrapper::View& ta
 // Name: WeaponType::DirectFire
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void WeaponType::DirectFire( const wrapper::View& firer, const wrapper::View& element, unsigned int nNbrAmmoReserved ) const
+void WeaponType::DirectFire( const wrapper::View& firer, const wrapper::View& element, std::size_t ammos ) const
 {
     assert( pDirectFireData_.get() );
-    pDirectFireData_->Fire( firer, element, nNbrAmmoReserved );
+    pDirectFireData_->Fire( firer, element, ammos );
 }
 
 //// -----------------------------------------------------------------------------
@@ -506,9 +506,9 @@ bool WeaponType::CanIndirectFire( const wrapper::View& entity, const wrapper::Vi
 // Name: WeaponType::ReserveAmmunition
 // Created: MCO 2012-06-21
 // -----------------------------------------------------------------------------
-unsigned int WeaponType::ReserveAmmunition( const wrapper::View& firer, unsigned int nNbrAmmoToFire )
+std::size_t WeaponType::ReserveAmmunition( const wrapper::View& firer, std::size_t ammos )
 {
-    return dotation_->ReserveAmmunition( firer, nNbrAmmoToFire );
+    return dotation_->ReserveAmmunition( firer, ammos );
 }
 
 // -----------------------------------------------------------------------------

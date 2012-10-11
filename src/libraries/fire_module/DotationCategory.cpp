@@ -19,7 +19,7 @@ DECLARE_HOOK( ModifyPh, double, ( const SWORD_Model* firer, const SWORD_Model* t
 DECLARE_HOOK( ModifyDangerosity, double, ( const SWORD_Model* compTarget, const char* dotation ) )
 DECLARE_HOOK( HasDotation, bool, ( const SWORD_Model* entity, const char* dotation ) )
 DECLARE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotation, const SWORD_Model* parameters ) )
-DECLARE_HOOK( ReserveAmmunition, unsigned int, ( const SWORD_Model* firer, const char* dotation, double nNbrAmmoToFire ) )
+DECLARE_HOOK( ReserveAmmunition, size_t, ( const SWORD_Model* firer, const char* dotation, size_t ammos ) )
 DECLARE_HOOK( GetDotationValue, double, ( const SWORD_Model* entity, const char* dotation ) )
 
 DEFINE_HOOK( InitializeDotations, void, ( const char* xml ) )
@@ -193,9 +193,9 @@ bool DotationCategory::CanFire( const wrapper::View& component, const std::strin
 // Name: DotationCategory::ReserveAmmunition
 // Created: MCO 2012-06-21
 // -----------------------------------------------------------------------------
-unsigned int DotationCategory::ReserveAmmunition( const wrapper::View& firer, unsigned int nNbrAmmoToFire )
+std::size_t DotationCategory::ReserveAmmunition( const wrapper::View& firer, std::size_t ammos )
 {
-    return GET_HOOK( ::ReserveAmmunition )( firer, strName_.c_str(), nNbrAmmoToFire );
+    return GET_HOOK( ::ReserveAmmunition )( firer, strName_.c_str(), ammos );
 }
 
 // -----------------------------------------------------------------------------

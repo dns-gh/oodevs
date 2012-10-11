@@ -71,14 +71,14 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& target
     assert( IsReady() );
     const double current = model_[ "tick" ];
     double next = std::max( current, module_->weapons[ weapon_ ].first );
-    unsigned int fired = module_->weapons[ weapon_ ].second;
+    std::size_t fired = module_->weapons[ weapon_ ].second;
     while( next <= current )
     {
-        unsigned int burst = type_->GetNbrAmmoPerBurst();
+        std::size_t burst = type_->GetNbrAmmoPerBurst();
         if( type_->GetNbrAmmoPerLoader() != 0 )
             burst = std::min( burst, type_->GetNbrAmmoPerLoader() - fired );
         assert( burst > 0 );
-        unsigned int reserved = type_->ReserveAmmunition( firer, burst );
+        const std::size_t reserved = type_->ReserveAmmunition( firer, burst );
         if( reserved )
         {
             fired += reserved;
@@ -105,11 +105,11 @@ void Weapon::DirectFire( const wrapper::View& firer, const wrapper::View& elemen
     assert( IsReady() );
     const double current = model_[ "tick" ];
     double next = std::max( current, module_->weapons[ weapon_ ].first );
-    unsigned int fired = module_->weapons[ weapon_ ].second;
+    const std::size_t fired = module_->weapons[ weapon_ ].second;
     if( next <= current ) // $$$$ MCO 2012-09-17: if instead of while ?
     {
-        const std::size_t nKilledHumans = GET_HOOK( ComputeKilledHumans )( firer, element );
-        const std::size_t burst = type_->ReserveAmmunition( firer, nKilledHumans );
+        const std::size_t humans = GET_HOOK( ComputeKilledHumans )( firer, element );
+        const std::size_t burst = type_->ReserveAmmunition( firer, humans );
         type_->DirectFire( firer, element, burst );
         next += type_->GetBurstDuration();
     }

@@ -144,7 +144,7 @@ namespace
         pion.Execute( *computer );
         return computer->GetDuration();
     }
-    DEFINE_HOOK( ReserveAmmunition, unsigned int, ( const SWORD_Model* firer, const char* dotation, double nNbrAmmoToFire ) )
+    DEFINE_HOOK( ReserveAmmunition, size_t, ( const SWORD_Model* firer, const char* dotation, size_t ammos ) )
     {
         const PHY_DotationCategory* category = GetDotationCategory( dotation );
         if( ! category )
@@ -153,7 +153,7 @@ namespace
             return 0;
         }
         using namespace dotation;
-        return (unsigned int)GET_ROLE( firer, PHY_RoleInterface_Dotations ).AddFireReservation( *category, nNbrAmmoToFire );
+        return static_cast< size_t >( GET_ROLE( firer, PHY_RoleInterface_Dotations ).AddFireReservation( *category, static_cast< double >( ammos ) ) );
     }
     DEFINE_HOOK( GetVolumeId, size_t, ( const char* type ) )
     {
