@@ -106,7 +106,7 @@ View View::operator[]( const std::string& key ) const
         return model_;
     const SWORD_Model* child = ::SWORD_GetNamedChild( model_, key.c_str() );
     if( !child )
-        throw std::runtime_error( "could not retrieve child parameter '" + key + "'" );
+        throw std::runtime_error( "could not retrieve child '" + key + "'" );
     return child;
 }
 
@@ -120,7 +120,7 @@ View View::operator[]( const char* key ) const
         return model_;
     const SWORD_Model* child = ::SWORD_GetNamedChild( model_, key );
     if( !child )
-        throw std::runtime_error( "could not retrieve child parameter '" + std::string( key ) + "'" );
+        throw std::runtime_error( "could not retrieve child '" + std::string( key ) + "'" );
     return child;
 }
 
@@ -132,7 +132,7 @@ View View::operator[]( std::size_t key ) const
 {
     const SWORD_Model* child = ::SWORD_GetIdentifiedChild( model_, boost::numeric_cast< unsigned int >( key ) );
     if( !child )
-        throw std::runtime_error( "could not retrieve child parameter '" + boost::lexical_cast< std::string >( key ) + "'" );
+        throw std::runtime_error( "could not retrieve child '" + boost::lexical_cast< std::string >( key ) + "'" );
     return child;
 }
 
@@ -144,7 +144,7 @@ std::size_t View::GetSize() const
 {
     size_t size;
     if( ! ::SWORD_GetSize( model_, &size ) )
-        throw std::runtime_error( "could not retrieve size parameter" );
+        throw std::runtime_error( "could not retrieve size" );
     return size;
 }
 
@@ -156,7 +156,7 @@ View View::GetElement( std::size_t index ) const
 {
     const SWORD_Model* element = ::SWORD_GetElement( model_, index );
     if( !element )
-        throw std::runtime_error( "could not retrieve element parameter '" + boost::lexical_cast< std::string >( index ) + "'" );
+        throw std::runtime_error( "could not retrieve element '" + boost::lexical_cast< std::string >( index ) + "'" );
     return element;
 }
 
