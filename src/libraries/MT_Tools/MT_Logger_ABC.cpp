@@ -42,8 +42,13 @@ void MT_Logger_ABC::Log( E_LogLevel nLevel, const char* strMessage, const char* 
 {
     if( bPaused_ || !IsLogLevelSet( nLevel ) )
         return;
+
+    char timestamp[100];
+    const time_t nTime = time( NULL );
+    strftime( timestamp, sizeof( timestamp )/sizeof( *timestamp ), strTimestamp_.c_str(), localtime( &nTime ) );
+
     std::stringstream output;
-    output << "[" << GetTimestampAsString() << "] ";
+    output << "[" << timestamp << "] ";
     output << "<" << GetTypeAsString() << "> ";
     output << "<" << GetLogLevelAsString( nLevel ) << "> ";
     if( strMessage )
@@ -55,22 +60,6 @@ void MT_Logger_ABC::Log( E_LogLevel nLevel, const char* strMessage, const char* 
     output << std::endl;
     WriteString( output.str() );
 }
-
-//-----------------------------------------------------------------------------
-// Name: MT_Logger_ABC::GetTimestampAsString
-/**
-    @return Return a formated timestamp
-*/
-// Created:  NLD 00-06-05
-//-----------------------------------------------------------------------------
-const char* MT_Logger_ABC::GetTimestampAsString() const
-{
-    static char buffer[256];
-    time_t nTime = time( NULL );
-    strftime( buffer, 256, strTimestamp_.c_str(), localtime( &nTime ) );
-    return buffer;
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_Logger_ABC::GetTypeAsString
