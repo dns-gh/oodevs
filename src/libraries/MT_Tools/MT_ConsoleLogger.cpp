@@ -29,14 +29,8 @@ MT_ConsoleLogger::~MT_ConsoleLogger()
     // NOTHING
 }
 
-//-----------------------------------------------------------------------------
-// Name: MT_ConsoleLogger::LogString
-// Created:  NLD 00-06-05
-//-----------------------------------------------------------------------------
-void MT_ConsoleLogger::LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode )
+void MT_ConsoleLogger::WriteString( const std::string& s )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-    std::stringstream output;
-    MakeString( level, strMessage, strContext, nCode, output );
-    printf( "%s", output.str().c_str() );
+    printf( "%s", s.c_str() );
 }

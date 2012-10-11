@@ -42,7 +42,7 @@ private:
     /** @name Main methods */
     //-------------------------------------------------------------------------
     //@{
-    virtual void LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
+    virtual void MT_ConsoleLogger::WriteString( const std::string& s );
     //@}
 
 private:

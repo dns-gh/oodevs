@@ -46,7 +46,7 @@ private:
 private:
     //! @name Operations
     //@{
-    virtual void LogString( E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
+    virtual void WriteString( const std::string& s );
     //@}
 
     //! @name Helpers

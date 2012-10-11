@@ -44,7 +44,7 @@ protected:
     /** @name Main method */
     //-------------------------------------------------------------------------
     //@{
-    virtual void LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
+    virtual void WriteString( const std::string& s );
     unsigned int OpenNewOfstream( const std::string& fileName, bool clearPrevious = true );
     unsigned int GetOldestFile();
     std::string GetFileName( unsigned int fileCount );

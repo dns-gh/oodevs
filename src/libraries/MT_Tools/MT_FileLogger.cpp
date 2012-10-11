@@ -102,20 +102,12 @@ unsigned int MT_FileLogger::OpenNewOfstream( const std::string& fileName, bool c
     return size;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MT_FileLogger::LogString
-// Created:  NLD 00-06-05
-//-----------------------------------------------------------------------------
-void MT_FileLogger::LogString( E_LogLevel nLogLevel, const char* strMessage, const char* strContext, int nCode )
+void MT_FileLogger::WriteString( const std::string& s )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-
-    std::stringstream messageStream;
-    MakeString( nLogLevel, strMessage, strContext, nCode, messageStream );
-
     if( maxSize_ > 0 )
     {
-        int messageSize = sizeInBytes_ ? static_cast< int >( messageStream.str().size() ) : 1;
+        int messageSize = sizeInBytes_ ? static_cast< int >( s.size() ) : 1;
         sizeCount_ += messageSize;
         if( sizeCount_ > maxSize_ )
         {
@@ -124,7 +116,7 @@ void MT_FileLogger::LogString( E_LogLevel nLogLevel, const char* strMessage, con
             sizeCount_ = messageSize + static_cast< int >( OpenNewOfstream( GetFileName( filesCount_ ) ) );
         }
     }
-    *file_ << messageStream.str();
+    *file_ << s;
     file_->flush();
 }
 

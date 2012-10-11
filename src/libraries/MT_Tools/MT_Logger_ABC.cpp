@@ -10,6 +10,7 @@
 #include "MT_Logger_ABC.h"
 #pragma warning( disable: 4996 )
 #include <ctime>
+#include <sstream>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC constructor
@@ -39,12 +40,9 @@ MT_Logger_ABC::~MT_Logger_ABC()
 //-----------------------------------------------------------------------------
 void MT_Logger_ABC::Log( E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode )
 {
-    if( ! bPaused_ && IsLogLevelSet( nLevel ) )
-        LogString( nLevel, strMessage, strContext, nCode );
-}
-
-void MT_Logger_ABC::MakeString( E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode, std::stringstream& output ) const
-{
+    if( bPaused_ || !IsLogLevelSet( nLevel ) )
+        return;
+    std::stringstream output;
     output << "[" << GetTimestampAsString() << "] ";
     output << "<" << GetTypeAsString() << "> ";
     output << "<" << GetLogLevelAsString( nLevel ) << "> ";
@@ -55,6 +53,7 @@ void MT_Logger_ABC::MakeString( E_LogLevel nLevel, const char* strMessage, const
     if( strContext )
         output << "[Context: " << strContext << "]";
     output << std::endl;
+    WriteString( output.str() );
 }
 
 //-----------------------------------------------------------------------------
