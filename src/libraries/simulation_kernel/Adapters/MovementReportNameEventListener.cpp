@@ -48,6 +48,6 @@ MovementReportNameEventListener::~MovementReportNameEventListener()
 void MovementReportNameEventListener::Notify( const core::Model& report )
 {
     const unsigned int entity = report[ "entity" ];
-    RoleAction_Moving& role = model_[ "entities" ][ entity ][ "pion" ].GetUserData< MIL_AgentPion >().GetRole< RoleAction_Moving >();
+    RoleAction_Moving& role = model_[ "entities" ][ entity ][ "data" ].GetUserData< MIL_AgentPion >().GetRole< RoleAction_Moving >();
     role.SendRC( report[ "code" ], report[ "name" ] );
 }

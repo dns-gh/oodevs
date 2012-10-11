@@ -21,7 +21,7 @@ BOOST_FIXTURE_TEST_CASE( alat_monitoring_sensor_recognized_all_agents_in_locatio
                                                                    ( "forest-detection-time-step", 1 )
                                                                    ( "urban-detection-time-step", 2 );
     core::Model& other = model[ "entities" ][ target ];
-    other = core::MakeModel( "pion", 43 )
+    other = core::MakeModel( "data", 43 )
                            ( "movement/position/x", 5 )
                            ( "movement/position/y", 5 );
     MOCK_EXPECT( GetAgentListWithinLocalisation ).once().calls( boost::bind( boost::apply< void >(), _3, core::Convert( &other ), _4 ) );

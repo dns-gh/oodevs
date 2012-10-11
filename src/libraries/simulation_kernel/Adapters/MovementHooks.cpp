@@ -73,8 +73,8 @@ namespace movement
 }
 }
 
-#define GET_ROLE( node, role ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< role >()
-#define GET_PION( node ) (*core::Convert( node ))[ "pion" ].GetUserData< MIL_AgentPion >()
+#define GET_ROLE( node, role ) (*core::Convert( node ))[ "data" ].GetUserData< MIL_AgentPion >().GetRole< role >()
+#define GET_PION( node ) (*core::Convert( node ))[ "data" ].GetUserData< MIL_AgentPion >()
 #define GET_DATA( node, data ) (*core::Convert( node ))[ "data" ].GetUserData< data >()
 
 namespace
@@ -220,7 +220,7 @@ namespace
         ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance,
           boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, std::size_t size, bool blockedByObject, bool applyScale ) )
     {
-        const MIL_AgentPion& agent = (*core::Convert( entity ))[ "pion" ].GetUserData< MIL_AgentPion >();
+        const MIL_AgentPion& agent = GET_PION( entity );
         static const double epsilon = 1e-8;
         // Path hull
         TER_Polygon pathHull;
@@ -440,7 +440,7 @@ namespace
         if( ! cache )
             cache.reset( new KnowledgeCache() );
         T_KnowledgeObjectVector knowledges;
-        MIL_AgentPion& pion = (*core::Convert( entity ) )[ "pion" ].GetUserData< MIL_AgentPion >();
+        MIL_AgentPion& pion = GET_PION( entity );
         pion.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, pion, MIL_DangerousObjectFilter() );
         if( knowledges != cache->objectsToAvoid_ )
         {

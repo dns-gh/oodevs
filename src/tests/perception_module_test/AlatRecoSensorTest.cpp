@@ -19,7 +19,7 @@ BOOST_FIXTURE_TEST_CASE( alat_reco_sensor_recognized_all_agents_in_location_depe
     entity[ "perceptions/sensor/activated" ] = false;
     entity[ "perceptions/alat/reco" ][ uniqueReco ][ "localization" ];
     const SWORD_Model* other = core::Convert( &model[ "entities" ][ target ] );
-    model[ "entities" ][ target ][ "pion" ] = 43;
+    model[ "entities" ][ target ][ "data" ] = 43;
     model[ "entities" ][ target ][ "movement/position/x" ] = 5;
     model[ "entities" ][ target ][ "movement/position/y" ] = 5;
     const SWORD_Model* perceiver = core::Convert( &entity );

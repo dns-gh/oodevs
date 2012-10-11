@@ -24,9 +24,9 @@ BOOST_FIXTURE_TEST_CASE( localization_reco_sensor_recognized_all_agents_in_locat
                                 ( "radius", 0 )
                                 ( "max-radius-reached", false );
     const SWORD_Model* other = core::Convert( &model[ "entities" ][ target ] );
-    model[ "entities" ][ target ] = core::MakeModel( "pion", 43 )
-                                               ( "movement/position/x", 5 )
-                                               ( "movement/position/y", 5 );
+    model[ "entities" ][ target ] = core::MakeModel( "data", 43 )
+                                                   ( "movement/position/x", 5 )
+                                                   ( "movement/position/y", 5 );
     MOCK_EXPECT( GetLocalizationRadius ).once().returns( 100 );
     MOCK_EXPECT( IsPointInsideLocalisation ).once().returns( true );
     MOCK_RESET( GetAgentListWithinCircle );

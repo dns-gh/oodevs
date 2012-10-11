@@ -33,7 +33,7 @@ namespace perception
             entity[ "is-underground" ] = false;
             entity[ "is-transported" ] = false;
             entity[ "is-prisoner" ] = false;
-            entity[ "pion" ] = 1337;
+            entity[ "data" ] = 1337;
             entity[ "perceptions/max-agent-perception-distance" ] = maxPerceptionDistance;
             entity[ "perceptions/max-theoretical-agent-perception-distance" ] = theoreticalDistance;
             entity[ "perceptions/peripherical-vision/next-tick" ] = 1;

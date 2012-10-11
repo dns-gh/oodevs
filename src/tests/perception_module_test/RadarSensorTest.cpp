@@ -19,7 +19,7 @@ namespace
         RadarFixture()
         {
             core::Model& other = model[ "entities" ][ 13337 ];
-            other = core::MakeModel( "pion", 43 )
+            other = core::MakeModel( "data", 43 )
                                    ( "movement/position/x", 5 )
                                    ( "movement/position/y", 5 )
                                    ( "movement/height", 5 )

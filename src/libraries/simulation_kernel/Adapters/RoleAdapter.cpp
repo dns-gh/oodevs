@@ -123,7 +123,7 @@ RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
 {
     senders_.push_back( MakeModelSender< client::UnitPathFind >( entity_[ "movement/path/points" ], boost::bind( &Serialize< client::UnitPathFind >, _1, pion.GetID(), _2 ) ) );
     senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( entity_[ "movement/environment" ], boost::bind( &Serialize< client::UnitEnvironmentType >, _1, pion.GetID(), _2 ) ) ); // $$$$ MCO 2012-09-13: move the two listeners to RoleAction_Moving
-    entity_[ "pion" ].SetUserData( &pion ); // $$$$ MCO 2012-09-13: move all initializations into Sink::CreateEntity
+    entity_[ "data" ].SetUserData( &pion ); // $$$$ MCO 2012-09-13: move all initializations into Sink::CreateEntity
     entity_[ "movement/speed" ] = 0;
     entity_[ "movement/direction/x" ] = 0;
     entity_[ "movement/direction/y" ] = 1;

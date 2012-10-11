@@ -17,7 +17,7 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_recognized_with_scan_sensor, Percept
     entity[ "perceptions/sensor/activated" ] = false;
     entity[ "perceptions/scan/activated" ] = true;
     const SWORD_Model* other = core::Convert( &model[ "entities" ][ target ] );
-    model[ "entities" ][ target ][ "pion" ] = 43;
+    model[ "entities" ][ target ][ "data" ] = 43;
     model[ "entities" ][ target ][ "movement/position/x" ] = 5;
     model[ "entities" ][ target ][ "movement/position/y" ] = 5;
     model[ "entities" ][ target ][ "identifier" ] = 1337u;

@@ -50,7 +50,7 @@ void MovementEventListener::Notify( const core::Model& event )
 {
     const unsigned int identifier = event[ "entity" ];
     const core::Model& entity = model_[ "entities" ][ identifier ];
-    RoleAction_Moving& role = entity[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< RoleAction_Moving >();
+    RoleAction_Moving& role = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< RoleAction_Moving >();
     const core::Model& movement = entity[ "movement" ];
     MT_Vector2D position( movement[ "position/x" ], movement[ "position/y" ] );
     TER_World::GetWorld().ClipPointInsideWorld( position ); // $$$$ MCO : used to be in RolePion_Location::Move but should be done by movement_module I suppose

@@ -44,6 +44,6 @@ CallbackEventListener::~CallbackEventListener()
 void CallbackEventListener::Notify( const core::Model& callback )
 {
     const unsigned int entity = callback[ "entity" ];
-    DEC_Decision_ABC& role = model_[ "entities" ][ entity ][ "pion" ].GetUserData< MIL_AgentPion >().GetRole< DEC_Decision_ABC >();
+    DEC_Decision_ABC& role = model_[ "entities" ][ entity ][ "data" ].GetUserData< MIL_AgentPion >().GetRole< DEC_Decision_ABC >();
     role.Callback< unsigned int >( callback[ "id" ], callback[ "code" ] );
 }

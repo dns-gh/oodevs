@@ -162,11 +162,11 @@ boost::shared_ptr< PathAdapter > PathAdapter::Remove( const boost::shared_ptr< m
 PathAdapter::PathAdapter( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path )
     : path_        ( path )
     , altitudeData_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
-    , weight_      ( entity[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from model
+    , weight_      ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from model
     , slope_       ( entity[ "movement/max-slope" ] )
-    , height_      ( entity[ "pion" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight() ) // $$$$ MCO 2012-05-23: read from model
+    , height_      ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight() ) // $$$$ MCO 2012-05-23: read from model
 {
-    MIL_AgentPion& pion = entity[ "pion" ].GetUserData< MIL_AgentPion >();
+    MIL_AgentPion& pion = entity[ "data" ].GetUserData< MIL_AgentPion >();
     fuseau_= pion.GetOrderManager().GetFuseau();
     automateFuseau_ = pion.GetAutomate().GetOrderManager().GetFuseau();
     InitializePathKnowledges( entity, pion );
@@ -301,7 +301,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
                     if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
                     {
                         TerrainData data;
-                        double rMaxSpeed = entity[ "pion" ].GetUserData< MIL_AgentPion >().GetRole< RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject );
+                        double rMaxSpeed = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject );
                         if( rMaxSpeed == 0 || rMaxSpeed == std::numeric_limits< double >::max() )
                             continue;
                     }

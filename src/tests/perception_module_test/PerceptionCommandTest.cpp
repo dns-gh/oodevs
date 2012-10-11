@@ -30,7 +30,7 @@ BOOST_FIXTURE_TEST_CASE( perception_command_identifies_its_transporter, Percepti
 {
     const size_t transporterId = 1342;
     const SWORD_Model* transporter = core::Convert( &model[ "entities" ][ transporterId ] );
-    model[ "entities" ][ transporterId ][ "pion" ] = 1818;
+    model[ "entities" ][ transporterId ][ "data" ] = 1818;
     MOCK_RESET( GetTransporter );
     MOCK_EXPECT( GetTransporter ).returns( transporter );
     ExpectNotifications( "agents", sword::test::MakeModel()

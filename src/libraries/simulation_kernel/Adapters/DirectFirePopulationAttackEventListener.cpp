@@ -53,7 +53,7 @@ void DirectFirePopulationAttackEventListener::Notify( const core::Model& event )
 {
     try
     {
-        MIL_AgentPion& pion = event[ "entity/pion" ].GetUserData< MIL_AgentPion >();
+        MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
         unsigned int nTargetKnowledgeID = event[ "population" ];
         const boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pion.GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
         if( ! pKnowledge )
