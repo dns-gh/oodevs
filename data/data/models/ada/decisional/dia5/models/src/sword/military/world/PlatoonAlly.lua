@@ -98,7 +98,7 @@ masalife.brain.communication.setMessageTreatment( "DataToNewUnitInAutomat",
                integration.changeTacticHealtPriority( content.santePrioritesTact )
            end
            if content.maintPrioritesTact and #content.maintPrioritesTact > 0 then
-               integration.changeTacticMaintenancePriority( content.maintPrioritesTact )
+               integration.changeMaintenancePriority( content.maintPrioritesTact )
            end
            if content.maintPriorites and #content.maintPriorites > 0 then
                integration.changeTacticMaintenancePriority( content.maintPriorites )
