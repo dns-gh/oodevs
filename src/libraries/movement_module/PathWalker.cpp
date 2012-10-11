@@ -33,21 +33,24 @@ DECLARE_HOOK( ObjectIntersect2D, bool, ( const SWORD_Model* object, const MT_Lin
 DECLARE_HOOK( ObjectIsInside, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
 DECLARE_HOOK( ObjectIsOnBorder, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
 
-void PostReport( unsigned int entity, MIL_Report::E_EngineReport code )
+namespace
 {
-    wrapper::Event event( "movement report" );
-    event[ "entity" ] = entity;
-    event[ "code" ] = code;
-    event.Post();
-}
+    void PostReport( unsigned int entity, MIL_Report::E_EngineReport code )
+    {
+        wrapper::Event event( "movement report" );
+        event[ "entity" ] = entity;
+        event[ "code" ] = code;
+        event.Post();
+    }
 
-void PostReport( unsigned int entity, MIL_Report::E_EngineReport code, const std::string& name )
-{
-    wrapper::Event event( "movement report with name" );
-    event[ "entity" ] = entity;
-    event[ "code" ] = code;
-    event[ "name" ] = name;
-    event.Post();
+    void PostReport( unsigned int entity, MIL_Report::E_EngineReport code, const std::string& name )
+    {
+        wrapper::Event event( "movement report with name" );
+        event[ "entity" ] = entity;
+        event[ "code" ] = code;
+        event[ "name" ] = name;
+        event.Post();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +127,6 @@ MT_Vector2D PathWalker::ExtrapolatePosition( const wrapper::View& entity, const 
 // Name: PathWalker::ComputeCurrentSpeed
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-inline
 void PathWalker::ComputeCurrentSpeed( const wrapper::View& entity ) const
 {
     const PathPoint& curPathPoint = **itCurrentPathPoint_;
@@ -137,7 +139,6 @@ void PathWalker::ComputeCurrentSpeed( const wrapper::View& entity ) const
 // Name: PathWalker::InitializeEnvironment
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-inline
 void PathWalker::InitializeEnvironment( const PathResult& path, const wrapper::View& entity ) const
 {
     PathResult::CIT_PathPointList itPathPointTmp = itCurrentPathPoint_;
@@ -222,7 +223,6 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< Pa
 // Created: JVT 02-12-06
 // Last modified: JVT 03-02-04
 //-----------------------------------------------------------------------------
-inline
 bool PathWalker::GoToNextNavPoint( PathResult& path, const wrapper::View& entity ) const
 {
     if( ( *itNextPathPoint_ )->GetType() == PathPoint::eTypePointPath )
