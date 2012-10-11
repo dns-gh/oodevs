@@ -10,9 +10,6 @@
 #ifndef gui_PropertyDialog_h
 #define gui_PropertyDialog_h
 
-#include "ModalDialog.h"
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 // =============================================================================
@@ -22,7 +19,6 @@ namespace gui
 // Created: LGY 2012-08-16
 // =============================================================================
 class PropertyDialog : public QDialog
-                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

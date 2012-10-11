@@ -264,7 +264,7 @@ void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( DotationsItem** const& value )
 {
-    DotationsEditor* dotationsEditor = new DotationsEditor( parent_, staticModel_ );
+    DotationsEditor* dotationsEditor = new DotationsEditor( parent_, staticModel_.objectTypes_ );
     dotationsEditor->SetCurrentItem( *value, *selected_ );
     result_ = dotationsEditor;
 }

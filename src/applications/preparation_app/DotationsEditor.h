@@ -11,18 +11,20 @@
 #define __DotationsEditor_h_
 
 #include "clients_gui/PropertyDialog.h"
-#include "tools/Resolver.h"
+#include "clients_kernel/Resolver2.h"
 #include "clients_kernel/ValueEditor.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
-    class DotationType;
     class Entity_ABC;
+    class DotationType;
+    class EquipmentType;
+    class ObjectTypes;
 }
 
 class Dotation;
 class DotationsItem;
-class StaticModel;
 
 // =============================================================================
 /** @class  DotationsEditor
@@ -38,7 +40,7 @@ class DotationsEditor : public gui::PropertyDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationsEditor( QWidget* parent, const ::StaticModel& staticModel );
+             DotationsEditor( QWidget* parent, const kernel::ObjectTypes& objectTypes );
     virtual ~DotationsEditor();
     //@}
 
@@ -65,69 +67,11 @@ private:
     typedef T_StockCapacities::const_iterator                  CIT_StockCapacities;
 
     enum E_InfosColumns { eWeightCurrent = 0, eWeightMax = 1, eVolumeCurrent = 2, eVolumeMax = 3 };
-
-    class KeyPressSpinBox : public QSpinBox
-    {
-    public :
-        void keyPressEvent( QKeyEvent *event ) { QSpinBox::keyPressEvent( event ); }
-        void keyReleaseEvent( QKeyEvent *event ) { QSpinBox::keyReleaseEvent( event ); }
-    };
-
-    class KeyPressEditableTable : public Q3Table
-    {
-    public :
-        KeyPressEditableTable( int numRows, int numCols, QWidget* parent = 0, const char* name = 0 ) : Q3Table( numRows, numCols, parent, name ) {}
-        virtual ~KeyPressEditableTable() {}
-
-    protected :
-        virtual QWidget* beginEdit( int row, int col, bool replace )
-        {
-            QWidget* pWidget = Q3Table::beginEdit( row, col, replace );
-            if( pWidget && col == 1 )
-            {
-                QSpinBox* pSpinBox = dynamic_cast< QSpinBox* >( pWidget );
-                if( pSpinBox )
-                    pSpinBox->selectAll();
-            }
-            return pWidget;
-        }
-
-        virtual KeyPressSpinBox* ManageLineEdit( QKeyEvent* event )
-        {
-            if( event && ( event->key() == Qt::Key_Left || event->key() == Qt::Key_Right ) )
-            {
-                int row = currentRow(), col = currentColumn();
-                QWidget* pWidget = this->cellWidget( row, col );
-                if( pWidget && col == 1 )
-                    if( QSpinBox* pSpinBox = dynamic_cast< QSpinBox* >( pWidget ) )
-                        return static_cast< KeyPressSpinBox* >( pSpinBox );
-            }
-            return 0;
-        }
-
-        virtual void keyPressEvent( QKeyEvent* event )
-        {
-            KeyPressSpinBox* pSpinBox = ManageLineEdit( event );
-            if( pSpinBox )
-                pSpinBox->keyPressEvent( event );
-            else
-                Q3Table::keyPressEvent( event );
-        }
-
-        virtual void keyReleaseEvent( QKeyEvent* event )
-        {
-            KeyPressSpinBox* pSpinBox = ManageLineEdit( event );
-            if( pSpinBox )
-                pSpinBox->keyReleaseEvent( event );
-            else
-                Q3Table::keyReleaseEvent( event );
-        }
-    };
     //@}
 
     //! @name Helpers
     //@{
-    void AddItem( const Dotation* dotation = 0 );
+    void AddItem( int row, const Dotation* dotation = 0 );
     void AddInfoItem( int row, E_InfosColumns currentCol, double currentValue, E_InfosColumns maxCol, double maxValue );
     void UpdateInfos();
     void FillMissingWithZero( T_StockCapacities& src, T_StockCapacities& dst );
@@ -136,14 +80,14 @@ private:
 private:
     //! @name Member data
     //@{
-    const StaticModel& staticModel_;
+    const kernel::Resolver2< kernel::EquipmentType >& equipments_;
+    const kernel::Resolver2< kernel::DotationType >& dotations_;
     const kernel::Entity_ABC* current_;
     DotationsItem** value_;
-    KeyPressEditableTable* table_;
-    Q3Table* infosTable_;
-    QStringList types_;
+    QTableWidget* table_;
+    QTableWidget* infosTable_;
     QLabel* infosLabel_;
-    static QColor warningColor_;
+    bool blockSlot_;
     //@}
 };
 

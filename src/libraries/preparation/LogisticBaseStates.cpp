@@ -60,8 +60,8 @@ void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, k
     dico.Register( *(const LogisticHierarchiesBase*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
     if( canHaveQuotas_ )
     {
-        item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *(Resolver< Dotation >*)this );
-        dico.Register( entity, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), item_ );
+        item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *static_cast< Resolver< Dotation >* >( this ), false );
+        dico.Register( entity, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Edit Quotas" ), item_ );
     }
 }
 

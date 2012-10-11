@@ -11,6 +11,7 @@
 #define __DotationsItem_h_
 
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -28,12 +29,12 @@ class Dotation;
 */
 // Created: SBO 2006-11-10
 // =============================================================================
-class DotationsItem
+class DotationsItem : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations );
+             DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations, bool isStock );
     virtual ~DotationsItem();
     //@}
 
@@ -46,13 +47,7 @@ public:
     void Clear();
     void Update();
     unsigned long CountDotations() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    DotationsItem( const DotationsItem& );            //!< Copy constructor
-    DotationsItem& operator=( const DotationsItem& ); //!< Assignment operator
+    bool IsStock() const;
     //@}
 
 private:
@@ -63,6 +58,7 @@ private:
     kernel::PropertiesDictionary& dico_;
     QString propertyName_;
     tools::Resolver< Dotation >& dotations_;
+    bool isStock_;
     //@}
 };
 

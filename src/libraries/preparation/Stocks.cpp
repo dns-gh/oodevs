@@ -151,8 +151,8 @@ void Stocks::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Stocks::CreateDictionary( Entity_ABC& entity, PropertiesDictionary& dico )
 {
-    item_ = new DotationsItem( controller_, entity, dico, tools::translate( "Stocks", "Stocks" ), *(Resolver< Dotation >*)this );
-    dico.Register( entity, tools::translate( "Stocks", "Stocks/Stocks" ), item_ );
+    item_ = new DotationsItem( controller_, entity, dico, tools::translate( "Stocks", "Stocks" ), *static_cast< Resolver< Dotation >* >( this ), true );
+    dico.Register( entity, tools::translate( "Stocks", "Stocks/Edit Stocks" ), item_ );
 }
 
 // -----------------------------------------------------------------------------

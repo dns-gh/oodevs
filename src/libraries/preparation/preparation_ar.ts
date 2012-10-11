@@ -267,6 +267,10 @@
         <source>Logistic/LogisticBase/Quotas</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic/LogisticBase/Edit Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LogisticLevelAttritube</name>
@@ -634,7 +638,7 @@ Reason: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Stocks/Stocks</source>
+        <source>Stocks/Edit Stocks</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

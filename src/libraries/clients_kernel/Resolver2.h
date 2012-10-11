@@ -138,7 +138,7 @@ public:
     }
     unsigned long Count() const
     {
-        return elements1_.size();
+        return static_cast< unsigned long >( elements1_.size() );
     }
     //@}
     // $$$$ AGE 2006-02-14:

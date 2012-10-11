@@ -10,57 +10,56 @@
 #include "preparation_app_pch.h"
 #include "DotationsEditor.h"
 #include "moc_DotationsEditor.cpp"
+#include "clients_gui/CommonDelegate.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_gui/ExclusiveComboTableItem.h"
-#include "clients_gui/SpinTableItem.h"
 #include "preparation/Dotation.h"
 #include "preparation/DotationsItem.h"
-#include "preparation/StaticModel.h"
 #include "preparation/Stocks.h"
-#include "tools/Iterator.h"
 
-using namespace kernel;
-using namespace gui;
-
-QColor DotationsEditor::warningColor_( 200, 200, 200 );
+#define WARNING_COLOR QColor( 200, 200, 200 )
 
 // -----------------------------------------------------------------------------
 // Name: DotationsEditor constructor
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-DotationsEditor::DotationsEditor( QWidget* parent, const ::StaticModel& staticModel )
+DotationsEditor::DotationsEditor( QWidget* parent, const kernel::ObjectTypes& objectTypes )
     : gui::PropertyDialog( parent )
-    , staticModel_( staticModel )
-    , value_      ( 0 )
+    , equipments_( objectTypes )
+    , dotations_( objectTypes )
+    , value_( 0 )
+    , blockSlot_( false )
 {
     setCaption( tr( "Resources editor" ) );
     setMinimumSize( 500, 500 );
 
     // Table
-    table_ = new KeyPressEditableTable( 0, 2, this );
-    table_->setColumnStretchable( 0, true );
+    table_ = new QTableWidget;
+    gui::CommonDelegate* delegate = new gui::CommonDelegate( this );
+    table_->setItemDelegate( delegate );
+    table_->setColumnCount( 2 );
+    table_->horizontalHeader()->setStretchLastSection( false );
+    table_->horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
+    table_->horizontalHeader()->setResizeMode( 1, QHeaderView::Fixed );
     table_->setColumnWidth( 1, 100 );
-    table_->horizontalHeader()->setLabel( 0, tr( "Type" ) );
-    table_->horizontalHeader()->setLabel( 1, tr( "Quantity" ) );
+    QStringList tableHeaders;
+    tableHeaders << tr( "Type" ) << tr( "Quantity" );
+    table_->setHorizontalHeaderLabels( tableHeaders );
 
     // Info Panel
     infosLabel_ = new QLabel( this );
-    infosTable_ = new Q3Table( 0, 4, this );
-    infosTable_->setColumnStretchable( eWeightCurrent, true );
-    infosTable_->setColumnStretchable( eWeightMax, true );
-    infosTable_->setColumnStretchable( eVolumeCurrent, true );
-    infosTable_->setColumnStretchable( eVolumeMax, true );
-    infosTable_->horizontalHeader()->setLabel( eWeightCurrent, tr( "Current weight" ) );
-    infosTable_->horizontalHeader()->setLabel( eWeightMax, tr( "Maximal weight" ) );
-    infosTable_->horizontalHeader()->setLabel( eVolumeCurrent, tr( "Current volume" ) );
-    infosTable_->horizontalHeader()->setLabel( eVolumeMax, tr( "Maximal volume" ) );
+    infosTable_ = new QTableWidget();
+    infosTable_->setSelectionMode( QAbstractItemView::NoSelection );
+    infosTable_->setColumnCount( 4 );
+    infosTable_->horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    QStringList headers;
+    headers << tr( "Current weight" ) << tr( "Maximal weight" ) << tr( "Current volume" ) << tr( "Maximal volume" );
+    infosTable_->setHorizontalHeaderLabels( headers );
 
     // Buttons
     Q3HBox* buttonBox = new Q3HBox( this );
@@ -76,15 +75,19 @@ DotationsEditor::DotationsEditor( QWidget* parent, const ::StaticModel& staticMo
     pMainLayout->addWidget( infosTable_, 1 );
     pMainLayout->addWidget( buttonBox );
 
-    types_.append( "" );
-    tools::Iterator< const DotationType& > it = staticModel_.objectTypes_.Resolver2< DotationType >::CreateIterator();
+    QStringList types;
+    types.append( "" );
+    tools::Iterator< const kernel::DotationType& > it = dotations_.CreateIterator();
     while( it.HasMoreElements() )
-        types_.append( it.NextElement().GetName().c_str() );
+        types.append( it.NextElement().GetName().c_str() );
+    delegate->AddComboBoxOnColumn( 0, types );
+    delegate->AddSpinBoxOnColumn( 1, 0, std::numeric_limits< int >::max() );
+
     connect( infosLabel_, SIGNAL( linkActivated( const QString& ) ), SLOT( OnLinkActivated( const QString& ) ) );
     connect( clear , SIGNAL( clicked() ), SLOT( OnClear() ) );
     connect( ok    , SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
-    connect( table_, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
+    connect( table_, SIGNAL( cellChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
     OnLinkActivated( "hide" );
 }
 
@@ -121,10 +124,10 @@ void DotationsEditor::OnLinkActivated( const QString& link )
 // -----------------------------------------------------------------------------
 void DotationsEditor::OnAccept()
 {
-    (*value_)->Clear();
-    for( int i = 0; i < table_->numRows() - 1; ++i )
-        (*value_)->AddDotation( staticModel_.objectTypes_.Resolver2< DotationType >::Get( table_->text( i, 0 ).toAscii().constData() ), locale().toUInt( table_->text( i, 1 ) ) );
-    (*value_)->Update();
+    ( *value_ )->Clear();
+    for( int i = 0; i < table_->rowCount() - 1; ++i )
+        ( *value_ )->AddDotation( dotations_.Get( table_->item( i, 0 )->text().toStdString() ), locale().toUInt( table_->item( i, 1 )->text() ) );
+    ( *value_ )->Update();
     accept();
 }
 
@@ -141,19 +144,23 @@ void DotationsEditor::OnReject()
 // Name: DotationsEditor::SetCurrentItem
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-void DotationsEditor::SetCurrentItem( DotationsItem*& dotations, const Entity_ABC& current )
+void DotationsEditor::SetCurrentItem( DotationsItem*& dotations, const kernel::Entity_ABC& current )
 {
     value_ = &dotations;
     current_ = &current;
-    table_->setNumRows( 0 );
+    table_->clearContents();
+    table_->setRowCount( dotations->CountDotations() + 1 );
     tools::Iterator< const Dotation& > it = dotations->CreateIterator();
+    int row = 0;
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
-        AddItem( &dotation );
+        AddItem( row++, &dotation );
     }
-    AddItem();
+    AddItem( row );
     UpdateInfos();
+    OnLinkActivated( "hide" );
+    infosLabel_->setVisible( dotations->IsStock() );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,17 +169,17 @@ void DotationsEditor::SetCurrentItem( DotationsItem*& dotations, const Entity_AB
 // -----------------------------------------------------------------------------
 void DotationsEditor::UpdateInfos()
 {
-    if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( current_ ) )
+    if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( current_ ) )
     {
         // Compute max
         T_StockCapacities maxCapacities;
-        tools::Iterator< const AgentComposition& > itComposition = agent->GetType().CreateIterator();
+        tools::Iterator< const kernel::AgentComposition& > itComposition = agent->GetType().CreateIterator();
         while( itComposition.HasMoreElements() )
         {
-            const AgentComposition& agentComposition = itComposition.NextElement();
-            const ComponentType& equipment = agentComposition.GetType();
-            const EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< EquipmentType >::Get( equipment.GetId() );
-            if( const EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
+            const kernel::AgentComposition& agentComposition = itComposition.NextElement();
+            const kernel::ComponentType& equipment = agentComposition.GetType();
+            const kernel::EquipmentType& equipmentType = equipments_.Get( equipment.GetId() );
+            if( const kernel::EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
             {
                 double nEquipments = static_cast< double >( agentComposition.GetCount() );
                 maxCapacities[ carrying->stockNature_ ].first += nEquipments * carrying->stockWeightCapacity_;
@@ -181,15 +188,15 @@ void DotationsEditor::UpdateInfos()
         }
         // Compute current
         T_StockCapacities currentCapacities;
-        for( int i = 0; i < table_->numRows() - 1; ++i )
+        for( int i = 0; i < table_->rowCount() - 1; ++i )
         {
-            if( table_->text( i, 1 ).isEmpty() )
+            if( table_->item( i, 1 )->text().isEmpty() )
                 continue;
             bool ok = false;
-            const double dotationQuantity = locale().toDouble( table_->text( i, 1 ), &ok );
+            const double dotationQuantity = locale().toDouble( table_->item( i, 1 )->text(), &ok );
             if( !ok )
                 continue;
-            const DotationType& dotationType = staticModel_.objectTypes_.Resolver2< DotationType >::Get( table_->text( i, 0 ).toAscii().constData() );
+            const kernel::DotationType& dotationType = dotations_.Get( table_->item( i, 0 )->text().toStdString() );
             currentCapacities[ dotationType.GetNature() ].first += dotationQuantity * dotationType.GetUnitWeight();
             currentCapacities[ dotationType.GetNature() ].second += dotationQuantity * dotationType.GetUnitVolume();
         }
@@ -197,47 +204,30 @@ void DotationsEditor::UpdateInfos()
         FillMissingWithZero( currentCapacities, maxCapacities );
         FillMissingWithZero( maxCapacities, currentCapacities );
         // Fill info table with value
-        infosTable_->setNumRows( 0 );
+        infosTable_->clearContents();
+        QStringList verticalHeaders;
         int row = 0;
+        infosTable_->setRowCount( static_cast< int >( currentCapacities.size() ) );
         for( CIT_StockCapacities currentIt = currentCapacities.begin(); currentIt != currentCapacities.end(); ++currentIt, ++row )
         {
             CIT_StockCapacities maxIt = maxCapacities.find( currentIt->first );
-            infosTable_->setNumRows( row + 1 );
-            infosTable_->verticalHeader()->setLabel( row, currentIt->first.c_str() );
+            verticalHeaders << currentIt->first.c_str();
             AddInfoItem( row, eWeightCurrent, currentIt->second.first, eWeightMax, maxIt->second.first );
             AddInfoItem( row, eVolumeCurrent, currentIt->second.second, eVolumeMax, maxIt->second.second );
         }
+        infosTable_->setVerticalHeaderLabels( verticalHeaders );
     }
 }
 
 namespace
 {
-    class RightAlignTableItem : public Q3TableItem
+    QTableWidgetItem* MakeItem( QWidget* w, double value )
     {
-    public:
-        RightAlignTableItem ( Q3Table * table, EditType et ) : Q3TableItem( table, et ), useColor_( false ) {}
-        RightAlignTableItem ( Q3Table * table, EditType et, const QString & text ) : Q3TableItem( table, et, text ), useColor_( false ) {}
-
-    public:
-        void SetColor( QColor color ) { color_ = color; useColor_ = true; }
-
-        virtual int alignment() const { return Qt::AlignRight; }
-        virtual void paint( QPainter* p, const QColorGroup& cg, const QRect& cr, bool selected )
-        {
-            if( useColor_ )
-            {
-                QColorGroup newCg( cg );
-                newCg.setColor( QColorGroup::Base, color_ );
-                Q3TableItem::paint( p, newCg, cr, selected );
-            }
-            else
-                Q3TableItem::paint( p, cg, cr, selected );
-        }
-
-    private:
-        bool useColor_;
-        QColor color_;
-    };
+        QTableWidgetItem* item = new QTableWidgetItem( w->locale().toString( value, 'f', 2 ) );
+        item->setTextAlignment( Qt::AlignRight );
+        item->setFlags( item->flags() ^ Qt::ItemIsEditable );
+        return item;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -246,12 +236,10 @@ namespace
 // -----------------------------------------------------------------------------
 void DotationsEditor::AddInfoItem( int row, E_InfosColumns currentCol, double currentValue, E_InfosColumns maxCol, double maxValue )
 {
-    RightAlignTableItem* currentItem = new RightAlignTableItem( infosTable_, Q3TableItem::Never, locale().toString( currentValue, 'f', 2 ) );
-    RightAlignTableItem* maxItem = new RightAlignTableItem( infosTable_, Q3TableItem::Never, locale().toString( maxValue, 'f', 2 ) );
+    infosTable_->setItem( row, currentCol, MakeItem( this, currentValue ) );
+    infosTable_->setItem( row, maxCol, MakeItem( this, maxValue ) );
     if( currentValue > maxValue )
-        currentItem->SetColor( warningColor_ );
-    infosTable_->setItem( row, currentCol, currentItem );
-    infosTable_->setItem( row, maxCol, maxItem );
+        infosTable_->item( row, currentCol )->setBackgroundColor( WARNING_COLOR );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,24 +268,28 @@ DotationsItem* DotationsEditor::GetValue()
 // -----------------------------------------------------------------------------
 void DotationsEditor::OnValueChanged( int row, int col )
 {
-    ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( table_->item( row, 0 ) );
+    if( blockSlot_ )
+        return;
+    blockSlot_ = true;
     if( col == 0 )
     {
-        if( item.CurrentItem() == 0 && row != table_->numRows() - 1 )
+        QTableWidgetItem* item = table_->item( row, 0 );
+        if( item->text().isEmpty() && row != table_->rowCount() - 1 )
         {
             table_->removeRow( row );
-            table_->setCurrentCell( table_->numRows() - 1, 1 );
+            table_->setCurrentCell( table_->rowCount() - 1, 1, QItemSelectionModel::ClearAndSelect );
+            blockSlot_ = false;
             return;
         }
-        if( item.CurrentItem() && row == table_->numRows() - 1 )
+        if( !item->text().isEmpty() && row == table_->rowCount() - 1 && table_->rowCount() < static_cast< int >( dotations_.Count() - 1 ) )
         {
-            const int current = item.CurrentItem();
-            if( table_->numRows() < int( types_.size() ) - 1 )
-                AddItem();
-            item.SetCurrentItem( current );
+            const int rowCount = table_->rowCount();
+            table_->setRowCount( rowCount + 1 );
+            AddItem( rowCount );
         }
         table_->setCurrentCell( row, 1 );
     }
+    blockSlot_ = false;
     UpdateInfos();
 }
 
@@ -305,19 +297,20 @@ void DotationsEditor::OnValueChanged( int row, int col )
 // Name: DotationsEditor::AddItem
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-void DotationsEditor::AddItem( const Dotation* dotation /* =0*/ )
+void DotationsEditor::AddItem( int row, const Dotation* dotation /* =0*/ )
 {
-    const unsigned int row = table_->numRows();
-    table_->setNumRows( row + 1 );
-    ExclusiveComboTableItem* item = new ExclusiveComboTableItem( table_, types_ );
-    table_->setItem( row, 0, item );
-    table_->setItem( row, 1, new gui::SpinTableItem< int >( table_, 0, std::numeric_limits< int >::max(), 1 ) );
+    blockSlot_ = true;
+    table_->setItem( row, 0, new QTableWidgetItem() );
+    table_->setItem( row, 1, new QTableWidgetItem() );
     if( dotation )
     {
-        table_->setText( row, 1, locale().toString( dotation->quantity_ ) );
-        item->SetCurrentText( dotation->type_.GetName().c_str() );
+        table_->item( row, 0 )->setText( dotation->type_.GetName().c_str() );
+        table_->item( row, 1 )->setText( locale().toString( dotation->quantity_ ) );
     }
+    else 
+        table_->item( row, 1 )->setText( locale().toString( 0 ) );
     table_->setCurrentCell( row, 1 );
+    blockSlot_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -326,7 +319,8 @@ void DotationsEditor::AddItem( const Dotation* dotation /* =0*/ )
 // -----------------------------------------------------------------------------
 void DotationsEditor::OnClear()
 {
-    table_->setNumRows( 0 );
-    AddItem();
+    table_->clearContents();
+    table_->setRowCount( 1 );
+    AddItem( 0 );
     UpdateInfos();
 }

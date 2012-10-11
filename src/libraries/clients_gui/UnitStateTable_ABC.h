@@ -11,7 +11,6 @@
 #define __gui_UnitStateTable_ABC_h_
 
 #include <boost/noncopyable.hpp>
-//#include <Qt3Support/q3table.h>
 #include "clients_kernel/Tools.h"
 #include "ComboTableItem.h"
 #include "CommonDelegate.h"

@@ -22,12 +22,13 @@ using namespace kernel;
 // Name: DotationsItem constructor
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-DotationsItem::DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations )
+DotationsItem::DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, tools::Resolver< Dotation >& dotations, bool isStock )
     : controller_( controller )
     , owner_( owner )
     , dico_( dico )
     , propertyName_( propertyName )
     , dotations_( dotations )
+    , isStock_( isStock )
 {
     // NOTHING
 }
@@ -47,7 +48,9 @@ DotationsItem::~DotationsItem()
 // -----------------------------------------------------------------------------
 void DotationsItem::AddDotation( const Dotation& dotation )
 {
-    dico_.Register( owner_, propertyName_ + "/" + dotation.type_.GetName().c_str(), ( int& ) dotation.quantity_ );
+    const QString property = propertyName_ + "/" + dotation.type_.GetName().c_str();
+    dico_.Register( owner_, property, const_cast< unsigned int& >( dotation.quantity_ ) );
+    controller_.Create( kernel::DictionaryUpdated( owner_, property ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +74,9 @@ void DotationsItem::RemoveDotation( const DotationType& type )
     Dotation* dotation = dotations_.Find( type.GetId() );
     if( dotation )
     {
-        dico_.Remove( propertyName_ + "/" + type.GetName().c_str() );
+        const QString property = propertyName_ + "/" + type.GetName().c_str();
+        dico_.Remove( property );
+        controller_.Delete( kernel::DictionaryUpdated( owner_, property ) );
         dotations_.Remove( type.GetId() );
     }
 }
@@ -117,4 +122,13 @@ void DotationsItem::Update()
 tools::Iterator< const Dotation& > DotationsItem::CreateIterator() const
 {
     return dotations_.CreateIterator();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationsItem::IsStock
+// Created: JSR 2012-10-11
+// -----------------------------------------------------------------------------
+bool DotationsItem::IsStock() const
+{
+    return isStock_;
 }

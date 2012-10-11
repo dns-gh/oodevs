@@ -267,6 +267,10 @@
         <source>Logistic/LogisticBase/Quotas</source>
         <translation>Logistique/Base logistique/Quotas</translation>
     </message>
+    <message>
+        <source>Logistic/LogisticBase/Edit Quotas</source>
+        <translation>Logistique/Base logistique/Editer les Quotas</translation>
+    </message>
 </context>
 <context>
     <name>LogisticLevelAttritube</name>
@@ -639,8 +643,8 @@ Détail: %1.</translation>
         <translation>Stocks</translation>
     </message>
     <message>
-        <source>Stocks/Stocks</source>
-        <translation>Stocks/Stocks</translation>
+        <source>Stocks/Edit Stocks</source>
+        <translation>Stocks/Editer les Stocks</translation>
     </message>
 </context>
 <context>
