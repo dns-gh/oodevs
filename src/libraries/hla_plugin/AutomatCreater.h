@@ -39,7 +39,7 @@ namespace plugins
 namespace hla
 {
     template< typename ResponseMessage > class ContextHandler_ABC;
-    class AutomatTypeResolver_ABC;
+    class UnitTypeResolver_ABC;
 
 // =============================================================================
 /** @class  AutomatCreater
@@ -55,7 +55,7 @@ public:
              AutomatCreater( xml::xisubstream xis,
                              ContextHandler_ABC< sword::FormationCreation >& formationCreation,
                              ContextHandler_ABC< sword::AutomatCreation >& automatCreation,
-                             const AutomatTypeResolver_ABC& automatTypeResolver,
+                             const UnitTypeResolver_ABC& automatTypeResolver,
                              const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC, unsigned long >& knowledgeGroups );
     virtual ~AutomatCreater();
     //@}

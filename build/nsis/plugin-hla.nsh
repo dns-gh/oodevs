@@ -23,6 +23,7 @@
     ${File} "${RUNDIR}\plugins\hla\" "hla_plugin-${PLATFORM}-mt.dll"
     ${File} "${RUNDIR}\plugins\hla\" "libFedTime1516e.dll"
     ${File} "${RUNDIR}\plugins\hla\" "hla_1516.dll"
+    ${File} "${RUNDIR}\plugins\hla\" "automat.xml"
     ${File} "${RUNDIR}\plugins\hla\" "aggregate.xml"
     ${File} "${RUNDIR}\plugins\hla\" "vessel.xml"
     ${File} "${RUNDIR}\plugins\hla\" "component.xml"

@@ -46,6 +46,8 @@
 #include "SideResolver.h"
 #include "tools/MessageController.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
@@ -186,12 +188,14 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pFederateFactory_           ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
     , pDebugFederateFactory_      ( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger_, *pObjectResolver_ ) )
     , pAggregateTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "aggregate" ) ) ) )
+    , pAutomatAggregateResolver_  ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "automat" ) ) ) )
     , pSurfaceVesselTypeResolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "surface-vessel" ) ) ) )
     , pComponentTypeResolver_     ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "component" ) ) ) )
     , pEntityMunitionTypeResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "munition" ) ) ) )
     , pEntityObjectTypeResolver_  ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + ReadMapping( *pXis_, "object" ) ) ) )
     , pComponentTypes_            ( new ComponentTypes( staticModel.types_ ) )
-    , pUnitTypeResolver_          ( new UnitTypeResolver( *pAggregateTypeResolver_, staticModel.types_, logger ) )
+    , pUnitTypeResolver_          ( new UnitTypeResolver< kernel::AgentType >( *pAggregateTypeResolver_, staticModel.types_, logger ) )
+    , pAutomatTypeResolver_       ( new UnitTypeResolver< kernel::AutomatType >( *pAutomatAggregateResolver_, staticModel.types_, logger ) )
     , pMunitionTypeResolver_      ( new DotationTypeResolver( *pEntityMunitionTypeResolver_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , pLocalAgentResolver_        ( new LocalAgentResolver() )
     , pCallsignResolver_          ( new CallsignResolver() )
@@ -259,7 +263,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
                     static_cast< NETN_InteractionBuilder_ABC* >( new NETNv2_InteractionBuilder( logger_, *pFederate_ ) ) );
             pInteractionBuilder_.reset( new InteractionBuilder( logger_, *pFederate_, *pNetnInteractionBuilder_ ) );
             pSimulationFacade_.reset( new SimulationFacade( *pXis_, *pContextFactory_, *pMessageController_, simulationPublisher_, dynamicModel_,
-                    *pComponentTypeResolver_, staticModel_, *pUnitTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_,
+                    *pComponentTypeResolver_, *pUnitTypeResolver_, *pAutomatTypeResolver_, *pFederate_, *pComponentTypes_, *pCallsignResolver_, logger_,
                     *pExtentResolver_, *pSubject_, *pLocalAgentResolver_, *pSideResolver_, *pEntityObjectTypeResolver_, *pFederate_ ) );
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_ ) );

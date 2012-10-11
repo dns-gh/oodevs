@@ -40,6 +40,7 @@ namespace hla
 {
     class RemoteAgentSubject_ABC;
     class SideResolver_ABC;
+    class UnitTypeResolver_ABC;
     template< typename ResponseMessage > class ContextHandler_ABC;
 
 // =============================================================================
@@ -61,7 +62,7 @@ public:
                                 ContextHandler_ABC< sword::AutomatCreation >& automatCreation,
                                 ContextHandler_ABC< sword::UnitCreation >& unitCreation, const SideResolver_ABC& sideResolver,
                                 const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC, unsigned long >& knowledgeGroups,
-                                dispatcher::SimulationPublisher_ABC& publisher );
+                                dispatcher::SimulationPublisher_ABC& publisher, const UnitTypeResolver_ABC& automatTypeResolver );
     virtual ~RemoteOrbatShaper();
     //@}
 
@@ -117,6 +118,7 @@ private:
     ContextHandler_ABC< sword::UnitCreation >& unitCreation_;
     const SideResolver_ABC& sideResolver_;
     dispatcher::SimulationPublisher_ABC& publisher_;
+    const UnitTypeResolver_ABC& automatTypeResolver_;
     T_PartyMap party2Formations_;
     T_PartyMap party2KnowledgeGroups_;
     T_UnitsData units_;

@@ -1,5 +1,6 @@
 <configuration>
     <mappings>
+        <automat>automat.xml</automat>
         <aggregate>aggregate.xml</aggregate>
         <surface-vessel>vessel.xml</surface-vessel>
         <component>component.xml</component>

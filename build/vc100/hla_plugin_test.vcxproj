@@ -208,7 +208,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAgentSubject.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAttributeFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatChecker.h" />
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockCallsignResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassBuilder.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassListener.h" />

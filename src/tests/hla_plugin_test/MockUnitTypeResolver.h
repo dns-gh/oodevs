@@ -24,7 +24,8 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockUnitTypeResolver, UnitTypeResolver_ABC )
 {
-    MOCK_METHOD( Resolve, 1 );
+    MOCK_METHOD_EXT( Resolve, 1, unsigned long ( const rpr::EntityType& ), Resolve );
+    MOCK_METHOD_EXT( Resolve, 1, unsigned long ( const std::string& ), ResolveName );
 };
 
 }

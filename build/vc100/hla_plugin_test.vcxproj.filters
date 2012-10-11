@@ -282,9 +282,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSubordinates.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatTypeResolver.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSideChecker.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>

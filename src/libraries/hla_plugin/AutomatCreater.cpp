@@ -10,7 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "AutomatCreater.h"
 #include "ContextHandler_ABC.h"
-#include "AutomatTypeResolver_ABC.h"
+#include "UnitTypeResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/KnowledgeGroup_ABC.h"
 #include "dispatcher/Team_ABC.h"
@@ -22,7 +22,7 @@ using namespace plugins::hla;
 
 namespace
 {
-    unsigned long ResolveAutomatType( xml::xistream& xis, const AutomatTypeResolver_ABC& automatTypeResolver )
+    unsigned long ResolveAutomatType( xml::xistream& xis, const UnitTypeResolver_ABC& automatTypeResolver )
     {
         std::string name;
         xis >> xml::start( "types" )
@@ -41,7 +41,7 @@ namespace
 AutomatCreater::AutomatCreater( xml::xisubstream xis,
                                 ContextHandler_ABC< sword::FormationCreation >& formationCreation,
                                 ContextHandler_ABC< sword::AutomatCreation >& automatCreation,
-                                const AutomatTypeResolver_ABC& automatTypeResolver,
+                                const UnitTypeResolver_ABC& automatTypeResolver,
                                 const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC, unsigned long >& knowledgeGroups )
     : automatType_      ( ResolveAutomatType( xis, automatTypeResolver ) )
     , formationCreation_( formationCreation )

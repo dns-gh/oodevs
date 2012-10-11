@@ -17,7 +17,6 @@
 #include "RemoteAgentController.h"
 #include "UnitTeleporter.h"
 #include "NetnRemoteCallsignListener.h"
-#include "AutomatTypeResolver.h"
 #include "EquipmentUpdater.h"
 #include "RemoteOrbatShaper.h"
 #include "RemoteTacticalObjectController.h"
@@ -70,7 +69,7 @@ namespace
 // -----------------------------------------------------------------------------
 SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_ABC& contextFactory, tools::MessageController_ABC< sword::SimToClient_Content >& messageController,
                                     dispatcher::SimulationPublisher_ABC& publisher, dispatcher::Model_ABC& dynamicModel, const rpr::EntityTypeResolver_ABC& componentTypeResolver,
-                                    const dispatcher::StaticModel& staticModel, const UnitTypeResolver_ABC& unitTypeResolver,
+                                    const UnitTypeResolver_ABC& unitTypeResolver, const UnitTypeResolver_ABC& automatTypeResolver,
                                     RemoteAgentSubject_ABC& remoteAgentSubject, const ComponentTypes_ABC& componentTypes, CallsignResolver_ABC& callsignResolver,
                                     dispatcher::Logger_ABC& logger, const ExtentResolver_ABC& extent, AgentSubject_ABC& subject, const LocalAgentResolver_ABC& localResolver,
                                     const SideResolver_ABC& sideResolver, const rpr::EntityTypeResolver_ABC& objectEntityTypeResolver, RemoteTacticalObjectSubject_ABC& remoteTacticalSubject )
@@ -78,17 +77,16 @@ SimulationFacade::SimulationFacade( xml::xisubstream xis, const ContextFactory_A
     , pFormationHandler_          ( new FormationContextHandler( messageController, contextFactory, publisher ) )
     , pAutomatHandler_            ( new AutomatContextHandler( messageController, contextFactory, publisher ) )
     , pUnitHandler_               ( new UnitContextHandler( messageController, contextFactory, publisher ) )
-    , pAutomatTypeResolver_       ( new AutomatTypeResolver( staticModel.types_ ) )
     , pAutomatDisengager_         ( new AutomatDisengager( *pAutomatHandler_, publisher, contextFactory ) )
     , pFormationCreater_          ( new FormationCreater( dynamicModel.Sides(), *pFormationHandler_ ) )
-    , pAutomatCreater_            ( new AutomatCreater( xis, *pFormationHandler_, *pAutomatHandler_, *pAutomatTypeResolver_, dynamicModel.KnowledgeGroups() ) )
+    , pAutomatCreater_            ( new AutomatCreater( xis, *pFormationHandler_, *pAutomatHandler_, automatTypeResolver, dynamicModel.KnowledgeGroups() ) )
     , pUnitTeleporter_            ( new UnitTeleporter( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, localResolver, callsignResolver, logger ) )
     , pEquipmentUpdater_          ( new EquipmentUpdater( remoteAgentSubject, *pUnitHandler_, publisher, contextFactory, componentTypeResolver, componentTypes, messageController, logger ) )
     , pRemoteAgentController_     ( new RemoteAgentController( remoteAgentSubject, *pAutomatHandler_, *pUnitHandler_, sideResolver_, unitTypeResolver, logger, extent, subject ) )
     , pNetnRemoteCallsignListener_( new NetnRemoteCallsignListener( callsignResolver, remoteAgentSubject, *pUnitHandler_ ) )
     , pRemoteTacticalObjectController_( new RemoteTacticalObjectController( extent, sideResolver_, objectEntityTypeResolver, publisher, remoteTacticalSubject, logger ) )
     , pRemoteOrbatShaper_         ( xis.attribute< bool >( "send-full-orbat", false ) ?
-                                    new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher ) : 0 )
+                                    new RemoteOrbatShaper( remoteAgentSubject, *pFormationHandler_, *pAutomatHandler_, *pUnitHandler_, sideResolver, dynamicModel.KnowledgeGroups(), publisher, automatTypeResolver ) : 0 )
 
 {
     // NOTHING

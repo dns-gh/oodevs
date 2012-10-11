@@ -19,6 +19,7 @@
 #include "MockKnowledgeGroup.h"
 #include "MockHlaClass.h"
 #include "MockHlaObject.h"
+#include "MockUnitTypeResolver.h"
 
 #include "protocol/Simulation.h"
 #include "protocol/SimulationSenders.h"
@@ -63,6 +64,7 @@ namespace
         MockSideResolver sideResolver;
         tools::MockResolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroupResolver;
         dispatcher::MockSimulationPublisher simulationPublisher;
+        MockUnitTypeResolver automatTypeResolver;
         
         dispatcher::MockTeam team;
         T_KnowledgeGroups groups;
@@ -95,7 +97,7 @@ namespace
     {
         ShaperFixture() 
             :   formationId_( 18 ) 
-            ,   orbatShaper( remoteSubject, formationCreation, automatCreation, unitCreation, sideResolver, knowledgeGroupResolver, simulationPublisher)
+            ,   orbatShaper( remoteSubject, formationCreation, automatCreation, unitCreation, sideResolver, knowledgeGroupResolver, simulationPublisher, automatTypeResolver )
         {
             BOOST_REQUIRE( remoteClassListener );
             BOOST_REQUIRE( formationCreationHandler );
@@ -142,10 +144,12 @@ BOOST_FIXTURE_TEST_CASE( remote_orbat_shaper_creates_automat, ShaperFixture )
     parentListener->NameChanged( parentRtiId, "parent" );
     MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
     parentListener->SideChanged( parentRtiId, rpr::Friendly );
+    parentListener->TypeChanged( parentRtiId, rpr::EntityType( "1 2 3 4 5 6 7" ) );
 
     sword::UnitCreation message;
     message.mutable_unit()->set_id( 52 );
     simulation::UnitMagicAction actual;
+    MOCK_EXPECT( automatTypeResolver.Resolve ).once().with( rpr::EntityType( "1 2 3 4 5 6 7" ) ).returns( 33u );
     MOCK_EXPECT( automatCreation.Send ).once().with( mock::retrieve( actual ), parentRtiId );
     unitCreationHandler->Notify( message, childRtiId );
     
@@ -153,7 +157,7 @@ BOOST_FIXTURE_TEST_CASE( remote_orbat_shaper_creates_automat, ShaperFixture )
     BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::automat_creation );
     BOOST_CHECK_EQUAL( action.tasker().formation().id(), formationId_ );    
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 4 );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 116u );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).identifier(), 33u );
     BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value( 0 ).identifier(), 42u );
     BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "parent" );
     BOOST_CHECK( action.parameters().elem( 3 ).value( 0 ).has_extensionlist() );
@@ -185,10 +189,12 @@ namespace
             parentListener->NameChanged( parentRtiId, "parent" );
             MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
             parentListener->SideChanged( parentRtiId, rpr::Friendly );
+            parentListener->TypeChanged( parentRtiId, rpr::EntityType( "1 2 3 4 5 6 7" ) );
 
             sword::UnitCreation message;
             message.mutable_unit()->set_id( unitSimId );
             simulation::UnitMagicAction actual;
+            MOCK_EXPECT( automatTypeResolver.Resolve ).once().with( rpr::EntityType( "1 2 3 4 5 6 7" ) ).returns( 33u );
             MOCK_EXPECT( automatCreation.Send ).once().with( mock::retrieve( actual ), parentRtiId );
             unitCreationHandler->Notify( message, childRtiId );
         }

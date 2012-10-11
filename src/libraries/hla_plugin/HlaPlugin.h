@@ -134,12 +134,14 @@ private:
     std::auto_ptr< FederateAmbassadorFactory_ABC > pFederateFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pAggregateTypeResolver_;
+    std::auto_ptr< rpr::EntityTypeResolver_ABC > pAutomatAggregateResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pSurfaceVesselTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pComponentTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityMunitionTypeResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityObjectTypeResolver_;
     std::auto_ptr< ComponentTypes_ABC > pComponentTypes_;
     std::auto_ptr< UnitTypeResolver_ABC > pUnitTypeResolver_;
+    std::auto_ptr< UnitTypeResolver_ABC > pAutomatTypeResolver_;
     std::auto_ptr< DotationTypeResolver_ABC > pMunitionTypeResolver_;
     std::auto_ptr< LocalAgentResolver_ABC > pLocalAgentResolver_;
     std::auto_ptr< CallsignResolver_ABC > pCallsignResolver_;

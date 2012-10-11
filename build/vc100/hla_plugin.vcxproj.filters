@@ -154,9 +154,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\DirectFireSender.cpp">
       <Filter>Source Files\Interactions\Detonation</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp">
-      <Filter>Source Files\Resolvers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\RemoteAgentResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
@@ -203,9 +200,6 @@
       <Filter>Source Files\Interactions\Transportation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\MissionResolver.cpp">
-      <Filter>Source Files\Resolvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\SideChecker.cpp">
@@ -580,12 +574,6 @@
       <Filter>Source Files\Interactions\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver.h">
-      <Filter>Source Files\Resolvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.h">
-      <Filter>Source Files\Resolvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker_ABC.h">

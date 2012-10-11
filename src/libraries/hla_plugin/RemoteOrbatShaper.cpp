@@ -13,11 +13,13 @@
 #include "ContextHandler_ABC.h"
 #include "SideResolver_ABC.h"
 #include "HlaObject_ABC.h"
+#include "UnitTypeResolver_ABC.h"
 #include "dispatcher/Team_ABC.h"
 #include "dispatcher/KnowledgeGroup_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "tools/Resolver_ABC.h"
+#include "rpr/EntityType.h"
 #include <boost/foreach.hpp>
 #include <set>
 
@@ -49,6 +51,7 @@ public:
     std::string parentRtiId;
     std::string name;
     int level;
+    rpr::EntityType entityType;
 
 private:
     Kind kind;
@@ -66,13 +69,14 @@ RemoteOrbatShaper::RemoteOrbatShaper( RemoteAgentSubject_ABC& agentSubject, Cont
                                 ContextHandler_ABC< sword::AutomatCreation >& automatCreation,
                                 ContextHandler_ABC< sword::UnitCreation >& unitCreation, const SideResolver_ABC& sideResolver,
                                 const tools::Resolver_ABC< dispatcher::KnowledgeGroup_ABC, unsigned long >& knowledgeGroups,
-                                dispatcher::SimulationPublisher_ABC& publisher )
+                                dispatcher::SimulationPublisher_ABC& publisher, const UnitTypeResolver_ABC& automatTypeResolver )
     : agentSubject_( agentSubject )
     , formationCreation_( formationCreation )
     , automatCreation_( automatCreation )
     , unitCreation_( unitCreation )
     , sideResolver_( sideResolver )
     , publisher_( publisher )
+    , automatTypeResolver_( automatTypeResolver )
 {
     agentSubject_.Register( *this );
     formationCreation_.Register( *this );
@@ -157,9 +161,12 @@ void RemoteOrbatShaper::NameChanged( const std::string& identifier, const std::s
 // Name: RemoteOrbatShaper::TypeChanged
 // Created: AHC 2012-10-03
 // -----------------------------------------------------------------------------
-void RemoteOrbatShaper::TypeChanged( const std::string& /*identifier*/, const rpr::EntityType& /*type*/ )
+void RemoteOrbatShaper::TypeChanged( const std::string& identifier, const rpr::EntityType& type )
 {
-    // NOTHING
+    T_UnitsData::const_iterator it( units_.find( identifier ) );
+    if( units_.end() == it )
+        return;
+    it->second->entityType = type;
 }
 
 // -----------------------------------------------------------------------------
@@ -333,7 +340,7 @@ void RemoteOrbatShaper::CreateParent( const std::string& childId )
     {
     case UnitData::UNIT:
         CreateAutomat( automatCreation_, party2Formations_[ childIt->second->GetTeam() ], party2KnowledgeGroups_[ childIt->second->GetTeam() ],
-                        116 /* FIXME AHC */, parentIt->second->name, parentId );
+                       automatTypeResolver_.Resolve( parentIt->second->entityType ), parentIt->second->name, parentId );
         parentIt->second->CreationSent();
         break;
     case UnitData::AUTOMAT:

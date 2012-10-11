@@ -13,7 +13,7 @@
 #include "MockResolver.h"
 #include "MockTeam.h"
 #include "MockKnowledgeGroup.h"
-#include "MockAutomatTypeResolver.h"
+#include "MockUnitTypeResolver.h"
 #include "protocol/Simulation.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/shared_ptr.hpp>
@@ -75,7 +75,7 @@ namespace
         xml::xistringstream xis;
         MockContextHandler< sword::FormationCreation > formationCreation;
         MockContextHandler< sword::AutomatCreation > automatCreation;
-        MockAutomatTypeResolver automatResolver;
+        MockUnitTypeResolver automatResolver;
         tools::MockResolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroupResolver;
         ResponseObserver_ABC< sword::FormationCreation >* formationCreationHandler;
         T_KnowledgeGroups groups;
@@ -88,13 +88,13 @@ namespace
 BOOST_FIXTURE_TEST_CASE( automat_creater_checks_remote_automat_type_id_existence, Fixture )
 {
     mock::reset( formationCreation );
-    MOCK_EXPECT( automatResolver.Resolve ).once().returns( 0 );
+    MOCK_EXPECT( automatResolver.ResolveName ).once().returns( 0 );
     BOOST_CHECK_THROW( AutomatCreater automatCreater( xis, formationCreation, automatCreation, automatResolver, knowledgeGroupResolver ), std::runtime_error );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_creater_sends_automat_creation_message_when_receiving_formation_creation, Fixture )
 {
-    MOCK_EXPECT( automatResolver.Resolve ).once().with( "automat type name" ).returns( 42u );
+    MOCK_EXPECT( automatResolver.ResolveName ).once().with( "automat type name" ).returns( 42u );
     ConfigureKnowledgeGroups();
     AutomatCreater automatCreater( xis, formationCreation, automatCreation, automatResolver, knowledgeGroupResolver );
     BOOST_REQUIRE( formationCreationHandler );

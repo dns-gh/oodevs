@@ -39,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual unsigned long Resolve( const rpr::EntityType& type ) const = 0;
+    virtual unsigned long Resolve( const std::string& typeName ) const = 0;
     //@}
 };
 
