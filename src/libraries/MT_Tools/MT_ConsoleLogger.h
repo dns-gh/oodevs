@@ -44,8 +44,6 @@ private:
     /** @name Main methods */
     //-------------------------------------------------------------------------
     //@{
-    const char* GetColorFromLogLevel( unsigned int nLogLevel );
-
     virtual void LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
     //@}
 

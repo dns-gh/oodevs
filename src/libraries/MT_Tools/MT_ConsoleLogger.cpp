@@ -31,26 +31,6 @@ MT_ConsoleLogger::~MT_ConsoleLogger()
 }
 
 //-----------------------------------------------------------------------------
-// Name: MT_ConsoleLogger::GetColorFromLogLevel
-/**
-    @return The ANSI color associated to the given log level
-*/
-// Created:  NLD 00-10-23
-//-----------------------------------------------------------------------------
-const char* MT_ConsoleLogger::GetColorFromLogLevel( unsigned int nLogLevel )
-{
-    switch( nLogLevel )
-    {
-        case eLogLevel_Error:
-            return "\033[31;5m";
-        case eLogLevel_Warning:
-            return "\033[33;5m";
-        default:
-            return "";
-    }
-}
-
-//-----------------------------------------------------------------------------
 // Name: MT_ConsoleLogger::EnableTimeStamps
 /**
 */
@@ -68,10 +48,6 @@ void MT_ConsoleLogger::EnableTimeStamps( bool bEnabled )
 void MT_ConsoleLogger::LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode )
 {
     boost::mutex::scoped_lock locker( mutex_ );
-
-#ifdef MT_COLOR_CONSOLE
-    printf( "%s", GetColorFromLogLevel( level ) );
-#endif
 
     // Time
     if( bDumpTimeStamps_ )
@@ -95,9 +71,5 @@ void MT_ConsoleLogger::LogString( E_LogLevel level, const char* strMessage, cons
     if( strContext != NULL )
         printf( " [Context: %s]", strContext );
 
-#ifdef MT_COLOR_CONSOLE
-    printf("\033[0m\n");
-#else
     printf("\n");
-#endif
 }
