@@ -29,6 +29,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 Object::Object( xml::xistream& xis, const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation, bool /*reserved*/ )
     : MIL_Object( army, type, xis.attribute< unsigned long >( "id" ) )
     , name_( xis.attribute< std::string >( "name", "" ) )
+    , externalIdentifier_( 0 )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
@@ -183,7 +184,7 @@ void Object::SendCreation() const
     asn().mutable_party()->set_id( GetArmy() ? GetArmy()->GetID() : 0 );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
     asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation ne doit PAS envoyer les attributs
-    if( externalIdentifier_ != 0u )
+    if( externalIdentifier_ )
         asn().set_external_identifier( externalIdentifier_ );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
