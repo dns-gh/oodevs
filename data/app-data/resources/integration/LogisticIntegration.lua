@@ -36,3 +36,31 @@ end
 integration.isMedical = function( agent )
     return DEC_Agent_CanPerformHealthEvacuation( agent.source ) -- works with myself
 end
+
+integration.startGiveEquipment = function( agent, agentToReinforce, equipment, nbrAmbulance )
+    DEC_StartPreterComposantes( agent, agentToReinforce, equipment, nbrAmbulance )
+end
+
+integration.startTakeEquipment = function( agent, equipment, nbrAmbulance )
+	DEC_RecupererComposantes( agent, equipment, nbrAmbulance )
+end
+
+integration.changeMaintenanceWorkMode = function( workOrganization )
+    DEC_Maintenance_ChangerRegimeTravail( workOrganization )
+end
+
+integration.changeTacticHealtPriority = function( tacticPriority )
+    DEC_Sante_ChangerPrioritesTactiques( tacticPriority )
+end
+
+integration.changeTacticMaintenancePriority = function( tacticPriority )
+    DEC_Maintenance_ChangerPrioritesTactiques( tacticPriority )
+end
+
+integration.changeMaintenancePriority = function( priority )
+    DEC_Maintenance_ChangerPriorites( priority )
+end
+
+integration.changeHealthPriority = function( priority )
+    DEC_Sante_ChangerPriorites( priority )
+end

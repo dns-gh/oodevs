@@ -703,3 +703,7 @@ integration.creerItineraireAPartirListePoint = function( listPoint )
     end
     return CreateKnowledge( world.Itinerary, DEC_CreerItineraireListe(listPointSource, eTypeItiMouvement) )
 end
+
+integration.copyPoint = function( position )
+    return DEC_Geometrie_CopiePoint( position )
+end

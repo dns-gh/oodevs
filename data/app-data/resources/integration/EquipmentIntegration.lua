@@ -479,7 +479,7 @@ integration.modifyHumanWoundPriority = function ( blessuresTraitees )
         for parameterName, parameterValue in pairs( blessuresTraitees ) do
             List[parameterName] = parameterValue.source
         end
-        DEC_Sante_ChangerPriorites( List )
+        integration.changeHealthPriority( List )
     end
 end
 
@@ -527,9 +527,9 @@ end
 -- -------------------------------------------------------------------------------- 
 integration.activateRadar = function ( area )
     if not myself.radarActivated then
-        myself.ecoute = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Ecoute, area.source )
-        myself.radar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, area.source )
-        myself.ecouteRadar = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_EcouteRadar, area.source )
+        myself.ecoute = integration.activeRadarOnLocalisation( eRadarType_Ecoute, area.source )
+        myself.radar = integration.activeRadarOnLocalisation( eRadarType_Radar, area.source )
+        myself.ecouteRadar = integration.activeRadarOnLocalisation( eRadarType_EcouteRadar, area.source )
         myself.zoneAEcouter = area.source
         myself.radarActivated = true
 
@@ -548,9 +548,9 @@ end
 -- -------------------------------------------------------------------------------- 
 integration.deactivateRadar = function ( area )
     if myself.radarActivated then
-        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Ecoute, myself.ecoute )
-        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_Radar, myself.radar )
-        DEC_Perception_DesactiverRadarSurLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
+        integration.disableRadarOnLocalisation( eRadarType_Ecoute, myself.ecoute )
+        integration.disableRadarOnLocalisation( eRadarType_Radar, myself.radar )
+        integration.disableRadarOnLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
         myself.radarActivated = false
 
         meKnowledge:RC( eRC_FinSurveillance )	
@@ -693,4 +693,12 @@ end
 
 integration.meKnowledgeIsTranported = function( self )
     return DEC_Agent_EstTransporte()
+end
+
+integration.activeRadarOnLocalisation = function( radarType, area )
+    DEC_Perception_ActiverRadarSurLocalisation( radarType, area )
+end
+
+integration.disableRadarOnLocalisation = function( radarType, radar )
+    DEC_Perception_DesactiverRadarSurLocalisation( radarType, radar )
 end

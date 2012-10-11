@@ -247,3 +247,7 @@ function DEC_GetMission( entity )
     entity.mission = mission
     return mission
 end
+
+integration.getMission = function( entity )
+    return DEC_GetMission( entity.source )
+end
