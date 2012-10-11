@@ -110,17 +110,8 @@ void MT_FileLogger::LogString( E_LogLevel nLogLevel, const char* strMessage, con
 {
     boost::mutex::scoped_lock locker( mutex_ );
 
-    std::stringstream messageStream ( std::stringstream::in | std::stringstream::out );
-    messageStream << "[" << GetTimestampAsString() << "] ";
-    messageStream << "<" << GetTypeAsString() << "> ";
-    messageStream << "<" << GetLogLevelAsString( nLogLevel ) << "> ";
-    if( strMessage )
-        messageStream << strMessage;
-    if( nCode != -1 )
-        messageStream << "(" << nCode << ") ";
-    if( strContext )
-        messageStream << "[Context: " << strContext << "]";
-    messageStream << std::endl;
+    std::stringstream messageStream;
+    MakeString( nLogLevel, strMessage, strContext, nCode, messageStream );
 
     if( maxSize_ > 0 )
     {

@@ -43,6 +43,20 @@ void MT_Logger_ABC::Log( E_LogLevel nLevel, const char* strMessage, const char* 
         LogString( nLevel, strMessage, strContext, nCode );
 }
 
+void MT_Logger_ABC::MakeString( E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode, std::stringstream& output ) const
+{
+    output << "[" << GetTimestampAsString() << "] ";
+    output << "<" << GetTypeAsString() << "> ";
+    output << "<" << GetLogLevelAsString( nLevel ) << "> ";
+    if( strMessage )
+        output << strMessage;
+    if( nCode != -1 )
+        output << "(" << nCode << ") ";
+    if( strContext )
+        output << "[Context: " << strContext << "]";
+    output << std::endl;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC::GetTimestampAsString
 /**

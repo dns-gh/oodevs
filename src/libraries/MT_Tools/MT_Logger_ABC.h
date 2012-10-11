@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <string>
+#include <sstream>
 
 //=============================================================================
 /**
@@ -90,6 +91,7 @@ protected:
     //-------------------------------------------------------------------------
     //@{
     virtual void LogString( E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode ) = 0;
+    void MakeString( E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode, std::stringstream& output ) const;
     //@}
 
     //-------------------------------------------------------------------------
