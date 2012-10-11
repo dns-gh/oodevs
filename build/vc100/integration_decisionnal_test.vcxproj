@@ -73,7 +73,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
     <Link>
-      <Profile>true</Profile>
+      <Profile>
+      </Profile>
     </Link>
     <PostBuildEvent />
     <ClCompile>
@@ -88,7 +89,8 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile />
     <Link>
-      <Profile>true</Profile>
+      <Profile>
+      </Profile>
     </Link>
     <PostBuildEvent />
     <ClCompile>
