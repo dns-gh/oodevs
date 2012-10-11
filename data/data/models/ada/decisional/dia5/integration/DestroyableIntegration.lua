@@ -77,7 +77,7 @@ integration.stopRespondIt = function( target )
 end
 
 integration.firePermitted = function( target )
-    local stateROE = DEC_Agent_GetEtatROE()
+    local stateROE = integration.getROE()
     if (not integration.isInForbiddenFireArea( target ) ) and ( stateROE == eRoeStateFreeFire ) then
         return true
     end
@@ -85,7 +85,7 @@ integration.firePermitted = function( target )
 end
 
 integration.fireNotForbbiden = function( target )
-    local stateROE = DEC_Agent_GetEtatROE()
+    local stateROE = integration.getROE()
     if (not integration.isInForbiddenFireArea( target ) ) and ( stateROE ~= eRoeStateFireByOrder ) then
         return true
     end
@@ -143,4 +143,16 @@ integration.niTropPresNiTropLoin = function( eni, ph )
     local bTropLoin =  rDistanceAEni > rPorteeMax
     
     return ( not ( bTropProche or bTropLoin ))
+end
+
+integration.forbidAmmunition = function( munitions )
+    DEC_Pion_InterdireMunition( munitions )
+end
+
+integration.autoriseAmmunition = function( munitions )
+    DEC_Pion_AutoriserMunition( munitions )
+end
+
+integration.autoriseAllAmmunitions = function()
+    DEC_Pion_AutoriserToutesMunitions()
 end

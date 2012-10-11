@@ -37,7 +37,7 @@ rootnode
         
         for _, fragOrder in ipairs( self.params.fragOrders ) do
             if fragOrder:isROE() then
-                integration.setCompanyROE( fragOrder.source:GetorderConduiteChangerReglesEngagement_())
+                integration.setCompanyROE( integration.getOrderConduiteChangerReglesEngagementParameter(fragOrder))
             end
             fragOrder:setAutomatFragOrder()
             if fragOrder:mustBePropagate() then

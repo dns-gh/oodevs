@@ -652,3 +652,7 @@ end
 integration.isElementInAOR = function( self )
 	return DEC_Geometrie_EstPointDansFuseau( self:getPosition() )
 end
+
+integration.copyPoint = function( position )
+    return DEC_Geometrie_CopiePoint( position )
+end

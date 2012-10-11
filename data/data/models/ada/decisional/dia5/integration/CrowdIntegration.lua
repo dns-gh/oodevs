@@ -6,7 +6,7 @@
 
 integration.setAttitude = function( eNewAttitude )
     if DEC_Population_Attitude() ~= eNewAttitude then
-        DEC_Population_ChangerAttitude( eNewAttitude )
+        integration.changeAttitude( eNewAttitude )
         meKnowledge:RC( eRC_AttitudePopulation, eNewAttitude )
     end
 end
@@ -99,15 +99,15 @@ coeffAgressionForCurrentAttitude = function()
 end
 
 integration.fireForbiddenOnCrowd = function( self )
-    return DEC_Agent_RoePopulation() == eEtatROEPopulation_EmploiForceInterdit
+    return integration.getCrowdROEForAgent() == eEtatROEPopulation_EmploiForceInterdit
 end
 
 integration.wlrAllowedOnCrowd = function( self )
-    return DEC_Agent_RoePopulation() == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux
+    return integration.getCrowdROEForAgent() == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux
 end
 
 integration.fireAllowedOnCrowd = function( self )
-    return DEC_Agent_RoePopulation() == eEtatROEPopulation_ArmesLetalesAutorisees
+    return integration.getCrowdROEForAgent() == eEtatROEPopulation_ArmesLetalesAutorisees
 end
 
 local ammoClass = {} 
@@ -126,7 +126,7 @@ integration.startShootingOnCrowd = function( crowd )
       DEC_ReprendAction( crowd[myself].actionTir )
       return false
     end
-    crowd[myself].actionTir = DEC__StartTirSurPopulation( crowd.source, ammoClass[ DEC_Agent_RoePopulation() ] )
+    crowd[myself].actionTir = DEC__StartTirSurPopulation( crowd.source, ammoClass[ integration.getCrowdROEForAgent() ] )
     actionCallbacks[ crowd[myself].actionTir ] = function( arg ) crowd[myself].eTir = arg end
 end
 integration.stopShootingOnCrowd = function( crowd )
@@ -342,4 +342,8 @@ end
 
 integration.crowdIsContamined = function ()
     return DEC_GetNombrePersonneContaminee() > 0
+end
+
+integration.changeAttitude = function( attitude )
+    DEC_Population_ChangerAttitude( attitude )
 end

@@ -26,14 +26,14 @@ rootnode
         else
             local angriness = DEC_GetUrbanBlockAngriness()            
             if angriness < 0.1 then
-                DEC_Population_ChangerAttitude( eAttitudePopulation_Calme )
+                integration.changeAttitude( eAttitudePopulation_Calme )
                 Activate( skill.links.moveTo, 1, { element = self.initialPosition } )
             else
                 local currentTime = DEC_GetTimeInSeconds()
                 if self.nextChangeAttitudeTime and self.nextChangeAttitudeTime > currentTime then
                     local newAttitude = DEC_Population_Attitude() + 1
                     newAttitude = newAttitude < eAttitudePopulation_Agressive and newAttitude or eAttitudePopulation_Agressive
-                    DEC_Population_ChangerAttitude( newAttitude )
+                    integration.changeAttitude( newAttitude )
                     self.nextChangeAttitudeTime = currentTime + 60 * 60
                 end
             end
