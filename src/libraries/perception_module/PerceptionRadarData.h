@@ -43,14 +43,15 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionRadarData( const wrapper::View& entity, wrapper::Effect& effect, const RadarType& radarType );
-             PerceptionRadarData( wrapper::Effect& effect, const RadarType& radarType );
+             PerceptionRadarData( const wrapper::View& entity, const RadarType& radarType );
+             PerceptionRadarData( const RadarType& radarType );
     virtual ~PerceptionRadarData();
     //@}
 
     //! @name Operations
     //@{
-    void Acquire( const wrapper::View& model, const wrapper::View& perceiver, PerceptionObserver_ABC& observer, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition );
+    void Acquire( const wrapper::View& model, const wrapper::View& perceiver, wrapper::Effect& effect,
+        PerceptionObserver_ABC& observer, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition );
     //@}
 
 private:
@@ -76,7 +77,6 @@ private:
     //! @name Member Data
     //@{
     const RadarType* pRadarType_;
-    wrapper::Effect& effect_;
     T_AgentAcquisitionMap acquisitionData_;
     //@}
 };

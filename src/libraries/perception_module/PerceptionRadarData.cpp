@@ -38,9 +38,8 @@ namespace
 // Name: PerceptionRadarData constructor
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-PerceptionRadarData::PerceptionRadarData( const wrapper::View& entity, wrapper::Effect& effect, const RadarType& radarType )
+PerceptionRadarData::PerceptionRadarData( const wrapper::View& entity, const RadarType& radarType )
     : pRadarType_( &radarType )
-    , effect_    ( effect )
 {
     GetRadar( entity, radarType ).VisitIdentifiedChildren( boost::bind( &PerceptionRadarData::AddData, this, _2 ) );
 }
@@ -49,9 +48,8 @@ PerceptionRadarData::PerceptionRadarData( const wrapper::View& entity, wrapper::
 // Name: PerceptionRadarData constructor
 // Created: SLI 2012-08-31
 // -----------------------------------------------------------------------------
-PerceptionRadarData::PerceptionRadarData( wrapper::Effect& effect, const RadarType& radarType )
+PerceptionRadarData::PerceptionRadarData( const RadarType& radarType )
     : pRadarType_( &radarType )
-    , effect_    ( effect )
 {
     // NOTHING
 }
@@ -129,9 +127,10 @@ void PerceptionRadarData::Update( const wrapper::View& model, PerceptionObserver
 // Name: PerceptionRadarData::Acquire
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PerceptionRadarData::Acquire( const wrapper::View& model, const wrapper::View& perceiver, PerceptionObserver_ABC& observer, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition )
+void PerceptionRadarData::Acquire( const wrapper::View& model, const wrapper::View& perceiver, wrapper::Effect& effect,
+    PerceptionObserver_ABC& observer, const T_ZoneSet& zones, bool bAcquireOnPerceiverPosition )
 {
-    wrapper::Node effect = effect_[ pRadarType_->GetName() ];
+    wrapper::Node node = effect[ pRadarType_->GetName() ];
     assert( pRadarType_ );
     Perception_ABC::T_AgentPtrVector targets;
     for( T_ZoneSet::const_iterator itZone = zones.begin(); itZone != zones.end(); ++itZone )
@@ -139,7 +138,7 @@ void PerceptionRadarData::Acquire( const wrapper::View& model, const wrapper::Vi
         targets.clear();
         ListInCircleVisitor agentVisitor( targets );
         GET_HOOK( GetAgentListWithinLocalisation )( model, *itZone, &ListInCircleVisitor::Add, &agentVisitor );
-        AcquireTargets( model, perceiver, targets, effect );
+        AcquireTargets( model, perceiver, targets, node );
     }
 
     if( bAcquireOnPerceiverPosition )
@@ -147,8 +146,8 @@ void PerceptionRadarData::Acquire( const wrapper::View& model, const wrapper::Vi
         targets.clear();
         ListInCircleVisitor agentVisitor( targets );
         GET_HOOK( GetAgentListWithinCircle )( model, MT_Vector2D( perceiver[ "movement/position/x" ], perceiver[ "movement/position/y" ] ), pRadarType_->GetRadius(), &ListInCircleVisitor::Add, &agentVisitor );
-        AcquireTargets( model, perceiver, targets, effect );
+        AcquireTargets( model, perceiver, targets, node );
     }
 
-    Update( model, observer, effect );
+    Update( model, observer, node );
 }
