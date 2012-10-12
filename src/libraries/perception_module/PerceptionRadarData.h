@@ -12,9 +12,9 @@
 
 #include "Perception_ABC.h"
 #include <module_api/Model.h>
+#include <boost/noncopyable.hpp>
 #include <set>
 #include <map>
-#include <boost/noncopyable.hpp>
 
 namespace sword
 {
