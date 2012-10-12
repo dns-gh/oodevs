@@ -27,16 +27,21 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
     : observer_( 0 )
     , config_( 0 )
     , dispatcher_( 0 )
+    , console_( 0 )
+    , file_( 0 )
 {
     tools::SetCodec();
     observer_.reset( new tools::NullFileLoaderObserver() );
     config_.reset( new dispatcher::Config( *observer_ ) );
-    MT_LOG_REGISTER_LOGGER( *new MT_ConsoleLogger() );
+    console_.reset( new MT_ConsoleLogger() );
+    MT_LOG_REGISTER_LOGGER( *console_ );
     config_->Parse( argc, argv );
     bool bClearPreviousLog = !config_->HasCheckpoint();
-    MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(), 
-                                                config_->GetDispatcherLogFiles(), config_->GetDispatcherLogSize(),
-                                                config_->GetDispatcherLogLevel(), bClearPreviousLog, MT_Logger_ABC::eDispatcher, config_->IsDispatcherLogInBytes() ) );
+
+    file_.reset( new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(),
+                                    config_->GetDispatcherLogFiles(), config_->GetDispatcherLogSize(),
+                                    config_->GetDispatcherLogLevel(), bClearPreviousLog, MT_Logger_ABC::eDispatcher, config_->IsDispatcherLogInBytes() ) );
+    MT_LOG_REGISTER_LOGGER( *file_ );
     try
     {
         dispatcher_.reset( new dispatcher::Dispatcher( *config_, maxConnections ) );
@@ -56,7 +61,8 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
 // -----------------------------------------------------------------------------
 DispatcherFacade::~DispatcherFacade()
 {
-    // NOTHING
+    MT_LOG_UNREGISTER_LOGGER( *file_ );
+    MT_LOG_UNREGISTER_LOGGER( *console_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +117,7 @@ extern "C" __declspec(dllexport) void UpdateDispatcherFacade( void* dispatchFaca
             static_cast< DispatcherFacade* >( dispatchFacade )->Update();
     }
     catch( const std::exception& e )
-    { 
+    {
         MT_LOG_ERROR_MSG( "Updating: " << e.what() );
     }
     catch( ... )
