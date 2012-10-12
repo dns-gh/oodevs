@@ -116,18 +116,28 @@ namespace
             Q3VBox* box = new Q3VBox( this );
             layout->add( box );
 
-            Q3Table* table = new Q3Table( timeTable.time_table_item_size(), 3, box );
+            QTableWidget* table = new QTableWidget( box );
+            table->setRowCount( timeTable.time_table_item_size() );
+            table->setColumnCount( 3 );
             table->verticalHeader()->hide();
-            table->setLeftMargin( 0 );
-            table->horizontalHeader()->setLabel( 0, tools::translate( "TimeTableDialog", "Tick" ) );
-            table->horizontalHeader()->setLabel( 1, tools::translate( "TimeTableDialog", "Sim time" ) );
-            table->horizontalHeader()->setLabel( 2, tools::translate( "TimeTableDialog", "Real time" ) );
+            //table->setLeftMargin( 0 );
+            QStringList headers;
+            headers << tools::translate( "TimeTableDialog", "Tick" ) 
+                    << tools::translate( "TimeTableDialog", "Sim time" )
+                    << tools::translate( "TimeTableDialog", "Real time" );
+            table->setHorizontalHeaderLabels( headers );
+            table->horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
+            table->horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+            table->horizontalHeader()->setResizeMode( 2, QHeaderView::Stretch );
             for( int i = 0; i < timeTable.time_table_item_size(); ++i )
             {
                 const sword::TimeTable_TimeMapping& map = timeTable.time_table_item( i );
-                table->setItem( i, 0, new Q3TableItem( table, Q3TableItem::Never, locale().toString( map.tick() ) ) );
-                table->setItem( i, 1, new Q3TableItem( table, Q3TableItem::Never, map.simulation_time().data().c_str() ) );
-                table->setItem( i, 2, new Q3TableItem( table, Q3TableItem::Never, map.real_time().data().c_str() ) );
+                table->setItem( i, 0, new QTableWidgetItem( locale().toString( map.tick() ) ) );
+                table->setItem( i, 1, new QTableWidgetItem( map.simulation_time().data().c_str() ) );
+                table->setItem( i, 2, new QTableWidgetItem( map.real_time().data().c_str() ) );
+                table->item( i, 0 )->setFlags( Qt::ItemIsEnabled );
+                table->item( i, 1 )->setFlags( Qt::ItemIsEnabled );
+                table->item( i, 2 )->setFlags( Qt::ItemIsEnabled );
             }
             connect( new QPushButton(  tools::translate( "TimeTableDialog", "Ok" ), box ), SIGNAL( clicked() ), SLOT( accept() ) );
         }
