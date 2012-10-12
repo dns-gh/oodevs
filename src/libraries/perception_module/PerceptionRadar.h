@@ -67,8 +67,6 @@ private:
     PerceptionObserver_ABC&     observer_;
     T_RadarZonesVector          radarZones_;
     T_RadarOnUnitPositionVector radarOnUnitPosition_;
-    T_RadarTypesMap             radarTypes_;
-    T_RadarDataMap              radarData_;
     T_RadarIdMap                radarId_;
     //@}
 };
