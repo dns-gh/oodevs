@@ -88,9 +88,9 @@ void PerceptionRadar::PrepareRadarData( const wrapper::View& entity, T_RadarType
         for( std::size_t j = 0; j < component[ "radars" ].GetSize(); ++j )
         {
             const wrapper::View& radar = component[ "radars" ].GetElement( j );
-            const RadarType* radarType = RadarType::Find( static_cast< std::string >( radar[ "type" ] ) );
+            const RadarType* radarType = RadarType::Find( radar[ "type" ] );
             if( !radarType )
-                throw std::runtime_error( "unknown radar type " + static_cast< std::string >( radar[ "type" ] ) );
+                throw std::runtime_error( "unknown radar type " + radar[ "type" ] );
             types[ radarType->GetClass().GetID() ].insert( radarType );
         }
     }
