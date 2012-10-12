@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\src\libraries\wrapper\Effect.cpp" />
     <ClCompile Include="..\..\src\libraries\wrapper\Event.cpp" />
     <ClCompile Include="..\..\src\libraries\wrapper\Node.cpp" />
+    <ClCompile Include="..\..\src\libraries\wrapper\Remove.cpp" />
     <ClCompile Include="..\..\src\libraries\wrapper\View.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +127,7 @@
     <ClInclude Include="..\..\src\libraries\wrapper\Event.h" />
     <ClInclude Include="..\..\src\libraries\wrapper\Hook.h" />
     <ClInclude Include="..\..\src\libraries\wrapper\Node.h" />
+    <ClInclude Include="..\..\src\libraries\wrapper\Remove.h" />
     <ClInclude Include="..\..\src\libraries\wrapper\View.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

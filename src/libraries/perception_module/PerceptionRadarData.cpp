@@ -14,6 +14,7 @@
 #include "ListInCircleVisitor.h"
 #include "wrapper/View.h"
 #include "wrapper/Effect.h"
+#include "wrapper/Remove.h"
 #include "wrapper/Hook.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <boost/bind.hpp>
@@ -104,7 +105,7 @@ void PerceptionRadarData::AcquireTargets( const wrapper::View& model, const wrap
 // Name: PerceptionRadarData::Update
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-void PerceptionRadarData::Update( const wrapper::View& model, PerceptionObserver_ABC& observer, wrapper::Node& effect )
+void PerceptionRadarData::Update( const wrapper::View& model, const wrapper::View& acquisitions, PerceptionObserver_ABC& observer )
 {
     assert( pRadarType_ );
     for( T_AgentAcquisitionMap::iterator itAcquisitionData = acquisitionData_.begin(); itAcquisitionData != acquisitionData_.end(); )
@@ -113,7 +114,7 @@ void PerceptionRadarData::Update( const wrapper::View& model, PerceptionObserver
         const wrapper::View& target = model[ "entities" ][ itAcquisitionData->first ];
         if( !data.bUpdated_ )
         {
-            effect[ itAcquisitionData->first ].MarkForRemove();
+            wrapper::Remove( acquisitions[ pRadarType_->GetName() ][ itAcquisitionData->first ] ).Post();
             itAcquisitionData = acquisitionData_.erase( itAcquisitionData );
             continue;
         }
@@ -149,5 +150,5 @@ void PerceptionRadarData::Acquire( const wrapper::View& model, const wrapper::Vi
         AcquireTargets( model, perceiver, targets, node );
     }
 
-    Update( model, observer, node );
+    Update( model, perceiver[ "perceptions/radars/acquisitions" ], observer );
 }

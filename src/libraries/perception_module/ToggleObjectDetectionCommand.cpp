@@ -10,6 +10,7 @@
 #include "ToggleObjectDetectionCommand.h"
 #include "wrapper/View.h"
 #include "wrapper/Effect.h"
+#include "wrapper/Remove.h"
 
 using namespace sword;
 using namespace sword::perception;
@@ -30,20 +31,21 @@ ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( const wrapper::View&
 void ToggleObjectDetectionCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
     const std::size_t identifier = parameters[ "identifier" ];
-    wrapper::Effect effect( model[ "entities" ][ identifier ][ "perceptions/object-detection" ] );
     const std::size_t perceptionId = parameters[ "perception-id" ];
+    const wrapper::View& perception = model[ "entities" ][ identifier ][ "perceptions/object-detection" ];
     if( parameters[ "activated" ] )
     {
+        wrapper::Effect effect( perception );
         effect[ perceptionId ][ "growth-speed" ] = parameters[ "growth-speed" ];
         effect[ perceptionId ][ "perception-id" ] = parameters[ "perception-id" ];
         effect[ perceptionId ][ "center" ] = parameters[ "center" ];
         effect[ perceptionId ][ "localization" ] = parameters[ "localization" ];
         effect[ perceptionId ][ "radius" ] = 0;
         effect[ perceptionId ][ "max-radius-reached" ] = false;
+        effect.Post();
     }
     else
-        effect[ perceptionId ].MarkForRemove();
-    effect.Post();
+        wrapper::Remove( perception[ perceptionId ] ).Post();
 }
 
 // -----------------------------------------------------------------------------

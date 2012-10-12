@@ -83,9 +83,6 @@ private:
     {
         empty_ = false;
     }
-
-    virtual void MarkForRemove()
-    {}
     //@}
 
 private:

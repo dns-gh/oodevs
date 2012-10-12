@@ -97,6 +97,19 @@ namespace core
             MOCK_EXPECT( PostEvent ).once().with( name, mock::any );
         }
 
+        static void SWORD_PostRemove( const SWORD_Model* target )
+        {
+            TRY
+                BOOST_REQUIRE( target );
+                PostRemove( core::Convert( target )->Context() );
+            CATCH
+        }
+        MOCK_STATIC_METHOD( PostRemove, 1, void( const std::string& target ), PostRemove )
+        void ExpectRemove( const core::Model& target )
+        {
+            MOCK_EXPECT( PostRemove ).once().with( target.Context() );
+        }
+
         #define DECLARE_GET_SET( TYPE_NAME, TYPE ) \
         static int SWORD_Get##TYPE_NAME( const SWORD_Model* node, TYPE* value ) \
         { \
@@ -232,15 +245,6 @@ namespace core
                 BOOST_REQUIRE( parent );
                 BOOST_REQUIRE( visitor );
                 core::IdentifiedChildrenVisitor( *core::Convert( parent ), visitor, userData );
-                return true;
-            CATCH
-            return false;
-        }
-        static int SWORD_MarkForRemove( SWORD_Model* node )
-        {
-            TRY
-                BOOST_REQUIRE( node );
-                core::Convert( node )->MarkForRemove();
                 return true;
             CATCH
             return false;

@@ -53,9 +53,6 @@ public:
 
     virtual void Visit( const boost::shared_ptr< core::UserData_ABC >& /*data*/ )
     {}
-
-    virtual void MarkForRemove()
-    {}
     //@}
 };
 

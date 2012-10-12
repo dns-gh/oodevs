@@ -58,7 +58,7 @@ private:
     //! @name Tools
     //@{
     void AcquireTargets( const wrapper::View& model, const wrapper::View& perceiver, Perception_ABC::T_AgentPtrVector& targets, wrapper::Node& effect );
-    void Update        ( const wrapper::View& model, PerceptionObserver_ABC& observer, wrapper::Node& effect );
+    void Update        ( const wrapper::View& model, const wrapper::View& acquisitions, PerceptionObserver_ABC& observer );
     void AddData( const wrapper::View& acquisition );
     //@}
 

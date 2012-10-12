@@ -54,7 +54,6 @@ public:
     Node operator[]( size_t key );
 
     Node AddElement();
-    Node& MarkForRemove();
     //@}
 
 private:

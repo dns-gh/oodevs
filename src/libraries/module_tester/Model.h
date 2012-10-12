@@ -38,14 +38,12 @@ public:
     //@{
     Model()
         : constraint_( new EmptyConstraint() )
-        , removed_   ( false )
     {}
     Model( const Model& rhs )
         : constraint_( rhs.constraint_ )
         , data_      ( rhs.data_ )
         , children_  ( rhs.children_ )
         , elements_  ( rhs.elements_ )
-        , removed_   ( rhs.removed_ )
     {}
     //@}
 
@@ -57,7 +55,6 @@ public:
         data_ = rhs.data_;
         children_ = rhs.children_;
         elements_ = rhs.elements_;
-        removed_ = rhs.removed_;
         return *this;
     }
 
@@ -93,7 +90,7 @@ public:
     {
         try
         {
-            return CheckRemove( actual ) && constraint_->Check( *this, actual );
+            return constraint_->Check( *this, actual );
         }
         catch( ... )
         {
@@ -116,11 +113,6 @@ public:
             throw std::invalid_argument( "empty user data are not allowed in a model" );
         constraint_.reset( new UserDataConstraint() );
         data_ = data;
-    }
-    Model& MarkForRemove()
-    {
-        removed_ = true;
-        return *this;
     }
 
     void Serialize( std::ostream& os, std::size_t indent = 0 ) const
@@ -146,11 +138,6 @@ private:
             return "";
         return key.substr( pos + 1 );
     }
-
-    bool CheckRemove( const core::Model& actual ) const
-    {
-        return removed_ == RemoveCheck( actual ).removed_;
-    }
     //@}
 
 private:
@@ -160,20 +147,6 @@ private:
     typedef T_Children::const_iterator   CIT_Children;
     typedef std::vector< Model >         T_Elements;
     typedef T_Elements::const_iterator CIT_Elements;
-
-    struct RemoveCheck : NullModelVisitor
-    {
-        RemoveCheck( const core::Model& model )
-            : removed_( false )
-        {
-            model.Accept( *this );
-        }
-        virtual void MarkForRemove()
-        {
-            removed_ = true;
-        }
-        bool removed_;
-    };
 
     template< typename T >
     class ConstraintWrapper : public ModelConstraint_ABC
@@ -306,7 +279,6 @@ private:
     boost::shared_ptr< core::UserData_ABC > data_;
     T_Children children_;
     T_Elements elements_;
-    bool removed_;
     //@}
 };
 

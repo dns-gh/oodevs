@@ -3,14 +3,14 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef WRAPPER_EFFECT_H
-#define WRAPPER_EFFECT_H
+#ifndef WRAPPER_REMOVE_H
+#define WRAPPER_REMOVE_H
 
-#include "Node.h"
+#include <module_api/Model.h>
 #include <boost/noncopyable.hpp>
 
 namespace sword
@@ -20,45 +20,27 @@ namespace wrapper
     class View;
 
 // =============================================================================
-/** @class  Effect
-    @brief  Effect
+/** @class  Remove
+    @brief  Remove
 */
-// Created: SLI 2011-12-21
+// Created: MCO 2012-10-12
 // =============================================================================
-class Effect : private boost::noncopyable
+class Remove : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Effect( const View& target );
-            ~Effect();
+    explicit Remove( const View& target );
     //@}
 
     //! @name Operations
     //@{
     void Post() const; // $$$$ MCO : should it be done by the destructor (it cannot throw) ?
-
-    Node AddElement();
-
-    template< typename T >
-    Effect& operator=( T value )
-    {
-        node_ = value;
-        return *this;
-    }
-
-    template< typename T >
-    Node operator[]( T key )
-    {
-        return node_[ key ];
-    }
     //@}
 
 private:
     //! @name Member data
     //@{
-    SWORD_Model* effect_;
-    Node node_;
     const SWORD_Model* target_;
     //@}
 };
@@ -66,4 +48,4 @@ private:
 }
 }
 
-#endif // WRAPPER_EFFECT_H
+#endif // WRAPPER_REMOVE_H

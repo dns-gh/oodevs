@@ -284,21 +284,6 @@ BOOST_AUTO_TEST_CASE( a_model_does_not_accept_empty_user_data )
     BOOST_CHECK_THROW( model.SetData( data ), std::exception );
 }
 
-BOOST_AUTO_TEST_CASE( a_model_can_be_marked_for_remove )
-{
-    Model model;
-    model.MarkForRemove();
-    {
-        core::Model actual;
-        actual.MarkForRemove();
-        BOOST_CHECK( model.Check( actual ) );
-    }
-    {
-        core::Model actual;
-        BOOST_CHECK( ! model.Check( actual ) );
-    }
-}
-
 BOOST_AUTO_TEST_CASE( a_model_is_printable )
 {
     Model model;

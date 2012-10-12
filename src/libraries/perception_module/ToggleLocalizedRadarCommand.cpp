@@ -11,6 +11,7 @@
 #include "RadarClass.h"
 #include "wrapper/View.h"
 #include "wrapper/Effect.h"
+#include "wrapper/Remove.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace sword;
@@ -48,16 +49,17 @@ ToggleLocalizedRadarCommand::ToggleLocalizedRadarCommand( const wrapper::View& /
 // -----------------------------------------------------------------------------
 void ToggleLocalizedRadarCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
-    wrapper::Effect effect( GetTarget( parameters, model ) );
     const std::size_t perceptionId = parameters[ "perception-id" ];
+    const wrapper::View& perception = GetTarget( parameters, model );
     if( parameters[ "activated" ] )
     {
+        wrapper::Effect effect( perception );
         effect[ perceptionId ][ "localization" ] = parameters[ "localization" ];
         effect[ perceptionId ][ "perception-id" ] = perceptionId;
+        effect.Post();
     }
     else
-        effect[ perceptionId ].MarkForRemove();
-    effect.Post();
+        wrapper::Remove( perception[ perceptionId ] ).Post();
 }
 
 // -----------------------------------------------------------------------------

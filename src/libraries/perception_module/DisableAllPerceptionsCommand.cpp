@@ -10,6 +10,7 @@
 #include "DisableAllPerceptionsCommand.h"
 #include "wrapper/View.h"
 #include "wrapper/Effect.h"
+#include "wrapper/Remove.h"
 #include "wrapper/Event.h"
 #include <boost/bind.hpp>
 
@@ -33,15 +34,13 @@ namespace
         effect = false;
         effect.Post();
     }
-    void RemoveElement( std::size_t identifier, wrapper::Effect& effect )
+    void RemoveElement( const wrapper::View& child )
     {
-        effect[ identifier ].MarkForRemove();
+        wrapper::Remove( child ).Post();
     }
     void RemoveElements( const wrapper::View& perception )
     {
-        wrapper::Effect effect( perception );
-        perception.VisitIdentifiedChildren( boost::bind( &RemoveElement, _1, boost::ref( effect ) ) );
-        effect.Post();
+        perception.VisitIdentifiedChildren( boost::bind( &RemoveElement, _2 ) );
     }
 }
 

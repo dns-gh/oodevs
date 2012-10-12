@@ -59,24 +59,6 @@ namespace test
     {
         return boost::make_shared< core::UserData< Data > >( data );
     }
-
-    template< typename T >
-    ModelBuilder MarkForRemove( const T& t )
-    {
-        return ModelBuilder( t ).MarkForRemove();
-    }
-    inline ModelBuilder MarkForRemove()
-    {
-        return ModelBuilder().MarkForRemove();
-    }
-    inline ModelBuilder MarkForRemove( boost::shared_ptr< core::UserData_ABC > data )
-    {
-        return ModelBuilder( data ).MarkForRemove();
-    }
-    inline ModelBuilder MarkForRemove( ModelBuilder& builder )
-    {
-        return builder.MarkForRemove();
-    }
 }
 }
 

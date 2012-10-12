@@ -10,6 +10,7 @@
 #include "ToggleLocalizedPerceptionCommand.h"
 #include "wrapper/View.h"
 #include "wrapper/Effect.h"
+#include "wrapper/Remove.h"
 #include "wrapper/Event.h"
 
 using namespace sword;
@@ -31,14 +32,17 @@ ToggleLocalizedPerceptionCommand::ToggleLocalizedPerceptionCommand( const wrappe
 void ToggleLocalizedPerceptionCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
     const std::size_t identifier = parameters[ "identifier" ];
-    const std::string perception = parameters[ "perception" ];
+    const std::string type = parameters[ "perception" ];
     const std::size_t perceptionId = parameters[ "perception-id" ];
-    wrapper::Effect effect( model[ "entities" ][ identifier ][ "perceptions" ][ perception ] );
+    const wrapper::View& perception = model[ "entities" ][ identifier ][ "perceptions" ][ type ];
     if( parameters[ "activated" ] )
+    {
+        wrapper::Effect effect( perception );
         effect[ perceptionId ][ "localization" ] = parameters[ "localization" ];
+        effect.Post();
+    }
     else
-        effect[ perceptionId ].MarkForRemove();
-    effect.Post();
+        wrapper::Remove( perception[ perceptionId ] ).Post();
 }
 
 // -----------------------------------------------------------------------------

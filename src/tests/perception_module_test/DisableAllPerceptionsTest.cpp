@@ -20,8 +20,7 @@ namespace
         }
         void CheckElementRemoved( core::Model& perception )
         {
-            perception[ 42u ];
-            ExpectEffect( perception, sword::test::MakeModel( 42u, sword::test::MarkForRemove() ) );
+            ExpectRemove( perception[ 42u ] );
         }
     };
 }

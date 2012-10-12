@@ -51,12 +51,3 @@ Node Effect::AddElement()
 {
     return node_.AddElement();
 }
-
-// -----------------------------------------------------------------------------
-// Name: Effect::MarkForRemove
-// Created: SLI 2012-07-20
-// -----------------------------------------------------------------------------
-Node Effect::MarkForRemove()
-{
-    return node_.MarkForRemove();
-}

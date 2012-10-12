@@ -106,12 +106,3 @@ void ModelCounter::Visit( const boost::shared_ptr< core::UserData_ABC >& /*data*
 {
     // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: ModelCounter::MarkForRemove
-// Created: MCO 2012-09-28
-// -----------------------------------------------------------------------------
-void ModelCounter::MarkForRemove()
-{
-    // NOTHING
-}

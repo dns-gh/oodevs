@@ -122,14 +122,3 @@ Node Node::AddElement()
         throw std::runtime_error( "could not add element to node" );
     return Node( element );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Node::MarkForRemove
-// Created: SLI 2012-07-20
-// -----------------------------------------------------------------------------
-Node& Node::MarkForRemove()
-{
-    if( ! ::SWORD_MarkForRemove( node_ ) )
-        throw std::runtime_error( "could not mark node for remove" );
-    return *this;
-}

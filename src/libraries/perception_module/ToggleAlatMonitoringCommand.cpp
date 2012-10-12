@@ -11,6 +11,7 @@
 #include "wrapper/View.h"
 #include "wrapper/Hook.h"
 #include "wrapper/Effect.h"
+#include "wrapper/Remove.h"
 #include "wrapper/Event.h"
 #include "tools/Codec.h"
 #include <xeumeuleu/xml.hpp>
@@ -44,8 +45,8 @@ ToggleAlatMonitoringCommand::ToggleAlatMonitoringCommand( const wrapper::View& /
 void ToggleAlatMonitoringCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
     const std::size_t identifier = parameters[ "identifier" ];
-    wrapper::Effect effect( model[ "entities" ][ identifier ][ "perceptions/alat/monitoring" ] );
     const std::size_t perceptionId = parameters[ "perception-id" ];
+    const wrapper::View& perception = model[ "entities" ][ identifier ][ "perceptions/alat/monitoring" ];
     if( parameters[ "activated" ] )
     {
         const unsigned int currentTimeStep = model[ "tick" ];
@@ -53,19 +54,20 @@ void ToggleAlatMonitoringCommand::Execute( const wrapper::View& parameters, cons
         unsigned int nEmptySurface  = 0;
         unsigned int nUrbanSurface  = 0;
         GET_HOOK( GetVisionObjectsInSurface )( parameters[ "localization" ], nEmptySurface, nForestSurface, nUrbanSurface );
+        wrapper::Effect effect( perception );
         effect[ perceptionId ][ "forest-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nForestSurface * rForestSurveillanceTime_ );
         effect[ perceptionId ][ "empty-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nEmptySurface * rEmptySurveillanceTime_ );
         effect[ perceptionId ][ "urban-detection-time-step" ] = currentTimeStep + static_cast< unsigned int >( nUrbanSurface * rUrbanSurveillanceTime_ );
         effect[ perceptionId ][ "localization" ] = parameters[ "localization" ];
+        effect.Post();
     }
     else
     {
-        effect[ perceptionId ].MarkForRemove();
+        wrapper::Remove( perception[ perceptionId ] ).Post();
         wrapper::Event event( "alat monitoring disabled" );
         event[ "entity" ] = identifier;
         event.Post();
     }
-    effect.Post();
 }
 
 // -----------------------------------------------------------------------------
