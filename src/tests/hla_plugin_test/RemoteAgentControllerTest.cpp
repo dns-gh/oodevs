@@ -152,6 +152,36 @@ BOOST_FIXTURE_TEST_CASE( remote_agent_controller_creates_agent_when_receiving_re
     BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), "name" );
 }
 
+BOOST_FIXTURE_TEST_CASE( remote_agent_controller_correctly_fill_magic_action, AutomatFixture )
+{
+    const rpr::EntityType entityType( "1 2" );
+    const unsigned long agentTypeId = 4343;
+    dispatcher::MockTeam team( 42 );
+    MOCK_EXPECT( sideResolver.ResolveTeam ).once().with( rpr::Friendly ).returns( team.GetId() );
+    remoteAgentListener->NameChanged( "identifier", "name" );
+    remoteAgentListener->NameChanged( "identifier", "name" );
+    MOCK_EXPECT( unitTypeResolver.Resolve ).exactly( 2 ).with( mock::same( entityType ) ).returns( agentTypeId );
+    remoteAgentListener->TypeChanged( "identifier", entityType );
+    remoteAgentListener->TypeChanged( "identifier", entityType );
+    remoteAgentListener->SubAgregatesChanged( "identifier", std::set< std::string > () );
+    simulation::UnitMagicAction actual;
+    MOCK_EXPECT( extentResolver.IsInBoundaries ).exactly( 2 ).returns( true );
+    remoteAgentListener->Moved( "identifier", latitude, longitude );
+    remoteAgentListener->Moved( "identifier", latitude, longitude );
+    MOCK_EXPECT( unitCreation.Send ).once().with( mock::retrieve( actual ), "identifier" );
+    remoteAgentListener->SideChanged( "identifier", rpr::Friendly );
+    mock::verify();
+    const sword::UnitMagicAction& action = actual();
+    BOOST_CHECK_EQUAL( action.type(), sword::UnitMagicAction::unit_creation );
+    BOOST_CHECK_EQUAL( action.tasker().automat().id(), automat );
+    BOOST_CHECK_EQUAL( action.parameters().elem_size(), 5 );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value_size(), 1 );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 1 ).value_size(), 1 );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value_size(), 1 );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 3 ).value_size(), 1 );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 4 ).value_size(), 1 );
+}
+
 BOOST_FIXTURE_TEST_CASE( remote_agent_controller_does_not_recreate_agent_after_second_moved_event, AutomatFixture )
 {
     dispatcher::MockTeam team( 42 );

@@ -123,9 +123,11 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
     if( !extent_.IsInBoundaries( geometry::Point2d( longitude, latitude ) ) ) // $$$$ _RC_ SLI 2011-11-30: geocoord invert latitude/longitude???
         return;
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
+    sword::Location* location = 0;
     if( message().mutable_parameters()->mutable_elem( 1 )->value_size() != 0 )
-        return;
-    sword::Location* location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();
+        location = message().mutable_parameters()->mutable_elem( 1 )->mutable_value( 0 )->mutable_point()->mutable_location();
+    else
+        location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();
     location->set_type( sword::Location::point );
     sword::CoordLatLong* coordLatLong = location->mutable_coordinates()->add_elem();
     coordLatLong->set_latitude( latitude );
@@ -161,7 +163,10 @@ void RemoteAgentController::NameChanged( const std::string& identifier, const st
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
-    message().mutable_parameters()->mutable_elem( 2 )->add_value()->set_acharstr( name );
+    if( message().parameters().elem( 2 ).value_size() == 1)
+        message().mutable_parameters()->mutable_elem( 2 )->mutable_value( 0 )->set_acharstr( name );
+    else
+        message().mutable_parameters()->mutable_elem( 2 )->add_value()->set_acharstr( name );
     Send( message, identifier );
 }
 
@@ -174,7 +179,10 @@ void RemoteAgentController::TypeChanged( const std::string& identifier, const rp
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
-    message().mutable_parameters()->mutable_elem( 0 )->add_value()->set_identifier( typeResolver_.Resolve( type ) );
+    if( message().parameters().elem( 0 ).value_size() == 1)
+        message().mutable_parameters()->mutable_elem( 0 )->mutable_value( 0 )->set_identifier( typeResolver_.Resolve( type ) );
+    else
+        message().mutable_parameters()->mutable_elem( 0 )->add_value()->set_identifier( typeResolver_.Resolve( type ) );
     Send( message, identifier );
 }
 
