@@ -16,8 +16,6 @@
 #include "Acceptor.h"
 #include "asio.h"
 
-#pragma warning( disable : 4355 )
-
 using namespace tools;
 
 // -----------------------------------------------------------------------------
@@ -32,10 +30,12 @@ ServerNetworker::ServerNetworker( unsigned short port, unsigned long timeOut /*=
     , messageService_  ( new ObjectMessageService() )
     , acceptor_        ( new Acceptor( *sockets_, *service_, port ) )
     , stopped_         ( false )
-    , thread_          ( boost::bind( &ServerNetworker::Run, this ) )
+    , thread_          ()
 {
     messageService_->RegisterErrorCallback( boost::bind( &ServerNetworker::ConnectionError, this, _1, _2 ) );
     messageService_->RegisterWarningCallback( boost::bind( &ServerNetworker::ConnectionWarning, this, _1, _2 ) );
+    // start thread only when 'this' has been initialized
+    thread_ = boost::thread( boost::bind( &ServerNetworker::Run, this ) );
 }
 
 // -----------------------------------------------------------------------------
