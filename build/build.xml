@@ -545,7 +545,7 @@
     </target>
 
     <target name="fire_module" description="build fire module">
-        <build-lib name="fire_module">
+        <build-lib name="fire_module" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
@@ -1939,17 +1939,8 @@
             <arg value="--exclude=module_tester"/>
             <!-- These should be fixed -->
             <arg value="--exclude=actions"/>
-            <arg value="--exclude=movement_module"/>
-            <arg value="--exclude=movement_module_dll"/>
-            <arg value="--exclude=movement_module_test"/>
             <arg value="--exclude=simulation_kernel"/>
             <arg value="--exclude=hla_plugin"/>
-            <arg value="--exclude=fire_module"/>
-            <arg value="--exclude=fire_module_dll"/>
-            <arg value="--exclude=fire_module_test"/>
-            <arg value="--exclude=perception_module"/>
-            <arg value="--exclude=perception_module_dll"/>
-            <arg value="--exclude=perception_module_test"/>
         </exec>
     </target>
 
