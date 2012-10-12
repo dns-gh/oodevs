@@ -36,7 +36,7 @@ struct AgentVisitor : private boost::noncopyable
     static void Add( const SWORD_Model* agent, void* userData )
     {
         wrapper::Node notification = static_cast< AgentVisitor* >( userData )->effect_.AddElement();
-        notification[ "target" ] = wrapper::View( agent );
+        notification[ "target/data" ] = wrapper::View( agent )[ "data" ];
         notification[ "level" ] = PerceptionLevel::identified_.GetID();
         notification[ "recorded" ] = static_cast< AgentVisitor* >( userData )->recordMode_;
     }

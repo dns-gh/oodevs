@@ -21,7 +21,8 @@ BOOST_FIXTURE_TEST_CASE( flying_shell_sensor_posts_event_when_flying_shell_is_in
     MOCK_EXPECT( CanFlyingShellBePerceived ).once().returns( true );
     ExpectEffect( entity[ "perceptions/flying-shell/previous" ], sword::test::MakeModel()[ sword::test::MakeModel( 33u ) ] );
     ExpectEvent( "flying shell detection", sword::test::MakeModel( "entity", mock::any )
-                                                                 ( "flying-shell", mock::any ) );
+                                                                 ( "flying-shell/identifier", 33u )
+                                                                 ( "flying-shell/data", "data" ) );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExpectNotifications();
     ExecuteCommands();

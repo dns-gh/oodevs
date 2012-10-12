@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
     MOCK_EXPECT( GetAltitude ).once().with( 5, 5 ).returns( 0u );
     MOCK_EXPECT( ComputeRayTrace ).once().returns( 5000 );
     ExpectNotifications( "agents", sword::test::MakeModel()
-                                       [ sword::test::MakeModel( "target", mock::any )
+                                       [ sword::test::MakeModel( "target/data", 43 )
                                                                ( "level", 3 ) // identified
                                                                ( "recorded", false ) ]
                                        [ sword::test::MakeModel( mock::any ) ] );
@@ -64,7 +64,10 @@ BOOST_FIXTURE_TEST_CASE( objects_in_list_are_identified_with_default_sensor, Per
     MOCK_EXPECT( GetObjectListWithinCircle ).once().calls( boost::bind( boost::apply< void >(), _4, object, _5 ) );
     MOCK_EXPECT( IsObjectPerceptionDistanceHacked ).once().with( perceiver, object ).returns( false );
     MOCK_EXPECT( ObjectIntersectWithCircle ).once().returns( true );
-    ExpectNotifications( "objects", sword::test::MakeModel()[ sword::test::MakeModel( "target", mock::any )
+    ExpectNotifications( "objects", sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
+                                                                                    ( "target/is-universal", false )
+                                                                                    ( "target/type/identifier", 0 )
+                                                                                    ( "target/can-be-perceived", true )
                                                                                     ( "level", 3 ) // identified
                                                                                     ( "recorded", false ) ] );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
@@ -96,7 +99,8 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
     MOCK_EXPECT( PopulationElementIntersectWithCircle ).once().calls( boost::bind( &AddPoints, boost::cref( shape ), _4, _5 ) );
     MOCK_EXPECT( IsPopulationElementNewlyPerceived ).once().with( perceiver, flow, mock::any ).returns( true );
     ExpectNotifications( "population-flows",
-        sword::test::MakeModel()[ sword::test::MakeModel( "target", mock::any )
+        sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
+                                                        ( "target/can-be-perceived", true )
                                                         ( "level", 3 ) // identified
                                                         ( "recorded", false )
                                                         ( "shape", sword::test::MakeModel()[ sword::test::MakeModel( "x", 0. )( "y", 0. ) ]
@@ -119,7 +123,8 @@ BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_d
     MOCK_EXPECT( IsPopulationElementPerceptionDistanceHacked ).once().with( perceiver, concentration ).returns( false );
     MOCK_EXPECT( PopulationElementIntersectWithCircle ).once().returns( true );
     MOCK_EXPECT( IsPopulationElementNewlyPerceived ).once().with( perceiver, concentration, mock::any ).returns( true );
-    ExpectNotifications( "population-concentrations", sword::test::MakeModel()[ sword::test::MakeModel( "target", mock::any )
+    ExpectNotifications( "population-concentrations", sword::test::MakeModel()[ sword::test::MakeModel( "target/data", 42 )
+                                                                                                      ( "target/can-be-perceived", true )
                                                                                                       ( "level", 3 ) // identified
                                                                                                       ( "recorded", false ) ] );
     ExpectEvent( "report", sword::test::MakeModel( "entity", identifier )

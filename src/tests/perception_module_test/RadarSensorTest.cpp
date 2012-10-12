@@ -40,7 +40,7 @@ namespace
             MOCK_EXPECT( GetConsumptionMode ).once().returns( 0u );
             MOCK_EXPECT( CanBeSeen ).once().returns( true );
             ExpectNotifications( "agents", sword::test::MakeModel()
-                                            [ sword::test::MakeModel( "target", mock::any )
+                                            [ sword::test::MakeModel( "target/data", 43 )
                                                                     ( "level", identificationLevel )
                                                                     ( "recorded", false ) ]
                                             [ sword::test::MakeModel( mock::any ) ] );
