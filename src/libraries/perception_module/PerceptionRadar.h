@@ -50,7 +50,6 @@ private:
     typedef std::set< const RadarType* > T_RadarSet;
     typedef std::map< int, T_RadarSet > T_RadarTypesMap;
     typedef std::map< const RadarType*, T_Data > T_RadarDataMap;
-    typedef std::map< int, wrapper::View > T_RadarIdMap;
     //@}
 
 private:
@@ -67,7 +66,6 @@ private:
     PerceptionObserver_ABC&     observer_;
     T_RadarZonesVector          radarZones_;
     T_RadarOnUnitPositionVector radarOnUnitPosition_;
-    T_RadarIdMap                radarId_;
     //@}
 };
 
