@@ -29,8 +29,8 @@ namespace
             , formation( 52 )
             , automat( 51 )
             , knowledgeGroup( 3 )
+            , type( staticModel.MakeAutomatType() )
         {
-            boost::shared_ptr< kernel::AutomatType > type( staticModel.MakeAutomatType() );
             types.Register( type->GetId(), *type );
 
             // sides
@@ -58,6 +58,7 @@ namespace
 
         // automat types
         tools::Resolver< kernel::AutomatType > types;
+        boost::shared_ptr< kernel::AutomatType > type;
 
         // sides
         tools::Resolver< dispatcher::Team_ABC > sides;
