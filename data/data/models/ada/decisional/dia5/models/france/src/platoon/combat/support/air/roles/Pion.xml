@@ -9,7 +9,6 @@
         <skill name="platoon.combat.support.rens.skills.RADINT_RenseignerSur"/>
         <skill name="platoon.combat.support.rens.skills.ROIM_RenseignerSur"/>
         <skill name="platoon.combat.support.air.skills.Defaut"/>
-        <skill name="agent.skills.MoveAlongItinerary"/>
     </skills>
     <default-task label="Prise en compte des ordres de conduite et de la sauvegarde." permanent="true">
         <description>Gestion par défaut des ordres de conduite et de la sauvegarde.</description>

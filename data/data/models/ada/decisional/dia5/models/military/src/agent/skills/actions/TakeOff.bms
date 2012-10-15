@@ -8,11 +8,9 @@ rootnode
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
-        if not DEC_Agent_EstEnVol() then
-            myself.altitude = self.params.height
-            DEC_Agent_HauteurDeVol( myself.altitude )
-        end
-        integration.activateSensors()
-        Feedback( self.feedbacks.done, additionalParams )
+        myself.altitude = self.params.height
+        DEC_Agent_HauteurDeVol( myself.altitude )
+        integration.activateSensors() -- $$$ MIA TODO A virer spé drones
+        Feedback( self.feedbacks.done )
     end,
 }

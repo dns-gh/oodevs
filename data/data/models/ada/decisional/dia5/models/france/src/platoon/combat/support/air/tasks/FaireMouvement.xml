@@ -23,8 +23,8 @@
         </stage>
         <stage label="Déplacement" permanent="false">
             <skills>
-                <skill name="agent.skills.MoveAlongItinerary" main="true">
-                    <parameter name="objectives">
+                <skill name="agent.skills.MoveAlong" main="true">
+                    <parameter name="entities">
                         <value>
                             <parameter>objectives</parameter>
                         </value>

@@ -5,7 +5,6 @@
         <skill name="agent.skills.actions.TakeOff"/>
         <skill name="agent.skills.actions.Land"/>
         <skill name="agent.skills.actions.ChangeAltitude"/>
-        <skill name="agent.skills.MoveAlongItinerary"/>
     </skills>
     <default-task permanent="true">
         <description>For the flying agent, to manage received FRAGO such as &quot;change altitude&quot;.</description>
