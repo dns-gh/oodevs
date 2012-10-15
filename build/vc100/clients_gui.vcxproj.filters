@@ -1452,6 +1452,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\InputPropagationPrototype_ABC.h">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\PropertyDelegate.h">
+      <Filter>Source Files\MVC\View</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl">
@@ -1824,9 +1827,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\PropertiesPanel.h">
       <Filter>Source Files\Tools\Editors</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\PropertyDelegate.h">
-      <Filter>Source Files\MVC\View</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\PropertyModel.h">
       <Filter>Source Files\MVC\Model</Filter>
