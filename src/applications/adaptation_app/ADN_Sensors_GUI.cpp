@@ -346,13 +346,13 @@ void AddHeaders( ADN_Table* pTable, int& nCol, const char* szName, const std::st
 // Name: AddHeaders
 // Created: LGY 2011-06-20
 // -----------------------------------------------------------------------------
-void ADN_Sensors_GUI::AddHeaders( ADN_Table* pTable, int& nCol, const char* szName, const ADN_Categories_Data::T_SizeInfos_Vector& materials )
+void ADN_Sensors_GUI::AddHeaders( ADN_Table* pTable, int& nCol, const char* szName, const ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials )
 {
     ADN_GuiBuilder builder;
     pTable->AddBoldGridCol( nCol );
     builder.AddTableCell( pTable, 0, nCol, 1, static_cast< int >( materials.size() ), szName );
     unsigned int n = 0;
-    for( ADN_Categories_Data::CIT_SizeInfos_Vector it = materials.begin(); it != materials.end(); ++it )
+    for( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = materials.begin(); it != materials.end(); ++it )
     {
         builder.AddTableCell( pTable, 1, nCol + n, (*it)->strName_.GetData().c_str() );
         ++n;
@@ -381,15 +381,6 @@ void AddCells( ADN_Table* pTable, void* pData, int nRow, int& nCol, T& vVector, 
     nCol += nVectorSize;
 }
 
-namespace
-{
-    void Convert( const ADN_Urban_Data::T_UrbanMaterialInfos_Vector& vector, ADN_Categories_Data::T_SizeInfos_Vector& result )
-    {
-       for ( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = vector.begin(); it != vector.end(); ++it )
-           result.AddItem( &( *it )->strName_ );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::CreateAgentDetectionTable
 // Created: APE 2005-03-30
@@ -397,8 +388,7 @@ namespace
 ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 {
     ADN_Categories_Data::T_SizeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
-    ADN_Categories_Data::T_SizeInfos_Vector materials;
-    Convert( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), materials );
+    ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos();
 
     ADN_GuiBuilder builder;
     ADN_Table* pTable = builder.CreateTable( 0 );
