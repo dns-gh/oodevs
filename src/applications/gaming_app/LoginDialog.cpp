@@ -23,19 +23,13 @@ LoginDialog::LoginDialog( QWidget* pParent )
     setCaption( tools::translate( "LoginDialog", "Select user profile" ) );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
 
-    users_ = new Q3IconView( this );
-    users_->setGridX( 300 );
-    users_->setGridY( 30 );
+    users_ = new QListWidget( this );
+    users_->setGridSize( QSize( 300, 30 ) );
+    users_->setUniformItemSizes( true );
     users_->setMinimumSize( 345, 200 );
-    users_->setWordWrapIconText( true );
-    users_->setSorting( true );
-    users_->setItemsMovable( false );
-    users_->setHScrollBarMode( Q3ScrollView::AlwaysOff );
-    users_->setItemTextPos( Q3IconView::Right );
-    users_->setResizeMode( Q3IconView::Adjust );
-    connect( users_, SIGNAL( selectionChanged( Q3IconViewItem* ) ), SLOT( OnSelectItem( Q3IconViewItem* ) ) );
-    connect( users_, SIGNAL( doubleClicked( Q3IconViewItem* ) ), SLOT( OnAccept() ) );
-    connect( users_, SIGNAL( returnPressed( Q3IconViewItem* ) ), SLOT( OnAccept() ) );
+    users_->setWordWrap( true );
+    connect( users_, SIGNAL( itemSelectionChanged() ), SLOT( OnSelectItem() ) );
+    connect( users_, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ), SLOT( OnAccept() ) );
     mainLayout->addWidget( users_ );
 
     widget_ = new QWidget();
@@ -100,7 +94,7 @@ void LoginDialog::OnReject()
 // Name: LoginDialog::OnSelectItem
 // Created: SBO 2009-06-10
 // -----------------------------------------------------------------------------
-void LoginDialog::OnSelectItem( Q3IconViewItem* /*item*/ )
+void LoginDialog::OnSelectItem()
 {
     // NOTHING
 }

@@ -34,7 +34,7 @@ private:
     //! @name Operations
     //@{
     virtual void OnAccept();
-    virtual void OnSelectItem( Q3IconViewItem* item );
+    virtual void OnSelectItem();
     //@}
 
 private:

@@ -16,28 +16,26 @@
 
 namespace
 {
-    class UserItem : public Q3IconViewItem
+    class UserItem : public QListWidgetItem
+                   , private boost::noncopyable
     {
     public:
-        UserItem( Q3IconView* parent, const AvailableProfile& profile )
-            : Q3IconViewItem( parent )
+        UserItem( QListWidget* parent, const AvailableProfile& profile )
+            : QListWidgetItem( parent )
             , profile_( profile )
         {
             setText( profile_.GetLogin().isEmpty() ? tools::translate( "LoginDialog", "Anonymous" ) : profile_.GetLogin() );
             const QString pixmap = QString( "images/gaming/profile/%1%2.png" ).arg( profile_.IsSupervision() ? "supervisor" : "standard" )
                 .arg( profile_.IsPasswordProtected() ? "_password" : "" );
-            QImage img( tools::ExerciseConfig::BuildResourceChildFile( pixmap.toAscii().constData() ).c_str() );
+            QImage img( tools::ExerciseConfig::BuildResourceChildFile( pixmap.toStdString() ).c_str() );
             img = img.scaled( 30, 30 );
-            setPixmap( QPixmap::fromImage( img ) );
+            setIcon( QPixmap::fromImage( img ) );
         }
 
         bool RequiresPassword() const { return profile_.IsPasswordProtected(); }
         QString Login() const { return profile_.GetLogin(); }
 
     private:
-        UserItem( const UserItem& );
-        UserItem& operator=( const UserItem& );
-
         const AvailableProfile profile_;
     };
 }
@@ -92,10 +90,13 @@ void ConnectLoginDialog::OnAccept()
 {
     if( widget_->isShown() && password_->text().isEmpty() )
         return;
-    if( UserItem* item = static_cast< UserItem* >( users_->currentItem() ) )
+    UserItem* item = static_cast< UserItem* >( users_->currentItem() );
+    if( !item && users_->count() > 0 )
+        item = static_cast< UserItem* >( users_->item( 0 ) );
+    if( item )
     {
         profiles_.clear();
-        profile_.Login( item->Login().toAscii().constData(), password_->text().toAscii().constData() );
+        profile_.Login( item->Login().toStdString(), password_->text().toStdString() );
         accept();
     }
 }
@@ -115,9 +116,12 @@ void ConnectLoginDialog::OnReject()
 // Name: ConnectLoginDialog::OnSelectItem
 // Created: LGY 2011-11-23
 // -----------------------------------------------------------------------------
-void ConnectLoginDialog::OnSelectItem( Q3IconViewItem* item )
+void ConnectLoginDialog::OnSelectItem()
 {
-    UserItem* user = static_cast< UserItem* >( item );
-    widget_->setShown( user->RequiresPassword() );
-    password_->clear();
+    UserItem* user = static_cast< UserItem* >( users_->currentItem() );
+    if( user )
+    {
+        widget_->setShown( user->RequiresPassword() );
+        password_->clear();
+    }
 }

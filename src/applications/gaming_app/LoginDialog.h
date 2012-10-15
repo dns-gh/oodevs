@@ -35,13 +35,13 @@ private slots:
     //@{
     virtual void OnAccept();
     virtual void OnReject();
-    virtual void OnSelectItem( Q3IconViewItem* item );
+    virtual void OnSelectItem();
     //@}
 
 protected:
     //! @name Member data
     //@{
-    Q3IconView* users_;
+    QListWidget* users_;
     QWidget* widget_;
     QLineEdit* password_;
     //@}

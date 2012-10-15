@@ -16,28 +16,26 @@
 
 namespace
 {
-    class UserItem : public Q3IconViewItem
+    class UserItem : public QListWidgetItem
+                   , private boost::noncopyable
     {
     public:
-        UserItem( Q3IconView* parent, const UserProfile& profile )
-            : Q3IconViewItem( parent )
+        UserItem( QListWidget* parent, const UserProfile& profile )
+            : QListWidgetItem( parent )
             , profile_( profile )
         {
             setText( profile_.GetLogin().isEmpty() ? tools::translate( "LoginDialog", "Anonymous" ) : profile_.GetLogin() );
             const QString pixmap = QString( "images/gaming/profile/%1%2.png" ).arg( profile_.IsSupervision() ? "supervisor" : "standard" )
                 .arg( profile_.IsPasswordProtected() ? "_password" : "" );
-            QImage img( tools::ExerciseConfig::BuildResourceChildFile( pixmap.toAscii().constData() ).c_str() );
+            QImage img( tools::ExerciseConfig::BuildResourceChildFile( pixmap.toStdString() ).c_str() );
             img = img.scaled( 30, 30 );
-            setPixmap( QPixmap::fromImage( img ) );
+            setIcon( QPixmap::fromImage( img ) );
         }
 
         bool RequiresPassword() const { return profile_.IsPasswordProtected(); }
         QString Login() const { return profile_.GetLogin(); }
 
     private:
-        UserItem( const UserItem& );
-        UserItem& operator=( const UserItem& );
-
         const UserProfile& profile_;
     };
 }
@@ -52,9 +50,8 @@ ReconnectLoginDialog::ReconnectLoginDialog( QWidget* pParent, const UserProfile&
     , network_   ( network )
 {
     new UserItem( users_, profile );
-    Q3IconViewItem* item = users_->firstItem();
-    if( item )
-        users_->setCurrentItem( item );
+    if( users_->count() > 0 )
+        users_->setCurrentRow( 0, QItemSelectionModel::ClearAndSelect );
     password_->setFocus( Qt::MouseFocusReason );
 }
 
@@ -75,9 +72,12 @@ void ReconnectLoginDialog::OnAccept()
 {
     if( widget_->isShown() && password_->text().isEmpty() )
         return;
-    if( UserItem* item = static_cast< UserItem* >( users_->currentItem() ) )
+    UserItem* item = static_cast< UserItem* >( users_->currentItem() );
+    if( !item && users_->count() > 0 )
+        item = static_cast< UserItem* >( users_->item( 0 ) );
+    if( item )
     {
-        network_.GetMessageMgr().Reconnect( item->Login().toAscii().constData(), password_->text().toAscii().constData() );
+        network_.GetMessageMgr().Reconnect( item->Login().toStdString(), password_->text().toStdString() );
         accept();
     }
 }
@@ -86,9 +86,11 @@ void ReconnectLoginDialog::OnAccept()
 // Name: ReconnectLoginDialog::OnSelectItem
 // Created: LGY 2011-11-23
 // -----------------------------------------------------------------------------
-void ReconnectLoginDialog::OnSelectItem( Q3IconViewItem* item )
+void ReconnectLoginDialog::OnSelectItem()
 {
-    UserItem* user = static_cast< UserItem* >( item );
-    widget_->setShown( user->RequiresPassword() );
-    password_->clear();
+    if( UserItem* user = static_cast< UserItem* >(  users_->currentItem() ) )
+    {
+        widget_->setShown( user->RequiresPassword() );
+        password_->clear();
+    }
 }

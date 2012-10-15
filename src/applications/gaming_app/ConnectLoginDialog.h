@@ -51,7 +51,7 @@ private:
     virtual void showEvent( QShowEvent* ev );
     virtual void OnAccept();
     virtual void OnReject();
-    virtual void OnSelectItem( Q3IconViewItem* item );
+    virtual void OnSelectItem();
     //@}
 
 private:

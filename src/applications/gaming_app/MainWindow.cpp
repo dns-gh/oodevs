@@ -707,7 +707,7 @@ void MainWindow::NotifyUpdated( const Profile& profile )
         profile_ = profile.GetLogin();
         static ConnectLoginDialog* dialog = new ConnectLoginDialog( this, profile, network_, controllers_ );
         // $$$$ AGE 2006-10-11: exec would create a reentrance...
-        QTimer::singleShot( 0, dialog, SLOT(exec()) );
+        QTimer::singleShot( 0, dialog, SLOT( show() ) );
     }
         else
         profile_ = profile.GetLogin();
