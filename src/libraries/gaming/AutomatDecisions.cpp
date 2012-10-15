@@ -58,7 +58,7 @@ void AutomatDecisions::DoUpdate( const sword::AutomatAttributes& message )
         bEmbraye_ = ( message.mode() == sword::engaged );
     if( message.has_decisional_model() && message.decisional_model()!=model_->GetName() )
         model_ = &modelResolver_.Get( message.decisional_model() );
-    controller_.Update( *this );
+    controller_.Update( static_cast< kernel::AutomatDecisions_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void AutomatDecisions::DoUpdate( const sword::AutomatOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.type().id() );
-    controller_.Update( *this );
+    controller_.Update( static_cast< kernel::AutomatDecisions_ABC& >( *this ) );
 }
 
 // -----------------------------------------------------------------------------

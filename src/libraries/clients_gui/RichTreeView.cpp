@@ -70,6 +70,7 @@ RichTreeView::RichTreeView( QWidget* parent /*= 0*/, kernel::Controllers* contro
     , dataModel_( controllers, *proxyModel_, this )
 {
     setSortingEnabled( true );
+    setDropIndicatorShown( false );
 
     setItemDelegate( new HeightDelegate( this ) );
 
@@ -108,12 +109,11 @@ void RichTreeView::Purge()
 void RichTreeView::EnableDragAndDrop( bool enable )
 {
     dataModel_.SetDragAndDropObserver( enable ? this : 0 );
+    viewport()->setAcceptDrops( enable );
     setDragEnabled( enable );
     setAcceptDrops( enable );
-    //setDropIndicatorShown( enable );
     setAutoScroll( enable );
     setAutoExpandDelay( 500 );
-    setDropIndicatorShown( true );
 }
 
 // -----------------------------------------------------------------------------

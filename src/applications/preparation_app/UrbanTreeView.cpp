@@ -372,6 +372,7 @@ QMimeData* UrbanTreeView::MimeData( const QModelIndexList& indexes, bool& overri
 // -----------------------------------------------------------------------------
 void UrbanTreeView::dragMoveEvent( QDragMoveEvent *pEvent )
 {
+    QTreeView::dragMoveEvent( pEvent );
     if( IsReadOnly() )
     {
         pEvent->ignore();

@@ -32,18 +32,17 @@ Logger::Logger( QWidget* pParent, const kernel::Time_ABC& simulation, const std:
     setMinimumSize( 40, 40 );
     header()->setSortIndicatorShown( true );
     setRootIsDecorated( true );
-    dataModel_.setColumnCount( 3 );
+    dataModel_.setColumnCount( 4 );
     setHeaderHidden( false );
     setEditTriggers( 0 );
     EnableDragAndDrop( false );
 
     QStringList headers;
-    headers << tr( "Real time" ) << tr( "Simulation time" ) << tr( "Message" );
+    headers << tr( "Real time" ) << tr( "Simulation time" ) << tr( "Message" ) << "";
     dataModel_.setHorizontalHeaderLabels( headers );
-    header()->setMovable( false );
     header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     header()->setResizeMode( 1, QHeaderView::ResizeToContents );
-    header()->setResizeMode( 2, QHeaderView::Stretch );
+    header()->setResizeMode( 2, QHeaderView::ResizeToContents );
 
     setAllColumnsShowFocus( true );
 

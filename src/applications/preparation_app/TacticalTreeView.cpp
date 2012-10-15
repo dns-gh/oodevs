@@ -422,6 +422,7 @@ void TacticalTreeView::Engage()
     if( contextMenuEntity_ )
         if( kernel::AutomatDecisions_ABC* decisions = contextMenuEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >() )
             decisions->Engage();
+    doItemsLayout();
 }
 
 // -----------------------------------------------------------------------------
@@ -433,6 +434,7 @@ void TacticalTreeView::Disengage()
     if( contextMenuEntity_ )
         if( kernel::AutomatDecisions_ABC* decisions = contextMenuEntity_.ConstCast()->Retrieve< kernel::AutomatDecisions_ABC >() )
             decisions->Disengage();
+    doItemsLayout();
 }
 
 // -----------------------------------------------------------------------------

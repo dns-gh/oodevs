@@ -356,6 +356,7 @@ QStringList LogisticTreeView::MimeTypes() const
 // -----------------------------------------------------------------------------
 void LogisticTreeView::dragMoveEvent( QDragMoveEvent* pEvent )
 {
+    QTreeView::dragMoveEvent( pEvent );
     if( CanDrop( pEvent ) )
     {
         pEvent->accept();

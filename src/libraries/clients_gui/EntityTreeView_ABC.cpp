@@ -206,11 +206,17 @@ void EntityTreeView_ABC::contextMenuEvent( QContextMenuEvent* event )
 {
     if( !IsReadOnly() && event )
     {
-        const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( event->pos() ) );
-        if( entity )
-            entity->ContextMenu( controllers_.actions_, event->globalPos() );
-        else
-            ContextMenuRequested( event->globalPos() );
+        QModelIndex index = indexAt( event->pos() );
+        if( index.isValid() )
+        {
+            const kernel::Entity_ABC* entity = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( dataModel_.GetMainModelIndex( indexAt( event->pos() ) ) );
+            if( entity )
+            {
+                entity->ContextMenu( controllers_.actions_, event->globalPos() );
+                return;
+            }
+        }
+        ContextMenuRequested( event->globalPos() );
     }
 }
 

@@ -316,6 +316,7 @@ void HierarchyTreeView_ABC::Drop( const QString& mimeType, void* data, QStandard
 // -----------------------------------------------------------------------------
 void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
 {
+    QTreeView::dragMoveEvent( pEvent );
     // TODO factoriser la méthode
     if( IsReadOnly()  )
     {
