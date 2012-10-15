@@ -75,9 +75,11 @@ void DrawerLayer::OnDeleteDrawing()
 {
     if( selected_ )
     {
-        controllers_.controller_.Delete( *const_cast< kernel::Drawing_ABC* >( selected_ ) );
-        delete selected_;
+        const kernel::Drawing_ABC* selected = selected_;
         selected_ = 0;
+        controllers_.controller_.Delete( *const_cast< kernel::Drawing_ABC* >( selected ) );
+        controllers_.actions_.DeselectAll();
+        delete selected;
     }
 }
 
