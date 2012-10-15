@@ -13,7 +13,6 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include <Qt3Support/q3iconview.h>
 
 namespace kernel
 {
@@ -33,12 +32,12 @@ namespace gui
 */
 // Created: SBO 2007-02-21
 // =============================================================================
-class InfoSubordinatesWidget : public Q3IconView
+class InfoSubordinatesWidget : public QListWidget
                              , public tools::Observer_ABC
                              , public tools::SelectionObserver< kernel::Entity_ABC >
                              , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -50,16 +49,10 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OpenItem( Q3IconViewItem* item );
+    void OpenItem( QListWidgetItem* item );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InfoSubordinatesWidget( const InfoSubordinatesWidget& );            //!< Copy constructor
-    InfoSubordinatesWidget& operator=( const InfoSubordinatesWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );

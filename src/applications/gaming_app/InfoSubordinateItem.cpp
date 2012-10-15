@@ -13,18 +13,20 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/EntitySymbols.h"
 #include "gaming/Attributes.h"
-#include <QtGui/qpainter.h>
+
+Q_DECLARE_METATYPE( const kernel::Entity_ABC* );
 
 // -----------------------------------------------------------------------------
 // Name: InfoSubordinateItem constructor
 // Created: SBO 2007-02-22
 // -----------------------------------------------------------------------------
-InfoSubordinateItem::InfoSubordinateItem( Q3IconView* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity )
-    : Q3IconViewItem( parent, entity.GetName(), icons.GetSymbol( entity ) )
+InfoSubordinateItem::InfoSubordinateItem( QListWidget* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity )
+    : QListWidgetItem( entity.GetName(), parent )
     , controllers_( controllers )
     , icons_( icons )
-    , entity_( entity )
+    , oldRawState_( -1 )
 {
+    setData( Qt::UserRole + 1, QVariant::fromValue( &entity ) );
     controllers_.Register( *this );
 }
 
@@ -38,29 +40,20 @@ InfoSubordinateItem::~InfoSubordinateItem()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoSubordinateItem::paintItem
-// Created: SBO 2007-02-22
+// Name: InfoSubordinateItem::data
+// Created: JSR 2012-10-15
 // -----------------------------------------------------------------------------
-void InfoSubordinateItem::paintItem( QPainter* p, const QColorGroup& cg )
+QVariant InfoSubordinateItem::data( int role ) const
 {
-    Q3IconViewItem::paintItem( p, cg );
-    if( const Attributes* attributes = static_cast< const Attributes* >( entity_.Retrieve< kernel::Attributes_ABC >() ) )
-        DrawLife( p, attributes->nRawOpState_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoSubordinateItem::DrawLife
-// Created: SBO 2007-02-23
-// -----------------------------------------------------------------------------
-void InfoSubordinateItem::DrawLife( QPainter* p, int life )
-{
-    const QRect rect = pixmapRect( false );
-    const QRect lifeRect( rect.left(), rect.bottom() - 5, rect.width(), 5 );
-    QColor color;
-    color.setHsv( life, 255, 255 );
-    p->fillRect( lifeRect, QColor( 255, 100, 100 ) );
-    p->fillRect( lifeRect.left(), lifeRect.top(), int( lifeRect.width() * float( life ) / 100.f ), lifeRect.height(), color );
-    p->drawRect( lifeRect );
+    if( role == Qt::DecorationRole )
+    {
+        assert( listWidget() );
+        const QPixmap& p = icons_.GetSymbol( GetEntity() );
+        if( p.isNull() )
+            QTimer::singleShot( 0, listWidget(), SLOT( doItemsLayout() ) );
+        return p;
+    }
+    return QListWidgetItem::data( role );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,8 +62,15 @@ void InfoSubordinateItem::DrawLife( QPainter* p, int life )
 // -----------------------------------------------------------------------------
 void InfoSubordinateItem::NotifyUpdated( const kernel::Attributes_ABC& attributes )
 {
-    if( &attributes == entity_.Retrieve< kernel::Attributes_ABC >() )
-        repaint();
+    if( &attributes == GetEntity().Retrieve< kernel::Attributes_ABC >() )
+    {
+        int opState = static_cast< const Attributes& >( attributes ).nRawOpState_;
+        if( opState != oldRawState_ )
+        {
+            oldRawState_ = opState;
+            QTimer::singleShot( 0, listWidget(), SLOT( doItemsLayout() ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -79,5 +79,5 @@ void InfoSubordinateItem::NotifyUpdated( const kernel::Attributes_ABC& attribute
 // -----------------------------------------------------------------------------
 const kernel::Entity_ABC& InfoSubordinateItem::GetEntity() const
 {
-    return entity_;
+    return *data( Qt::UserRole + 1 ).value< const kernel::Entity_ABC* >();
 }

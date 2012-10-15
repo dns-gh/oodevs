@@ -11,7 +11,7 @@
 #define __InfoSubordinateItem_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include <Qt3Support/q3iconview.h>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -31,34 +31,28 @@ namespace gui
 */
 // Created: SBO 2007-02-22
 // =============================================================================
-class InfoSubordinateItem : public Q3IconViewItem
+class InfoSubordinateItem : public QListWidgetItem
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::Attributes_ABC >
+                          , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSubordinateItem( Q3IconView* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity );
+             InfoSubordinateItem( QListWidget* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity );
     virtual ~InfoSubordinateItem();
     //@}
 
     //! @name Operations
     //@{
     const kernel::Entity_ABC& GetEntity() const;
+    virtual QVariant data( int role ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InfoSubordinateItem( const InfoSubordinateItem& );            //!< Copy constructor
-    InfoSubordinateItem& operator=( const InfoSubordinateItem& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::Attributes_ABC& attributes );
-    virtual void paintItem( QPainter* p, const QColorGroup& cg );
-    void DrawLife( QPainter* p, int life );
     //@}
 
 private:
@@ -66,7 +60,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::EntitySymbols& icons_;
-    const kernel::Entity_ABC& entity_;
+    int oldRawState_;
     //@}
 };
 

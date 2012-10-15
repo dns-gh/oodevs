@@ -10,32 +10,68 @@
 #include "gaming_app_pch.h"
 #include "InfoSubordinatesWidget.h"
 #include "moc_InfoSubordinatesWidget.cpp"
+#include "InfoSubordinateItem.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "InfoSubordinateItem.h"
+#include "gaming/Attributes.h"
+
+Q_DECLARE_METATYPE( const kernel::Entity_ABC* );
+
+namespace
+{
+    class ItemDelegate : public QItemDelegate
+    {
+    public:
+        ItemDelegate( QObject* parent ) : QItemDelegate( parent )
+        {
+            // NOTHING
+        }
+        virtual ~ItemDelegate()
+        {
+            // NOTHING
+        }
+        virtual void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
+        {
+            QItemDelegate::paint( painter, option, index );
+            if( const kernel::Entity_ABC* entity = index.model()->data( index, Qt::UserRole + 1 ).value< const kernel::Entity_ABC* >() )
+                if( const Attributes* attributes = static_cast< const Attributes* >( entity->Retrieve< kernel::Attributes_ABC >() ) )
+                    DrawLife( painter, attributes->nRawOpState_, option.rect );
+        }
+    private:
+        void DrawLife( QPainter* p, int life, const QRect& rect ) const
+        {
+            int width = std::min( rect.width(), 50 );
+            int posx = std::max( 0, ( rect.width() - 50 ) / 2 );
+            const QRect lifeRect( rect.left() + posx, rect.bottom() - 5, width, 5 );
+            QColor color;
+            color.setHsv( life, 255, 255 );
+            p->fillRect( lifeRect, QColor( 255, 100, 100 ) );
+            p->fillRect( lifeRect.left(), lifeRect.top(), static_cast< int >( 0.01f * lifeRect.width() * life ), lifeRect.height(), color );
+            p->drawRect( lifeRect );
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: InfoSubordinatesWidget constructor
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
 InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
-    : Q3IconView( parent, "InfoSubordinatesWidget" )
+    : QListWidget( parent )
     , controllers_( controllers )
     , profile_( profile )
     , icons_( icons )
     , selected_( controllers )
 {
-    setGridX( 60 );
-    setGridY( 60 );
+    setGridSize( QSize( 60, 60 ) );
+    setViewMode( QListView::IconMode );
     setFixedWidth( 345 );
-    setWordWrapIconText( false );
-    setSorting( true );
-    setItemsMovable( false );
-    setHScrollBarMode( Q3ScrollView::AlwaysOff );
-    connect( this, SIGNAL( doubleClicked( Q3IconViewItem* ) ), SLOT( OpenItem( Q3IconViewItem* ) ) );
+    setWordWrap( true );
+    setItemDelegate( new ItemDelegate( this ) );
+    connect( this, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ), SLOT( OpenItem( QListWidgetItem* ) ) );
     hide();
     controllers_.Register( *this );
 }
@@ -90,10 +126,10 @@ void InfoSubordinatesWidget::AddSubordinate( const kernel::Entity_ABC& entity )
 // Name: InfoSubordinatesWidget::OpenItem
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
-void InfoSubordinatesWidget::OpenItem( Q3IconViewItem* item )
+void InfoSubordinatesWidget::OpenItem( QListWidgetItem* item )
 {
     if( InfoSubordinateItem* value = static_cast< InfoSubordinateItem* >( item ) )
-        controllers_.actions_.Select( value->GetEntity() );
+        controllers_.actions_.SetSelected( value->GetEntity(), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,10 +138,10 @@ void InfoSubordinatesWidget::OpenItem( Q3IconViewItem* item )
 // -----------------------------------------------------------------------------
 void InfoSubordinatesWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    for( Q3IconViewItem* item = firstItem(); item; item = item->nextItem() )
-        if( &static_cast< InfoSubordinateItem* >( item )->GetEntity() == &entity )
+    for( int row = 0; row < count(); ++row )
+        if( &static_cast< InfoSubordinateItem* >( item( row ) )->GetEntity() == &entity )
         {
-            delete item;
+            delete takeItem( row );
             return;
         }
 }
