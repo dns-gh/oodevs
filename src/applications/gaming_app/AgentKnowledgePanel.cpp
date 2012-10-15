@@ -19,6 +19,12 @@
 #include "gaming/PerceptionMap.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/ListDisplayer.h"
+#include "clients_gui/InternalLinks.h"
+
+Q_DECLARE_METATYPE( const kernel::Automat_ABC* )
+Q_DECLARE_METATYPE( const kernel::AgentKnowledge_ABC* )
+#define EntityRole ( Qt::UserRole + 1 )
+#define KnowledgeRole ( Qt::UserRole + 2 )
 
 using namespace kernel;
 using namespace gui;
@@ -35,12 +41,20 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , selectionCandidate_( controllers )
     , display_     ( 0 )
 {
-    QVBoxLayout* layout = new QVBoxLayout( this );
-    pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( tools::translate( "AgentKnowledge", "Known units" ) );
-    layout->addWidget( pKnowledgeListView_ );
+    QWidget* view = new QWidget();
+    QVBoxLayout* layoutView = new QVBoxLayout( view );
 
-    display_ = new DisplayBuilder( this, factory );
+    pKnowledgeListView_ = new QTreeView();
+    pKnowledgeListView_->setContextMenuPolicy( Qt::CustomContextMenu );
+    pKnowledgeListView_->setRootIsDecorated( false );
+    pKnowledgeListView_->setEditTriggers( 0 );
+    knowledgeModel_.setColumnCount( 1 );
+    pKnowledgeListView_->setModel( &knowledgeModel_ );
+    knowledgeModel_.setHorizontalHeaderLabels( QStringList( tools::translate( "AgentKnowledge", "Known units" ) ) );
+
+    layoutView->addWidget( pKnowledgeListView_ );
+
+    display_ = new DisplayBuilder( view, factory );
     display_->AddGroup( tools::translate( "AgentKnowledge", "Details" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Identifier:" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Associated agent:" ) )
@@ -60,19 +74,30 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Relevance:" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Critical intelligence:" ) );
 
-    pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( tools::translate( "AgentKnowledge", "Unit" ) ).
-                          AddColumn( tools::translate( "AgentKnowledge", "Perception level" ) );
-    layout->addWidget( pPerceptionListView_ );
+    //perception tree view configuration
+    pPerceptionListView_ = new QTreeView();
+    pPerceptionListView_->setContextMenuPolicy( Qt::CustomContextMenu );
+    pPerceptionListView_->setRootIsDecorated( false );
+    pPerceptionListView_->setEditTriggers( 0 );
+    perceptionModel_.setColumnCount( 2 );
+    pPerceptionListView_->setModel( &perceptionModel_ );
+    pPerceptionListView_->header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    QStringList list;
+    list.append( tools::translate( "AgentKnowledge", "Unit" ) );
+    list.append( tools::translate( "AgentKnowledge", "Perception level" ) );
+    perceptionModel_.setHorizontalHeaderLabels( list );
 
-    connect( pKnowledgeListView_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
-    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
-    connect( pKnowledgeListView_, SIGNAL( doubleClicked       ( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter( Q3ListViewItem* ) ) );
-    connect( pKnowledgeListView_, SIGNAL( spacePressed        ( Q3ListViewItem* ) ),                     this, SLOT( OnRequestCenter( Q3ListViewItem* ) ) );
+    layoutView->addWidget( pPerceptionListView_ );
 
-    connect( pPerceptionListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
-    connect( pPerceptionListView_, SIGNAL( doubleClicked       ( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter( Q3ListViewItem* ) ) );
-    connect( pPerceptionListView_, SIGNAL( spacePressed        ( Q3ListViewItem* ) ),                     this, SLOT( OnRequestCenter( Q3ListViewItem* ) ) );
+    connect( pKnowledgeListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
+    connect( pKnowledgeListView_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnKnowledgeContextMenuEvent( const QPoint& ) ) );
+    connect( pKnowledgeListView_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnKnowledgeRequestCenter() ) );
+
+    connect( pPerceptionListView_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnPerceptionRequestCenter() ) );
+    connect( pPerceptionListView_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnPerceptionContextMenuEvent( const QPoint& ) ) );
+    
+    setWidget( view );
+
     controllers_.Register( *this );
 }
 
@@ -105,17 +130,14 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     if( ! IsVisible() || selected_ != &knowledges )
         return;
 
-    pKnowledgeListView_->DeleteTail(
-        pKnowledgeListView_->DisplayList( knowledges.CreateIterator() )
-        );
-    ValuedListItem* item = FindItem( subSelected_, pKnowledgeListView_->firstChild() );
-    if( item )
-        pKnowledgeListView_->setSelected( item, true );
-    else
+    tools::Iterator< const AgentKnowledge_ABC& > iterator = knowledges.CreateIterator();
+    knowledgeModel_.removeRows( 0, knowledgeModel_.rowCount() );
+    while( iterator.HasMoreElements() )
     {
-        subSelected_ = 0;
-        pKnowledgeListView_->setSelected( pKnowledgeListView_->firstChild(), true );
-        OnSelectionChanged( pKnowledgeListView_->firstChild() );
+        const AgentKnowledge_ABC& knowledge = iterator.NextElement();
+        QStandardItem* knowledgeItem = new QStandardItem( knowledge.GetEntity()->GetName() );
+        knowledgeItem->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        knowledgeModel_.appendRow( knowledgeItem );
     }
 }
 
@@ -159,12 +181,6 @@ void AgentKnowledgePanel::AfterSelection()
         const Entity_ABC* owner = & selectionCandidate_->GetOwner();
         const KnowledgeGroup_ABC* kg = static_cast< const KnowledgeGroup_ABC* >( owner );
         Select( kg );
-        ValuedListItem* item = FindItem( (const AgentKnowledge_ABC*)selectionCandidate_, pKnowledgeListView_->firstChild() );
-        if( item )
-        {
-            pKnowledgeListView_->setSelected( item, true );
-            pKnowledgeListView_->ensureItemVisible( item );
-        }
     }
     else
         KnowledgeGroupSelectionObserver::AfterSelection();
@@ -180,7 +196,8 @@ void AgentKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
     if( ! k || k != selected_ )
     {
         selected_ = k;
-        if( selected_ ) {
+        if( selected_ )
+        {
             subSelected_ = 0;
             Show();
             NotifyUpdated( *selected_ );
@@ -194,13 +211,14 @@ void AgentKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 // Name: AgentKnowledgePanel::OnSelectionChanged
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
+void AgentKnowledgePanel::OnSelectionChanged()
 {
-    ValuedListItem* item = (ValuedListItem*)( i );
-    if( ! item || ! item->IsA< const AgentKnowledge_ABC >() )
-        subSelected_ = 0;
-    else
-        subSelected_ = item->GetValueNoCheck< const AgentKnowledge_ABC >();
+    const QModelIndex index = pKnowledgeListView_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = knowledgeModel_.itemFromIndex( index );
+    if( item && item->data( KnowledgeRole ).isValid() )
+        subSelected_ = item->data( KnowledgeRole ).value< const kernel::AgentKnowledge_ABC* >();
 
     if( subSelected_ )
     {
@@ -208,35 +226,67 @@ void AgentKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
         const PerceptionMap* perceptions = subSelected_->Retrieve< PerceptionMap >();
         if( perceptions )
             NotifyUpdated( *perceptions  );
+        else
+            perceptionModel_.removeRows( 0, perceptionModel_.rowCount() );
     }
     else
         display_->Hide();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnContextMenuRequested
+// Name: AgentKnowledgePanel::OnPerceptionContextMenuEvent
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos )
+void AgentKnowledgePanel::OnPerceptionContextMenuEvent( const QPoint & pos )
 {
-    if( i )
-    {
-        ValuedListItem* item = (ValuedListItem*)( i );
-        item->ContextMenu( controllers_.actions_, pos );
-    }
+    const QModelIndex index = pPerceptionListView_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = perceptionModel_.itemFromIndex( index );
+    if( item && item->data( EntityRole ).isValid() )
+        item->data( EntityRole ).value< const Automat_ABC* >()->ContextMenu( controllers_.actions_, pPerceptionListView_->viewport()->mapToGlobal( pos ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::OnRequestCenter
+// Name: AgentKnowledgePanel::OnKnowledgeContextMenuEvent
+// Created: AGE 2006-03-13
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::OnKnowledgeContextMenuEvent( const QPoint & pos )
+{
+    const QModelIndex index = pKnowledgeListView_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = knowledgeModel_.itemFromIndex( index );
+    if( item && item->data( KnowledgeRole ).isValid() )
+        item->data( KnowledgeRole ).value< const AgentKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::OnPerceptionRequestCenter
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::OnRequestCenter( Q3ListViewItem* i )
+void AgentKnowledgePanel::OnPerceptionRequestCenter()
 {
-    if( i )
-    {
-        ValuedListItem* item = (ValuedListItem*)( i );
-        item->Activate( controllers_.actions_ );
-    }
+    const QModelIndex index = pPerceptionListView_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = perceptionModel_.itemFromIndex( index );
+    if( item && item->data( EntityRole ).isValid() )
+        item->data( EntityRole ).value< const Automat_ABC* >()->Activate( controllers_.actions_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::OnKnowledgeRequestCenter
+// Created: AGE 2006-05-18
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::OnKnowledgeRequestCenter()
+{
+    const QModelIndex index = pKnowledgeListView_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = knowledgeModel_.itemFromIndex( index );
+    if( item && item->data( KnowledgeRole ).isValid() )
+        item->data( KnowledgeRole ).value< const AgentKnowledge_ABC* >()->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,9 +310,17 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
     if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< PerceptionMap >() != & perceptions )
         return;
 
-    pPerceptionListView_->DeleteTail(
-        pPerceptionListView_->DisplayList( perceptions.perceptions_.begin(), perceptions.perceptions_.end() )
-        );
+    perceptionModel_.removeRows( 0, perceptionModel_.rowCount() );
+    for( PerceptionMap::CIT_Perceptions it = perceptions.perceptions_.begin(); it != perceptions.perceptions_.end(); ++it )
+    {
+        QList< QStandardItem *> list;
+        QStandardItem* nameItem = new QStandardItem( ( *it ).detected_->GetName() );
+        nameItem->setData( QVariant::fromValue( ( *it ).detected_ ), EntityRole );
+        QStandardItem* levelItem = new QStandardItem( tools::ToString( ( *it ).level_ ) );
+        list.append( nameItem );
+        list.append( levelItem );
+        perceptionModel_.appendRow( list );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -500,6 +500,17 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>Crowd</name>
+    <message>
+        <source>Concentration - </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flow - </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DisconnectDialog</name>
     <message>
         <source>Disconnect</source>
@@ -3274,10 +3285,6 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Maximum Progress:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -168,3 +168,12 @@ void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const kernel::View
         glPopAttrib();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlowKnowledge::GetNId
+// Created: NPT 2012-10-11
+// -----------------------------------------------------------------------------
+uint PopulationFlowKnowledge::GetNId() const
+{
+    return nID_;
+}

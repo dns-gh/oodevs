@@ -53,9 +53,11 @@ private:
     ObjectPerceptions& operator=( const ObjectPerceptions& ); //!< Assignment operator
     //@}
 
+public:
     //! @name Types
     //@{
     typedef std::vector< const kernel::Automat_ABC* > T_Agents;
+    typedef T_Agents::const_iterator                CIT_Agents;
     //@}
 
     //! @name Member data

@@ -23,7 +23,6 @@ InfoPanel_ABC::InfoPanel_ABC( QWidget* parent, PanelStack_ABC& panel, const QStr
     , name_      ( name )
 {
     setName( qtName );
-    setFrameStyle( QFrame::Box | QFrame::Sunken );
     setWidgetResizable( true );
 }
 

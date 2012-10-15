@@ -27,9 +27,7 @@ namespace kernel
 
 namespace gui
 {
-    template< typename T > class ListDisplayer;
     class DisplayBuilder;
-    class ValuedListItem;
     class ItemFactory_ABC;
 }
 
@@ -48,6 +46,7 @@ class PopulationKnowledgePanel : public gui::InfoPanel_ABC
                                , public tools::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
                                , public tools::ElementObserver_ABC< PopulationFlowKnowledge >
                                , public tools::ElementObserver_ABC< PopulationConcentrationKnowledge >
+                               , private boost::noncopyable
 {
     Q_OBJECT;
 public:
@@ -57,17 +56,11 @@ public:
     virtual ~PopulationKnowledgePanel();
     //@}
 
-    //! @name Operations
-    //@{
-    void Display( const kernel::PopulationKnowledge_ABC& knowledge, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    void Display( const PopulationPartKnowledge_ABC& knowledge, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( Q3ListViewItem* i );
-    void OnContextMenuRequested( Q3ListViewItem*, const QPoint& );
+    void OnSelectionChanged();
+    void OnContextMenuRequested( const QPoint & pos );
     //@}
 
 private:
@@ -92,7 +85,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
+    QTreeView* knowledgeList_;
+    QStandardItemModel knowledgeModel_;
     gui::DisplayBuilder* display_;
     kernel::SafePointer< PopulationKnowledges >            selected_;
     kernel::SafePointer< kernel::PopulationKnowledge_ABC > subSelected_;

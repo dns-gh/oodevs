@@ -146,3 +146,12 @@ void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const ker
         glPopAttrib();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::GetNId
+// Created: NPT 2012-10-11
+// -----------------------------------------------------------------------------
+uint PopulationConcentrationKnowledge::GetNId() const
+{
+    return nID_;
+}

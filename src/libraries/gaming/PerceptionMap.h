@@ -54,12 +54,13 @@ private:
     virtual void DoUpdate( const sword::UnitKnowledgeUpdate& message );
     //@}
 
+public:
     //! @name Types
     //@{
-    typedef std::vector< Perception > T_Perceptions;
+    typedef std::vector< Perception >       T_Perceptions;
+    typedef T_Perceptions::const_iterator CIT_Perceptions;
     //@}
 
-public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;

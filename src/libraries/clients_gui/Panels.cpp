@@ -20,31 +20,41 @@ using namespace gui;
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
 Panels::Panels( QWidget* pParent )
-    : Q3VBox( pParent )
+    : QWidget( pParent )
 {
-    setMinimumSize( 1, 1 );
-    layout()->setMargin( 5 );
 
-    Q3HBox* box = new Q3HBox( this );
-    box->layout()->setMargin( 5 );
-    box->layout()->setSpacing( 5 );
-    box->setMaximumHeight( 30 );
-    previous_ = new QPushButton( box );
+    //knowledge choice panel
+    previous_ = new QPushButton();
     previous_->setPixmap( MAKE_PIXMAP( left_arrow ) );
     previous_->setMaximumSize( 20, 20 );
     previous_->setFlat( true );
-    next_ = new QPushButton( box );
+
+    next_ = new QPushButton();
     next_->setPixmap( MAKE_PIXMAP( right_arrow ) );
     next_->setMaximumSize( 20, 20 );
     next_->setFlat( true );
-    combo_ = new QComboBox( box );
+
+    combo_ = new QComboBox();
     combo_->setFocusPolicy( Qt::StrongFocus );
 
-    stack_ = new QStackedWidget( this );
+    QHBoxLayout* box = new QHBoxLayout();
+    box->setMargin( 5 );
+    box->setSpacing( 5 );
+    box->addWidget( previous_ );
+    box->addWidget( next_ );
+    box->addWidget( combo_ );
 
+    //stacked panel
+    stack_ = new QStackedWidget();
     dummy_ = new QWidget();
     stack_->addWidget( dummy_ );
     stack_->setCurrentWidget( dummy_ );
+
+    //general panel
+    QVBoxLayout * layout = new QVBoxLayout( this );
+    layout->setMargin( 5 );
+    layout->addLayout( box );
+    layout->addWidget( stack_ );
 
     CheckButtons();
 

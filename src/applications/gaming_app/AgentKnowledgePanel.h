@@ -49,6 +49,7 @@ class AgentKnowledgePanel : public gui::InfoPanel_ABC
                           , public tools::ElementObserver_ABC< PerceptionMap >
                           , public tools::SelectionObserver_Base< kernel::AgentKnowledge_ABC >
                           , public KnowledgeGroupSelectionObserver
+                          , private boost::noncopyable
 {
     Q_OBJECT;
 public:
@@ -88,9 +89,11 @@ private:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( Q3ListViewItem* );
-    void OnContextMenuRequested( Q3ListViewItem*, const QPoint& );
-    void OnRequestCenter( Q3ListViewItem* );
+    void OnSelectionChanged();
+    void OnKnowledgeContextMenuEvent( const QPoint & pos );
+    void OnPerceptionContextMenuEvent( const QPoint & pos );
+    void OnKnowledgeRequestCenter();
+    void OnPerceptionRequestCenter();
     //@}
 
 private:
@@ -98,9 +101,11 @@ private:
     //@{
     kernel::Controllers& controllers_;
 
-    gui::ListDisplayer< AgentKnowledgePanel >* pKnowledgeListView_;
+    QTreeView* pKnowledgeListView_;
+    QStandardItemModel knowledgeModel_;
     gui::DisplayBuilder* display_;
-    gui::ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
+    QTreeView* pPerceptionListView_;
+    QStandardItemModel perceptionModel_;
 
     kernel::SafePointer< AgentKnowledges >     selected_;
     kernel::SafePointer< kernel::AgentKnowledge_ABC >  subSelected_;

@@ -22,7 +22,7 @@ namespace gui
 */
 // Created: SBO 2006-08-08
 // =============================================================================
-class Panels : public Q3VBox
+class Panels : public QWidget
              , public gui::PanelStack_ABC
 {
     Q_OBJECT;

@@ -26,6 +26,11 @@
 using namespace kernel;
 using namespace gui;
 
+Q_DECLARE_METATYPE( const kernel::PopulationKnowledge_ABC* )
+Q_DECLARE_METATYPE( const PopulationFlowKnowledge* )
+Q_DECLARE_METATYPE( const PopulationConcentrationKnowledge* )
+#define KnowledgeRole ( Qt::UserRole + 1 )
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePanel constructor
 // Created: AGE 2006-02-24
@@ -37,12 +42,20 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
     , subSelected_ ( controllers )
     , selectedPart_( controllers )
 {
-    QVBoxLayout* layout = new QVBoxLayout( this );
-    knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this, factory );
-    knowledgeList_->AddColumn( tools::translate( "PopulationKnowledgePanel", "Known crowds" ) );
+    QWidget* view = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout( view );
+
+    knowledgeList_ = new QTreeView();
+    knowledgeList_->setContextMenuPolicy( Qt::CustomContextMenu );
+    knowledgeList_->setRootIsDecorated( false );
+    knowledgeList_->setEditTriggers( 0 );
+    knowledgeList_->setModel( &knowledgeModel_ );
+    knowledgeModel_.setColumnCount( 1 );
+    knowledgeModel_.setHorizontalHeaderLabels( QStringList( tools::translate( "PopulationKnowledgePanel", "Known crowds" ) ) );
+    
     layout->addWidget( knowledgeList_ );
 
-    display_ = new DisplayBuilder( this, factory );
+    display_ = new DisplayBuilder( view, factory );
     display_->AddGroup( tools::translate( "PopulationKnowledgePanel", "Details" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Identifier:" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Associated crowd:" ) )
@@ -64,8 +77,10 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
                 .AddLabel( tools::findTranslation( "Crowd", "Mood:" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Perceived:" ) );
 
-    connect( knowledgeList_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
-    connect( knowledgeList_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
+    connect( knowledgeList_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
+    connect( knowledgeList_, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenuRequested( const QPoint & ) ) );
+
+    setWidget( view );
 
     controllers_.Register( *this );
 }
@@ -107,38 +122,47 @@ void PopulationKnowledgePanel::showEvent( QShowEvent* )
 // Name: PopulationKnowledgePanel::OnContextMenuRequested
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos )
+void PopulationKnowledgePanel::OnContextMenuRequested( const QPoint & pos )
 {
-    if( i )
-    {
-        ValuedListItem* item = (ValuedListItem*)( i );
-        item->ContextMenu( controllers_.actions_, pos );
-    }
+    const QModelIndex index = knowledgeList_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = knowledgeModel_.itemFromIndex( index );
+    if( item && item->data( KnowledgeRole ).isValid() )
+        item->data( KnowledgeRole ).value< const PopulationKnowledge_ABC* >()->ContextMenu( controllers_.actions_, knowledgeList_->viewport()->mapToGlobal( pos ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePanel::OnSelectionChanged
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
+void PopulationKnowledgePanel::OnSelectionChanged()
 {
-    ValuedListItem* item = (ValuedListItem*)( i );
+    const QModelIndex index = knowledgeList_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
     display_->Group( tools::translate( "PopulationKnowledgePanel", "Flow" ) ).Hide();
     display_->Group( tools::translate( "PopulationKnowledgePanel", "Concentration" ) ).Hide();
-    if( item && item->IsA< const PopulationKnowledge_ABC >() )
+    QStandardItem* item = knowledgeModel_.itemFromIndex( index );
+
+    if( item && item->data( KnowledgeRole ).isValid() )
     {
-        subSelected_ = item->GetValueNoCheck< const PopulationKnowledge_ABC >();
-        subSelected_->Display( *display_ );
-    }
-    else if( item && item->IsA< const PopulationConcentrationKnowledge >() )
-    {
-        selectedPart_ = item->GetValueNoCheck< const PopulationConcentrationKnowledge >();
-        selectedPart_->Display( *display_ );
-    }
-    else if( item && item->IsA< const PopulationFlowKnowledge >() )
-    {
-        selectedPart_ = item->GetValueNoCheck< const PopulationFlowKnowledge >();
-        selectedPart_->Display( *display_ );
+        if( item->data( KnowledgeRole ).canConvert< const PopulationKnowledge_ABC* >() )
+        {
+            subSelected_ = item->data( KnowledgeRole ).value< const PopulationKnowledge_ABC* >();
+            subSelected_->Activate( controllers_.actions_ );
+            subSelected_->Display( *display_ );
+        }
+        else if( item->data( KnowledgeRole ).canConvert< const PopulationConcentrationKnowledge* >() )
+        {
+            selectedPart_ = item->data( KnowledgeRole ).value< const PopulationConcentrationKnowledge* >();
+            selectedPart_->Display( *display_ );
+        }
+        else if( item->data( KnowledgeRole ).canConvert< const PopulationFlowKnowledge* >() )
+        {
+            selectedPart_ = item->data( KnowledgeRole ).value< const PopulationFlowKnowledge* >();
+            selectedPart_->Display( *display_ );
+        }
     }
 }
 
@@ -150,31 +174,40 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
 {
     if( ! IsVisible() || selected_ != &element )
         return;
-    knowledgeList_->DeleteTail( knowledgeList_->DisplayList( element.CreateIterator() ) );
+
+    //population knowledge
+    knowledgeModel_.removeRows( 0, knowledgeModel_.rowCount() );
+    tools::Iterator< const kernel::PopulationKnowledge_ABC& > iterator = element.CreateIterator();
+    while( iterator.HasMoreElements() )
+    {
+        //population knowledge infos
+        const kernel::PopulationKnowledge_ABC& knowledge = iterator.NextElement();
+        QStandardItem* nameItem = new QStandardItem( knowledge.GetEntity()->GetName() + " - "+ QString::number( knowledge.GetEntity()->GetId() ) );
+        nameItem->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        knowledgeModel_.appendRow( nameItem );
+        const PopulationKnowledge& k = dynamic_cast< const PopulationKnowledge& >( knowledge ); 
+
+        //concentration knowledge
+        tools::Iterator< const PopulationConcentrationKnowledge& > iteratorConcentration = k.Resolver< PopulationConcentrationKnowledge >::CreateIterator();
+        while( iteratorConcentration.HasMoreElements() && k.Resolver< PopulationConcentrationKnowledge >::Count() )
+        {
+            const PopulationConcentrationKnowledge& concentration = iteratorConcentration.NextElement();
+            QStandardItem* concentrationItem = new QStandardItem(  tools::translate( "Crowd", "Concentration - " ) + QString::number( concentration.GetNId() ) );
+            concentrationItem->setData( QVariant::fromValue( &concentration ), KnowledgeRole );
+            nameItem->appendRow( concentrationItem );
+        }
+
+        //flow knowledge
+        tools::Iterator< const PopulationFlowKnowledge& > iteratorFlow = k.Resolver< PopulationFlowKnowledge >::CreateIterator();
+        while( iteratorFlow.HasMoreElements() && k.Resolver< PopulationFlowKnowledge >::Count() )
+        {
+            const PopulationFlowKnowledge& flow = iteratorFlow.NextElement();
+            QStandardItem* flowItem = new QStandardItem( tools::translate( "Crowd", "Flow - " ) + QString::number( flow.GetNId() ) );
+            flowItem->setData( QVariant::fromValue( &flow ), KnowledgeRole );
+            nameItem->appendRow( flowItem );
+        }
+    }
     selected_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledgePanel::Display
-// Created: AGE 2006-02-24
-// -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::Display( const PopulationKnowledge_ABC& knowledge, Displayer_ABC& displayer, ValuedListItem* item )
-{
-    item->SetValue( &knowledge );
-    knowledge.DisplayInList( displayer );
-    const PopulationKnowledge& k = dynamic_cast< const PopulationKnowledge& >( knowledge );  // $$$$ AGE 2008-06-19:
-    ValuedListItem* subItem = knowledgeList_->DisplayList( k.Resolver< PopulationConcentrationKnowledge >::CreateIterator(), item );
-    subItem = knowledgeList_->DisplayList( k.Resolver< PopulationFlowKnowledge >::CreateIterator(), item, subItem );
-    knowledgeList_->DeleteTail( subItem );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledgePanel::Display
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::Display( const PopulationPartKnowledge_ABC& knowledge, Displayer_ABC& displayer, ValuedListItem* )
-{
-    knowledge.DisplayInList( displayer );
 }
 
 // -----------------------------------------------------------------------------

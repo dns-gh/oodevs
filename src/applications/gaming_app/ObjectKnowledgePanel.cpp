@@ -16,12 +16,16 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/ObjectKnowledges.h"
 #include "gaming/ObjectPerceptions.h"
+
+Q_DECLARE_METATYPE( const kernel::ObjectKnowledge_ABC* )
+#define KnowledgeRole ( Qt::UserRole + 1 )
 
 using namespace kernel;
 using namespace gui;
@@ -39,12 +43,19 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     , selected_    ( controllers )
     , subSelected_ ( controllers )
 {
-    QVBoxLayout* layout = new QVBoxLayout( this );
-    pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Known objects" ) );
+    QWidget* view = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout( view );
+
+    pKnowledgeListView_ = new QTreeView();
+    pKnowledgeListView_->setContextMenuPolicy( Qt::CustomContextMenu );
+    pKnowledgeListView_->setRootIsDecorated( false );
+    pKnowledgeListView_->setEditTriggers( 0 );
+    pKnowledgeListView_->setModel( &knowledgeModel_ );
+    knowledgeModel_.setHorizontalHeaderLabels( QStringList( tools::translate( "ObjectKnowledgePanel", "Known objects" ) ) );
+
     layout->addWidget( pKnowledgeListView_ );
 
-    display_ = new DisplayBuilder( this, factory );
+    display_ = new DisplayBuilder( view, factory );
     display_->AddGroup( tools::findTranslation( "Object", "Information" ) )
                 .AddLabel( tools::findTranslation( "Object", "Identifier:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Associated object:" ) )
@@ -91,12 +102,18 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tools::findTranslation( "Object", "Fire class:" ) )
                 .AddLabel( tools::findTranslation( "Object", "Max combustion energy:" ) );
 
-    pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Agent" ) );
+    pPerceptionListView_ = new QTreeView();
+    pPerceptionListView_->setRootIsDecorated( false );
+    pPerceptionListView_->setEditTriggers( 0 );
+    pPerceptionListView_->setModel( &perceptionModel_ );
+    perceptionModel_.setHorizontalHeaderLabels( QStringList( tools::translate( "ObjectKnowledgePanel", "Agent" ) ) );
+
     layout->addWidget( pPerceptionListView_ );
 
-    connect( pKnowledgeListView_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
-    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
+    connect( pKnowledgeListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
+    connect( pKnowledgeListView_, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenuRequested( const QPoint & ) ) );
+    
+    setWidget( view );
 
     controllers_.Register( *this );
 }
@@ -127,18 +144,19 @@ void ObjectKnowledgePanel::showEvent( QShowEvent* )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 {
-    if( selected_ && selected_ == &element )
-        pKnowledgeListView_->DeleteTail( pKnowledgeListView_->DisplayList( element.CreateIterator() ));
-}
+    if( !selected_ || selected_ != &element )
+        return;
 
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledgePanel::Display
-// Created: AGE 2006-02-24
-// -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Display( const kernel::ObjectKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
-{
-    item->SetValue( &k );
-    k.DisplayInList( displayer );
+    knowledgeModel_.removeRows( 0, knowledgeModel_.rowCount() );
+    tools::Iterator< const kernel::ObjectKnowledge_ABC& > iterator = element.CreateIterator();
+    while( iterator.HasMoreElements() )
+    {
+        //object knowledge infos
+        const kernel::ObjectKnowledge_ABC& knowledge = iterator.NextElement();
+        QStandardItem* nameItem = new QStandardItem( knowledge.GetEntity()? knowledge.GetEntity()->GetName() : QString::number( knowledge.GetEntityId() ) );
+        nameItem->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        knowledgeModel_.appendRow( nameItem );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -161,18 +179,9 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectPerceptions& element )
 {
     if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< ObjectPerceptions >() != &element )
         return;
-    pPerceptionListView_->DeleteTail(
-        pPerceptionListView_->DisplayList( element.detectingAutomats_.begin(), element.detectingAutomats_.end() )
-    );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledgePanel::Display
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Display( const Automat_ABC* agent, Displayer_ABC& displayer, ValuedListItem* )
-{
-    displayer.Display( agent );
+    perceptionModel_.removeRows( 0, perceptionModel_.rowCount() );
+    for( ObjectPerceptions::CIT_Agents it = element.detectingAutomats_.begin(); it != element.detectingAutomats_.end(); ++it )
+        perceptionModel_.appendRow( new QStandardItem( ( *it )->GetName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -328,12 +337,16 @@ void ObjectKnowledgePanel::UpdateExtension( const ObjectKnowledge_ABC& k )
 // Name: ObjectKnowledgePanel::OnSelectionChanged
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
+void ObjectKnowledgePanel::OnSelectionChanged()
 {
-    ValuedListItem* item = (ValuedListItem*)( i );
-    if( item->IsA< const ObjectKnowledge_ABC >() )
+    const QModelIndex index = pKnowledgeListView_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = knowledgeModel_.itemFromIndex( index );
+    if( item && item->data( KnowledgeRole ).isValid() )
     {
-        subSelected_ = item->GetValueNoCheck< const ObjectKnowledge_ABC >();
+        subSelected_ = item->data( KnowledgeRole ).value< const ObjectKnowledge_ABC* >();
+        subSelected_->Activate( controllers_.actions_ );
         if( subSelected_ )
         {
             NotifyUpdated( *subSelected_ );
@@ -359,11 +372,12 @@ void ObjectKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
 // Name: ObjectKnowledgePanel::OnContextMenuRequested
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos )
+void ObjectKnowledgePanel::OnContextMenuRequested( const QPoint & pos )
 {
-    if( i )
-    {
-        ValuedListItem* item = (ValuedListItem*)( i );
-        item->ContextMenu( controllers_.actions_, pos );
-    }
+    const QModelIndex index = pKnowledgeListView_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = knowledgeModel_.itemFromIndex( index );
+    if( item && item->data( KnowledgeRole ).isValid() )
+        item->data( KnowledgeRole ).value< const ObjectKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ) );
 }

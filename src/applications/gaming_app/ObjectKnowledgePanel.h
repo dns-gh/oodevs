@@ -37,9 +37,7 @@ namespace kernel
 
 namespace gui
 {
-    template< typename T > class ListDisplayer;
     class DisplayBuilder;
-    class ValuedListItem;
     class ItemFactory_ABC;
 }
 
@@ -68,6 +66,7 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::ElementObserver_ABC< kernel::TimeLimitedAttribute_ABC >
                            , public kernel::TeamSelectionObserver
                            , public KnowledgeGroupSelectionObserver
+                           , private boost::noncopyable
 {
     Q_OBJECT;
 public:
@@ -77,24 +76,11 @@ public:
     virtual ~ObjectKnowledgePanel();
     //@}
 
-    //! @name Operations
-    //@{
-    void Display( const kernel::ObjectKnowledge_ABC& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
-    void Display( const kernel::Automat_ABC* agent, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( Q3ListViewItem* );
-    void OnContextMenuRequested( Q3ListViewItem* pItem, const QPoint& pos );
-    //@}
-
-private:
-    //! @name Copy / Assignment
-    //@{
-    ObjectKnowledgePanel( const ObjectKnowledgePanel& );
-    ObjectKnowledgePanel& operator=( const ObjectKnowledgePanel& );
+    void OnSelectionChanged();
+    void OnContextMenuRequested( const QPoint & pos );
     //@}
 
 private:
@@ -128,12 +114,14 @@ private:
     kernel::Controllers& controllers_;
 
     kernel::SafePointer< ObjectKnowledges > selected_;
-    gui::ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
+    QTreeView* pKnowledgeListView_;
+    QStandardItemModel knowledgeModel_;
 
     kernel::SafePointer< kernel::ObjectKnowledge_ABC > subSelected_;
     gui::DisplayBuilder* display_;
 
-    gui::ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;
+    QTreeView* pPerceptionListView_;
+    QStandardItemModel perceptionModel_;
     //@}
 };
 

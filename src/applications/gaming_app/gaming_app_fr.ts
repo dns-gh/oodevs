@@ -502,6 +502,17 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>Crowd</name>
+    <message>
+        <source>Concentration - </source>
+        <translation>Concentration - </translation>
+    </message>
+    <message>
+        <source>Flow - </source>
+        <translation>Flux - </translation>
+    </message>
+</context>
+<context>
     <name>DisconnectDialog</name>
     <message>
         <source>Disconnect</source>
@@ -3275,10 +3286,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Progress:</source>
         <translation>Progrès:</translation>
-    </message>
-    <message>
-        <source>Agent</source>
-        <translation>Agent</translation>
     </message>
     <message>
         <source>Associated block:</source>

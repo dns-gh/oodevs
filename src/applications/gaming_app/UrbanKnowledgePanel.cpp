@@ -11,6 +11,7 @@
 #include "UrbanKnowledgePanel.h"
 #include "moc_UrbanKnowledgePanel.cpp"
 
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -21,6 +22,9 @@
 #include "clients_gui/ListDisplayer.h"
 #include "gaming/UrbanKnowledges.h"
 #include "gaming/UrbanPerceptions.h"
+
+Q_DECLARE_METATYPE( const kernel::UrbanKnowledge_ABC* )
+#define KnowledgeRole ( Qt::UserRole + 1 )
 
 using namespace kernel;
 using namespace gui;
@@ -35,12 +39,18 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , selected_    ( controllers )
     , subSelected_ ( controllers )
 {
-    QVBoxLayout* layout = new QVBoxLayout( this );
-    pKnowledgeListView_ = new ListDisplayer< UrbanKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( tools::translate( "Urban", "Known blocks" ) );
+    QWidget* view = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout( view );
+
+    pKnowledgeListView_ = new QTreeView();
+    pKnowledgeListView_->setContextMenuPolicy( Qt::CustomContextMenu );
+    pKnowledgeListView_->setRootIsDecorated( false );
+    pKnowledgeListView_->setEditTriggers( 0 );
+    pKnowledgeListView_->setModel( &knowledgeModel_ );
+    knowledgeModel_.setHorizontalHeaderLabels( QStringList( tools::translate( "Urban", "Known blocks" ) ) );
     layout->addWidget( pKnowledgeListView_ );
 
-    display_ = new DisplayBuilder( this, factory );
+    display_ = new DisplayBuilder( view, factory );
     display_->AddGroup( tr( "Details" ) )
                 .AddLabel( tr( "Identifier:" ) )
                 .AddLabel( tr( "Associated block:" ) )
@@ -48,12 +58,18 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tr( "Progress:" ) )
                 .AddLabel( tr( "Maximum Progress:" ) );
 
-    pPerceptionListView_ = new ListDisplayer< UrbanKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( tr( "Agent" ) );
+    pPerceptionListView_ = new QTreeView();
+    pPerceptionListView_->setRootIsDecorated( false );
+    pPerceptionListView_->setEditTriggers( 0 );
+    pPerceptionListView_->setModel( &perceptionModel_ );
+    perceptionModel_.setHorizontalHeaderLabels( QStringList( tools::translate( "ObjectKnowledgePanel", "Agent" ) ) );
+
     layout->addWidget( pPerceptionListView_ );
 
-    connect( pKnowledgeListView_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
-    connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );
+    connect( pKnowledgeListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
+    connect( pKnowledgeListView_, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( OnContextMenuRequested( const QPoint & ) ) );
+
+    setWidget( view );
 
     controllers_.Register( *this );
 }
@@ -87,21 +103,15 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanKnowledges& element )
     if( ! IsVisible() || selected_ != &element )
         return;
 
-    pKnowledgeListView_->DeleteTail(
-      pKnowledgeListView_->DisplayList( element.CreateIterator() )
-    );
-
-    ValuedListItem* item = FindItem( subSelected_, pKnowledgeListView_->firstChild() );
-    if( item )
+    knowledgeModel_.removeRows( 0, knowledgeModel_.rowCount() );
+    tools::Iterator< const kernel::UrbanKnowledge_ABC& > iterator = element.CreateIterator();
+    while( iterator.HasMoreElements() )
     {
-        pKnowledgeListView_->setSelected( item, true );
-        NotifyUpdated( *subSelected_ );
-    }
-    else
-    {
-        subSelected_ = 0;
-        pKnowledgeListView_->setSelected( pKnowledgeListView_->firstChild(), true );
-        OnSelectionChanged( pKnowledgeListView_->firstChild() );
+        //population knowledge infos
+        const kernel::UrbanKnowledge_ABC& knowledge = iterator.NextElement();
+        QStandardItem* nameItem = new QStandardItem( knowledge.GetEntity()->GetName() );
+        nameItem->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        knowledgeModel_.appendRow( nameItem );
     }
 }
 
@@ -113,9 +123,9 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanPerceptions& element )
 {
      if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< UrbanPerceptions >() != &element )
          return;
-     pPerceptionListView_->DeleteTail(
-         pPerceptionListView_->DisplayList( element.detectingAutomats_.begin(), element.detectingAutomats_.end() )
-     );
+     perceptionModel_.removeRows( 0, perceptionModel_.rowCount() );
+     for( UrbanPerceptions::CIT_Agents it = element.detectingAutomats_.begin(); it != element.detectingAutomats_.end(); ++it )
+         perceptionModel_.appendRow( new QStandardItem( ( *it )->GetName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,25 +138,6 @@ void UrbanKnowledgePanel::NotifyUpdated( const kernel::UrbanKnowledge_ABC& eleme
         return;
     display_->Hide();
     element.Display( *display_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanKnowledgePanel::Display
-// Created: MGD 2009-12-10
-// -----------------------------------------------------------------------------
-void UrbanKnowledgePanel::Display( const kernel::UrbanKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
-{
-    item->SetValue( &k );
-    k.DisplayInList( displayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanKnowledgePanel::Display
-// Created: MGD 2009-12-10
-// -----------------------------------------------------------------------------
-void UrbanKnowledgePanel::Display( const Automat_ABC* agent, Displayer_ABC& displayer, ValuedListItem* )
-{
-    displayer.Display( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,13 +178,19 @@ void UrbanKnowledgePanel::Select( const kernel::KnowledgeGroup_ABC* group )
 // Name: UrbanKnowledgePanel::OnSelectionChanged
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-void UrbanKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
+void UrbanKnowledgePanel::OnSelectionChanged()
 {
-    ValuedListItem* item = (ValuedListItem*)( i );
-    if( !item || !item->IsA< const UrbanKnowledge_ABC >() )
-        subSelected_ = 0;
+    const QModelIndex index = pKnowledgeListView_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = knowledgeModel_.itemFromIndex( index );
+    if( item && item->data( KnowledgeRole ).isValid() )
+    {
+        subSelected_ = item->data( KnowledgeRole ).value< const UrbanKnowledge_ABC* >();
+        subSelected_->GetEntity()->Activate( controllers_.actions_ );
+    }
     else
-        subSelected_ = item->GetValueNoCheck< const UrbanKnowledge_ABC >();
+        subSelected_ = 0;
 
     if( subSelected_ )
     {
@@ -210,11 +207,12 @@ void UrbanKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
 // Name: UrbanKnowledgePanel::OnContextMenuRequested
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-void UrbanKnowledgePanel::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos )
+void UrbanKnowledgePanel::OnContextMenuRequested( const QPoint& pos )
 {
-    if( i )
-    {
-        ValuedListItem* item = (ValuedListItem*)( i );
-        item->ContextMenu( controllers_.actions_, pos );
-    }
+    const QModelIndex index = pKnowledgeListView_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = knowledgeModel_.itemFromIndex( index );
+    if( item && item->data( KnowledgeRole ).isValid() )
+        item->data( KnowledgeRole ).value< const UrbanKnowledge_ABC* >()->ContextMenu( controllers_.actions_, pKnowledgeListView_->viewport()->mapToGlobal( pos ) );
 }
