@@ -9,6 +9,9 @@ rootnode
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
+    done = function( self ) -- from moveTo skill
+        -- $$$ NOTHING
+    end,
     elementFailed = function( self, params, additionalParams )
         self.report = additionalParams.reason
         if additionalParams.reason == eRC_BUNonTraficable then

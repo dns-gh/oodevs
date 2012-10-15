@@ -8,6 +8,10 @@ rootnode
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks
     -- --------------------------------------------------------------------------------
+    done = function( self ) -- from moveTo skill
+        -- $$$ NOTHING
+    end,
+
     elementFailed = function( self, params, additionalParams )
         self.report = additionalParams.reason
         self.nextTargetIndex = self.nextTargetIndex + 1
@@ -63,7 +67,7 @@ rootnode
         self.nextTargetIndex = 1
         self.report = nil
         self.toImprove = nil
-        self.alltry = #self.params.entities == 0
+        self.alltry = #self.params.entities == 0 or false
         self.objectsToActivate = {}
         myself.obstacleToActivate = false
     end,
