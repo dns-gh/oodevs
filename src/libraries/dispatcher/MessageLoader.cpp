@@ -16,6 +16,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
 #include "protocol/ReplaySenders.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
 
@@ -205,7 +206,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
     }
     catch( ... )
     {
-        // NOTHING
+        MT_LOG_ERROR_MSG( "Exception caught while filling time table." );
     }
 }
 
