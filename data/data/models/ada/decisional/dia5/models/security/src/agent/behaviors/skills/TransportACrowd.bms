@@ -6,7 +6,7 @@ rootnode
 {
     connections = 
     {
-        skill.links.reach, 
+        skill.links.moveTo, 
         skill.nodes.LoadCrowdConcentration ,
         skill.nodes.UnloadCrowdConcentration 
     },
@@ -68,7 +68,7 @@ rootnode
 
         if not self.arrived then -- agent is moving toward loading position or target position
             -- Try to load all issued entities
-            Activate( skill.links.reach,1, { destination = self.currentDestination } )
+            Activate( skill.links.moveTo,1, { destination = self.currentDestination } )
         else -- max entities are loaded, unload them on the destination.
             if self.loadConcentration then -- once arrived on loading position, 
                 Activate( skill.nodes.LoadCrowdConcentration, 1, { 

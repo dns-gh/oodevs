@@ -8,7 +8,6 @@ local result =
         local fuseau = companyTask:getReachable( params )
         if fuseau then
           local point = CreateKnowledge( world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source))
-          DEC_Trace( "Hey!! "..tostringr( point ) )
           return { objective = point, fuseau = fuseau }
         end
         return nil --use by keepBest in Lead skill

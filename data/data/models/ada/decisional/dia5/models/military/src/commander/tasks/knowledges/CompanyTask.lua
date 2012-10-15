@@ -9,7 +9,7 @@ return
     
     getMeetingPoint = function( self, params )
         if params.meetingPoint and params.meetingPoint ~= NIL then
-            return { integration.randomPositionInCircle( params.meetingPoint, 100 ) }  -- Need to send list of elements
+            return { integration.randomPositionInCircle( params.meetingPoint, 50 ) }  -- Need to send list of elements
         end
         return NIL
     end,
