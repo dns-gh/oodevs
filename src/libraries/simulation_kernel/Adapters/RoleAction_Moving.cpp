@@ -25,7 +25,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_PathPoint.h"
 
@@ -319,24 +318,6 @@ bool RoleAction_Moving::HasResources()
     owner_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
 
     return request->AllChanged();
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::SendRC
-// Created: NLD 2005-10-05
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::SendRC( int nReportID ) const
-{
-    MIL_Report::PostEvent( owner_, static_cast< MIL_Report::E_EngineReport >( nReportID ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::SendRC
-// Created: CMA 2012-02-02
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::SendRC( int nReportID, const std::string& name ) const
-{
-    MIL_Report::PostEvent( owner_, static_cast< MIL_Report::E_EngineReport >( nReportID ), name );
 }
 
 // -----------------------------------------------------------------------------
