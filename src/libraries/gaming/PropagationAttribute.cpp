@@ -85,7 +85,7 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
         {
             tiles_.clear();
             T_Files files = it->second;
-            for( int i = 0; i < files.size(); ++i )
+            for( std::size_t i = 0; i < files.size(); ++i )
             {
                 bfs::path file( it->second.at( i ) );
                 bfs::path path( path_ / file.filename() );
