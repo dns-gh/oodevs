@@ -205,16 +205,12 @@ double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environm
 {
     if( !object().HasMobilityInfluence() )
         return std::numeric_limits< double >::max();
-
     if( !object().IsTrafficable( owner_ ) )
-        return 0.;
-
+        return 0;
     moving::SpeedComputerStrategy strategy( false, true, object );
     double rObjectSpeed = ComputeSpeed( owner_, strategy );
-
     const double rCurrentMaxSpeed = GetMaxSpeed();
     const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
-
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
     rObjectSpeed *= rSpeedModificator_;
     return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, owner_ );
