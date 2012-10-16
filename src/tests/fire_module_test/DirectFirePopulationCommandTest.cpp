@@ -30,7 +30,8 @@ namespace
         ~FireFixture()
         {
             ExpectCallback( 5 );
-            ExpectEvent( "direct fire population", sword::test::MakeModel( "entity", 42 )( "running", false ) );
+            ExpectEvent( "direct fire population", sword::test::MakeModel( "entity/identifier", 42 )
+                                                                         ( "running", false ) );
         }
         void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
         {
@@ -165,11 +166,12 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_hits
                                           ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
                                           ( "paused", false ) );
     ExpectEvent( "direct fire population",
-        sword::test::MakeModel( "entity", 42 )
-            ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
-            ( "dotation", ammo_1 )
-            ( "hits", 2 )
-            ( "running", true ) );
+        sword::test::MakeModel( "entity/identifier", 42 )
+                              ( "entity/data", "data" )
+                              ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
+                              ( "dotation", ammo_1 )
+                              ( "hits", 2 )
+                              ( "running", true ) );
     ExecuteCommands();
 }
 
@@ -189,12 +191,12 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_no_h
             ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
             ( "paused", false ) );
     ExpectEvent( "direct fire population",
-        sword::test::MakeModel( "entity", 42 )
-            ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
-            ( "dotation", ammo_1 )
-            ( "hits", 2 )
-            ( "running", true ) );
-
+        sword::test::MakeModel( "entity/identifier", 42 )
+                              ( "entity/data", "data" )
+                              ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
+                              ( "dotation", ammo_1 )
+                              ( "hits", 2 )
+                              ( "running", true ) );
     ExpectCallback( 4 );
     StartCommand( "direct fire population",
         core::MakeModel( "identifier", 42 )
@@ -207,5 +209,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_no_h
     ExecuteCommands();
 
     ExpectCallback( 5 );
-    ExpectEvent( "direct fire population", sword::test::MakeModel( "entity", 42 )( "running", false ) );
+    ExpectEvent( "direct fire population", sword::test::MakeModel( "entity/identifier", 42 )
+                                                                 ( "running", false ) );
 }

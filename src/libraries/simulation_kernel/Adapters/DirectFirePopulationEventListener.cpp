@@ -30,10 +30,8 @@ namespace
 // Name: DirectFirePopulationEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
-DirectFirePopulationEventListener::DirectFirePopulationEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver )
-    : model_   ( model )
-    , facade_  ( facade )
-    , resolver_( resolver )
+DirectFirePopulationEventListener::DirectFirePopulationEventListener( core::Facade& facade )
+    : facade_( facade )
 {
     facade.Register( event, *this );
 }
@@ -78,7 +76,7 @@ void DirectFirePopulationEventListener::Notify( const core::Model& event )
 // -----------------------------------------------------------------------------
 void DirectFirePopulationEventListener::Update( const core::Model& event )
 {
-    MIL_AgentPion& pion = resolver_.Get( static_cast< unsigned int >( event[ "entity" ] ) );
+    MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
     MIL_PopulationElement_ABC& element = event[ "element/data" ].GetUserData< MIL_PopulationElement_ABC >();
     const std::string& dotation = event[ "dotation" ];
     const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( dotation );
@@ -87,7 +85,7 @@ void DirectFirePopulationEventListener::Update( const core::Model& event )
         MT_LOG_ERROR_MSG( "Unknown dotation category in DirectFirePopulationEventListener : " << dotation );
         return;
     }
-    PHY_FireResults_Pion*& results = results_[ event[ "entity" ] ]; // $$$$ MCO 2012-04-26: use command id instead ? can a unit have several direct fire running in parallel ?
+    PHY_FireResults_Pion*& results = results_[ event[ "entity/identifier" ] ]; // $$$$ MCO 2012-04-26: use command id instead ? can a unit have several direct fire running in parallel ?
     if( ! results )
     {
         results = new PHY_FireResults_Pion( pion, element );
@@ -103,7 +101,7 @@ void DirectFirePopulationEventListener::Update( const core::Model& event )
 // -----------------------------------------------------------------------------
 void DirectFirePopulationEventListener::Remove( const core::Model& event )
 {
-    IT_Results it = results_.find( event[ "entity" ] );
+    IT_Results it = results_.find( event[ "entity/identifier" ] );
     if( it != results_.end() )
     {
         it->second->DecRef();

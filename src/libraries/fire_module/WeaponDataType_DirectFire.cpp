@@ -277,7 +277,8 @@ void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper:
         if( GET_HOOK( GetFireRandomNumber )( 0, 1 ) < ph )
             ++hits;
     wrapper::Event event( "direct fire population" );
-    event[ "entity" ] = firer[ "identifier" ];
+    event[ "entity/identifier" ] = firer[ "identifier" ];
+    event[ "entity/data" ] = firer[ "data" ];
     event[ "element" ] = element;
     event[ "hits" ] = hits;
     event[ "dotation" ] = dotation_.GetName();

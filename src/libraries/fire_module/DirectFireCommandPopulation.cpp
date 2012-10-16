@@ -35,7 +35,7 @@ DirectFireCommandPopulation::~DirectFireCommandPopulation()
 {
     PostCallback( role_.GetFinalReturnCode() );
     wrapper::Event event( "direct fire population" );
-    event[ "entity" ] = identifier_;
+    event[ "entity/identifier" ] = identifier_;
     event[ "running" ] = false;
     event.Post();
 }

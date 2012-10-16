@@ -206,15 +206,15 @@ Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
 // -----------------------------------------------------------------------------
 Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
             std::auto_ptr< core::Model > model, unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects )
-    : agents_           ( agents )
-    , populations_      ( populations )
-    , gcPause_          ( gcPause )
-    , gcMult_           ( gcMult )
-    , dangerousObjects_ ( dangerousObjects )
-    , modules_          ( configuration )
-    , logger_           ( new CoreLogger() )
-    , model_            ( model )
-    , facade_           ( new core::Facade( modules_, *logger_, *model_ ) )
+    : agents_          ( agents )
+    , populations_     ( populations )
+    , gcPause_         ( gcPause )
+    , gcMult_          ( gcMult )
+    , dangerousObjects_( dangerousObjects )
+    , modules_         ( configuration )
+    , logger_          ( new CoreLogger() )
+    , model_           ( model )
+    , facade_          ( new core::Facade( modules_, *logger_, *model_ ) )
 {
     Initialize();
 }
@@ -247,7 +247,7 @@ void Sink::Initialize()
     listeners_.push_back( new ExternalPerceptionEventListener( *facade_ ) );
     listeners_.push_back( new AlatMonitoringEventListener( *facade_ ) );
     listeners_.push_back( new DirectFirePopulationAttackEventListener( *facade_ ) );
-    listeners_.push_back( new DirectFirePopulationEventListener( *model_, *facade_, agents_ ) );
+    listeners_.push_back( new DirectFirePopulationEventListener( *facade_ ) );
     MovementHooks::Initialize( *facade_ );
     RolePion_Decision::Initialize( *facade_ );
     FireHooks::Initialize( *facade_ );
