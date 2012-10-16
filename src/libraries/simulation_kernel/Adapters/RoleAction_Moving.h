@@ -54,7 +54,8 @@ public:
     virtual void Clean();
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
-    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
+
+    void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
     //@}
 
     //! @name Accessors
