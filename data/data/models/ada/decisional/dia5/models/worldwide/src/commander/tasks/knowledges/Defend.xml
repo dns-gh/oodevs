@@ -51,7 +51,15 @@
             </return>
         </method>
         <method name="getWithImprovement">
-            <description>Return the value of the &quot;withImprovement&quot; parameter.</description>
+            <description>Returns the value of the &quot;withImprovement&quot; parameter.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getWithReinforcement">
+            <description>In case of obstacles contruction, returns if the company need reinforcement. This implementation returns 'false'.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

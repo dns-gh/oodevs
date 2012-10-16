@@ -65,5 +65,8 @@ return
 
     getWithImprovement = function( self, params )
         return params.withImprovement or false
+    end,
+    getWithReinforcement = function( self, params )
+        return false
     end
 }
