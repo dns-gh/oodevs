@@ -52,7 +52,7 @@ PerceptionRecoPointReco::PerceptionRecoPointReco( const wrapper::View& perceptio
                 effect = true;
                 effect.Post();
                 wrapper::Event event( "perception callback" );
-                event[ "entity" ] = static_cast< std::size_t >( entity[ "identifier" ] );
+                event[ "entity/data" ] = entity[ "data" ];
                 event[ "perception" ] = static_cast< std::size_t >( perception[ "perception-id" ] );
                 event.Post();
                 bProcessed_ = true;

@@ -237,7 +237,7 @@ void Sink::Initialize()
     listeners_.push_back( new ReportEventListener( *facade_ ) );
     listeners_.push_back( new MovementReportNameEventListener( *facade_ ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "movement callback" ) );
-    listeners_.push_back( new PerceptionCallbackEventListener( *model_, *facade_ ) );
+    listeners_.push_back( new PerceptionCallbackEventListener( *facade_ ) );
     listeners_.push_back( new MovementEventListener( *model_, *facade_ ) );
     listeners_.push_back( new MovementReportEventListener( *model_, *facade_ ) );
     listeners_.push_back( new DirectFirePionEventListener( *facade_ ) );

@@ -25,9 +25,8 @@ namespace
 // Name: PerceptionCallbackEventListener constructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
-PerceptionCallbackEventListener::PerceptionCallbackEventListener( const core::Model& model, core::Facade& facade )
-    : model_ ( model )
-    , facade_( facade )
+PerceptionCallbackEventListener::PerceptionCallbackEventListener( core::Facade& facade )
+    : facade_( facade )
 {
     facade.Register( event, *this );
 }
@@ -47,7 +46,6 @@ PerceptionCallbackEventListener::~PerceptionCallbackEventListener()
 // -----------------------------------------------------------------------------
 void PerceptionCallbackEventListener::Notify( const core::Model& callback )
 {
-    const unsigned int entity = callback[ "entity" ];
-    DEC_Decision_ABC& role = model_[ "entities" ][ entity ][ "data" ].GetUserData< MIL_AgentPion >().GetRole< DEC_Decision_ABC >();
+    DEC_Decision_ABC& role = callback[ "entity/data" ].GetUserData< MIL_AgentPion >().GetRole< DEC_Decision_ABC >();
     role.CallbackPerception( callback[ "perception" ] );
 }

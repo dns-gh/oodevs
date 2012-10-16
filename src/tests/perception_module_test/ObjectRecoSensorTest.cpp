@@ -34,7 +34,7 @@ BOOST_FIXTURE_TEST_CASE( perception_reco_object_sensor_identifies_all_objects_in
     MOCK_EXPECT( GetObjectListWithinCircle ).once().with( mock::any, mock::any, growthSpeed, mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _4, object, _5 ) );
     MOCK_EXPECT( IsObjectIntersectingLocalization ).once().with( mock::any, object ).returns( true );
     ExpectEffect( perception[ "radius" ], sword::test::MakeModel( growthSpeed ) );
-    ExpectEvent( "perception callback", sword::test::MakeModel( "entity", identifier )
+    ExpectEvent( "perception callback", sword::test::MakeModel( "entity/data", 1337 )
                                                               ( "perception", perceptionId ) );
     ExpectNotifications( "objects", sword::test::MakeModel()
                                     [ sword::test::MakeModel( "target/data", 666 )

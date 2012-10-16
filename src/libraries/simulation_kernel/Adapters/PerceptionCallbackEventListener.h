@@ -14,7 +14,6 @@
 
 namespace core
 {
-    class Model;
     class Facade;
 }
 
@@ -31,7 +30,7 @@ class PerceptionCallbackEventListener : public core::EventListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionCallbackEventListener( const core::Model& model, core::Facade& facade );
+    explicit PerceptionCallbackEventListener( core::Facade& facade );
     virtual ~PerceptionCallbackEventListener();
     //@}
 
@@ -43,7 +42,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const core::Model& model_;
     core::Facade& facade_;
     //@}
 };
