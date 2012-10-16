@@ -52,8 +52,6 @@ public:
 
     virtual void SetSpeedModificator( double rFactor ) = 0;
     virtual void SetMaxSpeedModificator( double rFactor ) = 0;
-
-    virtual MT_Vector2D ExtrapolatePosition( const double rTime, const bool bBoundOnPath ) const = 0;
     //@}
 
 private:

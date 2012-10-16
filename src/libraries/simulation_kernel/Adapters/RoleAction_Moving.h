@@ -87,11 +87,6 @@ public:
     virtual const MT_Vector2D& GetDirection() const;
     //@}
 
-    //! @name Tools
-    //@{
-    virtual MT_Vector2D ExtrapolatePosition( const double rTime, const bool bBoundOnPath ) const;
-    //@}
-
     //! @name Notifications
     //@{
     virtual void NotifyMovingOnPathPoint( const MT_Vector2D& point );

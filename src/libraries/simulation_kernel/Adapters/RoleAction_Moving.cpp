@@ -215,15 +215,6 @@ double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environm
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::ExtrapolatePosition
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-MT_Vector2D RoleAction_Moving::ExtrapolatePosition( const double /*rTime*/, const bool /*bBoundOnPath*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::GetPosition
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
