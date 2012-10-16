@@ -73,7 +73,7 @@ Speeds::~Speeds()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Speeds::Initialize
+// Name: Speeds::Initialize
 // Created: JSR 2012-02-02
 // -----------------------------------------------------------------------------
 void Speeds::Initialize( const wrapper::View& entity )
@@ -249,7 +249,7 @@ bool Speeds::IsPassable( const TerrainData& data ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Speeds::HasConstructionSpeeds
+// Name: Speeds::HasConstructionSpeeds
 // Created: JSR 2012-02-07
 // -----------------------------------------------------------------------------
 bool Speeds::HasConstructionSpeeds() const
@@ -258,7 +258,7 @@ bool Speeds::HasConstructionSpeeds() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Speeds::GetConstructionSpeed
+// Name: Speeds::GetConstructionSpeed
 // Created: JSR 2012-02-03
 // -----------------------------------------------------------------------------
 double Speeds::GetConstructionSpeed( const TerrainData& data ) const
