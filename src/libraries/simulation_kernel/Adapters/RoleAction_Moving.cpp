@@ -119,7 +119,6 @@ double RoleAction_Moving::GetMaxSlope() const
     std::auto_ptr< moving::MaxSlopeComputer_ABC > computer =
             owner_.GetAlgorithms().moveComputerFactory_->CreateMaxSlopeComputer();
     owner_.Execute< OnComponentComputer_ABC >( *computer );
-
     return computer->GetMaxSlope();
 }
 
@@ -236,7 +235,6 @@ bool RoleAction_Moving::CanMove() const
 {
     std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
     owner_.Execute( *moveComputer );
-
     return moveComputer->CanMoveOverride() || moveComputer->CanMove();
 }
 
@@ -248,14 +246,11 @@ bool RoleAction_Moving::HasResources()
 {
     std::auto_ptr< moving::MoveComputer_ABC > moveComputer = owner_.GetAlgorithms().moveComputerFactory_->CreateMoveComputer();
     owner_.Execute( *moveComputer );
-
     if( moveComputer->CanMoveOverride() )
         return true;
-
     std::auto_ptr< dotation::ConsumptionModeChangeRequest_ABC > request =
             owner_.GetAlgorithms().consumptionComputerFactory_->CreateConsumptionModeChangeRequest(PHY_ConsumptionType::moving_);
     owner_.Apply( &dotation::ConsumptionChangeRequestHandler_ABC::ChangeConsumptionMode, *request ); // automatic rollback
-
     return request->AllChanged();
 }
 
@@ -265,7 +260,6 @@ bool RoleAction_Moving::HasResources()
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::Update( bool /*bIsDead*/ )
 {
-    // NOTHING
     if (!bHasMove_)
         rSpeed_ = 0.;
 }
