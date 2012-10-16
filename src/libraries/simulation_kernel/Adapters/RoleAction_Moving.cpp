@@ -77,8 +77,7 @@ void RoleAction_Moving::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::ApplyMaxSpeedModificators( double rSpeed ) const
 {
-    rSpeed *= rMaxSpeedModificator_;
-    return rSpeed;
+    return rSpeed * rMaxSpeedModificator_;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,8 +86,7 @@ double RoleAction_Moving::ApplyMaxSpeedModificators( double rSpeed ) const
 // -----------------------------------------------------------------------------
 double RoleAction_Moving::ApplySpeedModificators( double rSpeed ) const
 {
-    rSpeed *= rSpeedModificator_;
-    return rSpeed;
+    return rSpeed * rSpeedModificator_;
 }
 
 // -----------------------------------------------------------------------------
