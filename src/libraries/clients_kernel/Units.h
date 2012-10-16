@@ -12,6 +12,7 @@
 
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
+#include <QtGui/qapplication.h>
 #pragma warning( pop )
 
 namespace kernel
@@ -25,9 +26,14 @@ namespace kernel
 class Unit
 {
 public:
-    explicit Unit( const QString& symbol, double minValue, double maxValue, unsigned short decimal );
+    explicit Unit( const QString& symbol, const QString& dummy, double minValue, double maxValue, unsigned short decimal );
     ~Unit() {}
-    const QString& AsString() const { return symbol_; }
+    const QString& AsString() const
+    {
+        if( qApp && translated_.isEmpty() )
+            translated_ = qApp->translate( "Units", symbol_ );
+        return translated_;
+    }
     const double GetMinValue() const { return minValue_; }
     const double GetMaxValue() const { return maxValue_; }
     const unsigned short GetDecimal() const { return decimal_; }
@@ -35,6 +41,7 @@ public:
     bool operator==( const Unit& other ) const { return symbol_ == other.symbol_; }
 private:
     QString         symbol_;
+    mutable QString translated_;
     double          minValue_;
     double          maxValue_;
     unsigned short  decimal_;
