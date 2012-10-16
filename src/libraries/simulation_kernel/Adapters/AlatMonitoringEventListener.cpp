@@ -26,10 +26,9 @@ namespace
 // Name: AlatMonitoringEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
-AlatMonitoringEventListener::AlatMonitoringEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver )
-    : model_   ( model )
-    , facade_  ( facade )
-    , resolver_( resolver )
+AlatMonitoringEventListener::AlatMonitoringEventListener( const core::Model& model, core::Facade& facade )
+    : model_ ( model )
+    , facade_( facade )
 {
     facade.Register( event, *this );
 }
@@ -49,5 +48,5 @@ AlatMonitoringEventListener::~AlatMonitoringEventListener()
 // -----------------------------------------------------------------------------
 void AlatMonitoringEventListener::Notify( const core::Model& event )
 {
-    resolver_.Get( static_cast< unsigned int >( event[ "entity" ] ) ).GetKnowledge().GetKsPerception().MakePerceptionsAvailableTimed();
+    event[ "entity/data" ].GetUserData< MIL_AgentPion >().GetKnowledge().GetKsPerception().MakePerceptionsAvailableTimed();
 }

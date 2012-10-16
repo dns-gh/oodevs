@@ -65,7 +65,7 @@ void ToggleAlatMonitoringCommand::Execute( const wrapper::View& parameters, cons
     {
         wrapper::Remove( perception[ perceptionId ] ).Post();
         wrapper::Event event( "alat monitoring disabled" );
-        event[ "entity" ] = identifier;
+        event[ "entity/data" ] = model[ "entities" ][ identifier ][ "data" ];
         event.Post();
     }
 }

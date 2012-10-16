@@ -71,7 +71,7 @@ void DisableAllPerceptionsCommand::Execute( const wrapper::View& parameters, con
     RemoveElements( perceptions[ "localized-radars/tapping" ] );
     RemoveElements( perceptions[ "localized-radars/tapping-radar" ] );
     wrapper::Event event( "alat monitoring disabled" );
-    event[ "entity" ] = identifier;
+    event[ "entity/data" ] = model[ "entities" ][ identifier ][ "data" ];
     event.Post();
 }
 

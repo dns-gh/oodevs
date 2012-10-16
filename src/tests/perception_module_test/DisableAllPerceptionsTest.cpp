@@ -35,7 +35,7 @@ BOOST_FIXTURE_TEST_CASE( disable_all_perceptions_command_removes_localizations_a
     CheckDeactivated( perceptions[ "radars/tapping/activated" ] );
     CheckDeactivated( perceptions[ "radars/tapping-radar/activated" ] );
     CheckElementRemoved( perceptions[ "alat/reco" ] );
-    ExpectEvent( "alat monitoring disabled", sword::test::MakeModel( "entity", identifier ) );
+    ExpectEvent( "alat monitoring disabled", sword::test::MakeModel( "entity/data", 1337 ) );
     CheckElementRemoved( perceptions[ "alat/monitoring" ] );
     CheckElementRemoved( perceptions[ "object-detection" ] );
     CheckElementRemoved( perceptions[ "urban" ] );
