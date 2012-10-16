@@ -11,7 +11,7 @@ The agent moves to decontamination site, and when it is reached, ask for deconta
         </parameter>
     </parameters>
     <links>
-        <link name="moveTo" skill="agent.behaviors.skills.actions.MoveTo">
+        <link name="moveTo" skill="behaviors.skills.MoveAlong">
             <description>To enact the decision to move to the decontamination site object.</description>
         </link>
         <link name="getDecontaminated" skill="agent.behaviors.skills.actions.GetDecontaminated">

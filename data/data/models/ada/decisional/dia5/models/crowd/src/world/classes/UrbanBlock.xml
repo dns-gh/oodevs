@@ -28,16 +28,6 @@ This implementation  returns 'true' if the structural state is equal to 0%. This
                 </type>
             </return>
         </method>
-        <method name="isReached" abstract="false">
-            <description>Returns true if this object has a proximity of 100% and should be considered as being reached by the agent, false otherwise.&#xD;
-&#xD;
-This implementation returns 'true' if at least one  flow of the crowd has reached the border of the urban block.</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="damageIt" abstract="false">
             <description>To damage this element. Returns 'true' upon action completion.&#xD;
 The quatity of damage is here used as a percentage.</description>
@@ -47,6 +37,16 @@ The quatity of damage is here used as a percentage.</description>
                     <simple name="numeric"/>
                 </type>
             </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeDamaged" abstract="false">
+            <description>Return 'true' if this element can be damaged by the crowd agent, 'false' otherwise.&#xD;
+&#xD;
+This implemenation returns 'true' if the head of the crowd agent has reached this element.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

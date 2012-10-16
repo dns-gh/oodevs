@@ -1,14 +1,11 @@
 -- -------------------------------------------------------------------------------- 
--- Overrided methods
+-- Specific methods
 -- --------------------------------------------------------------------------------
-method "isReached" (
+method "canBeAttacked" (
     function( self )
         return integration.unitIsInCrowd( self )
     end )
 
--- -------------------------------------------------------------------------------- 
--- Specific methods
--- --------------------------------------------------------------------------------
 method "attackIt" ( masalife.brain.integration.startStopAction(
 { 
     start = function( self )

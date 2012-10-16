@@ -41,7 +41,7 @@ Returns true once the agent has reached the end-point of the path (please note t
             </return>
         </method>
         <method name="isReached" abstract="false">
-            <description>Returns true if this object has a proximity of 100% and should be considered as being reached by the agent, false otherwise.</description>
+            <description>Returns 'true' if the Crowd has entirely reached this element (the crowd has no more flow, and it is not moving anymore), 'false' otherwise.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

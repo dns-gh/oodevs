@@ -17,7 +17,7 @@ The demonstration is represented by an interaction with nearby agents which inte
         <class name="world.classes.CrowdBody"/>
     </body-type>
     <links>
-        <link name="moveTo" skill="agent.behaviors.skills.actions.MoveTo">
+        <link name="moveTo" skill="behaviors.skills.MoveAlong">
             <description>To enact the decision of moving toward the destination.</description>
         </link>
         <link name="demonstrate" skill="behaviors.skills.actions.Demonstrate">

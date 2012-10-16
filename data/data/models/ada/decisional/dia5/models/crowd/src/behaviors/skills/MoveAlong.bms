@@ -7,13 +7,10 @@ rootnode
     connections = { skill.links.moveTo },
 
     -- -------------------------------------------------------------------------------- 
-    -- Once first element is reached, get the next one by incrementing iterator.
+    -- Slots
     -- --------------------------------------------------------------------------------
-    done = function( self, params )
-        self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.wayPoints then
-            Feedback( self.feedbacks.done )
-        end
+    done = function( self, params ) -- call by moveTo skill
+        -- $$$ NOTHING
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -28,6 +25,18 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        Activate( skill.links.moveTo, 1, { destination  = self.params.wayPoints[ self.nextTargetIndex ] } )
+
+        -- No more wayPoints to visit
+        if self.nextTargetIndex > #self.params.wayPoints then
+            Feedback( self.feedbacks.done )
+            return
+        end
+
+        -- Move to current wayPoint. Once it is reached, get the next one and so on.
+        if not self.params.wayPoints[ self.nextTargetIndex ]:isReached() then
+            Activate( skill.links.moveTo, 1, { destination  = self.params.wayPoints[ self.nextTargetIndex ] } )
+        else -- objective is reached (see implementation of "isReached" methods in world representation classes)
+            self.nextTargetIndex = self.nextTargetIndex + 1
+        end
     end
 }

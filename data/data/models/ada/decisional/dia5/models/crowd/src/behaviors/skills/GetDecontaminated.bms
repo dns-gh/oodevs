@@ -32,6 +32,6 @@ rootnode
             Activate( skill.links.getDecontaminated, 1, 
                         { decontaminationPlot = self.params.decontaminationPlot } )
         end
-        Activate( skill.links.moveTo, 1, { destination = self.params.decontaminationPlot } )
+        Activate( skill.links.moveTo, 1, { wayPoints = { self.params.decontaminationPlot } } )
     end
 }

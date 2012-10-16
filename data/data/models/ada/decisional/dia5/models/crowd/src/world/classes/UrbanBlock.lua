@@ -1,7 +1,7 @@
 -- -------------------------------------------------------------------------------- 
--- Destination (overrided method)
+-- Installation
 -- --------------------------------------------------------------------------------
-method "isReached" (
+method "canBeDamaged" (
     function( self )
         return integration.hasReachUrbanBlock( self )
     end )

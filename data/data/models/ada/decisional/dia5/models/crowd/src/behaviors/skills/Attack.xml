@@ -15,7 +15,7 @@ This skill failed if the crowd agent is under control. It is done if all the ele
         <class name="world.classes.CrowdBody"/>
     </body-type>
     <links>
-        <link name="moveTo" skill="agent.behaviors.skills.actions.MoveTo">
+        <link name="moveTo" skill="behaviors.skills.MoveAlong">
             <description>To enact the decision to reach the target unit.</description>
         </link>
         <link name="attack" skill="behaviors.skills.actions.Attack">

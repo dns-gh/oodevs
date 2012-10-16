@@ -29,7 +29,7 @@ method "isAccessible" (
 
 method "isReached" (
     function( self )
-        return self:getProximity( meKnowledge ) == 100
+        return integration.hasEntirelyReachedDestination( self )
     end )
 
 return{}

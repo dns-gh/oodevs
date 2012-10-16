@@ -12,10 +12,12 @@
     <stages>
         <stage label="moving to destination" disable-when-done="true">
             <skills>
-                <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
-                    <parameter name="destination">
+                <skill name="behaviors.skills.MoveAlong" main="true">
+                    <parameter name="wayPoints">
                         <value>
-                            <parameter>destination</parameter>
+                            <list>
+                                <parameter>destination</parameter>
+                            </list>
                         </value>
                     </parameter>
                 </skill>

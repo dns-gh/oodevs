@@ -27,10 +27,8 @@ The attack action is considered as completed when the target unit is no more ope
                 </type>
             </return>
         </method>
-        <method name="isReached" abstract="false">
-            <description>Returns true if this object has a proximity of 100% and should be considered as being reached by the agent, false otherwise.&#xD;
-&#xD;
-This implementation returns 'true' once this element (the unit) is within the crowd agent.</description>
+        <method name="canBeAttacked">
+            <description>Returns 'true' once the unit touches the crowd agent, 'false' otherwise.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

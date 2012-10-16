@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="world.interfaces.Installation" source-version="1.0.0">
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="world.interfaces.Installation" source-version="1.0.0" extends="agent.world.Destination">
     <description>Any simulation object that can be damaged by the crowd agent.</description>
     <methods>
         <method name="damageIt">
@@ -18,6 +18,14 @@
         </method>
         <method name="isDamaged">
             <description>Returns 'true' if this element is damaged, 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeDamaged">
+            <description>Return 'true' if this element can be damaged by the crowd agent, 'false' otherwise.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

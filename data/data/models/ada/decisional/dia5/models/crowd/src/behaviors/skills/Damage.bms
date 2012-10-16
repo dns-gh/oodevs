@@ -12,9 +12,7 @@ rootnode
     -- Feedbacks 'done' function is called if objective is reached
     -- --------------------------------------------------------------------------------
     done = function( self )
-        if self.damageDone then
-            Feedback( self.feedbacks.done ) -- skill ends only if the crowd has entierly reached the objective 
-        end
+        self.arrived = true
     end,
     damageActionCompleted = function( self ) -- from MoveTo
         self.damageDone = true
@@ -26,6 +24,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self, params )
         self.damageDone = false
+        self.arrived    = false
         meKnowledge:adoptAgressiveAttitude()
     end,
 
@@ -35,16 +34,24 @@ rootnode
     activate = function( self )
         local Activate = Activate
 
+        -- Sent the feedback only if the entire crowd is arrived and the target is destroyed.
+        if self.arrived and self.damageDone then 
+            Feedback( self.feedbacks.done )
+        end
+
         -- Crowd is under control, cannot commit agression
         if not meKnowledge:canDamage( self.params.installation ) then
             meKnowledge:sendReport( eRC_AgressionImpossible )
             Feedback( self.feedbacks.failed )
         end
 
-        if self.params.installation:isReached() then
+        -- Once installation can be damaged, damage it.
+        if self.params.installation:canBeDamaged() then
             Activate( skill.links.damage, 1, 
               { installation = self.params.installation, quantityOfDamage = self.params.quantityOfDamage } )
         end
-        Activate( skill.links.moveTo, 1, { destination = self.params.installation } )
+        -- Move to target position (permanently)
+        Activate( skill.links.moveTo, 1, { wayPoints = { self.params.installation } } )
+        self.arrived = false
     end
 }

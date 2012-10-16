@@ -10,7 +10,7 @@ rootnode
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
-    done = function( self ) -- call by "moveTo" action skill.
+    done = function( self ) -- call by "moveTo" skill.
          self.arrived = true
          Feedback( self.feedbacks.arrived )-- the skill is done once the crowd has reach the destination
     end,
@@ -46,11 +46,11 @@ rootnode
         end
 
         -- Once entity is reached attack it.
-        if self.params.unit:isReached() then
+        if self.params.unit:canBeAttacked() then
             Activate( skill.links.attack, 1, { unit = self.params.unit } )
         end
         -- Move to target position (permanently)
-        Activate( skill.links.moveTo, 1, { destination = self.params.unit } )
+        Activate( skill.links.moveTo, 1, { wayPoints = { self.params.unit } } )
         self.arrived = false
     end
 }

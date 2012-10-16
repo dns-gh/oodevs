@@ -24,7 +24,7 @@ This skill failed if the crowd agent is under control. It is done if the urban b
         <class name="world.classes.CrowdBody"/>
     </body-type>
     <links>
-        <link name="moveTo" skill="agent.behaviors.skills.actions.MoveTo">
+        <link name="moveTo" skill="behaviors.skills.MoveAlong">
             <description>To enact the decision to reach the given installation.</description>
         </link>
         <link name="damage" skill="behaviors.skills.actions.Damage">
