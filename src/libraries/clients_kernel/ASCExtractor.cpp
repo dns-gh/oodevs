@@ -11,7 +11,9 @@
 #include "ASCExtractor.h"
 
 #include <boost/bind.hpp>
+#include <boost/filesystem/path.hpp>
 #include <numeric>
+namespace bfs = boost::filesystem;
 
 using namespace kernel;
 
@@ -45,6 +47,20 @@ namespace
             blockSize = tileSizeY;
         return true;
     }
+
+    std::string ReadProjectionfile( const bfs::path& file )
+    {
+        std::string projection;
+        std::ifstream stream;
+        stream.open( file.string().c_str(), std::ifstream::in );
+        if( stream.is_open() )
+        {
+            while( stream.good() )
+                std::getline( stream, projection );
+            stream.close();
+        }
+        return projection;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -69,10 +85,62 @@ ASCExtractor::ASCExtractor( const std::string& file, unsigned int sizeFactor )
     if( pDataset_->GetRasterCount() != 1 )
         throw std::runtime_error( "Format not supported : " + file );
 
+    pTransformation_ = CreateCoordinateTransformation( pDataset_->GetProjectionRef() );
+
+    if( !pTransformation_ )
+        throw std::runtime_error( "Invalid projection" );
+
+    ExtractData( sizeFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASCExtractor constructor
+// Created: LGY 2012-10-12
+// -----------------------------------------------------------------------------
+ASCExtractor::ASCExtractor( const std::string& file, const std::string& projection, unsigned int sizeFactor /*= 1u*/ )
+    : pDataset_       ( 0 )
+    , pBand_          ( 0 )
+    , pTransformation_( 0 )
+    , ncols_          ( 0 )
+    , nrows_          ( 0 )
+    , min_            ( 1. )
+    , max_            ( 1. )
+    , noValueData_    ( 0. )
+{
+    GDALAllRegister();
+    pDataset_ = ( GDALDataset* ) GDALOpen( file.c_str(), GA_ReadOnly );
+    if( pDataset_ == NULL )
+        throw std::runtime_error( "Unable to open file : " + file );
+
+    if( pDataset_->GetRasterCount() != 1 )
+        throw std::runtime_error( "Format not supported : " + file );
+
+    pTransformation_ = CreateCoordinateTransformation( ReadProjectionfile( bfs::path( projection ) ) );
+
+    if( !pTransformation_ )
+        throw std::runtime_error( "Invalid projection" );
+
+    ExtractData( sizeFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASCExtractor destructor
+// Created: LGY 2012-10-03
+// -----------------------------------------------------------------------------
+ASCExtractor::~ASCExtractor()
+{
+    if( pDataset_ )
+        GDALClose( pDataset_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASCExtractor::ExtractData
+// Created: LGY 2012-10-16
+// -----------------------------------------------------------------------------
+void ASCExtractor::ExtractData( unsigned int sizeFactor )
+{
     ncols_ = pDataset_->GetRasterXSize();
     nrows_ = pDataset_->GetRasterYSize();
-
-    projection_ =  pDataset_->GetProjectionRef();
     pBand_ = pDataset_->GetRasterBand( 1 );
     noValueData_ = pBand_->GetNoDataValue();
 
@@ -82,11 +150,6 @@ ASCExtractor::ASCExtractor( const std::string& file, unsigned int sizeFactor )
         origin_ = geometry::Point2d( adfGeoTransform[ 0 ], adfGeoTransform[ 3 ] );
         pixelSize_ = geometry::Point2d( adfGeoTransform[ 1 ], adfGeoTransform[ 5 ] );
     }
-
-    pTransformation_ = CreateCoordinateTransformation( projection_ );
-
-    if( !pTransformation_ )
-        throw std::runtime_error( "Invalid projection" );
 
     extent_ = GenerateExtent( origin_.X() + ( ncols_ * pixelSize_.X() ),
                               origin_.Y() + ( nrows_ * pixelSize_.Y() ),
@@ -120,16 +183,6 @@ ASCExtractor::ASCExtractor( const std::string& file, unsigned int sizeFactor )
             }
         }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ASCExtractor destructor
-// Created: LGY 2012-10-03
-// -----------------------------------------------------------------------------
-ASCExtractor::~ASCExtractor()
-{
-    if( pDataset_ )
-        GDALClose( pDataset_ );
 }
 
 // -----------------------------------------------------------------------------

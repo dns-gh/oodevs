@@ -30,6 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ASCExtractor( const std::string& file, unsigned int sizeFactor = 1u );
+             ASCExtractor( const std::string& file, const std::string& projection, unsigned int sizeFactor = 1u );
     virtual ~ASCExtractor();
     //@}
 
@@ -59,6 +60,7 @@ private:
     geometry::Rectangle2d GenerateTile( int x, int y, int sizeX, int sizeY );
     geometry::Rectangle2d GenerateExtent( double left, double bottom, double right, double top );
     void Project( const geometry::Point2d& point, double& rLatitudeInDegrees, double& rLongitudeInDegrees );
+    void ExtractData( unsigned int sizeFactor );
     //@}
 
 private:
@@ -72,7 +74,6 @@ private:
     double noValueData_;
     double min_;
     double max_;
-    std::string projection_;
     T_Tiles tiles_;
     geometry::Rectangle2d extent_;
     geometry::Point2d origin_;
