@@ -150,7 +150,7 @@ double RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 // Name: RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement
 // Created: LDC 2012-08-27
 // -----------------------------------------------------------------------------
-double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement()
+double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
 {
     SetTheoricSpeed( true );
     double result = GetMaxSpeedWithReinforcement();

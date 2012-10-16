@@ -79,7 +79,7 @@ public:
     virtual double GetMaxSpeed( const TerrainData& environment ) const;
     virtual double GetMaxSlope() const;
     virtual double GetTheoricMaxSpeed( bool loaded ) const;
-    virtual double GetTheoricMaxSpeedWithReinforcement();
+    virtual double GetTheoricMaxSpeedWithReinforcement() const;
     virtual void SetSpeedModificator( double rFactor );
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;

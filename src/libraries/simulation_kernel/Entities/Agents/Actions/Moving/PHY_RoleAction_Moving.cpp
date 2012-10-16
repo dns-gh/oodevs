@@ -210,7 +210,11 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
     return rSpeed;
 }
 
-double PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement()
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement
+// Created: NLD 2004-09-23
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement() const
 {
     SetTheoricSpeed( true );
     double result = GetMaxSpeedWithReinforcement();

@@ -77,7 +77,7 @@ public:
     virtual double GetMaxSpeedModificator() const;
     virtual bool HasResources();
     virtual bool CanMove() const;
-    virtual double GetTheoricMaxSpeedWithReinforcement();
+    virtual double GetTheoricMaxSpeedWithReinforcement() const;
     virtual void SetTheoricSpeed( bool ) const;
 
     virtual const MT_Vector2D& GetPosition () const;
