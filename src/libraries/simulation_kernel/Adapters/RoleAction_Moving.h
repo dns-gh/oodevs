@@ -13,12 +13,12 @@
 #include "MIL.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 #include <boost/serialization/export.hpp>
 
 class MIL_AgentPion;
 class MIL_Object_ABC;
+class DEC_PathPoint;
 
 namespace client
 {

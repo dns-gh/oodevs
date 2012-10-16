@@ -13,9 +13,9 @@
 #define __PHY_RoleAction_InterfaceMoving_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include "Entities/Actions/PHY_MovingEntity_ABC.h"
 
 class TerrainData;
+class MIL_Object_ABC;
 
 namespace moving
 {

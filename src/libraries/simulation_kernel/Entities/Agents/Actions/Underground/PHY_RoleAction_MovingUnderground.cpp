@@ -22,6 +22,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/ClientSenders.h"
+#include <spatialcontainer/TerrainData.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_MovingUnderground )
 

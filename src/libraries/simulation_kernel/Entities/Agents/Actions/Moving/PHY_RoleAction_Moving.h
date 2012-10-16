@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "PHY_RoleAction_InterfaceMoving.h"
+#include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
