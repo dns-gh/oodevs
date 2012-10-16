@@ -234,21 +234,21 @@ Sink::~Sink()
 // -----------------------------------------------------------------------------
 void Sink::Initialize()
 {
-    listeners_.push_back( new ReportEventListener( *facade_ ) );
+    listeners_.push_back( new MovementEventListener( *model_, *facade_ ) );
+    listeners_.push_back( new MovementReportEventListener( *facade_ ) );
     listeners_.push_back( new MovementReportNameEventListener( *facade_ ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "movement callback" ) );
     listeners_.push_back( new PerceptionCallbackEventListener( *facade_ ) );
-    listeners_.push_back( new MovementEventListener( *model_, *facade_ ) );
-    listeners_.push_back( new MovementReportEventListener( *facade_ ) );
+    listeners_.push_back( new ExternalPerceptionEventListener( *facade_ ) );
+    listeners_.push_back( new AlatMonitoringEventListener( *facade_ ) );
+    listeners_.push_back( new ReportEventListener( *facade_ ) );
     listeners_.push_back( new DirectFirePionEventListener( *facade_ ) );
     listeners_.push_back( new DirectFirePerceptionEventListener( *facade_ ) );
     listeners_.push_back( new DirectFirePionAttackEventListener( *facade_ ) );
-    listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
-    listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire population callback" ) );
-    listeners_.push_back( new ExternalPerceptionEventListener( *facade_ ) );
-    listeners_.push_back( new AlatMonitoringEventListener( *facade_ ) );
     listeners_.push_back( new DirectFirePopulationAttackEventListener( *facade_ ) );
     listeners_.push_back( new DirectFirePopulationEventListener( *facade_ ) );
+    listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
+    listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire population callback" ) );
     MovementHooks::Initialize( *facade_ );
     RolePion_Decision::Initialize( *facade_ );
     FireHooks::Initialize( *facade_ );
