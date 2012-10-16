@@ -153,9 +153,9 @@ Display a message.</description>
         </method>
         <method name="canDamage">
             <description>Returns 'true' if the crowd agent can damage the given urban block. This implementation returns always 'true'.</description>
-            <argument name="urbanBlock">
+            <argument name="installation">
                 <type>
-                    <class name="world.classes.UrbanBlock"/>
+                    <class name="world.interfaces.Installation"/>
                 </type>
             </argument>
             <return>
@@ -166,9 +166,9 @@ Display a message.</description>
         </method>
         <method name="damage">
             <description>To damage the given urban block.</description>
-            <argument name="urbanBlock">
+            <argument name="installation">
                 <type>
-                    <class name="world.classes.UrbanBlock"/>
+                    <class name="world.interfaces.Installation"/>
                 </type>
             </argument>
             <argument name="quantityOfDamage">

@@ -1,3 +1,22 @@
+-- --------------------------------------------------------------------------------
+-- Movement
+-- --------------------------------------------------------------------------------
+method "reachIt" ( masalife.brain.integration.startStopAction( 
+{ 
+    start = function( self, pathType )
+        return integration.startMoveToItCrowd( self, pathType ) 
+    end,
+    started = function( self, pathType )
+        if integration.canObjectFilterCrowds( self ) then
+            meKnowledge:sendMessage( "The objective has the capacity to filter the crowd" )
+        end
+        return integration.updateMoveToItCrowd( self, pathType )
+    end, 
+    stop = function( self )
+        return integration.deselectMoveToIt( self )
+    end,
+} ) )
+
 -- -------------------------------------------------------------------------------- 
 -- Installation
 -- --------------------------------------------------------------------------------

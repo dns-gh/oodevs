@@ -76,5 +76,21 @@ This implemenation returns 'true' if the crowd agent has entirely reached this e
                 </type>
             </return>
         </method>
+        <method name="reachIt" abstract="false">
+            <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
+Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
+</description>
+            <argument name="pathType">
+                <description>The path type used by the agent to reach the given destination.</description>
+                <type>
+                    <any/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>
