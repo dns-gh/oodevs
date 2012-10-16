@@ -30,7 +30,7 @@ class DirectFirePopulationAttackEventListener : public core::EventListener_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             DirectFirePopulationAttackEventListener( const core::Model& model, core::Facade& facade );
+    explicit DirectFirePopulationAttackEventListener( core::Facade& facade );
     virtual ~DirectFirePopulationAttackEventListener();
     //@}
 
@@ -42,7 +42,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const core::Model& model_;
     core::Facade& facade_;
     //@}
 };
