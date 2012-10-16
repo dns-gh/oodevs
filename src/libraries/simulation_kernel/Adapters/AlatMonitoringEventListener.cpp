@@ -26,9 +26,8 @@ namespace
 // Name: AlatMonitoringEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
-AlatMonitoringEventListener::AlatMonitoringEventListener( const core::Model& model, core::Facade& facade )
-    : model_ ( model )
-    , facade_( facade )
+AlatMonitoringEventListener::AlatMonitoringEventListener( core::Facade& facade )
+    : facade_( facade )
 {
     facade.Register( event, *this );
 }

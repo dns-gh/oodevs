@@ -30,7 +30,7 @@ class AlatMonitoringEventListener : public core::EventListener_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             AlatMonitoringEventListener( const core::Model& model, core::Facade& facade );
+    explicit AlatMonitoringEventListener( core::Facade& facade );
     virtual ~AlatMonitoringEventListener();
     //@}
 
@@ -42,7 +42,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const core::Model& model_;
     core::Facade& facade_;
     //@}
 };
