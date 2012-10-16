@@ -18,12 +18,6 @@
 
 class MIL_AgentPion;
 class MIL_Object_ABC;
-class DEC_PathPoint;
-
-namespace client
-{
-    class UnitAttributes;
-}
 
 namespace posture
 {
