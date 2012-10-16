@@ -1158,7 +1158,7 @@ namespace
     }
     bool IsInUrbanBlock( const SWORD_Model* knowledge, void* userData )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
+        boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
         MIL_UrbanObject_ABC* pUrbanObject = static_cast< MIL_UrbanObject_ABC* >( userData );
         return pUrbanObject && agent->IsInUrbanBlock( *pUrbanObject );
     }
@@ -1209,7 +1209,7 @@ namespace
     }
     void Populate( const SWORD_Model* knowledge, void* userData )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "agent" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
+        boost::shared_ptr< DEC_Knowledge_Agent > agent = (*core::Convert( knowledge ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
         static_cast< T_ConstKnowledgeAgentVector* >( userData )->push_back( agent );
     }
     T_ConstKnowledgeAgentVector GetDangerousEnemies( const MIL_AgentPion& agent, const core::Model& model )

@@ -128,7 +128,7 @@ namespace
 void DirectFirePionEventListener::Update( const core::Model& event )
 {
     MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
-    MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< MIL_AgentPion >();
+    MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
     const std::string& dotation = event[ "dotation" ];
     const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( dotation );
     if( ! category )

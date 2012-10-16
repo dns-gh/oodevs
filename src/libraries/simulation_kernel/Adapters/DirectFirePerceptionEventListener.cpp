@@ -13,6 +13,7 @@
 #include "OnComponentFunctor_ABC.h"
 #include "OnComponentComputer_ABC.h"
 #include "OnComponentFunctorComputerFactory_ABC.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
@@ -126,7 +127,7 @@ void DirectFirePerceptionEventListener::Notify( const core::Model& event )
         if( event[ "running" ] )
         {
             MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
-            MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< MIL_AgentPion >();
+            MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
             NotifyFirerPerception( pion, target ); // $$$$ MCO 2012-09-10: move to a separate listener
         }
     }

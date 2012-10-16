@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DirectFirePionAttackEventListener.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MT_Tools/MT_Logger.h"
 #include <core/Facade.h>
@@ -49,7 +50,7 @@ void DirectFirePionAttackEventListener::Notify( const core::Model& event )
     try
     {
         MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
-        MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< MIL_AgentPion >();
+        MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
         if( ! event[ "paused" ] )
             pion.NotifyAttacking( target, event[ "report" ] );
         target.NotifyAttackedBy( pion, event[ "report" ] );
