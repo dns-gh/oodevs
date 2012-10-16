@@ -17,7 +17,7 @@ namespace xml
 
 namespace moving
 {
-    class PHY_RoleAction_InterfaceMoving;
+    class PHY_RoleAction_Moving;
 }
 
 class TerrainData;
@@ -34,8 +34,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration );
-    explicit PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role );
-             PHY_Speeds( const moving::PHY_RoleAction_InterfaceMoving& role, bool loaded );
+    explicit PHY_Speeds( const moving::PHY_RoleAction_Moving& role );
+             PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded );
     virtual ~PHY_Speeds();
     //@}
 
@@ -56,7 +56,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void Initialize( const moving::PHY_RoleAction_InterfaceMoving& role );
+    void Initialize( const moving::PHY_RoleAction_Moving& role );
     void ReadSpeed          ( xml::xistream& xis, unsigned int timeStepDuration );
     void ReadTerrain        ( xml::xistream& xis );
     void CheckInitialization( xml::xistream& xis, unsigned int timeStepDuration );

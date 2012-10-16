@@ -43,6 +43,7 @@ class PHY_RoleAction_Moving : public PHY_RoleAction_InterfaceMoving
                             , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                             , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
                             , public network::NetworkMessageSender_ABC
+                            , public PHY_MovingEntity_ABC
 {
 public:
     //! @name Constructors/Destructor

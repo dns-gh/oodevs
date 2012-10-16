@@ -24,7 +24,6 @@ namespace moving
 // Created: MCO 2012-03-05
 // =============================================================================
 class PHY_RoleAction_InterfaceMoving : public tools::Role_ABC
-                                     , public PHY_MovingEntity_ABC
 {
 public:
     //! @name Types
@@ -41,6 +40,8 @@ public:
     virtual double GetMaxSpeedWithReinforcement() const = 0;
     virtual double GetTheoricMaxSpeed( bool loaded ) const = 0;
     virtual double GetTheoricMaxSpeedWithReinforcement() = 0;
+    virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const = 0;
+    virtual double GetSpeedWithReinforcement( const TerrainData& environment, const MIL_Object_ABC& object ) const = 0;
     virtual double GetMaxSpeedModificator() const = 0;
     virtual double GetMaxSpeed() const = 0;
     virtual double GetMaxSpeed( const TerrainData& environment ) const = 0;

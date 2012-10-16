@@ -28,7 +28,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/FloodCapacity.h"
@@ -55,8 +55,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
-    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSlope() )
+    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
+    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
@@ -80,8 +80,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< bo
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
-    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSlope() )
+    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
+    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
@@ -108,8 +108,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     , queryMaker_               ( queryMaker )
     , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
-    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSlope() )
+    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
+    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , rCostOutsideOfAllObjects_ ( 0. )
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_       ( false )
@@ -133,8 +133,8 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
-    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >(), loaded )
-    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetMaxSlope() )
+    , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >(), loaded )
+    , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
@@ -160,7 +160,7 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , bRefine_                 ( rhs.bRefine_ )
     , vDirDanger_              ( rhs.vDirDanger_ )
  //   , unitSpeeds_               ( rhs.unitSpeeds_ ) $$$ TODO
-    , unitSpeeds_              ( queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
+    , unitSpeeds_              ( queryMaker_.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_               ( rhs.rMaxSlope_ )
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( rhs.pathClass_ )
@@ -255,7 +255,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                     if( const MIL_Object_ABC* pObject = knowledge.GetObjectKnown() )
                     {
                         TerrainData data;
-                        double rMaxSpeed = queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().GetSpeedWithReinforcement( data, *pObject );
+                        double rMaxSpeed = queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( data, *pObject );
                         if( rMaxSpeed == 0. || rMaxSpeed == std::numeric_limits< double >::max() )
                             continue;
                     }
@@ -598,9 +598,9 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
     {
         const PHY_RoleAction_MovingUnderground* roleUnderground = queryMaker_.RetrieveRole< PHY_RoleAction_MovingUnderground >();
         if( roleUnderground && roleUnderground->IsUnderground() )
-            queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SendRC( MIL_Report::eReport_NotActivatedUndergroundNetwork );
+            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_NotActivatedUndergroundNetwork );
         else
-            queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SendRC( MIL_Report::eReport_DifficultTerrain );
+            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
     }
 
 #ifndef NDEBUG
@@ -682,7 +682,7 @@ void DEC_Agent_Path::ComputePath( boost::shared_ptr< DEC_Path_ABC > pPath )
 {
     if( !IsDestinationTrafficable() )
     {
-        queryMaker_.GetRole< moving::PHY_RoleAction_InterfaceMoving >().SendRC( MIL_Report::eReport_DifficultTerrain );
+        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
         Cancel();
     }
     else

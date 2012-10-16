@@ -28,8 +28,6 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_PathPoint.h"
-#include "Network/NET_Publisher_ABC.h"
-#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RoleAction_Moving )
 
@@ -220,59 +218,9 @@ double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environm
 // Name: RoleAction_Moving::ExtrapolatePosition
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-MT_Vector2D RoleAction_Moving::ExtrapolatePosition( const double rTime, const bool bBoundOnPath ) const
+MT_Vector2D RoleAction_Moving::ExtrapolatePosition( const double /*rTime*/, const bool /*bBoundOnPath*/ ) const
 {
-    return PHY_MovingEntity_ABC::ExtrapolatePosition(
-        owner_.GetRole< PHY_RoleInterface_Location >().GetPosition(),
-        owner_.GetRole< PHY_RoleInterface_Location >().GetCurrentSpeed(),
-        rTime, bBoundOnPath );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::SendEnvironmentType
-// Created: SBO 2005-06-15
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::SendEnvironmentType( unsigned int context ) const
-{
-    client::UnitEnvironmentType asn;
-    asn().mutable_unit()->set_id( owner_.GetID() );
-    SerializeEnvironmentType( asn() );
-    asn.Send( NET_Publisher_ABC::Publisher(), context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::SendCurrentPath
-// Created: NLD 2004-09-22
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::SendCurrentPath( unsigned int context ) const
-{
-    client::UnitPathFind asnMsg;
-    asnMsg().mutable_unit()->set_id( owner_.GetID() );
-    if( !SerializeCurrentPath( *asnMsg().mutable_path() ) )
-        return;
-    asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::SendFullState
-// Created: NLD 2005-09-30
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::SendFullState( unsigned int context ) const
-{
-    SendCurrentPath( context );
-    SendEnvironmentType( context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::SendChangedState
-// Created: NLD 2004-09-22
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::SendChangedState() const
-{
-    if( bCurrentPathHasChanged_ )
-        SendCurrentPath();
-    if( bEnvironmentHasChanged_ )
-        SendEnvironmentType();
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
@@ -417,8 +365,6 @@ void RoleAction_Moving::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::Clean()
 {
-    PHY_MovingEntity_ABC::Clean();
-
     bCurrentPathHasChanged_ = false;
     bEnvironmentHasChanged_ = false;
     bHasMove_               = false;

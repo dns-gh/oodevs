@@ -41,7 +41,6 @@ namespace sword
 class RoleAction_Moving : public moving::PHY_RoleAction_InterfaceMoving
                         , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                         , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
-                        , public network::NetworkMessageSender_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -88,16 +87,11 @@ public:
     virtual const MT_Vector2D& GetDirection() const;
     //@}
 
-    //! @name Network
-    //@{
-    virtual void SendChangedState() const;
-    virtual void SendFullState   ( unsigned int context ) const;
-    //@}
-
     //! @name Tools
     //@{
     virtual MT_Vector2D ExtrapolatePosition( const double rTime, const bool bBoundOnPath ) const;
     //@}
+
     //! @name Notifications
     //@{
     virtual void NotifyMovingOnPathPoint( const MT_Vector2D& point );
@@ -107,6 +101,7 @@ public:
     virtual void NotifyEnvironmentChanged();
     virtual void NotifyCurrentPathChanged();
     //@}
+
     //! @name
     //@{
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
@@ -116,12 +111,6 @@ private:
     //! @name Speed management
     //@{
     double GetMaxSpeed( const MIL_Object_ABC& object ) const;
-    //@}
-
-    //! @name Network
-    //@{
-    void SendCurrentPath( unsigned int context = 0 ) const;
-    void SendEnvironmentType( unsigned int context = 0 ) const;
     //@}
 
     //! @name Serialization

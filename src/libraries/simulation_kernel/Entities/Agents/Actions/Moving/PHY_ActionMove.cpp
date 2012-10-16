@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionMove.h"
-#include "PHY_RoleAction_InterfaceMoving.h"
+#include "PHY_RoleAction_Moving.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -34,7 +34,7 @@
 PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path_ABC > pPath )
     : PHY_DecisionCallbackAction_ABC( pion )
     , pion_( pion )
-    , role_( pion.GetRole< moving::PHY_RoleAction_InterfaceMoving >() )
+    , role_( pion.GetRole< moving::PHY_RoleAction_Moving >() )
     , pMainPath_( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
     , executionSuspended_( false )
     , isBlockedByObject_( false )

@@ -20,7 +20,7 @@
 class MIL_AgentPion;
 namespace moving
 {
-    class PHY_RoleAction_InterfaceMoving;
+    class PHY_RoleAction_Moving;
 }
 class DEC_Path_ABC;
 class DEC_Agent_Path;
@@ -61,7 +61,7 @@ private:
 
 private:
     MIL_AgentPion& pion_;
-    moving::PHY_RoleAction_InterfaceMoving& role_;
+    moving::PHY_RoleAction_Moving& role_;
     boost::shared_ptr< DEC_Agent_Path > pMainPath_;
     T_KnowledgeObjectVector objectsToAvoid_;
     std::vector< TER_Localisation > geometrySignatures_;
