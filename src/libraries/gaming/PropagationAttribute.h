@@ -40,6 +40,7 @@ class Simulation;
 // =============================================================================
 class PropagationAttribute : public kernel::InputPropagationAttribute_ABC
                            , public kernel::Drawable_ABC
+                           , public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< Simulation >
 {
 public:

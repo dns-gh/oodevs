@@ -30,7 +30,7 @@ PropagationAttribute::PropagationAttribute( Controller& controller, const Coordi
     : controller_( controller )
     , converter_ ( converter )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ PropagationAttribute::PropagationAttribute( Controller& controller, const Coordi
 // -----------------------------------------------------------------------------
 PropagationAttribute::~PropagationAttribute()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
