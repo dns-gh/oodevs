@@ -97,16 +97,6 @@ namespace
 // Name: RoleAction_Moving::GetMaxSpeed
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-double RoleAction_Moving::GetMaxSpeed( const MIL_Object_ABC& object ) const
-{
-    moving::SpeedComputerStrategy strategy( true, false, object );
-    return ComputeSpeed( owner_, strategy );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetMaxSpeed
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
 double RoleAction_Moving::GetMaxSpeed( const TerrainData& environment ) const
 {
     moving::SpeedComputerStrategy strategy( true, false, &environment );

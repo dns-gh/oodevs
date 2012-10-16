@@ -79,11 +79,6 @@ public:
     //@}
 
 private:
-    //! @name Speed management
-    //@{
-    double GetMaxSpeed( const MIL_Object_ABC& object ) const;
-    //@}
-
     //! @name Serialization
     //@{
     INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( RoleAction_Moving )
