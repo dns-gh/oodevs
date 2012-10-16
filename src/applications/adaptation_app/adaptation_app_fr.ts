@@ -1179,16 +1179,14 @@ Arrêt moteur allumé</translation>
         <translation>Construction (%)</translation>
     </message>
     <message>
-        <source>ADN_Composantes_GUI</source>
-        <comment>At least one speed is above the new max speed.
-Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
-        <translation>Au moins une vitesse est au dessus de la nouvelle vitesse maximum.
-Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vitesse maximum.</translation>
+        <source>Warning</source>
+        <translation>Attention</translation>
     </message>
     <message>
-        <source>ADN_Composantes_GUI</source>
-        <comment>Warning</comment>
-        <translation>Attention</translation>
+        <source>At least one speed is above the new max speed.
+Click &quot;Ok&quot; to bound it to the new max speed value.</source>
+        <translation>Au moins une vitesse est au dessus de la nouvelle vitesse maximum.
+Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vitesse maximum.</translation>
     </message>
 </context>
 <context>
@@ -6206,22 +6204,18 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <name>QObject</name>
     <message>
         <source>d</source>
-        <comment>ADN_Rich_ListViewItem</comment>
         <translation>d</translation>
     </message>
     <message>
         <source>h</source>
-        <comment>ADN_Rich_ListViewItem</comment>
         <translation>h</translation>
     </message>
     <message>
         <source>m</source>
-        <comment>ADN_Rich_ListViewItem</comment>
         <translation>m</translation>
     </message>
     <message>
         <source>s</source>
-        <comment>ADN_Rich_ListViewItem</comment>
         <translation>s</translation>
     </message>
 </context>

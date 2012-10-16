@@ -119,13 +119,13 @@ QString ADN_Rich_ListViewItem::ToString( const T& value, E_FieldUnits eUnit /* =
         T seconds = ( uint )( value * 3600 - days * 24 * 3600 - hours * 3600 - minutes * 60 );
         QString result;
         if( days > 0 )
-            result += QString::number( days ) + QObject::tr( "d", "ADN_Rich_ListViewItem" );
+            result += QString::number( days ) + QObject::tr( "d" );
         if( hours > 0 )
-            result += QString::number( hours ) + QObject::tr( "h", "ADN_Rich_ListViewItem" );
+            result += QString::number( hours ) + QObject::tr( "h" );
         if( minutes > 0 )
-            result += QString::number( minutes ) + QObject::tr( "m", "ADN_Rich_ListViewItem" );
+            result += QString::number( minutes ) + QObject::tr( "m" );
         if( seconds > 0 )
-            result += QString::number( seconds ) + QObject::tr( "s", "ADN_Rich_ListViewItem" );
+            result += QString::number( seconds ) + QObject::tr( "s" );
         return result;
     }
     return QString::number( value, 'f', 2 );

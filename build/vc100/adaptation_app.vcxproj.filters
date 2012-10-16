@@ -1998,6 +1998,9 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_Wizard.inl">
       <Filter>Source Files\Tools\Wizard Tools</Filter>
     </None>
+    <None Include="..\..\src\applications\adaptation_app\adaptation_app_en.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.h">

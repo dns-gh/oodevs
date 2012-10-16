@@ -1179,14 +1179,12 @@ estacionado con motor encendido</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ADN_Composantes_GUI</source>
-        <comment>At least one speed is above the new max speed.
-Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
+        <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ADN_Composantes_GUI</source>
-        <comment>Warning</comment>
+        <source>At least one speed is above the new max speed.
+Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6195,23 +6193,19 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <name>QObject</name>
     <message>
         <source>d</source>
-        <comment>ADN_Rich_ListViewItem</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>h</source>
-        <comment>ADN_Rich_ListViewItem</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>m</source>
-        <comment>ADN_Rich_ListViewItem</comment>
-        <translation></translation>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
         <source>s</source>
-        <comment>ADN_Rich_ListViewItem</comment>
-        <translation>s</translation>
+        <translation type="unfinished">s</translation>
     </message>
 </context>
 <context>
