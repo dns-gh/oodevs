@@ -25,35 +25,46 @@
 // Created: LDC 2011-03-23
 // -----------------------------------------------------------------------------
 PopulationOptionChooser::PopulationOptionChooser( QMainWindow* parent, kernel::Controllers& controllers, StaticModel& staticModel )
-    : QDockWidget( "population-display-option", parent )
+    : QDialog( parent, "population-display-option", false, Qt::FramelessWindowHint | Qt::ToolTip )
     , controllers_( controllers )
     , accomodations_( staticModel.accommodationTypes_ )
 {
     setObjectName( "popDisplayOption" );
-    setCaption( tools::translate( "PopulationOptionChooser", "Population Display Options" ) );
-    {
-        Q3HBox* box = new Q3VBox( this );
-        Q3ButtonGroup* group = new Q3ButtonGroup( 1, Qt::Horizontal, box );
-        group->setExclusive( true );
-        QRadioButton* off = new QRadioButton( group );
-        off->setText( tools::translate( "PopulationOptionChooser", "Off" ) );
-        off->setChecked( true );
-        density_ = new QRadioButton( group );
-        density_->setText( tools::translate( "PopulationOptionChooser", "Density" ) );
-        occupation_ = new QRadioButton( group );
-        occupation_->setText( tools::translate( "PopulationOptionChooser", "Occupation" ) );
-        connect( density_, SIGNAL( toggled( bool ) ), this, SLOT( OnDensityToggled( bool ) ) );
-        connect( occupation_, SIGNAL( toggled( bool ) ), this, SLOT( OnOccupationToggled( bool ) ) );
-        activities_ = new Q3ButtonGroup( 1, Qt::Horizontal, box );
-        activities_->setExclusive( true );
-        activities_->setEnabled( false );
-        populations_ = new Q3ButtonGroup( 1, Qt::Horizontal, box );
-        populations_->setEnabled( false );
-        setWidget( box );
-    }
-    setFeatures( QDockWidget::AllDockWidgetFeatures );
+    setWindowTitle( tools::translate( "PopulationOptionChooser", "Population Display Options" ) );
+    qApp->installEventFilter( this );
+
+    displayCombo_ = new QComboBox();
+    QStringList displays;
+    displays << tools::translate( "PopulationOptionChooser", "Off" ) 
+             << tools::translate( "PopulationOptionChooser", "Density" ) 
+             << tools::translate( "PopulationOptionChooser", "Occupation" );
+    displayCombo_->addItems( displays );
+    displayCombo_->setCurrentItem( 0 );
+    displayCombo_->setEditable( false );
+
+    activityCombo_ = new QComboBox();
+    activityCombo_->setEditable( false );
+    activityCombo_->setCurrentItem( 0 );
+    activityCombo_->setEnabled( false );
+
+    occupationList_ = new QListWidget();
+    occupationList_->setEnabled( false );
+
+    QWidget* panel = new QWidget( this );
+    QVBoxLayout* panelLayout = new QVBoxLayout( panel );
+    panelLayout->addWidget( new QLabel(), 0 );
+    panelLayout->addWidget( displayCombo_, 0 );
+    panelLayout->addWidget( activityCombo_, 0 );
+    panelLayout->addWidget( occupationList_, 0 );
+
+    connect( displayCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnDisplayChanged( int ) ) );
+    connect( activityCombo_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnActivityChanged( int ) ) );
+    connect( occupationList_, SIGNAL( itemClicked ( QListWidgetItem* ) ), this, SLOT( OnOccupationChanged( QListWidgetItem* ) ) );
+
     hide();
+    resize( 280, 300 );
     setProperty( "notAppropriate", QVariant( true ) );
+
     controllers_.Register( *this );
 }
 
@@ -67,23 +78,50 @@ PopulationOptionChooser::~PopulationOptionChooser()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationOptionChooser::OnDensityToggled
+// Name: PopulationOptionChooser::OnDisplayChanged
 // Created: LDC 2011-03-23
 // -----------------------------------------------------------------------------
-void PopulationOptionChooser::OnDensityToggled( bool toggled )
+void PopulationOptionChooser::OnDisplayChanged( int index )
 {
-    controllers_.options_.Change( "UrbanDensityColor", toggled );
+    controllers_.options_.Change( "UrbanDensityColor", index  == 1 );
+    controllers_.options_.Change( "UrbanAccommodationColor", index  == 2 );
+    activityCombo_->setEnabled( index  == 2 );
+    occupationList_->setEnabled( index  == 2  );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationOptionChooser::OnOccupationToggled
+// Name: PopulationOptionChooser::OnActivityChanged
 // Created: LDC 2011-03-23
 // -----------------------------------------------------------------------------
-void PopulationOptionChooser::OnOccupationToggled( bool toggled )
+void PopulationOptionChooser::OnActivityChanged( int index )
 {
-    activities_->setEnabled( toggled );
-    populations_->setEnabled( toggled );
-    controllers_.options_.Change( "UrbanAccommodationColor", toggled );
+    controllers_.options_.Change( "UrbanAccommodationDisplayed", activityCombo_->itemText( index ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationOptionChooser::OnOccupationChanged
+// Created: LDC 2011-03-23
+// -----------------------------------------------------------------------------
+void PopulationOptionChooser::OnOccupationChanged( QListWidgetItem* item )
+{
+    if( item )
+    {
+        kernel::ChangePopulationDisplay display( item->text().toAscii().constData(), item->checkState() == Qt::Checked );
+        controllers_.controller_.Update( display );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationOptionChooser::Show
+// Created: NPT 2012-10-15
+// -----------------------------------------------------------------------------
+void PopulationOptionChooser::Show()
+{
+    const QPushButton* button = dynamic_cast< const QPushButton* >( sender() );
+    if( !button )
+        return;
+    move( button->mapToGlobal( button->pos() ).x() - 3*button->width(), button->mapToGlobal( button->pos() ).y() + button->height() );
+    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,20 +131,11 @@ void PopulationOptionChooser::OnOccupationToggled( bool toggled )
 void PopulationOptionChooser::NotifyUpdated( const kernel::ModelLoaded& )
 {
     tools::Iterator< const kernel::AccommodationType& > it = accomodations_.CreateIterator();
+    activityCombo_->clear();
     while( it.HasMoreElements() )
-    {
-        QRadioButton* next = new QRadioButton( activities_ );
-        next->setText( it.NextElement().GetRole().c_str() );
-        connect( next, SIGNAL( toggled( bool ) ), this, SLOT( OnAccomodationToggled( bool ) ) );
-    }
-    const QObjectList buttons = activities_->children();
-    for( QObjectList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
-        if( QAbstractButton* button = dynamic_cast< QAbstractButton* >( *it ) )
-        {
-            button->toggle();
-            break;
-        }
-    activities_->adjustSize();
+        activityCombo_->addItem( it.NextElement().GetRole().c_str() );
+    if( activityCombo_->count() > 0 )
+        activityCombo_->setCurrentItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,14 +144,8 @@ void PopulationOptionChooser::NotifyUpdated( const kernel::ModelLoaded& )
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
-    hide();
-    const QObjectList buttons = activities_->children();
-    for( QObjectList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
-    {
-        QAbstractButton* button = dynamic_cast< QAbstractButton* >( *it );
-        if( button )
-            button->deleteLater();
-    }
+    if( !isVisible() )
+        hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -131,56 +154,10 @@ void PopulationOptionChooser::NotifyUpdated( const kernel::ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::NotifyCreated( const kernel::Inhabitant_ABC& inhabitant )
 {
-    QCheckBox* newPopulation = new QCheckBox( populations_ );
-    QString name = inhabitant.GetName();
-    if( name.isNull() )
-        name = "";
-    newPopulation->setText( name );
-    connect( newPopulation, SIGNAL( toggled( bool ) ), this, SLOT( OnPopulationToggled( bool ) ) );
-    newPopulation->setChecked( true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationOptionChooser::NotifyDeleted
-// Created: LDC 2011-03-25
-// -----------------------------------------------------------------------------
-void PopulationOptionChooser::NotifyDeleted( const kernel::Inhabitant_ABC& inhabitant )
-{
-    const QObjectList buttons = populations_->children();
-    for( QObjectList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
-    {
-        QAbstractButton* button = dynamic_cast< QAbstractButton* >( *it );
-        if( button && button->text() == inhabitant.GetName() )
-            button->deleteLater();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationOptionChooser::OnAccomodationToggled
-// Created: LDC 2011-03-25
-// -----------------------------------------------------------------------------
-void PopulationOptionChooser::OnAccomodationToggled( bool toggled )
-{
-    if( toggled )
-    {
-        const QAbstractButton* senderObject = dynamic_cast< const QAbstractButton* >( sender() );
-        if( senderObject )
-            controllers_.options_.Change( "UrbanAccommodationDisplayed", senderObject->text() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationOptionChooser::OnPopulationToggled
-// Created: LDC 2011-03-28
-// -----------------------------------------------------------------------------
-void PopulationOptionChooser::OnPopulationToggled( bool toggled )
-{
-    const QAbstractButton* senderObject = dynamic_cast< const QAbstractButton* >( sender() );
-    if( senderObject )
-    {
-        kernel::ChangePopulationDisplay display( senderObject->text().toAscii().constData(), toggled );
-        controllers_.controller_.Update( display );
-    }
+    QListWidgetItem* item = new QListWidgetItem( inhabitant.GetName() );
+    item->setCheckState( Qt::Checked );
+    OnOccupationChanged( item );
+    occupationList_->addItem( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -189,25 +166,27 @@ void PopulationOptionChooser::OnPopulationToggled( bool toggled )
 // -----------------------------------------------------------------------------
 void PopulationOptionChooser::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( density_ && occupation_ )
-    {
+    if( displayCombo_ )
         if( name == "UrbanDensityColor" )
-        {
             if( value.To< bool >() )
-            {
-                occupation_ = 0;
-                density_->setChecked( true );
-                density_ = 0;
-            }
-        }
+                displayCombo_->setCurrentIndex( 1 );
         else if( name == "UrbanAccommodationColor" )
-        {
             if( value.To< bool >() )
-            {
-                density_ = 0;
-                occupation_->setChecked( true );
-                occupation_ = 0;
-            }
-        }
-    }
+                displayCombo_->setCurrentIndex( 2 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationOptionChooser::eventFilter
+// Created: NPT 2012-10-16
+// -----------------------------------------------------------------------------
+bool PopulationOptionChooser::eventFilter( QObject*, QEvent* e )
+{
+    switch( e->type() )
+    {
+    case QEvent::MouseButtonPress:
+        if( ! rect().contains( mapFromGlobal( static_cast<QMouseEvent*>( e )->globalPos() ) ) )
+            hide();
+    }
+    return false;
+}
+

@@ -215,15 +215,12 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
 
     {
         Q3HBox* populationBox = new Q3HBox( toolBar );
-        QCheckBox* populationEnabled = new QCheckBox( tools::translate( "Menu", "Population" ), populationBox );
-        QToolTip::add( populationEnabled, tools::translate( "Menu", "Show population display tool" ) );
-        QDockWidget* populationOptions = new PopulationOptionChooser( pParent, controllers, staticModel );
-        populationOptions->setFloating( true );
-        pParent->addDockWidget( Qt::RightDockWidgetArea, populationOptions );
+        QPushButton* populationEnabled = new QPushButton( tools::translate( "Menu", "Population" ), populationBox );
+        populationEnabled->setToolTip( tools::translate( "Menu", "Show population display tool" ) );
+        PopulationOptionChooser* populationOptions = new PopulationOptionChooser( pParent, controllers, staticModel );
         toolBar->addWidget( populationBox );
         toolBar->addWidget( populationEnabled );
-        connect( populationEnabled, SIGNAL( toggled( bool ) ), populationOptions, SLOT( setShown( bool ) ) );
-        connect( populationOptions, SIGNAL( visibilityChanged( bool ) ), populationEnabled, SLOT( setChecked( bool ) ) );
+        connect( populationEnabled, SIGNAL( clicked() ), populationOptions, SLOT( Show() ) );
     }
 
     menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );
