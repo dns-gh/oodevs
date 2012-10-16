@@ -68,6 +68,8 @@ namespace core
         static void SWORD_PostEffect( SWORD_Model* effect, const SWORD_Model* target )
         {
             TRY
+                BOOST_REQUIRE( effect );
+                BOOST_REQUIRE( target );
                 PostEffect( effect, core::Convert( target )->Context() );
             CATCH
         }
@@ -84,13 +86,13 @@ namespace core
             MOCK_EXPECT( CreateEffect ).once().returns( Convert( models_.back().get() ) );
             MOCK_EXPECT( PostEffect ).once().with( mock::any, target.Context() );
         }
-        void ExpectEvent( const std::string name, const sword::test::ModelBuilder& event )
+        void ExpectEvent( const std::string& name, const sword::test::ModelBuilder& event )
         {
             models_.push_back( boost::make_shared< core::Model >() );
             MOCK_EXPECT( CreateEvent ).once().returns( Convert( models_.back().get() ) );
             MOCK_EXPECT( PostEvent ).once().with( name, event );
         }
-        void ExpectEvent( const std::string name )
+        void ExpectEvent( const std::string& name )
         {
             models_.push_back( boost::make_shared< core::Model >() );
             MOCK_EXPECT( CreateEvent ).once().returns( Convert( models_.back().get() ) );
