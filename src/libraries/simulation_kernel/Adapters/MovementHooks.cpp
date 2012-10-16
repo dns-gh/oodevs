@@ -386,9 +386,9 @@ namespace
     {
         return GET_ROLE( entity, RoleAction_Moving ).GetSpeedWithReinforcement( environment );
     }
-    DEFINE_HOOK( GetMaxSpeedWithReinforcement, double, ( const SWORD_Model* entity ) )
+    DEFINE_HOOK( GetTheoricMaxSpeedWithReinforcement, double, ( const SWORD_Model* entity ) )
     {
-        return GET_ROLE( entity, RoleAction_Moving ).GetMaxSpeedWithReinforcement();
+        return GET_ROLE( entity, RoleAction_Moving ).GetTheoricMaxSpeedWithReinforcement();
     }
     DEFINE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) // $$$$ MCO 2012-10-15: not used because only for populations which are not supported for now
     {
@@ -538,7 +538,7 @@ void MovementHooks::Initialize( core::Facade& facade )
     REGISTER_HOOK( GetUrbanBlocksListWithinSegment, facade );
     REGISTER_HOOK( GetMaxPathFindComputationDuration, facade );
     REGISTER_HOOK( CancelPathFindJob, facade );
-    REGISTER_HOOK( GetMaxSpeedWithReinforcement, facade );
+    REGISTER_HOOK( GetTheoricMaxSpeedWithReinforcement, facade );
     REGISTER_HOOK( GetObjectKnownId, facade );
     REGISTER_HOOK( GetPathfindCurrentThread, facade );
     REGISTER_HOOK( GetSpeedWithReinforcement, facade );

@@ -20,7 +20,7 @@ using namespace sword::movement;
 
 DECLARE_HOOK( ConvertSpeedMosToSim, double, ( double speed ) )
 DECLARE_HOOK( GetLandTypeName, const char*, ( const TerrainData& terrain ) )
-DECLARE_HOOK( GetMaxSpeedWithReinforcement, double, ( const SWORD_Model* entity ) )
+DECLARE_HOOK( GetTheoricMaxSpeedWithReinforcement, double, ( const SWORD_Model* entity ) )
 DECLARE_HOOK( GetSpeedWithReinforcement, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ Speeds::Speeds( xml::xistream& xis, unsigned int timeStepDuration )
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
 Speeds::Speeds( const wrapper::View& entity )
-    : rMaxSpeed_               ( GET_HOOK( GetMaxSpeedWithReinforcement )( entity ) )
+    : rMaxSpeed_               ( GET_HOOK( GetTheoricMaxSpeedWithReinforcement )( entity ) )
     , rBaseSpeed_              ( GET_HOOK( GetSpeedWithReinforcement )( entity, TerrainData() ) )
     , nLinearPassabilityMask_  ( 0 )
     , nAreaPassabilityMask_    ( 0 )

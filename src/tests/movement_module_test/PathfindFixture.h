@@ -103,7 +103,7 @@ namespace movement
             const double maxSpeed = 50;
             const double baseSpeed = 10;
             const double terrainSpeed = 20;
-            MOCK_EXPECT( GetMaxSpeedWithReinforcement ).once().returns( maxSpeed );
+            MOCK_EXPECT( GetTheoricMaxSpeedWithReinforcement ).once().returns( maxSpeed );
             MOCK_EXPECT( GetSpeedWithReinforcement ).once().returns( baseSpeed );
             MOCK_EXPECT( GetSpeedWithReinforcement ).exactly( TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes ).returns( terrainSpeed );
             boost::shared_ptr< sword::movement::Path_ABC > path = CreatePath( core::Convert( &entity ), vPosEnd, movementPathType );
