@@ -89,6 +89,7 @@ namespace movement
         boost::shared_ptr< sword::movement::Path_ABC > CreatePathParameter( const geometry::Point2f& objective )
         {
             entity[ "identifier" ] = identifier; // $$$$ _RC_ SLI 2012-03-09: smell?
+            entity[ "data" ] = "data";
             entity[ "can-fly" ] = false;
             entity[ "is-autonomous" ] = false;
             entity[ "is-underground" ] = false; // $$$$ MCO 2012-07-09: module should not be aware of this "is-underground" feature

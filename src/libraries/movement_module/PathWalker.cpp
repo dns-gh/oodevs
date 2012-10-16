@@ -35,10 +35,10 @@ DECLARE_HOOK( ObjectIsOnBorder, bool, ( const SWORD_Model* object, const MT_Vect
 
 namespace
 {
-    void PostReport( unsigned int entity, MIL_Report::E_EngineReport code )
+    void PostReport( const wrapper::View& entity, MIL_Report::E_EngineReport code )
     {
         wrapper::Event event( "movement report" );
-        event[ "entity" ] = entity;
+        event[ "entity/data" ] = entity[ "data" ];
         event[ "code" ] = code;
         event.Post();
     }
@@ -209,7 +209,7 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< Pa
             }
         }
         if( !isInsideObject )
-            PostReport( entity_, MIL_Report::eReport_DifficultTerrain );
+            PostReport( entity, MIL_Report::eReport_DifficultTerrain );
         rc = ePartialPath;
     }
     itNextPathPoint_ = itCurrentPathPoint_;
@@ -513,7 +513,7 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
         rCurrentSpeed_ = 0.;
         if( !bFuelReportSent_ )
         {
-            PostReport( entity_, MIL_Report::eReport_OutOfGas );
+            PostReport( entity, MIL_Report::eReport_OutOfGas );
             bFuelReportSent_ = true;
         }
         PostMovement( entity );
