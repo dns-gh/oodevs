@@ -20,22 +20,25 @@ namespace
             ExpectCallback( 4 );
             StartCommand( "direct fire",
                 core::MakeModel( "identifier", 42 )
-                    ( "enemy", 51 )
-                    ( "percentage", 0.07 )
-                    ( "mode", 0 )
-                    ( "type", 0 )
-                    ( "major", false )
-                    ( "dotation", 0 ) );
+                               ( "enemy", 51 )
+                               ( "percentage", 0.07 )
+                               ( "mode", 0 )
+                               ( "type", 0 )
+                               ( "major", false )
+                               ( "dotation", 0 ) );
             mock::verify();
         }
         ~FireFixture()
         {
             ExpectCallback( 5 );
-            ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity", 42 )( "running", false ) );
+            ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity/identifier", 42 )
+                                                                   ( "running", false ) );
         }
         void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
         {
-            ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )( "id", mock::any )( "code", code ) );
+            ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )
+                                                                            ( "id", mock::any )
+                                                                            ( "code", code ) );
         }
     };
 }
@@ -199,17 +202,18 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_fir
     ExpectCallback( 4 );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity", 42 )
-            ( "enemy", 43 )
-            ( "report", true )
-            ( "paused", false ) );
+                              ( "enemy", 43 )
+                              ( "report", true )
+                              ( "paused", false ) );
     ExpectEvent( "direct fire pion",
         sword::test::MakeModel( "component", sword::test::MakeUserData( &data ) )
-            ( "dotation", ammo_1 )
-            ( "enemy", 43 )
-            ( "entity", 42 )
-            ( "running", true )
-            ( "use-ph", true )
-            ( "missed", true ) );
+                              ( "dotation", ammo_1 )
+                              ( "enemy/data", "data" )
+                              ( "entity/identifier", 42 )
+                              ( "entity/data", "data" )
+                              ( "running", true )
+                              ( "use-ph", true )
+                              ( "missed", true ) );
     ExecuteCommands();
 }
 
@@ -223,17 +227,18 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing
     ExpectCallback( 4 );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity", 42 )
-            ( "enemy", 43 )
-            ( "report", true )
-            ( "paused", false ) );
+                              ( "enemy", 43 )
+                              ( "report", true )
+                              ( "paused", false ) );
     ExpectEvent( "direct fire pion",
         sword::test::MakeModel( "component", sword::test::MakeUserData( &data ) )
-            ( "dotation", ammo_1 )
-            ( "enemy", 43 )
-            ( "entity", 42 )
-            ( "running", true )
-            ( "use-ph", true )
-            ( "missed", false ) );
+                              ( "dotation", ammo_1 )
+                              ( "enemy/data", "data" )
+                              ( "entity/identifier", 42 )
+                              ( "entity/data", "data" )
+                              ( "running", true )
+                              ( "use-ph", true )
+                              ( "missed", false ) );
     ExecuteCommands();
 }
 
@@ -247,31 +252,29 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
     ExpectCallback( 4 );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity", 42 )
-            ( "enemy", 43 )
-            ( "report", true )
-            ( "paused", false ) );
+                              ( "enemy", 43 )
+                              ( "report", true )
+                              ( "paused", false ) );
     ExpectEvent( "direct fire pion",
         sword::test::MakeModel( "component", sword::test::MakeUserData( &data ) )
-            ( "dotation", ammo_1 )
-            ( "enemy", 43 )
-            ( "entity", 42 )
-            ( "running", true )
-            ( "use-ph", true )
-            ( "missed", false ) );
-
+                              ( "dotation", ammo_1 )
+                              ( "enemy/data", "data" )
+                              ( "entity/identifier", 42 )
+                              ( "entity/data", "data" )
+                              ( "running", true )
+                              ( "use-ph", true )
+                              ( "missed", false ) );
     ExpectCallback( 4 );
     StartCommand( "direct fire",
         core::MakeModel( "identifier", 42 )
-            ( "enemy", 51 )
-            ( "percentage", 0.07 )
-            ( "mode", 0 )
-            ( "type", 0 )
-            ( "major", false )
-            ( "dotation", 0 ) );
+                       ( "enemy", 51 )
+                       ( "percentage", 0.07 )
+                       ( "mode", 0 )
+                       ( "type", 0 )
+                       ( "major", false )
+                       ( "dotation", 0 ) );
     ExpectCallback( 4 );
-
     ExecuteCommands();
-
     ExpectCallback( 5 );
-    ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity", 42 )( "running", false ) );
+    ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity/identifier", 42 )( "running", false ) );
 }

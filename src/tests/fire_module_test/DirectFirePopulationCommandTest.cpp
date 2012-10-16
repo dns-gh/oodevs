@@ -21,10 +21,10 @@ namespace
             ExpectCallback( 4 );
             StartCommand( "direct fire population",
                 core::MakeModel( "identifier", 42 )
-                    ( "population", 53 )
-                    ( "percentage", 1 )
-                    ( "mode", 0 )
-                    ( "dotation", ammo_1 ) );
+                               ( "population", 53 )
+                               ( "percentage", 1 )
+                               ( "mode", 0 )
+                               ( "dotation", ammo_1 ) );
             mock::verify();
         }
         ~FireFixture()
@@ -157,10 +157,13 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_hits
     MOCK_EXPECT( GetFireRandomNumber ).exactly( 2 ).returns( 0 ); // $$$$ MCO 2012-09-21: one random per reserved ammo
     ExpectCallback( 4 );
     ExpectEvent( "direct fire population attack",
-        sword::test::MakeModel( "entity", sword::test::MakeModel( "identifier", 42 )( "components", mock::any )( "knowledges", mock::any ) ) // $$$$ MCO 2012-09-21: this is actually a copy of 'entity'
-            ( "population", 53 )
-            ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
-            ( "paused", false ) );
+        sword::test::MakeModel( "entity", sword::test::MakeModel( "identifier", 42 )
+                                                                ( "components", mock::any )
+                                                                ( "knowledges", mock::any )
+                                                                ( "data", mock::any ) ) // $$$$ MCO 2012-09-21: this is actually a copy of 'entity'
+                                          ( "population", 53 )
+                                          ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
+                                          ( "paused", false ) );
     ExpectEvent( "direct fire population",
         sword::test::MakeModel( "entity", 42 )
             ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
@@ -178,7 +181,10 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_no_h
     MOCK_EXPECT( GetFireRandomNumber ).returns( 0 );
     ExpectCallback( 4 );
     ExpectEvent( "direct fire population attack",
-        sword::test::MakeModel( "entity", sword::test::MakeModel( "identifier", 42 )( "components", mock::any )( "knowledges", mock::any ) ) // $$$$ MCO 2012-09-21: this is actually a copy of 'entity'
+        sword::test::MakeModel( "entity", sword::test::MakeModel( "identifier", 42 )
+                                                                ( "components", mock::any )
+                                                                ( "knowledges", mock::any )
+                                                                ( "data", mock::any ) ) // $$$$ MCO 2012-09-21: this is actually a copy of 'entity'
             ( "population", 53 )
             ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
             ( "paused", false ) );

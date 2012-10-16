@@ -38,10 +38,8 @@ namespace
 // Name: DirectFirePionEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
-DirectFirePionEventListener::DirectFirePionEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver )
-    : model_   ( model )
-    , facade_  ( facade )
-    , resolver_( resolver )
+DirectFirePionEventListener::DirectFirePionEventListener( core::Facade& facade )
+    : facade_( facade )
 {
     facade.Register( event, *this );
 }
@@ -129,8 +127,8 @@ namespace
 // -----------------------------------------------------------------------------
 void DirectFirePionEventListener::Update( const core::Model& event )
 {
-    MIL_AgentPion& pion = resolver_.Get( static_cast< unsigned int >( event[ "entity" ] ) );
-    MIL_Agent_ABC& target = resolver_.Get( static_cast< unsigned int >( event[ "enemy" ] ) );
+    MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
+    MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< MIL_AgentPion >();
     const std::string& dotation = event[ "dotation" ];
     const PHY_DotationCategory* category = PHY_DotationType::FindDotationCategory( dotation );
     if( ! category )
@@ -141,7 +139,7 @@ void DirectFirePionEventListener::Update( const core::Model& event )
     if( ! event[ "missed" ] )
     {
         PHY_ComposantePion& component = event[ "component" ].GetUserData< PHY_ComposantePion >();
-        PHY_FireResults_Pion*& results = results_[ event[ "entity" ] ]; // $$$$ MCO 2012-04-26: use command id instead ? can a unit have several direct fire running in parallel ?
+        PHY_FireResults_Pion*& results = results_[ event[ "entity/identifier" ] ]; // $$$$ MCO 2012-04-26: use command id instead ? can a unit have several direct fire running in parallel ?
         if( ! results )
         {
             results = new PHY_FireResults_Pion( pion, target );
@@ -163,7 +161,7 @@ void DirectFirePionEventListener::Update( const core::Model& event )
 // -----------------------------------------------------------------------------
 void DirectFirePionEventListener::Remove( const core::Model& event )
 {
-    IT_Results it = results_.find( event[ "entity" ] );
+    IT_Results it = results_.find( event[ "entity/identifier" ] );
     if( it != results_.end() )
     {
         it->second->DecRef();

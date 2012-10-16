@@ -37,10 +37,8 @@ namespace
 // Name: DirectFirePerceptionEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
-DirectFirePerceptionEventListener::DirectFirePerceptionEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver )
-    : model_   ( model )
-    , facade_  ( facade )
-    , resolver_( resolver )
+DirectFirePerceptionEventListener::DirectFirePerceptionEventListener( core::Facade& facade )
+    : facade_( facade )
 {
     facade.Register( event, *this );
 }
@@ -127,8 +125,8 @@ void DirectFirePerceptionEventListener::Notify( const core::Model& event )
     {
         if( event[ "running" ] )
         {
-            MIL_AgentPion& pion = resolver_.Get( static_cast< unsigned int >( event[ "entity" ] ) );
-            MIL_Agent_ABC& target = resolver_.Get( static_cast< unsigned int >( event[ "enemy" ] ) );
+            MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
+            MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< MIL_AgentPion >();
             NotifyFirerPerception( pion, target ); // $$$$ MCO 2012-09-10: move to a separate listener
         }
     }

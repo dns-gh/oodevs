@@ -81,9 +81,11 @@ namespace fire
             entity[ "components" ];
             entity[ "knowledges" ] = 1242;
             entity[ "identifier" ] = 42;
+            entity[ "data" ] = "data";
             model[ "entities" ][ 43 ][ "components" ];
             target[ "components" ];
             target[ "identifier" ] = 43;
+            target[ "data" ] = "data";
             target[ "dead" ] = false;
             mock::sequence s1, s2;
             MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, std::string( "Initializing launchers" ) ).in( s1 );

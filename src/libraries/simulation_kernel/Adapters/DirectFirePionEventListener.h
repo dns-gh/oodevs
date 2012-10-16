@@ -10,11 +10,9 @@
 #ifndef SWORD_DIRECT_FIRE_PION_EVENT_LISTENER_H
 #define SWORD_DIRECT_FIRE_PION_EVENT_LISTENER_H
 
-#include "tools/Resolver.h"
 #include <core/EventListener_ABC.h>
 #include <map>
 
-class MIL_AgentPion;
 class PHY_FireResults_Pion;
 
 namespace core
@@ -35,7 +33,7 @@ class DirectFirePionEventListener : public core::EventListener_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             DirectFirePionEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver );
+    explicit DirectFirePionEventListener( core::Facade& facade );
     virtual ~DirectFirePionEventListener();
     //@}
 
@@ -61,9 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const core::Model& model_;
     core::Facade& facade_;
-    tools::Resolver< MIL_AgentPion >& resolver_;
     T_Results results_;
     //@}
 };

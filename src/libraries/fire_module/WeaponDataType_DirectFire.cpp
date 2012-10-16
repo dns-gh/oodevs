@@ -254,8 +254,9 @@ void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper:
 {
     const bool missed = bUsePH ? GET_HOOK( GetFireRandomNumber )( 0, 1 ) < GetPH( firer, target, compTarget[ "volume" ] ) : false;
     wrapper::Event event( "direct fire pion" );
-    event[ "entity" ] = static_cast< std::size_t >( firer[ "identifier" ] );
-    event[ "enemy" ] = static_cast< std::size_t >( target[ "identifier" ] );
+    event[ "entity/identifier" ] = static_cast< std::size_t >( firer[ "identifier" ] );
+    event[ "entity/data" ] = firer[ "data" ];
+    event[ "enemy/data" ] = target[ "data" ];
     event[ "component" ] = compTarget[ "component" ];
     event[ "dotation" ] = dotation_.GetName();
     event[ "running" ] = true;
