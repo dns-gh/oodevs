@@ -19,7 +19,6 @@
 #include "ConsumptionChangeRequestHandler_ABC.h"
 #include "AlgorithmsFactories.h"
 #include "Entities/Agents/Actions/Moving/SpeedComputerStrategy.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
@@ -195,24 +194,6 @@ double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environm
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
     rObjectSpeed *= rSpeedModificator_;
     return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, owner_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetPosition
-// Created: NLD 2005-09-30
-// -----------------------------------------------------------------------------
-const MT_Vector2D& RoleAction_Moving::GetPosition() const
-{
-    return owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::GetDirection
-// Created: NLD 2005-09-30
-// -----------------------------------------------------------------------------
-const MT_Vector2D& RoleAction_Moving::GetDirection() const
-{
-    return owner_.GetRole< PHY_RoleInterface_Location >().GetDirection();
 }
 
 // -----------------------------------------------------------------------------

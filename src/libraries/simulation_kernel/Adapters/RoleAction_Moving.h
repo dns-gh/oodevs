@@ -73,9 +73,6 @@ public:
     virtual bool CanMove() const;
     virtual double GetTheoricMaxSpeedWithReinforcement() const;
     virtual void SetTheoricSpeed( bool ) const;
-
-    virtual const MT_Vector2D& GetPosition () const;
-    virtual const MT_Vector2D& GetDirection() const;
     //@}
 
 private:
