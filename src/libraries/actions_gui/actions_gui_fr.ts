@@ -106,22 +106,22 @@
     <name>actions::gui::ParamHumanWoundList</name>
     <message>
         <source>Add...</source>
-        <translation type="unfinished">Ajouter...</translation>
+        <translation>Ajouter...</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>actions::gui::ParamObstacle</name>
     <message>
         <source>Type:</source>
-        <translation type="unfinished">Type:</translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <source>Demolition target type:</source>
-        <translation type="unfinished">Type de cible de démolition:</translation>
+        <translation>Type de cible de démolition:</translation>
     </message>
     <message>
         <source>Density per 100 square meter</source>

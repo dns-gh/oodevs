@@ -1660,6 +1660,7 @@
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_ar.ts" />
+    <None Include="..\..\src\applications\preparation_app\preparation_app_en.ts" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts">
       <SubType>Designer</SubType>

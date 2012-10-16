@@ -94,4 +94,4 @@ WeatherListView.cpp \
 WeatherPanel.cpp \
 WeatherWidget.cpp \
 
-TRANSLATIONS = clients_gui_fr.ts clients_gui_es.ts clients_gui_ar.ts
+TRANSLATIONS = clients_gui_en.ts clients_gui_fr.ts clients_gui_es.ts clients_gui_ar.ts

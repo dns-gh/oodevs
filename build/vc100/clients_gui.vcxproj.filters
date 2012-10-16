@@ -1496,6 +1496,9 @@
     <None Include="..\..\src\libraries\clients_gui\SearchTreeView.inl">
       <Filter>Source Files\MVC\View</Filter>
     </None>
+    <None Include="..\..\src\libraries\clients_gui\clients_gui_en.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HelpSystem.h">

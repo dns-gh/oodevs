@@ -746,6 +746,9 @@
     <None Include="..\..\src\applications\preparation_app\preparation_app_ar.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\applications\preparation_app\preparation_app_en.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\preparation_app\MainWindow.h">

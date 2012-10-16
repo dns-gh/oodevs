@@ -24,4 +24,4 @@ UrbanObject.cpp \
 Usages.cpp \
 XmlDescription.cpp \
 
-TRANSLATIONS = clients_kernel_fr.ts clients_kernel_es.ts clients_kernel_ar.ts
+TRANSLATIONS = clients_kernel_en.ts clients_kernel_fr.ts clients_kernel_es.ts clients_kernel_ar.ts
