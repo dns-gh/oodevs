@@ -390,7 +390,7 @@ namespace
     {
         return GET_ROLE( entity, RoleAction_Moving ).GetMaxSpeedWithReinforcement();
     }
-    DEFINE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) // $$$$ MCO 2012-10-15: no-op => remove !
+    DEFINE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) // $$$$ MCO 2012-10-15: not used because only for populations which are not supported for now
     {
         SWORD_UNUSED( entity );
         SWORD_UNUSED( point );
