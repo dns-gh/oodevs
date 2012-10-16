@@ -17,6 +17,7 @@
 #include "actions/Quantity.h"
 #include "actions/ParameterList.h"
 #include "actions/UnitMagicAction.h"
+#include "clients_gui/CommonDelegate.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
@@ -24,10 +25,11 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/MagicActionType.h"
-#include "clients_gui/SpinTableItem.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
 #include "gaming/StaticModel.h"
+
+#pragma warning( disable : 4355 )
 
 // -----------------------------------------------------------------------------
 // Name: EquipmentTransferDialog constructor
@@ -42,6 +44,7 @@ EquipmentTransferDialog::EquipmentTransferDialog( QWidget* pParent, kernel::Cont
     , profile_     ( profile )
     , selectedFrom_( controllers )
     , selectedTo_  ( controllers )
+    , delegate_    ( new gui::CommonDelegate( this ) )
 {
     // Dialog
     setCaption( tr( "Equipment transfer" ) );
@@ -70,13 +73,17 @@ EquipmentTransferDialog::EquipmentTransferDialog( QWidget* pParent, kernel::Cont
     }
     // Equipments
     {
-        equipmentTable_ = new EquipmentTable( 0, 2, this, "EquipmentTransferDialog_EquipmentTable" );
-        equipmentTable_->horizontalHeader()->setLabel( 0, tr( "Equipment" ) );
-        equipmentTable_->horizontalHeader()->setLabel( 1, tr( "Quantity" ) );
-        equipmentTable_->setColumnReadOnly( 0, true );
-        equipmentTable_->setColumnStretchable( 0, true );
+        equipmentTable_ = new QTableWidget();
+        equipmentTable_->setColumnCount( 2 );
+        equipmentTable_->setItemDelegate( delegate_ );
+        QStringList headers;
+        headers << tr( "Equipment" ) << tr( "Quantity" );
+        equipmentTable_->setHorizontalHeaderLabels( headers );
+        equipmentTable_->horizontalHeader()->setStretchLastSection( false );
+        equipmentTable_->horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
+        equipmentTable_->horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
+        equipmentTable_->verticalHeader()->hide();
         equipmentTable_->setShowGrid( false );
-        equipmentTable_->setLeftMargin( 0 );
         mainLayout->addMultiCellWidget( equipmentTable_, 2, 2, 0, 1 );
     }
     // ok / cancel butons
@@ -84,7 +91,7 @@ EquipmentTransferDialog::EquipmentTransferDialog( QWidget* pParent, kernel::Cont
         Q3HBox* buttonLayout = new Q3HBox( this, "EquipmentTransferDialog_ButtonLayout" );
         okButton_ = new QPushButton( tr( "Ok" ), buttonLayout, "EquipmentTransferDialog_ButtonOK" );
         QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout, "EquipmentTransferDialog_ButtonCancel" );
-        okButton_->setDefault( TRUE );
+        okButton_->setDefault( true );
         connect( okButton_   , SIGNAL( clicked() ), SLOT( Validate() ) );
         connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
         mainLayout->addMultiCellWidget( buttonLayout, 3, 3, 0, 1 );
@@ -192,22 +199,23 @@ void EquipmentTransferDialog::InitializeEquipments()
     const Equipments* equipments = selectedFrom_->Retrieve< Equipments >();
     if( !equipments )
         throw std::runtime_error( __FUNCTION__ " cannot find Equipments extension.");
-    while( equipmentTable_->numRows() )
-        equipmentTable_->removeRow( 0 );
+    equipmentTable_->clearContents();
     equipmentIdMap_.clear();
     tools::Iterator< const Equipment& > it = equipments->CreateIterator();
+    int row = 0;
     while( it.HasMoreElements() )
     {
         const Equipment& equipment = it.NextElement();
         if( equipment.available_ == 0 )
             continue;
+        equipmentTable_->setRowCount( row + 1 );
+        equipmentTable_->setItem( row, 0, new QTableWidgetItem() );
+        equipmentTable_->setItem( row, 1, new QTableWidgetItem() );
         equipmentIdMap_[ equipment.GetName() ] = equipment.type_.GetId();
-        unsigned int nRow = equipmentTable_->numRows();
-        equipmentTable_->insertRows( nRow );
-        equipmentTable_->setText( nRow, 0, equipment.GetName() );
-        gui::SpinTableItem< int >* quantity = new gui::SpinTableItem< int >( equipmentTable_, 0, equipment.available_ );
-        quantity->setText( "0" );
-        equipmentTable_->setItem( nRow, 1, quantity );
+        delegate_->AddSpinBox( row, row, 1, 1, 0, equipment.available_ );
+        equipmentTable_->item( row, 0 )->setText( equipment.GetName() );
+        equipmentTable_->item( row, 1 )->setText( "0" );
+        ++row;
     }
 }
 
@@ -218,7 +226,7 @@ void EquipmentTransferDialog::InitializeEquipments()
 void EquipmentTransferDialog::FillEquipments( actions::parameters::ParameterList& list )
 {
     int index = 0;
-    for( int nRow = 0; nRow < equipmentTable_->numRows(); ++nRow )
+    for( int nRow = 0; nRow < equipmentTable_->rowCount(); ++nRow )
     {
         int quantity = equipmentTable_->item( nRow, 1 )->text().toInt();
         if( quantity == 0 )
@@ -236,12 +244,9 @@ void EquipmentTransferDialog::FillEquipments( actions::parameters::ParameterList
 // -----------------------------------------------------------------------------
 bool EquipmentTransferDialog::CheckValidity() const
 {
-    for( int nRow = 0; nRow < equipmentTable_->numRows(); ++nRow )
-    {
-        equipmentTable_->setCellContentFromEditor( nRow, 1 );
+    for( int nRow = 0; nRow < equipmentTable_->rowCount(); ++nRow )
         if( equipmentTable_->item( nRow, 1 )->text().toInt() != 0 )
             return true;
-    }
     return false;
 }
 
