@@ -3315,7 +3315,7 @@ The spawn capacity will be disabled.</source>
     </message>
     <message>
         <source>m²</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">m²</translation>
     </message>
     <message>
         <source>PH</source>
@@ -3508,7 +3508,7 @@ Asegúrese que el archivo existe.</translation>
     </message>
     <message>
         <source>Attrition Surface (m²)</source>
-        <translation>Superficie de atrición (m2)</translation>
+        <translation>Superficie de atrición (m²)</translation>
     </message>
     <message>
         <source>PH</source>
@@ -3541,7 +3541,7 @@ Asegúrese que el archivo existe.</translation>
     </message>
     <message>
         <source>people/m²</source>
-        <translation>personas/m2</translation>
+        <translation>personas/m²</translation>
     </message>
     <message>
         <source>Modifier</source>
@@ -4026,7 +4026,7 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
     <message>
         <source>people/m²</source>
-        <translation>personas/m2</translation>
+        <translation>personas/m²</translation>
     </message>
     <message>
         <source>Modifier</source>

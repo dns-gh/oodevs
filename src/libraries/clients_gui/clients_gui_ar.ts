@@ -73,7 +73,9 @@
         <source>2D: %L1m
 3D: %L2m
 %L3°</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2D: %L1m
+3D: %L2m
+%L3°</translation>
     </message>
 </context>
 <context>
@@ -1596,11 +1598,11 @@ Do you want to remove it?</source>
     <name>gui::TerrainPicker</name>
     <message>
         <source>Wind speed: %L1km/h, direction: %L2°</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wind speed: %L1km/h, direction: %L2°</translation>
     </message>
     <message>
         <source>Temperature: %L2°C</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Température: %L2°C</translation>
     </message>
 </context>
 <context>
@@ -1975,6 +1977,10 @@ Do you want to remove it?</source>
     <message>
         <source>Weather type:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>°C</source>
+        <translation>°C</translation>
     </message>
 </context>
 </TS>

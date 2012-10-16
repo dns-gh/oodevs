@@ -1721,7 +1721,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>m²</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">m²</translation>
     </message>
     <message>
         <source>ID</source>
@@ -1733,7 +1733,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Area (m²)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Area (m²)</translation>
     </message>
     <message>
         <source>Delete</source>

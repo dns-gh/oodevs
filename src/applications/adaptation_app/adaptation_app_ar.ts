@@ -2837,7 +2837,7 @@ stance</source>
     </message>
     <message>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">°</translation>
     </message>
 </context>
 <context>
@@ -3162,7 +3162,7 @@ The spawn capacity will be disabled.</source>
     </message>
     <message>
         <source>m²</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">m²</translation>
     </message>
     <message>
         <source>PH</source>
@@ -3490,7 +3490,7 @@ Make sure the file exists.</source>
     </message>
     <message>
         <source>Attrition Surface (m²)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Attrition Surface (m²)</translation>
     </message>
     <message>
         <source>PH</source>
@@ -3527,7 +3527,7 @@ Make sure the file exists.</source>
     </message>
     <message>
         <source>people/m²</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">people/m²</translation>
     </message>
     <message>
         <source>Modifier</source>
@@ -3942,7 +3942,7 @@ Make sure that the file is not write-protected.</source>
     </message>
     <message>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">°</translation>
     </message>
     <message>
         <source>Can perform scanning</source>
@@ -4002,7 +4002,7 @@ Make sure that the file is not write-protected.</source>
     </message>
     <message>
         <source>people/m²</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">people/m²</translation>
     </message>
     <message>
         <source>Modifier</source>

@@ -1988,5 +1988,9 @@ Voulez-vous le supprimer?</translation>
         <source>Wind direction:</source>
         <translation>Direction du vent:</translation>
     </message>
+    <message>
+        <source>°C</source>
+        <translation>°C</translation>
+    </message>
 </context>
 </TS>

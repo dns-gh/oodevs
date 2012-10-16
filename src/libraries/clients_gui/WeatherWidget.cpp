@@ -99,7 +99,7 @@ WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
     // Temperature
     new QLabel( tools::translate( "gui::WeatherWidget", "Temperature:" ), this );
     temperature_ = new RichSpinBox( this, -20, 40, 1 );
-    temperature_->setSuffix( "°C" );
+    temperature_->setSuffix( tools::translate( "gui::WeatherWidget", "°C" ) );
 
     // Clouds
     new QLabel( tools::translate( "gui::WeatherWidget", "Clouds floor/ceiling/density:" ), this );
