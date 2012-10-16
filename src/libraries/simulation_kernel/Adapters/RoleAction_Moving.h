@@ -70,10 +70,11 @@ public:
     virtual void SetSpeedModificator( double rFactor );
     virtual void SetMaxSpeedModificator( double rFactor );
     virtual double GetMaxSpeedModificator() const;
-    virtual bool HasResources();
     virtual bool CanMove() const;
     virtual double GetTheoricMaxSpeedWithReinforcement() const;
     virtual void SetTheoricSpeed( bool ) const;
+
+    bool HasResources();
     //@}
 
 private:
