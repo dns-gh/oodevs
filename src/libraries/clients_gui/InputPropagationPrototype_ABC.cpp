@@ -96,9 +96,7 @@ namespace
     bool IsPropagationDir( const bfs::path& dir )
     {
         return bfs::is_directory( dir )
-               && bfs::exists( dir / "propagation.xml" )
-               && bfs::exists( dir / "propagation" )
-               && bfs::is_directory( dir / "propagation" );
+               && bfs::exists( dir / "propagation.xml" );
     }
 
     std::string BuildPropagationDir( const std::string& root, const std::string& path )

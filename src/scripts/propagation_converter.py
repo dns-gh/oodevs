@@ -14,7 +14,7 @@ def listascfiles(refdate, rootdir):
     return asc
 
 def writefile(path, root):
-    file = open( os.path.join( path, "config.xml" ), 'w')
+    file = open( os.path.join( path, "propagation.xml" ), 'w')
     xml.ElementTree(root).write(file)
     file.close()
 
