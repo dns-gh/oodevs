@@ -422,7 +422,7 @@ namespace
     }
     DEFINE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
     {
-        return GET_ROLE( entity, RoleAction_Moving ).CanObjectInteractWith( GET_DATA( object, MIL_Object_ABC ) );
+        return GET_DATA( object, MIL_Object_ABC ).CanInteractWith( GET_PION( entity ) );
     }
     DEFINE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
     {

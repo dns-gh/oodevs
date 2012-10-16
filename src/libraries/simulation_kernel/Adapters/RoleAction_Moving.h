@@ -78,11 +78,6 @@ public:
     virtual const MT_Vector2D& GetDirection() const;
     //@}
 
-    //! @name
-    //@{
-    virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
-    //@}
-
 private:
     //! @name Speed management
     //@{

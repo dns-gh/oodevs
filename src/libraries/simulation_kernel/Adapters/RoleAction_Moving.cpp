@@ -254,15 +254,6 @@ bool RoleAction_Moving::CanMove() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::CanObjectInteractWith
-// Created: NLD 2005-09-30
-// -----------------------------------------------------------------------------
-bool RoleAction_Moving::CanObjectInteractWith( const MIL_Object_ABC& object ) const
-{
-    return object.CanInteractWith( owner_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::HasResources
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
