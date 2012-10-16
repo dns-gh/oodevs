@@ -25,9 +25,8 @@ namespace
 // Name: ReportEventListener constructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
-ReportEventListener::ReportEventListener( const core::Model& model, core::Facade& facade )
-    : model_ ( model )
-    , facade_( facade )
+ReportEventListener::ReportEventListener( core::Facade& facade )
+    : facade_( facade )
 {
     facade.Register( event, *this );
 }
@@ -47,9 +46,7 @@ ReportEventListener::~ReportEventListener()
 // -----------------------------------------------------------------------------
 void ReportEventListener::Notify( const core::Model& report )
 {
-    const size_t identifier = report[ "entity" ];
-    const core::Model& entity = model_[ "entities" ][ identifier ];
-    const MIL_AgentPion& pion = entity[ "data" ].GetUserData< MIL_AgentPion >();
+    const MIL_AgentPion& pion = report[ "entity/data" ].GetUserData< MIL_AgentPion >();
     const int code = report[ "code" ];
     MIL_Report::PostEvent( pion, static_cast< MIL_Report::E_EngineReport >( code ) );
 }

@@ -106,7 +106,7 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
                                                         ( "shape", sword::test::MakeModel()[ sword::test::MakeModel( "x", 0. )( "y", 0. ) ]
                                                                                            [ sword::test::MakeModel( "x", 1. )( "y", 1. ) ]
                                                                                            [ sword::test::MakeModel( "x", 2. )( "y", 0. ) ] ) ] );
-    ExpectEvent( "report", sword::test::MakeModel( "entity", identifier )
+    ExpectEvent( "report", sword::test::MakeModel( "entity/data", 1337 )
                                                  ( "code", static_cast< int >( MIL_Report::eReport_CiviliansEncountered ) ) );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();
@@ -127,7 +127,7 @@ BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_d
                                                                                                       ( "target/can-be-perceived", true )
                                                                                                       ( "level", 3 ) // identified
                                                                                                       ( "recorded", false ) ] );
-    ExpectEvent( "report", sword::test::MakeModel( "entity", identifier )
+    ExpectEvent( "report", sword::test::MakeModel( "entity/data", 1337 )
                                                  ( "code", static_cast< int >( MIL_Report::eReport_CiviliansEncountered ) ) );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();

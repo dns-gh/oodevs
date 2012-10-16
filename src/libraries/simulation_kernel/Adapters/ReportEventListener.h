@@ -14,7 +14,6 @@
 
 namespace core
 {
-    class Model;
     class Facade;
 }
 
@@ -31,7 +30,7 @@ class ReportEventListener : public core::EventListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportEventListener( const core::Model& model, core::Facade& facade );
+    explicit ReportEventListener( core::Facade& facade );
     virtual ~ReportEventListener();
     //@}
 
@@ -43,7 +42,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const core::Model& model_;
     core::Facade& facade_;
     //@}
 };
