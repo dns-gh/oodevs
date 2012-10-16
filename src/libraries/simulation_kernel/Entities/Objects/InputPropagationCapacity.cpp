@@ -22,8 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InputPropagationCapacity )
 // Name: InputPropagationCapacity constructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-InputPropagationCapacity::InputPropagationCapacity( xml::xistream& xis )
-    : model_( xis.attribute< std::string >( "model" ) )
+InputPropagationCapacity::InputPropagationCapacity( xml::xistream& /*xis*/ )
 {
     // NOTHING
 }
@@ -41,8 +40,7 @@ InputPropagationCapacity::InputPropagationCapacity()
 // Name: InputPropagationCapacity constructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-InputPropagationCapacity::InputPropagationCapacity( const InputPropagationCapacity& from )
-    : model_ ( from.model_ )
+InputPropagationCapacity::InputPropagationCapacity( const InputPropagationCapacity& /*from*/ )
 {
     // NOTHING
 }
@@ -64,7 +62,6 @@ template< typename Archive >
 void InputPropagationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    file & model_;
 }
 
 // -----------------------------------------------------------------------------

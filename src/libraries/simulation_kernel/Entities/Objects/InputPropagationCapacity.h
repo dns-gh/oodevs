@@ -50,12 +50,6 @@ private:
     //@{
     InputPropagationCapacity( const InputPropagationCapacity& from );
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::string model_;
-    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( InputPropagationCapacity )

@@ -1575,6 +1575,14 @@ message ObjectAttributeToxicCloud {
     required LocatedQuantityList quantities = 1;
 }
 
+/** @struct ObjectAttributePropagation
+    @brief Defines an object attribute propagation
+*/
+message ObjectAttributePropagation {
+    //! The located quantities
+    required string model = 1;
+}
+
 /** @struct ObjectAttributeFire
     @brief Defines an object attribute fire
 */
@@ -1795,6 +1803,8 @@ message ObjectAttributes {
     optional ObjectAttributeUnderground       underground        = 23;
     //! @copybrief ObjectAttributeTrafficability
     optional ObjectAttributeTrafficability    trafficability     = 24;
+    //! @copybrief ObjectAttributePropagation
+    optional ObjectAttributePropagation       propagation        = 25;
 }
 
 /** @struct Marker

@@ -45,6 +45,11 @@ public:
     void serialize( Archive&, const unsigned int );
     //@}
 
+    //! @name Operations
+    //@{
+    void SendFullState( sword::ObjectAttributes& asn ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{

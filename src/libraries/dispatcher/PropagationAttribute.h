@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __ToxicCloudAttribute_h_
-#define __ToxicCloudAttribute_h_
+#ifndef __PropagationAttribute_h_
+#define __PropagationAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
 #include "protocol/Protocol.h"
@@ -17,33 +17,33 @@ namespace dispatcher
 {
 
 // =============================================================================
-/** @class  ToxicCloudAttribute
-    @brief  ToxicCloudAttribute
+/** @class  PropagationAttribute
+    @brief  Propagation attribute
 */
-// Created: NLD 2006-09-19
+// Created: LGY 2012-10-12
 // =============================================================================
-class ToxicCloudAttribute : public ObjectAttribute_ABC
+class PropagationAttribute : public ObjectAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ToxicCloudAttribute( const sword::ObjectAttributes& message );
-    virtual ~ToxicCloudAttribute();
+    explicit PropagationAttribute( const sword::ObjectAttributes& message );
+    virtual ~PropagationAttribute();
     //@}
 
     //! @name Operations
     //@{
     virtual void Update( const sword::ObjectAttributes& message );
-    virtual void Send  ( sword::ObjectAttributes& message ) const;
+    virtual void Send( sword::ObjectAttributes& message ) const;
     //@}
 
 private:
     //! @name Data member
     //@{
-    sword::LocatedQuantityList quantities_;
+    std::string model_;
     //@}
 };
 
 }
 
-#endif // __ToxicCloudAttribute_h_
+#endif // __PropagationAttribute_h_

@@ -26,6 +26,7 @@
 #include "MineAttribute.h"
 #include "NBCAttribute.h"
 #include "NBCTypeAttribute.h"
+#include "PropagationAttribute.h"
 #include "ObstacleAttribute.h"
 #include "ResourceNetworkAttribute.h"
 #include "StockAttribute.h"
@@ -128,6 +129,8 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< TimeLimitedAttribute >( message );
     if( message.has_toxic_cloud() )
         CreateOrUpdate< ToxicCloudAttribute >( message );
+    if( message.has_propagation() )
+        CreateOrUpdate< PropagationAttribute >( message );
     if( message.has_interaction_height() )
         CreateOrUpdate< InteractionHeightAttribute >( message );
     if( message.has_stock() )

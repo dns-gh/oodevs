@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "InputPropagationAttribute.h"
 #include "MIL_AgentServer.h"
+#include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InputPropagationAttribute )
 
@@ -48,6 +49,15 @@ InputPropagationAttribute::InputPropagationAttribute( xml::xistream& xis )
 InputPropagationAttribute::~InputPropagationAttribute()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: InputPropagationAttribute::SendFullState
+// Created: LGY 2012-10-08
+// -----------------------------------------------------------------------------
+void InputPropagationAttribute::SendFullState( sword::ObjectAttributes& asn ) const
+{
+    asn.mutable_propagation()->set_model( model_ );
 }
 
 // -----------------------------------------------------------------------------

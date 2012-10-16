@@ -115,6 +115,7 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyRecipientResourcesRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\LogSupplyResourceRequest.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\PluginFactory.cpp" />
+    <ClCompile Include="..\..\src\libraries\dispatcher\PropagationAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Services.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\Simulation.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\SimulationNetworker.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\OrderResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\PluginFactory_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\PropagationAttribute.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Services.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\MessageHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\NullClientPublisher.h" />
