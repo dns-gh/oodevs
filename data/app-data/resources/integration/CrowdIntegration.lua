@@ -163,6 +163,10 @@ integration.hasReachedDestination = function( point )
     return DEC_Population_HasReachedDestination( point.source )
 end
 
+integration.hasEntirelyReachedDestination = function( localizedElement )
+    return DEC_Population_HasReachedDestinationCompletely( localizedElement:getPosition() )
+end
+
 integration.setDensitePopulationSortante = function( checkpoint, outgoingFlow )
    DEC_ConnaissanceObjet_ChangeDensitePopulationSortante( checkpoint, outgoingFlow / 300 ) -- valeur entre 0.003 et 0.03
 end
@@ -370,4 +374,8 @@ end
 
 integration.changeAttitude = function( attitude )
     DEC_Population_ChangerAttitude( attitude )
+end
+
+integration.canObjectFilterCrowds = function( object )
+    return DEC_ObjectKnowledge_HasCapacity( object.source, "population-filter" )
 end
