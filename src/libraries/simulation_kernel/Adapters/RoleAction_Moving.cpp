@@ -17,7 +17,6 @@
 #include "ConsumptionComputerFactory_ABC.h"
 #include "ConsumptionModeChangeRequest_ABC.h"
 #include "ConsumptionChangeRequestHandler_ABC.h"
-#include "ObjectCollisionNotificationHandler_ABC.h"
 #include "AlgorithmsFactories.h"
 #include "Entities/Agents/Actions/Moving/SpeedComputerStrategy.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -25,8 +24,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Decision/DEC_Representations.h"
-#include "Decision/DEC_PathPoint.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RoleAction_Moving )
 
