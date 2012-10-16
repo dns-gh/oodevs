@@ -43,10 +43,10 @@ namespace
         event.Post();
     }
 
-    void PostReport( unsigned int entity, MIL_Report::E_EngineReport code, const std::string& name )
+    void PostReport( const wrapper::View& entity, MIL_Report::E_EngineReport code, const std::string& name )
     {
         wrapper::Event event( "movement report with name" );
-        event[ "entity" ] = entity;
+        event[ "entity/data" ] = entity[ "data" ];
         event[ "code" ] = code;
         event[ "name" ] = name;
         event.Post();
@@ -203,7 +203,7 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< Pa
         {
             if( GET_HOOK( ObjectIsInside )( *it, lastWaypoint ) )
             {
-                PostReport( entity_, MIL_Report::eReport_DifficultMovementProgression, (*it)[ "type/real-name" ] );
+                PostReport( entity, MIL_Report::eReport_DifficultMovementProgression, (*it)[ "type/real-name" ] );
                 isInsideObject = true;
                 break;
             }
