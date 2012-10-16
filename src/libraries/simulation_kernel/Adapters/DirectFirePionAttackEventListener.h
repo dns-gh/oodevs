@@ -33,7 +33,7 @@ class DirectFirePionAttackEventListener : public core::EventListener_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             DirectFirePionAttackEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver );
+    explicit DirectFirePionAttackEventListener( core::Facade& facade );
     virtual ~DirectFirePionAttackEventListener();
     //@}
 
@@ -45,9 +45,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const core::Model& model_;
     core::Facade& facade_;
-    tools::Resolver< MIL_AgentPion >& resolver_;
     //@}
 };
 

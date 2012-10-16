@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DirectFirePionAttackEventListener.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "MT_Tools/MT_Logger.h"
 #include <core/Facade.h>
@@ -26,10 +25,8 @@ namespace
 // Name: DirectFirePionAttackEventListener constructor
 // Created: MCO 2012-04-26
 //-----------------------------------------------------------------------------
-DirectFirePionAttackEventListener::DirectFirePionAttackEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver )
-    : model_   ( model )
-    , facade_  ( facade )
-    , resolver_( resolver )
+DirectFirePionAttackEventListener::DirectFirePionAttackEventListener( core::Facade& facade )
+    : facade_( facade )
 {
     facade.Register( event, *this );
 }
@@ -51,8 +48,8 @@ void DirectFirePionAttackEventListener::Notify( const core::Model& event )
 {
     try
     {
-        MIL_AgentPion& pion = resolver_.Get( static_cast< unsigned int >( event[ "entity" ] ) );
-        MIL_Agent_ABC& target = resolver_.Get( static_cast< unsigned int >( event[ "enemy" ] ) );
+        MIL_AgentPion& pion = event[ "entity/data" ].GetUserData< MIL_AgentPion >();
+        MIL_Agent_ABC& target = event[ "enemy/data" ].GetUserData< MIL_AgentPion >();
         if( ! event[ "paused" ] )
             pion.NotifyAttacking( target, event[ "report" ] );
         target.NotifyAttackedBy( pion, event[ "report" ] );

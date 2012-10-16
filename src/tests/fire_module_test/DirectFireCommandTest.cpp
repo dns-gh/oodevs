@@ -151,11 +151,11 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_enemy_
 {
     ExpectCallback( 1 );
     ExpectEvent( "direct fire pion attack",
-        sword::test::MakeModel( "entity", 42 )
-            ( "enemy", 43 )
-            ( "report", true )
-            ( "paused", false ) );
-    ExecuteCommands();
+        sword::test::MakeModel( "entity/data", "data" )
+                              ( "enemy/data", "data" )
+                              ( "report", true )
+                              ( "paused", false ) );
+   ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_no_component_can_be_found_to_fire_at, FiringFixture )
@@ -164,10 +164,10 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_no_com
     MOCK_EXPECT( CanComponentBeFiredAt ).once().with( core::Convert( &component_2 ), mock::any ).returns( false );
     ExpectCallback( 1 );
     ExpectEvent( "direct fire pion attack",
-        sword::test::MakeModel( "entity", 42 )
-            ( "enemy", 43 )
-            ( "report", true )
-            ( "paused", false ) );
+        sword::test::MakeModel( "entity/data", "data" )
+                              ( "enemy/data", "data" )
+                              ( "report", true )
+                              ( "paused", false ) );
     ExecuteCommands();
 }
 
@@ -201,8 +201,8 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_fir
     MOCK_EXPECT( GetFireRandomNumber ).once().returns( 0 );
     ExpectCallback( 4 );
     ExpectEvent( "direct fire pion attack",
-        sword::test::MakeModel( "entity", 42 )
-                              ( "enemy", 43 )
+        sword::test::MakeModel( "entity/data", "data" )
+                              ( "enemy/data", "data" )
                               ( "report", true )
                               ( "paused", false ) );
     ExpectEvent( "direct fire pion",
@@ -226,8 +226,8 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing
     MOCK_EXPECT( GetFireRandomNumber ).once().returns( 1 );
     ExpectCallback( 4 );
     ExpectEvent( "direct fire pion attack",
-        sword::test::MakeModel( "entity", 42 )
-                              ( "enemy", 43 )
+        sword::test::MakeModel( "entity/data", "data" )
+                              ( "enemy/data", "data" )
                               ( "report", true )
                               ( "paused", false ) );
     ExpectEvent( "direct fire pion",
@@ -251,8 +251,8 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
     MOCK_EXPECT( GetFireRandomNumber ).returns( 1 );
     ExpectCallback( 4 );
     ExpectEvent( "direct fire pion attack",
-        sword::test::MakeModel( "entity", 42 )
-                              ( "enemy", 43 )
+        sword::test::MakeModel( "entity/data", "data" )
+                              ( "enemy/data", "data" )
                               ( "report", true )
                               ( "paused", false ) );
     ExpectEvent( "direct fire pion",

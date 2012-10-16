@@ -123,8 +123,8 @@ namespace
     void NotifyAttacking( const wrapper::View& entity, const wrapper::View& target, bool mustReport, bool paused )
     {
         wrapper::Event event( "direct fire pion attack" );
-        event[ "entity" ] = static_cast< std::size_t >( entity[ "identifier" ] );
-        event[ "enemy" ] = static_cast< std::size_t >( target[ "identifier" ] );
+        event[ "entity/data" ] = entity[ "data" ];
+        event[ "enemy/data" ] = target[ "data" ];
         event[ "report" ] = mustReport;
         event[ "paused" ] = paused;
         event.Post();
