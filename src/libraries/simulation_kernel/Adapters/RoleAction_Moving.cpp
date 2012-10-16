@@ -72,15 +72,6 @@ void RoleAction_Moving::serialize( Archive& file, const unsigned int )
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::ApplySpeedModificators
-// Created: NLD 2004-11-04
-// -----------------------------------------------------------------------------
-double RoleAction_Moving::ApplySpeedModificators( double rSpeed ) const
-{
-    return rSpeed * rSpeedModificator_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::Execute
 // Created: DDA 2010-06-14
 // -----------------------------------------------------------------------------
@@ -225,7 +216,7 @@ double RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& environm
     const double rCurrentEnvSpeed = GetSpeedWithReinforcement( environment );
 
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
-    rObjectSpeed = ApplySpeedModificators( rObjectSpeed );
+    rObjectSpeed *= rSpeedModificator_;
     return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, owner_ );
 }
 

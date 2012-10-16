@@ -116,8 +116,6 @@ private:
     //! @name Speed management
     //@{
     double GetMaxSpeed( const MIL_Object_ABC& object ) const;
-    double ApplyMaxSpeedModificators( double rSpeed ) const;
-    double ApplySpeedModificators( double rSpeed ) const;
     //@}
 
     //! @name Network
