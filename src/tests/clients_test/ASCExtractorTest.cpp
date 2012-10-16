@@ -28,7 +28,7 @@ namespace
         BOOST_CHECK_EQUAL( pixelSire.Y(), -50 );
 
         kernel::ASCExtractor::T_Tiles tiles = extractor.GetTiles();
-        BOOST_CHECK_EQUAL( tiles.size(), 20 );
+        BOOST_CHECK_EQUAL( tiles.size(), 20u );
     }
 }
 
