@@ -12,4 +12,12 @@
             </default>
         </parameter>
     </parameters>
+    <feedbacks>
+        <feedback name="tookOff">
+            <description>Set upon action completion.</description>
+        </feedback>
+        <feedback name="done">
+            <description>Set upon action completion.</description>
+        </feedback>
+    </feedbacks>
 </skill>

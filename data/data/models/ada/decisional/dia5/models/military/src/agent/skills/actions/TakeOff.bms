@@ -1,16 +1,18 @@
 -- **************************************************************************** 
--- Take off: to set the agent altitude with the 'self.params.height' value.
--- self.params.height: the wanted altitude
+-- Take off
 -- ****************************************************************************
 rootnode 
 {
+    feebacks = { "tookOff" },
+
     -- -------------------------------------------------------------------------------- 
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
         myself.altitude = self.params.height
-        DEC_Agent_HauteurDeVol( myself.altitude )
+        DEC_Agent_HauteurDeVol( myself.altitude ) -- $$$ MIA TODO Action sur le body, faire un body flyingAgent et virer la méthode DEC
         integration.activateSensors() -- $$$ MIA TODO A virer spé drones
-        Feedback( self.feedbacks.done )
+        Feedback( self.feedbacks.tookOff )
+        Feedback( self.feedbacks.done ) -- if called within a mission
     end,
 }

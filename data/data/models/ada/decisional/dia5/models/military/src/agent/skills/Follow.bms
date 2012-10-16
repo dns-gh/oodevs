@@ -20,7 +20,7 @@ rootnode
                 else
                     meKnowledge:RC( eRC_FollowingUnitIsDead )
                 end
-            end -- else...the knowldedge of the entity is lost. Can't follow it
+            end -- else...the knowledge of the entity is lost. Can't follow it
         end
 
         -- None of the entities can be followed...
@@ -31,6 +31,6 @@ rootnode
         end -- else, decide to follow filtered intities
 
         -- Activate "StayClose" skill to follow operational entities
-        Activate( skill.links.stayClose, 1, { entities = self.entities } )
+        Activate( skill.links.stayClose, 1, { entities = self.entities, distanceMin = self.params.distanceMin } )
     end
 }

@@ -3,15 +3,15 @@
 -- ****************************************************************************
 rootnode 
 {
+    feebacks = { "landed" },
     -- -------------------------------------------------------------------------------- 
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
-        if DEC_Agent_EstEnVol() then
-            myself.altitude = 0
-            DEC_Agent_HauteurDeVol( myself.altitude )
-        end
-        integration.deactivateSensors()
-        Feedback( self.feedbacks.done, additionalParams )
+        myself.altitude = 0
+        DEC_Agent_HauteurDeVol( myself.altitude ) -- $$$ MIA TODO Action sur le body, faire un body flyingAgent et virer la méthode DEC
+        integration.deactivateSensors()-- $$$ MIA TODO A virer spé drones
+        Feedback( self.feedbacks.landed )
+        Feedback( self.feedbacks.done ) -- if called within a mission
     end,
 }

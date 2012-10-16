@@ -12,6 +12,14 @@ If no entities can be followed (none of them are operational), this skill sends 
                 </list>
             </type>
         </parameter>
+        <parameter name="distanceMin">
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>100.0</number>
+            </default>
+        </parameter>
     </parameters>
     <links>
         <link name="stayClose" skill="agent.skills.primitives.StayClose"/>
