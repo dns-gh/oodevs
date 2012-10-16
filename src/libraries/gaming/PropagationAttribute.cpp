@@ -80,7 +80,7 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
     if( !propagation_.empty() )
     {
         QDateTime current = simulation.GetDateTime();
-        CIT_Propagation it = propagation_.begin();
+        IT_Propagation it = propagation_.begin();
         if( current >= it->first )
         {
             tiles_.clear();

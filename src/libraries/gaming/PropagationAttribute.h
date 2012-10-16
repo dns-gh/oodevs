@@ -74,7 +74,7 @@ private:
     //@{
     typedef std::vector< std::string >     T_Files;
     typedef std::map< QDateTime, T_Files > T_Propagation;
-    typedef T_Propagation::const_iterator CIT_Propagation;
+    typedef T_Propagation::const_iterator IT_Propagation;
     //@}
 
 private:
