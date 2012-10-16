@@ -12,12 +12,14 @@
 
 BOOST_FIXTURE_TEST_CASE( external_perception_command_produces_external_perception_event, sword::perception::ModuleFixture )
 {
-    ExpectEvent( "external perception", sword::test::MakeModel( "identifier", 3 )
+    model[ "entities" ][ 3 ][ "data" ] = "data1";
+    model[ "entities" ][ 4 ][ "data" ] = "data2";
+    ExpectEvent( "external perception", sword::test::MakeModel( "entity/data", "data1" )
                                                               ( "level", 2 )
-                                                              ( "target/data", 0x123 ) );
+                                                              ( "target/data", "data2" ) );
     StartCommand( "external perception",
-        core::MakeModel( "identifier", 3 )
+        core::MakeModel( "perceiver", 3 )
                        ( "level", 2 )
-                       ( "target/data", 0x123 ) );
+                       ( "target", 4 ) );
     ExecuteCommands();
 }

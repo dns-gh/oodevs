@@ -28,12 +28,14 @@ ExternalPerceptionCommand::ExternalPerceptionCommand( const wrapper::View& /*par
 // Name: ExternalPerceptionCommand::Execute
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-void ExternalPerceptionCommand::Execute( const wrapper::View& parameters, const wrapper::View& /*model*/ ) const
+void ExternalPerceptionCommand::Execute( const wrapper::View& parameters, const wrapper::View& model ) const
 {
     wrapper::Event event( "external perception" );
-    event[ "identifier" ] = parameters[ "identifier" ];
+    const std::size_t perceiver = parameters[ "perceiver" ];
+    const std::size_t target = parameters[ "target" ];
+    event[ "entity/data" ] = model[ "entities" ][ perceiver ][ "data" ];
     event[ "level" ] = parameters[ "level" ];
-    event[ "target" ] = parameters[ "target" ];
+    event[ "target/data" ] = model[ "entities" ][ target ][ "data" ];
     event.Post();
 }
 

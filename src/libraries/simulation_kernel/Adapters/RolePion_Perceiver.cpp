@@ -676,14 +676,11 @@ void RolePion_Perceiver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC& /*obj
 // Name: RolePion_Perceiver::NotifytExternalPerception
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& /*agent*/, const PHY_PerceptionLevel& level )
+void RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& target, const PHY_PerceptionLevel& level )
 {
-    const core::Model& entity = model_[ "entities" ][ owner_.GetID() ][ "data" ];
-    core::Model parameters;
-    parameters = core::MakeModel( "identifier", owner_.GetID() )
-                                ( "level", level.GetID() );
-    parameters[ "target/data" ] = entity;
-    sink_.PostCommand( "external perception", parameters );
+    sink_.PostCommand( "external perception", core::MakeModel( "perceiver", owner_.GetID() )
+                                                             ( "level", level.GetID() )
+                                                             ( "target", target.GetID() ) );
 }
 
 // -----------------------------------------------------------------------------

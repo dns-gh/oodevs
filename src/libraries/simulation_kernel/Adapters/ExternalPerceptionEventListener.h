@@ -10,10 +10,7 @@
 #ifndef SWORD_EXTERNAL_PERCEPTION_EVENT_LISTENER_H
 #define SWORD_EXTERNAL_PERCEPTION_EVENT_LISTENER_H
 
-#include "tools/Resolver.h"
 #include <core/EventListener_ABC.h>
-
-class MIL_AgentPion;
 
 namespace core
 {
@@ -33,7 +30,7 @@ class ExternalPerceptionEventListener : public core::EventListener_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             ExternalPerceptionEventListener( const core::Model& model, core::Facade& facade, tools::Resolver< MIL_AgentPion >& resolver );
+    explicit ExternalPerceptionEventListener( core::Facade& facade );
     virtual ~ExternalPerceptionEventListener();
     //@}
 
@@ -45,9 +42,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const core::Model& model_;
     core::Facade& facade_;
-    tools::Resolver< MIL_AgentPion >& resolver_;
     //@}
 };
 
