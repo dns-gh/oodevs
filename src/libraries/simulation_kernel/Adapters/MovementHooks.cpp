@@ -18,6 +18,7 @@
 #include "AlgorithmsFactories.h"
 #include "LocationComputer_ABC.h"
 #include "LocationComputerFactory_ABC.h"
+#include "ObjectCollisionNotificationHandler_ABC.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -389,9 +390,10 @@ namespace
     {
         return GET_ROLE( entity, RoleAction_Moving ).GetMaxSpeedWithReinforcement();
     }
-    DEFINE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
+    DEFINE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) // $$$$ MCO 2012-10-15: no-op => remove !
     {
-        GET_ROLE( entity, RoleAction_Moving ).NotifyMovingOnPathPoint( point );
+        SWORD_UNUSED( entity );
+        SWORD_UNUSED( point );
     }
     DEFINE_HOOK( CanMoveOn, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
     {
@@ -424,11 +426,11 @@ namespace
     }
     DEFINE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
     {
-        return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingInsideObject( GET_DATA( object, MIL_Object_ABC ) );
+        GET_PION( entity ).Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, GET_DATA( object, MIL_Object_ABC ) );
     }
     DEFINE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
     {
-        return GET_ROLE( entity, RoleAction_Moving ).NotifyMovingOutsideObject( GET_DATA( object, MIL_Object_ABC ) );
+        GET_PION( entity ).Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, GET_DATA( object, MIL_Object_ABC ) );
     }
     DEFINE_HOOK( GetObjectKnownId, int, ( boost::shared_ptr< DEC_Knowledge_Object > obstacle ) )
     {

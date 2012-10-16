@@ -58,7 +58,6 @@ public:
     //@{
     virtual void Update( bool bIsDead );
     virtual void Clean();
-    bool HasChanged() const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     virtual void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
@@ -85,16 +84,6 @@ public:
     virtual const MT_Vector2D& GetDirection() const;
     //@}
 
-    //! @name Notifications
-    //@{
-    virtual void NotifyMovingOnPathPoint( const MT_Vector2D& point );
-    virtual void NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point );
-    virtual void NotifyMovingInsideObject( MIL_Object_ABC& object );
-    virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
-    virtual void NotifyEnvironmentChanged();
-    virtual void NotifyCurrentPathChanged();
-    //@}
-
     //! @name
     //@{
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const;
@@ -119,8 +108,6 @@ private:
     double                      rSpeedModificator_;
     double                      rMaxSpeedModificator_;
     // Network
-    bool                        bCurrentPathHasChanged_;
-    bool                        bEnvironmentHasChanged_;
     bool                        bHasMove_;
     mutable bool bTheoricMaxSpeed_;
     //@}

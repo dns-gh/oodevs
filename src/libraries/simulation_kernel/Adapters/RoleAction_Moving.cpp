@@ -37,14 +37,12 @@ using namespace sword;
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 RoleAction_Moving::RoleAction_Moving( MIL_AgentPion& pion )
-    : owner_                 ( pion )
-    , rSpeed_                ( 0.)
-    , rSpeedModificator_     ( 1. )
-    , rMaxSpeedModificator_  ( 1. )
-    , bCurrentPathHasChanged_( true )
-    , bEnvironmentHasChanged_( true )
-    , bHasMove_              ( false )
-    , bTheoricMaxSpeed_      ( false )
+    : owner_               ( pion )
+    , rSpeed_              ( 0.)
+    , rSpeedModificator_   ( 1. )
+    , rMaxSpeedModificator_( 1. )
+    , bHasMove_            ( false )
+    , bTheoricMaxSpeed_    ( false )
 {
     // NOTHING
 }
@@ -159,7 +157,7 @@ double RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement()
     SetTheoricSpeed( false );
     return result;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::SetTheoricSpeed
 // Created: LDC 2012-08-27
@@ -244,43 +242,6 @@ void RoleAction_Moving::ApplyMove( const MT_Vector2D& /*position*/, const MT_Vec
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::NotifyMovingOnPathPoint
-// Created: NLD 2005-10-04
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::NotifyMovingOnPathPoint( const MT_Vector2D& /*point*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::NotifyMovingOnSpecialPoint
-// Created: NLD 2005-09-30
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point )
-{
-    //@TODO MGD Refactor Path_Point and DEC_Representation, DEC_Representations must be a manager to avoid auto dia register
-    point->SendToDIA( owner_.GetRole< DEC_Representations >(), point );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::NotifyMovingInsideObject
-// Created: NLD 2005-09-30
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::NotifyMovingInsideObject( MIL_Object_ABC& object )
-{
-    owner_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::NotifyMovingOutsideObject
-// Created: NLD 2005-09-30
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
-{
-    owner_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RoleAction_Moving::CanMove
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
@@ -337,37 +298,8 @@ void RoleAction_Moving::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void RoleAction_Moving::Clean()
 {
-    bCurrentPathHasChanged_ = false;
-    bEnvironmentHasChanged_ = false;
-    bHasMove_               = false;
-    bTheoricMaxSpeed_       = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::HasChanged
-// Created: NLD 2004-09-23
-// -----------------------------------------------------------------------------
-bool RoleAction_Moving::HasChanged() const
-{
-    return bCurrentPathHasChanged_ || bEnvironmentHasChanged_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::NotifyEnvironmentChanged
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::NotifyEnvironmentChanged()
-{
-    bEnvironmentHasChanged_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RoleAction_Moving::NotifyCurrentPathChanged
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-void RoleAction_Moving::NotifyCurrentPathChanged()
-{
-    bCurrentPathHasChanged_ = true;
+    bHasMove_         = false;
+    bTheoricMaxSpeed_ = false;
 }
 
 // -----------------------------------------------------------------------------
