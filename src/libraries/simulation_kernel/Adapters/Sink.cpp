@@ -244,6 +244,7 @@ void Sink::Initialize()
     listeners_.push_back( new DirectFirePerceptionEventListener( *facade_ ) );
     listeners_.push_back( new DirectFirePionAttackEventListener( *facade_ ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
+    listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire population callback" ) );
     listeners_.push_back( new ExternalPerceptionEventListener( *facade_ ) );
     listeners_.push_back( new AlatMonitoringEventListener( *facade_ ) );
     listeners_.push_back( new DirectFirePopulationAttackEventListener( *facade_ ) );
