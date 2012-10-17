@@ -65,6 +65,7 @@ private slots:
     void ClearSelection();
     void OnSelectCheckpoint( const QString& session, const QString& checkpoint );
     void OnSwordVersionSelected( bool isLegacy );
+    void OnNoClientSelected( bool noClient );
     //@}
 
 protected:
@@ -101,6 +102,7 @@ protected:
     QTabWidget*                   tabs_;
     QTabWidget*                   configTabs_;
     bool                          isLegacy_;
+    bool                          noClient_;
     //@}
 };
 

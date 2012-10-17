@@ -64,15 +64,6 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\AuthoringPage.cpp">
       <Filter>Source Files\Pages\Implementations</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\selftraining_app\BattleCenterJoinPage.cpp">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\selftraining_app\BattleCenterLauncherPage.cpp">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\selftraining_app\BattleCenterPage.cpp">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\selftraining_app\CreateTerrainPage.cpp">
       <Filter>Source Files\Pages\Implementations</Filter>
     </ClCompile>
@@ -83,9 +74,6 @@
       <Filter>Source Files\Pages\Implementations</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\selftraining_app\QuitPage.cpp">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\selftraining_app\RemoteControlPage.cpp">
       <Filter>Source Files\Pages\Implementations</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\selftraining_app\ReplayPage.cpp">
@@ -148,6 +136,9 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\ExerciseListView.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\ScenarioJoinPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\selftraining_app\Config.h">
@@ -167,9 +158,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\selftraining_app\ContentPage.h">
       <Filter>Source Files\Pages</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\selftraining_app\BattleCenterPage.h">
-      <Filter>Source Files\Pages\Implementations</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\selftraining_app\HomePage.h">
       <Filter>Source Files\Pages\Implementations</Filter>
@@ -229,12 +217,6 @@
     <CustomBuild Include="..\..\src\applications\selftraining_app\AuthoringPage.h">
       <Filter>Source Files\Pages\Implementations</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\selftraining_app\BattleCenterJoinPage.h">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\selftraining_app\BattleCenterLauncherPage.h">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\CreateTerrainPage.h">
       <Filter>Source Files\Pages\Implementations</Filter>
     </CustomBuild>
@@ -242,9 +224,6 @@
       <Filter>Source Files\Pages\Implementations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\QuitPage.h">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\selftraining_app\RemoteControlPage.h">
       <Filter>Source Files\Pages\Implementations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\ReplayPage.h">
@@ -290,6 +269,9 @@
       <Filter>Translations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\DataPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\ScenarioJoinPage.h">
       <Filter>Source Files\Pages\Implementations</Filter>
     </CustomBuild>
   </ItemGroup>

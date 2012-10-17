@@ -76,51 +76,6 @@
     </message>
 </context>
 <context>
-    <name>BattleCenterJoinPage</name>
-    <message>
-        <source>Join</source>
-        <translation>Unirse</translation>
-    </message>
-    <message>
-        <source>Joining host</source>
-        <translation>Conectar al host</translation>
-    </message>
-    <message>
-        <source>Host:</source>
-        <translation>Host:</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <translation>Puerto:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Actualizar</translation>
-    </message>
-</context>
-<context>
-    <name>BattleCenterLauncherPage</name>
-    <message>
-        <source>Multiplayer session</source>
-        <translation>Sesión Multijugador</translation>
-    </message>
-</context>
-<context>
-    <name>BattleCenterPage</name>
-    <message>
-        <source>Start</source>
-        <translation>Iniciar</translation>
-    </message>
-    <message>
-        <source>Join</source>
-        <translation>Unirse</translation>
-    </message>
-    <message>
-        <source>Remote</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CreateExerciceWidget</name>
     <message>
         <source>Create new exercise:</source>
@@ -562,45 +517,6 @@ Do really you want to replace it ?</source>
     </message>
 </context>
 <context>
-    <name>RemoteControlPage</name>
-    <message>
-        <source>Remote control</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Host:</source>
-        <translation type="unfinished">Host:</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <translation type="unfinished">Puerto:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation type="unfinished">Actualizar</translation>
-    </message>
-    <message>
-        <source>Start game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start replay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="unfinished">Iniciar</translation>
-    </message>
-    <message>
-        <source>Stop running session</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Control</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ReplayPage</name>
     <message>
         <source>Replay</source>
@@ -639,6 +555,25 @@ Do really you want to replace it ?</source>
     </message>
 </context>
 <context>
+    <name>ScenarioJoinPage</name>
+    <message>
+        <source>Join</source>
+        <translation>Unirse</translation>
+    </message>
+    <message>
+        <source>Joining host</source>
+        <translation>Conectar al host</translation>
+    </message>
+    <message>
+        <source>Host:</source>
+        <translation>Host:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation>Puerto:</translation>
+    </message>
+</context>
+<context>
     <name>ScenarioLauncherPage</name>
     <message>
         <source>Scenario</source>
@@ -658,37 +593,22 @@ Do really you want to replace it ?</source>
     </message>
 </context>
 <context>
-    <name>ScenarioPage</name>
-    <message>
-        <source>Join multiplayer training session</source>
-        <translation>Unirse a sesión multijugador</translation>
-    </message>
-    <message>
-        <source>Start multiplayer training session</source>
-        <translation>Iniciar una sesión multijugador</translation>
-    </message>
-    <message>
-        <source>Control remote training sessions</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SelfTrainingPage</name>
     <message>
-        <source>Single</source>
-        <translation>Individual</translation>
+        <source>Start</source>
+        <translation>Iniciar</translation>
     </message>
     <message>
-        <source>Multiplayer</source>
-        <translation>Multijugador</translation>
+        <source>Start a training session</source>
+        <translation>Iniciar una sesión</translation>
     </message>
     <message>
-        <source>Start or join a multiplayer training session</source>
-        <translation>Iniciar o unirse a una sesión multijugador</translation>
+        <source>Join</source>
+        <translation>Unirse</translation>
     </message>
     <message>
-        <source>Start a single training session</source>
-        <translation>Iniciar una sesión individual</translation>
+        <source>Join a remote training session</source>
+        <translation>Unirse a una sesión remota</translation>
     </message>
 </context>
 <context>

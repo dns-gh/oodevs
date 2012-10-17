@@ -2,9 +2,6 @@ HEADERS =
 
 SOURCES = Application.cpp \
 AuthoringPage.cpp \
-BattleCenterJoinPage.cpp \
-BattleCenterLauncherPage.cpp \
-BattleCenterPage.cpp \
 CreateExerciceWidget.cpp \
 CreateTerrainPage.cpp \
 DataPage.cpp \
@@ -21,9 +18,9 @@ Page_ABC.cpp \
 ProcessDialogs.cpp \
 ProfileList.cpp \
 QuitPage.cpp \
-RemoteControlPage.cpp \
 ReplayPage.cpp \
 ScenarioEditPage.cpp \
+ScenarioJoinPage.cpp \
 ScenarioLauncherPage.cpp \
 SelfTrainingPage.cpp \
 SessionList.cpp \

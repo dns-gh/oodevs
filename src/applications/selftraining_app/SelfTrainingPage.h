@@ -58,8 +58,8 @@ private:
 private:
     //! @name Data Member
     //@{
-    QPushButton* singleButton_;
-    QPushButton* multiButton_;
+    QPushButton* startButton_;
+    QPushButton* joinButton_;
     //@}
 };
 

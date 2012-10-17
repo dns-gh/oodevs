@@ -3,19 +3,18 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2008 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __RemoteControlPage_h_
-#define __RemoteControlPage_h_
+#ifndef __ScenarioJoinPage_h_
+#define __ScenarioJoinPage_h_
 
 #include "LauncherClientPage.h"
 
 namespace frontend
 {
     class Exercise_ABC;
-    class ExerciseFilter_ABC;
 }
 
 namespace kernel
@@ -30,42 +29,39 @@ namespace tools
 
 class Config;
 class ExerciseList;
+class ProgressPage;
+class QSpinBox;
 
 // =============================================================================
-/** @class  RemoteControlPage
-    @brief  RemoteControlPage
+/** @class  ScenarioJoinPage
+    @brief  ScenarioJoinPage
 */
-// Created: SBO 2010-10-21
+// Created: SBO 2008-10-14
 // =============================================================================
-class RemoteControlPage : public LauncherClientPage
+class ScenarioJoinPage : public LauncherClientPage
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher );
-    virtual ~RemoteControlPage();
+             ScenarioJoinPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher );
+    virtual ~ScenarioJoinPage();
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();
+    virtual void Update();
     //@}
 
 private slots:
     //! @name Slots
     //@{
+    virtual void OnJoin();
     void SelectExercise( const frontend::Exercise_ABC& exercise );
     void ClearSelection();
-    void SelectRunningExercise( const frontend::Exercise_ABC& exercise );
-    void ClearRunningSelection();
-
-    void UpdateExerciseList();
-    void OnStart();
-    void OnReplay();
-    void OnStop();
     //@}
 
 private:
@@ -74,23 +70,15 @@ private:
     kernel::Controllers& controllers_;
     const Config& config_;
     const tools::Loader_ABC& fileLoader_;
+    ProgressPage* progressPage_;
     QLineEdit* host_;
     QSpinBox* port_;
     ExerciseList* exercises_;
-    ExerciseList* runningExercises_;
     const frontend::Exercise_ABC* exercise_;
-    const frontend::Exercise_ABC* runningExercise_;
-    std::auto_ptr< frontend::ExerciseFilter_ABC > filter_;
-    std::auto_ptr< frontend::ExerciseFilter_ABC > runningFilter_;
 
-    QLabel*      hostLabel_;
-    QLabel*      portLabel_;
-    QTabWidget*  tabs_;
-    QPushButton* updateButton_;
-    QPushButton* gameButton_;
-    QPushButton* replayButton_;
-    QPushButton* stopButton_;
+    QLabel* hostLabel_;
+    QLabel* portLabel_;
     //@}
 };
 
-#endif // __RemoteControlPage_h_
+#endif // __ScenarioJoinPage_h_

@@ -51,6 +51,14 @@
         <source>Paused at startup:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Client</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not start gaming client</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Application</name>

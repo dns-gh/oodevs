@@ -9,7 +9,7 @@
 
 #include "selftraining_app_pch.h"
 #include "SelfTrainingPage.h"
-#include "BattleCenterPage.h"
+#include "ScenarioJoinPage.h"
 #include "Config.h"
 #include "MenuButton.h"
 #include "ScenarioLauncherPage.h"
@@ -23,8 +23,8 @@ SelfTrainingPage::SelfTrainingPage( Q3WidgetStack* pages, Page_ABC& previous, co
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
 {
     setName( "SelfTrainingPage" );
-    singleButton_ = AddLink( *new ScenarioLauncherPage( pages, *this, controllers, config, fileLoader, launcher, interpreter ) );
-    multiButton_ = AddLink( *new BattleCenterPage( pages, *this, config, fileLoader, controllers, launcher, interpreter ) );
+    startButton_ = AddLink( *new ScenarioLauncherPage( pages, *this, controllers, config, fileLoader, launcher, interpreter ) );
+    joinButton_ = AddLink( *new ScenarioJoinPage( pages, *this, controllers, config, fileLoader, launcher ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ SelfTrainingPage::~SelfTrainingPage()
 // -----------------------------------------------------------------------------
 void SelfTrainingPage::OnLanguageChanged()
 {
-    SetTextAndSubtitle( singleButton_, tools::translate( "SelfTrainingPage", "Single" ), tools::translate( "SelfTrainingPage", "Start a single training session" ) );
-    SetTextAndSubtitle( multiButton_, tools::translate( "SelfTrainingPage", "Multiplayer" ), tools::translate( "SelfTrainingPage", "Start or join a multiplayer training session" ) );
+    SetTextAndSubtitle( startButton_, tools::translate( "SelfTrainingPage", "Start" ), tools::translate( "SelfTrainingPage", "Start a training session" ) );
+    SetTextAndSubtitle( joinButton_, tools::translate( "SelfTrainingPage", "Join" ), tools::translate( "SelfTrainingPage", "Join a remote training session" ) );
     MenuPage::OnLanguageChanged();
 }

@@ -69,6 +69,13 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
         fragmentsFrequencySpin_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, freqBox );
         fragmentsFrequencySpin_->setValue( 200 );
     }
+    clientBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
+    {
+        noClientLabel_ = new QLabel( clientBox_ );
+        noClientCheckBox_ = new QCheckBox( clientBox_ );
+        noClientCheckBox_->setChecked( false );
+        connect( noClientCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( NoClientChecked( int ) ) );
+    }
     legacyBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
     {
         legacyLabel_ = new QLabel( legacyBox_ );
@@ -105,7 +112,10 @@ void AdvancedConfigPanel::OnLanguageChanged()
     recordBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Recorder" ) );
     fragmentsFrequencyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Fragmentation frequency: " ) );
     
-    legacyBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Legacy Mode" ) );
+    clientBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Client" ) );
+    noClientLabel_->setText( tools::translate( "AdvancedConfigPanel", "Do not start gaming client" ) );
+
+	legacyBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Legacy Mode" ) );
     legacyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Enable Legacy Mode" ) );
 }
 
@@ -132,6 +142,15 @@ void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string
     action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreadsSpin_->value() );
     action.SetOption( "session/config/dispatcher/plugins/recorder/@fragmentfreq", fragmentsFrequencySpin_->value() );
     action.Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdvancedConfigPanel::SwordVersionChecked
+// Created: RBA 2012-01-30
+// -----------------------------------------------------------------------------
+void AdvancedConfigPanel::NoClientChecked( int state )
+{
+    emit NoClientSelected( state == Qt::Checked );
 }
 
 // -----------------------------------------------------------------------------

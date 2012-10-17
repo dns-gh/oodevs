@@ -137,6 +137,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
     , interpreter_ ( interpreter )
     , progressPage_( new ProgressPage( pages, *this ) )
     , exercise_    ( 0 )
+    , noClient_    ( false )
     , isLegacy_    ( false )
 {
     setName( "ScenarioLauncherPage" );
@@ -165,6 +166,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
                 AddPlugin< frontend::RandomPluginConfigPanel >();
                 frontend::AdvancedConfigPanel* advancedPanel = AddPlugin< frontend::AdvancedConfigPanel >();
                 connect( advancedPanel, SIGNAL( SwordVersionSelected( bool ) ), SLOT( OnSwordVersionSelected( bool ) ) );
+                connect( advancedPanel, SIGNAL( NoClientSelected( bool ) ), SLOT( OnNoClientSelected( bool ) ) );
             }
         }
         {
@@ -254,10 +256,19 @@ void ScenarioLauncherPage::OnStart()
         const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
         CreateSession( exerciseName, session );
         boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exerciseName, session, checkpoint_, true, isLegacy_ ) );
-        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exerciseName, session, profile_.GetLogin(), true ) );
-        boost::shared_ptr< CompositeProcessWrapper > process( new CompositeProcessWrapper( *progressPage_, simulation, client ) );
-        progressPage_->Attach( process );
-        process->Start();
+        if ( ! noClient_ )
+        {
+            boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exerciseName, session, profile_.GetLogin(), true ) );
+            boost::shared_ptr< CompositeProcessWrapper > process( new CompositeProcessWrapper( *progressPage_, simulation, client ) );
+            progressPage_->Attach( process );
+            process->Start();
+        }
+        else
+        {
+            boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, simulation ) );
+            progressPage_->Attach( process );
+            process->Start();
+        }
         progressPage_->show();
     }
     else if( target == "preparation" )
@@ -343,7 +354,7 @@ bool ScenarioLauncherPage::CanBeStarted() const
             return false;
         const std::string target = ReadTargetApplication( exerciseFile, fileLoader_ );
         if( target == "gaming" || target == "replayer" )
-            return profile_.IsValid();
+            return profile_.IsValid() || noClient_;
         if( target == "preparation" )
             return true;
     }
@@ -358,6 +369,15 @@ void ScenarioLauncherPage::OnSelectCheckpoint( const QString& session, const QSt
 {
     session_ = session;
     checkpoint_ = checkpoint;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::OnSwordVersionSelected
+// Created: RBA 2012-10-17
+// -----------------------------------------------------------------------------
+void ScenarioLauncherPage::OnNoClientSelected( bool noClient )
+{
+    noClient_ = noClient;
 }
 
 // -----------------------------------------------------------------------------

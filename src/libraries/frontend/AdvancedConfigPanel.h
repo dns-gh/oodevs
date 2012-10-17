@@ -51,12 +51,14 @@ public:
 signals:
     //! @name Signals
     //@{
+    void NoClientSelected( bool isLegacy );
     void SwordVersionSelected( bool isLegacy );
     //@}
 
 private slots:
     //! @name Operations
     //@{
+    void NoClientChecked( int state );
     void SwordVersionChecked( int state );
     //@}
 
@@ -83,7 +85,11 @@ private:
     QLabel*                     fragmentsFrequencyLabel_;
     QSpinBox*                   fragmentsFrequencySpin_;
 
-    Q3GroupBox*                 legacyBox_;
+    Q3GroupBox*                 clientBox_;
+    QLabel*                     noClientLabel_;
+    QCheckBox*                  noClientCheckBox_;
+
+	Q3GroupBox*                 legacyBox_;
     QLabel*                     legacyLabel_;
     QCheckBox*                  legacyCheckBox_;
     //@}

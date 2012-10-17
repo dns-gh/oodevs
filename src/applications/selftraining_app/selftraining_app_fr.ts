@@ -76,51 +76,6 @@
     </message>
 </context>
 <context>
-    <name>BattleCenterJoinPage</name>
-    <message>
-        <source>Join</source>
-        <translation>Rejoindre</translation>
-    </message>
-    <message>
-        <source>Joining host</source>
-        <translation>Connexion à l&apos;hôte</translation>
-    </message>
-    <message>
-        <source>Host:</source>
-        <translation>Hôte: </translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <translation>Port: </translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Mise à jour</translation>
-    </message>
-</context>
-<context>
-    <name>BattleCenterLauncherPage</name>
-    <message>
-        <source>Multiplayer session</source>
-        <translation>Session multi-joueur</translation>
-    </message>
-</context>
-<context>
-    <name>BattleCenterPage</name>
-    <message>
-        <source>Start</source>
-        <translation>Démarrer</translation>
-    </message>
-    <message>
-        <source>Join</source>
-        <translation>Rejoindre</translation>
-    </message>
-    <message>
-        <source>Remote</source>
-        <translation>Distant</translation>
-    </message>
-</context>
-<context>
     <name>CreateExerciceWidget</name>
     <message>
         <source>Create new exercise:</source>
@@ -564,45 +519,6 @@ Voulez-vous vraiment le remplacer ?</translation>
     </message>
 </context>
 <context>
-    <name>RemoteControlPage</name>
-    <message>
-        <source>Remote control</source>
-        <translation>Contrôle distant</translation>
-    </message>
-    <message>
-        <source>Host:</source>
-        <translation>Hôte: </translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <translation>Port: </translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Mise à jour</translation>
-    </message>
-    <message>
-        <source>Start game</source>
-        <translation>Démarrer le jeu</translation>
-    </message>
-    <message>
-        <source>Start replay</source>
-        <translation>Démarrer le rejeu</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation>Démarrer</translation>
-    </message>
-    <message>
-        <source>Stop running session</source>
-        <translation>Arrêter une session en cours</translation>
-    </message>
-    <message>
-        <source>Control</source>
-        <translation>Contrôler</translation>
-    </message>
-</context>
-<context>
     <name>ReplayPage</name>
     <message>
         <source>Replay</source>
@@ -641,6 +557,25 @@ Voulez-vous vraiment le remplacer ?</translation>
     </message>
 </context>
 <context>
+    <name>ScenarioJoinPage</name>
+    <message>
+        <source>Join</source>
+        <translation>Rejoindre</translation>
+    </message>
+    <message>
+        <source>Joining host</source>
+        <translation>Connexion à l&apos;hôte</translation>
+    </message>
+    <message>
+        <source>Host:</source>
+        <translation>Hôte: </translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation>Port: </translation>
+    </message>
+</context>
+<context>
     <name>ScenarioLauncherPage</name>
     <message>
         <source>Scenario</source>
@@ -660,37 +595,22 @@ Voulez-vous vraiment le remplacer ?</translation>
     </message>
 </context>
 <context>
-    <name>ScenarioPage</name>
-    <message>
-        <source>Start multiplayer training session</source>
-        <translation>Démarrer une session d&apos;entraînement multijoueur</translation>
-    </message>
-    <message>
-        <source>Join multiplayer training session</source>
-        <translation>Rejoindre une session d&apos;entraînement multijoueur</translation>
-    </message>
-    <message>
-        <source>Control remote training sessions</source>
-        <translation>Contrôler les sessions d&apos;entraînement distantes</translation>
-    </message>
-</context>
-<context>
     <name>SelfTrainingPage</name>
     <message>
-        <source>Single</source>
-        <translation>Solo</translation>
+        <source>Start</source>
+        <translation>Démarrer</translation>
     </message>
     <message>
-        <source>Start a single training session</source>
-        <translation>Démarrer une session d&apos;entraînement solo</translation>
+        <source>Start a training session</source>
+        <translation>Démarrer une session d&apos;entraînement</translation>
     </message>
     <message>
-        <source>Multiplayer</source>
-        <translation>Multijoueur</translation>
+        <source>Join</source>
+        <translation>Rejoindre</translation>
     </message>
     <message>
-        <source>Start or join a multiplayer training session</source>
-        <translation>Démarrer ou rejoindre une session d&apos;entraînement multi-joueur</translation>
+        <source>Join a remote training session</source>
+        <translation>Rejoindre une session d&apos;entraînement distante</translation>
     </message>
 </context>
 <context>

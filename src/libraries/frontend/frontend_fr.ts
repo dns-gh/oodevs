@@ -51,6 +51,14 @@
         <source>Paused at startup:</source>
         <translation>Démarrage en pause</translation>
     </message>
+    <message>
+        <source>Client</source>
+        <translation>Client</translation>
+    </message>
+    <message>
+        <source>Do not start gaming client</source>
+        <translation>Ne pas démarrer le client de jeu</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>
