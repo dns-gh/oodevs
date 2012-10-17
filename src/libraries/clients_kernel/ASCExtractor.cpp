@@ -51,14 +51,8 @@ namespace
     std::string ReadProjectionfile( const bfs::path& file )
     {
         std::string projection;
-        std::ifstream stream;
-        stream.open( file.string().c_str(), std::ifstream::in );
-        if( stream.is_open() )
-        {
-            while( stream.good() )
-                std::getline( stream, projection );
-            stream.close();
-        }
+        std::ifstream stream( file.string().c_str() );
+        while( std::getline( stream, projection ) ) {}
         return projection;
     }
 }
