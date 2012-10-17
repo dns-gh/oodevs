@@ -12,6 +12,8 @@
 #include "moc_TerrainExportDialog.cpp"
 #include "preparation/UrbanModel.h"
 #include "clients_gui/resources.h"
+#include "terrainextractor/TerrainExtractionManager.h"
+#include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
 
 namespace bfs = boost::filesystem;
@@ -31,18 +33,20 @@ TerrainExportDialog::TerrainExportDialog( QWidget* parent, const tools::Exercise
     mainLayout->setMargin( 5 );
 
     QGroupBox* exportGroupBox = new QGroupBox();
-    QHBoxLayout* layoutShpFolder = new QHBoxLayout();
-    QLabel* labelshp = new QLabel( tr( "Export shapefiles directory:"), this );
-    pathEditor_ = new QLineEdit( );
-    pathEditor_->setReadOnly( true );
-    pathEditor_->setMinimumWidth( 250 );
+    QHBoxLayout* layoutExportFolder = new QHBoxLayout();
+    QLabel* labelshp = new QLabel( tr( "Export directory:"), this );
+    exportPathEditor_ = new QLineEdit( );
+    exportPathEditor_->setReadOnly( true );
+    exportPathEditor_->setMinimumWidth( 250 );
+
     QPushButton* pBrowseExport = new QPushButton( tr( "..." ) );
     pBrowseExport->setFixedWidth( 20 );
     pBrowseExport->setFixedHeight( 20 );
-    layoutShpFolder->addWidget( labelshp );
-    layoutShpFolder->addWidget( pathEditor_ );
-    layoutShpFolder->addWidget( pBrowseExport );
-    exportGroupBox->setLayout( layoutShpFolder );
+
+    layoutExportFolder->addWidget( labelshp );
+    layoutExportFolder->addWidget( exportPathEditor_ );
+    layoutExportFolder->addWidget( pBrowseExport );
+    exportGroupBox->setLayout( layoutExportFolder );
 
     QHBoxLayout* layoutButton = new QHBoxLayout();
     okButton_ = new QPushButton( tr( "Ok" ) );
@@ -52,12 +56,22 @@ TerrainExportDialog::TerrainExportDialog( QWidget* parent, const tools::Exercise
     layoutButton->addWidget( pCancel );
     layoutButton->setAlignment( Qt::AlignRight );
 
+    shapeCheck_ = new QCheckBox( tr( "Export vector data (Shapefile)" ) );
+    shapeCheck_->setChecked( true );
+    rasterCheck_ = new QCheckBox( tr( "Export raster data (GeoTIFF)" ) );
+    rasterCheck_->setChecked( true );
+    elevationCheck_ = new QCheckBox( tr( "Export elevation data (ESRI Ascii GRID)" ) );
+    elevationCheck_->setChecked( true );
+
+    mainLayout->addWidget( shapeCheck_ );
+    mainLayout->addWidget( rasterCheck_ );
+    mainLayout->addWidget( elevationCheck_ );
     mainLayout->addWidget( exportGroupBox );
     mainLayout->addLayout( layoutButton );
 
     setLayout( mainLayout );
 
-    connect( pBrowseExport, SIGNAL( clicked() ), this, SLOT( OnBrowseExportShp() ) );
+    connect( pBrowseExport, SIGNAL( clicked() ), this, SLOT( OnBrowseExport() ) );
     connect( okButton_, SIGNAL( clicked() ), this, SLOT( accept() ) );
     connect( pCancel, SIGNAL( clicked() ), this, SLOT( reject() ) );
 }
@@ -77,7 +91,7 @@ TerrainExportDialog::~TerrainExportDialog()
 // -----------------------------------------------------------------------------
 void TerrainExportDialog::showEvent( QShowEvent* event )
 {
-    pathEditor_->clear();
+    exportPathEditor_->clear();
     okButton_->setEnabled( false );
     QDialog::showEvent( event );
 }
@@ -101,7 +115,7 @@ namespace
 void TerrainExportDialog::accept()
 {
     QDialog::accept();
-    const std::string path = pathEditor_->text().toAscii().constData();
+    const std::string path = exportPathEditor_->text().toAscii().constData();
     assert( !path.empty() && bfs::exists( path ) && bfs::is_directory( path ) );
 
     QProgressDialog progressDialog( "", "", 0, 100, this, Qt::SplashScreen );
@@ -111,8 +125,19 @@ void TerrainExportDialog::accept()
 
     try
     {
-        urbanModel_.ExportShapeFile( path, config_, progressDialog );
-        QMessageBox::information( this, tr( "Terrain export" ),tr( "Export successfull." ) );
+        if( shapeCheck_->isChecked() )
+        {
+            urbanModel_.ExportShapeFile( path, config_, progressDialog );
+        }
+        if( rasterCheck_->isChecked() || elevationCheck_->isChecked() )
+        {
+            bfs::path terrainPath( config_.GetTerrainFile() );
+            TerrainExtractionManager manager( terrainPath.parent_path(), path );
+            manager.SetRasterExportEnabled( rasterCheck_->isChecked() );
+            manager.SetElevationExportEnabled( elevationCheck_->isChecked() );
+            manager.Run();
+        }
+        QMessageBox::information( this, tr( "Terrain export" ), tr( "Export successful." ) );
     }
     catch( std::exception& e )
     {
@@ -125,9 +150,9 @@ void TerrainExportDialog::accept()
 // Name: TerrainExportDialog::OnBrowseExportShp
 // Created: AME 2010-10-15
 // -----------------------------------------------------------------------------
-void TerrainExportDialog::OnBrowseExportShp()
+void TerrainExportDialog::OnBrowseExport()
 {
-    QString newDirectory = QFileDialog::getExistingDirectory( this, tr( "Select export directory" ), pathEditor_->text() );
-    pathEditor_->setText( newDirectory );
+    QString newDirectory = QFileDialog::getExistingDirectory( this, tr( "Select export directory" ), exportPathEditor_->text() );
+    exportPathEditor_->setText( newDirectory );
     okButton_->setEnabled( !newDirectory.isEmpty() && bfs::exists( newDirectory.toAscii().constData() ) && bfs::is_directory( newDirectory.toAscii().constData() ) );
 }
