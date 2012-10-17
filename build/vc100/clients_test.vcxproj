@@ -176,7 +176,7 @@
     </ClCompile>
     <PostBuildEvent>
       <Command>cd $(RunDir)
-$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --run_test=extract_ascii_grid</Command>
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

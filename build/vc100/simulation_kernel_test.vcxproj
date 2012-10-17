@@ -133,7 +133,7 @@
     </ClCompile>
     <PostBuildEvent>
       <Command>cd $(RunDir)
-$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --run_test=VerifyObjectCapacity_InteractionAttitudeModifier</Command>
+$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
