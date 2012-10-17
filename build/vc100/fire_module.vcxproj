@@ -25,7 +25,6 @@
     <ClInclude Include="..\..\src\libraries\fire_module\DirectFireData.h" />
     <ClInclude Include="..\..\src\libraries\fire_module\DotationCategory.h" />
     <ClInclude Include="..\..\src\libraries\fire_module\Knowledge_RapForLocal.h" />
-    <ClInclude Include="..\..\src\libraries\fire_module\Knowledge_RapFor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\fire_module\LauncherType.h" />
     <ClInclude Include="..\..\src\libraries\fire_module\ModuleFacade.h" />
     <ClInclude Include="..\..\src\libraries\fire_module\RoleAction_DirectFiring.h" />
@@ -42,7 +41,6 @@
     <ClCompile Include="..\..\src\libraries\fire_module\DirectFireData.cpp" />
     <ClCompile Include="..\..\src\libraries\fire_module\DotationCategory.cpp" />
     <ClCompile Include="..\..\src\libraries\fire_module\Knowledge_RapForLocal.cpp" />
-    <ClCompile Include="..\..\src\libraries\fire_module\Knowledge_RapFor_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\fire_module\LauncherType.cpp" />
     <ClCompile Include="..\..\src\libraries\fire_module\ModuleFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\fire_module\RoleAction_DirectFiring.cpp" />

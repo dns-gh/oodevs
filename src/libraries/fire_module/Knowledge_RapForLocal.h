@@ -10,9 +10,14 @@
 #ifndef fire_module_Knowledge_RapForLocal_h
 #define fire_module_Knowledge_RapForLocal_h
 
-#include "Knowledge_RapFor_ABC.h"
 #include <wrapper/View.h>
 #include <vector>
+#include <boost/noncopyable.hpp>
+
+namespace xml
+{
+    class xisubstream;
+}
 
 namespace sword
 {
@@ -24,7 +29,7 @@ namespace fire
 */
 // Created: NLD 2004-04-07
 // =============================================================================
-class Knowledge_RapForLocal : public Knowledge_RapFor_ABC
+class Knowledge_RapForLocal : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -33,24 +38,37 @@ public:
     typedef T_KnowledgeAgents::const_iterator CIT_KnowledgeAgents;
     //@}
 
+public:
+    //! @name Constructors/Destructor
+    //@{
+    Knowledge_RapForLocal();
+    //@}
+
     //! @name Accessors
     //@{
-    const T_KnowledgeAgents& GetDangerousEnemies( const wrapper::View& model, const wrapper::View& entity );
+    void Update( const wrapper::View& model, const wrapper::View& entity );
+    double GetValue() const;
+    const T_KnowledgeAgents& GetDangerousEnemies() const;
+    //@}
 
-    std::pair< double, double > GetRapForLocal( const wrapper::View& model, const wrapper::View& entity,
-        T_KnowledgeAgents& dangerousEnemies, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData ) const;
+    //! @name Tools
+    //@{
+    static void Initialize( xml::xisubstream xis, double tickDuration );
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void Update( const wrapper::View& model, const wrapper::View& entity );
+    void ApplyValue( double rTotalFightScoreFriend, double rTotalFightScoreEnemy, double rFeedbackTime );
     //@}
 
 private:
     //! @name Member data
     //@{
+    unsigned int nLastCacheUpdateTick_;
+    double rRapForValue_;
     T_KnowledgeAgents dangerousEnemies_;
+    static double rRapForIncreasePerTimeStepDefaultValue_;
     //@}
 };
 

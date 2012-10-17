@@ -33,6 +33,13 @@ public:
     ModuleFacade();
     //@}
 
+    //! @name Hooks
+    //@{
+    double GetForceRatio( const wrapper::View& model, const wrapper::View& entity );
+    void GetDangerousEnemies( const wrapper::View& model, const wrapper::View& entity,
+                              void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData );
+    //@}
+
     //! @name Member data
     //@{
     std::map< const SWORD_Model*, std::pair< double, std::size_t > > weapons;

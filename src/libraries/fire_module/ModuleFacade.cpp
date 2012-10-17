@@ -40,7 +40,8 @@ namespace
 DEFINE_HOOK( GetForceRatio, double, ( const SWORD_Model* model, const SWORD_Model* entity ) )
 {
     TRY
-        return sword::fire::Knowledge_RapForLocal().GetValue( model, entity ); // $$$$ MCO 2012-05-15: cache this
+        assert( module );
+        return module->GetForceRatio( model, entity );
     CATCH( GetForceRatio )
     return 0;
 }
@@ -48,9 +49,8 @@ DEFINE_HOOK( GetDangerousEnemies, void, ( const SWORD_Model* model, const SWORD_
                                           void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData ) )
 {
     TRY
-        sword::fire::Knowledge_RapForLocal rapfor;
-        const Knowledge_RapForLocal::T_KnowledgeAgents& enemies = rapfor.GetDangerousEnemies( model, entity ); // $$$$ MCO 2012-05-15: cache this and/or GetDangerousEnemies()
-        std::for_each( enemies.begin(), enemies.end(), boost::bind( visitor, _1, userData ) );
+        assert( module );
+        module->GetDangerousEnemies( model, entity, visitor, userData );
     CATCH( GetDangerousEnemies )
 }
 DEFINE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
@@ -76,4 +76,28 @@ ModuleFacade::ModuleFacade()
     module = this;
     wrapper::RegisterCommand< DirectFireCommand >( "direct fire", *this );
     wrapper::RegisterCommand< DirectFireCommandPopulation >( "direct fire population", *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleFacade::GetForceRatio
+// Created: SLI 2012-10-17
+// -----------------------------------------------------------------------------
+double ModuleFacade::GetForceRatio( const wrapper::View& model, const wrapper::View& entity )
+{
+    sword::fire::Knowledge_RapForLocal rapfor;
+    rapfor.Update( model, entity ); // $$$$ MCO 2012-05-15: cache this
+    return rapfor.GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModuleFacade::GetDangerousEnemies
+// Created: SLI 2012-10-17
+// -----------------------------------------------------------------------------
+void ModuleFacade::GetDangerousEnemies( const wrapper::View& model, const wrapper::View& entity,
+                                        void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData )
+{
+    sword::fire::Knowledge_RapForLocal rapfor;
+    rapfor.Update( model, entity ); // $$$$ MCO 2012-05-15: cache this
+    const Knowledge_RapForLocal::T_KnowledgeAgents& enemies = rapfor.GetDangerousEnemies();
+    std::for_each( enemies.begin(), enemies.end(), boost::bind( visitor, _1, userData ) );
 }
