@@ -165,7 +165,7 @@ namespace
     DEFINE_HOOK( GetDistance, double, ( const SWORD_Model* firer, const SWORD_Model* target ) )
     {
         const MIL_AgentPion& pion = GET_PION( firer );
-        const MIL_Agent_ABC& knowledge = (*core::Convert( target ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
+        const MIL_Agent_ABC& knowledge = GET_DATA( target, boost::shared_ptr< DEC_Knowledge_Agent > )->GetAgentKnown();
         return pion.Distance( knowledge );
     }
     DEFINE_HOOK( ModifyPh, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* dotation, double rPh ) )
@@ -176,7 +176,7 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown dotation category in ModifyPh hook implementation : " << dotation );
             return false;
         }
-        const MIL_Agent_ABC& enemy = (*core::Convert( target ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
+        const MIL_Agent_ABC& enemy = GET_DATA( target, boost::shared_ptr< DEC_Knowledge_Agent > )->GetAgentKnown();
         const double protection = enemy.GetRole< PHY_RoleInterface_ActiveProtection >().GetPHModifier( *category );
         return GET_ROLE( firer, PHY_RoleInterface_HumanFactors ).ModifyPH( rPh * protection );
     }
@@ -188,7 +188,7 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown launcher type in GetPhModificator hook implementation : " << launcher );
             return 0;
         }
-        const MIL_Agent_ABC& enemy = (*core::Convert( target ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->GetAgentKnown();
+        const MIL_Agent_ABC& enemy = GET_DATA( target, boost::shared_ptr< DEC_Knowledge_Agent > )->GetAgentKnown();
         const PHY_RoleInterface_Posture& firerPosture  = GET_ROLE( firer, PHY_RoleInterface_Posture );
         const PHY_RoleInterface_Posture& targetPosture = enemy.GetRole< PHY_RoleInterface_Posture >();
         return type->GetPHModificator( firerPosture, targetPosture ) * firerPosture.GetElongationFactor();
@@ -216,18 +216,18 @@ namespace
     DEFINE_HOOK( EvaluateDangerosity, double, ( const SWORD_Model* agent, const SWORD_Model* target ) )
     {
         const MIL_AgentPion& pion = GET_PION( target );
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = (*core::Convert( agent ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = GET_DATA( agent, boost::shared_ptr< DEC_Knowledge_Agent > );
         return knowledge->GetDangerosity( pion, false ) * knowledge->GetOperationalState(); // $$$$ MCO 2012-05-16: use fire module GetDangerosity
     }
     DEFINE_HOOK( EvaluateDangerosity2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge1 = (*core::Convert( agent ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
-        boost::shared_ptr< DEC_Knowledge_Agent > knowledge2 = (*core::Convert( target ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >();
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge1 = GET_DATA( agent, boost::shared_ptr< DEC_Knowledge_Agent > );
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge2 = GET_DATA( target, boost::shared_ptr< DEC_Knowledge_Agent > );
         return knowledge1->GetDangerosity( *knowledge2, true ) * knowledge2->GetOperationalState(); // $$$$ MCO 2012-05-16: use fire module GetDangerosity
     }
     DEFINE_HOOK( IsAgentKnowledgeValid, bool, ( const SWORD_Model* knowledge ) )
     {
-        return (*core::Convert( knowledge ))[ "data" ].GetUserData< boost::shared_ptr< DEC_Knowledge_Agent > >()->IsValid();
+        return GET_DATA( knowledge, boost::shared_ptr< DEC_Knowledge_Agent > )->IsValid();
     }
     DEFINE_HOOK( IsPopulationKnowledgeValid, bool, ( const SWORD_Model* entity, const SWORD_Model* knowledge ) )
     {
