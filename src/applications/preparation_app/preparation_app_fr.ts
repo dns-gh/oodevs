@@ -2428,10 +2428,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Export du terrain</translation>
     </message>
     <message>
-        <source>Export shapefiles directory:</source>
-        <translation>Répertoire d&apos;export:</translation>
-    </message>
-    <message>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -2456,8 +2452,24 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Export terrain</translation>
     </message>
     <message>
-        <source>Export successfull.</source>
-        <translation>Export réussi.</translation>
+        <source>Export directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export vector data (Shapefile)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export raster data (GeoTIFF)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export elevation data (ESRI Ascii GRID)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export successful.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
