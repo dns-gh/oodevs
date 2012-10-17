@@ -40,7 +40,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnBrowseExport();
+    void OnBrowseExportShp();
     //@}
 
 private:
@@ -53,14 +53,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const UrbanModel&               urbanModel_;
-    const tools::ExerciseConfig&    config_;
-    
-    QLineEdit*                      exportPathEditor_;
-    QCheckBox*                      shapeCheck_;
-    QCheckBox*                      elevationCheck_;
-    QCheckBox*                      rasterCheck_;
-    QPushButton*                    okButton_;
+    const UrbanModel&            urbanModel_;
+    const tools::ExerciseConfig& config_;
+    QLineEdit*                   pathEditor_;
+    QPushButton*                 okButton_;
     //@}
 };
 
