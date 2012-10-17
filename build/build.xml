@@ -916,11 +916,11 @@
         </sequential>
     </macrodef>
 
-    <target name = "generate-database-common" depends="configure-update,generate-decisional-files">
+    <target name = "generate-database-common" depends="generate-decisional-files">
         <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
     </target>
 
-    <target name="generate-database-crowd" depends="configure-update,generate-database-common" description= "compile behavior model database for crowd">
+    <target name="generate-database-crowd" depends="generate-database-common" description= "compile behavior model database for crowd">
         <bmc src="${models.dir}/crowd/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src" luac="false"/>
     </target>
 
@@ -929,21 +929,21 @@
         <bmc src="${models.dir}/security_test/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src;${models.dir}/security/src" luac="false"/>
     </target>
 
-    <target name ="generate-database-military">
+    <target name ="generate-database-military" depends="generate-database-common">
         <bmc src="${models.dir}/military/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
     </target>
 
-    <target name="generate-database-france" depends="generate-database-military,generate-database-crowd" description="compile behavior model database france">
+    <target name="generate-database-france" depends="generate-database-military,generate-database-crowd,generate-database-security" description="compile behavior model database france">
         <bmc src="${models.dir}/france/src/" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src;${models.dir}/crowd/src;${models.dir}/military/src" luac="false"/>
         <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
     </target>
 
-    <target name="generate-database-worldwide" depends="generate-database-military" description="compile behavior model database worldwide">
+    <target name="generate-database-worldwide" depends="generate-database-military,generate-database-crowd,generate-database-security" description="compile behavior model database worldwide">
         <bmc src="${models.dir}/worldwide/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/military/src" luac="false"/>
         <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
     </target>
 
-    <target name="generate-database" depends="deploy-application-data,generate-database-france,generate-database-worldwide,generate-database-security" description="compile all behavior models"/>
+    <target name="generate-database" depends="deploy-application-data,generate-database-france,generate-database-worldwide" description="compile all behavior models"/>
 
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
