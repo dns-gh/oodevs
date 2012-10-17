@@ -107,8 +107,7 @@ namespace movement
             MOCK_EXPECT( GetTheoricMaxSpeedWithReinforcement ).once().returns( maxSpeed );
             MOCK_EXPECT( GetSpeedWithReinforcement ).once().returns( baseSpeed );
             MOCK_EXPECT( GetSpeedWithReinforcement ).exactly( TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes ).returns( terrainSpeed );
-            boost::shared_ptr< sword::movement::Path_ABC > path = CreatePath( core::Convert( &entity ), vPosEnd, movementPathType );
-            return path;
+            return CreatePath( core::Convert( &entity ), vPosEnd, movementPathType );
         }
         boost::shared_ptr< sword::movement::Path_ABC > CreateSimplePath()
         {
