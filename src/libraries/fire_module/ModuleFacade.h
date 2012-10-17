@@ -13,12 +13,15 @@
 #include <wrapper/Hook.h>
 #include <wrapper/View.h>
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 #include <map>
 
 namespace sword
 {
 namespace fire
 {
+    class Knowledge_RapForLocal;
+
 // =============================================================================
 /** @class  ModuleFacade
     @brief  Module facade
@@ -43,6 +46,7 @@ public:
     //! @name Member data
     //@{
     std::map< const SWORD_Model*, std::pair< double, std::size_t > > weapons;
+    std::map< std::size_t, boost::shared_ptr< Knowledge_RapForLocal > > rapforCache_;
     //@}
 };
 

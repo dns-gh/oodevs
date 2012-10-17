@@ -78,15 +78,26 @@ ModuleFacade::ModuleFacade()
     wrapper::RegisterCommand< DirectFireCommandPopulation >( "direct fire population", *this );
 }
 
+namespace
+{
+    template< typename T >
+    const sword::fire::Knowledge_RapForLocal& GetCache( T& cache, const wrapper::View& model, const wrapper::View& entity )
+    {
+        boost::shared_ptr< Knowledge_RapForLocal >& rapfor = cache[ entity[ "identifier" ] ];
+        if( !rapfor.get() )
+            rapfor.reset( new Knowledge_RapForLocal() );
+        rapfor->Update( model, entity );
+        return *rapfor;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModuleFacade::GetForceRatio
 // Created: SLI 2012-10-17
 // -----------------------------------------------------------------------------
 double ModuleFacade::GetForceRatio( const wrapper::View& model, const wrapper::View& entity )
 {
-    sword::fire::Knowledge_RapForLocal rapfor;
-    rapfor.Update( model, entity ); // $$$$ MCO 2012-05-15: cache this
-    return rapfor.GetValue();
+    return GetCache( rapforCache_, model, entity ).GetValue();
 }
 
 // -----------------------------------------------------------------------------
@@ -96,8 +107,7 @@ double ModuleFacade::GetForceRatio( const wrapper::View& model, const wrapper::V
 void ModuleFacade::GetDangerousEnemies( const wrapper::View& model, const wrapper::View& entity,
                                         void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData )
 {
-    sword::fire::Knowledge_RapForLocal rapfor;
-    rapfor.Update( model, entity ); // $$$$ MCO 2012-05-15: cache this
+    const sword::fire::Knowledge_RapForLocal& rapfor = GetCache( rapforCache_, model, entity );
     const Knowledge_RapForLocal::T_KnowledgeAgents& enemies = rapfor.GetDangerousEnemies();
     std::for_each( enemies.begin(), enemies.end(), boost::bind( visitor, _1, userData ) );
 }
