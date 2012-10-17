@@ -69,7 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const size_t commandIdentifier_;
+    const size_t action_;
     unsigned int identifier_;
     mutable boost::shared_ptr< Agent_Path > pMainPath_;
     mutable boost::shared_ptr< KnowledgeCache > cache_;

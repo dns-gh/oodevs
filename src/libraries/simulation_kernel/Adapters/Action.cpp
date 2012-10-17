@@ -12,6 +12,7 @@
 #include "Sink.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_Entity_ABC.h"
+#include <core/Model.h>
 
 using namespace sword;
 
@@ -19,12 +20,12 @@ using namespace sword;
 // Name: Action constructor
 // Created: MCO 2012-10-10
 // -----------------------------------------------------------------------------
-Action::Action( Sink& sink, MIL_Entity_ABC& entity, std::size_t command )
+Action::Action( Sink& sink, MIL_Entity_ABC& entity, const std::string& name, core::Model& parameters )
     : sink_    ( sink )
     , decision_( entity.GetRole< DEC_Decision_ABC >() )
-    , command_ ( command )
 {
-    // NOTHING
+    parameters[ "action" ] = GetId();
+    command_ = sink.StartCommand( name, parameters );
 }
 
 // -----------------------------------------------------------------------------

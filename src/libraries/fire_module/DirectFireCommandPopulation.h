@@ -54,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const size_t commandIdentifier_;
+    const size_t action_;
     const unsigned int identifier_;
     const RoleAction_DirectFiring role_;
     //@}

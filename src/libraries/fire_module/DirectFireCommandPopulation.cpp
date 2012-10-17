@@ -19,10 +19,10 @@ using namespace sword::fire;
 // Name: DirectFireCommandPopulation constructor
 // Created: MCO 2012-03-19
 // -----------------------------------------------------------------------------
-DirectFireCommandPopulation::DirectFireCommandPopulation( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/, std::size_t identifier )
-    : commandIdentifier_( identifier )
-    , identifier_       ( parameters[ "identifier" ] )
-    , role_             ( module )
+DirectFireCommandPopulation::DirectFireCommandPopulation( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/, std::size_t /*identifier*/ )
+    : action_    ( parameters[ "action" ] )
+    , identifier_( parameters[ "identifier" ] )
+    , role_      ( module )
 {
     PostCallback( role_.GetInitialReturnCode() );
 }
@@ -71,7 +71,7 @@ void DirectFireCommandPopulation::PostCallback( int code ) const
 {
     wrapper::Event event( "direct fire population callback" );
     event[ "entity" ] = identifier_;
-    event[ "id" ] = commandIdentifier_;
+    event[ "action" ] = action_;
     event[ "code" ] = code;
     event.Post();
 }

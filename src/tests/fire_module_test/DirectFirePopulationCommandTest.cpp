@@ -20,7 +20,8 @@ namespace
         {
             ExpectCallback( 4 );
             StartCommand( "direct fire population",
-                core::MakeModel( "identifier", 42 )
+                core::MakeModel( "action", 117 )
+                               ( "identifier", 42 )
                                ( "population", 53 )
                                ( "percentage", 1 )
                                ( "mode", 0 )
@@ -35,7 +36,7 @@ namespace
         }
         void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
         {
-            ExpectEvent( "direct fire population callback", sword::test::MakeModel( "entity", 42 )( "id", mock::any )( "code", code ) );
+            ExpectEvent( "direct fire population callback", sword::test::MakeModel( "entity", 42 )( "action", 117 )( "code", code ) );
         }
         core::Model& population;
     };
@@ -199,7 +200,8 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_no_h
                               ( "running", true ) );
     ExpectCallback( 4 );
     StartCommand( "direct fire population",
-        core::MakeModel( "identifier", 42 )
+        core::MakeModel( "action", 117 )
+            ( "identifier", 42 )
             ( "population", 53 )
             ( "percentage", 1 )
             ( "mode", 0 )

@@ -39,8 +39,8 @@ namespace
 // Name: MoveCommand constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t identifier )
-    : commandIdentifier_ ( identifier )
+MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
+    : action_            ( parameters[ "action" ] )
     , identifier_        ( parameters[ "identifier" ] )
     , pMainPath_         ( boost::dynamic_pointer_cast< Agent_Path >( *static_cast< boost::shared_ptr< Path_ABC >* >( parameters[ "path" ].GetUserData() ) ) )
     , executionSuspended_( false )
@@ -65,7 +65,7 @@ MoveCommand::~MoveCommand() // $$$$ _RC_ SLI 2012-01-02: moved from StopAction
         pMainPath_->DecRef();
         executionSuspended_ = false;
     }
-//    Callback( static_cast< int >( DEC_PathWalker::eFinished ) );  // $$$$ _RC_ SLI 2012-01-03: remove it?
+    //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ void MoveCommand::PostCallback( sword::movement::PathWalker::E_ReturnCode code )
 {
     wrapper::Event event( "movement callback" );
     event[ "entity" ] = identifier_;
-    event[ "id" ] = commandIdentifier_;
+    event[ "action" ] = action_;
     event[ "code" ] = code;
     event.Post();
 }

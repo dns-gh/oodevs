@@ -243,10 +243,9 @@ void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, 
 }
 namespace
 {
-    unsigned int StartCommand( Sink& sink, MIL_AgentPion& pion, const std::string& name, const core::Model& parameters )
+    unsigned int StartCommand( Sink& sink, MIL_AgentPion& pion, const std::string& name, core::Model& parameters )
     {
-        std::size_t id = sink.StartCommand( name, parameters );
-        boost::shared_ptr< PHY_Action_ABC > action( new sword::Action( sink, pion, id ) );
+        boost::shared_ptr< PHY_Action_ABC > action( new sword::Action( sink, pion, name, parameters ) );
         pion.RegisterAction( action );
         return action->GetId();
     }

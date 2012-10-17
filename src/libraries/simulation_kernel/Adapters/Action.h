@@ -11,9 +11,15 @@
 #define SWORD_ACTION_H
 
 #include "Entities/Actions/PHY_Action_ABC.h"
+#include <string>
 
 class MIL_Entity_ABC;
 class DEC_Decision_ABC;
+
+namespace core
+{
+    class Model;
+}
 
 namespace sword
 {
@@ -30,7 +36,7 @@ class Action : public PHY_Action_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Action( Sink& sink, MIL_Entity_ABC& entity, std::size_t command );
+             Action( Sink& sink, MIL_Entity_ABC& entity, const std::string& name, core::Model& parameters );
     virtual ~Action();
     //@}
 

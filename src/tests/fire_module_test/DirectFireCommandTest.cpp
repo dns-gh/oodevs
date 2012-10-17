@@ -19,7 +19,8 @@ namespace
         {
             ExpectCallback( 4 );
             StartCommand( "direct fire",
-                core::MakeModel( "identifier", 42 )
+                core::MakeModel( "action", 117 )
+                               ( "identifier", 42 )
                                ( "enemy", 51 )
                                ( "percentage", 0.07 )
                                ( "mode", 0 )
@@ -37,7 +38,7 @@ namespace
         void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
         {
             ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )
-                                                                            ( "id", mock::any )
+                                                                            ( "action", 117 )
                                                                             ( "code", code ) );
         }
     };
@@ -266,7 +267,8 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
                               ( "missed", false ) );
     ExpectCallback( 4 );
     StartCommand( "direct fire",
-        core::MakeModel( "identifier", 42 )
+        core::MakeModel( "action", 117 )
+                       ( "identifier", 42 )
                        ( "enemy", 51 )
                        ( "percentage", 0.07 )
                        ( "mode", 0 )

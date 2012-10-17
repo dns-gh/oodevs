@@ -17,12 +17,17 @@ namespace
 {
     struct MovementFixture : public PathfindFixture
     {
+        MovementFixture()
+            : action( 117u )
+            , command( 0u )
+        {}
         size_t StartMoveCommand( const T_Points& points )
         {
             ConfigurePathfind( points );
             boost::shared_ptr< sword::movement::Path_ABC > path = CreatePathParameter( points.back().first );
             return StartCommand( "move",
-                core::MakeModel( "identifier", identifier )
+                core::MakeModel( "action", action )
+                               ( "identifier", identifier )
                                ( "path", core::MakeUserData( path ) ) );
         }
         void ConfigurePathfind( const T_Points& points )
@@ -60,13 +65,14 @@ namespace
         {
             ExpectEvent( "movement callback", sword::test::MakeModel( "code", code )
                                                                     ( "entity", identifier )
-                                                                    ( "id", command ) );
+                                                                    ( "action", action ) );
         }
         void ExpectMovementEvent( double speed )
         {
             ExpectEvent( "movement", sword::test::MakeModel( "distance", speed )
                                                            ( "entity", identifier ) );
         }
+        size_t action;
         size_t command;
     };
 }
@@ -104,7 +110,8 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
     ExpectEvent( "movement report" );
     boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
     command = StartCommand( "move",
-        core::MakeModel( "identifier", identifier )
+        core::MakeModel( "action", action )
+            ( "identifier", identifier )
             ( "path", core::MakeUserData( path ) ) );
     mock::verify();
     mock::reset();
@@ -119,7 +126,8 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
     ExpectEvent( "movement report" );
     boost::shared_ptr< sword::movement::Path_ABC > path = CreateSimplePath();
     command = StartCommand( "move",
-        core::MakeModel( "identifier", identifier )
+        core::MakeModel( "action", action )
+            ( "identifier", identifier )
             ( "path", core::MakeUserData( path ) ) );
     mock::verify();
     mock::reset();
