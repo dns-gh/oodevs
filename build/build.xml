@@ -1954,6 +1954,7 @@
         <update name="geocoord"/>
         <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr"/>
         <update name="terrain" package="terraintools_${platform}.zip"/>
+        <update name="terrainextractor"/>
         <update name="qt"/>
         <update name="boost"/>
         <update name="masalife/brain" version="${masalife.version}"/>
