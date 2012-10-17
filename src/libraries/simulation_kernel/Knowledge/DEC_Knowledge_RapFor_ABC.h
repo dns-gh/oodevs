@@ -51,7 +51,6 @@ protected:
     //@{
     static double ComputeRapForIncreasePerTimeStepValue( double rBaseTimeValue );
     void ApplyValue( double rTotalFightScoreFriend, double rTotalFightScoreEnemy, const double rRapForIncreasePerTimeStepValue );
-    bool NeedUpdate() const;
     virtual void Update() = 0;
     //@}
 
