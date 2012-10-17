@@ -32,7 +32,7 @@ class ToggleLocalizedRadarCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleLocalizedRadarCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleLocalizedRadarCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

@@ -20,7 +20,7 @@ using namespace sword::propagation;
 // Name: FloodCommand constructor
 // Created: LGY 2012-06-12
 // -----------------------------------------------------------------------------
-FloodCommand::FloodCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+FloodCommand::FloodCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

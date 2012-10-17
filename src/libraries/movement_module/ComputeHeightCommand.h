@@ -34,7 +34,7 @@ class ComputeHeightCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ComputeHeightCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ComputeHeightCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

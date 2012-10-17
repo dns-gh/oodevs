@@ -33,7 +33,7 @@ class ToggleRadarCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleRadarCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleRadarCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

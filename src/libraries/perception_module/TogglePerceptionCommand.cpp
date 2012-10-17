@@ -18,7 +18,7 @@ using namespace sword::perception;
 // Name: TogglePerceptionCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-TogglePerceptionCommand::TogglePerceptionCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+TogglePerceptionCommand::TogglePerceptionCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

@@ -39,7 +39,7 @@ namespace
 // Name: MoveCommand constructor
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/, size_t /*identifier*/ )
+MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/ )
     : action_            ( parameters[ "action" ] )
     , identifier_        ( parameters[ "identifier" ] )
     , pMainPath_         ( boost::dynamic_pointer_cast< Agent_Path >( *static_cast< boost::shared_ptr< Path_ABC >* >( parameters[ "path" ].GetUserData() ) ) )

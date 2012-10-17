@@ -33,7 +33,7 @@ class VisionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    VisionCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    VisionCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

@@ -34,7 +34,7 @@ class IdentifyAgentCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    IdentifyAgentCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    IdentifyAgentCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

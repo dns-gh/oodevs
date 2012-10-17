@@ -33,7 +33,7 @@ class TogglePerceptionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    TogglePerceptionCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    TogglePerceptionCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

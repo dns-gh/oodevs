@@ -16,7 +16,7 @@ using namespace sword::propagation;
 // Name: PropagationCommand constructor
 // Created: LGY 2012-09-20
 // -----------------------------------------------------------------------------
-PropagationCommand::PropagationCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+PropagationCommand::PropagationCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

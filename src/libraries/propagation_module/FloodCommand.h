@@ -34,7 +34,7 @@ class FloodCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    FloodCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    FloodCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
 public:

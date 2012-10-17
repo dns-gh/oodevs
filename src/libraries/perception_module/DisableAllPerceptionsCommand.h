@@ -33,7 +33,7 @@ class DisableAllPerceptionsCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    DisableAllPerceptionsCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    DisableAllPerceptionsCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

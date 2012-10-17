@@ -19,7 +19,7 @@ using namespace sword::perception;
 // Name: ToggleRecoCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleRecoCommand::ToggleRecoCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+ToggleRecoCommand::ToggleRecoCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

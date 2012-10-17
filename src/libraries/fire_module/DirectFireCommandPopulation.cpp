@@ -19,7 +19,7 @@ using namespace sword::fire;
 // Name: DirectFireCommandPopulation constructor
 // Created: MCO 2012-03-19
 // -----------------------------------------------------------------------------
-DirectFireCommandPopulation::DirectFireCommandPopulation( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/, std::size_t /*identifier*/ )
+DirectFireCommandPopulation::DirectFireCommandPopulation( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/ )
     : action_    ( parameters[ "action" ] )
     , identifier_( parameters[ "identifier" ] )
     , role_      ( module )

@@ -32,7 +32,7 @@ class ToggleRecoCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleRecoCommand(const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleRecoCommand(const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

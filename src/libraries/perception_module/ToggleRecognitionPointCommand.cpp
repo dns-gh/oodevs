@@ -19,7 +19,7 @@ using namespace sword::perception;
 // Name: ToggleRecognitionPointCommand constructor
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------
-ToggleRecognitionPointCommand::ToggleRecognitionPointCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+ToggleRecognitionPointCommand::ToggleRecognitionPointCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

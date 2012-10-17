@@ -34,7 +34,7 @@ class OrientateCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    OrientateCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    OrientateCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

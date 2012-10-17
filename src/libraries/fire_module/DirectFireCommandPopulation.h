@@ -35,7 +35,7 @@ class DirectFireCommandPopulation : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     DirectFireCommandPopulation( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model, std::size_t identifier );
+     DirectFireCommandPopulation( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model );
     ~DirectFireCommandPopulation();
     //@}
 

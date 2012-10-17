@@ -32,7 +32,7 @@ class ExternalPerceptionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ExternalPerceptionCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ExternalPerceptionCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

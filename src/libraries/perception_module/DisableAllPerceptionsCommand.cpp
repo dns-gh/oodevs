@@ -21,7 +21,7 @@ using namespace sword::perception;
 // Name: DisableAllPerceptionsCommand constructor
 // Created: SLI 2012-10-03
 // -----------------------------------------------------------------------------
-DisableAllPerceptionsCommand::DisableAllPerceptionsCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+DisableAllPerceptionsCommand::DisableAllPerceptionsCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

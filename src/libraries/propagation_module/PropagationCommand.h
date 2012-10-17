@@ -32,7 +32,7 @@ class PropagationCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    PropagationCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    PropagationCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
 public:

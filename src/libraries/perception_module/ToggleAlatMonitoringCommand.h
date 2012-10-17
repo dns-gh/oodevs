@@ -36,7 +36,7 @@ class ToggleAlatMonitoringCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleAlatMonitoringCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleAlatMonitoringCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Initialization

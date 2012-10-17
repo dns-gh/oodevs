@@ -18,7 +18,7 @@ using namespace sword::perception;
 // Name: PerceptionCommand constructor
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------
-PerceptionCommand::PerceptionCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+PerceptionCommand::PerceptionCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

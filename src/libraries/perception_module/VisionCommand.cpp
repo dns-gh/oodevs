@@ -18,7 +18,7 @@ using namespace sword::perception;
 // Name: VisionCommand constructor
 // Created: SLI 2012-03-29
 // -----------------------------------------------------------------------------
-VisionCommand::VisionCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/, size_t /*identifier*/ )
+VisionCommand::VisionCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

@@ -25,11 +25,11 @@ namespace detail
     struct Command
     {
         static void Create( void** command,
-            const SWORD_Model* parameters, const SWORD_Model* model, size_t identifier, void* context )
+            const SWORD_Model* parameters, const SWORD_Model* model, void* context )
         {
             try
             {
-                *command = new T( *static_cast< C* >( context ), parameters, model, identifier );
+                *command = new T( *static_cast< C* >( context ), parameters, model );
             }
             catch( std::exception& e )
             {
@@ -84,11 +84,11 @@ namespace detail
     struct Command< T, void >
     {
         static void Create( void** command,
-            const SWORD_Model* parameters, const SWORD_Model* model, size_t identifier, void* /*userData*/ )
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*userData*/ )
         {
             try
             {
-                *command = new T( parameters, model, identifier );
+                *command = new T( parameters, model );
             }
             catch( std::exception& e )
             {

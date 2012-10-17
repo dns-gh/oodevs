@@ -32,7 +32,7 @@ class ToggleObjectDetectionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleObjectDetectionCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleObjectDetectionCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

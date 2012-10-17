@@ -31,7 +31,7 @@ class ToggleLocalizedPerceptionCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ToggleLocalizedPerceptionCommand( const wrapper::View& parameters, const wrapper::View& model, size_t identifier );
+    ToggleLocalizedPerceptionCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations
