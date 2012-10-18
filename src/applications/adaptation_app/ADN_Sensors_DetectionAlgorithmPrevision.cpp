@@ -116,24 +116,18 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
         new QLabel( tr( "Crowd Value" ), group );
         populationValue_ = new QLineEdit( group, tr( "Crowd Value" ) );
         populationValue_->setText( "0" );
-        populationValue_->setValidator( new ADN_DoubleValidator( populationValue_ ) );
+        populationValue_->setValidator( new ADN_DoubleValidator( 0., static_cast< double >( std::numeric_limits< int >::max() ), 2, populationValue_ ) );
         connect( populationValue_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnPopulationChanged( const QString& ) ) );
-        connect( populationValue_, SIGNAL( returnPressed() ), this, SLOT( UpdateValue() ) );
-        connect( populationValue_, SIGNAL( lostFocus() ), this, SLOT( UpdateValue() ) );
         new QLabel( tr( "Urban Height Ratio" ), group );
         urbanHeightRatioValue_ = new QLineEdit( group, tr( "Urban Height Ratio" ) );
         urbanHeightRatioValue_->setText( "1" );
         urbanHeightRatioValue_->setValidator( new ADN_DoubleValidator( 0., 1., 2, urbanHeightRatioValue_ ) );
         connect( urbanHeightRatioValue_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnUrbanHeightRatioChanged( const QString& ) ) );
-        connect( urbanHeightRatioValue_, SIGNAL( returnPressed() ), this, SLOT( UpdateValue() ) );
-        connect( urbanHeightRatioValue_, SIGNAL( lostFocus() ), this, SLOT( UpdateValue() ) );
         new QLabel( tr( "Urban Occupation Value" ), group );
         urbanOccupationValue_ = new QLineEdit( group, tr( "Urban Occupation Value" ) );
         urbanOccupationValue_->setText( "1" );
         urbanOccupationValue_->setValidator( new ADN_DoubleValidator( 0., 1., 2, urbanOccupationValue_ ) );
         connect( urbanOccupationValue_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnUrbanOccupationChanged( const QString& ) ) );
-        connect( urbanOccupationValue_, SIGNAL( returnPressed() ), this, SLOT( UpdateValue() ) );
-        connect( urbanOccupationValue_, SIGNAL( lostFocus() ), this, SLOT( UpdateValue() ) );
     }
 
     GQ_Plot* pGraph = new GQ_Plot( this );
@@ -331,8 +325,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::UrbanBlockChanged( std::string mat
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString& value )
 {
-    detection_ = locale().toDouble( value );
-    Update();
+    UpdatePreview( detection_, value, 0. );
 }
 
 // -----------------------------------------------------------------------------
@@ -341,8 +334,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString&
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QString& value )
 {
-    recognition_ = locale().toDouble( value );
-    Update();
+    UpdatePreview( recognition_, value, 0. );
 }
 
 // -----------------------------------------------------------------------------
@@ -351,8 +343,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QStrin
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnIdentificationChanged( const QString& value )
 {
-    identification_ = locale().toDouble( value );
-    Update();
+    UpdatePreview( identification_, value, 0. );
 }
 
 // -----------------------------------------------------------------------------
@@ -361,11 +352,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnIdentificationChanged( const QSt
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const QString& value )
 {
-    bool ok = false;
-    populationDensityFactor_ = locale().toDouble( value, &ok );
-    if( !ok || value.isEmpty() )
-        populationDensityFactor_ = 1.;
-    Update();
+    UpdatePreview( populationDensityFactor_, value, 1. );
 }
 
 // -----------------------------------------------------------------------------
@@ -374,11 +361,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const 
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged( const QString& value )
 {
-    bool ok = false;
-    populationModifier_ = locale().toDouble( value, &ok );
-    if( !ok || value.isEmpty() )
-        populationModifier_ = 1.;
-    Update();
+    UpdatePreview( populationModifier_, value, 1. );
 }
 
 // -----------------------------------------------------------------------------
@@ -387,7 +370,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged( const
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationChanged( const QString& value )
 {
-    UpdatePreview( population_, populationValue_, 0., "0", value );
+    UpdatePreview( population_, value, 0., populationValue_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -396,7 +379,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationChanged( const QString
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanHeightRatioChanged( const QString& value )
 {
-    UpdatePreview( urbanHeightRatio_, urbanHeightRatioValue_, 1., "1", value );
+    UpdatePreview( urbanHeightRatio_, value, 1., urbanHeightRatioValue_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -405,32 +388,22 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanHeightRatioChanged( const Q
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanOccupationChanged( const QString& value )
 {
-    UpdatePreview( urbanOccupation_, urbanOccupationValue_, 1., "1", value );
+    UpdatePreview( urbanOccupation_, value, 1., urbanOccupationValue_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_DetectionAlgorithmPrevision::UpdatePreview
 // Created: LDC 2010-08-16
 // -----------------------------------------------------------------------------
-void ADN_Sensors_DetectionAlgorithmPrevision::UpdatePreview( double& parameter, QLineEdit* widget, double defaultValue, const QString& defaultString, const QString& value )
+void ADN_Sensors_DetectionAlgorithmPrevision::UpdatePreview( double& parameter, const QString& value, double defaultValue, QLineEdit* widget /* = 0 */ )
 {
     bool ok = false;
     parameter = locale().toDouble( value, &ok );
     if( !ok || value.isEmpty() )
     {
-        widget->setText( defaultString );
         parameter = defaultValue;
+        if( widget )
+            widget->setText( QString::number( defaultValue ) );
     }
     Update();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_DetectionAlgorithmPrevision::UpdateValue
-// Created: LGY 2010-08-12
-// -----------------------------------------------------------------------------
-void ADN_Sensors_DetectionAlgorithmPrevision::UpdateValue()
-{
-    populationValue_->setText( QString::number( population_ ) );
-    urbanHeightRatioValue_->setText( QString::number( urbanHeightRatio_ ) );
-    urbanOccupationValue_->setText( QString::number( urbanOccupation_ ) );
 }
