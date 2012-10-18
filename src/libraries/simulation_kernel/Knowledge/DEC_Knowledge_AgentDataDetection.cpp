@@ -68,8 +68,9 @@ DEC_Knowledge_AgentDataDetection::~DEC_Knowledge_AgentDataDetection()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    MT_Vector2D positionTmp;
     file >> nTimeLastUpdate_
-         >> vPosition_
+         >> positionTmp
          >> vDirection_
          >> rSpeed_
          >> rAltitude_
@@ -78,6 +79,7 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> bRefugeeManaged_
          >> bDead_
          >> rPopulationDensity_;
+    vPosition_.reset( new MT_Vector2D( positionTmp ) );
     std::size_t nNbr;
     unsigned int nID;
     file >> nNbr;
@@ -109,7 +111,7 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
 void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << nTimeLastUpdate_
-         << vPosition_
+         << ( *vPosition_ )
          << vDirection_
          << rSpeed_
          << rAltitude_
