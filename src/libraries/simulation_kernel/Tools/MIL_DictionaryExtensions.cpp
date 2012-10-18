@@ -73,13 +73,24 @@ void MIL_DictionaryExtensions::WriteODB( xml::xostream& xos ) const
 {
     if( extensions_.empty() )
         return;
-    xos << xml::start( "extensions" );
+    bool found = false;
     for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
-        xos << xml::start( "entry" )
-                << xml::attribute( "key", it->first )
-                << xml::attribute( "value", it->second )
-            << xml::end;
-    xos << xml::end;
+    {
+        if( it->second != "" )
+        {
+            if( !found )
+            {
+                found =  true;
+                xos << xml::start( "extensions" );
+            }
+            xos << xml::start( "entry" )
+                    << xml::attribute( "key", it->first )
+                    << xml::attribute( "value", it->second )
+                << xml::end;
+        }
+    }
+    if( found )
+        xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -283,23 +283,31 @@ void PHY_RolePion_Composantes::DistributeCommanders()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
 {
-    xos.start( "equipments" );
+    bool found = false;
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         const PHY_ComposantePion& composante = **it;
-
-        xos.start( "equipment" );
-        xos.attribute( "state", composante.GetState().GetName() );
-        xos.attribute( "type", composante.GetType().GetName() );
-        if( composante.GetState() == PHY_ComposanteState::repairableWithEvacuation_ )
+        if( &composante.GetState() != &PHY_ComposanteState::undamaged_ )
         {
-            const PHY_Breakdown* breakdown = composante.GetBreakdown();
-            assert( breakdown );
-            xos.attribute( "breakdown", breakdown->GetType().GetName() );
+            if( !found )
+            {
+                found = true;
+                xos.start( "equipments" );
+            }
+            xos.start( "equipment" );
+            xos.attribute( "state", composante.GetState().GetName() );
+            xos.attribute( "type", composante.GetType().GetName() );
+            if( composante.GetState() == PHY_ComposanteState::repairableWithEvacuation_ )
+            {
+                const PHY_Breakdown* breakdown = composante.GetBreakdown();
+                assert( breakdown );
+                xos.attribute( "breakdown", breakdown->GetType().GetName() );
+            }
+            xos.end(); // equipment
         }
-        xos.end(); // equipment
     }
-    xos.end(); // equipments
+    if ( found )
+        xos.end(); // equipments
 }
 
 // -----------------------------------------------------------------------------
@@ -379,7 +387,8 @@ void PHY_RolePion_Composantes::ReadHuman( xml::xistream& xis )
     bool contaminated = xis.attribute< bool >( "contaminated" );
     bool psyop = xis.attribute< bool >( "psyop" );
     unsigned int number = xis.attribute< unsigned int >( "number" );
-
+    if( !contaminated && !psyop && pWound == &PHY_HumanWound::notWounded_ )
+        return;
     PHY_ComposantePion::CIT_ComposantePionVector itCurrentComp = composantes_.begin();
     while( number )
     {
