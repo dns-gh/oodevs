@@ -30,9 +30,9 @@ find_package( Boost COMPONENTS
     thread
     unit_test_framework
     REQUIRED )
-find_with_prefix( ZLIB zlib REQUIRED )
+masa_find_with_prefix( ZLIB zlib REQUIRED )
 find_package( OpenSSL REQUIRED )
-find_qt4( REQUIRED QtCore QtGui QtNetwork )
+masa_find_qt4( REQUIRED QtCore QtGui QtNetwork )
 
 ################################################################################
 # runtime
