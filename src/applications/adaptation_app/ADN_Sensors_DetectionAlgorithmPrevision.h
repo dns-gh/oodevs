@@ -55,23 +55,16 @@ public slots:
     void OnPopulationChanged( const QString& );
     void OnUrbanHeightRatioChanged( const QString& );
     void OnUrbanOccupationChanged( const QString& );
-    void UpdateValue();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_Sensors_DetectionAlgorithmPrevision( const ADN_Sensors_DetectionAlgorithmPrevision& );            //!< Copy constructor
-    ADN_Sensors_DetectionAlgorithmPrevision& operator=( const ADN_Sensors_DetectionAlgorithmPrevision& ); //!< Assignment operator
-    //@}
-
     //! @name Modifiers
     //@{
     void Update();
     //@}
     //! @name Helpers
     //@{
-    void UpdatePreview( double& parameter, QLineEdit* widget, double defaultValue, const QString& defaultString, const QString& value );
+    void UpdatePreview( double& parameter, const QString& value, double defaultValue, QLineEdit* widget = 0 );
     //@}
 
 private:
