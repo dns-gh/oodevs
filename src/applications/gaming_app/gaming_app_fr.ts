@@ -464,11 +464,11 @@
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Not connected to %1:%L2
+        <source>Not connected to %1:%2
 Reason: %3
 </source>
-        <translation>Non connecté à %1:%L2
-Reason: %3
+        <translation>Non connecté à %1:%2
+Raison: %3
 </translation>
     </message>
 </context>

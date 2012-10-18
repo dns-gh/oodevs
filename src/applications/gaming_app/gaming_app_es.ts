@@ -464,7 +464,7 @@
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Not connected to %1:%L2
+        <source>Not connected to %1:%2
 Reason: %3
 </source>
         <translation type="unfinished"></translation>
