@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ListenerHelper.h"
+#include "Sink.h"
 #include <core/Model.h>
 
 using namespace sword;
@@ -17,23 +18,25 @@ using namespace sword;
 // Name: ListenerHelper constructor
 // Created: SLI 2012-07-24
 // -----------------------------------------------------------------------------
-ListenerHelper::ListenerHelper( const core::Model& model, T_Callback changed )
-    : model_  ( &model )
+ListenerHelper::ListenerHelper( Sink& sink, const core::Model& model, T_Callback changed )
+    : sink_   ( sink )
+    , model_  ( &model )
     , changed_( changed )
 {
-    model.Register( *this );
+    sink_.Register( *model_, *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ListenerHelper constructor
 // Created: SLI 2012-07-24
 // -----------------------------------------------------------------------------
-ListenerHelper::ListenerHelper( const core::Model& model, T_Callback changed, T_Callback removed )
-    : model_  ( &model )
+ListenerHelper::ListenerHelper( Sink& sink, const core::Model& model, T_Callback changed, T_Callback removed )
+    : sink_   ( sink )
+    , model_  ( &model )
     , changed_( changed )
     , removed_( removed )
 {
-    model.Register( *this );
+    sink_.Register( *model_, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +46,7 @@ ListenerHelper::ListenerHelper( const core::Model& model, T_Callback changed, T_
 ListenerHelper::~ListenerHelper()
 {
     if( model_ )
-        model_->Unregister( *this );
+        sink_.Unregister( *model_, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,5 +79,6 @@ void ListenerHelper::NotifyRemoved( const core::Model& model )
 {
     if( removed_ )
         removed_( model );
+    sink_.Unregister( *model_, *this );
     model_ = 0;
 }

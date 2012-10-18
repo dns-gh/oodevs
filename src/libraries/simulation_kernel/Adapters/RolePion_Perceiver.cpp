@@ -52,21 +52,21 @@ namespace sword
     template< typename Archive >
     void save_construct_data( Archive& archive, const RolePion_Perceiver* role, const unsigned int /*version*/ )
     {
-        const core::Model* model = &role->model_;
-        const Sink* sink = &role->sink_;
-        MIL_Agent_ABC* const pion = &role->owner_;
+        const Sink* const sink = &role->sink_;
+        const core::Model* const model = &role->model_;
+        const MIL_Agent_ABC* const pion = &role->owner_;
         const core::Model* const entity = &role->entity_;
-        archive << model << sink << pion << entity;
+        archive << sink << model << pion << entity;
     }
 
     template< typename Archive >
     void load_construct_data( Archive& archive, RolePion_Perceiver* role, const unsigned int /*version*/ )
     {
-        core::Model* model;
         Sink* sink;
+        core::Model* model;
         MIL_Agent_ABC* pion;
         core::Model* entity;
-        archive >> model >> sink >> pion >> entity;
+        archive >> sink >> model >> pion >> entity;
         ::new( role )RolePion_Perceiver( *sink, *model, *pion, *entity );
     }
 }
@@ -177,13 +177,6 @@ RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MI
     , bRadarStateHasChanged_         ( true )
 {
     entity[ "perceptions/peripherical-vision/next-tick" ] = ++nNbr % nNbrStepsBetweenPeriphericalVision;
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/record-mode/activated" ] ), boost::bind( &ToggleRecordMode, _1, boost::ref( owner_.GetKnowledge().GetKsPerception() ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyObjectPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/population-concentrations" ] ), boost::bind( &::NotifyConcentrationPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/population-flows" ] ), boost::bind( &::NotifyFlowPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::cref( entity[ "perceptions/notifications/urban-blocks" ] ), boost::bind( &::NotifyUrbanObjectPerception, _1, boost::ref( notifications_ ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,6 +186,21 @@ RolePion_Perceiver::RolePion_Perceiver( Sink& sink, const core::Model& model, MI
 RolePion_Perceiver::~RolePion_Perceiver()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::Finalize
+// Created: BAX 2012-10-08
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::Finalize()
+{
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/record-mode/activated" ] ), boost::bind( &ToggleRecordMode, _1, boost::ref( owner_.GetKnowledge().GetKsPerception() ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyObjectPerception, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/population-concentrations" ] ), boost::bind( &::NotifyConcentrationPerception, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/population-flows" ] ), boost::bind( &::NotifyFlowPerception, _1, boost::ref( notifications_ ) ) ) );
+    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/urban-blocks" ] ), boost::bind( &::NotifyUrbanObjectPerception, _1, boost::ref( notifications_ ) ) ) );
 }
 
 // -----------------------------------------------------------------------------

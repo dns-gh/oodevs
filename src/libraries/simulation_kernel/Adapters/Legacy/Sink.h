@@ -39,6 +39,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Finalize();
     virtual void ExecutePerceptions();
     virtual void ExecuteCommands();
     virtual void ApplyEffects();
@@ -95,7 +96,6 @@ private:
     unsigned int gcMult_;
     //@}
 };
-
 }
 }
 

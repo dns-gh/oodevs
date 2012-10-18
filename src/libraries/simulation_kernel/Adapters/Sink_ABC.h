@@ -43,6 +43,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Finalize() = 0;
     virtual void ExecutePerceptions() = 0;
     virtual void ExecuteCommands() = 0;
     virtual void ApplyEffects() = 0;
@@ -72,7 +73,6 @@ public:
     virtual unsigned long GetModelCount() const = 0;
     //@}
 };
-
 }
 
 BOOST_CLASS_EXPORT_KEY( sword::Sink_ABC )

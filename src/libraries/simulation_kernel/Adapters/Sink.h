@@ -23,6 +23,7 @@ namespace core
     class EventListener_ABC;
     class Logger_ABC;
     class Model;
+    class ModelListener_ABC;
     class Facade;
 }
 
@@ -46,6 +47,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Finalize();
     virtual void ExecuteCommands();
     virtual void ApplyEffects();
     virtual void ExecutePerceptions();
@@ -58,6 +60,9 @@ public:
     void PauseCommand( std::size_t command );
     void ResumeCommand( std::size_t command );
     virtual void StopCommand( std::size_t command );
+
+    virtual void Register  ( const core::Model& model, core::ModelListener_ABC& listener );
+    virtual void Unregister( const core::Model& model, core::ModelListener_ABC& listener );
     //@}
 
     //! @name Factory
@@ -114,7 +119,6 @@ private:
     boost::ptr_vector< core::EventListener_ABC > listeners_;
     //@}
 };
-
 }
 
 BOOST_CLASS_EXPORT_KEY( sword::Sink )

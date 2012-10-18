@@ -21,6 +21,7 @@
 #include "MoveComputerFactory_ABC.h"
 #include "MovementHandler_ABC.h"
 #include "NetworkNotificationHandler_ABC.h"
+#include "Sink.h"
 #include "VisionConeNotificationHandler_ABC.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "simulation_terrain/TER_World.h"
@@ -36,6 +37,27 @@ using namespace sword;
 namespace bl = boost::lambda;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RolePion_Location )
+
+namespace sword
+{
+    template< typename Archive >
+    void save_construct_data( Archive& archive, const RolePion_Location* role, const unsigned int /*version*/ )
+    {
+        const Sink* const sink = &role->sink_;
+        const MIL_AgentPion* const pion = &role->owner_;
+        const core::Model* const entity = &role->entity_;
+        archive << sink << pion << entity;
+    }
+    template< typename Archive >
+    void load_construct_data( Archive& archive, RolePion_Location* role, const unsigned int /*version*/ )
+    {
+        Sink* sink;
+        MIL_AgentPion* pion;
+        core::Model* entity;
+        archive >> sink >> pion >> entity;
+        ::new( role )RolePion_Location( *sink, *pion, *entity );
+    }
+}
 
 namespace sword
 {
@@ -57,10 +79,10 @@ namespace
     class HeightListener : public RoleListener_ABC
     {
     public:
-        HeightListener( MIL_AgentPion& owner, core::Model& entity )
+        HeightListener( Sink& sink, MIL_AgentPion& owner, core::Model& entity )
             : owner_   ( owner )
             , modified_( false )
-            , height_  ( entity[ "movement/height" ], bl::var( modified_ ) = true )
+            , height_  ( sink, entity[ "movement/height" ], bl::var( modified_ ) = true )
         {}
         virtual void Clean()
         {
@@ -84,10 +106,10 @@ namespace
     class AltitudeListener : public RoleListener_ABC
     {
     public:
-        AltitudeListener( core::Model& entity )
+        AltitudeListener( Sink& sink, core::Model& entity )
             : modified_( true )
-            , height_  ( entity[ "movement/height" ], bl::var( modified_ ) = true )
-            , position_( entity[ "movement/position" ], bl::var( modified_ ) = true )
+            , height_  ( sink, entity[ "movement/height" ], bl::var( modified_ ) = true )
+            , position_( sink, entity[ "movement/position" ], bl::var( modified_ ) = true )
         {}
         virtual void Clean()
         {
@@ -111,11 +133,11 @@ namespace
     class PositionListener : public RoleListener_ABC
     {
     public:
-        PositionListener( MIL_AgentPion& owner, core::Model& entity, TER_Agent_ABC& agent, boost::shared_ptr< MT_Vector2D >& pPosition )
+        PositionListener( Sink& sink, MIL_AgentPion& owner, core::Model& entity, TER_Agent_ABC& agent, boost::shared_ptr< MT_Vector2D >& pPosition )
             : owner_    ( owner )
             , agent_    ( agent )
             , modified_ ( false )
-            , position_ ( entity[ "movement/position" ], boost::bind( &PositionListener::Changed, this ) )
+            , position_ ( sink, entity[ "movement/position" ], boost::bind( &PositionListener::Changed, this ) )
             , pPosition_( pPosition )
         {}
         virtual void Clean()
@@ -153,10 +175,10 @@ namespace
     class DirectionListener : public RoleListener_ABC
     {
     public:
-        DirectionListener( MIL_AgentPion& owner, core::Model& entity, MT_Vector2D& direction )
-            : owner_    ( owner )
+        DirectionListener( Sink& sink, MIL_AgentPion& owner, core::Model& entity, MT_Vector2D& direction )
+            : owner_     ( owner )
             , modified_  ( false )
-            , direction_ ( entity[ "movement/direction" ], boost::bind( &DirectionListener::Changed, this ) )
+            , direction_ ( sink, entity[ "movement/direction" ], boost::bind( &DirectionListener::Changed, this ) )
             , vDirection_( direction )
         {}
         virtual void Clean()
@@ -191,11 +213,11 @@ namespace
     class SpeedListener : public RoleListener_ABC
     {
     public:
-        SpeedListener( MIL_AgentPion& owner, core::Model& entity, bool& moved )
+        SpeedListener( Sink& sink, MIL_AgentPion& owner, core::Model& entity, bool& moved )
             : owner_   ( owner )
             , moved_   ( moved )
             , modified_( false )
-            , speed_   ( entity[ "movement/speed" ], boost::bind( &SpeedListener::Changed, this ) )
+            , speed_   ( sink, entity[ "movement/speed" ], boost::bind( &SpeedListener::Changed, this ) )
         {}
         virtual void Clean()
         {
@@ -232,19 +254,16 @@ namespace
 // Name: RolePion_Location constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-RolePion_Location::RolePion_Location( MIL_AgentPion& pion, core::Model& entity )
-    : owner_            ( pion )
+RolePion_Location::RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Model& entity )
+    : sink_             ( sink )
+    , owner_            ( pion )
     , entity_           ( entity )
     , vDirection_       ( 0, 1 )
     , pvPosition_       ( new MT_Vector2D ( -1, -1 ) )   // $$$$ Devrait être 'NULL'
     , bHasMoved_        ( false )
     , bHasDoneMagicMove_( false )
 {
-    listeners_.push_back( boost::make_shared< PositionListener >( boost::ref( pion ), boost::ref( entity ), boost::ref( *this ), boost::ref( pvPosition_ ) ) );
-    listeners_.push_back( boost::make_shared< DirectionListener >( boost::ref( pion ), boost::ref( entity ), boost::ref( vDirection_ ) ) );
-    listeners_.push_back( boost::make_shared< SpeedListener >( boost::ref( pion ), boost::ref( entity ), boost::ref( bHasMoved_ ) ) );
-    listeners_.push_back( boost::make_shared< HeightListener >( boost::ref( pion ), boost::ref( entity ) ) );
-    listeners_.push_back( boost::make_shared< AltitudeListener >( boost::ref( entity ) ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -254,6 +273,19 @@ RolePion_Location::RolePion_Location( MIL_AgentPion& pion, core::Model& entity )
 RolePion_Location::~RolePion_Location()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Location::Finalize
+// Created: BAX 2012-10-18
+// -----------------------------------------------------------------------------
+void RolePion_Location::Finalize()
+{
+    listeners_.push_back( boost::make_shared< PositionListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ), boost::ref( *this ), boost::ref( pvPosition_ ) ) );
+    listeners_.push_back( boost::make_shared< DirectionListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ), boost::ref( vDirection_ ) ) );
+    listeners_.push_back( boost::make_shared< SpeedListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ), boost::ref( bHasMoved_ ) ) );
+    listeners_.push_back( boost::make_shared< HeightListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ) ) );
+    listeners_.push_back( boost::make_shared< AltitudeListener >( boost::ref( sink_ ), boost::ref( entity_ ) ) );
 }
 
 // -----------------------------------------------------------------------------

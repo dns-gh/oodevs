@@ -262,7 +262,7 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
                                        pSink,
                                        MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(),
                                        MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
-    }
+}
 
 // =============================================================================
 // INITIALIZATION
@@ -412,7 +412,7 @@ void MIL_EntityManager::LoadUrbanModel( const MIL_Config& config )
         {
             fullPath = bfs::path( config.GetTerrainUrbanFile() );
             urbanFound = bfs::exists( fullPath );
-            oldUrbanMode = urbanFound; 
+            oldUrbanMode = urbanFound;
         }
         if( urbanFound ) // avoid exception
         {
@@ -597,6 +597,7 @@ void MIL_EntityManager::Finalize()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::Synchronize()
 {
+    sink_->Finalize();
     sink_->UpdateUrbanModel( MIL_AgentServer::GetWorkspace().GetUrbanCache() );
     sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
     sink_->ApplyEffects();

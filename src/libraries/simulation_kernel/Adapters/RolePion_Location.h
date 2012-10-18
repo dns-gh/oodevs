@@ -37,6 +37,7 @@ namespace core
 namespace sword
 {
     class RoleListener_ABC;
+    class Sink;
 
 // =============================================================================
 /** @class  RolePion_Location
@@ -52,7 +53,7 @@ class RolePion_Location : public PHY_RoleInterface_Location
                         , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
 {
 public:
-             RolePion_Location( MIL_AgentPion& pion, core::Model& entity );
+             RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Model& entity );
     virtual ~RolePion_Location();
 
     //! @name CheckPoints
@@ -64,6 +65,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Finalize();
     virtual void Update( bool bIsDead );
     virtual void Clean ();
 
@@ -110,26 +112,13 @@ public:
 private:
     //! @name Serialization
     //@{
-    template< typename Archive >
-    friend void save_construct_data( Archive& archive, const RolePion_Location* role, const unsigned int /*version*/ )
-    {
-        const MIL_AgentPion* const pion = &role->owner_;
-        const core::Model* const entity = &role->entity_;
-        archive << pion << entity;
-    }
-    template< typename Archive >
-    friend void load_construct_data( Archive& archive, RolePion_Location* role, const unsigned int /*version*/ )
-    {
-        MIL_AgentPion* pion;
-        core::Model* entity;
-        archive >> pion >> entity;
-        ::new( role )RolePion_Location( *pion, *entity );
-    }
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( sword::RolePion_Location )
     //@}
 
 private:
     //! @name Member data
     //@{
+    Sink&                            sink_;
     MIL_AgentPion&                   owner_;
     core::Model&                     entity_;
     MT_Vector2D                      vDirection_;
@@ -139,7 +128,6 @@ private:
     std::vector< boost::shared_ptr< RoleListener_ABC > > listeners_;
     //@}
 };
-
 }
 
 BOOST_CLASS_EXPORT_KEY( sword::RolePion_Location )

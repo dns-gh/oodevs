@@ -12,6 +12,7 @@
 
 #include "RoleAdapterInterface.h"
 #include "NetworkMessageSender_ABC.h"
+#include "simulation_kernel/MIL.h"
 #include <vector>
 
 class MIL_AgentPion;
@@ -24,6 +25,7 @@ namespace core
 namespace sword
 {
     class ModelSender_ABC;
+    class Sink;
 
 // =============================================================================
 /** @class  RoleAdapter
@@ -43,12 +45,13 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             RoleAdapter( MIL_AgentPion& pion, core::Model& entity );
+             RoleAdapter( Sink& sink, MIL_AgentPion& pion, core::Model& entity );
     virtual ~RoleAdapter();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Finalize();
     virtual void SendChangedState() const;
     virtual void SendFullState( unsigned int context ) const;
 
@@ -59,32 +62,18 @@ public:
 private:
     //! @name Serialization
     //@{
-    template< typename Archive >
-    friend void save_construct_data( Archive& archive, const RoleAdapter* role, const unsigned int /*version*/ )
-    {
-        const MIL_AgentPion* const pion = &role->pion_;
-        const core::Model* const entity = &role->entity_;
-        archive << pion << entity;
-    }
-    template< typename Archive >
-    friend void load_construct_data( Archive& archive, RoleAdapter* role, const unsigned int /*version*/ )
-    {
-        MIL_AgentPion* pion;
-        core::Model* entity;
-        archive >> pion >> entity;
-        ::new( role )RoleAdapter( *pion, *entity );
-    }
+    INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( sword::RoleAdapter );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Sink& sink_;
     MIL_AgentPion& pion_;
     core::Model& entity_;
     std::vector< boost::shared_ptr< network::NetworkMessageSender_ABC > > senders_;
     //@}
 };
-
 }
 
 BOOST_CLASS_EXPORT_KEY( sword::RoleAdapter )

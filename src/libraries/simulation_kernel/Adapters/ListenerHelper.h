@@ -15,6 +15,8 @@
 
 namespace sword
 {
+    class Sink;
+
 // =============================================================================
 /** @class  ListenerHelper
     @brief  Listener helper
@@ -32,8 +34,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ListenerHelper( const core::Model& model, T_Callback changed );
-             ListenerHelper( const core::Model& model, T_Callback changed, T_Callback removed );
+             ListenerHelper( Sink& sink, const core::Model& model, T_Callback changed );
+             ListenerHelper( Sink& sink, const core::Model& model, T_Callback changed, T_Callback removed );
     virtual ~ListenerHelper();
     //@}
 
@@ -59,6 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Sink& sink_;
     const core::Model* model_;
     T_Callback changed_;
     T_Callback removed_;

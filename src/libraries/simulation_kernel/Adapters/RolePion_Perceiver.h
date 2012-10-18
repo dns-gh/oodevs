@@ -73,6 +73,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void                       Finalize          ();
     virtual void                       Update            ( bool bIsDead );
     virtual void                       Clean             ();
     virtual void                       ExecutePerceptions();
@@ -196,7 +197,6 @@ private:
     T_Notifications notifications_;
     //@}
 };
-
 }
 
 BOOST_CLASS_EXPORT_KEY( sword::RolePion_Perceiver )

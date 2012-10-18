@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "RoleAdapter.h"
 #include "RoleAction_Moving.h"
+#include "Sink.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Decision/DEC_Decision_ABC.h"
@@ -26,22 +27,44 @@ using namespace sword;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( sword::RoleAdapter )
 
+namespace sword
+{
+    template< typename Archive >
+    void save_construct_data( Archive& archive, const RoleAdapter* role, const unsigned int /*version*/ )
+    {
+        const Sink* const sink = &role->sink_;
+        const MIL_AgentPion* const pion = &role->pion_;
+        const core::Model* const entity = &role->entity_;
+        archive << sink << pion << entity;
+    }
+    template< typename Archive >
+    void load_construct_data( Archive& archive, RoleAdapter* role, const unsigned int /*version*/ )
+    {
+        Sink* sink;
+        MIL_AgentPion* pion;
+        core::Model* entity;
+        archive >> sink >> pion >> entity;
+        ::new( role )RoleAdapter( *sink, *pion, *entity );
+    }
+}
+
 namespace
 {
     template< typename Message, typename Serializer >
     class ModelSender : public network::NetworkMessageSender_ABC, private core::ModelListener_ABC // $$$$ MCO 2012-09-13: factorize with ListenerHelper
     {
     public:
-        ModelSender( core::Model& model, Serializer serializer )
-            : model_     ( &model )
+        ModelSender( Sink& sink, core::Model& model, Serializer serializer )
+            : sink_      ( sink )
+            , model_     ( &model )
             , serializer_( serializer )
         {
-            model.Register( *this );
+            sink_.Register( *model_, *this );
         }
         virtual ~ModelSender()
         {
             if( model_ )
-                model_->Unregister( *this );
+                sink_.Unregister( *model_, *this );
         }
         virtual void SendChangedState() const
         {
@@ -66,18 +89,20 @@ namespace
         }
         virtual void NotifyRemoved( const core::Model& /*model*/ )
         {
+            sink_.Unregister( *model_, *this );
             model_ = 0;
         }
     private:
+        Sink& sink_;
         const core::Model* model_;
         mutable boost::optional< Message > message_;
         Serializer serializer_;
     };
 
     template< typename Message, typename Serializer >
-    boost::shared_ptr< network::NetworkMessageSender_ABC > MakeModelSender( core::Model& model, Serializer serializer )
+    boost::shared_ptr< network::NetworkMessageSender_ABC > MakeModelSender( Sink& sink, core::Model& model, Serializer serializer )
     {
-        return boost::make_shared< ModelSender< Message, Serializer > >( boost::ref( model ), serializer );
+        return boost::make_shared< ModelSender< Message, Serializer > >( boost::ref( sink ), boost::ref( model ), serializer );
     }
 
     template< typename M >
@@ -117,12 +142,11 @@ SWORD_USER_DATA_EXPORT( MIL_AgentPion* )
 // Name: RoleAdapter constructor
 // Created: SLI 2012-01-16
 // -----------------------------------------------------------------------------
-RoleAdapter::RoleAdapter( MIL_AgentPion& pion, core::Model& entity )
-    : pion_  ( pion )
+RoleAdapter::RoleAdapter( Sink& sink, MIL_AgentPion& pion, core::Model& entity )
+    : sink_  ( sink )
+    , pion_  ( pion )
     , entity_( entity )
 {
-    senders_.push_back( MakeModelSender< client::UnitPathFind >( entity_[ "movement/path/points" ], boost::bind( &Serialize< client::UnitPathFind >, _1, pion.GetID(), _2 ) ) );
-    senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( entity_[ "movement/environment" ], boost::bind( &Serialize< client::UnitEnvironmentType >, _1, pion.GetID(), _2 ) ) ); // $$$$ MCO 2012-09-13: move the two listeners to RoleAction_Moving
     entity_[ "data" ].SetUserData( &pion ); // $$$$ MCO 2012-09-13: move all initializations into Sink::CreateEntity
     entity_[ "movement/speed" ] = 0;
     entity_[ "movement/direction/x" ] = 0;
@@ -180,7 +204,17 @@ RoleAdapter::~RoleAdapter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RoleAdapter destructor
+// Name: RoleAdapter::Finalize
+// Created: BAX 2012-10-18
+// -----------------------------------------------------------------------------
+void RoleAdapter::Finalize()
+{
+    senders_.push_back( MakeModelSender< client::UnitPathFind >( boost::ref( sink_ ), entity_[ "movement/path/points" ], boost::bind( &Serialize< client::UnitPathFind >, _1, pion_.GetID(), _2 ) ) );
+    senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( boost::ref( sink_ ), entity_[ "movement/environment" ], boost::bind( &Serialize< client::UnitEnvironmentType >, _1, pion_.GetID(), _2 ) ) ); // $$$$ MCO 2012-09-13: move the two listeners to RoleAction_Moving
+}
+
+// -----------------------------------------------------------------------------
+// Name: RoleAdapter::serialize
 // Created: SLI 2012-01-16
 // -----------------------------------------------------------------------------
 template< typename Archive >

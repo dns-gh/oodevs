@@ -539,7 +539,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
     core::Model& entity = (*model_)[ "entities" ][ pion.GetID() ];
     entity[ "movement/position/x" ] = position.rX_;
     entity[ "movement/position/y" ] = position.rY_;
-    pion.RegisterRole( *new sword::RolePion_Location( pion, entity ) );
+    pion.RegisterRole( *new sword::RolePion_Location( *this, pion, entity ) );
     try
     {
         pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, *this ) );
@@ -551,7 +551,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
     pion.RegisterRole( *new sword::RoleAction_Moving( pion ) );
     pion.RegisterRole( *new sword::RolePion_Perceiver( *this, *model_, pion, entity ) );
     pion.RegisterRole( *new sword::RolePion_Composantes( pion, entity ) );
-    pion.RegisterRole( *new sword::RoleAdapter( pion, entity ) );
+    pion.RegisterRole( *new sword::RoleAdapter( *this, pion, entity ) );
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
     pion.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( position );
     {
@@ -561,6 +561,29 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
         facade_->StartCommand( "perception", parameters );
     }
     return pion;
+}
+
+namespace
+{
+    // -------------------------------------------------------------------------
+    // Name: Finalize
+    // Created: BAX 2012-10-18
+    // -------------------------------------------------------------------------
+    void Finalize( MIL_AgentPion& pion )
+    {
+        pion.GetRole< sword::RolePion_Location >().Finalize();
+        pion.GetRole< sword::RolePion_Perceiver >().Finalize();
+        pion.GetRole< sword::RoleAdapter >().Finalize();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::Finalize
+// Created: BAX 2012-10-18
+// -----------------------------------------------------------------------------
+void Sink::Finalize()
+{
+    tools::Resolver< MIL_AgentPion >::Apply( boost::bind( &::Finalize, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -615,4 +638,22 @@ unsigned long Sink::GetModelCount() const
     ModelCounter counter;
     model_->Accept( counter );
     return counter.count_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::Register
+// Created: BAX 2012-10-16
+// -----------------------------------------------------------------------------
+void Sink::Register( const core::Model& model, core::ModelListener_ABC& listener )
+{
+    facade_->Register( model, listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Sink::Unregister
+// Created: BAX 2012-10-16
+// -----------------------------------------------------------------------------
+void Sink::Unregister( const core::Model& model, core::ModelListener_ABC& listener )
+{
+    facade_->Unregister( model, listener );
 }
