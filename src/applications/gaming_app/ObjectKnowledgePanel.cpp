@@ -147,15 +147,23 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
     if( !selected_ || selected_ != &element )
         return;
 
-    knowledgeModel_.removeRows( 0, knowledgeModel_.rowCount() );
+    int knowledgeSize = element.Count();
+    int modelSize = knowledgeModel_.rowCount();
+
+    if( modelSize > knowledgeSize )
+        knowledgeModel_.removeRows( knowledgeSize, modelSize - knowledgeSize );
+    else if( modelSize < knowledgeSize )
+        for( int i = 0; i < knowledgeSize - modelSize; ++i )
+            knowledgeModel_.appendRow( new QStandardItem() );
+
+    int i = 0;
     tools::Iterator< const kernel::ObjectKnowledge_ABC& > iterator = element.CreateIterator();
     while( iterator.HasMoreElements() )
     {
-        //object knowledge infos
         const kernel::ObjectKnowledge_ABC& knowledge = iterator.NextElement();
-        QStandardItem* nameItem = new QStandardItem( knowledge.GetEntity()? knowledge.GetEntity()->GetName() : QString::number( knowledge.GetEntityId() ) );
-        nameItem->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
-        knowledgeModel_.appendRow( nameItem );
+        knowledgeModel_.item( i )->setText( knowledge.GetEntity()? knowledge.GetEntity()->GetName() : QString::number( knowledge.GetEntityId() ) );
+        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        ++i;
     }
 }
 
@@ -179,9 +187,17 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectPerceptions& element )
 {
     if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< ObjectPerceptions >() != &element )
         return;
-    perceptionModel_.removeRows( 0, perceptionModel_.rowCount() );
-    for( ObjectPerceptions::CIT_Agents it = element.detectingAutomats_.begin(); it != element.detectingAutomats_.end(); ++it )
-        perceptionModel_.appendRow( new QStandardItem( ( *it )->GetName() ) );
+
+    int knowledgeSize = static_cast< int >( element.detectingAutomats_.size() );
+    int modelSize = perceptionModel_.rowCount();
+
+    if( modelSize > knowledgeSize )
+        perceptionModel_.removeRows( knowledgeSize, modelSize - knowledgeSize );
+    else if( modelSize < knowledgeSize )
+        for( int i = 0; i < knowledgeSize - modelSize; ++i )
+            perceptionModel_.appendRow( new QStandardItem() );
+    for( int i = 0; i < knowledgeSize; ++i )
+        perceptionModel_.item( i )->setText( element.detectingAutomats_[ i ]->GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,9 +362,9 @@ void ObjectKnowledgePanel::OnSelectionChanged()
     if( item && item->data( KnowledgeRole ).isValid() )
     {
         subSelected_ = item->data( KnowledgeRole ).value< const ObjectKnowledge_ABC* >();
-        subSelected_->Activate( controllers_.actions_ );
         if( subSelected_ )
         {
+            subSelected_->Activate( controllers_.actions_ );
             NotifyUpdated( *subSelected_ );
             UpdateExtension< ConstructionAttribute_ABC >( *subSelected_ );
             UpdateExtension< BypassAttribute_ABC >( *subSelected_ );

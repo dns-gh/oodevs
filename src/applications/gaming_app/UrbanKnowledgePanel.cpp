@@ -103,15 +103,23 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanKnowledges& element )
     if( ! IsVisible() || selected_ != &element )
         return;
 
-    knowledgeModel_.removeRows( 0, knowledgeModel_.rowCount() );
+    int knowledgeSize = element.Count();
+    int modelSize = knowledgeModel_.rowCount();
+
+    if( modelSize > knowledgeSize )
+        knowledgeModel_.removeRows( knowledgeSize, modelSize - knowledgeSize );
+    else if( modelSize < knowledgeSize )
+        for( int i = 0; i < knowledgeSize - modelSize; ++i )
+            knowledgeModel_.appendRow( new QStandardItem() );
+
+    int i = 0;
     tools::Iterator< const kernel::UrbanKnowledge_ABC& > iterator = element.CreateIterator();
     while( iterator.HasMoreElements() )
     {
-        //population knowledge infos
         const kernel::UrbanKnowledge_ABC& knowledge = iterator.NextElement();
-        QStandardItem* nameItem = new QStandardItem( knowledge.GetEntity()->GetName() );
-        nameItem->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
-        knowledgeModel_.appendRow( nameItem );
+        knowledgeModel_.item( i )->setText( knowledge.GetEntity()->GetName() );
+        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
+        ++i;
     }
 }
 
@@ -123,9 +131,17 @@ void UrbanKnowledgePanel::NotifyUpdated( const UrbanPerceptions& element )
 {
      if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< UrbanPerceptions >() != &element )
          return;
-     perceptionModel_.removeRows( 0, perceptionModel_.rowCount() );
-     for( UrbanPerceptions::CIT_Agents it = element.detectingAutomats_.begin(); it != element.detectingAutomats_.end(); ++it )
-         perceptionModel_.appendRow( new QStandardItem( ( *it )->GetName() ) );
+
+     int knowledgeSize = static_cast< int >( element.detectingAutomats_.size() );
+     int modelSize = perceptionModel_.rowCount();
+
+     if( modelSize > knowledgeSize )
+         perceptionModel_.removeRows( knowledgeSize, modelSize - knowledgeSize );
+     else if( modelSize < knowledgeSize )
+         for( int i = 0; i < knowledgeSize - modelSize; ++i )
+             perceptionModel_.appendRow( new QStandardItem() );
+     for( int i = 0; i < knowledgeSize; ++i )
+         perceptionModel_.item( i )->setText( element.detectingAutomats_[ i ]->GetName() );
 }
 
 // -----------------------------------------------------------------------------

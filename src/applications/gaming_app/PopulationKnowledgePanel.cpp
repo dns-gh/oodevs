@@ -85,19 +85,6 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
     controllers_.Register( *this );
 }
 
-// $$$$ AGE 2006-02-27: ajouter
-//    pFlowPartBox_ = new QGroupBox( 1, Qt::Horizontal, tools::translate( "PopulationKnowledgePanel", "Portions de flux" ), this );
-//    pFlowPartTable_ = new QTable( 0, 2, pFlowPartBox_ );
-//    pFlowPartTable_->horizontalHeader()->setLabel( 0, tools::translate( "PopulationKnowledgePanel", "#" ) );
-//    pFlowPartTable_->horizontalHeader()->setLabel( 1, tools::translate( "PopulationKnowledgePanel", "Pertinence" ) );
-//    pFlowPartTable_->setColumnWidth   ( 0, 20 );
-//    pFlowPartTable_->setColumnReadOnly( 0, true );
-//    pFlowPartTable_->setColumnReadOnly( 1, true );
-//    pFlowPartTable_->setLeftMargin( 0 );
-//    pFlowPartTable_->setShowGrid( false );
-//    pFlowPartTable_->setMaximumHeight( 100 );
-//    pFlowPartBox_->hide();
-
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgePanel destructor
 // Created: SBO 2005-10-19
@@ -129,7 +116,8 @@ void PopulationKnowledgePanel::OnContextMenuRequested( const QPoint & pos )
         return;
     QStandardItem* item = knowledgeModel_.itemFromIndex( index );
     if( item && item->data( KnowledgeRole ).isValid() )
-        item->data( KnowledgeRole ).value< const PopulationKnowledge_ABC* >()->ContextMenu( controllers_.actions_, knowledgeList_->viewport()->mapToGlobal( pos ) );
+        if( item->data( KnowledgeRole ).canConvert< const PopulationKnowledge_ABC* >() )
+            item->data( KnowledgeRole ).value< const PopulationKnowledge_ABC* >()->ContextMenu( controllers_.actions_, knowledgeList_->viewport()->mapToGlobal( pos ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,36 +164,59 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
         return;
 
     //population knowledge
-    knowledgeModel_.removeRows( 0, knowledgeModel_.rowCount() );
+    int knowledgeSize = element.Count();
+    int modelSize = knowledgeModel_.rowCount();
+
+    if( modelSize > knowledgeSize )
+        knowledgeModel_.removeRows( knowledgeSize, modelSize - knowledgeSize );
+    else if( modelSize < knowledgeSize )
+        for( int i = 0; i < knowledgeSize - modelSize; ++i )
+            knowledgeModel_.appendRow( new QStandardItem() );
+
+    int i = 0;
     tools::Iterator< const kernel::PopulationKnowledge_ABC& > iterator = element.CreateIterator();
     while( iterator.HasMoreElements() )
     {
         //population knowledge infos
         const kernel::PopulationKnowledge_ABC& knowledge = iterator.NextElement();
-        QStandardItem* nameItem = new QStandardItem( knowledge.GetEntity()->GetName() + " - "+ QString::number( knowledge.GetEntity()->GetId() ) );
-        nameItem->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
-        knowledgeModel_.appendRow( nameItem );
-        const PopulationKnowledge& k = dynamic_cast< const PopulationKnowledge& >( knowledge ); 
+        knowledgeModel_.item( i )->setText( knowledge.GetEntity()? knowledge.GetEntity()->GetName() + " - "+ QString::number( knowledge.GetEntity()->GetId() ) : QString::number( knowledge.GetEntityId() ) );
+        knowledgeModel_.item( i )->setData( QVariant::fromValue( &knowledge ), KnowledgeRole );
 
+        const PopulationKnowledge& k = static_cast< const PopulationKnowledge& >( knowledge );
+        const tools::Resolver< PopulationConcentrationKnowledge >& concentrations = static_cast< const tools::Resolver< PopulationConcentrationKnowledge >& >( k );
+        const tools::Resolver< PopulationFlowKnowledge >& flows = static_cast< const tools::Resolver< PopulationFlowKnowledge >& >( k );
+
+        //concentration and flow count
+        int populationSize = concentrations.Count() + flows.Count();
+        int itemchildrenSize = knowledgeModel_.item( i )->rowCount();
+
+        if( itemchildrenSize > populationSize )
+            knowledgeModel_.item( i )->removeRows( populationSize, itemchildrenSize - populationSize );
+        else if( itemchildrenSize < populationSize )
+            for( int size = 0; size < populationSize - itemchildrenSize; ++size )
+                knowledgeModel_.item( i )->appendRow( new QStandardItem() );
+
+        int j = 0;
         //concentration knowledge
-        tools::Iterator< const PopulationConcentrationKnowledge& > iteratorConcentration = k.Resolver< PopulationConcentrationKnowledge >::CreateIterator();
-        while( iteratorConcentration.HasMoreElements() && k.Resolver< PopulationConcentrationKnowledge >::Count() )
+        tools::Iterator< const PopulationConcentrationKnowledge& > iteratorConcentration = concentrations.CreateIterator();
+        while( iteratorConcentration.HasMoreElements()  )
         {
             const PopulationConcentrationKnowledge& concentration = iteratorConcentration.NextElement();
-            QStandardItem* concentrationItem = new QStandardItem(  tools::translate( "Crowd", "Concentration - " ) + QString::number( concentration.GetNId() ) );
-            concentrationItem->setData( QVariant::fromValue( &concentration ), KnowledgeRole );
-            nameItem->appendRow( concentrationItem );
+            knowledgeModel_.item( i )->child( j )->setText(  tools::translate( "Crowd", "Concentration - " ) + QString::number( concentration.GetNId() ) );
+            knowledgeModel_.item( i )->child( j )->setData( QVariant::fromValue( &concentration ), KnowledgeRole );
+            ++j;
         }
 
         //flow knowledge
-        tools::Iterator< const PopulationFlowKnowledge& > iteratorFlow = k.Resolver< PopulationFlowKnowledge >::CreateIterator();
-        while( iteratorFlow.HasMoreElements() && k.Resolver< PopulationFlowKnowledge >::Count() )
+        tools::Iterator< const PopulationFlowKnowledge& > iteratorFlow = flows.CreateIterator();
+        while( iteratorFlow.HasMoreElements() )
         {
             const PopulationFlowKnowledge& flow = iteratorFlow.NextElement();
-            QStandardItem* flowItem = new QStandardItem( tools::translate( "Crowd", "Flow - " ) + QString::number( flow.GetNId() ) );
-            flowItem->setData( QVariant::fromValue( &flow ), KnowledgeRole );
-            nameItem->appendRow( flowItem );
+            knowledgeModel_.item( i )->child( j )->setText( tools::translate( "Crowd", "Flow - " ) + QString::number( flow.GetNId() ) );
+            knowledgeModel_.item( i )->child( j )->setData( QVariant::fromValue( &flow ), KnowledgeRole );
+            ++j;
         }
+        ++i;
     }
     selected_ = &element;
 }
