@@ -37,12 +37,12 @@ masa_find_qt4( REQUIRED QtCore QtGui QtNetwork )
 ################################################################################
 # runtime
 ################################################################################
-glob_dir( files src
+masa_glob_dir( files src
     "${root_dir}/src/libraries/runtime/*.h"
     "${root_dir}/src/libraries/runtime/*.cpp"
 )
 if( MSVC )
-    glob_dir( win32_files win32
+    masa_glob_dir( win32_files win32
         "${root_dir}/src/libraries/runtime/win32/*.cpp"
         "${root_dir}/src/libraries/runtime/win32/*.h"
     )
@@ -59,7 +59,7 @@ endif()
 ################################################################################
 # web_server
 ################################################################################
-glob_dir( files src
+masa_glob_dir( files src
     "${root_dir}/src/libraries/web/*.h"
     "${root_dir}/src/libraries/web/*.cpp"
 )
@@ -76,7 +76,7 @@ target_link_libraries( web ${OPENSSL_LIBRARIES} )
 ################################################################################
 # host
 ################################################################################
-glob_dir( files src
+masa_glob_dir( files src
     "${root_dir}/src/libraries/host/*.h"
     "${root_dir}/src/libraries/host/*.cpp"
 )
@@ -92,7 +92,7 @@ endif()
 ################################################################################
 # cloud_server
 ################################################################################
-glob_dir( files src
+masa_glob_dir( files src
     "${root_dir}/src/applications/cloud_server/*.cpp"
 )
 configure_rc( cloud_server files res
@@ -110,7 +110,7 @@ target_link_libraries( cloud_server
 # client
 ################################################################################
 set( root "${root_dir}/src/libraries/client" )
-glob_dir( files src "${root}/*.cpp" )
+masa_glob_dir( files src "${root}/*.cpp" )
 glob_qt4_headers( files src "${root}/*.h" )
 glob_qt4_ui( files ui "${root}/*.ui" )
 add_static_library( client ${files} )
@@ -121,7 +121,7 @@ set_target_qt4( client )
 # cloud_client
 ################################################################################
 set( root "${root_dir}/src/applications/cloud_client" )
-glob_dir( files src "${root}/*.cpp" )
+masa_glob_dir( files src "${root}/*.cpp" )
 configure_rc( cloud_client files res "${root}/version.rc.in" )
 glob_qt4_rc( files res "${root}/*.qrc" )
 add_executable_target( cloud_client WIN32 ${files} )
@@ -136,12 +136,12 @@ target_link_libraries( cloud_client
 ################################################################################
 # runtime_test
 ################################################################################
-glob_dir( files src
+masa_glob_dir( files src
     "${root_dir}/src/tests/runtime_test/*.cpp"
     "${root_dir}/src/tests/runtime_test/*.h"
 )
 if( WIN32 )
-    glob_dir( win32_files win32
+    masa_glob_dir( win32_files win32
         "${root_dir}/src/tests/runtime_test/Win32*.cpp"
         "${root_dir}/src/tests/runtime_test/Win32*.h"
     )
@@ -159,7 +159,7 @@ add_test_target( runtime_test runtime
 ################################################################################
 # host_test
 ################################################################################
-glob_dir( files src
+masa_glob_dir( files src
     "${root_dir}/src/tests/host_test/*.cpp"
     "${root_dir}/src/tests/host_test/*.h"
 )
@@ -176,7 +176,7 @@ add_test_target( host_test host
 ################################################################################
 # web_test
 ################################################################################
-glob_dir( files src
+masa_glob_dir( files src
     "${root_dir}/src/tests/web_test/*.cpp"
     "${root_dir}/src/tests/web_test/*.h"
 )
