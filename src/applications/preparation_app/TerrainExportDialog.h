@@ -40,6 +40,7 @@ public:
 private slots:
     //! @name Slots
     //@{
+    void CheckExportReady();
     void OnBrowseExport();
     //@}
 

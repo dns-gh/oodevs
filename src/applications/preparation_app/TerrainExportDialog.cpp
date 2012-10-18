@@ -57,10 +57,13 @@ TerrainExportDialog::TerrainExportDialog( QWidget* parent, const tools::Exercise
     layoutButton->setAlignment( Qt::AlignRight );
 
     shapeCheck_ = new QCheckBox( tr( "Export vector data (Shapefile)" ) );
+    connect( shapeCheck_, SIGNAL( clicked( bool ) ), SLOT( CheckExportReady() ) );
     shapeCheck_->setChecked( true );
     rasterCheck_ = new QCheckBox( tr( "Export raster data (GeoTIFF)" ) );
+    connect( rasterCheck_, SIGNAL( clicked( bool ) ), SLOT( CheckExportReady() ) );
     rasterCheck_->setChecked( true );
     elevationCheck_ = new QCheckBox( tr( "Export elevation data (ESRI Ascii GRID)" ) );
+    connect( elevationCheck_, SIGNAL( clicked( bool ) ), SLOT( CheckExportReady() ) );
     elevationCheck_->setChecked( true );
 
     mainLayout->addWidget( shapeCheck_ );
@@ -154,5 +157,12 @@ void TerrainExportDialog::OnBrowseExport()
 {
     QString newDirectory = QFileDialog::getExistingDirectory( this, tr( "Select export directory" ), exportPathEditor_->text() );
     exportPathEditor_->setText( newDirectory );
-    okButton_->setEnabled( !newDirectory.isEmpty() && bfs::exists( newDirectory.toAscii().constData() ) && bfs::is_directory( newDirectory.toAscii().constData() ) );
+    CheckExportReady();
+}
+
+void TerrainExportDialog::CheckExportReady()
+{
+    const QString newDirectory = exportPathEditor_->text();
+    const bool isExportEnabled = shapeCheck_->isChecked() || rasterCheck_->isChecked() || elevationCheck_->isChecked();
+    okButton_->setEnabled( isExportEnabled && !newDirectory.isEmpty() && bfs::exists( newDirectory.toAscii().constData() ) && bfs::is_directory( newDirectory.toAscii().constData() ) );
 }
