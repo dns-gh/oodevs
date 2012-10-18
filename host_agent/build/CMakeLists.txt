@@ -83,8 +83,10 @@ glob_dir( files src
 add_static_library( host ${files} )
 set_target_folder( host libraries )
 if( MSVC )
-    add_target_external_library( host bcrypt-${platform}_d bcrypt-${platform} )
-    add_target_external_library( host libsqlite3-${platform}_d libsqlite3-${platform} )
+    masa_get_library_full_name( bcrypt bcrypt_debug bcrypt_release ) 
+    add_target_external_library( host ${bcrypt_debug} ${bcrypt_release} )
+    masa_get_library_full_name( sqlite3 sqlite3_debug sqlite3_release ) 
+    add_target_external_library( host ${sqlite3_debug} ${sqlite3_release} )
 endif()
 
 ################################################################################
