@@ -148,7 +148,7 @@ unsigned int PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, unsign
 // -----------------------------------------------------------------------------
 unsigned int PHY_HumansComposante::OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop /*= false*/, bool contaminated /*= false*/ )
 {
-    if( ( newWound == PHY_HumanWound::notWounded_ ) && !psyop && !contaminated )
+    if( ( newWound == PHY_HumanWound::notWounded_ && !psyop && !contaminated ) || ( pComposante_->GetState() == PHY_ComposanteState::dead_ && newWound != PHY_HumanWound::killed_ ) )
         return 0;
     unsigned int nNbrChanged = 0;
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end() && nNbrToChange ; ++it )

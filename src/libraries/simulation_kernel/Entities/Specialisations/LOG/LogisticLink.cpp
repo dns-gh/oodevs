@@ -97,7 +97,7 @@ void LogisticLink::ReadQuota( xml::xistream& xis )
     if( quotas_.find( pDotationCategory ) != quotas_.end() )
         xis.error( "Quota already defined" );
 
-    unsigned int quantity;
+    double quantity;
     xis >> xml::attribute( "quantity", quantity );
     if( quantity < 0 )
         xis.error( "quantity is not greater or equal to 0" );

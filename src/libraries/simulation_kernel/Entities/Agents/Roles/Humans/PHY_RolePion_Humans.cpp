@@ -191,19 +191,28 @@ void PHY_RolePion_Humans::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::WriteODB( xml::xostream& xos ) const
 {
-    xos.start( "humans" );
+    bool found = false;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const HumanState& state = **it;
-        xos << xml::start( "human" )
-                << xml::attribute( "number", state.number_ )
-                << xml::attribute( "rank", state.rank_->GetName() )
-                << xml::attribute( "state", state.state_->GetName() )
-                << xml::attribute( "contaminated", state.contaminated_ )
-                << xml::attribute( "psyop", state.psyop_ )
-            << xml::end; // human
+        if( ( state.contaminated_ || state.psyop_ || state.state_ != &PHY_HumanWound::notWounded_ ) && state.number_ != 0 )
+        {
+            if( ! found )
+            {
+                found = true;
+                xos.start( "humans" );
+            }
+            xos << xml::start( "human" )
+                    << xml::attribute( "number", state.number_ )
+                    << xml::attribute( "rank", state.rank_->GetName() )
+                    << xml::attribute( "state", state.state_->GetName() )
+                    << xml::attribute( "contaminated", state.contaminated_ )
+                    << xml::attribute( "psyop", state.psyop_ )
+                << xml::end; // human
+        }
     }
-    xos.end(); // humans
+    if( found )
+        xos.end(); // humans
 }
 
 
