@@ -48,11 +48,11 @@ if( MSVC )
     )
     list( APPEND files ${win32_files} )
 endif()
-add_static_library( runtime ${files} )
-set_target_folder( runtime libraries )
+masa_add_static_library( runtime ${files} )
+masa_set_target_folder( runtime libraries )
 if( MSVC )
-    add_target_external_library( runtime archive_static_d archive_static )
-    add_target_external_library( runtime zlibd zlib )
+    masa_add_target_external_library( runtime archive_static_d archive_static )
+    masa_add_target_external_library( runtime zlibd zlib )
     target_link_libraries( runtime shlwapi )
 endif()
 
@@ -63,12 +63,12 @@ masa_glob_dir( files src
     "${root_dir}/src/libraries/web/*.h"
     "${root_dir}/src/libraries/web/*.cpp"
 )
-add_static_library( web ${files} )
-set_target_folder( web libraries )
+masa_add_static_library( web ${files} )
+masa_set_target_folder( web libraries )
 if( MSVC )
-    add_target_external_library( web cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
-    add_target_external_library( web cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
-    add_target_external_library( web mongoose_d mongoose )
+    masa_add_target_external_library( web cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
+    masa_add_target_external_library( web cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
+    masa_add_target_external_library( web mongoose_d mongoose )
     target_link_libraries( web ws2_32 )
 endif()
 target_link_libraries( web ${OPENSSL_LIBRARIES} )
@@ -80,13 +80,13 @@ masa_glob_dir( files src
     "${root_dir}/src/libraries/host/*.h"
     "${root_dir}/src/libraries/host/*.cpp"
 )
-add_static_library( host ${files} )
-set_target_folder( host libraries )
+masa_add_static_library( host ${files} )
+masa_set_target_folder( host libraries )
 if( MSVC )
     masa_get_library_full_name( bcrypt bcrypt_debug bcrypt_release ) 
-    add_target_external_library( host ${bcrypt_debug} ${bcrypt_release} )
+    masa_add_target_external_library( host ${bcrypt_debug} ${bcrypt_release} )
     masa_get_library_full_name( sqlite3 sqlite3_debug sqlite3_release ) 
-    add_target_external_library( host ${sqlite3_debug} ${sqlite3_release} )
+    masa_add_target_external_library( host ${sqlite3_debug} ${sqlite3_release} )
 endif()
 
 ################################################################################
@@ -95,11 +95,11 @@ endif()
 masa_glob_dir( files src
     "${root_dir}/src/applications/cloud_server/*.cpp"
 )
-configure_rc( cloud_server files res
+masa_configure_rc( cloud_server files res
     "${root_dir}/src/applications/cloud_server/version.rc.in"
 )
-add_executable_target( cloud_server ${files} )
-set_target_folder( cloud_server applications )
+masa_add_executable_target( cloud_server ${files} )
+masa_set_target_folder( cloud_server applications )
 target_link_libraries( cloud_server
     host
     runtime
@@ -111,22 +111,22 @@ target_link_libraries( cloud_server
 ################################################################################
 set( root "${root_dir}/src/libraries/client" )
 masa_glob_dir( files src "${root}/*.cpp" )
-glob_qt4_headers( files src "${root}/*.h" )
-glob_qt4_ui( files ui "${root}/*.ui" )
-add_static_library( client ${files} )
-set_target_folder( client libraries )
-set_target_qt4( client )
+masa_glob_qt4_headers( files src "${root}/*.h" )
+masa_glob_qt4_ui( files ui "${root}/*.ui" )
+masa_add_static_library( client ${files} )
+masa_set_target_folder( client libraries )
+masa_set_target_qt4( client )
 
 ################################################################################
 # cloud_client
 ################################################################################
 set( root "${root_dir}/src/applications/cloud_client" )
 masa_glob_dir( files src "${root}/*.cpp" )
-configure_rc( cloud_client files res "${root}/version.rc.in" )
-glob_qt4_rc( files res "${root}/*.qrc" )
-add_executable_target( cloud_client WIN32 ${files} )
-set_target_folder( cloud_client applications )
-set_target_qt4( cloud_client )
+masa_configure_rc( cloud_client files res "${root}/version.rc.in" )
+masa_glob_qt4_rc( files res "${root}/*.qrc" )
+masa_add_executable_target( cloud_client WIN32 ${files} )
+masa_set_target_folder( cloud_client applications )
+masa_set_target_qt4( cloud_client )
 target_link_libraries( cloud_client
     client
     host
@@ -148,12 +148,12 @@ if( WIN32 )
     list( REMOVE_ITEM files ${win32_files} )
     list( APPEND files ${win32_files} )
 endif()
-add_executable_target( runtime_test ${files} )
-set_target_folder( runtime_test tests )
+masa_add_executable_target( runtime_test ${files} )
+masa_set_target_folder( runtime_test tests )
 target_link_libraries( runtime_test
     runtime
 )
-add_test_target( runtime_test runtime
+masa_add_test_target( runtime_test runtime
     "--data_directory=${root_dir}/src/tests/runtime_test" )
 
 ################################################################################
@@ -163,14 +163,14 @@ masa_glob_dir( files src
     "${root_dir}/src/tests/host_test/*.cpp"
     "${root_dir}/src/tests/host_test/*.h"
 )
-add_executable_target( host_test ${files} )
-set_target_folder( host_test tests )
+masa_add_executable_target( host_test ${files} )
+masa_set_target_folder( host_test tests )
 target_link_libraries( host_test
     host
     runtime
     web
 )
-add_test_target( host_test host
+masa_add_test_target( host_test host
    "--data_directory=${root_dir}/src/tests/host_test" )
 
 ################################################################################
@@ -180,11 +180,11 @@ masa_glob_dir( files src
     "${root_dir}/src/tests/web_test/*.cpp"
     "${root_dir}/src/tests/web_test/*.h"
 )
-add_executable_target( web_test ${files} )
-set_target_folder( web_test tests )
+masa_add_executable_target( web_test ${files} )
+masa_set_target_folder( web_test tests )
 target_link_libraries( web_test
     runtime
     web
 )
-add_test_target( web_test web
+masa_add_test_target( web_test web
     "--data_directory=${root_dir}/src/tests/web_test" )
