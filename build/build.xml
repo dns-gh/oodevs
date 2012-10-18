@@ -777,7 +777,7 @@
     <target name="preparation_app" depends="preparation,frontend" description="build Sword Gaming executable">
         <build-app name="preparation_app" excludes="**/**_Gen.*" depends="terrain,xerces,xalan,qt4,boost,flexlm,protobuf"
                    libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,
-                         geodata,geos_i,spatialite,proj_i,libiconv,
+                         geodata,geos_i,spatialite,proj_i,libiconv,terrainextractor-${platform}-mt,
                          lib${ant.project.name}_actions-${platform}-mt,
                          lib${ant.project.name}_actions_gui-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
