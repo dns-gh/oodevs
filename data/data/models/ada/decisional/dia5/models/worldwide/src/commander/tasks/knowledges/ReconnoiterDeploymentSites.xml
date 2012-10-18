@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.ReconnoiterDeploymentSites" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
+    <description>The knowledge of the 'Build' mission. This knowledge is used by the commander agent to perform this mission.</description>
+    <methods>
+        <method name="getObstaclesPlan">
+            <description>Returns the objects to build.</description>
+            <return>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getFinalMeetingPoint">
+            <description>Returns the meeting position.</description>
+            <return>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </return>
+        </method>
+        <method name="getObstaclesParameter">
+            <description>Returns the list of the objects to build.</description>
+            <return name="obstacles">
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+    </methods>
+</class>

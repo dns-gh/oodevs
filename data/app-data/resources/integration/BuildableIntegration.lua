@@ -137,7 +137,6 @@ integration.stopBuildIt = function( object )
     else
         object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
         object[myself].actionBuildState = nil
-        DEC_Trace( "pause work build" )
     end
     object[myself].actionBuildState = nil
 end

@@ -1,42 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.Build" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.Build">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.ReconnoiterDeploymentSites" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.ReconnoiterDeploymentSites">
     <description>For the commander agent, to order subordinates units to build a set of issued planned work. Engineer units will receive the main task (the 'Build' mission). Other units are ordered to reach the meeting position.&#xD;
 &#xD;
 &#xD;
 .</description>
     <parameters>
-        <parameter name="entities">
+        <parameter name="deploymentPositions">
             <description>The entities to construct.</description>
             <type>
                 <list>
-                    <class name="world.EngineerObject"/>
+                    <class name="world.Object"/>
                 </list>
             </type>
         </parameter>
-        <parameter name="meetingPoint">
+        <parameter name="meetingPosition">
             <description>The meeting position to reach upon works completion.</description>
             <type>
                 <class name="properties.Reachable"/>
             </type>
-        </parameter>
-        <parameter name="withImprovement" nullable="true">
-            <description>In case of obstacles erection, define if the subordinate units should improve works with mines.</description>
-            <type>
-                <simple name="boolean"/>
-            </type>
-            <default>
-                <boolean>false</boolean>
-            </default>
-        </parameter>
-        <parameter name="waitForReinforcement">
-            <description>Define if agent needs to wait for reinforcement when it is not able to build a work.  If it is set to 'true', the agent waits for reinforcement if it cannot perform a work on an object, else the agents goes to the next one.&#xD;
-</description>
-            <type>
-                <simple name="boolean"/>
-            </type>
-            <default>
-                <boolean>false</boolean>
-            </default>
         </parameter>
     </parameters>
     <stages>
@@ -45,27 +26,27 @@
                 <skill name="commander.skills.LeadGEN" main="true">
                     <parameter name="companyTask">
                         <value>
-                            <string>commander.tasks.Build</string>
+                            <string>commander.tasks.ReconnoiterDeploymentSites</string>
                         </value>
                     </parameter>
                     <parameter name="mainTasks">
                         <value>
-                            <string>agent.tasks.Build</string>
+                            <string>agent.tasks.ReconnoiterDeploymentSites</string>
                         </value>
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>agent.tasks.MoveAlong</string>
+                            <string>agent.tasks.Follow</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <string>agent.tasks.Reinforce</string>
+                            <string>agent.tasks.CombatSupport</string>
                         </value>
                     </parameter>
                     <parameter name="defaultTask">
                         <value>
-                            <string>agent.tasks.MoveAlong</string>
+                            <string>agent.tasks.Follow</string>
                         </value>
                     </parameter>
                     <parameter name="disableWhenDone">
@@ -81,7 +62,7 @@
                 <skill name="commander.skills.Lead" main="true">
                     <parameter name="companyTask">
                         <value>
-                            <string>commander.tasks.Build</string>
+                            <string>commander.tasks.ReconnoiterDeploymentSites</string>
                         </value>
                     </parameter>
                     <parameter name="mainTasks">

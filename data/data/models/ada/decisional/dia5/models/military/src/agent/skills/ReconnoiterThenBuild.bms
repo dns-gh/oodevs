@@ -1,0 +1,44 @@
+-- **************************************************************************** 
+-- ReconnoiterThenBuild
+-- Uses the primitive skill "moveToward" on each objectives. 
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.reconnoiter, skill.links.build },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Slots
+    -- --------------------------------------------------------------------------------
+    done = function( self, params )
+        -- $$$ NOTHING
+    end,
+    reconnaissanceDone = function( self, params )  -- call by reconnoiter skill
+        self.recceDone = true
+    end,
+    worksDone = function( self, params ) -- call by build skill
+        self.recceDone = false
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        if self.nextTargetIndex > #self.params.works then
+            Feedback( self.feedbacks.done )
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.nextTargetIndex = 1
+        self.recceDone = false
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Move along the entities.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        if not self.recceDone then
+            Activate( skill.links.reconnoiter,1, { entities  = { self.params.works[ self.nextTargetIndex ] } } )
+        else
+            Activate( skill.links.build,1, { entities  = { self.params.works[ self.nextTargetIndex ] } } )
+        end
+    end
+}

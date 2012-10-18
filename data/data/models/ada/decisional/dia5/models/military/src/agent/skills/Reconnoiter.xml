@@ -17,4 +17,12 @@
     <links>
         <link name="reconnoitre" skill="agent.skills.primitives.Reconnoitre"/>
     </links>
+    <feedbacks>
+        <feedback name="reconnaissanceDone">
+            <description>Sent once all issued elements have been reconnoitered.</description>
+        </feedback>
+        <feedback name="done">
+            <description>Sent once all issued elements have been reconnoitered.</description>
+        </feedback>
+    </feedbacks>
 </skill>

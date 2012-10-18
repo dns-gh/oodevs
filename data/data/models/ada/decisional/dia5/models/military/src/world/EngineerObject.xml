@@ -172,6 +172,20 @@
                 </type>
             </return>
         </method>
+        <method name="isReconnoitred" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="reconnoitreIt" abstract="false">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isBuilt">

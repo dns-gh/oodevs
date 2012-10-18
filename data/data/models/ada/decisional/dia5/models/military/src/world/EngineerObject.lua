@@ -20,6 +20,14 @@ return
     buildEfficiency = function( self, objective )
         return self == objective and 1 or 0
     end,
+    isReconnoitred = function( self )
+        local position = self:getMyPosition()
+        return position:isReconnoitred()
+    end,
+    reconnoitreIt = function( self )
+        local position = self:getMyPosition()
+        return position:reconnoitreIt()
+    end,
 
     -- -------------------------------------------------------------------------------- 
     -- Predicates

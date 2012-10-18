@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.ReconnoiterDeploymentSites" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.ReconnoiterDeploymentSites">
+    <description>For the agent, to reconnoiter each issued planned sites for deployment (the locations of the planned work) and then construct arty firing positions. &#xD;
+The agent moves to first position, reconnoiters it and the then build it. Once it is done, it moves to next one until the last is reached.&#xD;
+When all the positions have been built, the agent moves to the meeting position and the mission terminates.</description>
+    <parameters>
+        <parameter name="deploymentPositions">
+            <description>The set of positions to build.</description>
+            <type>
+                <list>
+                    <class name="world.EngineerObject"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="meetingPosition">
+            <description>The meeting position to reach once all deployment positions have been built.</description>
+            <type>
+                <class name="properties.Reachable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="moving to sites">
+            <skills>
+                <skill name="agent.skills.ReconnoiterThenBuild" main="true">
+                    <parameter name="works">
+                        <value>
+                            <parameter>deploymentPositions</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="moving to meeting position" disable-when-done="true">
+            <skills>
+                <skill name="agent.skills.MoveToward" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>meetingPosition</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

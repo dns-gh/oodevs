@@ -38,4 +38,12 @@ This skill can receive an empty list of objects to build. In that case, it retur
         <link name="buildWithoutReinforcement" skill="agent.skills.BuildWithoutReinforcement"/>
         <link name="buildWithReinforcement" skill="agent.skills.BuildWithReinforcement"/>
     </links>
+    <feedbacks>
+        <feedback name="worksDone">
+            <description>Sent once all works have been built.</description>
+        </feedback>
+        <feedback name="done">
+            <description>Sent once all works have been built.</description>
+        </feedback>
+    </feedbacks>
 </skill>

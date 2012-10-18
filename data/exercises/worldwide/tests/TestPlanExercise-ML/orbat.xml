@@ -1,41 +1,205 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/exercise/orbat.xsd">
   <parties>
     <party id="1396" name="Allies" type="friend">
       <objects/>
       <tactical>
-        <formation id="1399" level="iii" name="Infantry">
-          <automat engaged="true" id="1421" knowledge-group="1422" name="Infantry company [1420]" type="Infantry company">
-            <unit command-post="true" id="1423" name="Infantry company CP" position="30UXU4090036134" type="Infantry company CP"/>
-            <unit command-post="false" id="1424" name="Mechanized infantry platoon" position="30UXU4141935653" type="Mechanized infantry platoon"/>
-            <unit command-post="false" id="1425" name="MRA troop" position="30UXU4093635136" type="MRA troop"/>
-            <unit command-post="false" id="1426" name="Mortar troop" position="30UXU4041735617" type="Mortar troop"/>
-            <unit command-post="false" id="1427" name="Light armored platoon" position="30UXU4140036152" type="Light armored platoon"/>
-            <unit command-post="false" id="1428" name="Infantry platoon" position="30UXU4162635661" type="Infantry platoon"/>
+        <formation id="1481" level="xxxxx" name="Simple" symbol="symbols/sfgpucim">
+          <automat engaged="true" id="1482" knowledge-group="1422" name="MILITARY.Infantry company (S)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1483" name="MILITARY.Infantry platoon (s)" position="30UXU3227840042" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1484" name="MILITARY.Infantry platoon (s)" position="30UXU3236739995" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1485" name="MILITARY.Infantry platoon (s)" position="30UXU3237039895" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1486" name="MILITARY.Infantry platoon (s)" position="30UXU3228639842" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1487" name="MILITARY.Engineer platoon (s)" position="30UXU3219739889" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1488" name="MILITARY.Company command post (s)" position="30UXU3228239942" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1489" name="MILITARY.Scouting platoon (s)" position="30UXU3219339989" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat engaged="false" id="1598" knowledge-group="1422" name="Target (S)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="1604" name="Target (s)" position="30UXU3441239606" type="MILITARY.Company command post"/>
+          </automat>
+          <limit name="Limite 1 690">
+            <point>30UXU1531053264</point>
+            <point>30UXU6861454949</point>
+          </limit>
+          <limit name="Limite 1 691">
+            <point>30TXT1769187450</point>
+            <point>30TXT7171589148</point>
+          </limit>
+        </formation>
+        <formation id="1517" level="xxxxx" name="Automate" symbol="symbols/sfgpucim">
+          <automat engaged="true" id="1518" knowledge-group="1422" name="MILITARY.Infantry company (A)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1519" name="MILITARY.Infantry platoon (a)" position="31TCN0583968529" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1520" name="MILITARY.Infantry platoon (a)" position="31TCN0592468475" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1521" name="MILITARY.Infantry platoon (a)" position="31TCN0591968375" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1522" name="MILITARY.Infantry platoon (a)" position="31TCN0583168329" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1523" name="MILITARY.Engineer platoon (a)" position="31TCN0574668382" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1524" name="MILITARY.Company command post (a)" position="31TCN0583568429" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1525" name="MILITARY.Scouting platoon (a)" position="31TCN0575068482" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat engaged="false" id="1623" knowledge-group="1422" name="Target (A)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1624" name="Target (a)" position="31TCN0797268004" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1625" name="Target (a)" position="31TCN0805667950" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1626" name="Target (a)" position="31TCN0805267850" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1627" name="Target (a)" position="31TCN0796367804" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1628" name="Target (a)" position="31TCN0787967858" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1629" name="Target (a)" position="31TCN0796767904" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1630" name="Target (a)" position="31TCN0788367957" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <limit name="Limite 1 696">
+            <point>31TBN8943583007</point>
+            <point>31TCN4444880726</point>
+          </limit>
+          <limit name="Limite 1 697">
+            <point>31TBN8706317131</point>
+            <point>31TCN4132114752</point>
+          </limit>
+        </formation>
+        <formation id="1544" level="xxxxx" name="Attack" symbol="symbols/sfgpucim">
+          <automat engaged="true" id="1545" knowledge-group="1422" name="MILITARY.Infantry company (ATK)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1546" name="MILITARY.Infantry platoon (atk)" position="30TXS3759393151" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1547" name="MILITARY.Infantry platoon (atk)" position="30TXS3768193104" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1548" name="MILITARY.Infantry platoon (atk)" position="30TXS3768593005" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1549" name="MILITARY.Infantry platoon (atk)" position="30TXS3760092952" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1550" name="MILITARY.Engineer platoon (atk)" position="30TXS3751292998" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1551" name="MILITARY.Company command post (atk)" position="30TXS3759693051" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1552" name="MILITARY.Scouting platoon (atk)" position="30TXS3750893098" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat engaged="true" id="1636" knowledge-group="1422" name="Target (ATK)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1637" name="Target (atk)" position="30TXS3971292778" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1638" name="Target (atk)" position="30TXS3980192731" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1639" name="Target (atk)" position="30TXS3980492632" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1640" name="Target (atk)" position="30TXS3971992579" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1641" name="Target (atk)" position="30TXS3963192625" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1642" name="Target (atk)" position="30TXS3971692678" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1643" name="Target (atk)" position="30TXS3962792725" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <limit name="Limite 1 702">
+            <point>30TXT2031105923</point>
+            <point>30TXT7496707868</point>
+          </limit>
+          <limit name="Limite 1 703">
+            <point>30TXS2262940490</point>
+            <point>30TXS7729042226</point>
+          </limit>
+        </formation>
+        <formation id="1562" level="xxxxx" name="Morts" symbol="symbols/sfgpucim">
+          <automat engaged="true" id="1563" knowledge-group="1422" name="MILITARY.Infantry company (M)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1564" name="MILITARY.Infantry platoon (m)" position="31TCM0280895078" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1565" name="MILITARY.Infantry platoon (m)" position="31TCM0289295025" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1566" name="MILITARY.Infantry platoon (m)" position="31TCM0288894925" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1567" name="MILITARY.Infantry platoon (m)" position="31TCM0279994879" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1568" name="MILITARY.Engineer platoon (m)" position="31TCM0271594932" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1569" name="MILITARY.Company command post (m)" position="31TCM0280394979" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1570" name="MILITARY.Scouting platoon (m)" position="31TCM0271995032" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat engaged="false" id="1655" knowledge-group="1422" name="Target (M)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="1661" name="Target (m)" position="31TCM0492494443" type="MILITARY.Company command post">
+              <equipments>
+                <equipment state="Detruit" type="CP.Armoured Personnel Carrier Command Post"/>
+                <equipment state="Detruit" type="CP.Armoured Personnel Carrier Command Post"/>
+                <equipment state="Detruit" type="ARMOR.Light Armored Vehicle"/>
+                <equipment state="Detruit" type="ARMOR.Light Armored Vehicle"/>
+              </equipments>
+              <humans>
+                <human contaminated="false" number="1" psyop="false" rank="Officier" state="dead"/>
+                <human contaminated="false" number="2" psyop="false" rank="SousOfficier" state="dead"/>
+                <human contaminated="false" number="9" psyop="false" rank="MilitaireDuRang" state="dead"/>
+              </humans>
+              <resources>
+                <resource logistic-threshold="30" name="7.62-mm Bullet" quantity="0"/>
+                <resource logistic-threshold="30" name="Diesel" quantity="0"/>
+                <resource logistic-threshold="10" name="5.56-mm Bullet" quantity="0"/>
+                <resource logistic-threshold="10" name="12,7-mm Bullet" quantity="0"/>
+                <resource logistic-threshold="30" name="Food" quantity="0"/>
+                <resource logistic-threshold="30" name="Water" quantity="0"/>
+              </resources>
+            </unit>
+          </automat>
+          <limit name="Limite 1 706">
+            <point>31TBN8678009522</point>
+            <point>31TCN4122807087</point>
+          </limit>
+          <limit name="Limite 1 707">
+            <point>31TBM8412943975</point>
+            <point>31TCM3854341498</point>
+          </limit>
+        </formation>
+        <formation id="1580" level="xxxxx" name="Limas" symbol="symbols/sfgpucim">
+          <automat engaged="true" id="1581" knowledge-group="1422" name="MILITARY.Infantry company (L)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1582" name="MILITARY.Infantry platoon (l)" position="31UCP0894742143" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1583" name="MILITARY.Infantry platoon (l)" position="31UCP0903242089" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1584" name="MILITARY.Infantry platoon (l)" position="31UCP0902841989" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1585" name="MILITARY.Infantry platoon (l)" position="31UCP0893941943" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1586" name="MILITARY.Engineer platoon (l)" position="31UCP0885441996" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1587" name="MILITARY.Company command post (l)" position="31UCP0894342043" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1588" name="MILITARY.Scouting platoon (l)" position="31UCP0885842096" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat engaged="false" id="1664" knowledge-group="1422" name="Target (L)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="1670" name="Target (l)" position="31UCP1075741679" type="MILITARY.Company command post"/>
+            <lima name="Lima 1 735">
+              <point>31UCP0720858051</point>
+              <point>31UCP1319242345</point>
+              <point>31TCN0407987820</point>
+            </lima>
+          </automat>
+          <limit name="Limite 1 736">
+            <point>31UBP9270256546</point>
+            <point>31UCP4739154357</point>
+          </limit>
+          <limit name="Limite 1 737">
+            <point>31TBN8994690614</point>
+            <point>31TCN4454388541</point>
+          </limit>
+        </formation>
+        <formation id="1689" level="xxxxx" name="Limite" symbol="symbols/sfgpucim">
+          <automat engaged="true" id="1690" knowledge-group="1422" name="MILITARY.Infantry company (LT)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1691" name="MILITARY.Infantry platoon (lt)" position="30TXS9873295266" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1692" name="MILITARY.Infantry platoon (lt)" position="30TXS9882195219" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1693" name="MILITARY.Infantry platoon (lt)" position="30TXS9882495120" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1694" name="MILITARY.Infantry platoon (lt)" position="30TXS9873995067" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1695" name="MILITARY.Engineer platoon (lt)" position="30TXS9865195113" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1696" name="MILITARY.Company command post (lt)" position="30TXS9873695166" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1697" name="MILITARY.Scouting platoon (lt)" position="30TXS9864795213" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat engaged="true" id="1698" knowledge-group="1422" name="Target (LT)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="true" id="1699" name="Target (lt)" position="30TYS0045195142" type="MILITARY.Company command post"/>
+            <limit name="Limite 1 738">
+              <point>30TXS8028981270</point>
+              <point>30TYS0600381156</point>
+              <point>30TYT0506002909</point>
+              <point>30TXT7998202018</point>
+            </limit>
           </automat>
         </formation>
-        <formation id="1400" level="iii" name="Engineer">
-          <automat engaged="true" id="1431" knowledge-group="1422" name="Countermobility company [1430]" type="Countermobility company">
-            <unit command-post="true" id="1432" name="Countermobility platoon" position="30UXU3901036443" type="Countermobility platoon"/>
-            <unit command-post="false" id="1433" name="Countermobility platoon" position="30UXU3952835962" type="Countermobility platoon"/>
-            <unit command-post="false" id="1434" name="Countermobility platoon" position="30UXU3904635445" type="Countermobility platoon"/>
+        <formation id="1701" level="xxxxx" name="Auto Soutien" symbol="symbols/sfgpucim">
+          <automat engaged="true" id="1702" knowledge-group="1422" name="MILITARY.Infantry company (AF)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1703" name="MILITARY.Infantry platoon (af)" position="30TXT9607668934" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1704" name="MILITARY.Infantry platoon (af)" position="30TXT9616368888" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1705" name="MILITARY.Infantry platoon (af)" position="30TXT9616768789" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1706" name="MILITARY.Infantry platoon (af)" position="30TXT9608268734" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1707" name="MILITARY.Engineer platoon (af)" position="30TXT9599468782" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1708" name="MILITARY.Company command post (af)" position="30TXT9607968834" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1709" name="MILITARY.Scouting platoon (af)" position="30TXT9599068882" type="MILITARY.Scouting platoon"/>
           </automat>
         </formation>
-        <formation id="1435" level="iii" name="Logistic">
-          <automat engaged="true" id="1436" knowledge-group="1422" logistic-level="logistic-base" name="Armored battalion combat train [1435]" type="Armored battalion combat train">
-            <unit command-post="true" id="1437" name="Teeth arms battalion CT" position="30UXU4015037612" type="Teeth arms battalion CT"/>
+        <formation id="1710" level="xxxxx" name="Automate Avec Ennemis" symbol="symbols/sfgpucim">
+          <automat engaged="true" id="1711" knowledge-group="1422" name="MILITARY.Infantry company (AAE)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1712" name="MILITARY.Infantry platoon (aae)" position="30UXU9349442345" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1713" name="MILITARY.Infantry platoon (aae)" position="30UXU9358342298" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1714" name="MILITARY.Infantry platoon (aae)" position="30UXU9358542198" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1715" name="MILITARY.Infantry platoon (aae)" position="30UXU9350142145" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1716" name="MILITARY.Engineer platoon (aae)" position="30UXU9341242192" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1717" name="MILITARY.Company command post (aae)" position="30UXU9349842245" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1718" name="MILITARY.Scouting platoon (aae)" position="30UXU9340942292" type="MILITARY.Scouting platoon"/>
           </automat>
-          <automat engaged="true" id="1456" knowledge-group="1422" logistic-level="logistic-base" name="Armored battalion combat train [1456]" type="Armored battalion combat train">
-            <unit command-post="true" id="1457" name="Teeth arms battalion CT" position="30UXU4090338033" type="Teeth arms battalion CT"/>
-          </automat>
-        </formation>
-        <formation id="1438" level="iii" name="Armored allies">
-          <automat engaged="true" id="1439" knowledge-group="1422" name="MBT squadron [1438]" type="MBT squadron">
-            <unit command-post="true" id="1440" name="Armored squadron CP" position="30UXU3994937450" type="Armored squadron CP"/>
-            <unit command-post="false" id="1441" name="MBT platoon" position="30UXU4046836969" type="MBT platoon"/>
-            <unit command-post="false" id="1442" name="MBT platoon" position="30UXU3998536452" type="MBT platoon"/>
-            <unit command-post="false" id="1443" name="MBT platoon" position="30UXU3946736933" type="MBT platoon"/>
-            <unit command-post="false" id="1444" name="MBT platoon" position="30UXU4045037468" type="MBT platoon"/>
+          <automat engaged="true" id="1719" knowledge-group="1422" name="Target (AAE)" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+            <unit command-post="false" id="1720" name="Target (aae)" position="30UXU9566141987" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1721" name="Target (aae)" position="30UXU9574941940" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1722" name="Target (aae)" position="30UXU9575341840" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1723" name="Target (aae)" position="30UXU9566841787" type="MILITARY.Infantry platoon"/>
+            <unit command-post="false" id="1724" name="Target (aae)" position="30UXU9558041834" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="1725" name="Target (aae)" position="30UXU9566441887" type="MILITARY.Company command post"/>
+            <unit command-post="false" id="1726" name="Target (aae)" position="30UXU9557641933" type="MILITARY.Scouting platoon"/>
           </automat>
         </formation>
       </tactical>
@@ -55,7 +219,6 @@
           <adhesions>
             <adhesion party="1396" value="0"/>
             <adhesion party="1397" value="0"/>
-            <adhesion party="1398" value="0"/>
           </adhesions>
         </inhabitant>
       </inhabitants>
@@ -64,19 +227,41 @@
     <party color="0xff0000" id="1397" name="Enemies" type="enemy">
       <objects/>
       <tactical>
-        <formation color="0xff0000" id="1401" level="iii" name="Armored enemies">
-          <automat color="0xff0000" engaged="true" id="1445" knowledge-group="1446" name="MBT squadron [1444]" type="MBT squadron">
-            <unit color="0xff0000" command-post="true" id="1447" name="Armored squadron CP" position="30UXU5514319320" type="Armored squadron CP"/>
-            <unit color="0xff0000" command-post="false" id="1448" name="MBT platoon" position="30UXU5566218839" type="MBT platoon"/>
-            <unit color="0xff0000" command-post="false" id="1449" name="MBT platoon" position="30TXU5517918322" type="MBT platoon"/>
-            <unit color="0xff0000" command-post="false" id="1450" name="MBT platoon" position="30UXU5466118803" type="MBT platoon"/>
-            <unit color="0xff0000" command-post="false" id="1451" name="MBT platoon" position="30UXU5564419338" type="MBT platoon"/>
+        <formation color="0xff0000" id="1672" level="xxxx" name="Attack" symbol="symbols/shgpucim">
+          <automat color="0xff0000" engaged="true" id="1727" knowledge-group="1446" name="MILITARY.Infantry company (ATK)" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1729" name="MILITARY.Infantry platoon (atk)" position="30TXS4774891510" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="true" id="1733" name="MILITARY.Company command post (atk)" position="30TXS4766391457" type="MILITARY.Company command post"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1767" knowledge-group="1446" name="MILITARY.Infantry company (ATK)" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1768" name="MILITARY.Infantry platoon (atk)" position="30TXS5659874110" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="true" id="1769" name="MILITARY.Company command post (atk)" position="30TXS5651374057" type="MILITARY.Company command post"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1770" knowledge-group="1446" name="MILITARY.Infantry company (ATK)" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1771" name="MILITARY.Infantry platoon (atk)" position="30TXS6315664541" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="true" id="1772" name="MILITARY.Company command post (atk)" position="30TXS6307164488" type="MILITARY.Company command post"/>
           </automat>
         </formation>
-        <formation color="0xff0000" id="1402" level="iii" name="Terrorists">
-          <automat color="0xff0000" engaged="true" id="1452" knowledge-group="1446" name="Terrorists [1451]" type="Terrorists">
-            <unit color="0xff0000" command-post="true" id="1453" name="Terrorist" position="30TXU5055715680" type="Terrorist"/>
-            <unit color="0xff0000" command-post="false" id="1454" name="Terrorist Bombmaker" position="30TXU5107515199" type="Terrorist Bombmaker"/>
+        <formation color="0xff0000" id="1739" level="xxxx" name="Automate Avec Ennemis" symbol="symbols/shgpucim">
+          <automat color="0xff0000" engaged="true" id="1740" knowledge-group="1446" name="MILITARY.Infantry company (AAE)" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1741" name="MILITARY.Infantry platoon (aae)" position="30UYU0362840642" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="true" id="1742" name="MILITARY.Company command post (aae)" position="30UYU0354340589" type="MILITARY.Company command post"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1743" knowledge-group="1446" name="MILITARY.Infantry company (AAE)" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1744" name="MILITARY.Infantry platoon (aae)" position="30UYU0345240795" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="true" id="1749" name="MILITARY.Company command post (aae)" position="30UYU0345640695" type="MILITARY.Company command post"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1751" knowledge-group="1446" name="MILITARY.Infantry company (AAE)" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1752" name="MILITARY.Infantry platoon (aae)" position="30UYU0351940713" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1753" name="MILITARY.Infantry platoon (aae)" position="30UYU0360740666" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1754" name="MILITARY.Infantry platoon (aae)" position="30UYU0361140566" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1755" name="MILITARY.Infantry platoon (aae)" position="30UYU0352640513" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="false" id="1756" name="MILITARY.Engineer platoon (aae)" position="30UYU0343740560" type="MILITARY.Engineer platoon"/>
+            <unit color="0xff0000" command-post="true" id="1757" name="MILITARY.Company command post (aae)" position="30UYU0352240613" type="MILITARY.Company command post"/>
+            <unit color="0xff0000" command-post="false" id="1758" name="MILITARY.Scouting platoon (aae)" position="30UYU0343440660" type="MILITARY.Scouting platoon"/>
+          </automat>
+          <automat color="0xff0000" engaged="true" id="1759" knowledge-group="1446" name="MILITARY.Infantry company (AAE)" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
+            <unit color="0xff0000" command-post="false" id="1760" name="MILITARY.Infantry platoon (aae)" position="30UYU0347640732" type="MILITARY.Infantry platoon"/>
+            <unit color="0xff0000" command-post="true" id="1765" name="MILITARY.Company command post (aae)" position="30UYU0347940633" type="MILITARY.Company command post"/>
           </automat>
         </formation>
       </tactical>
@@ -87,59 +272,14 @@
       <inhabitants/>
       <logistics/>
     </party>
-    <party color="0x55ff00" id="1398" name="Neutrals" type="neutral">
-      <objects/>
-      <tactical>
-        <formation color="0x55ff00" id="1405" level="iii" name="Formation [1404]">
-          <automat color="0x55ff00" engaged="true" id="1406" knowledge-group="1407" name="Journalists [1405]" type="Journalists">
-            <unit color="0x55ff00" command-post="true" id="1408" name="Journalist" position="30UXU4769625958" type="Journalist"/>
-            <unit color="0x55ff00" command-post="false" id="1409" name="Journalist" position="30UXU4821525477" type="Journalist"/>
-            <unit color="0x55ff00" command-post="false" id="1410" name="Journalist" position="30UXU4773224960" type="Journalist"/>
-          </automat>
-          <automat color="0x55ff00" engaged="true" id="1411" knowledge-group="1407" name="Refugees [1410]" type="Refugees">
-            <unit color="0x55ff00" command-post="true" id="1412" name="Refugee" position="30UXU4748924116" type="Refugee"/>
-          </automat>
-          <automat color="0x55ff00" engaged="true" id="1413" knowledge-group="1407" name="Riotters [1412]" type="Riotters">
-            <unit color="0x55ff00" command-post="true" id="1414" name="Riotters" position="30UXU4642723996" type="Riotters"/>
-            <unit color="0x55ff00" command-post="false" id="1415" name="Riotters" position="30UXU4694623515" type="Riotters"/>
-            <unit color="0x55ff00" command-post="false" id="1416" name="Riotters" position="30UXU4646322998" type="Riotters"/>
-            <unit color="0x55ff00" command-post="false" id="1417" name="Riotters" position="30UXU4594523479" type="Riotters"/>
-            <unit color="0x55ff00" command-post="false" id="1418" name="Riotters" position="30UXU4692824014" type="Riotters"/>
-            <unit color="0x55ff00" command-post="false" id="1419" name="Riotters" position="30UXU4715323523" type="Riotters"/>
-            <unit color="0x55ff00" command-post="false" id="1420" name="Riotters" position="30UXU4696423016" type="Riotters"/>
-          </automat>
-        </formation>
-      </tactical>
-      <communication>
-        <knowledge-group id="1407" name="Knowledge group [1406]" type="Standard"/>
-      </communication>
-      <populations>
-        <population attitude="calme" id="1404" name="Standard Crowd [1403]" position="30UXU4340225389" type="Standard Crowd">
-          <composition contaminated="0" dead="0" healthy="100000" wounded="0"/>
-          <adhesions>
-            <adhesion party="1396" value="0"/>
-            <adhesion party="1397" value="0"/>
-            <adhesion party="1398" value="0"/>
-          </adhesions>
-        </population>
-      </populations>
-      <inhabitants/>
-      <logistics/>
-    </party>
   </parties>
   <diplomacy>
     <party id="1396">
       <relationship diplomacy="enemy" party="1397"/>
-      <relationship diplomacy="neutral" party="1398"/>
     </party>
     <party id="1397">
       <relationship diplomacy="enemy" party="1396"/>
-      <relationship diplomacy="neutral" party="1398"/>
-    </party>
-    <party id="1398">
-      <relationship diplomacy="neutral" party="1396"/>
-      <relationship diplomacy="neutral" party="1397"/>
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3515392554" -->
+<!-- signature="2602257684" -->

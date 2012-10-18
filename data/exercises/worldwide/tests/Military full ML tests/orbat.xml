@@ -180,6 +180,18 @@
             <mine density="1"/>
           </attributes>
         </object>
+        <object id="1100" name="Decontamination Site [1,100]" type="decontamination site">
+          <shape type="polygone">
+            <points>
+              <point>29TNF4096852629</point>
+              <point>29TNF4105152629</point>
+              <point>29TNF4100652566</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
       </objects>
       <tactical>
         <formation id="318" level="ii" name="Formation [318]" symbol="symbols/sfgpucim">
@@ -252,10 +264,10 @@
             <unit command-post="false" id="667" name="LOG.Supply group 35m3" position="29TNF3729458233" type="LOG.Supply group 35m3"/>
             <unit command-post="false" id="668" name="LOG.Supply group180m3" position="29TNF3733058269" type="LOG.Supply group180m3"/>
           </automat>
-          <automat engaged="true" id="697" knowledge-group="321" name="MILITARY.Transportation company" symbol="symbols/sfgpust" type="MILITARY.Transportation company">
+          <automat engaged="false" id="697" knowledge-group="321" name="MILITARY.Transportation company" symbol="symbols/sfgpust" type="MILITARY.Transportation company">
             <unit command-post="true" id="698" name="MILITARY.Transporter platoon" position="29TNF3607457293" type="MILITARY.Transporter platoon"/>
-            <unit command-post="false" id="699" name="MILITARY.Transporter platoon" position="29TNF3602057295" type="MILITARY.Transporter platoon"/>
-            <unit command-post="false" id="700" name="MILITARY.Transporter platoon" position="29TNF3605257239" type="MILITARY.Transporter platoon"/>
+            <unit command-post="false" id="699" name="MILITARY.Transporter platoon" position="29TNF3922655197" type="MILITARY.Transporter platoon"/>
+            <unit command-post="false" id="700" name="MILITARY.Transporter platoon" position="29TNF3701053944" type="MILITARY.Transporter platoon"/>
             <unit command-post="false" id="701" name="MILITARY.Transporter platoon" position="29TNF3614657294" type="MILITARY.Transporter platoon"/>
           </automat>
           <automat engaged="false" id="730" knowledge-group="321" name="MILITARY.Infantry dismounted company" symbol="symbols/sfgpucim" type="MILITARY.Infantry dismounted company">
@@ -299,6 +311,37 @@
             <unit command-post="false" id="934" name="MILITARY.Engineer platoon" position="29TNF3816651364" type="MILITARY.Engineer platoon"/>
             <unit command-post="false" id="984" name="MILITARY.Infantry platoon" position="29TNF3791951361" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="985" name="MILITARY.Infantry platoon" position="29TNF3810051347" type="MILITARY.Infantry platoon"/>
+          </automat>
+          <automat engaged="true" id="1096" knowledge-group="321" name="MILITARY.NBC company" symbol="symbols/sfgpuuad" type="MILITARY.NBC company">
+            <unit command-post="true" id="1097" name="MILITARY.NBC Platoon" position="29TNF4084652331" type="MILITARY.NBC Platoon"/>
+            <unit command-post="false" id="1098" name="MILITARY.NBC Platoon" position="29TNF4107152332" type="MILITARY.NBC Platoon"/>
+            <unit command-post="false" id="1099" name="MILITARY.NBC Platoon" position="29TNF4095752342" type="MILITARY.NBC Platoon"/>
+          </automat>
+          <automat engaged="false" id="1132" knowledge-group="321" name="MILITARY.Transportation company" symbol="symbols/sfgpust" type="MILITARY.Transportation company">
+            <unit command-post="true" id="1133" name="MILITARY.Transporter platoon" position="29TNF2913353857" type="MILITARY.Transporter platoon"/>
+            <unit command-post="false" id="1134" name="MILITARY.Transporter platoon" position="29TNF2913353956" type="MILITARY.Transporter platoon"/>
+          </automat>
+          <automat engaged="true" id="1206" knowledge-group="321" name="ART.Artillery reconnaissance battery" symbol="symbols/sfgpucf" type="ART.Artillery reconnaissance battery">
+            <unit command-post="true" id="1207" name="ART.Artillery reconnaissance platoon" position="29TNF3084448040" type="ART.Artillery reconnaissance platoon"/>
+            <unit command-post="false" id="1208" name="ART.Artillery reconnaissance platoon" position="29TNF3084448139" type="ART.Artillery reconnaissance platoon"/>
+            <unit command-post="false" id="1209" name="ART.Artillery reconnaissance platoon" position="29TNF3084547940" type="ART.Artillery reconnaissance platoon"/>
+          </automat>
+          <automat engaged="true" id="1210" knowledge-group="321" name="ART.Firefinder reconnaissance battery" symbol="symbols/sfgpucftr" type="ART.Firefinder reconnaissance battery">
+            <unit command-post="true" id="1211" name="ART.Firefinder reconnaissance platoon" position="29TNF3120047888" type="ART.Firefinder reconnaissance platoon"/>
+            <unit command-post="false" id="1212" name="ART.Firefinder reconnaissance platoon" position="29TNF3119947987" type="ART.Firefinder reconnaissance platoon"/>
+            <unit command-post="false" id="1213" name="ART.Firefinder reconnaissance platoon" position="29TNF3120047788" type="ART.Firefinder reconnaissance platoon"/>
+          </automat>
+          <automat engaged="true" id="1214" knowledge-group="321" name="ART.MLRS reconnaissance battery" symbol="symbols/sfgpucfs" type="ART.MLRS reconnaissance battery">
+            <unit command-post="true" id="1215" name="ART.Battery CP" position="29TNF3130548431" type="ART.Battery CP"/>
+            <unit command-post="false" id="1216" name="ART.MLRS reconnaissance platoon" position="29TNF3130548531" type="ART.MLRS reconnaissance platoon"/>
+            <unit command-post="false" id="1217" name="ART.MLRS reconnaissance platoon" position="29TNF3140548431" type="ART.MLRS reconnaissance platoon"/>
+            <unit command-post="false" id="1218" name="ART.MLRS reconnaissance platoon" position="29TNF3130648331" type="ART.MLRS reconnaissance platoon"/>
+            <unit command-post="false" id="1219" name="ART.MLRS reconnaissance platoon" position="29TNF3120548431" type="ART.MLRS reconnaissance platoon"/>
+          </automat>
+          <automat engaged="true" id="1220" knowledge-group="321" name="ART.Mortar reconnaissance battery" symbol="symbols/sfgpucfs" type="ART.Mortar reconnaissance battery">
+            <unit command-post="true" id="1221" name="ART.Mortar reconnaissance platoon" position="29TNF3081648526" type="ART.Mortar reconnaissance platoon"/>
+            <unit command-post="false" id="1222" name="ART.Mortar reconnaissance platoon" position="29TNF3081648626" type="ART.Mortar reconnaissance platoon"/>
+            <unit command-post="false" id="1223" name="ART.Mortar reconnaissance platoon" position="29TNF3081748426" type="ART.Mortar reconnaissance platoon"/>
           </automat>
           <lima name="Phase line 372">
             <point>29TNF3257758436</point>
@@ -406,6 +449,48 @@
             <point>29TNF3915552274</point>
             <point>29TNF3864049422</point>
           </limit>
+          <limit name="Limit 1,130">
+            <point>29TNF4066853766</point>
+            <point>29TNF4032352815</point>
+            <point>29TNF4060651979</point>
+            <point>29TNF4091751112</point>
+            <point>29TNF4089650956</point>
+          </limit>
+          <limit name="Limit 1,131">
+            <point>29TNF4182850789</point>
+            <point>29TNF4163051823</point>
+            <point>29TNF4179652060</point>
+            <point>29TNF4152753126</point>
+            <point>29TNF4165853995</point>
+          </limit>
+          <limit name="Limit 1,135">
+            <point>29TNF2835754305</point>
+            <point>29TNF2903753496</point>
+            <point>29TNF2911652680</point>
+            <point>29TNF2972151968</point>
+            <point>29TNF2976251728</point>
+          </limit>
+          <limit name="Limit 1,136">
+            <point>29TNF2926754771</point>
+            <point>29TNF3007353975</point>
+            <point>29TNF3007753210</point>
+            <point>29TNF3079252270</point>
+            <point>29TNF3089151956</point>
+          </limit>
+          <limit name="Limit 1,204">
+            <point>29TNF3004247791</point>
+            <point>29TNF3039149569</point>
+            <point>29TNF3089850544</point>
+            <point>29TNF3087751779</point>
+            <point>29TNF3159853326</point>
+          </limit>
+          <limit name="Limit 1,205">
+            <point>29TNF3243147478</point>
+            <point>29TNF3285549533</point>
+            <point>29TNF3368850510</point>
+            <point>29TNF3368251807</point>
+            <point>29TNF3384753104</point>
+          </limit>
         </formation>
       </tactical>
       <communication>
@@ -421,7 +506,7 @@
             <adhesion party="1035" value="0"/>
           </adhesions>
         </population>
-        <population attitude="calme" id="417" name="Fan Crowd [417]" position="29TNF3670456811" type="Fan Crowd">
+        <population attitude="calme" id="417" name="Fan Crowd [417]" position="29TNF3937055348" type="Fan Crowd">
           <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
           <adhesions>
             <adhesion party="316" value="0"/>
@@ -431,6 +516,24 @@
           </adhesions>
         </population>
         <population attitude="calme" id="418" name="Standard Crowd [418]" position="29TNF3504756376" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+            <adhesion party="1035" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1080" name="Standard Crowd [1,080]" position="29TNF3680953524" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+            <adhesion party="1035" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1101" name="Standard Crowd [1,101]" position="29TNF4163652325" type="Standard Crowd">
           <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
           <adhesions>
             <adhesion party="316" value="0"/>
@@ -453,7 +556,41 @@
       </logistics>
     </party>
     <party id="317" name="Army 317" type="enemy">
-      <objects/>
+      <objects>
+        <object id="1079" name="Abatis [1,079]" type="abattis">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3899956824</point>
+              <point>29TNF3885356307</point>
+              <point>29TNF3928956172</point>
+              <point>29TNF3971256745</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+              <activity-time value="0"/>
+            </obstacle>
+            <construction completion="1"/>
+            <mine density="1"/>
+          </attributes>
+        </object>
+        <object id="1102" name="NBC Cloud [1,102]" type="nbc cloud">
+          <shape type="polygone">
+            <points>
+              <point>29TNF4164252737</point>
+              <point>29TNF4136452146</point>
+              <point>29TNF4182852034</point>
+              <point>29TNF4217252210</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents danger="0" state="liquid">
+              <nbc-agent type="Chimical"/>
+            </nbc-agents>
+          </attributes>
+        </object>
+      </objects>
       <tactical>
         <formation id="319" level="ii" name="Formation [319]" symbol="symbols/shgpucim">
           <automat engaged="true" id="518" knowledge-group="348" name="MILITARY.Infantry company" symbol="symbols/shgpucim" type="MILITARY.Infantry company">
@@ -716,6 +853,33 @@
             <adhesion party="1035" value="0"/>
           </adhesions>
         </population>
+        <population attitude="calme" id="1095" name="Standard Crowd [1,095]" position="29TNF3888955513" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+            <adhesion party="1035" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1137" name="Standard Crowd [1,137]" position="29TNF2964754516" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+            <adhesion party="1035" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="1138" name="Standard Crowd [1,138]" position="29TNF2938853309" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="316" value="0"/>
+            <adhesion party="317" value="0"/>
+            <adhesion party="374" value="0"/>
+            <adhesion party="1035" value="0"/>
+          </adhesions>
+        </population>
       </populations>
       <inhabitants/>
       <logistics/>
@@ -764,4 +928,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1713769003" -->
+<!-- signature="2640920256" -->

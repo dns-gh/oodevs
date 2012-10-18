@@ -182,7 +182,11 @@ end
 
 integration.RetrievePionTask = function( entity, targetTask )
     if DEC_IsMissionAvailable( entity.source, targetTask ) then
-        local knowledgeName = integration.taskKnowledge[targetTask]
+        local knowledgeName = integration.taskKnowledge[ targetTask ]
+        if knowledgeName == nil then
+            DEC_Trace( "The knowledge of the task "..tostring( targetTask ).." is missing" )
+            return nil
+        end
         return taskKnowledge[ knowledgeName ]
     end
     return nil

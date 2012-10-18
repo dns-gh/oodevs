@@ -9,6 +9,15 @@ rootnode
         skill.links.buildWithReinforcement,
         skill.links.buildWithoutReinforcement
     },
+    feedbacks =   { "worksDone" },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Slots
+    -- --------------------------------------------------------------------------------
+    done = function( self, params )
+        Feedback( self.feedbacks.done )
+        Feedback( self.feedbacks.worksDone )
+    end,
 
     -- -------------------------------------------------------------------------------- 
     -- Init

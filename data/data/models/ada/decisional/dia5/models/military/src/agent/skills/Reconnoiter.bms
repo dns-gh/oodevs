@@ -6,6 +6,7 @@
 rootnode
 {
     connections = { skill.links.reconnoitre },
+    feedbacks =   { "reconnaissanceDone" },
 
     -- -------------------------------------------------------------------------------- 
     -- Feedback from skill.links.reconnoitre
@@ -15,6 +16,7 @@ rootnode
         if self.nextTargetIndex > #self.params.entities then
             -- goal is reached, all objectives have been reconnoitred.
             Feedback( self.feedbacks.done )
+            Feedback( self.feedbacks.reconnaissanceDone )
         end
     end,
 
