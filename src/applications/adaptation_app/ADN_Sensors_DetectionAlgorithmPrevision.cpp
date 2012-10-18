@@ -16,7 +16,6 @@
 #include "ADN_Connector_Graph_ABC.h"
 #include "ADN_GraphData.h"
 #include "GQ_PlotData.h"
-#include <boost/lexical_cast.hpp>
 
 namespace
 {
@@ -332,16 +331,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::UrbanBlockChanged( std::string mat
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString& value )
 {
-    if( !value.isEmpty() )
-        try
-    {
-        detection_ = boost::lexical_cast< double >( value.toAscii().constData() );
-    }
-    catch( boost::bad_lexical_cast& /*e*/ )
-    {
-        detection_ = 0;
-
-    }
+    detection_ = locale().toDouble( value );
     Update();
 }
 
@@ -351,15 +341,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString&
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QString& value )
 {
-    if( !value.isEmpty() )
-        try
-    {
-        recognition_ = boost::lexical_cast< double >( value.toAscii().constData() );
-    }
-    catch( boost::bad_lexical_cast& /*e*/ )
-    {
-        recognition_ = 0;
-    }
+    recognition_ = locale().toDouble( value );
     Update();
 }
 
@@ -369,15 +351,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QStrin
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnIdentificationChanged( const QString& value )
 {
-    if( !value.isEmpty() )
-            try
-        {
-            identification_ = boost::lexical_cast< double >( value.toAscii().constData() );
-        }
-        catch( boost::bad_lexical_cast& /*e*/ )
-        {
-            identification_ = 0;
-        }
+    identification_ = locale().toDouble( value );
     Update();
 }
 
@@ -387,17 +361,10 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnIdentificationChanged( const QSt
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const QString& value )
 {
-    if( !value.isEmpty() )
-        try
-        {
-             populationDensityFactor_ = boost::lexical_cast< double >( value.toAscii().constData() );
-        }
-       catch( boost::bad_lexical_cast& /*e*/ )
-        {
-            populationDensityFactor_ = 1;
-        }
-    else
-        populationDensityFactor_ = 1;
+    bool ok = false;
+    populationDensityFactor_ = locale().toDouble( value, &ok );
+    if( !ok || value.isEmpty() )
+        populationDensityFactor_ = 1.;
     Update();
 }
 
@@ -407,17 +374,10 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const 
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged( const QString& value )
 {
-    if( !value.isEmpty() )
-        try
-        {
-            populationModifier_ = boost::lexical_cast< double >( value.toAscii().constData() );
-        }
-      catch( boost::bad_lexical_cast& /*e*/ )
-         {
-            populationModifier_ = 1;
-         }
-    else
-        populationModifier_ = 1;
+    bool ok = false;
+    populationModifier_ = locale().toDouble( value, &ok );
+    if( !ok || value.isEmpty() )
+        populationModifier_ = 1.;
     Update();
 }
 
@@ -454,18 +414,13 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanOccupationChanged( const QS
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::UpdatePreview( double& parameter, QLineEdit* widget, double defaultValue, const QString& defaultString, const QString& value )
 {
-    if( !value.isEmpty() )
-       try
-       {
-           parameter = boost::lexical_cast< double >( value.toAscii().constData() );
-       }
-       catch( boost::bad_lexical_cast& /*e*/ )
-       {
-           widget->setText( defaultString );
-           parameter = defaultValue;
-       }
-    else
+    bool ok = false;
+    parameter = locale().toDouble( value, &ok );
+    if( !ok || value.isEmpty() )
+    {
+        widget->setText( defaultString );
         parameter = defaultValue;
+    }
     Update();
 }
 
@@ -475,7 +430,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::UpdatePreview( double& parameter, 
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::UpdateValue()
 {
-    populationValue_->setText( boost::lexical_cast< std::string >( population_ ).c_str() );
-    urbanHeightRatioValue_->setText( boost::lexical_cast< std::string >( urbanHeightRatio_ ).c_str() );
-    urbanOccupationValue_->setText( boost::lexical_cast< std::string >( urbanOccupation_ ).c_str() );
+    populationValue_->setText( QString::number( population_ ) );
+    urbanHeightRatioValue_->setText( QString::number( urbanHeightRatio_ ) );
+    urbanOccupationValue_->setText( QString::number( urbanOccupation_ ) );
 }
