@@ -65,7 +65,8 @@ Application::Application( int argc, char** argv )
 Application::~Application()
 {
     launcher_.reset();
-    timer_->stop();
+    if( timer_.get() )
+        timer_->stop();
     launcherClient_.reset();
 }
 
@@ -98,7 +99,10 @@ void Application::InitializeStyle()
 // -----------------------------------------------------------------------------
 int Application::Run()
 {
-    if( !launcher_.get() || !launcher_->IsInitialized() )
+    if( IsInvalidLicense() )
+        return EXIT_FAILURE;
+    
+    if( !launcher_->IsInitialized() )
     {
         QMessageBox::critical( mainWindow_, tools::translate( "Application", "Error" ), tools::translate( "Application", "Launcher service cannot be started: %1."  ).arg( launcher_->GetLastError().c_str() ) );
         return EXIT_FAILURE;
