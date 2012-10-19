@@ -62,7 +62,6 @@ public:
     //@{
     virtual QString GetName() const;
     virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
-    virtual QString GetLink( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void SetKeyName( const std::string& identifier );
     virtual bool IsOptional() const;
     virtual std::string GetType() const;

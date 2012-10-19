@@ -43,7 +43,6 @@ public:
     virtual void SetKeyName( const std::string& identifier );
     virtual bool IsOptional() const;
     virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
-    virtual QString GetLink( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;
     virtual std::string GetKeyName() const;

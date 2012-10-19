@@ -60,12 +60,6 @@ class DisplayExtractor : public QObject
                        , public kernel::DisplayExtractor< kernel::AgentKnowledge_ABC >
                        , public kernel::DisplayExtractor< kernel::PopulationKnowledge_ABC >
                        , public kernel::DisplayExtractor< kernel::ObjectKnowledge_ABC >
-                       , public kernel::LinkExtractor< kernel::Agent_ABC >
-                       , public kernel::LinkExtractor< kernel::Automat_ABC >
-                       , public kernel::LinkExtractor< kernel::Formation_ABC >
-                       , public kernel::LinkExtractor< kernel::Population_ABC>
-                       , public kernel::LinkExtractor< kernel::Inhabitant_ABC>
-                       , public kernel::LinkExtractor< kernel::UrbanObject_ABC >
 {
     Q_OBJECT
 public:
@@ -101,13 +95,6 @@ public:
     virtual QString GetDisplayName( const kernel::AgentKnowledge_ABC& element ) const;
     virtual QString GetDisplayName( const kernel::PopulationKnowledge_ABC& element ) const;
     virtual QString GetDisplayName( const kernel::ObjectKnowledge_ABC& element ) const;
-
-    virtual QString GetLink( const kernel::Agent_ABC& element ) const;
-    virtual QString GetLink( const kernel::Automat_ABC& element ) const;
-    virtual QString GetLink( const kernel::Formation_ABC& element ) const;
-    virtual QString GetLink( const kernel::Population_ABC& element ) const;
-    virtual QString GetLink( const kernel::Inhabitant_ABC& element ) const;
-    virtual QString GetLink( const kernel::UrbanObject_ABC& element ) const;
     //@}
 
 signals:

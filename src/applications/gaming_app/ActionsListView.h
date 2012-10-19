@@ -48,7 +48,7 @@ public:
 public slots:
     //! @name Slots
     //@{
-    void OnItemClicked( QTreeWidgetItem *item, int column );
+    void OnLinkClicked( const QString& url, const QModelIndex& index );
     //@}
 
 private:

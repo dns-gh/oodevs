@@ -13,9 +13,11 @@
 #include "icons.h"
 #include "actions/Action_ABC.h"
 #include "actions/Parameter_ABC.h"
+#include "clients_gui/LinkItemDelegate.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DisplayExtractor_ABC.h"
+
 
 // -----------------------------------------------------------------------------
 // Name: ActionsListView constructor
@@ -28,12 +30,16 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
     , parameter_( MAKE_PIXMAP( parameter2 ) )
 {
     setColumnCount( 2 );
+    setMouseTracking( true );
+    gui::LinkItemDelegate* delegate = new gui::LinkItemDelegate( this );
+    setItemDelegateForColumn( 1, delegate );
+    setAllColumnsShowFocus( true );
     QStringList headers;
     headers << tools::translate( "Parameter", "Parameter" ) << tools::translate( "Parameter", "Value" );
     setHeaderLabels( headers );
     setRootIsDecorated( false );
-    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    connect( this, SIGNAL( itemClicked( QTreeWidgetItem*, int ) ), SLOT( OnItemClicked( QTreeWidgetItem*, int ) ) );
+    //header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    connect( delegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
     controllers_.Register( *this );
 }
 
@@ -64,15 +70,6 @@ void ActionsListView::DisplayParameter( const actions::Parameter_ABC& param, QTr
     item->setIcon( 0, parameter_ );
     item->setText( 0, param.GetName() );
     item->setText( 1, param.GetDisplayName( extractor_ ) );
-    QString link = param.GetLink( extractor_ );
-    if( !link.isEmpty())
-    {
-        QFont font = item->font( 1 );
-        font.setUnderline( true );
-        item->setFont( 1, font );
-        item->setTextColor( 1, Qt::blue );
-        item->setData( 1, Qt::UserRole + 1, link );
-    }
     RecursiveDisplay( param, item );
 }
 
@@ -95,13 +92,13 @@ void ActionsListView::RecursiveDisplay( const T& element, QTreeWidgetItem* item 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsListView::OnItemClicked
-// Created: JSR 2012-10-18
+// Name: ActionsListView::OnLinkClicked
+// Created: JSR 2012-10-19
 // -----------------------------------------------------------------------------
-void ActionsListView::OnItemClicked( QTreeWidgetItem *item, int column )
+void ActionsListView::OnLinkClicked( const QString& url, const QModelIndex& index )
 {
-    if( column == 1 && item->data( 1, Qt::UserRole + 1 ).isValid() )
-        extractor_.NotifyLinkClicked( item->data( 1, Qt::UserRole + 1 ).toString() );
+    selectionModel()->setCurrentIndex( index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
+    extractor_.NotifyLinkClicked( url );
 }
 
 // -----------------------------------------------------------------------------

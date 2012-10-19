@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "DisplayExtractor.h"
 #include "moc_DisplayExtractor.cpp"
+#include "InternalLinks.h"
 #include "Tools.h"
 #include "clients_kernel\Entity_ABC.h"
 #include "clients_kernel\Agent_ABC.h"
@@ -106,10 +107,10 @@ QString DisplayExtractor::GetDisplayName( const T& element ) const \
     return element.GetName(); \
 }
 
-#define GET_LINK( T ) \
-QString DisplayExtractor::GetLink( const T& element ) const \
+#define GET_ENTITY_LINK( T ) \
+QString DisplayExtractor::GetDisplayName( const T& element ) const \
 { \
-    return QString( "id://%1/%L2" ).arg( element.GetTypeName().c_str() ).arg( element.GetId() ); \
+    return InternalLinks::CreateLink( element, element.GetName() ) ; \
 }
 
 LOCALE_TO_STRING( int )
@@ -119,21 +120,15 @@ LOCALE_TO_STRING( double )
 LOCALE_TO_STRING( long )
 
 GET_ENTITY_NAME( kernel::Entity_ABC )
-GET_ENTITY_NAME( kernel::Agent_ABC )
-GET_ENTITY_NAME( kernel::Automat_ABC )
-GET_ENTITY_NAME( kernel::Formation_ABC )
 GET_ENTITY_NAME( kernel::Team_ABC )
-GET_ENTITY_NAME( kernel::Population_ABC )
-GET_ENTITY_NAME( kernel::Inhabitant_ABC )
 GET_ENTITY_NAME( kernel::KnowledgeGroup_ABC )
-GET_ENTITY_NAME( kernel::UrbanObject_ABC )
 GET_ENTITY_NAME( kernel::AgentKnowledge_ABC )
 GET_ENTITY_NAME( kernel::PopulationKnowledge_ABC )
 GET_ENTITY_NAME( kernel::ObjectKnowledge_ABC )
 
-GET_LINK( kernel::Agent_ABC )
-GET_LINK( kernel::Automat_ABC )
-GET_LINK( kernel::Formation_ABC )
-GET_LINK( kernel::Population_ABC )
-GET_LINK( kernel::Inhabitant_ABC )
-GET_LINK( kernel::UrbanObject_ABC )
+GET_ENTITY_LINK( kernel::Agent_ABC )
+GET_ENTITY_LINK( kernel::Automat_ABC )
+GET_ENTITY_LINK( kernel::Formation_ABC )
+GET_ENTITY_LINK( kernel::Population_ABC )
+GET_ENTITY_LINK( kernel::Inhabitant_ABC )
+GET_ENTITY_LINK( kernel::UrbanObject_ABC )

@@ -25,17 +25,6 @@ namespace kernel
         }
     };
 
-    template< typename T >
-    struct LinkExtractor
-    {
-        virtual QString GetLink( const T& element ) const = 0;
-
-        void GetLinkInternal( const T& element, QString& link ) const
-        {
-            link = GetLink( element );
-        }
-    };
-
 // =============================================================================
 /** @class  DisplayExtractor_ABC
     @brief  DisplayExtractor_ABC
@@ -57,11 +46,7 @@ public:
     template< typename T >
     QString GetDisplayName( const T* element );
     template< typename T >
-    QString GetLink( const T* element );
-    template< typename T >
     QString GetDisplayName( const T& element );
-    template< typename T >
-    QString GetLink( const T& element );
     //@}
 };
 
@@ -78,18 +63,6 @@ QString DisplayExtractor_ABC::GetDisplayName( const T& element )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisplayExtractor_ABC::GetLink
-// Created: JSR 2012-10-18
-// -----------------------------------------------------------------------------
-template< typename T >
-QString DisplayExtractor_ABC::GetLink( const T& element )
-{
-    QString link;
-    Apply( &LinkExtractor< T >::GetLinkInternal, element, link );
-    return link;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DisplayExtractor_ABC::GetDisplayName
 // Created: JSR 2012-10-18
 // -----------------------------------------------------------------------------
@@ -97,16 +70,6 @@ template< typename T >
 QString DisplayExtractor_ABC::GetDisplayName( const T* element )
 {
     return GetDisplayName( *element );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DisplayExtractor_ABC::GetLink
-// Created: JSR 2012-10-18
-// -----------------------------------------------------------------------------
-template< typename T >
-QString DisplayExtractor_ABC::GetLink( const T* element )
-{
-    return GetLink( *element );
 }
 
 }

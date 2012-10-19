@@ -55,18 +55,6 @@ QString Knowledge_ABC< ConcreteEntity >::GetDisplayName( kernel::DisplayExtracto
 }
 
 // -----------------------------------------------------------------------------
-// Name: Knowledge_ABC::GetLink
-// Created: JSR 2012-10-18
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-QString Knowledge_ABC< ConcreteEntity >::GetLink( kernel::DisplayExtractor_ABC& extractor ) const
-{
-    if( !IsSet() || isEntityValid_ )
-        return Entity< ConcreteEntity >::GetLink( extractor );
-    return "";
-}
-
-// -----------------------------------------------------------------------------
 // Name: Knowledge_ABC::Display
 // Created: JSR 2010-05-20
 // -----------------------------------------------------------------------------

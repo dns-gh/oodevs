@@ -109,18 +109,6 @@ QString Parameter< T >::GetDisplayName( kernel::DisplayExtractor_ABC& extractor 
 }
 
 // -----------------------------------------------------------------------------
-// Name: Parameter::GetLink
-// Created: JSR 2012-10-18
-// -----------------------------------------------------------------------------
-template< typename T >
-QString Parameter< T >::GetLink( kernel::DisplayExtractor_ABC& extractor ) const
-{
-    if( IsSet() )
-        return extractor.GetLink( value_ );
-    return "";
-}
-
-// -----------------------------------------------------------------------------
 // Name: Parameter::Display
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
