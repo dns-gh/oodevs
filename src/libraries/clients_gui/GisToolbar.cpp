@@ -75,7 +75,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         QToolTip::add( contourBoxEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable contour lines display" ) );
 
         linesHeight_ = new RichSpinBox( contourBox, 1, 10000, 1 );
-        linesHeight_->setValue( 20 );
+        linesHeight_->setValue( 100 );
         linesHeight_->setSuffix( kernel::Units::meters.AsString() );
         linesHeight_->setEnabled( false );
         QToolTip::add( linesHeight_, tools::translate( "gui::GisToolBar", "Set contour lines height" ) );
