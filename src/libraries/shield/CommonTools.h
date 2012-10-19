@@ -243,7 +243,10 @@ namespace shield
 #endif
         CONVERT( activity_time );
         CONVERT( activation_time );
-        CONVERT( name );
+        if( from.has_name() )
+            to->set_name( from.name() );
+        else
+            to->set_name( "" );
     }
     template< typename From, typename To >
     void ConvertLogMedicalPriorities( const From& from, To* to )
