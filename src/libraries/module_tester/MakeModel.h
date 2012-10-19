@@ -14,6 +14,7 @@
 #include "Tools.h" // $$$$ MCO 2012-04-17: ?
 #include <core/Model.h>
 #include <core/ModelBuilder.h>
+#include <core/ModelListener_ABC.h>
 #include <core/UserData.h>
 
 namespace sword
@@ -22,7 +23,7 @@ namespace test
 {
     struct Assign
     {
-        Assign( const Model& lhs, Model& rhs )
+        Assign( const Model& lhs, Model& rhs, core::ModelListener_ABC* )
         {
             rhs = lhs;
         }
