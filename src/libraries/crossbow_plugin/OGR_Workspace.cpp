@@ -13,9 +13,11 @@
 #include "Database_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push, 0 )
 #include <gdal/gdal.h>
 #include <gdal/ogr_api.h>
 #include <gdal/ogrsf_frmts.h>
+#pragma warning( pop )
 #include <boost/filesystem/operations.hpp>
 
 using namespace plugins;
@@ -23,7 +25,7 @@ namespace bfs = boost::filesystem;
 
 namespace
 {
-    void InitializeOGR( int argc, char* argv[] )
+    void InitializeOGR( int , char* [] )
     {
         const std::string projDriverPath( bfs::current_path().string() + "/" );
         const std::string projPath( ( bfs::current_path() / "projection_data" ).string() );

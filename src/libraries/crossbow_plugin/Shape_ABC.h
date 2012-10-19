@@ -10,8 +10,10 @@
 #ifndef __Shape_ABC_h_
 #define __Shape_ABC_h_
 
+#pragma warning( push, 0 )
 #include <gdal/ogr_geometry.h>
 #include <gdal/ogr_feature.h>
+#pragma warning( pop )
 
 namespace kernel
 {

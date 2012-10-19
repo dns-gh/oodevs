@@ -12,9 +12,9 @@
 #include "OGR_Database.h"
 #include "tools/GeneralConfig.h"
 #include "dispatcher/Logger_ABC.h"
-#include <gdal/ogrsf_frmts.h>
 
 #pragma warning( push, 0 )
+#include <gdal/ogrsf_frmts.h>
 #pragma warning( disable: 4127 4244 4245 4996 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>

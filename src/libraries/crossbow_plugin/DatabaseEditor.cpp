@@ -10,7 +10,9 @@
 #include "crossbow_plugin_pch.h"
 #include "DatabaseEditor.h"
 
+#pragma warning( push, 0 )
 #include <gdal/ogrsf_frmts.h>
+#pragma warning( pop )
 
 using namespace plugins::crossbow;
 

@@ -11,8 +11,10 @@
 #include "Line.h"
 #include "Point.h"
 #include "protocol/SimulationSenders.h"
+#pragma warning( push, 0 )
 #include <gdal/ogr_geometry.h>
 #include <gdal/ogr_feature.h>
+#pragma warning( pop )
 #include <sstream>
 
 using namespace plugins;

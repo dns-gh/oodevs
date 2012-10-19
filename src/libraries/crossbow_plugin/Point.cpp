@@ -12,7 +12,9 @@
 #include "protocol/SimulationSenders.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#pragma warning( push, 0 )
 #include <gdal/ogr_feature.h>
+#pragma warning( pop )
 
 using namespace plugins;
 

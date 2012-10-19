@@ -13,10 +13,12 @@
 #include "Area.h"
 #include "Line.h"
 
+#pragma warning( push, 0 )
 #include <gdal/ogr_core.h>
 #include <gdal/ogr_feature.h>
 #include <gdal/ogrsf_frmts.h>
 #include <boost/noncopyable.hpp>
+#pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins;

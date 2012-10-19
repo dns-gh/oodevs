@@ -12,9 +12,11 @@
 #include "OGR_FeatureRow.h"
 #include "DatabaseEditor.h"
 
+#pragma warning( push, 0 )
 #include <gdal/gdal.h>
 #include <gdal/ogr_feature.h>
 #include <gdal/ogrsf_frmts.h>
+#pragma warning( pop )
 
 using namespace plugins;
 using namespace crossbow;

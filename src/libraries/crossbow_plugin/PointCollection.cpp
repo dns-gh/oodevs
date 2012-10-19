@@ -11,8 +11,10 @@
 #include "protocol/Protocol.h"
 #include "PointCollection.h"
 #include "Point.h"
+#pragma warning( push, 0 )
 #include <gdal/ogr_geometry.h>
 #include <gdal/ogr_feature.h>
+#pragma warning( pop )
 
 using namespace plugins::crossbow;
 

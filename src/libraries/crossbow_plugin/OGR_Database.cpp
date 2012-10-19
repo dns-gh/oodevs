@@ -12,7 +12,9 @@
 #include "OGR_Workspace.h"
 #include "OGR_FeatureClass.h"
 #include <algorithm>
+#pragma warning( push, 0 )
 #include <gdal/ogrsf_frmts.h>
+#pragma warning( pop )
 
 using namespace plugins;
 using namespace crossbow;
