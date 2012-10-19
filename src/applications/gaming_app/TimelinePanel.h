@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controllers;
+    class DisplayExtractor_ABC;
     class Profile_ABC;
 }
 
@@ -23,11 +24,6 @@ namespace actions
 {
     class ActionsFilter_ABC;
     class ActionsModel;
-}
-
-namespace gui
-{
-    class ItemFactory_ABC;
 }
 
 class ActionsScheduler;
@@ -49,7 +45,7 @@ class TimelinePanel : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, const Config& config, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
+             TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, const Config& config, const kernel::Profile_ABC& profile, kernel::DisplayExtractor_ABC& extractor );
     virtual ~TimelinePanel();
     //@}
 

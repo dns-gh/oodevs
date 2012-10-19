@@ -1,0 +1,139 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
+
+#include "clients_gui_pch.h"
+#include "DisplayExtractor.h"
+#include "moc_DisplayExtractor.cpp"
+#include "Tools.h"
+#include "clients_kernel\Entity_ABC.h"
+#include "clients_kernel\Agent_ABC.h"
+#include "clients_kernel\Automat_ABC.h"
+#include "clients_kernel\Formation_ABC.h"
+#include "clients_kernel\Team_ABC.h"
+#include "clients_kernel\Population_ABC.h"
+#include "clients_kernel\Inhabitant_ABC.h"
+#include "clients_kernel\KnowledgeGroup_ABC.h"
+#include "clients_kernel\UrbanObject_ABC.h"
+#include "clients_kernel\AgentKnowledge_ABC.h"
+#include "clients_kernel\PopulationKnowledge_ABC.h"
+#include "clients_kernel\ObjectKnowledge_ABC.h"
+
+using namespace gui;
+
+QLocale DisplayExtractor::locale_ = QLocale();
+
+// -----------------------------------------------------------------------------
+// Name: DisplayExtractor constructor
+// Created: JSR 2012-10-18
+// -----------------------------------------------------------------------------
+DisplayExtractor::DisplayExtractor( QObject* parent )
+    : QObject( parent )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayExtractor destructor
+// Created: JSR 2012-10-18
+// -----------------------------------------------------------------------------
+DisplayExtractor::~DisplayExtractor()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayExtractor::NotifyLinkClicked
+// Created: JSR 2012-10-18
+// -----------------------------------------------------------------------------
+void DisplayExtractor::NotifyLinkClicked( const QString& url )
+{
+    emit LinkClicked( url );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayExtractor::GetDisplayName
+// Created: JSR 2012-10-18
+// -----------------------------------------------------------------------------
+QString DisplayExtractor::GetDisplayName( const QString& element ) const
+{
+    return element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayExtractor::GetDisplayName
+// Created: JSR 2012-10-18
+// -----------------------------------------------------------------------------
+QString DisplayExtractor::GetDisplayName( const std::string& element ) const
+{
+    return element.c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayExtractor::GetDisplayName
+// Created: JSR 2012-10-18
+// -----------------------------------------------------------------------------
+QString DisplayExtractor::GetDisplayName( const unsigned long& element ) const
+{
+    return locale_.toString( static_cast< const unsigned int >( element) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayExtractor::GetDisplayName
+// Created: JSR 2012-10-18
+// -----------------------------------------------------------------------------
+QString DisplayExtractor::GetDisplayName( const bool& element ) const
+{
+    static const QString yes = tools::translate( "Yes/No", "Yes" ) ;
+    static const QString no = tools::translate( "Yes/No", "No" ) ;
+    return element ? yes : no;
+}
+
+#define LOCALE_TO_STRING( T ) \
+QString DisplayExtractor::GetDisplayName( const T& element ) const \
+{ \
+    return locale_.toString( element); \
+}
+
+#define GET_ENTITY_NAME( T ) \
+QString DisplayExtractor::GetDisplayName( const T& element ) const \
+{ \
+    return element.GetName(); \
+}
+
+#define GET_LINK( T ) \
+QString DisplayExtractor::GetLink( const T& element ) const \
+{ \
+    return QString( "id://%1/%L2" ).arg( element.GetTypeName().c_str() ).arg( element.GetId() ); \
+}
+
+LOCALE_TO_STRING( int )
+LOCALE_TO_STRING( unsigned int )
+LOCALE_TO_STRING( float )
+LOCALE_TO_STRING( double )
+LOCALE_TO_STRING( long )
+
+GET_ENTITY_NAME( kernel::Entity_ABC )
+GET_ENTITY_NAME( kernel::Agent_ABC )
+GET_ENTITY_NAME( kernel::Automat_ABC )
+GET_ENTITY_NAME( kernel::Formation_ABC )
+GET_ENTITY_NAME( kernel::Team_ABC )
+GET_ENTITY_NAME( kernel::Population_ABC )
+GET_ENTITY_NAME( kernel::Inhabitant_ABC )
+GET_ENTITY_NAME( kernel::KnowledgeGroup_ABC )
+GET_ENTITY_NAME( kernel::UrbanObject_ABC )
+GET_ENTITY_NAME( kernel::AgentKnowledge_ABC )
+GET_ENTITY_NAME( kernel::PopulationKnowledge_ABC )
+GET_ENTITY_NAME( kernel::ObjectKnowledge_ABC )
+
+GET_LINK( kernel::Agent_ABC )
+GET_LINK( kernel::Automat_ABC )
+GET_LINK( kernel::Formation_ABC )
+GET_LINK( kernel::Population_ABC )
+GET_LINK( kernel::Inhabitant_ABC )
+GET_LINK( kernel::UrbanObject_ABC )

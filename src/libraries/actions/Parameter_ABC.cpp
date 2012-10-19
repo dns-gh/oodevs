@@ -51,6 +51,24 @@ QString Parameter_ABC::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Parameter_ABC::GetDisplayName
+// Created: JSR 2012-10-17
+// -----------------------------------------------------------------------------
+QString Parameter_ABC::GetDisplayName( kernel::DisplayExtractor_ABC& /*extractor*/ ) const
+{
+    return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parameter_ABC::GetLink
+// Created: JSR 2012-10-18
+// -----------------------------------------------------------------------------
+QString Parameter_ABC::GetLink( kernel::DisplayExtractor_ABC& /*extractor*/ ) const
+{
+    return "";
+}
+
+// -----------------------------------------------------------------------------
 // Name: Parameter_ABC::GetType
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------

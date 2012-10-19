@@ -31,23 +31,23 @@ namespace kernel
 namespace gui
 {
     class AddRasterDialog;
-    class OptionsPanel;
-    class ParametersLayer;
     class AgentsLayer;
     class AutomatsLayer;
-    class FormationLayer;
-    class ColorStrategy;
-    class GlProxy;
-    class ExclusiveEventStrategy;
     class CircularEventStrategy;
-    class PreferencesDialog;
-    class LightingProxy;
+    class ColorStrategy;
+    class ExclusiveEventStrategy;
+    class FormationLayer;
+    class GlProxy;
     class GlSelector;
-    class TerrainLayer;
-    class Layer_ABC;
-    class TerrainPicker;
-    class Painter_ABC;
     class HelpSystem;
+    class Layer_ABC;
+    class LightingProxy;
+    class OptionsPanel;
+    class Painter_ABC;
+    class ParametersLayer;
+    class PreferencesDialog;
+    class TerrainLayer;
+    class TerrainPicker;
 }
 
 class Config;

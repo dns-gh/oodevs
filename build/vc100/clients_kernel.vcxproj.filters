@@ -1212,6 +1212,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHelpers.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayExtractor_ABC.h">
+      <Filter>Source Files\Display</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">

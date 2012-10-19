@@ -53,7 +53,7 @@ using namespace actions;
 // Name: TimelineWidget constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, gui::ItemFactory_ABC& factory )
+TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, kernel::DisplayExtractor_ABC& extractor )
     : Q3HBox( parent, "TimelineWidget" )
 {
     QSplitter* splitter = new QSplitter( this );
@@ -61,7 +61,7 @@ TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controller
     Q3VBox* box = new Q3VBox( splitter );
     TimelineRuler* ruler = new TimelineRuler( box, controllers, list_->header()->height() );
     view_ = new TimelineView( box, new TimelineCanvas( this, 25 ), controllers, model, scheduler, *ruler );
-    new ActionProperties( splitter, controllers, factory );
+    new ActionProperties( splitter, controllers, extractor );
 
     connect( view_, SIGNAL( contentsMoving( int, int ) ), list_, SLOT( setContentsPos( int, int ) ) );
     connect( list_, SIGNAL( contentsMoving( int, int ) ), view_, SLOT( setContentsPos( int, int ) ) );

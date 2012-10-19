@@ -73,6 +73,17 @@ std::string ParameterList::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParameterList::GetDisplayName
+// Created: JSR 2012-10-17
+// -----------------------------------------------------------------------------
+QString ParameterList::GetDisplayName( kernel::DisplayExtractor_ABC& /*extractor*/ ) const
+{
+    if( IsSet() )
+        return tools::translate( "ParameterList", "List" );
+    return tools::translate( "ParameterList", "Not set" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParameterList::Display
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------

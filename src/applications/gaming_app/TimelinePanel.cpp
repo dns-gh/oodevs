@@ -81,7 +81,7 @@ namespace
 // Name: TimelinePanel constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const Config& config, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
+TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const Config& config, const kernel::Profile_ABC& profile, kernel::DisplayExtractor_ABC& extractor )
     : QDockWidget( "timeline", parent )
 {
     // Init
@@ -108,7 +108,7 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
         hbox->addStretch( 1 );
     }
     // Timeline
-    timeline_ = new TimelineWidget( this, controllers, model, scheduler, factory );
+    timeline_ = new TimelineWidget( this, controllers, model, scheduler, extractor );
     // Layout
     layout->addWidget( toolbar_ );
     layout->addWidget( groupBox );

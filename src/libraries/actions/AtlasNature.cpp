@@ -98,6 +98,17 @@ void AtlasNature::CommitTo( sword::MissionParameter_Value& message ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AtlasNature::GetDisplayName
+// Created: JSR 2012-10-17
+// -----------------------------------------------------------------------------
+QString AtlasNature::GetDisplayName( kernel::DisplayExtractor_ABC& /*extractor*/ ) const
+{
+    if( IsSet() )
+        return GetValue().GetName();
+    return tools::translate( "AtlasNature", "Not set" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AtlasNature::Display
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------

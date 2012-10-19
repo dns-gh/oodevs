@@ -97,6 +97,30 @@ const T& Parameter< T >::GetValue() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Parameter::GetDisplayName
+// Created: JSR 2012-10-17
+// -----------------------------------------------------------------------------
+template< typename T >
+QString Parameter< T >::GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const
+{
+    if( IsSet() )
+        return extractor.GetDisplayName( value_ );
+    return tools::translate( "ParameterList", "Not set" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Parameter::GetLink
+// Created: JSR 2012-10-18
+// -----------------------------------------------------------------------------
+template< typename T >
+QString Parameter< T >::GetLink( kernel::DisplayExtractor_ABC& extractor ) const
+{
+    if( IsSet() )
+        return extractor.GetLink( value_ );
+    return "";
+}
+
+// -----------------------------------------------------------------------------
 // Name: Parameter::Display
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------

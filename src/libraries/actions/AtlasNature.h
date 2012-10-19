@@ -47,6 +47,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void CommitTo( sword::MissionParameter& asn ) const;
     virtual void CommitTo( sword::MissionParameter_Value& asn ) const;

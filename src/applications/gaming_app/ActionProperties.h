@@ -19,6 +19,7 @@ namespace kernel
 {
     class Controllers;
     class Displayer_ABC;
+    class DisplayExtractor_ABC;
 }
 
 namespace actions
@@ -26,11 +27,6 @@ namespace actions
     class Action_ABC;
     class ActionTiming;
     class Parameter_ABC;
-}
-
-namespace gui
-{
-    class ItemFactory_ABC;
 }
 
 // =============================================================================
@@ -48,7 +44,7 @@ class ActionProperties : public QSplitter
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionProperties( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             ActionProperties( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor );
     virtual ~ActionProperties();
     //@}
 

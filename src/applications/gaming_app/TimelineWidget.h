@@ -15,17 +15,13 @@
 namespace kernel
 {
     class Controllers;
+    class DisplayExtractor_ABC;
 }
 
 namespace actions
 {
     class ActionsFilter_ABC;
     class ActionsModel;
-}
-
-namespace gui
-{
-    class ItemFactory_ABC;
 }
 
 class ActionsScheduler;
@@ -44,7 +40,7 @@ class TimelineWidget : public Q3HBox
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineWidget( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, gui::ItemFactory_ABC& factory );
+             TimelineWidget( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, kernel::DisplayExtractor_ABC& extractor );
     virtual ~TimelineWidget();
     //@}
 

@@ -79,6 +79,7 @@
 #include "gaming/ColorController.h"
 #include "clients_gui/AddRasterDialog.h"
 #include "clients_gui/DisplayToolbar.h"
+#include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/Logger.h"
 #include "clients_gui/MiscLayer.h"
@@ -190,8 +191,11 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     preferenceDialog_->AddPage( tr( "Orbat" ), *new OrbatPanel( preferenceDialog_.get(), controllers ) );
     new VisionConesToggler( controllers, publisher, this );
 
+    gui::DisplayExtractor* displayExtractor = new gui::DisplayExtractor( this );
+
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, *pProfile_ );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
+    connect( displayExtractor, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     // Logger
     QDockWidget* pLogDockWnd_ = new QDockWidget( "log", this );
@@ -329,7 +333,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Actions panel
     {
-        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *factory, *pProfile_ );
+        TimelinePanel* timelinePanel = new TimelinePanel( this, controllers_, model_.actions_, *scheduler, config_, *pProfile_, *displayExtractor );
         addDockWidget( Qt::TopDockWidgetArea, timelinePanel );
         timelinePanel->hide();
     }

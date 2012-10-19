@@ -260,6 +260,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayExtractor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHelpers.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Filter_ABC.h" />

@@ -320,6 +320,7 @@ void Param_ABC::SetParentList( ListParameterBase* parentList )
 void Param_ABC::SetName( const QString& name )
 {
     name_ = name;
+    parameter_.SetName( name.toStdString() );
     if( group_ )
         group_->setTitle( name_ );
 }

@@ -10,13 +10,13 @@
 #ifndef __ActionsListView_h_
 #define __ActionsListView_h_
 
-#include "clients_gui/ListDisplayer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
+    class DisplayExtractor_ABC;
 }
 
 namespace actions
@@ -25,30 +25,30 @@ namespace actions
     class Parameter_ABC;
 }
 
-class ActionsListView;
-typedef gui::ListDisplayer< ActionsListView > ActionsListViewBase;
-
 // =============================================================================
 /** @class  ActionsListView
     @brief  ActionsListView
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionsListView : public ActionsListViewBase
+class ActionsListView : public QTreeWidget
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< actions::Action_ABC >
                       , public tools::SelectionObserver< actions::Action_ABC >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             ActionsListView( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor );
     virtual ~ActionsListView();
     //@}
 
-    //! @name Operations
+public slots:
+    //! @name Slots
     //@{
-    virtual void Display( const actions::Parameter_ABC& param, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void OnItemClicked( QTreeWidgetItem *item, int column );
     //@}
 
 private:
@@ -56,13 +56,17 @@ private:
     //@{
     virtual void NotifyUpdated( const actions::Action_ABC& action );
     virtual void NotifySelected( const actions::Action_ABC* action );
+    void DisplayParameter( const actions::Parameter_ABC& param, QTreeWidgetItem* item );
+    template< typename T >
+    void RecursiveDisplay( const T& element, QTreeWidgetItem* item );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    QPixmap parameter_;
+    kernel::DisplayExtractor_ABC& extractor_;
+    QIcon parameter_;
     //@}
 };
 

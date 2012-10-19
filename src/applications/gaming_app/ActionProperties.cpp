@@ -20,14 +20,14 @@
 // Name: ActionProperties constructor
 // Created: SBO 2010-05-04
 // -----------------------------------------------------------------------------
-ActionProperties::ActionProperties( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+ActionProperties::ActionProperties( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor )
     : QSplitter( Qt::Vertical, parent )
     , controllers_( controllers )
     , selected_( controllers )
 {
     Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tr( "Properties" ), this );
     display_.reset( new SummariesDisplayer( group ) );
-    new ActionsListView( this, controllers, factory );
+    new ActionsListView( this, controllers, extractor );
     controllers_.Register( *this );
     hide();
 }

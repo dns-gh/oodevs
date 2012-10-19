@@ -14,6 +14,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DisplayExtractor_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace actions {
@@ -41,6 +42,8 @@ public:
     virtual std::string GetType() const;
     virtual void SetKeyName( const std::string& identifier );
     virtual bool IsOptional() const;
+    virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
+    virtual QString GetLink( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;
     virtual std::string GetKeyName() const;

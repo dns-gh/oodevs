@@ -39,6 +39,8 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual QString GetDisplayName( kernel::DisplayExtractor_ABC& extractor ) const;
+    virtual QString GetLink( kernel::DisplayExtractor_ABC& extractor ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void NotifyDestruction();
     template< typename M >
