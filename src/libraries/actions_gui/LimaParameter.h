@@ -12,12 +12,14 @@
 
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include <Qt3Support/q3listbox.h>
 
 namespace kernel
 {
     class TacticalLine_ABC;
     class CoordinateConverter_ABC;
+    class Controller;
 }
 
 namespace actions
@@ -35,6 +37,7 @@ namespace actions
 // =============================================================================
 class LimaParameter : public Param_ABC
                     , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
+                    , public tools::ElementObserver_ABC< kernel::TacticalLine_ABC >
 {
     Q_OBJECT
 
@@ -63,12 +66,14 @@ private:
     //@{
     virtual bool InternalCheckValidity() const;
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyDeleted( const kernel::TacticalLine_ABC& entity );
     virtual void CreateInternalMenu( kernel::ContextMenu& menu );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     const QDateTime currentDate_;
     const kernel::TacticalLine_ABC* clickedLine_;

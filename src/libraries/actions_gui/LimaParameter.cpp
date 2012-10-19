@@ -14,6 +14,8 @@
 #include "ListParameter.h"
 #include "actions/Lima.h"
 #include "actions_gui/MissionInterface_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -30,13 +32,14 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 LimaParameter::LimaParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    , controller_( builder.GetControllers().controller_ )
     , converter_   ( builder.GetStaticModel().coordinateConverter_ )
     , clickedLine_ ( 0 )
     , selectedLine_( 0 )
     , functions_   ( new Q3ListBox() )
     , schedule_    ( static_cast< ParamDateTime* >( &builder.BuildOne( kernel::OrderParameter( tools::translate( "LimaParameter", "Schedule" ).toAscii().constData(), "datetime", true ), false ) ) )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +48,7 @@ LimaParameter::LimaParameter( const InterfaceBuilder_ABC& builder, const kernel:
 // -----------------------------------------------------------------------------
 LimaParameter::~LimaParameter()
 {
+    controller_.Unregister( *this );
     delete functions_;
     delete schedule_;
 }
@@ -129,6 +133,18 @@ void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
         return;
     clickedLine_ = &entity;
     Param_ABC::CreateMenu( menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::NotifyDeleted
+// Created: LDC 2012-10-17
+// -----------------------------------------------------------------------------
+void LimaParameter::NotifyDeleted( const kernel::TacticalLine_ABC& entity )
+{
+    if( &entity == clickedLine_ )
+        clickedLine_ = 0;
+    if( &entity == selectedLine_ )
+        selectedLine_ = 0;
 }
 
 // -----------------------------------------------------------------------------
