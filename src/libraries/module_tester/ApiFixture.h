@@ -282,7 +282,7 @@ namespace core
             TRY
                 BOOST_REQUIRE( source );
                 BOOST_REQUIRE( target );
-                MergeVisitor( *Convert( source ), *Convert( target ) );
+                MergeVisitor( *Convert( source ), *Convert( target ), 0 );
                 return true;
             CATCH
                 return false;
