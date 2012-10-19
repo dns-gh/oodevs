@@ -16,21 +16,10 @@
 DECLARE_HOOK( GetPhModificator, double, ( const SWORD_Model* firer, const SWORD_Model* target, const char* launcher ) )
 DECLARE_HOOK( GetPhModificator2, double, ( const char* launcher ) )
 
-DEFINE_HOOK( InitializeLaunchers, void, ( const char* xml ) )
+DEFINE_HOOK( InitializeLaunchers, 1, void, ( const char* xml ) )
 {
-    try
-    {
-        // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
-        sword::fire::LauncherType::Initialize( xml::xistringstream( xml ) );
-    }
-    catch( std::exception& e )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-    }
-    catch( ... )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception during weapon type initialization" );
-    }
+    // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+    sword::fire::LauncherType::Initialize( xml::xistringstream( xml ) );
     if( GET_PREVIOUS_HOOK( InitializeLaunchers ) )
         GET_PREVIOUS_HOOK( InitializeLaunchers )( xml );
 }

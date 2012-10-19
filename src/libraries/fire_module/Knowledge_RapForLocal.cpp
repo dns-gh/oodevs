@@ -24,23 +24,12 @@ double Knowledge_RapForLocal::rRapForIncreasePerTimeStepDefaultValue_ = 0;
 
 namespace
 {
-    DEFINE_HOOK( InitializeDecisional, void, ( const char* xml, double tickDuration ) )
+    DEFINE_HOOK( InitializeDecisional, 2, void, ( const char* xml, double tickDuration ) )
     {
-        try
-        {
-            // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
-            xml::xistringstream xis( xml );
-            xis >> xml::start( "decisional" );
-            Knowledge_RapForLocal::Initialize( xis, tickDuration );
-        }
-        catch( std::exception& e )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-        }
-        catch( ... )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception during force ratio initialization" );
-        }
+        // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+        xml::xistringstream xis( xml );
+        xis >> xml::start( "decisional" );
+        Knowledge_RapForLocal::Initialize( xis, tickDuration );
         if( GET_PREVIOUS_HOOK( InitializeDecisional ) )
             GET_PREVIOUS_HOOK( InitializeDecisional )( xml, tickDuration );
     }
@@ -93,7 +82,7 @@ namespace
         return std::make_pair( rTotalFightScoreFriend, rTotalFightScoreEnemy );
     }
 
-    DEFINE_HOOK( ComputeForceRatio, double, ( const SWORD_Model* model, const SWORD_Model* entity,
+    DEFINE_HOOK( ComputeForceRatio, 4, double, ( const SWORD_Model* model, const SWORD_Model* entity,
                                               bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData ) )
     {
         std::vector< const SWORD_Model* > agents;

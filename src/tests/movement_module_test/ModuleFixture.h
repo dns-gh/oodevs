@@ -56,7 +56,7 @@ namespace movement
     APPLY( CreatePathList, 3, boost::shared_ptr< sword::movement::Path_ABC >, ( const SWORD_Model* model, std::vector< boost::shared_ptr< MT_Vector2D > >& points, int pathType ) ) \
     APPLY( ExecutePathfind, 2, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, TerrainPathfinder& pathfind ) ) \
     APPLY( GetAgentFuturePosition, 3, MT_Vector2D, ( const SWORD_Model* entity, double rTime, bool bBoundOnPath ) ) \
-    APPLY( GetPathDestPoint, 1, const boost::shared_ptr< sword::movement::PathPoint >&, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) ) \
+    APPLY( GetPathDestPoint, 1, const boost::shared_ptr< sword::movement::PathPoint >*, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) ) \
     APPLY( GetPathDIAType, 1, const char*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) ) \
     APPLY( GetPathLimaPoint, 1, unsigned int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) ) \
     APPLY( AvoidEnemies, 1, bool, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
@@ -71,7 +71,7 @@ namespace movement
     APPLY( GetCostOutsideOfPopulation, 1, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( GetPopulationAttitudeCost, 2, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) ) \
     APPLY( GetPathPoints, 3, void, ( unsigned int entity, void(*callback)( const boost::shared_ptr< sword::movement::PathPoint >& point, void* userData ), void* userData ) ) \
-    APPLY( GetPathPos, 1, const MT_Vector2D&, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) ) \
+    APPLY( GetPathPos, 1, const MT_Vector2D*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) ) \
     APPLY( GetPathTypeLimaPoint, 1, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) ) \
     APPLY( GetPathTypePoint, 1, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) ) \
     APPLY( InitializePathClass, 3, void, ( const char* xml, const unsigned int* first, size_t size ) ) \

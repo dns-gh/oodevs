@@ -22,21 +22,10 @@ DECLARE_HOOK( CanFire, bool, ( const SWORD_Model* component, const char* dotatio
 DECLARE_HOOK( ReserveAmmunition, size_t, ( const SWORD_Model* firer, const char* dotation, size_t ammos ) )
 DECLARE_HOOK( GetDotationValue, double, ( const SWORD_Model* entity, const char* dotation ) )
 
-DEFINE_HOOK( InitializeDotations, void, ( const char* xml ) )
+DEFINE_HOOK( InitializeDotations, 1, void, ( const char* xml ) )
 {
-    try
-    {
-        // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
-        sword::fire::DotationCategory::Initialize( xml::xistringstream( xml ) );
-    }
-    catch( std::exception& e )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-    }
-    catch( ... )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception during weapon type initialization" );
-    }
+    // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+    sword::fire::DotationCategory::Initialize( xml::xistringstream( xml ) );
     if( GET_PREVIOUS_HOOK( InitializeDotations ) )
         GET_PREVIOUS_HOOK( InitializeDotations )( xml );
 }

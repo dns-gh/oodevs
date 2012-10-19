@@ -21,21 +21,10 @@
 #include <boost/bind.hpp>
 #include <cassert>
 
-DEFINE_HOOK( InitializeWeaponSystems, void, ( const char* xml, double tickDuration ) )
+DEFINE_HOOK( InitializeWeaponSystems, 2, void, ( const char* xml, double tickDuration ) )
 {
-    try
-    {
-        // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
-        sword::fire::WeaponType::Initialize( xml::xistringstream( xml ), tickDuration );
-    }
-    catch( std::exception& e )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-    }
-    catch( ... )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception during weapon type initialization" );
-    }
+    // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+    sword::fire::WeaponType::Initialize( xml::xistringstream( xml ), tickDuration );
     if( GET_PREVIOUS_HOOK( InitializeWeaponSystems ) )
         GET_PREVIOUS_HOOK( InitializeWeaponSystems )( xml, tickDuration );
 }
@@ -256,27 +245,27 @@ namespace
     }
 }
 
-DEFINE_HOOK( GetDangerosity, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double distance, bool checkAmmo ) )
+DEFINE_HOOK( GetDangerosity, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double distance, bool checkAmmo ) )
 {
     return GetMax( firer, filter, boost::bind( &WeaponType::GetDangerosity, _1, firer, target, distance, checkAmmo ) );
 }
-DEFINE_HOOK( GetMaxRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, const char* dotation ) )
+DEFINE_HOOK( GetMaxRangeToFireOn, 5, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH, const char* dotation ) )
 {
     return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToFireOn, _1, firer, target, rWantedPH, dotation ) );
 }
-DEFINE_HOOK( GetMinRangeToFireOn, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
+DEFINE_HOOK( GetMinRangeToFireOn, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
 {
     return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToFireOn, _1, firer, target, rWantedPH ) );
 }
-DEFINE_HOOK( GetMaxRangeToFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
+DEFINE_HOOK( GetMaxRangeToFire, 3, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
 {
     return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToFire, _1, rWantedPH ) );
 }
-DEFINE_HOOK( GetMaxRangeToFireOnWithPosture, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
+DEFINE_HOOK( GetMaxRangeToFireOnWithPosture, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
 {
     return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToFireOnWithPosture, _1, firer, target, rWantedPH ) );
 }
-DEFINE_HOOK( GetMinRangeToFireOnWithPosture, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
+DEFINE_HOOK( GetMinRangeToFireOnWithPosture, 4, double, ( const SWORD_Model* firer, const SWORD_Model* target, bool(*filter)( const SWORD_Model* component ), double rWantedPH ) )
 {
     return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToFireOnWithPosture, _1, firer, target, rWantedPH ) );
 }
@@ -289,11 +278,11 @@ namespace
         return boost::none;
     }
 }
-DEFINE_HOOK( GetMaxRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
+DEFINE_HOOK( GetMaxRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
 {
     return GetMax( firer, filter, boost::bind( &WeaponType::GetMaxRangeToIndirectFire, _1, firer, MakeDotation( dotation ), checkAmmo ), -1 );
 }
-DEFINE_HOOK( GetMinRangeToIndirectFire, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
+DEFINE_HOOK( GetMinRangeToIndirectFire, 4, double, ( const SWORD_Model* firer, bool(*filter)( const SWORD_Model* component ), const char* dotation, bool checkAmmo ) )
 {
     return GetMin( firer, filter, boost::bind( &WeaponType::GetMinRangeToIndirectFire, _1, firer, MakeDotation( dotation ), checkAmmo ) );
 }

@@ -15,10 +15,10 @@
 
 using namespace sword;
 
-DECLARE_HOOK( GetPathDestPoint, const boost::shared_ptr< sword::movement::PathPoint >&, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
+DECLARE_HOOK( GetPathDestPoint, const boost::shared_ptr< sword::movement::PathPoint >*, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
 DECLARE_HOOK( GetPathDIAType, const char*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) )
 DECLARE_HOOK( GetPathLimaPoint, unsigned int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
-DECLARE_HOOK( GetPathPos, const MT_Vector2D&, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) )
+DECLARE_HOOK( GetPathPos, const MT_Vector2D*, ( const boost::shared_ptr< sword::movement::PathPoint >& point ) )
 DECLARE_HOOK( GetPathTypeLimaPoint, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
 DECLARE_HOOK( GetPathTypePoint, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
 DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
@@ -109,7 +109,7 @@ bool PathPointAdapter::IsPoint() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< PathPointAdapter > PathPointAdapter::GetDestPoint() const
 {
-    return AdaptPoint( entity_, GET_HOOK( GetPathDestPoint )( point_ ) );
+    return AdaptPoint( entity_, *GET_HOOK( GetPathDestPoint )( point_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,5 +146,5 @@ const std::string& PathPointAdapter::GetDIAType() const
 // -----------------------------------------------------------------------------
 const MT_Vector2D& PathPointAdapter::GetPos() const
 {
-    return GET_HOOK( GetPathPos )( point_ );
+    return *GET_HOOK( GetPathPos )( point_ );
 }

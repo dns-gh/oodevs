@@ -67,100 +67,56 @@ DECLARE_HOOK( GetTransporter, const SWORD_Model*, ( const SWORD_Model* model, co
 
 namespace
 {
-    DEFINE_HOOK( IsPointVisible, bool, ( const SWORD_Model* model, const SWORD_Model* entity, const MT_Vector2D* point ) )
+    DEFINE_HOOK( IsPointVisible, 3, bool, ( const SWORD_Model* model, const SWORD_Model* entity, const MT_Vector2D* point ) )
     {
         bool result = false;
-        try
-        {
-            RolePion_Perceiver perceiver;
-            const PerceptionLevel& level = perceiver.ComputePointPerception( model, entity, *point );
-            result = level != PerceptionLevel::notSeen_;
-        }
-        catch( std::exception& e )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-        }
-        catch( ... )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in IsPointVisible hook" );
-        }
+        RolePion_Perceiver perceiver;
+        const PerceptionLevel& level = perceiver.ComputePointPerception( model, entity, *point );
+        result = level != PerceptionLevel::notSeen_;
         if( GET_PREVIOUS_HOOK( IsPointVisible ) )
             result = result || GET_PREVIOUS_HOOK( IsPointVisible )( model, entity, point );
         return result;
     }
-    DEFINE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const SWORD_Model* knowledgeObject ) )
+    DEFINE_HOOK( ComputeKnowledgeObjectPerception, 3, size_t, ( const SWORD_Model* model, const SWORD_Model* entity, const SWORD_Model* knowledgeObject ) )
     {
         size_t level = PerceptionLevel::notSeen_.GetID();
-        try
-        {
-            RolePion_Perceiver perceiver;
-            level = perceiver.ComputeKnowledgeObjectPerception( model, entity, knowledgeObject ).GetID();
-        }
-        catch( std::exception& e )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-        }
-        catch( ... )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in ComputeKnowledgeObjectPerception hook" );
-        }
+        RolePion_Perceiver perceiver;
+        level = perceiver.ComputeKnowledgeObjectPerception( model, entity, knowledgeObject ).GetID();
         if( GET_PREVIOUS_HOOK( ComputeKnowledgeObjectPerception ) )
             level = std::max( level, GET_PREVIOUS_HOOK( ComputeKnowledgeObjectPerception )( model, entity, knowledgeObject ) );
         return level;
     }
-    DEFINE_HOOK( AgentHasRadar, bool, ( const SWORD_Model* entity, size_t radarType ) )
+    DEFINE_HOOK( AgentHasRadar, 2, bool, ( const SWORD_Model* entity, size_t radarType ) )
     {
         bool result = false;
-        try
-        {
-            RolePion_Perceiver perceiver;
-            result = perceiver.HasRadar( entity, radarType );
-        }
-        catch( std::exception& e )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-        }
-        catch( ... )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in AgentHasRadar hook" );
-        }
+        RolePion_Perceiver perceiver;
+        result = perceiver.HasRadar( entity, radarType );
         if( GET_PREVIOUS_HOOK( AgentHasRadar ) )
             result = result || GET_PREVIOUS_HOOK( AgentHasRadar )( entity, radarType );
         return result;
     }
-    DEFINE_HOOK( GetPerception, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) )
+    DEFINE_HOOK( GetPerception, 3, double, ( const SWORD_Model* entity, const MT_Vector2D* point, const MT_Vector2D* target ) )
     {
         if( !target || !point )
             return 0.;
         double energy = 0.;
-        try
+        const sword::wrapper::View view( entity );
+        for( std::size_t i = 0; i < view[ "components" ].GetSize(); ++i )
         {
-            const sword::wrapper::View view( entity );
-            for( std::size_t i = 0; i < view[ "components" ].GetSize(); ++i )
+            const wrapper::View& component = view[ "components" ].GetElement( i );
+            if( !component[ "can-perceive" ] )
+                continue;
+            for( std::size_t j = 0; j < component[ "sensors" ].GetSize(); ++j )
             {
-                const wrapper::View& component = view[ "components" ].GetElement( i );
-                if( !component[ "can-perceive" ] )
-                    continue;
-                for( std::size_t j = 0; j < component[ "sensors" ].GetSize(); ++j )
-                {
-                    const wrapper::View& sensor = component[ "sensors" ].GetElement( j );
-                    const SensorType* type = SensorType::FindSensorType( static_cast< std::string >( sensor[ "type" ] ) );
-                    if( !type )
-                        throw std::runtime_error( "unknown sensor type " + static_cast< std::string >( sensor[ "type" ] ) );
-                    const SensorTypeAgent* pSensorTypeAgent = type->GetTypeAgent();
-                    const double height = sensor[ "height" ];
-                    if( pSensorTypeAgent )
-                        energy = std::max( energy, pSensorTypeAgent->RayTrace( *point, *target, height ) );
-                }
+                const wrapper::View& sensor = component[ "sensors" ].GetElement( j );
+                const SensorType* type = SensorType::FindSensorType( static_cast< std::string >( sensor[ "type" ] ) );
+                if( !type )
+                    throw std::runtime_error( "unknown sensor type " + static_cast< std::string >( sensor[ "type" ] ) );
+                const SensorTypeAgent* pSensorTypeAgent = type->GetTypeAgent();
+                const double height = sensor[ "height" ];
+                if( pSensorTypeAgent )
+                    energy = std::max( energy, pSensorTypeAgent->RayTrace( *point, *target, height ) );
             }
-        }
-        catch( std::exception& e )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-        }
-        catch( ... )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in GetPerception hook" );
         }
         if( GET_PREVIOUS_HOOK( GetPerception ) )
             energy = std::max( energy, GET_PREVIOUS_HOOK( GetPerception )( entity, point, target ) );

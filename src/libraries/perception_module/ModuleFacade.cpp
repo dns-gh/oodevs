@@ -35,26 +35,19 @@ using namespace sword::perception;
 
 namespace
 {
-    DEFINE_HOOK( GetPerceptionId, int, () )
+    DEFINE_HOOK( GetPerceptionId, 0, int, () )
     {
         static int id = 0;
         return id++;
     }
-    DEFINE_HOOK( InitializePerceptionTypes, void, ( const char* xml ) )
+    DEFINE_HOOK( InitializePerceptionTypes, 1, void, ( const char* xml ) )
     {
         xml::xistringstream xis( xml );
         xis >> xml::start( "sensors" );
-        try
-        {
-            ToggleAlatMonitoringCommand::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
-            SensorType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
-            RadarType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
-            PerceptionFlyingShell::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
-        }
-        catch( std::runtime_error e )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-        }
+        ToggleAlatMonitoringCommand::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+        SensorType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+        RadarType::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+        PerceptionFlyingShell::Initialize( xis ); // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
     }
     bool IsActivated( const sword::wrapper::View& sensor )
     {
@@ -62,7 +55,7 @@ namespace
         sensor.VisitIdentifiedChildren( boost::lambda::var( activated ) = true );
         return activated;
     }
-    DEFINE_HOOK( IsUsingActiveRadar, bool, ( const SWORD_Model* entity ) )
+    DEFINE_HOOK( IsUsingActiveRadar, 1, bool, ( const SWORD_Model* entity ) )
     {
         const sword::wrapper::View view( entity );
         const bool radar = view[ "perceptions/radars/radar/activated" ]
@@ -74,7 +67,7 @@ namespace
         const bool flyingShell = IsActivated( view[ "perceptions/flying-shell" ] );
         return radar || localizedRadar || flyingShell;
     }
-    DEFINE_HOOK( IsUsingSpecializedActiveRadar, bool, ( const SWORD_Model* entity, const char* radarType ) )
+    DEFINE_HOOK( IsUsingSpecializedActiveRadar, 2, bool, ( const SWORD_Model* entity, const char* radarType ) )
     {
         const sword::wrapper::View view( entity );
         const bool radar = view[ "perceptions/radars" ][ radarType ][ "activated" ];

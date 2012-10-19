@@ -25,46 +25,26 @@ namespace
     ModuleFacade* module = 0;
 }
 
-#define TRY try {
-#define CATCH( hook ) \
-    } \
-    catch( std::exception& e ) \
-    { \
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() ); \
-    } \
-    catch( ... ) \
-    { \
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception during " #hook ); \
-    }
-
-DEFINE_HOOK( GetForceRatio, double, ( const SWORD_Model* model, const SWORD_Model* entity ) )
+DEFINE_HOOK( GetForceRatio, 2, double, ( const SWORD_Model* model, const SWORD_Model* entity ) )
 {
-    TRY
-        assert( module );
-        return module->GetForceRatio( model, entity );
-    CATCH( GetForceRatio )
-    return 0;
+    assert( module );
+    return module->GetForceRatio( model, entity );
 }
-DEFINE_HOOK( GetDangerousEnemies, void, ( const SWORD_Model* model, const SWORD_Model* entity,
+DEFINE_HOOK( GetDangerousEnemies, 4, void, ( const SWORD_Model* model, const SWORD_Model* entity,
                                           void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData ) )
 {
-    TRY
-        assert( module );
-        module->GetDangerousEnemies( model, entity, visitor, userData );
-    CATCH( GetDangerousEnemies )
+    assert( module );
+    module->GetDangerousEnemies( model, entity, visitor, userData );
 }
-DEFINE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
+DEFINE_HOOK( GetAmmunitionForIndirectFire, 4, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
 {
-    if( ! type )
+    if( !type )
     {
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Invalid null type in GetAmmunitionForIndirectFire" );
         return 0;
     }
-    TRY
-        assert( module );
-        return RoleAction_IndirectFiring().GetAmmunitionForIndirectFire( *module, model, firer, type, target );
-    CATCH( GetAmmunitionForIndirectFire )
-    return 0;
+    assert( module );
+    return RoleAction_IndirectFiring().GetAmmunitionForIndirectFire( *module, model, firer, type, target );
 }
 
 // -----------------------------------------------------------------------------

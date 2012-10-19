@@ -20,25 +20,14 @@ using namespace sword::fire;
 
 namespace
 {
-    DEFINE_HOOK( InitializeDecisional, void, ( const char* xml, double tickDuration ) )
+    DEFINE_HOOK( InitializeDecisional, 2, void, ( const char* xml, double tickDuration ) )
     {
-        try
-        {
-            // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
-            xml::xistringstream xis( xml );
-            xis >> xml::start( "decisional" )
-                    >> xml::optional >> xml::start( "urban-combat" )
-                        >> xml::attribute( "hit-factor", DirectFireData::nUrbanCoefficient_ )
-                    >> xml::end;
-        }
-        catch( std::exception& e )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-        }
-        catch( ... )
-        {
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception during weapon type initialization" );
-        }
+        // $$$$ MCO : TODO : maybe we need to store configuration data in a model somehow ?
+        xml::xistringstream xis( xml );
+        xis >> xml::start( "decisional" )
+                >> xml::optional >> xml::start( "urban-combat" )
+                    >> xml::attribute( "hit-factor", DirectFireData::nUrbanCoefficient_ )
+                >> xml::end;
         if( GET_PREVIOUS_HOOK( InitializeDecisional ) )
             GET_PREVIOUS_HOOK( InitializeDecisional )( xml, tickDuration );
     }
