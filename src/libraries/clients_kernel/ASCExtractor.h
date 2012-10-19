@@ -10,8 +10,10 @@
 #ifndef kernel_ASCExtractor_h
 #define kernel_ASCExtractor_h
 
+#pragma warning( push, 0 )
 #include <gdal/gdal_priv.h>
 #include <gdal/ogrsf_frmts.h>
+#pragma warning( pop )
 #include <boost/noncopyable.hpp>
 #include <geometry/Types.h>
 #include <vector>
