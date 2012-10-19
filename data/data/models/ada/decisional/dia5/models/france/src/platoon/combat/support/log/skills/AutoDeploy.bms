@@ -1,12 +1,14 @@
-rootnode 
-{
-    connections = { skill.links.activateLogisticChains },
+rootnode {
+    connections = { skill.links.Deploy },
 
+    create = function( self )
+    end,
+    
     done = function( self )
     end,
     
     activate = function( self )
         local Activate = Activate
-        Activate( skill.links.activateLogisticChains, 0.01 )
+        Activate( skill.links.Deploy, 0.01 )
     end,
 }

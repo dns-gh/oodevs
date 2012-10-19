@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.Deploy">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Deploy">
     <parameters>
         <parameter name="objective" nullable="true">
             <type>
-                <class name="properties.Positionable"/>
+                <class name="properties.Reachable"/>
             </type>
             <default>
                 <nil/>
@@ -13,7 +13,7 @@
     <stages>
         <stage label="Prise en compte des réactions mentales" permanent="true">
             <skills>
-                <skill name="agent.skills.ActivateLogisticChains">
+                <skill name="agent.skills.Deploy">
                     <parameter name="objective">
                         <value>
                             <parameter>objective</parameter>

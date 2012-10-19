@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.EnsureIndirectFire" source-version="1.0.0">
-    <description>To deploy onto given positions in order to be ready to deliver indirect fires.</description>
-    <parameters>
-        <parameter name="firePositions" nullable="true">
-            <description>The firing positions to reach. If no positions issued, the agent deploys on its own position.</description>
-            <type>
-                <list>
-                    <class name="properties.Reaching"/>
-                </list>
-            </type>
-            <default>
-                <nil/>
-            </default>
-        </parameter>
-        <parameter name="callByFragOrder" nullable="true">
-            <type>
-                <simple name="boolean"/>
-            </type>
-            <default>
-                <boolean>false</boolean>
-            </default>
-        </parameter>
-        <parameter name="changeAutomatically" nullable="true">
-            <type>
-                <simple name="boolean"/>
-            </type>
-            <default>
-                <boolean>false</boolean>
-            </default>
-        </parameter>
-    </parameters>
-    <links>
-        <link name="deploy" skill="agent.skills.Deploy">
-            <description>To enact the decision to deploy onto one of the given positions.</description>
-        </link>
-        <link name="applyIndirectFire" skill="agent.skills.ApplyIndirectFire">
-            <description>To enact the decision to deliver fires.</description>
-        </link>
-    </links>
+	<description>Se déployer sur la position de tir, puis rejoindre la position de repli.</description>
+	<parameters>
+		<parameter name="firePositions" nullable="true">
+			<description>Les positions de tirs</description>
+			<type>
+				<list>
+					<class name="properties.Reaching"/>
+				</list>
+			</type>
+			<default>
+				<nil/>
+			</default>
+		</parameter>
+		<parameter name="callByFragOrder" nullable="true">
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>false</boolean>
+			</default>
+		</parameter>
+		<parameter name="changeAutomatically" nullable="true">
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>false</boolean>
+			</default>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Effectuer un tir de batterie</description>
+	</goal>
+	<links>
+		<link name="deploy" skill="agent.skills.Deploy"/>
+		<link name="indirectFire" skill="agent.skills.ApplyIndirectFire">
+			<description>Lien vers le skill indirectFire</description>
+		</link>
+	</links>
 </skill>

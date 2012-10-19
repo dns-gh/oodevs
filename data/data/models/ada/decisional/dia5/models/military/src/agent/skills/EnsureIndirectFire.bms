@@ -1,86 +1,103 @@
--- **************************************************************************** 
--- To ensure indirect fire onto issued 
--- self.params.objective: the goal element
--- ****************************************************************************
+-------------------------------------------------------------------------------
+-- Skill EnsureIndirectFire
+-- @author MGD
+-- @created 2010-06-02
+--
+-- This file is part of a MASA library or program.
+-- Refer to the included end-user license agreement for restrictions.
+--
+-- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+-------------------------------------------------------------------------------
+
 rootnode
 {
-    connections = { skill.links.deploy, skill.links.applyIndirectFire },
-
-    -- --------------------------------------------------------------------------------
-    -- Slots
-    -- --------------------------------------------------------------------------------
-    done = function( self, params, additionnalParams ) -- called by ApplyIndirectFire skill
-        if  additionnalParams.state == "hasFire" or
-            additionnalParams.state == "no ammo" or
-            additionnalParams.state == "forbidden ammo" or
-            additionnalParams.state == "out of range" or
-            additionnalParams.state == "impossible to fire" or
-            additionnalParams.state == "no Launcher" or
-            additionnalParams.state == "target not illuminated" then
-            self.order = nil
-            if self.params.changeAutomatically then
-                self.nextTargetIndex = self.nextTargetIndex + 1
-                if self.nextTargetIndex > #self.params.firePositions then
-                   self.nextTargetIndex = 1 -- one more time...starting from the first position.
-                end
-            end
+    connections = { skill.links.deploy, skill.links.indirectFire, skill.nodes.CR_ReceiveFireOrder,
+                    skill.nodes.CR_NotDeployedIndirectFireImpossible, skill.nodes.CR_ReadyToFire };
+   
+    feedbacks = { "done" };
+   
+    done = function( self, params, additionnalParams )
+        if additionnalParams.state == "hasFire" or
+           additionnalParams.state == "no ammo" or
+           additionnalParams.state == "forbidden ammo" or
+           additionnalParams.state == "out of range" or
+           additionnalParams.state == "impossible to fire" or
+           additionnalParams.state == "no Launcher" or
+           additionnalParams.state == "target not illuminated" then
+              self.order = nil
+              if self.params.changeAutomatically then
+                  self.nextTargetIndex = self.nextTargetIndex + 1
+                  if self.nextTargetIndex > #self.params.firePositions then
+                     self.nextTargetIndex = 1
+                  end
+              end
         end
     end,
-    -- --------------------------------------------------------------------------------
-    -- Init
-    -- --------------------------------------------------------------------------------
+    
     create = function( self )
         self.order = nil
         self.positions = {}
         self.nextTargetIndex = 1
         self.waitOrder = false
     end,
-
-    -- --------------------------------------------------------------------------------
-    -- Move to firing position, and then deploy on it, toget ready to apply fire.
-    -- --------------------------------------------------------------------------------
+    
     activate = function( self )
-        local Activate = Activate -- lua optim
-
-        -- The agent deploys on its own position.
+        local Activate = Activate
+        
         if self.params.firePositions == NIL then
-            self.waitOrder = true -- wait order to go to next position.
+            self.waitOrder = true
         end
-
-        -- Deploy on next position
         if self.nextTargetIndex <= #self.params.firePositions then
             self.waitOrder = true
             Activate( skill.links.deploy, 1, { objective = self.params.firePositions[ self.nextTargetIndex ] } )
-        end
-
-        -- Ready to apply fires
+        end        
+        
         if self.waitOrder then
             if not self.order then
-                self.order = integration.query.getFirstFireOrder() -- $$$ MIA TODO faire une query réutilisable.
+                self.order = integration.query.getFirstFireOrder()
             end
-            if meKnowledge:isDeployed() then
-                integration.sendfireAvailable( true ) -- agent is OK to deliver fire
-                meKnowledge:RC( eRC_PretPourConduiteTir )
+            if meKnowledge:isDeployed() then --or self.params.canReceiveUnexpectedOrder then
+                integration.sendfireAvailable(true)
+                Activate( skill.nodes.CR_ReadyToFire, 1 )
                 if self.params.callByFragOrder then
                       Feedback( self.feedbacks.done )
                 end
                 if self.order then
-                    meKnowledge:RC( eRC_ReceptionOrdreDeFeu )
-                    Activate( skill.links.applyIndirectFire, 1, self.order )
+                    Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
+                    Activate( skill.links.indirectFire, 1, self.order )
                 end
             else
-                integration.sendfireAvailable( false ) -- cannot deliver fire, the agent is not deployed.
+                integration.sendfireAvailable(false)
                 if self.order then
-                    meKnowledge:RC( eRC_NotDeployedIndirectFireImpossible )
+                  Activate( skill.nodes.CR_NotDeployedIndirectFireImpossible, 1 )
                 end
             end
         end
     end,
-
-    -- --------------------------------------------------------------------------------
-    -- Instance destruction, notify that the agent cannot deliver fire.
-    -- --------------------------------------------------------------------------------
+  
     destroy = function( self )
-        integration.sendfireAvailable( false )
+      integration.sendfireAvailable(false)
+    end
+}
+
+node "CR_ReceiveFireOrder"
+{ 
+    create = function( self )
+        meKnowledge:RC( eRC_ReceptionOrdreDeFeu )
+    end
+}
+
+node "CR_ReadyToFire"
+{ 
+    create = function( self )
+        meKnowledge:RC( eRC_PretPourConduiteTir )
+    end
+}
+
+
+node "CR_NotDeployedIndirectFireImpossible"
+{
+    create = function( self )
+        meKnowledge:RC( eRC_NotDeployedIndirectFireImpossible )
     end
 }

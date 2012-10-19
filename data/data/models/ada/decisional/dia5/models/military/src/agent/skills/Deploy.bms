@@ -4,29 +4,30 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.links.moveToward, skill.links.dismount, skill.links.deploy },
-    feedbacks   = { "deployed" },
+    connections = { skill.links.moveToward, skill.links.dismount, skill.nodes.Deploy },
 
     -- -------------------------------------------------------------------------------- 
-    -- Slots
+    -- Feedbacks
+    -- 'deployed' function is called if "meKnowledge" has been deployed
     -- --------------------------------------------------------------------------------
     deployed = function( self )
         Feedback( self.feedbacks.done )
-        Feedback( self.feedbacks.deployed )
-    end,
-    done = function( self ) -- called by MoveToward skill
-        self.isArrived = true
     end,
 
     -- -------------------------------------------------------------------------------- 
-    -- Init
+    -- Feedbacks
+    -- 'done' function is called if objective is reached
     -- --------------------------------------------------------------------------------
+    done = function( self ) -- from MoveToward
+        self.isArrived = true
+    end,
+
     create = function( self )
         self.isArrived = false
         if self.params.objective == NIL then
-            self.objective = meKnowledge:getMyPosition() -- deploy on self position
+            self.objective = meKnowledge:getMyPosition()
         else
-            self.objective = self.params.objective -- a position has been issued.
+            self.objective = self.params.objective
         end
     end,
 
@@ -36,10 +37,26 @@ rootnode
     activate = function( self )
         local Activate = Activate
         if self.isArrived then
-            Activate( skill.links.dismount, 1, {} )
-            Activate( skill.links.deploy, 1, {} )
+            Activate( skill.links.dismount, 1 )
+            Activate( skill.nodes.Deploy, 1 )
         end
         Activate( skill.links.moveToward, 1, { entities = { self.objective } } )
         self.isArrived = false
-    end
+    end,
+}
+
+-- **************************************************************************** 
+-- Simple action that activate deploy on objective
+-- ****************************************************************************
+node "Deploy"
+{
+    feedbacks = { "deployed" },
+
+    select = function( self )
+        meKnowledge:deploy()
+        if meKnowledge:isDeployed() then
+            meKnowledge:activateFunctions()
+            Feedback( self.feedbacks.deployed )
+        end
+    end,
 }

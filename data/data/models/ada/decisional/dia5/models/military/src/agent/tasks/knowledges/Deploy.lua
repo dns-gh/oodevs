@@ -6,6 +6,6 @@ local result =
 }
 
 local t = initTaskKnowledge( result )
-taskKnowledge[ "platoon.tasks.knowledges.Deploy" ] = t
+taskKnowledge["agent.tasks.knowledges.Deploy"] = t
 
 return result

@@ -434,7 +434,7 @@ integration.desactivateInjuredSorting = function( self )
     DEC_Sante_DesactiverFonctionTri()
 end
 
-integration.activateLogisticChains = function( self )
+integration.activateFunctions = function( self )
     if integration.isLogisticTypeUnit( ) then
         DEC_Sante_ActiverChaine()
         DEC_Maintenance_ActiverChaine()
@@ -442,7 +442,7 @@ integration.activateLogisticChains = function( self )
     end
 end
 
-integration.desactivateLogisticChains = function( self )
+integration.desactivateFunctions = function( self )
     if integration.isLogisticTypeUnit( ) then
         DEC_Sante_DesactiverChaine()
         DEC_Maintenance_DesactiverChaine()

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.log.skills.AutoDeploy" source-version="1.0.0">
+    <parameters/>
+    <modifiers/>
     <links>
-        <link name="activateLogisticChains" skill="agent.skills.ActivateLogisticChains"/>
+        <link name="Deploy" skill="agent.skills.Deploy"/>
     </links>
+    <resources/>
 </skill>

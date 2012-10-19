@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.knowledges.Deploy" source-version="1.0.0" extends="agent.tasks.knowledges.PlatoonTask">
+  <methods>
+    <method name="fillParameters" abstract="false">
+      <argument name="companyTask">
+        <description>La tâche automate</description>
+        <type>
+          <class name="properties.Commandable"/>
+        </type>
+      </argument>
+      <argument name="objective">
+        <description>L'objectif de la tâche automate</description>
+        <type>
+          <class name="directia.core.Object"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <class name="directia.core.Object"/>
+        </type>
+      </return>
+    </method>
+  </methods>
+</class>

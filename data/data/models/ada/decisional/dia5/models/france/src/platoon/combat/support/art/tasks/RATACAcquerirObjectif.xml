@@ -8,7 +8,7 @@
         </parameter>
         <parameter name="position">
             <type>
-                <class name="properties.Positionable"/>
+                <class name="properties.Reachable"/>
             </type>
         </parameter>
     </parameters>

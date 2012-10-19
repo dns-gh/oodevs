@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.log.tasks.Reparer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Deploy">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.Deploy" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Deploy">
     <parameters>
         <parameter name="objective" nullable="true">
+            <description>Objective that will be used to deploy the unit</description>
             <type>
                 <class name="properties.Reachable"/>
             </type>
@@ -11,7 +12,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Réparations" permanent="true">
+        <stage label="Deploiement" permanent="true">
             <skills>
                 <skill name="agent.skills.Deploy">
                     <parameter name="objective">

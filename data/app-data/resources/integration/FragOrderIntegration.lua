@@ -634,10 +634,6 @@ integration.startFragOrderTask = function( self )
         integration.cleanFragOrder( self )
         return
     elseif orderType == "platoon.combat.support.art.tasks.AppliquerFeux" then
-                -- $$$ Managed within the skill
-        return
-    elseif orderType == "Rep_OrderConduite_Pion_AppliquerFeux" then
-                -- $$$ Managed within the skill (agent.skills.EnsureIndirectFire)
         return
     elseif orderType == "Rep_OrderConduite_Decrocher" then
         return
