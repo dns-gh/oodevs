@@ -19,7 +19,9 @@
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#pragma warning( push, 0 )
 #include <gdal/ogrsf_frmts.h>
+#pragma warning( pop )
 
 using namespace gui;
 
@@ -85,7 +87,7 @@ ObjectPrototypeShapeFileLoader::~ObjectPrototypeShapeFileLoader()
 // Name: ObjectPrototypeShapeFileLoader::CanLoadLayer
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
-bool ObjectPrototypeShapeFileLoader::CanLoadLayer( OGRLayer& layer, const kernel::ObjectType& objectType, QString& unloadableExplanation )
+bool ObjectPrototypeShapeFileLoader::CanLoadLayer( OGRLayer& layer, const kernel::ObjectType&, QString& unloadableExplanation )
 {
     if( !layer.GetSpatialRef() )
     {
