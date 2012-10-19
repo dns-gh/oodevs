@@ -12,6 +12,8 @@
 
 #include <boost/noncopyable.hpp>
 #include "InfoPanel_ABC.h"
+#include "ValuedComboBox.h"
+#include "clients_kernel/Types.h"
 
 namespace weather
 {
@@ -85,22 +87,23 @@ private slots:
 protected:
     //! @name Member data
     //@{
-    WeatherLayer&           layer_;
-    E_WeatherType           currentType_;
+    WeatherLayer& layer_;
+    E_WeatherType currentType_;
 
-    Q3VBox*                 headerLayout_;
-    Q3VBox*                 localLayout_;
-    Q3VBox*                 globalLayout_;
-    Q3GroupBox*             parametersGroup_;
-    QPushButton*            locationButton_;
-    WeatherListView*        localWeathers_;
-    WeatherWidget*          localWidget_;
-    WeatherWidget*          globalWidget_;
+    Q3VBox* headerLayout_;
+    Q3VBox* localLayout_;
+    Q3VBox* globalLayout_;
+    Q3GroupBox* parametersGroup_;
+    QPushButton* locationButton_;
+    WeatherListView* localWeathers_;
+    WeatherWidget* localWidget_;
+    WeatherWidget* globalWidget_;
 
-    weather::MeteoLocal*    selectedLocal_;
-    QDateTimeEdit*          startTime_;
-    QDateTimeEdit*          endTime_;
-    Q3Button*               positionBtn_;
+    weather::MeteoLocal* selectedLocal_;
+    gui::ValuedComboBox< E_LightingType >* lighting_;
+    QDateTimeEdit* startTime_;
+    QDateTimeEdit* endTime_;
+    Q3Button* positionBtn_;
     //@}
 
 };

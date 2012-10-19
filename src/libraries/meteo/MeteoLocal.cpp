@@ -71,11 +71,15 @@ MeteoLocal::MeteoLocal( xml::xistream& xis, const kernel::CoordinateConverter_AB
     , converter_( &converter )
     , created_  ( false )
 {
-    std::string topLeft, bottomRight, startTime, endTime ;
+    std::string topLeft, bottomRight, startTime, endTime, lighting ;
     xis >> xml::attribute( "start-time", startTime )
         >> xml::attribute( "end-time", endTime )
         >> xml::attribute( "top-left", topLeft )
-        >> xml::attribute( "bottom-right", bottomRight );
+        >> xml::attribute( "bottom-right", bottomRight )
+        >> xml::optional >> xml::attribute( "lighting", lighting ); // $$$$ ABR 2012-10-19: Remove optional on the next version
+    const weather::PHY_Lighting* pLighting = weather::PHY_Lighting::FindLighting( lighting );
+    if( pLighting )
+        pLighting_ = pLighting;
     topLeft_ = converter_->ConvertToXY( topLeft );
     bottomRight_ = converter_->ConvertToXY( bottomRight );
     startTime_ = MakeDate( startTime );
@@ -126,13 +130,14 @@ MeteoLocal::~MeteoLocal()
 // -----------------------------------------------------------------------------
 void MeteoLocal::Serialize( xml::xostream& xos ) const
 {
-    assert( converter_ );
+    assert( converter_ && pLighting_ );
     const QString start = ( startTime_.isValid() ? startTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
     const QString end   = ( endTime_.isValid() ? endTime_ : QDateTime() ).toString( "yyyyMMddThhmmss" );
     xos << xml::attribute( "start-time", start.isNull() ? "19700101Thhmmss" : start.toAscii().constData() )
         << xml::attribute( "end-time", end.isNull() ? "19700101Thhmmss" : end.toAscii().constData() )
         << xml::attribute( "top-left", converter_->ConvertToMgrs( topLeft_ ) )
-        << xml::attribute( "bottom-right"  , converter_->ConvertToMgrs( bottomRight_ ) );
+        << xml::attribute( "bottom-right"  , converter_->ConvertToMgrs( bottomRight_ ) )
+        << xml::attribute( "lighting", pLighting_->GetName() );
     Meteo::Serialize( xos );
 }
 

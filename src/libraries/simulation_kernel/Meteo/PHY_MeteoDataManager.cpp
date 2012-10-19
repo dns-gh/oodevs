@@ -101,7 +101,6 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
     pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
-    pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
     xis >> xml::end;
 }
 
@@ -143,7 +142,7 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg, uns
     else if( msg.type() == sword::local_weather )
     {
         unsigned int id = 0;
-        if( msg.parameters().elem_size() == 11 )
+        if( msg.parameters().elem_size() == 11 || msg.parameters().elem_size() == 12 ) // $$$$ ABR 2012-10-19: Lighting added in last position
         {
             const sword::MissionParameter& idParameter = msg.parameters().elem( 10 );
             if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
@@ -281,9 +280,7 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     if( pEphemeride_->UpdateNight( date ) )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "Ephemeris is now: %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
-        pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
-        for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
-            ( *it )->Update( pEphemeride_->GetLightingBase() );
+        pGlobalMeteo_->SetLighting( pEphemeride_->GetLightingBase() );
     }
     pGlobalMeteo_->UpdateMeteoPatch( date, *pRawData_, boost::shared_ptr< weather::Meteo >() );
     for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )

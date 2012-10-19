@@ -1922,6 +1922,10 @@ Voulez-vous le supprimer?</translation>
         <source>Set location</source>
         <translation>Définir la localisation</translation>
     </message>
+    <message>
+        <source>Lighting:</source>
+        <translation>Eclairage:</translation>
+    </message>
 </context>
 <context>
     <name>gui::WeatherWidget</name>

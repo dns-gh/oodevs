@@ -95,7 +95,6 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
         xis.error( "Unknown Precipitation type '" + strVal + "'" );
 
     wind_.rSpeed_ *= conversionFactor_;
-    Update( *pLighting_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +123,6 @@ Meteo::Meteo( unsigned int id, const sword::MissionParameters& msg, const PHY_Li
     , temperature_     ( 20 )
 {
     Update( msg );
-    Update( light );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,16 +263,6 @@ void Meteo::Update( const sword::MissionParameters& msg )
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (sword::WeatherAttributes::EnumPrecipitationType ) precipitation.value().Get(0).enumeration() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: Meteo::Update
-// Created: JVT 03-08-07
-//-----------------------------------------------------------------------------
-void Meteo::Update( const PHY_Lighting& light )
-{
-    pLighting_ = &light.GetDegradedLighting( (unsigned int)( cloud_.rDensity_ * ( cloud_.nCeiling_ - cloud_.nFloor_ ) / 2000 ) );
-    modified_ = true;
 }
 
 // -----------------------------------------------------------------------------

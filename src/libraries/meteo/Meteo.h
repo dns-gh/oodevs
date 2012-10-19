@@ -66,6 +66,7 @@ public:
         MT_Vector2D  vDirection_;
         sWindData() : rSpeed_( 0.), eAngle_( 0 ) {}
     };
+    // Useless now, to remove, but still in protobuf
     struct sCloudData
     {
         int          nFloor_;
@@ -125,7 +126,6 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void Update( const sword::WeatherAttributes& msg );
     virtual void Update( const sword::MissionParameters& asn );
-    virtual void Update( const PHY_Lighting& lighting );
     virtual void Update( const PHY_Precipitation& precipitation);
     virtual void Update( const Meteo& );
     virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< Meteo > meteo );

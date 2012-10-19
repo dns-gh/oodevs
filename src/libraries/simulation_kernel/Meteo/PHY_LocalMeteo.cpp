@@ -48,15 +48,19 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weath
     , startTime_ ( 0 )
     , endTime_   ( 0 )
 {
-    std::string strStartTime, strEndTime, strTopLeftPos, strTopRightPos;
+    std::string strStartTime, strEndTime, strTopLeftPos, strTopRightPos, lighting;
     xis >> xml::attribute( "start-time", strStartTime )
         >> xml::attribute( "end-time", strEndTime )
         >> xml::attribute( "top-left", strTopLeftPos )
-        >> xml::attribute( "bottom-right", strTopRightPos );
+        >> xml::attribute( "bottom-right", strTopRightPos )
+        >> xml::optional >> xml::attribute( "lighting", lighting ); // $$$$ ABR 2012-10-19: Remove optional on the next version
     MIL_Tools::ConvertCoordMosToSim( strTopLeftPos, upLeft_ );
     MIL_Tools::ConvertCoordMosToSim( strTopRightPos, downRight_ );
     startTime_ = ( bpt::from_iso_string( strStartTime ) - bpt::from_time_t( 0 ) ).total_seconds();
     endTime_ = ( bpt::from_iso_string( strEndTime ) - bpt::from_time_t( 0 ) ).total_seconds();
+    pLighting_ = weather::PHY_Lighting::FindLighting( lighting );
+    if( !pLighting_ )
+        pLighting_ = &light;
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +115,8 @@ void PHY_LocalMeteo::Serialize( xml::xostream& xos ) const
     xos << xml::attribute( "start-time", start )
         << xml::attribute( "end-time", end )
         << xml::attribute( "top-left", coordUpLeft )
-        << xml::attribute( "bottom-right", coordDownRight );
+        << xml::attribute( "bottom-right", coordDownRight )
+        << xml::attribute( "lighting", pLighting_->GetName() );
     Meteo::Serialize( xos );
 }
 
@@ -157,6 +162,15 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg, bool isCr
     }
     else
         throw std::exception( "Meteo : bad attribute for Location" );
+    if( msg.elem_size() == 12 ) // $$$$ ABR 2012-10-19: Lighting
+    {
+        const sword::MissionParameter& lighting = msg.elem( 11 );
+        if( lighting.null_value() || !lighting.value().Get(0).has_enumeration() )
+            throw std::exception( "Meteo : bad attribute for lighting" );
+        const weather::PHY_Lighting* pLighting = weather::PHY_Lighting::FindLighting( (sword::WeatherAttributes::EnumLightingType ) lighting.value().Get(0).enumeration() );
+        if( pLighting )
+            pLighting_ = pLighting;
+    }
 }
 
 // -----------------------------------------------------------------------------

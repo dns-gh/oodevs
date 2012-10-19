@@ -227,6 +227,18 @@ void MagicActionType::Initialize()
             CreateOrderParameter( "EndTime", "datetime" );
             CreateOrderParameter( "Location", "location" );
             CreateOrderParameter( "ID", "identifier" );
+
+            OrderParameter* lighting = CreateOrderParameter( "Lighting", "enumeration" );
+            lighting->AddValue( 0, "JourSansNuage"          );
+            lighting->AddValue( 1, "JourPeuNuageux"         );
+            lighting->AddValue( 2, "JourMoyennementNuageux" );
+            lighting->AddValue( 3, "JourAssezNuageux"       );
+            lighting->AddValue( 4, "JourTresNuageux"        );
+            lighting->AddValue( 5, "NuitPleineLune"         );
+            lighting->AddValue( 6, "NuitTroisQuartDeLune"   );
+            lighting->AddValue( 7, "NuitDemiLune"           );
+            lighting->AddValue( 8, "NuitQuartDeLune"        );
+            lighting->AddValue( 9, "NuitNouvelleLune"       );
         }
     }
     else if( name == "local_weather_destruction" )

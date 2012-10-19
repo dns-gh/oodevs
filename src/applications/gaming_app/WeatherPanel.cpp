@@ -19,6 +19,7 @@
 #include "actions/Location.h"
 #include "actions/MagicAction.h"
 #include "actions/Identifier.h"
+#include "actions/Enumeration.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
@@ -135,6 +136,7 @@ void WeatherPanel::Commit()
                     rectangle.AddPoint( local->GetTopLeft() );
                     action->AddParameter( *new actions::parameters::Location( it.NextElement(), model_.coordinateConverter_, rectangle ) );
                     action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), ( local->IsCreated() ) ? 0 : local->GetId() ) );
+                    action->AddParameter( *new actions::parameters::Enumeration( it.NextElement(), lighting_->GetValue() ) );
 
                     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
                     action->RegisterAndPublish( actionsModel_ );

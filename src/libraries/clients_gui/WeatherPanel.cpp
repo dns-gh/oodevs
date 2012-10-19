@@ -19,6 +19,8 @@
 #include "WeatherWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "meteo/MeteoLocal.h"
+#include "meteo/PHY_Lighting.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace gui;
 
@@ -32,6 +34,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer
     , selectedLocal_( 0 )
     , currentType_  ( eWeatherGlobal )
     , localWeathers_( 0 )
+    , lighting_     ( 0 )
     , startTime_    ( 0 )
     , endTime_      ( 0 )
 {
@@ -93,6 +96,13 @@ WeatherPanel::~WeatherPanel()
 // -----------------------------------------------------------------------------
 void WeatherPanel::CreateLocalParameters()
 {
+    // Lighting added to common parameters
+    new QLabel( tr( "Lighting:" ), localWidget_ );
+    lighting_ = new gui::ValuedComboBox< E_LightingType >( localWidget_ );
+    for( int i = 0; i < static_cast< int >( eLightingType_Eclairant ); ++i )
+        lighting_->AddItem( ENT_Tr::ConvertFromLightingType( static_cast< E_LightingType >( i ), ENT_Tr::eToTr ), static_cast< E_LightingType >( i ) );
+
+    // Time
     parametersGroup_ = new Q3GroupBox( 2, Qt::Horizontal, tr( "Time and position parameters" ), localLayout_ );
     localLayout_->setMinimumHeight( 350 );
     new QLabel( tr( "Start time:" ), parametersGroup_ );
@@ -152,6 +162,9 @@ void WeatherPanel::CommitLocalWeather()
         localWidget_->CommitTo( *selectedLocal_ );
         if( selectedLocal_->IsCreated() )
             selectedLocal_->SetPeriod( startTime_->dateTime(), endTime_->dateTime() );
+        const weather::PHY_Lighting* lighting = weather::PHY_Lighting::FindLighting( ENT_Tr::ConvertFromLightingType( lighting_->GetValue() ) );
+        if( lighting )
+            selectedLocal_->SetLighting( *lighting );
     }
 }
 
@@ -168,6 +181,10 @@ void WeatherPanel::LocalSelectionChanged()
         localWidget_->Update( *selected );
         startTime_->setDateTime( selected->GetStartTime() );
         endTime_->setDateTime( selected->GetEndTime() );
+        //const std::string tmp = selected->GetLighting().GetName();
+        const E_LightingType& lighting = ENT_Tr::ConvertToLightingType( selected->GetLighting().GetName() );
+        assert( lighting >= eLightingType_JourSansNuage && lighting < eLightingType_Eclairant );
+        lighting_->SetCurrentItem( lighting );
         layer_.SetPosition( *selected );
     }
     else

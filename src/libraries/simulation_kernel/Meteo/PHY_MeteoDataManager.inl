@@ -33,6 +33,5 @@ const PHY_Ephemeride& PHY_MeteoDataManager::GetEphemeride() const
 inline
 void PHY_MeteoDataManager::AddMeteo( weather::Meteo& meteo )
 {
-    meteo.Update( pEphemeride_->GetLightingBase() );
     meteos_.push_back( boost::shared_ptr< weather::Meteo >( &meteo ) );
 }

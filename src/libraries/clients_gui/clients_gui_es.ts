@@ -1921,6 +1921,10 @@ Voulez-vous le supprimer?</translation>
         <source>Time and position parameters</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lighting:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::WeatherWidget</name>
