@@ -3377,30 +3377,6 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="150" type="mined area (linear)">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="0.3"/>
-            <distance-modifier type="MouvementDiscret" value="0.3"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="150" type="mined area (scattered)">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="0.3"/>
-            <distance-modifier type="MouvementDiscret" value="0.3"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="150" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -6217,30 +6193,6 @@
         </distance-modifiers>
       </unit-detection>
       <object-detection>
-        <object detection-distance="150" type="mined area (linear)">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
-        <object detection-distance="150" type="mined area (scattered)">
-          <population-modifier density="2" modifier="0.5"/>
-          <source-posture-modifiers>
-            <distance-modifier type="Mouvement" value="1"/>
-            <distance-modifier type="MouvementDiscret" value="1"/>
-            <distance-modifier type="Arret" value="1"/>
-            <distance-modifier type="PosteReflexe" value="1"/>
-            <distance-modifier type="Poste" value="1"/>
-            <distance-modifier type="PosteAmenage" value="1"/>
-            <distance-modifier type="PostePrepareGenie" value="1"/>
-          </source-posture-modifiers>
-        </object>
         <object detection-distance="150" type="anti tank obstacle">
           <population-modifier density="2" modifier="0.5"/>
           <source-posture-modifiers>
@@ -7579,4 +7531,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="3197844817" -->
+<!-- signature="1785800201" -->
