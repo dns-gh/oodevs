@@ -79,7 +79,7 @@ rootnode
       end
       if #self.entities ~= 0 and self.movementDone then -- arrived on a position to engage enemies
           for _,  element in pairs( self.entities ) do
-              local porteeMax = DEC_Tir_PorteeMaxPourTirer( 0.7 )
+              local porteeMax = DEC_Tir_PorteeMaxPourTirer( 0.5 )
               if element:canNeutralizeIt() and integration.distance( meKnowledge, element ) < porteeMax then
                   Activate( skill.nodes.Shoot, element:destructionPriority(), { entity = element } )
               end
