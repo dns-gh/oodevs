@@ -82,7 +82,8 @@ integration.query.getFirstFireOrder = function( )
     local DEC_RemoveFromOrdersCategory = DEC_RemoveFromOrdersCategory
     local DEC_DeleteRepresentation = DEC_DeleteRepresentation
     for _,x in pairs( ordres_recus or emptyTable ) do
-        if x:GetType() == "platoon.combat.support.art.tasks.AppliquerFeux" then
+        if x:GetType() == "platoon.combat.support.art.tasks.AppliquerFeux" 
+           or "Rep_OrderConduite_Pion_AppliquerFeux" then
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
             DEC_RemoveFromOrdersCategory( x )
             DEC_DeleteRepresentation( x )

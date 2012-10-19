@@ -1118,8 +1118,8 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
         <method name="sortInjured">
             <description>Action qui corespond a fai de tirer les blesses</description>
         </method>
-        <method name="activateFunctions">
-            <description>Activation des fonctions spécifiques à l'unité (après déploiement)</description>
+        <method name="activateLogisticChains">
+            <description>To activate logistic chains.</description>
         </method>
         <method name="activateSensors">
             <description>Activation des senseurs pour un pion RENS</description>

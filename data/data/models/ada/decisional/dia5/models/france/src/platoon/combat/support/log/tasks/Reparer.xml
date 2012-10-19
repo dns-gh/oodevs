@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.log.tasks.Reparer" source-version="1.0.0" knowledge-class="agent.tasks.knowledges.Deploy">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.log.tasks.Reparer" source-version="1.0.0" knowledge-class="platoon.tasks.knowledges.Deploy">
     <parameters>
         <parameter name="objective" nullable="true">
             <type>
-                <class name="properties.Reachable"/>
+                <class name="properties.Positionable"/>
             </type>
             <default>
                 <nil/>
@@ -13,7 +13,7 @@
     <stages>
         <stage label="Réparations" permanent="true">
             <skills>
-                <skill name="agent.skills.Deploy">
+                <skill name="agent.skills.ActivateLogisticChains">
                     <parameter name="objective">
                         <value>
                             <parameter>objective</parameter>

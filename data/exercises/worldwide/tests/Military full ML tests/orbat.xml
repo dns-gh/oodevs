@@ -343,6 +343,21 @@
             <unit command-post="false" id="1222" name="ART.Mortar reconnaissance platoon" position="29TNF3081648626" type="ART.Mortar reconnaissance platoon"/>
             <unit command-post="false" id="1223" name="ART.Mortar reconnaissance platoon" position="29TNF3081748426" type="ART.Mortar reconnaissance platoon"/>
           </automat>
+          <automat engaged="false" id="1260" knowledge-group="321" name="ART.MLRS firing battery" symbol="symbols/sfgpucf" type="ART.MLRS firing battery">
+            <unit command-post="true" id="1261" name="ART.Battery CP" position="29TNF3054547794" type="ART.Battery CP"/>
+            <unit command-post="false" id="1262" name="ART.MLRS firing platoon" position="29TNF3076147865" type="ART.MLRS firing platoon"/>
+            <unit command-post="false" id="1263" name="ART.MLRS firing platoon" position="29TNF3054547694" type="ART.MLRS firing platoon"/>
+          </automat>
+          <automat engaged="false" id="1264" knowledge-group="321" name="ART.Artillery firing battery" symbol="symbols/sfgpucfhe" type="ART.Artillery firing battery">
+            <unit command-post="true" id="1265" name="ART.Battery CP" position="29TNF3045548173" type="ART.Battery CP"/>
+            <unit command-post="false" id="1266" name="ART.Artillery firing platoon" position="29TNF3045448273" type="ART.Artillery firing platoon"/>
+            <unit command-post="false" id="1267" name="ART.Artillery firing platoon" position="29TNF3045548073" type="ART.Artillery firing platoon"/>
+          </automat>
+          <automat engaged="false" id="1268" knowledge-group="321" name="ART.Mortar firing battery" symbol="symbols/sfgpucfm" type="ART.Mortar firing battery">
+            <unit command-post="true" id="1269" name="ART.Battery CP" position="29TNF3075047644" type="ART.Battery CP"/>
+            <unit command-post="false" id="1270" name="ART.Mortar firing platoon" position="29TNF3075047744" type="ART.Mortar firing platoon"/>
+            <unit command-post="false" id="1271" name="ART.Mortar firing platoon" position="29TNF3075047544" type="ART.Mortar firing platoon"/>
+          </automat>
           <lima name="Phase line 372">
             <point>29TNF3257758436</point>
             <point>29TNF3451257933</point>
@@ -928,4 +943,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2640920256" -->
+<!-- signature="3953925429" -->
