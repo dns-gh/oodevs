@@ -11,7 +11,6 @@
 #include "PathPointAdapter.h"
 #include "Hook.h"
 #include "Decision/DEC_PathPoint.h"
-#include <core/Facade.h>
 
 using namespace sword;
 
@@ -22,21 +21,6 @@ DECLARE_HOOK( GetPathPos, const MT_Vector2D*, ( const boost::shared_ptr< sword::
 DECLARE_HOOK( GetPathTypeLimaPoint, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
 DECLARE_HOOK( GetPathTypePoint, int, ( const boost::shared_ptr< sword::movement::PathPoint >& pPoint ) )
 DECLARE_HOOK( RemovePathPoint, void, ( unsigned int entity, const boost::shared_ptr< sword::movement::PathPoint >& point ) )
-
-//-----------------------------------------------------------------------------
-// Name: PathPointAdapter::Initialize
-// Created: BAX 2012-02-21
-//-----------------------------------------------------------------------------
-void PathPointAdapter::Initialize( core::Facade& facade )
-{
-    USE_HOOK( GetPathDestPoint, facade );
-    USE_HOOK( GetPathDIAType, facade );
-    USE_HOOK( GetPathLimaPoint, facade );
-    USE_HOOK( GetPathPos, facade );
-    USE_HOOK( GetPathTypeLimaPoint, facade );
-    USE_HOOK( GetPathTypePoint, facade );
-    USE_HOOK( RemovePathPoint, facade );
-}
 
 //-----------------------------------------------------------------------------
 // Name: PathPointAdapter constructor

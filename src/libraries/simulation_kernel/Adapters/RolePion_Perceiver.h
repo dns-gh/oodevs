@@ -44,11 +44,6 @@ class RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                          , public network::VisionConeNotificationHandler_ABC
 {
 public:
-    //! @name Static Initializer
-    //@{
-    static void Initialize( core::Facade& facade );
-    //@}
-
     //! @name Constructors/Destructor
     //@{
              RolePion_Perceiver( Sink& sink, const core::Model& model, MIL_Agent_ABC& pion, core::Model& entity );

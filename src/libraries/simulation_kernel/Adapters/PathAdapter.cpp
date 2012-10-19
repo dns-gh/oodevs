@@ -36,7 +36,6 @@
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Urban/MIL_UrbanCache.h"
-#include <core/Facade.h>
 #include <core/Convert.h>
 
 using namespace sword;
@@ -90,35 +89,6 @@ DEFINE_HOOK( GetPopulationsCost, double, ( const SWORD_Model* entity, const boos
 DEFINE_HOOK( GetAltitudeCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetAltitudeCost( from, to, rAltitudeCostPerMeter );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PathAdapter::Initialize
-// Created: BAX 2012-02-21
-// -----------------------------------------------------------------------------
-void PathAdapter::Initialize( core::Facade& facade )
-{
-    REGISTER_HOOK( GetAltitudeCost, facade );
-    REGISTER_HOOK( GetEnemiesCost, facade );
-    REGISTER_HOOK( GetFuseauxCost, facade );
-    REGISTER_HOOK( GetObjectsCost, facade );
-    REGISTER_HOOK( GetPopulationsCost, facade );
-    REGISTER_HOOK( GetUrbanBlockCost, facade );
-    USE_HOOK( CleanPathAfterComputation, facade );
-    USE_HOOK( ExecutePathfind, facade );
-    USE_HOOK( PathGetLength, facade );
-    USE_HOOK( PathGetState, facade );
-    USE_HOOK( AvoidEnemies, facade );
-    USE_HOOK( GetEnemyCostAtSecurityRange, facade );
-    USE_HOOK( GetEnemyCostOnContact, facade );
-    USE_HOOK( AvoidObjects, facade );
-    USE_HOOK( GetFirstPoint, facade );
-    USE_HOOK( GetObjectCost, facade );
-    USE_HOOK( GetThreshold, facade );
-    USE_HOOK( HandlePopulations, facade );
-    USE_HOOK( GetPopulationAttitudeCost, facade );
-    USE_HOOK( GetPopulationSecurityRange, facade );
-    USE_HOOK( GetCostOutsideOfPopulation, facade );
 }
 
 namespace

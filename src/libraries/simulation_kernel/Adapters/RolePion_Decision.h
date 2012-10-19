@@ -14,7 +14,6 @@
 
 namespace core
 {
-    class Facade;
     class Model;
 }
 
@@ -31,11 +30,6 @@ namespace sword
 class RolePion_Decision : public DEC_RolePion_Decision
 {
 public:
-    //! @name Static Initializer
-    //@{
-    static void Initialize( core::Facade& facade );
-    //@}
-
     //! @name Constructors/Destructor
     //@{
              RolePion_Decision( MIL_AgentPion& pion, const core::Model& model, unsigned int gcPause, unsigned int gcMult, Sink& sink );

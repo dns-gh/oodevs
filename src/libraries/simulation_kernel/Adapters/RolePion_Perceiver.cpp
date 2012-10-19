@@ -152,18 +152,6 @@ DECLARE_HOOK( ComputeKnowledgeObjectPerception, size_t, ( const SWORD_Model* mod
 DECLARE_HOOK( GetPerceptionId, int, () )
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::Initialize
-// Created: SLI 2012-07-05
-// -----------------------------------------------------------------------------
-void RolePion_Perceiver::Initialize( core::Facade& facade )
-{
-    USE_HOOK( IsUsingActiveRadar, facade );
-    USE_HOOK( IsUsingSpecializedActiveRadar, facade );
-    USE_HOOK( ComputeKnowledgeObjectPerception, facade );
-    USE_HOOK( GetPerceptionId, facade );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver constructor
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------

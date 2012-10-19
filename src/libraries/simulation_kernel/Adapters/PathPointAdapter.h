@@ -15,11 +15,6 @@
 
 class MT_Vector2D;
 
-namespace core
-{
-    class Facade;
-}
-
 namespace sword
 {
 namespace movement
@@ -35,11 +30,6 @@ namespace movement
 class PathPointAdapter : boost::noncopyable
 {
 public:
-    //! @name Static Initializer
-    //@{
-    static void Initialize( core::Facade& facade );
-    //@}
-
     //! @name Constructor/Destructor
     //@{
              PathPointAdapter( unsigned int entity, boost::shared_ptr< movement::PathPoint > point );

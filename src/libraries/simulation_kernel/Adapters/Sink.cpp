@@ -126,7 +126,6 @@ namespace
     DECLARE_HOOK( InitializeDotations, void, ( const char* xml ) )
     DECLARE_HOOK( InitializeWeaponSystems, void, ( const char* xml, double tickDuration ) )
     DECLARE_HOOK( InitializeDecisional, void, ( const char* xml, double tickDuration ) )
-    DECLARE_HOOK( InitializeRadarType, void, ( const char* xml ) )
 
     void InitializePathfinder( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
     {
@@ -249,16 +248,10 @@ void Sink::Initialize()
     listeners_.push_back( new DirectFirePopulationEventListener( *facade_ ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire population callback" ) );
-    MovementHooks::Initialize( *facade_ );
-    RolePion_Decision::Initialize( *facade_ );
-    FireHooks::Initialize( *facade_ );
-    PerceptionHooks::Initialize( *facade_ );
-    USE_HOOK( InitializePathClass, *facade_ );
-    USE_HOOK( InitializePerceptionTypes, *facade_ );
-    USE_HOOK( InitializeLaunchers, *facade_ );
-    USE_HOOK( InitializeDotations, *facade_ );
-    USE_HOOK( InitializeWeaponSystems, *facade_ );
-    USE_HOOK( InitializeDecisional, *facade_ );
+    FireHooks::Initialize();
+    PerceptionHooks::Initialize();
+    MovementHooks::Initialize();
+    Hooks::Initialize( *facade_ );
     facade_->Resolve();
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &::InitializePathfinder, _1, boost::cref( dangerousObjects_ ) ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "sensors", boost::bind( &::InitializePerception, _1 ) );

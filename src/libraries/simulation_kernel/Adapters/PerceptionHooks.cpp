@@ -561,71 +561,9 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: PerceptionHooks::Initialize
-// Created: SLI 2012-05-22
+// Created: SLI 2012-10-19
 // -----------------------------------------------------------------------------
-void PerceptionHooks::Initialize( core::Facade& facade )
+void PerceptionHooks::Initialize()
 {
-    REGISTER_HOOK( ComputeRayTrace, facade );
-    REGISTER_HOOK( GetAltitude, facade );
-    REGISTER_HOOK( GetSignificantVolume, facade );
-    REGISTER_HOOK( GetVolumeIdentifierFromInstance, facade );
-    REGISTER_HOOK( GetVolumeSize, facade );
-    REGISTER_HOOK( PopulationElementIntersectWithCircle, facade );
-    REGISTER_HOOK( GetUrbanBlockFactor, facade );
-    REGISTER_HOOK( IsMaterialType, facade );
-    REGISTER_HOOK( GetPrecipitationSize, facade );
-    REGISTER_HOOK( GetLightingSize, facade );
-    REGISTER_HOOK( GetMaterialTypeSize, facade );
-    REGISTER_HOOK( GetVolumeIdentifier, facade );
-    REGISTER_HOOK( GetPrecipitationIdentifier, facade );
-    REGISTER_HOOK( GetLightingIdentifier, facade );
-    REGISTER_HOOK( GetPostureSize, facade );
-    REGISTER_HOOK( GetPostureIdentifier, facade );
-    REGISTER_HOOK( PostureCanModifyDetection, facade );
-    REGISTER_HOOK( GetLastPostureIdentifier, facade );
-    REGISTER_HOOK( GetCurrentPostureIdentifier, facade );
-    REGISTER_HOOK( GetPostureCompletionPercentage, facade );
-    REGISTER_HOOK( ComputePerceptionDistanceFactor, facade );
-    REGISTER_HOOK( GetCollidingPopulationDensity, facade );
-    REGISTER_HOOK( ObjectIntersectWithCircle, facade );
-    REGISTER_HOOK( KnowledgeObjectIntersectWithCircle, facade );
-    REGISTER_HOOK( GetKnowledgeObjectType, facade );
-    REGISTER_HOOK( GetEnvironmentAssociation, facade );
-    REGISTER_HOOK( GetPerceptionRandom, facade );
-    REGISTER_HOOK( IsKnown, facade );
-    REGISTER_HOOK( ComputeAgentRatioInsidePerceptionPolygon, facade );
-    REGISTER_HOOK( GetCurrentUrbanBlock, facade );
-    REGISTER_HOOK( GetUrbanObjectStructuralHeight, facade );
-    REGISTER_HOOK( GetUrbanObjectOccupation, facade );
-    REGISTER_HOOK( GetUrbanObjectStructuralState, facade );
-    REGISTER_HOOK( HasUrbanObjectArchitecture, facade );
-    REGISTER_HOOK( CanUrbanBlockBeSeen, facade );
-    REGISTER_HOOK( IsPostureStationed, facade );
-    REGISTER_HOOK( AppendAddedKnowledge, facade );
-    REGISTER_HOOK( IsInCity, facade );
-    REGISTER_HOOK( BelongsToKnowledgeGroup, facade );
-    REGISTER_HOOK( IsAgentPerceptionDistanceHacked, facade );
-    REGISTER_HOOK( IsObjectPerceptionDistanceHacked, facade );
-    REGISTER_HOOK( IsPopulationElementPerceptionDistanceHacked, facade );
-    REGISTER_HOOK( GetHackedPerceptionLevel, facade );
-    REGISTER_HOOK( GetObjectPerceptionLevel, facade );
-    REGISTER_HOOK( GetPopulationElementPerceptionLevel, facade );
-    REGISTER_HOOK( CanBeSeen, facade );
-    REGISTER_HOOK( IsAgentNewlyPerceived, facade );
-    REGISTER_HOOK( IsPopulationElementNewlyPerceived, facade );
-    REGISTER_HOOK( ConvertSecondsToSim, facade );
-    REGISTER_HOOK( GetConsumptionTypeSize, facade );
-    REGISTER_HOOK( FindConsumptionType, facade );
-    REGISTER_HOOK( GetConsumptionMode, facade );
-    REGISTER_HOOK( GetTransporter, facade );
-    REGISTER_HOOK( GetVisionObjectsInSurface, facade );
-    REGISTER_HOOK( GetVisionObject, facade );
-    REGISTER_HOOK( IsPointInsideLocalisation, facade );
-    REGISTER_HOOK( IsLocalizationInsideCircle, facade );
-    REGISTER_HOOK( IsKnowledgeObjectInsidePerception, facade );
-    REGISTER_HOOK( IsObjectIntersectingLocalization, facade );
-    REGISTER_HOOK( IsKnowledgeObjectIntersectingWithCircle, facade );
-    REGISTER_HOOK( GetLocalizationRadius, facade );
-    REGISTER_HOOK( CanFlyingShellBePerceived, facade );
-    RolePion_Perceiver::Initialize( facade );
+    // NOTHING
 }

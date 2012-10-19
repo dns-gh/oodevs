@@ -10,11 +10,6 @@
 #ifndef SWORD_PERCEPTION_HOOKS_H
 #define SWORD_PERCEPTION_HOOKS_H
 
-namespace core
-{
-    class Facade;
-}
-
 namespace sword
 {
 // =============================================================================
@@ -28,7 +23,7 @@ class PerceptionHooks
 public:
     //! @name Constructors/Destructor
     //@{
-    static void Initialize( core::Facade& facade );
+    static void Initialize(); // $$$$ _RC_ SLI 2012-10-19: Only to avoid compiler to remove hooks
     //@}
 };
 

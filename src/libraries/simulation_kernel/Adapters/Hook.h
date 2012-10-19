@@ -11,40 +11,100 @@
 #define SWORD_HOOK_TOOLS_H
 
 #include <core/Facade.h>
+#include <algorithm>
+#include <vector>
+#include <boost/bind.hpp>
+
+namespace sword
+{
+    class Hook_ABC
+    {
+    public:
+        virtual void Apply( core::Facade& facade ) = 0;
+    protected:
+        virtual ~Hook_ABC()
+        {}
+    };
+
+    class Hooks
+    {
+    public:
+        static void Use( Hook_ABC* hook )
+        {
+            GetUses().push_back( hook );
+        }
+        static void Register( Hook_ABC* hook )
+        {
+            GetRegistrations().push_back( hook );
+        }
+        static void Initialize( core::Facade& facade )
+        {
+            std::for_each( GetUses().begin(), GetUses().end(), boost::bind( &Hook_ABC::Apply, _1, boost::ref( facade ) ) );
+            std::for_each( GetRegistrations().begin(), GetRegistrations().end(), boost::bind( &Hook_ABC::Apply, _1, boost::ref( facade ) ) );
+        }
+    private:
+        static std::vector< Hook_ABC* >& GetUses()
+        {
+            static std::vector< Hook_ABC* > hooks;
+            return hooks;
+        }
+        static std::vector< Hook_ABC* >& GetRegistrations()
+        {
+            static std::vector< Hook_ABC* > hooks;
+            return hooks;
+        }
+    };
+}
 
 #define DECLARE_HOOK( Hook, result, parameters ) \
-    namespace \
+    static struct Hook ## Wrapper : private sword::Hook_ABC \
     { \
-        typedef result (*HOOK_ ## Hook) parameters; \
-        __pragma(warning(suppress:4100)) \
-        result HOOK_ ## Hook ## _Unitialized parameters \
+        typedef result result_type; \
+        Hook ## Wrapper() \
         { \
-            throw std::runtime_error( "Missing USE_HOOK for " #Hook ); \
+            sword::Hooks::Use( this ); \
         } \
-        HOOK_ ## Hook HOOK_ ## Hook ## _Current = &HOOK_ ## Hook ## _Unitialized; \
-        HOOK_ ## Hook HOOK_ ## Hook ## _Previous = &HOOK_ ## Hook ## _Unitialized; \
-        void HOOK_Register ## Hook( const HOOK_ ## Hook implement, core::Facade& facade ) \
+        typedef result (*Function) parameters; \
+        operator Function const() \
         { \
-            facade.RegisterHook( &HOOK_ ## Hook ## _Current, &HOOK_ ## Hook ## _Previous, implement, #Hook, #result #parameters ); \
+            return current_; \
         } \
-        void HOOK_Use ## Hook( core::Facade& facade ) \
+        Function current_; \
+    private: \
+        virtual void Apply( core::Facade& facade ) \
         { \
-            facade.UseHook( &HOOK_ ## Hook ## _Current, #Hook, #result #parameters ); \
+            facade.UseHook( &current_, #Hook, #result #parameters ); \
         } \
-    }
+} Hook##_;
 
 #define DEFINE_HOOK( Hook, result, parameters ) \
-    DECLARE_HOOK( Hook, result, parameters ) \
-    result HOOK_ ## Hook ## _Implement ## parameters
+    static struct Hook ## Wrapper : private sword::Hook_ABC \
+    { \
+        typedef result result_type; \
+        Hook ## Wrapper() \
+        { \
+            sword::Hooks::Register( this ); \
+        } \
+        typedef result (*Function) parameters; \
+        operator Function const() \
+        { \
+            return current_; \
+        } \
+        Function current_; \
+        Function Previous; \
+        static result Implement parameters; \
+    private: \
+        virtual void Apply( core::Facade& facade ) \
+        { \
+            facade.RegisterHook( &current_, &Previous, Implement, #Hook, #result #parameters ); \
+        } \
+    } Hook##_; \
+    result Hook ## Wrapper::Implement parameters
 
-#define REGISTER_HOOK( Hook, facade ) \
-    HOOK_Register ## Hook( HOOK_ ## Hook ## _Implement, facade )
+// $$$$ MCO : or Hook.current_ if we want to keep the macro
+#define GET_HOOK( Hook ) Hook##_
 
-#define USE_HOOK( Hook, facade ) \
-    HOOK_Use ## Hook( facade )
-
-#define GET_HOOK( Hook ) HOOK_ ## Hook ## _Current
-
-#define GET_PREVIOUS_HOOK( Hook ) HOOK_ ## Hook ## _Previous
+// $$$$ MCO : simply Previous should be possible, Previous has to be static in the wrapper though
+#define GET_PREVIOUS_HOOK( Hook ) Hook##_.Previous
 
 #endif // SWORD_HOOK_TOOLS_H

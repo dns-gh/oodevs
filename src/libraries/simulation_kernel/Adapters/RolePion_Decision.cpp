@@ -121,36 +121,6 @@ DECLARE_HOOK( ComputeForceRatio, double, ( const SWORD_Model* model, const SWORD
 DECLARE_HOOK( GetAmmunitionForIndirectFire, const char*, ( const SWORD_Model* model, const SWORD_Model* firer, const char* type, const MT_Vector2D* target ) )
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Decision::Initialize
-// Created: SLI 2012-02-01
-// -----------------------------------------------------------------------------
-void RolePion_Decision::Initialize( core::Facade& facade )
-{
-    USE_HOOK( ComputeAgentFutureObjectCollision, facade );
-    USE_HOOK( CreatePath, facade );
-    USE_HOOK( CreatePathList, facade );
-    USE_HOOK( GetAgentFuturePosition, facade );
-    USE_HOOK( GetPathPoints, facade );
-    USE_HOOK( IsAgentMovingOnPath, facade );
-    USE_HOOK( PathGetLastPointOfPath, facade );
-    USE_HOOK( GetPerceptionId, facade );
-    USE_HOOK( IsPointVisible, facade );
-    USE_HOOK( GetPerception, facade );
-    USE_HOOK( GetDangerosity, facade );
-    USE_HOOK( GetMaxRangeToFireOn, facade );
-    USE_HOOK( GetMinRangeToFireOn, facade );
-    USE_HOOK( GetMaxRangeToFireOnWithPosture, facade );
-    USE_HOOK( GetMinRangeToFireOnWithPosture, facade );
-    USE_HOOK( GetMaxRangeToFire, facade );
-    USE_HOOK( GetMaxRangeToIndirectFire, facade );
-    USE_HOOK( GetMinRangeToIndirectFire, facade );
-    USE_HOOK( GetForceRatio, facade );
-    USE_HOOK( GetDangerousEnemies, facade );
-    USE_HOOK( ComputeForceRatio, facade );
-    USE_HOOK( GetAmmunitionForIndirectFire, facade );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RolePion_Decision constructor
 // Created: SLI 2012-02-01
 // -----------------------------------------------------------------------------

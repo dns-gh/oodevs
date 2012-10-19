@@ -512,54 +512,9 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: MovementHooks::Initialize
-// Created: SLI 2012-03-13
+// Created: SLI 2012-10-19
 // -----------------------------------------------------------------------------
-void MovementHooks::Initialize( core::Facade& facade )
+void MovementHooks::Initialize()
 {
-    REGISTER_HOOK( CanObjectInteractWith, facade );
-    REGISTER_HOOK( ComputeObjectCollision, facade );
-    REGISTER_HOOK( ComputePathfind, facade );
-    REGISTER_HOOK( ConvertSpeedMosToSim, facade );
-    REGISTER_HOOK( EntityManagerFindObject, facade );
-    REGISTER_HOOK( FindObjectType, facade );
-    REGISTER_HOOK( FindPopulationAttitude, facade );
-    REGISTER_HOOK( GetDistanceAvantLima, facade );
-    REGISTER_HOOK( GetDistanceAvantPoint, facade );
-    REGISTER_HOOK( GetKnowledgeObjectRealName, facade );
-    REGISTER_HOOK( GetLandTypeName, facade );
-    REGISTER_HOOK( GetLimaOrders, facade );
-    REGISTER_HOOK( GetLimas, facade );
-    REGISTER_HOOK( GetAgentListWithinCircle, facade );
-    REGISTER_HOOK( GetAgentListWithinLocalisation, facade );
-    REGISTER_HOOK( GetObjectListWithinCircle, facade );
-    REGISTER_HOOK( GetConcentrationListWithinCircle, facade );
-    REGISTER_HOOK( GetFlowListWithinCircle, facade );
-    REGISTER_HOOK( GetUrbanObjectListWithinCircle, facade );
-    REGISTER_HOOK( GetUrbanBlocksListWithinSegment, facade );
-    REGISTER_HOOK( GetMaxPathFindComputationDuration, facade );
-    REGISTER_HOOK( CancelPathFindJob, facade );
-    REGISTER_HOOK( GetTheoricMaxSpeedWithReinforcement, facade );
-    REGISTER_HOOK( GetObjectKnownId, facade );
-    REGISTER_HOOK( GetPathfindCurrentThread, facade );
-    REGISTER_HOOK( GetSpeedWithReinforcement, facade );
-    REGISTER_HOOK( GetSpeedWithReinforcementObject, facade );
-    REGISTER_HOOK( GetWorldWeldValue, facade );
-    REGISTER_HOOK( IsDestinationTrafficable, facade );
-    REGISTER_HOOK( IsNullAutomateFuseau, facade );
-    REGISTER_HOOK( IsValidPosition, facade );
-    REGISTER_HOOK( LimaIntersect2D, facade );
-    REGISTER_HOOK( CanMoveOn, facade );
-    REGISTER_HOOK( NotifyMovingInsideObject, facade );
-    REGISTER_HOOK( NotifyMovingOnPathPoint, facade );
-    REGISTER_HOOK( NotifyMovingOutsideObject, facade );
-    REGISTER_HOOK( ObjectIntersect2D, facade );
-    REGISTER_HOOK( ObjectIsInside, facade );
-    REGISTER_HOOK( ObjectIsOnBorder, facade );
-    REGISTER_HOOK( StartComputePathfind, facade );
-    REGISTER_HOOK( UpdateObjectsToAvoid, facade );
-    REGISTER_HOOK( UsePathDebug, facade );
-    REGISTER_HOOK( ComputeHeight, facade );
-    REGISTER_HOOK( VisitKnowledgeObjects, facade );
-    PathAdapter::Initialize( facade );
-    PathPointAdapter::Initialize( facade );
+    // NOTHING
 }

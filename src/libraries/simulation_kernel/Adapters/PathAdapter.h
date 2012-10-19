@@ -26,7 +26,6 @@ class MIL_AgentPion;
 
 namespace core
 {
-    class Facade;
     class Model;
 }
 
@@ -49,11 +48,6 @@ namespace movement
 class PathAdapter : public DEC_Path_ABC, private DEC_Agent_PathClass_ABC
 {
 public:
-    //! @name Static Initializer
-    //@{
-    static void Initialize( core::Facade& facade );
-    //@}
-
     //! @name Constructors/Destructor
     //@{
     virtual ~PathAdapter();

@@ -269,31 +269,9 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: FireHooks::Initialize
-// Created: MCO 2012-04-30
+// Created: SLI 2012-10-19
 // -----------------------------------------------------------------------------
-void FireHooks::Initialize( core::Facade& facade )
+void FireHooks::Initialize()
 {
-    REGISTER_HOOK( IsTemporarilyBlocked, facade );
-    REGISTER_HOOK( GetFireRandomInteger, facade );
-    REGISTER_HOOK( GetFireRandomNumber, facade );
-    REGISTER_HOOK( HasDotation, facade );
-    REGISTER_HOOK( GetDotationValue, facade );
-    REGISTER_HOOK( CanFire, facade );
-    REGISTER_HOOK( CanComponentFire, facade );
-    REGISTER_HOOK( CanComponentBeFiredAt, facade );
-    REGISTER_HOOK( GetWeaponReloadingDuration, facade );
-    REGISTER_HOOK( ReserveAmmunition, facade );
-    REGISTER_HOOK( GetVolumeId, facade );
-    REGISTER_HOOK( GetDistance, facade );
-    REGISTER_HOOK( ModifyPh, facade );
-    REGISTER_HOOK( GetPhModificator, facade );
-    REGISTER_HOOK( GetPhModificator2, facade );
-    REGISTER_HOOK( ModifyDangerosity, facade );
-    REGISTER_HOOK( EvaluateDangerosity, facade );
-    REGISTER_HOOK( EvaluateDangerosity2, facade );
-    REGISTER_HOOK( IsAgentKnowledgeValid, facade );
-    REGISTER_HOOK( IsPopulationKnowledgeValid, facade );
-    REGISTER_HOOK( GetClosestAlivePopulationElement, facade );
-    REGISTER_HOOK( ComputeKilledHumans, facade );
-    REGISTER_HOOK( GetPopulationElementPh, facade );
+    // NOTHING
 }
