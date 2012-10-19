@@ -79,6 +79,7 @@
         <skill name="agent.skills.TakeRefugee"/>
         <skill name="agent.skills.InquireAbout"/>
         <skill name="agent.skills.Filter"/>
+        <skill name="agent.skills.ActivateLogisticChains"/>
         <skill name="agent.skills.ControlCrowds"/>
         <skill name="agent.skills.Deploy"/>
         <skill name="agent.skills.Patrol"/>
@@ -106,6 +107,9 @@
         <skill name="agent.skills.Operate"/>
         <skill name="agent.skills.Build"/>
         <skill name="agent.skills.ReconnoiterThenBuild"/>
+        <skill name="agent.skills.actions.Deploy"/>
+        <skill name="agent.skills.actions.ActivateLogisticChains"/>
+        <skill name="agent.skills.EnsureIndirectFire"/>
     </skills>
     <resources>
         <resource name="agent.resources.EngageCapacity"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.Deploy" source-version="1.0.0">
-    <description>For the agent, to move and deploy on the given objective.</description>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.ActivateLogisticChains" source-version="1.0.0">
+    <description>$$$ todo</description>
     <parameters>
         <parameter name="objective" nullable="true">
             <description>The position onto which the agent needs to deploy. If no objective is issued, the agent deploys on its own position.</description>
@@ -22,16 +22,16 @@
         <link name="dismount" skill="agent.skills.actions.Dismount">
             <description>To enact the decision of dismounting upon reaching the deployment position.</description>
         </link>
-        <link name="deploy" skill="agent.skills.actions.Deploy">
-            <description>To enact the decision to self deploy once arrived on the given position.</description>
+        <link name="activateLogisticChains" skill="agent.skills.actions.ActivateLogisticChains">
+            <description>To enact the decision of activating logistic chains upon reaching the deployment position.</description>
         </link>
     </links>
     <feedbacks>
-        <feedback name="done">
-            <description>Sent once the agent is deployed.</description>
+        <feedback name="logisticChainsActivated">
+            <description>Sent once the agent has activated its logistic chains.</description>
         </feedback>
-        <feedback name="deployed">
-            <description>Sent once the agent is deployed.</description>
+        <feedback name="done">
+            <description>Sent once the agent has activated its logistic chains.</description>
         </feedback>
     </feedbacks>
 </skill>

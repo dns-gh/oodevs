@@ -5,8 +5,6 @@ rootnode
 {
     acquire = { [ skill.resources.radar ] = 1 },
 
-    done = function( self ) end,
-
     select = function( self )
         meKnowledge:switchRadarOn()
     end

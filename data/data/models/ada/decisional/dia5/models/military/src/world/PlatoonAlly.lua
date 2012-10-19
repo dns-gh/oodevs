@@ -750,15 +750,15 @@ return
     selfDestruct = function( self )
         integration.selfDestruct()
     end,
-    deploy = masalife.brain.integration.startStopAction( 
-    { 
-        start = integration.startDeploy,
-        started = integration.deployed,
-        stop = integration.undeploy
-    } ),
     isDeployed = function( self )
         return integration.isDeployed( self )
     end,
+    deploy = masalife.brain.integration.startStopAction( 
+    { 
+        start = integration.startDeploy,
+        started = integration.isDeployed,
+        stop = integration.undeploy
+    } ),
     activateDrone = masalife.brain.integration.startStopAction( 
     { 
         start = integration.startActivateDrone,
@@ -913,10 +913,11 @@ return
         start = integration.activateInjuredSorting,
         stop = integration.desactivateInjuredSorting
     } ),
-    activateFunctions = masalife.brain.integration.startStopAction(
+    activateLogisticChains = masalife.brain.integration.startStopAction(
     {
-        start = integration.activateFunctions,
-        stop = integration.desactivateFunctions
+        start = integration.activateLogisticChains,
+        started = function( self )return true end, -- cannot failed.
+        stop = integration.desactivateLogisticChains
     } ),
     activateSensors = masalife.brain.integration.startStopAction(
     {

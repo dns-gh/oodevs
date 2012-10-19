@@ -1,0 +1,13 @@
+-- **************************************************************************** 
+-- To self deploy.
+-- ****************************************************************************
+rootnode 
+{
+    feedbacks = { "deployed" },
+
+    select = function( self )
+        if meKnowledge:deploy() then
+            Feedback( self.feedbacks.deployed )
+        end
+    end
+}
