@@ -21,6 +21,7 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockSink, sword::Sink_ABC )
 {
+    MOCK_METHOD( Finalize, 0 );
     MOCK_METHOD( ExecutePerceptions, 0 );
     MOCK_METHOD( ExecuteCommands, 0 );
     MOCK_METHOD( ApplyEffects, 0 );
