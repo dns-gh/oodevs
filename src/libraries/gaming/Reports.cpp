@@ -103,19 +103,25 @@ void Reports::AddReport( unsigned int id, Report* report )
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const sword::InvalidateReport& message )
 {
-    delete Find( message.report().id() );
-    Remove( message.report().id() );
-    controller_.Update( *this );
-    const TacticalHierarchies* hierarchies = agent_.Retrieve< TacticalHierarchies >();
-    if( hierarchies )
+    Report* report = Find( message.report().id() );
+    if( report )
     {
-        const Entity_ABC* superior = hierarchies->GetSuperior();
-        if( superior )
+        Remove( message.report().id() );
+        controller_.Update( *this );
+        const TacticalHierarchies* hierarchies = agent_.Retrieve< TacticalHierarchies >();
+        if( hierarchies )
         {
-            Reports* reports = const_cast< Reports* >( superior->Retrieve< Reports >() );
-            if( reports )
-                reports->DoUpdate( message );
+            const Entity_ABC* superior = hierarchies->GetSuperior();
+            if( superior )
+            {
+                Reports* reports = const_cast< Reports* >( superior->Retrieve< Reports >() );
+                if( reports )
+                    reports->DoUpdate( message );
+            }
         }
+        const kernel::Entity_ABC& owner = report->GetOwner();
+        if( &agent_ == &owner )
+            delete report;
     }
 }
 
