@@ -83,10 +83,8 @@ masa_glob_dir( files src
 masa_add_static_library( host ${files} )
 masa_set_target_folder( host libraries )
 if( MSVC )
-    masa_get_library_full_name( bcrypt bcrypt_debug bcrypt_release ) 
-    masa_add_target_external_library( host ${bcrypt_debug} ${bcrypt_release} )
-    masa_get_library_full_name( sqlite3 sqlite3_debug sqlite3_release ) 
-    masa_add_target_external_library( host ${sqlite3_debug} ${sqlite3_release} )
+    masa_add_target_library( host bcrypt )
+    masa_add_target_library( host sqlite3 )
 endif()
 
 ################################################################################
