@@ -22,7 +22,9 @@
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Usages_ABC.h"
 #include "terrain/PointProjector_ABC.h"
+#pragma warning( push, 0 )
 #include <gdal/ogrsf_frmts.h>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: UrbanFileExporter constructor
