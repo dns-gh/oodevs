@@ -1394,7 +1394,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>Logistic : Pull supply flow</name>
     <message>
         <source>Resources</source>
-        <translation>Dotations</translation>
+        <translation>Ressources</translation>
     </message>
     <message>
         <source>Carriers</source>
@@ -1402,7 +1402,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Resource</source>
-        <translation>Dotation</translation>
+        <translation>Ressource</translation>
     </message>
     <message>
         <source>Available</source>
@@ -1433,7 +1433,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>Logistic : Push supply flow</name>
     <message>
         <source>Resources</source>
-        <translation>Dotations</translation>
+        <translation>Ressources</translation>
     </message>
     <message>
         <source>Carriers</source>
@@ -1445,7 +1445,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Resource</source>
-        <translation>Dotation</translation>
+        <translation>Ressource</translation>
     </message>
     <message>
         <source>Available</source>
@@ -1526,7 +1526,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Resource</source>
-        <translation>Dotation</translation>
+        <translation>Ressource</translation>
     </message>
     <message>
         <source>Quota</source>
@@ -2983,7 +2983,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Resources requested/granted/convoyed</source>
-        <translation>Dotations demandées/accordées/convoyées</translation>
+        <translation>Ressources demandées/accordées/convoyées</translation>
     </message>
     <message>
         <source>Current state end :</source>
