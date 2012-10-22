@@ -66,8 +66,7 @@ void Reports::DoUpdate( const sword::Report& message )
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const sword::InvalidateReport& message )
 {
-    delete Find( message.report().id() );
-    Remove( message.report().id() );
+    Delete( message.report().id() );
     controller_.Update( *this );
 }
 
