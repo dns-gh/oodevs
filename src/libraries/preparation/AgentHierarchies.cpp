@@ -14,6 +14,7 @@
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/SymbolHierarchy_ABC.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "ENT/ENT_Tr_Gen.h"
 
@@ -91,6 +92,19 @@ void AgentHierarchies::UpdateSymbolUpward()
     if( GetSuperior() )
         UpdateKarma( *GetSuperior() );
     TacticalHierarchies::UpdateSymbolUpward();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::UpdateSymbolDownward
+// Created: ABR 2012-10-22
+// -----------------------------------------------------------------------------
+void AgentHierarchies::UpdateSymbolDownward()
+{
+    const std::string oldSymbol = GetSymbol();
+    if( const kernel::Entity_ABC* superior = GetSuperior() )
+        UpdateKarma( *superior );
+    if( GetSymbol() != oldSymbol )
+        controller_.Update( *static_cast< kernel::Symbol_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------

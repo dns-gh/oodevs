@@ -43,6 +43,7 @@ public:
     virtual std::string GetSymbol() const;
     void SetSymbol( const std::string& symbol );
     virtual void UpdateSymbolUpward();
+    virtual void UpdateSymbolDownward();
     void UpdateSymbol( const std::string& level, const std::string& symbol );
     //@}
 

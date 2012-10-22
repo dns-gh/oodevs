@@ -45,9 +45,11 @@ const std::string& SymbolHierarchy::GetValue() const
 // Name: SymbolHierarchy::MergeSymbol
 // Created: JSR 2011-08-02
 // -----------------------------------------------------------------------------
-void SymbolHierarchy::MergeSymbol( const std::string& symbol )
+void SymbolHierarchy::MergeSymbol( const std::string& symbol, bool original /* = false */ )
 {
     App6Symbol::Merge( symbol, computedSymbol_ );
+    if( original )
+        originalSymbol_ = computedSymbol_;
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +60,8 @@ void SymbolHierarchy::ResetSymbol( const std::string& symbol )
 {
     if( !symbol.empty() )
         computedSymbol_ = symbol;
+    else if( !originalSymbol_.empty() )
+        computedSymbol_ = originalSymbol_;
 }
 
 // -----------------------------------------------------------------------------
@@ -112,4 +116,6 @@ bool SymbolHierarchy::IsOverriden() const
 void SymbolHierarchy::UpdateKarma( const Karma& karma )
 {
     kernel::App6Symbol::SetKarma( symbol_, karma );
+    kernel::App6Symbol::SetKarma( computedSymbol_, karma );
+    kernel::App6Symbol::SetKarma( originalSymbol_, karma );
 }

@@ -34,7 +34,7 @@ public:
     //@{
     virtual const std::string& GetValue() const;
     virtual void OverrideValue( const std::string& value );
-    virtual void MergeSymbol( const std::string& symbol );
+    virtual void MergeSymbol( const std::string& symbol, bool original = false );
     virtual void ResetSymbol( const std::string& symbol );
     virtual void PrepareForMerge();
     virtual void Reset();
@@ -48,6 +48,7 @@ private:
     //@{
     std::string symbol_;
     std::string computedSymbol_;
+    std::string originalSymbol_;
     bool overriden_;
     //@}
 };
