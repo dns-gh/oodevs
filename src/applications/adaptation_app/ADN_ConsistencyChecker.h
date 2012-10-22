@@ -12,6 +12,7 @@
 
 #include "clients_kernel/ConsistencyChecker_ABC.h"
 #include "ADN_ConsistencyErrorTypes.h"
+#include "ADN_Missions_Data.h"
 
 // =============================================================================
 /** @class  ADN_ConsistencyChecker
@@ -57,10 +58,13 @@ private: // NNO Consistency
     //! @name Helpers
     //@{
     void CheckNNOConsistency();
-    ADN_NavigationInfos::GoTo* CreateGotoInfoFromNNOElement( const NNOElement& element );
+    void CheckMissionsTypes();
+    void CheckMissionTypes( const ADN_Missions_Data::T_Mission_Vector& missions, int subTab );
+    ADN_NavigationInfos::GoTo* CreateGotoInfoFromNNOElement( const std::string& name, int tab, int subTab );
     bool IsAlreadyRegistered( const std::string& code, E_ConsistencyCheck type ) const;
     void AddError( E_ConsistencyCheck type, const NNOElement& element );
     void AddError( E_ConsistencyCheck type, const T_NNOElements& elements );
+    void AddError( E_ConsistencyCheck type, const ADN_Missions_Data::Mission& rhs, const ADN_Missions_Data::Mission& lhs, int subTab );
     //@}
 };
 

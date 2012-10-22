@@ -58,7 +58,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingNNo     ] = tr( "%1 has no NNO code defined." );
     errorDescriptions_[ eMissingEmat    ] = tr( "%1 has no EMAT8 code defined." );
 
-    errorDescriptions_[ eOthers         ] = "%1";
+    errorDescriptions_[ eMissionTypeUniqueness ] = tr( "Duplicate type for missions %1." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
@@ -88,7 +88,7 @@ void ADN_ConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
     }
     else
     {
-        QMenu* menu = new QMenu( this  );
+        QMenu* menu = new QMenu( this );
         // Create menu
         for( ADN_ConsistencyChecker::CIT_Items it = gotoList->begin(); it != gotoList->end(); ++it )
             menu->addAction( ( *it )->targetName_ );
@@ -131,7 +131,6 @@ void ADN_ConsistencyDialog::UpdateDataModel()
         }
         else if( ( error.type_ & eUniquenessMask ) != 0 )
         {
-            assert( !error.optional_.empty() && error.items_.size() >= 1 );
             QString text = errorDescriptions_[ error.type_ ];
             assert( text.contains( "%1" ) );
             QString itemList;

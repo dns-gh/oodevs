@@ -1281,6 +1281,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <source> and &apos;</source>
         <translation> and &apos;</translation>
     </message>
+    <message>
+        <source>Duplicate type for missions %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

@@ -385,7 +385,6 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 {
     Mission* newMission                  = new Mission();
     newMission->strName_                 = strName_.GetData();
-    newMission->diaType_                 = diaType_.GetData();
     newMission->diaBehavior_             = diaBehavior_.GetData();
     newMission->cdtDiaBehavior_          = cdtDiaBehavior_.GetData();
     newMission->mrtDiaBehavior_          = mrtDiaBehavior_.GetData();
@@ -622,7 +621,6 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
 {
     FragOrder* newFragOrder = new FragOrder();
     newFragOrder->strName_ = strName_.GetData();
-    newFragOrder->diaType_ = diaType_.GetData();
     newFragOrder->missionSheetContent_ = missionSheetContent_.GetData();
     newFragOrder->parameters_.reserve( parameters_.size() );
     for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )

@@ -12,16 +12,16 @@
 
 enum E_ConsistencyCheck
 {
-    eUniquenessMask = 0x000f,
-    eNNoUniqueness  = 0x0001,
-    eEmatUniqueness = 0x0002,
+    eUniquenessMask        = 0x000f,
+    eNNoUniqueness         = 0x0001,
+    eEmatUniqueness        = 0x0002,
+    eMissionTypeUniqueness = 0x0004,
 
-    eMissingMask    = 0x000f << 4,
-    eMissingNNo     = 0x0001 << 4,
-    eMissingEmat    = 0x0002 << 4,
+    eMissingMask           = 0x000f << 4,
+    eMissingNNo            = 0x0001 << 4,
+    eMissingEmat           = 0x0002 << 4,
 
-    eOthersMask     = 0x000f << 8,
-    eOthers         = 0x0001 << 8
+    eOthersMask            = 0x000f << 8,
 };
 
 #endif // __ADN_ConsistencyErrorTypes_h_
