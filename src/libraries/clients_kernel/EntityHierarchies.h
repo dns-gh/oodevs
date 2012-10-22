@@ -72,7 +72,7 @@ private:
     EntityHierarchies& operator=( const EntityHierarchies& ); //!< Assignment operator
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     Controller& controller_;
