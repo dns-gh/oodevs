@@ -80,11 +80,11 @@ namespace movement
 
 namespace
 {
-    DEFINE_HOOK( StartComputePathfind, void, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( StartComputePathfind, 2, void, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( PathAdapter::Add( *core::Convert( entity ), path ) );
     }
-    DEFINE_HOOK( GetAgentListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetAgentListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) )
     {
         const core::Model& rootNode = *core::Convert( root );
         TER_Agent_ABC::T_AgentPtrVector agents;
@@ -92,7 +92,7 @@ namespace
         BOOST_FOREACH( TER_Agent_ABC* agent, agents )
             callback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
     }
-    DEFINE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, const SWORD_Model* localization, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
+    DEFINE_HOOK( GetAgentListWithinLocalisation, 4, void, ( const SWORD_Model* root, const SWORD_Model* localization, void (*callback)( const SWORD_Model* agent, void* userData ), void* userData ) ) \
     {
         const core::Model& rootNode = *core::Convert( root );
         TER_Agent_ABC::T_AgentPtrVector agentsDetected;
@@ -100,7 +100,7 @@ namespace
         BOOST_FOREACH( TER_Agent_ABC* agent, agentsDetected )
             callback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
     }
-    DEFINE_HOOK( GetObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetObjectListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* object, void* userData ), void* userData ) )
     {
         const core::Model& rootNode = *core::Convert( root );
         TER_Object_ABC::T_ObjectVector objects; // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
@@ -108,7 +108,7 @@ namespace
         BOOST_FOREACH( TER_Object_ABC* object, objects )
             callback( core::Convert( &rootNode[ "objects" ][ static_cast< MIL_Object_ABC* >( object )->GetID() ] ), userData );
     }
-    DEFINE_HOOK( GetConcentrationListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* concentration, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetConcentrationListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* concentration, void* userData ), void* userData ) )
     {
         const core::Model& rootNode = *core::Convert( root );
         TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector perceivableConcentrations;
@@ -119,7 +119,7 @@ namespace
             callback( core::Convert( &rootNode[ "populations" ][ concentration->GetPopulation().GetID() ][ "elements" ][ concentration->GetID() ] ), userData );
         }
     }
-    DEFINE_HOOK( GetFlowListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* flow, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetFlowListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& vCenter, double rRadius, void (*callback)( const SWORD_Model* flow, void* userData ), void* userData ) )
     {
         const core::Model& rootNode = *core::Convert( root );
         TER_PopulationFlow_ABC::T_ConstPopulationFlowVector perceivableFlows;
@@ -130,7 +130,7 @@ namespace
             callback( core::Convert( &rootNode[ "populations" ][ flow->GetPopulation().GetID() ][ "elements" ][ flow->GetID() ] ), userData );
         }
     }
-    DEFINE_HOOK( GetUrbanObjectListWithinCircle, void, ( const SWORD_Model* root, const MT_Vector2D& center, float radius, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetUrbanObjectListWithinCircle, 5, void, ( const SWORD_Model* root, const MT_Vector2D& center, float radius, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
     {
         const core::Model& rootNode = *core::Convert( root );
         std::vector< const MIL_UrbanObject_ABC* > perceivableUrbanBlock;
@@ -138,7 +138,7 @@ namespace
         BOOST_FOREACH( const MIL_UrbanObject_ABC* urbanBlock, perceivableUrbanBlock )
             callback( core::Convert( &rootNode[ "urban-objects" ][ urbanBlock->GetID() ] ), userData );
     }
-    DEFINE_HOOK( GetUrbanBlocksListWithinSegment, void, ( const SWORD_Model* root, MT_Vector2D first, MT_Vector2D second, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetUrbanBlocksListWithinSegment, 5, void, ( const SWORD_Model* root, MT_Vector2D first, MT_Vector2D second, void (*callback)( const SWORD_Model* urbanObjectWrapper, void* userData ), void* userData ) )
     {
         const core::Model& rootNode = *core::Convert( root );
         std::vector< const MIL_UrbanObject_ABC* > list;
@@ -146,15 +146,15 @@ namespace
         BOOST_FOREACH( const MIL_UrbanObject_ABC* urbanBlock, list )
             callback( core::Convert( &rootNode[ "urban-objects" ][ urbanBlock->GetID() ] ), userData );
     }
-    DEFINE_HOOK( EntityManagerFindObject, bool, ( unsigned int nID ) )
+    DEFINE_HOOK( EntityManagerFindObject, 1, bool, ( unsigned int nID ) )
     {
         return MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( nID ) != 0;
     }
-    DEFINE_HOOK( GetWorldWeldValue, double, () )
+    DEFINE_HOOK( GetWorldWeldValue, 0, double, () )
     {
         return TER_World::GetWorld().GetWeldValue();
     }
-    DEFINE_HOOK( IsDestinationTrafficable, bool, ( const SWORD_Model* entity, const MT_Vector2D* first, size_t size ) )
+    DEFINE_HOOK( IsDestinationTrafficable, 3, bool, ( const SWORD_Model* entity, const MT_Vector2D* first, size_t size ) )
     {
         const std::vector< MT_Vector2D > points( first, first + size );
         const PHY_RoleInterface_TerrainAnalysis& analysis = GET_ROLE( entity, PHY_RoleInterface_TerrainAnalysis );
@@ -162,54 +162,54 @@ namespace
                analysis.CanMoveOnBurningCells( points ) &&
                analysis.CanMoveOnKnowledgeObject( points );
     }
-    DEFINE_HOOK( GetDistanceAvantLima, double, ( const SWORD_Model* entity ) )
+    DEFINE_HOOK( GetDistanceAvantLima, 1, double, ( const SWORD_Model* entity ) )
     {
         return GET_PION( entity ).GetType().GetDistanceAvantLima();
     }
-    DEFINE_HOOK( GetDistanceAvantPoint, double, ( const SWORD_Model* entity, const TerrainData& data ) )
+    DEFINE_HOOK( GetDistanceAvantPoint, 2, double, ( const SWORD_Model* entity, const TerrainData& data ) )
     {
         return GET_PION( entity ).GetType().GetDistanceAvantPoint( data );
     }
-    DEFINE_HOOK( LimaIntersect2D, bool, ( const MIL_LimaOrder& lima, const MT_Line& line, MT_Vector2D& intersection ) )
+    DEFINE_HOOK( LimaIntersect2D, 3, bool, ( const MIL_LimaOrder& lima, const MT_Line& line, MT_Vector2D& intersection ) )
     {
         return lima.Intersect2D( line, intersection );
     }
-    DEFINE_HOOK( GetLimaOrders, void, ( const MIL_LimaOrder& lima, void(*visitor)( unsigned int limaID, int functionID, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetLimaOrders, 3, void, ( const MIL_LimaOrder& lima, void(*visitor)( unsigned int limaID, int functionID, void* userData ), void* userData ) )
     {
         for( MIL_LimaOrder::CIT_LimaFunctions it = lima.GetFunctions().begin(); it != lima.GetFunctions().end(); ++it )
             visitor( lima.GetID(), (*it)->GetID(), userData );
     }
-    DEFINE_HOOK( GetLimas, void, ( const SWORD_Model* entity, void(*visitor)( const MIL_LimaOrder& lima, void* userData ), void* userData ) )
+    DEFINE_HOOK( GetLimas, 3, void, ( const SWORD_Model* entity, void(*visitor)( const MIL_LimaOrder& lima, void* userData ), void* userData ) )
     {
         const T_LimaVector& limas = GET_PION( entity ).GetOrderManager().GetLimas();
         for( CIT_LimaVector it = limas.begin(); it != limas.end(); ++it )
             visitor( *it, userData );
     }
-    DEFINE_HOOK( UsePathDebug, bool, () )
+    DEFINE_HOOK( UsePathDebug, 0, bool, () )
     {
         return MIL_AgentServer::IsInitialized() &&  MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug();
     }
-    DEFINE_HOOK( GetPathfindCurrentThread, int, () )
+    DEFINE_HOOK( GetPathfindCurrentThread, 0, int, () )
     {
         return MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread();
     }
-    DEFINE_HOOK( FindObjectType, unsigned int, ( const char* type ) )
+    DEFINE_HOOK( FindObjectType, 1, unsigned int, ( const char* type ) )
     {
         return  MIL_AgentServer::GetWorkspace().GetObjectFactory().FindType( type ).GetID();
     }
-    DEFINE_HOOK( IsNullAutomateFuseau, bool, ( const SWORD_Model* entity ) )
+    DEFINE_HOOK( IsNullAutomateFuseau, 1, bool, ( const SWORD_Model* entity ) )
     {
         return GET_PION( entity ).GetAutomate().GetOrderManager().GetFuseau().IsNull();
     }
-    DEFINE_HOOK( IsValidPosition, bool, ( const MT_Vector2D& point ) )
+    DEFINE_HOOK( IsValidPosition, 1, bool, ( const MT_Vector2D& point ) )
     {
         return TER_World::GetWorld().IsValidPosition( point );
     }
-    DEFINE_HOOK( GetMaxPathFindComputationDuration, unsigned int, () )
+    DEFINE_HOOK( GetMaxPathFindComputationDuration, 0, unsigned int, () )
     {
         return MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
     }
-    DEFINE_HOOK( CancelPathFindJob, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
+    DEFINE_HOOK( CancelPathFindJob, 1, void, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
     {
         boost::shared_ptr< PathAdapter > removed = PathAdapter::Remove( path );
         if( removed )
@@ -217,7 +217,7 @@ namespace
         else
             MT_LOG_ERROR_MSG( "Path already canceled" );
     }
-    DEFINE_HOOK( ComputeObjectCollision, void,
+    DEFINE_HOOK( ComputeObjectCollision, 8, void,
         ( const SWORD_Model* entity, const KnowledgeCache& objectsToTest, double& rDistance,
           boost::shared_ptr< DEC_Knowledge_Object >& pObject, MT_Vector2D* start, std::size_t size, bool blockedByObject, bool applyScale ) )
     {
@@ -318,12 +318,12 @@ namespace
     typedef float (*PathfindEvaluateCost)( const geometry::Point2f& from, const geometry::Point2f& to, void* userData );
     typedef float (*PathfindGetCost)( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween, void* userData );
     typedef void (*PathfindHandlePathPoint)( const geometry::Point2f& point, const TerrainData& dataAtPoint, const TerrainData& dataToNextPoint, void* userData );
-    DEFINE_HOOK( ComputePathfind, bool, ( TerrainPathfinder& pathfind, bool needRefine, bool strictClosest,
-                                          const geometry::Point2f& from, const geometry::Point2f& to,
-                                          PathfindEvaluateCost evaluate, void* evaluateData,
-                                          PathfindGetCost get, void* getData,
-                                          PathfindHandlePathPoint handler, void* handlerData,
-                                          PathfindShouldEndComputation termination, void* terminationData ) ) // $$$$ MCO : or just have hooks on the other side as callbacks
+    DEFINE_HOOK( ComputePathfind, 13, bool, ( TerrainPathfinder& pathfind, bool needRefine, bool strictClosest,
+                                              const geometry::Point2f& from, const geometry::Point2f& to,
+                                              PathfindEvaluateCost evaluate, void* evaluateData,
+                                              PathfindGetCost get, void* getData,
+                                              PathfindHandlePathPoint handler, void* handlerData,
+                                              PathfindShouldEndComputation termination, void* terminationData ) ) // $$$$ MCO : or just have hooks on the other side as callbacks
     {
         if( needRefine )
             pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
@@ -382,24 +382,24 @@ namespace
         pathfind.SetCallback( 0 );
         return bResult;
     }
-    DEFINE_HOOK( GetSpeedWithReinforcement, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
+    DEFINE_HOOK( GetSpeedWithReinforcement, 2, double, ( const SWORD_Model* entity, const TerrainData& environment ) )
     {
         return GET_ROLE( entity, RoleAction_Moving ).GetSpeedWithReinforcement( environment );
     }
-    DEFINE_HOOK( GetTheoricMaxSpeedWithReinforcement, double, ( const SWORD_Model* entity ) )
+    DEFINE_HOOK( GetTheoricMaxSpeedWithReinforcement, 1, double, ( const SWORD_Model* entity ) )
     {
         return GET_ROLE( entity, RoleAction_Moving ).GetTheoricMaxSpeedWithReinforcement();
     }
-    DEFINE_HOOK( NotifyMovingOnPathPoint, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) // $$$$ MCO 2012-10-15: not used because only for populations which are not supported for now
+    DEFINE_HOOK( NotifyMovingOnPathPoint, 2, void, ( const SWORD_Model* entity, const MT_Vector2D& point ) ) // $$$$ MCO 2012-10-15: not used because only for populations which are not supported for now
     {
         SWORD_UNUSED( entity );
         SWORD_UNUSED( point );
     }
-    DEFINE_HOOK( CanMoveOn, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
+    DEFINE_HOOK( CanMoveOn, 2, bool, ( const SWORD_Model* entity, const MT_Vector2D& point ) )
     {
         return GET_ROLE( entity, PHY_RoleInterface_TerrainAnalysis ).CanMoveOn( point );
     }
-    DEFINE_HOOK( ObjectIntersect2D, bool, ( const SWORD_Model* object, const MT_Line& line, void (*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
+    DEFINE_HOOK( ObjectIntersect2D, 4, bool, ( const SWORD_Model* object, const MT_Line& line, void (*callback)( const MT_Vector2D& point, void* userData ), void* userData ) )
     {
         MT_Vector2D pt;
         TER_DistanceLess cmp( pt );
@@ -408,36 +408,36 @@ namespace
         std::for_each( collisions.begin(), collisions.end(), boost::bind( callback, _1, userData ) );
         return result;
     }
-    DEFINE_HOOK( ObjectIsInside, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
+    DEFINE_HOOK( ObjectIsInside, 2, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
     {
         return GET_DATA( object, MIL_Object_ABC ).IsInside( point );
     }
-    DEFINE_HOOK( ObjectIsOnBorder, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
+    DEFINE_HOOK( ObjectIsOnBorder, 2, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) )
     {
         return GET_DATA( object, MIL_Object_ABC ).IsOnBorder( point );
     }
-    DEFINE_HOOK( GetSpeedWithReinforcementObject, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
+    DEFINE_HOOK( GetSpeedWithReinforcementObject, 3, double, ( const SWORD_Model* entity, const TerrainData& environment, const SWORD_Model* object ) )
     {
         return GET_ROLE( entity, RoleAction_Moving ).GetSpeedWithReinforcement( environment, GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( CanObjectInteractWith, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
+    DEFINE_HOOK( CanObjectInteractWith, 2, bool, ( const SWORD_Model* entity, const SWORD_Model* object ) )
     {
         return GET_DATA( object, MIL_Object_ABC ).CanInteractWith( GET_PION( entity ) );
     }
-    DEFINE_HOOK( NotifyMovingInsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
+    DEFINE_HOOK( NotifyMovingInsideObject, 2, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
     {
         GET_PION( entity ).Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( NotifyMovingOutsideObject, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
+    DEFINE_HOOK( NotifyMovingOutsideObject, 2, void, ( const SWORD_Model* entity, const SWORD_Model* object ) ) // $$$$ _RC_ SLI 2012-10-08: side effect, move it to a real effect
     {
         GET_PION( entity ).Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( GetObjectKnownId, int, ( boost::shared_ptr< DEC_Knowledge_Object > obstacle ) )
+    DEFINE_HOOK( GetObjectKnownId, 1, int, ( boost::shared_ptr< DEC_Knowledge_Object > obstacle ) )
     {
         assert( obstacle && obstacle->IsValid() );
         return obstacle->GetObjectKnown() ? obstacle->GetObjectKnown()->GetID() : 0;
     }
-    DEFINE_HOOK( UpdateObjectsToAvoid, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) )
+    DEFINE_HOOK( UpdateObjectsToAvoid, 2, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) )
     {
         if( ! cache )
             cache.reset( new KnowledgeCache() );
@@ -472,7 +472,7 @@ namespace
         return false;
     }
 
-    DEFINE_HOOK( FindPopulationAttitude, bool, ( const char* attitude, unsigned int& id ) )
+    DEFINE_HOOK( FindPopulationAttitude, 2, bool, ( const char* attitude, unsigned int& id ) )
     {
         const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( attitude );
         if( ! pAttitude )
@@ -480,24 +480,24 @@ namespace
         id = pAttitude->GetID();
         return true;
     }
-    DEFINE_HOOK( ConvertSpeedMosToSim, double, ( double speed ) )
+    DEFINE_HOOK( ConvertSpeedMosToSim, 1, double, ( double speed ) )
     {
         return MIL_Tools::ConvertSpeedMosToSim( speed );
     }
-    DEFINE_HOOK( GetLandTypeName, const char*, ( const TerrainData& terrain ) )
+    DEFINE_HOOK( GetLandTypeName, 1, const char*, ( const TerrainData& terrain ) )
     {
         return MIL_Tools::GetLandTypeName( terrain ).c_str();
     }
-    DEFINE_HOOK( GetKnowledgeObjectRealName, const char*, ( boost::shared_ptr< DEC_Knowledge_Object > object ) )
+    DEFINE_HOOK( GetKnowledgeObjectRealName, 1, const char*, ( boost::shared_ptr< DEC_Knowledge_Object > object ) )
     {
         return object->GetType().GetRealName().c_str();
     }
-    DEFINE_HOOK( ComputeHeight, double, ( const SWORD_Model* entity ) )
+    DEFINE_HOOK( ComputeHeight, 1, double, ( const SWORD_Model* entity ) )
     {
         MIL_AgentPion& pion = GET_PION( entity );
         return pion.Execute( *pion.GetAlgorithms().locationComputerFactory_->Create() ).GetHeight();
     }
-    DEFINE_HOOK( VisitKnowledgeObjects, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) )
+    DEFINE_HOOK( VisitKnowledgeObjects, 3, void, ( const SWORD_Model* entity, bool(*visitor)( const DEC_Knowledge_Object* object, void* userData ), void* userData ) )
     {
         T_KnowledgeObjectVector knowledgesObject;
         GET_PION( entity ).GetArmy().GetKnowledge().GetObjects( knowledgesObject );

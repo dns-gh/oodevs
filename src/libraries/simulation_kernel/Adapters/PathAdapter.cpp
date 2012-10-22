@@ -59,34 +59,39 @@ DECLARE_HOOK( GetPopulationSecurityRange, double, ( const boost::shared_ptr< swo
 DECLARE_HOOK( GetCostOutsideOfPopulation, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path ) )
 DECLARE_HOOK( GetPopulationAttitudeCost, double, ( const boost::shared_ptr< sword::movement::Path_ABC >& path, unsigned int type ) )
 
-DEFINE_HOOK( GetFuseauxCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path,
-                                       const MT_Vector2D& from, const MT_Vector2D& to,
-                                       double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, // $$$$ MCO : all those configuration values should stay out of the movement module
-                                       double rFuseauCostPerMeterOut, double rComfortFuseauDistance, double rFuseauCostPerMeterIn,
-                                       double rMaximumAutomataFuseauDistance, double rAutomataFuseauCostPerMeterOut ) )
+DEFINE_HOOK( GetFuseauxCost, 11, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path,
+                                           const MT_Vector2D& from, const MT_Vector2D& to,
+                                           double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, // $$$$ MCO : all those configuration values should stay out of the movement module
+                                           double rFuseauCostPerMeterOut, double rComfortFuseauDistance, double rFuseauCostPerMeterIn,
+                                           double rMaximumAutomataFuseauDistance, double rAutomataFuseauCostPerMeterOut ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetFuseauxCost( from, to, rMaximumFuseauDistance, rMaximumFuseauDistanceWithAutomata, rFuseauCostPerMeterOut, rComfortFuseauDistance, rFuseauCostPerMeterIn, rMaximumAutomataFuseauDistance, rAutomataFuseauCostPerMeterOut );
 }
-DEFINE_HOOK( GetObjectsCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path,
-    const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) )
+
+DEFINE_HOOK( GetObjectsCost, 6, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path,
+                                          const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) )
 {
     return PathAdapter::Add( *core::Convert( entity ), path )->GetObjectsCost( from, to, nToTerrainType, nLinkTerrainType );
 }
-DEFINE_HOOK( GetUrbanBlockCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to ) )
+
+DEFINE_HOOK( GetUrbanBlockCost, 4, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetUrbanBlockCost( from, to );
 }
-DEFINE_HOOK( GetEnemiesCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
-                                       const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) )
+
+DEFINE_HOOK( GetEnemiesCost, 7, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
+                                          const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType, rEnemyMaximumCost );
 }
-DEFINE_HOOK( GetPopulationsCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
-                                           const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) )
+
+DEFINE_HOOK( GetPopulationsCost, 7, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to,
+                                              const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType, rPopulationMaximumCost );
 }
-DEFINE_HOOK( GetAltitudeCost, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
+
+DEFINE_HOOK( GetAltitudeCost, 5, double, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path, const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) )
 {
     return sword::PathAdapter::Add( *core::Convert( entity ), path )->GetAltitudeCost( from, to, rAltitudeCostPerMeter );
 }
