@@ -66,7 +66,10 @@ LendingsListView.cpp \
 LoginDialog.cpp \
 LogisticTreeView.cpp \
 LogisticStatusWidgets.cpp \
+LogisticSupplyAvailabilityTableWidget.cpp \
 LogisticSupplyChangeQuotasDialog.cpp \
+LogisticSupplyExclusiveListWidget.cpp \
+LogisticSupplyFlowDialog_ABC.cpp \
 LogisticSupplyPullFlowDialog.cpp \
 LogisticSupplyPushFlowDialog.cpp \
 LogisticSupplyRecompletionDialog.cpp \

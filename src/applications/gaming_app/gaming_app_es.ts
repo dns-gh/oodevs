@@ -1338,59 +1338,8 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>Logistic : Pull supply flow</name>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished">Dotaciones</translation>
-    </message>
-    <message>
-        <source>Carriers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished">Cantidad</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manual selection of transport carriers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Route</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supplier:</source>
-        <translation type="unfinished">Proveedor:</translation>
-    </message>
-</context>
-<context>
     <name>Logistic : Push supply flow</name>
     <message>
-        <source>Resources</source>
-        <translation type="unfinished">Dotaciones</translation>
-    </message>
-    <message>
-        <source>Carriers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Route</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Resource</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1404,10 +1353,6 @@ Reason: %3
     </message>
     <message>
         <source>Manual selection of transport carriers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1424,6 +1369,25 @@ Reason: %3
     </message>
     <message>
         <source>Add Waypoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Logistic : supply flow</name>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished">Dotaciones</translation>
+    </message>
+    <message>
+        <source>Carriers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Route</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1490,17 +1454,24 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>LogisticSupplyPullFlowDialog</name>
+    <name>LogisticSupplyFlowDialog_ABC</name>
     <message>
-        <source>Pull supply flow</source>
+        <source>Supply flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ok</source>
         <translation type="unfinished">Ok</translation>
     </message>
+</context>
+<context>
+    <name>LogisticSupplyPullFlowDialog</name>
     <message>
-        <source>Cancel</source>
+        <source>Pull supply flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1513,14 +1484,6 @@ Reason: %3
     <message>
         <source>Push supply flow</source>
         <translation>Forzar flujo de abastecimiento</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Log Supply Push Flow</source>

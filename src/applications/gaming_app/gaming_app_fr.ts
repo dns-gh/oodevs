@@ -1340,58 +1340,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>Logistic : Pull supply flow</name>
-    <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
-    </message>
-    <message>
-        <source>Carriers</source>
-        <translation>Vecteurs</translation>
-    </message>
-    <message>
-        <source>Resource</source>
-        <translation>Ressource</translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation>Quantité</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Manual selection of transport carriers</source>
-        <translation>Sélection manuelle des vecteurs de transport</translation>
-    </message>
-    <message>
-        <source>Route</source>
-        <translation>Itinéraire</translation>
-    </message>
-    <message>
-        <source>Supplier:</source>
-        <translation>Fournisseur:</translation>
-    </message>
-</context>
-<context>
     <name>Logistic : Push supply flow</name>
-    <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
-    </message>
-    <message>
-        <source>Carriers</source>
-        <translation>Vecteurs</translation>
-    </message>
-    <message>
-        <source>Route</source>
-        <translation>Itinéraire</translation>
-    </message>
     <message>
         <source>Resource</source>
         <translation>Ressource</translation>
@@ -1427,6 +1376,21 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Add Waypoint</source>
         <translation>Ajouter le point de passage</translation>
+    </message>
+</context>
+<context>
+    <name>Logistic : supply flow</name>
+    <message>
+        <source>Resources</source>
+        <translation>Ressources</translation>
+    </message>
+    <message>
+        <source>Carriers</source>
+        <translation>Vecteurs</translation>
+    </message>
+    <message>
+        <source>Route</source>
+        <translation>Itinéraire</translation>
     </message>
 </context>
 <context>
@@ -1492,18 +1456,25 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>LogisticSupplyPullFlowDialog</name>
+    <name>LogisticSupplyFlowDialog_ABC</name>
     <message>
-        <source>Pull supply flow</source>
-        <translation>Tirer flux</translation>
+        <source>Supply flow</source>
+        <translation>Flux de ravitaillement</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
+</context>
+<context>
+    <name>LogisticSupplyPullFlowDialog</name>
     <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
+        <source>Pull supply flow</source>
+        <translation>Tirer flux</translation>
     </message>
     <message>
         <source>Log Supply Pull Flow</source>
@@ -1515,14 +1486,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Push supply flow</source>
         <translation>Pousser un flux de ravitaillement</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
     </message>
     <message>
         <source>Log Supply Push Flow</source>
@@ -1565,7 +1528,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Resources</source>
-        <translation>Dotations</translation>
+        <translation>Ressources</translation>
     </message>
     <message>
         <source>Resource</source>
