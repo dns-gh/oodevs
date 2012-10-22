@@ -22,9 +22,11 @@
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/Agent.h"
 #include "clients_kernel/Karma.h"
+#include "rpr/EntityType.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/foreach.hpp>
 #include <algorithm>
+#include <sstream>
 
 using namespace plugins::hla;
 
@@ -143,6 +145,12 @@ void RemoteAgentController::SideChanged( const std::string& identifier, rpr::For
 {
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
+    {
+        std::stringstream ss;
+        ss << "Received side for " << identifier << " " << (int)side;
+        logger_.LogInfo( ss.str() );
+    }
+
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     const unsigned long automat = FindAutomat( side );
     if( automat == 0 )
@@ -162,6 +170,11 @@ void RemoteAgentController::NameChanged( const std::string& identifier, const st
 {
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
+    {
+        std::stringstream ss;
+        ss << "Received name for " << identifier << " " << name;
+        logger_.LogInfo( ss.str() );
+    }
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     if( message().parameters().elem( 2 ).value_size() == 1)
         message().mutable_parameters()->mutable_elem( 2 )->mutable_value( 0 )->set_acharstr( name );
@@ -178,6 +191,11 @@ void RemoteAgentController::TypeChanged( const std::string& identifier, const rp
 {
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
+    {
+        std::stringstream ss;
+        ss << "Received type for " << identifier << " " << type.str();
+        logger_.LogInfo( ss.str() );
+    }
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     if( message().parameters().elem( 0 ).value_size() == 1)
         message().mutable_parameters()->mutable_elem( 0 )->mutable_value( 0 )->set_identifier( typeResolver_.Resolve( type ) );
@@ -190,9 +208,14 @@ void RemoteAgentController::TypeChanged( const std::string& identifier, const rp
 // Name: RemoteAgentController::EquipmentUpdated
 // Created: SLI 2011-09-29
 // -----------------------------------------------------------------------------
-void RemoteAgentController::EquipmentUpdated( const std::string& /*identifier*/, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
+void RemoteAgentController::EquipmentUpdated( const std::string& identifier, const rpr::EntityType& /*equipmentType*/, unsigned int /*number*/ )
 {
-    // NOTHING
+    T_UnitCreations::const_iterator it( unitCreations_.find( identifier ) );
+    if( unitCreations_.end() == it )
+        return;
+    simulation::UnitMagicAction& message = *(it->second);
+    message().set_type( sword::UnitMagicAction::unit_creation );
+    Send( message, identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,6 +242,16 @@ void RemoteAgentController::CallsignChanged( const std::string& /*identifier*/, 
 // -----------------------------------------------------------------------------
 void RemoteAgentController::Send( simulation::UnitMagicAction& message, const std::string& identifier )
 {
+    {
+        std::stringstream ss;
+        ss << "Attempt creation unit " << identifier << std::boolalpha << " " << message().has_type() << " " << 
+            ( message().has_tasker() ) << " " << 
+            ( message().parameters().elem( 0 ).value_size() > 0 ) << " " << // type 
+            ( message().parameters().elem( 1 ).value_size() > 0 ) << " " << // position
+            ( message().parameters().elem( 2 ).value_size() > 0 ); // name
+        logger_.LogInfo( ss.str() );
+    }
+
     if( message().has_type() && 
         message().has_tasker() &&
         message().parameters().elem( 0 ).value_size() > 0 &&
@@ -379,9 +412,7 @@ void RemoteAgentController::SubAgregatesChanged( const std::string& rtiIdentifie
     T_UnitCreations::const_iterator it( unitCreations_.find( rtiIdentifier ) );
     if( unitCreations_.end() == it )
         return;
-    if( !children.empty() ) // FIXME heuristic to determine if aggregate is a platoon
-        unitCreations_.erase( rtiIdentifier );
-    else
+    if( children.empty() ) // FIXME heuristic to determine if remote is a Sword Unit
     {
         simulation::UnitMagicAction& message = *(it->second);
         message().set_type( sword::UnitMagicAction::unit_creation );
@@ -393,7 +424,15 @@ void RemoteAgentController::SubAgregatesChanged( const std::string& rtiIdentifie
 // Name: RemoteAgentController::SubEntitiesChanged
 // Created: AHC 2012-10-04
 // -----------------------------------------------------------------------------
-void RemoteAgentController::SubEntitiesChanged(const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+void RemoteAgentController::SubEntitiesChanged(const std::string& rtiIdentifier, const std::set< std::string >& children )
 {
-    // NOTHING
+    T_UnitCreations::const_iterator it( unitCreations_.find( rtiIdentifier ) );
+    if( unitCreations_.end() == it )
+        return;
+    if( !children.empty() ) // FIXME heuristic to determine if remote is a Sword Unit
+    {
+        simulation::UnitMagicAction& message = *(it->second);
+        message().set_type( sword::UnitMagicAction::unit_creation );
+        Send( message, rtiIdentifier );
+    }
 }
