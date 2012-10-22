@@ -151,12 +151,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_enemy_has_no_visible_component, FiringFixture )
 {
     ExpectCallback( 1 );
-    ExpectEvent( "direct fire pion attack",
-        sword::test::MakeModel( "entity/data", "data" )
-                              ( "enemy/data", "data" )
-                              ( "report", true )
-                              ( "paused", false ) );
-   ExecuteCommands();
+    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_no_component_can_be_found_to_fire_at, FiringFixture )
