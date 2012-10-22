@@ -4,23 +4,23 @@
 The agent chooses a position, deploys onto it and wait the order to delevier indirect fires. If the &quot;moveAutomatically&quot; parameter is set to 'TRUE', (default value), the agent decides to change its position after each fire. </description>
     <parameters>
         <parameter name="deploymentPositions" nullable="true">
-            <description>The set of deploying positions (object knowledges).</description>
+            <description>The set of deploying positions (object knowledges, position, area, urban knowledge).</description>
             <type>
                 <list>
-                    <class name="world.Object"/>
+                    <class name="properties.Positionable"/>
                 </list>
             </type>
             <default>
                 <nil/>
             </default>
         </parameter>
-        <parameter name="moveAutomatically" nullable="true">
+        <parameter name="moveAutomatically">
             <description>Define if the agent changes automatically its position afer each fire.</description>
             <type>
                 <simple name="boolean"/>
             </type>
             <default>
-                <boolean>true</boolean>
+                <boolean>false</boolean>
             </default>
         </parameter>
     </parameters>

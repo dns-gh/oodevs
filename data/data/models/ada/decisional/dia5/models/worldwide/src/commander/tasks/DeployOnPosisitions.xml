@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.DeployOnPosisitions" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.DeployOnPositions">
+    <parameters>
+        <parameter name="deploymentPositions" nullable="true">
+            <type>
+                <list>
+                    <class name="properties.Positionable"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="retreatPosition" nullable="true">
+            <description>The retreat position to reach </description>
+            <type>
+                <class name="properties.Reachable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="changeAutomatically" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="deploying on positions" disable-when-done="true">
+            <skills>
+                <skill name="commander.skills.Lead" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>commander.tasks.DeployOnPosisitions</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>agent.tasks.DeployOnPositions</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>agent.tasks.Follow</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>agent.tasks.CombatSupport</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>agent.tasks.Follow</string>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>
