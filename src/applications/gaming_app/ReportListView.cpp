@@ -178,8 +178,9 @@ void ReportListView::NotifyUpdated( const Reports& reports )
     tools::Iterator< const Report& > iterator = reports.CreateIterator();
     while( iterator.HasMoreElements() )
         reportModel_.appendRow( iterator.NextElement().GetReportData() );
-    for( size_t i = 0; i < reports.traces_.size(); ++i )
-        reportModel_.appendRow( reports.traces_[ i ]->GetReportData() );
+    const Reports::T_Reports& traces = reports.GetTraces();
+    for( size_t i = 0; i < traces.size(); ++i )
+        reportModel_.appendRow( traces[ i ]->GetReportData() );
 }
 
 // -----------------------------------------------------------------------------

@@ -47,6 +47,8 @@ class Reports : public kernel::Extension_ABC
               , public kernel::Displayable_ABC
 {
 public:
+    typedef std::vector< Report* >      T_Reports;
+
     //! @name Constructors/Destructor
     //@{
              Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller, const ReportFactory& reportFactory );
@@ -57,23 +59,23 @@ public:
     //@{
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
 
+    const T_Reports& GetTraces() const;
     void Clear();
     void ClearTraces();
     void MarkAsRead();
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef T_Reports::iterator        IT_Reports;
+    typedef T_Reports::const_iterator CIT_Reports;
+    //@}
+
     //! @name Copy/Assignment
     //@{
     Reports( const Reports& );            //!< Copy constructor
     Reports& operator=( const Reports& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< Report* >      T_Reports;
-    typedef T_Reports::iterator        IT_Reports;
-    typedef T_Reports::const_iterator CIT_Reports;
     //@}
 
     //! @name Helpers
@@ -89,8 +91,6 @@ private:
     const kernel::Entity_ABC& agent_;
     kernel::Controller& controller_;
     const ReportFactory& reportFactory_;
-
-public:  // $$$$ AGE 2006-03-09:
     T_Reports traces_;
     //@}
 };

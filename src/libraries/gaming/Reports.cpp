@@ -125,3 +125,8 @@ void Reports::DisplayInTooltip( Displayer_ABC& displayer ) const
         if( const Report* report = it->second )
             report->DisplayInTooltip( displayer );
 }
+
+const Reports::T_Reports& Reports::GetTraces() const
+{
+    return traces_;
+}
