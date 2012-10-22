@@ -6,38 +6,38 @@
     <settings>
         <group>
             <descriptions>
-                <description lang="en" name="Federation"></description>
-                <description lang="fr" name="Fédération"></description>
+                <description lang="en" name="Federation"/>
+                <description lang="fr" name="Fédération"/>
             </descriptions>
             <settings>
                 <setting attribute="@federation" type="string" default="MyFederation">
                     <descriptions>
-                        <description lang="en" name="Federation Name"></description>
-                        <description lang="fr" name="Nom de la fédération"></description>
+                        <description lang="en" name="Federation Name"/>
+                        <description lang="fr" name="Nom de la fédération"/>
                     </descriptions>
                 </setting>
                 <setting attribute="@name" type="string" default="SWORD">
                     <descriptions>
-                        <description lang="en" name="Federate Name"></description>
-                        <description lang="fr" name="Nom du fédéré"></description>
+                        <description lang="en" name="Federate Name"/>
+                        <description lang="fr" name="Nom du fédéré"/>
                     </descriptions>
                 </setting>
                 <setting attribute="@dis-site" type="integer" default="1">
                     <descriptions>
-                        <description lang="en" name="DIS Site ID"></description>
-                        <description lang="fr" name="DIS Site ID"></description>
+                        <description lang="en" name="DIS Site ID"/>
+                        <description lang="fr" name="DIS Site ID"/>
                     </descriptions>
                 </setting>
                 <setting attribute="@dis-application" type="integer" default="1">
                     <descriptions>
-                        <description lang="en" name="DIS Application ID"></description>
-                        <description lang="fr" name="DIS Application ID"></description>
+                        <description lang="en" name="DIS Application ID"/>
+                        <description lang="fr" name="DIS Application ID"/>
                     </descriptions>
                 </setting>
                 <setting attribute="@host" type="string" default="localhost">
                     <descriptions>
-                        <description lang="en" name="Host Name"></description>
-                        <description lang="fr" name="Nom de l'hôte"></description>
+                        <description lang="en" name="Host Name"><![CDATA[RTI CRC host name]]></description>
+                        <description lang="fr" name="Nom de l'hôte"><![CDATA[Nom de l'hôte RTI CRC]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@port" type="integer" default="8989" min="0" max="65535">
@@ -68,34 +68,34 @@
         </group>
         <group>
             <descriptions>
-                <description lang="en" name="Time"></description>
-                <description lang="fr" name="Temps"></description>
+                <description lang="en" name="Time"/>
+                <description lang="fr" name="Temps"/>
             </descriptions>
             <settings>
                 <setting attribute="@time-constrained" type="boolean" default="true">
                     <descriptions>
-                        <description lang="en" name="Time constrained"></description>
-                        <description lang="fr" name="Temps contraint"></description>
+                        <description lang="en" name="Time constrained"/>
+                        <description lang="fr" name="Temps contraint"/>
                     </descriptions>
                 </setting>
                 <setting attribute="@time-regulating" type="boolean" default="true">
                     <descriptions>
-                        <description lang="en" name="Time regulating"></description>
-                        <description lang="fr" name="Regulateur de temps"></description>
+                        <description lang="en" name="Time regulating"/>
+                        <description lang="fr" name="Regulateur de temps"/>
                     </descriptions>
                 </setting>
                 <setting attribute="@lookahead" type="integer" default="10" min="0" max="60">
                     <descriptions>
-                        <description lang="en" name="Lookahead"></description>
-                        <description lang="fr" name="Anticipation"></description>
+                        <description lang="en" name="Lookahead"/>
+                        <description lang="fr" name="Anticipation"/>
                     </descriptions>
                 </setting>
             </settings>
         </group>
         <group>
             <descriptions>
-                <description lang="en" name="Advanced"></description>
-                <description lang="fr" name="Avancé"></description>
+                <description lang="en" name="Advanced"/>
+                <description lang="fr" name="Avancé"/>
             </descriptions>
             <settings>
                 <setting attribute="@protocol" type="enumeration" default="hla-1516e;hla-1516">
@@ -154,32 +154,32 @@
                 </setting>
                 <setting attribute="@transfer-sender" type="enumeration" default="rpr;null">
                     <descriptions>
-                        <description lang="en" name="Transfer sender"><![CDATA[]]>Select how ownership transfer is initiated.</description>
-                        <description lang="fr" name="Requete transfert"><![CDATA[]]>Détermine comment démarre le transfert de controle.</description>
+                        <description lang="en" name="Transfer sender"><![CDATA[Select how ownership transfer is initiated]]></description>
+                        <description lang="fr" name="Requete transfert"><![CDATA[Détermine comment démarre le transfert de controle]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@accept-external-transfer" type="enumeration" default="negotiated;always;never">
                     <descriptions>
-                        <description lang="en" name="Accept Transfer"><![CDATA[]]>Specify whether external transfer request should be accepted.</description>
-                        <description lang="fr" name="Accepter les tansfert"><![CDATA[]]>Détermine s'il faut accepter les demandes de transfert externes.</description>
+                        <description lang="en" name="Accept Transfer"><![CDATA[Specify whether external transfer request should be accepted]]></description>
+                        <description lang="fr" name="Accepter les tansfert"><![CDATA[Détermine s'il faut accepter les demandes de transfert externes]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@attribute-ownership-negotiation" type="boolean" default="false">
                     <descriptions>
-                        <description lang="en" name="Use HLA ownership negotiation"><![CDATA[]]>Specify whether RTI attribute negotiation should be used.</description>
-                        <description lang="fr" name="Negotiation ownership HLA"><![CDATA[]]>Détermine s'il faut utiliser la négotiation de transfert HLA.</description>
+                        <description lang="en" name="Use HLA ownership negotiation"><![CDATA[Specify whether RTI attribute negotiation should be used]]></description>
+                        <description lang="fr" name="Negotiation ownership HLA"><![CDATA[Détermine s'il faut utiliser la négotiation de transfert HLA]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@handle-objects" type="boolean" default="false">
                     <descriptions>
-                        <description lang="en" name="Publish tactical objects on HLA"><![CDATA[]]>Specify whether tactical objects shall be published.</description>
-                        <description lang="fr" name="Publier les objets tactiques"><![CDATA[]]>Détermine s'il faut publier les objets tactiques.</description>
+                        <description lang="en" name="Publish tactical objects on HLA"><![CDATA[Specify whether tactical objects shall be published]]></description>
+                        <description lang="fr" name="Publier les objets tactiques"><![CDATA[Détermine s'il faut publier les objets tactiques]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@send-full-orbat" type="boolean" default="false">
                     <descriptions>
-                        <description lang="en" name="Publish complete ORBAT on HLA"><![CDATA[]]>Specify whether all orbat shall be published.</description>
-                        <description lang="fr" name="Publier l'ODB complet"><![CDATA[]]>Détermine s'il faut publier l'ODB complet.</description>
+                        <description lang="en" name="Publish complete ORBAT on HLA"><![CDATA[Specify whether all orbat shall be published]]></description>
+                        <description lang="fr" name="Publier l'ODB complet"><![CDATA[Détermine s'il faut publier l'ODB complet]]></description>
                     </descriptions>
                 </setting>
             </settings>
