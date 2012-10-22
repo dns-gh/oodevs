@@ -50,8 +50,11 @@ void LinkItemDelegate::paint( QPainter* painter, const QStyleOptionViewItem& opt
         ctx.palette.setColor( QPalette::Text, optionV4.palette.color( QPalette::Active, QPalette::HighlightedText ) );
     QRect textRect = style->subElementRect( QStyle::SE_ItemViewItemText, &optionV4 );
     painter->save();
-    painter->translate( textRect.topLeft() );
-    painter->setClipRect( textRect.translated( -textRect.topLeft() ) );
+    QPoint offset;
+    if( QApplication::isRightToLeft() )
+        offset.setX( textRect.width() - static_cast< int >( doc.idealWidth() ) );
+    painter->translate( textRect.topLeft() + offset );
+    painter->setClipRect( textRect.translated( -textRect.topLeft() - offset ) );
     doc.documentLayout()->draw( painter, ctx );
     painter->restore();
 }
@@ -84,7 +87,14 @@ bool LinkItemDelegate::editorEvent( QEvent* event, QAbstractItemModel* model, co
     initStyleOption( &optionV4, index );
     QTextDocument doc;
     doc.setHtml( optionV4.text );
-    QString anchor = doc.documentLayout()->anchorAt( p );
+    QPoint offset;
+    if( QApplication::isRightToLeft() )
+    {
+        QStyle* style = optionV4.widget ? optionV4.widget->style() : QApplication::style();
+        QRect textRect = style->subElementRect( QStyle::SE_ItemViewItemText, &optionV4 );
+        offset.setX( textRect.width() - static_cast< int >( doc.idealWidth() ) );
+    }
+    QString anchor = doc.documentLayout()->anchorAt( p - offset );
     if( anchor.isEmpty() )
         static_cast< QWidget* >( parent() )->unsetCursor();
     else
