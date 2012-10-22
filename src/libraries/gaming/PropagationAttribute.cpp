@@ -91,7 +91,7 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
                 bfs::path path( path_ / file.filename() );
                 bfs::path projection( path_ / projection_ );
                 kernel::ASCExtractor extractor( path.string(), projection.string() );
-                kernel::ASCExtractor::T_Tiles tmp = extractor.GetTiles();
+                const kernel::ASCExtractor::T_Tiles& tmp = extractor.GetTiles();
                 tiles_.insert( tiles_.end(), tmp.begin(), tmp.end() );
             }
             propagation_.erase( it );
