@@ -164,11 +164,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_no_com
     core::Model& component_2 = model[ "entities" ][ 43 ][ "components" ].AddElement();
     MOCK_EXPECT( CanComponentBeFiredAt ).once().with( core::Convert( &component_2 ), mock::any ).returns( false );
     ExpectCallback( 1 );
-    ExpectEvent( "direct fire pion attack",
-        sword::test::MakeModel( "entity/data", "data" )
-                              ( "enemy/data", "data" )
-                              ( "report", true )
-                              ( "paused", false ) );
     ExecuteCommands();
 }
 
