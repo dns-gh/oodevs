@@ -14,6 +14,7 @@
 #include <functional>
 #include <algorithm>
 #include <vector>
+#include <string>
 #include <boost/preprocessor.hpp>
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/function_types/result_type.hpp>
@@ -138,7 +139,7 @@ namespace detail
             }\
             catch( std::exception& e )\
             {\
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );\
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, ( "Exception in " #Hook " hook: " + std::string( e.what() ) ).c_str() );\
             }\
             catch( ... )\
             {\

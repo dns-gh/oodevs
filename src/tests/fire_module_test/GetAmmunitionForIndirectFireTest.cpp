@@ -23,7 +23,7 @@ BOOST_FIXTURE_TEST_CASE( get_ammunition_for_indirect_fire_returns_no_ammunition_
 BOOST_FIXTURE_TEST_CASE( get_ammunition_for_indirect_fire_returns_no_ammunition_when_weapon_type_does_not_exist, sword::fire::ModuleFixture )
 {
     entity[ "components" ].AddElement()[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Unknown weapon type : non existing weapon" ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Exception in GetAmmunitionForIndirectFire hook: Unknown weapon type : non existing weapon" ) );
     BOOST_CHECK( ! GetAmmunitionForIndirectFire( core::Convert( &model ), firer, "explosion", 0 ) );
 }
 
