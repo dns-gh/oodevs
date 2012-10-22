@@ -149,8 +149,6 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
             return eTemporarilyBlocked;
         return eNoCapacity;
     }
-    owner_.NotifyAttacking ( *pTarget, mustReport );
-    pTarget->NotifyAttackedBy( owner_, mustReport );
     // Targets
     const bool bFireOnlyOnMajorComposantes = ( nComposanteFiredType == PHY_DirectFireData::eFireOnlyOnMajorComposantes );
     std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > componentAbleToBeFiredComputer = owner_.GetAlgorithms().composantesAbleToBeFiredComputerFactory_->Create( bFireOnlyOnMajorComposantes );
@@ -158,6 +156,8 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
     PHY_Composante_ABC::T_ComposanteVector& targets = componentAbleToBeFiredComputer->ResultLimited( nNbrWeaponsUsable );
     if( targets.empty() )
         return eEnemyDestroyed;
+    owner_.NotifyAttacking ( *pTarget, mustReport );
+    pTarget->NotifyAttackedBy( owner_, mustReport );
     assert( targets.size() == nNbrWeaponsUsable );
     if( !pFireResult )
         pFireResult = new PHY_FireResults_Pion( owner_, *pTarget );

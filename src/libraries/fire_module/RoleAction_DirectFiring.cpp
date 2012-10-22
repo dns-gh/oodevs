@@ -166,11 +166,11 @@ int RoleAction_DirectFiring::FirePion( const wrapper::View& model, const wrapper
             return eTemporarilyBlocked;
         return eNoCapacity;
     }
-    NotifyAttacking( entity, target, mustReport, false );
     const wrapper::View& targets = model[ "entities" ][ static_cast< unsigned int >( target[ "identifier" ] ) ][ "components" ];
     T_ComposanteVector compTargets = GetComposantesAbleToBeFired( targets, parameters, nNbrWeaponsUsable );
     if( compTargets.empty() )
         return eEnemyDestroyed;
+    NotifyAttacking( entity, target, mustReport, false );
     assert( compTargets.size() == nNbrWeaponsUsable );
     FirePion( data, entity, target, compTargets );
     return eRunning;
