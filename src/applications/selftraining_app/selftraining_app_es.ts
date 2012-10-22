@@ -74,6 +74,14 @@
         <source>Remove Terrains and Models</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Missing Sword-Authoring license</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing Sword-Terrain-Generation license</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateExerciceWidget</name>
@@ -308,6 +316,18 @@ Do really you want to replace it ?</source>
         <source>Start single player or multiplayer training session</source>
         <translation>Iniciar sesión de entrenamiento individual o multijugador</translation>
     </message>
+    <message>
+        <source>Missing Sword-Authoring and Sword-Terrain-Generation licenses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing Sword-Preparation license</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing Sword-Replayer license</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportWidget</name>
@@ -382,26 +402,6 @@ Do really you want to replace it ?</source>
     <message>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Profile: </source>
-        <translation>Perfil: </translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terreno</translation>
-    </message>
-    <message>
-        <source>User</source>
-        <translation>Usuario</translation>
-    </message>
-    <message>
-        <source>Advanced User</source>
-        <translation>Usuario avanzado</translation>
-    </message>
-    <message>
-        <source>Administrator</source>
-        <translation>Administración</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -609,6 +609,10 @@ Do really you want to replace it ?</source>
     <message>
         <source>Join a remote training session</source>
         <translation>Unirse a una sesión remota</translation>
+    </message>
+    <message>
+        <source>Missing Sword-Runtime license</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

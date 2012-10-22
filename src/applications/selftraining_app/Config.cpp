@@ -9,26 +9,28 @@
 
 #include "selftraining_app_pch.h"
 #include "Config.h"
-#include "clients_gui/Tools.h"
-
-#pragma warning( push, 0 )
-#include <boost/program_options.hpp>
-#pragma warning( pop )
-
-namespace po = boost::program_options;
+#include "license_gui/LicenseDialog.h"
 
 namespace
 {
-    Config::EProfile ReadUserProfile()
+// -----------------------------------------------------------------------------
+// Name: CheckLicenseFeature
+// Created: BAX 2012-10-22
+// -----------------------------------------------------------------------------
+bool CheckLicenseFeature( const std::string& feature )
+{
+    try
     {
-        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        QString value = settings.readEntry( "/Common/UserProfile", "" );
-        if( value.isEmpty() )
-            return Config::eAdministrator;
-        int intValue = value.toInt();
-        assert( intValue >= Config::eTerrain && intValue <= Config::eAdministrator );
-        return static_cast< Config::EProfile >( intValue );
+#if !defined( NO_LICENSE_CHECK )
+        license_gui::LicenseDialog::CheckLicense( feature, false, 0, 0 );
+#endif
+        return true;
     }
+    catch( std::exception& /*e*/ )
+    {
+        return false;
+    }
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +38,11 @@ namespace
 // Created: LDC 2008-10-27
 // -----------------------------------------------------------------------------
 Config::Config()
-    : profile_( ReadUserProfile() )
+    : hasAuthoring_( CheckLicenseFeature( "sword-authoring" ) )
+    , hasTerrainGeneration_( CheckLicenseFeature( "sword-terrain-generation" ) )
+    , hasPreparation_( CheckLicenseFeature( "sword-preparation" ) )
+    , hasRuntime_( CheckLicenseFeature( "sword-runtime" ) )
+    , hasReplayer_( CheckLicenseFeature( "sword-replayer" ) )
 {
     // NOTHING
 }
@@ -48,22 +54,4 @@ Config::Config()
 Config::~Config()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::SetProfile
-// Created: JSR 2010-07-12
-// -----------------------------------------------------------------------------
-void Config::SetProfile( EProfile profile )
-{
-    profile_ = profile;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::GetProfile
-// Created: JSR 2010-07-12
-// -----------------------------------------------------------------------------
-Config::EProfile Config::GetProfile() const
-{
-    return profile_;
 }

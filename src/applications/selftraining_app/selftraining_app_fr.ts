@@ -74,6 +74,14 @@
         <source>Remove Terrains and Models</source>
         <translation>Supprimer des terrains et des modèles</translation>
     </message>
+    <message>
+        <source>Missing Sword-Authoring license</source>
+        <translation>License Sword-Authoring manquante</translation>
+    </message>
+    <message>
+        <source>Missing Sword-Terrain-Generation license</source>
+        <translation>License Sword-Terrain-Generation manquante</translation>
+    </message>
 </context>
 <context>
     <name>CreateExerciceWidget</name>
@@ -310,6 +318,18 @@ Voulez-vous vraiment le remplacer ?</translation>
         <source>Start single player or multiplayer training session</source>
         <translation>Démarrer une session d&apos;entraînement solo ou multi-joueur</translation>
     </message>
+    <message>
+        <source>Missing Sword-Authoring and Sword-Terrain-Generation licenses</source>
+        <translation>Licenses Sword-Authoring et Sword-Terrain-Generation manquantes</translation>
+    </message>
+    <message>
+        <source>Missing Sword-Preparation license</source>
+        <translation>License Sword-Preparation manquante</translation>
+    </message>
+    <message>
+        <source>Missing Sword-Replayer license</source>
+        <translation>License Sword-Replayer manquante</translation>
+    </message>
 </context>
 <context>
     <name>ImportWidget</name>
@@ -384,26 +404,6 @@ Voulez-vous vraiment le remplacer ?</translation>
     <message>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Profile: </source>
-        <translation>Profil: </translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terrain</translation>
-    </message>
-    <message>
-        <source>User</source>
-        <translation>Utilisation</translation>
-    </message>
-    <message>
-        <source>Advanced User</source>
-        <translation>Validation</translation>
-    </message>
-    <message>
-        <source>Administrator</source>
-        <translation>Administration</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -611,6 +611,10 @@ Voulez-vous vraiment le remplacer ?</translation>
     <message>
         <source>Join a remote training session</source>
         <translation>Rejoindre une session d&apos;entraînement distante</translation>
+    </message>
+    <message>
+        <source>Missing Sword-Runtime license</source>
+        <translation>License Sword-Runtime manquante</translation>
     </message>
 </context>
 <context>

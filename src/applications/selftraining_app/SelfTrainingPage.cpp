@@ -21,6 +21,7 @@
 // -----------------------------------------------------------------------------
 SelfTrainingPage::SelfTrainingPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
+    , config_( config )
 {
     setName( "SelfTrainingPage" );
     startButton_ = AddLink( *new ScenarioLauncherPage( pages, *this, controllers, config, fileLoader, launcher, interpreter ) );
@@ -42,7 +43,20 @@ SelfTrainingPage::~SelfTrainingPage()
 // -----------------------------------------------------------------------------
 void SelfTrainingPage::OnLanguageChanged()
 {
-    SetTextAndSubtitle( startButton_, tools::translate( "SelfTrainingPage", "Start" ), tools::translate( "SelfTrainingPage", "Start a training session" ) );
-    SetTextAndSubtitle( joinButton_, tools::translate( "SelfTrainingPage", "Join" ), tools::translate( "SelfTrainingPage", "Join a remote training session" ) );
+    SetTextAndSubtitle( startButton_, tools::translate( "SelfTrainingPage", "Start" ),
+        config_.hasRuntime_
+        ? tools::translate( "SelfTrainingPage", "Start a training session" )
+        : tools::translate( "SelfTrainingPage", "Missing Sword-Runtime license" ) );
+    SetTextAndSubtitle( joinButton_, tools::translate( "SelfTrainingPage", "Join" ),
+        tools::translate( "SelfTrainingPage", "Join a remote training session" ) );
     MenuPage::OnLanguageChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SelfTrainingPage::Update
+// Created: JSR 2010-07-12
+// -----------------------------------------------------------------------------
+void SelfTrainingPage::Update()
+{
+    startButton_->setEnabled( config_.hasRuntime_ );
 }

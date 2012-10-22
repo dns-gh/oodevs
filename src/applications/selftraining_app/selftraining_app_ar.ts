@@ -74,6 +74,14 @@
         <source>Remove Terrains and Models</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Missing Sword-Authoring license</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing Sword-Terrain-Generation license</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateExerciceWidget</name>
@@ -306,6 +314,18 @@ Do really you want to replace it ?</source>
         <source>Replay scenario</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Missing Sword-Authoring and Sword-Terrain-Generation licenses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing Sword-Preparation license</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing Sword-Replayer license</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportWidget</name>
@@ -383,26 +403,6 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Advanced User</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Administrator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -606,6 +606,10 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>Join a remote training session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing Sword-Runtime license</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

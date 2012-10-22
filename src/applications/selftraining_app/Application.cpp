@@ -23,7 +23,6 @@
 #include "tools/NullFileLoaderObserver.h"
 #include "tools/DefaultLoader.h"
 #include "tools/Win32/BugTrap.h"
-#include "license_gui/LicenseDialog.h"
 #include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -34,11 +33,6 @@
 Application::Application( int argc, char** argv )
     : gui::Application_ABC( argc, argv )
 {
-    // License
-    CheckLicense( "sword" );
-    if( IsInvalidLicense() )
-        return;
-
     // Application_ABC initialization
     Initialize();
 
@@ -99,9 +93,6 @@ void Application::InitializeStyle()
 // -----------------------------------------------------------------------------
 int Application::Run()
 {
-    if( IsInvalidLicense() )
-        return EXIT_FAILURE;
-    
     if( !launcher_->IsInitialized() )
     {
         QMessageBox::critical( mainWindow_, tools::translate( "Application", "Error" ), tools::translate( "Application", "Launcher service cannot be started: %1."  ).arg( launcher_->GetLastError().c_str() ) );

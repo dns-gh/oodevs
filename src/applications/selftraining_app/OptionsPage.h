@@ -37,7 +37,6 @@ private slots:
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
     void OnEditDataDirectory( const QString& text );
-    void OnChangeProfile( int index );
     virtual void OnApply();
     virtual void OnBack();
     //@}
@@ -65,16 +64,12 @@ private:
 
     std::string selectedLanguage_;
     std::string selectedDataDir_;
-    int         selectedProfile_;
 
     QLabel*      languageLabel_;
     QComboBox*   languageCombo_;
 
     QLabel*      dataLabel_;
     QPushButton* dataButton_;
-
-    QLabel*      profileLabel_;
-    QComboBox*   profileCombo_;
 
     QLineEdit*   dataDirectory_;
 

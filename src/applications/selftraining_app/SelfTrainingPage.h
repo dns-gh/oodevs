@@ -53,6 +53,7 @@ private:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();
+    virtual void Update();
     //@}
 
 private:
@@ -60,6 +61,7 @@ private:
     //@{
     QPushButton* startButton_;
     QPushButton* joinButton_;
+    const Config& config_;
     //@}
 };
 

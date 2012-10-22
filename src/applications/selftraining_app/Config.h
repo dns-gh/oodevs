@@ -21,28 +21,10 @@
 class Config : public frontend::Config
 {
 public:
-    //! @name Profiles
-    //@{
-    enum EProfile
-    {
-        eTerrain       = 0,
-        eUser          = 1,
-        eAdvancedUser  = 2,
-        eAdministrator = 3
-    };
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              Config();
     virtual ~Config();
-    //@}
-
-    //! @name Operations
-    //@{
-    void SetProfile( EProfile profile );
-    EProfile GetProfile() const;
     //@}
 
 private:
@@ -52,10 +34,14 @@ private:
     Config& operator=( const Config& ); //!< Assignment operator
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
-    EProfile profile_;
+    bool hasAuthoring_;
+    bool hasTerrainGeneration_;
+    bool hasPreparation_;
+    bool hasRuntime_;
+    bool hasReplayer_;
     //@}
 };
 

@@ -56,9 +56,16 @@ AuthoringPage::~AuthoringPage()
 void AuthoringPage::OnLanguageChanged()
 {
     progressPage_->SetTitle( tools::translate( "AuthoringPage", "Starting Application" ) );
-    SetTextAndSubtitle( authoring_,       tools::translate( "AuthoringPage", "Authoring" ),        tools::translate( "AuthoringPage", "Launch Authoring application" ) );
-    SetTextAndSubtitle( terrainGen_,      tools::translate( "AuthoringPage", "Terrain Gen" ),      tools::translate( "AuthoringPage", "Launch Terrain Generation application" ) );
-    SetTextAndSubtitle( data_,            tools::translate( "AuthoringPage", "Data" ),             tools::translate( "AuthoringPage", "Remove Terrains and Models" ) );
+    SetTextAndSubtitle( authoring_, tools::translate( "AuthoringPage", "Authoring" ),
+        config_.hasAuthoring_
+        ? tools::translate( "AuthoringPage", "Launch Authoring application" )
+        : tools::translate( "AuthoringPage", "Missing Sword-Authoring license" ) );
+    SetTextAndSubtitle( terrainGen_, tools::translate( "AuthoringPage", "Terrain Gen" ),
+        config_.hasTerrainGeneration_
+        ? tools::translate( "AuthoringPage", "Launch Terrain Generation application" )
+        : tools::translate( "AuthoringPage", "Missing Sword-Terrain-Generation license" ) );
+    SetTextAndSubtitle( data_, tools::translate( "AuthoringPage", "Data" ),
+        tools::translate( "AuthoringPage", "Remove Terrains and Models" ) );
     MenuPage::OnLanguageChanged();
 }
 
@@ -68,30 +75,10 @@ void AuthoringPage::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void AuthoringPage::Update()
 {
-    switch( config_.GetProfile() )
-    {
-    case Config::eTerrain:
-        authoring_->setEnabled( false );
-        terrainGen_->setEnabled( true );
-        dataPage_->SetTerrainsEnabled( true );
-        dataPage_->SetModelsEnabled( false );
-        break;
-    case Config::eUser:
-    case Config::eAdvancedUser:
-        authoring_->setEnabled( true );
-        terrainGen_->setEnabled( false );
-        dataPage_->SetTerrainsEnabled( false );
-        dataPage_->SetModelsEnabled( true );
-        break;
-    case Config::eAdministrator:
-        authoring_->setEnabled( true );
-        terrainGen_->setEnabled( true );
-        dataPage_->SetTerrainsEnabled( true );
-        dataPage_->SetModelsEnabled( true );
-        break;
-    default:
-        throw std::exception( "Unknown profile" );
-    }
+    authoring_->setEnabled( config_.hasAuthoring_ );
+    terrainGen_->setEnabled( config_.hasTerrainGeneration_ );
+    dataPage_->SetTerrainsEnabled( true );
+    dataPage_->SetModelsEnabled( true );
 }
 
 // -----------------------------------------------------------------------------

@@ -44,16 +44,38 @@ HomePage::~HomePage()
     // NOTHING
 }
 
+namespace
+{
+// -----------------------------------------------------------------------------
+// Name: HasAdaptPage
+// Created: BAX 2012-10-22
+// -----------------------------------------------------------------------------
+bool HasAdaptPage( const Config& cfg )
+{
+    return cfg.hasAuthoring_ || cfg.hasTerrainGeneration_;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: HomePage::OnLanguageChanged
 // Created: ABR 2011-11-09
 // -----------------------------------------------------------------------------
 void HomePage::OnLanguageChanged()
 {
-    SetTextAndSubtitle( adapt_,   tools::translate( "HomePage", "Adapt" ),   tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" ) );
-    SetTextAndSubtitle( prepare_, tools::translate( "HomePage", "Prepare" ), tools::translate( "HomePage", "Edit scenario" ) );
-    SetTextAndSubtitle( play_,    tools::translate( "HomePage", "Play" ),    tools::translate( "HomePage", "Start single player or multiplayer training session" ) );
-    SetTextAndSubtitle( replay_,  tools::translate( "HomePage", "Replay" ),  tools::translate( "HomePage", "Replay scenario" ) );
+    SetTextAndSubtitle( adapt_, tools::translate( "HomePage", "Adapt" ),
+        HasAdaptPage( config_ )
+        ? tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" )
+        : tools::translate( "HomePage", "Missing Sword-Authoring and Sword-Terrain-Generation licenses" ) );
+    SetTextAndSubtitle( prepare_, tools::translate( "HomePage", "Prepare" ),
+        config_.hasPreparation_
+        ? tools::translate( "HomePage", "Edit scenario" )
+        : tools::translate( "HomePage", "Missing Sword-Preparation license" ) );
+    SetTextAndSubtitle( play_, tools::translate( "HomePage", "Play" ),
+        tools::translate( "HomePage", "Start single player or multiplayer training session" ) );
+    SetTextAndSubtitle( replay_,  tools::translate( "HomePage", "Replay" ),
+        config_.hasReplayer_
+        ? tools::translate( "HomePage", "Replay scenario" )
+        : tools::translate( "HomePage", "Missing Sword-Replayer license" ) );
     MenuPage::OnLanguageChanged();
 }
 
@@ -63,35 +85,10 @@ void HomePage::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void HomePage::Update()
 {
-    switch( config_.GetProfile() )
-    {
-    case Config::eTerrain:
-        adapt_->setEnabled( true );
-        prepare_->setEnabled( false );
-        play_ ->setEnabled( false );
-        replay_->setEnabled( false );
-        break;
-    case Config::eUser:
-        adapt_->setEnabled( true );
-        prepare_->setEnabled( true );
-        play_ ->setEnabled( true );
-        replay_->setEnabled( true );
-        break;
-    case Config::eAdvancedUser:
-        adapt_->setEnabled( true );
-        prepare_->setEnabled( false );
-        play_ ->setEnabled( false );
-        replay_->setEnabled( false );
-        break;
-    case Config::eAdministrator:
-        adapt_->setEnabled( true );
-        prepare_->setEnabled( true );
-        play_ ->setEnabled( true );
-        replay_->setEnabled( true );
-        break;
-    default:
-        throw std::exception( "Unknown profile" );
-    }
+    adapt_->setEnabled( HasAdaptPage( config_ ) );
+    prepare_->setEnabled( config_.hasPreparation_ );
+    play_->setEnabled( true );
+    replay_->setEnabled( config_.hasReplayer_ );
 }
 
 // -----------------------------------------------------------------------------
