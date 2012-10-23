@@ -31,6 +31,7 @@
 #include "Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Roles/Logistic/PHY_RoleInterface_Medical.h"
+#include "Roles/Logistic/PHY_RolePionLOG_Medical.h"
 #include "Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
 #include "Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Roles/Urban/PHY_RolePion_UrbanLocation.h"
@@ -1497,7 +1498,7 @@ void MIL_AgentPion::Apply2( boost::function< void( PHY_DotationStock& ) > visito
     const PHY_RoleInterface_Supply* itf = RetrieveRole< PHY_RoleInterface_Supply >();
     if( itf )
         itf->Apply( visitor );
-    else
+    else if( !RetrieveRole< PHY_RolePionLOG_Medical >() )
         MT_LOG_ERROR_MSG( "Unit " << GetID() << " is not a logistic unit." );
 }
 
