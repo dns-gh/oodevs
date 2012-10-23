@@ -1238,6 +1238,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source> and &apos;</source>
         <translation> et &apos;</translation>
     </message>
+    <message>
+        <source>Duplicate type for missions %1.</source>
+        <translation>Les missions %1 possèdent le même type.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

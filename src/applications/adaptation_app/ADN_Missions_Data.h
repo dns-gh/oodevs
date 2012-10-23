@@ -142,8 +142,9 @@ public:
         ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
     };
 
-    typedef ADN_Type_Vector_ABC<Mission>  T_Mission_Vector;
-    typedef T_Mission_Vector::iterator   IT_Mission_Vector;
+    typedef ADN_Type_Vector_ABC<Mission>         T_Mission_Vector;
+    typedef T_Mission_Vector::iterator          IT_Mission_Vector;
+    typedef T_Mission_Vector::const_iterator   CIT_Mission_Vector;
 
 // =============================================================================
 // Frag orders

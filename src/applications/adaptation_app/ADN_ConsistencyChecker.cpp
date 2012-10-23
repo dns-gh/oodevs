@@ -39,6 +39,7 @@ bool ADN_ConsistencyChecker::CheckConsistency()
 {
     ClearErrors();
     CheckNNOConsistency();
+    CheckMissionsTypes();
     return !errors_.empty();
 }
 
@@ -58,14 +59,14 @@ bool ADN_ConsistencyChecker::IsAlreadyRegistered( const std::string& code, E_Con
 // Name: ADN_ConsistencyChecker::CreateGotoInfoFromNNOElement
 // Created: ABR 2012-06-08
 // -----------------------------------------------------------------------------
-ADN_NavigationInfos::GoTo* ADN_ConsistencyChecker::CreateGotoInfoFromNNOElement( const NNOElement& element )
+ADN_NavigationInfos::GoTo* ADN_ConsistencyChecker::CreateGotoInfoFromNNOElement( const std::string& name, int tab, int subTab )
 {
     ADN_NavigationInfos::GoTo* result = new ADN_NavigationInfos::GoTo();
-    result->targetName_ = element.name_.c_str();
-    assert( element.tab_ >= 0 && element.tab_ < eNbrWorkspaceElements );
-    result->targetTab_ = static_cast< E_WorkspaceElements >( element.tab_ );
-    if( element.subTab_ != -1 )
-        result->subTargetTab_ = element.subTab_;
+    result->targetName_ = name.c_str();
+    assert( tab >= 0 && tab < eNbrWorkspaceElements );
+    result->targetTab_ = static_cast< E_WorkspaceElements >( tab );
+    if( subTab != -1 )
+        result->subTargetTab_ = subTab;
     return result;
 }
 
@@ -77,7 +78,7 @@ void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const NNOElement
 {
     assert( ( type & eMissingMask ) != 0 );
     ConsistencyError error( type );
-    error.items_.push_back( CreateGotoInfoFromNNOElement( element ) );
+    error.items_.push_back( CreateGotoInfoFromNNOElement( element.name_, element.tab_, element.subTab_ ) );
     errors_.push_back( error );
 }
 
@@ -91,7 +92,10 @@ void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const T_NNOEleme
     assert( elements.size() > 1 );
     ConsistencyError error( type );
     for( CIT_NNOElements it = elements.begin(); it != elements.end(); ++it )
-        error.items_.push_back( CreateGotoInfoFromNNOElement( *it ) );
+    {
+        const NNOElement& element = *it;
+        error.items_.push_back( CreateGotoInfoFromNNOElement( element.name_, element.tab_, element.subTab_ ) );
+    }
     error.optional_ = ( type == eNNoUniqueness ) ? elements.front().codeNNO_ : elements.front().codeEMAT8_;
     errors_.push_back( error );
 }
@@ -158,4 +162,40 @@ void ADN_ConsistencyChecker::CheckNNOConsistency()
             AddError( eEmatUniqueness, EMATelements );
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::CheckMissionsTypes
+// Created: LGY 2012-10-22
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::CheckMissionsTypes()
+{
+    CheckMissionTypes( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions(), 0 );
+    CheckMissionTypes( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions(), 1 );
+    CheckMissionTypes( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions(), 2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::CheckMissionTypes
+// Created: LGY 2012-10-22
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::CheckMissionTypes( const ADN_Missions_Data::T_Mission_Vector& missions, int subTab )
+{
+    for( ADN_Missions_Data::CIT_Mission_Vector rhs = missions.begin(); rhs != missions.end() - 1; ++rhs )
+        for( ADN_Missions_Data::CIT_Mission_Vector lhs = rhs + 1; lhs != missions.end(); ++lhs )
+            if( (*lhs)->strName_.GetData() != (*rhs)->strName_.GetData() &&
+                (*lhs)->diaType_.GetData() == (*rhs)->diaType_.GetData() )
+                    AddError( eMissionTypeUniqueness, **rhs, **lhs, subTab );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::AddError
+// Created: LGY 2012-10-22
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const ADN_Missions_Data::Mission& rhs, const ADN_Missions_Data::Mission& lhs, int subTab )
+{
+    ConsistencyError error( type );
+    error.items_.push_back( CreateGotoInfoFromNNOElement( rhs.strName_.GetData(), eMissions, subTab ) );
+    error.items_.push_back( CreateGotoInfoFromNNOElement( lhs.strName_.GetData(), eMissions, subTab ) );
+    errors_.push_back( error );
 }
