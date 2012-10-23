@@ -390,9 +390,9 @@ void RolePion_Location::Hide()
 // -----------------------------------------------------------------------------
 void RolePion_Location::Show( const MT_Vector2D& vPosition )
 {
-    sink_.StartCommand( "magic move", core::MakeModel( "identifier", owner_.GetID() )
-                                                     ( "position/x", vPosition.rX_ )
-                                                     ( "position/y", vPosition.rY_ ) );
+    sink_.PostCommand( "magic move", core::MakeModel( "identifier", owner_.GetID() )
+                                                    ( "position/x", vPosition.rX_ )
+                                                    ( "position/y", vPosition.rY_ ) );
     TER_Object_ABC::T_ObjectVector objectsColliding;
     TER_World::GetWorld().GetObjectManager().GetListAt( *pvPosition_, objectsColliding );
     for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
