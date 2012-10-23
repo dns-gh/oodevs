@@ -21,7 +21,7 @@ DECLARE_HOOK( ComputeHeight, double, ( const SWORD_Model* entity ) )
 // Name: ComputeHeightCommand constructor
 // Created: MCO 2012-03-12
 // -----------------------------------------------------------------------------
-ComputeHeightCommand::ComputeHeightCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
+ComputeHeightCommand::ComputeHeightCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

@@ -18,7 +18,7 @@ using namespace sword::movement;
 // Name: OrientateCommand constructor
 // Created: MCO 2012-03-09
 // -----------------------------------------------------------------------------
-OrientateCommand::OrientateCommand( ModuleFacade& /*module*/, const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
+OrientateCommand::OrientateCommand( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ )
 {
     // NOTHING
 }

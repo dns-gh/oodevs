@@ -21,8 +21,6 @@ namespace wrapper
 
 namespace movement
 {
-    class ModuleFacade;
-
 // =============================================================================
 /** @class  ComputeHeightCommand
     @brief  Compute height command
@@ -34,7 +32,7 @@ class ComputeHeightCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    ComputeHeightCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model );
+    ComputeHeightCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

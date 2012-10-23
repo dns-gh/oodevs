@@ -21,8 +21,6 @@ namespace wrapper
 
 namespace movement
 {
-    class ModuleFacade;
-
 // =============================================================================
 /** @class  OrientateCommand
     @brief  Orientate command
@@ -34,7 +32,7 @@ class OrientateCommand : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    OrientateCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model );
+    OrientateCommand( const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations

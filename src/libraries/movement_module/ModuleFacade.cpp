@@ -193,8 +193,8 @@ ModuleFacade::ModuleFacade()
     MT_Profiler::Initialize();
     PathType::Initialize();
     wrapper::RegisterCommand< MoveCommand >( "move", *this );
-    wrapper::RegisterCommand< OrientateCommand >( "orientate", *this );
-    wrapper::RegisterCommand< ComputeHeightCommand >( "compute height", *this );
+    wrapper::RegisterCommand< OrientateCommand >( "orientate" );
+    wrapper::RegisterCommand< ComputeHeightCommand >( "compute height" );
 }
 
 // -----------------------------------------------------------------------------
