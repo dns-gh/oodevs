@@ -45,7 +45,7 @@ LogisticSupplyAvailabilityItemDelegate::~LogisticSupplyAvailabilityItemDelegate(
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyExclusiveListWidget::createEditor
+// Name: LogisticSupplyAvailabilityItemDelegate::createEditor
 // Created: MMC 2012-10-11
 // -----------------------------------------------------------------------------
 QWidget* LogisticSupplyAvailabilityItemDelegate::createEditor( QWidget* parent, const QStyleOptionViewItem&, const QModelIndex& index ) const
@@ -89,7 +89,7 @@ QWidget* LogisticSupplyAvailabilityItemDelegate::createEditor( QWidget* parent, 
             qty = model->data( model->index( row, eValue ), Qt::UserRole ).value< int >();
         }
         RichSpinBox* spinBox = new RichSpinBox( parent );
-        spinBox->setRange( eName, available );
+        spinBox->setRange( 0, available );
         spinBox->setValue( qty );
         spinBox->setSingleStep( 1 );
         return spinBox;
@@ -98,7 +98,7 @@ QWidget* LogisticSupplyAvailabilityItemDelegate::createEditor( QWidget* parent, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyExclusiveListWidget::setEditorData
+// Name: LogisticSupplyAvailabilityItemDelegate::setEditorData
 // Created: MMC 2012-10-11
 // -----------------------------------------------------------------------------
 void LogisticSupplyAvailabilityItemDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) const
@@ -121,7 +121,7 @@ void LogisticSupplyAvailabilityItemDelegate::setEditorData( QWidget* editor, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyExclusiveListWidget::setModelData
+// Name: LogisticSupplyAvailabilityItemDelegate::setModelData
 // Created: MMC 2012-10-11
 // -----------------------------------------------------------------------------
 void LogisticSupplyAvailabilityItemDelegate::setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const
@@ -138,7 +138,7 @@ void LogisticSupplyAvailabilityItemDelegate::setModelData( QWidget* editor, QAbs
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyExclusiveListWidget::IsNameInTable
+// Name: LogisticSupplyAvailabilityItemDelegate::IsNameInTable
 // Created: MMC 2012-10-11
 // -----------------------------------------------------------------------------
 bool LogisticSupplyAvailabilityItemDelegate::IsNameInTable( const QAbstractItemModel* model, const QString& name ) const
@@ -259,7 +259,7 @@ void LogisticSupplyAvailabilityTableWidget::SetQuantities( QMap< QString, int >&
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticSupplyExclusiveListWidget::OnNameChanged
+// Name: LogisticSupplyAvailabilityTableWidget::OnNameChanged
 // Created: MMC 2012-10-11
 // -----------------------------------------------------------------------------
 void LogisticSupplyAvailabilityTableWidget::OnNameChanged( const QString& newName )

@@ -407,7 +407,7 @@ void LogisticSupplyPushFlowDialog::ComputeRecipients()
         {
             const AutomatType& type = automat.Get< kernel::EntityType< kernel::AutomatType > >().GetType();
             if( type.IsLogisticSupply() && &automat.Get< TacticalHierarchies >().GetTop() == &team )
-                recipientsNames_[ QString::fromStdString( GetBestName( automat ) ) + QString( " [" ) + QString::number( automat.GetId() ) + QString( "]" ) ] = &automat;
+                recipientsNames_[ automat.GetName() + QString( " [" ) + QString::number( automat.GetId() ) + QString( "]" ) ] = &automat;
         }
     }
 }
