@@ -315,10 +315,6 @@ Do really you want to replace it ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Missing Sword-Authoring and Sword-Terrain-Generation licenses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Missing Sword-Preparation license</source>
         <translation type="unfinished"></translation>
     </message>

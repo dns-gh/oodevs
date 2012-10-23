@@ -319,10 +319,6 @@ Voulez-vous vraiment le remplacer ?</translation>
         <translation>Démarrer une session d&apos;entraînement solo ou multi-joueur</translation>
     </message>
     <message>
-        <source>Missing Sword-Authoring and Sword-Terrain-Generation licenses</source>
-        <translation>Licenses Sword-Authoring et Sword-Terrain-Generation manquantes</translation>
-    </message>
-    <message>
         <source>Missing Sword-Preparation license</source>
         <translation>License Sword-Preparation manquante</translation>
     </message>

@@ -44,18 +44,6 @@ HomePage::~HomePage()
     // NOTHING
 }
 
-namespace
-{
-// -----------------------------------------------------------------------------
-// Name: HasAdaptPage
-// Created: BAX 2012-10-22
-// -----------------------------------------------------------------------------
-bool HasAdaptPage( const Config& cfg )
-{
-    return cfg.hasAuthoring_ || cfg.hasTerrainGeneration_;
-}
-}
-
 // -----------------------------------------------------------------------------
 // Name: HomePage::OnLanguageChanged
 // Created: ABR 2011-11-09
@@ -63,9 +51,7 @@ bool HasAdaptPage( const Config& cfg )
 void HomePage::OnLanguageChanged()
 {
     SetTextAndSubtitle( adapt_, tools::translate( "HomePage", "Adapt" ),
-        HasAdaptPage( config_ )
-        ? tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" )
-        : tools::translate( "HomePage", "Missing Sword-Authoring and Sword-Terrain-Generation licenses" ) );
+        tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" ) );
     SetTextAndSubtitle( prepare_, tools::translate( "HomePage", "Prepare" ),
         config_.hasPreparation_
         ? tools::translate( "HomePage", "Edit scenario" )
@@ -85,7 +71,7 @@ void HomePage::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void HomePage::Update()
 {
-    adapt_->setEnabled( HasAdaptPage( config_ ) );
+    adapt_->setEnabled( true );
     prepare_->setEnabled( config_.hasPreparation_ );
     play_->setEnabled( true );
     replay_->setEnabled( config_.hasReplayer_ );
