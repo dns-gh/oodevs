@@ -298,4 +298,5 @@ void DrawerPanel::Save()
 void DrawerPanel::Clear()
 {
     model_.Purge();
+    selectedDrawing_ = 0;
 }
