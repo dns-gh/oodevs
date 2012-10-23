@@ -102,15 +102,8 @@ Section "!${PRODUCT_NAME}"
     ;plugin definitions
     SetOutPath "$INSTDIR\applications\plugins"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r "${RUNDIR}\plugins\crossbow"
     File /r "${RUNDIR}\plugins\positions"
     File /r "${RUNDIR}\plugins\logistic"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-
-    ;projection settings (used in crossbow)
-    SetOutPath "$INSTDIR\applications\projection_data"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r "${RUNDIR}\projection_data\*"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     SetOutPath "$INSTDIR\applications"

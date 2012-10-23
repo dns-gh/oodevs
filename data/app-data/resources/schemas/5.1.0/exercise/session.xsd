@@ -130,28 +130,6 @@
                   <xs:attribute name="keyframesfreq" type="xs:string" use="optional"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="crossbow" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="flat">
-                      <xs:complexType>
-                        <xs:annotation>
-                          <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
-                        </xs:annotation>
-                        <xs:attribute name="connection" type="xs:string" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="geometry">
-                      <xs:complexType>
-                        <xs:annotation>
-                          <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
-                        </xs:annotation>
-                        <xs:attribute name="connection" type="xs:string" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
               <xs:element name="edxl-have" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>

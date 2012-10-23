@@ -312,9 +312,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\FormationSymbols.cpp">
       <Filter>Source Files\Model\Extensions\Symbols</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectSymbols.cpp">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\dispatcher\SideSymbols.cpp">
       <Filter>Source Files\Model\Extensions\Symbols</Filter>
     </ClCompile>
@@ -729,9 +726,6 @@
       <Filter>Source Files\Model\Extensions\Symbols</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\FormationSymbols.h">
-      <Filter>Source Files\Model\Extensions\Symbols</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectSymbols.h">
       <Filter>Source Files\Model\Extensions\Symbols</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\dispatcher\SideSymbols.h">

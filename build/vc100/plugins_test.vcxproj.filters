@@ -8,9 +8,6 @@
     <Filter Include="Source Files\mock">
       <UniqueIdentifier>{14705f93-1cdd-46a4-96e6-638c52ff97e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\crossbow_plugin">
-      <UniqueIdentifier>{137dbf74-504d-4a80-9a03-b202d8047949}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\plugins_test\FormationTest.cpp">
@@ -27,15 +24,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tests\plugins_test\TimelineServiceTest.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\plugins_test\CrossbowDatabaseTest.cpp">
-      <Filter>Source Files\crossbow_plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\plugins_test\CrossbowDatabaseUpdateTest.cpp">
-      <Filter>Source Files\crossbow_plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\plugins_test\CrossbowUrlConnectionTest.cpp">
-      <Filter>Source Files\crossbow_plugin</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\plugins_test\LogisticPluginTest.cpp">
       <Filter>Source Files</Filter>

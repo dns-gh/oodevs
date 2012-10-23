@@ -19,9 +19,6 @@
               <plugin name="recorder" enabled="false">
                   <parameter name="directory" value="records"/>
               </plugin>
-              <plugin name="crossbow" enabled="false">
-                  <parameter name="geodatabase" value="SWORD.mdb"/>
-              </plugin>
           </plugins>
       </dispatcher>
   </config>

@@ -161,18 +161,6 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClCompile Include="..\..\src\tests\plugins_test\ScriptTest.cpp" />
     <ClCompile Include="..\..\src\tests\plugins_test\TestCoordinates.cpp" />
     <ClCompile Include="..\..\src\tests\plugins_test\TimelineServiceTest.cpp" />
-    <ClCompile Include="..\..\src\tests\plugins_test\CrossbowDatabaseTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='release|win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\plugins_test\CrossbowDatabaseUpdateTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='release|win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\plugins_test\CrossbowUrlConnectionTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='release|win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\plugins_test\plugins_test_pch.h" />

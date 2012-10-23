@@ -179,7 +179,6 @@
     <ClCompile Include="..\..\src\libraries\dispatcher\AgentSymbols.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\AutomatSymbols.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\FormationSymbols.cpp" />
-    <ClCompile Include="..\..\src\libraries\dispatcher\ObjectSymbols.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\SideSymbols.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\UrbanObject.cpp" />
     <ClCompile Include="..\..\src\libraries\dispatcher\ArchitectureAttribute.cpp" />
@@ -325,7 +324,6 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\AutomatSymbols.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\EntitySymbols_ABC.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\FormationSymbols.h" />
-    <ClInclude Include="..\..\src\libraries\dispatcher\ObjectSymbols.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\SideSymbols.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\EntityPublisher.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\EntityPublisher_ABC.h" />
