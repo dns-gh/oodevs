@@ -21,6 +21,10 @@ namespace
             : action( 117u )
             , command( 0u )
         {}
+        virtual ~MovementFixture()
+        {
+            StopCommand( command );
+        }
         size_t StartMoveCommand( const T_Points& points )
         {
             ConfigurePathfind( points );

@@ -19,13 +19,13 @@ namespace
             : population( model[ "populations" ][ 53 ] )
         {
             ExpectCallback( 4 );
-            StartCommand( "direct fire population",
-                core::MakeModel( "action", 117 )
-                               ( "identifier", 42 )
-                               ( "population", 53 )
-                               ( "percentage", 1 )
-                               ( "mode", 0 )
-                               ( "dotation", ammo_1 ) );
+            command = StartCommand( "direct fire population",
+                                    core::MakeModel( "action", 117 )
+                                                   ( "identifier", 42 )
+                                                   ( "population", 53 )
+                                                   ( "percentage", 1 )
+                                                   ( "mode", 0 )
+                                                   ( "dotation", ammo_1 ) );
             mock::verify();
         }
         ~FireFixture()
@@ -33,12 +33,14 @@ namespace
             ExpectCallback( 5 );
             ExpectEvent( "direct fire population", sword::test::MakeModel( "entity/identifier", 42 )
                                                                          ( "running", false ) );
+            StopCommand( command );
         }
         void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
         {
             ExpectEvent( "direct fire population callback", sword::test::MakeModel( "entity", 42 )( "action", 117 )( "code", code ) );
         }
         core::Model& population;
+        std::size_t command;
     };
 }
 
@@ -199,13 +201,13 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_no_h
                               ( "hits", 2 )
                               ( "running", true ) );
     ExpectCallback( 4 );
-    StartCommand( "direct fire population",
-        core::MakeModel( "action", 117 )
-            ( "identifier", 42 )
-            ( "population", 53 )
-            ( "percentage", 1 )
-            ( "mode", 0 )
-            ( "dotation", ammo_1 ) );
+    const std::size_t command = StartCommand( "direct fire population",
+                                               core::MakeModel( "action", 117 )
+                                                              ( "identifier", 42 )
+                                                              ( "population", 53 )
+                                                              ( "percentage", 1 )
+                                                              ( "mode", 0 )
+                                                              ( "dotation", ammo_1 ) );
     ExpectCallback( 4 );
 
     ExecuteCommands();
@@ -213,4 +215,5 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_no_h
     ExpectCallback( 5 );
     ExpectEvent( "direct fire population", sword::test::MakeModel( "entity/identifier", 42 )
                                                                  ( "running", false ) );
+    StopCommand( command );
 }

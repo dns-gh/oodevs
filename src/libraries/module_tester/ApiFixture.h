@@ -50,13 +50,6 @@ namespace core
         {
             MOCK_EXPECT( api.Configure ).once().calls( boost::bind( &ConfigureFixture::Configure, boost::ref( loader ), _1, _2 ) );
         }
-        virtual ~ConfigureFixture()
-        {
-            if( ! std::uncaught_exception() )
-                mock::verify();
-            mock::reset();
-        }
-
         MOCK_STATIC_METHOD( SWORD_RegisterCommand, 6, void( const char* name, SWORD_CommandConstructor constructor, SWORD_CommandExecutor executor, \
                                                             SWORD_CommandExecutor pausedExecutor, SWORD_CommandDestructor destructor, void* userData ), RegisterCommand )
         MOCK_STATIC_METHOD( SWORD_PostEvent, 2, void( const char* name, SWORD_Model* event ), PostEvent )
@@ -330,6 +323,12 @@ namespace core
             : LoadFixture( name )
             , commands( model )
         {}
+        virtual ~ApiFixture()
+        {
+            if( ! std::uncaught_exception() )
+                mock::verify();
+            mock::reset();
+        }
         void ExpectRegisterCommand( const std::string& command )
         {
             MOCK_EXPECT( RegisterCommand )
@@ -347,6 +346,10 @@ namespace core
         size_t StartCommand( const std::string& name, const Model& parameters )
         {
             return commands.Start( "default", name, parameters );
+        }
+        void StopCommand( std::size_t command )
+        {
+            commands.Stop( command );
         }
         void ExecuteCommands()
         {

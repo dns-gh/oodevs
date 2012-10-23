@@ -18,22 +18,23 @@ namespace
         FireFixture()
         {
             ExpectCallback( 4 );
-            StartCommand( "direct fire",
-                core::MakeModel( "action", 117 )
-                               ( "identifier", 42 )
-                               ( "enemy", 51 )
-                               ( "percentage", 0.07 )
-                               ( "mode", 0 )
-                               ( "type", 0 )
-                               ( "major", false )
-                               ( "dotation", 0 ) );
+            command = StartCommand( "direct fire",
+                                    core::MakeModel( "action", 117 )
+                                                   ( "identifier", 42 )
+                                                   ( "enemy", 51 )
+                                                   ( "percentage", 0.07 )
+                                                   ( "mode", 0 )
+                                                   ( "type", 0 )
+                                                   ( "major", false )
+                                                   ( "dotation", 0 ) );
             mock::verify();
         }
-        ~FireFixture()
+        virtual ~FireFixture()
         {
             ExpectCallback( 5 );
             ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity/identifier", 42 )
                                                                    ( "running", false ) );
+            StopCommand( command );
         }
         void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
         {
@@ -41,6 +42,7 @@ namespace
                                                                             ( "action", 117 )
                                                                             ( "code", code ) );
         }
+        std::size_t command;
     };
 }
 
@@ -256,17 +258,18 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
                               ( "use-ph", true )
                               ( "missed", false ) );
     ExpectCallback( 4 );
-    StartCommand( "direct fire",
-        core::MakeModel( "action", 117 )
-                       ( "identifier", 42 )
-                       ( "enemy", 51 )
-                       ( "percentage", 0.07 )
-                       ( "mode", 0 )
-                       ( "type", 0 )
-                       ( "major", false )
-                       ( "dotation", 0 ) );
+    const std::size_t command = StartCommand( "direct fire",
+                                              core::MakeModel( "action", 117 )
+                                                              ( "identifier", 42 )
+                                                              ( "enemy", 51 )
+                                                              ( "percentage", 0.07 )
+                                                              ( "mode", 0 )
+                                                              ( "type", 0 )
+                                                              ( "major", false )
+                                                              ( "dotation", 0 ) );
     ExpectCallback( 4 );
     ExecuteCommands();
     ExpectCallback( 5 );
     ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity/identifier", 42 )( "running", false ) );
+    StopCommand( command );
 }
