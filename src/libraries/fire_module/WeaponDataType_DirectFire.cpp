@@ -77,12 +77,8 @@ double WeaponDataType_DirectFire::GetMaxDistanceForPH( double ph, const wrapper:
 {
     const std::size_t targetVolume = compTarget[ "volume" ];
     if( targetVolume >= phs_.size() )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR,
-            ( "Invalid target volume identifier in GetMaxDistanceForPH : "
-                + boost::lexical_cast< std::string >( targetVolume ) ).c_str() );
-        return 0;
-    }
+        throw std::runtime_error( "Invalid target volume identifier in GetMaxDistanceForPH : "
+                                  + boost::lexical_cast< std::string >( targetVolume ) );
     return launcherType_.GetPHModificator()
         * phs_[ targetVolume ].GetMaxYForX( ph );
 }
@@ -95,12 +91,8 @@ double WeaponDataType_DirectFire::GetMaxDistanceForPH( const wrapper::View& fire
 {
     const std::size_t targetVolume = compTarget[ "volume" ];
     if( targetVolume >= phs_.size() )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR,
-            ( "Invalid target volume identifier in GetMaxDistanceForPH : "
-                + boost::lexical_cast< std::string >( targetVolume ) ).c_str() );
-        return 0;
-    }
+        throw std::runtime_error( "Invalid target volume identifier in GetMaxDistanceForPH : "
+                                  + boost::lexical_cast< std::string >( targetVolume ) );
     return launcherType_.GetPHModificator( firer, target )
         * phs_[ targetVolume ].GetMaxYForX( ph );
 }
@@ -113,12 +105,8 @@ double WeaponDataType_DirectFire::GetMinDistanceForPH( double ph, const wrapper:
 {
     const std::size_t targetVolume = compTarget[ "volume" ];
     if( targetVolume >= phs_.size() )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR,
-            ( "Invalid target volume identifier in GetMinDistanceForPH : "
-                + boost::lexical_cast< std::string >( targetVolume ) ).c_str() );
-        return std::numeric_limits< double >::max();
-    }
+        throw std::runtime_error( "Invalid target volume identifier in GetMinDistanceForPH : "
+                                  + boost::lexical_cast< std::string >( targetVolume ) );
     return launcherType_.GetPHModificator()
         * phs_[ targetVolume ].GetMinYForX( ph );
 }
@@ -143,12 +131,8 @@ double WeaponDataType_DirectFire::GetMinDistanceForPH( const wrapper::View& fire
 {
     const std::size_t targetVolume = compTarget[ "volume" ];
     if( targetVolume >= phs_.size() )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR,
-            ( "Invalid target volume identifier in GetMinDistanceForPH : "
-                + boost::lexical_cast< std::string >( targetVolume ) ).c_str() );
-        return std::numeric_limits< double >::max();
-    }
+        throw std::runtime_error( "Invalid target volume identifier in GetMinDistanceForPH : "
+                                  + boost::lexical_cast< std::string >( targetVolume ) );
     return launcherType_.GetPHModificator( firer, target )
         * phs_[ targetVolume ].GetMinYForX( ph );
 }
@@ -178,12 +162,8 @@ double WeaponDataType_DirectFire::GetPH( const wrapper::View& firer, const wrapp
 double WeaponDataType_DirectFire::GetPH( std::size_t targetVolume, double rDistance ) const
 {
     if( targetVolume >= phs_.size() )
-    {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR,
-            ( "Invalid target volume identifier in GetDangerosity : "
-                + boost::lexical_cast< std::string >( targetVolume ) ).c_str() );
-        return 0;
-    }
+        throw std::runtime_error( "Invalid target volume identifier in GetDangerosity : "
+                                  + boost::lexical_cast< std::string >( targetVolume ) );
     const double rPHModificator = launcherType_.GetPHModificator();
     if( rPHModificator <= 0 )
         return 0;

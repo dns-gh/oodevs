@@ -207,8 +207,8 @@ namespace
     boost::shared_ptr< WeaponType > FindWeaponType( const std::string& weapon )
     {
         boost::shared_ptr< WeaponType > type = WeaponType::FindWeaponType( weapon );
-        if( ! type )
-            ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, ("Unknown weapon type : " + weapon).c_str() );
+        if( !type )
+            throw std::runtime_error( "Unknown weapon type : " + weapon );
         return type;
     }
     template< typename Accumulator, typename Filter, typename Operation >
@@ -224,10 +224,8 @@ namespace
                 const wrapper::View& weapons = component[ "weapons" ];
                 for( std::size_t w = 0; w < weapons.GetSize(); ++w )
                 {
-                    boost::shared_ptr< WeaponType > type =
-                        FindWeaponType( weapons.GetElement( w )[ "type" ] );
-                    if( type )
-                        result = accumulator( result, operation( type ) );
+                    boost::shared_ptr< WeaponType > type = FindWeaponType( weapons.GetElement( w )[ "type" ] );
+                    result = accumulator( result, operation( type ) );
                 }
             }
         }

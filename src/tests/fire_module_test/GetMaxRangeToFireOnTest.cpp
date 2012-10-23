@@ -35,7 +35,7 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_is_zero_when_weapon_type_does_not_
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Unknown weapon type : non existing weapon" ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Exception in GetMaxRangeToFireOn hook: Unknown weapon type : non existing weapon" ) );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToFireOn( firer, enemy, filter, 0.5, 0 ) );
 }
 
@@ -66,7 +66,7 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_is_zero_when_volume_is_invalid, Qu
     component_2[ "score" ] = 2;
     component_2[ "volume" ] = 42;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Invalid target volume identifier in GetMaxDistanceForPH : 42" ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Exception in GetMaxRangeToFireOn hook: Invalid target volume identifier in GetMaxDistanceForPH : 42" ) );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToFireOn( firer, enemy, filter, 0.5, 0 ) );
 }
 
