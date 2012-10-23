@@ -47,6 +47,7 @@ public:
     void SetReadOnly( bool readOnly );
     bool IsReadOnly() const;
     const QStringList* GetComboContent( int row, int col ) const;
+    void SetComboContent( int row, int col, const QStringList& content );
     template< typename T >
     void SetSpinBoxMinMax( int row, int col, T min, T max );
     //@}

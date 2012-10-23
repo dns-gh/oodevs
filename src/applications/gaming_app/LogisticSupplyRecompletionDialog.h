@@ -12,6 +12,7 @@
 
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_gui/CommonDelegate.h"
 
 namespace kernel
 {
@@ -70,13 +71,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LogisticSupplyRecompletionDialog( const LogisticSupplyRecompletionDialog& );
-    LogisticSupplyRecompletionDialog& operator=( const LogisticSupplyRecompletionDialog& );
-    //@}
-
-private:
     //! @name Helpers
     //@{
     void InitializeEquipments ();
@@ -94,7 +88,7 @@ private:
     void FillAmmunitions( actions::parameters::ParameterList& list );
     void FillSupplies   ( actions::parameters::ParameterList& list );
 
-    QStringList FilterEquipmentList() const;
+    QStringList FilterEquipmentList( int index ) const;
     //@}
 
     //! @name Types
@@ -120,16 +114,22 @@ private:
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Agent_ABC > selected_;
-    Q3Table* equipmentsTable_;
+    QTableWidget* equipmentsTable_;
     QStringList equipmentsList_;
     T_Equipments equipments_;
     T_Ints equipmentsMax_;
-    Q3Table* personalsTable_;
-    Q3Table* dotationsTable_;
-    Q3Table* munitionsFamilyTable_;
-    Q3Table* stockTable_;
+    QTableWidget* personalsTable_;
+    QTableWidget* dotationsTable_;
+    QTableWidget* munitionsFamilyTable_;
+    QTableWidget* stockTable_;
     T_Dotations stocks_;
     T_CatetoriesNames catetoriesNames_;
+    gui::CommonDelegate* equipmentDelegate_;
+    gui::CommonDelegate* personalDelegate_;
+    gui::CommonDelegate* dotationDelegate_;
+    gui::CommonDelegate* munitionsFamilyDelegate_;
+    gui::CommonDelegate* stockDelegate_;
+    Q3GroupBox* stockGroupBox_;
     //@}
 };
 

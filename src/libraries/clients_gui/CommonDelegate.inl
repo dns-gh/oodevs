@@ -274,3 +274,20 @@ const QStringList* CommonDelegate::GetComboContent( int row, int col ) const
          element = comboBoxs_.Find( position->id_ );
     return element;
 }
+
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::SetComboContent
+// Created: NPT 2012-10-19
+// -----------------------------------------------------------------------------
+inline
+void CommonDelegate::SetComboContent( int row, int col, const QStringList& content )
+{
+    const CommonDelegate::DelegatePosition* position = IsInPosition( row, col );
+    if( position )
+    {
+        QStringList* element = comboBoxs_.Find( position->id_ );
+        if( element)
+            *element = content;
+    }
+}
+
