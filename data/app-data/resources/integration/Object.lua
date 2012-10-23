@@ -51,3 +51,7 @@ end
 integration.canDecontaminateAgents = function( object )
     return DEC_ObjectKnowledge_HasCapacity( object.source, "decontamination" )
 end
+
+integration.isCamp = function( object )
+    return DEC_ObjectKnowledge_HasCapacity( object.source, "logistic" )
+end

@@ -27,6 +27,11 @@ rootnode
     -- If element is reached and if agent can dischargeIn it then dischargeIn it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+       --[[ if not self.params.camp:canBeUsedToDischarge() then -- $$$ MIA TODO decommenter pour corriger le bug SWBUG-9023
+            meKnowledge:RC( eRC_PasDeCampPrisonniersDisponible )
+            Feedback( self.feedbacks.failed )
+            return
+        end ]]
 
         if self.arrived then -- once arrived in camp, discharge elements
             for _, element in pairs( self.params.elements ) do

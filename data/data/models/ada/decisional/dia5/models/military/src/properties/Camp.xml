@@ -6,14 +6,12 @@
     à une distance suffisante par rapport aux capacités d'embarquement de l'entité.
     </description>
     <methods>
-        <method name="dischargeInIt">
-            <description>Action de déchargement d'un élément transporté, dans un conteneur.&#xD;
-            </description>
-            <argument name="transportedElement">
+        <method name="canBeUsedToDischarge">
+            <return>
                 <type>
-                    <class name="properties.Loadable"/>
+                    <simple name="boolean"/>
                 </type>
-            </argument>
+            </return>
         </method>
     </methods>
 </interface>

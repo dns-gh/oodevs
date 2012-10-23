@@ -424,4 +424,7 @@ return
         end
         return res
     end,
+    canBeUsedToDischarge = function( self )
+        return integration.isCamp( self )
+    end
 }

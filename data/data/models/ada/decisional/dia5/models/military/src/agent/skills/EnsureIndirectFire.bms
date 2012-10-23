@@ -42,6 +42,8 @@ rootnode
     activate = function( self )
         local Activate = Activate -- lua optim
 
+        DEC_Trace( "mission.boolParameter = "..tostring( myself.taskParams.boolParameter ) )
+
         -- The agent deploys on its own position.
         if self.params.firePositions == NIL then
             self.waitOrder = true -- wait order to go to next position.
