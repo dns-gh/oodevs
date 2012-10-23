@@ -18,12 +18,29 @@ def writefile(path, root):
     xml.ElementTree(root).write(file)
     file.close()
 
-def writeconfig(path, ascfiles, projectionfile):
-    config = xml.Element('config')
+def writecolor( colors, threshold, value):
+    color = xml.Element('color')
+    color.attrib['threshold'] = threshold
+    color.text = value
+    colors.append( color )
+
+def writecolors( config ):
+    colors = xml.Element('colors')
+    writecolor( colors, '5', '#00FF00')
+    writecolor( colors, '100', '#FF8040')
+    writecolor( colors, '500', '#FF0000')
+    config.append( colors )
+
+def writeprojection( confign, projectionfile):
     if projectionfile:
         projection = xml.Element('projection')
         projection.text = projectionfile
         config.append( projection )
+
+def writeconfig(path, ascfiles, projectionfile):
+    config = xml.Element('config')
+    writeprojection( config, projectionfile)
+    writecolors( config )
     files = xml.Element('files')
     config.append(files)
     for f in ascfiles:

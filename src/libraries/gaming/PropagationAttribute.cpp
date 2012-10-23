@@ -57,9 +57,22 @@ void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
                 >> xml::start( "files" )
                     >> xml::list( "file", *this, &PropagationAttribute::ReadFile )
                 >> xml::end
+                >> xml::optional
+                    >> xml::start( "colors" )
+                        >> xml::list( "color", *this, &PropagationAttribute::ReadColor )
+                    >> xml::end
             >> xml::end;
         path_ = path.parent_path();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropagationAttribute::ReadColor
+// Created: LGY 2012-10-22
+// -----------------------------------------------------------------------------
+void PropagationAttribute::ReadColor( xml::xistream& xis )
+{
+    colors_[ xis.attribute< float >( "threshold" ) ] = QColor( xis.value< std::string >().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +81,7 @@ void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // -----------------------------------------------------------------------------
 void PropagationAttribute::ReadFile( xml::xistream& xis )
 {
-    propagation_[ QDateTime::fromString( xis.attribute< std::string >( "time" ).c_str(), "yyyy-MM-dd'T'HH:mm:ss" ) ].push_back( xis.value< std::string> () );
+    propagation_[ QDateTime::fromString( xis.attribute< std::string >( "time" ).c_str(), "yyyy-MM-dd'T'HH:mm:ss" ) ].push_back( xis.value< std::string >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,10 +119,10 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
 void PropagationAttribute::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& /*tools*/ ) const
 {
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT | GL_LIGHTING_BIT );
-    QColor green( Qt::green );
     BOOST_FOREACH( kernel::ASCExtractor::T_Tile tile, tiles_ )
     {
-        glColor4f( green.red() / 255.f, green.green() / 255.f, green.blue() / 255.f, 1.f );
+        QColor color = colors_.empty() ? Qt::green : colors_.lower_bound( tile.second )->second;
+        glColor4f( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f, 1.f );
         geometry::Point2f lb = converter_.ConvertFromGeo( tile.first.BottomLeft( ) );
         geometry::Point2f rt = converter_.ConvertFromGeo( tile.first.TopRight( ) );
         glRectfv( reinterpret_cast< const GLfloat* >( &lb ), reinterpret_cast< const GLfloat* >( &rt ) );

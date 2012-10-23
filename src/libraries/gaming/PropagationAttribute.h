@@ -67,6 +67,7 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void DoUpdate( const sword::ObjectUpdate& message );
     void ReadFile( xml::xistream& xis );
+    void ReadColor( xml::xistream& xis );
     //@}
 
 private:
@@ -75,6 +76,9 @@ private:
     typedef std::vector< std::string >     T_Files;
     typedef std::map< QDateTime, T_Files > T_Propagation;
     typedef T_Propagation::iterator       IT_Propagation;
+
+    typedef std::map< double, QColor > T_Colors;
+    typedef T_Colors::const_iterator CIT_Colors;
     //@}
 
 private:
@@ -85,6 +89,7 @@ private:
     boost::filesystem::path path_;
     std::string projection_;
     T_Propagation propagation_;
+    T_Colors colors_;
     kernel::ASCExtractor::T_Tiles tiles_;
     //@}
 };
