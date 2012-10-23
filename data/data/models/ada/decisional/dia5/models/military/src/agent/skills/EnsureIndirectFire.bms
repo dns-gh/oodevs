@@ -48,7 +48,8 @@ rootnode
         end
 
         -- Deploy on next position
-        if self.nextTargetIndex <= #self.params.firePositions then
+        if self.nextTargetIndex <= #self.params.firePositions 
+            or self.params.firePositions  == NIL then
             self.waitOrder = true
             Activate( skill.links.deploy, 1, { objective = self.params.firePositions[ self.nextTargetIndex ] } )
         end
