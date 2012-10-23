@@ -18,6 +18,7 @@
 #include <QtGui/qcolor.h>
 #include <QtGui/qstandarditemmodel.h>
 #pragma warning( pop )
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -34,7 +35,7 @@ namespace kernel
 */
 // Created: APE 2004-08-04
 // =============================================================================
-class Report
+class Report : private boost::noncopyable
 {
 public:
     enum E_Type
@@ -45,9 +46,6 @@ public:
         eMessage = 1003,
         eWarning = 1004
     };
-
-    static const int ReportRole;
-    static const int TypeFilterRole;
 
 public:
     //! @name Constructors/Destructor
@@ -64,23 +62,14 @@ public:
 
     //! @name Accessors
     //@{
+    bool IsNew() const;
     const kernel::Entity_ABC& GetOwner() const;
-    QList< QStandardItem* > GetReportData() const;
     E_Type GetType () const;
+    const QString& GetMessage() const;
     const QDateTime& GetDateTime() const; 
+    const QColor& GetColor() const;
     //@}
 
-private:
-    //! @name Copy / Assignment
-    //@{
-    Report( const Report& );
-    Report& operator=( const Report& );
-    //@}
-
-    //! @name Helpers
-    //@{
-    static QColor GetColor( E_Type type );
-    //@}
 
 private:
     //! @name Member data

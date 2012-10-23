@@ -12,15 +12,15 @@
 
 #include "tools/SelectionObserver_ABC.h"
 
+namespace gui
+{
+    class DisplayExtractor;
+}
+
 namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-}
-
-namespace gui
-{
-    class ItemFactory_ABC;
 }
 
 // =============================================================================
@@ -36,17 +36,11 @@ class InfoReportsTab : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoReportsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
     virtual ~InfoReportsTab();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InfoReportsTab( const InfoReportsTab& );            //!< Copy constructor
-    InfoReportsTab& operator=( const InfoReportsTab& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
@@ -57,7 +51,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     QTabWidget* parent_;
-    std::auto_ptr< gui::ItemFactory_ABC > factory_;
     //@}
 };
 

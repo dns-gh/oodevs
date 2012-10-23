@@ -10,15 +10,21 @@
 #ifndef __ReportListView_h_
 #define __ReportListView_h_
 
-#include "clients_gui/ListDisplayer.h"
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/AgentSelectionObserver.h"
 #include "reports/Report.h"
 
+namespace gui
+{
+    class DisplayExtractor;
+    class LinkItemDelegate;
+}
+
 namespace kernel
 {
+    class ContextMenu;
     class Controllers;
 }
 
@@ -40,7 +46,7 @@ class ReportListView : public QTreeView
 public:
     //! @name Constructors/Destructor
     //@{
-             ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             ReportListView( QWidget* pParent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
     virtual ~ReportListView();
     //@}
 
@@ -49,18 +55,17 @@ public:
     virtual void showEvent( QShowEvent* );
     virtual void contextMenuEvent ( QContextMenuEvent * e );
     void AddMenuItem( const QString& name, Report::E_Type type ) const;
-    void AddContextMenu() const;
 
 public slots:
     //! @name Slots
     //@{
-    void OnRequestPopup( const QPoint& pos );
     void OnSelectionChanged();
     void OnReadTimerOut();
     void OnClearAll();
     void OnClearTrace();
     void OnRequestCenter();
     void OnToggle( QAction* action );
+    void OnLinkClicked( const QString&, const QModelIndex& );
     //@}
 
 private:
@@ -72,18 +77,21 @@ private:
     bool ShouldUpdate( const Reports& reports );
     void MarkReportsAsRead();
     void SetFilterRegexp();
+    QList< QStandardItem* > GetItems( const Report& report ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    static unsigned int sortOrder_;
     kernel::Controllers& controllers_;
-    gui::ItemFactory_ABC& factory_;
+    gui::DisplayExtractor& extractor_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     kernel::ContextMenu* menu_;
     QTimer* readTimer_;
     QStandardItemModel reportModel_;
     QSortFilterProxyModel* proxyFilter_;
+    gui::LinkItemDelegate* delegate_;
     std::set< Report::E_Type > toDisplay_;
     //@}
 };

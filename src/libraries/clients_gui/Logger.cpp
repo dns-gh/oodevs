@@ -135,6 +135,7 @@ void Logger::End( std::stringstream& output )
     QStandardItem* item = dataModel_.FindDataItem( output, dataModel_.invisibleRootItem() );
     if( item )
     {
+        item->setData( *new QVariant(), StandardModel::DataRole );
         QModelIndex index = dataModel_.index( item->row(), 2, dataModel_.indexFromItem( item->parent() ) );
         QStandardItem* msgItem = dataModel_.GetItemFromIndex( index );
         if( msgItem )

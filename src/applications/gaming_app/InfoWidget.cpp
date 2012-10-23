@@ -26,7 +26,7 @@
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
 InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
-                        gui::ItemFactory_ABC& itemFactory, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
+                        gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
     : Q3HBox( parent, "InfoWidget" )
 {
     layout()->setSpacing( 10 );
@@ -44,7 +44,7 @@ InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const
 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );
-    tabs->addTab( new InfoReportsTab( tabs, controllers, itemFactory ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
+    tabs->addTab( new InfoReportsTab( tabs, controllers, extractor ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
     tabs->addTab( new InfoConflictsTab( tabs, controllers, itemFactory ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
     tabs->addTab( new InfoMissionsTab( tabs, controllers, itemFactory ), MAKE_PIXMAP( mission ), tr( "Missions" ) );
     tabs->setCurrentPage( 0 );

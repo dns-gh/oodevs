@@ -12,7 +12,6 @@
 
 #include <boost/noncopyable.hpp>
 #include "clients_kernel/Tools.h"
-#include "ComboTableItem.h"
 #include "CommonDelegate.h"
 
 namespace kernel

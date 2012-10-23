@@ -17,9 +17,6 @@
 
 Q_DECLARE_METATYPE( const Report* )
 
-const int Report::ReportRole = Qt::UserRole + 1;
-const int Report::TypeFilterRole = Qt::UserRole + 2 ;
-
 // -----------------------------------------------------------------------------
 // Name: Report constructor
 // Created: AGE 2006-03-09
@@ -54,6 +51,15 @@ void Report::Read()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Report::IsNew
+// Created: JSR 2012-10-23
+// -----------------------------------------------------------------------------
+bool Report::IsNew() const
+{
+    return isNew_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Report::GetType
 // Created: SBO 2005-09-08
 // -----------------------------------------------------------------------------
@@ -63,34 +69,21 @@ Report::E_Type Report::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Report::GetMessage
+// Created: JSR 2012-10-19
+// -----------------------------------------------------------------------------
+const QString& Report::GetMessage() const
+{
+    return message_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Report::GetDateTime
 // Created: NPT 2012-10-08
 // -----------------------------------------------------------------------------
 const QDateTime& Report::GetDateTime() const
 {
     return time_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: QList< QStandardItem > Report::GetReportData
-// Created: NPT 2012-10-05
-// -----------------------------------------------------------------------------
-QList< QStandardItem* > Report::GetReportData() const
-{
-    QList< QStandardItem* > list;
-
-    QStandardItem* dateItem = new QStandardItem( time_.toString( Qt::LocalDate ) );
-    dateItem->setFont( QFont( "Calibri", 10, QFont::Bold ) );
-    dateItem->setForeground( GetColor( type_ ) );
-
-    QStandardItem* reportItem = new QStandardItem( message_ ) ;
-    reportItem->setFont( QFont( "Calibri", 10, QFont::Bold ) );
-    reportItem->setForeground( GetColor( type_ ) );
-    reportItem->setData( QString::number( type_ ), TypeFilterRole );
-    reportItem->setData( QVariant::fromValue( this ), ReportRole );
-    list.append( dateItem );
-    list.append( reportItem );
-    return list;
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +102,7 @@ const kernel::Entity_ABC& Report::GetOwner() const
 void Report::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Item( "" )
-             .Start( GetColor( type_ ) )
+             .Start( GetColor() )
              .Add( time_.toString( "hh:mm" ) )
                 .Add( " " )
                 .Add( message_.section( " - ", 0 ) )
@@ -120,12 +113,12 @@ void Report::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // Name: Report::GetColor
 // Created: AGE 2006-07-03
 // -----------------------------------------------------------------------------
-QColor Report::GetColor( E_Type type )
+const QColor& Report::GetColor() const
 {
     static QColor colors[] = { QColor( 0, 0, 0 ),      // eRC      = 1000,
                                QColor( 118,  83, 38 ), // eTrace   = 1001,
                                QColor(  32, 200, 64 ),  // eEvent   = 1002,
                                QColor(  64, 128, 200 ), // eMessage = 1003,
                                QColor( 255, 128, 64 )}; // eWarning = 1004
-    return colors[ type - eRC ];
+    return colors[ type_ - eRC ];
 }

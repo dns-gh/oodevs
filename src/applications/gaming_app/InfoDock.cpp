@@ -18,12 +18,12 @@
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
 InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
-                    gui::ItemFactory_ABC& itemFactory, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
+                    gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
     : QDockWidget( "info", parent )
     , controllers_( controllers )
 {
     setObjectName( "infoDock" );
-    setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, staticModel, actionsModel, simulation ) );
+    setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor, staticModel, actionsModel, simulation ) );
     setCaption( tools::translate( "InfoDock", "Info" ) );
     controllers_.Register( *this );
     hide();

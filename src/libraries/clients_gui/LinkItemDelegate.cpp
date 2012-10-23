@@ -42,12 +42,15 @@ void LinkItemDelegate::paint( QPainter* painter, const QStyleOptionViewItem& opt
     initStyleOption( &optionV4, index );
     QStyle* style = optionV4.widget ? optionV4.widget->style() : QApplication::style();
     QTextDocument doc;
+    doc.setDefaultFont( qvariant_cast< QFont >( index.model()->data( index, Qt::FontRole ) ) );
     doc.setHtml( optionV4.text );
     optionV4.text = QString();
     style->drawControl( QStyle::CE_ItemViewItem, &optionV4, painter );
     QAbstractTextDocumentLayout::PaintContext ctx;
-    if( optionV4.state & QStyle::State_Selected )
+    if( ( optionV4.state & QStyle::State_Selected ) != 0 && ( optionV4.state & QStyle::State_Active ) != 0 )
         ctx.palette.setColor( QPalette::Text, optionV4.palette.color( QPalette::Active, QPalette::HighlightedText ) );
+    else
+        ctx.palette.setColor( QPalette::Text, qvariant_cast< QBrush >( index.model()->data( index, Qt::ForegroundRole ) ).color() );
     QRect textRect = style->subElementRect( QStyle::SE_ItemViewItemText, &optionV4 );
     painter->save();
     QPoint offset;
@@ -68,6 +71,7 @@ QSize LinkItemDelegate::sizeHint( const QStyleOptionViewItem& option, const QMod
     QStyleOptionViewItemV4 optionV4 = option;
     initStyleOption( &optionV4, index );
     QTextDocument doc;
+    doc.setDefaultFont( qvariant_cast< QFont >( index.model()->data( index, Qt::FontRole ) ) );
     doc.setHtml( optionV4.text );
     doc.setTextWidth( optionV4.rect.width() );
     return QSize( static_cast< int >( doc.idealWidth() ), static_cast< int >( doc.size().height() ) );
@@ -86,6 +90,7 @@ bool LinkItemDelegate::editorEvent( QEvent* event, QAbstractItemModel* model, co
     QStyleOptionViewItemV4 optionV4 = option;
     initStyleOption( &optionV4, index );
     QTextDocument doc;
+    doc.setDefaultFont( qvariant_cast< QFont >( index.model()->data( index, Qt::FontRole ) ) );
     doc.setHtml( optionV4.text );
     QPoint offset;
     if( QApplication::isRightToLeft() )

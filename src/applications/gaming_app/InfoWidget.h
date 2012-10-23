@@ -24,6 +24,7 @@ namespace kernel
 
 namespace gui
 {
+    class DisplayExtractor;
     class EntitySymbols;
     class ItemFactory_ABC;
 }
@@ -44,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons,
-                         gui::ItemFactory_ABC& itemFactory, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation );
+                         gui::ItemFactory_ABC& itemFactory, gui::DisplayExtractor& extractor, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation );
     virtual ~InfoWidget();
     //@}
 
