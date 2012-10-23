@@ -483,7 +483,7 @@
 
     <target name="applications.clients" description="build Sword Client executables"
             depends="gaming_app,preparation_app,adaptation_app,
-                     loadtester_app,wise_driver_dll,
+                     loadtester_app,
                      launcher_test_app,xml_signature_app,
                      shield_app"/>
 
@@ -731,20 +731,6 @@
             <syslibset libs="user32"/>
             <defineset define="QT3_SUPPORT"/>
         </build-app>
-    </target>
-
-    <target name="wise_driver_dll" depends="client_proxy" description="build Sword WISE driver dll" if="is-vc80">
-        <build-lib name="wise_driver_dll" outtype="shared" depends="boost,protobuf" suffix="-gd" pattern="MASAGroup.Sword@{suffix}"
-            libs="Common,DriverBase,
-                  lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
-                  lib${ant.project.name}_protocol-${platform}-mt@{suffix},
-                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
-            <includepath path="${include.dir}/wise"/>
-            <defineset define="_USRDLL"/>
-            <defineset define="DLLDRIVER_EXPORTS"/>
-            <defineset define="QT3_SUPPORT"/>
-        </build-lib>
     </target>
 
     <target name="launcher_test_app" depends="protocol,frontend,shield" description="build application">
@@ -1467,7 +1453,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.otpacks,package.ts,package.plugins,package.binaries,package.gaming_app,package.sdk" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.hla,package.plugin.dis" description="package plugin individual installers"/>
@@ -1566,14 +1552,7 @@
         <safe-move file="${output}"/>
     </target>
 
-    <target name="package.wise-driver" depends="wise_driver_dll" description="package the wise driver installer" if="is-vc80">
-        <nsis name="sword-wise_driver" script="sword-wise_driver.nsi">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-        </nsis>
-    </target>
-
-    <!-- Package Application -->
+     <!-- Package Application -->
     <target name="package.app" description="package des applications runtime">
         <nsis name="sword" script="sword.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
@@ -1768,7 +1747,6 @@
             <arg value="${root.dir}"/>
             <arg value="${root.dir}/build/vc100/sword.sln"/>
             <!-- These cannot really be fixed, either no project or vc80 -->
-            <arg value="--exclude=wise_driver_dll"/>
             <arg value="--exclude=module_tester"/>
             <!-- These should be fixed -->
             <arg value="--exclude=actions"/>
@@ -1814,7 +1792,6 @@
         <update name="vcredist" package="vcredist"/>
         <update name="openssl"/>
         <update name="excel"/>
-        <update name="wise"/>
         <update name="spatialite"/>
         <update name="steel"/>
         <update name="geos"/>
