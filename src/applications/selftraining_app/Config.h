@@ -37,11 +37,11 @@ private:
 public:
     //! @name Member data
     //@{
-    bool hasAuthoring_;
-    bool hasTerrainGeneration_;
-    bool hasPreparation_;
-    bool hasRuntime_;
-    bool hasReplayer_;
+    const bool hasAuthoring_;
+    const bool hasTerrainGeneration_;
+    const bool hasPreparation_;
+    const bool hasRuntime_;
+    const bool hasReplayer_;
     //@}
 };
 
