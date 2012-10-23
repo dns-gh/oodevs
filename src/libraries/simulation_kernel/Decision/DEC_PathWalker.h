@@ -137,6 +137,7 @@ private:
     bool GoToNextNavPoint( DEC_PathResult& path );
     E_ReturnCode SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath );
     void SetCurrentPathPoint( DEC_PathResult& path );
+    void CheckPathNotification();
      //@}
 
 private:
@@ -152,6 +153,7 @@ private:
     MT_Vector2D vNewDir_;
     double rCurrentSpeed_;
     double rWalkedDistance_;
+    int pointsPassed_;
     bool bForcePathCheck_;
     bool bHasMoved_;
     bool bFuelReportSent_;
