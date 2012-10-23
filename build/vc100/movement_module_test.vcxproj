@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\tests\movement_module_test\ComputeHeightCommandTest.cpp" />
+    <ClCompile Include="..\..\src\tests\movement_module_test\MagicMoveCommandTest.cpp" />
     <ClCompile Include="..\..\src\tests\movement_module_test\MoveCommandTest.cpp" />
     <ClCompile Include="..\..\src\tests\movement_module_test\movement_module_test_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>

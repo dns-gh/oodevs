@@ -120,6 +120,7 @@
     <ClCompile Include="..\..\src\libraries\movement_module\Agent_PathfinderRule.cpp" />
     <ClCompile Include="..\..\src\libraries\movement_module\Agent_PathSection.cpp" />
     <ClCompile Include="..\..\src\libraries\movement_module\ComputeHeightCommand.cpp" />
+    <ClCompile Include="..\..\src\libraries\movement_module\MagicMoveCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\movement_module\ModuleFacade.cpp" />
     <ClCompile Include="..\..\src\libraries\movement_module\MoveCommand.cpp" />
     <ClCompile Include="..\..\src\libraries\movement_module\OrientateCommand.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="..\..\src\libraries\movement_module\Agent_PathfinderRule.h" />
     <ClInclude Include="..\..\src\libraries\movement_module\Agent_PathSection.h" />
     <ClInclude Include="..\..\src\libraries\movement_module\ComputeHeightCommand.h" />
+    <ClInclude Include="..\..\src\libraries\movement_module\MagicMoveCommand.h" />
     <ClInclude Include="..\..\src\libraries\movement_module\ModuleFacade.h" />
     <ClInclude Include="..\..\src\libraries\movement_module\MoveCommand.h" />
     <ClInclude Include="..\..\src\libraries\movement_module\OrientateCommand.h" />

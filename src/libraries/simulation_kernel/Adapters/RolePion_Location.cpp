@@ -29,6 +29,7 @@
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_Tools.h"
 #include <core/Model.h>
+#include <core/MakeModel.h>
 #include <boost/make_shared.hpp>
 #include <boost/lambda/lambda.hpp>
 
@@ -389,9 +390,9 @@ void RolePion_Location::Hide()
 // -----------------------------------------------------------------------------
 void RolePion_Location::Show( const MT_Vector2D& vPosition )
 {
-    entity_[ "movement/position/x" ] = vPosition.rX_; // $$$$ MCO : this should be left to an effect
-    entity_[ "movement/position/y" ] = vPosition.rY_;
-    entity_[ "movement/speed" ] = 0;
+    sink_.StartCommand( "magic move", core::MakeModel( "identifier", owner_.GetID() )
+                                                     ( "position/x", vPosition.rX_ )
+                                                     ( "position/y", vPosition.rY_ ) );
     TER_Object_ABC::T_ObjectVector objectsColliding;
     TER_World::GetWorld().GetObjectManager().GetListAt( *pvPosition_, objectsColliding );
     for( TER_Object_ABC::CIT_ObjectVector itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )

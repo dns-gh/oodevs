@@ -12,6 +12,7 @@
 #include "Agent_PathClass.h"
 #include "PathType.h"
 #include "MoveCommand.h"
+#include "MagicMoveCommand.h"
 #include "OrientateCommand.h"
 #include "ComputeHeightCommand.h"
 #include "Rep_PathPoint_Front.h"
@@ -193,6 +194,7 @@ ModuleFacade::ModuleFacade()
     MT_Profiler::Initialize();
     PathType::Initialize();
     wrapper::RegisterCommand< MoveCommand >( "move", *this );
+    wrapper::RegisterCommand< MagicMoveCommand >( "magic move" );
     wrapper::RegisterCommand< OrientateCommand >( "orientate" );
     wrapper::RegisterCommand< ComputeHeightCommand >( "compute height" );
 }
