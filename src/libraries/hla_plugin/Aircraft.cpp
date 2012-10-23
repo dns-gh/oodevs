@@ -185,18 +185,6 @@ void Aircraft::Attach( Agent_ABC* agent, unsigned long /*simId*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Aircraft::SetIdentifier
-// Created: AHC 2012-03-15
-// -----------------------------------------------------------------------------
-void Aircraft::SetIdentifier( const std::string& id )
-{
-    identifier_ = id;
-    attributesUpdater_.reset( new AttributesUpdater(identifier_, *listeners_) );
-    entityIdentifierResolver_.Register( entityIdentifier_,  identifier_ );
-    RegisterAttributes();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Aircraft::GetIdentifier
 // Created: AHC 2012-04-18
 // -----------------------------------------------------------------------------

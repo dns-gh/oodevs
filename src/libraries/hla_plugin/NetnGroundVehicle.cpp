@@ -64,15 +64,6 @@ void NetnGroundVehicle::Deserialize( const ::hla::AttributeIdentifier& /*identif
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnGroundVehicle::SetIdentifier
-// Created: AHC 2012-07-27
-// -----------------------------------------------------------------------------
-void NetnGroundVehicle::SetIdentifier( const std::string& id )
-{
-    aggregate_->SetIdentifier( id );
-}
-
-// -----------------------------------------------------------------------------
 // Name: NetnGroundVehicle::GetIdentifier
 // Created: AHC 2012-07-27
 // -----------------------------------------------------------------------------

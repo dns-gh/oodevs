@@ -125,17 +125,6 @@ void Minefield::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla
 }
 
 // -----------------------------------------------------------------------------
-// Name: Minefield::SetIdentifier
-// Created: AHC 2012-08-07
-// -----------------------------------------------------------------------------
-void Minefield::SetIdentifier( const std::string& id )
-{
-    identifier_ = id;
-    attributes_.reset( new AttributesUpdater(identifier_, *listeners_) );
-    RegisterAttributes();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Minefield::GetIdentifier
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------

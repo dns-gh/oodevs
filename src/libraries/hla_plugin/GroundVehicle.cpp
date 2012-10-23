@@ -108,15 +108,6 @@ void GroundVehicle::EmbarkmentChanged( bool /*mounted*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GroundVehicle::SetIdentifier
-// Created: AHC 2012-07-26
-// -----------------------------------------------------------------------------
-void GroundVehicle::SetIdentifier( const std::string& id )
-{
-    identifier_ = id;
-}
-
-// -----------------------------------------------------------------------------
 // Name: GroundVehicle::GetIdentifier
 // Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------

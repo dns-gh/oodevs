@@ -114,10 +114,9 @@ bool HlaTacticalObjectClass::RequestOwnershipAssumption( const ::hla::ObjectIden
 // -----------------------------------------------------------------------------
 void HlaTacticalObjectClass::Created( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    T_Entity localEntity( factory_->Create( object, name, identifier, force, type ).release() );
     std::string objectName( nameFactory_.CreateName( name + boost::lexical_cast< std::string >( identifier ) ) );
+    T_Entity localEntity( factory_->Create( object, objectName, identifier, force, type ).release() );
     ::hla::ObjectIdentifier objectId( hlaClass_->Register( *localEntity, objectName ) );
-    localEntity->SetIdentifier( objectName );
     pListeners_->LocalCreated( objectId.ToString(), *this, *localEntity );
     localEntities_[ objectName ] = localEntity;
     //hlaIdentifiers_[ objectName ] = objectId.ToLong();

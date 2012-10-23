@@ -122,18 +122,6 @@ void NetnAircraft::RegisterAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NetnAircraft::SetIdentifier
-// Created: AHC 2012-03-15
-// -----------------------------------------------------------------------------
-void NetnAircraft::SetIdentifier( const std::string& id )
-{
-    aggregate_->SetIdentifier( id );
-    identifier_ = id;
-    attributesUpdater_.reset( new AttributesUpdater(identifier_, *listeners_) );
-    RegisterAttributes();
-}
-
-// -----------------------------------------------------------------------------
 // Name: NetnAircraft::GetIdentifier
 // Created: AHC 2012-04-18
 // -----------------------------------------------------------------------------

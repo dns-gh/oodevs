@@ -63,7 +63,6 @@ public:
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const;
     virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer );
-    virtual void SetIdentifier( const std::string& id );
     virtual const std::string& GetIdentifier() const;
     virtual void Attach( Agent_ABC* agent, unsigned long simId );
     virtual void Register( ObjectListener_ABC& listener );

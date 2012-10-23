@@ -184,18 +184,6 @@ void SurfaceVessel::Attach( Agent_ABC* agent, unsigned long /*simId*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SurfaceVessel::SetIdentifier
-// Created: AHC 2012-03-15
-// -----------------------------------------------------------------------------
-void SurfaceVessel::SetIdentifier( const std::string& id )
-{
-    identifier_ = id;
-    attributesUpdater_.reset( new AttributesUpdater(identifier_, *listeners_) );
-    entityIdentifierResolver_.Register( entityIdentifier_,  identifier_ );
-    RegisterAttributes();
-}
-
-// -----------------------------------------------------------------------------
 // Name: SurfaceVessel::GetIdentifier
 // Created: AHC 2012-04-18
 // -----------------------------------------------------------------------------

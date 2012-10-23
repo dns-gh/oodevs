@@ -173,19 +173,6 @@ void NetnAggregate::RegisterAttributes()
     attributesUpdater_->Register( "EmbeddedUnitList", boost::bind( &FOM_Serializer_ABC::ReadEmbeddedUnitList, boost::ref( fomSerializer_ ), _1, _2, _3 ), std::vector< std::string >() , fomSerializer_.GetUniqueIdSerializer() );
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: NetnAggregate::SetIdentifier
-// Created: AHC 2012-03-15
-// -----------------------------------------------------------------------------
-void NetnAggregate::SetIdentifier( const std::string& id )
-{
-    aggregate_->SetIdentifier( id );
-    identifier_ = id;
-    attributesUpdater_.reset( new AttributesUpdater(identifier_, *listeners_) );
-    RegisterAttributes();
-}
-
 // -----------------------------------------------------------------------------
 // Name: NetnAggregate::GetIdentifier
 // Created: AHC 2012-04-18

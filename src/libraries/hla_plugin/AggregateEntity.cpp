@@ -232,19 +232,6 @@ void AggregateEntity::Attach( Agent_ABC* agent, unsigned long /*simId*/ )
     agent_ = agent;
     agent_->Register( *this );
 }
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::SetIdentifier
-// Created: AHC 2012-03-15
-// -----------------------------------------------------------------------------
-void AggregateEntity::SetIdentifier( const std::string& id )
-{
-    identifier_ = id;
-    attributesUpdater_.reset( new AttributesUpdater(identifier_, *listeners_) );
-    entityIdentifierResolver_.Register( entityIdentifier_,  identifier_ );
-    RegisterAttributes();
-}
-
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity::GetIdentifier
 // Created: AHC 2012-04-18
