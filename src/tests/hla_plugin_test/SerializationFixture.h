@@ -23,7 +23,7 @@ namespace
     {
     public:
         template< typename T >
-        ::hla::Deserializer Serialize( const T& value, unsigned int messageSize )
+        ::hla::Deserializer Serialize( const T& value, size_t messageSize )
         {
             ::hla::Serializer serializer;
             value.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer ) );
