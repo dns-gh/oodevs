@@ -38,6 +38,7 @@ class Dotation;
 class Model;
 class StaticModel;
 class SupplyStates;
+class LogisticSupplyValuesTableWidget;
 
 // =============================================================================
 /** @class  LogisticSupplyChangeQuotasDialog
@@ -72,7 +73,7 @@ private slots:
     void Validate();
     void Reject();
     void OnSelectionChanged();
-    void OnValueChanged( int row, int col );
+    //void OnValueChanged( int row, int col );
     //@}
 
 private:
@@ -84,13 +85,13 @@ private:
 
     //! @name Helpers
     //@{
-    void AddItem();
-    void AddDotation( const SupplyStates& states );
+    // void AddItem();
+    void AddDotation( const Dotation& dotation );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< QString, Dotation > T_Supplies;
+    typedef QMap< QString, Dotation > T_Supplies;
     //@}
 
 private:
@@ -113,13 +114,14 @@ private:
     //@{
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
-    const StaticModel& static_;
+    const ::StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     const Model& model_;
     const kernel::Profile_ABC& profile_;
 
     gui::ValuedComboBox< const kernel::Entity_ABC* >* targetCombo_;
-    Q3Table* table_;
+    // Q3Table* table_;
+    LogisticSupplyValuesTableWidget* table_;
     SelectedHolder selected_;
     QStringList dotationTypes_;
     T_Supplies supplies_;

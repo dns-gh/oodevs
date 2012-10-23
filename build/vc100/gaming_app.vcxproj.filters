@@ -808,6 +808,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyFlowDialog_ABC.cpp">
       <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyValuesTableWidget.cpp">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1477,6 +1480,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyFlowDialog_ABC.h">
       <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyValuesTableWidget.h">
+      <Filter>Source Files\Dialogs\Magic actions\Logistic\Widgets</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

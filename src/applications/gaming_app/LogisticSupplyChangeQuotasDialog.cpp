@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
+#include "LogisticSupplyValuesTableWidget.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Automat.h"
@@ -19,6 +20,7 @@
 #include "actions/Identifier.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Dotation.h"
+#include "gaming/LogisticHelpers.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
@@ -155,36 +157,31 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     , selected_( controllers )
 {
     setCaption( tr( "Supply quotas allocation" ) );
-    Q3VBoxLayout* layout = new Q3VBoxLayout( this );
+    setFixedSize( 375, 265 );
 
-    Q3HBox* box = new Q3HBox( this );
-    box->setMargin( 5 );
-    new QLabel( tr( "Target:" ), box );
-    targetCombo_ = new ValuedComboBox< const Entity_ABC* >( box );
+    QGridLayout* layout = new QGridLayout( this, 3, 2, 5 );
+    layout->setRowMinimumHeight( 0, 25 );
+    layout->setColumnMinimumWidth( 0, 110 );    
+    targetCombo_ = new ValuedComboBox< const Entity_ABC* >( this );
     targetCombo_->setMinimumWidth( 150 );
-    layout->addWidget( box );
 
-    table_ = new Q3Table( 0, 2, this );
-    table_->setMargin( 5 );
-    table_->horizontalHeader()->setLabel( 0, tr( "Resource" ) );
-    table_->horizontalHeader()->setLabel( 1, tr( "Quota" ) );
-    table_->setLeftMargin( 0 );
-    table_->setColumnStretchable( 0, true );
+    QStringList header;
+    header << tr( "Resource" ) << tr( "Quota" );
+    table_ = new LogisticSupplyValuesTableWidget( this, header );
     table_->setMinimumSize( 220, 200 );
-    layout->addWidget( table_ );
-
-    box = new Q3HBox( this );
-    box->setMargin( 5 );
-    QPushButton* okButton = new QPushButton( tr( "Ok" ), box );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), box );
+    QPushButton* okButton = new QPushButton( tr( "Ok" ), this );
+    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), this );
     okButton->setDefault( true );
-    layout->addWidget( box );
+
+    layout->addWidget( new QLabel( tr( "Target:" ), this ), 0, 0, 1, 1, Qt::AlignLeft );
+    layout->addWidget( targetCombo_, 0, 1, 1, 1 );
+    layout->addWidget( table_, 1, 0, 1, 2 );
+    layout->addWidget( okButton, 2, 0, 1, 1 );
+    layout->addWidget( cancelButton, 2, 1, 1, 1 );
 
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( okButton, SIGNAL( clicked() ), SLOT( Validate() ) );
-
     connect( targetCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSelectionChanged() ) );
-    connect( table_, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
 
     controllers_.Register( *this );
     hide();
@@ -239,9 +236,7 @@ void LogisticSupplyChangeQuotasDialog::Show()
 {
     if( !selected_ )
         return;
-
     targetCombo_->Clear();
-
     {
         tools::Iterator< const Automat_ABC& > it = model_.agents_.Resolver< Automat_ABC >::CreateIterator();
         while( it.HasMoreElements() )
@@ -296,14 +291,13 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     action->AddParameter( *dotations );
 
     unsigned int index = 0;
-    for( int i = 0; i < table_->numRows(); ++i )
+    QMap< QString, int > quantities;
+    table_->GetQuantities( quantities );
+    for( QMap< QString, int >::iterator it = quantities.begin(); it != quantities.end(); ++it )
     {
-        const QString text = table_->text( i, 0 );
-        if( text.isEmpty() || text.isNull() )
-            continue;
         ParameterList& dotationList = dotations->AddList( CreateName( "Dotation", ++index ) );
-        dotationList.AddIdentifier( "Type", supplies_[ text ].type_->GetId() );
-        dotationList.AddQuantity( "Number", table_->text( i, 1 ).toInt() );
+        dotationList.AddIdentifier( "Type", supplies_[ it.key() ].type_->GetId() );
+        dotationList.AddQuantity( "Number", it.value() );
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( target, false ) );
@@ -320,24 +314,6 @@ void LogisticSupplyChangeQuotasDialog::Reject()
     selected_.Reset();
 }
 
-namespace
-{
-    struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>, boost::noncopyable
-    {
-        SupplyStatesVisitor( LogisticSupplyChangeQuotasDialog& dlg, void (LogisticSupplyChangeQuotasDialog::*pFunc)(const SupplyStates&) )
-                : dlg_  ( dlg )
-                , pFunc_( pFunc )
-        {}
-        void Visit( const SupplyStates& extension )
-        {
-            (dlg_.*pFunc_)(extension);
-        }
-    private:
-        LogisticSupplyChangeQuotasDialog& dlg_;
-        void (LogisticSupplyChangeQuotasDialog::*pFunc_)(const SupplyStates&);
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog::OnSelectionChanged
 // Created: SBO 2006-07-03
@@ -349,82 +325,25 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
     dotationTypes_.append( "" );
     const Entity_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( agent )
-    {
-        const TacticalHierarchies& hierarchies = agent->Get< TacticalHierarchies >();
-        SupplyStatesVisitor visitor( *this, &LogisticSupplyChangeQuotasDialog::AddDotation );
-        hierarchies.Accept<SupplyStates>(visitor);
-    }
-    table_->setNumRows( 0 );
-    if( ! dotationTypes_.empty() )
-        AddItem();
+        logistic_helpers::VisitBaseStocksDotations( *agent, boost::bind( &LogisticSupplyChangeQuotasDialog::AddDotation, this, _1 ) );
+    QMap< QString, int > values;
+    QStringList possible = supplies_.keys();
+    table_->SetQuantities( values, possible );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog::AddDotation
-// Created: AGE 2006-10-06
+// Created: MMC 2012-10-22
 // -----------------------------------------------------------------------------
-void LogisticSupplyChangeQuotasDialog::AddDotation( const SupplyStates& states )
+void LogisticSupplyChangeQuotasDialog::AddDotation( const Dotation& dotation )
 {
-    tools::Iterator< const Dotation& > it = states.CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const Dotation& dotation = it.NextElement();
-        const QString type = dotation.type_->GetName().c_str();
-        Dotation& supply = supplies_[ type ];
-        if( ! supply.type_ )
-        {
-            dotationTypes_.append( type );
-            supply.type_ = dotation.type_;
-        }
-        supply.quantity_ += dotation.quantity_;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyChangeQuotasDialog::OnValueChanged
-// Created: SBO 2006-07-03
-// -----------------------------------------------------------------------------
-void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int /*col*/ )
-{
-    if( row < 0 )
+    if( !dotation.type_ )
         return;
-
-    const Entity_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
-    if( !selected_ || !agent )
-        return;
-
-    ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( table_->item( row, 0 ) );
-    //if( col == 0 )
+    const QString type = dotation.type_->GetName().c_str();
+    Dotation& supply = supplies_[ type ];
+    if( !supply.type_ )
     {
-        if( item.CurrentItem() == 0 && row != table_->numRows() - 1 )
-            table_->removeRow( row );
-        else if( item.CurrentItem() && row == table_->numRows() - 1 )
-        {
-            const int current = item.CurrentItem();
-            if( table_->numRows() < int( dotationTypes_.size() ) - 1 )
-                AddItem();
-            item.SetCurrentItem( current );
-        }
-        table_->setCurrentCell( row, 1 );
+        dotationTypes_.append( type );
+        supply.type_ = dotation.type_;
     }
-    //else if( col == 1 )
-    {
-        // $$$$ SBO 2006-07-03: check value/stock
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSupplyChangeQuotasDialog::AddItem
-// Created: SBO 2006-07-03
-// -----------------------------------------------------------------------------
-void LogisticSupplyChangeQuotasDialog::AddItem()
-{
-    const Entity_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
-    if( !selected_ || !agent )
-        return;
-    const unsigned int rows = table_->numRows() + 1;
-    table_->setNumRows( rows );
-    table_->setItem( rows - 1, 0, new ExclusiveComboTableItem( table_, dotationTypes_ ) );
-    table_->setItem( rows - 1, 1, new gui::SpinTableItem< int >( table_, 0, std::numeric_limits< int >::max(), 1 ) );
-    table_->setCurrentCell( rows - 1, 1 );
 }
