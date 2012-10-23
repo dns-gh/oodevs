@@ -171,18 +171,9 @@ void PluginSetting::Accept( PluginSettingVisitor_ABC& visitor )
     else if( type_ == "time" )
         visitor.Visit( attribute_, std::string( QString( "%1s" ).arg( QTime().secsTo( timeValue_->time() ) ).toAscii().constData() ) );
     else if( type_ == "file" )
-    {
-        // TODO:
-        // const bfs::path exerciseDir = bfs::path( config_.GetExerciseDir( exercise ) );
-        // const bfs::path orderDir = bfs::path( orderFile_ );
-        // if( exerciseDir.string() == std::string( orderDir.string(), 0, exerciseDir.string().size() ) )
-        //    action.SetOption( "session/config/dispatcher/plugins/timeline/orders/@file", std::string( orderFile_, exerciseDir.string().size() + 1, orderFile_.size() - exerciseDir.string().size() - 1 ) );
         visitor.Visit( attribute_, fileName_ );
-    }
     else if( type_ == "file_list" )
-    {
         visitor.Visit( attribute_,  fileList_->GetFilesDelimited());
-    }
     else if( type_ == "enumeration" )
         visitor.Visit( attribute_, std::string( enumerationValue_->currentText().toAscii().constData() ) );
 }

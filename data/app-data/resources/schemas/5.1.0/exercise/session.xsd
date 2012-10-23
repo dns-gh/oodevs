@@ -130,42 +130,6 @@
                   <xs:attribute name="keyframesfreq" type="xs:string" use="optional"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="timeline" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="orders">
-                      <xs:complexType>
-                        <xs:annotation>
-                          <xs:documentation xml:lang="en">Recorded orders.</xs:documentation>
-                        </xs:annotation>
-                        <xs:attribute name="file" type="xs:string" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="scenario">
-                      <xs:complexType>
-                        <xs:annotation>
-                          <xs:documentation xml:lang="en">Recorded orders.</xs:documentation>
-                        </xs:annotation>
-                        <xs:sequence>
-                          <xs:element name="actor">
-                            <xs:complexType>
-                              <xs:annotation>
-                                <xs:documentation xml:lang="en">Actor reference in the timeline scenario who will play the recorded orders.</xs:documentation>
-                              </xs:annotation>
-                              <xs:attribute name="id" type="xs:string" use="required"/>
-                              <xs:attribute name="name" type="xs:string" use="required"/>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="id" type="xs:string" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                  <xs:attribute name="host" type="xs:string" use="required"/>
-                  <xs:attribute name="log" type="xs:boolean" use="optional"/>
-                  <xs:attribute name="ssl" type="xs:boolean" use="optional"/>
-                </xs:complexType>
-              </xs:element>
               <xs:element name="shield" minOccurs="0">
                 <xs:annotation>
                   <xs:documentation xml:lang="en">Activates a Shield dispatcher proxy.</xs:documentation>
