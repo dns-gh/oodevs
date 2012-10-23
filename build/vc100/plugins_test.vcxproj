@@ -150,7 +150,6 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\tests\plugins_test\BmlTest.cpp" />
     <ClCompile Include="..\..\src\tests\plugins_test\FormationTest.cpp" />
     <ClCompile Include="..\..\src\tests\plugins_test\LogisticPluginTest.cpp" />
     <ClCompile Include="..\..\src\tests\plugins_test\plugins_test_pch.cpp">
@@ -180,9 +179,6 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     <ClInclude Include="..\..\src\tests\plugins_test\MockMovable.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="bml_plugin.vcxproj">
-      <Project>{22bf4c12-a16a-4fdb-bc1d-eb14c1f0d2ff}</Project>
-    </ProjectReference>
     <ProjectReference Include="clients_kernel.vcxproj">
       <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
     </ProjectReference>
