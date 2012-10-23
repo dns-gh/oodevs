@@ -18,7 +18,6 @@
 #include "frontend/CheckpointConfigPanel.h"
 #include "frontend/Config.h"
 #include "frontend/CreateSession.h"
-// #include "frontend/EdxlHavePluginConfigPanel.h"
 #include "frontend/EditExercise.h"
 #include "frontend/Exercise_ABC.h"
 #include "frontend/JoinAnalysis.h"
@@ -171,9 +170,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
         }
         {
             frontend::PluginConfigBuilder builder( config_, tabs_ );
-            plugins_.push_back( builder.BuildFromXml()
-                                       // .Build< frontend::EdxlHavePluginConfigPanel >()
-                                       .Finalize() );
+            plugins_.push_back( builder.BuildFromXml().Finalize() );
         }
     }
     EnableButton( eButtonStart, false );

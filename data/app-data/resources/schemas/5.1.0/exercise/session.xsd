@@ -130,41 +130,6 @@
                   <xs:attribute name="keyframesfreq" type="xs:string" use="optional"/>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="edxl-have" minOccurs="0">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="services">
-                      <xs:complexType>
-                        <xs:annotation>
-                          <xs:documentation xml:lang="en">Defines connection information to the EDXL server.</xs:documentation>
-                        </xs:annotation>
-                        <xs:sequence>
-                          <xs:element name="initialization">
-                            <xs:complexType>
-                              <xs:annotation>
-                                <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
-                              </xs:annotation>
-                              <xs:attribute name="serviceURI" type="xs:string" use="required"/>
-                            </xs:complexType>
-                          </xs:element>
-                          <xs:element name="update">
-                            <xs:complexType>
-                              <xs:annotation>
-                                <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
-                              </xs:annotation>
-                              <xs:attribute name="frequency" type="T_SimulationTime" use="required"/>
-                              <xs:attribute name="serviceURI" type="xs:string" use="required"/>
-                            </xs:complexType>
-                          </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="host" type="xs:string" use="required"/>
-                        <xs:attribute name="ssl" type="xs:boolean" use="optional"/>
-                        <xs:attribute name="log" type="xs:boolean" use="optional"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
               <xs:element name="timeline" minOccurs="0">
                 <xs:complexType>
                   <xs:sequence>

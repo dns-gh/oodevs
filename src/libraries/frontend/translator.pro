@@ -6,7 +6,6 @@ CheckpointList.cpp \
 CompositePluginConfig.cpp \
 Config.cpp \
 CreateTerrain.cpp \
-EdxlHavePluginConfigPanel.cpp \
 JoinExercise.cpp \
 LauncherClient.cpp \
 PluginConfig.cpp \

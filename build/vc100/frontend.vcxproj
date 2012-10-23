@@ -261,7 +261,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuildStep Include="..\..\src\libraries\frontend\EdxlHavePluginConfigPanel.h" />
     <ClInclude Include="..\..\src\libraries\frontend\PluginConfig_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\frontend\RandomPluginConfigPanel.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
