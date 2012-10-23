@@ -45,14 +45,14 @@ int RunReplayer(  HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, 
     int nResult = EXIT_SUCCESS;
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
-    bool silentMode = false;
+    bool verbose = false;
     try
     {
-        // Silent mode
-        silentMode = ( std::find( argv.begin(), argv.end(), "--silent" ) != argv.end() );
+        // verbose mode
+        verbose = std::find( argv.begin(), argv.end(), "--verbose" ) != argv.end();
 
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-        license_gui::LicenseDialog::CheckLicense( "sword-replayer", silentMode );
+        license_gui::LicenseDialog::CheckLicense( "sword-replayer", !verbose );
 #endif
         tools::SetCodec();
         App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow, replayLog );

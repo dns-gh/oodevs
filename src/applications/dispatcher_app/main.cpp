@@ -29,19 +29,19 @@ int Run( LPSTR lpCmdLine )
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 
-    bool silentMode = false;
+    bool verbose = false;
     int maxConnections = 10;
     int nResult = EXIT_FAILURE;
     try
     {
-        // Silent mode
+        // verbose mode
         std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
-        silentMode = ( std::find( argv.begin(), argv.end(), "--silent" ) != argv.end() );
+        verbose = std::find( argv.begin(), argv.end(), "--verbose" ) != argv.end();
 
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         // Check license
-        license_gui::LicenseDialog::CheckLicense( "sword-runtime", silentMode );
-        license_gui::LicenseDialog::CheckLicense( "sword-dispatcher", silentMode, &maxConnections );
+        license_gui::LicenseDialog::CheckLicense( "sword-runtime", !verbose );
+        license_gui::LicenseDialog::CheckLicense( "sword-dispatcher", !verbose, &maxConnections );
 #endif
 
         // Execute dispatcher

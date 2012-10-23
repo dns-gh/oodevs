@@ -51,7 +51,8 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
 // Name: SIM_App constructor
 // Created: RDS 2008-07-08
 // -----------------------------------------------------------------------------
-SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */, int maxConnections )
+SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPSTR lpCmdLine,
+                  int /* nCmdShow */, int maxConnections, bool verbose )
     : observer_      ( std::auto_ptr< tools::RealFileLoaderObserver_ABC >( new FileLoaderObserver() ) )
     , startupConfig_ ( new MIL_Config( *observer_ ) )
     , winArguments_  ( new tools::WinArguments( lpCmdLine ) )
@@ -63,9 +64,10 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
     , pDispatcher_   ( 0 )
     , nIconIndex_    ( 0 )
     , dispatcherOk_  ( true )
+    , verbose_       ( verbose )
 {
     startupConfig_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
-    
+
     bool bClearPreviousLog = !startupConfig_->HasCheckpoint();
     tools::ExerciseConfig* exerciceConfig = static_cast< tools::ExerciseConfig* >( startupConfig_.get() );
     logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(),
@@ -488,7 +490,7 @@ void SIM_App::CreateConsoleLog()
     {
         std::string errorMsg = "Console output failed. No messages will be available.";
         MT_LOG_ERROR_MSG( errorMsg );
-        if( !startupConfig_->IsSilentMode() )
+        if( verbose_ )
             ::MessageBox(NULL, errorMsg.c_str(),"Console error", MB_OK | MB_ICONWARNING);
     }
     std::ios::sync_with_stdio();

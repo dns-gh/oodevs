@@ -38,7 +38,8 @@ class SIM_App : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow, int maxConnections ); //!< win32
+             SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine,
+                      int nCmdShow, int maxConnections, bool verbose ); //!< win32
     virtual ~SIM_App();
     //@}
 
@@ -92,6 +93,7 @@ private:
     std::auto_ptr< boost::thread > guiThread_;
     std::auto_ptr< boost::thread > dispatcherThread_;
     bool                           dispatcherOk_;
+    const bool                     verbose_;
     //@}
 };
 

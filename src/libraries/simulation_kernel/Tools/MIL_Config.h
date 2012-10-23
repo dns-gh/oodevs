@@ -60,7 +60,6 @@ public:
     unsigned short     GetNetworkPort            () const;
     unsigned long      GetNetworkTimeout         () const;
     bool               IsThreadedNetwork         () const;
-    bool               IsSilentMode              () const;
     bool               IsLegacy                  () const;
 
     bool               UseCheckPointCRC          () const;
@@ -154,7 +153,6 @@ private:
     bool           bFrozenMode_;
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
-    bool           bSilentMode_;
     bool           bLegacy_;
     std::string    strCheckPointNameTestMode_;
     T_CRCMap       CRCMap_;
