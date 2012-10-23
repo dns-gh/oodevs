@@ -15,6 +15,7 @@
 #include "MagicMoveCommand.h"
 #include "OrientateCommand.h"
 #include "ComputeHeightCommand.h"
+#include "FollowCommand.h"
 #include "Rep_PathPoint_Front.h"
 #include "simulation_kernel/Decision/DEC_Path_ABC.h" // $$$$ MCO : for enums
 #include "wrapper/Command.h"
@@ -197,6 +198,7 @@ ModuleFacade::ModuleFacade()
     wrapper::RegisterCommand< MagicMoveCommand >( "magic move" );
     wrapper::RegisterCommand< OrientateCommand >( "orientate" );
     wrapper::RegisterCommand< ComputeHeightCommand >( "compute height" );
+    wrapper::RegisterCommand< FollowCommand >( "follow" );
 }
 
 // -----------------------------------------------------------------------------

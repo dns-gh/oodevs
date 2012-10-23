@@ -141,6 +141,7 @@ namespace movement
         ModuleFixture()
             : HookFixture( "movement_module", boost::assign::list_of( "move" )
                                                                     ( "magic move" )
+                                                                    ( "follow" )
                                                                     ( "orientate" )
                                                                     ( "compute height" ) )
         {}

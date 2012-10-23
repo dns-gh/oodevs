@@ -362,13 +362,8 @@ void RolePion_Location::Clean()
 // -----------------------------------------------------------------------------
 void RolePion_Location::Follow( const MIL_Agent_ABC& agent )
 {
-    const PHY_RoleInterface_Location& roleLocation = agent.GetRole< PHY_RoleInterface_Location >();
-    entity_[ "movement/position/x" ] = roleLocation.GetPosition().rX_; // $$$$ MCO : this should be left to an effect
-    entity_[ "movement/position/y" ] = roleLocation.GetPosition().rY_;
-    entity_[ "movement/direction/x" ] = roleLocation.GetDirection().rX_;
-    entity_[ "movement/direction/y" ] = roleLocation.GetDirection().rY_;
-    entity_[ "movement/speed" ] = roleLocation.GetCurrentSpeed();
-    entity_[ "movement/height" ] = roleLocation.GetHeight();
+    sink_.PostCommand( "follow", core::MakeModel( "identifier", owner_.GetID() )
+                                                ( "followed", agent.GetID() ) );
 }
 
 // -----------------------------------------------------------------------------

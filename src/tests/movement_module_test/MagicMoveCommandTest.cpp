@@ -16,9 +16,9 @@ BOOST_FIXTURE_TEST_CASE( magic_move_command_posts_effect_on_position_and_resets_
     model[ "entities" ][ identifier ][ "movement" ] = core::MakeModel( "position/x", -1 )
                                                                      ( "position/y", -2 )
                                                                      ( "speed", 30 );
-    StartCommand( "magic move", core::MakeModel( "identifier", identifier )
-                                               ( "position/x", 1 )
-                                               ( "position/y", 2 ) );
+    PostCommand( "magic move", core::MakeModel( "identifier", identifier )
+                                              ( "position/x", 1 )
+                                              ( "position/y", 2 ) );
     ExpectEffect( model[ "entities" ][ identifier ][ "movement" ],
                   sword::test::MakeModel( "position/x", 1 )
                                         ( "position/y", 2 )
