@@ -171,6 +171,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\IndirectFireReceiverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\IndirectFireSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\InteractionBuilderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\IsPartOfStructTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\MappingsTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />

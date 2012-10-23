@@ -2451,11 +2451,23 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export shapefiles directory:</source>
+        <source>Export directory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export successfull.</source>
+        <source>Export vector data (Shapefile)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export raster data (GeoTIFF)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export elevation data (ESRI Ascii GRID)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export successful.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

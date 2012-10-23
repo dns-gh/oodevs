@@ -17,6 +17,12 @@ using namespace plugins::hla;
 // Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
 IsPartOfStruct::IsPartOfStruct()
+    : constituentPartStationName( Other )
+    , x ( 0.f )
+    , y ( 0.f )
+    , z ( 0.f )
+    , range ( 0.f )
+    , bearing ( 0.f )
 {
     // NOTHING
 }
@@ -28,6 +34,12 @@ IsPartOfStruct::IsPartOfStruct()
 IsPartOfStruct::IsPartOfStruct( const rpr::EntityIdentifier& disId, const Omt13String& rtiId )
     : disId_( disId )
     , rtiId_( rtiId )
+    , constituentPartStationName( Other )
+    , x ( 0.f )
+    , y ( 0.f )
+    , z ( 0.f )
+    , range ( 0.f )
+    , bearing ( 0.f )
 {
     // NOTHING
 }
