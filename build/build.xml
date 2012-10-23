@@ -929,7 +929,7 @@
         </build-test>
     </target>
 
-    <target name="hla_plugin_test" depends="hla_plugin" if="is-vc80">
+    <target name="hla_plugin_test" depends="hla_plugin">
         <build-test name="hla_plugin" depends="boost,qt4,terrain,xerces,xalan,protobuf"
             libs="HLA,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
