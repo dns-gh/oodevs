@@ -257,12 +257,19 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector
 // Name: DEC_PathResult::Serialize
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void DEC_PathResult::Serialize( sword::Path& asn ) const
+void DEC_PathResult::Serialize( sword::Path& asn, int firstPoint, int pathSizeThreshold ) const
 {
     assert( !resultList_.empty() );
     asn.mutable_location()->set_type( sword::Location::line );
-    for( CIT_PathPointList it = resultList_.begin(); it != resultList_.end(); ++it )
+    int index = 0;
+    CIT_PathPointList it = resultList_.begin();
+    std::advance( it, firstPoint );
+    for( firstPoint; it != resultList_.end(); ++it )
+    {
         NET_ASN_Tools::WritePoint( (*it)->GetPos(), *asn.mutable_location()->mutable_coordinates()->add_elem() );
+        if( ++index > pathSizeThreshold )
+            return;
+    }
 }
 
 // -----------------------------------------------------------------------------

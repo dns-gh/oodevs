@@ -20,6 +20,11 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 
+namespace
+{
+    int pathSizeThreshold = 200;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker constructor
 // Created: NLD 2005-09-30
@@ -33,6 +38,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , vNewDir_           ( 0., 0. )
     , rCurrentSpeed_     ( 0. )
     , rWalkedDistance_   ( 0. )
+    , pointsPassed_      ( 0 )
     , bForcePathCheck_   ( true )
     , bHasMoved_         ( false )
     , bFuelReportSent_   ( false )
@@ -139,6 +145,7 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     if( pCurrentPath_.get() && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RolePion_Location >().HasDoneMagicMove()*/ )
         return eRunning;
     
+    pointsPassed_ = 0;
     DEC_PathWalker::E_ReturnCode rc = eRunning;
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
@@ -192,6 +199,7 @@ bool DEC_PathWalker::GoToNextNavPoint( DEC_PathResult& path )
         movingEntity_.NotifyMovingOnPathPoint( **itNextPathPoint_ );
         SetCurrentPathPoint( path );
         ++itNextPathPoint_;
+        CheckPathNotification();
         return false;
     }
     // points particuliers -> EVT vers DEC
@@ -199,10 +207,24 @@ bool DEC_PathWalker::GoToNextNavPoint( DEC_PathResult& path )
     {
         movingEntity_.NotifyMovingOnSpecialPoint( *itNextPathPoint_ );
         SetCurrentPathPoint( path );
+        CheckPathNotification();
     }
     while( ++itNextPathPoint_ != path.GetResult().end() &&
          ( *itNextPathPoint_ )->GetType() != DEC_PathPoint::eTypePointPath && ( *itNextPathPoint_ )->GetPos() == vNewPos_ );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathWalker::CheckPathNotification
+// Created: LDC 2012-10-22
+// -----------------------------------------------------------------------------
+void DEC_PathWalker::CheckPathNotification()
+{
+    ++pointsPassed_;
+    if( pointsPassed_ % pathSizeThreshold == 0 )
+    {
+        movingEntity_.NotifyCurrentPathChanged();
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -556,6 +578,6 @@ bool DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
 {
     if( !pCurrentPath_.get() )
         return false;
-    pCurrentPath_->Serialize( asn );
+    pCurrentPath_->Serialize( asn, pointsPassed_, 2*pathSizeThreshold );
     return true;
 }

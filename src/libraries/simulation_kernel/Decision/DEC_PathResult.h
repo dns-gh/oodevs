@@ -67,7 +67,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( sword::Path& asn ) const;
+    void Serialize( sword::Path& asn, int firstPoint, int pathSizeThreshold ) const;
     //@}
 
 private:
