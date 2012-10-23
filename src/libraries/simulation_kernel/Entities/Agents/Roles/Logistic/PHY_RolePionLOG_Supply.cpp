@@ -125,6 +125,7 @@ public:
     AvailableConvoyFunctor( const PHY_DotationCategory& dotationCategory )
         : dotationCategory_( dotationCategory )
         , pSelectedConvoy_ ( 0 )
+        , rTotalWeightMax_( 0. )
     {
         // NOTHING
     }
@@ -132,11 +133,21 @@ public:
     void operator() ( PHY_ComposantePion& composante )
     {
         if( composante.CanBePartOfConvoy() && composante.CanTransportStock( dotationCategory_ ) )
-            pSelectedConvoy_ = &composante;
+        {
+            double rTotalWeightMax = 0.;
+            double rTotalVolumeMax = 0.;
+            composante.GetStockTransporterCapacity( rTotalWeightMax, rTotalVolumeMax );
+            if( !pSelectedConvoy_ || rTotalWeightMax_ > rTotalWeightMax ) // smallest...
+            {
+                rTotalWeightMax_ = rTotalWeightMax;
+                pSelectedConvoy_ = &composante;
+            }
+        }
     }
 
     const PHY_DotationCategory& dotationCategory_;
     PHY_ComposantePion* pSelectedConvoy_;
+    double rTotalWeightMax_;
 };
 
 // -----------------------------------------------------------------------------

@@ -15,6 +15,7 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConfig.h"
 #include "Entities/Agents/Roles/Logistic/FuneralPackagingResource.h"
@@ -372,8 +373,9 @@ class SupplyConvoyAvailabilityVisitor : public MIL_LogisticEntitiesVisitor
     public:
         SupplyConvoyAvailabilityVisitor( const PHY_DotationCategory& dotationCategory )
             : dotationCategory_( dotationCategory )
-            , pConvoySelected_ ( 0 )
-            , pSelected_       ( 0 )
+            , pConvoySelected_( 0 )
+            , pSelected_( 0 )
+            , rTotalWeightMax_( 0. )
         {
         }
 
@@ -385,22 +387,27 @@ class SupplyConvoyAvailabilityVisitor : public MIL_LogisticEntitiesVisitor
             //if( bExternalTransfert_ && testBrain )
                 //return;
 
-            if( pSelected_ )
-                return;
-
             const PHY_RoleInterface_Supply* candidate = tmp.RetrieveRole< PHY_RoleInterface_Supply >();
             PHY_ComposantePion* pTmpConvoySelected = candidate!=0 ? candidate->GetAvailableConvoyTransporter( dotationCategory_ ) : 0;
             if( pTmpConvoySelected )
             {
-                pConvoySelected_ = pTmpConvoySelected;
-                pSelected_       = const_cast<MIL_AgentPion*>(&tmp);
+                double rTotalWeightMax = 0.;
+                double rTotalVolumeMax = 0.;
+                pTmpConvoySelected->GetStockTransporterCapacity( rTotalWeightMax, rTotalVolumeMax );
+                if( !pSelected_ || rTotalWeightMax_ > rTotalWeightMax )
+                {
+                    rTotalWeightMax_ = rTotalWeightMax;
+                    pConvoySelected_ = pTmpConvoySelected;
+                    pSelected_       = const_cast<MIL_AgentPion*>(&tmp);
+                }
             }
         }
 
     public:
-        const PHY_DotationCategory&  dotationCategory_;
-              PHY_ComposantePion*    pConvoySelected_;
-              MIL_AgentPion*         pSelected_;
+        const PHY_DotationCategory& dotationCategory_;
+              PHY_ComposantePion* pConvoySelected_;
+              MIL_AgentPion* pSelected_;
+              double rTotalWeightMax_;
 };
 
 class SupplyConvoyTransporterVisitor : public MIL_LogisticEntitiesVisitor
