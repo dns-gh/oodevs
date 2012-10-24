@@ -9,7 +9,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         myself.altitude = 0
-        DEC_Agent_HauteurDeVol( myself.altitude ) -- $$$ MIA TODO Action sur le body, faire un body flyingAgent et virer la méthode DEC
+        integration.changeHeight( myself.altitude ) -- $$$ MIA TODO Action sur le body, faire un body flyingAgent
         integration.deactivateSensors()-- $$$ MIA TODO A virer spé drones
         Feedback( self.feedbacks.landed )
         Feedback( self.feedbacks.done ) -- if called within a mission

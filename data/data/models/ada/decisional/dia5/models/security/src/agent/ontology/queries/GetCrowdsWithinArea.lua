@@ -12,7 +12,7 @@ queryImplementation "GetCrowdsWithinArea"
         for _, simCrowd in pairs( simCrowds ) do
             local crowd = CreateKnowledge( agent.ontology.classes.Crowd, simCrowd )
             local simCrowdPosition = integration.getHeadPosition( crowd )
-            if DEC_Geometrie_EstPointDansLocalisation( simCrowdPosition , params.area.source ) then
+            if integration.isPointInsideLocation( simCrowdPosition , params.area.source ) then
                 allRes[ #allRes + 1 ] = crowd
             end
         end

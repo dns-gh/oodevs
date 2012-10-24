@@ -32,9 +32,9 @@ connections = {},
         for _, elem in pairs (self.params.commandingEntities) do
             if myself.pionParams[elem] then
                 local position = elem:getMyPosition()
-                if integration.distance( position, myself.pionParams[elem]:getMyPosition() ) < DEC_Tir_PorteeMaxPourTirer(elem.source, 0.8) then
-                      local mission = DEC_GetRawMission( self.params.objective.source )
-                      DEC_DonnerMissionAutomate( mission )
+                if integration.distance( position, myself.pionParams[elem]:getMyPosition() ) < getMaxRangeToFireAgentForPH(elem.source, 0.8) then
+                      local mission = integration.getRawMission( self.params.objective.source )
+                      integration.giveCommanderTask( mission )
                 end
             end
         end

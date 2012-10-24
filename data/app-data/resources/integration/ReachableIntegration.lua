@@ -3,7 +3,7 @@ require "debug"
 --Reachable Implementation
 --TODO use map to convert string to int/ or other  move function approach
 integration.getPlatoonPosition = function( platoon )
-    if DEC_ConnaissanceAgent_EstValide( platoon.source ) then
+    if integration.isKnowledgeAgentValid( platoon.source ) then
         return DEC_ConnaissanceAgent_Position( platoon.source )
     else
         return nil
@@ -181,13 +181,16 @@ integration.setPace = function( urgency ) -- urgence TRUE/FALSE
     if urgency then
         currentModulation = 1
     end
-    if DEC_Agent_EnVille() then
-        DEC_ModulationVitesseMax( currentModulation / 2 )
+    if integration.isAgentInsideTown() then
+        integration.speedMaxModulation( currentModulation / 2 )
     else
-        DEC_ModulationVitesseMax( currentModulation )
+        integration.speedMaxModulation( currentModulation )
     end
 end
 
+integration.speedMaxModulation = function( modulation )
+    DEC_ModulationVitesseMax( modulation )
+end
 
 -- ============================================================================
 -- MOVEMENT MANAGEMENT
@@ -696,6 +699,16 @@ integration.isPointInUrbanBlockTrafficableForPlatoon = function( platoon, locali
     return DEC_IsPointInUrbanBlockTrafficableForPlatoon( platoon, localisation)
 end
 
+integration.isPointInUrbanBlockTrafficable = function( position )
+    return DEC_IsPointInUrbanBlockTrafficable( position )
+end
+
+integration.getCrossroads = function()
+    local crossroads = {}
+    DEC_Crossroads( crossroads )
+    return crossroads
+end
+
 integration.creerItineraireAPartirListePoint = function( listPoint )
     local listPointSource = {}
     for i=1,#listPoint do 
@@ -706,4 +719,24 @@ end
 
 integration.copyPoint = function( position )
     return DEC_Geometrie_CopiePoint( position )
+end
+
+integration.getPointsCategory = function()
+    return DEC_GetPointsCategory()
+end
+
+integration.isBeforePoint = function( position )
+    return DEC_IsAvantPoint( position)
+end
+
+integration.getTypePoint = function( position )
+    return DEC_GetTypePoint( position)
+end
+
+integration.getDestinationPoint = function( position )
+    return DEC_GetDestPoint( position )
+end
+
+integration.getSafetyPositions = function( radius, safetyDistance )
+    return DEC_FindSafetyPositions( radius, safetyDistance )
 end

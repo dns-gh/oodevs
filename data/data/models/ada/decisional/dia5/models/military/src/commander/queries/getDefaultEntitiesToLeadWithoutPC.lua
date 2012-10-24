@@ -2,7 +2,7 @@ queryImplementation "getDefaultEntitiesToLeadWithoutPC"
 { 
     [ "execute" ] = function ( params )
         local allRes = {}
-        local temp = DEC_Automate_PionsSansPCCommunication()
+        local temp = integration.getUnitsWithoutHQCommunication()
         local CreateKnowledge = CreateKnowledge
         local nTemp = #temp
         for i = 1, nTemp do

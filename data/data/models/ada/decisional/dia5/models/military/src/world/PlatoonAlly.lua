@@ -201,7 +201,7 @@ predicate "isSelfCommanding"
 {
     dependencies = {},
     method = function( self )
-        return not self.source:DEC_Agent_AutomateEstEmbraye()
+        return not integration.isAgentAutomatEngaged( self.source )
     end
 }
 predicate "isDestroyed" 
@@ -350,7 +350,7 @@ return
     end,
 
     -- -------------------------------------------------------------------------------- 
-    -- Integrations and specific methos
+    -- Integrations and specific methods
     -- --------------------------------------------------------------------------------
     isPosted = function( self )
         return integration.isPosted( self )
@@ -444,8 +444,8 @@ return
         return integration.getPerception( self, position )
     end,
     computeMovementCapability = function( self, objective, position )
-        if not DEC_IsPointInUrbanBlockTrafficable( position:getPosition() )
-           and not DEC_Agent_EstEmbarquable() then
+        if not integration.isPointInUrbanBlockTrafficable( position:getPosition() )
+           and not integration.canDismount() then
             return 0 
         else
             return 1
@@ -507,9 +507,9 @@ return
     end,
     getPosition = function( self )
         if self == meKnowledge then
-            return DEC_Agent_Position() -- Me
+            return integration.getBodyPosition() -- Me
         else
-            return DEC_Agent_PositionPtr( self.source ) -- a friend 
+            return integration.getTeammatePosition( self.source ) -- a friend 
         end
     end,
     getMyPosition = function( self )
@@ -517,16 +517,16 @@ return
             world.ReachingArea, self, { distanceMin = 0, distanceMax = 10 } )
     end,
     getPositions = function( self )
-        return DEC_Geometrie_CalculerTrafficablePointPourPoint( self:getPosition() )
+        return integration.getUnitPositions( self:getPosition() )
     end,
     computeEstimateAttritionOnMe = function( self, threat )
-        return ( DEC_ConnaissanceAgent_Dangerosite( threat.source ) - 1 ) * 100
+        return ( integration.getKnowledgeDangerousAgent( threat.source ) - 1 ) * 100
     end,
     getProximity = function( self, reachable )
         return integration.normalizedInversedDistance( self, reachable )
     end,
     getDistanceTo = function( self, entity )
-        return DEC_Geometrie_Distance( self:getPosition(), entity:getPosition() )
+        return integration.computeDistance( self:getPosition(), entity:getPosition() )
     end,
     computeRelation = function( self )
         return integration.computeRelationAgent( self )
@@ -538,12 +538,12 @@ return
         if capacity == ePionEfficiencyCommon then 
             return 1
         else
-            return DEC_Automate_GetEfficacite( self.source, capacity )
+            return integration.getCommanderEfficacity( self.source, capacity )
         end
     end,
     computePhysicalEfficiencyForEffect = function( self, capacity )
-        local coeffZurb = ( DEC_Automate_GetEfficacite( self.source, ePionEfficiencyUrbanArea )/100 )
-        local etatOp = self.source:DEC_Agent_EtatOpsMajeur()
+        local coeffZurb = ( integration.getCommanderEfficacity( self.source, ePionEfficiencyUrbanArea )/100 )
+        local etatOp = integration.getAgentMajorOpsState( self.source )
         local efficiency = self:computePhysicalEfficiency( capacity )
         return efficiency*coeffZurb*etatOp
     end,
@@ -637,7 +637,7 @@ return
         integration.pionRC( ... )
     end,
     isPC = function( self )
-        local pionPC = self.source:DEC_Automate_PionPC()
+        local pionPC = self.source:getHQUnit()
         if self.source == pionPC then
             return true
         end
@@ -649,7 +649,9 @@ return
     isPCJammed = function ( self )
         return integration.pcEstBrouille( self )
     end,
-        
+    getHQUnit = function( self )
+        return integration.commanderGetHQUnit( self )
+    end,    
     getTasks = function( self )
         return self.tasks
     end,
@@ -691,14 +693,14 @@ return
         --NOTHING override later for NBC and ALAT
     end,
     getForceRatio = function( self )
-        -- Interpolation linï¿½aire avec DEC_RapportDeForceLocal [1;5] --> [0;1]
-        -- 0 signifie trï¿½s dï¿½favorable, 1 trï¿½s favorable.
+        -- Interpolation linéaire avec RapportDeForceLocal [1;5] --> [0;1]
+        -- 0 signifie trés défavorable, 1 trés favorable.
         return integration.getForceRatio( self )
     end,
     
     getForceRatioAgent = function( self, pion )
-        -- Interpolation linï¿½aire avec DEC_RapportDeForceLocal [1;5] --> [0;1]
-        -- 0 signifie trï¿½s dï¿½favorable, 1 trï¿½s favorable pour le pion en paramï¿½tre.
+        -- Interpolation linéaire avec RapportDeForceLocal [1;5] --> [0;1]
+        -- 0 signifie trés défavorable, 1 trés favorable pour le pion en paramètre.
         return integration.getForceRatioAgent( pion )
     end,
     
@@ -721,10 +723,10 @@ return
         return integration.canIlluminate()
     end,
     getOperationalCapacity = function( self )
-        return self.source:DEC_Agent_EtatOpsMajeur() * 100
+        return integration.getAgentMajorOpsState( self.source ) * 100
     end,
     getDestructionState = function( self ) -- destruction physique, indï¿½pendant des capacitï¿½s opï¿½rationnelles.
-        return ( 1 - DEC_Agent_EtatOps() ) * 100
+        return ( 1 - integration.getAgentOpsState() ) * 100
     end,
     getEchelon = function( self )
         return F_Pion_GeteEtatEchelon( self.source )
@@ -889,7 +891,7 @@ return
     end,
 
     getAutomat = function ( self )
-        return CreateKnowledge( world.Company, DEC_GetAutomate(self.source) )
+        return CreateKnowledge( world.Company, integration.getCommander(self.source) )
     end,
     dischargeItIn = function( self, camp )
         return integration.dischargeAgent( self, camp )

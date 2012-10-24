@@ -70,6 +70,9 @@ include "integration/LogisticIntegration.lua"
 include "integration/CommandingFilter.lua"
 include "integration/ToolsQueries.lua"
 
+include "integration/GeometryIntegration.lua"
+include "integration/LimaIntegration.lua"
+
 -- for Security
 include "integration/UrbanBlock.lua"
 include "integration/Teammate.lua"

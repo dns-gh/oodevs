@@ -59,7 +59,7 @@ activate = function( self )
                   if pion.source.needReinforcementForDotation ~= nil then
                       dotationAgent = integration.nombreDotationAgent( support, pion.source.needReinforcementForDotation )
                   end
-                  if task and distance < bestDistance and support.source:DEC_Agent_EtatOpsMajeur() > 0 and ( dotationAgent == -1 or dotationAgent > self.bestSupportDotation) then
+                  if task and distance < bestDistance and integration.getAgentMajorOpsState( support.source ) > 0 and ( dotationAgent == -1 or dotationAgent > self.bestSupportDotation) then
                       bestSupport = support
                       bestDistance = distance
                       bestTask = task

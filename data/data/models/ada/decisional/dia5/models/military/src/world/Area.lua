@@ -168,7 +168,7 @@ return
         return integration.getAreaPositions( self )
     end,
     getBorderPosition = function( self )
-        return CreateKnowledge( world.Point, DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( self.source ) )
+        return CreateKnowledge( world.Point, integration.computePointNearLocationsInsideAOR( self.source ) )
     end,
     getProximity = function( self, reachable )
         return integration.normalizedInversedDistance( self, reachable )
@@ -255,8 +255,8 @@ return
         return res
     end,
     decontaminateIt = function ( self )
-        local zoneLocalisation = DEC_Geometrie_CreerLocalisationPolyligne( DEC_Geometrie_ListePointsLocalisation( self.source ) )
-        DEC_DecontaminerZone( zoneLocalisation )
+        local zoneLocalisation = integration.createLocationPolyline( integration.locationInPoints( self.source ) )
+        integration.decontaminateArea( zoneLocalisation )
         meKnowledge:RC( eRC_ZoneDecontaminee )
         return true
     end,

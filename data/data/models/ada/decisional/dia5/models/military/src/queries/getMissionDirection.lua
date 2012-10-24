@@ -1,9 +1,9 @@
 queryImplementation "getMissionDirection"
 { 
     ["execute"] = function ( params )
-        local mission = DEC_GetRawMission( meKnowledge.source )
-        if DEC_HasMission( meKnowledge.source ) then
-            local dir = DEC_GetDirectionDanger( mission )
+        local mission = integration.getRawMission( meKnowledge.source )
+        if integration.hasMission( meKnowledge.source ) then
+            local dir = integration.getDangerousDirection( mission )
             res =  CreateKnowledge( world.Direction, dir )
         else
             res = nil

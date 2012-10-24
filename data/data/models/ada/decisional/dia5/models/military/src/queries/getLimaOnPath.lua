@@ -8,14 +8,14 @@ local knowledgeAssociation =
 queryImplementation "getLimaOnPath"
 { 
     ["execute"] = function ( params )
-        local listePointInterressant = DEC_GetPointsCategory()
+        local listePointInterressant = integration.getPointsCategory()
         local res = {}
         for _,point in pairs( listePointInterressant or {} ) do
-            if DEC_IsAvantPoint( point ) then
-                local destPoint = DEC_GetDestPoint( point )
-                local pointType = DEC_GetTypePoint( destPoint )
+            if integration.isBeforePoint( point ) then
+                local destPoint = integration.getDestinationPoint( point )
+                local pointType = integration.getTypePoint( destPoint )
                 if pointType == eTypePointLima then
-                    local limaType = DEC_GetTypeLimaPoint( destPoint )
+                    local limaType = integration.getTypeLimaFromPoint( destPoint )
                     local limaTypeEnum = knowledgeAssociation[ limaType ]
                     if limaTypeEnum then
                         res[ #res + 1 ] = CreateKnowledge( limaTypeEnum , point, { limaType_ = limaType } )

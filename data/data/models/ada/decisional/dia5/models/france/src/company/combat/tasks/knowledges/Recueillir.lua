@@ -12,7 +12,7 @@ return
         local tasks = explode( ";", params.mainTasks )
         for _, task in pairs( tasks ) do
             for _, platoon in pairs( listPlatoonAlly or {} ) do
-                if DEC_IsMissionAvailable( platoon.source, task ) and existsInside( { listPlatoonAllyBis }, platoon ) then
+                if integration.isMissionAvailable( platoon, task ) and existsInside( { listPlatoonAllyBis }, platoon ) then
                     platoon.entity = platoon
                     listPlatoonAllyBis = removeFromListForLead( { platoon }, listPlatoonAllyBis )
                     self.nbMain = self.nbMain + 1
@@ -21,27 +21,27 @@ return
         end
         self.nbScout = integration.reconPlatoons( listPlatoonAlly )
 
-        local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LR, ( self.nbMain ) )		
+        local pointsOnLimas = integration.getPointsLimas( eTypeLima_LR, ( self.nbMain ) )
         for _, points in pairs( pointsOnLimas ) do
             for _, point in pairs( points ) do
                 self.mainPositions[#self.mainPositions + 1] = CreateKnowledge( world.Point, point )
             end
         end
         if not pointsOnLimas or #pointsOnLimas == 0 then
-            DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LR )
+            integration.report( eRC_LimaParameterNotPresent, eTypeLima_LR )
         end
         if #self.mainPositions == 0 then
             self.mainPositions[#self.mainPositions + 1] = myself.taskParams.meetingPoint
         end
         if self.nbScout > 0 then
-            pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LIA, ( self.nbScout ) )      
+            pointsOnLimas = integration.getPointsLimas( eTypeLima_LIA, ( self.nbScout ) )
             for _, points in pairs( pointsOnLimas ) do
                 for _, point in pairs( points ) do
                     self.scoutPositions[#self.scoutPositions + 1] = CreateKnowledge( world.Point, point )
                 end
             end
             if not pointsOnLimas or #pointsOnLimas == 0 then
-                DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LIA )
+                integration.report( eRC_LimaParameterNotPresent, eTypeLima_LIA )
             end
         end
         if #self.scoutPositions == 0 then
@@ -55,9 +55,9 @@ return
     end,
 
     getDirection = function( self, params, entity )
-        local mission = DEC_GetRawMission( meKnowledge.source )
-        local dir = DEC_GetDirectionEnnemi( mission )
-        local position = DEC_Geometrie_PositionTranslateDir( self.scoutPositions[1]:getPosition(), dir, 1000 )
+        local mission = integration.getRawMission( meKnowledge.source )
+        local dir = integration.getDirectionEnemy( mission )
+        local position = integration.positionTranslateDir( self.scoutPositions[1]:getPosition(), dir, 1000 )
         return CreateKnowledge( world.Point, position)
     end,
 

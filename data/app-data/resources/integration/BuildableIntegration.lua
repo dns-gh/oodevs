@@ -474,3 +474,19 @@ end
 integration.stopFilterCrowds = function( checkpoint ) -- A appeler une seule fois.
     DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, 1 )
 end
+
+integration.hasDotationToBuildObject = function( entity, objetcType )
+    return DEC_Agent_AgentADotationPourConstruireObjet( entity, objetcType )
+end
+
+integration.canBuildObjectWhenLoadedWithLocation = function( entity, objetcType, location )
+    return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( entity, objetcType, location )
+end
+
+integration.canBuildObjectWhenLoaded = function( entity, objetcType, location )
+    return DEC_Agent_AgentPeutConstruireObjetEmbarque( entity, objetcType, location )
+end
+
+integration.canDestroyObject = function( entity, obstacle )
+    return DEC_Agent_AgentPeutDetruireObjet( entity, obstacle )
+end

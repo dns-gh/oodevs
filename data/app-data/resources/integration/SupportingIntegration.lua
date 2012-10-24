@@ -14,13 +14,13 @@ integration.isInMiddleFiringRange = function( target )
 end
 
 integration.getPositionToSupportFriend = function( friendToSupport )
-    local rangeDistance = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2  -- indirect fire case
+    local rangeDistance = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2  -- indirect fire case
     if rangeDistance <= 0 then -- direct fire case
         rangeDistance = DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2
     end
-    if DEC_HasMission( meKnowledge.source ) then
+    if integration.hasMission( meKnowledge.source ) then
         local mission = DEC_GetRawMission( meKnowledge.source )
-        local dir = DEC_GetDirectionDanger( mission )
+        local dir = integration.getDangerousDirection( mission )
         local friendPos = friendToSupport:getPosition()
         local positionToSupport = DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance )
         return CreateKnowledge( world.Point, positionToSupport )

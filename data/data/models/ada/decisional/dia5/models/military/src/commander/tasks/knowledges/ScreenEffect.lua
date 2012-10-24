@@ -12,15 +12,15 @@ return
             self.numberEchelons = 1 -- par défaut les pions décrochent sur 1 échelon
         end
 
-        local fuseaux = DEC_DecouperFuseau( meKnowledge.nbPionsMain )
+        local fuseaux = integration.query.getFuseaux( meKnowledge.nbPionsMain )
         for _, fuseau in pairs( fuseaux ) do
             myself.leadData.fuseaux[ #myself.leadData.fuseaux + 1 ] = fuseau
         end
 
         -- Organisation du dsipositif initial à 300 metres devant la LCAR (moins en zurb ?)
-        local LimaId = DEC_GetLima( eTypeLima_LCAR )
+        local LimaId = integration.getLimaFromType( eTypeLima_LCAR )
         if LimaId > 0 and meKnowledge.nbPionsMain > 0 then
-            pointsBeforeLimas = DEC_Geometrie_CalculerPositionsParRapportALima( LimaId, 300, meKnowledge.nbPionsMain)
+            pointsBeforeLimas = integration.computePositionsRelativeToLima( LimaId, 300, meKnowledge.nbPionsMain)
             for _, point in pairs( pointsBeforeLimas ) do
                 myself.leadData.scoutPoints[ #myself.leadData.scoutPoints + 1 ]= CreateKnowledge( world.Point, point )
             end
@@ -41,7 +41,7 @@ return
         local fuseau = myself.leadData.fuseaux[ myself.leadData.fuseauxIndex ]
         for i=1, #myself.leadData.scoutPoints do
             local point = myself.leadData.scoutPoints[i]
-            if DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( fuseau, point.source ) then
+            if integration.isPointInAOR_WithParam( fuseau, point.source ) then
                 positions[ #positions + 1 ] = point
             end
         end

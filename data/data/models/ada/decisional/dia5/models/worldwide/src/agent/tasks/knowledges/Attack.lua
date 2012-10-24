@@ -7,7 +7,7 @@ local result =
     fillParameters = function( self, companyTask, params, entity )
         local fuseau = companyTask:getReachable( params )
         if fuseau then
-          local point = CreateKnowledge( world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source))
+          local point = CreateKnowledge( world.Point, integration.computeArrivedPointForAOR(fuseau.source))
           return { objective = point, fuseau = fuseau }
         end
         return nil --use by keepBest in Lead skill

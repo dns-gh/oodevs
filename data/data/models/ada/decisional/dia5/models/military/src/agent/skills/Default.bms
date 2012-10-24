@@ -43,14 +43,14 @@ rootnode
                 if meKnowledge:isParked() then
                     self.positionSurete = meKnowledge:getPosition()
                 elseif( self.direction[1] ~= nil ) then
-                    self.positionSurete = DEC_Geometrie_PositionTranslateDir( meKnowledge:getPosition(), self.direction[1].source, -1100 )
+                    self.positionSurete = integration.positionTranslateDir( meKnowledge:getPosition(), self.direction[1].source, -1100 )
                 else
-                    self.positionSurete = DEC_Geometrie_PositionTranslateDir( meKnowledge:getPosition(), DEC_Agent_Direction(), -1100 )
+                    self.positionSurete = integration.positionTranslateDir( meKnowledge:getPosition(), integration.getAgentDirection(), -1100 )
                 end
              self.isMoving = true
              end
         end
-        if self.positionSurete and DEC_Agent_EstNeutralise() then
+        if self.positionSurete and integration.isAgentNeutralized() then
             Activate( skill.links.moveTo, 10, { entities = {CreateKnowledge( integration.ontology.types.point, self.positionSurete )} } )
         end
         
@@ -100,9 +100,9 @@ rootnode
             meKnowledge.isStoppingTransport = false
             local pos = CreateKnowledge( world.Point, meKnowledge:getPosition() )
             Activate( skill.links.moveTo, 1, {entities = { pos } } )
-            if DEC_Transport_EnCoursDeTransport() then
+            if integration.isDuringTransport() then
                 Activate( skill.nodes.UnloadQueue, 1, emptyTable )
-            elseif meKnowledge.crowdTransporting and DEC_Agent_TransporteFoule( meKnowledge.source ) then
+            elseif meKnowledge.crowdTransporting and integration.isTransportingCrowd( meKnowledge.source ) then
                 local pos = CreateKnowledge( world.Point, meKnowledge:getPosition() )
                 Activate( skill.nodes.UnloadCrowd, 1, { crowd = meKnowledge.crowdTransporting, position = pos } )
             end
@@ -116,19 +116,19 @@ rootnode
 node "DecisionalState"
 {
     create = function( self )
-        DEC_DecisionalState( self.params.category, self.params.value )
+        integration.setDecisionalState( self.params.category, self.params.value )
     end
 }
 node "ChangeEtatRapportDeForce"
 {
     create = function( self )
-       DEC_Agent_ChangeEtatRapportDeForce( self.params.value )
+       integration.setForceRatioState( self.params.value )
     end
 } 
 node "ChangeEtatOperationnel"
 {
     create = function( self )
-        DEC_Agent_ChangeEtatOperationnel( self.params.value )
+        integration.setOperationalState( self.params.value )
     end
 }
 node "RC"

@@ -17,6 +17,45 @@ integration.isIdentifiedPredicate = {
     end
 }
 
+integration.setDecisionalState = function( category, value)
+    DEC_DecisionalState( category, value )
+end
+
+integration.setForceRatioState = function( value )
+    DEC_Agent_ChangeEtatRapportDeForce( value )
+end
+
+integration.setOperationalState = function( value )
+    DEC_Agent_ChangeEtatOperationnel( value )
+end
+
+integration.getAgentMajorOpsState = function( agent )
+    return agent:DEC_Agent_EtatOpsMajeur()
+end
+
+integration.getAgentOpsState = function()
+    return DEC_Agent_EtatOps()
+end
+
+integration.isKnowledgeAgentValid = function( agent )
+    return DEC_ConnaissanceAgent_EstValide( agent )
+end
+
+integration.isKnowledgesAgentsInArea = function( area )
+    return DEC_Connaissances_UnitesEnnemiesVivantesDansZone( area )
+end
+
+integration.getKnowledgesLivingAgentsInCircle = function( position, distance )
+    return DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( position, distance )
+end
+
+integration.getHeightForKnowledgeAgent = function( agent )
+    return DEC_ConnaissanceAgent_Altitude( agent )
+end
+
+integration.getKnowledgeAgentOperationalState = function( agent )
+    return DEC_ConnaissanceAgent_EtatOps( agent )
+end
 ------------------------------------------------------------------
 --- SAFEGUARDABLE INTERFACE IMPLEMENTATION SPECIFIC TO AN UNIT
 ------------------------------------------------------------------

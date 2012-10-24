@@ -12,7 +12,7 @@ queryImplementation "GetPositionsOnEdgeOfArea"
             -- -------------------------------------------------------------------------------- 
             -- Area intersection with roads
             -- --------------------------------------------------------------------------------
-            local simPositions = DEC_Geometrie_FindRoadIntersectionWithZone( params.area.source )
+            local simPositions = integration.findRoadIntersectionWithZone( params.area.source )
             for _, simPos in pairs( simPositions ) do
                 allRes[ #allRes + 1 ] = CreateKnowledge( agent.ontology.classes.Position, simPos )
             end

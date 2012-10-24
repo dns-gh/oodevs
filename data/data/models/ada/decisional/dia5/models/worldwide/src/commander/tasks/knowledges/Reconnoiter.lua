@@ -7,7 +7,7 @@ return
         for i=1, #myself.taskParams.objectives do
             local objective = myself.taskParams.objectives[ i ]
             local coord = objective:getPosition()
-            advance = DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( coord )
+            advance = integration.positionAdvanceAlongAORAutomat( coord )
             if advance > myself.leadData.advanceMax then
                 myself.leadData.advanceMax = advance
             end
@@ -21,7 +21,7 @@ return
 
         if not next( params.objectives ) then
             positions[ #positions + 1 ] = CreateKnowledge( world.Point, 
-              DEC_Geometrie_CalculerPointArriveePourFuseau( fuseau.source ) )
+              integration.computeArrivedPointForAOR( fuseau.source ) )
             return positions, fuseau
         end
 
@@ -29,8 +29,8 @@ return
             local objective = params.objectives[ i ]
             local myPositions = objective:getPositions()
             for i = 1, #myPositions do
-                if DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( fuseau.source, myPositions[ i ] ) then
-                    if DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( objective:getPosition() )
+                if integration.isPointInAOR_WithParam( fuseau.source, myPositions[ i ] ) then
+                    if integration.positionAdvanceAlongAORAutomat( objective:getPosition() )
                      >= myself.leadData.advanceMax then
                       addLastPoint = false
                     end
@@ -48,7 +48,7 @@ return
         -- order the list from the nearest to the furthest.
         table.sort( positions, comp )
         if not next( positions ) or addLastPoint then
-          local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau.source, myself.leadData.advanceMax )
+          local pos = integration.computePointOnAOR( fuseau.source, myself.leadData.advanceMax )
           positions[ #positions + 1 ] = CreateKnowledge( world.Point, pos )
         end
         return positions, fuseau

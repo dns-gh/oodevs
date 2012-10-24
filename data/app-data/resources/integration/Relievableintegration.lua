@@ -30,3 +30,11 @@ integration.relieveIt = function( object )
     end
     return false
 end
+
+integration.isAgentInAutomatCanRelieveAgent = function( Agent, AgentToRelieve )
+    return DEC_Automate_PionPeutReleverPion( Agent, AgentToRelieve )
+end
+
+integration.agentInAutomatRelieveAgent = function( Agent, AgentToRelieve )
+    return DEC_Automate_PionRelevePion( Agent, AgentToRelieve )
+end

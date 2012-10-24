@@ -42,7 +42,7 @@ rootnode
                              or "ActivateRadioCommunication" 
                              or "Rep_OrderConduite_MettreTenueNBC" 
                              or "ActivateNBCProtection"  then -- Il faut enlever le silence radio à tous les pions
-                    local automatkn = CreateKnowledge( world.Company, DEC_GetAutomate( entities[1].source ) )
+                    local automatkn = CreateKnowledge( world.Company, integration.getCommander( entities[1].source ) )
                     local allEntities = integration.getEntitiesFromAutomat( automatkn, "none", true )
                     entities = allEntities
                 end

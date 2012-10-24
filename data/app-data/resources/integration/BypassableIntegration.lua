@@ -55,3 +55,7 @@ integration.stopBypassIt = function( object )
     object[myself].actionBypassState = nil
     return true
 end
+
+integration.canBuildBypassingObject = function( entity, objetcType )
+    return DEC_Agent_AgentPeutConstruireContournementObjet( entity, objetcType )
+end

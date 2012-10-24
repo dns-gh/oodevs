@@ -7,9 +7,9 @@ return
     getSealOffPosition = function( self, params )
         myself.leadData.sealOffIndex = myself.leadData.sealOffIndex or 0 
         if masalife.brain.core.class.isOfType( params.objective, world.UrbanBlock) then
-            myself.leadData.sealOffPositions = myself.leadData.sealOffPositions or DEC_Geometrie_ListePointsLocalisation(DEC_PolygoneBlocUrbain(params.objective.source))
+            myself.leadData.sealOffPositions = myself.leadData.sealOffPositions or integration.locationInPoints( integration.polylineUrbanBlock( params.objective.source ) )
         else
-            myself.leadData.sealOffPositions = myself.leadData.sealOffPositions or DEC_Geometrie_ListePointsLocalisation(params.objective.source)
+            myself.leadData.sealOffPositions = myself.leadData.sealOffPositions or integration.locationInPoints( params.objective.source )
         end
         local number = math.floor( (#myself.leadData.sealOffPositions / meKnowledge.nbPionsMain ) +1 )
 

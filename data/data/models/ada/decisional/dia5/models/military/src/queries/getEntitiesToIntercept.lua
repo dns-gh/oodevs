@@ -1,7 +1,7 @@
 queryImplementation "getEntitiesToIntercept" { ["execute"] = function ( params )
      local entities = {}
      local enemies = integration.getDestroyableInObjective ( params.objective )
-     local porteeMax = DEC_Tir_PorteeMaxPourTirer( params.probabilityToHit )
+     local porteeMax = integration.getMaxRangeToFireForPH( params.probabilityToHit )
      local realEnemies = {}
      if myself.taskParams.entities and #myself.taskParams.entities ~= 0 then
         for i, enemyKnowledge in pairs( myself.taskParams.entities ) do
@@ -23,9 +23,9 @@ queryImplementation "getEntitiesToIntercept" { ["execute"] = function ( params )
                 if realEnemies[ realEnemyId ] then
                     if element:isOperational() and 
                     ( ( masalife.brain.core.class.isOfType( params.objective,world.Area ) 
-              and DEC_Geometrie_EstPointDansLocalisation( element:getPosition(), params.objective.source ) ) 
+              and integration.isPointInsideLocation( element:getPosition(), params.objective.source ) ) 
                         or ( masalife.brain.core.class.isOfType( params.objective, world.UrbanBlock ) 
-              and DEC_IsPointInUrbanBlock( element:getPosition(), params.objective.source ) ) )
+              and integration.isPointInsideUrbanBlock( element:getPosition(), params.objective.source ) ) )
                     then
                         if integration.distance( element, meKnowledge ) < porteeMax then
                             entities[ #entities + 1 ] = element

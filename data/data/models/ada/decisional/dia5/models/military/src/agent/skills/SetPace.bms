@@ -16,7 +16,7 @@ rootnode
     activate = function( self )
         local maxSpeed = 1
 
-        if DEC_Agent_EnVille() and not DEC_Agent_EstEnVol() and ( meKnowledge:getEchelon() == eEtatEchelon_First or meKnowledge:isSelfCommanding()) then
+        if integration.isAgentInsideTown() and not integration.isFlying() and ( meKnowledge:getEchelon() == eEtatEchelon_First or meKnowledge:isSelfCommanding()) then
           myself.speedModulation.urbanSpeed = 0.7
         else
           myself.speedModulation.urbanSpeed = 1
@@ -30,7 +30,7 @@ rootnode
         if maxSpeed <= 0 then
             Activate( skill.nodes.Wait, 1000, emptyTable ) -- $$$ MIA???? TODO A REVOIR
         else
-            DEC_ModulationVitesseMax( maxSpeed ) -- $$$ MIA TODO a appler dans le moveto côté intégration
+            integration.speedMaxModulation( maxSpeed ) -- $$$ MIA TODO a appler dans le moveto côté intégration
         end
     end
 }

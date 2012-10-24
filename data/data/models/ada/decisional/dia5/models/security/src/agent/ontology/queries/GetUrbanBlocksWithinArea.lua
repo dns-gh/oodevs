@@ -6,7 +6,7 @@ queryImplementation "GetUrbanBlocksWithinArea"
 {
     ["execute"] = function ( params )
         local allRes = {}
-        local urbanBlocks = DEC_Connaissances_BlocUrbainDansZone( params.area.source )
+        local urbanBlocks = integration.getUrbanBlockInsideArea( params.area.source )
         for _, urbanBlock in pairs( urbanBlocks ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( agent.ontology.classes.UrbanBlock, urbanBlock )
         end

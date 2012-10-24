@@ -22,22 +22,16 @@ queryImplementation "getPositionsToSupport"
         else
             local knowledges = {}
             local newPositions = {}
-            -- lua optim start
-            local DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition
-            local DEC_Tir_PorteeMaxPourTirer = DEC_Tir_PorteeMaxPourTirer
-            local DEC_Connaissances_BlocUrbainDansCercle = DEC_Connaissances_BlocUrbainDansCercle
-            local DEC_Geometrie_CalculerLocalisationsBU = DEC_Geometrie_CalculerLocalisationsBU
-            -- lua optim end
 
             -- -------------------------------------------------------------------------------- 
             -- Retrograde mission cases (Screen / Delay)
             -- --------------------------------------------------------------------------------
             if ( knowledgeManager.bCanCallStaticQuery or params.dynamic ) then
-               local rangeDistanceMax = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 2 -- indirect fire case
-               local rangeDistanceMin = DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition() / 3
+               local rangeDistanceMax = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 2 -- indirect fire case
+               local rangeDistanceMin = integration.getMaxRangeIndirectFireWithoutSelectAmmo() / 3
                if rangeDistanceMax <= 0 then -- direct fire case
-                   rangeDistanceMax = DEC_Tir_PorteeMaxPourTirer( 0.7 ) / 2
-                   rangeDistanceMin = DEC_Tir_PorteeMaxPourTirer( 0.8 ) / 2
+                   rangeDistanceMax = integration.getMaxRangeToFireForPH( 0.7 ) / 2
+                   rangeDistanceMin = integration.getMaxRangeToFireForPH( 0.8 ) / 2
                end
 
                -- For each element to support, find best positions
@@ -45,9 +39,9 @@ queryImplementation "getPositionsToSupport"
                    local foundAPositionForThisObjective = false
 
                    -- URBAN BLOCKS
-                   local urbanknowledges = DEC_Connaissances_BlocUrbainDansCercle( objective:getPosition(), 100 )
+                   local urbanknowledges = integration.getUrbanBlockInsideCircle( objective:getPosition(), 100 )
                    for _, bu in pairs ( urbanknowledges ) do
-                       AddPointKnowledge( DEC_Geometrie_CalculerLocalisationsBU( bu ), result, newResult, knowledges )
+                       AddPointKnowledge( integration.computeUrbanBlockLocations( bu ), result, newResult, knowledges )
                    end
 
                    -- Verify that position are good to support unit
@@ -56,7 +50,7 @@ queryImplementation "getPositionsToSupport"
                            foundAPositionForThisObjective = true
                            if not exists( newResult, element ) then
                                newResult[ #newResult + 1 ] = CreateKnowledge( 
-                                 world.Point, DEC_Geometrie_CopiePoint(element:getPosition() ) )
+                                 world.Point, integration.copyPoint(element:getPosition() ) )
                            end
                        end
                    end
@@ -79,7 +73,7 @@ local AddPointKnowledge = function( points, result, newResult, knowledges )
     local CheckEqualPositions = function( point, result )
         for _, p in pairs( result ) do
             if masalife.brain.core.class.isOfType( p, world.Point ) then
-                if DEC_Geometrie_PositionsEgales( point, p.source ) then 
+                if integration.positionsEqual( point, p.source ) then 
                     return p
                 end
             end

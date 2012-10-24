@@ -7,7 +7,7 @@ queryImplementation "GetResourceNodesWithinArea"
 {
     ["execute"] = function ( params )
         local allRes = {}
-        local resourceNodes = DEC_ResourceNetwork_NodesInZone( meKnowledge.source, params.area.source )
+        local resourceNodes = integration.getResourceNetworkNodesInZone( meKnowledge.source, params.area.source )
         for _, resourceNode in pairs( resourceNodes ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( agent.ontology.classes.ResourceNode, resourceNode )
         end

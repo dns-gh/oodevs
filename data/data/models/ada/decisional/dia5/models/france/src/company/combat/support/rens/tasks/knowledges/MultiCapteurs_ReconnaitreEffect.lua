@@ -12,7 +12,7 @@ return
         if myself.taskParams.ficelleDeVol and myself.taskParams.ficelleDeVol ~= NIL then
             return myself.taskParams.ficelleDeVol
         else
-            local areaLocalisation = DEC_Geometrie_CalculerBarycentreLocalisation( myself.taskParams.area.source )
+            local areaLocalisation = integration.computeLocationBarycenter( myself.taskParams.area.source )
             local point = CreateKnowledge( integration.ontology.types.point, areaLocalisation )
             return { point }    
         end

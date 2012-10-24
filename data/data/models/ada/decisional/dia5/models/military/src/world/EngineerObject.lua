@@ -12,7 +12,7 @@ return
     end,
     buildPriority = function( self )
         local obstacleType = 0 -- First build preliminary obstacles,at the end build maneuver obstacles
-        if DEC_GenObject_TypeObstacleManoeuvre( self.source ) == false then
+        if integration.isManeuverGenObject( self.source ) == false then
             obstacleType = 1
         end
         return ( ( self:proximityLevel() / 100 + obstacleType ) ) / 2
@@ -127,10 +127,10 @@ return
         end
     end,
     getLocalisation = function( self )
-        return DEC_GenObject_Localisation( self.source )
+        return integration.getGenObjectLocation( self.source )
     end,
     getType = function( self )
-        return DEC_GenObject_Type( self.source )
+        return integration.getGenObjectType( self.source )
     end,
     plannedworkToWork = function( self )
         if self.knowledge then

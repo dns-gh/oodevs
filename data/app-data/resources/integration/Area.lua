@@ -2,7 +2,7 @@
 --- AREA SPECIFIC INTEGRATION METHODS
 ------------------------------------------------------------------
 integration.decontaminateArea = function( area )            
-    DEC_DecontaminerZone( area.source )
+    integration.decontaminateArea( area.source )
     integration.pionRC( eRC_DecontaminationDone )        
     return true
 end
@@ -17,4 +17,8 @@ end
 integration.getAreaPositionsSecu = function( area )
     area.getAreaPositionsResult = area.getAreaPositionsResult or DEC_Geometrie_CalculerTrafficablePointPourPoint( integration.getAreaPosition( area ) )
     return area.getAreaPositionsResult
+end
+
+integration.decontaminateArea = function( area )
+    DEC_DecontaminerZone( area )
 end

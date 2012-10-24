@@ -78,7 +78,7 @@ return
     end,
     buildPriority = function( self )
         local obstacleType = 0 -- First build preliminary obstacles,at the end build maneuver obstacles
-        if DEC_ConnaissanceObjet_EstObstacleDeManoeuvre( self.source ) == false then
+        if integration.isManeuverObstacle( self.source ) == false then
             obstacleType = 1
         end
         return ( ( self:proximityLevel() / 100 + obstacleType ) ) / 2
@@ -172,7 +172,7 @@ return
     predicate "isRemoved"
     {
         method = function( self )
-            return not DEC_IsValidKnowledgeObject(self.source)
+            return not integration.isValidKnowledgeObject(self.source)
         end,
     },
     predicate "isBuilt"
@@ -227,7 +227,7 @@ return
         return meKnowledge:orientateSensor( self )
     end,
     getProximity = function( self, target )
-        if DEC_IsValidKnowledgeObject(self.source) then
+        if integration.isValidKnowledgeObject(self.source) then
             if masalife.brain.core.class.isOfType( target, world.Direction ) then
                 return 100 -- $$$$ PSN: TMP pour prendre en compte la direction, qui n'a pas de notion de position
             else
@@ -343,19 +343,19 @@ return
         return integration.canBeImproved( self )
     end,
     requestDecontamination = function( self )
-        DEC_ConnaissanceObjet_DemandeDeDecontamination( self.source )
+        integration.requestForDecontamination( self.source )
     end,
     destroyMoveToIt = function( self )
         return meKnowledge:destroyMoveToItIntegration( self )
     end,
     isValid = function( self )
-        return DEC_IsValidKnowledgeObject( self.source )
+        return integration.isValidKnowledgeObject( self.source )
     end,
     getLocalisation = function( self )
-        return DEC_ConnaissanceObjet_Localisation( self.source )
+        return integration.getKnowledgeObjectLocation( self.source )
     end,
     getType = function( self )
-        return DEC_ConnaissanceObjet_Type( self.source )
+        return integration.getKnowledgeObjectType( self.source )
     end,
     -- commit attak
     attackIt = function( self, suicide, dotation  )
@@ -401,8 +401,7 @@ return
         integration.unAffectMobility( self )
     end,
     canEquipIt = function( self, typePont )
-        return DEC_Agent_PeutConstruireObjetAvecLocalisation( typePont, self:getLocalisation() )
-    end,
+        return integration.canBuildNowObjectType( typePont, self:getLocalisation() )    end,
     equipIt = masalife.brain.integration.startStopAction(
     { 
         start = integration.startEquipBridge, 

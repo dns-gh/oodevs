@@ -227,7 +227,7 @@ local function manageFeedback ( frontElement )
     local nbUnitInOtherAutomat = 0
     for _, elem in pairs (frontElement) do
       integration.ListenFrontElement( elem.entity )
-      if DEC_GetAutomate( elem.entity.source ) == meKnowledge then
+      if integration.getCommander( elem.entity.source ) == meKnowledge then
       -- On vérifie que le pion est toujours sous l'automate
           nbUnitInOtherAutomat = nbUnitInOtherAutomat + 1
       end
@@ -317,7 +317,7 @@ activate = function( self )
         for i, entity in pairs( newEntities ) do
             if not exists( oldEntities, entity ) then
               F_Pion_SeteEtatEchelon( entity.source, eEtatEchelon_Second ) -- on met les nouveaux pions au second echelon
-              if not DEC_HasMission( entity.source ) then -- Si le pion n'a pas de mission
+              if not integration.hasMission( entity.source ) then -- Si le pion n'a pas de mission
                   local tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
                   issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity } )
               end
@@ -353,7 +353,7 @@ activate = function( self )
     -- plus la valeur est grande, plus le pion est en avant dans le fuseau
     local proj
     for _, entity in pairs( self.parameters.commandingEntities ) do
-        proj = DEC_Geometrie_AdvanceAlongFuseau( entity.source ) 
+        proj = integration.advanceAlongAOR( entity.source ) 
         self.progressionInAOR[ entity ] = proj
     end
 
@@ -361,7 +361,7 @@ activate = function( self )
     local maxsupportDistance = 1200
     if next(pionsSE) ~= nil then
         for _, pion in pairs( pionsSE ) do
-              supportDistance = DEC_Tir_PorteeMaxPourTirer( pion.source, 0.5 )
+              supportDistance = integration.getMaxRangeToFireAgentForPH( pion.source, 0.5 )
               if supportDistance > maxsupportDistance then
                   maxsupportDistance = supportDistance
               end

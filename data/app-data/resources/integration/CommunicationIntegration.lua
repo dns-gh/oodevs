@@ -207,6 +207,10 @@ integration.isMissionAvailable = function( entity, targetTaskName )
     return false
 end
 
+integration.isMissionAgentAvailable = function( entity, targetTaskName )
+    DEC_IsMissionPionAvailable( entity, targetTaskName )
+end
+
 masalife.brain.communication.setMessageTreatment( "TaskDone",
     function( message )
         local myFrontElements = integration.listenFrontElementCallbacks[meKnowledge]
@@ -254,4 +258,36 @@ end
 
 integration.getMission = function( entity )
     return DEC_GetMission( entity.source )
+end
+
+integration.getRawMission = function( entity )
+    return DEC_GetRawMission( entity )
+end
+
+integration.getDirectionEnemy = function( mission )
+    return DEC_GetDirectionEnnemi( mission )
+end
+
+integration.getUnitsWithoutHQCommunication = function( )
+    return DEC_Automate_PionsSansPCCommunication( )
+end
+
+integration.hasMission = function( entity )
+    return DEC_HasMission( entity )
+end
+
+integration.giveCommanderTask = function( task )
+    return DEC_DonnerMissionAutomate( task )
+end
+
+integration.getDangerousDirection = function( task )
+    return DEC_GetDirectionDanger( task )
+end
+
+integration.getAORFromCommander = function( task )
+    return DEC_Fuseau( task )
+end
+
+integration.getAORWidth = function( AOR )
+    return DEC_Fuseau_Width( AOR )
 end

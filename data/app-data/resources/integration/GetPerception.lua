@@ -18,6 +18,10 @@ integration.getPerception = function( knowledgeA, knowledgeB )
     return DEC_GetPerception( knowledgeA:getPosition(), knowledgeB:getPosition() )
 end
 
-integration.connaissanceAgentEstAPorteDeCapteurDansCone = function ( eni, direction, angleOuverture )
+integration.connaissanceAgentEstAPorteDeCapteurDansCone = function( eni, direction, angleOuverture )
     return DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone( eni.source, direction.source, angleOuverture )
+end
+
+integration.knowledgePerceivedLivingEnemiesAgents = function( )
+    return DEC_Connaissances_UnitesEnnemiesVivantesPercues()
 end

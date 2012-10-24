@@ -20,7 +20,7 @@ rootnode
         if self.params.position ~= NIL then
             self.position = self.params.position
         else
-            local objectPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), self.params.objective:getLocalisation() )
+            local objectPosition = integration.computeNearestBorder( meKnowledge:getPosition(), self.params.objective:getLocalisation() )
             self.position = CreateKnowledge( world.Point, objectPosition )
         end
     end,

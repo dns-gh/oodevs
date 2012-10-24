@@ -202,7 +202,7 @@ return
         end
     end,
     getOperationalCapacity = function( self )
-        if DEC_ConnaissanceAgent_EstDetruitTactique( self.source ) then
+        if integration.isAgentTacticallyDestroyed( self.source ) then
             if not meKnowledge.CRSended then 
                 meKnowledge:RC( eRC_EnnemiTactiquementDetruit, self.source ) 
                 meKnowledge.CRSended = true
@@ -213,13 +213,13 @@ return
         end
     end,
     getDestructionState = function( self ) -- destruction physique, indépendant des capacités opérationnelles.
-        if DEC_ConnaissanceAgent_EtatOps( self.source ) == 0 then
+        if integration.getKnowledgeAgentOperationalState( self.source ) == 0 then
             if not meKnowledge.CRSended then 
                 meKnowledge:RC( eRC_EnnemiDetruit, self.source ) 
                 meKnowledge.CRSended = true
             end
         end
-        return ( 1 - DEC_ConnaissanceAgent_EtatOps( self.source ) ) * 100
+        return ( 1 - integration.getKnowledgeAgentOperationalState( self.source ) ) * 100
     end,
     neutralizeIt = masalife.brain.integration.startStopAction( 
     { 
@@ -286,7 +286,7 @@ return
     -- Specific class methods used by integration methods
     -- --------------------------------------------------------------------------------
     hasDetectedMe = function( self )
-        return DEC_ConnaissanceAgent_PercoitUnite( self.source )
+        return integration.isAgentPerceivesAgent( self.source )
     end,
     getPosition = function( self )
       return integration.getPlatoonPosition( self )
@@ -317,7 +317,7 @@ return
      },
      
     isValid = function( self )
-        return DEC_ConnaissanceAgent_EstValide( self.source )
+        return integration.isKnowledgeAgentValid( self.source )
     end,
     loadIt = function( self )
         return integration.loadFriendOrFoe( self )

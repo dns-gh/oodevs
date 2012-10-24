@@ -34,3 +34,7 @@ integration.stopNeutralizingIt = function( target )
         g_myEnemy = nil
     end
 end
+
+integration.isAgentNeutralized = function( )
+    DEC_Agent_EstNeutralise()
+end

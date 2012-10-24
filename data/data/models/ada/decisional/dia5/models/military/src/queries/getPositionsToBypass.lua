@@ -6,8 +6,8 @@ queryImplementation "getPositionsToBypass"
             allRes = {}
             local point, objectPosition, scaledObject
             for _, element in pairs ( params.elementsToBypass ) do
-                scaledObject = DEC_Geometrie_AgrandirLocalisation(  element:getLocalisation() , 50 )
-                objectPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), scaledObject )
+                scaledObject = integration.enlargeLocation( element:getLocalisation() , 50 )
+                objectPosition = integration.computeNearestBorder( meKnowledge:getPosition(), scaledObject )
                 point = CreateKnowledge( world.Point, objectPosition )
                 allRes[ #allRes + 1 ] = point
             end

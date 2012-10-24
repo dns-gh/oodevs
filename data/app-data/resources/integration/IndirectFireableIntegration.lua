@@ -167,8 +167,8 @@ end
 
 integration.getMortarUnitsToNeutralize = function( friend )
     local res = {}
-    local unitsAttackingFriend = DEC_Connaissances_UnitesPrenantAPartieSurAmi( friend.source )
-    local unitsDangerous = DEC_Connaissances_UnitesEnnemiesDangereuses()
+    local unitsAttackingFriend = integration.getKnowledgesUnitsEngagingFriend( friend.source )
+    local unitsDangerous = integration.getKnowledgesDangerousUnits()
     res = fusionList( unitsAttackingFriend, unitsDangerous )
     return res
 end
@@ -200,10 +200,14 @@ end
 integration.launchDREB = function()
     local DEC_ConnaissanceAgent_EstValide = DEC_ConnaissanceAgent_EstValide
     local DEC_Tir_LancerFumigeneSurConnaissance = DEC_Tir_LancerFumigeneSurConnaissance
-    local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
+    local listeConnaissances = integration.getKnowledgesDangerousUnits()
     for _, eni in pairs( listeConnaissances or emptyTable ) do
         if DEC_ConnaissanceAgent_EstValide( eni ) then
             DEC_Tir_LancerFumigeneSurConnaissance( eni )
         end
     end
+end
+
+integration.getMaxRangeIndirectFireWithoutSelectAmmo = function()
+    return DEC_Tir_PorteeMaxTirIndirectSansChoisirMunition()
 end

@@ -13,8 +13,8 @@ queryImplementation "getPositionsToReach"
         local position, scaledObject, objectPosition
         for _, element in pairs ( params.elementsToReach ) do
             if masalife.brain.core.class.isOfType( element, world.Object) and element:isAvoidable() then
-                scaledObject = DEC_Geometrie_AgrandirLocalisation(  element:getLocalisation() , 20 )
-                objectPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), scaledObject )
+                scaledObject = integration.enlargeLocation( element:getLocalisation() , 20 )
+                objectPosition = integration.computeNearestBorder( meKnowledge:getPosition(), scaledObject )
                 position = CreateKnowledge( world.Point, objectPosition )
             else
                 position = element:getMyPosition() -- reaching element

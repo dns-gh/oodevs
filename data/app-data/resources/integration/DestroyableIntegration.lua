@@ -156,3 +156,39 @@ end
 integration.autoriseAllAmmunitions = function()
     DEC_Pion_AutoriserToutesMunitions()
 end
+
+integration.getMaxRangeToFireForPH = function( pH )
+    return DEC_Tir_PorteeMaxPourTirer( pH )
+end
+
+integration.getMaxRangeToFireAgentForPH = function( agent, pH )
+    return DEC_Tir_PorteeMaxPourTirer( agent, pH )
+end
+
+integration.getKnowledgesUnitsEngaging = function()
+    return DEC_Connaissances_UnitesPrenantAPartie()
+end
+
+integration.getKnowledgesUnitsEngagingFriend = function( friendAgent )
+    return DEC_Connaissances_UnitesPrenantAPartieSurAmi( friendAgent )
+end
+
+integration.getKnowledgesDangerousUnits = function( )
+    return DEC_Connaissances_UnitesEnnemiesDangereuses( )
+end
+
+integration.getKnowledgeDangerousAgent = function( agent )
+    return DEC_ConnaissanceAgent_Dangerosite( agent )
+end
+
+integration.isAgentTacticallyDestroyed = function( )
+    return DEC_ConnaissanceAgent_EstDetruitTactique( )
+end
+
+integration.getMaxRangeToFireOnAgent = function( agent, pH )
+    return DEC_Tir_PorteeMaxPourTirerSurUnite( agent, pH )
+end
+
+integration.getMaxRangeToBeFiriedByAgent = function( agent, pH )
+    return DEC_Tir_PorteeMaxPourEtreTireParUnite
+end

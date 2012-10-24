@@ -3,7 +3,7 @@ queryImplementation "getEnemiesInCircle"
     [ "execute" ] = function( params )
         local res = {}
         local ennemies = {}
-        ennemies = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( meKnowledge:getPosition(), params.distance )        
+        ennemies = integration.getKnowledgesLivingAgentsInCircle( meKnowledge:getPosition(), params.distance )        
        
         for _, ennemy in pairs( ennemies ) do
             local eny = CreateKnowledge( world.Platoon, ennemy )

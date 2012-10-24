@@ -4,9 +4,9 @@ queryImplementation "getEnemiesToSupport"
         local res = {}
         local ennemies = {}
         local pH = 0.5 -- $$$ sortir en tant que paramètre?
-        local porteeMax = DEC_Tir_PorteeMaxPourTirer( pH )
+        local porteeMax = integration.getMaxRangeToFireForPH( pH )
         for _, element in pairs( params.elementsToSupport ) do
-            ennemies = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( element:getPosition(), porteeMax )
+            ennemies = integration.getKnowledgesLivingAgentsInCircle( element:getPosition(), porteeMax )
             for _, ennemy in pairs( ennemies ) do
                 res[ #res + 1 ] = CreateKnowledge( world.Platoon, ennemy )
             end

@@ -17,7 +17,7 @@ rootnode
     failed = function( self, additionnalParams )
         removeFromList(additionnalParams.entity, self.entities)
         if not next(self.entities) then
-            DEC_RC( eRC_NoUnitsInParameter )
+            integration.report( eRC_NoUnitsInParameter )
             Feedback( self.feedbacks.done )
         end
     end,
@@ -77,7 +77,7 @@ node "SupportElement"
         local Activate = Activate
 
         if not self.params.entity:isOperational() then
-               DEC_RC( eRC_CombatSupportUnitIsDead, DEC_GetSzName(self.params.entity.source ) )
+               integration.report( eRC_CombatSupportUnitIsDead, integration.getName( self.params.entity.source ) )
                Feedback( self.feedbacks.failed, {entity = self.params.entity } )
         end
 

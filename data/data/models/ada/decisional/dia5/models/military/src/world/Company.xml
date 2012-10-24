@@ -387,6 +387,16 @@ This implementation returns 'true' if one of the subordinate units of the compan
                 </type>
             </return>
         </method>
+        <method name="getAgentsFromCommander" abstract="false">
+            <description>Returns agents from commander.</description>
+            <return>
+                <type>
+                    <list>
+                        <class name="world.PlatoonAlly"/>
+                    </list>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isReinforced">

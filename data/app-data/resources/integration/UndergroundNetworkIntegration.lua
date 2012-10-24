@@ -59,3 +59,11 @@ end
 integration.enterAndExitInSameUndergroundNetwork = function( enterIssue, exitIssue )
     return DEC_ConnaissanceObjet_IssuesDuMemeReseauSouterrain( enterIssue.source, exitIssue.source )
 end
+
+integration.getResourceNetworkNodesInZone = function( agent, area )
+    if agent == nil then
+        return DEC_ResourceNetwork_NodesInZone( area )
+    else
+        return DEC_ResourceNetwork_NodesInZone( agent, area )
+    end
+end

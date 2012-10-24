@@ -13,8 +13,8 @@ rootnode
     done = function( self ) end,
 
     create = function ( self )
-        DEC_DemandeDeRavitaillement()
-        DEC_RC( eRC_DemandeRavitaillementDotations )
+        integration.supplyRequest()
+        integration.report( eRC_DemandeRavitaillementDotations )
         Feedback( self.feedbacks.done )
     end
 }

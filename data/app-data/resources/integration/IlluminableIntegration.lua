@@ -52,3 +52,7 @@ integration.stopIlluminateIt = function( target )
     return false
 end
 
+integration.canAgentIlluminate = function( agent )
+    return DEC_Agent_PeutIllumine( agent )
+end
+

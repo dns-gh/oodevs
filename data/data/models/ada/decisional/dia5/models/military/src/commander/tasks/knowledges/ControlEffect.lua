@@ -25,13 +25,13 @@ return
        
     getDirection = function( self, params, entity, objectivePosition )
         if not params.objectives.kn then
-            local mission = DEC_GetRawMission( meKnowledge.source )
-            local dir = DEC_GetDirectionEnnemi( mission )
+            local mission = integration.getRawMission( meKnowledge.source )
+            local dir = integration.getDirectionEnemy( mission )
             local position
             if objectivePosition then
-                position = DEC_Geometrie_PositionTranslateDir( objectivePosition:getPosition(), dir, 1000 )
+                position = integration.positionTranslateDir( objectivePosition:getPosition(), dir, 1000 )
             else
-                position = DEC_Geometrie_PositionTranslateDir( meKnowledge:getPosition(), dir, 1000 )
+                position = integration.positionTranslateDir( meKnowledge:getPosition(), dir, 1000 )
             end
             params.objectives.kn = CreateKnowledge( world.Point, position)
         end
@@ -49,7 +49,7 @@ return
           if masalife.brain.core.class.isOfType( objective, world.Area) then
               local nbOtherObjectives = #params.objectives - self.nbAreas
               local nbParts = math.max((( nbFront - nbOtherObjectives )/self.nbAreas),1)
-              local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
+              local subAreas = integration.geometrySplitLocalisation( objective.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction integration.geometrySplitLocalisation
               subAreas = subAreas.first
               for _, area in pairs( subAreas ) do
                   myself.leadData.objectives[#myself.leadData.objectives + 1] = CreateKnowledge( world.Area, area )

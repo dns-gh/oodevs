@@ -18,7 +18,7 @@ rootnode
     -- Movement toward firing position is done
     done = function( self )
         local fragorderReceived = integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_Decrocher" )
-        if DEC_Agent_AutomateEstEmbraye() then 
+        if integration.isCommanderEngaged() then 
             if  not self.arrived  then
               self.arrived = true
               integration.SendMessage( "ArrivedOnLima", integration.GetSuperiorKnowledge( meKnowledge), { arrived = true, me = meKnowledge }, { type = "dynamic" } )

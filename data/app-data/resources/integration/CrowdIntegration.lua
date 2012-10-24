@@ -379,3 +379,11 @@ end
 integration.canObjectFilterCrowds = function( object )
     return DEC_ObjectKnowledge_HasCapacity( object.source, "population-filter" )
 end
+
+integration.getKnowledgesCrowdsEngaging = function()
+    return DEC_Connaissances_PopulationsPrenantAPartie()
+end
+
+integration.isKnowledgeCrowdInsideArea = function( crowd, area )
+    return DEC_ConnaissancePopulation_EstDansZone( crowd, area )
+end

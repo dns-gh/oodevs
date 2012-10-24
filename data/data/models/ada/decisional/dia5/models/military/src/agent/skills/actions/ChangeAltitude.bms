@@ -8,7 +8,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         myself.altitude = self.params.height
-        DEC_Agent_HauteurDeVol( myself.altitude ) -- $$$ MIA TODO Action sur le body, faire un body flyingAgent et virer la méthode DEC
+        integration.changeHeight( myself.altitude ) -- $$$ MIA TODO Action sur le body, faire un body flyingAgent
         Feedback( self.feedbacks.done )
     end
 }

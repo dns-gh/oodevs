@@ -32,7 +32,7 @@ return
                     local radius = 150 -- in meters. Defined the radius of circle in witch we need to find terrain poisition to destroy elements
                     local elementPosition = params.objective:getPosition()
                     if elementPosition then
-                        local blocksInCircle = DEC_Connaissances_BlocUrbainDansCercle( elementPosition, radius )
+                        local blocksInCircle = integration.getUrbanBlockInsideCircle( elementPosition, radius )
                         for _, block in pairs( blocksInCircle ) do
                             myself.leadData.observingPositions[ #myself.leadData.observingPositions + 1 ] = CreateKnowledge( world.UrbanBlock, block )
                         end
@@ -42,9 +42,9 @@ return
                 local nbParts = math.min( self:getNbrFront(), params.maxNbrFront ) - #myself.leadData.observingPositions
                 if nbParts > 0 then
                     if masalife.brain.core.class.isOfType( params.objective, world.Area) then
-                        local subAreas = DEC_Geometry_SplitLocalisation( params.objective.source, nbParts, nil )
+                        local subAreas = integration.geometrySplitLocalisation( params.objective.source, nbParts, nil )
                         for _, subArea in pairs( subAreas.first ) do
-                            local pos = DEC_Geometrie_CalculerBarycentreLocalisation( subArea )
+                            local pos = integration.computeLocationBarycenter( subArea )
                             myself.leadData.observingPositions[ #myself.leadData.observingPositions + 1 ] = CreateKnowledge( world.Point, pos )
                         end
                     end

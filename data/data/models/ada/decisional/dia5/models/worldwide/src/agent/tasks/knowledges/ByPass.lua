@@ -20,7 +20,7 @@ local result =
     end,
 
     canDoIt = function( self, entity, obstacle )
-        return  DEC_Agent_AgentPeutConstruireContournementObjet( entity.source, obstacle.source )
+        return  integration.canBuildBypassingObject( entity.source, obstacle.source )
     end,
 }
 

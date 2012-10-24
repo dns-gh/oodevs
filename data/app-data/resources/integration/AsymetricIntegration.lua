@@ -104,14 +104,14 @@ end
 --refugee
 integration.takeAsRefugee = function( unit )
     -- $$$ MIA TODO
-    DEC_RC( eRC_OrientationPopulationVersCampRefugies )
+    integration.report( eRC_OrientationPopulationVersCampRefugies )
     return true
 end
 
 --prisoner
 integration.takeAsPrisoner = function( unit )
     -- $$$ MIA TODO
-    DEC_RC( eRC_OrientationEnnemiRenduVersCampPrisonniers )
+    integration.report( eRC_OrientationEnnemiRenduVersCampPrisonniers )
     return true
 end
 

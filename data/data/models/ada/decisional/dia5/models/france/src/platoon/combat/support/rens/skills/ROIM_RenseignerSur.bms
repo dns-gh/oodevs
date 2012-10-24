@@ -11,7 +11,7 @@ rootnode
     end,
     
     create = function( self )
-        self.initPos = CreateKnowledge( world.Point, DEC_Geometrie_CopiePoint( meKnowledge:getPosition() ) )
+        self.initPos = CreateKnowledge( world.Point, integration.copyPoint( meKnowledge:getPosition() ) )
         self.destination = nil
         self.unitPC = meKnowledge:getUnitPC()
         self.listPoint = fusionList( self.params.ficelleDeVol, { self.initPos } )

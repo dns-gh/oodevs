@@ -32,7 +32,7 @@ rootnode
             if not self.fragOrderSent then
                 local platoonInMeKnowledge = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", true)
                 local sizePlatoonInMeKnowledge = #platoonInMeKnowledge
-                local objectivePosition = CreateKnowledge( world.Point, DEC_Geometrie_CopiePoint( self.params.objective:getPosition() ) )
+                local objectivePosition = CreateKnowledge( world.Point, integration.copyPoint( self.params.objective:getPosition() ) )
                 for i = 1, sizePlatoonInMeKnowledge do
                     local element = platoonInMeKnowledge[i]
                     element:sendTaskToPion( element, "platoon.tasks.FaireMouvement", { objectives = { objectivePosition },

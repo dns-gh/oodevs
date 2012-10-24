@@ -14,7 +14,7 @@ rootnode
     
     create = function( self )
         self.gotoInit = false
-        self.initPos = CreateKnowledge( world.Point, DEC_Geometrie_CopiePoint(meKnowledge:getPosition()))
+        self.initPos = CreateKnowledge( world.Point, integration.copyPoint( meKnowledge:getPosition() ) )
         self.area = self.params.area
 
         Activate( skill.nodes.ActivateRecording, 1 )     
@@ -46,7 +46,7 @@ rootnode
     
     destroy = function( self )
         myself.altitude = 0
-        DEC_Agent_HauteurDeVol( myself.altitude )
+        integration.changeHeight( myself.altitude )
     end
 }
 

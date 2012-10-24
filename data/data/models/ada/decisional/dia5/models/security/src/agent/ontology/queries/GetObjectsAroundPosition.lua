@@ -7,7 +7,7 @@ queryImplementation "GetObjectsAroundPosition"
     ["execute"] = function ( params )
         local allRes={}
 
-        local simObjects = DEC_Knowledges_ObjectsInCircle( params.position.source, params.distance, { "Barrage", "CheckPoint" } )
+        local simObjects = integration.getKnowledgesObjectsInCircle( params.position.source, params.distance, { "Barrage", "CheckPoint" } )
         for _, simObject in pairs( simObjects ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( agent.ontology.classes.Object, simObject )
         end

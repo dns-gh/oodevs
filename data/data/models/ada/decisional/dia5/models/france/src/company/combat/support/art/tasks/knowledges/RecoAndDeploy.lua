@@ -27,7 +27,7 @@ return
                 nbAreasToAdd = nbAreasToAdd - 1
               end
               -- calcul du nombre de sous-zones suivant le reste de la division entière entre nbFront et #params.objectives
-              local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbParts + addArea, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
+              local subAreas = integration.geometrySplitLocalisation( objective.source, nbParts + addArea, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction integration.geometrySplitLocalisation
               subAreas = subAreas.first
               for _, area in pairs( subAreas ) do
                   areasKn[#areasKn + 1] = CreateKnowledge( world.Area, area )

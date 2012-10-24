@@ -17,7 +17,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
       self.prevDomination = self.params.crowd:getDomination()
-      self.rTempsDebut = DEC_TempsSim()
+      self.rTempsDebut = getSimulationTime()
       self.delaiDepasse = false
       self.bDerniereChance = false
       self.isSelfProtecting = false
@@ -40,12 +40,12 @@ rootnode
             if domination < ( self.prevDomination - 0.2 ) or domination == 0 then
                 self.prevDomination = domination
                 self.delaiDepasse = false
-                self.rTempsDebut = DEC_TempsSim()
+                self.rTempsDebut = getSimulationTime()
             elseif not self.bDerniereChance then
                 self.bDerniereChance = true
                 self.prevDomination = domination
                 self.delaiDepasse = false
-                self.rTempsDebut = DEC_TempsSim()
+                self.rTempsDebut = getSimulationTime()
                 Activate( skill.nodes.Reports, 1, { report = eRC_SituationDifficilementTenableFaceAPopulation } )
             end
          end
@@ -70,7 +70,7 @@ rootnode
             Feedback( self.feedbacks.done )
         end
 
-        if self.delai <=  DEC_TempsSim() - self.rTempsDebut then
+        if self.delai <= getSimulationTime() - self.rTempsDebut then
             self.delaiDepasse = true
         end
     end

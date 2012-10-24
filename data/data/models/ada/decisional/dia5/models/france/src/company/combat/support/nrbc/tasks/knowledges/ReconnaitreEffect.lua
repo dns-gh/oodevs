@@ -22,7 +22,7 @@ return
                 if masalife.brain.core.class.isOfType( entity, world.Area) then
                     local nbOtherObjectives = #params.entities - self.nbAreas
                     local nbParts = math.max((( nbFront - nbOtherObjectives )/self.nbAreas),1)
-                    local subAreas = DEC_Geometry_SplitLocalisation( entity.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
+                    local subAreas = integration.geometrySplitLocalisation( entity.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction integration.geometrySplitLocalisation
                     subAreas = subAreas.first
                     for _, area in pairs( subAreas ) do
                         myself.leadData.entities[#myself.leadData.entities + 1] = CreateKnowledge( world.Area, area )

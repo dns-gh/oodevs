@@ -51,13 +51,13 @@ rootnode
             if distance < 50 then
                 myself.speedModulation.escort =  0 -- l'unit� qui escorte s'arrete
             elseif distance < 90 then
-                local mySpeed = DEC_Agent_GetCurrentSpeed(meKnowledge.source)
-                local hisSpeed = DEC_Agent_GetCurrentSpeed(self.escortableUnit.source)
+                local mySpeed = integration.getCurrentSpeed( meKnowledge.source )
+                local hisSpeed = integration.getCurrentSpeed( self.escortableUnit.source )
                 self.speedModulation = self.speedModulation or 1
                 if hisSpeed~= 0 and mySpeed ~= 0 then
                     self.speedModulation = ( mySpeed/hisSpeed ) + self.speedModulation
                 end
-                local oldSpeed = DEC_GetModulationVitesseMax( meKnowledge.source )
+                local oldSpeed = integration.getModulationMaxSpeed( meKnowledge.source )
                 local newSpeed =  oldSpeed/self.speedModulation
                 myself.speedModulation.escort = newSpeed
             end

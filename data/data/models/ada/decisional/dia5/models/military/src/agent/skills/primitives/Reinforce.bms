@@ -21,7 +21,7 @@ rootnode
 
     create = function( self )
         self.arrived = false
-        if not DEC_Agent_AutomateEstEmbraye() and masalife.brain.core.class.isOfType( self.params.entity, world.PlatoonAlly ) then
+        if not integration.isCommanderEngaged() and masalife.brain.core.class.isOfType( self.params.entity, world.PlatoonAlly ) then
            meKnowledge:sendReinforceGivenByUser( integration.GetSuperiorKnowledge( meKnowledge ), meKnowledge )
         end
         self.params.entity:changeAutomate()

@@ -154,7 +154,7 @@ end
 integration.switchOnSafetyMode = function( self )
     myself.speedModulation.switchOnSafetyMode = 0.3 -- modulationMax / 10
     DEC_Perception_ActiverCoupsDeSonde()
-    if DEC_Agent_EstEnVol() and myself.altitude then
+    if integration.isFlying() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude * 0.2 )
     end
     if not myself.reportSafetyMode or myself.reportSafetyMode == nil then
@@ -185,7 +185,7 @@ end
 integration.switchOffSafetyMode = function( self )
     myself.speedModulation.switchOnSafetyMode = 1
     DEC_Perception_DesactiverCoupsDeSonde()
-    if DEC_Agent_EstEnVol() and myself.altitude then
+    if integration.isFlying() and myself.altitude then
         DEC_Agent_HauteurDeVol( myself.altitude )
     end
     if myself.reportSafetyMode or myself.reportSafetyMode == nil then
@@ -314,6 +314,24 @@ integration.isDismounted = function( self )
 end
 
 -- -------------------------------------------------------------------------------- 
+-- Board list of elements without delay
+-- @author GGE
+-- @release 2012-10-22
+-- --------------------------------------------------------------------------------
+integration.boardElementsWithoutDelay = function( units, transportOnlyLoadable )
+    DEC_Transport_EmbarquerPionsSansDelais( units, transportOnlyLoadable )
+end
+
+-- -------------------------------------------------------------------------------- 
+-- Board one element without delay
+-- @author GGE
+-- @release 2012-10-22
+-- --------------------------------------------------------------------------------
+integration.boardElementWithoutDelay = function( unit, transportOnlyLoadable )
+    DEC_Transport_EmbarquerPionsSansDelais( unit, transportOnlyLoadable )
+end
+
+-- -------------------------------------------------------------------------------- 
 -- Deploy the unit
 -- @author PSN
 -- @release 2011-12-20
@@ -371,7 +389,7 @@ end
 
 integration.setAvailableDrones = function ( self )
     myself.droneAvailable  = nil
-    local listePions = DEC_Pion_PionsSansPC()
+    local listePions = integration.getAgentsWithoutHQ()
     for _,pion in pairs( listePions or emptyTable ) do
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
         local fuelDotationNumber = DEC_Agent_GetFuelDotationNumber( pion )	
@@ -418,6 +436,14 @@ integration.splitArea = function( area, numberOfParts )
     end
 end
 
+-- -------------------------------------------------------------------------------- 
+-- Split localisation
+-- @author GGE
+-- @release 2012-10-22
+-- --------------------------------------------------------------------------------
+integration.geometrySplitLocalisation = function( localisation, numberOfParts, direction )
+    DEC_Geometry_SplitLocalisation( localisation, numberOfParts, direction )
+end
 -- -------------------------------------------------------------------------------- 
 -- The unit is moving
 -- @author MIA
@@ -615,22 +641,36 @@ integration.deactivateSensors = function( self )
     DEC_Perception_DesactiverSenseurs()
 end
 integration.increaseNodeProduction = function( resourceNode, quantity )
-    DEC_ReseauRessourceAugmenteProduction( resourceNode.source, quantity )
+    integration.increaseResourceNodeProduction( resourceNode.source, quantity )
     return true
 end
+integration.increaseResourceNodeProduction = function( resourceNode, quantity )
+    DEC_ReseauRessourceAugmenteProduction( resourceNode.source, quantity )
+end
 integration.decreaseNodeProduction = function( resourceNode, quantity )
-    DEC_ReseauRessourceBaisseProduction( resourceNode.source, quantity )
+    integration.decreaseResourceNodeProduction( resourceNode.source, quantity )
     return true
+end
+integration.decreaseResourceNodeProduction = function( resourceNode, quantity )
+    DEC_ReseauRessourceBaisseProduction( resourceNode.source, quantity )
 end
 integration.enable = function( resourceNode )
     meKnowledge:RC( eRC_ResourceNodeEnabled )
-    DEC_ReseauRessource_ActiverElement( resourceNode.source ) 
+    integration.enableResourceNode( resourceNode.source ) 
     return true
 end
 integration.disable = function( resourceNode )
     meKnowledge:RC( eRC_ResourceNodeDisabled )
-    DEC_ReseauRessource_DesactiverElement( resourceNode.source ) 
+    integration.disableResourceNode( resourceNode.source ) 
     return true
+end
+
+integration.enableResourceNode = function( resourceNode )
+    DEC_ReseauRessource_ActiverElement( resourceNode )
+end
+
+integration.disableResourceNode = function( resourceNode )
+    DEC_ReseauRessource_DesactiverElement( resourceNode )
 end
 
 integration.isDead = function( self )
@@ -701,4 +741,28 @@ end
 
 integration.disableRadarOnLocalisation = function( radarType, radar )
     DEC_Perception_DesactiverRadarSurLocalisation( radarType, radar )
+end
+
+integration.isAgentFlying = function( agent )
+    return DEC_ConnaissanceAgent_EstEnVol( agent )
+end
+
+integration.getCurrentSpeed = function( agent )
+    return DEC_Agent_GetCurrentSpeed( agent )
+end
+
+integration.getModulationMaxSpeed = function( agent )
+    return DEC_GetModulationVitesseMax( agent )
+end
+
+integration.getAgentDirection = function()
+    return DEC_Agent_Direction()
+end
+
+integration.getAgentsWithoutHQ = function()
+    return DEC_Pion_PionsSansPC()
+end
+
+integration.getAgentsWithHQ = function()
+    return DEC_Pion_PionsAvecPC()
 end

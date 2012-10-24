@@ -13,7 +13,7 @@ rootnode
             pion.source:SetbMiseEnOeuvre_ ( false )
             self.pionsSources[#self.pionsSources + 1] = pion.source
         end
-        DEC_Transport_EmbarquerPionsSansDelais( self.pionsSources, false )
+        integration.boardElementsWithoutDelay( self.pionsSources, false )
     end,
     
     activate = function( self )
@@ -38,7 +38,7 @@ node "EmbarquerDrone"
 {
     create = function( self )
         self.params.pionDrone.source:SetbMiseEnOeuvre_( false )
-        DEC_Transport_EmbarquerPionSansDelais(self.params.pionDrone.source, false)
+        integration.boardElementWithoutDelay( self.params.pionDrone.source, false )
     end,
 }
 

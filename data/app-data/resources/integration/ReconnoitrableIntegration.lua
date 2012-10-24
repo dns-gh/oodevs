@@ -17,7 +17,7 @@ local objectNBCSpeed  = 2
 -- Recce BU
 -- --------------------------------------------------------------------------------
 integration.getUrbanBlockReconnaissanceState = function( urbanBlock )
-    return DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant( urbanBlock.source ) * 100
+    return integration.getUrbanBlockCurrentReconnaissanceState( urbanBlock.source ) * 100
 end
 integration.startRecceUrbanBlock = function( urbanBlock )
     urbanBlock.area = urbanBlock.area or DEC_PolygoneBlocUrbain( urbanBlock.source )

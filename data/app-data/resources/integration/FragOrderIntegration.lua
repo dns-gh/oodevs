@@ -678,35 +678,35 @@ end
 -- CR ROE 
 integration.CR_ROE  = function( typeROE )
     if typeROE == eRoeStateRestrictedFire then
-        DEC_RC( eRC_TirRestreint )
+        integration.report( eRC_TirRestreint )
     elseif typeROE ==  eRoeStateFireByOrder then
-        DEC_RC( eRC_TirInterdit )
+        integration.report( eRC_TirInterdit )
     elseif typeROE == eRoeStateFreeFire then
-        DEC_RC( eRC_TirLibre )
+        integration.report( eRC_TirLibre )
     end
 end
 
 -- CR ROE Foule
 integration.CR_ROE_Foules  = function( typeROE )
     if typeROE == eEtatROEPopulation_EmploiForceInterdit then
-        DEC_RC( eRC_EmploiForceInterdit )
+        integration.report( eRC_EmploiForceInterdit )
     elseif typeROE ==  eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
-        DEC_RC( eRC_MaintienADistanceParMoyensNonLetaux )
+        integration.report( eRC_MaintienADistanceParMoyensNonLetaux )
     elseif typeROE == eEtatROEPopulation_ArmesLetalesAutorisees then
-        DEC_RC( eRC_ArmesLetalesAutorisees )
+        integration.report( eRC_ArmesLetalesAutorisees )
     end
 end
 
 -- CR Attitude Foule
 integration.CR_Attitude_Foules  = function ( attitude )
     if attitude == eAttitudeCalme then
-        DEC_RC( eRC_EmploiForceInterdit )
+        integration.report( eRC_EmploiForceInterdit )
     elseif attitude ==  eAttitudeAgitee then
-        DEC_RC( eRC_MaintienADistanceParMoyensNonLetaux )
+        integration.report( eRC_MaintienADistanceParMoyensNonLetaux )
     elseif attitude == eAttitudeExcitee then
-        DEC_RC( eRC_ArmesLetalesAutorisees )
+        integration.report( eRC_ArmesLetalesAutorisees )
     elseif attitude == eAttitudeAgressive then
-        DEC_RC( eRC_ArmesLetalesAutorisees )
+        integration.report( eRC_ArmesLetalesAutorisees )
     end
 end
 
@@ -808,4 +808,8 @@ end
 
 integration.getOrderType = function( fragorder )
     return fragorder.source:GetType()
+end
+
+integration.getOrdersCategory = function( )
+    return DEC_GetOrdersCategory()
 end

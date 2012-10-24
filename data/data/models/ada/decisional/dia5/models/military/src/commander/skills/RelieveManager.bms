@@ -7,10 +7,10 @@ activate = function( self )
 
   -- Demander à tous les pions s’ils sont en difficulté
   for _, pion in pairs ( self.params.pions ) do
-       if pion.source:DEC_Agent_EtatOpsMajeur() == 0 then --  si le pion a un mauvais état opérationnel
+       if integration.getAgentMajorOpsState( pion.source ) == 0 then --  si le pion a un mauvais état opérationnel
            local possibleReleve = {}
            for _, pionReleve in pairs ( self.params.releve ) do
-             if pionReleve.source:DEC_Agent_EtatOpsMajeur() > 0 and DEC_Automate_PionPeutReleverPion( pionReleve.source, pion.source ) then
+             if integration.getAgentMajorOpsState( pionReleve.source ) > 0 and integration.isAgentInAutomatCanRelieveAgent( pionReleve.source, pion.source ) then
                possibleReleve [#possibleReleve + 1] = pionReleve
              end
            end
@@ -25,7 +25,7 @@ activate = function( self )
 
            end
            if bestReleve then
-               DEC_Automate_PionRelevePion( bestReleve.source, pion.source )
+               integration.agentInAutomatRelieveAgent( bestReleve.source, pion.source )
                F_Pion_SeteEtatEchelon( bestReleve.source, F_Pion_GeteEtatEchelon( pion.source ) )
                meKnowledge:sendTaskToPion(pion, self.params.followTask, { objectives = { bestReleve } }, eEtatEchelon_None )
            else

@@ -64,3 +64,39 @@ integration.getPositionsAroundObject = function( object )
     end
     return { CreateKnowledge( world.Point, object.getObjectNearestBorderPosition ) }
 end
+
+integration.getKnowledgesObjectsInCircle = function( position, distance, objectTypeList )
+    return DEC_Knowledges_ObjectsInCircle( position, distance, objectTypeList )
+end
+
+integration.getKnowledgeObjectLocation = function( object )
+    return DEC_ConnaissanceObjet_Localisation( object )
+end
+
+integration.getKnowledgeGenObjectLocation = function( genObject )
+    return DEC_GenObjectKnowledge_Localisation( genObject )
+end
+
+integration.getGenObjectLocation = function( genObject )
+    return DEC_GenObject_Localisation( genObject )
+end
+
+integration.getGenObjectType = function( genObject )
+    return DEC_GenObject_Type( genObject )
+end
+
+integration.getKnowledgeObjectType = function( object )
+    return DEC_ConnaissanceObjet_Type( object )
+end
+
+integration.getNextObjectOnPath = function( model, distance, paramsList )
+    return DEC_GetNextObjectOnPath( model, distance, paramsList )
+end
+
+integration.isManeuverGenObject = function( genObject )
+    return DEC_GenObject_TypeObstacleManoeuvre( genObject )
+end
+
+integration.isValidKnowledgeObject = function( object )
+    return DEC_IsValidKnowledgeObject( object )
+end

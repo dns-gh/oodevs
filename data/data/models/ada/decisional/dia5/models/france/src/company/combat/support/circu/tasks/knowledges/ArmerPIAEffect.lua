@@ -10,7 +10,7 @@ return
         local tasks = explode( ";", params.mainTasks )
         for _, task in pairs( tasks ) do
             for _, platoon in pairs( listPlatoonAlly or {} ) do
-                if DEC_IsMissionAvailable( platoon.source, task ) and existsInside( { listPlatoonAlly }, platoon ) then
+                if integration.isMissionAvailable( platoon, task ) and existsInside( { listPlatoonAlly }, platoon ) then
                     platoon.entity = platoon
                     listPlatoonAlly = removeFromListForLead( { platoon }, listPlatoonAlly )
                     self.nbMain = self.nbMain + 1
@@ -18,14 +18,14 @@ return
             end
         end
         
-        local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LIA, ( self.nbMain ) )	
+        local pointsOnLimas = integration.getPointsLimas( eTypeLima_LIA, ( self.nbMain ) )
         for _, points in pairs( pointsOnLimas ) do
             for _, point in pairs( points ) do
                 self.mainPositions[#self.mainPositions + 1] = CreateKnowledge( world.Point, point )
             end
         end
         if not pointsOnLimas or #pointsOnLimas == 0 then
-            DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LIA )
+            integration.report( eRC_LimaParameterNotPresent, eTypeLima_LIA )
         end	
 
         if #self.mainPositions == 0 then
@@ -36,9 +36,9 @@ return
     end,
 
     getDirection = function( self, params, entity )
-        local mission = DEC_GetRawMission( meKnowledge.source )
-        local dir = DEC_GetDirectionEnnemi( mission )
-        local position = DEC_Geometrie_PositionTranslateDir( self.mainPositions[myself.leadData.mainPosIndex]:getPosition(), dir, 1000 )
+        local mission = integration.getRawMission( meKnowledge.source )
+        local dir = integration.getDirectionEnemy( mission )
+        local position = integration.positionTranslateDir( self.mainPositions[myself.leadData.mainPosIndex]:getPosition(), dir, 1000 )
         return CreateKnowledge( world.Point, position)
     end,
 

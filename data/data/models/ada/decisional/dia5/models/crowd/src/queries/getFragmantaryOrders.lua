@@ -3,7 +3,7 @@ queryImplementation "getFragOrders"
     ["execute"] = function ( params )
         local CreateKnowledge = CreateKnowledge
         local res = {}
-        local ordres_recus = DEC_GetOrdersCategory()
+        local ordres_recus = integration.getOrdersCategory()
         if ordres_recus then
             local nOrdres = #ordres_recus
             for i = 1, nOrdres do

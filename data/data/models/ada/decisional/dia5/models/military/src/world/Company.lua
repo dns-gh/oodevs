@@ -86,7 +86,7 @@ predicate "isCommanding"
 {
     dependencies = "none",
     method = function( self )
-        return DEC_Automate_EstEmbraye()
+        return integration.isEngagedCommander()
     end
 }
 predicate "isFar"
@@ -114,10 +114,9 @@ predicate "isContaminated"
 {
     dependencies = "none",
     method = function( self )
-        local DEC_Automate_PionEstContamine = DEC_Automate_PionEstContamine
-        local listCommanding = self.source:DEC_Automate_PionsAvecPC()
+        local listCommanding = self.source:getAgentsFromCommander()
         for _, entity in pairs( listCommanding or emptyTable ) do
-            if DEC_Automate_PionEstContamine( entity ) then
+            if integration.isCommanderContaminated( entity ) then
                 return true
             end
         end
@@ -128,10 +127,9 @@ predicate "isPoisoned"
 {
     dependencies = "none",
     method = function( self )
-        local DEC_Automate_PionEstEmpoisonne = DEC_Automate_PionEstEmpoisonne
-        local listCommanding = self.source:DEC_Automate_PionsAvecPC()
+        local listCommanding = self.source:getAgentsFromCommander()
         for _, entity in pairs( listCommanding or emptyTable ) do
-            if DEC_Automate_PionEstEmpoisonne( entity ) then
+            if integration.isCommanderPoisoned( entity ) then
                 return true
             end
         end
@@ -142,11 +140,11 @@ predicate "isOperational"
 {
     dependencies = "none",
     method = function( self )
-        local listCommanding = self.source:DEC_Automate_PionsAvecPC()
+        local listCommanding = self.source:getAgentsFromCommander()
         local operationalThreshold = 0
         local listOperational = 0
         for _, entity in pairs( listCommanding or emptyTable ) do
-            if entity:DEC_Agent_EtatOpsMajeur() ~= 0 then
+            if integration.getAgentMajorOpsState( entity ) ~= 0 then
                 listOperational = listOperational + 1
             end
         end
@@ -221,7 +219,7 @@ return
     -- Integration and specific methods
     -- --------------------------------------------------------------------------------
     getPosition = function( self )
-        return DEC_Automate_Position( self.source )
+        return integration.getCommanderPosition( self.source )
     end,
     getMyPosition = function( self )
         return CreateKnowledge( world.Point, self:getPosition() )
@@ -261,7 +259,7 @@ return
     end,
     -- Create Knowledge Fuseau
     getFuseau = function( self )
-        local fuseau = DEC_Fuseau()
+        local fuseau = integration.getAORFromCommander()
         return CreateKnowledge( world.Fuseau, fuseau )
     end,
     getProximity = function( self, reachable )
@@ -290,7 +288,7 @@ return
     },
     moveToIt = function( self, pathType ) -- $$$ not used
         local pionToReach = CreateKnowledge( 
-            world.PlatoonAlly, DEC_Automate_PionPC() )
+            world.PlatoonAlly, integration.commanderGetHQUnit() )
         return meKnowledge:moveToItIntegration( pionToReach, pathType )
     end,
     destroyMoveToIt = function( self )  -- $$$ not used
@@ -316,34 +314,37 @@ return
         local santePriorites = {}	
         local etatROEPopulation = -1
         local etatROE = -1
-        if DEC_Automate_isLogistic then
-            if DEC_Automate_isLogistic() then
-                if DEC_Maintenance_RegimeTravail then
-                    saintRegimeTravail = DEC_Maintenance_RegimeTravail()
+        if integration.isLogisticAutomatExist() then
+            if integration.isLogisticAutomat() then
+                if integration.getWorkRegimeExist() then
+                    saintRegimeTravail = integration.getWorkRegime()
                 end
-                if DEC_Sante_PrioritesTactiques then
-                    santePrioritesTact = DEC_Sante_PrioritesTactiques()
+                if integration.getTacticalPrioritiesHealthExist() then
+                    santePrioritesTact = integration.getTacticalPrioritiesHealth ()
                 end
-                if DEC_Maintenance_PrioritesTactiques then
-                    maintPrioritesTact = DEC_Maintenance_PrioritesTactiques()
+                if integration.getTacticalPrioritiesMaintenanceExist() then
+                    maintPrioritesTact = integration.getTacticalPrioritiesMaintenance()
                 end
-                if DEC_Maintenance_Priorites then
-                    maintPriorites = DEC_Maintenance_Priorites()
+                if integration.getPrioritiesMaintenanceExist() then
+                    maintPriorites = integration.getPrioritiesMaintenance()
                 end
-                if DEC_Sante_Priorites then
-                    santePriorites = DEC_Sante_Priorites()
+                if integration.getPrioritiesHealthExist() then
+                    santePriorites = integration.getPrioritiesHealth()
                 end
             end
         end
-        if DEC_Automate_ROEPopulation then
-            etatROEPopulation = DEC_Automate_ROEPopulation()
+        if integration.getPopulationROEExist() then
+            etatROEPopulation = integration.getPopulationROE()
         end
-        if DEC_Automate_ROE then
-            etatROE = DEC_Automate_ROE()
+        if integration.getAutomatROEExist() then
+            etatROE = integration.getCommanderROE()
         end
         meKnowledge:sendDataToNewUnitInAutomat( unit, saintRegimeTravail, santePrioritesTact, maintPrioritesTact, maintPriorites, santePriorites, etatROEPopulation, etatROE )
     end,
     getName = function( self )
         return integration.getAgentName( self )
+    end,
+    getAgentsFromCommander = function( self )
+        return integration.getAgentsFromCommander( self )
     end
 }

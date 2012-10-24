@@ -41,8 +41,8 @@ method "canBeCreated" (
         if instantaneously then 
             return true -- magic action
         else
-            local result = integration.canBuildNowObjectType( DEC_ConnaissanceObjet_Type( self.source ) ) 
-            and integration.hasEnoughtDotationForObjectType( DEC_ConnaissanceObjet_Type( self.source ) )
+            local result = integration.canBuildNowObjectType( integration.getKnowledgeObjectType( self.source ) ) 
+            and integration.hasEnoughtDotationForObjectType( integration.getKnowledgeObjectType( self.source ) )
             if not result then -- $$$ MIA not the right place to do this report
                 meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
             end

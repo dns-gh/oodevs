@@ -1,7 +1,7 @@
 -- --Safeguardable Implementation
 
 integration.computeAggressiveness = function( target )
-    local firers = DEC_Connaissances_UnitesPrenantAPartie()
+    local firers = integration.getKnowledgesUnitsEngaging()
     if exists(firers, target.source ) then
         return 100
     end

@@ -15,12 +15,12 @@ local result =
     end,
 
     hasDotation = function( self, entity, obstacle )
-        return DEC_Agent_AgentADotationPourConstruireObjet( entity.source, tostring(obstacle:getType()) )
+        return integration.hasDotationToBuildObject( entity.source, tostring(obstacle:getType()) )
     end,
 
     canDoIt = function( self, entity, obstacle )
         local localisation = obstacle:getLocalisation()
-        return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( entity.source, tostring(obstacle:getType()), localisation )
+        return integration.canBuildObjectWhenLoadedWithLocation( entity.source, tostring(obstacle:getType()), localisation )
     end,
 }
 

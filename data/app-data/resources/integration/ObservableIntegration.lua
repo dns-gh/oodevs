@@ -71,7 +71,11 @@ end
 
 
 integration.getUrbanBlockPerception = function( urbanBlock )
-  return DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant( urbanBlock.source ) * 100
+  return integration.getUrbanBlockCurrentReconnaissanceState( urbanBlock.source ) * 100
+end
+
+integration.getUrbanBlockCurrentReconnaissanceState = function( urbanBlock )
+  return DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant( urbanBlock )
 end
 
 --- Observe a knowledge
@@ -124,3 +128,10 @@ integration.isPointVisible = function ( point )
     return DEC_Perception_PointEstVisible( point.source )
 end
 
+integration.getDetectionDistance = function ()
+    return DEC_Detection_Distance()
+end
+
+integration.isAgentPerceivesAgent = function ( agent )
+    return DEC_ConnaissanceAgent_PercoitUnite( agent )
+end

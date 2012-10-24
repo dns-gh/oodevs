@@ -3,7 +3,7 @@ queryImplementation "getObstaclesAroundMe"
     ["execute"] = function ( params )
         local allRes={}
         local obstacles = {}
-        obstacles = DEC_Knowledges_ObjectsInCircle( meKnowledge:getPosition(), params.distance,
+        obstacles = integration.getKnowledgesObjectsInCircle( meKnowledge:getPosition(), params.distance,
             { eTypeObjectAbatis, eTypeObjectAntiTankObstacle, eTypeObjectBarricade, eTypeObjectBridgeDestruction, 
              eTypeObjectLandslide, eTypeObjectMines, eTypeObjectScatteredMinedArea, eTypeObjectLinearMinedArea, 
              eTypeObjectRoadDestruction } )

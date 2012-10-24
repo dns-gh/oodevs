@@ -12,7 +12,7 @@ queryImplementation "GetAllReachableDestinationInArea"
         -- -------------------------------------------------------------------------------- 
         -- Urban blocks
         -- --------------------------------------------------------------------------------
-        local urbanBlocks = DEC_Connaissances_BlocUrbainDansZone( params.area.source )
+        local urbanBlocks = integration.getUrbanBlockInsideArea( params.area.source )
         for _, urbanBlock in pairs( urbanBlocks ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( agent.ontology.classes.UrbanBlock, urbanBlock )
         end
@@ -22,10 +22,9 @@ queryImplementation "GetAllReachableDestinationInArea"
         -- $$$ MIA A revoir. Ne pas renvoyer tous les crossroads et tester si ils sont dans
         -- la zone. Appeler une fonction qui fait ça.
         -- --------------------------------------------------------------------------------
-        local crossroads = {}
-        DEC_Crossroads( crossroads ) -- filled with agent.ontology.classes.Position
+        local crossroads = integration.getCrossroads() -- filled with agent.ontology.classes.Position
         for _, crossroad in pairs( crossroads ) do
-            if DEC_Geometrie_EstPointDansLocalisation( crossroad:getPosition(), params.area.source ) then
+            if integration.isPointInsideLocation( crossroad:getPosition(), params.area.source ) then
                 allRes[ #allRes + 1 ] = crossroad
             end
         end
@@ -41,7 +40,7 @@ queryImplementation "GetAllReachableDestinationInArea"
         -- -------------------------------------------------------------------------------- 
         -- Area intersection with roads
         -- --------------------------------------------------------------------------------
-        local simPositions = DEC_Geometrie_FindRoadIntersectionWithZone( params.area.source )
+        local simPositions = integration.findRoadIntersectionWithZone( params.area.source )
         for _, simPos in pairs( simPositions ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( agent.ontology.classes.Position, simPos )
         end

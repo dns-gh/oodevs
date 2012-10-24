@@ -45,7 +45,6 @@ end
 
 local function manageAddedAndDeletedUnits( self )
     local redone = false
-    local DEC_HasMission = DEC_HasMission
     local oldEntities = self.parameters.commandingEntities
     local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
@@ -63,7 +62,7 @@ local function manageAddedAndDeletedUnits( self )
    if #newOperationnalEntities > #self.operationnalEntities and not redone then
         for i, entity in pairs( newOperationnalEntities ) do
             if not exists( self.operationnalEntities, entity ) then
-                if not DEC_HasMission( entity.source ) then -- Si le pion n'a pas de mission
+                if not integration.hasMission( entity.source ) then -- Si le pion n'a pas de mission
                     local tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
                     giveMission ( self,tasksForNewEntity, 1, eEtatEchelon_Second, { entity } )
                 end
@@ -78,7 +77,7 @@ end
 local function managePositionsToScreen( self )
         -- Pour la mission jalonner on force le décrochage juste devant la LCAR si elle est présente comme position de début de mission
         if self.params.companyTask == "agent.tasks.Screen" then
-            local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LCAR, meKnowledge.nbPionsMain )
+            local pointsOnLimas = integration.getPointsLimas( eTypeLima_LCAR, meKnowledge.nbPionsMain )
             if #pointsOnLimas > 0 then
                 self.screenPosition  = true
             end
@@ -213,7 +212,7 @@ create = function( self )
       -- plus la valeur est grande, plus le pion est en avant dans le fuseau
       local proj
       for _, entity in pairs( self.parameters.commandingEntities ) do
-          proj = DEC_Geometrie_AdvanceAlongFuseau( entity.source ) 
+          proj = integration.advanceAlongAOR( entity.source ) 
           self.progressionInAOR[ entity ] = proj
       end
 

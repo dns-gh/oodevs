@@ -63,7 +63,7 @@ return
       return CreateKnowledge( world.Point, self:getPosition() )
     end,
     getPositions = function( self )
-      return DEC_Geometrie_CalculerTrafficablePointPourPoint( self:getPosition() )
+      return integration.getUnitPositions( self:getPosition() )
     end,
     getProximity = function( self, reachable )
         if masalife.brain.core.class.isOfType( reachable, world.Direction ) then

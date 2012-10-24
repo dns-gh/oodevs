@@ -267,3 +267,7 @@ end
 integration.isFriendOrFoeSurrendered = function( platoon )
     return DEC_ConnaissanceAgent_EstRenduAMonCamp( meKnowledge.source, platoon.source )
 end
+
+integration.isDuringTransport = function( )
+    return DEC_Transport_EnCoursDeTransport()
+end

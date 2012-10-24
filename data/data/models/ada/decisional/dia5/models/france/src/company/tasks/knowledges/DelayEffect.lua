@@ -13,7 +13,7 @@ return
 
       -- self.scoutPoints: Points sur les limas pour les pions d'eclairage
       meKnowledge.nbPionsScout = meKnowledge.nbPionsScout or 0
-      self.pointsOnLimasScout = DEC_Geometrie_GetPointsLimas( eTypeLima_LCAR, meKnowledge.nbPionsScout )
+      self.pointsOnLimasScout = integration.getPointsLimas( eTypeLima_LCAR, meKnowledge.nbPionsScout )
       for _, points in pairs( self.pointsOnLimasScout ) do
        for _, point in pairs( points ) do
          self.scoutPoints[ #self.scoutPoints + 1 ] = CreateKnowledge( world.Point, point )
@@ -27,7 +27,7 @@ return
       -- self.mainPoints: Points sur les limas pour les pions ayant la mission principale
       -- meKnowledge.nbPionsMain + meKnowledge.nbPionsMain % 2  nombre de points sont créés sur n echelons
       meKnowledge.nbPionsMain = meKnowledge.nbPionsMain or 0
-      self.pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LCAR, ( meKnowledge.nbPionsMain + meKnowledge.nbPionsMain % 2 ) /self.numberEchelons )
+      self.pointsOnLimas = integration.getPointsLimas( eTypeLima_LCAR, ( meKnowledge.nbPionsMain + meKnowledge.nbPionsMain % 2 ) /self.numberEchelons )
       self.list = {}
       self.listScout = {}
       local compt = 0
@@ -40,7 +40,7 @@ return
        end
       end 
       if not self.pointsOnLimas or #self.pointsOnLimas == 0 then
-        DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LCAR )
+        integration.report( eRC_LimaParameterNotPresent, eTypeLima_LCAR )
       end
       if params.pcObjective and params.pcObjective ~= NIL then
         for i = 1, meKnowledge.nbPionsMain do

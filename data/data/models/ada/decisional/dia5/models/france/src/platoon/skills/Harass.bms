@@ -68,9 +68,9 @@ rootnode
               if self.realEnemies[ realEnemyId ] then
                   if element:isOperational() and 
                     ( ( masalife.brain.core.class.isOfType( self.params.harassObjective,world.Area ) 
-                  and DEC_Geometrie_EstPointDansLocalisation( element:getPosition(), self.params.harassObjective.source ) ) 
+                  and integration.isPointInsideLocation( element:getPosition(), self.params.harassObjective.source ) ) 
                         or ( masalife.brain.core.class.isOfType( self.params.harassObjective, world.UrbanBlock ) 
-                  and DEC_IsPointInUrbanBlock( element:getPosition(), self.params.harassObjective.source ) ) )
+                  and integration.isPointInsideUrbanBlock( element:getPosition(), self.params.harassObjective.source ) ) )
                     then
                       self.entities[ #self.entities + 1 ] = element
                   end
@@ -79,7 +79,7 @@ rootnode
       end
       if #self.entities ~= 0 and self.movementDone then -- arrived on a position to engage enemies
           for _,  element in pairs( self.entities ) do
-              local porteeMax = DEC_Tir_PorteeMaxPourTirer( 0.5 )
+              local porteeMax = integration.getMaxRangeToFireForPH( 0.5 )
               if element:canNeutralizeIt() and integration.distance( meKnowledge, element ) < porteeMax then
                   Activate( skill.nodes.Shoot, element:destructionPriority(), { entity = element } )
               end

@@ -10,12 +10,12 @@ queryImplementation "GetAllReachableDestinationsAroundPosition"
         local allRes = knowledgeManager.getQueryResult( "GetAllReachableDestinationsAroundPosition" )
         if next( allRes ) then return allRes end
 
-        local simLoc = DEC_Geometrie_CreerLocalisationCercle( params.position:getPosition(), params.radius )
+        local simLoc = integration.createLocationCircle( params.position:getPosition(), params.radius )
 
         -- -------------------------------------------------------------------------------- 
         -- Urban blocks
         -- --------------------------------------------------------------------------------
-        local urbanBlocks = DEC_Connaissances_BlocUrbainDansZone( simLoc )
+        local urbanBlocks = integration.getUrbanBlockInsideArea( simLoc )
         for _, urbanBlock in pairs( urbanBlocks ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( agent.ontology.classes.UrbanBlock, urbanBlock )
         end
@@ -23,10 +23,9 @@ queryImplementation "GetAllReachableDestinationsAroundPosition"
         -- -------------------------------------------------------------------------------- 
         -- Crossroads
         -- --------------------------------------------------------------------------------
-        local crossroads = {}
-        DEC_Crossroads( crossroads ) -- filled with military.world.classes.sim.Point
+        local crossroads = integration.getCrossroads() -- filled with military.world.classes.sim.Point
         for _, crossroad in pairs( crossroads ) do
-            if DEC_Geometrie_EstPointDansLocalisation( crossroad:getPosition(), simLoc ) then
+            if integration.isPointInsideLocation( crossroad:getPosition(), simLoc ) then
                 allRes[ #allRes + 1 ] = crossroad
             end
         end

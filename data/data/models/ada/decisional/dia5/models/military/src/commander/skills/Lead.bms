@@ -38,10 +38,9 @@ end
 -- @release 2011-01-14
 local function manageFeedback ( frontElement )
     local nbUnitInOtherAutomat = 0
-    local DEC_GetAutomate = DEC_GetAutomate
     for _, elem in pairs (frontElement) do
       integration.ListenFrontElement( elem.entity )
-      if DEC_GetAutomate( elem.entity.source ) == meKnowledge then
+      if integration.getCommander( elem.entity.source ) == meKnowledge then
       -- On v�rifie que le pion est toujours sous l'automate
           nbUnitInOtherAutomat = nbUnitInOtherAutomat + 1
       end
@@ -54,7 +53,6 @@ end
 
 local function manageAddedAndDeletedUnits( self )
     local redone = false
-    local DEC_HasMission = DEC_HasMission
     local oldEntities = self.parameters.commandingEntities
     local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
@@ -73,7 +71,7 @@ local function manageAddedAndDeletedUnits( self )
         for i, entity in pairs( newOperationnalEntities ) do
             if not exists( self.operationnalEntities, entity ) then
                 -- Si le pion n'a pas de mission ou si c'est de la LOG on donne Se deployer; si c'est un pion Convoi, il ne faut pas le prendre en compte
-                if ( not DEC_HasMission( entity.source ) or DEC_Automate_isLogistic() ) and not integration.isLogisticConvoy( entity.source ) then 
+                if ( not integration.hasMission( entity.source ) or integration.isLogisticAutomat() ) and not integration.isLogisticConvoy( entity.source ) then 
                     local tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
                     issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity } )
                 end
@@ -194,14 +192,14 @@ activate = function( self )
         -- plus la valeur est grande, plus le pion est en avant dans le fuseau
         local proj
         for _, entity in pairs( self.parameters.commandingEntities ) do
-            proj = DEC_Geometrie_AdvanceAlongFuseau( entity.source ) 
+            proj = integration.advanceAlongAOR( entity.source ) 
             self.progressionInAOR[ entity ] = proj
         end
     
         local pionHasSupport, supportDistance
         local maxsupportDistance = 1200
         for _, pion in pairs( pionsSE ) do
-              supportDistance = DEC_Tir_PorteeMaxPourTirer( pion.source, 0.5 )
+              supportDistance = integration.getMaxRangeToFireAgentForPH( pion.source, 0.5 )
               if supportDistance > maxsupportDistance then
                   maxsupportDistance = supportDistance
               end

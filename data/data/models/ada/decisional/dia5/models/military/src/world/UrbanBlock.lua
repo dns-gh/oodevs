@@ -219,7 +219,7 @@ return
     end,
     getPerception = function( self )
         -- $$$ MIA TODO il ne s'agit du niveau de reconnaissance
-        return DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant( self.source ) * 100
+        return integration.getUrbanBlockCurrentReconnaissanceState( self.source ) * 100
     end,
     getReconnaissanceState = function( self )
         return integration.getUrbanBlockReconnaissanceState( self )
@@ -281,7 +281,7 @@ return
         return integration.getUrbanBlockPositions( self )
     end,
     getLocalisation = function( self )
-        return DEC_PolygoneBlocUrbain( self.source )
+        return integration.polylineUrbanBlock( self.source )
     end,
     getCoverAndConcealmentLevelFor = function( self, entity, objective )
         return integration.getUrbanBlockCoverAndConcealmentLevelFor( self, entity, objective )

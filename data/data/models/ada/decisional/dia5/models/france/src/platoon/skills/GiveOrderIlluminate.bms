@@ -28,7 +28,7 @@ rootnode
         end
         local task = "platoon.tasks.Illuminer" -- $$$ MIA ne pas mettre la mission Francaise!
         for _, entity in pairs( self.params.illuminateally ) do
-            if DEC_IsMissionPionAvailable( entity.source, task ) then
+            if integration.isMissionAgentAvailable( entity.source, task ) then
                 Activate( skill.nodes.IssueTask, 1, { entity = entity, task = task, objective = self.params.entity, ally = meKnowledge } )
             end
         end

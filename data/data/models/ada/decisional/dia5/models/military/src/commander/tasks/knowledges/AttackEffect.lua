@@ -3,7 +3,7 @@ return
 
     getObjectives = function( self, params, entity )
         local fuseau = self:getReachable( params )
-        return { CreateKnowledge( world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source)) }
+        return { CreateKnowledge( world.Point, integration.computeArrivedPointForAOR(fuseau.source)) }
     end,
 
     getReachable = function( self, params )

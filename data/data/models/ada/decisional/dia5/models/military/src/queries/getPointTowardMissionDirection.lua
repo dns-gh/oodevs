@@ -10,11 +10,11 @@ queryImplementation "getPointTowardMissionDirection"
         end
 
         -- on récupère la direction dangereuse et on renvoie un point dans cette direction
-        local obsCapacity = DEC_Detection_Distance()
-        if DEC_HasMission( meKnowledge.source ) then
-            local mission = DEC_GetRawMission( meKnowledge.source )
-            local dir = DEC_GetDirectionDanger( mission )
-            local position = DEC_Geometrie_PositionTranslateDir( meKnowledge:getPosition(), dir, obsCapacity )
+        local obsCapacity = integration.getDetectionDistance()
+        if integration.hasMission( meKnowledge.source ) then
+            local mission = integration.getRawMission( meKnowledge.source )
+            local dir = integration.getDangerousDirection( mission )
+            local position = integration.positionTranslateDir( meKnowledge:getPosition(), dir, obsCapacity )
             res =  CreateKnowledge( world.Point, position )
         else
             res = nil

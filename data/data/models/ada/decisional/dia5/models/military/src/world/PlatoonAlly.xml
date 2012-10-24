@@ -1433,6 +1433,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="getHQUnit">
+            <description>Return HQ.</description>
+            <return>
+                <type>
+                    <class name="world.PlatoonAlly"/>
+                </type>
+            </return>
+        </method>
         <method name="sendMessage">
             <description>Displays a simple trace message into sword gaming interface.</description>
             <argument name="message">

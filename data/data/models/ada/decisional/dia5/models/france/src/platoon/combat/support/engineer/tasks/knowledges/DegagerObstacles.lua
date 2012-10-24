@@ -19,7 +19,7 @@ local result =
     end,
 
     canDoIt = function( self, entity, obstacle )
-        return  DEC_Agent_AgentPeutDetruireObjet( entity.source, obstacle.source )
+        return  integration.canDestroyObject( entity.source, obstacle.source )
     end,
 }
 

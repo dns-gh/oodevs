@@ -18,7 +18,7 @@ return
             local objective = params.zonesAObserver[i]
             -- division de la zone en sous-zones
             local nbParts = math.max((nbFront /#params.zonesAObserver),1)
-            local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
+            local subAreas = integration.geometrySplitLocalisation( objective.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction integration.geometrySplitLocalisation
             subAreas = subAreas.first
             for _, area in pairs( subAreas ) do
                 myself.leadData.zonesAObserver[#myself.leadData.zonesAObserver + 1] = CreateKnowledge( world.Area, area )

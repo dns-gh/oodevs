@@ -3,7 +3,7 @@ queryImplementation "getDangerousEnemies"
     [ "execute" ] = function( params )
 
         local dangerousEnemies = {}
-        local simEnemies = DEC_Connaissances_UnitesEnnemiesDangereuses( )
+        local simEnemies = integration.getKnowledgesDangerousUnits( )
         for _, simEny in pairs( simEnemies ) do
             local eny = CreateKnowledge( world.Platoon, simEny )
             if eny:isNearby() and not eny:isTransported() then

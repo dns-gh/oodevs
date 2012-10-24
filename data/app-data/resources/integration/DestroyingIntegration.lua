@@ -10,5 +10,5 @@
 -------------------------------------------------------------------------------
 
 integration.isInFiringRange = function( target )
-    return integration.distance( meKnowledge, target ) < DEC_Tir_PorteeMaxPourTirerSurUnite( target.source, 0.7)
+    return integration.distance( meKnowledge, target ) < integration.getMaxRangeToFireOnAgent( target.source, 0.7)
 end

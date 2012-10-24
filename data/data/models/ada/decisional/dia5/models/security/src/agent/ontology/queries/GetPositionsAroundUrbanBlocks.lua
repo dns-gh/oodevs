@@ -12,7 +12,7 @@ queryImplementation "GetPositionsAroundUrbanBlocks"
         -- --------------------------------------------------------------------------------
         for _, urbanBlock in pairs( params.urbanBlocks ) do
             for _, simPoint in pairs( urbanBlock:getPositions() ) do
-                if not DEC_IsPointInUrbanBlock( simPoint, urbanBlock.source ) then -- just points around, no the barycenter.
+                if not integration.isPointInsideUrbanBlock( simPoint, urbanBlock.source ) then -- just points around, no the barycenter.
                     allRes[ #allRes + 1 ] = CreateKnowledge( agent.ontology.classes.Position, simPoint )
                 end
             end

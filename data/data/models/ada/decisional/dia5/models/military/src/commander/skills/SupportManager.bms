@@ -23,7 +23,7 @@ activate = function( self )
         for index, support in pairs ( self.supportList ) do -- SE qui n'supporte pas déja
           local task = integration.RetrievePionTask( support, self.params.taskForSupporting )
           local distance = integration.distance( position, support:getMyPosition() )
-          if task and support.source:DEC_Agent_EtatOpsMajeur() > 0  and distance < bestDistance then
+          if task and integration.getAgentMajorOpsState( support.source ) > 0  and distance < bestDistance then
               bestSupport = support 
               bestIndex = index
               bestDistance = distance

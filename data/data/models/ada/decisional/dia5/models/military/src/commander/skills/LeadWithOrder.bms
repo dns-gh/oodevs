@@ -38,10 +38,9 @@ end
 -- @release 2011-01-14
 local function manageFeedback ( frontElement )
     local nbUnitInOtherAutomat = 0
-    local DEC_GetAutomate = DEC_GetAutomate
     for _, elem in pairs (frontElement) do
       integration.ListenFrontElement( elem.entity )
-      if DEC_GetAutomate( elem.entity.source ) == meKnowledge then
+      if integration.getCommander( elem.entity.source ) == meKnowledge then
       -- On vérifie que le pion est toujours sous l'automate
           nbUnitInOtherAutomat = nbUnitInOtherAutomat + 1
       end
@@ -54,7 +53,6 @@ end
 
 local function manageAddedAndDeletedUnits( self )
     local redone = false
-    local DEC_HasMission = DEC_HasMission
     local oldEntities = self.parameters.commandingEntities
     local newEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
     local newOperationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
@@ -72,7 +70,7 @@ local function manageAddedAndDeletedUnits( self )
    if #newOperationnalEntities > #self.operationnalEntities and not redone then
         for i, entity in pairs( newOperationnalEntities ) do
             if not exists( self.operationnalEntities, entity ) then
-                if not DEC_HasMission( entity.source ) then -- Si le pion n'a pas de mission
+                if not integration.hasMission( entity.source ) then -- Si le pion n'a pas de mission
                     local tasksForNewEntity = self.params.supportTasks..";"..self.params.defaultTask
                     issueMission ( self, tasksForNewEntity, 1, eEtatEchelon_Second, { entity } )
                 end

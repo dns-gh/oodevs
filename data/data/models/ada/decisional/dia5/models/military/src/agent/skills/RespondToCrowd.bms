@@ -7,7 +7,7 @@ rootnode
 
     create = function( self )
         self.respond = true
-        self.rTempsDebut = DEC_TempsSim() -- pas de fonction DEC dans les skills
+        self.rTempsDebut = getSimulationTime() -- pas de fonction DEC dans les skills
         meKnowledge:RC( eRC_RiposteContrePopulation, self.params.crowd.source ) -- body type dans xml au pire, sinon à mettre dans l'action de response'
     end,
 
@@ -16,10 +16,10 @@ rootnode
         -- Manage respond if under fire
         if self.respond then
             self.params.crowd:respondToIt()
-            self.rTempsDebut = DEC_TempsSim() -- pas de fonction DEC dans les skills
+            self.rTempsDebut = getSimulationTime() -- pas de fonction DEC dans les skills
             self.respond = false
         end
-        if self.delai <=  DEC_TempsSim() - self.rTempsDebut then -- pas de fonction DEC dans les skills
+        if self.delai <= getSimulationTime() - self.rTempsDebut then -- pas de fonction DEC dans les skills
            self.respond = true
         end
      end

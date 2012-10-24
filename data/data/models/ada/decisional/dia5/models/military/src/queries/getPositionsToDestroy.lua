@@ -11,7 +11,7 @@ queryImplementation "getPositionsToDestroy"
         for _, element in pairs( params.elementsToDestroy ) do
             local elementPosition = element:getPosition()
             if elementPosition then
-                blocksInCircle = DEC_Connaissances_BlocUrbainDansCercle( elementPosition, radius )
+                blocksInCircle = integration.getUrbanBlockInsideCircle( elementPosition, radius )
                 for _, block in pairs( blocksInCircle ) do
                     allRes[ #allRes + 1 ] = CreateKnowledge( world.UrbanBlock, block )
                 end

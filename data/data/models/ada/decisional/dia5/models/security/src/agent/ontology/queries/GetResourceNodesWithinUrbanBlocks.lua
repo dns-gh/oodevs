@@ -8,8 +8,8 @@ queryImplementation "GetResourceNodesWithinUrbanBlocks"
     ["execute"] = function ( params )
         local allRes = {}
         for _, urbanBlock in pairs( params.urbanBlocks ) do
-            local simUrbanBlockArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
-            local simResourceNodes = DEC_ResourceNetwork_NodesInZone( simUrbanBlockArea )
+            local simUrbanBlockArea = integration.polylineUrbanBlock( urbanBlock.source )
+            local simResourceNodes = integration.getResourceNetworkNodesInZone( nil, simUrbanBlockArea )
             for _, simResourceNode in pairs( simResourceNodes ) do
                 allRes[ #allRes + 1 ] = CreateKnowledge( agent.ontology.classes.ResourceNode, simResourceNode )
             end

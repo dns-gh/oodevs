@@ -562,8 +562,8 @@ end
 
 waitInMin = function( self, delay )
     self[myself] = self[myself] or {}
-    self[myself].tempsDebut = self[myself].tempsDebut or DEC_TempsSim()
-    return  delay * 60 <= DEC_TempsSim() - self[myself].tempsDebut
+    self[myself].tempsDebut = self[myself].tempsDebut or getSimulationTime()
+    return  delay * 60 <= getSimulationTime() - self[myself].tempsDebut
 end
 
 getBetterReachingEfficiencyInList = function( elements, entity )
@@ -579,12 +579,12 @@ getBetterReachingEfficiencyInList = function( elements, entity )
             bestPosition = currentPositionReach
             bestReturnPosition = position
         end
-    end	
+    end
     return bestReturnPosition
 end
 
 startSettleCalcul = function()
-    local listePions = DEC_Pion_PionsAvecPC()
+    local listePions = integration.getAgentsWithHQ()
     return DEC_Geometrie_StartCalculLignesAvantEtArrierePourPion( DEC_GetAutomate( meKnowledge.source ), listePions )
 end
 
@@ -594,4 +594,8 @@ end
 
 stopSettleCalcul = function( line )
     DEC_Geometrie_StopCalculLignesAvantEtArriere( line )
+end
+
+getSimulationTime = function()
+    return DEC_TempsSim()
 end

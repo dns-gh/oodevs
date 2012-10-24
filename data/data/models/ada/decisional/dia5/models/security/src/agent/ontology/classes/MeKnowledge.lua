@@ -25,7 +25,7 @@ masalife.brain.communication.setMessageTreatment( "Commander_MoveTo",
 method "moveTo" (
     function( self, destination, urgency, pathType )
         local etat = F_Pion_GeteEtatEchelon( self.source )
-        DEC_DecisionalState( "Echelon", "eEtatEchelon_Premier" )
+        integration.setDecisionalState( "Echelon", "eEtatEchelon_Premier" )
         integration.setPace( urgency ) -- determine pace depending on urgency.
         return destination:reachIt( pathType )   -- movement toward destination
     end )

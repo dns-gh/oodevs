@@ -2,7 +2,7 @@ return
 {
     getEntities = function( self, params )
         local res = {}
-        local pions = DEC_Automate_PionsAvecPC()
+        local pions = integration.getAgentsFromCommander()
         for _, pion in pairs( pions ) do
             res[ #res + 1 ] = CreateKnowledge( world.PlatoonAlly, pion )
         end

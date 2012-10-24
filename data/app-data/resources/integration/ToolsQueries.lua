@@ -250,7 +250,7 @@ end
 -- @release 2010-11-26
 -- --------------------------------------------------------------------------------
 integration.query.getPCUnit = function()
-    return CreateKnowledge( integration.ontology.types.agent, DEC_Automate_PionPC() )
+    return CreateKnowledge( integration.ontology.types.agent, integration.commanderGetHQUnit() )
 end
 
 integration.GetSuperiorKnowledge = function( unit ) 
@@ -266,7 +266,7 @@ end
 integration.getEntitiesFromAutomat = function ( automat, role, withPC)
     local temp = {}
     if withPC then
-        temp = DEC_Automate_PionsDeAutomateAvecPC(automat.source)
+        temp = integration.getSubordinateAgentsFromCommander( automat.source )
     else
         temp = DEC_Automate_PionsDeAutomateSansPC(automat.source)
     end
@@ -357,11 +357,11 @@ integration.getDestroyableInObjective = function( objective )
     local res = {}
     local enemies = {}
     if masalife.brain.core.class.isOfType( objective, world.Area ) then
-        enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( objective.source ) 
+        enemies = integration.isKnowledgesAgentsInArea( objective.source ) 
     elseif masalife.brain.core.class.isOfType( objective, world.UrbanBlock ) then
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
     else
-        enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( objective:getPosition(), 600 )
+        enemies = integration.getKnowledgesLivingAgentsInCircle( objective:getPosition(), 600 )
     end
     
     local nEnemies = #enemies
@@ -382,11 +382,11 @@ integration.getTerroristsInObjective = function( objective )
     local res = {}
     local enemies = {}
     if masalife.brain.core.class.isOfType( objective, world.Area ) then
-        enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( objective.source ) 
+        enemies = integration.isKnowledgesAgentsInArea( objective.source ) 
     elseif masalife.brain.core.class.isOfType( objective, world.UrbanBlock ) then
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
     else
-        enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( objective:getPosition(), 600 )
+        enemies = integration.getKnowledgesLivingAgentsInCircle( objective:getPosition(), 600 )
     end
     
     local nEnemies = #enemies
@@ -444,7 +444,7 @@ end
 -- @release 2011-12-05
 -- --------------------------------------------------------------------------------
 integration.getFirePositions = function( modeDeploiement, zone, angle )
-    local nombrePositions = #( DEC_Automate_PionsSansPCCommunication() )
+    local nombrePositions = #( integration.getUnitsWithoutHQCommunication() )
     local directionEnnemi = DEC_GetDirectionEnnemi( DEC_GetRawMission( meKnowledge.source ) )
     local firePositions = {}
     if modeDeploiement == eDeploiementEn_carre then

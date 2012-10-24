@@ -12,7 +12,7 @@ queryImplementation "getPositionsToIntercept"
         for _, objective in pairs( params.objectives ) do
             local elementPosition = objective:getPosition()
             if elementPosition then
-                blocksInCircle = DEC_Connaissances_BlocUrbainDansCercle( elementPosition, radius )
+                blocksInCircle = integration.getUrbanBlockInsideCircle( elementPosition, radius )
                 for _, block in pairs( blocksInCircle ) do
                     allRes[ #allRes + 1 ] = CreateKnowledge( world.UrbanBlock, block )
                 end
@@ -24,9 +24,9 @@ queryImplementation "getPositionsToIntercept"
         if nbAreas > 0 then
             for _, objective in pairs( params.objectives ) do
                 if masalife.brain.core.class.isOfType( objective, world.Area) then
-                    local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbAreas, nil )
+                    local subAreas = integration.geometrySplitLocalisation( objective.source, nbAreas, nil )
                     for _, subArea in pairs( subAreas.first ) do
-                         local pos = DEC_Geometrie_CalculerBarycentreLocalisation( subArea )
+                         local pos = integration.computeLocationBarycenter( subArea )
                          allRes[ #allRes + 1 ] = CreateKnowledge( world.Point, pos )
                     end
                 end

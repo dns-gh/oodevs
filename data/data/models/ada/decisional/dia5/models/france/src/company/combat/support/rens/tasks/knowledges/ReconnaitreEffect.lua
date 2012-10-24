@@ -10,7 +10,7 @@ return
       local nbFrontBefore = math.min(self:getNbrFront(), params.maxNbrFront )
       local nbFront = math.max(nbFrontBefore,1)
       -- division de la zone en sous-zones
-      local subAreas = DEC_Geometry_SplitLocalisation( myself.taskParams.area.source, nbFront, nil ) 
+      local subAreas = integration.geometrySplitLocalisation( myself.taskParams.area.source, nbFront, nil )
       subAreas = subAreas.first
       for _, area in pairs( subAreas ) do
           myself.leadData.area[#myself.leadData.area + 1] = CreateKnowledge( world.Area, area )

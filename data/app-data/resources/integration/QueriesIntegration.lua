@@ -21,7 +21,7 @@ end
 function integration.getSafetyPositions( radius, safetyDistance )
     -- Warning: If this method is called with different parameters, the simulation cache will be invalidated so
     -- it's good practice not to call it with different parameters for the same brain.
-    local points = DEC_FindSafetyPositions( radius, safetyDistance )
+    local points = integration.getSafetyPositions( radius, safetyDistance )
     local result = {}
     local CreateKnowledge = CreateKnowledge
     local nPoints = #points
@@ -34,7 +34,7 @@ end
 
 function integration.getCrowdsInArea( area )
     local allRes = {}
-    local crowds = DEC_Connaissances_Populations()
+    local crowds = integration.getCrowds()
     local CreateKnowledge = CreateKnowledge
     local DEC_ConnaissancePopulation_EstDansZone = DEC_ConnaissancePopulation_EstDansZone 
     local nCrowd = #crowds
@@ -80,7 +80,7 @@ integration.getImplantationObjects = function( area, nbAreas )
     for _, subArea in pairs( subAreas.first ) do
         index = index + 1
         barycentre = DEC_Geometrie_CalculerBarycentreLocalisation( subArea )
-        local platoons = DEC_Pion_PionsAvecPC()
+        local platoons = integration.getAgentsWithHQ()
         for i = 1, #platoons do -- Est ce que ce point est trafficable pour tous les pions de l'automate
             if not integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i],barycentre ) then
                 nonTrafficablePosition = true
@@ -107,7 +107,7 @@ integration.getImplantationObjects = function( area, nbAreas )
             localisation = DEC_Geometrie_ConvertirPointEnLocalisation( barycentre )
         end
         
-        local name = DEC_GetSzName(meKnowledge.source)
+        local name = integration.getName( meKnowledge.source )
         local eTypeObject = eTypeObjectGunArtilleryDeploymentArea
         if string.find(name, "COBRA") ~= nil then
             eTypeObject = eTypeObjectCOBRADeploymentArea

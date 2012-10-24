@@ -70,7 +70,7 @@ RC_WithParams = function( RC_Function, type_rc, id, list )
     end
 end
 
-DEC_RC = function( id, ... )
+integration.report = function( id, ... )
     if tableRC[id] then 
         return RC_WithParams( tableRC[id], type_rc, id, {...} )
     else

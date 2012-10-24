@@ -6,13 +6,13 @@ queryImplementation "getPositionsToBuild"
         local point, objectPosition, scaledObject
   
         for _, element in pairs ( params.elementsToBuild ) do     
-          scaledObject = DEC_Geometrie_AgrandirLocalisation(  element:getLocalisation() , 50 )
+          scaledObject = integration.enlargeLocation( element:getLocalisation() , 50 )
           if myself.taskParams.meetingPoint and myself.taskParams.meetingPoint ~= NIL then
               positionNextTo = myself.taskParams.meetingPoint.source
           else
               positionNextTo = meKnowledge:getPosition()
           end
-          objectPosition = DEC_Geometrie_ComputeNearestBorder( positionNextTo, scaledObject )
+          objectPosition = integration.computeNearestBorder( positionNextTo, scaledObject )
           point = CreateKnowledge( world.Point, objectPosition )
           
           if point:isBuildingFor( element ) then

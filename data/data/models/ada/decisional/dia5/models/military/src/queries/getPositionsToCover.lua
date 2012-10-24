@@ -1,7 +1,7 @@
 local CheckEqualPositions = function( point, result )
     for _, p in pairs( result ) do
         if masalife.brain.core.class.isOfType( p, world.Point ) then
-            if DEC_Geometrie_PositionsEgales( point, p.source ) then 
+            if integration.positionsEqual( point, p.source ) then 
                 return p
             end
         end
@@ -23,7 +23,7 @@ local AddUrbanKnowledge = function( blocks, result, newResult, knowledges )
     local CheckEqualUrbanKnoweldges = function( block, result )
         for _, p in pairs( result ) do
             if masalife.brain.core.class.isOfType( p, world.UrbanBlock ) then
-                if DEC_Geometrie_PositionsEgales( DEC_ConnaissanceUrbanBlock_Barycentre( block ) , DEC_ConnaissanceUrbanBlock_Barycentre( p.source ) ) then 
+                if integration.positionsEqual( integration.getUrbanBlockBarycenter( block ) , integration.getUrbanBlockBarycenter( p.source ) ) then 
                     return p
                 end
             end
@@ -63,14 +63,14 @@ queryImplementation "getPositionsToCover"
         -- -------------------------------------------------------------------------------- 
         -- Urban blocks
         -- --------------------------------------------------------------------------------
-        urbanknowledges = DEC_Connaissances_BlocUrbainDansCercle(  meKnowledge:getPosition(), radius )
+        urbanknowledges = integration.getUrbanBlockInsideCircle(  meKnowledge:getPosition(), radius )
         AddUrbanKnowledge( urbanknowledges, result, newResult, knowledges )
 
         -- -------------------------------------------------------------------------------- 
         -- Crossroads and streets positions
         -- --------------------------------------------------------------------------------
-        if next( urbanknowledges ) and DEC_Agent_EnVille() then -- only if agent is in urban terrain
-            newPositions = DEC_FindSafetyPositions( distanceToFindCrossroads, distanceToFindStreetsPositions )
+        if next( urbanknowledges ) and integration.isAgentInsideTown() then -- only if agent is in urban terrain
+            newPositions = integration.getSafetyPositions( distanceToFindCrossroads, distanceToFindStreetsPositions )
             for _, pos in pairs ( newPositions ) do
                knowledges[ #knowledges + 1 ] = CreateKnowledge( world.Point, pos )
             end
@@ -89,20 +89,20 @@ queryImplementation "getPositionsToCover"
                 end
             end
             if #newResult == 0 then
-                local distanceToFindOpenFieldPositions = DEC_Tir_PorteeMaxPourEtreTireParUnite(element.source, 0.5)
+                local distanceToFindOpenFieldPositions = integration.getMaxRangeToBeFiriedByAgent(element.source, 0.5)
                 if distanceToFindOpenFieldPositions ~= 0 then
-                    local point = DEC_Geometrie_CalculerPositionSurete(element.source, distanceToFindOpenFieldPositions)
+                    local point = integration.computeSafetyPosition( element.source, distanceToFindOpenFieldPositions )
                     AddPoint( point, result, newResult )
                 end
                 -- Add unit position 
                 local unitPosition = meKnowledge:getPosition()
                 AddPoint( unitPosition, result, newResult )
 
-                if DEC_HasMission( meKnowledge.source ) then
-                    local mission = DEC_GetRawMission( meKnowledge.source )
-                    local dirDanger = DEC_GetDirectionDanger( mission )
+                if integration.hasMission( meKnowledge.source ) then
+                    local mission = integration.getRawMission( meKnowledge.source )
+                    local dirDanger = integration.getDangerousDirection( mission )
  
-                    local positionSurete = DEC_Geometrie_PositionTranslateDir( meKnowledge:getPosition(), dirDanger, - distanceToFindOpenFieldPositions )
+                    local positionSurete = integration.positionTranslateDir( meKnowledge:getPosition(), dirDanger, - distanceToFindOpenFieldPositions )
 
                     AddPoint( positionSurete, result, newResult )
                 end

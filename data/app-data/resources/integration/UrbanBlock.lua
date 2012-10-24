@@ -121,11 +121,35 @@ end
 
 -- Decontamination
 integration.decontaminateUrbanBlock = function( urbanBlock )            
-    DEC_DecontaminerZone( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
+    integration.decontaminateArea( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
     integration.pionRC( eRC_DecontaminationDone )        
     return true
 end
 
 integration.createResourceLinkWithUrbanBlock = function( urbanBlock, resourceNode )
     return DEC_ResourceNetwork_CreateLinkFromUrbanBlock( urbanBlock.source, resourceNode.source )
+end
+
+integration.polylineUrbanBlock = function( urbanBlock )
+    return DEC_PolygoneBlocUrbain( urbanBlock )
+end
+
+integration.isPointInsideUrbanBlock = function( position, urbanBlock )
+    return DEC_IsPointInUrbanBlock( position, urbanBlock )
+end
+
+integration.isAgentInsideTown = function( )
+    return DEC_Agent_EnVille()
+end
+
+integration.getUrbanBlockInsideCircle = function( position, radius )
+    return DEC_Connaissances_BlocUrbainDansCercle( position, radius )
+end
+
+integration.getUrbanBlockInsideArea = function( area )
+    return DEC_Connaissances_BlocUrbainDansZone( area )
+end
+
+integration.getUrbanBlockBarycenter = function( urbanBlock )
+    return DEC_ConnaissanceUrbanBlock_Barycentre( urbanBlock )
 end

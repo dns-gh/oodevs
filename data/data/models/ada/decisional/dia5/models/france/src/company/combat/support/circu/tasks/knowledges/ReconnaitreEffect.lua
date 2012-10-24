@@ -8,7 +8,7 @@ return
             -- ajout d'objectif si un des coins ou le centre est dans le sous-fuseau
             local myPositions = objective:getPositions()
             for i=1, #myPositions do
-                if DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( fuseau.source, myPositions[i] ) then
+                if integration.isPointInAOR_WithParam( fuseau.source, myPositions[i] ) then
                     if not exists(positions, objective) then
                         positions[ #positions + 1 ] = objective
                     end
@@ -23,7 +23,7 @@ return
         -- Ordonner la table d'objectives par ordre de proximité à l'unité subordonnée
         table.sort( positions, comp )
         -- Ajout du dernier point au bout du sous-fuseau
-        positions[ #positions + 1 ] = CreateKnowledge( world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source))
+        positions[ #positions + 1 ] = CreateKnowledge( world.Point, integration.computeArrivedPointForAOR(fuseau.source) )
         return positions, fuseau
     end,
     
@@ -44,7 +44,7 @@ return
         local positions = {}
         local fuseau = self:getPeiAOR( params )
         -- Ajout du dernier point au bout du sous-fuseau
-        positions[ #positions + 1 ] = CreateKnowledge( world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau(fuseau.source))
+        positions[ #positions + 1 ] = CreateKnowledge( world.Point, integration.computeArrivedPointForAOR(fuseau.source) )
         return positions, fuseau
     end,
     

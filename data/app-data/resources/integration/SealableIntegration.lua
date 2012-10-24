@@ -45,7 +45,7 @@ integration.stopSealOffArea  = function( area )
         end
     end
     local ptRef = integration.getBarycentreZoneFromLocalisation( area.source )
-    local lstObjets = DEC_Knowledges_ObjectsInCircle( ptRef, 10, { eTypeObjectSealOffArea } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
+    local lstObjets = integration.getKnowledgesObjectsInCircle( ptRef, 10, { eTypeObjectSealOffArea } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
     if #lstObjets > 0 then
         for i = 1, #lstObjets do
             if DEC_ConnaissanceObjet_NiveauAnimation( lstObjets[i] ) == 0 then
@@ -89,7 +89,7 @@ integration.stopSealOffUrbanBlock = function( urbanBlock )
         end
         local buArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
         local ptRef = integration.getBarycentreZoneFromLocalisation( buArea )
-        local lstObjets = DEC_Knowledges_ObjectsInCircle( ptRef, 10, { eTypeObjectSealOffArea } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
+        local lstObjets = integration.getKnowledgesObjectsInCircle( ptRef, 10, { eTypeObjectSealOffArea } ) --cas ou plusieurs pions ont construit un objet car ils sont arrivés au même tick
         if #lstObjets > 0 then
             for i = 1, #lstObjets do
                 if DEC_ConnaissanceObjet_NiveauAnimation( lstObjets[i] ) == 0 then

@@ -64,3 +64,55 @@ end
 integration.changeHealthPriority = function( priority )
     DEC_Sante_ChangerPriorites( priority )
 end
+
+integration.isLogisticAutomat = function( )
+    return DEC_Automate_isLogistic( )
+end
+
+integration.isLogisticAutomatExist = function( )
+    return DEC_Automate_isLogistic
+end
+
+integration.getWorkRegime = function( )
+    return DEC_Maintenance_RegimeTravail( )
+end
+
+integration.getWorkRegimeExist = function( )
+    return DEC_Maintenance_RegimeTravail
+end
+
+integration.getTacticalPrioritiesHealth = function( )
+    return DEC_Sante_PrioritesTactiques( )
+end
+
+integration.getTacticalPrioritiesHealthExist = function( )
+    return DEC_Sante_PrioritesTactiques
+end
+
+integration.getTacticalPrioritiesMaintenance = function( )
+    return DEC_Maintenance_PrioritesTactiques( )
+end
+
+integration.getTacticalPrioritiesMaintenanceExist = function( )
+    return DEC_Maintenance_PrioritesTactiques
+end
+
+integration.getPrioritiesMaintenance = function( )
+    return DEC_Maintenance_Priorites( )
+end
+
+integration.getPrioritiesMaintenanceExist = function( )
+    return DEC_Maintenance_Priorites
+end
+
+integration.getPrioritiesHealth = function( )
+    return DEC_Sante_Priorites( )
+end
+
+integration.getPrioritiesHealthExist = function( )
+    return DEC_Sante_Priorites
+end
+
+integration.supplyRequest = function( )
+    return DEC_DemandeDeRavitaillement()
+end

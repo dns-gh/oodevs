@@ -4,7 +4,7 @@ return
         local entities = {}
         self.entitiesToFollow = {}
         if masalife.brain.core.class.isOfType( parameters.objective, world.Company) then
-             entities = DEC_Automate_PionsDeAutomateAvecPC(parameters.objective.source)
+             entities = integration.getSubordinateAgentsFromCommander( parameters.objective.source )
              for _, element in pairs (entities) do
                 self.entitiesToFollow[ #self.entitiesToFollow + 1 ] = CreateKnowledge( world.PlatoonAlly, element )
              end

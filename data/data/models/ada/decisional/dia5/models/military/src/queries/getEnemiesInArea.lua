@@ -5,7 +5,7 @@ queryImplementation "getEnemiesInArea"
         local units = {}
         for _, objective in pairs( params.areas ) do
             if masalife.brain.core.class.isOfType( objective, world.Area ) then
-                units = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( objective.source )
+                units = integration.isKnowledgesAgentsInArea( objective.source )
             end
         end
         for _, enemy in pairs( units ) do

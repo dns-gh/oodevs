@@ -2,6 +2,6 @@ return
 {
     -- Create Knowledge Fuseau
     getWidth = function( self )
-        return DEC_Fuseau_Width( self.source )
+        return integration.getAORWidth( self.source )
     end,
 }

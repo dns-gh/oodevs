@@ -72,9 +72,9 @@ return
     end,
     
     getDirection = function( self, params, entity )     
-        local mission = DEC_GetRawMission( meKnowledge.source )
-        local dir = DEC_GetDirectionEnnemi( mission )
-        local position = DEC_Geometrie_PositionTranslateDir( params.objectives[1]:getPosition(), dir, 1000 )
+        local mission = integration.getRawMission( meKnowledge.source )
+        local dir = integration.getDirectionEnemy( mission )
+        local position = integration.positionTranslateDir( params.objectives[1]:getPosition(), dir, 1000 )
         return CreateKnowledge( world.Point, position)
     end, 
 

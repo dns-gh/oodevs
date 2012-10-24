@@ -7,7 +7,7 @@ return
         for i=1, #myself.taskParams.objectives do
             local objective = myself.taskParams.objectives[i]
             local coord = objective:getPosition()
-            advance = DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( coord )
+            advance = integration.positionAdvanceAlongAORAutomat( coord )
             if advance > myself.leadData.advanceMax then
                 myself.leadData.advanceMax = advance
             end
@@ -20,7 +20,7 @@ return
         local fuseau = self:getAOR( params )
         
         if not next( params.objectives ) then
-            positions[ #positions + 1 ] = CreateKnowledge( world.Point, DEC_Geometrie_CalculerPointArriveePourFuseau( fuseau.source ) )
+            positions[ #positions + 1 ] = CreateKnowledge( world.Point, integration.computeArrivedPointForAOR( fuseau.source ) )
             return positions, fuseau
         end
         
@@ -30,8 +30,8 @@ return
             -- ajout d'objectif si un des coins ou le centre est dans le sous-fuseau
             local myPositions = objective:getPositions()
             for i = 1, #myPositions do
-                if DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( fuseau.source, myPositions[i] ) then
-                    if DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( objective:getPosition() ) >= myself.leadData.advanceMax then
+                if integration.isPointInAOR_WithParam( fuseau.source, myPositions[i] ) then
+                    if integration.positionAdvanceAlongAORAutomat( objective:getPosition() ) >= myself.leadData.advanceMax then
                       addLastPoint = false
                     end
                     if not exists(positions, objective) then
@@ -49,7 +49,7 @@ return
         table.sort( positions, comp )
         -- ajouter un point dans le fuseau au meme niveau que l'objectif le plus lointain
         if not next( positions ) or addLastPoint then
-          local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau.source, myself.leadData.advanceMax )
+          local pos = integration.computePointOnAOR( fuseau.source, myself.leadData.advanceMax )
           positions[ #positions + 1 ] = CreateKnowledge( world.Point, pos )
         end
       

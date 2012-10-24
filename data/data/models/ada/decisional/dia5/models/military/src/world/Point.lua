@@ -294,15 +294,15 @@ return
     end,
     getCoverAndConcealmentLevelFor = function( self, entity, objective )
         local scalaire = 0.50
-        if DEC_HasMission( meKnowledge.source ) then
-            local mission = DEC_GetRawMission( meKnowledge.source )
-            local dirDanger = DEC_GetDirectionDanger( mission )
-            local dirEni = DEC_Geometrie_CreerDirection(meKnowledge:getPosition(), self:getPosition())
+        if integration.hasMission( meKnowledge.source ) then
+            local mission = integration.getRawMission( meKnowledge.source )
+            local dirDanger = integration.getDangerousDirection( mission )
+            local dirEni = integration.createDirection(meKnowledge:getPosition(), self:getPosition())
             
-            local xDanger = dirDanger:DEC_Geometrie_X()
-            local yDanger = dirDanger:DEC_Geometrie_Y()
-            local xEni = dirEni:DEC_Geometrie_X()
-            local yEni = dirEni:DEC_Geometrie_Y()
+            local xDanger = getX( dirDanger )
+            local yDanger = getY( dirDanger )
+            local xEni = getX( dirEni )
+            local yEni = getY( dirEni )
             scalaire = ( xDanger * xEni ) + ( yDanger * yEni )            
         end
 
@@ -354,6 +354,12 @@ return
     isInAttackRange = function( self, suicide, dotation )
         if suicide then return self:isReached() end
         return integration.distance( meKnowledge, self ) < integration.porteePourAttentat( dotation )
+    end,
+    getX = function( direction )
+        return integration.geometryX( direction )
+    end,
+    getY = function( direction )
+        return integration.geometryY( direction)
     end,
     attackIt = masalife.brain.integration.startStopAction( 
     { 

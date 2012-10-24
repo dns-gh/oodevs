@@ -2,7 +2,7 @@ queryImplementation "getPositionsToNeutralize"
 {
     ["execute"] = function ( params )
         local allRes = {}
-        local blocksInCircle = DEC_Connaissances_BlocUrbainDansCercle( meKnowledge:getPosition(), 100 )
+        local blocksInCircle = integration.getUrbanBlockInsideCircle( meKnowledge:getPosition(), 100 )
         for _, block in pairs( blocksInCircle ) do
             allRes[ #allRes + 1 ] = CreateKnowledge( world.UrbanBlock, block )  
         end

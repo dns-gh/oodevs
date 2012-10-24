@@ -19,7 +19,7 @@ queryImplementation "getEnemiesEngagingFriends"
                     entities[#entities + 1] = entity
                 end
                 for k = 1, #entities do
-                    res = DEC_Connaissances_UnitesPrenantAPartieSurAmi( entities[k].source )
+                    res = integration.getKnowledgesUnitsEngagingFriend( entities[k].source )
                     for _, i in pairs( res ) do
                         if not exists( tableKn, i ) then
                             allRes[ #allRes + 1 ] = CreateKnowledge( world.Platoon, i )
