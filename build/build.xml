@@ -484,7 +484,7 @@
     <target name="applications.clients" description="build Sword Client executables"
             depends="gaming_app,preparation_app,adaptation_app,
                      loadtester_app,
-                     launcher_test_app,xml_signature_app,
+                     launcher_test_app,
                      shield_app"/>
 
     <target name="applications.frontends" description="build Sword Frontend executables"
@@ -747,12 +747,6 @@
         </build-app>
     </target>
 
-    <target name="xml_signature_app" description="build application">
-        <build-app name="xml_signature_app" subsystem="console" depends="boost" libs="tools" failonwarning="${failonwarning}">
-            <defineset define="QT3_SUPPORT"/>
-        </build-app>
-    </target>
-
     <!--
     ============================================================================
     samples
@@ -820,8 +814,8 @@
         </zip>
     </target>
 
-    <target name="generate-signatures" depends="xml_signature_app" description="generate signatures">
-        <exec executable="${out.dir}/release/applications/xml_signature_app/xml_signature_app.exe" dir="${run.dir}" failonerror="true" timeout="30000">
+    <target name="generate-signatures" description="generate signatures">
+        <exec executable="${bin.dir}/xml_signature_app.exe" dir="${run.dir}" failonerror="true" timeout="30000">
             <arg value="${data.dir}/data/models/ada/physical"/>
             <arg value="${data.dir}/data/terrains"/>
             <arg value="${data.dir}/exercises"/>
