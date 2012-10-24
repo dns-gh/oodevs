@@ -153,6 +153,9 @@
     <ProjectReference Include="ENT.vcxproj">
       <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
     </ProjectReference>
+    <ProjectReference Include="logistic_plugin.vcxproj">
+      <Project>{39fdc693-7fd0-4273-8602-1f8a3bdb4fea}</Project>
+    </ProjectReference>
     <ProjectReference Include="MT_Tools.vcxproj">
       <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
     </ProjectReference>
