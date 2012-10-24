@@ -48,6 +48,7 @@
     ${FileRename} "${RUNDIR}\plugins\hla\" "plugin_vc100.xml" "plugin.xml"
     ${File} "${RUNDIR}\plugins\hla\" "protocols.xml"
 !else if ${PLATFORM} == "vc100_x64"
+    ${File} "${RUNDIR}\plugins\hla\" "libFedTime1516_64.dll"
     ${File} "${RUNDIR}\plugins\hla\" "libFedTime1516e64.dll"
     ${FileRename} "${RUNDIR}\plugins\hla\" "plugin_vc100.xml" "plugin.xml"
     ${FileRename} "${RUNDIR}\plugins\hla\" "protocols_vc100x64.xml" "protocols.xml"
