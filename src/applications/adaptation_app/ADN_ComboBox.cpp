@@ -140,6 +140,8 @@ void ADN_ComboBox::insertItem( const QString& txt, int index )
     // Insert index value in model at view place.
     vItemsEnum_.insert( vItemsEnum_.begin() + index, static_cast< int >( vItemsEnum_.size() ) );
     QComboBox::insertItem( txt, index );
+    if( !pCurData_ )
+        ItemSelected( index >= 0 ? index : 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -161,6 +163,9 @@ void ADN_ComboBox::insertItem( ADN_ComboBoxItem* item, int index )
 
     // insert item in list items
     vItems_.insert(vItems_.begin() + nRealIndex, item );
+
+    if( !pCurData_ )
+        ItemSelected( nRealIndex >= 0 ? nRealIndex : 0 );
 }
 
 //-----------------------------------------------------------------------------
