@@ -72,13 +72,13 @@
                 <description lang="fr" name="Temps"/>
             </descriptions>
             <settings>
-                <setting attribute="@time-constrained" type="boolean" default="true">
+                <setting attribute="@time-constrained" type="boolean" default="false">
                     <descriptions>
                         <description lang="en" name="Time constrained"/>
                         <description lang="fr" name="Temps contraint"/>
                     </descriptions>
                 </setting>
-                <setting attribute="@time-regulating" type="boolean" default="true">
+                <setting attribute="@time-regulating" type="boolean" default="false">
                     <descriptions>
                         <description lang="en" name="Time regulating"/>
                         <description lang="fr" name="Regulateur de temps"/>
@@ -116,7 +116,7 @@
                         <description lang="fr" name="Debug"><![CDATA[Active les informations de debug]]></description>
                     </descriptions>
                 </setting>
-                <setting attribute="@netn" type="boolean" default="true">
+                <setting attribute="@netn" type="boolean" default="false">
                     <descriptions>
                         <description lang="en" name="Use NETN modules"><![CDATA[Enable NETN subscriptions and publications]]></description>
                         <description lang="fr" name="Utiliser les modules NETN"><![CDATA[Active la souscription et la publication NETN]]></description>
