@@ -164,7 +164,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
         return;
 
     //population knowledge
-    resizeModelOnNewContent( &knowledgeModel_, element.Count() );
+    ResizeModelOnNewContent( &knowledgeModel_, element.Count() );
     int i = 0;
     tools::Iterator< const kernel::PopulationKnowledge_ABC& > iterator = element.CreateIterator();
     while( iterator.HasMoreElements() )

@@ -34,7 +34,7 @@ public:
     void Show();
     void Hide();
     bool IsVisible() const;
-    void resizeModelOnNewContent( QStandardItemModel* model, int wantedSize );
+    void ResizeModelOnNewContent( QStandardItemModel* model, int wantedSize );
     //@}
 
     //! @name Accessors

@@ -130,7 +130,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     if( ! IsVisible() || selected_ != &knowledges )
         return;
 
-    resizeModelOnNewContent( &knowledgeModel_, knowledges.Count() );
+    ResizeModelOnNewContent( &knowledgeModel_, knowledges.Count() );
     int i = 0;
     tools::Iterator< const AgentKnowledge_ABC& > iterator = knowledges.CreateIterator();
     while( iterator.HasMoreElements() )
@@ -311,7 +311,7 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
     if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< PerceptionMap >() != & perceptions )
         return;
     int perceptionSize = static_cast< int >( perceptions.perceptions_.size() );
-    resizeModelOnNewContent( &perceptionModel_, perceptionSize );
+    ResizeModelOnNewContent( &perceptionModel_, perceptionSize );
     for( int i = 0; i < perceptionSize; ++i )
     {
         perceptionModel_.item( i, 0 )->setText( perceptions.perceptions_[ i ].detected_->GetName() );

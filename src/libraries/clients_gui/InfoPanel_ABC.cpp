@@ -66,7 +66,7 @@ bool InfoPanel_ABC::IsVisible() const
 // Name: InfoPanel_ABC::resizeModelOnContent
 // Created: NPT 2012-10-23
 // -----------------------------------------------------------------------------
-void InfoPanel_ABC::resizeModelOnNewContent( QStandardItemModel* model, int wantedSize )
+void InfoPanel_ABC::ResizeModelOnNewContent( QStandardItemModel* model, int wantedSize )
 {
     int modelSize = model->rowCount();
     if( modelSize > wantedSize )
