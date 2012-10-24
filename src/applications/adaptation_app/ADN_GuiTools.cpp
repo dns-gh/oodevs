@@ -173,3 +173,17 @@ bool ADN_GuiTools::MissingParameterChoices( const std::string& name )
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiTools::MissingArmor
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+bool ADN_GuiTools::MissingArmor()
+{
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning( 0,
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
+        qApp->translate( "ADNDatabaseWarnings", "At least one armor must be defined , database cannot be saved." ),
+        QMessageBox::Ok | QMessageBox::Default );
+    return false;
+}

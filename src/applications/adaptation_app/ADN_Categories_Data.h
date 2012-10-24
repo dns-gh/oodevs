@@ -65,6 +65,7 @@ public:
     helpers::ResourceNatureInfos*          FindDotationNature( const std::string& strName );
     helpers::LogisticSupplyClass*          FindLogisticSupplyClass( const std::string& strName );
     static unsigned long                   GetNewIdentifier();
+    virtual bool IsValidDatabase();
 
 private:
     void ReadVolume( xml::xistream& input );

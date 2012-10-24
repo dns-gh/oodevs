@@ -10,6 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Categories_Data.h"
+#include "ADN_GuiTools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
@@ -404,4 +405,15 @@ void ADN_Categories_Data::WriteLogisticSupplyClasses( xml::xostream& output )
 unsigned long ADN_Categories_Data::GetNewIdentifier()
 {
     return idManager_.GetNextId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::IsValidDatabase
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+bool ADN_Categories_Data::IsValidDatabase()
+{
+    if( vArmors_.size() == 1 )
+        return ADN_GuiTools::MissingArmor();
+    return true;
 }
