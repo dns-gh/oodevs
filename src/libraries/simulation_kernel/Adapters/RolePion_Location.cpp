@@ -47,7 +47,8 @@ namespace sword
         const Sink* const sink = &role->sink_;
         const MIL_AgentPion* const pion = &role->owner_;
         const core::Model* const entity = &role->entity_;
-        archive << sink << pion << entity;
+        const MT_Vector2D position = *role->pvPosition_;
+        archive << sink << pion << entity << position;
     }
     template< typename Archive >
     void load_construct_data( Archive& archive, RolePion_Location* role, const unsigned int /*version*/ )
@@ -55,8 +56,9 @@ namespace sword
         Sink* sink;
         MIL_AgentPion* pion;
         core::Model* entity;
-        archive >> sink >> pion >> entity;
-        ::new( role )RolePion_Location( *sink, *pion, *entity );
+        MT_Vector2D position;
+        archive >> sink >> pion >> entity >> position;
+        ::new( role )RolePion_Location( *sink, *pion, *entity, position );
     }
 }
 
@@ -255,12 +257,12 @@ namespace
 // Name: RolePion_Location constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-RolePion_Location::RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Model& entity )
+RolePion_Location::RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Model& entity, const MT_Vector2D& position )
     : sink_             ( sink )
     , owner_            ( pion )
     , entity_           ( entity )
     , vDirection_       ( 0, 1 )
-    , pvPosition_       ( new MT_Vector2D ( -1, -1 ) )   // $$$$ Devrait être 'NULL'
+    , pvPosition_       ( new MT_Vector2D ( position ) )   // $$$$ Devrait être 'NULL'
     , bHasMoved_        ( false )
     , bHasDoneMagicMove_( false )
 {

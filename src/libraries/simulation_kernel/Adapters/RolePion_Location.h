@@ -53,7 +53,7 @@ class RolePion_Location : public PHY_RoleInterface_Location
                         , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
 {
 public:
-             RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Model& entity );
+             RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Model& entity, const MT_Vector2D& position );
     virtual ~RolePion_Location();
 
     //! @name CheckPoints

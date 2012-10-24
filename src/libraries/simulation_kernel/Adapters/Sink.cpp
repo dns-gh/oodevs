@@ -532,7 +532,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
     core::Model& entity = (*model_)[ "entities" ][ pion.GetID() ];
     entity[ "movement/position/x" ] = position.rX_;
     entity[ "movement/position/y" ] = position.rY_;
-    pion.RegisterRole( *new sword::RolePion_Location( *this, pion, entity ) );
+    pion.RegisterRole( *new sword::RolePion_Location( *this, pion, entity, position ) );
     try
     {
         pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, *this ) );
@@ -562,11 +562,12 @@ namespace
     // Name: Finalize
     // Created: BAX 2012-10-18
     // -------------------------------------------------------------------------
-    void Finalize( MIL_AgentPion& pion )
+    MIL_AgentPion& Finalize( MIL_AgentPion& pion )
     {
         pion.GetRole< sword::RolePion_Location >().Finalize();
         pion.GetRole< sword::RolePion_Perceiver >().Finalize();
         pion.GetRole< sword::RoleAdapter >().Finalize();
+        return pion;
     }
 }
 
@@ -600,7 +601,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
 {
-    return &Configure( *agents_.Create( type, automate, vPosition ), vPosition );
+    return &::Finalize( Configure( *agents_.Create( type, automate, vPosition ), vPosition ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -609,7 +610,7 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // -----------------------------------------------------------------------------
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name )
 {
-    return &Configure( *agents_.Create( type, automate, vPosition, name ), vPosition );
+    return &::Finalize( Configure( *agents_.Create( type, automate, vPosition, name ), vPosition ) );
 }
 
 // -----------------------------------------------------------------------------
