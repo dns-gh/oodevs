@@ -614,7 +614,7 @@
         </build-app>
     </target>
 
-    <target name="adaptation_app" depends="ENT,clients_gui" description="build Sword Adaptation executable">
+    <target name="adaptation_app" depends="ENT,clients_gui,license_gui" description="build Sword Adaptation executable">
         <build-app name="adaptation_app" depends="qt4,xerces,xalan,boost,flexlm" excludes="**/XmlResources.cpp"
                    libs="svgl,zipstream,bugtrap,excel@{suffix},
                          lib${ant.project.name}_ENT-${platform}-mt,
