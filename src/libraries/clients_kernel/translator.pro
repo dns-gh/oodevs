@@ -6,6 +6,7 @@ Architecture.cpp \
 Circle.cpp \
 CoordinateSystems.cpp \
 CriticalIntelligence.cpp \
+DisplayExtractor_ABC.h \
 EntityHierarchies.inl \
 Formatter.cpp \
 FourStateOption.cpp \

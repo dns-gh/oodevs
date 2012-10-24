@@ -11,6 +11,7 @@
 #define __DisplayExtractor_ABC_h_
 
 #include "tools/VirtualTemplate.h"
+#include "clients_kernel/Tools.h"
 
 namespace kernel
 {
@@ -69,7 +70,10 @@ QString DisplayExtractor_ABC::GetDisplayName( const T& element )
 template< typename T >
 QString DisplayExtractor_ABC::GetDisplayName( const T* element )
 {
-    return GetDisplayName( *element );
+    if( element )
+        return GetDisplayName( *element );
+    else
+        return tools::translate( "DisplayExtractor_ABC", "Unknown element" );
 }
 
 }

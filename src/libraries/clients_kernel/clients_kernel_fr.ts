@@ -174,6 +174,13 @@
     </message>
 </context>
 <context>
+    <name>DisplayExtractor_ABC</name>
+    <message>
+        <source>Unknown element</source>
+        <translation>Connaissance indéterminée</translation>
+    </message>
+</context>
+<context>
     <name>E_FuncLimaType</name>
     <message>
         <source>LD</source>
