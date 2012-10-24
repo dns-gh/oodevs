@@ -115,7 +115,7 @@ void AdvancedConfigPanel::OnLanguageChanged()
     clientBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Client" ) );
     noClientLabel_->setText( tools::translate( "AdvancedConfigPanel", "Do not start gaming client" ) );
 
-	legacyBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Legacy Mode" ) );
+    legacyBox_->setTitle( tools::translate( "AdvancedConfigPanel", "Legacy Mode" ) );
     legacyLabel_->setText( tools::translate( "AdvancedConfigPanel", "Enable Legacy Mode" ) );
 }
 
