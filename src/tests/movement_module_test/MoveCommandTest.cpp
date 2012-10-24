@@ -164,7 +164,7 @@ BOOST_FIXTURE_TEST_CASE( movement_command_in_paused_execution_only_sends_paused_
     MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
-BOOST_FIXTURE_TEST_CASE( first_movement_command_execution_posts_path_effect_and_running_code_event_if_not_arrived, StartedFixture )
+BOOST_FIXTURE_TEST_CASE( first_movement_command_posts_path_effect_and_running_code_event_if_not_arrived, StartedFixture )
 {
     const double currentSpeed = 5;
     ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "direction/x", 0 )
