@@ -304,3 +304,61 @@ BOOST_FIXTURE_TEST_CASE( object_colliding_with_path_makes_command_send_blocked_b
     Step( 2, true, true );
     MOCK_EXPECT( CancelPathFindJob ).once();
 }
+
+namespace
+{
+    const std::size_t threshold = 200; // $$$$ MCO 2012-10-24: ^c^v PathWalker.cpp => should be customizable...
+
+    struct LongPathStartedFixture : public MovementFixture
+    {
+        LongPathStartedFixture()
+            : size( 4 * threshold )
+        {
+            UpdatePosition( geometry::Point2f( 0, 0 ) );
+            T_Points points;
+            for( float y = 0; y < size; ++y )
+                points.push_back( T_Point( geometry::Point2f( 0, y ), TerrainData() ) );
+            command = StartMoveCommand( points );
+        }
+        const int size;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( movement_command_posts_truncated_path_when_too_long, LongPathStartedFixture )
+{
+    sword::test::ModelBuilder builder = sword::test::MakeModel();
+    for( float y = 0; y < threshold; ++y )
+        builder[ sword::test::MakeModel( "x", 0 )( "y", y ) ];
+    ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", 1 )( "points", builder ) );
+    Advance( 0.5, sword::movement::PathWalker::eRunning, true, true );
+    MOCK_EXPECT( CancelPathFindJob ).once();
+}
+
+BOOST_FIXTURE_TEST_CASE( movement_command_does_not_post_updated_truncated_path_when_threshold_not_reached, LongPathStartedFixture )
+{
+    ExpectEffect( entity[ "movement/path" ] );
+    Advance( 0.5, sword::movement::PathWalker::eRunning, true, true );
+    mock::verify();
+    MOCK_EXPECT( NotifyMovingOnPathPoint ).exactly( threshold - 1 );
+    Advance( threshold - 1, sword::movement::PathWalker::eRunning, true, true );
+    MOCK_EXPECT( CancelPathFindJob ).once();
+}
+
+BOOST_FIXTURE_TEST_CASE( _movement_command_does_not_post_updated_truncated_path_when_threshold_not_reached, LongPathStartedFixture )
+{
+    ExpectEffect( entity[ "movement/path" ] );
+    MOCK_EXPECT( NotifyMovingOnPathPoint ).exactly( threshold - 1 );
+    Advance( threshold - 0.5, sword::movement::PathWalker::eRunning, true, true );
+    mock::verify();
+    sword::test::ModelBuilder builder = sword::test::MakeModel();
+    for( float y = threshold; y < 2 * threshold; ++y )
+        builder[ sword::test::MakeModel( "x", 0 )( "y", y ) ];
+    ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", 1 )( "points", builder ) );
+    ExpectEffect( entity[ "movement" ], sword::test::MakeModel( mock::any ) );
+    ExpectCallbackEvent( sword::movement::PathWalker::eRunning );
+    const double currentSpeed = 0.5;
+    ExpectMovementEvent( currentSpeed );
+    MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
+    Step( currentSpeed, true, true );
+    MOCK_EXPECT( CancelPathFindJob ).once();
+}

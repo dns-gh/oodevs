@@ -66,6 +66,7 @@ PathWalker::PathWalker( ModuleFacade& module, unsigned int entity )
     , vNewDir_           ( 0., 0. )
     , rCurrentSpeed_     ( 0. )
     , rWalkedDistance_   ( 0. )
+    , pointsPassed_      ( 0 )
     , bForcePathCheck_   ( true )
     , bHasMoved_         ( false )
     , bFuelReportSent_   ( false )
@@ -179,11 +180,12 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< Pa
     if( pCurrentPath_ && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
 
+    pointsPassed_ = 0;
     PathWalker::E_ReturnCode rc = eRunning;
     bool bCanSendTerrainReport = pPath != pCurrentPath_;
     pCurrentPath_ = pPath;
     pPath->InsertDecPoints(); // $$$ HIDEUX
-    PostPath( entity, *pCurrentPath_ );
+    PostPath( entity );
     bForcePathCheck_ = false;
     if( pPath->GetResult().empty() )
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "List of path points resulting from pathfind is empty" );
@@ -230,6 +232,7 @@ bool PathWalker::GoToNextNavPoint( PathResult& path, const wrapper::View& entity
         GET_HOOK( NotifyMovingOnPathPoint )( entity, (*itNextPathPoint_)->GetPos() ); // $$$$ MCO : only for populations...
         SetCurrentPathPoint( path );
         ++itNextPathPoint_;
+        CheckPathNotification( entity );
         return false;
     }
     // points particuliers -> EVT vers DEC
@@ -237,10 +240,27 @@ bool PathWalker::GoToNextNavPoint( PathResult& path, const wrapper::View& entity
     {
         (*itNextPathPoint_)->SendToDIA( entity_, *itNextPathPoint_ );
         SetCurrentPathPoint( path );
+        CheckPathNotification( entity );
     }
     while( ++itNextPathPoint_ != path.GetResult().end() &&
          ( *itNextPathPoint_ )->GetType() != PathPoint::eTypePointPath && ( *itNextPathPoint_ )->GetPos() == vNewPos_ );
     return true;
+}
+
+namespace
+{
+    const std::size_t pathSizeThreshold = 200;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PathWalker::CheckPathNotification
+// Created: LDC 2012-10-22
+// -----------------------------------------------------------------------------
+void PathWalker::CheckPathNotification( const wrapper::View& entity ) const
+{
+    ++pointsPassed_;
+    if( pointsPassed_ % pathSizeThreshold == 0 )
+        PostPath( entity );
 }
 
 //-----------------------------------------------------------------------------
@@ -608,18 +628,20 @@ void PathWalker::PostMovement( const wrapper::View& entity ) const
 // Name: PathWalker::PostPath
 // Created: SLI 2012-01-16
 // -----------------------------------------------------------------------------
-void PathWalker::PostPath( const wrapper::View& entity, PathResult& path ) const
+void PathWalker::PostPath( const wrapper::View& entity ) const
 {
     wrapper::Effect effect( entity[ "movement/path" ] );
     wrapper::Node points = effect[ "points" ];
-    BOOST_FOREACH( boost::shared_ptr< PathPoint > point, path.GetResult() )
+    effect[ "identifier" ] = pCurrentPath_->GetID();
+    const PathResult::T_PathPointList& pts = pCurrentPath_->GetResult();
+    PathResult::CIT_PathPointList it = pts.begin();
+    std::advance( it, pointsPassed_ );
+    for( std::size_t index = 0; it != pts.end() && index < pathSizeThreshold; ++it, ++index )
     {
-        const MT_Vector2D& position = point->GetPos();
-        wrapper::Node pointNode = points.AddElement();
-        pointNode[ "x" ] = position.rX_;
-        pointNode[ "y" ] = position.rY_;
+        wrapper::Node point = points.AddElement();
+        point[ "x" ] = (*it)->GetPos().rX_;
+        point[ "y" ] = (*it)->GetPos().rY_;
     }
-    effect[ "identifier" ] = path.GetID();
     effect.Post();
 }
 

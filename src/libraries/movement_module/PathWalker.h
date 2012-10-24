@@ -127,9 +127,10 @@ private:
     bool GoToNextNavPoint( PathResult& path, const wrapper::View& entity ) const;
     E_ReturnCode SetCurrentPath( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const;
     void SetCurrentPathPoint( PathResult& path ) const;
+    void CheckPathNotification( const wrapper::View& entity ) const;
     void SetEnvironmentType( const TerrainData& environment, const wrapper::View& entity ) const;
     void PostMovement( const wrapper::View& entity ) const;
-    void PostPath( const wrapper::View& entity, PathResult& path ) const;
+    void PostPath( const wrapper::View& entity ) const;
     void PostEnvironment( const wrapper::View& entity, const TerrainData& environment ) const;
 
     struct CollisionData
@@ -154,6 +155,7 @@ private:
     mutable MT_Vector2D vNewDir_;
     mutable double rCurrentSpeed_;
     mutable double rWalkedDistance_;
+    mutable std::size_t pointsPassed_;
     mutable bool bForcePathCheck_;
     mutable bool bHasMoved_;
     mutable bool bFuelReportSent_;

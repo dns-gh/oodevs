@@ -37,4 +37,28 @@ inline std::ostream& operator<<( std::ostream& os, SWORD_LogLevel model )
                 :                                        "fatal" );
 }
 
+namespace mock
+{
+    template<>
+    class matcher< const core::Model&, double >
+        : public detail::matcher_base< const core::Model& >
+    {
+    public:
+        explicit matcher( double expected )
+            : expected_( expected )
+        {}
+        virtual bool operator()( const core::Model& actual )
+        {
+            return std::abs( actual - expected_ ) < 0.0001;
+        }
+    private:
+        virtual void serialize( std::ostream& s ) const
+        {
+            s << mock::format( expected_ );
+        }
+    private:
+        double expected_;
+    };
+}
+
 #endif // MODULE_TESTER_TOOLS_H
