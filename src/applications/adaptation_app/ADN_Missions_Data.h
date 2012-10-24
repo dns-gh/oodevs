@@ -16,6 +16,7 @@
 #include "ADN_Drawings_Data.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
 #include "ADN_Missions_ParameterValue.h"
+#include "ADN_Missions_Type.h"
 #include "tools/IdManager.h"
 
 enum E_EntityType;
@@ -34,27 +35,9 @@ class ADN_Missions_Data : public ADN_Data_ABC
 // Mission parameters
 // =============================================================================
 public:
-    class MissionType : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
-    {
-    public:
-                 MissionType();
-        explicit MissionType( const std::string& name );
-        virtual ~MissionType();
-
-        std::string GetItemName();
-        MissionType* CreateCopy();
-
-        void WriteArchive( xml::xostream& output );
-    public:
-        std::string name_;
-        std::string displayName_;
-        ADN_Type_Bool isAllowed_;
-    };
-
     typedef ADN_Type_Vector_ABC<ADN_Missions_ParameterValue>  T_MissionParameterValue_Vector;
     typedef T_MissionParameterValue_Vector::iterator          IT_MissionParameterValue_Vector;
-    typedef ADN_Type_Vector_ABC<MissionType>                  T_Choice_Vector;
+    typedef ADN_Type_Vector_ABC<ADN_Missions_Type>            T_Choice_Vector;
     typedef T_Choice_Vector::iterator                         IT_Choice_Vector;
 
 public:

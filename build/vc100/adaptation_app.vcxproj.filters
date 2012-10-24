@@ -1255,6 +1255,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_ParameterValue.cpp">
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_Type.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1903,6 +1906,9 @@
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_ParameterValue.h">
+      <Filter>Source Files\Workspace\Missions\Missions data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_Type.h">
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
     </ClInclude>
   </ItemGroup>
