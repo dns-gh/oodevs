@@ -10,10 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_ParameterValue.h"
 
-#include "tools/Loader_ABC.h"
-#include <tools/XmlCrc32Signature.h>
-#include <xeuseuleu/xsl.hpp>
-
 ADN_Missions_ParameterValue::ADN_Missions_ParameterValue()
 {
     // NOTHING
