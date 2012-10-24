@@ -97,12 +97,22 @@ bool PHY_RoleAction_Flying::Land()
         return false;
 
     entity_.UnregisterAction( pActionFly_->GetId() );
-    rHeight_ = 0.;
-    pActionFly_.reset();
-    entity_.Apply( &FlyListener_ABC::Land );
+    NotifyStopFlying();
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Flying::NotifyStopFlying
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Flying::NotifyStopFlying()
+{
+    if( !pActionFly_ )
+        return;
+    rHeight_ = 0.;
+    pActionFly_.reset();
+    entity_.Apply( &FlyListener_ABC::Land );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Flying::SetFlyingHeight

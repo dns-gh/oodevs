@@ -74,6 +74,7 @@ public:
 private:
     //! @name Tools
     //@{
+    virtual void NotifyStopFlying();
     bool TakeOff();
     bool Land();
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Flying* role, const unsigned int /*version*/ );

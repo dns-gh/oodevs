@@ -94,3 +94,12 @@ bool PHY_RoleAction_InterfaceFlying::CanMove() const
 {
     return true;
 }
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_InterfaceFlying::NotifyStopFlying
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_InterfaceFlying::NotifyStopFlying()
+{
+    // NOTHING
+}
