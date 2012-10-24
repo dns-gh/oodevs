@@ -16,6 +16,7 @@
 #include "ADN_Drawings_Data.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
 #include "ADN_Missions_ParameterValue.h"
+#include "ADN_Missions_Parameter.h"
 #include "ADN_Missions_Type.h"
 #include "tools/IdManager.h"
 
@@ -39,46 +40,8 @@ public:
     typedef T_MissionParameterValue_Vector::iterator          IT_MissionParameterValue_Vector;
     typedef ADN_Type_Vector_ABC<ADN_Missions_Type>            T_Choice_Vector;
     typedef T_Choice_Vector::iterator                         IT_Choice_Vector;
-
-public:
-    class MissionParameter : public ADN_Ref_ABC
-                           , public ADN_DataTreeNode_ABC
-    {
-    public:
-                 MissionParameter();
-        virtual ~MissionParameter();
-
-        std::string GetItemName();
-        MissionParameter* CreateCopy();
-
-        void ReadArchive ( xml::xistream& input );
-        void ReadValue   ( xml::xistream& input );
-        template< typename T >
-        void ReadChoice  ( xml::xistream& input, T& data );
-        void WriteArchive( xml::xostream& output );
-
-    private:
-        void FillChoices();
-        void FillGenObjects();
-        bool HasGenObjects() const;
-
-    public:
-        ADN_Type_String                                                   strMission_;
-        ADN_Type_String                                                   strName_;
-        ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
-        ADN_Type_Bool                                                     isOptional_;
-        ADN_Type_Int                                                      minOccurs_;
-        ADN_Type_Int                                                      maxOccurs_;
-        ADN_Type_Int                                                      minValue_;
-        ADN_Type_Int                                                      maxValue_;
-        T_MissionParameterValue_Vector                                    values_;
-        T_Choice_Vector                                                   choices_;
-        helpers::T_MissionGenObjectTypes_Infos_Vector                     genObjects_;
-        ADN_Type_String                                                   diaName_;
-    };
-
-    typedef ADN_Type_Vector_ABC<MissionParameter>  T_MissionParameter_Vector;
-    typedef T_MissionParameter_Vector::iterator   IT_MissionParameter_Vector;
+    typedef ADN_Type_Vector_ABC<ADN_Missions_Parameter>       T_MissionParameter_Vector;
+    typedef T_MissionParameter_Vector::iterator               IT_MissionParameter_Vector;
 
 // =============================================================================
 // Missions

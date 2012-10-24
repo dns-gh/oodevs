@@ -65,7 +65,7 @@ void ADN_MissionParameterType::Update()
 void ADN_MissionParameterType::DoValueChanged()
 {
     ADN_TableItem_ComboBox::DoValueChanged();
-    ADN_Missions_Data::MissionParameter* param = static_cast< ADN_Missions_Data::MissionParameter* >( pData_ );
+    ADN_Missions_Parameter* param = static_cast< ADN_Missions_Parameter* >( pData_ );
     E_MissionParameterType type = param->type_.GetData();
     bool isEnum = type == eMissionParameterTypeEnumeration;
     if( !isEnum )
@@ -87,7 +87,7 @@ void ADN_MissionParameterType::DoValueChanged()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameterType::Disconnect()
 {
-    ADN_Missions_Data::MissionParameter* param = static_cast< ADN_Missions_Data::MissionParameter* >( pData_ );
+    ADN_Missions_Parameter* param = static_cast< ADN_Missions_Parameter* >( pData_ );
     if( param )
     {
         itemConnectors_[ADN_Missions_GUI::eParameterValues]->Disconnect( &param->values_ );

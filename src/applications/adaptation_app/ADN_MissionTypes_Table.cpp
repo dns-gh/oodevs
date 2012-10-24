@@ -27,7 +27,7 @@ public:
 
     void AddSubItems(int i,void* obj)
     {
-        ADN_Missions_Data::MissionType* param = static_cast< ADN_Missions_Data::MissionType* >( obj );
+        ADN_Missions_Type* param = static_cast< ADN_Missions_Type* >( obj );
 
         Q3TableItem* itemName = new Q3TableItem( &tab_, Q3TableItem::Never );
         ADN_TableItem_CheckItem*  itemAllowed = new ADN_TableItem_CheckItem ( &tab_, obj );
