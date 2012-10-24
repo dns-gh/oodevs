@@ -7,7 +7,12 @@ rootnode
 {
     connections = { skill.nodes.ReconnoiterElement },
 
-    done = function( self ) end,
+    -- --------------------------------------------------------------------------------
+    -- Slots
+    -- --------------------------------------------------------------------------------
+    done = function( self )
+        -- $$$ NOTHING
+    end,
 
     -- --------------------------------------------------------------------------------
     -- Main effect is reached: send feedback when entities are reconnoitered
@@ -50,12 +55,16 @@ node "ReconnoiterElement"
     connections = {skill.links.moveAndTakePosition, skill.links.observe,
                    skill.nodes.Reconnoitre },
 
-    feedbacks = { "reconnoitred" },
+    feedbacks = { "reconnoitred", "not reached" },
 
     -- -------------------------------------------------------------------------------- 
-    -- Feedbacks
+    -- Slots
     -- --------------------------------------------------------------------------------
     done = function( self )-- from moveAndTakePosition
+        self.movementDone = true
+    end,
+    elementFailed = function( self, params, additionalParams )
+        meKnowledge:sendMessage( "The position cannot be reached" )
         self.movementDone = true
     end,
 
@@ -86,6 +95,7 @@ node "ReconnoiterElement"
             else
                 Feedback( self.feedbacks.reconnoitred, { element = self.params.entity } )
             end
+            return
         end
 
         -- Moving toward a reconnoitering positions

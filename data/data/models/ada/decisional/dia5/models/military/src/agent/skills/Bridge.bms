@@ -9,7 +9,7 @@ rootnode
     -- -------------------------------------------------------------------------------- 
     -- Feeback and slots
     -- --------------------------------------------------------------------------------
-    done = function( self )
+    done = function( self ) -- call by moveToward skill
         self.arrived = true
     end,
 
@@ -25,10 +25,10 @@ rootnode
     create = function( self )
         self.arrived = false
         self.bridgeBuilt = false
-        if self.params.typePontage == 0 then
-            self.typePont = eTypeObjectContinuousPontoonBridge
+        if self.params.bridgeSystem == 0 then
+            self.bridgeSystem = eTypeObjectContinuousPontoonBridge
         else
-            self.typePont = eTypeObjectDiscontinuousPontoonBridge
+            self.bridgeSystem = eTypeObjectDiscontinuousPontoonBridge
         end
     end,
 
@@ -36,27 +36,21 @@ rootnode
     -- Init
     -- --------------------------------------------------------------------------------
     activate = function( self )
-        -- lua optim
-        local Activate = Activate
-        local CreateKnowledge = CreateKnowledge
-        local emptyTable = emptyTable
+        local Activate = Activate  -- lua optim
 
+        -- Object is not reconnoitered, cannot construct the bridge
         if not self.params.crossingSite:isReconnoitred() then
             Activate( skill.nodes.RC, 1, { RC = eRC_CrossingSiteNotRecon } )
             return
         end
-        if self.arrived and not self.bridgeBuilt then
-            Activate( skill.nodes.Bridge, 1, { crossingSite = self.params.crossingSite, typePont = self.typePont } )
-        end
-        local positions = self.params.crossingSite:getPositions()
-        local positionsKn = {}
-        for i = 1, #positions do
-            positionsKn[ #positionsKn + 1 ] = CreateKnowledge( world.Point, positions[ i ] ) -- $$$ MIA: to move in integration
-        end
 
-        -- Moving to position
-        Activate( skill.links.moveToward, 1, { entities = positionsKn } )
-        self.arrived = false
+        -- Move to object and build the bridge
+        if self.arrived and not self.bridgeBuilt then
+            Activate( skill.nodes.Bridge, 1, { crossingSite = self.params.crossingSite, bridgeSystem = self.bridgeSystem } )
+        else  -- Moving to position
+            Activate( skill.links.moveToward, 1, { entities = { self.params.crossingSite } } )
+            self.arrived = false
+        end
     end,
 
     destroy = function( self )
@@ -78,12 +72,12 @@ node "Bridge"
     -- Equip crossing site with a bridge
     -- --------------------------------------------------------------------------------
     activate = function( self )
-        if not self.params.crossingSite:canEquipIt( self.params.typePont ) then
+        if not self.params.crossingSite:canEquipIt( self.params.bridgeSystem ) then
             integration.setNeedReinforcement( meKnowledge, "build", self.params.crossingSite, false )
             Activate( skill.nodes.RC, 1, { RC = eRC_ConstructionObjetImpossible } )
             return
         end
-        if self.params.crossingSite:equipIt( self.params.typePont ) then
+        if self.params.crossingSite:equipIt( self.params.bridgeSystem ) then
             Feedback( self.feedbacks.equiped )
         end
     end,

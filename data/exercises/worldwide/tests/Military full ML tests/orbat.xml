@@ -192,6 +192,42 @@
             <construction completion="1"/>
           </attributes>
         </object>
+        <object id="1309" name="Crossing Site [1,309]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>29TNF3794552151</point>
+              <point>29TNF3809452343</point>
+              <point>29TNF3808352173</point>
+              <point>29TNF3821652270</point>
+              <point>29TNF3815052369</point>
+              <point>29TNF3830452346</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="1350" name="Crossing Site [1,350]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>29TNF3809152467</point>
+              <point>29TNF3786452185</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
       </objects>
       <tactical>
         <formation id="318" level="ii" name="Formation [318]" symbol="symbols/sfgpucim">
@@ -281,16 +317,16 @@
             <unit command-post="true" id="854" name="MILITARY.Aircraft" position="29TNF3562859219" type="MILITARY.Aircraft"/>
             <unit command-post="false" id="856" name="MILITARY.Aircraft" position="29TNF3562959119" type="MILITARY.Aircraft"/>
           </automat>
-          <automat engaged="true" id="887" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
+          <automat engaged="false" id="887" knowledge-group="321" name="MILITARY.Infantry company" symbol="symbols/sfgpucim" type="MILITARY.Infantry company">
             <unit command-post="false" id="888" name="MILITARY.Infantry platoon" position="29TNF3837052867" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="889" name="MILITARY.Infantry platoon" position="29TNF3845752818" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="890" name="MILITARY.Infantry platoon" position="29TNF3845852718" type="MILITARY.Infantry platoon"/>
             <unit command-post="false" id="891" name="MILITARY.Infantry platoon" position="29TNF3837152668" type="MILITARY.Infantry platoon"/>
-            <unit command-post="false" id="892" name="MILITARY.Engineer platoon" position="29TNF3828452718" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="892" name="MILITARY.Engineer platoon" position="29TNF3807552581" type="MILITARY.Engineer platoon"/>
             <unit command-post="true" id="893" name="MILITARY.Company command post" position="29TNF3837152768" type="MILITARY.Company command post"/>
             <unit command-post="false" id="894" name="MILITARY.Scouting platoon" position="29TNF3828452817" type="MILITARY.Scouting platoon"/>
-            <unit command-post="false" id="895" name="MILITARY.Engineer platoon" position="29TNF3825352661" type="MILITARY.Engineer platoon"/>
-            <unit command-post="false" id="896" name="MILITARY.Engineer platoon" position="29TNF3814252811" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="895" name="MILITARY.Engineer platoon" position="29TNF3803651983" type="MILITARY.Engineer platoon"/>
+            <unit command-post="false" id="896" name="MILITARY.Engineer platoon" position="29TNF3834352269" type="MILITARY.Engineer platoon"/>
             <limit name="Limit 925">
               <point>29TNF3837153568</point>
               <point>29TNF3724551696</point>
@@ -304,7 +340,7 @@
             </limit>
           </automat>
           <automat engaged="true" id="927" knowledge-group="321" name="MILITARY.Engineer company" symbol="symbols/sfgpucect" type="MILITARY.Engineer company">
-            <unit command-post="true" id="928" name="MILITARY.Engineer platoon" position="29TNF3805951395" type="MILITARY.Engineer platoon"/>
+            <unit command-post="true" id="928" name="MILITARY.Engineer platoon" position="29TNF3806651371" type="MILITARY.Engineer platoon"/>
             <unit command-post="false" id="929" name="MILITARY.Engineer platoon" position="29TNF3786251261" type="MILITARY.Engineer platoon"/>
             <unit command-post="false" id="930" name="MILITARY.Engineer platoon" position="29TNF3803951233" type="MILITARY.Engineer platoon"/>
             <unit command-post="false" id="931" name="MILITARY.Engineer platoon" position="29TNF3791151452" type="MILITARY.Engineer platoon"/>
@@ -357,6 +393,11 @@
             <unit command-post="true" id="1269" name="ART.Battery CP" position="29TNF3075047644" type="ART.Battery CP"/>
             <unit command-post="false" id="1270" name="ART.Mortar firing platoon" position="29TNF3075047744" type="ART.Mortar firing platoon"/>
             <unit command-post="false" id="1271" name="ART.Mortar firing platoon" position="29TNF3075047544" type="ART.Mortar firing platoon"/>
+          </automat>
+          <automat engaged="false" id="1310" knowledge-group="321" name="ENG.Bridging company" symbol="symbols/sfgpucect" type="ENG.Bridging company">
+            <unit command-post="true" id="1311" name="ENG.Bridging troop" position="29TNF3783752096" type="ENG.Bridging troop"/>
+            <unit command-post="false" id="1312" name="ENG.Bridging troop" position="29TNF3857752012" type="ENG.Bridging troop"/>
+            <unit command-post="false" id="1313" name="ENG.Bridging troop" position="29TNF3817751681" type="ENG.Bridging troop"/>
           </automat>
           <lima name="Phase line 372">
             <point>29TNF3257758436</point>
@@ -904,8 +945,34 @@
         <object id="885" name="Crossing Site [885]" type="crossing site">
           <shape type="ligne">
             <points>
-              <point>29TNF3804352611</point>
-              <point>29TNF3782352182</point>
+              <point>29TNF3800852579</point>
+              <point>29TNF3778852150</point>
+            </points>
+          </shape>
+          <attributes>
+            <crossing-site>
+              <width>1</width>
+              <depth>1</depth>
+              <speed>0</speed>
+              <construction-needed>false</construction-needed>
+            </crossing-site>
+          </attributes>
+        </object>
+        <object id="1308" name="Crossing Site [1,308]" type="crossing site">
+          <shape type="ligne">
+            <points>
+              <point>29TNF3852251995</point>
+              <point>29TNF3842452086</point>
+              <point>29TNF3835352149</point>
+              <point>29TNF3830952204</point>
+              <point>29TNF3828352215</point>
+              <point>29TNF3817552138</point>
+              <point>29TNF3815752110</point>
+              <point>29TNF3819552027</point>
+              <point>29TNF3821151998</point>
+              <point>29TNF3825351805</point>
+              <point>29TNF3810751788</point>
+              <point>29TNF3804751790</point>
             </points>
           </shape>
           <attributes>
@@ -943,4 +1010,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3953925429" -->
+<!-- signature="3292160977" -->

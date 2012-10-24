@@ -33,9 +33,17 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
+
+        local positions = {}
+        if self.params.positions == NIL then -- no positions issued, agent try to find close position by calling the query
+            positions = queries.getPositionsToReach[ "execute" ]( { elementsToReach = self.params.entities } )
+        else -- the skill gets some positions to use.
+            positions = self.params.positions
+        end
+
         for _, entity in pairs( self.params.entities ) do
-            Activate( skill.nodes.MoveTowardElement, entity:reachPriority(),{ entity = entity, 
-                positions = self.params.positions, pathType = self.pathType } )
+            Activate( skill.nodes.MoveTowardElement, entity:reachPriority(),
+              { entity = entity, positions = positions, pathType = self.pathType } )
         end
     end
 }

@@ -416,13 +416,7 @@ return
         return integration.isPointInLocalisation( meKnowledge, self )
     end,
     getPositionsToReconnoiter = function( self )
-        local CreateKnowledge = CreateKnowledge
-        local res = {}
-        local simPoints = self:getPositions()  -- Sim points, not reconnoitring elements
-        for i = 1, #simPoints do
-            res[ #res + 1 ] = CreateKnowledge( world.Point, simPoints[i] ) -- create point as reconnoitring elements
-        end
-        return res
+        return integration.getPositionsAroundObject( self )
     end,
     canBeUsedToDischarge = function( self )
         return integration.isCamp( self )

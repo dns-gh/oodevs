@@ -10,6 +10,9 @@
             <type>
                 <simple name="numeric"/>
             </type>
+            <default>
+                <number>0.0</number>
+            </default>
         </parameter>
     </parameters>
     <links>
