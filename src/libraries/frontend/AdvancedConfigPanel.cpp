@@ -17,8 +17,23 @@
 #include <QtGui/qlabel.h>
 #include <QtGui/qspinbox.h>
 #include <Qt3Support/q3vbox.h>
+#include <QtCore/qsettings.h>
 
 using namespace frontend;
+
+namespace
+{
+    bool ReadLegacy()
+    {
+        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        return settings.readBoolEntry( "/sword/IsLegacy", false );
+    }
+    void WriteLegacy( bool isLegacy )
+    {
+        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        settings.writeEntry( "/sword/IsLegacy", isLegacy );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: AdvancedConfigPanel constructor
@@ -80,7 +95,7 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     {
         legacyLabel_ = new QLabel( legacyBox_ );
         legacyCheckBox_ = new QCheckBox( legacyBox_ );
-        legacyCheckBox_->setChecked( false );
+        legacyCheckBox_->setChecked( ReadLegacy() );
         connect( legacyCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( SwordVersionChecked( int ) ) );
     }
 }
@@ -159,5 +174,7 @@ void AdvancedConfigPanel::NoClientChecked( int state )
 // -----------------------------------------------------------------------------
 void AdvancedConfigPanel::SwordVersionChecked( int state )
 {
-    emit SwordVersionSelected( state == Qt::Checked );
+    const bool isLegacy = state == Qt::Checked;
+    WriteLegacy( isLegacy );
+    emit SwordVersionSelected( isLegacy );
 }
