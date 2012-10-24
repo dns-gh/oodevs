@@ -49,5 +49,15 @@
             </return>
         </method>
         <method name="init" abstract="false"/>
+        <method name="getNbrFront" abstract="false">
+            <description>Returns the number of unit to perform the mission. &#xD;
+&#xD;
+This implementation returns the number of crossing sites to bridge.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

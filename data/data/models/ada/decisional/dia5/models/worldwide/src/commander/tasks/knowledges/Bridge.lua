@@ -23,5 +23,8 @@ return
 
     getMeetingPoint = function( self, params, entity )
         return { params.meetingPoint }
+    end,
+    getNbrFront = function( self )
+        return #myself.taskParams.crossingSites
     end
 }

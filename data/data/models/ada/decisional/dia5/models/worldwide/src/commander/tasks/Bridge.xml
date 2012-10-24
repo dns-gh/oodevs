@@ -50,7 +50,7 @@ Only engineer units work for that mission. Other units reach the meeting positio
                     </parameter>
                     <parameter name="defaultTask">
                         <value>
-                            <string>agent.tasks.MoveAlong</string>
+                            <string>agent.tasks.Follow</string>
                         </value>
                     </parameter>
                     <parameter name="disableWhenDone">

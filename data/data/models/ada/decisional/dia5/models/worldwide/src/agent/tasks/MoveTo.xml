@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.tasks.MoveTo" source-version="1.0.0">
+    <description>For the agent, to move toward a given objective. If the position is n ot reachable, the agent tries to find a nearby position.</description>
     <parameters>
         <parameter name="objective">
+            <description>The objective to reach.</description>
             <type>
                 <class name="properties.Reachable"/>
             </type>
