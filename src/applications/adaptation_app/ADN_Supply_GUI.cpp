@@ -56,7 +56,7 @@ void ADN_Supply_GUI::Build()
     // Supply
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     builder.AddField< ADN_SupplyUnitSelector >( pInfoHolder, tr( "Unit type" ), data_.infos_.ptrUnit_ );
-    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pInfoHolder, tr( "Mission" ),  data_.infos_.ptrSupplyMission_ );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Mission > >( pInfoHolder, tr( "Mission" ),  data_.infos_.ptrSupplyMission_ );
 
     Q3GroupBox* pTypeGroup = new Q3GroupBox( 2, Qt::Vertical, tr( "Convoy type" ) );
     {

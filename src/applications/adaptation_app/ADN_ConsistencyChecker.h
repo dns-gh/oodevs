@@ -64,7 +64,7 @@ private: // NNO Consistency
     bool IsAlreadyRegistered( const std::string& code, E_ConsistencyCheck type ) const;
     void AddError( E_ConsistencyCheck type, const NNOElement& element );
     void AddError( E_ConsistencyCheck type, const T_NNOElements& elements );
-    void AddError( E_ConsistencyCheck type, const ADN_Missions_Data::Mission& rhs, const ADN_Missions_Data::Mission& lhs, int subTab );
+    void AddError( E_ConsistencyCheck type, const ADN_Missions_Mission& rhs, const ADN_Missions_Mission& lhs, int subTab );
     //@}
 };
 

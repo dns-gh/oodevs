@@ -24,14 +24,14 @@ class ADN_Mission_CheckItem : public Q3CheckListItem
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Mission_CheckItem( Q3ListView* pParent, ADN_Missions_Data::Mission& mission, ADN_Models_Data::MissionInfos* pMission = 0 );
-             ADN_Mission_CheckItem( Q3CheckListItem* pParent, ADN_Missions_Data::Mission& mission, ADN_Models_Data::MissionInfos* pMission = 0 );
+             ADN_Mission_CheckItem( Q3ListView* pParent, ADN_Missions_Mission& mission, ADN_Models_Data::MissionInfos* pMission = 0 );
+             ADN_Mission_CheckItem( Q3CheckListItem* pParent, ADN_Missions_Mission& mission, ADN_Models_Data::MissionInfos* pMission = 0 );
     virtual ~ADN_Mission_CheckItem();
     //@}
 
     //! @name Accessors
     //@{
-    ADN_Missions_Data::Mission& GetMission() const;
+    ADN_Missions_Mission& GetMission() const;
     ADN_Models_Data::MissionInfos* GetMissionPtr();
     //@}
 
@@ -45,7 +45,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ADN_Missions_Data::Mission&    missionType_;
+    ADN_Missions_Mission&    missionType_;
     ADN_Models_Data::MissionInfos* missionModel_;
     //@}
 };
@@ -55,7 +55,7 @@ private:
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
 inline
-ADN_Missions_Data::Mission& ADN_Mission_CheckItem::GetMission() const
+ADN_Missions_Mission& ADN_Mission_CheckItem::GetMission() const
 {
     return missionType_;
 }

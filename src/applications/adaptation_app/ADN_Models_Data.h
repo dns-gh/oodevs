@@ -73,7 +73,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Missions_Data::Mission > mission_;
+        ADN_TypePtr_InVector_ABC< ADN_Missions_Mission > mission_;
         ADN_Type_String                          strName_; // do not use directly !!!
         T_OrderInfos_Vector                      vOrders_;
     };
@@ -124,7 +124,7 @@ public:
 
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
-    QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_Data::Mission& model );
+    QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& model );
     QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_Data::FragOrder& fragOrder );
 
     T_ModelInfos_Vector&    GetUnitModelsInfos();

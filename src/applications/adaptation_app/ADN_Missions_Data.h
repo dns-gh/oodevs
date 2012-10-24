@@ -18,6 +18,7 @@
 #include "ADN_Missions_ParameterValue.h"
 #include "ADN_Missions_Parameter.h"
 #include "ADN_Missions_Type.h"
+#include "ADN_Missions_Mission.h"
 #include "tools/IdManager.h"
 
 enum E_EntityType;
@@ -42,48 +43,9 @@ public:
     typedef T_Choice_Vector::iterator                         IT_Choice_Vector;
     typedef ADN_Type_Vector_ABC<ADN_Missions_Parameter>       T_MissionParameter_Vector;
     typedef T_MissionParameter_Vector::iterator               IT_MissionParameter_Vector;
-
-// =============================================================================
-// Missions
-// =============================================================================
-public:
-    class Mission : public ADN_Ref_ABC
-                  , public ADN_DataTreeNode_ABC
-    {
-    public:
-                 Mission();
-        explicit Mission( unsigned int id );
-        virtual ~Mission();
-
-        std::string GetItemName();
-        Mission* CreateCopy();
-
-        void ReadArchive ( xml::xistream& input, std::size_t contextLength, E_EntityType modelType );
-        void ReadParameter( xml::xistream& input, std::size_t& index, std::size_t contextLength );
-        void WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context );
-
-        void ReadMissionSheet ( E_EntityType type );
-        void RemoveDifferentNamedMissionSheet ( E_EntityType type );
-        void WriteMissionSheet ( E_EntityType type );
-        std::string FromEntityTypeToRepository( E_EntityType type);
-
-    public:
-        ADN_Type_Int id_;
-        ADN_Type_String strName_;
-        T_MissionParameter_Vector parameters_;
-        ADN_Type_String diaType_;
-        ADN_Type_String diaBehavior_;
-        ADN_Type_String cdtDiaBehavior_;
-        ADN_Type_String mrtDiaBehavior_;
-        ADN_Type_String missionSheetContent_;
-        ADN_Type_String missionSheetPath_;
-        ADN_Type_String strPackage_;
-        ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
-    };
-
-    typedef ADN_Type_Vector_ABC<Mission>         T_Mission_Vector;
-    typedef T_Mission_Vector::iterator          IT_Mission_Vector;
-    typedef T_Mission_Vector::const_iterator   CIT_Mission_Vector;
+    typedef ADN_Type_Vector_ABC<ADN_Missions_Mission>         T_Mission_Vector;
+    typedef T_Mission_Vector::iterator                        IT_Mission_Vector;
+    typedef T_Mission_Vector::const_iterator                  CIT_Mission_Vector;
 
 // =============================================================================
 // Frag orders
@@ -136,12 +98,12 @@ public:
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Reset();
 
-    T_FragOrder_Vector& GetFragOrders();
-    T_Mission_Vector&   GetUnitMissions();
-    T_Mission_Vector&   GetAutomatMissions();
-    T_Mission_Vector&   GetPopulationMissions();
-    FragOrder*          FindFragOrder( const std::string& strName );
-    Mission*            FindMission( T_Mission_Vector& missions, const std::string& strName );
+    T_FragOrder_Vector&   GetFragOrders();
+    T_Mission_Vector&     GetUnitMissions();
+    T_Mission_Vector&     GetAutomatMissions();
+    T_Mission_Vector&     GetPopulationMissions();
+    FragOrder*            FindFragOrder( const std::string& strName );
+    ADN_Missions_Mission* FindMission( T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
 
@@ -174,7 +136,7 @@ public:
     T_FragOrder_Vector          fragOrders_;
     T_StringList toDeleteMissionSheets_;
 
-private:
+public:
     static tools::IdManager idManager_;
 };
 

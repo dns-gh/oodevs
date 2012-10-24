@@ -678,7 +678,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     }
 
     // Models that use mission
-    if( ADN_Missions_Data::Mission* infos = dynamic_cast< ADN_Missions_Data::Mission* >( data ) )
+    if( ADN_Missions_Mission* infos = dynamic_cast< ADN_Missions_Mission* >( data ) )
     {
         QStringList& list = result[ eModels ];
         for( int i = 0; i < eNbrEntityTypes; ++i )

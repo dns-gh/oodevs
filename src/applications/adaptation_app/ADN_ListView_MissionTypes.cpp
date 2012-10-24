@@ -18,7 +18,7 @@
 #include "ADN_Wizard.h"
 #include "ADN_enums.h"
 
-typedef ADN_Missions_Data::Mission Mission;
+typedef ADN_Missions_Mission Mission;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_MissionTypes constructor

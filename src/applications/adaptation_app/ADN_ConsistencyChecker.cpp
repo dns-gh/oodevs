@@ -192,7 +192,7 @@ void ADN_ConsistencyChecker::CheckMissionTypes( const ADN_Missions_Data::T_Missi
 // Name: ADN_ConsistencyChecker::AddError
 // Created: LGY 2012-10-22
 // -----------------------------------------------------------------------------
-void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const ADN_Missions_Data::Mission& rhs, const ADN_Missions_Data::Mission& lhs, int subTab )
+void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const ADN_Missions_Mission& rhs, const ADN_Missions_Mission& lhs, int subTab )
 {
     ConsistencyError error( type );
     error.items_.push_back( CreateGotoInfoFromNNOElement( rhs.strName_.GetData(), eMissions, subTab ) );

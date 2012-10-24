@@ -167,7 +167,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
     ptrUnit_ = pUnit;
 
     ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
-    ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
+    ADN_Missions_Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
     if( mission == 0 )
         throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).toAscii().constData() );
     ptrSupplyMission_ = mission;

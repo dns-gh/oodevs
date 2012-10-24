@@ -177,7 +177,7 @@ void ADN_Models_Data::MissionInfos::ReadFragOrder( xml::xistream& input )
 void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ );
-    ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( mission_.GetVector(), strName_.GetData() );
+    ADN_Missions_Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( mission_.GetVector(), strName_.GetData() );
     if( !mission )
         throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toAscii().constData() );
     mission_ = mission;
@@ -506,7 +506,7 @@ void ADN_Models_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Models_Data::GetModelsThatUse
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
-QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_Data::Mission& mission )
+QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& mission )
 {
     QStringList result;
     T_ModelInfos_Vector* currentVector = 0;
