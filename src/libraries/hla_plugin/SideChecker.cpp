@@ -76,7 +76,7 @@ int SideChecker::Find( unsigned int identifier ) const
 // Name: SideChecker::AggregateCreated
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void SideChecker::AggregateCreated( Agent_ABC& /*agent*/, unsigned long identifier, const std::string& /*name*/, rpr::ForceIdentifier force, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool /*isLocal*/ )
+void SideChecker::AggregateCreated( Agent_ABC& /*agent*/, unsigned long identifier, const std::string& /*name*/, rpr::ForceIdentifier force, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool /*isLocal*/, const std::string& /*uniqueId*/ )
 {
     localSides_[ identifier ] = force;
 }
@@ -220,7 +220,7 @@ void SideChecker::EmbeddedUnitListChanged( const std::string& /*identifier*/, co
 // Name: SideChecker::PlatformCreated
 // Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SideChecker::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/ )
+void SideChecker::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::string& /*uniqueId*/ )
 {
     // NOTHING
 }

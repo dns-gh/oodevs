@@ -48,7 +48,7 @@ namespace
 {
     struct NullFactory : public HlaObjectFactory_ABC
     {
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC&, const std::string&, unsigned long, rpr::ForceIdentifier, const rpr::EntityType&, const std::string&, const std::string& ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC&, const std::string&, unsigned long, rpr::ForceIdentifier, const rpr::EntityType&, const std::string&, const std::string&, const std::string& ) const
         {
             return std::auto_ptr< HlaObject_ABC >( 0 );
         }
@@ -382,11 +382,11 @@ void FederateFacade::Register( ::hla::FederateAmbassador_ABC& listener )
 // Name: FederateFacade::AggregateCreated
 // Created: SLI 2011-10-05
 // -----------------------------------------------------------------------------
-void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal )
+void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, const std::string& uniqueId )
 {
     // TODO Handle vessels and aircrafts
     if( isLocal )
-        aggregateClass_->Created( agent, identifier, name, force, type, symbol );
+        aggregateClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
 }
 
 // -----------------------------------------------------------------------------
@@ -438,18 +438,18 @@ void FederateFacade::UnconditionalAcquisition( const ::hla::ObjectIdentifier& ob
 // Name: FederateFacade::PlatformCreated
 // Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol )
+void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& uniqueId )
 {
     switch( type.Domain() )
     {
     case rpr::EntityType::LAND:
-        groundVehicleClass_->Created( agent, identifier, name, force, type, symbol );
+        groundVehicleClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
         break;
     case rpr::EntityType::AIR:
-        aircraftClass_->Created( agent, identifier, name, force, type, symbol );
+        aircraftClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
         break;
     case rpr::EntityType::SURFACE:
-        surfaceVesselClass_->Created( agent, identifier, name, force, type, symbol );
+        surfaceVesselClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
         break;
     }
 }

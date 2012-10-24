@@ -68,7 +68,7 @@ public:
     //@{
     virtual void Register( ClassListener_ABC& listener );
     virtual void Unregister( ClassListener_ABC& listener );
-    void Created( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
+    void Created( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& uniqueId );
     //@}
 
 private:

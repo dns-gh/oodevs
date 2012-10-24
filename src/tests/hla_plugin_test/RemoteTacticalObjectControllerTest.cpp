@@ -89,7 +89,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_point_object,
     BOOST_CHECK_EQUAL( action.type(), sword::ObjectMagicAction::create );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 4 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).acharstr(), std::string( "an_object_type" ) );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), std::string( "an_object_name" ) );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), std::string( "HLA_an_object_name" ) );
     BOOST_CHECK_EQUAL( action.parameters().elem( 3 ).value( 0 ).party().id(), team.GetId() );
     const sword::Location& loc = action.parameters().elem( 1 ).value( 0 ).location();
     BOOST_CHECK_EQUAL( loc.type(), sword::Location_Geometry_point );
@@ -133,7 +133,7 @@ BOOST_FIXTURE_TEST_CASE( remote_tactical_object_controller_creates_polygon_objec
     BOOST_CHECK_EQUAL( action.type(), sword::ObjectMagicAction::create );
     BOOST_CHECK_EQUAL( action.parameters().elem_size(), 4 );
     BOOST_CHECK_EQUAL( action.parameters().elem( 0 ).value( 0 ).acharstr(), std::string( "an_object_type" ) );
-    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), std::string( "an_object_name" ) );
+    BOOST_CHECK_EQUAL( action.parameters().elem( 2 ).value( 0 ).acharstr(), std::string( "HLA_an_object_name" ) );
     BOOST_CHECK_EQUAL( action.parameters().elem( 3 ).value( 0 ).party().id(), team.GetId() );
     const sword::Location& loc = action.parameters().elem( 1 ).value( 0 ).location();
     BOOST_CHECK_EQUAL( loc.type(), sword::Location_Geometry_polygon );

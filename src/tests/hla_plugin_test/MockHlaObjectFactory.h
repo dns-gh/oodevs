@@ -25,7 +25,7 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockHlaObjectFactory, HlaObjectFactory_ABC )
 {
-    MOCK_METHOD( Create, 7 )
+    MOCK_METHOD( Create, 8 )
 };
 
 }

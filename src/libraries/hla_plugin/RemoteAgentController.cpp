@@ -361,7 +361,7 @@ void RemoteAgentController::Attach( unsigned long simId )
 // Created: AHC 2010-03-09
 // -----------------------------------------------------------------------------
 void RemoteAgentController::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& /*name*/,
-        rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool isLocal )
+        rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool isLocal, const std::string& /*uniqueId*/ )
 {
     if( !isLocal )
         remoteAgents_[ identifier ] = &agent;
@@ -380,7 +380,7 @@ void RemoteAgentController::EmbeddedUnitListChanged( const std::string& /*identi
 // Name: RemoteAgentController::PlatformCreated
 // Created: AHC 2010-03-09
 // -----------------------------------------------------------------------------
-void RemoteAgentController::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/ )
+void RemoteAgentController::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::string& /*uniqueId*/ )
 {
     // NOTHING
 }

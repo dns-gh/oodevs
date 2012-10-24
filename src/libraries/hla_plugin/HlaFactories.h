@@ -34,7 +34,7 @@ namespace hla
             , entityIdentifierResolver_( entityIdentifierResolver )
             , fomSerializer_( fomSerializer )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long /*identifier*/, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/, const std::string& rtiId ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long /*identifier*/, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/, const std::string& rtiId, const std::string& /*uniqueId*/ ) const
         {
             rpr::EntityIdentifier entityId;
             entityIdentifierResolver_.Create( rtiId, entityId );
@@ -54,13 +54,12 @@ namespace hla
             , resolver_( resolver )
             , fomSerializer_( fomSerializer )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long simId, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& rtiId ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long simId, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& rtiId, const std::string& uniqueId ) const
         {
-            std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, simId, force, type, symbol, rtiId );
-            const std::string uniqueIdentifier( "SWORD" + boost::lexical_cast< std::string >( simId ) );
+            std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, simId, force, type, symbol, rtiId, uniqueId );
             const std::string callsign( name + boost::lexical_cast< std::string >( simId ) );
-            resolver_.Add( simId, callsign, uniqueIdentifier );
-            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueIdentifier, symbol, fomSerializer_ ) );
+            resolver_.Add( simId, callsign, uniqueId );
+            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueId, symbol, fomSerializer_ ) );
         }
     private:
         std::auto_ptr< HlaObjectFactory_ABC > factory_;

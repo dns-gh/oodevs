@@ -22,6 +22,8 @@
 
 #include <boost/bind.hpp>
 
+#include <limits>
+
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
@@ -56,7 +58,7 @@ RemoteTacticalObjectController::~RemoteTacticalObjectController()
 // -----------------------------------------------------------------------------
 void RemoteTacticalObjectController::RemoteCreated( const std::string& identifier, HlaClass_ABC& /*hlaClass*/, HlaObject_ABC& object )
 {
-    static unsigned int objId = 0xFFFFFF;
+    static unsigned int objId = std::numeric_limits< unsigned int>::max();
     object.Register( *this );
     objectCreations_[ identifier ] = T_ObjectCreation( new simulation::ObjectMagicAction() );
     simulation::ObjectMagicAction& message = *objectCreations_[ identifier ];
@@ -67,6 +69,14 @@ void RemoteTacticalObjectController::RemoteCreated( const std::string& identifie
     message().mutable_parameters()->add_elem(); // position
     message().mutable_parameters()->add_elem(); // name
     message().mutable_parameters()->add_elem(); // army
+    /* Uncomment when simulation_kernel is modified
+    sword::Extension* ext = message().mutable_parameters()->add_elem()->add_value()->mutable_extensionlist();
+    sword::Extension_Entry* entry = ext->add_entries(); // extension
+    entry->set_name( "RemoteEntity" );
+    entry->set_value( "true" );
+    entry = ext->add_entries(); // extension
+    entry->set_name( "HLA_ObjectID" );
+    entry->set_value( identifier );*/
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +162,7 @@ void RemoteTacticalObjectController::NameChanged( const std::string& identifier,
     if( objectCreations_.end() == it)
         return;
     simulation::ObjectMagicAction& message = *it->second;
-    message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->Add()->set_acharstr( name.c_str() );
+    message().mutable_parameters()->mutable_elem( 2 )->mutable_value()->Add()->set_acharstr( std::string( "HLA_" ) +name.c_str() );
     Send( message, identifier );
 }
 
