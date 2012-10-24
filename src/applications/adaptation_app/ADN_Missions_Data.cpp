@@ -201,7 +201,8 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 {
     std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( xis.attribute< unsigned int >( "id" ) ) );
-    spNew->ReadArchive( xis );
+    const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
+    spNew->ReadArchive( xis, baseDir, GetMissionDir( eNbrEntityTypes )  );
     fragOrders_.AddItem( spNew.release() );
 }
 
@@ -278,11 +279,13 @@ void ADN_Missions_Data::WriteArchive( xml::xostream& output )
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
         fragOrders_[i]->WriteArchive( output );
 
+    const std::string baseDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
+    const std::string missionDir = GetMissionDir( eNbrEntityTypes );
     //frag orders mission sheets saving
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
-        fragOrders_[i]->RemoveDifferentNamedMissionSheet();
+        fragOrders_[i]->RemoveDifferentNamedMissionSheet( baseDir, missionDir );
     for( unsigned int i = 0; i < fragOrders_.size(); ++i )
-         fragOrders_[i]->WriteMissionSheet();
+         fragOrders_[i]->WriteMissionSheet( baseDir, missionDir );
 
     //move mission sheets to obsolete directory when mission is deleted
     for( IT_StringList it = toDeleteMissionSheets_.begin(); it != toDeleteMissionSheets_.end() ; ++it )

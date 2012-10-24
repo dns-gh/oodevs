@@ -56,13 +56,13 @@ ADN_Missions_FragOrder* ADN_Missions_FragOrder::CreateCopy()
     return newFragOrder;
 }
 
-void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input )
+void ADN_Missions_FragOrder::ReadArchive( xml::xistream& input, const std::string& baseDir, const std::string& missionDir )
 {
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", diaType_ )
           >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
           >> xml::list( "parameter", *this, &ADN_Missions_FragOrder::ReadParameter );
-    ReadMissionSheet();
+    ReadMissionSheet( baseDir, missionDir );
 }
 
 void ADN_Missions_FragOrder::ReadParameter( xml::xistream& input )
@@ -102,13 +102,12 @@ void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output )
     output << xml::end;
 }
 
-void ADN_Missions_FragOrder::ReadMissionSheet()
+void ADN_Missions_FragOrder::ReadMissionSheet( const std::string& baseDir, const std::string& missionDir )
 {
-    std::string path = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-                     + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
-    std::string fileName = std::string( path + "/" + strName_.GetData() + ".html");
-    missionSheetPath_ = fileName;
-    if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
+    missionSheetPath_ = std::string( missionDir +  "/" + strName_.GetData() + ".html" );
+    const std::string dir = baseDir + missionDir;
+    const std::string fileName = baseDir + missionSheetPath_;
+    if( bfs::is_directory( dir ) && bfs::is_regular_file( fileName ) )
     {
         std::ifstream file( fileName.c_str() );
         std::stringstream buffer;
@@ -118,27 +117,23 @@ void ADN_Missions_FragOrder::ReadMissionSheet()
     }
 }
 
-void ADN_Missions_FragOrder::RemoveDifferentNamedMissionSheet()
+void ADN_Missions_FragOrder::RemoveDifferentNamedMissionSheet( const std::string& baseDir, const std::string& missionDir )
 {
-    std::string missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
-    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    std::string file = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html");
-    std::string sheetPath = missionSheetPath_.GetData();
-    if( !sheetPath.empty() && file != sheetPath )
-        bfs::remove( missionSheetPath_.GetData() );
+    const std::string relPath = std::string( missionDir + "/" + strName_.GetData() + ".html" );
+    if( !missionSheetPath_.empty() && relPath != missionSheetPath_ )
+        bfs::remove( baseDir + relPath );
 }
 
-void ADN_Missions_FragOrder::WriteMissionSheet()
+void ADN_Missions_FragOrder::WriteMissionSheet( const std::string& baseDir, const std::string& missionDir )
 {
-    std::string missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
-    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    std::string fileName = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html");
+    const std::string dir = baseDir + missionDir;
+    std::string fileName = std::string(dir + "/" + strName_.GetData() + ".html" );
 
-    if( !bfs::is_directory( directoryPath+missionDirectoryPath ) )
-        bfs::create_directories( directoryPath+missionDirectoryPath + "/obsolete" );
-    std::fstream fichier( fileName.c_str(), std::ios::out | std::ios::trunc );
-    fichier << missionSheetContent_.GetData();
-    fichier.close();
+    if( !bfs::is_directory( dir ) )
+        bfs::create_directories( dir + "/obsolete" );
+    std::fstream fileStream( fileName.c_str(), std::ios::out | std::ios::trunc );
+    fileStream << missionSheetContent_.GetData();
+    fileStream.close();
     missionSheetPath_ = fileName;
 }
 

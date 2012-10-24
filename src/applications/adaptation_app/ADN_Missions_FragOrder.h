@@ -36,13 +36,13 @@ public:
     std::string GetItemName();
     ADN_Missions_FragOrder* CreateCopy();
 
-    void ReadArchive ( xml::xistream& input );
+    void ReadArchive( xml::xistream& input, const std::string& baseDir, const std::string& missionDir );
     void ReadParameter( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
 
-    void ReadMissionSheet ();
-    void RemoveDifferentNamedMissionSheet ();
-    void WriteMissionSheet ();
+    void ReadMissionSheet( const std::string& baseDir, const std::string& missionDir );
+    void RemoveDifferentNamedMissionSheet( const std::string& baseDir, const std::string& missionDir );
+    void WriteMissionSheet( const std::string& baseDir, const std::string& missionDir );
     bool IsValidDatabase();
 
 public:
@@ -52,7 +52,10 @@ public:
     ADN_Type_String           diaType_;
     ADN_Type_Bool             isAvailableWithoutMission_;
     ADN_Type_String           missionSheetContent_;
-    ADN_Type_String           missionSheetPath_;
+
+private:
+    // Relative path to base missions directory
+    std::string missionSheetPath_;
 };
 
 #endif // ADAPTATION_ADN_MISSIONS_FRAGORDER_H

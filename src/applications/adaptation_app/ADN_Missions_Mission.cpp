@@ -222,9 +222,9 @@ void ADN_Missions_Mission::WriteMissionSheet( const std::string& baseDir, const 
 
     if( !bfs::is_directory( dir ) )
         bfs::create_directories( dir + "/obsolete" );
-    std::fstream fichier( fileName.c_str(), std::ios::out | std::ios::trunc );
-    fichier << missionSheetContent_.GetData();
-    fichier.close();
+    std::fstream fileStream( fileName.c_str(), std::ios::out | std::ios::trunc );
+    fileStream << missionSheetContent_.GetData();
+    fileStream.close();
     missionSheetPath_ = fileName;
 }
 
