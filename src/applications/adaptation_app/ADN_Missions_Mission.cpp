@@ -187,9 +187,9 @@ void ADN_Missions_Mission::WriteArchive( xml::xostream& output, const std::strin
 // -----------------------------------------------------------------------------
 void ADN_Missions_Mission::ReadMissionSheet( const std::string& baseDir, const std::string& missionDir )
 {
+    missionSheetPath_ = std::string( missionDir +  "/" + strName_.GetData() + ".html" );
     const std::string dir = baseDir + missionDir;
-    std::string fileName = std::string( dir + "/" + strName_.GetData() + ".html" );
-    missionSheetPath_ = fileName;
+    const std::string fileName = baseDir + missionSheetPath_;
     if( bfs::is_directory( dir ) && bfs::is_regular_file( fileName ) )
     {
         std::ifstream file( fileName.c_str() );
@@ -206,10 +206,9 @@ void ADN_Missions_Mission::ReadMissionSheet( const std::string& baseDir, const s
 // -----------------------------------------------------------------------------
 void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( const std::string& baseDir, const std::string& missionDir )
 {
-    const std::string file = baseDir + missionDir + std::string( "/" + strName_.GetData() + ".html" );
-    const std::string sheetPath = missionSheetPath_.GetData();
-    if( !sheetPath.empty() && file != sheetPath )
-        bfs::remove( missionSheetPath_.GetData() );
+    const std::string relPath = std::string( missionDir + "/" + strName_.GetData() + ".html" );
+    if( !missionSheetPath_.empty() && relPath != missionSheetPath_ )
+        bfs::remove( baseDir + relPath );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,7 +218,7 @@ void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( const std::string& 
 void ADN_Missions_Mission::WriteMissionSheet( const std::string& baseDir, const std::string& missionDir )
 {
     const std::string dir = baseDir + missionDir;
-    std::string fileName = dir + std::string( "/" + strName_.GetData() + ".html" );
+    std::string fileName = std::string(dir + "/" + strName_.GetData() + ".html" );
 
     if( !bfs::is_directory( dir ) )
         bfs::create_directories( dir + "/obsolete" );

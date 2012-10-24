@@ -53,9 +53,12 @@ public:
     ADN_Type_String cdtDiaBehavior_;
     ADN_Type_String mrtDiaBehavior_;
     ADN_Type_String missionSheetContent_;
-    ADN_Type_String missionSheetPath_;
     ADN_Type_String strPackage_;
     ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
+
+private:
+    // Relative path to base missions directory
+    std::string missionSheetPath_;
 };
 
 #endif // ADAPTATION_ADN_MISSIONS_MISSION_H
