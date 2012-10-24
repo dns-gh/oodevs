@@ -164,15 +164,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
         return;
 
     //population knowledge
-    int knowledgeSize = element.Count();
-    int modelSize = knowledgeModel_.rowCount();
-
-    if( modelSize > knowledgeSize )
-        knowledgeModel_.removeRows( knowledgeSize, modelSize - knowledgeSize );
-    else if( modelSize < knowledgeSize )
-        for( int i = 0; i < knowledgeSize - modelSize; ++i )
-            knowledgeModel_.appendRow( new QStandardItem() );
-
+    resizeModelOnNewContent( &knowledgeModel_, element.Count() );
     int i = 0;
     tools::Iterator< const kernel::PopulationKnowledge_ABC& > iterator = element.CreateIterator();
     while( iterator.HasMoreElements() )

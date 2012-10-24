@@ -130,15 +130,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     if( ! IsVisible() || selected_ != &knowledges )
         return;
 
-    int knowledgeSize = knowledges.Count();
-    int modelSize = knowledgeModel_.rowCount();
-
-    if( modelSize > knowledgeSize )
-        knowledgeModel_.removeRows( knowledgeSize, modelSize - knowledgeSize );
-    else if( modelSize < knowledgeSize )
-        for( int i = 0; i < knowledgeSize - modelSize; ++i )
-            knowledgeModel_.appendRow( new QStandardItem() );
-
+    resizeModelOnNewContent( &knowledgeModel_, knowledges.Count() );
     int i = 0;
     tools::Iterator< const AgentKnowledge_ABC& > iterator = knowledges.CreateIterator();
     while( iterator.HasMoreElements() )
@@ -319,19 +311,7 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
     if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< PerceptionMap >() != & perceptions )
         return;
     int perceptionSize = static_cast< int >( perceptions.perceptions_.size() );
-    int modelSize = perceptionModel_.rowCount();
-
-    if( modelSize > perceptionSize )
-        perceptionModel_.removeRows( perceptionSize, modelSize - perceptionSize );
-    else if( modelSize < perceptionSize )
-        for( int i = 0; i < perceptionSize - modelSize; ++i )
-        {
-            QList< QStandardItem *> list;
-            list.append( new QStandardItem() );
-            list.append( new QStandardItem() );
-            perceptionModel_.appendRow( list );
-        }
-
+    resizeModelOnNewContent( &perceptionModel_, perceptionSize );
     for( int i = 0; i < perceptionSize; ++i )
     {
         perceptionModel_.item( i, 0 )->setText( perceptions.perceptions_[ i ].detected_->GetName() );
