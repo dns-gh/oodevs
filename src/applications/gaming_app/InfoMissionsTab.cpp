@@ -9,36 +9,81 @@
 
 #include "gaming_app_pch.h"
 #include "InfoMissionsTab.h"
-#include "clients_kernel/Controllers.h"
+#include "moc_InfoMissionsTab.cpp"
+#include "icons.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionTiming.h"
 #include "actions/Parameter_ABC.h"
-#include "gaming/MissionParameters.h"
+#include "clients_gui/DisplayExtractor.h"
+#include "clients_gui/LinkItemDelegate.h"
 #include "clients_kernel/Tools.h"
-#include "icons.h"
+#include "clients_kernel/Controllers.h"
+#include "gaming/MissionParameters.h"
 
-using namespace actions;
+namespace
+{
+    class CustomSortFilterProxyModel : public QSortFilterProxyModel
+    {
+    public:
+        CustomSortFilterProxyModel( QObject* parent )
+            : QSortFilterProxyModel( parent )
+        {
+            // NOTHING
+        }
+        ~CustomSortFilterProxyModel()
+        {
+            // NOTHING
+        }
+    protected:
+        virtual bool lessThan( const QModelIndex& left, const QModelIndex& right ) const
+        {
+            if( left.isValid() && right.isValid() )
+            {
+                if( left.parent().isValid() )
+                {
+                    QString txt1 = sourceModel()->data( left ).toString();
+                    QString txt2 = sourceModel()->data( right ).toString();
+                    return txt1.localeAwareCompare( txt2 ) > 0;
+                }
+                return true;
+            }
+            return false;
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: InfoMissionsTab constructor
 // Created: SBO 2007-04-18
 // -----------------------------------------------------------------------------
-InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : gui::ListDisplayer< InfoMissionsTab >( parent, *this, factory, "InfoMissionsTab" )
+InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
+    : QTreeView( parent )
     , controllers_( controllers )
-    , sub_ ( new gui::ListItemDisplayer() )
+    , extractor_( extractor )
     , selected_( controllers )
     , parent_( parent )
+    , proxyFilter_ ( new CustomSortFilterProxyModel( parent ) )
 {
-    setMargin( 2 );
-    setFrameStyle( Q3Frame::Plain );
-    AddColumn( tools::findTranslation( "Action", "Parameter" ) );
-    AddColumn( tools::findTranslation( "Action", "Value" ) );
-    AddColumn( tools::findTranslation( "ActionTiming", "Time" ) );
-    setResizeMode( Q3ListView::AllColumns );
-    setColumnAlignment( 2, Qt::AlignRight );
-    setSorting( 2, false );
-    header()->hide();
+    gui::LinkItemDelegate* delegate = new gui::LinkItemDelegate( this );
+    setItemDelegateForColumn( 1, delegate );
+    setModel( proxyFilter_ );
+    setMouseTracking( true );
+    setRootIsDecorated( false );
+    setEditTriggers( 0 );
+    setAlternatingRowColors( true );
+    setAllColumnsShowFocus( true );
+    proxyFilter_->setSourceModel( &missionModel_ );
+    proxyFilter_->setDynamicSortFilter( true );
+    setSortingEnabled( true );
+
+    //configure the model
+    missionModel_.setColumnCount( 3 );
+    setHeaderHidden( true );
+    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 1, QHeaderView::Stretch );
+
+    connect( delegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
+
     controllers_.Register( *this );
 }
 
@@ -49,42 +94,16 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
 InfoMissionsTab::~InfoMissionsTab()
 {
     controllers_.Unregister( *this );
-    delete sub_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfoMissionsTab::Display
-// Created: SBO 2007-04-18
+// Name: InfoMissionsTab::OnLinkClicked
+// Created: JSR 2012-10-23
 // -----------------------------------------------------------------------------
-void InfoMissionsTab::Display( const Action_ABC& action, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item )
+void InfoMissionsTab::OnLinkClicked( const QString& url, const QModelIndex& index )
 {
-    item->setPixmap( 0, MAKE_PIXMAP( mission ) );
-    if( const actions::ActionTiming* timing = action.Retrieve< actions::ActionTiming >() )
-        timing->Display( displayer );
-    action.Display( displayer );
-    DeleteTail( DisplayList( action.CreateIterator(), item ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoMissionsTab::Display
-// Created: SBO 2007-04-18
-// -----------------------------------------------------------------------------
-void InfoMissionsTab::Display( const actions::Parameter_ABC& param, kernel::Displayer_ABC& /*displayer*/, gui::ValuedListItem* item )
-{
-    item->setPixmap( 0, MAKE_PIXMAP( parameter2 ) );
-    param.Display( (*sub_)( item ) );
-    item->setText( 2, "" );
-    DeleteTail( DisplayList( param.CreateIterator(), item ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfoMissionsTab::AddColumn
-// Created: SBO 2007-04-18
-// -----------------------------------------------------------------------------
-void InfoMissionsTab::AddColumn( const QString& column )
-{
-    gui::ListDisplayer< InfoMissionsTab >::AddColumn( column );
-    sub_->AddColumn( column );
+    selectionModel()->setCurrentIndex( index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
+    extractor_.NotifyLinkClicked( url );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +119,7 @@ void InfoMissionsTab::NotifySelected( const kernel::Entity_ABC* entity )
         if( extension )
             NotifyUpdated( *extension );
         else
-            clear();
+            missionModel_.removeRows( 0, missionModel_.rowCount() );
     }
 }
 
@@ -110,8 +129,73 @@ void InfoMissionsTab::NotifySelected( const kernel::Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void InfoMissionsTab::NotifyUpdated( const MissionParameters& extension )
 {
-    if( ShouldUpdate( extension ) )
-        DeleteTail( DisplayList( extension.CreateIterator() ) );
+    if( ! ShouldUpdate( extension ) )
+        return;
+    const int count = extension.Count();
+    while( missionModel_.rowCount() > count )
+        missionModel_.removeRow( count );
+    while( missionModel_.rowCount() < count )
+    {
+        QList< QStandardItem* > items;
+        items << new QStandardItem() << new QStandardItem() << new QStandardItem();
+        missionModel_.appendRow( items );
+    }
+
+    int row = 0;
+    tools::Iterator< const actions::Action_ABC& > iterator = extension.CreateIterator();
+    while( iterator.HasMoreElements() )
+    {
+        const actions::Action_ABC& action = iterator.NextElement();
+        QStandardItem* nameItem = missionModel_.item( row );
+        nameItem->setText( action.GetName() );
+        nameItem->setIcon( MAKE_PIXMAP( mission ) );
+        nameItem->setTextAlignment( Qt::AlignLeft | Qt::AlignVCenter );
+
+        if( const actions::ActionTiming* timing = action.Retrieve< actions::ActionTiming >() )
+        {
+            QStandardItem* dateItem = missionModel_.item( row, 2 );
+            dateItem->setText( timing->GetTime().toString() );
+            dateItem->setTextAlignment( Qt::AlignRight );
+        }
+        RecursiveDisplay( action, missionModel_.item( row++ ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoMissionsTab::RecursiveDisplay
+// Created: JSR 2012-10-23
+// -----------------------------------------------------------------------------
+template< typename T >
+void InfoMissionsTab::RecursiveDisplay( const T& element, QStandardItem* item )
+{
+    const int count = element.Count();
+    while( item->rowCount() > count )
+        item->removeRow( count );
+    while( item->rowCount() < count )
+    {
+        QList< QStandardItem* > items;
+        items << new QStandardItem() << new QStandardItem() << new QStandardItem();
+        item->appendRow( items );
+    }
+    tools::Iterator< const actions::Parameter_ABC& > it = element.CreateIterator();
+    int row = 0;
+    while( it.HasMoreElements() )
+    {
+        DisplayParameter( it.NextElement(), item->child( row, 0 ), item->child( row, 1 ) );
+        ++row;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoMissionsTab::DisplayParameter
+// Created: JSR 2012-10-23
+// -----------------------------------------------------------------------------
+void InfoMissionsTab::DisplayParameter( const actions::Parameter_ABC& param, QStandardItem* item1, QStandardItem* item2 )
+{
+    item1->setIcon( MAKE_PIXMAP( parameter2 ) );
+    item1->setText( param.GetName() );
+    item2->setText( param.GetDisplayName( extractor_ ) );
+    RecursiveDisplay( param, item1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,5 +216,5 @@ void InfoMissionsTab::showEvent( QShowEvent* event )
     const kernel::Entity_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
-    gui::ListDisplayer< InfoMissionsTab >::showEvent( event );
+    QTreeView::showEvent( event );
 }

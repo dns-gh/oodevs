@@ -66,12 +66,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InfoSummariesWidget( const InfoSummariesWidget& );            //!< Copy constructor
-    InfoSummariesWidget& operator=( const InfoSummariesWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* );
@@ -113,17 +107,5 @@ private:
     std::auto_ptr< kernel::Displayer_ABC > display_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: InfoSummariesWidget::UpdateDisplayIfNeeded
-// Created: ABR 2011-01-21
-// -----------------------------------------------------------------------------
-template< class T >
-void InfoSummariesWidget::UpdateDisplayIfNeeded( const T& extension )
-{
-    if( !selected_ || ( selected_->Retrieve< T >() != &extension ) )
-        return;
-    extension.DisplayInSummary( *display_ );
-}
 
 #endif // __InfoSummariesWidget_h_

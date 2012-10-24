@@ -10,9 +10,14 @@
 #ifndef __InfoMissionsTab_h_
 #define __InfoMissionsTab_h_
 
-#include "clients_gui/ListDisplayer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
+
+namespace gui
+{
+    class DisplayExtractor;
+}
 
 namespace kernel
 {
@@ -27,42 +32,41 @@ namespace actions
 }
 
 class MissionParameters;
+
 // =============================================================================
 /** @class  InfoMissionsTab
     @brief  InfoMissionsTab
 */
 // Created: SBO 2007-04-18
 // =============================================================================
-class InfoMissionsTab : public gui::ListDisplayer< InfoMissionsTab >
+class InfoMissionsTab : public QTreeView
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< MissionParameters >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoMissionsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoMissionsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
     virtual ~InfoMissionsTab();
     //@}
 
-    //! @name Operations
+public slots:
+    //! @name Slots
     //@{
-    virtual void Display( const actions::Action_ABC& action, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    virtual void Display( const actions::Parameter_ABC& param, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void OnLinkClicked( const QString& url, const QModelIndex& index );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InfoMissionsTab( const InfoMissionsTab& );            //!< Copy constructor
-    InfoMissionsTab& operator=( const InfoMissionsTab& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void AddColumn( const QString& column );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const MissionParameters& extension );
+    template< typename T >
+    void RecursiveDisplay( const T& element, QStandardItem* item );
+    void DisplayParameter( const actions::Parameter_ABC& param, QStandardItem* item1, QStandardItem* item2 );
     bool ShouldUpdate( const MissionParameters& extension ) const;
     virtual void showEvent( QShowEvent* event );
     //@}
@@ -71,9 +75,11 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::ListItemDisplayer* sub_;
+    gui::DisplayExtractor& extractor_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QTabWidget* parent_;
+    QStandardItemModel missionModel_;
+    QSortFilterProxyModel* proxyFilter_;
     //@}
 };
 

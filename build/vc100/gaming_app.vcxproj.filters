@@ -891,9 +891,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\InfoConflictsTab.h">
       <Filter>Source Files\Panels\Info\tabs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\InfoMissionsTab.h">
-      <Filter>Source Files\Panels\Info\tabs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\InfoReportsTab.h">
       <Filter>Source Files\Panels\Info\tabs</Filter>
     </ClInclude>
@@ -1480,6 +1477,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyFlowDialog_ABC.h">
       <Filter>Source Files\Dialogs\Magic actions\Logistic</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\InfoMissionsTab.h">
+      <Filter>Source Files\Panels\Info\tabs</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyValuesTableWidget.h">
       <Filter>Source Files\Dialogs\Magic actions\Logistic\Widgets</Filter>
