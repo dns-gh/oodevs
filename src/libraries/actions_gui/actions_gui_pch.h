@@ -14,22 +14,28 @@
 #include <windows.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
-#include <QtGui/qcheckbox.h>
+#include <Qtcore/qtimer.h>
 #include <QtCore/qdatetime.h>
-#include <QtOpenGL/qgl.h>
-#include <Qt3Support/q3groupbox.h>
-#include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3header.h>
+
+#include <QtGui/qcheckbox.h>
 #include <QtGui/qlabel.h>
 #include <QtGui/qlayout.h>
 #include <QtGui/qlineedit.h>
-#include <Qt3Support/q3listview.h>
 #include <QtGui/qpixmap.h>
-#include <Qt3Support/q3popupmenu.h>
 #include <QtGui/qpushbutton.h>
 #include <QtGui/qscrollarea.h>
-#include <Qtcore/qtimer.h>
+#include <QtGui/qtreeview.h>
+#include <QtGui/qstandarditemmodel.h>
+#include <QtGui/qheaderview.h>
+
+#include <Qt3Support/q3groupbox.h>
+#include <Qt3Support/q3hbox.h>
+#include <Qt3Support/q3header.h>
+#include <Qt3Support/q3listview.h>
+#include <Qt3Support/q3popupmenu.h>
 #include <Qt3Support/q3vbox.h>
+
+#include <QtOpenGL/qgl.h>
 #pragma warning( pop )
 
 #include <string>

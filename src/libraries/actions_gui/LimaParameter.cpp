@@ -36,7 +36,7 @@ LimaParameter::LimaParameter( const InterfaceBuilder_ABC& builder, const kernel:
     , converter_   ( builder.GetStaticModel().coordinateConverter_ )
     , clickedLine_ ( 0 )
     , selectedLine_( 0 )
-    , functions_   ( new Q3ListBox() )
+    , functions_   ( new QListWidget() )
     , schedule_    ( static_cast< ParamDateTime* >( &builder.BuildOne( kernel::OrderParameter( tools::translate( "LimaParameter", "Schedule" ).toAscii().constData(), "datetime", true ), false ) ) )
 {
     controller_.Register( *this );
@@ -75,13 +75,9 @@ QWidget* LimaParameter::BuildInterface( QWidget* parent )
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
-
-    functions_->setSelectionMode( Q3ListBox::Multi );
+    functions_->setSelectionMode( QListWidget::MultiSelection );
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
-        functions_->insertItem( tools::ToShortString( (kernel::E_FuncLimaType)i ), i );
-    functions_->setRowMode( Q3ListBox::FitToHeight );
-    //functions_->setFixedSize( 150, functions_->itemHeight( 0 ) * 4 );
-    functions_->setFixedHeight( functions_->itemHeight( 0 ) * 4 );
+        functions_->insertItem( i, tools::ToShortString( (kernel::E_FuncLimaType)i ) );
 
     QWidget* scheduleBox = schedule_->BuildInterface( parent );
     layout->addWidget( new QLabel( tools::translate( "LimaParameter", "Line" ), parent ), 0, 0 );
@@ -111,8 +107,8 @@ void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
             // $$$$ AGE 2007-05-09: pourquoi pas juste Draw ??
             glColor3f( 0.7f, 0, 0 );
             QStringList functions;
-            for( unsigned int i = 0; i < functions_->count(); ++i )
-                if( functions_->isSelected( i ) )
+            for( int i = 0; i < functions_->count(); ++i )
+                if( functions_->isItemSelected( functions_->item( i ) ) )
                     functions.append( tools::ToShortString( (kernel::E_FuncLimaType)i ) );
             const geometry::Point2f position = selectedLine_->Get< kernel::Positions >().GetPosition();
             const geometry::Vector2f lineFeed = geometry::Vector2f( 0, -18.f * tools.Pixels() ); // $$$$ SBO 2007-05-15: hard coded \n
@@ -161,7 +157,7 @@ void LimaParameter::CreateInternalMenu( kernel::ContextMenu& menu )
     {
         QAction* action = internalMenu->InsertItem( "", tools::ToString( (kernel::E_FuncLimaType)i ), i );
         action->setCheckable( true );
-        action->setChecked( functions_->isSelected( i ) );
+        action->setChecked( functions_->isItemSelected( functions_->item( i ) ) );
         actions_.push_back( action );
     }
     QObject::connect( internalMenu, SIGNAL( triggered( QAction* ) ), this, SLOT( OnMenuClick( QAction* ) ) );
@@ -183,14 +179,14 @@ void LimaParameter::OnMenuClick( QAction* action )
             if( *it == action )
             {
                 entityLabel_->setText( selectedLine_->GetName() );
-                functions_->setSelected( index, !functions_->isSelected( index ) );
+                functions_->setItemSelected( functions_->item( index ), !functions_->isItemSelected( functions_->item( index ) ) );
             }
     }
     else
     {
         entityLabel_->setText( "---" );
         for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
-            functions_->setSelected( i, !functions_->isSelected( i ) );
+            functions_->setItemSelected( functions_->item( i ), !functions_->isItemSelected( functions_->item( i ) ) );
     }
     if( group_ && IsOptional() )
         group_->setChecked( true );
@@ -237,8 +233,8 @@ void LimaParameter::CommitTo( actions::ParameterContainer_ABC& parameter ) const
         GeometrySerializer serializer( lines, converter_ );
         selectedLine_->Get< kernel::Positions >().Accept( serializer );
         std::auto_ptr< actions::parameters::Lima > param( new actions::parameters::Lima( kernel::OrderParameter( GetName().toAscii().constData(), "phaseline", false ), converter_, lines ) );
-        for( unsigned int i = 0; i < functions_->count(); ++i )
-            if( functions_->isSelected( i ) )
+        for( int i = 0; i < functions_->count(); ++i )
+            if( functions_->isItemSelected( functions_->item( i ) ) )
                 param->AddFunction( i );
         schedule_->CommitTo( *param );
         parameter.AddParameter( *param.release() );

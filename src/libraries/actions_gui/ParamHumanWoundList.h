@@ -13,6 +13,9 @@
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
+#include "QtGui/qtreeview.h"
+#include "QtGui/qstandarditemmodel.h"
+
 namespace actions
 {
     namespace gui
@@ -50,13 +53,14 @@ private slots:
     void OnDown();
     void OnAdd( int index );
     void OnRemove();
-    void OnContextMenu( Q3ListViewItem* item, const QPoint& point, int col );
+    void OnContextMenu( const QPoint& point );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Q3ListView* list_;
+    QTreeView* list_;
+    QStandardItemModel model_;
     //@}
 };
 

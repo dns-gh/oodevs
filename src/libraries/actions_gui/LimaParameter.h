@@ -13,7 +13,10 @@
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include <Qt3Support/q3listbox.h>
+
+#pragma warning( push, 0 )
+#include <QtGui/qlistwidget.h>
+#pragma warning( pop )
 
 namespace kernel
 {
@@ -78,7 +81,7 @@ private:
     const QDateTime currentDate_;
     const kernel::TacticalLine_ABC* clickedLine_;
     const kernel::TacticalLine_ABC* selectedLine_;
-    Q3ListBox* functions_;
+    QListWidget* functions_;
     QLabel* entityLabel_;
     ParamDateTime* schedule_;
     T_Actions actions_;

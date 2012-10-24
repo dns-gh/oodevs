@@ -49,13 +49,15 @@ QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
     Param_ABC::BuildInterface( parent );
     QGridLayout* layout = new QGridLayout( group_ );
 
-    list_ = new Q3ListView( parent );
-    list_->addColumn( "", 0 );
-    list_->addColumn( "" );
-    list_->header()->hide();
-    list_->setSorting( -1, true );
-    list_->setResizeMode( Q3ListView::LastColumn );
+    list_ = new QTreeView( parent );
+    list_->setRootIsDecorated( false );
+    list_->setEditTriggers( 0 );
+    model_.setColumnCount( 2 );
+    list_->setModel( &model_ );
+    list_->setHeaderHidden( true );
     list_->setAllColumnsShowFocus( true );
+    list_->setContextMenuPolicy( Qt::CustomContextMenu );
+    list_->header()->setResizeMode( 0, QHeaderView::ResizeToContents );
 
     QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, parent );
     upBtn->setFixedSize( 32, 32 );
@@ -68,7 +70,7 @@ QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
 
     connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
     connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
-    connect( list_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( Q3ListViewItem*, const QPoint&, int ) ) );
+    connect( list_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnContextMenu( const QPoint& ) ) );
     return group_;
 }
 
@@ -80,8 +82,8 @@ void ParamHumanWoundList::CommitTo( actions::ParameterContainer_ABC& action ) co
 {
     std::auto_ptr< actions::parameters::MedicalPriorities > param( new actions::parameters::MedicalPriorities( parameter_ ) );
     if( IsChecked() )
-        for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
-            param->AddMedicalPriority( E_HumanWound( it.current()->text( 0 ).toUInt() ) );
+        for( int row = 0; row < model_.rowCount(); ++row )
+            param->AddMedicalPriority( E_HumanWound( model_.item( row )->text().toUInt() ) );
     action.AddParameter( *param.release() );
 }
 
@@ -91,9 +93,13 @@ void ParamHumanWoundList::CommitTo( actions::ParameterContainer_ABC& action ) co
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnUp()
 {
-    Q3ListViewItem* item = list_->currentItem();
-    if( item && item->itemAbove() )
-        item->itemAbove()->moveItem( item );
+    const QModelIndex index = list_->selectionModel()->currentIndex();
+    if( !index.isValid() || index.row() == 0 )
+        return;
+    QList< QStandardItem* > currentSelection = model_.takeRow( index.row() );
+    model_.insertRow( index.row() - 1, currentSelection );
+    list_->selectionModel()->clearSelection();
+    list_->selectionModel()->setCurrentIndex( model_.index( index.row() - 1, 0 ), QItemSelectionModel::Select );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,9 +108,13 @@ void ParamHumanWoundList::OnUp()
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnDown()
 {
-    Q3ListViewItem* item = list_->currentItem();
-    if( item && item->itemBelow() )
-        item->moveItem( item->itemBelow() );
+    const QModelIndex index = list_->selectionModel()->currentIndex();
+    if( !index.isValid() || index.row() == model_.rowCount() )
+        return;
+    QList< QStandardItem* > currentSelection = model_.takeRow( index.row() );
+    model_.insertRow( index.row() + 1, currentSelection );
+    list_->selectionModel()->clearSelection();
+    list_->selectionModel()->setCurrentIndex( model_.index( index.row() + 1, 0 ) , QItemSelectionModel::Select );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,9 +123,10 @@ void ParamHumanWoundList::OnDown()
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnAdd( int value )
 {
-    Q3ListViewItem* item = new Q3ListViewItem( list_, list_->lastItem() );
-    item->setText( 1, tools::ToString( E_HumanWound( value ) ) );
-    item->setText( 0, QString::number( value ) );
+    QList< QStandardItem* >itemList;
+    itemList.append( new QStandardItem( tools::ToString( E_HumanWound( value ) ) ) );
+    itemList.append( new QStandardItem( QString::number( value ) ) );
+    model_.appendRow( itemList );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,21 +135,25 @@ void ParamHumanWoundList::OnAdd( int value )
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnRemove()
 {
-    delete list_->currentItem();
+    const QModelIndex index = list_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    model_.removeRow( index.row() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamHumanWoundList::OnContextMenu
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void ParamHumanWoundList::OnContextMenu( Q3ListViewItem* item, const QPoint& point, int )
+void ParamHumanWoundList::OnContextMenu( const QPoint& point )
 {
+    //general context menu
     kernel::ContextMenu* menu = new kernel::ContextMenu( list_ );
     kernel::ContextMenu* items = new kernel::ContextMenu( menu );
     for( unsigned int i = eHumanWound_BlesseUrgence1; i < int( eNbrHumanWound ); ++i )
     {
         const QString name = tools::ToString( ( E_HumanWound )i );
-        if( ! list_->findItem( name, 1 ) )
+        if( model_.findItems( name ).isEmpty() )
         {
             int id = items->insertItem( name, this, SLOT( OnAdd( int ) ) );
             items->setItemParameter( id, i );
@@ -146,9 +161,16 @@ void ParamHumanWoundList::OnContextMenu( Q3ListViewItem* item, const QPoint& poi
     }
     if( items->count() )
         menu->insertItem( tr( "Add..." ), items );
-    if( item )
-        menu->insertItem( tr( "Remove" ), this, SLOT( OnRemove() ) );
-    menu->popup( point );
+    
+    //context menu on selected item 
+    const QModelIndex index = list_->selectionModel()->currentIndex();
+    if( index.isValid() )
+    {
+        QStandardItem* item = model_.itemFromIndex( index );
+        if ( item )
+            menu->insertItem( tr( "Remove" ), this, SLOT( OnRemove() ) );
+    }
+    menu->popup( list_->viewport()->mapToGlobal( point ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,5 +179,5 @@ void ParamHumanWoundList::OnContextMenu( Q3ListViewItem* item, const QPoint& poi
 // -----------------------------------------------------------------------------
 bool ParamHumanWoundList::InternalCheckValidity() const
 {
-    return list_ && list_->childCount() != 0;
+    return list_ && model_.rowCount() != 0;
 }

@@ -50,23 +50,23 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
     Param_ABC::BuildInterface( parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
 
-    list_ = new Q3ListView( parent );
+    list_ = new QTreeView( parent );
     list_->setRootIsDecorated( true );
-    list_->addColumn( "name" );
-    list_->addColumn( "id", 0 );
-    list_->setSorting( -1, true );
-    list_->header()->hide();
-    list_->header()->setResizeEnabled( false, 1 );
-    list_->hideColumn( 1 );
-    list_->setSelectionMode( Q3ListView::Multi );
+    list_->setEditTriggers( 0 );
+    model_.setColumnCount( 2 );
+    list_->setModel( &model_ );
+    list_->setHeaderHidden( true );
+    list_->setSelectionMode( QAbstractItemView::MultiSelection );
+    list_->header()->setResizeMode( 0, QHeaderView::ResizeToContents );
 
     tools::Iterator< const kernel::DotationType& > it = resolver_.CreateIterator();
     while( it.HasMoreElements() )
     {
         const kernel::DotationType& type = it.NextElement();
-        AddItem( type.GetName().c_str(), type.GetName().c_str(), type.GetId() );
+        AddItem( type.GetCategoryDisplay().c_str(), type.GetName().c_str(), type.GetId() );
     }
-    connect( list_, SIGNAL( clicked( Q3ListViewItem* ) ), SLOT( Clicked( Q3ListViewItem* ) ) );
+    list_->hideColumn( 1 );
+    connect( list_, SIGNAL( clicked( const QModelIndex& ) ), SLOT( Clicked( const QModelIndex& ) ) );
     layout->addWidget( list_ );
     return group_;
 }
@@ -75,15 +75,18 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
 // Name: ParamDotationTypeList::Clicked
 // Created: AGE 2007-10-23
 // -----------------------------------------------------------------------------
-void ParamDotationTypeList::Clicked( Q3ListViewItem* item )
+void ParamDotationTypeList::Clicked( const QModelIndex& index )
 {
-    Q3ListViewItem* child = item ? item->firstChild() : 0;
-    bool selected = child ? !child->isSelected() : false;
-    list_->ensureItemVisible( child );
-    while( child )
+    QStandardItem* item = index.isValid()? model_.itemFromIndex( index ): 0 ;
+    if ( item )
     {
-        list_->setSelected( child, selected );
-        child = child->nextSibling();
+        QStandardItem* child = item ? item->child( 0 ) : 0;
+        bool selected = child ? !list_->selectionModel()->isSelected( child->index() ) : false;
+        if( selected )
+            list_->expand( index );
+        for( int row = 0 ; row < item->rowCount();  ++row )
+            list_->selectionModel()->select( item->child( row )->index(), selected? QItemSelectionModel::Select : QItemSelectionModel::Deselect );
+
     }
 }
 
@@ -93,13 +96,22 @@ void ParamDotationTypeList::Clicked( Q3ListViewItem* item )
 // -----------------------------------------------------------------------------
 void ParamDotationTypeList::AddItem( const QString& parent, const QString& child, unsigned id )
 {
-    Q3ListViewItem* parentItem = list_->findItem( parent, 0 );
-    if( ! parentItem )
+    QList< QStandardItem* > parentItemList = model_.findItems( parent ); 
+    QStandardItem* parentItem;
+    if( parentItemList.isEmpty() )
     {
-        parentItem = new Q3ListViewItem( list_, parent );
+        parentItem = new QStandardItem( parent );
         parentItem->setSelectable( false );
+        model_.appendRow( parentItem );
     }
-    new Q3ListViewItem( parentItem, child, QString::number( id ) );
+    else
+    {
+        parentItem = parentItemList[ 0 ];
+    }
+    QList< QStandardItem* > list;
+    list.append( new QStandardItem( child ) );
+    list.append( new QStandardItem( QString::number( id ) ) );
+    parentItem->appendRow( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,15 +125,13 @@ void ParamDotationTypeList::CommitTo( actions::ParameterContainer_ABC& action ) 
     std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::DotationTypeList( parameter_ ) );
     if( IsChecked() )
     {
-        Q3ListViewItemIterator it( list_ );
-        while( it.current() )
+        for( int row = 0; row < model_.rowCount(); ++row )
         {
-            if( it.current()->isSelected() )
+            if( list_->selectionModel()->isSelected( model_.item( row )->index() ) )
             {
-                const unsigned id = it.current()->text( 1 ).toUInt();
+                const unsigned id = model_.item( row, 1 )->text().toUInt();
                 param->AddParameter( *new actions::parameters::DotationType( parameter_, id, resolver_ ) );
             }
-            ++it;
         }
     }
     action.AddParameter( *param.release() );
@@ -133,5 +143,5 @@ void ParamDotationTypeList::CommitTo( actions::ParameterContainer_ABC& action ) 
 // -----------------------------------------------------------------------------
 bool ParamDotationTypeList::InternalCheckValidity() const
 {
-    return list_ && list_->childCount() != 0;
+    return list_ && model_.rowCount() != 0;
 }

@@ -53,7 +53,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void Clicked( Q3ListViewItem* item );
+    void Clicked( const QModelIndex& index );
     //@}
 
 private:
@@ -66,7 +66,8 @@ private:
     //! @name Member data
     //@{
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
-    Q3ListView* list_;
+    QTreeView* list_;
+    QStandardItemModel model_;
     //@}
 };
 
