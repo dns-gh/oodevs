@@ -37,27 +37,25 @@ rootnode
         if self.params.withImprovement then
             self.toImprove = additionalParams.element
         else
-            self.nextTargetIndex = self.nextTargetIndex + 1
-            if self.nextTargetIndex > #self.params.entities then
-                self.alltry = true
-            end
+            self:nextElement()
+        end
+    end,
+
+    nextElement = function( self, params, additionalParams )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        if self.nextTargetIndex > #self.params.entities then
+            self.alltry = true
         end
     end,
 
     elementImproved = function( self, params, additionalParams )
         self.toImprove = nil
-        self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.entities then
-            self.alltry = true
-        end
+        self:nextElement()
     end,
 
     elementNotImprovable = function( self )
         self.toImprove = nil
-        self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.entities then
-            self.alltry = true
-        end
+        self:nextElement()
     end,
 
     -- -------------------------------------------------------------------------------- 
