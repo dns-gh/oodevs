@@ -35,14 +35,14 @@ public:
     std::string GetItemName();
     ADN_Missions_Mission* CreateCopy();
 
-    void ReadArchive ( xml::xistream& input, std::size_t contextLength, E_EntityType modelType );
+    void ReadArchive ( xml::xistream& input, std::size_t contextLength, ADN_Drawings_Data& drawings,
+        const std::string& baseDir, const std::string& missionDir );
     void ReadParameter( xml::xistream& input, std::size_t& index, std::size_t contextLength );
     void WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context );
 
-    void ReadMissionSheet ( E_EntityType type );
-    void RemoveDifferentNamedMissionSheet ( E_EntityType type );
-    void WriteMissionSheet ( E_EntityType type );
-    std::string FromEntityTypeToRepository( E_EntityType type);
+    void ReadMissionSheet ( const std::string& baseDir, const std::string& missionDir );
+    void RemoveDifferentNamedMissionSheet ( const std::string& baseDir, const std::string& missionDir );
+    void WriteMissionSheet ( const std::string& baseDir, const std::string& missionDir );
 
 public:
     ADN_Type_Int id_;

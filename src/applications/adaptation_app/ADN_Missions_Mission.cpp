@@ -11,8 +11,6 @@
 #include "ADN_Missions_Mission.h"
 
 #include "ADN_Missions_Data.h"
-#include "ADN_Workspace.h"
-#include "ADN_Project_Data.h"
 #include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
 
@@ -87,7 +85,8 @@ ADN_Missions_Mission* ADN_Missions_Mission::CreateCopy()
 // Name: ADN_Missions_Mission::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadArchive( xml::xistream& input, std::size_t contextLength, E_EntityType type )
+void ADN_Missions_Mission::ReadArchive( xml::xistream& input, std::size_t contextLength,
+    ADN_Drawings_Data& drawings, const std::string& baseDir, const std::string& missionDir )
 {
     std::string missionSheetDesc, symbol;
     std::size_t index = 0;
@@ -100,10 +99,9 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input, std::size_t contex
         >> xml::optional >> xml::attribute( "package", strPackage_ )
         >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
     const std::string code = symbol.empty() ? " - " : symbol;
-    ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    symbol_.SetVector( drawingsData.GetCategoryDrawings( "tasks" ) );
-    symbol_.SetData( drawingsData.GetDrawing( code ), false );
-    ReadMissionSheet( type );
+    symbol_.SetVector( drawings.GetCategoryDrawings( "tasks" ) );
+    symbol_.SetData( drawings.GetDrawing( code ), false );
+    ReadMissionSheet( baseDir, missionDir );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,12 +185,12 @@ void ADN_Missions_Mission::WriteArchive( xml::xostream& output, const std::strin
 // Name: ADN_Missions_Data::ReadMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::ReadMissionSheet( E_EntityType type )
+void ADN_Missions_Mission::ReadMissionSheet( const std::string& baseDir, const std::string& missionDir )
 {
-    std::string path = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + FromEntityTypeToRepository( type );
-    std::string fileName = std::string( path + "/" + strName_.GetData() + ".html" );
+    const std::string dir = baseDir + missionDir;
+    std::string fileName = std::string( dir + "/" + strName_.GetData() + ".html" );
     missionSheetPath_ = fileName;
-    if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
+    if( bfs::is_directory( dir ) && bfs::is_regular_file( fileName ) )
     {
         std::ifstream file( fileName.c_str() );
         std::stringstream buffer;
@@ -206,12 +204,10 @@ void ADN_Missions_Mission::ReadMissionSheet( E_EntityType type )
 // Name: ADN_Missions_Data::RemoveMissionSheet
 // Created: NPT 2012-07-31
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( E_EntityType type )
+void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( const std::string& baseDir, const std::string& missionDir )
 {
-    std::string missionDirectoryPath = FromEntityTypeToRepository( type );
-    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    std::string file = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html" );
-    std::string sheetPath = missionSheetPath_.GetData();
+    const std::string file = baseDir + missionDir + std::string( "/" + strName_.GetData() + ".html" );
+    const std::string sheetPath = missionSheetPath_.GetData();
     if( !sheetPath.empty() && file != sheetPath )
         bfs::remove( missionSheetPath_.GetData() );
 }
@@ -220,35 +216,16 @@ void ADN_Missions_Mission::RemoveDifferentNamedMissionSheet( E_EntityType type )
 // Name: ADN_Missions_Data::WriteMissionSheet
 // Created: NPT 2012-07-27
 // -----------------------------------------------------------------------------
-void ADN_Missions_Mission::WriteMissionSheet( E_EntityType type )
+void ADN_Missions_Mission::WriteMissionSheet( const std::string& baseDir, const std::string& missionDir )
 {
-    std::string missionDirectoryPath = FromEntityTypeToRepository( type );
-    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    std::string fileName = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html" );
+    const std::string dir = baseDir + missionDir;
+    std::string fileName = dir + std::string( "/" + strName_.GetData() + ".html" );
 
-    if( !bfs::is_directory( directoryPath+missionDirectoryPath ) )
-        bfs::create_directories( directoryPath+missionDirectoryPath + "/obsolete" );
+    if( !bfs::is_directory( dir ) )
+        bfs::create_directories( dir + "/obsolete" );
     std::fstream fichier( fileName.c_str(), std::ios::out | std::ios::trunc );
     fichier << missionSheetContent_.GetData();
     fichier.close();
     missionSheetPath_ = fileName;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FromEntityTypeToRepository
-// Created: NPT 2012-07-30
-// -----------------------------------------------------------------------------
-std::string ADN_Missions_Mission::FromEntityTypeToRepository( E_EntityType type )
-{
-    switch( type )
-    {
-    case eEntityType_Pawn:
-        return ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUnitsMissionPath_.GetData();
-    case eEntityType_Automat:
-        return ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szAutomataMissionPath_.GetData();
-    case eEntityType_Population:
-        return ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szCrowdsMissionPath_.GetData();
-    default:
-        return "";
-    }
-}
