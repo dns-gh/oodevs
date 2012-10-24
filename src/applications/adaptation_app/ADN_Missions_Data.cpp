@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_Data.h"
 
+#include "ADN_GuiTools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
@@ -284,6 +285,23 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
     output << xml::end;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::IsValidDatabase
+// Created: JSR 2012-10-24
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Data::MissionParameter::IsValidDatabase()
+{
+    if( type_.GetData() == eMissionParameterTypeLocationComposite )
+    {
+        bool hasChoice = false;
+        for( std::size_t i = 0; i < choices_.size() && !hasChoice; ++i )
+            hasChoice = choices_[i]->isAllowed_.GetData();
+        if( !hasChoice )
+            return ADN_GuiTools::MissingParameterChoices( strName_.GetData() );
+    }
+    return true;
+}
+
 // =============================================================================
 // Missions
 // =============================================================================
@@ -464,6 +482,18 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     output << xml::end;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::Mission::IsValidDatabase
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Data::Mission::IsValidDatabase()
+{
+    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+        if( !(*it)->IsValidDatabase() )
+            return false;
+    return true;
+}
+
 // =============================================================================
 // Frag orders
 // =============================================================================
@@ -597,6 +627,18 @@ void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::FragOrder::IsValidDatabase
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Data::FragOrder::IsValidDatabase()
+{
+    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+        if( !(*it)->IsValidDatabase() )
+            return false;
+    return true;
 }
 
 // =============================================================================
@@ -835,6 +877,26 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::FindMission( ADN_Missions_Data::T
     return *it;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::IsValidDatabase
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Data::IsValidDatabase()
+{
+    for( IT_Mission_Vector it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
+        if( !(*it)->IsValidDatabase() )
+            return false;
+    for( IT_Mission_Vector it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
+        if( !(*it)->IsValidDatabase() )
+            return false;
+    for( IT_Mission_Vector it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
+        if( !(*it)->IsValidDatabase() )
+            return false;
+    for( IT_FragOrder_Vector it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
+        if( !(*it)->IsValidDatabase() )
+            return false;
+    return true;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::MissionType::MissionType
