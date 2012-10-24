@@ -182,7 +182,6 @@
                         <description lang="fr" name="Publier l'ODB complet"><![CDATA[Détermine s'il faut publier l'ODB complet]]></description>
                     </descriptions>
                 </setting>
-                </setting>
             </settings>
         </group>
     </settings>
