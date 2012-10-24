@@ -31,6 +31,10 @@
         <source>No parameter type specified for parameter %1, database cannot be saved.</source>
         <translation>Aucun type de paramètre spécifié pour le paramètre %1, la base ne peut pas être sauvée.</translation>
     </message>
+    <message>
+        <source>At least one armor must be defined , database cannot be saved.</source>
+        <translation>Au moins un type de blindage doit être défini, la base ne peut pas être sauvée.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtections_GUI</name>
