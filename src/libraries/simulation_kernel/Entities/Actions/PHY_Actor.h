@@ -41,7 +41,7 @@ public:
     //@{
     void RegisterAction( boost::shared_ptr< PHY_Action_ABC > action );
     void UnregisterAction( unsigned int actionId );
-    void CancelAllActions();
+    virtual void CancelAllActions();
     bool HasAction( unsigned int actionId ) const;
     boost::shared_ptr< PHY_Action_ABC > GetAction( unsigned int actionId ) const;
     //@}

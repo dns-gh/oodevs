@@ -92,3 +92,14 @@ MIL_AutomateLOG* MIL_AgentPionLOG_ABC::FindLogisticManager() const
 {
     return GetAutomate().FindLogisticManager();
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPionLOG_ABC::CancelAllActions
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+void MIL_AgentPionLOG_ABC::CancelAllActions()
+{
+    MIL_AgentPion::CancelAllActions();
+    this->RegisterAction( pLogisticAction_ );
+}
