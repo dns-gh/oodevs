@@ -37,7 +37,7 @@ public:
 
     public:
         OrderInfos();
-        OrderInfos( ADN_Missions_Data::FragOrder* fragorder, const std::string& name );
+        OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name );
 
         std::string GetItemName();
 
@@ -46,7 +46,7 @@ public:
         OrderInfos* CreateCopy();
 
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Missions_Data::FragOrder > fragOrder_;
+        ADN_TypePtr_InVector_ABC< ADN_Missions_FragOrder >       fragOrder_;
         ADN_Type_String                                          strName_; // do not use directly !!!
     };
 
@@ -101,7 +101,7 @@ public:
         void ReadMission( xml::xistream& input );
         void ReadOrder( xml::xistream& input );
         void WriteArchive( const std::string& type, xml::xostream& output );
-        void AddFragOrder( ADN_Missions_Data::FragOrder* fragorder, const std::string& order );
+        void AddFragOrder( ADN_Missions_FragOrder* fragorder, const std::string& order );
         void RemoveFragOder( const std::string& order );
 
     public:
@@ -125,7 +125,7 @@ public:
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
     QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_Mission& model );
-    QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_Data::FragOrder& fragOrder );
+    QStringList     GetModelsThatUse( E_EntityType type, ADN_Missions_FragOrder& fragOrder );
 
     T_ModelInfos_Vector&    GetUnitModelsInfos();
     ModelInfos*             FindUnitModel( const std::string& strName );

@@ -25,187 +25,8 @@
 #include <xeuseuleu/xsl.hpp>
 
 #include <boost/bind.hpp>
-#include <boost/filesystem.hpp>
-
-namespace bfs = boost::filesystem;
 
 tools::IdManager ADN_Missions_Data::idManager_;
-
-// =============================================================================
-// Frag orders
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FragOrder::FragOrder
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-ADN_Missions_Data::FragOrder::FragOrder()
-    : id_( ADN_Missions_Data::idManager_.GetNextId() )
-    , isAvailableWithoutMission_( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FragOrder::FragOrder
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-ADN_Missions_Data::FragOrder::FragOrder( unsigned int id )
-    : id_                       ( id )
-    , isAvailableWithoutMission_( false )
-{
-    ADN_Missions_Data::idManager_.Lock( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FragOrder::~FragOrder
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-ADN_Missions_Data::FragOrder::~FragOrder()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FragOrder::GetItemName
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-std::string ADN_Missions_Data::FragOrder::GetItemName()
-{
-    return strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FragOrder::CreateCopy
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
-{
-    FragOrder* newFragOrder = new FragOrder();
-    newFragOrder->strName_ = strName_.GetData();
-    newFragOrder->missionSheetContent_ = missionSheetContent_.GetData();
-    newFragOrder->parameters_.reserve( parameters_.size() );
-    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
-    {
-        ADN_Missions_Parameter* newParam = (*it)->CreateCopy();
-        newFragOrder->parameters_.AddItem( newParam );
-    }
-    return newFragOrder;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FragOrder::ReadArchive
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "dia-type", diaType_ )
-          >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
-          >> xml::list( "parameter", *this, &ADN_Missions_Data::FragOrder::ReadParameter );
-    ReadMissionSheet();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FragOrder::ReadParameter
-// Created: AGE 2007-08-16
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::FragOrder::ReadParameter( xml::xistream& input )
-{
-    std::auto_ptr< ADN_Missions_Parameter > spNew( new ADN_Missions_Parameter() );
-    spNew->ReadArchive( input );
-    parameters_.AddItem( spNew.release() );
-}
-
-namespace
-{
-    QString BuildDiaFragOrderType( const QString& name )
-    {
-        QStringList list = QStringList::split( ' ', name );
-        if( list.front() == "Pion" || list.front() == "Automate" || list.front() == "Population" )
-            list[0].append( "_" );
-        for( int i = 1; i < list.size() - 1; ++i )
-            if( list[i].length() > 1 && list[i] == list[i].upper() )
-                list[i].append( "_" );
-        return QString( "Rep_OrderConduite_%1" ).arg( list.join( "" ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::FragOrder::WriteArchive
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
-{
-    if( diaType_.GetData().empty() )
-        diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).toAscii().constData();
-
-    output << xml::start( "fragorder" )
-            << xml::attribute( "name", strName_ )
-            << xml::attribute( "dia-type", diaType_ )
-            << xml::attribute( "id", id_ )
-            << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
-
-    for( unsigned int i = 0; i < parameters_.size(); ++i )
-        parameters_[i]->WriteArchive( output );
-    output << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::Mission::ReadMissionSheet
-// Created: NPT 2012-07-27
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::FragOrder::ReadMissionSheet()
-{
-    std::string path = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-                     + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
-    std::string fileName = std::string( path + "/" + strName_.GetData() + ".html");
-    missionSheetPath_ = fileName;
-    if( bfs::is_directory( path ) && bfs::is_regular_file( fileName ) )
-    {
-        std::ifstream file( fileName.c_str() );
-        std::stringstream buffer;
-        buffer << file.rdbuf();
-        missionSheetContent_ = std::string( buffer.str() );
-        file.close();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::RemoveMissionSheet
-// Created: NPT 2012-07-31
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::FragOrder::RemoveDifferentNamedMissionSheet()
-{
-    std::string missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
-    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    std::string file = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html");
-    std::string sheetPath = missionSheetPath_.GetData();
-    if( !sheetPath.empty() && file != sheetPath )
-        bfs::remove( missionSheetPath_.GetData() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::Mission::WriteMissionSheet
-// Created: NPT 2012-07-27
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::FragOrder::WriteMissionSheet()
-{
-    std::string missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
-    std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    std::string fileName = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html");
-
-    if( !bfs::is_directory( directoryPath+missionDirectoryPath ) )
-        bfs::create_directories( directoryPath+missionDirectoryPath + "/obsolete" );
-    std::fstream fichier( fileName.c_str(), std::ios::out | std::ios::trunc );
-    fichier << missionSheetContent_.GetData();
-    fichier.close();
-    missionSheetPath_ = fileName;
-}
-
-// =============================================================================
-// Main data
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data constructor
@@ -373,7 +194,7 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 {
-    std::auto_ptr< FragOrder > spNew( new FragOrder( xis.attribute< unsigned int >( "id" ) ) );
+    std::auto_ptr< ADN_Missions_FragOrder > spNew( new ADN_Missions_FragOrder( xis.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( xis );
     fragOrders_.AddItem( spNew.release() );
 }
@@ -513,9 +334,9 @@ ADN_Missions_Data::T_Mission_Vector& ADN_Missions_Data::GetPopulationMissions()
 // Name: ADN_Missions_Data::FindFragOrder
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::FragOrder* ADN_Missions_Data::FindFragOrder( const std::string& strName )
+ADN_Missions_FragOrder* ADN_Missions_Data::FindFragOrder( const std::string& strName )
 {
-    IT_FragOrder_Vector it = std::find_if( fragOrders_.begin(), fragOrders_.end(), ADN_Tools::NameCmp< FragOrder >( strName ) );
+    IT_FragOrder_Vector it = std::find_if( fragOrders_.begin(), fragOrders_.end(), ADN_Tools::NameCmp< ADN_Missions_FragOrder >( strName ) );
     if( it == fragOrders_.end() )
         return 0;
     return *it;

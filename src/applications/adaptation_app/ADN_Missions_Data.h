@@ -19,6 +19,7 @@
 #include "ADN_Missions_Parameter.h"
 #include "ADN_Missions_Type.h"
 #include "ADN_Missions_Mission.h"
+#include "ADN_Missions_FragOrder.h"
 #include "tools/IdManager.h"
 
 enum E_EntityType;
@@ -46,42 +47,8 @@ public:
     typedef ADN_Type_Vector_ABC<ADN_Missions_Mission>         T_Mission_Vector;
     typedef T_Mission_Vector::iterator                        IT_Mission_Vector;
     typedef T_Mission_Vector::const_iterator                  CIT_Mission_Vector;
-
-// =============================================================================
-// Frag orders
-// =============================================================================
-public:
-    class FragOrder : public ADN_Ref_ABC
-                    , public ADN_DataTreeNode_ABC
-    {
-    public:
-                 FragOrder();
-        explicit FragOrder( unsigned int id );
-        virtual ~FragOrder();
-
-        std::string GetItemName();
-        FragOrder* CreateCopy();
-
-        void ReadArchive ( xml::xistream& input );
-        void ReadParameter( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
-
-        void ReadMissionSheet ();
-        void RemoveDifferentNamedMissionSheet ();
-        void WriteMissionSheet ();
-
-    public:
-        ADN_Type_Int              id_;
-        ADN_Type_String           strName_;
-        T_MissionParameter_Vector parameters_;
-        ADN_Type_String           diaType_;
-        ADN_Type_Bool             isAvailableWithoutMission_;
-        ADN_Type_String           missionSheetContent_;
-        ADN_Type_String           missionSheetPath_;
-    };
-
-    typedef ADN_Type_Vector_ABC<FragOrder>  T_FragOrder_Vector;
-    typedef T_FragOrder_Vector::iterator   IT_FragOrder_Vector;
+    typedef ADN_Type_Vector_ABC<ADN_Missions_FragOrder>       T_FragOrder_Vector;
+    typedef T_FragOrder_Vector::iterator                      IT_FragOrder_Vector;
 
 // =============================================================================
 // Main data
@@ -98,11 +65,11 @@ public:
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Reset();
 
-    T_FragOrder_Vector&   GetFragOrders();
-    T_Mission_Vector&     GetUnitMissions();
-    T_Mission_Vector&     GetAutomatMissions();
-    T_Mission_Vector&     GetPopulationMissions();
-    FragOrder*            FindFragOrder( const std::string& strName );
+    T_FragOrder_Vector&     GetFragOrders();
+    T_Mission_Vector&       GetUnitMissions();
+    T_Mission_Vector&       GetAutomatMissions();
+    T_Mission_Vector&       GetPopulationMissions();
+    ADN_Missions_FragOrder* FindFragOrder( const std::string& strName );
     ADN_Missions_Mission* FindMission( T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();

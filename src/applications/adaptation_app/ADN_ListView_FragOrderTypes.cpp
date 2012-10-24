@@ -19,7 +19,7 @@
 #include "ADN_Wizard.h"
 #include "ADN_WizardPage.h"
 
-typedef ADN_Missions_Data::FragOrder FragOrder;
+typedef ADN_Missions_FragOrder FragOrder;
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_FragOrderTypes constructor

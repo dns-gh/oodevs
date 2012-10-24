@@ -686,7 +686,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         return result;
     }
     // Models that use frag order
-    if( ADN_Missions_Data::FragOrder* infos = dynamic_cast< ADN_Missions_Data::FragOrder* >( data ) )
+    if( ADN_Missions_FragOrder* infos = dynamic_cast< ADN_Missions_FragOrder* >( data ) )
     {
         QStringList& list = result[ eModels ];
         for( int i = 0; i < eNbrEntityTypes; ++i )

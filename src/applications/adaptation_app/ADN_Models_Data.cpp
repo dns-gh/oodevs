@@ -37,7 +37,7 @@ ADN_Models_Data::OrderInfos::OrderInfos()
     this->BindExistenceTo( &fragOrder_ );
 }
 
-ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_Data::FragOrder* fragorder, const std::string& name )
+ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name )
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
 , fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), fragorder )
@@ -62,7 +62,7 @@ std::string ADN_Models_Data::OrderInfos::GetItemName()
 void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ );
-    ADN_Missions_Data::FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( strName_.GetData() );
+    ADN_Missions_FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( strName_.GetData() );
     if( !fragOrder )
         throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Models_Data", "Doctrine models - Invalid frag order '%1'" ).arg( strName_.GetData().c_str() ).toAscii().constData() );
     fragOrder_ = fragOrder;
@@ -266,7 +266,7 @@ std::string ADN_Models_Data::ModelInfos::GetNodeName()
 // Name: ADN_Models_Data::AddFragOrder
 // Created: HBD 2010-09-01
 // -----------------------------------------------------------------------------
-void ADN_Models_Data::ModelInfos::AddFragOrder( ADN_Missions_Data::FragOrder* fragorder, const std::string& name )
+void ADN_Models_Data::ModelInfos::AddFragOrder( ADN_Missions_FragOrder* fragorder, const std::string& name )
 {
     std::auto_ptr<OrderInfos> spNew( new OrderInfos( fragorder, name ) );
     vFragOrders_.AddItem( spNew.release() );
@@ -535,7 +535,7 @@ QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_M
 // Name: ADN_Models_Data::GetModelsThatUse
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_Data::FragOrder& fragOrder )
+QStringList ADN_Models_Data::GetModelsThatUse( E_EntityType type, ADN_Missions_FragOrder& fragOrder )
 {
     QStringList result;
     T_ModelInfos_Vector* currentVector = 0;
