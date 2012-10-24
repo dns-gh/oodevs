@@ -46,6 +46,7 @@ public:
     template< typename T >
     void ReadChoice  ( xml::xistream& input, T& data );
     void WriteArchive( xml::xostream& output );
+    bool IsValidDatabase();
 
 private:
     void FillChoices();

@@ -31,6 +31,10 @@
         <source>Convoy mission not defined in Log/Supply, database cannot be saved.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No parameter type specified for parameter %1, database cannot be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtections_GUI</name>

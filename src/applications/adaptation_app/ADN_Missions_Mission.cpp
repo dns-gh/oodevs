@@ -228,3 +228,15 @@ void ADN_Missions_Mission::WriteMissionSheet( const std::string& baseDir, const 
     missionSheetPath_ = fileName;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Mission::IsValidDatabase
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Mission::IsValidDatabase()
+{
+    for( IT_MissionParameter_Vector it = parameters_.begin(); it != parameters_.end(); ++it )
+        if( !(*it)->IsValidDatabase() )
+            return false;
+    return true;
+}
+

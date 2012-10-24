@@ -43,6 +43,7 @@ public:
     void ReadMissionSheet ();
     void RemoveDifferentNamedMissionSheet ();
     void WriteMissionSheet ();
+    bool IsValidDatabase();
 
 public:
     ADN_Type_Int              id_;

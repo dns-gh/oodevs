@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_Parameter.h"
 
+#include "ADN_GuiTools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
 #include "ADN_Objects_Data.h"
@@ -214,3 +215,21 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
     Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
     output << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Parameter::IsValidDatabase
+// Created: LDC 2012-10-24
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Parameter::IsValidDatabase()
+{
+    if( type_.GetData() == eMissionParameterTypeLocationComposite )
+    {
+        bool hasChoice = false;
+        for( std::size_t i = 0; i < choices_.size() && !hasChoice; ++i )
+            hasChoice = choices_[i]->isAllowed_.GetData();
+        if( !hasChoice )
+            return ADN_GuiTools::MissingParameterChoices( strName_.GetData() );
+    }
+    return true;
+}
+

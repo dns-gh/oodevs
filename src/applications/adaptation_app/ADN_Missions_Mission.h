@@ -43,6 +43,7 @@ public:
     void ReadMissionSheet ( const std::string& baseDir, const std::string& missionDir );
     void RemoveDifferentNamedMissionSheet ( const std::string& baseDir, const std::string& missionDir );
     void WriteMissionSheet ( const std::string& baseDir, const std::string& missionDir );
+    bool IsValidDatabase();
 
 public:
     ADN_Type_Int id_;

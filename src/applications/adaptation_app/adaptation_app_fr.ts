@@ -31,6 +31,10 @@
         <source>Convoy mission not defined in Log/Supply, database cannot be saved.</source>
         <translation>La mission Convoi n&apos;est pas définie dans Log/Ravitaillement, la base ne peut pas être sauvée.</translation>
     </message>
+    <message>
+        <source>No parameter type specified for parameter %1, database cannot be saved.</source>
+        <translation>Aucun type de paramètre spécifié pour le paramètre %1, la base ne peut pas être sauvée.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtections_GUI</name>

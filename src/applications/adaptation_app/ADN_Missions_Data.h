@@ -72,6 +72,7 @@ public:
     ADN_Missions_FragOrder* FindFragOrder( const std::string& strName );
     ADN_Missions_Mission* FindMission( T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
+    virtual bool IsValidDatabase();
     virtual void Initialize();
 
     QStringList         GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name
