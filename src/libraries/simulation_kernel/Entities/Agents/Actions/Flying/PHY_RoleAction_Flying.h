@@ -75,6 +75,7 @@ public:
 private:
     //! @name Tools
     //@{
+    virtual void NotifyStopFlying();
     bool TakeOff();
     bool Land();
     virtual void Execute( location::LocationComputer_ABC& algorithm ) const;

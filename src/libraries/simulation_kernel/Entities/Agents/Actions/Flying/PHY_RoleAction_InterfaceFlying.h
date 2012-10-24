@@ -47,6 +47,7 @@ public:
     virtual void Fly();
     virtual void SetFlyingHeight( double rHeight );
     virtual bool IsFlying() const;
+    virtual void NotifyStopFlying();
     //@}
 
     //! @name Effect interface
