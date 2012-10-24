@@ -146,7 +146,7 @@ void ObjectPanel::OnApply()
 
         // add attributes
         Displayer_ABC& infos = GetBuilder().Group( tools::findTranslation( "Object", "Information" ) );
-        gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Reserved obstacle activated:" ) ) );
+        gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Obstacle activated:" ) ) );
         if( pCheckBox && pCheckBox->IsChecked() )
         {
             ParameterList& obstacleList = attributesList->AddList( "Obstacle" );
