@@ -208,7 +208,9 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
         values_[i]->WriteArchive( output, i );
     Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
     if( type_.GetData() == eMissionParameterTypeGenObject && !HasGenObjects() )
-        throw ADN_DataException( tools::translate( "ADN_Missions_Data",  "Invalid mission" ).toAscii().constData(), tools::translate( "ADN_Missions_Data", "'%1' parameter should have at least one object." ).arg( strName_.GetData().c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "ADN_Missions_Parameter",  "Invalid mission" ).toAscii().constData(),
+            tools::translate( "ADN_Missions_Parameter", "'%1' parameter should have at least one object." )
+                .arg( strName_.GetData().c_str() ).toAscii().constData() );
     Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
     output << xml::end;
 }

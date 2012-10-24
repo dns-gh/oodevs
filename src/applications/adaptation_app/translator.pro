@@ -107,6 +107,7 @@ ADN_MissionTypes_Table.cpp \
 ADN_Mission_ConfigurationDlg.cpp \
 ADN_Missions_Data.cpp \
 ADN_Missions_GUI.cpp \
+ADN_Missions_Parameter.cpp \
 ADN_Models_Data.cpp \
 ADN_Models_GUI.cpp \
 ADN_MultiPercentage.cpp \
