@@ -633,12 +633,9 @@ return
     relieveIt = function ( self )
         integration.relieveIt( self )
     end,
-    RC = masalife.brain.integration.startStopAction(
-    {
-        start = function( self, ... ) 
-           integration.pionRC( ... )
-        end
-    } ),
+    RC = function ( self, ... ) 
+        integration.pionRC( ... )
+    end,
     isPC = function( self )
         local pionPC = self.source:DEC_Automate_PionPC()
         if self.source == pionPC then
