@@ -31,69 +31,6 @@ namespace bfs = boost::filesystem;
 
 tools::IdManager ADN_Missions_Data::idManager_;
 
-// =============================================================================
-// Mission Parameters
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::MissionParameterValue::MissionParameterValue
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-ADN_Missions_Data::MissionParameterValue::MissionParameterValue()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::MissionParameterValue::~MissionParameterValue
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-ADN_Missions_Data::MissionParameterValue::~MissionParameterValue()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::MissionParameterValue::GetItemName
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-std::string ADN_Missions_Data::MissionParameterValue::GetItemName()
-{
-    return name_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::MissionParameterValue::CreateCopy
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-ADN_Missions_Data::MissionParameterValue* ADN_Missions_Data::MissionParameterValue::CreateCopy()
-{
-    MissionParameterValue* newValue = new MissionParameterValue();
-    newValue->name_ = name_.GetData();
-    return newValue;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::MissionParameterValue::ReadArchive
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::MissionParameterValue::ReadArchive( xml::xistream& input )
-{
-    input >> xml::attribute( "name", name_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::MissionParameterValue::WriteArchive
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-void ADN_Missions_Data::MissionParameterValue::WriteArchive( xml::xostream& output, unsigned int id )
-{
-    output << xml::start( "value" )
-                << xml::attribute( "id", id )
-                << xml::attribute( "name", name_ )
-           << xml::end;
-}
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::MissionParameter::MissionParameter
 // Created: SBO 2006-12-04
@@ -146,7 +83,7 @@ ADN_Missions_Data::MissionParameter* ADN_Missions_Data::MissionParameter::Create
     newParam->values_.reserve( values_.size() );
     for( IT_MissionParameterValue_Vector it = values_.begin(); it != values_.end(); ++it )
     {
-        MissionParameterValue* newParamValue = (*it)->CreateCopy();
+        ADN_Missions_ParameterValue* newParamValue = (*it)->CreateCopy();
         newParam->values_.AddItem( newParamValue );
     }
     newParam->choices_.reserve( choices_.size() );
@@ -236,7 +173,7 @@ void ADN_Missions_Data::MissionParameter::FillChoices()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::MissionParameter::ReadValue( xml::xistream& input )
 {
-    std::auto_ptr< MissionParameterValue > spNew( new MissionParameterValue() );
+    std::auto_ptr< ADN_Missions_ParameterValue > spNew( new ADN_Missions_ParameterValue() );
     spNew->ReadArchive( input );
     values_.AddItem( spNew.release() );
 }
@@ -527,8 +464,8 @@ void ADN_Missions_Data::Mission::RemoveDifferentNamedMissionSheet( E_EntityType 
     std::string missionDirectoryPath = FromEntityTypeToRepository( type );
     std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
     std::string file = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html" );
-
-    if( file != missionSheetPath_.GetData() && missionSheetPath_.GetData() != "" )
+    std::string sheetPath = missionSheetPath_.GetData();
+    if( !sheetPath.empty() && file != sheetPath )
         bfs::remove( missionSheetPath_.GetData() );
 }
 
@@ -718,8 +655,8 @@ void ADN_Missions_Data::FragOrder::RemoveDifferentNamedMissionSheet()
     std::string missionDirectoryPath = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szFragOrdersMissionPath_.GetData();
     std::string directoryPath = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
     std::string file = directoryPath + missionDirectoryPath + std::string( "/" + strName_.GetData() + ".html");
-
-    if( file != missionSheetPath_.GetData() && missionSheetPath_.GetData() != "" )
+    std::string sheetPath = missionSheetPath_.GetData();
+    if( !sheetPath.empty() && file != sheetPath )
         bfs::remove( missionSheetPath_.GetData() );
 }
 

@@ -28,7 +28,7 @@ namespace
         {
             assert( obj );
 
-            ADN_Missions_Data::MissionParameterValue* param = static_cast< ADN_Missions_Data::MissionParameterValue* >( obj );
+            ADN_Missions_ParameterValue* param = static_cast< ADN_Missions_ParameterValue* >( obj );
             ADN_TableItem_String* itemName = new ADN_TableItem_String( &tab_, obj );
             tab_.setItem( i, 0, itemName );
             itemName->GetConnector().Connect( &param->name_ );
@@ -68,7 +68,7 @@ ADN_MissionParameterValues_Table::~ADN_MissionParameterValues_Table()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameterValues_Table::AddNewElement()
 {
-    ADN_Missions_Data::MissionParameterValue* newElement = new ADN_Missions_Data::MissionParameterValue();
+    ADN_Missions_ParameterValue* newElement = new ADN_Missions_ParameterValue();
     newElement->name_ = tr( "New value" ).toAscii().constData();
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
@@ -82,7 +82,7 @@ void ADN_MissionParameterValues_Table::AddNewElement()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameterValues_Table::RemoveCurrentElement()
 {
-    ADN_Missions_Data::MissionParameterValue* param = (ADN_Missions_Data::MissionParameterValue*)GetCurrentData();
+    ADN_Missions_ParameterValue* param = (ADN_Missions_ParameterValue*)GetCurrentData();
     if( param )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
 }

@@ -206,6 +206,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameter_GroupBox.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_ParameterValue.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchListView.cpp" />
@@ -2079,6 +2080,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_ParameterValue.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NavigationInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.h" />

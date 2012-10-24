@@ -15,6 +15,7 @@
 #include "ADN_Enums.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
+#include "ADN_Missions_ParameterValue.h"
 #include "tools/IdManager.h"
 
 enum E_EntityType;
@@ -29,27 +30,10 @@ namespace xml { class xistream; }
 // =============================================================================
 class ADN_Missions_Data : public ADN_Data_ABC
 {
-
 // =============================================================================
 // Mission parameters
 // =============================================================================
 public:
-    class MissionParameterValue : public ADN_Ref_ABC
-                                , public ADN_DataTreeNode_ABC
-    {
-    public:
-                 MissionParameterValue();
-        virtual ~MissionParameterValue();
-
-        std::string GetItemName();
-        MissionParameterValue* CreateCopy();
-
-        void ReadArchive ( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, unsigned int id );
-
-    public:
-        ADN_Type_String name_;
-    };
     class MissionType : public ADN_Ref_ABC
                       , public ADN_DataTreeNode_ABC
     {
@@ -68,10 +52,10 @@ public:
         ADN_Type_Bool isAllowed_;
     };
 
-    typedef ADN_Type_Vector_ABC<MissionParameterValue>  T_MissionParameterValue_Vector;
-    typedef T_MissionParameterValue_Vector::iterator   IT_MissionParameterValue_Vector;
-    typedef ADN_Type_Vector_ABC<MissionType>            T_Choice_Vector;
-    typedef T_Choice_Vector::iterator                  IT_Choice_Vector;
+    typedef ADN_Type_Vector_ABC<ADN_Missions_ParameterValue>  T_MissionParameterValue_Vector;
+    typedef T_MissionParameterValue_Vector::iterator          IT_MissionParameterValue_Vector;
+    typedef ADN_Type_Vector_ABC<MissionType>                  T_Choice_Vector;
+    typedef T_Choice_Vector::iterator                         IT_Choice_Vector;
 
 public:
     class MissionParameter : public ADN_Ref_ABC
