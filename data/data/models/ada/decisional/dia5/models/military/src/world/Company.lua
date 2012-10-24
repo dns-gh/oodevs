@@ -114,7 +114,7 @@ predicate "isContaminated"
 {
     dependencies = "none",
     method = function( self )
-        local listCommanding = self.source:getAgentsFromCommander()
+        local listCommanding = integration.getAgentsFromCommander( self.source )
         for _, entity in pairs( listCommanding or emptyTable ) do
             if integration.isCommanderContaminated( entity ) then
                 return true
@@ -127,7 +127,7 @@ predicate "isPoisoned"
 {
     dependencies = "none",
     method = function( self )
-        local listCommanding = self.source:getAgentsFromCommander()
+        local listCommanding = integration.getAgentsFromCommander( self.source )
         for _, entity in pairs( listCommanding or emptyTable ) do
             if integration.isCommanderPoisoned( entity ) then
                 return true
@@ -140,7 +140,7 @@ predicate "isOperational"
 {
     dependencies = "none",
     method = function( self )
-        local listCommanding = self.source:getAgentsFromCommander()
+        local listCommanding = integration.getAgentsFromCommander( self.source )
         local operationalThreshold = 0
         local listOperational = 0
         for _, entity in pairs( listCommanding or emptyTable ) do

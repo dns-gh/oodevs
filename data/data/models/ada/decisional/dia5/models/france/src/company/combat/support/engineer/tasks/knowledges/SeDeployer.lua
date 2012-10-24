@@ -6,7 +6,7 @@ return
     
     getReachable = function( self, params )
         if params.position ~= NIL then
-            local nbUnits = #( integration.getAgentsFromCommander() )
+            local nbUnits = #( integration.getAgentsFromCommander( meKnowledge ) )
             -- division de la zone en sous-zones
             if masalife.brain.core.class.isOfType( params.position, world.Area) then
                 if not myself.leadData.currentPosition then

@@ -2,7 +2,7 @@ return
 {
     getEntities = function( self, params )
         local res = {}
-        local pions = integration.getAgentsFromCommander()
+        local pions = integration.getAgentsFromCommander( meKnowledge )
         for _, pion in pairs( pions ) do
             res[ #res + 1 ] = CreateKnowledge( world.PlatoonAlly, pion )
         end

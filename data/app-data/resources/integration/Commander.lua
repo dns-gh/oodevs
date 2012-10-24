@@ -10,8 +10,8 @@ integration.getSubordinatePosition = function( subordinate )
     return DEC_Automate_Position( subordinate.source ) -- $$$ GGE: TODO a virer ? Doublon de getCommanderPosition. Etrange qu'un subordonné appelle une fonction DEC niveau automate
 end
 
-integration.getAgentsFromCommander = function( self )
-    return DEC_Automate_PionsAvecPC()
+integration.getAgentsFromCommander = function( commander )
+    return commander:DEC_Automate_PionsAvecPC()
 end
 
 integration.isCommanderEngaged = function( self )
