@@ -60,10 +60,10 @@ namespace
 PathWalker::PathWalker( ModuleFacade& module, unsigned int entity )
     : module_         ( module )
     , entity_         ( entity )
-    , vNewPos_        ( 0., 0. )
-    , vNewDir_        ( 0., 0. )
-    , rCurrentSpeed_  ( 0. )
-    , rWalkedDistance_( 0. )
+    , vNewPos_        ( 0, 0 )
+    , vNewDir_        ( 0, 0 )
+    , rCurrentSpeed_  ( 0 )
+    , rWalkedDistance_( 0 )
     , pointsPassed_   ( 0 )
     , bForcePathCheck_( true )
     , bHasMoved_      ( false )
@@ -369,7 +369,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
             if( !bFirstMove ) //// $$$$$ !bFirstMove A REVOIR - PERMET DE SORTIR D'UN OBSTACLE PONCTUEL
             {
                 GET_HOOK( NotifyMovingInsideObject )( entity, object );
-                if( rSpeedWithinObject == 0. )
+                if( rSpeedWithinObject == 0 )
                 {
                     rCurrentSpeed_ = 0;
                     vNewPos_ = itCurMoveStep->vPos_;
@@ -395,7 +395,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
         {
             GET_HOOK( NotifyMovingInsideObject )( entity, object );
             rMaxSpeedForStep = std::min( rMaxSpeedForStep, GET_HOOK( GetSpeedWithReinforcementObject )( entity, environment_, object) );
-            if( rMaxSpeedForStep == 0. )
+            if( rMaxSpeedForStep == 0 )
             {
                 rCurrentSpeed_ = 0;
                 vNewPos_ = itCurMoveStep->vPos_;
@@ -448,7 +448,7 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
     if( vNewPosTmp == vNewPos_ )
         return true;
 
-    if( rCurrentSpeed_ <= 0. )
+    if( rCurrentSpeed_ <= 0 )
     {
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Current speed is not positive" );
         return false;
@@ -471,7 +471,7 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
     CIT_MoveStepSet itCurMoveStep  = moveStepSet.begin();
     CIT_MoveStepSet itNextMoveStep = moveStepSet.begin();
     ++itNextMoveStep;
-    while( rTimeRemaining > 0. )
+    while( rTimeRemaining > 0 )
     {
         if( !TryToMoveToNextStep( itCurMoveStep, itNextMoveStep, rTimeRemaining, bFirstMove, entity ) )
             return false;
@@ -512,23 +512,23 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
     vNewPos_ = MT_Vector2D( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
     vNewDir_ = MT_Vector2D( entity[ "movement/direction/x" ], entity[ "movement/direction/y" ] );
 
-    if( rCurrentSpeed_ == 0. || ! entity[ "movement/can-move" ] )
+    if( rCurrentSpeed_ == 0 || ! entity[ "movement/can-move" ] )
     {
-        rCurrentSpeed_ = 0.;
+        rCurrentSpeed_ = 0;
         PostMovement( entity );
         return eNotAllowed;
     }
 
     if( itNextPathPoint_ == pPath->GetResult().end() )
     {
-        rCurrentSpeed_ = 0.;
+        rCurrentSpeed_ = 0;
         PostMovement( entity );
         return eFinished;
     }
 
     if( ! entity[ "movement/has-resources" ] )
     {
-        rCurrentSpeed_ = 0.;
+        rCurrentSpeed_ = 0;
         if( !bFuelReportSent_ )
         {
             PostReport( entity, MIL_Report::eReport_OutOfGas );
@@ -544,7 +544,7 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
         vNewDir_ = ( ( *itNextPathPoint_ )->GetPos() - vNewPos_ ).Normalize();
 
     rWalkedDistance_ = 0;
-    while( rTimeRemaining > 0. )
+    while( rTimeRemaining > 0 )
     {
         const MT_Vector2D vPosBeforeMove( vNewPos_ );
         const bool moveTryResult = TryToMoveTo( *pPath, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining, model, entity );  // $$$$ VPR 2012-01-06: Modifies vNewPos_
