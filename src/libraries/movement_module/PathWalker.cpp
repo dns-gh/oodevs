@@ -58,19 +58,17 @@ namespace
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
 PathWalker::PathWalker( ModuleFacade& module, unsigned int entity )
-    : module_            ( module )
-    , entity_            ( entity )
-    , itNextPathPoint_   ()
-    , itCurrentPathPoint_()
-    , vNewPos_           ( 0., 0. )
-    , vNewDir_           ( 0., 0. )
-    , rCurrentSpeed_     ( 0. )
-    , rWalkedDistance_   ( 0. )
-    , pointsPassed_      ( 0 )
-    , bForcePathCheck_   ( true )
-    , bHasMoved_         ( false )
-    , bFuelReportSent_   ( false )
-    , pathSet_           ( eFinished )
+    : module_         ( module )
+    , entity_         ( entity )
+    , vNewPos_        ( 0., 0. )
+    , vNewDir_        ( 0., 0. )
+    , rCurrentSpeed_  ( 0. )
+    , rWalkedDistance_( 0. )
+    , pointsPassed_   ( 0 )
+    , bForcePathCheck_( true )
+    , bHasMoved_      ( false )
+    , bFuelReportSent_( false )
+    , pathSet_        ( eFinished )
 {
     module.Register( entity_, *this );
 }
