@@ -69,14 +69,14 @@ void ReadPerimeter( ::hla::Deserializer_ABC& deserializer, const std::string& id
 // Name: Minefield constructor
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-Minefield::Minefield( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
-        unsigned short siteID, unsigned short applicationID )
+Minefield::Minefield( TacticalObject_ABC& object, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier force, const rpr::EntityType& type,
+        const rpr::EntityIdentifier& entityId, const std::string& rtiId )
     : object_( &object )
     , listeners_ ( new ObjectListenerComposite() )
-    , identifier_( name )
+    , identifier_( rtiId )
     , attributes_( new AttributesUpdater( identifier_, *listeners_ ) )
     , type_( type )
-    , entityIdentifier_( siteID, applicationID, static_cast< unsigned short >( identifier ) )
+    , entityIdentifier_( entityId )
     , force_( force )
 {
     RegisterAttributes();

@@ -35,6 +35,17 @@ EntityIdentifier::EntityIdentifier()
 
 // -----------------------------------------------------------------------------
 // Name: EntityIdentifier constructor
+// Created: AHC 2012-10-23
+// -----------------------------------------------------------------------------
+EntityIdentifier::EntityIdentifier( const rpr::EntityIdentifier& rhs )
+    : federateIdentifier_( rhs.federateIdentifier_ )
+    , entityNumber_( rhs.entityNumber_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityIdentifier constructor
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
 EntityIdentifier::EntityIdentifier( unsigned short site, unsigned short application, unsigned short number )
@@ -97,4 +108,13 @@ bool EntityIdentifier::Match( const rpr::EntityIdentifier& lhs, const rpr::Entit
     return ::Match( lhs.federateIdentifier_.siteID_, rhs.federateIdentifier_.siteID_ ) &&
            ::Match( lhs.federateIdentifier_.applicationID_, rhs.federateIdentifier_.applicationID_ ) &&
            ::Match( lhs.entityNumber_, rhs.entityNumber_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityIdentifier::GetNumber
+// Created: AHC 2012-10-23
+// -----------------------------------------------------------------------------
+unsigned short EntityIdentifier::GetNumber() const
+{
+    return entityNumber_;
 }

@@ -37,6 +37,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Create( const std::string& name, rpr::EntityIdentifier& id ) = 0; // Create and register an ID
     virtual void Register( const rpr::EntityIdentifier& identifier, const std::string& name ) = 0;
     virtual void Unregister( const rpr::EntityIdentifier& identifier ) = 0;
     virtual void Unregister( const std::string& name ) = 0;

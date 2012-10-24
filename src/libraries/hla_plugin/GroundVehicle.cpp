@@ -27,19 +27,19 @@ using namespace plugins::hla;
 // Name: GroundVehicle constructor
 // Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-GroundVehicle::GroundVehicle( Agent_ABC& agent, unsigned int identifier,
-                              const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                              unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/, FOM_Serializer_ABC& fomSerializer )
-    :  identifier_( name )
+GroundVehicle::GroundVehicle( Agent_ABC& agent, const std::string& name,
+                              rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
+                              const rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId )
+    :  identifier_( rtiId )
     , listeners_ ( new ObjectListenerComposite() )
     , fomSerializer_( fomSerializer )
     , agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     attributes_->Register( "EntityType", type );
-    attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( siteID, applicationID, static_cast< unsigned short >( identifier ) ) );
+    attributes_->Register( "EntityIdentifier", entityId );
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
-    attributes_->Register( "Marking", markingFactory.CreateMarking( name, identifier ) );
+    attributes_->Register( "Marking", markingFactory.CreateMarking( name, entityId.GetNumber() ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
     agent_.Register( *this );
 }

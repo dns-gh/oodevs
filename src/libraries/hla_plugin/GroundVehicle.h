@@ -25,6 +25,7 @@ namespace hla
 namespace rpr
 {
     class EntityType;
+    class EntityIdentifier;
 }
 
 namespace plugins
@@ -51,9 +52,9 @@ class GroundVehicle : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             GroundVehicle( Agent_ABC& agent, unsigned int identifier,
-                            const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                            unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
+             GroundVehicle( Agent_ABC& agent, const std::string& name,
+                            rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
+                            const rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId );
     virtual ~GroundVehicle( );
     //@}
 

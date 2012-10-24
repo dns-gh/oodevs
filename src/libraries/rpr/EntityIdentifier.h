@@ -26,6 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntityIdentifier();
+             EntityIdentifier( const rpr::EntityIdentifier& rhs );
              EntityIdentifier( unsigned short site, unsigned short application, unsigned short number );
     virtual ~EntityIdentifier();
     //@}
@@ -46,16 +47,21 @@ public:
     }
 
     std::string str() const;
+
+    unsigned short GetNumber() const;
+
 	static bool Match( const EntityIdentifier& lhs, const EntityIdentifier& rhs);
     bool operator== ( const EntityIdentifier& rhs ) const;
     bool operator< ( const EntityIdentifier& rhs ) const;
     //@}
 
-private:
+public:
     //! @name Types
     //@{
     struct FederateIdentifier
     {
+        FederateIdentifier( const FederateIdentifier& rhs )
+            : siteID_( rhs.siteID_ ), applicationID_( rhs.applicationID_ ) {}
         FederateIdentifier( unsigned short site, unsigned short application )
             : siteID_( site ), applicationID_( application ) {}
         template< typename Archive >
@@ -79,6 +85,7 @@ private:
     FederateIdentifier federateIdentifier_;
     unsigned short entityNumber_;
     //@}
+
 };
 
 }

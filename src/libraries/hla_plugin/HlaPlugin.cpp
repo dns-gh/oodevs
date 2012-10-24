@@ -220,7 +220,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pMessengerMessageController_( new tools::MessageController< sword::MessengerToClient_Content >() )
     , pOwnershipStrategy_         ( new OwnershipStrategy( *pXis_ ) )
     , pOwnershipPolicy_           ( 0 )
-    , pEntityIdentifierResolver_   ( new EntityIdentifierResolver() )
+    , pEntityIdentifierResolver_  ( new EntityIdentifierResolver( pXis_->attribute< unsigned short >( "dis-site", 1 ), pXis_->attribute< unsigned short >( "dis-application", 1 ) ) )
 {
     logger_.LogInfo( "Debug log enabled" );
 }

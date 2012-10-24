@@ -32,6 +32,7 @@ namespace
     public:
         Fixture()
             : listener( 0 )
+            , entityId( 42, 43, 1 )
         {
             MOCK_EXPECT( agent.Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( agent.Unregister ).once();
@@ -44,12 +45,13 @@ namespace
         hla::MockUpdateFunctor functor;
         rpr::EntityType entityType;
 		MockFOM_Serialization fomSerialization;
+		rpr::EntityIdentifier entityId;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory, 42, 43, entityIdResolver, fomSerialization )
+            : entity( agent, "name", rpr::Friendly, rpr::EntityType(), factory, entityId, entityIdResolver, fomSerialization, "rtiId" )
         {}
         AggregateEntity entity;
     };

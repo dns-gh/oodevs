@@ -52,7 +52,7 @@ HlaTacticalObjectClass::~HlaTacticalObjectClass()
 }
 
 // -----------------------------------------------------------------------------
-// Name: HlaTacticalObjectClass destructor
+// Name: HlaTacticalObjectClass::Create
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
 HlaObject_ABC& HlaTacticalObjectClass::Create ( const ::hla::ObjectIdentifier& /*objectID*/, const std::string& objectName )
@@ -115,7 +115,7 @@ bool HlaTacticalObjectClass::RequestOwnershipAssumption( const ::hla::ObjectIden
 void HlaTacticalObjectClass::Created( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
     std::string objectName( nameFactory_.CreateName( name + boost::lexical_cast< std::string >( identifier ) ) );
-    T_Entity localEntity( factory_->Create( object, objectName, identifier, force, type ).release() );
+    T_Entity localEntity( factory_->Create( object, name, identifier, force, type, objectName ).release() );
     ::hla::ObjectIdentifier objectId( hlaClass_->Register( *localEntity, objectName ) );
     pListeners_->LocalCreated( objectId.ToString(), *this, *localEntity );
     localEntities_[ objectName ] = localEntity;

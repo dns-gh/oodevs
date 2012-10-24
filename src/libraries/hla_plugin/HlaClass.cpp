@@ -64,10 +64,10 @@ HlaClass::~HlaClass()
 // Name: HlaClass::Created
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-void HlaClass::Created( Agent_ABC& agent, unsigned long identifier, const std::string& /*name*/, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol )
+void HlaClass::Created( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol )
 {
-    std::string objectName( nameFactory_.CreateName( boost::lexical_cast< std::string >( identifier ) ) );
-    T_Entity localEntity( factory_->Create( agent, objectName, identifier, force, type, symbol ).release() );
+    std::string objectName( nameFactory_.CreateName( name + boost::lexical_cast< std::string >( identifier ) ) );
+    T_Entity localEntity( factory_->Create( agent, name, identifier, force, type, symbol, objectName ).release() );
     if( !localEntity.get() )
         return;
     ::hla::ObjectIdentifier objectId( hlaClass_->Register( *localEntity, objectName ) );

@@ -12,6 +12,7 @@
 
 #include "HlaObjectFactory_ABC.h"
 #include "RemoteHlaObjectFactory_ABC.h"
+#include "EntityIdentifierResolver_ABC.h"
 #include "CallsignResolver_ABC.h"
 #include <boost/lexical_cast.hpp>
 
@@ -27,22 +28,20 @@ namespace hla
     class HlaObjectFactory : public HlaObjectFactory_ABC
     {
     public:
-        HlaObjectFactory( const MarkingFactory_ABC& markingFactory, unsigned short siteID, unsigned short applicationID,
+        HlaObjectFactory( const MarkingFactory_ABC& markingFactory,
                 EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer )
             : markingFactory_( markingFactory )
-            , siteID_( siteID )
-            , applicationID_( applicationID )
             , entityIdentifierResolver_( entityIdentifierResolver )
             , fomSerializer_( fomSerializer )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/ ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long /*identifier*/, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/, const std::string& rtiId ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type, markingFactory_, siteID_, applicationID_, entityIdentifierResolver_, fomSerializer_ ) );
+            rpr::EntityIdentifier entityId;
+            entityIdentifierResolver_.Create( rtiId, entityId );
+            return std::auto_ptr< HlaObject_ABC >( new T( agent, name, force, type, markingFactory_, entityId, entityIdentifierResolver_, fomSerializer_, rtiId ) );
         }
     private:
         const MarkingFactory_ABC& markingFactory_;
-        unsigned short siteID_;
-        unsigned short applicationID_;
         EntityIdentifierResolver_ABC& entityIdentifierResolver_;
         FOM_Serializer_ABC& fomSerializer_;
     };
@@ -55,12 +54,12 @@ namespace hla
             , resolver_( resolver )
             , fomSerializer_( fomSerializer )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned long simId, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& rtiId ) const
         {
-            std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, identifier, force, type, symbol );
-            const std::string uniqueIdentifier( "SWORD" + boost::lexical_cast< std::string >( identifier ) );
-            const std::string callsign( name + boost::lexical_cast< std::string >( identifier ) );
-            resolver_.Add( identifier, callsign, uniqueIdentifier );
+            std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, simId, force, type, symbol, rtiId );
+            const std::string uniqueIdentifier( "SWORD" + boost::lexical_cast< std::string >( simId ) );
+            const std::string callsign( name + boost::lexical_cast< std::string >( simId ) );
+            resolver_.Add( simId, callsign, uniqueIdentifier );
             return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueIdentifier, symbol, fomSerializer_ ) );
         }
     private:
@@ -110,17 +109,17 @@ namespace hla
     class TacticalObjectFactory : public HlaTacticalObjectFactory_ABC
     {
     public:
-        TacticalObjectFactory( unsigned short siteID, unsigned short applicationID )
-            : siteID_( siteID )
-            , applicationID_ ( applicationID )
+        TacticalObjectFactory( EntityIdentifierResolver_ABC& entityIdentifierResolver )
+            : entityIdentifierResolver_( entityIdentifierResolver )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( TacticalObject_ABC& object, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( TacticalObject_ABC& object, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& rtiId ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new T( object, identifier, name, force, type, siteID_, applicationID_ ) );
+            rpr::EntityIdentifier entityId;
+            entityIdentifierResolver_.Create( rtiId, entityId );
+            return std::auto_ptr< HlaObject_ABC >( new T( object, identifier, name, force, type, entityId, rtiId ) );
         }
     private:
-        unsigned short siteID_;
-        unsigned short applicationID_;
+        EntityIdentifierResolver_ABC& entityIdentifierResolver_;
     };
 }
 }

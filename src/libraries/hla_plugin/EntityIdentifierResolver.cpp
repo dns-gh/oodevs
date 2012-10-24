@@ -16,7 +16,10 @@ using namespace plugins::hla;
 // Name: EntityIdentifierResolver constructor
 // Created: AHC 2012-04-23
 // -----------------------------------------------------------------------------
-EntityIdentifierResolver::EntityIdentifierResolver()
+EntityIdentifierResolver::EntityIdentifierResolver( unsigned short siteId, unsigned short applicationId )
+    : siteId_( siteId )
+    , applicationId_( applicationId )
+    , sequenceId_( 0 )
 {
 }
 
@@ -84,4 +87,15 @@ void EntityIdentifierResolver::Unregister( const std::string& name )
     T_IdMap::left_iterator it( ids_.left.find( name ) );
     if( ids_.left.end() != it )
         ids_.left.erase( it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityIdentifierResolver::Create
+// Created: AHC 2012-10-23
+// -----------------------------------------------------------------------------
+void EntityIdentifierResolver::Create( const std::string& name, rpr::EntityIdentifier& id )
+{
+    ++sequenceId_;
+    id = rpr::EntityIdentifier( siteId_, applicationId_, sequenceId_ );
+    Register( id, name );
 }

@@ -361,7 +361,7 @@ void RemoteAgentController::Attach( unsigned long simId )
 // Created: AHC 2010-03-09
 // -----------------------------------------------------------------------------
 void RemoteAgentController::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& /*name*/,
-        rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool isLocal, unsigned long /*agentType*/ )
+        rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool isLocal )
 {
     if( !isLocal )
         remoteAgents_[ identifier ] = &agent;

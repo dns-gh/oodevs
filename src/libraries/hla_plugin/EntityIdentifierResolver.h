@@ -31,12 +31,13 @@ class EntityIdentifierResolver : public EntityIdentifierResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    EntityIdentifierResolver();
+    EntityIdentifierResolver( unsigned short siteId, unsigned short applicationId );
     virtual ~EntityIdentifierResolver();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Create( const std::string& name, rpr::EntityIdentifier& id );
     virtual void Register( const rpr::EntityIdentifier& identifier, const std::string& name );
     virtual void Unregister( const rpr::EntityIdentifier& identifier );
     virtual void Unregister( const std::string& name );
@@ -53,6 +54,9 @@ private:
     //! @name Attributes
     //@{
     T_IdMap ids_;
+    unsigned short siteId_;
+    unsigned short applicationId_;
+    unsigned short sequenceId_;
     //@}
 };
 }

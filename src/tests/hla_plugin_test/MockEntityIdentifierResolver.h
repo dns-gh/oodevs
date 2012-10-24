@@ -24,6 +24,7 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockEntityIdentifierResolver, EntityIdentifierResolver_ABC )
 {
+    MOCK_METHOD( Create, 2 )
     MOCK_METHOD( Register, 2 )
     MOCK_METHOD_EXT( Unregister, 1, void( const rpr::EntityIdentifier&), UnregisterId )
     MOCK_METHOD_EXT( Unregister, 1, void( const std::string&), UnregisterName )

@@ -43,8 +43,8 @@ BOOST_AUTO_TEST_CASE( side_checker_checks_sides )
     MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
     remoteClassListener->RemoteCreated("remote friendly", hlaClass, object);
     BOOST_REQUIRE( remoteClassListener );
-    agentListener->AggregateCreated( agent, friendly, "friendly", rpr::Friendly, rpr::EntityType(), "symbol", true, 42 );
-    agentListener->AggregateCreated( agent, enemyVessel, "enemy vessel", rpr::Opposing, rpr::EntityType(), "symbol", true, 42 );
+    agentListener->AggregateCreated( agent, friendly, "friendly", rpr::Friendly, rpr::EntityType(), "symbol", true );
+    agentListener->AggregateCreated( agent, enemyVessel, "enemy vessel", rpr::Opposing, rpr::EntityType(), "symbol", true );
     remoteAgentListener->SideChanged( "remote friendly", rpr::Friendly );
     BOOST_CHECK( checker.AreSameSide( friendly, friendly ) );
     BOOST_CHECK( !checker.AreSameSide( friendly, enemyVessel ) );

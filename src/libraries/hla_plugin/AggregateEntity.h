@@ -59,9 +59,9 @@ class AggregateEntity : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateEntity( Agent_ABC& agent, unsigned long identifier,
-                              const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                              unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
+             AggregateEntity( Agent_ABC& agent, const std::string& name,
+                              rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
+                              const rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId );
              AggregateEntity( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
     virtual ~AggregateEntity();
     //@}
@@ -130,7 +130,6 @@ private:
     Omt13StringArray subAggregates_;
     IsPartOfStruct isPartOf_;
     unsigned short numberOfSilentEntities_;
-    unsigned long simIdentifier_;
     rpr::ForceIdentifier force_;
     rpr::EntityType type_;
     AggregateMarking marking_;

@@ -54,7 +54,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     Minefield( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type,
-            unsigned short siteID, unsigned short applicationID );
+            const rpr::EntityIdentifier& entityId, const std::string& rtiId );
     Minefield( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
     virtual  ~Minefield();
     //@}

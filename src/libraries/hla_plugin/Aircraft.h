@@ -54,9 +54,9 @@ class Aircraft : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Aircraft( Agent_ABC& agent, unsigned long identifier,
-                            const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                            unsigned short siteID, unsigned short applicationID, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
+             Aircraft( Agent_ABC& agent, const std::string& name,
+                            rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
+                            const rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId );
              Aircraft( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
     virtual ~Aircraft();
     //@}
@@ -98,7 +98,6 @@ private:
     EntityIdentifierResolver_ABC& entityIdentifierResolver_;
     FOM_Serializer_ABC& fomSerializer_;
     std::auto_ptr< AttributesUpdater > attributesUpdater_;
-    unsigned long simIdentifier_;
     rpr::ForceIdentifier force_;
     rpr::EntityType type_;
     Marking marking_;
