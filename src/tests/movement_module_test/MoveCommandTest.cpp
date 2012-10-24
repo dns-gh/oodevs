@@ -145,16 +145,14 @@ namespace
     struct StartedFixture : public MovementFixture
     {
         StartedFixture()
-            : start( 0, 0 )
-            , end  ( 0, 10 )
         {
+            const geometry::Point2f start( 0, 0 );
+            const geometry::Point2f end( 0, 10 );
             UpdatePosition( start );
             const T_Points points = boost::assign::map_list_of( start, TerrainData() )
                                                               ( end, TerrainData() );
             command = StartMoveCommand( points );
         }
-        const geometry::Point2f start;
-        const geometry::Point2f end;
     };
 }
 
