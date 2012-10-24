@@ -43,27 +43,27 @@ namespace
             MOCK_EXPECT( ComputePathfind ).once().calls( bp::bind( &PathfindFixture::AddPoints, this, boost::ref( points ), bp::arg_names::arg10, bp::arg_names::arg11 ) );
             MOCK_EXPECT( StartComputePathfind ).once().calls( boost::bind( &ExecutePathfind, _2, boost::ref( pathfind ) ) );
         }
-        void Step( double currentSpeed, bool hasResources, bool canMove )
+        void Step( double speed, bool hasResources, bool canMove )
         {
             const bool obstaclesChange = false;
             entity[ "movement/has-resources" ] = hasResources;
             entity[ "movement/can-move" ] = canMove;
             MOCK_EXPECT( GetWorldWeldValue ).returns( 1000 );
             MOCK_EXPECT( GetLimas );
-            MOCK_EXPECT( GetSpeedWithReinforcement ).returns( currentSpeed );
+            MOCK_EXPECT( GetSpeedWithReinforcement ).returns( speed );
             MOCK_EXPECT( GetObjectListWithinCircle );
             MOCK_EXPECT( UpdateObjectsToAvoid ).returns( obstaclesChange );
             ExecuteCommands();
             mock::verify();
             mock::reset();
         }
-        void Advance( float currentSpeed, unsigned int code, bool hasResources, bool canMove )
+        void Advance( float speed, unsigned int code, bool hasResources, bool canMove )
         {
             ExpectEffect( entity[ "movement" ] );
             ExpectCallbackEvent( code );
-            ExpectMovementEvent( currentSpeed );
-            Step( currentSpeed, hasResources, canMove );
-            UpdatePosition( geometry::Point2f( 0, entity[ "movement/position/y" ] + currentSpeed ) );
+            ExpectMovementEvent( speed );
+            Step( speed, hasResources, canMove );
+            UpdatePosition( geometry::Point2f( 0, entity[ "movement/position/y" ] + speed ) );
         }
         void ExpectCallbackEvent( unsigned int code )
         {
@@ -166,18 +166,18 @@ BOOST_FIXTURE_TEST_CASE( movement_command_in_paused_execution_only_sends_paused_
 
 BOOST_FIXTURE_TEST_CASE( first_movement_command_posts_path_effect_and_running_code_event_if_not_arrived, StartedFixture )
 {
-    const double currentSpeed = 5;
+    const double speed = 5;
     ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "direction/x", 0 )
                                                               ( "direction/y", 1 )
                                                               ( "position/x", 0 )
-                                                              ( "position/y", currentSpeed )
-                                                              ( "speed", currentSpeed ) );
+                                                              ( "position/y", speed )
+                                                              ( "speed", speed ) );
     ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", 1 )
         ( "points", sword::test::MakeModel()[ sword::test::MakeModel( "x", 0 )( "y", 0 ) ]
                                             [ sword::test::MakeModel( "x", 0 )( "y", 10 ) ] ) );
     ExpectCallbackEvent( sword::movement::PathWalker::eRunning );
-    ExpectMovementEvent( currentSpeed );
-    Step( currentSpeed, true, true );
+    ExpectMovementEvent( speed );
+    Step( speed, true, true );
     MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
@@ -240,7 +240,7 @@ BOOST_FIXTURE_TEST_CASE( movement_with_entity_that_cannot_move_sends_not_allowed
 {
     ExpectEffect( entity[ "movement/path" ] );
     Advance( 1, sword::movement::PathWalker::eRunning, true, true );
-    const double currentSpeed = 1;
+    const double speed = 1;
     const double stopSpeed = 0;
     ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "direction/x", 0 )
                                                               ( "direction/y", 0 )
@@ -248,8 +248,8 @@ BOOST_FIXTURE_TEST_CASE( movement_with_entity_that_cannot_move_sends_not_allowed
                                                               ( "position/y", 1 )
                                                               ( "speed", stopSpeed ) );
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
-    ExpectMovementEvent( currentSpeed );
-    Step( currentSpeed, true, false );
+    ExpectMovementEvent( speed );
+    Step( speed, true, false );
     MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
@@ -356,9 +356,9 @@ BOOST_FIXTURE_TEST_CASE( _movement_command_does_not_post_updated_truncated_path_
     ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", 1 )( "points", builder ) );
     ExpectEffect( entity[ "movement" ], sword::test::MakeModel( mock::any ) );
     ExpectCallbackEvent( sword::movement::PathWalker::eRunning );
-    const double currentSpeed = 0.5;
-    ExpectMovementEvent( currentSpeed );
+    const double speed = 0.5;
+    ExpectMovementEvent( speed );
     MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
-    Step( currentSpeed, true, true );
+    Step( speed, true, true );
     MOCK_EXPECT( CancelPathFindJob ).once();
 }
