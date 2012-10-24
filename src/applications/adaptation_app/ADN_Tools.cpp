@@ -18,6 +18,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/algorithm/string.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Tools::CreatePathToFile
@@ -51,12 +52,7 @@ bool ADN_Tools::CopyFileToFile( const std::string& strSrc, const std::string& st
 // -----------------------------------------------------------------------------
 bool ADN_Tools::CaselessCompare( const std::string& str1, const std::string& str2 )
 {
-    std::string str1Lower = str1;
-    std::transform( str1Lower.begin(), str1Lower.end(), str1Lower.begin(), std::tolower );
-    std::string str2Lower = str2;
-    std::transform( str2Lower.begin(), str2Lower.end(), str2Lower.begin(), std::tolower );
-
-    return str1Lower == str2Lower;
+    return boost::iequals( str1, str2 );
 }
 
 // -----------------------------------------------------------------------------
