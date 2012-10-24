@@ -47,7 +47,7 @@ rootnode
         -- Move to object and build the bridge
         if self.arrived and not self.bridgeBuilt then
             Activate( skill.nodes.Bridge, 1, { crossingSite = self.params.crossingSite, bridgeSystem = self.bridgeSystem } )
-        else  -- Moving to position
+        elseif not self.arrived then -- Moving to position
             Activate( skill.links.moveToward, 1, { entities = { self.params.crossingSite } } )
             self.arrived = false
         end
