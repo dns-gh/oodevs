@@ -55,3 +55,12 @@ end
 integration.isCamp = function( object )
     return DEC_ObjectKnowledge_HasCapacity( object.source, "logistic" )
 end
+
+integration.getPositionsAroundObject = function( object )
+    object.getObjectNearestBorderPosition = object.getObjectNearestBorderPosition or nil
+    if object.getObjectNearestBorderPosition == nil then
+        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 20 )
+        object.getObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
+    end
+    return { CreateKnowledge( world.Point, object.getObjectNearestBorderPosition ) }
+end
