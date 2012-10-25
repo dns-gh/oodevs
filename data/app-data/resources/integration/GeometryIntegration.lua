@@ -81,7 +81,7 @@ integration.createLocationPolyline = function( positionsList )
 end
 
 integration.createDirection = function( firstPosition, secondPosition )
-    DEC_Geometrie_CreerDirection( firstPosition, secondPosition )
+    return DEC_Geometrie_CreerDirection( firstPosition, secondPosition )
 end
 
 integration.geometryX = function( position )
