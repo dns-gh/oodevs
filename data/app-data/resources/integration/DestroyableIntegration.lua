@@ -190,5 +190,5 @@ integration.getMaxRangeToFireOnAgent = function( agent, pH )
 end
 
 integration.getMaxRangeToBeFiriedByAgent = function( agent, pH )
-    return DEC_Tir_PorteeMaxPourEtreTireParUnite
+    return DEC_Tir_PorteeMaxPourEtreTireParUnite( agent, pH )
 end
