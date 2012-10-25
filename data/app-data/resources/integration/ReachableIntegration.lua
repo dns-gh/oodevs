@@ -699,10 +699,6 @@ integration.isPointInUrbanBlockTrafficableForPlatoon = function( platoon, locali
     return DEC_IsPointInUrbanBlockTrafficableForPlatoon( platoon, localisation)
 end
 
-integration.isPointInUrbanBlockTrafficable = function( position )
-    return DEC_IsPointInUrbanBlockTrafficable( position )
-end
-
 integration.getCrossroads = function()
     local crossroads = {}
     DEC_Crossroads( crossroads )
