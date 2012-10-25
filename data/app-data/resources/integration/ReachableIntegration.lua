@@ -4,11 +4,16 @@ require "debug"
 --TODO use map to convert string to int/ or other  move function approach
 integration.getPlatoonPosition = function( platoon )
     if integration.isKnowledgeAgentValid( platoon.source ) then
-        return DEC_ConnaissanceAgent_Position( platoon.source )
+        return integration.getKnowledgeAgentPosition( platoon.source )
     else
         return nil
     end
 end
+
+integration.getKnowledgeAgentPosition = function( agent )
+    return DEC_ConnaissanceAgent_Position( agent )
+end
+
 integration.getTeammatePosition = function( platoon )
 	  return DEC_Agent_PositionPtr( platoon.source )
 end

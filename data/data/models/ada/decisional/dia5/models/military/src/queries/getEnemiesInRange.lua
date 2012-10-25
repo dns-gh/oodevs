@@ -10,7 +10,7 @@ queryImplementation "getEnemiesInRange"
             if integration.isKnowledgeAgentValid( enemy ) and not integration.isAgentTacticallyDestroyed( enemy ) then
                 local rDistanceAEni = 0 
                 local porteeMaxEn = integration.getMaxRangeToFireOnAgent( enemy, params.probabilityToHit ) -- range depends on enemy volume
-                local enyPosition = integration.getPlatoonPosition( enemy )
+                local enyPosition = integration.getKnowledgeAgentPosition( enemy )
                 if integration.isAgentFlying( enemy ) then -- flying enemy: compute 3D distance
                     local altitude = integration.getHeightForKnowledgeAgent( enemy )
                     rDistanceAEni = integration.compute3DDistance( myPosition, 0, enyPosition, altitude )
