@@ -100,7 +100,3 @@ integration.isIdentifyingForPredicate = {
                 return masalife.brain.knowledge.me.body:computeMovementCapability( self ) ~= 0 and masalife.brain.knowledge.me.body:computeIdentificationCapability( objective, self ) > 66
              end
 }
-
-integration.copyPoint = function( point )
-    DEC_Geometrie_CopiePoint( point )
-end
