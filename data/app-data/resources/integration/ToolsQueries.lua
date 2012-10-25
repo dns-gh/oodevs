@@ -266,7 +266,7 @@ end
 integration.getEntitiesFromAutomat = function ( automat, role, withPC)
     local temp = {}
     if withPC then
-        temp = integration.getSubordinateAgentsFromCommander( automat.source )
+        temp = integration.getSubordinateAgentsFromCommander( automat )
     else
         temp = DEC_Automate_PionsDeAutomateSansPC(automat.source)
     end
