@@ -85,11 +85,11 @@ integration.createDirection = function( firstPosition, secondPosition )
 end
 
 integration.geometryX = function( position )
-    position:DEC_Geometrie_X()
+    return position:DEC_Geometrie_X()
 end
 
 integration.geometryY = function( position )
-    position:DEC_Geometrie_Y( )
+    return position:DEC_Geometrie_Y( )
 end
 
 integration.computeSafetyPosition = function( agent, safetyDistance )
