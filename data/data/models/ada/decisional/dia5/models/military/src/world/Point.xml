@@ -586,36 +586,6 @@ Par défaut, toute position est une position potentielle de couverture.</descrip
                 </type>
             </return>
         </method>
-        <method name="getX" abstract="false">
-            <description>Return X coordinate.</description>
-            <argument name="position">
-                <description>Position.</description>
-                <type>
-                    <class name="properties.Positionable"/>
-                </type>
-            </argument>
-            <return>
-                <description>Return X coordinate.</description>
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </return>
-        </method>
-        <method name="getY" abstract="false">
-            <description>Return Y coordinate.</description>
-            <argument name="position">
-                <description>Position.</description>
-                <type>
-                    <class name="properties.Positionable"/>
-                </type>
-            </argument>
-            <return>
-                <description>Return Y coordinate.</description>
-                <type>
-                    <simple name="numeric"/>
-                </type>
-            </return>
-        </method>
     </methods>
     <predicates>
         <predicate name="isIdentifyingFor">

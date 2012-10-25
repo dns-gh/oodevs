@@ -298,11 +298,10 @@ return
             local mission = integration.getRawMission( meKnowledge.source )
             local dirDanger = integration.getDangerousDirection( mission )
             local dirEni = integration.createDirection(meKnowledge:getPosition(), self:getPosition())
-            
-            local xDanger = getX( dirDanger )
-            local yDanger = getY( dirDanger )
-            local xEni = getX( dirEni )
-            local yEni = getY( dirEni )
+            local xDanger = integration.geometryX( dirDanger )
+            local yDanger = integration.geometryY( dirDanger )
+            local xEni = integration.geometryX( dirEni )
+            local yEni = integration.geometryY( dirEni )
             scalaire = ( xDanger * xEni ) + ( yDanger * yEni )            
         end
 
@@ -354,12 +353,6 @@ return
     isInAttackRange = function( self, suicide, dotation )
         if suicide then return self:isReached() end
         return integration.distance( meKnowledge, self ) < integration.porteePourAttentat( dotation )
-    end,
-    getX = function( direction )
-        return integration.geometryX( direction )
-    end,
-    getY = function( direction )
-        return integration.geometryY( direction)
     end,
     attackIt = masalife.brain.integration.startStopAction( 
     { 
