@@ -31,7 +31,7 @@ protected:
     {
         eButtonBack     = 0x01,
         eButtonQuit     = 0x02,
-        eButtonOptions  = 0x04,
+        eButtonAdmin    = 0x04,
         eButtonStart    = 0x08,
         eButtonJoin     = 0x10,
         eButtonEdit     = 0x20,
@@ -97,7 +97,7 @@ private:
     static QuitPage* quitPage_;
 
     QPushButton* backButton_;
-    QPushButton* settingsButton_;
+    QPushButton* adminButton_;
     QPushButton* quitButton_;
     QPushButton* startButton_;
     QPushButton* joinButton_;

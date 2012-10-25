@@ -23,7 +23,7 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 HomePage::HomePage( QWidget* parent, Q3WidgetStack* pages, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
-    : MenuPage( pages, *this, eButtonOptions | eButtonQuit )
+    : MenuPage( pages, *this, eButtonAdmin | eButtonQuit )
     , config_( config )
     , optionsPage_( new OptionsPage( parent, pages, *this, config ) )
 {

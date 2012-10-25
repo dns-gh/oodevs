@@ -34,17 +34,17 @@ namespace
 // -----------------------------------------------------------------------------
 Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short flags )
     : gui::LanguageChangeObserver_ABC< Q3VBox >( pages )
-    , pages_         ( pages )
-    , previous_      ( previous )
-    , backButton_    ( 0 )
-    , settingsButton_( 0 )
-    , quitButton_    ( 0 )
-    , startButton_   ( 0 )
-    , joinButton_    ( 0 )
-    , editButton_    ( 0 )
-    , applyButton_   ( 0 )
-    , deleteButton_  ( 0 )
-    , titleLabel_    ( 0 )
+    , pages_       ( pages )
+    , previous_    ( previous )
+    , backButton_  ( 0 )
+    , adminButton_ ( 0 )
+    , quitButton_  ( 0 )
+    , startButton_ ( 0 )
+    , joinButton_  ( 0 )
+    , editButton_  ( 0 )
+    , applyButton_ ( 0 )
+    , deleteButton_( 0 )
+    , titleLabel_  ( 0 )
 {
     grid_ = new Q3GridLayout( layout(), 3, 2 );
     grid_->setRowStretch( 0, 1 );
@@ -57,8 +57,8 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
 
     if( flags & eButtonBack )
         backButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignLeft, SLOT( OnBack() ) );
-    else if( flags & eButtonOptions )
-        settingsButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignLeft, SLOT( OnOptions() ) );
+    else if( flags & eButtonAdmin )
+        adminButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignLeft, SLOT( OnOptions() ) );
 
     if( flags & eButtonQuit )
     {
@@ -99,21 +99,21 @@ Page_ABC::~Page_ABC()
 void Page_ABC::OnLanguageChanged()
 {
     if( backButton_ )
-        backButton_->setText(     tools::translate( "Page_ABC", "Back" ) );
-    if( settingsButton_ )
-        settingsButton_->setText( tools::translate( "Page_ABC", "Settings" ) );
+        backButton_->setText(   tools::translate( "Page_ABC", "Back" ) );
+    if( adminButton_ )
+        adminButton_->setText(  tools::translate( "Page_ABC", "Administration" ) );
     if( quitButton_ )
-        quitButton_->setText(     tools::translate( "Page_ABC", "Quit" ) );
+        quitButton_->setText(   tools::translate( "Page_ABC", "Quit" ) );
     if( startButton_ )
-        startButton_->setText(    tools::translate( "Page_ABC", "Start" ) );
+        startButton_->setText(  tools::translate( "Page_ABC", "Start" ) );
     if( joinButton_ )
-        joinButton_->setText(     tools::translate( "Page_ABC", "Join" ) );
+        joinButton_->setText(   tools::translate( "Page_ABC", "Join" ) );
     if( editButton_ )
-        editButton_->setText(     tools::translate( "Page_ABC", "Edit" ) );
+        editButton_->setText(   tools::translate( "Page_ABC", "Edit" ) );
     if( applyButton_ )
-        applyButton_->setText(    tools::translate( "Page_ABC", "Apply" ) );
+        applyButton_->setText(  tools::translate( "Page_ABC", "Apply" ) );
     if( deleteButton_ )
-        deleteButton_->setText(   tools::translate( "Page_ABC", "Delete" ) );
+        deleteButton_->setText( tools::translate( "Page_ABC", "Delete" ) );
 }
 
 // -----------------------------------------------------------------------------
