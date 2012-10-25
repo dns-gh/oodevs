@@ -5,7 +5,7 @@
         <parameter name="camp">
             <description>The refugees camp inside which the agent has to escort the refugees units.</description>
             <type>
-                <class name="properties.Loading"/>
+                <class name="properties.Camp"/>
             </type>
         </parameter>
         <parameter name="peoples">
