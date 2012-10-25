@@ -509,7 +509,7 @@ return
         if self == meKnowledge then
             return integration.getBodyPosition() -- Me
         else
-            return integration.getTeammatePosition( self.source ) -- a friend 
+            return integration.getTeammatePosition( self ) -- a friend 
         end
     end,
     getMyPosition = function( self )
