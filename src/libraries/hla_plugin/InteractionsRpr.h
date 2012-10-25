@@ -186,6 +186,26 @@ struct RecordSet
     std::vector<RecordStruct> values;
 };
 
+struct RecordSetList
+{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        int32 size = static_cast< int32 >( values.size() );
+        archive << size
+                << values;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        int32 size = 0;
+        archive >> size;
+        values.resize( size );
+        archive >> values;
+    }
+    std::vector<RecordSet> values;
+};
+
 struct TransferControl
 {
     enum TransferTypeEnum8
@@ -205,7 +225,7 @@ struct TransferControl
     uint32 requestIdentifier;
     uint8 transferType;
     Omt13String transferEntity;
-    std::vector<RecordSet> recordSetData;
+    RecordSetList recordSetData;
 };
 
 struct VariableDatum
