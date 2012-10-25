@@ -10,9 +10,27 @@
 #ifndef __OptionsPage_h_
 #define __OptionsPage_h_
 
-#include "ContentPage.h"
+#include "LauncherClientPage.h"
 
 class Config;
+class DataWidget;
+class ImportWidget;
+class ExportWidget;
+
+namespace frontend
+{
+    class LauncherClient;
+}
+
+namespace tools
+{
+    class Loader_ABC;
+}
+
+namespace kernel
+{
+    class Controllers;
+}
 
 // =============================================================================
 /** @class  OptionsPage
@@ -20,30 +38,63 @@ class Config;
 */
 // Created: SBO 2008-02-21
 // =============================================================================
-class OptionsPage : public ContentPage
+class OptionsPage : public LauncherClientPage
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, Config& config );
+             OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, Config& config,
+                          const tools::Loader_ABC& loader, kernel::Controllers& controllers,
+                          frontend::LauncherClient& launcher );
     virtual ~OptionsPage();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    void ShowPackageInstallation( const QString& package );
+    //@}
+
+public slots:
+    //! @name Operations
+    //@{
+    void UpdateButton();
+    void OnButtonChanged( bool enabled, const QString& text );
     //@}
 
 private slots:
     //! @name Operations
     //@{
+    virtual void OnApply();
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
     void OnEditDataDirectory( const QString& text );
-    virtual void OnApply();
     virtual void OnBack();
     //@}
 
 private:
+    //! @name Type
+    //@{
+    enum E_Tabs
+    {
+        eTabs_Settings,
+        eTabs_Import,
+        eTabs_Export,
+        eTabs_Terrains,
+        eTabs_Models,
+    };
+    void SetSettingsLayout();
+    void SetImportLayout();
+    void SetExportLayout();
+    void SetDataLayout();
+    //@}
+
     //! @name Helpers
     //@{
+    void Reconnect();
+    virtual void ApplyAction();
     virtual void OnLanguageChanged();
     void Reset();
     void Commit();
@@ -58,23 +109,40 @@ private:
 private:
     //! @name Member data
     //@{
-    QWidget* parent_;
-    Config& config_;
-    T_Languages languages_;
+    QWidget*                 parent_;
+    QTabWidget*              tabs_;
+    Config&                  config_;
+    const tools::Loader_ABC& loader_;
+    kernel::Controllers&     controllers_;
+    //@}
 
-    std::string selectedLanguage_;
-    std::string selectedDataDir_;
-
+    //! @name Settings tab
+    //@{
+    T_Languages  languages_;
+    std::string  selectedLanguage_;
+    std::string  selectedDataDir_;
     QLabel*      languageLabel_;
     QComboBox*   languageCombo_;
-
     QLabel*      dataLabel_;
     QPushButton* dataButton_;
-
     QLineEdit*   dataDirectory_;
+    bool         hasChanged_;
+    bool         languageHasChanged_;
+    //@}
 
-    bool hasChanged_;
-    bool languageHasChanged_;
+    //! @name Import tab
+    //@{
+    ImportWidget* import_;
+    //@}
+
+    //! @name Export tab
+    //@{
+    ExportWidget* export_;
+    //@}
+
+    //! @name Terrains/Models tab
+    //@{
+    DataWidget* data_;
     //@}
 };
 

@@ -12,6 +12,9 @@
 #include "moc_OptionsPage.cpp"
 #include "Application.h"
 #include "MessageDialog.h"
+#include "DataWidget.h"
+#include "ImportWidget.h"
+#include "ExportWidget.h"
 #include "clients_gui/Tools.h"
 #include "Config.h"
 #include "Launcher.h"
@@ -29,17 +32,49 @@ namespace bfs = boost::filesystem;
 // Name: OptionsPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, Config& config )
-    : ContentPage( pages, previous, eButtonBack | eButtonApply )
+OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, Config& config,
+                          const tools::Loader_ABC& loader, kernel::Controllers& controllers,
+                          frontend::LauncherClient& launcher )
+    : LauncherClientPage( pages, previous, eButtonBack | eButtonApply, launcher )
     , parent_            ( parent )
+    , tabs_              ( new QTabWidget() )
     , config_            ( config )
+    , loader_            ( loader )
+    , controllers_       ( controllers )
     , selectedLanguage_  ( tools::readLang() )
-    , selectedDataDir_   ( "" )
     , hasChanged_        ( false )
     , languageHasChanged_( false )
 {
     setObjectName( "OptionsPage" );
+    setMargin( 5 );
 
+    SetSettingsLayout();
+    SetImportLayout();
+    SetExportLayout();
+    SetDataLayout();
+    AddContent( tabs_ );
+
+    connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), SLOT( UpdateButton() ) );
+
+    // Init data
+    Reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage destructor
+// Created: SBO 2008-02-21
+// -----------------------------------------------------------------------------
+OptionsPage::~OptionsPage()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::SetSettingsLayout
+// Created: BAX 2012-10-24
+// -----------------------------------------------------------------------------
+void OptionsPage::SetSettingsLayout()
+{
     // Language
     languageLabel_ = new QLabel();
     languageLabel_->setFixedHeight( 25 );
@@ -82,23 +117,47 @@ OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previ
     boxLayout->addStretch();
 
     // main layout
-    QWidget* mainBox = new QWidget( pages );
+    QWidget* mainBox = new QWidget();
     QHBoxLayout* mainLayout = new QHBoxLayout( mainBox );
     mainLayout->addLayout( titleLayout );
     mainLayout->addLayout( boxLayout );
-    AddContent( mainBox );
 
-    // Init data
-    Reset();
+    tabs_->addTab( mainBox, "" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: OptionsPage destructor
-// Created: SBO 2008-02-21
+// Name: OptionsPage::SetImportLayout
+// Created: BAX 2012-10-24
 // -----------------------------------------------------------------------------
-OptionsPage::~OptionsPage()
+void OptionsPage::SetImportLayout()
 {
-    // NOTHING
+    import_ = new ImportWidget( parent_, config_ );
+    tabs_->addTab( import_, "" );
+    connect( import_, SIGNAL( ButtonChanged( bool, const QString& ) ),
+             SLOT( OnButtonChanged( bool, const QString& ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::SetExportLayout
+// Created: BAX 2012-10-24
+// -----------------------------------------------------------------------------
+void OptionsPage::SetExportLayout()
+{
+    export_ = new ExportWidget( parent_, config_, loader_, controllers_ );
+    tabs_->addTab( export_, "" );
+    connect( export_, SIGNAL( ButtonChanged( bool, const QString& ) ),
+             SLOT( OnButtonChanged( bool, const QString& ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::SetModelsLayout
+// Created: BAX 2012-10-24
+// -----------------------------------------------------------------------------
+void OptionsPage::SetDataLayout()
+{
+    data_ = new DataWidget( parent_, tabs_, config_ );
+    connect( data_, SIGNAL( ButtonChanged( bool, const QString& ) ),
+             SLOT( OnButtonChanged( bool, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,12 +167,17 @@ OptionsPage::~OptionsPage()
 void OptionsPage::OnLanguageChanged()
 {
     // Title
-    SetTitle( tools::translate( "OptionsPage", "Settings" ) );
+    SetTitle( tools::translate( "OptionsPage", "Administration" ) );
 
-    // Language
+    // tabs
+    tabs_->setTabText( eTabs_Settings, tools::translate( "OptionsPage", "Settings" ) );
+    tabs_->setTabText( eTabs_Import,   tools::translate( "OptionsPage", "Import" ) );
+    tabs_->setTabText( eTabs_Export,   tools::translate( "OptionsPage", "Export" ) );
+    tabs_->setTabText( eTabs_Terrains, tools::translate( "OptionsPage", "Terrains" ) );
+    tabs_->setTabText( eTabs_Models,   tools::translate( "OptionsPage", "Models" ) );
+
+    // settings
     languageLabel_->setText( tools::translate( "OptionsPage", "Language: " ) );
-
-    // Data
     dataLabel_->setText( tools::translate( "OptionsPage", "Data directory: " ) );
     dataButton_->setText( tools::translate( "OptionsPage", "..." ) );
 
@@ -137,7 +201,7 @@ void OptionsPage::OnChangeLanguage( const QString& lang )
     }
     hasChanged_ = true;
     languageHasChanged_ = true;
-    EnableButton( eButtonApply, true );
+    UpdateButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +216,7 @@ void OptionsPage::OnChangeDataDirectory()
     selectedDataDir_ = directory.toAscii().constData();
     dataDirectory_->setText( directory );
     hasChanged_ = true;
-    EnableButton( eButtonApply, true );
+    UpdateButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +227,7 @@ void OptionsPage::OnEditDataDirectory( const QString& text )
 {
     selectedDataDir_ = text.toAscii().constData();
     hasChanged_ = true;
-    EnableButton( eButtonApply, true );
+    UpdateButton();
 }
 
 // -----------------------------------------------------------------------------
@@ -188,6 +252,58 @@ void OptionsPage::OnBack()
     hasChanged_ = false;
     languageHasChanged_ = false;
     Page_ABC::OnBack();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::OnButtonChanged
+// Created: BAX 2012-24-10
+// -----------------------------------------------------------------------------
+void OptionsPage::OnButtonChanged( bool enabled, const QString& text )
+{
+    EnableButton ( eButtonApply, enabled );
+    SetButtonText( eButtonApply, text );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::UpdateButton
+// Created: BAX 2012-10-24
+// -----------------------------------------------------------------------------
+void OptionsPage::UpdateButton()
+{
+    switch( tabs_->currentPageIndex() )
+    {
+        default:
+            break;
+
+        case eTabs_Settings:
+            EnableButton ( eButtonApply, hasChanged_ );
+            SetButtonText( eButtonApply, tools::translate( "Page_ABC", "Apply" ) );
+            break;
+
+        case eTabs_Import:
+            import_->OnButtonChanged();
+            break;
+
+        case eTabs_Export:
+            export_->OnButtonChanged();
+            break;
+
+        case eTabs_Models:
+        case eTabs_Terrains:
+            data_->OnButtonChanged();
+            break;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::Reconnect
+// Created: BAX 2012-10-25
+// -----------------------------------------------------------------------------
+void OptionsPage::Reconnect()
+{
+    Connect( "localhost", config_.GetLauncherPort() );
+    export_->Update();
+    data_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -231,6 +347,40 @@ void OptionsPage::CreateDataDirectory()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnApply()
 {
+    switch( tabs_->currentPageIndex() )
+    {
+        default:
+            break;
+
+        case eTabs_Settings:
+            ApplyAction();
+            Reconnect();
+            break;
+
+        case eTabs_Import:
+            import_->InstallExercise();
+            Reconnect();
+            break;
+
+        case eTabs_Export:
+            export_->ExportPackage();
+            break;
+
+        case eTabs_Models:
+        case eTabs_Terrains:
+            data_->OnDelete();
+            Reconnect();
+            break;
+    }
+    UpdateButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OptionsPage::ApplyAction
+// Created: ABR 2011-11-08
+// -----------------------------------------------------------------------------
+void OptionsPage::ApplyAction()
+{
     CreateDataDirectory();
     assert( hasChanged_ );
     Application& application = static_cast< Application& >( *qApp );
@@ -245,7 +395,6 @@ void OptionsPage::OnApply()
     }
     languageHasChanged_ = false;
     hasChanged_ = false;
-    EnableButton( eButtonApply, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,6 +417,8 @@ void OptionsPage::Commit()
 // -----------------------------------------------------------------------------
 void OptionsPage::Reset()
 {
+    Reconnect();
+
     selectedLanguage_ = tools::readLang();
     selectedDataDir_ = config_.GetRootDir();
 
@@ -276,5 +427,16 @@ void OptionsPage::Reset()
     dataDirectory_->setText( QDir::convertSeparators( selectedDataDir_.c_str() ) );
 
     hasChanged_ = false;
-    EnableButton( eButtonApply, false );
+    UpdateButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::ShowPackageInstallation
+// Created: BAX 2012-10-24
+// -----------------------------------------------------------------------------
+void OptionsPage::ShowPackageInstallation( const QString& package )
+{
+    import_->SelectPackage( package );
+    tabs_->showPage( import_ );
+    QTimer::singleShot( 1, this, SLOT( show() ) );
 }

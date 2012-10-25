@@ -25,7 +25,7 @@
 HomePage::HomePage( QWidget* parent, Q3WidgetStack* pages, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, *this, eButtonAdmin | eButtonQuit )
     , config_( config )
-    , optionsPage_( new OptionsPage( parent, pages, *this, config ) )
+    , optionsPage_( new OptionsPage( parent, pages, *this, config, fileLoader, controllers, launcher ) )
 {
     setName( "HomePage" );
     adapt_ =   AddLink( *new AuthoringPage( parent, pages, *this, config, controllers ) );
@@ -92,9 +92,5 @@ void HomePage::OnOptions()
 // -----------------------------------------------------------------------------
 void HomePage::InstallPackage( const QString& package )
 {
-    package;
-#if 0
-    if( prepare_->isEnabled() )
-        editPage_->ShowPackageInstallation( package );
-#endif
+    optionsPage_->ShowPackageInstallation( package );
 }
