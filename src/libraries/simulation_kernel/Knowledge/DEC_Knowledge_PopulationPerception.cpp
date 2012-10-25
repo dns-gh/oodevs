@@ -31,7 +31,6 @@ DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MI
     , pAgentPerceiving_    ( &agentPerceiving )
     , pPopulationPerceived_( &populationPerceived )
     , bAttacker_( false )
-
 {
     // NOTHING
 }
