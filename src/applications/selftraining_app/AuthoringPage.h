@@ -20,7 +20,6 @@ namespace kernel
 class Config;
 class MenuButton;
 class ProgressPage;
-class DataPage;
 
 // =============================================================================
 /** @class  AuthoringPage
@@ -59,10 +58,8 @@ private:
     const Config& config_;
     kernel::Controllers& controllers_;
     ProgressPage* progressPage_;
-    DataPage* dataPage_;
     QPushButton* authoring_;
     QPushButton* terrainGen_;
-    QPushButton* data_;
     //@}
 };
 

@@ -12,7 +12,6 @@
 #include "moc_AuthoringPage.cpp"
 #include "Config.h"
 #include "CreateTerrainPage.h"
-#include "DataPage.h"
 #include "MenuButton.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
@@ -25,7 +24,7 @@
 // Name: AuthoringPage constructor
 // Created: JSR 2010-06-04
 // -----------------------------------------------------------------------------
-AuthoringPage::AuthoringPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous,
+AuthoringPage::AuthoringPage( QWidget* /*parent*/, Q3WidgetStack* pages, Page_ABC& previous,
                               const Config& config, kernel::Controllers& controllers )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_     ( config )
@@ -33,11 +32,9 @@ AuthoringPage::AuthoringPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& p
 {
     setName( "AuthoringPage" );
     progressPage_ = new ProgressPage( pages, *this );
-    dataPage_     = new DataPage( parent, pages, *this, config );
 
     authoring_       = AddLink( *this, SLOT( OnAuthoring() ) );
     terrainGen_      = AddLink( *new CreateTerrainPage( pages, *this, controllers, config ) );
-    data_            = AddLink( *dataPage_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,8 +61,6 @@ void AuthoringPage::OnLanguageChanged()
         config_.hasTerrainGeneration_
         ? tools::translate( "AuthoringPage", "Launch Terrain Generation application" )
         : tools::translate( "AuthoringPage", "Missing Sword-Terrain-Generation license" ) );
-    SetTextAndSubtitle( data_, tools::translate( "AuthoringPage", "Data" ),
-        tools::translate( "AuthoringPage", "Remove Terrains and Models" ) );
     MenuPage::OnLanguageChanged();
 }
 
@@ -77,8 +72,6 @@ void AuthoringPage::Update()
 {
     authoring_->setEnabled( config_.hasAuthoring_ );
     terrainGen_->setEnabled( config_.hasTerrainGeneration_ );
-    dataPage_->SetTerrainsEnabled( true );
-    dataPage_->SetModelsEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
