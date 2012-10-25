@@ -40,7 +40,9 @@
 #include "OwnershipController.h"
 #include "LocationOwnershipPolicy.h"
 #include "RprTransferSender.h"
+#include "Netn2TransferSender.h"
 #include "NullTransferSender.h"
+#include "RprTransferSender.h"
 #include "EntityIdentifierResolver.h"
 #include "FOM_Serializer.h"
 #include "SideResolver.h"
@@ -139,9 +141,10 @@ namespace
         const bool useExtent_;
         const kernel::CoordinateConverter_ABC& converter_;
     };
-    TransferSender_ABC* CreateTransferSender( xml::xisubstream xis, const rpr::EntityIdentifier& federateID,
+    TransferSender_ABC* CreateTransferSender( xml::xisubstream xis, const rpr::EntityIdentifier& federateID, const std::string& federateName,
             const ContextFactory_ABC& ctxtFactory, const InteractionBuilder& builder, OwnershipStrategy_ABC& strategy,
-            OwnershipController_ABC& controller,  dispatcher::Logger_ABC& logger)
+            OwnershipController_ABC& controller,  dispatcher::Logger_ABC& logger,
+            const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
     {
         std::string value( xis.attribute< std::string >( "transfer-sender", "null" ) );
         TransferSender_ABC* transferResult = NULL;
@@ -154,6 +157,17 @@ namespace
             catch (const ::hla::HLAException& ex)
             {
                 logger.LogError( "Unable to create RPR transfer sender with error: " + std::string(ex.what()) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );    
+            }
+        }
+        else if( value == "netn" )
+        {
+            try
+            {
+                transferResult = new Netn2TransferSender( federateName, ctxtFactory, builder, strategy, controller, logger, agentResolver, callsignResolver );
+            }
+            catch (const ::hla::HLAException& ex)
+            {
+                logger.LogError( "Unable to create RPR transfer sender with error: " + std::string(ex.what()) + ".\n  Creating NullTransferSender instead.  Ownership transfer will not work." );
             }
         }
 
@@ -271,7 +285,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pInteractionBuilder_, *pContextFactory_, simulationPublisher_, clientsPublisher_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, simulationPublisher_ ) );
             pOwnershipController_.reset( new OwnershipController( federateID, *pFederate_, logger_ ) );
-            transferSender_.reset( CreateTransferSender( *pXis_, federateID, *pContextFactory_, *pInteractionBuilder_, *pOwnershipStrategy_, *pOwnershipController_, logger_) );
+            transferSender_.reset( CreateTransferSender( *pXis_, federateID, pXis_->attribute< std::string >( "name", "SWORD" ), *pContextFactory_, *pInteractionBuilder_, *pOwnershipStrategy_, *pOwnershipController_, logger_, *pLocalAgentResolver_, *pCallsignResolver_ ) );
             pOwnershipPolicy_.reset( new LocationOwnershipPolicy( *pMessengerMessageController_, *pOwnershipController_, *pFederate_, *transferSender_, ReadDivestitureZone( *pXisConfiguration_ ) ) );
             // must be last action
             pSubject_->Visit( dynamicModel_ );

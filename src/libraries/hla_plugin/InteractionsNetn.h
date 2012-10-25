@@ -25,8 +25,10 @@ namespace hla
 namespace interactions
 {
 
-struct ListOfUnits
+template < typename T >
+struct VariableArray
 {
+    typedef T ElemType;
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
@@ -42,8 +44,10 @@ struct ListOfUnits
         list.resize( size );
         archive >> list;
     }
-    std::vector< NetnObjectDefinitionStruct > list;
+    std::vector< ElemType > list;
 };
+
+typedef VariableArray< NetnObjectDefinitionStruct > ListOfUnits;
 
 struct NetnService
 {
@@ -190,20 +194,20 @@ struct AttributeValueStruct
 struct TMR_InitiateTransferModellingResponsibility : public TMR
 {
     uint32 transferType; // TMR::TransferTypeEnum32
-    std::vector< NETN_UUID > instances;
-    std::vector< UnicodeString > attributes;
+    VariableArray< NETN_UUID > instances;
+    VariableArray< UnicodeString > attributes;
     UnicodeString intiating;
     uint32 capabilityType; // TMR::CapabilityTypeEnum32
-    std::vector< AttributeValueStruct >attributeValues;
+    VariableArray< AttributeValueStruct >attributeValues;
 };
 
 struct TMR_RequestTransferModellingResponsibility : public TMR
 {
     uint32 transferType; // TMR::TransferTypeEnum32
-    std::vector< NETN_UUID > instances;
-    std::vector< UnicodeString > attributes;
+    VariableArray< NETN_UUID > instances;
+    VariableArray< UnicodeString > attributes;
     uint32 capabilityType; // TMR::CapabilityTypeEnum32
-    std::vector< AttributeValueStruct >attributeValues;
+    VariableArray< AttributeValueStruct >attributeValues;
 };
 
 } // namespace interactions

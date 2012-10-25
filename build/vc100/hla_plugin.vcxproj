@@ -136,6 +136,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\MarkingFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\Minefield.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\MissionResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Netn2TransferSender.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAggregate.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnAircraft.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\NetnGroundVehicle.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\Minefield.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\MissionResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Netn2TransferSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAggregate.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnAircraft.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\NetnGroundVehicle.h" />
