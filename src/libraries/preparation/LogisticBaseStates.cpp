@@ -240,7 +240,13 @@ bool LogisticBaseStates::CleanBadSubordinates()
             badEntities.push_back( &entity );
     }
     for( std::vector< const kernel::Entity_ABC* >::const_iterator it = badEntities.begin(); it != badEntities.end(); ++it )
-        RemoveSubordinate( **it );
+    {
+        LogisticBaseStates* subordinateHierarchy = dynamic_cast< LogisticBaseStates* >( const_cast< LogisticHierarchiesBase* >( (*it)->Retrieve< LogisticHierarchiesBase >() ) );
+        if( subordinateHierarchy )
+            subordinateHierarchy->ChangeSuperior( 0 );
+        else
+            RemoveSubordinate( **it );
+    }
     return !badEntities.empty();
 }
 
