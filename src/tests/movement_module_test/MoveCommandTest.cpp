@@ -57,7 +57,7 @@ namespace
             mock::verify();
             mock::reset();
         }
-        void Advance( float speed, unsigned int code, bool hasResources = true )
+        void Advance( float speed, int code, bool hasResources = true )
         {
             ExpectEffect( entity[ "movement" ] );
             ExpectCallbackEvent( code );
@@ -65,7 +65,7 @@ namespace
             Step( speed, hasResources, true );
             UpdatePosition( geometry::Point2f( 0, entity[ "movement/position/y" ] + speed ) );
         }
-        void ExpectCallbackEvent( unsigned int code )
+        void ExpectCallbackEvent( int code )
         {
             ExpectEvent( "movement callback", sword::test::MakeModel( "code", code )
                                                                     ( "entity", identifier )
