@@ -23,6 +23,7 @@ namespace
         {}
         virtual ~MovementFixture()
         {
+            MOCK_EXPECT( CancelPathFindJob );
             StopCommand( command );
         }
         size_t StartMoveCommand( const T_Points& points )
@@ -105,7 +106,6 @@ BOOST_FIXTURE_TEST_CASE( movement_command_sends_movement_environment_effect_when
     Advance( 4, sword::movement::PathWalker::eRunning );
     MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
     Advance( 5, sword::movement::PathWalker::eFinished );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_does_not_move, MovementFixture )
@@ -121,7 +121,6 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
     Step( 1, true, true );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_and_does_not_move, MovementFixture )
@@ -137,7 +136,6 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
     Step( 1, true, true );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 namespace
@@ -161,7 +159,6 @@ BOOST_FIXTURE_TEST_CASE( movement_command_in_paused_execution_only_sends_paused_
     commands.Pause( command );
     ExpectCallbackEvent( sword::movement::PathWalker::ePaused );
     ExecuteCommands();
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( first_movement_command_posts_path_effect_and_running_code_event_if_not_arrived, StartedFixture )
@@ -178,7 +175,6 @@ BOOST_FIXTURE_TEST_CASE( first_movement_command_posts_path_effect_and_running_co
     ExpectCallbackEvent( sword::movement::PathWalker::eRunning );
     ExpectMovementEvent( speed );
     Step( speed, true, true );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( movement_command_posts_finished_code_event_if_arrived, StartedFixture )
@@ -186,7 +182,6 @@ BOOST_FIXTURE_TEST_CASE( movement_command_posts_finished_code_event_if_arrived, 
     MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
     ExpectEffect( entity[ "movement/path" ] );
     Advance( 10, sword::movement::PathWalker::eFinished );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( movement_command_advance_on_path, StartedFixture )
@@ -195,7 +190,6 @@ BOOST_FIXTURE_TEST_CASE( movement_command_advance_on_path, StartedFixture )
     Advance( 5, sword::movement::PathWalker::eRunning );
     MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
     Advance( 5, sword::movement::PathWalker::eFinished );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( stopping_command_cancels_pathfind_job, StartedFixture )
@@ -213,7 +207,6 @@ BOOST_FIXTURE_TEST_CASE( movement_without_resources_sends_out_of_gas_report_and_
     ExpectEvent( "movement report", sword::test::MakeModel( "entity/data", "data" )
                                                           ( "code", static_cast< int >( MIL_Report::eReport_OutOfGas ) ) );
     Advance( 1, sword::movement::PathWalker::eNotEnoughFuel, false );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( ouf_of_gas_report_is_only_sent_once, StartedFixture )
@@ -223,7 +216,6 @@ BOOST_FIXTURE_TEST_CASE( ouf_of_gas_report_is_only_sent_once, StartedFixture )
     ExpectEvent( "movement report" );
     Advance( 1, sword::movement::PathWalker::eNotEnoughFuel, false );
     Advance( 1, sword::movement::PathWalker::eNotEnoughFuel, false );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( movement_with_new_resources_moves_again, StartedFixture )
@@ -233,7 +225,6 @@ BOOST_FIXTURE_TEST_CASE( movement_with_new_resources_moves_again, StartedFixture
     ExpectEvent( "movement report" );
     Advance( 1, sword::movement::PathWalker::eNotEnoughFuel, false );
     Advance( 1, sword::movement::PathWalker::eRunning );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( movement_with_entity_that_cannot_move_sends_not_allowed_callback_and_sets_speed_at_0, StartedFixture )
@@ -250,7 +241,6 @@ BOOST_FIXTURE_TEST_CASE( movement_with_entity_that_cannot_move_sends_not_allowed
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
     ExpectMovementEvent( speed );
     Step( speed, true, false );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 namespace
@@ -302,7 +292,6 @@ BOOST_FIXTURE_TEST_CASE( object_colliding_with_path_makes_command_send_blocked_b
     ExpectCallbackEvent( sword::movement::PathWalker::eBlockedByObject );
     ExpectMovementEvent( weldValue + 1 );
     Step( 2, true, true );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 namespace
@@ -331,7 +320,6 @@ BOOST_FIXTURE_TEST_CASE( movement_command_posts_truncated_path_when_too_long, Lo
         builder[ sword::test::MakeModel( "x", 0 )( "y", y ) ];
     ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", 1 )( "points", builder ) );
     Advance( 0.5, sword::movement::PathWalker::eRunning );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( movement_command_does_not_post_updated_truncated_path_when_threshold_not_reached, LongPathStartedFixture )
@@ -341,7 +329,6 @@ BOOST_FIXTURE_TEST_CASE( movement_command_does_not_post_updated_truncated_path_w
     mock::verify();
     MOCK_EXPECT( NotifyMovingOnPathPoint ).exactly( threshold - 1 );
     Advance( threshold - 1, sword::movement::PathWalker::eRunning );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
 
 BOOST_FIXTURE_TEST_CASE( _movement_command_does_not_post_updated_truncated_path_when_threshold_not_reached, LongPathStartedFixture )
@@ -360,5 +347,4 @@ BOOST_FIXTURE_TEST_CASE( _movement_command_does_not_post_updated_truncated_path_
     ExpectMovementEvent( speed );
     MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
     Step( speed, true, true );
-    MOCK_EXPECT( CancelPathFindJob ).once();
 }
