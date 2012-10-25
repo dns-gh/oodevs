@@ -176,8 +176,9 @@ namespace
         virtual void NotifyChanged( const core::Model& model )
         {
             model_ = &model;
-            message_ = Message();
-            Serialize( *message_, entity_, model );
+            Message message;
+            if( Serialize( message, entity_, model ) )
+                message_ = message;
         }
         virtual void NotifyRemoved( const core::Model& /*model*/ )
         {
