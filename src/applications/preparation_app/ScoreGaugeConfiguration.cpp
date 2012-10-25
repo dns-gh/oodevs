@@ -93,15 +93,15 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
             }
         }
         {
-            intervals_ = new Q3Table( 0, 3, box );
-            intervals_->horizontalHeader()->setLabel( 0, tr( "Min" ) );
-            intervals_->horizontalHeader()->setLabel( 1, tr( "Max" ) );
-            intervals_->horizontalHeader()->setLabel( 2, tr( "Symbol" ) );
+            intervals_ = new QTableWidget( box );
+            intervals_->setColumnCount( 3 );
+            QStringList headers;
+            headers << tr( "Min" ) << tr( "Max" ) << tr( "Symbol" );
+            intervals_->setHorizontalHeaderLabels( headers );
             intervals_->setFixedHeight( 150 );
-            intervals_->setLeftMargin( 0 );
-            intervals_->setHScrollBarMode( Q3ScrollView::AlwaysOff );
+            intervals_->verticalHeader()->hide();
             AddInterval();
-            connect( intervals_, SIGNAL( valueChanged( int, int ) ), SLOT( OnChangeValue( int, int ) ) );
+            connect( intervals_, SIGNAL( cellChanged( int, int ) ), SLOT( OnChangeValue( int, int ) ) );
         }
     }
     controllers_.Register( *this );
@@ -123,7 +123,7 @@ ScoreGaugeConfiguration::~ScoreGaugeConfiguration()
 void ScoreGaugeConfiguration::StartEdit( const indicators::Gauge& gauge )
 {
     type_->SetCurrentItem( &gauge.GetType() );
-    intervals_->setNumRows( 0 );
+    intervals_->setRowCount( 0 );
     double min = std::numeric_limits< double >::max();
     double max = std::numeric_limits< double >::min();
     const indicators::GaugeNormalizer::T_Intervals& intervals = gauge.GetNormalizer().Intervals();
@@ -149,7 +149,7 @@ void ScoreGaugeConfiguration::StartEdit( const indicators::Gauge& gauge )
     }
     {
         steps_->blockSignals( true );
-        steps_->setValue( intervals_->numRows() );
+        steps_->setValue( intervals_->rowCount() );
         steps_->blockSignals( false );
     }
 }
@@ -162,7 +162,7 @@ indicators::Gauge ScoreGaugeConfiguration::GetValue() const
 {
     indicators::Gauge result( *type_->GetValue() );
     indicators::GaugeNormalizer normalizer;
-    for( int i = 0; i < intervals_->numRows(); ++i )
+    for( int i = 0; i < intervals_->rowCount(); ++i )
         normalizer.AddInterval( GetValue( i, 0 ), GetValue( i, 1 ), GetValue( i, 2 ) );
     result.SetNormalizer( normalizer );
     return result;
@@ -174,7 +174,7 @@ indicators::Gauge ScoreGaugeConfiguration::GetValue() const
 // -----------------------------------------------------------------------------
 void ScoreGaugeConfiguration::OnChangeStep( int steps )
 {
-    const int rows = intervals_->numRows();
+    const int rows = intervals_->rowCount();
     for( int i = rows; i < steps; ++i )
         AddInterval();
     for( int i = steps; i < rows; ++i )
@@ -190,7 +190,7 @@ void ScoreGaugeConfiguration::OnChangeBoundaries()
 {
     const double min = ToDouble( min_->text() );
     const double max = ToDouble( max_->text() );
-    const int rows = intervals_->numRows();
+    const int rows = intervals_->rowCount();
     const double interval = ( max - min ) / rows;
     for( int i = 0; i < rows; ++i )
     {
@@ -206,7 +206,7 @@ void ScoreGaugeConfiguration::OnChangeBoundaries()
 // -----------------------------------------------------------------------------
 void ScoreGaugeConfiguration::OnTypeChanged()
 {
-    for( int row = 0; row < intervals_->numRows(); ++row )
+    for( int row = 0; row < intervals_->rowCount(); ++row )
         UpdateSymbol( row, GetValue( row, 2 ) );
 }
 
@@ -226,7 +226,7 @@ void ScoreGaugeConfiguration::OnChangeValue( int row, int col )
 // -----------------------------------------------------------------------------
 void ScoreGaugeConfiguration::OnReverseSymbols()
 {
-    const int rows = intervals_->numRows();
+    const int rows = intervals_->rowCount();
     for( int row = 0; row < rows / 2; ++row )
     {
         const int symetric = rows - row - 1;
@@ -245,8 +245,11 @@ void ScoreGaugeConfiguration::OnReverseSymbols()
 // -----------------------------------------------------------------------------
 void ScoreGaugeConfiguration::AddInterval( double min /* = 0*/, double max /* = 0*/, double key /* = 0*/ )
 {
-    const int rows = intervals_->numRows();
-    intervals_->setNumRows( rows + 1 );
+    const int rows = intervals_->rowCount();
+    intervals_->setRowCount( rows + 1 );
+    intervals_->setItem( rows, 0, new QTableWidgetItem() );
+    intervals_->setItem( rows, 1, new QTableWidgetItem() );
+    intervals_->setItem( rows, 2, new QTableWidgetItem() );
     SetValue( rows, 0, min );
     SetValue( rows, 1, max );
     SetValue( rows, 2, key );
@@ -259,7 +262,7 @@ void ScoreGaugeConfiguration::AddInterval( double min /* = 0*/, double max /* = 
 // -----------------------------------------------------------------------------
 void ScoreGaugeConfiguration::RemoveInterval()
 {
-    intervals_->setNumRows( intervals_->numRows() - 1 );
+    intervals_->setRowCount( intervals_->rowCount() - 1 );
 }
 
 namespace
@@ -268,7 +271,7 @@ namespace
                              , public tools::Caller< QPixmap >
     {
     public:
-        explicit GaugeItemDisplayer( Q3TableItem* item ) : item_( item ) {}
+        explicit GaugeItemDisplayer( QTableWidgetItem* item ) : item_( item ) {}
 
         virtual void Hide() {}
         virtual void Clear() {}
@@ -284,18 +287,21 @@ namespace
         }
         virtual void Call( const QPixmap& pixmap )
         {
-            QImage image;
-            image = pixmap;
-            image = image.smoothScale( 16, 16 );
-            pixmap_ = image;
+            if( !pixmap.isNull() )
+            {
+                QImage image;
+                image = pixmap;
+                image = image.smoothScale( 16, 16 );
+                pixmap_ = image;
+            }
         }
         virtual void EndDisplay()
         {
             item_->setText( text_ );
-            item_->setPixmap( pixmap_ );
+            item_->setIcon( pixmap_ );
         }
     private:
-        Q3TableItem* item_;
+        QTableWidgetItem* item_;
         QPixmap pixmap_;
         QString text_;
     };
@@ -311,9 +317,10 @@ void ScoreGaugeConfiguration::UpdateSymbol( int row, double value )
         if( const indicators::GaugeType* type = type_->GetValue() )
         {
             GaugeItemDisplayer displayer( intervals_->item( row, 2 ) );
+            intervals_->blockSignals( true );
             type->Display( displayer, value );
+            intervals_->blockSignals( false );
             SetValue( row, 2, value );
-            intervals_->updateCell( row, 2 );
         }
 }
 
@@ -323,7 +330,9 @@ void ScoreGaugeConfiguration::UpdateSymbol( int row, double value )
 // -----------------------------------------------------------------------------
 void ScoreGaugeConfiguration::SetValue( int row, int col, double value )
 {
-    intervals_->setText( row, col, ToString( value ) );
+    intervals_->blockSignals( true );
+    intervals_->item( row, col )->setText( ToString( value ) );
+    intervals_->blockSignals( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -332,7 +341,7 @@ void ScoreGaugeConfiguration::SetValue( int row, int col, double value )
 // -----------------------------------------------------------------------------
 double ScoreGaugeConfiguration::GetValue( int row, int col ) const
 {
-    return ToDouble( intervals_->text( row, col ) );
+    return ToDouble( intervals_->item( row, col )->text() );
 }
 
 // -----------------------------------------------------------------------------

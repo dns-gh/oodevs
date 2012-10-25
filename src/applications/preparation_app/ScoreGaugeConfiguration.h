@@ -86,7 +86,7 @@ private:
     QSpinBox* steps_;
     QLineEdit* min_;
     QLineEdit* max_;
-    Q3Table* intervals_;
+    QTableWidget* intervals_;
     //@}
 };
 
