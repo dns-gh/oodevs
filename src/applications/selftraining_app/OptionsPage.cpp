@@ -268,7 +268,6 @@ void OptionsPage::Commit()
 // -----------------------------------------------------------------------------
 void OptionsPage::Reset()
 {
-    bool enableApplyButton = false;
     selectedLanguage_ = tools::readLang();
     selectedDataDir_ = config_.GetRootDir();
 
@@ -276,5 +275,6 @@ void OptionsPage::Reset()
     languageCombo_->setCurrentIndex( languageCombo_->findText( languages_.find( selectedLanguage_ )->second ) );
     dataDirectory_->setText( QDir::convertSeparators( selectedDataDir_.c_str() ) );
 
-    EnableButton( eButtonApply, enableApplyButton );
+    hasChanged_ = false;
+    EnableButton( eButtonApply, false );
 }
