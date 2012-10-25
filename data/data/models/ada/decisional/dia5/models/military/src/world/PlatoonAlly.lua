@@ -201,7 +201,7 @@ predicate "isSelfCommanding"
 {
     dependencies = {},
     method = function( self )
-        return not integration.isAgentAutomatEngaged( self.source )
+        return not integration.isAgentCommanderEngaged( self.source )
     end
 }
 predicate "isDestroyed" 
