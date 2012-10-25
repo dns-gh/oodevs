@@ -15,35 +15,68 @@
 #include "IndicatorPlotFactory.h"
 #include "IndicatorReportDialog.h"
 #include "clients_gui/DragAndDropHelpers.h"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Score.h"
 #include "gaming/ScoreModel.h"
 
+#pragma warning( disable : 4355 )
+
+Q_DECLARE_METATYPE( Score* )
+
 namespace
 {
-    class MyList : public gui::ListDisplayer< ScorePanel >
+    class MyList : public QTreeWidget
     {
     public:
-        MyList( ScorePanel* parent, gui::ItemFactory_ABC& factory, ScoreModel& model )
-            : ListDisplayer< ScorePanel >( parent, *parent, factory )
+        MyList( ScorePanel* parent, QDialog* reportDialog, ScoreModel& model )
+            : QTreeWidget( parent )
+            , parent_( parent )
+            , reportDialog_( reportDialog )
             , model_( model )
-        {}
-        virtual Q3DragObject* dragObject()
         {
-            if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( selectedItem() ) )
-                if( Score* score = item->GetValue< Score >() )
+            setColumnCount( 4 );
+            QStringList headers;
+            headers << tools::translate( "Score", "Name" ) << tools::translate( "Score", "Value" )
+                    << tools::translate( "Score", "Tendency" ) << tools::translate( "Score", "Gauge" );
+            setHeaderLabels( headers );
+            setAllColumnsShowFocus( true );
+            setDragEnabled( true );
+            setRootIsDecorated( false );
+        }
+        virtual void startDrag( Qt::DropActions /*supportedActions*/ )
+        {
+            const QModelIndex index = selectionModel()->currentIndex();
+            if( index.isValid() )
+            {
+                if( Score* score = index.model()->data( index.model()->index( index.row(), 0, index.parent() ), Qt::UserRole ).value< Score* >() )
                 {
                     IndicatorRequest& request = model_.CreateRequest( *score );
                     dnd::CreateDragObject( &request, this );
-                    return 0;
                 }
-            return 0;
+            }
+        }
+
+        void contextMenuEvent( QContextMenuEvent* event )
+        {
+            if( !event )
+                return;
+            kernel::ContextMenu* menu = new kernel::ContextMenu( this );
+            if( indexAt( event->pos() ).isValid() )
+            {
+                menu->insertItem( tools::translate( "ScorePanel", "View graph" ), parent_, SLOT( OnShowGraph() ) );
+                menu->insertItem( tools::translate( "Indicators", "Export score data..." ), parent_, SLOT( OnExportData() ) );
+                menu->insertSeparator();
+            }
+            menu->insertItem( tools::translate( "Indicators", "Create report..." ), reportDialog_, SLOT( show() ) );
+            menu->popup( event->globalPos() );
         }
 
     private:
-        MyList& operator=( const MyList& );
+        QDialog* reportDialog_;
+        ScorePanel* parent_;
         ScoreModel& model_;
     };
 }
@@ -52,10 +85,10 @@ namespace
 // Name: ScorePanel constructor
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::LinkInterpreter_ABC& interpreter, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model, const tools::ExerciseConfig& config )
+ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor, gui::LinkInterpreter_ABC& interpreter, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model, const tools::ExerciseConfig& config )
     : QDockWidget( "score", mainWindow )
     , controllers_( controllers )
-    , factory_( factory )
+    , extractor_( extractor )
     , plotFactory_( plotFactory )
     , model_( model )
     , exportDialog_( exportDialog )
@@ -63,20 +96,8 @@ ScorePanel::ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controller
 {
     setObjectName( "scorePanel" );
     setCaption( tools::translate( "ScorePanel", "Scores" ) );
-
-    {
-        scores_ = new MyList( this, factory_, model_ );
-        scores_->AddColumn( tools::translate( "Score", "Name" ) );
-        scores_->AddColumn( tools::translate( "Score", "Value" ) );
-        scores_->AddColumn( tools::translate( "Score", "Tendency" ) );
-        scores_->AddColumn( tools::translate( "Score", "Gauge" ) );
-        scores_->setColumnWidthMode( 2, Q3ListView::Manual );
-        scores_->setColumnWidthMode( 3, Q3ListView::Manual );
-        scores_->setColumnAlignment( 2, Qt::AlignCenter );
-        scores_->setColumnAlignment( 3, Qt::AlignCenter );
-        connect( scores_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnContextMenu( Q3ListViewItem*, const QPoint&, int ) ) );
-        connect( scores_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnShowGraph() ) );
-    }
+    scores_ = new MyList( this, reportDialog_, model_ );
+    connect( scores_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnShowGraph() ) );
     setWidget( scores_ );
     controllers_.Register( *this );
 }
@@ -96,7 +117,8 @@ ScorePanel::~ScorePanel()
 // -----------------------------------------------------------------------------
 void ScorePanel::NotifyCreated( const Score& element )
 {
-    gui::ValuedListItem* item = factory_.CreateItem( scores_ );
+    QTreeWidgetItem* item = new QTreeWidgetItem( scores_ );
+    item->setData( 0, Qt::UserRole, QVariant::fromValue( const_cast< Score* >( &element ) ) );
     Display( element, item );
 }
 
@@ -106,8 +128,15 @@ void ScorePanel::NotifyCreated( const Score& element )
 // -----------------------------------------------------------------------------
 void ScorePanel::NotifyUpdated( const Score& element )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &element, scores_->firstChild() ) )
-        Display( element, item );
+    for( int i = 0; i < scores_->topLevelItemCount(); ++i )
+    {
+        QTreeWidgetItem* item = scores_->topLevelItem( i );
+        if( item && item->data( 0, Qt::UserRole ).value< Score* >() == &element )
+        {
+            Display( element, item );
+            break;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -116,8 +145,15 @@ void ScorePanel::NotifyUpdated( const Score& element )
 // -----------------------------------------------------------------------------
 void ScorePanel::NotifyDeleted( const Score& element )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &element, scores_->firstChild() ) )
-        delete item;
+    for( int i = 0; i < scores_->topLevelItemCount(); ++i )
+    {
+        QTreeWidgetItem* item = scores_->topLevelItem( i );
+        if( item && item->data( 0, Qt::UserRole ).value< Score* >() == &element )
+        {
+            delete scores_->takeTopLevelItem( i );
+            break;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +162,8 @@ void ScorePanel::NotifyDeleted( const Score& element )
 // -----------------------------------------------------------------------------
 void ScorePanel::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
-    scores_->clear();
+    while( scores_->topLevelItemCount() > 0 )
+        delete scores_->takeTopLevelItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,28 +200,10 @@ void ScorePanel::NotifyUpdated( const IndicatorRequest& request )
 // Name: ScorePanel::Display
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-void ScorePanel::Display( const Score& score, gui::ValuedListItem* item )
+void ScorePanel::Display( const Score& score, QTreeWidgetItem* item )
 {
-    item->setDragEnabled( true );
-    item->SetValue( &score );
-    score.Display( scores_->GetItemDisplayer( item ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScorePanel::OnContextMenu
-// Created: SBO 2009-04-28
-// -----------------------------------------------------------------------------
-void ScorePanel::OnContextMenu( Q3ListViewItem* item, const QPoint& point, int /*column*/ )
-{
-    kernel::ContextMenu* menu = new kernel::ContextMenu( scores_ );
-    if( item )
-    {
-        menu->insertItem( tools::translate( "ScorePanel", "View graph" ), this, SLOT( OnShowGraph() ) );
-        menu->insertItem( tools::translate( "Indicators", "Export score data..." ), this, SLOT( OnExportData() ) );
-        menu->insertSeparator();
-    }
-    menu->insertItem( tools::translate( "Indicators", "Create report..." ), reportDialog_, SLOT( show() ) );
-    menu->popup( point );
+    item->setText( 0, score.GetName() );
+    score.Display( item, extractor_, 1, 2, 3 );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,8 +212,9 @@ void ScorePanel::OnContextMenu( Q3ListViewItem* item, const QPoint& point, int /
 // -----------------------------------------------------------------------------
 void ScorePanel::OnShowGraph()
 {
-    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( scores_->selectedItem() ) )
-        if( Score* score = item->GetValue< Score >() )
+    const QModelIndex index = scores_->selectionModel()->currentIndex();
+    if( index.isValid() )
+        if( Score* score = index.model()->data( index.model()->index( index.row(), 0, index.parent() ), Qt::UserRole ).value< Score* >() )
             graphRequests_.push_back( &model_.CreateRequest( *score ) );
 }
 
@@ -204,7 +224,8 @@ void ScorePanel::OnShowGraph()
 // -----------------------------------------------------------------------------
 void ScorePanel::OnExportData()
 {
-    if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( scores_->selectedItem() ) )
-        if( Score* score = item->GetValue< Score >() )
+    const QModelIndex index = scores_->selectionModel()->currentIndex();
+    if( index.isValid() )
+        if( Score* score = index.model()->data( index.model()->index( index.row(), 0, index.parent() ), Qt::UserRole ).value< Score* >() )
             exportRequests_.push_back( &model_.CreateRequest( *score ) );
 }

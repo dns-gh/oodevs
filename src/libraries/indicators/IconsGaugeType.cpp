@@ -80,3 +80,12 @@ void IconsGaugeType::Display( kernel::Displayer_ABC& displayer, double key ) con
 {
     displayer.Display( Icon( key ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: IconsGaugeType::Display
+// Created: JSR 2012-10-25
+// -----------------------------------------------------------------------------
+void IconsGaugeType::Display( QTreeWidgetItem* item, kernel::DisplayExtractor_ABC& /*extractor*/, int col, double value ) const
+{
+    item->setData( col, Qt::DecorationRole, Icon( value ) );
+}

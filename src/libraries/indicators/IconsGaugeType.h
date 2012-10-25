@@ -36,6 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer, double key ) const;
+    virtual void Display( QTreeWidgetItem* item, kernel::DisplayExtractor_ABC& extractor, int col, double value ) const;
     //@}
 
 private:

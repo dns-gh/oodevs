@@ -97,6 +97,15 @@ void Gauge::Display( kernel::Displayer_ABC& displayer, double value ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gauge::Display
+// Created: JSR 2012-10-25
+// -----------------------------------------------------------------------------
+void Gauge::Display( QTreeWidgetItem* item, kernel::DisplayExtractor_ABC& extractor, int col, double value ) const
+{
+    type_.Display( item, extractor, col, normalizer_->Normalize( value ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gauge::Serialize
 // Created: SBO 2009-05-07
 // -----------------------------------------------------------------------------

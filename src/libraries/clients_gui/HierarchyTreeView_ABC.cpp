@@ -184,9 +184,9 @@ void HierarchyTreeView_ABC::drawRow( QPainter* painter, const QStyleOptionViewIt
 {
     // TODO Move following to preparation or gui reimplementation, no ghost on gaming ... or not, all color could also be handle here (log missing, tacticaly destroyed, etc.), options are permissive for that, and it anticipate a gaming/prepa merge
     QStandardItem* item = dataModel_.GetItemFromIndex( dataModel_.GetMainModelIndex( index ) );
-    if( item && item->data( StandardModel::MimeTypeRole).isValid() )
+    if( item && item->data( StandardModel::MimeTypeRole ).isValid() )
     {
-        if( item->data( StandardModel::MimeTypeRole).toString() == typeid( kernel::Ghost_ABC ).name() )
+        if( item->data( StandardModel::MimeTypeRole ).toString() == typeid( kernel::Ghost_ABC ).name() )
         {
             QColor color( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
             painter->fillRect( options.rect, color );
@@ -209,6 +209,7 @@ namespace
         return emptyPixmap;
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: HierarchyTreeView_ABC::GetDecoration
 // Created: JSR 2012-09-14

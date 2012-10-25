@@ -13,10 +13,12 @@
 #include "IndicatorDefinition_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/AarSenders.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controller;
+    class DisplayExtractor_ABC;
 }
 
 namespace indicators
@@ -29,6 +31,7 @@ class IndicatorRequest;
 class Publisher_ABC;
 class ScoreDefinition;
 class ScoreDefinitions;
+class QTreeWidgetItem;
 
 // =============================================================================
 /** @class  Score
@@ -38,6 +41,7 @@ class ScoreDefinitions;
 // =============================================================================
 class Score : public IndicatorDefinition_ABC
             , public kernel::Displayable_ABC
+            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -55,17 +59,12 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    void Display( QTreeWidgetItem* item, kernel::DisplayExtractor_ABC& extractor, int valueCol, int tendencyCol, int gaugeCol ) const;
     void Update( const sword::Indicator& message );
     void ConnectTo( IndicatorRequest& request );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Score( const Score& );            //!< Copy constructor
-    Score& operator=( const Score& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void UpdatePlots( const sword::Indicator& message );

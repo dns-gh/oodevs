@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Displayer_ABC;
+    class DisplayExtractor_ABC;
 }
 
 namespace xml
@@ -20,6 +21,8 @@ namespace xml
     class xistream;
     class xostream;
 }
+
+class QTreeWidgetItem;
 
 namespace indicators
 {
@@ -58,6 +61,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer, double value ) const;
+    void Display( QTreeWidgetItem* item, kernel::DisplayExtractor_ABC& extractor, int col, double value ) const;
     void Serialize( xml::xostream& xos ) const;
     //@}
 

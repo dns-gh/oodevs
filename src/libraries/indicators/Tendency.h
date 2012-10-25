@@ -11,6 +11,7 @@
 #define __Tendency_h_
 
 #include <deque>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -26,7 +27,7 @@ namespace indicators
 */
 // Created: SBO 2009-05-05
 // =============================================================================
-class Tendency
+class Tendency : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -39,13 +40,7 @@ public:
     //@{
     void AddValue( double value );
     void Display( kernel::Displayer_ABC& displayer ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Tendency( const Tendency& );            //!< Copy constructor
-    Tendency& operator=( const Tendency& ); //!< Assignment operator
+    void Display( QTreeWidgetItem* item, int col ) const;
     //@}
 
 private:

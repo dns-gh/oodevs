@@ -64,3 +64,12 @@ void Tendency::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( ComputePixmap( ( values_.back() - values_.front() ) / 2. ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Tendency::Display
+// Created: JSR 2012-10-25
+// -----------------------------------------------------------------------------
+void Tendency::Display( QTreeWidgetItem* item, int col ) const
+{
+    item->setData( col, Qt::DecorationRole, ComputePixmap( ( values_.back() - values_.front() ) / 2. ) );
+}

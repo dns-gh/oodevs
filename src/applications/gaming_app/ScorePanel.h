@@ -11,17 +11,16 @@
 #define __ScorePanel_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "clients_gui/ListDisplayer.h"
 
 namespace gui
 {
-    class ItemFactory_ABC;
     class LinkInterpreter_ABC;
 }
 
 namespace kernel
 {
     class Controllers;
+    class DisplayExtractor_ABC;
     class ModelUnLoaded;
 }
 
@@ -53,25 +52,18 @@ class ScorePanel : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::LinkInterpreter_ABC& interpreter, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model, const tools::ExerciseConfig& config );
+             ScorePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor, gui::LinkInterpreter_ABC& interpreter, IndicatorPlotFactory& plotFactory, IndicatorExportDialog& exportDialog, ScoreModel& model, const tools::ExerciseConfig& config );
     virtual ~ScorePanel();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnContextMenu( Q3ListViewItem* item, const QPoint& point, int column );
     void OnShowGraph();
     void OnExportData();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScorePanel( const ScorePanel& );            //!< Copy constructor
-    ScorePanel& operator=( const ScorePanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Score& element );
@@ -79,7 +71,7 @@ private:
     virtual void NotifyDeleted( const Score& element );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     virtual void NotifyUpdated( const IndicatorRequest& request );
-    void Display( const Score& score, gui::ValuedListItem* item );
+    void Display( const Score& score, QTreeWidgetItem* item );
     //@}
 
     //! @name Types
@@ -91,12 +83,12 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::ItemFactory_ABC& factory_;
+    kernel::DisplayExtractor_ABC& extractor_;
     IndicatorPlotFactory& plotFactory_;
     ScoreModel& model_;
     IndicatorExportDialog& exportDialog_;
     QDialog* reportDialog_;
-    gui::ListDisplayer< ScorePanel >* scores_;
+    QTreeWidget* scores_;
     T_PendingRequests graphRequests_;
     T_PendingRequests exportRequests_;
     //@}

@@ -10,6 +10,7 @@
 #include "indicators_pch.h"
 #include "GaugeType.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DisplayExtractor_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
@@ -49,4 +50,13 @@ const QString& GaugeType::GetName() const
 void GaugeType::Display( kernel::Displayer_ABC& displayer, double value ) const
 {
     displayer.Display( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GaugeType::Display
+// Created: JSR 2012-10-25
+// -----------------------------------------------------------------------------
+void GaugeType::Display( QTreeWidgetItem* item, kernel::DisplayExtractor_ABC& extractor, int col, double value ) const
+{
+    item->setText( col, extractor.GetDisplayName( value ) );
 }

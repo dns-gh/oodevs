@@ -351,7 +351,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     }
     // Score panel
     {
-        ScorePanel* scorePanel = new ScorePanel( this, controllers_, *factory, *interpreter, *plotFactory, *indicatorExportDialog, model_.scores_, config );
+        ScorePanel* scorePanel = new ScorePanel( this, controllers_, *displayExtractor, *interpreter, *plotFactory, *indicatorExportDialog, model_.scores_, config );
         addDockWidget( Qt::RightDockWidgetArea, scorePanel );
         scorePanel->hide();
     }

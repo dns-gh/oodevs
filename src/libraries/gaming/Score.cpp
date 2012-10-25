@@ -16,10 +16,14 @@
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DisplayExtractor_ABC.h"
 #include "indicators/Tendency.h"
 #include "indicators/Gauge.h"
 #include "protocol/AarSenders.h"
 #include <boost/algorithm/string.hpp>
+#pragma warning( push, 0 )
+#include <QtGui/qtreewidget.h>
+#pragma warning( pop )
 
 namespace
 {
@@ -99,12 +103,23 @@ void Score::Display( kernel::Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Score::Display
+// Created: JSR 2012-10-25
+// -----------------------------------------------------------------------------
+void Score::Display( QTreeWidgetItem* item, kernel::DisplayExtractor_ABC& extractor, int valueCol, int tendencyCol, int gaugeCol ) const
+{
+    item->setText( valueCol, extractor.GetDisplayName( value_ ) );
+    tendency_->Display( item, tendencyCol );
+    gauge_->Display( item, extractor, gaugeCol , value_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Score::Commit
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
 std::string Score::Commit( const T_Parameters& ) const
 {
-    return QString( "indicator://%1" ).arg( name_ ).toAscii().constData();
+    return QString( "indicator://%1" ).arg( name_ ).toStdString();
 }
 
 // -----------------------------------------------------------------------------
