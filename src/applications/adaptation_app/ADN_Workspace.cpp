@@ -318,10 +318,10 @@ inline bool isWritable(const std::string& filename)
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::IsValidDatabase
+// Name: ADN_Workspace::ShowInvalidDatabaseWarning
 // Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
-bool ADN_Workspace::IsValidDatabase()
+bool ADN_Workspace::ShowInvalidDatabaseWarning()
 {
     BOOST_FOREACH( ADN_WorkspaceElement_ABC* element, elements_ )
         if( !element->GetDataABC().IsValidDatabase() )
@@ -341,7 +341,7 @@ void ADN_Workspace::SetOptions( bool symbols, bool noreadonly )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::IsValidDatabase
+// Name: ADN_Workspace::ShowSymbols
 // Created: PHC 2011-09-21
 // -----------------------------------------------------------------------------
 bool ADN_Workspace::ShowSymbols() const
@@ -378,8 +378,7 @@ namespace
 //-----------------------------------------------------------------------------
 bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC& fileLoader )
 {
-    if( !IsValidDatabase() )
-        return false;
+    ShowInvalidDatabaseWarning();
 
     ADN_Project_Data::WorkDirInfos& dirInfos = ADN_Project_Data::GetWorkDirInfos();
 

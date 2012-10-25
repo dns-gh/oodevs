@@ -109,7 +109,7 @@ public:
     bool Save( const tools::Loader_ABC& fileLoader );
     bool SaveAs( const std::string& filename, const tools::Loader_ABC& fileLoader );
     void ExportHtml( const std::string& strPath );
-    bool IsValidDatabase();
+    bool ShowInvalidDatabaseWarning();
     void SetOptions( bool symbols, bool noreadonly );
     bool ShowSymbols() const;
 

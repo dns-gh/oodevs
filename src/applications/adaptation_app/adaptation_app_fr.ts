@@ -8,36 +8,36 @@
         <translation>Enregistrement en cours.</translation>
     </message>
     <message>
-        <source>Convoy unit type not defined in Log/Supply, database cannot be saved.</source>
-        <translation>Le type de pion Convoi n&apos;est pas défini dans Log/Ravitaillement, la base ne peut pas être sauvée.</translation>
+        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Le type de pion Convoi n&apos;est pas défini dans Log/Ravitaillement, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
-        <source>No geometry defined for object %1, database cannot be saved.</source>
-        <translation>Pas de géométrie définie pour l&apos;objet %1, la base ne peut pas être sauvée.</translation>
+        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>La mission Convoi n&apos;est pas définei dans Log/Ravitaillement, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
-        <source>No PC defined for automat %1, database cannot be saved.</source>
-        <translation>L&apos;automate %1 n&apos;a pas de PC, la base ne peut pas être sauvée.</translation>
+        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Pas de géométrie définie pour l&apos;objet %1, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
-        <source>Automat %1 requires at least one PC, database cannot be saved.</source>
-        <translation>L&apos;automate %1 requiert au moins un PC, la base ne peut pas être sauvée.</translation>
+        <source>No PC defined for automat %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>L&apos;automate %1 n&apos;a pas de PC, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
-        <source>No decisional model defined for unit %1, database cannot be saved.</source>
-        <translation>Le modèle décisionnel de l&apos;unité %1 n&apos;est pas défini, la base ne peut pas être sauvée.</translation>
+        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>L&apos;automate %1 requiert au moins un PC, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
-        <source>Convoy mission not defined in Log/Supply, database cannot be saved.</source>
-        <translation>La mission Convoi n&apos;est pas définie dans Log/Ravitaillement, la base ne peut pas être sauvée.</translation>
+        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Le modèle décisionnel de l&apos;unité %1 n&apos;est pas défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
-        <source>No parameter type specified for parameter %1, database cannot be saved.</source>
-        <translation>Aucun type de paramètre spécifié pour le paramètre %1, la base ne peut pas être sauvée.</translation>
+        <source>No parameter type specified for parameter %1.</source>
+        <translation>Aucun type de paramètre spécifié pour le paramètre %1.</translation>
     </message>
     <message>
-        <source>At least one armor must be defined , database cannot be saved.</source>
-        <translation>Au moins un type de blindage doit être défini, la base ne peut pas être sauvée.</translation>
+        <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
+        <translation>&gt;Au moins un type de blindage doit être défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
 </context>
 <context>

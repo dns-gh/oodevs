@@ -8,35 +8,35 @@
         <translation></translation>
     </message>
     <message>
-        <source>Convoy unit type not defined in Log/Supply, database cannot be saved.</source>
+        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No geometry defined for object %1, database cannot be saved.</source>
+        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No PC defined for automat %1, database cannot be saved.</source>
+        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automat %1 requires at least one PC, database cannot be saved.</source>
+        <source>No PC defined for automat %1, because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No decisional model defined for unit %1, database cannot be saved.</source>
+        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convoy mission not defined in Log/Supply, database cannot be saved.</source>
+        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No parameter type specified for parameter %1, database cannot be saved.</source>
+        <source>No parameter type specified for parameter %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>At least one armor must be defined , database cannot be saved.</source>
+        <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

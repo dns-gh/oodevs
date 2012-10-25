@@ -68,7 +68,7 @@ bool ADN_GuiTools::MissingConvoyWarning()
     QApplication::restoreOverrideCursor();
     QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "Convoy unit type not defined in Log/Supply, database cannot be saved." ),
+        qApp->translate( "ADNDatabaseWarnings", "Convoy unit type not defined in Log/Supply, because of this, the simulation can't start with this database." ),
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
@@ -82,7 +82,7 @@ bool ADN_GuiTools::MissingConvoyMissionWarning()
     QApplication::restoreOverrideCursor();
     QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "Convoy mission not defined in Log/Supply, database cannot be saved." ),
+        qApp->translate( "ADNDatabaseWarnings", "Convoy mission not defined in Log/Supply, because of this, the simulation can't start with this database." ),
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
@@ -113,7 +113,7 @@ bool ADN_GuiTools::MissingGeometry( const std::string& name )
     QApplication::restoreOverrideCursor();
     QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "No geometry defined for object %1, database cannot be saved." ).arg( name.c_str() ) ,
+        qApp->translate( "ADNDatabaseWarnings", "No geometry defined for object %1, because of this, the simulation can't start with this database." ).arg( name.c_str() ) ,
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
@@ -127,7 +127,7 @@ bool ADN_GuiTools::MissingPCOnAutomat( const std::string& name )
     QApplication::restoreOverrideCursor();
     QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "No PC defined for automat %1, database cannot be saved." ).arg( name.c_str() ),
+        qApp->translate( "ADNDatabaseWarnings", "No PC defined for automat %1, because of this, the simulation can't start with this database." ).arg( name.c_str() ),
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
@@ -141,7 +141,7 @@ bool ADN_GuiTools::BadAutomatComposition( const std::string& name )
     QApplication::restoreOverrideCursor();
     QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "Automat %1 requires at least one PC, database cannot be saved." ).arg( name.c_str() ),
+        qApp->translate( "ADNDatabaseWarnings", "Automat %1 requires at least one PC, because of this, the simulation can't start with this database." ).arg( name.c_str() ),
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
@@ -155,7 +155,7 @@ bool ADN_GuiTools::MissingDecisionalModel( const std::string& unit )
     QApplication::restoreOverrideCursor();
     QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "No decisional model defined for unit %1, database cannot be saved." ).arg( unit.c_str() ),
+        qApp->translate( "ADNDatabaseWarnings", "No decisional model defined for unit %1, because of this, the simulation can't start with this database." ).arg( unit.c_str() ),
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
@@ -169,7 +169,7 @@ bool ADN_GuiTools::MissingParameterChoices( const std::string& name )
     QApplication::restoreOverrideCursor();
     QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "No parameter type specified for parameter %1, database cannot be saved." ).arg( name.c_str() ),
+        qApp->translate( "ADNDatabaseWarnings", "No parameter type specified for parameter %1." ).arg( name.c_str() ),
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
@@ -183,7 +183,7 @@ bool ADN_GuiTools::MissingArmor()
     QApplication::restoreOverrideCursor();
     QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "At least one armor must be defined , database cannot be saved." ),
+        qApp->translate( "ADNDatabaseWarnings", "At least one armor must be defined , because of this, the simulation can't start with this database." ),
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
