@@ -172,21 +172,22 @@ void OptionsPage::OnEditDataDirectory( const QString& text )
 // -----------------------------------------------------------------------------
 void OptionsPage::OnBack()
 {
-    if( hasChanged_ )
+    if( !hasChanged_ )
     {
-        MessageDialog message( parent_, tools::translate( "OptionsPage", "Unsaved changes" ), tools::translate( "OptionsPage", "Unsaved changes will be lost, continue anyway ?" ), QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() == QMessageBox::Yes )
-        {
-            Reset();
-            hasChanged_ = false;
-            languageHasChanged_ = false;
-            Page_ABC::OnBack();
-        }
-        else
-            return;
-    }
-    else
         Page_ABC::OnBack();
+        return;
+    }
+
+    MessageDialog message( parent_, tools::translate( "OptionsPage", "Unsaved changes" ),
+        tools::translate( "OptionsPage", "Unsaved changes will be lost, continue anyway ?" ),
+        QMessageBox::Yes, QMessageBox::No );
+    if( message.exec() != QMessageBox::Yes )
+        return;
+
+    Reset();
+    hasChanged_ = false;
+    languageHasChanged_ = false;
+    Page_ABC::OnBack();
 }
 
 // -----------------------------------------------------------------------------
