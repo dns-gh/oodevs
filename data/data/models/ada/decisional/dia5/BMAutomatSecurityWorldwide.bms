@@ -1,6 +1,7 @@
 pragma "once"
 --@TODO mutualiser les parties indépendantes  du modèle
 LoadResourcesFile( "Integration.lua" )
+include "FragOrder.lua"
 
 
 local libPath = select(1,...)
