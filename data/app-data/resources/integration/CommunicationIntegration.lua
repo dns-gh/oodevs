@@ -208,7 +208,7 @@ integration.isMissionAvailable = function( entity, targetTaskName )
 end
 
 integration.isMissionAgentAvailable = function( entity, targetTaskName )
-    DEC_IsMissionPionAvailable( entity, targetTaskName )
+    return DEC_IsMissionPionAvailable( entity, targetTaskName )
 end
 
 masalife.brain.communication.setMessageTreatment( "TaskDone",
