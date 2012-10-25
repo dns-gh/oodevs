@@ -802,6 +802,19 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
             AddError( eBadLogisticSubordinate, &automat );
             const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
         }
+    }    
+    Iterator< const Formation_ABC& > itFormations = model_.GetFormationResolver().CreateIterator();
+    while( itFormations.HasMoreElements() )
+    {
+        const Formation_ABC& formation = itFormations.NextElement();
+        if( formation.GetLogisticLevel() != kernel::LogisticLevel::logistic_base_ )
+            continue;
+        LogisticBaseStates* hierarchy = const_cast< LogisticBaseStates* >( static_cast< const LogisticBaseStates* >( formation.Retrieve< LogisticHierarchiesBase >() ) );
+        if( hierarchy->CleanBadSubordinates() )
+        {
+            AddError( eBadLogisticSubordinate, &formation );
+            const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
+        }
     }
 }
 
