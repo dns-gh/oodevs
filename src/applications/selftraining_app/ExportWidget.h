@@ -14,8 +14,6 @@
 #include "clients_gui/LanguageChangeObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
-class ScenarioEditPage;
-
 namespace tools
 {
     class GeneralConfig;
@@ -55,7 +53,7 @@ class ExportWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
 public:
     //! @name Constructors/Destructor
     //@{
-             ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers );
+             ExportWidget( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers );
     virtual ~ExportWidget();
     //@}
 
@@ -63,7 +61,18 @@ public:
     //@{
     void Update( QListWidgetItem* item = 0 );
     void ExportPackage();
-    bool EnableEditButton();
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void ButtonChanged( bool enable, const QString& text );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnButtonChanged();
     //@}
 
 private slots:
@@ -80,6 +89,7 @@ private:
     virtual void NotifyCreated( const frontend::Exercise_ABC& exercise );
     virtual void NotifyDeleted( const frontend::Exercise_ABC& exercise );
 
+    bool IsButtonEnabled();
     virtual void OnLanguageChanged();
     QString GetCurrentSelection() const;
     QTextEdit* GetCurrentDescription() const;
@@ -102,7 +112,6 @@ private:
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC&    fileLoader_;
     kernel::Controllers&        controllers_;
-    ScenarioEditPage&           page_;
     QTabWidget*                 tabs_;
     // Common
     QProgressBar*               progress_;

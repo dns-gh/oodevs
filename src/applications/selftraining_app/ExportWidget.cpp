@@ -10,7 +10,6 @@
 #include "selftraining_app_pch.h"
 #include "ExportWidget.h"
 #include "moc_ExportWidget.cpp"
-#include "ScenarioEditPage.h"
 #include "ExerciseListView.h"
 #include "clients_gui/tools.h"
 #include "clients_gui/ValuedListItem.h"
@@ -43,16 +42,14 @@ namespace
 // Name: ExportWidget constructor
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers )
+ExportWidget::ExportWidget( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers )
     : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 2, Qt::Vertical, parent )
     , config_     ( config )
     , fileLoader_ ( fileLoader )
     , controllers_( controllers )
-    , page_       ( page )
 {
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     tabs_ = new QTabWidget( this );
-    connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), &page, SLOT( UpdateEditButton( QWidget* ) ) );
 
     // eTabs_Exercise
     {
@@ -122,6 +119,7 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     progress_->hide();
     package_.first = config_.GetRootDir();
     controllers_.Register( *this );
+    connect( tabs_, SIGNAL( currentChanged( QWidget* ) ), SLOT( OnButtonChanged() ) );
     Update();
 }
 
@@ -238,10 +236,10 @@ QString ExportWidget::GetCurrentPackage() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExportWidget::EnableEditButton
+// Name: ExportWidget::IsButtonEnabled
 // Created: JSR 2010-07-19
 // -----------------------------------------------------------------------------
-bool ExportWidget::EnableEditButton()
+bool ExportWidget::IsButtonEnabled()
 {
     QString text = GetCurrentSelection();
     if( !text.isEmpty() )
@@ -263,7 +261,7 @@ void ExportWidget::OnSelectionChanged( const QModelIndex& modelIndex, const QMod
         frontend::BuildExerciseData( exercise, config_, exerciseContentModel_, fileLoader_ );
         exerciseContent_->expandAll();
     }
-    page_.UpdateEditButton();
+    OnButtonChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -281,7 +279,7 @@ void ExportWidget::OnSelectionChanged( QListWidgetItem* item )
 // -----------------------------------------------------------------------------
 void ExportWidget::OnModelNameChanged( const QString& /*text*/ )
 {
-    page_.UpdateEditButton();
+    OnButtonChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -314,7 +312,7 @@ void ExportWidget::Update( QListWidgetItem* item /*= 0*/ )
         modelName_->setText( Extract( physicalList_->currentItem()->text() ).first.c_str() );
         decisionalCheckBox_->setEnabled( true );
     }
-    page_.UpdateEditButton();
+    OnButtonChanged();
 }
 
 namespace
@@ -519,7 +517,7 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
     case eTabs_Terrain:
         {
             assert( terrainList_->currentItem() );
-            progress_->setValue( 0 ); 
+            progress_->setValue( 0 );
             progress_->setMaximum( 1 );
             bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->currentItem()->text().toAscii().constData() ) );
             Serialize( config_.GetRootDir(), diffPath.string(), archive, true );
@@ -578,4 +576,13 @@ void ExportWidget::NotifyCreated( const frontend::Exercise_ABC& exercise )
 void ExportWidget::NotifyDeleted( const frontend::Exercise_ABC& exercise )
 {
     exerciseList_->DeleteExerciseEntry( exercise );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExportWidget::OnButtonChanged
+// Created: BAX 2012-10-24
+// -----------------------------------------------------------------------------
+void ExportWidget::OnButtonChanged()
+{
+    emit ButtonChanged( IsButtonEnabled(), tools::translate( "Page_ABC", "Export" ) );
 }
