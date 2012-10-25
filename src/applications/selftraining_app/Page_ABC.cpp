@@ -196,6 +196,8 @@ void Page_ABC::SetButtonText( unsigned short flags, const QString& text )
         joinButton_->setText( text );
     if( ( flags & eButtonEdit ) && editButton_ )
         editButton_->setText( text );
+    if( ( flags & eButtonApply ) && applyButton_ )
+        applyButton_->setText( text );
     if( ( flags & eButtonDelete ) && deleteButton_ )
         deleteButton_->setText( text );
 }
