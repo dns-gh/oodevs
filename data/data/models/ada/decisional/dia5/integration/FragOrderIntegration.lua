@@ -18,11 +18,6 @@ integration.cleanFragOrder = function( fragOrder )
       DEC_DeleteRepresentation( fragOrder.source )
 end
 
-integration.isROE = function( self )
-  local returnValue = integration.getOrderType( self )=="Rep_OrderConduite_ChangerReglesEngagement"
-  return returnValue
-end
-
 integration.updateROE = function( self )
   DEC_Agent_ChangeEtatROE(integration.getOrderConduiteChangerReglesEngagementParameter( self ))
   integration.CR_ROE ( integration.getROE() )

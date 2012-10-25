@@ -435,3 +435,8 @@ integration.startFragOrderTask = function( self )
   masalife.brain.core.startTask( orderType, mission )
   integration.cleanFragOrder( self )
 end
+
+integration.isROE = function( self )
+  local returnValue = integration.getOrderType( self )=="Rep_OrderConduite_ChangerReglesEngagement"
+  return returnValue
+end
