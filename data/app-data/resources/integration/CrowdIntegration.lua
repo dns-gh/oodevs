@@ -44,7 +44,7 @@ integration.controlItCrowd = function( crowd )
 end
 
 integration.crowdRC = function ( ... )
-    DEC_RC( ... )
+    integration.report( ... )
 end
 
 -- -------------------------------------------------------------------------------- 

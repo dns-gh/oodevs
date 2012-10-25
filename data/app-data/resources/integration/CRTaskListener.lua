@@ -100,12 +100,12 @@ DEC_Warning = function( id, ... )
 end
 
 integration.genericRC = function ( ... ) 
-    DEC_RC( ... )
+    integration.report( ... )
 end
 
 integration.pionRC = function ( ... )
     if not DEC_Agent_AutomateEstEmbraye() then
-        DEC_RC( ... )
+        integration.report( ... )
     else
         DEC_Message( ... )
     end
