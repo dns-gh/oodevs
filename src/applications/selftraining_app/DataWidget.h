@@ -7,55 +7,54 @@
 //
 // *****************************************************************************
 
-#ifndef __DataPage_h_
-#define __DataPage_h_
+#ifndef DATA_WIDGET_H_
+#define DATA_WIDGET_H_
 
-#include "ContentPage.h"
+#include <boost/noncopyable.hpp>
 
 class Config;
 
 // =============================================================================
-/** @class  DataPage
+/** @class  DataWidget
     @brief  Data page
 */
 // Created: LGY 2012-02-28
 // =============================================================================
-class DataPage : public ContentPage
+class DataWidget : public QObject
+                 , public boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DataPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, const Config& config );
-    virtual ~DataPage();
+             DataWidget( QWidget* parent, QTabWidget* tabs, const Config& config );
+    virtual ~DataWidget();
     //@}
 
-    //! @name Operations
+signals:
+    //! @name public
     //@{
-    void SetTerrainsEnabled( bool value );
-    void SetModelsEnabled( bool value );
+    void ButtonChanged( bool enable, const QString& text );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnButtonChanged();
+    //@}
+
+public:
+    //! @name Methods
+    //@{
+    void Update();
+    void OnDelete();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void OnLanguageChanged();
-    virtual void OnDelete();
-    virtual void Update();
     QListWidgetItem* CurrentItem() const;
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void UpdateButton();
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    enum E_Tabs{ eTabs_Terrains = 0, eTabs_Models = 1 };
     //@}
 
 private:
@@ -69,4 +68,4 @@ private:
     //@}
 };
 
-#endif // __DataPage_h_
+#endif // DATA_WIDGET_H_

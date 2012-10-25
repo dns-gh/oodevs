@@ -130,14 +130,14 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\TrayMenu.cpp">
       <Filter>Source Files\Systray</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\selftraining_app\DataPage.cpp">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\selftraining_app\ExerciseListView.cpp">
       <Filter>Source Files\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\selftraining_app\ScenarioJoinPage.cpp">
       <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\DataWidget.cpp">
+      <Filter>Source Files\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,11 +268,11 @@
     <CustomBuild Include="..\..\src\applications\selftraining_app\translator.pro">
       <Filter>Translations</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\selftraining_app\DataPage.h">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\ScenarioJoinPage.h">
       <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\DataWidget.h">
+      <Filter>Source Files\Widgets</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
