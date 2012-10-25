@@ -225,3 +225,30 @@ bool NETNv1_InteractionBuilder::DoRegister( const std::string& name, ::hla::Inte
     }
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NETNv1_InteractionBuilder::Build
+// Created: AHC 2012-10-25
+// -----------------------------------------------------------------------------
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_OfferTransferModellingResponsibility >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NETNv1_InteractionBuilder::Build
+// Created: AHC 2012-10-25
+// -----------------------------------------------------------------------------
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_InitiateTransferModellingResponsibility >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NETNv1_InteractionBuilder::Build
+// Created: AHC 2012-10-25
+// -----------------------------------------------------------------------------
+bool NETNv1_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& ) const
+{
+    return false;
+}

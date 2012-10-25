@@ -35,6 +35,9 @@ namespace interactions
     struct NetnConvoyDestroyedEntities;
     struct NetnServiceComplete;
     struct NetnServiceReceived;
+    struct TMR_OfferTransferModellingResponsibility;
+    struct TMR_InitiateTransferModellingResponsibility;
+    struct TMR_RequestTransferModellingResponsibility;
 }
 
 // =============================================================================
@@ -65,6 +68,9 @@ public:
     virtual bool Build( ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const = 0;
     virtual bool Build( ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const = 0;
     virtual bool Build( ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_OfferTransferModellingResponsibility >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_InitiateTransferModellingResponsibility >& interaction ) const = 0;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const = 0;
     //@}
 };
 

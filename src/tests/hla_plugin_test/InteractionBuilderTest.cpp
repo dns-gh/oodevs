@@ -427,3 +427,44 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::NetnServiceReceived >( name, parameters );
 }
 
+BOOST_FIXTURE_TEST_CASE( build_offer_transfer_modelling_responibility, FixtureV2 )
+{
+    const std::string name = "TMR.TMR_OfferTransferModellingResponsibility";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "RequestFederate" )
+                                                                        ( "ResponseFederate" )
+                                                                        ( "isOffering" )
+                                                                        ( "Reason" );
+    CheckBuild< interactions::TMR_OfferTransferModellingResponsibility >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( build_initiate_transfer_modelling_responibility, FixtureV2 )
+{
+    const std::string name = "TMR.TMR_InitiateTransferModellingResponsibility";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "RequestFederate" )
+                                                                        ( "ResponseFederate" )
+                                                                        ( "TransferType" )
+                                                                        ( "Instances" )
+                                                                        ( "Attributes" )
+                                                                        ( "Initiating" )
+                                                                        ( "CapabilityType" )
+                                                                        ( "InstanceAttributeValues" );
+    CheckBuild< interactions::TMR_InitiateTransferModellingResponsibility >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( build_request_transfer_modelling_responibility, FixtureV2 )
+{
+    const std::string name = "TMR.TMR_RequestTransferModellingResponsibility";
+    const std::vector< std::string > parameters = boost::assign::list_of( "TransactionID" )
+                                                                        ( "RequestFederate" )
+                                                                        ( "ResponseFederate" )
+                                                                        ( "TransferType" )
+                                                                        ( "Instances" )
+                                                                        ( "Attributes" )
+                                                                        ( "CapabilityType" )
+                                                                        ( "InstanceAttributeValues" );
+    CheckBuild< interactions::TMR_RequestTransferModellingResponsibility >( name, parameters );
+}
+
+

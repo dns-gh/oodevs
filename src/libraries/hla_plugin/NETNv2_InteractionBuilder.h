@@ -56,6 +56,9 @@ public:
     virtual bool Build( ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const;
     virtual bool Build( ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const;
     virtual bool Build( ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_OfferTransferModellingResponsibility >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_InitiateTransferModellingResponsibility >& interaction ) const;
+    virtual bool Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const;
     //@}
 
 private:

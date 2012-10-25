@@ -299,3 +299,29 @@ bool InteractionBuilder::Build( ::hla::Interaction< interactions::Comment >& int
     return DoRegister( name, interaction, true, true );
 }
 
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-10-25
+// -----------------------------------------------------------------------------
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_OfferTransferModellingResponsibility >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-10-25
+// -----------------------------------------------------------------------------
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_InitiateTransferModellingResponsibility >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-10-25
+// -----------------------------------------------------------------------------
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const
+{
+    return netnBuilder_.Build( interaction );
+}

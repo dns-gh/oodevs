@@ -13,6 +13,7 @@
 #include "Omt13String.h"
 #include "Transportation.h"
 #include "UnicodeString.h"
+#include "UniqueId.h"
 #include "rpr/EntityType.h"
 #include "rpr/Coordinates.h"
 #include <hla/HLA_Types.h>
@@ -109,7 +110,103 @@ struct NetnServiceComplete : public NetnService
 struct NetnServiceReceived : public NetnService
 {};
 
-}
+// NETN Transfer of Modelling Responsability
+struct TransactionId
+{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        archive << transactionCounter;
+        federateName.Serialize( archive );
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        archive >> transactionCounter;
+        federateName.Deserialize( archive );
+    }
+    uint32 transactionCounter;
+    UnicodeString federateName;
+};
+struct TMR
+{
+    enum NoofferReasonEnum32
+    {
+        Reason_Other = 0,
+        CapabilityDoesNotMatch = 1,
+        AttributeSetToRestricted = 2,
+        AttributeSetToExtensive = 3,
+        FederateToBusy = 4,
+        AttributeSetNotCompatibleWithPublication = 5
+    };
+    enum TransferTypeEnum32
+    {
+        Transfer_Other = 0,
+        Acquire = 1,
+        Divest = 2,
+        AcquireWithoutNegotiating = 3
+    };
+    enum CapabilityTypeEnum32
+    {
+        Capability_Other = 0,
+        TotalTransfer = 1,
+        Movement = 2,
+        Damage = 3,
+        ResourceConsumption = 4
+    };
+    TransactionId transactionID;
+    UnicodeString requestFederate;
+    UnicodeString responseFederate;
+};
+
+struct TMR_OfferTransferModellingResponsibility : public TMR
+{
+    bool isOffering;
+    uint32 reason; // type is NoofferReasonEnum32
+};
+
+struct AttributeValueStruct
+{
+    template< typename Archive >
+    void Serialize( Archive& archive ) const
+    {
+        name.Serialize( archive );
+        archive << static_cast< uint32 >( value.size() )
+                << value;
+    }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        name.Deserialize( archive );
+        uint32 sz = 0;
+        archive >> sz;
+        value.resize( sz );
+        archive >> value;
+    }
+    UnicodeString name;
+    std::vector< uint8 > value;
+};
+
+struct TMR_InitiateTransferModellingResponsibility : public TMR
+{
+    uint32 transferType; // TMR::TransferTypeEnum32
+    std::vector< NETN_UUID > instances;
+    std::vector< UnicodeString > attributes;
+    UnicodeString intiating;
+    uint32 capabilityType; // TMR::CapabilityTypeEnum32
+    std::vector< AttributeValueStruct >attributeValues;
+};
+
+struct TMR_RequestTransferModellingResponsibility : public TMR
+{
+    uint32 transferType; // TMR::TransferTypeEnum32
+    std::vector< NETN_UUID > instances;
+    std::vector< UnicodeString > attributes;
+    uint32 capabilityType; // TMR::CapabilityTypeEnum32
+    std::vector< AttributeValueStruct >attributeValues;
+};
+
+} // namespace interactions
 }
 }
 

@@ -39,6 +39,12 @@ namespace
         REGISTER_TEMPLATE( "Consumer"   , &T::consumer, T );
         REGISTER_TEMPLATE( "Provider"   , &T::provider, T );
         REGISTER_TEMPLATE( "ServiceType", &T::serviceType, T );
+    }template< typename T >
+    void RegisterTMR( ::hla::Interaction< T >& interaction, const std::string& name, dispatcher::Logger_ABC& logger_ )
+    {
+        REGISTER_TEMPLATE( "TransactionID", &T::transactionID, T );
+        REGISTER_TEMPLATE( "RequestFederate", &T::requestFederate, T );
+        REGISTER_TEMPLATE( "ResponseFederate", &T::responseFederate, T );
     }
     NETN_UUID objectDef2uuid( const NetnObjectDefinitionStruct& v )
     {
@@ -282,7 +288,7 @@ bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::NetnSer
 }
 
 // -----------------------------------------------------------------------------
-// Name: InteractionBuilder::DoRegister
+// Name: NETNv2_InteractionBuilder::DoRegister
 // Created: AHC 2012-08-31
 // -----------------------------------------------------------------------------
 bool NETNv2_InteractionBuilder::DoRegister( const std::string& name, ::hla::Interaction_ABC& interactionClass, bool publish, bool subscribe ) const
@@ -297,4 +303,50 @@ bool NETNv2_InteractionBuilder::DoRegister( const std::string& name, ::hla::Inte
         return false;
     }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NETNv2_InteractionBuilder::Build
+// Created: AHC 2012-10-25
+// -----------------------------------------------------------------------------
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_OfferTransferModellingResponsibility >& interaction ) const
+{
+    const std::string name = "TMR.TMR_OfferTransferModellingResponsibility";
+    RegisterTMR( interaction, name, logger_ );
+    REGISTER( "isOffering", &interactions::TMR_OfferTransferModellingResponsibility::isOffering );
+    REGISTER( "Reason", &interactions::TMR_OfferTransferModellingResponsibility::reason );
+    return DoRegister( name, interaction, true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NETNv2_InteractionBuilder::Build
+// Created: AHC 2012-10-25
+// -----------------------------------------------------------------------------
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_InitiateTransferModellingResponsibility >& interaction ) const
+{
+    const std::string name = "TMR.TMR_InitiateTransferModellingResponsibility";
+    RegisterTMR( interaction, name, logger_ );
+    REGISTER( "TransferType", &interactions::TMR_InitiateTransferModellingResponsibility::transferType );
+    REGISTER( "Instances", &interactions::TMR_InitiateTransferModellingResponsibility::instances );
+    REGISTER( "Attributes", &interactions::TMR_InitiateTransferModellingResponsibility::attributes );
+    REGISTER( "Initiating", &interactions::TMR_InitiateTransferModellingResponsibility::intiating );
+    REGISTER( "CapabilityType", &interactions::TMR_InitiateTransferModellingResponsibility::capabilityType );
+    REGISTER( "InstanceAttributeValues", &interactions::TMR_InitiateTransferModellingResponsibility::attributeValues );
+    return DoRegister( name, interaction, true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NETNv2_InteractionBuilder::Build
+// Created: AHC 2012-10-25
+// -----------------------------------------------------------------------------
+bool NETNv2_InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_RequestTransferModellingResponsibility >& interaction ) const
+{
+    const std::string name = "TMR.TMR_RequestTransferModellingResponsibility";
+    RegisterTMR( interaction, name, logger_ );
+    REGISTER( "TransferType", &interactions::TMR_RequestTransferModellingResponsibility::transferType );
+    REGISTER( "Instances", &interactions::TMR_RequestTransferModellingResponsibility::instances );
+    REGISTER( "Attributes", &interactions::TMR_RequestTransferModellingResponsibility::attributes );
+    REGISTER( "CapabilityType", &interactions::TMR_RequestTransferModellingResponsibility::capabilityType );
+    REGISTER( "InstanceAttributeValues", &interactions::TMR_RequestTransferModellingResponsibility::attributeValues );
+    return DoRegister( name, interaction, true, true );
 }
