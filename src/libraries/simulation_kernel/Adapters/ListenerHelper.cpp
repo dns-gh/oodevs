@@ -66,7 +66,7 @@ const core::Model& ListenerHelper::operator*() const
 // -----------------------------------------------------------------------------
 void ListenerHelper::NotifyChanged( const core::Model& model )
 {
-    model_ = const_cast< core::Model* >( &model );
+    model_ = &model;
     if( changed_ )
         changed_( model );
 }
