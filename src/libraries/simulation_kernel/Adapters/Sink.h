@@ -48,9 +48,10 @@ public:
     //! @name Operations
     //@{
     virtual void Finalize();
+    virtual void ExecutePerceptions();
     virtual void ExecuteCommands();
     virtual void ApplyEffects();
-    virtual void ExecutePerceptions();
+    virtual void NotifyEffects();
     virtual void UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects, const MIL_EffectManager& effects );
     virtual void UpdateKnowledges();
     virtual void UpdateUrbanModel( const MIL_UrbanCache& cache );

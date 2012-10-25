@@ -289,6 +289,15 @@ void Sink::ApplyEffects()
     facade_->ApplyEffects();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Sink::NotifyEffects
+// Created: MCO 2012-10-25
+// -----------------------------------------------------------------------------
+void Sink::NotifyEffects()
+{
+    facade_->NotifyEffects();
+}
+
 SWORD_USER_DATA_EXPORT( boost::shared_ptr< DEC_Knowledge_Agent > )
 SWORD_USER_DATA_EXPORT( const MIL_Population* )
 SWORD_USER_DATA_EXPORT( const MIL_PopulationElement_ABC* )
@@ -558,10 +567,6 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
 
 namespace
 {
-    // -------------------------------------------------------------------------
-    // Name: Finalize
-    // Created: BAX 2012-10-18
-    // -------------------------------------------------------------------------
     MIL_AgentPion& Finalize( MIL_AgentPion& pion )
     {
         pion.GetRole< sword::RolePion_Location >().Finalize();

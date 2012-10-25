@@ -47,6 +47,7 @@ public:
     virtual void ExecutePerceptions() = 0;
     virtual void ExecuteCommands() = 0;
     virtual void ApplyEffects() = 0;
+    virtual void NotifyEffects() = 0;
     virtual void UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects, const MIL_EffectManager& effects ) = 0;
     virtual void UpdateKnowledges() = 0;
     virtual void UpdateUrbanModel( const MIL_UrbanCache& cache ) = 0;
