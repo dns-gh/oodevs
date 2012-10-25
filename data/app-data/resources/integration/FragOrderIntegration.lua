@@ -18,11 +18,6 @@ integration.cleanFragOrder = function( fragOrder )
       DEC_DeleteRepresentation( fragOrder.source )
 end
 
-integration.isROE = function( self )
-  local returnValue = integration.getOrderType( self )=="Rep_OrderConduite_ChangerReglesEngagement"
-  return returnValue
-end
-
 integration.updateROE = function( self )
   DEC_Agent_ChangeEtatROE(integration.getOrderConduiteChangerReglesEngagementParameter( self ))
   integration.CR_ROE ( integration.getROE() )
@@ -188,4 +183,15 @@ end
 
 integration.getOrdersCategory = function( )
     return DEC_GetOrdersCategory()
+end
+
+integration.getFireParameters = function( self )
+    local params = {}
+    local uggly = function() params.entities = { CreateKnowledge( integration.ontology.types.agentKnowledge, integration.getAgentKnowledgeParameter( self ) ) } end
+    if not pcall( uggly ) then
+        params.entities = { CreateKnowledge( integration.ontology.types.point, integration.getpointCibleParameter( self ) ) }
+    end
+    params.munition = integration.getMunitionsParameter( self )
+    params.interventionType = integration.getNbItParameter( self )
+    return params
 end

@@ -610,17 +610,6 @@ integration.startFragOrderTask = function( self )
     integration.cleanFragOrder( self )
 end
 
-integration.getFireParameters = function( self )
-    local params = {}
-    local uggly = function() params.entities = { CreateKnowledge( integration.ontology.types.agentKnowledge, integration.getAgentKnowledgeParameter( self ) ) } end
-    if not pcall( uggly ) then
-        params.entities = { CreateKnowledge( integration.ontology.types.point, integration.getpointCibleParameter( self ) ) }
-    end
-    params.munition = integration.getMunitionsParameter( self )
-    params.interventionType = integration.getNbItParameter( self )
-    return params
-end
-
 integration.getFireFragOrder = function( self )
     local ordres_recus = integration.getOrdersCategory()
     for _,x in pairs( ordres_recus or emptyTable ) do
@@ -632,4 +621,9 @@ integration.getFireFragOrder = function( self )
         end
     end
     return nil
+end
+
+integration.isROE = function( self )
+  local returnValue = integration.getOrderType( self )=="Rep_OrderConduite_ChangerReglesEngagement"
+  return returnValue
 end
