@@ -178,6 +178,7 @@
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="PION MELEE Surveiller"/>
+        <mission name="PION MELEE Appuyer Sur Position"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7492,4 +7493,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2495041960" -->
+<!-- signature="2346765759" -->
