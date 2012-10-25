@@ -60,6 +60,7 @@ enum E_ConsistencyCheck
     eDeletedUrbanBlocks,
     eMelmil,
     eDeletedPopulationUrbanBlocks,
+    eDiffusionListCleaned,
     eOthers,
     eOthersMask,
 };

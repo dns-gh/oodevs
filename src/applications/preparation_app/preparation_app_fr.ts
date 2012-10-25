@@ -1471,6 +1471,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Melmil file is missing.</source>
         <translation>Fichier melmil référencé absent</translation>
     </message>
+    <message>
+        <source>Invalid unit removed from diffusion list.</source>
+        <translation>Unité invalide retirée de la liste de diffusion</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

@@ -31,6 +31,7 @@
 #include "UrbanModel.h"
 #include "UserProfile.h"
 #include "clients_gui/LongNameHelper.h"
+#include "clients_gui/DiffusionListFunctors.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
@@ -929,6 +930,7 @@ namespace
         if( IsTransmitter( transmitter ) )
             BOOST_FOREACH( const std::string id, GetReceivers( transmitter ) )
                 if( id != "" )
+                {
                     if( const kernel::Agent_ABC* agent = resolver.Find( boost::lexical_cast< unsigned int >( id ) ) )
                     {
                         if( entity.GetId() == agent->GetId() )
@@ -936,7 +938,40 @@ namespace
                         if( !IsValid( *agent, entity, resolver ) )
                             return false;
                     }
+                }
         return true;
+    }
+
+    bool PointsInvalidElement( const kernel::Agent_ABC& transmitter, tools::Resolver_ABC< kernel::Agent_ABC >& resolver )
+    {
+        bool update = false;
+        std::string diffusionList;
+        if( IsTransmitter( transmitter ) )
+        {
+            std::vector< std::string > receivers = GetReceivers( transmitter );
+            for( std::vector< std::string >::const_iterator it = receivers.begin(); it != receivers.end(); ++it )
+            {
+                if( *it != "" )
+                {
+                    if( !resolver.Find( boost::lexical_cast< unsigned int >( *it ) ) )
+                        update = true;
+                    else
+                    {
+                        if ( !diffusionList.empty() ) 
+                            diffusionList += gui::DiffusionListData::separator_;
+                        diffusionList += *it;
+                    }
+                }
+            }
+            if( update )
+            {
+                std::vector< std::string > list;
+                kernel::DictionaryExtensions& extension = const_cast< kernel::DictionaryExtensions& >( transmitter.Get< kernel::DictionaryExtensions >() );
+                const std::string name = extension.GetExtensionTypes().GetNameByType( kernel::AttributeType::ETypeDiffusionList );
+                extension.SetValue( name, diffusionList );
+            }
+        }
+        return update;
     }
 }
 
@@ -950,6 +985,11 @@ void ModelConsistencyChecker::CheckDiffusionList()
     while( it.HasMoreElements() )
     {
         const Agent_ABC& agent = it.NextElement();
+        if( PointsInvalidElement( agent, model_.GetAgentResolver() ) )
+        {
+            AddError( eDiffusionListCleaned, &agent );
+            const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
+        }
         if( !IsValid( agent, agent, model_.GetAgentResolver() ) )
             AddError( eDiffusionList, &agent );
     }

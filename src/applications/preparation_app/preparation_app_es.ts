@@ -1466,6 +1466,10 @@ This data can&apos;t be projected.</source>
         <source>Melmil file is missing.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid unit removed from diffusion list.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

@@ -123,6 +123,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eDeletedUrbanBlocks ] = tools::translate( "ModelConsistencyDialog", "Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.");
     errorDescriptions_[ eMelmil ] = tools::translate( "ModelConsistencyDialog", "Melmil file is missing.");
     errorDescriptions_[ eDeletedPopulationUrbanBlocks ] = "%1";
+    errorDescriptions_[ eDiffusionListCleaned ] = tools::translate( "ModelConsistencyDialog", "Invalid unit removed from diffusion list." );
     errorDescriptions_[ eOthers ] = "%1";
 }
 
