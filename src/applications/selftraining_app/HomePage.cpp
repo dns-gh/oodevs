@@ -92,6 +92,9 @@ void HomePage::OnOptions()
 // -----------------------------------------------------------------------------
 void HomePage::InstallPackage( const QString& package )
 {
+    package;
+#if 0
     if( prepare_->isEnabled() )
         editPage_->ShowPackageInstallation( package );
+#endif
 }

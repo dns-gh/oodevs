@@ -30,8 +30,6 @@ namespace tools
 
 class CreateExerciceWidget;
 class ExerciseList;
-class ExportWidget;
-class ImportWidget;
 class ProgressPage;
 
 // =============================================================================
@@ -57,7 +55,6 @@ public:
     void Edit( const QString& exercise );
     bool ExerciceExists( const QString& string );
     void LaunchScenarioImport( const QString& inputScenario, const QString& outputScenario );
-    void ShowPackageInstallation( const QString& package );
     void LaunchPreparation( const QString& outputScenario );
     void UpdateEditButton();
     //@}
@@ -65,7 +62,7 @@ public:
 private:
     //! @name Type
     //@{
-    enum E_Tabs { eTabs_Edit = 0, eTabs_Create = 1, eTabs_Import = 2, eTabs_Export = 3 };
+    enum E_Tabs { eTabs_Edit = 0, eTabs_Create = 1 };
     //@}
 
     //! @name Helpers
@@ -98,8 +95,6 @@ private:
     const frontend::Exercise_ABC* exercise_;
     QTabWidget* mainTabs_;
     CreateExerciceWidget* createExerciceWidget_;
-    ImportWidget* importWidget_;
-    ExportWidget* exportWidget_;
     //@}
 };
 
