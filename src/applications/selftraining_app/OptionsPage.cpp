@@ -197,31 +197,31 @@ void OptionsPage::OnBack()
 void OptionsPage::CreateDataDirectory()
 {
     const std::string directory = dataDirectory_->text().toAscii().constData();
-    if( !bfs::exists( directory ) )
+    if( bfs::exists( directory ) )
+        return;
+
+    MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ),
+        tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ),
+        QMessageBox::Yes, QMessageBox::No );
+    if( message.exec() != QMessageBox::Yes )
     {
-        MessageDialog message( parent_, tools::translate( "OptionsPage", "Invalid directory" ), tools::translate( "OptionsPage", "Directory \'%1\' doesn't exist. Do you want to create it ?" ).arg( directory.c_str() ), QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() == QMessageBox::Yes )
-        {
-            try
-            {
-                selectedDataDir_ = directory;
-                bfs::create_directories( std::string( directory ) );
-            }
-            catch ( std::exception& e )
-            {
-                selectedDataDir_ = config_.GetRootDir();
-                dataDirectory_->setText( selectedDataDir_.c_str() );
-                MessageDialog message( parent_, tools::translate( "OptionsPage", "Error" ), tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.c_str() ).arg( e.what() ), QMessageBox::Ok );
-                message.exec();
-                return;
-            }
-        }
-        else
-        {
-            selectedDataDir_ = config_.GetRootDir();
-            dataDirectory_->setText( selectedDataDir_.c_str() );
-            return;
-        }
+        selectedDataDir_ = config_.GetRootDir();
+        dataDirectory_->setText( selectedDataDir_.c_str() );
+        return;
+    }
+
+    try
+    {
+        selectedDataDir_ = directory;
+        bfs::create_directories( std::string( directory ) );
+    }
+    catch ( std::exception& e )
+    {
+        selectedDataDir_ = config_.GetRootDir();
+        dataDirectory_->setText( selectedDataDir_.c_str() );
+        MessageDialog message( parent_, tools::translate( "OptionsPage", "Error" ),
+            tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.c_str() ).arg( e.what() ), QMessageBox::Ok );
+        message.exec();
     }
 }
 
