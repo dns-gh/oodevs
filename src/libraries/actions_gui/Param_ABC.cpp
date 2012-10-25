@@ -9,6 +9,7 @@
 
 #include "actions_gui_pch.h"
 #include "Param_ABC.h"
+#include "ParamInterface_ABC.h"
 #include "moc_Param_ABC.cpp"
 #include "ListParameter.h"
 #include "clients_kernel/ActionController.h"
@@ -374,13 +375,27 @@ bool Param_ABC::IsInParam() const
 // Name: Param_ABC::CreateListMenu
 // Created: ABR 2012-03-23
 // -----------------------------------------------------------------------------
-void Param_ABC::CreateListMenu( Q3ListView* list, Q3ListViewItem* item, const QPoint& pos, bool createEnabled )
+void Param_ABC::CreateListMenu( QTreeView* list, const QStandardItemModel& model, const QPoint& pos, bool createEnabled )
 {
     kernel::ContextMenu* menu = new kernel::ContextMenu( list );
     if( createEnabled )
         menu->insertItem( tools::translate( "ListParameter", "Add" ), this, SLOT( OnCreate() ) );
-    if( item )
-        menu->insertItem( tools::translate( "ListParameter", "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
+
+    const QModelIndex index = list->selectionModel()->currentIndex();
+    if( index.isValid() )
+        if( QStandardItem* item = model.itemFromIndex( index ) )
+            menu->insertItem( tools::translate( "ListParameter", "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
+
     menu->insertItem( tools::translate( "ListParameter", "Clear list" ), this, SLOT( OnClear() ) );
-    menu->popup( pos );
+    menu->popup( list->viewport()->mapToGlobal( pos ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::GetNextName
+// Created: NPT 2012-10-25
+// -----------------------------------------------------------------------------
+QString Param_ABC::GetNextNameAndId( const QStandardItemModel& model )
+{
+    int previousId = model.rowCount() != 0? model.item( model.rowCount() -1 )->data( IdRole ).toInt() : 0 ;
+    return tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( previousId + 1 );
 }

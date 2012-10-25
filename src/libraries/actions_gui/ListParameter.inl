@@ -7,6 +7,11 @@
 //
 // *****************************************************************************
 
+Q_DECLARE_METATYPE( Param_ABC* )
+
+#define ParamRole ( Qt::UserRole + 1 )
+#define IdRole    ( Qt::UserRole + 2 )
+
 // -----------------------------------------------------------------------------
 // Name: ListParameter constructor
 // Created: ABR 2012-01-09
@@ -62,11 +67,11 @@ bool ListParameter< ConcreteElement >::InternalCheckValidity() const
 {
     if( !list_ )
         return false;
-    unsigned int children = list_->childCount();
+    unsigned int children = model_.rowCount();
     if( min_ > children || max_ < children )
         return false;
     if( selected_ )
-        if( Param_ABC* param = static_cast< const ::gui::ValuedListItem* >( selected_ )->GetValue< Param_ABC >() )
+        if( Param_ABC* param = selected_->data( ParamRole ).value< Param_ABC* >() )
             return param->CheckValidity();
     return true;
 }
@@ -81,14 +86,20 @@ QWidget* ListParameter< ConcreteElement >::BuildInterface( QWidget* parent )
     Param_ABC::BuildInterface( parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     Q3VBox* vbox = new Q3VBox( parent );
-    list_ = new Q3ListView( vbox );
-    list_->setSorting( -1 );
+    
+    //list of parameters
+    list_ = new QTreeView( vbox );
+    list_->setModel( &model_ );
+    list_->setContextMenuPolicy( Qt::CustomContextMenu );
+    list_->setRootIsDecorated( false );
+    list_->setEditTriggers( 0 );
     list_->setMaximumHeight( 100 );
-    list_->addColumn( GetName() );
-    list_->header()->hide();
-    list_->setResizeMode( Q3ListView::LastColumn );
-    connect( list_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
-    connect( list_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint& ) ) );
+    list_->setHeaderHidden( true );
+    model_.setColumnCount( 1 );
+    list_->header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    connect( list_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), SLOT( OnSelectionChanged( const QItemSelection&, const QItemSelection& ) ) );
+    connect( list_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnRequestPopup( const QPoint& ) ) );
+
     layout->addWidget( vbox );
     return group_;
 }
@@ -98,9 +109,9 @@ QWidget* ListParameter< ConcreteElement >::BuildInterface( QWidget* parent )
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 template< typename ConcreteElement >
-void ListParameter< ConcreteElement >::OnRequestPopup( Q3ListViewItem* item, const QPoint& pos )
+void ListParameter< ConcreteElement >::OnRequestPopup( const QPoint& pos )
 {
-    CreateListMenu( list_, item, pos, createEnabled_ );
+    CreateListMenu( list_, model_, pos, createEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +131,7 @@ void ListParameter< ConcreteElement >::EnableCreation( bool enabled )
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::OnCreate()
 {
-    if( ! list_ || ( list_->childCount() && ! CheckValidity() ) )
+    if( ! list_ || ( model_.rowCount() && ! CheckValidity() ) )
         return;
     Param_ABC* param = CreateElement();
     if( param )
@@ -134,14 +145,20 @@ void ListParameter< ConcreteElement >::OnCreate()
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::AddElement( Param_ABC& param )
 {
+    //add param to interface
     param.SetOptional( false );
     Q3VBox* widget = new Q3VBox( list_->parentWidget() );
     widgets_[ &param ] = widget;
     param.BuildInterface( widget );
-    ::gui::ValuedListItem* item = new ::gui::ValuedListItem( list_, list_->lastItem() );
-    item->SetValue( &param );
-    item->setText( 0, param.GetName() );
-    list_->setSelected( item, true );
+
+    //add element to list
+    QStandardItem* item = new QStandardItem( param.GetName() );
+    item->setData( QVariant::fromValue( &param ), ParamRole );
+    int id = model_.rowCount() != 0? model_.item( model_.rowCount() - 1 )->data( IdRole ).toInt() + 1 : 1 ;
+    item->setData( id, IdRole );
+    model_.appendRow( item );
+    list_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
+
     if( group_ && IsOptional() )
         group_->setChecked( true );
 }
@@ -154,11 +171,14 @@ template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::OnDeleteSelectedItem()
 {
     if( list_ )
-    {
-        DeleteItem( list_->selectedItem() );
-        if( group_ && IsOptional() )
-            group_->setChecked( list_->childCount() != 0 );
-    }
+        if( list_->selectionModel()->currentIndex().isValid() )
+        {
+            list_->selectionModel()->select( list_->selectionModel()->currentIndex(), QItemSelectionModel::Deselect );
+            DeleteItem( model_.itemFromIndex( list_->selectionModel()->currentIndex() ) );
+            model_.removeRow( list_->selectionModel()->currentIndex().row() );
+        }
+    if( group_ && IsOptional() )
+        group_->setChecked( model_.rowCount() != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,33 +198,34 @@ void ListParameter< ConcreteElement >::OnClear()
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 template< typename ConcreteElement >
-void ListParameter< ConcreteElement >::OnSelectionChanged( Q3ListViewItem* item )
+void ListParameter< ConcreteElement >::OnSelectionChanged( const QItemSelection& newSelection , const QItemSelection& /*oldSelection*/ )
 {
+    if( newSelection.indexes().isEmpty() )
+        return;
+    QStandardItem* item = model_.itemFromIndex( newSelection.indexes().at( 0 ) );
     if( selected_ == item )
         return;
     if( selected_ )
     {
         if( CheckValidity() )
         {
-            if( Param_ABC* param = static_cast< ::gui::ValuedListItem* >( selected_ )->GetValue< Param_ABC >() )
+            if( Param_ABC* param = selected_->data( ParamRole ).value< Param_ABC* >() )
             {
                 param->RemoveFromController();
-                widgets_[param]->hide();
+                widgets_[ param ]->hide();
             }
         }
         else
         {
-            list_->setSelected( selected_, true );
+            list_->selectionModel()->select( selected_->index(), QItemSelectionModel::Select );
             return;
         }
     }
-    if( item )
+    if( item && item->data( ParamRole ).isValid())
     {
-        if( Param_ABC* param = static_cast< ::gui::ValuedListItem* >( item )->GetValue< Param_ABC >() )
-        {
-            param->RegisterIn( controller_ );
-            widgets_[param]->show();
-        }
+        Param_ABC* param = item->data( ParamRole ).value< Param_ABC* >();
+        param->RegisterIn( controller_ );
+        widgets_[ param ]->show();
     }
     selected_ = item;
 }
@@ -214,21 +235,20 @@ void ListParameter< ConcreteElement >::OnSelectionChanged( Q3ListViewItem* item 
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
 template< typename ConcreteElement >
-void ListParameter< ConcreteElement >::DeleteItem( Q3ListViewItem* item )
+void ListParameter< ConcreteElement >::DeleteItem( QStandardItem* item )
 {
-    if( item == selected_ )
+    if( selected_ && item == selected_ )
     {
-        if( Param_ABC* param = static_cast< ::gui::ValuedListItem* >( selected_ )->GetValue< Param_ABC >() )
+        if( Param_ABC* param = selected_->data( ParamRole ).value< Param_ABC* >() )
         {
             param->RemoveFromController();
             widgets_[param]->hide();
         }
-        selected_->setSelected( false );
+        list_->selectionModel()->select( selected_->index(), QItemSelectionModel::Deselect );
         selected_ = 0;
     }
-    if( Param_ABC* param = static_cast< ::gui::ValuedListItem* >( item )->GetValue< Param_ABC >() )
+    if( Param_ABC* param = item->data( ParamRole ).value< Param_ABC* >() )
         DeleteElement( *param );
-    delete item;
 }
 
 // -----------------------------------------------------------------------------
@@ -250,8 +270,12 @@ template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::Clear()
 {
     if( list_ )
-        while( list_->childCount() )
-            DeleteItem( list_->firstChild() );
+    {
+        for( int row = 0; row < model_.rowCount(); ++row )
+            DeleteItem( model_.item( row ) );
+        list_->clearSelection();
+        model_.removeRows( 0, model_.rowCount() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -274,10 +298,12 @@ bool ListParameter< ConcreteElement >::CommitChildrenTo( actions::ParameterConta
     bool result = false;
     if( !list_ || !IsChecked() )
         return result;
-    for( Q3ListViewItemIterator it = Q3ListViewItemIterator( list_ ); it.current(); ++it )
+    for( int row = 0; row < model_.rowCount(); ++row )
     {
-        ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( it.current() );
-        item->GetValue< Param_ABC >()->CommitTo( parent );
+        QStandardItem* item = model_.item( row );
+        if( item )
+            if( Param_ABC* param = selected_->data( ParamRole ).value< Param_ABC* >() )
+                param->CommitTo( parent );
         if( !result )
             result = true;
     }
@@ -291,9 +317,14 @@ bool ListParameter< ConcreteElement >::CommitChildrenTo( actions::ParameterConta
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::Select( const Param_ABC& param )
 {
-    ::gui::ValuedListItem* item = ::gui::FindItem( &param, list_->firstChild() );
-    if( item )
-        list_->setSelected( item, true );
+    for( int row = 0; row< model_.rowCount(); ++row )
+    {
+        QStandardItem* item = model_.item( 0 );
+        if( item )
+            Param_ABC* paramItem = selected_->data( ParamRole ).value< Param_ABC* >()
+            if( param == paramItem )
+                list_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -329,8 +360,8 @@ void ListParameter< ConcreteElement >::SetName( const QString& name )
 {
     if( list_ )
     {
-        assert( list_->columns() == 1 );
-        list_->setColumnText( 0, name );
+        assert( model_.columnCount() == 1 );
+        model_.item( 0 )->setText( name );
     }
     ListParameterBase::SetName( name );
 }
@@ -356,22 +387,23 @@ void ListParameter< ConcreteElement >::Draw( const geometry::Point2f& point, con
 {
     if( !list_ )
         return;
-    Q3ListViewItemIterator it( list_ );
-    for( unsigned int i = 0; it.current(); ++it, ++i )
+    for( int row = 0; row < model_.rowCount(); ++row )
     {
-        ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( it.current() );
-        item->GetValue< Param_ABC >()->Draw( point, viewport, tools );
+        QStandardItem* item = model_.item( row );
+        if( item )
+            if( Param_ABC* param = item->data( ParamRole ).value< Param_ABC* >() )
+                param->Draw( point, viewport, tools );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListParameter::CreateNextName
+// Name: ListParameter::CreateNextNameAndId
 // Created: ABR 2012-02-21
 // -----------------------------------------------------------------------------
 template< typename ConcreteElement >
-QString ListParameter< ConcreteElement >::CreateNextName()
+QString ListParameter< ConcreteElement >::CreateNextNameAndId()
 {
-    return tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( ++count_ );
+    return GetNextNameAndId( model_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -382,7 +414,7 @@ template< typename ConcreteElement >
 Param_ABC* ListParameter< ConcreteElement >::CreateElement()
 {
     kernel::OrderParameter param = parameter_;
-    param.SetName( ( potential_ != 0 ) ?  CreateNextName().toAscii().constData() : "POTENTIAL" );
+    param.SetName( ( potential_ != 0 ) ?  CreateNextNameAndId().toAscii().constData() : "POTENTIAL" );
     param.SetOptional( false );
     param.SetMinMaxOccurs( 1, 1 );
     Param_ABC& parameter = builder_.BuildOne( param, false );
@@ -399,7 +431,7 @@ bool ListParameter< ConcreteElement >::IsSelected( Param_ABC* parameter )
 {
     if( selected_ )
     {
-        if( Param_ABC* selected = static_cast< ::gui::ValuedListItem* >( selected_ )->GetValue< Param_ABC >() )
+        if( const Param_ABC* selected = selected_->data( ParamRole ).value< Param_ABC* >() )
         {
             return parameter == selected;
         }
@@ -427,7 +459,7 @@ void ListParameter< ConcreteElement >::OnMenuClick()
     assert( potential_ );
     Param_ABC* newParam = potential_;
     newParam->RemoveFromController();
-    newParam->SetName( CreateNextName() );
+    newParam->SetName( CreateNextNameAndId() );
     AddElement( *newParam );
     CreatePotential();
 }

@@ -37,6 +37,10 @@
         <source>Clear list</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 (item %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionInterface_ABC</name>

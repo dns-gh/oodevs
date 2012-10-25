@@ -11,11 +11,7 @@
 #define __ListParameter_h_
 
 #include "Param_ABC.h"
-#include "clients_gui/ShapeHandler_ABC.h"
 #include "actions/ParameterList.h"
-#include "clients_gui/Tools.h"
-#include "clients_gui/ValuedListItem.h"
-#include "MissionInterface_ABC.h"
 #include "InterfaceBuilder_ABC.h"
 
 class kernel::ContextMenu;
@@ -23,13 +19,6 @@ class kernel::ContextMenu;
 namespace kernel
 {
     class OrderParameter;
-    class CoordinateConverter_ABC;
-    class Location_ABC;
-}
-
-namespace gui
-{
-    class ParametersLayer;
 }
 
 namespace actions
@@ -73,8 +62,8 @@ protected slots:
     virtual void OnCreate() = 0;
     virtual void OnDeleteSelectedItem() = 0;
     virtual void OnClear() = 0;
-    virtual void OnRequestPopup( Q3ListViewItem* item, const QPoint& pos ) = 0;
-    virtual void OnSelectionChanged( Q3ListViewItem* item ) = 0;
+    virtual void OnRequestPopup( const QPoint& pos ) = 0;
+    virtual void OnSelectionChanged( const QItemSelection& newSelection , const QItemSelection& oldSelection ) = 0;
     virtual void TurnHeaderBlack() = 0;
     //@}
 };
@@ -141,8 +130,8 @@ private:
     virtual void OnCreate();
     virtual void OnDeleteSelectedItem();
     virtual void OnClear();
-    virtual void OnRequestPopup( Q3ListViewItem* item, const QPoint& pos );
-    virtual void OnSelectionChanged( Q3ListViewItem* item );
+    virtual void OnRequestPopup( const QPoint& pos );
+    virtual void OnSelectionChanged( const QItemSelection& newSelection , const QItemSelection& oldSelection );
     virtual void TurnHeaderBlack();
     //@}
 
@@ -150,9 +139,9 @@ private:
     //! @name Helpers
     //@{
     void CreatePotential();
-    QString CreateNextName();
+    QString CreateNextNameAndId();
     bool CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const;
-    void DeleteItem( Q3ListViewItem* item );
+    void DeleteItem( QStandardItem* item );
     void Clear();
     bool Invalid();
     //@}
@@ -174,8 +163,9 @@ private:
     //@{
     const InterfaceBuilder_ABC& builder_;
     kernel::ActionController&   controller_;
-    Q3ListView*                 list_;
-    Q3ListViewItem*             selected_;
+    QTreeView*                  list_;
+    QStandardItem*              selected_;
+    QStandardItemModel          model_;
     T_Widgets                   widgets_;
     unsigned int                min_;
     unsigned int                max_;

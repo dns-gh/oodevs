@@ -37,6 +37,10 @@
         <source>Clear list</source>
         <translation>Vider la liste</translation>
     </message>
+    <message>
+        <source>%1 (item %2)</source>
+        <translation>%1 (élément %2)</translation>
+    </message>
 </context>
 <context>
     <name>MissionInterface_ABC</name>
