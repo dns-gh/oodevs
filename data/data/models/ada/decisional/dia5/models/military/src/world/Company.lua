@@ -219,7 +219,7 @@ return
     -- Integration and specific methods
     -- --------------------------------------------------------------------------------
     getPosition = function( self )
-        return integration.getCommanderPosition( self.source )
+        return integration.getCommanderPosition( self )
     end,
     getMyPosition = function( self )
         return CreateKnowledge( world.Point, self:getPosition() )

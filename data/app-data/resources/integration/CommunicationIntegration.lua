@@ -284,8 +284,8 @@ integration.getDangerousDirection = function( task )
     return DEC_GetDirectionDanger( task )
 end
 
-integration.getAORFromCommander = function( task )
-    return DEC_Fuseau( task )
+integration.getAORFromCommander = function()
+    return DEC_Fuseau()
 end
 
 integration.getAORWidth = function( AOR )
