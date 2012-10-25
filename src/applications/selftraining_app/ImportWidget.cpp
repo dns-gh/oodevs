@@ -10,7 +10,6 @@
 #include "selftraining_app_pch.h"
 #include "ImportWidget.h"
 #include "moc_ImportWidget.cpp"
-#include "ScenarioEditPage.h"
 #include "clients_gui/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
@@ -26,9 +25,8 @@
 // Name: ImportWidget constructor
 // Created: JSR 2010-07-13
 // -----------------------------------------------------------------------------
-ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config )
+ImportWidget::ImportWidget( QWidget* parent, const tools::GeneralConfig& config )
     : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 2, Qt::Vertical, parent )
-    , page_          ( page )
     , config_        ( config )
     , isValidVersion_( false )
 {
@@ -125,10 +123,10 @@ void ImportWidget::InstallExercise()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ImportWidget::EnableEditButton
+// Name: ImportWidget::IsButtonEnabled
 // Created: JSR 2010-07-19
 // -----------------------------------------------------------------------------
-bool ImportWidget::EnableEditButton()
+bool ImportWidget::IsButtonEnabled() const
 {
     return isValidVersion_ && packageContent_->count() != 0;
 }
@@ -199,5 +197,14 @@ void ImportWidget::SelectPackage( const QString& filename )
         else
             packageName_->setText( tools::translate( "ImportWidget", "otpak corrupted: unable to load content properly" ) );
     }
-    page_.UpdateEditButton();
+    OnButtonChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ImportWidget::OnButtonChanged
+// Created: BAX 2012-10-24
+// -----------------------------------------------------------------------------
+void ImportWidget::OnButtonChanged()
+{
+    emit ButtonChanged( IsButtonEnabled(), tools::translate( "Page_ABC", "Import" ) );
 }

@@ -13,8 +13,6 @@
 #include <boost/noncopyable.hpp>
 #include "clients_gui/LanguageChangeObserver_ABC.h"
 
-class ScenarioEditPage;
-
 namespace tools
 {
     class GeneralConfig;
@@ -34,20 +32,32 @@ class ImportWidget : public gui::LanguageChangeObserver_ABC< Q3GroupBox >
 public:
     //! @name Constructors/Destructor
     //@{
-             ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config );
+             ImportWidget( QWidget* parent, const tools::GeneralConfig& config );
     virtual ~ImportWidget();
     //@}
 
     //! @name Operations
     //@{
     void InstallExercise();
-    bool EnableEditButton();
     void SelectPackage( const QString& filename );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void ButtonChanged( bool enable, const QString& text );
+    //@}
+
+public slots:
+    //! @name slots
+    //@{
+    void OnButtonChanged();
     //@}
 
 private:
     //! @name Helpers
     //@{
+    bool IsButtonEnabled() const;
     virtual void OnLanguageChanged();
     bool ReadPackageContentFile();
     //@}
@@ -61,7 +71,6 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ScenarioEditPage&           page_;
     const tools::GeneralConfig& config_;
     QTabWidget*                 tabs_;
     QLineEdit*                  package_;
