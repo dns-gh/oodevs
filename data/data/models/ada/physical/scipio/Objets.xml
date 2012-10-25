@@ -148,7 +148,7 @@
       <terrain type="suburb" value="1"/>
       <terrain type="urban area" value="2"/>
     </heuristic>
-    <interact-with-enemy enemy="true"/>
+    <interact-with-enemy enemy="true" friend="true" neutral="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -603,4 +603,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="2746106904" -->
+<!-- signature="3757523209" -->
