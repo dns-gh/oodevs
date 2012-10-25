@@ -745,18 +745,6 @@ Reason: %3
 <context>
     <name>FireResultListView</name>
     <message>
-        <source>Date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Target</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attrition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Equipments</source>
         <translation type="unfinished"></translation>
     </message>

@@ -19,6 +19,7 @@ namespace kernel
 
 namespace gui
 {
+    class DisplayExtractor;
     class ItemFactory_ABC;
 }
 
@@ -35,7 +36,7 @@ class InfoPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::DisplayExtractor& extractor );
     virtual ~InfoPanels();
     //@}
 

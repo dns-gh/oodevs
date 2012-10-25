@@ -16,13 +16,13 @@
 // Name: InfoConflictsTab constructor
 // Created: SBO 2007-02-15
 // -----------------------------------------------------------------------------
-InfoConflictsTab::InfoConflictsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoConflictsTab::InfoConflictsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
     : Q3VBox( parent, "InfoConflictsTab" )
     , controllers_( controllers )
     , parent_( parent )
 {
     setMargin( 0 );
-    FireResultListView* conflicts = new FireResultListView( this, controllers, factory );
+    FireResultListView* conflicts = new FireResultListView( this, controllers, extractor );
     conflicts->header()->hide();
     controllers_.Register( *this );
 }

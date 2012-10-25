@@ -10,6 +10,8 @@
 #ifndef __Casualties_h_
 #define __Casualties_h_
 
+#include "Ent/ENT_Enums_Gen.h"
+
 // =============================================================================
 /** @class  Casualties
     @brief  Casualties

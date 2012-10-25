@@ -26,7 +26,10 @@ namespace kernel
     class AgentKnowledge_ABC;
     class PopulationKnowledge_ABC;
     class ObjectKnowledge_ABC;
+    class EquipmentType;
 }
+
+enum E_HumanWound;
 
 namespace gui
 {
@@ -39,8 +42,6 @@ namespace gui
 // =============================================================================
 class DisplayExtractor : public QObject
                        , public kernel::DisplayExtractor_ABC
-                       , public kernel::DisplayExtractor< QString >
-                       , public kernel::DisplayExtractor< std::string >
                        , public kernel::DisplayExtractor< int >
                        , public kernel::DisplayExtractor< unsigned int >
                        , public kernel::DisplayExtractor< float >
@@ -48,6 +49,9 @@ class DisplayExtractor : public QObject
                        , public kernel::DisplayExtractor< long >
                        , public kernel::DisplayExtractor< unsigned long >
                        , public kernel::DisplayExtractor< bool >
+                       , public kernel::DisplayExtractor< std::string >
+                       , public kernel::DisplayExtractor< QString >
+                       , public kernel::DisplayExtractor< QDateTime >
                        , public kernel::DisplayExtractor< kernel::Entity_ABC >
                        , public kernel::DisplayExtractor< kernel::Agent_ABC >
                        , public kernel::DisplayExtractor< kernel::Automat_ABC >
@@ -60,6 +64,8 @@ class DisplayExtractor : public QObject
                        , public kernel::DisplayExtractor< kernel::AgentKnowledge_ABC >
                        , public kernel::DisplayExtractor< kernel::PopulationKnowledge_ABC >
                        , public kernel::DisplayExtractor< kernel::ObjectKnowledge_ABC >
+                       , public kernel::DisplayExtractor< kernel::EquipmentType >
+                       , public kernel::DisplayExtractor< E_HumanWound >
 {
     Q_OBJECT
 public:
@@ -73,8 +79,6 @@ public:
     //@{
     virtual void NotifyLinkClicked( const QString& url );
 
-    virtual QString GetDisplayName( const QString& element ) const;
-    virtual QString GetDisplayName( const std::string& element ) const;
     virtual QString GetDisplayName( const int& element ) const;
     virtual QString GetDisplayName( const unsigned int& element ) const;
     virtual QString GetDisplayName( const float& element ) const;
@@ -82,6 +86,9 @@ public:
     virtual QString GetDisplayName( const long& element ) const;
     virtual QString GetDisplayName( const unsigned long& element ) const;
     virtual QString GetDisplayName( const bool& element ) const;
+    virtual QString GetDisplayName( const std::string& element ) const;
+    virtual QString GetDisplayName( const QString& element ) const;
+    virtual QString GetDisplayName( const QDateTime& element ) const;
 
     virtual QString GetDisplayName( const kernel::Entity_ABC& element ) const;
     virtual QString GetDisplayName( const kernel::Agent_ABC& element ) const;
@@ -95,6 +102,10 @@ public:
     virtual QString GetDisplayName( const kernel::AgentKnowledge_ABC& element ) const;
     virtual QString GetDisplayName( const kernel::PopulationKnowledge_ABC& element ) const;
     virtual QString GetDisplayName( const kernel::ObjectKnowledge_ABC& element ) const;
+
+    virtual QString GetDisplayName( const kernel::EquipmentType& element ) const;
+
+    virtual QString GetDisplayName( const E_HumanWound& element ) const;
     //@}
 
 signals:

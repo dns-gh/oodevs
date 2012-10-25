@@ -13,6 +13,7 @@
 #include "Casualties.h"
 #include "clients_kernel/Types.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -34,6 +35,7 @@ class Equipment;
 // Created: AGE 2006-03-10
 // =============================================================================
 class AgentFireResult : public tools::Resolver< Equipment >
+                      , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -43,13 +45,6 @@ public:
                               const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
                               const QDateTime& time );
     virtual ~AgentFireResult();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AgentFireResult( const AgentFireResult& );            //!< Copy constructor
-    AgentFireResult& operator=( const AgentFireResult& ); //!< Assignment operator
     //@}
 
 public:

@@ -20,7 +20,7 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
+    class DisplayExtractor;
 }
 
 // =============================================================================
@@ -36,17 +36,11 @@ class InfoConflictsTab : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoConflictsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoConflictsTab( QTabWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
     virtual ~InfoConflictsTab();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InfoConflictsTab( const InfoConflictsTab& );            //!< Copy constructor
-    InfoConflictsTab& operator=( const InfoConflictsTab& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );

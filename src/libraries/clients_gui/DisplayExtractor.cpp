@@ -24,6 +24,8 @@
 #include "clients_kernel\AgentKnowledge_ABC.h"
 #include "clients_kernel\PopulationKnowledge_ABC.h"
 #include "clients_kernel\ObjectKnowledge_ABC.h"
+#include "clients_kernel\EquipmentType.h"
+#include "clients_kernel\Tools.h"
 
 using namespace gui;
 
@@ -86,6 +88,15 @@ QString DisplayExtractor::GetDisplayName( const unsigned long& element ) const
 
 // -----------------------------------------------------------------------------
 // Name: DisplayExtractor::GetDisplayName
+// Created: JSR 2012-10-24
+// -----------------------------------------------------------------------------
+QString DisplayExtractor::GetDisplayName( const QDateTime& element ) const
+{
+    return element.toString();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayExtractor::GetDisplayName
 // Created: JSR 2012-10-18
 // -----------------------------------------------------------------------------
 QString DisplayExtractor::GetDisplayName( const bool& element ) const
@@ -93,6 +104,15 @@ QString DisplayExtractor::GetDisplayName( const bool& element ) const
     static const QString yes = tools::translate( "Yes/No", "Yes" ) ;
     static const QString no = tools::translate( "Yes/No", "No" ) ;
     return element ? yes : no;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisplayExtractor::GetDisplayName
+// Created: JSR 2012-10-24
+// -----------------------------------------------------------------------------
+QString DisplayExtractor::GetDisplayName( const E_HumanWound& element ) const
+{
+    return tools::ToString( element );
 }
 
 #define LOCALE_TO_STRING( T ) \
@@ -111,6 +131,12 @@ QString DisplayExtractor::GetDisplayName( const T& element ) const \
 QString DisplayExtractor::GetDisplayName( const T& element ) const \
 { \
     return InternalLinks::CreateLink( element, element.GetName() ) ; \
+}
+
+#define GET_STRING_NAME( T ) \
+QString DisplayExtractor::GetDisplayName( const T& element ) const \
+{ \
+    return element.GetName().c_str(); \
 }
 
 LOCALE_TO_STRING( int )
@@ -132,3 +158,5 @@ GET_ENTITY_LINK( kernel::Formation_ABC )
 GET_ENTITY_LINK( kernel::Population_ABC )
 GET_ENTITY_LINK( kernel::Inhabitant_ABC )
 GET_ENTITY_LINK( kernel::UrbanObject_ABC )
+
+GET_STRING_NAME( kernel::EquipmentType )

@@ -23,11 +23,8 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
+    class DisplayExtractor;
 }
-
-class FireResultListView;
-class Explosions;
 
 // =============================================================================
 /** @class  ObjectReportPanel
@@ -37,26 +34,18 @@ class Explosions;
 // =============================================================================
 class ObjectReportPanel : public gui::InfoPanel_ABC
                         , public tools::Observer_ABC
-                        , public tools::ElementObserver_ABC< Explosions >
                         , public tools::SelectionObserver< kernel::Object_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectReportPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             ObjectReportPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
     virtual ~ObjectReportPanel();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectReportPanel( const ObjectReportPanel& );
-    ObjectReportPanel& operator=( const ObjectReportPanel& );
-    //@}
-
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const Explosions& );
     virtual void NotifyDeleted( const kernel::Object_ABC& );
     virtual void NotifySelected( const kernel::Object_ABC* );
     //@}
@@ -66,7 +55,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Object_ABC > selected_;
-    FireResultListView* reports_;
     //@}
 };
 

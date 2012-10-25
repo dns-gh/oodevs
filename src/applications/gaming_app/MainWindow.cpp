@@ -270,7 +270,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     QDockWidget* pInfoDockWnd_ = new QDockWidget( "oldinfo", this );
     pInfoDockWnd_->setObjectName( "oldInfo" );
     addDockWidget( Qt::RightDockWidgetArea, pInfoDockWnd_ );
-    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory );
+    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory, *displayExtractor );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setWindowTitle( tr( "Knowledge" ) );
     pInfoDockWnd_->hide();

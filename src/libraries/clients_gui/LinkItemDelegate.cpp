@@ -73,7 +73,7 @@ QSize LinkItemDelegate::sizeHint( const QStyleOptionViewItem& option, const QMod
     QTextDocument doc;
     doc.setDefaultFont( qvariant_cast< QFont >( index.model()->data( index, Qt::FontRole ) ) );
     doc.setHtml( optionV4.text );
-    doc.setTextWidth( optionV4.rect.width() );
+    //doc.setTextWidth( optionV4.rect.width() );
     return QSize( static_cast< int >( doc.idealWidth() ), static_cast< int >( doc.size().height() ) );
 }
 

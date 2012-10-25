@@ -13,6 +13,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include <deque>
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -43,6 +44,7 @@ class Explosions : public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< sword::Explosion >
                  , public kernel::Updatable_ABC< sword::StopUnitFire >
                  , public kernel::Updatable_ABC< sword::StopCrowdFire >
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -51,13 +53,7 @@ public:
     virtual ~Explosions();
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    Explosions( const Explosions& );            //!< Copy constructor
-    Explosions& operator=( const Explosions& ); //!< Assignment operator
-    //@}
-
+public:
     //! @name Types
     //@{
     typedef std::deque< AgentFireResult* >  T_AgentFires;
@@ -67,6 +63,13 @@ private:
     typedef T_PopulationFires::const_iterator  CIT_PopulationFires;
     //@}
 
+    //! @name Operations
+    //@{
+    const T_AgentFires& GetAgentExplosions() const;
+    const T_PopulationFires& GetPopulationExplosions() const;
+    //@}
+
+private:
     //! @name Helpers
     //@{
     template< typename T >
@@ -79,7 +82,7 @@ private:
     void Update( const sword::CrowdFireDamages& message );
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;

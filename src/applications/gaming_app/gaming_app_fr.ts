@@ -747,14 +747,6 @@ Raison: %3
 <context>
     <name>FireResultListView</name>
     <message>
-        <source>Target</source>
-        <translation>Cible</translation>
-    </message>
-    <message>
-        <source>Attrition</source>
-        <translation>Attrition</translation>
-    </message>
-    <message>
         <source>Equipments</source>
         <translation>Equipements</translation>
     </message>
@@ -773,10 +765,6 @@ Raison: %3
     <message>
         <source> (officer, warrant-off., private)</source>
         <translation>(officier, sous-off., militaires du rang)</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation>Date</translation>
     </message>
     <message>
         <source>Wounded:</source>

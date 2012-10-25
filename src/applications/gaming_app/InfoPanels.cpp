@@ -22,7 +22,7 @@
 // Name: InfoPanels constructor
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-InfoPanels::InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoPanels::InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::DisplayExtractor& extractor )
     : Panels( parent )
 {
     setMinimumWidth( 200 );
@@ -30,7 +30,7 @@ InfoPanels::InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::
     AddPanel( new gui::PopulationPanel    ( this, *this, controllers, factory ) );
     AddPanel( new PopulationKnowledgePanel( this, *this, controllers, factory ) );
     AddPanel( new ObjectPanel             ( this, *this, controllers, factory ) );
-    AddPanel( new ObjectReportPanel       ( this, *this, controllers, factory ) );
+    AddPanel( new ObjectReportPanel       ( this, *this, controllers, extractor ) );
     AddPanel( new ObjectKnowledgePanel    ( this, *this, controllers, factory ) );
     AddPanel( new UrbanKnowledgePanel     ( this, *this, controllers, factory ) );
 }

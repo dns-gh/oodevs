@@ -9,39 +9,39 @@
 
 #include "gaming_app_pch.h"
 #include "FireResultListView.h"
+#include "moc_FireResultListView.cpp"
+#include "clients_gui/DisplayExtractor.h"
+#include "clients_gui/LinkItemDelegate.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/PopulationFireResult.h"
 #include "gaming/AgentFireResult.h"
 #include "gaming/Equipment.h"
 #include "gaming/Casualties.h"
 #include "gaming/Explosions.h"
-#include "clients_gui/SubItemDisplayer.h"
-#include "clients_gui/ItemFactory_ABC.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Tools.h"
-
-using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& controllers, ItemFactory_ABC& factory )
-    : ListDisplayer< FireResultListView >( parent, *this, factory )
+FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
+    : QTreeWidget( parent )
     , controllers_( controllers )
-    , factory_( factory )
+    , extractor_( extractor )
     , selected_( controllers )
 {
     setFrameStyle( Q3Frame::Plain );
-    setMargin( 2 );
-    AddColumn( tools::translate( "FireResultListView", "Date" ) );
-    AddColumn( tools::translate( "FireResultListView", "Target" ) );
-    AddColumn( tools::translate( "FireResultListView", "Attrition" ) );
-
-    subDisplayer_ = new SubItemDisplayer( tools::translate( "FireResultListView", "Target" ), factory );
-    subDisplayer_->AddChild( tools::translate( "FireResultListView", "Equipments" ) );
-    subDisplayer_->AddChild( tools::translate( "FireResultListView", "Troops" ) );
-
+    setMouseTracking( true );
+    setColumnCount( 3 );
+    setHeaderHidden( true );
+    setRootIsDecorated( false );
+    gui::LinkItemDelegate* delegate = new gui::LinkItemDelegate( this );
+    setItemDelegateForColumn( 1, delegate );
+    setAllColumnsShowFocus( true );
+    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+    connect( delegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
     controllers_.Register( *this );
 }
 
@@ -52,86 +52,131 @@ FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& co
 FireResultListView::~FireResultListView()
 {
     controllers_.Unregister( *this );
-    delete subDisplayer_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::Display
-// Created: AGE 2006-03-10
-// -----------------------------------------------------------------------------
-void FireResultListView::Display( const PopulationFireResult* result, Displayer_ABC& displayer, ValuedListItem* item )
+namespace
 {
-    if( ! result ) {
-        RemoveItem( item );
-        return;
+    template< typename T >
+    int GetCount( const T& explosions )
+    {
+        int c = 0;
+        for( T::const_iterator it = explosions.begin(); it != explosions.end(); ++it )
+        {
+            if( *it )
+                ++c;
+        }
+        return c;
     }
-    // $$$$ AGE 2006-03-10: Move in PopulationFireResult
-    item->SetValue( result );
-    displayer.Display( tools::translate( "FireResultListView", "Date" ), result->time_ );
-    displayer.Display( tools::translate( "FireResultListView", "Target" ), result->target_ );
-    displayer.Item( tools::translate( "FireResultListView", "Attrition" ) );
-    if( result->deadPeople_ )
-        displayer.Start( tools::translate( "FireResultListView", "Dead:" ) ).Add( result->deadPeople_ );
-    if( result->woundedPeople_ )
-        displayer.Start( tools::translate( "FireResultListView", "Wounded:" ) ).Add( result->woundedPeople_ );
-    if( result->scatteredPeople_ )
-        displayer.Start( tools::translate( "FireResultListView", "Scattered:" ) ).Add( result->scatteredPeople_ );
-    displayer.End();
-}
 
-// -----------------------------------------------------------------------------
-// Name: FireResultListView::Display
-// Created: AGE 2006-03-10
-// -----------------------------------------------------------------------------
-void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC& rootDisplayer, ValuedListItem* item )
-{
-    if( ! result ) {
-        RemoveItem( item );
-        return;
+    void SetNumberOfChildren( QTreeWidgetItem* item, int number )
+    {
+        if( item )
+        {
+            while( item->childCount() > number )
+                delete item->takeChild( number );
+            while( item->childCount() < number )
+                item->addChild( new QTreeWidgetItem );
+        }
     }
-    // SubItemDisplayer;
-    // $$$$ AGE 2006-03-10: Move in AgentFireResult
-    item->SetValue( result );
-    Displayer_ABC& displayer = (*subDisplayer_)( item );
+}
 
-    rootDisplayer.Display( tools::translate( "FireResultListView", "Date" ), result->time_ );
-    rootDisplayer.Display( tools::translate( "FireResultListView", "Target" ), result->target_ );
-    displayer.Display( tools::translate( "FireResultListView", "Equipments" ), tools::translate( "FireResultListView", " (avail, unavail, repairable):" ) );
-    displayer.Display( tools::translate( "FireResultListView", "Troops" ), tools::translate( "FireResultListView", " (officer, warrant-off., private)" ) );
-
-    Q3ListViewItem* equipments = item->firstChild();
-    DeleteTail(
-        DisplayList( result->CreateIterator(), equipments )
-    );
-
-    Q3ListViewItem* humans = equipments->nextSibling();
-    DeleteTail(
-        DisplayList( &* result->casualties_, result->casualties_ + eNbrHumanWound, humans )
-    );
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::OnLinkClicked
+// Created: JSR 2012-10-24
+// -----------------------------------------------------------------------------
+void FireResultListView::OnLinkClicked( const QString& url, const QModelIndex& index )
+{
+    selectionModel()->setCurrentIndex( index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
+    extractor_.NotifyLinkClicked( url );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView::Display
-// Created: AGE 2006-03-10
+// Created: JSR 2012-10-24
 // -----------------------------------------------------------------------------
-void FireResultListView::Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* )
+void FireResultListView::Display( const AgentFireResult& result, QTreeWidgetItem* item )
 {
-    displayer.Display( tools::translate( "FireResultListView", "Target" ), equipment.type_ );
-    displayer.Item( tools::translate( "FireResultListView", "Attrition" ) ).Start( equipment.available_ )
-                    .Add( " / " ).Add( equipment.unavailable_ )
-                    .Add( " / " ).Add( equipment.repairable_ + equipment.onSiteFixable_ ).End();
+    assert( item );
+    if( !item )
+        return;
+    item->setText( 0, extractor_.GetDisplayName( result.time_ ) );
+    item->setText( 1, extractor_.GetDisplayName( result.target_ ) );
+    if( item->childCount() == 0 )
+    {
+        QStringList equipments;
+        equipments << tools::translate( "FireResultListView", "Equipments" ) << tools::translate( "FireResultListView", " (avail, unavail, repairable):" ) << "";
+        item->addChild( new QTreeWidgetItem( equipments ) );
+        QStringList troops;
+        troops << tools::translate( "FireResultListView", "Troops" ) << tools::translate( "FireResultListView", " (officer, warrant-off., private)" ) << "";
+        item->addChild( new QTreeWidgetItem( troops ) );
+    }
+    assert( item->childCount() == 2 );
+    SetNumberOfChildren( item->child( 0 ), result.Count() );
+    SetNumberOfChildren( item->child( 1 ), eNbrHumanWound );
+
+    int row = 0;
+    tools::Iterator< const Equipment& > it =  result.CreateIterator();
+    while( it.HasMoreElements() )
+        Display( it.NextElement(), item->child( 0 )->child( row++ ) );
+    for( row = 0; row < eNbrHumanWound; ++row )
+        Display( result.casualties_[ row ], item->child( 1 )->child( row ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireResultListView::Display
-// Created: AGE 2006-03-10
+// Created: JSR 2012-10-24
 // -----------------------------------------------------------------------------
-void FireResultListView::Display( const Casualties& casualties, Displayer_ABC& displayer, ValuedListItem* )
+void FireResultListView::Display( const PopulationFireResult& result, QTreeWidgetItem* item )
 {
-    displayer.Display( tools::translate( "FireResultListView", "Target" ), casualties.wound_ );
-    displayer.Item( tools::translate( "FireResultListView", "Attrition" ) ).Start( casualties.officers_ )
-                    .Add( " / " ).Add( casualties.subOfficers_ )
-                    .Add( " / " ).Add( casualties.troopers_ ).End();
+    assert( item );
+    if( !item )
+        return;
+    item->setText( 0, extractor_.GetDisplayName( result.time_ ) );
+    item->setText( 1, extractor_.GetDisplayName( result.target_ ) );
+    int lines = ( result.deadPeople_ == 0 ? 0 : 1 ) + ( result.woundedPeople_ == 0 ? 0 : 1 ) + ( result.scatteredPeople_ == 0 ? 0 : 1 );
+    SetNumberOfChildren( item, lines );
+    int row = 0;
+    if( result.deadPeople_ != 0 )
+    {
+        item->child( row )->setText( 1, tools::translate( "FireResultListView", "Dead:" ) );
+        item->child( row )->setText( 2, extractor_.GetDisplayName( result.deadPeople_ ) );
+        ++row;
+    }
+    if( result.woundedPeople_ != 0 )
+    {
+        item->child( row )->setText( 1, tools::translate( "FireResultListView", "Wounded:" ) );
+        item->child( row )->setText( 2, extractor_.GetDisplayName( result.woundedPeople_ ) );
+        ++row;
+    }
+    if( result.scatteredPeople_ != 0 )
+    {
+        item->child( row )->setText( 1, tools::translate( "FireResultListView", "Scattered:" ) );
+        item->child( row )->setText( 2, extractor_.GetDisplayName( result.scatteredPeople_ ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::Display
+// Created: JSR 2012-10-24
+// -----------------------------------------------------------------------------
+void FireResultListView::Display( const Equipment& equipment, QTreeWidgetItem* item )
+{
+    item->setText( 1, extractor_.GetDisplayName( equipment.type_ ) );
+    item->setText( 2, extractor_.GetDisplayName( equipment.available_ )
+           + " / "  + extractor_.GetDisplayName( equipment.unavailable_ )
+           + " / "  + extractor_.GetDisplayName( equipment.repairable_ + equipment.onSiteFixable_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::Display
+// Created: JSR 2012-10-24
+// -----------------------------------------------------------------------------
+void FireResultListView::Display( const Casualties& casualties, QTreeWidgetItem* item )
+{
+    item->setText( 1, extractor_.GetDisplayName( casualties.wound_ ) );
+    item->setText( 2, extractor_.GetDisplayName( casualties.officers_ )
+        + " / "  + extractor_.GetDisplayName( casualties.subOfficers_ )
+        + " / "  + extractor_.GetDisplayName( casualties.troopers_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -159,8 +204,14 @@ void FireResultListView::NotifyUpdated( const Explosions& results )
 {
     if( selected_ && selected_->Retrieve< Explosions >() == &results )
     {
-        ValuedListItem* item = DisplayList( results.agentExplosions_.begin(), results.agentExplosions_.end() );
-                        item = DisplayList( results.populationExplosions_.begin(), results.populationExplosions_.end(), this, item );
-        DeleteTail( item );
+        const int count = GetCount( results.GetAgentExplosions() ) + GetCount( results.GetPopulationExplosions() );
+        SetNumberOfChildren( invisibleRootItem(), count );
+        int row = 0;
+        for( Explosions::CIT_AgentFires it = results.GetAgentExplosions().begin(); it != results.GetAgentExplosions().end(); ++it )
+            if( *it )
+                Display( **it, topLevelItem( row++ ) );
+        for( Explosions::CIT_PopulationFires it = results.GetPopulationExplosions().begin(); it != results.GetPopulationExplosions().end(); ++it )
+            if( *it )
+                Display( **it, topLevelItem( row++ ) );
     }
 }

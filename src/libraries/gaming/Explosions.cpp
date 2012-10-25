@@ -41,6 +41,24 @@ Explosions::~Explosions()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Explosions::GetAgentExplosions
+// Created: JSR 2012-10-24
+// -----------------------------------------------------------------------------
+const Explosions::T_AgentFires& Explosions::GetAgentExplosions() const
+{
+    return agentExplosions_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Explosions::GetPopulationExplosions
+// Created: JSR 2012-10-24
+// -----------------------------------------------------------------------------
+const Explosions::T_PopulationFires& Explosions::GetPopulationExplosions() const
+{
+    return populationExplosions_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Explosions::UpdateData
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------

@@ -9,28 +9,23 @@
 
 #include "gaming_app_pch.h"
 #include "ObjectReportPanel.h"
-
 #include "FireResultListView.h"
+#include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
 #include "gaming/Explosions.h"
 #include "gaming/Equipment.h"
 
-using namespace kernel;
-using namespace gui;
-
 // -----------------------------------------------------------------------------
 // Name: ObjectReportPanel constructor
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-ObjectReportPanel::ObjectReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
+ObjectReportPanel::ObjectReportPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::DisplayExtractor& extractor )
     : InfoPanel_ABC( parent, panel, tr( "Reports" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {
-    reports_ = new FireResultListView( this, controllers, factory );
-    setWidget( reports_ );
-
+    setWidget( new FireResultListView( this, controllers, extractor ) );
     controllers_.Register( *this );
 }
 
@@ -44,27 +39,12 @@ ObjectReportPanel::~ObjectReportPanel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectReportPanel::NotifyUpdated
-// Created: AGE 2006-02-23
-// -----------------------------------------------------------------------------
-void ObjectReportPanel::NotifyUpdated( const Explosions& explosions )
-{
-    if( ! IsVisible() || ! selected_ || selected_->Retrieve< Explosions >() != &explosions )
-        return;
-
-    // $$$$ AGE 2006-03-10: try to keep the selection if possible
-    ValuedListItem* item = reports_->DisplayList( explosions.agentExplosions_.begin(), explosions.agentExplosions_.end() );
-                    item = reports_->DisplayList( explosions.populationExplosions_.begin(), explosions.populationExplosions_.end(), reports_, item );
-    reports_->DeleteTail( item );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectReportPanel::NotifyDeleted
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ObjectReportPanel::NotifyDeleted( const Object_ABC& object )
+void ObjectReportPanel::NotifyDeleted( const kernel::Object_ABC& object )
 {
-    if( & object == selected_ )
+    if( &object == selected_ )
         NotifySelected( 0 );
 }
 
@@ -72,18 +52,14 @@ void ObjectReportPanel::NotifyDeleted( const Object_ABC& object )
 // Name: ObjectReportPanel::NotifySelected
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void ObjectReportPanel::NotifySelected( const Object_ABC* object )
+void ObjectReportPanel::NotifySelected( const kernel::Object_ABC* object )
 {
+    // $$$$ _RC_ JSR 2012-10-24: Useless??
     if( object != selected_ || !object )
     {
         selected_ = object;
         if( selected_ )
-        {
-            Show();
-            const Explosions* explosions = selected_->Retrieve< Explosions >();
-            if( explosions )
-                NotifyUpdated( *explosions  );
-        }
+            Show(); 
         else
             Hide();
     }

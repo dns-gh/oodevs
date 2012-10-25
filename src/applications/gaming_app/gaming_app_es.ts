@@ -745,14 +745,6 @@ Reason: %3
 <context>
     <name>FireResultListView</name>
     <message>
-        <source>Target</source>
-        <translation>Blanco</translation>
-    </message>
-    <message>
-        <source>Attrition</source>
-        <translation>Daño</translation>
-    </message>
-    <message>
         <source>Equipments</source>
         <translation>Equipos</translation>
     </message>
@@ -771,10 +763,6 @@ Reason: %3
     <message>
         <source> (officer, warrant-off., private)</source>
         <translation>(oficial, sub-oficial., militares de rango)</translation>
-    </message>
-    <message>
-        <source>Date</source>
-        <translation>Fecha</translation>
     </message>
     <message>
         <source>Wounded:</source>

@@ -10,19 +10,20 @@
 #ifndef __FireResultListView_h_
 #define __FireResultListView_h_
 
-#include "clients_gui/ListDisplayer.h"
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+
+namespace gui
+{
+    class DisplayExtractor;
+}
 
 namespace kernel
 {
     class Controllers;
-}
-
-namespace gui
-{
-    class SubItemDisplayer;
+    class Entity_ABC;
 }
 
 class Explosions;
@@ -37,33 +38,34 @@ class Casualties;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class FireResultListView : public gui::ListDisplayer< FireResultListView >
+class FireResultListView : public QTreeWidget
                          , public tools::Observer_ABC
                          , public tools::SelectionObserver< kernel::Entity_ABC >
                          , public tools::ElementObserver_ABC< Explosions >
 {
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
-             FireResultListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             FireResultListView( QWidget* parent, kernel::Controllers& controllers, gui::DisplayExtractor& extractor );
     virtual ~FireResultListView();
     //@}
 
     //! @name Operations
     //@{
-    void Display( const PopulationFireResult* result, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    void Display( const AgentFireResult* result, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    void Display( const Equipment& equipment, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
-    void Display( const Casualties& casualties, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void Display( const AgentFireResult& result, QTreeWidgetItem* item );
+    void Display( const PopulationFireResult& result, QTreeWidgetItem* item );
+    void Display( const Equipment& equipment, QTreeWidgetItem* item );
+    void Display( const Casualties& casualties, QTreeWidgetItem* item );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnLinkClicked( const QString& url, const QModelIndex& index );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FireResultListView( const FireResultListView& );            //!< Copy constructor
-    FireResultListView& operator=( const FireResultListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
@@ -74,8 +76,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::ItemFactory_ABC& factory_;
-    gui::SubItemDisplayer* subDisplayer_;
+    gui::DisplayExtractor& extractor_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
