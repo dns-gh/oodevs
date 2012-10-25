@@ -35,6 +35,10 @@
         <source>No parameter type specified for parameter %1, database cannot be saved.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>At least one armor must be defined , database cannot be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtections_GUI</name>
