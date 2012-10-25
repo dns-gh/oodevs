@@ -67,14 +67,6 @@
         <translation>Démarrage de la Génération de Terrain</translation>
     </message>
     <message>
-        <source>Data</source>
-        <translation>Données</translation>
-    </message>
-    <message>
-        <source>Remove Terrains and Models</source>
-        <translation>Supprimer des terrains et des modèles</translation>
-    </message>
-    <message>
         <source>Missing Sword-Authoring license</source>
         <translation>License Sword-Authoring manquante</translation>
     </message>
@@ -158,29 +150,6 @@
     <message>
         <source>Starting terrain creation</source>
         <translation>Démarrage de la création de terrain</translation>
-    </message>
-</context>
-<context>
-    <name>DataPage</name>
-    <message>
-        <source>Data</source>
-        <translation>Données</translation>
-    </message>
-    <message>
-        <source>Terrains</source>
-        <translation>Terrains</translation>
-    </message>
-    <message>
-        <source>Models</source>
-        <translation>Modèles</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete?</source>
-        <translation>Etes-vous sur de vouloir supprimer?</translation>
     </message>
 </context>
 <context>
@@ -445,6 +414,26 @@ Voulez-vous vraiment le remplacer ?</translation>
         <source>Arabic</source>
         <translation>العربية</translation>
     </message>
+    <message>
+        <source>Administration</source>
+        <translation>Administration</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Importer</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation>Exporter</translation>
+    </message>
+    <message>
+        <source>Terrains</source>
+        <translation>Terrains</translation>
+    </message>
+    <message>
+        <source>Models</source>
+        <translation>Modèles</translation>
+    </message>
 </context>
 <context>
     <name>Page_ABC</name>
@@ -469,16 +458,24 @@ Voulez-vous vraiment le remplacer ?</translation>
         <translation>Editer</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Paramètres</translation>
-    </message>
-    <message>
         <source>Apply</source>
         <translation>Appliquer</translation>
     </message>
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation>Exporter</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Importer</translation>
+    </message>
+    <message>
+        <source>Administration</source>
+        <translation>Administration</translation>
     </message>
 </context>
 <context>
@@ -542,14 +539,6 @@ Voulez-vous vraiment le remplacer ?</translation>
     <message>
         <source>Create</source>
         <translation>Créer</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation>Importer</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation>Exporter</translation>
     </message>
 </context>
 <context>

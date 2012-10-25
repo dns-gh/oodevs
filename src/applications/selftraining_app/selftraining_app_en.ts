@@ -67,14 +67,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove Terrains and Models</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Missing Sword-Authoring license</source>
         <translation type="unfinished"></translation>
     </message>
@@ -155,29 +147,6 @@
     <message>
         <source>The new terrain will be created in:
 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DataPage</name>
-    <message>
-        <source>Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrains</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Models</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -441,15 +410,31 @@ Do really you want to replace it ?</source>
         <source>Can&apos;t create directory &apos;%1&apos;, error &apos;%2&apos; happen.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Administration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Models</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Page_ABC</name>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -474,6 +459,18 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Administration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -537,14 +534,6 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
