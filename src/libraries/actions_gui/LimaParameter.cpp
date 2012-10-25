@@ -86,9 +86,6 @@ QWidget* LimaParameter::BuildInterface( QWidget* parent )
     layout->addWidget( functions_, 1, 1 );
     layout->addWidget( scheduleBox, 2, 0, 1, 2 );
 
-    if( IsInList() )
-        parentList_->EnableCreation( false );
-
     return group_;
 }
 
