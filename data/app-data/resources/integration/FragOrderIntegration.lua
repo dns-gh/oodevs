@@ -813,3 +813,16 @@ end
 integration.getOrdersCategory = function( )
     return DEC_GetOrdersCategory()
 end
+
+integration.getFireFragOrder = function( self )
+    local ordres_recus = integration.getOrdersCategory()
+    for _,x in pairs( ordres_recus or emptyTable ) do
+        if x:GetType() == "platoon.combat.support.art.tasks.AppliquerFeux" 
+           or "Rep_OrderConduite_Pion_AppliquerFeux" then
+            local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
+            integration.cleanFragOrder( x )
+            return res
+        end
+    end
+    return nil
+end

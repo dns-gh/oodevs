@@ -37,5 +37,26 @@
         <method name="getParameters">
             <description>Retourne la table de paramètres de l'ordre de conduite</description>
         </method>
+        <method name="getAmmunitionTypeForIndirectFireOrder">
+            <return>
+                <type>
+                    <any/>
+                </type>
+            </return>
+        </method>
+        <method name="getQuantityForIndirectFireOrder">
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getTargetsForIndirectFireOrder">
+            <return>
+                <type>
+                    <class name="world.LocalizedElement"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

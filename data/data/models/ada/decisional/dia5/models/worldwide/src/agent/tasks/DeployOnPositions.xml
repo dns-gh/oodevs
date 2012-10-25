@@ -20,7 +20,7 @@ The agent chooses a position, deploys onto it and wait the order to delevier ind
                 <simple name="boolean"/>
             </type>
             <default>
-                <boolean>false</boolean>
+                <boolean>true</boolean>
             </default>
         </parameter>
     </parameters>

@@ -4,7 +4,12 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.links.deploy, skill.links.applyIndirectFire },
+    connections = 
+    {
+        skill.links.deploy,
+        skill.links.applyIndirectFire,
+        skill.nodes.Report
+    },
 
     -- --------------------------------------------------------------------------------
     -- Slots
@@ -17,7 +22,7 @@ rootnode
             additionnalParams.state == "impossible to fire" or
             additionnalParams.state == "no Launcher" or
             additionnalParams.state == "target not illuminated" then
-            self.order = nil
+            self.fireOrder = nil
             if self.params.changeAutomatically then
                 self.nextTargetIndex = self.nextTargetIndex + 1
                 if self.nextTargetIndex > #self.params.firePositions then
@@ -30,7 +35,7 @@ rootnode
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
-        self.order = nil
+        self.fireOrder = nil
         self.positions = {}
         self.nextTargetIndex = 1
         self.waitOrder = false
@@ -41,8 +46,6 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate -- lua optim
-
-        DEC_Trace( "mission.boolParameter = "..tostring( myself.taskParams.boolParameter ) )
 
         -- The agent deploys on its own position.
         if self.params.firePositions == NIL then
@@ -58,23 +61,26 @@ rootnode
 
         -- Ready to apply fires
         if self.waitOrder then
-            if not self.order then
-                self.order = integration.query.getFirstFireOrder() -- $$$ MIA TODO faire une query réutilisable.
+            if not self.fireOrder then
+                self.fireOrder = queries.getFireFragOrder[ "execute" ]()
             end
+
             if meKnowledge:isDeployed() then
                 integration.sendfireAvailable( true ) -- agent is OK to deliver fire
-                meKnowledge:RC( eRC_PretPourConduiteTir )
+                Activate( skill.nodes.Report, 1, { report = eRC_PretPourConduiteTir } )
                 if self.params.callByFragOrder then
                       Feedback( self.feedbacks.done )
                 end
-                if self.order then
-                    meKnowledge:RC( eRC_ReceptionOrdreDeFeu )
-                    Activate( skill.links.applyIndirectFire, 1, self.order )
+                if self.fireOrder then
+                    Activate( skill.nodes.Report, 1, { report = eRC_ReceptionOrdreDeFeu } )
+                    Activate( skill.links.applyIndirectFire, 1, { entities     = self.fireOrder:getTargetsForIndirectFireOrder(),
+                                                                  quantity     = self.fireOrder:getQuantityForIndirectFireOrder(),
+                                                                  dotationType = self.fireOrder:getAmmunitionTypeForIndirectFireOrder() } )
                 end
             else
                 integration.sendfireAvailable( false ) -- cannot deliver fire, the agent is not deployed.
                 if self.order then
-                    meKnowledge:RC( eRC_NotDeployedIndirectFireImpossible )
+                    Activate( skill.nodes.Report, 1, { report = eRC_NotDeployedIndirectFireImpossible } )
                 end
             end
         end
@@ -85,5 +91,11 @@ rootnode
     -- --------------------------------------------------------------------------------
     destroy = function( self )
         integration.sendfireAvailable( false )
+    end
+}
+node "Report"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.report )
     end
 }
