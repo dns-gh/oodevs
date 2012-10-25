@@ -36,5 +36,5 @@ integration.stopNeutralizingIt = function( target )
 end
 
 integration.isAgentNeutralized = function( )
-    DEC_Agent_EstNeutralise()
+    return DEC_Agent_EstNeutralise()
 end

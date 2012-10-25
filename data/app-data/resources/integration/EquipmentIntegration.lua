@@ -442,7 +442,7 @@ end
 -- @release 2012-10-22
 -- --------------------------------------------------------------------------------
 integration.geometrySplitLocalisation = function( localisation, numberOfParts, direction )
-    DEC_Geometry_SplitLocalisation( localisation, numberOfParts, direction )
+    return DEC_Geometry_SplitLocalisation( localisation, numberOfParts, direction )
 end
 -- -------------------------------------------------------------------------------- 
 -- The unit is moving
