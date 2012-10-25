@@ -130,7 +130,7 @@
       <terrain type="suburb" value="1"/>
       <terrain type="urban area" value="2"/>
     </heuristic>
-    <interact-with-enemy enemy="true"/>
+    <interact-with-enemy enemy="true" friend="true" neutral="true"/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -276,7 +276,7 @@
   <object geometry="circle" name="zone nbc" symbol="G*MPNR----****X" type="nbc zone">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="1"/>
-    <interaction-height height="100"/>
+    <interaction-height height="1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <spawn action-range="0" nbc="true" object="nbc cloud"/>
   </object>
@@ -445,4 +445,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="2379321171" -->
+<!-- signature="4293041246" -->
