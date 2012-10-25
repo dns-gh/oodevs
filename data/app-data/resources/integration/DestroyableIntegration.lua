@@ -181,8 +181,8 @@ integration.getKnowledgeDangerousAgent = function( agent )
     return DEC_ConnaissanceAgent_Dangerosite( agent )
 end
 
-integration.isAgentTacticallyDestroyed = function( )
-    return DEC_ConnaissanceAgent_EstDetruitTactique( )
+integration.isAgentTacticallyDestroyed = function( agent )
+    return DEC_ConnaissanceAgent_EstDetruitTactique( agent )
 end
 
 integration.getMaxRangeToFireOnAgent = function( agent, pH )
