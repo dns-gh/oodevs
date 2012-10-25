@@ -48,94 +48,6 @@ namespace sword
     }
 }
 
-namespace
-{
-    template< typename Message, typename Serializer >
-    class ModelSender : public network::NetworkMessageSender_ABC, private core::ModelListener_ABC // $$$$ MCO 2012-09-13: factorize with ListenerHelper
-    {
-    public:
-        ModelSender( Sink& sink, core::Model& model, Serializer serializer )
-            : sink_      ( sink )
-            , model_     ( &model )
-            , serializer_( serializer )
-        {
-            sink_.Register( *model_, *this );
-        }
-        virtual ~ModelSender()
-        {
-            if( model_ )
-                sink_.Unregister( *model_, *this );
-        }
-        virtual void SendChangedState() const
-        {
-            if( message_ )
-                message_->Send( NET_Publisher_ABC::Publisher() );
-            message_ = boost::none;
-        }
-        virtual void SendFullState( unsigned int context ) const
-        {
-            if( !model_ )
-                return;
-            Message message;
-            if( serializer_( message, *model_ ) )
-                message.Send( NET_Publisher_ABC::Publisher(), context );
-        }
-    private:
-        virtual void NotifyChanged( const core::Model& model )
-        {
-            model_ = &model;
-            message_ = Message();
-            serializer_( *message_, model );
-        }
-        virtual void NotifyRemoved( const core::Model& /*model*/ )
-        {
-            sink_.Unregister( *model_, *this );
-            model_ = 0;
-        }
-    private:
-        Sink& sink_;
-        const core::Model* model_;
-        mutable boost::optional< Message > message_;
-        Serializer serializer_;
-    };
-
-    template< typename Message, typename Serializer >
-    boost::shared_ptr< network::NetworkMessageSender_ABC > MakeModelSender( Sink& sink, core::Model& model, Serializer serializer )
-    {
-        return boost::make_shared< ModelSender< Message, Serializer > >( boost::ref( sink ), boost::ref( model ), serializer );
-    }
-
-    template< typename M >
-    bool Serialize( M& message, unsigned int identifier, const core::Model& model );
-
-    template<>
-    bool Serialize( client::UnitPathFind& message, unsigned int identifier, const core::Model& points )
-    {
-        if( ! points.GetSize() )
-            return false;
-        message().mutable_unit()->set_id( identifier );
-        sword::Path& root = *message().mutable_path();
-        root.mutable_location()->set_type( sword::Location::line );
-        for( std::size_t i = 0; i < points.GetSize(); ++i )
-        {
-            const core::Model& point = points.GetElement( i );
-            NET_ASN_Tools::WritePoint( MT_Vector2D( point["x"], point["y"] ),
-                                       *root.mutable_location()->mutable_coordinates()->add_elem() );
-        }
-        return true;
-    }
-    template<>
-    bool Serialize( client::UnitEnvironmentType& message, unsigned int identifier, const core::Model& environment )
-    {
-        message().mutable_unit()->set_id( identifier );
-        message().set_area( environment[ "area" ] );
-        message().set_left( environment[ "left" ] );
-        message().set_right( environment[ "right" ] );
-        message().set_linear( environment[ "linear" ] );
-        return true;
-    }
-}
-
 SWORD_USER_DATA_EXPORT( MIL_AgentPion* )
 
 // -----------------------------------------------------------------------------
@@ -203,14 +115,97 @@ RoleAdapter::~RoleAdapter()
     // NOTHING
 }
 
+namespace
+{
+    bool Serialize( client::UnitPathFind& message, unsigned int identifier, const core::Model& points )
+    {
+        if( ! points.GetSize() )
+            return false;
+        message().mutable_unit()->set_id( identifier );
+        sword::Path& root = *message().mutable_path();
+        root.mutable_location()->set_type( sword::Location::line );
+        for( std::size_t i = 0; i < points.GetSize(); ++i )
+        {
+            const core::Model& point = points.GetElement( i );
+            NET_ASN_Tools::WritePoint( MT_Vector2D( point["x"], point["y"] ),
+                                       *root.mutable_location()->mutable_coordinates()->add_elem() );
+        }
+        return true;
+    }
+    bool Serialize( client::UnitEnvironmentType& message, unsigned int identifier, const core::Model& environment )
+    {
+        message().mutable_unit()->set_id( identifier );
+        message().set_area( environment[ "area" ] );
+        message().set_left( environment[ "left" ] );
+        message().set_right( environment[ "right" ] );
+        message().set_linear( environment[ "linear" ] );
+        return true;
+    }
+
+    template< typename Message >
+    class ModelSender : public network::NetworkMessageSender_ABC, private core::ModelListener_ABC // $$$$ MCO 2012-09-13: factorize with ListenerHelper
+    {
+    public:
+        ModelSender( Sink& sink, core::Model& model, unsigned int entity )
+            : sink_  ( sink )
+            , model_ ( &model )
+            , entity_( entity )
+        {
+            sink_.Register( *model_, *this );
+        }
+        virtual ~ModelSender()
+        {
+            if( model_ )
+                sink_.Unregister( *model_, *this );
+        }
+        virtual void SendChangedState() const
+        {
+            if( message_ )
+                message_->Send( NET_Publisher_ABC::Publisher() );
+            message_ = boost::none;
+        }
+        virtual void SendFullState( unsigned int context ) const
+        {
+            if( !model_ )
+                return;
+            Message message;
+            if( Serialize( message, entity_, *model_ ) )
+                message.Send( NET_Publisher_ABC::Publisher(), context );
+        }
+    private:
+        virtual void NotifyChanged( const core::Model& model )
+        {
+            model_ = &model;
+            message_ = Message();
+            Serialize( *message_, entity_, model );
+        }
+        virtual void NotifyRemoved( const core::Model& /*model*/ )
+        {
+            sink_.Unregister( *model_, *this );
+            model_ = 0;
+        }
+    private:
+        Sink& sink_;
+        const core::Model* model_;
+        unsigned int entity_;
+        mutable boost::optional< Message > message_;
+    };
+
+    template< typename Message >
+    boost::shared_ptr< network::NetworkMessageSender_ABC > MakeModelSender( Sink& sink, core::Model& model, unsigned int entity )
+    {
+        return boost::make_shared< ModelSender< Message > >( boost::ref( sink ), boost::ref( model ), entity );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: RoleAdapter::Finalize
 // Created: BAX 2012-10-18
 // -----------------------------------------------------------------------------
 void RoleAdapter::Finalize()
 {
-    senders_.push_back( MakeModelSender< client::UnitPathFind >( boost::ref( sink_ ), entity_[ "movement/path/points" ], boost::bind( &Serialize< client::UnitPathFind >, _1, pion_.GetID(), _2 ) ) );
-    senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( boost::ref( sink_ ), entity_[ "movement/environment" ], boost::bind( &Serialize< client::UnitEnvironmentType >, _1, pion_.GetID(), _2 ) ) ); // $$$$ MCO 2012-09-13: move the two listeners to RoleAction_Moving
+    senders_.push_back( MakeModelSender< client::UnitPathFind >( boost::ref( sink_ ), entity_[ "movement/path/points" ], pion_.GetID() ) );
+    senders_.push_back( MakeModelSender< client::UnitEnvironmentType >( boost::ref( sink_ ), entity_[ "movement/environment" ], pion_.GetID() ) ); // $$$$ MCO 2012-09-13: move the two listeners to RoleAction_Moving
 }
 
 // -----------------------------------------------------------------------------
