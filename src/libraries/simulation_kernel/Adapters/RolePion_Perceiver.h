@@ -162,8 +162,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< ListenerHelper > > T_Listeners;
-    typedef boost::function< void( DEC_KS_Perception& ) > T_Notification;
-    typedef std::vector< T_Notification > T_Notifications;
     //@}
 
 private:
@@ -189,7 +187,6 @@ private:
     bool bHasChanged_;
     bool bRadarStateHasChanged_;
     bool bExternalMustUpdateVisionCones_;
-    T_Notifications notifications_;
     //@}
 };
 }

@@ -73,70 +73,6 @@ namespace sword
 
 namespace
 {
-    typedef boost::function< void( DEC_KS_Perception& ) > T_Notification;
-    void NotifyAgentPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
-    {
-        for( std::size_t i = 0; i < effect.GetSize(); ++i )
-        {
-            const core::Model& notification = effect.GetElement( i );
-            MIL_AgentPion& target = notification[ "target/data" ].GetUserData< MIL_AgentPion >();
-            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
-            const bool recorded = notification[ "recorded" ];
-            T_Notification notifier = boost::bind( static_cast< bool(DEC_KS_Perception::*)( MIL_Agent_ABC&, const PHY_PerceptionLevel&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( target ), boost::ref( level ), recorded );
-            notifications.push_back( notifier );
-        }
-    }
-    void NotifyObjectPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
-    {
-        for( std::size_t i = 0; i < effect.GetSize(); ++i )
-        {
-            const core::Model& notification = effect.GetElement( i );
-            MIL_Object_ABC& target = notification[ "target/data" ].GetUserData< MIL_Object_ABC >();
-            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
-            const bool recorded = notification[ "recorded" ];
-            T_Notification notifier = boost::bind( static_cast< void (DEC_KS_Perception::*)( MIL_Object_ABC&, const PHY_PerceptionLevel&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( target ), boost::ref( level ), recorded );
-            notifications.push_back( notifier );
-        }
-    }
-    void NotifyFlowPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
-    {
-        for( std::size_t i = 0; i < effect.GetSize(); ++i )
-        {
-            const core::Model& notification = effect.GetElement( i );
-            MIL_PopulationFlow& flow = *dynamic_cast< MIL_PopulationFlow* >( notification[ "target/data" ].GetUserData< MIL_PopulationElement_ABC* >() );
-            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
-            const bool recorded = notification[ "recorded" ];
-            const core::Model& points = notification[ "shape" ];
-            T_PointVector shape;
-            for( std::size_t i = 0; i < points.GetSize(); ++i )
-                shape.push_back( MT_Vector2D( points.GetElement( i )[ "x" ], points.GetElement( i )[ "y" ] ) );
-            T_Notification notifier = boost::bind( static_cast< bool(DEC_KS_Perception::*)( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const std::vector< MT_Vector2D >&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( flow ), boost::ref( level ), shape, recorded );
-            notifications.push_back( notifier );
-        }
-    }
-    void NotifyConcentrationPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
-    {
-        for( std::size_t i = 0; i < effect.GetSize(); ++i )
-        {
-            const core::Model& notification = effect.GetElement( i );
-            MIL_PopulationConcentration& target = *dynamic_cast< MIL_PopulationConcentration* >( notification[ "target/data" ].GetUserData< MIL_PopulationElement_ABC* >() );
-            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
-            const bool recorded = notification[ "recorded" ];
-            T_Notification notifier = boost::bind( static_cast< bool (DEC_KS_Perception::*)( MIL_PopulationConcentration&, const PHY_PerceptionLevel&, bool ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( target ), boost::ref( level ), recorded );
-            notifications.push_back( notifier );
-        }
-    }
-    void NotifyUrbanObjectPerception( const core::Model& effect, std::vector< T_Notification >& notifications )
-    {
-        for( std::size_t i = 0; i < effect.GetSize(); ++i )
-        {
-            const core::Model& notification = effect.GetElement( i );
-            const MIL_UrbanObject_ABC& object = notification[ "target/data" ].GetUserData< MIL_UrbanObject_ABC >();
-            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
-            T_Notification notifier = boost::bind( static_cast< void(DEC_KS_Perception::*)( const MIL_UrbanObject_ABC&, const PHY_PerceptionLevel& ) >(&DEC_KS_Perception::NotifyPerception), _1, boost::ref( object ), boost::ref( level ) );
-            notifications.push_back( notifier );
-        }
-    }
     void ToggleRecordMode( const core::Model& activation, DEC_KS_Perception& perception )
     {
         if( !activation )
@@ -183,12 +119,6 @@ RolePion_Perceiver::~RolePion_Perceiver()
 void RolePion_Perceiver::Finalize()
 {
     listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/record-mode/activated" ] ), boost::bind( &ToggleRecordMode, _1, boost::ref( owner_.GetKnowledge().GetKsPerception() ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/agents" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/agents-in-zone" ] ), boost::bind( &::NotifyAgentPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/objects" ] ), boost::bind( &::NotifyObjectPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/population-concentrations" ] ), boost::bind( &::NotifyConcentrationPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/population-flows" ] ), boost::bind( &::NotifyFlowPerception, _1, boost::ref( notifications_ ) ) ) );
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/notifications/urban-blocks" ] ), boost::bind( &::NotifyUrbanObjectPerception, _1, boost::ref( notifications_ ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -332,11 +262,11 @@ int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisa
 {
     const int perceptionId = GET_HOOK( GetPerceptionId )();
     sink_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
-                                                       ( "activated", true )
-                                                       ( "perception-id", perceptionId )
-                                                       ( "has-growth-speed", true )
-                                                       ( "growth-speed", rGrowthSpeed )
-                                                       ( "localization", core::MakeUserData( localisation ) ) );
+                                                     ( "activated", true )
+                                                     ( "perception-id", perceptionId )
+                                                     ( "has-growth-speed", true )
+                                                     ( "growth-speed", rGrowthSpeed )
+                                                     ( "localization", core::MakeUserData( localisation ) ) );
     return perceptionId;
 }
 
@@ -357,10 +287,10 @@ int RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& local
 {
     const int perceptionId = GET_HOOK( GetPerceptionId )();
     sink_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
-                                                       ( "activated", true )
-                                                       ( "perception-id", perceptionId )
-                                                       ( "has-growth-speed", false )
-                                                       ( "localization", core::MakeUserData( localisation ) ) );
+                                                     ( "activated", true )
+                                                     ( "perception-id", perceptionId )
+                                                     ( "has-growth-speed", false )
+                                                     ( "localization", core::MakeUserData( localisation ) ) );
     return perceptionId;
 }
 
@@ -371,8 +301,8 @@ int RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& local
 void RolePion_Perceiver::DisableRecoLocalisation( int id ) // $$$$ _RC_ SLI 2012-08-28: Remove this, only for PHY_ActionControlZone
 {
     sink_.PostCommand( "toggle reco", core::MakeModel( "identifier", owner_.GetID() )
-                                                       ( "activated", false )
-                                                       ( "perception-id", id ) );
+                                                     ( "activated", false )
+                                                     ( "perception-id", id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -485,15 +415,82 @@ void RolePion_Perceiver::DisableAllPerceptions()
     sink_.PostCommand( "disable all perceptions", core::MakeModel( "identifier", owner_.GetID() ) );
 }
 
+namespace
+{
+    void NotifyAgentPerception( const core::Model& effect, DEC_KS_Perception& perceptions )
+    {
+        for( std::size_t i = 0; i < effect.GetSize(); ++i )
+        {
+            const core::Model& notification = effect.GetElement( i );
+            MIL_AgentPion& target = notification[ "target/data" ].GetUserData< MIL_AgentPion >();
+            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
+            const bool recorded = notification[ "recorded" ];
+            perceptions.NotifyPerception( target, level, recorded );
+        }
+    }
+    void NotifyObjectPerception( const core::Model& effect, DEC_KS_Perception& perceptions )
+    {
+        for( std::size_t i = 0; i < effect.GetSize(); ++i )
+        {
+            const core::Model& notification = effect.GetElement( i );
+            MIL_Object_ABC& target = notification[ "target/data" ].GetUserData< MIL_Object_ABC >();
+            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
+            const bool recorded = notification[ "recorded" ];
+            perceptions.NotifyPerception( target, level, recorded );
+        }
+    }
+    void NotifyFlowPerception( const core::Model& effect, DEC_KS_Perception& perceptions )
+    {
+        for( std::size_t i = 0; i < effect.GetSize(); ++i )
+        {
+            const core::Model& notification = effect.GetElement( i );
+            MIL_PopulationFlow& flow = *dynamic_cast< MIL_PopulationFlow* >( notification[ "target/data" ].GetUserData< MIL_PopulationElement_ABC* >() );
+            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
+            const bool recorded = notification[ "recorded" ];
+            const core::Model& points = notification[ "shape" ];
+            T_PointVector shape;
+            for( std::size_t i = 0; i < points.GetSize(); ++i )
+                shape.push_back( MT_Vector2D( points.GetElement( i )[ "x" ], points.GetElement( i )[ "y" ] ) );
+            perceptions.NotifyPerception( flow, level, shape, recorded );
+        }
+    }
+    void NotifyConcentrationPerception( const core::Model& effect, DEC_KS_Perception& perceptions )
+    {
+        for( std::size_t i = 0; i < effect.GetSize(); ++i )
+        {
+            const core::Model& notification = effect.GetElement( i );
+            MIL_PopulationConcentration& target = *dynamic_cast< MIL_PopulationConcentration* >( notification[ "target/data" ].GetUserData< MIL_PopulationElement_ABC* >() );
+            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
+            const bool recorded = notification[ "recorded" ];
+            perceptions.NotifyPerception( target, level, recorded );
+        }
+    }
+    void NotifyUrbanObjectPerception( const core::Model& effect, DEC_KS_Perception& perceptions )
+    {
+        for( std::size_t i = 0; i < effect.GetSize(); ++i )
+        {
+            const core::Model& notification = effect.GetElement( i );
+            const MIL_UrbanObject_ABC& object = notification[ "target/data" ].GetUserData< MIL_UrbanObject_ABC >();
+            const PHY_PerceptionLevel& level = PHY_PerceptionLevel::FindPerceptionLevel( notification[ "level" ] );
+            perceptions.NotifyPerception( object, level );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::ExecutePerceptions
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::ExecutePerceptions()
 {
-    BOOST_FOREACH( const T_Notification& notification, notifications_ )
-        notification( owner_.GetKnowledge().GetKsPerception() );
-    notifications_.clear();
+    DEC_KS_Perception& perceptions = owner_.GetKnowledge().GetKsPerception();
+    const core::Model& notifications = entity_[ "perceptions/notifications" ];
+    NotifyAgentPerception( notifications[ "agents" ], perceptions );
+    NotifyAgentPerception( notifications[ "agents-in-zone" ], perceptions );
+    NotifyObjectPerception( notifications[ "objects" ], perceptions );
+    NotifyConcentrationPerception( notifications[ "population-concentrations" ], perceptions );
+    NotifyFlowPerception( notifications[ "population-flows" ], perceptions );
+    NotifyUrbanObjectPerception( notifications[ "urban-blocks" ], perceptions );
 }
 
 // -----------------------------------------------------------------------------

@@ -103,6 +103,12 @@ RoleAdapter::RoleAdapter( Sink& sink, MIL_AgentPion& pion, core::Model& entity )
     entity_[ "perceptions/drill-blow/length" ] = pion.GetType().GetUnitType().GetCoupDeSondeLength();
     entity_[ "perceptions/max-agent-perception-distance" ] = 0;
     entity_[ "perceptions/max-theoretical-agent-perception-distance" ] = 0;
+    entity_[ "perceptions/notifications/agents" ];
+    entity_[ "perceptions/notifications/agents-in-zone" ];
+    entity_[ "perceptions/notifications/objects" ];
+    entity_[ "perceptions/notifications/population-concentrations" ];
+    entity_[ "perceptions/notifications/population-flows" ];
+    entity_[ "perceptions/notifications/urban-blocks" ];
     entity_[ "fire/force-ratio/feedback-time" ] = pion.GetType().GetFeedbackTime();
 }
 
