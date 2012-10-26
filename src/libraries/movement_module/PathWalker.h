@@ -153,7 +153,7 @@ private:
     // Effect
     mutable MT_Vector2D vNewPos_;
     mutable MT_Vector2D vNewDir_;
-    mutable double rCurrentSpeed_;
+    mutable double speed_;
     mutable double rWalkedDistance_;
     mutable std::size_t pointsPassed_;
     mutable bool bForcePathCheck_;

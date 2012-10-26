@@ -62,7 +62,7 @@ PathWalker::PathWalker( ModuleFacade& module, unsigned int entity )
     , entity_         ( entity )
     , vNewPos_        ( 0, 0 )
     , vNewDir_        ( 0, 0 )
-    , rCurrentSpeed_  ( 0 )
+    , speed_  ( 0 )
     , rWalkedDistance_( 0 )
     , pointsPassed_   ( 0 )
     , bForcePathCheck_( true )
@@ -131,7 +131,7 @@ void PathWalker::ComputeCurrentSpeed( const wrapper::View& entity ) const
     const PathPoint& curPathPoint = **itCurrentPathPoint_;
     if( curPathPoint.GetType() == PathPoint::eTypePointPath )
         SetEnvironmentType( curPathPoint.GetObjectTypesToNextPoint(), entity );
-    rCurrentSpeed_ = GET_HOOK( GetSpeedWithReinforcement )( entity, environment_ );
+    speed_ = GET_HOOK( GetSpeedWithReinforcement )( entity, environment_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -371,7 +371,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
                 GET_HOOK( NotifyMovingInsideObject )( entity, object );
                 if( rSpeedWithinObject == 0 )
                 {
-                    rCurrentSpeed_ = 0;
+                    speed_ = 0;
                     vNewPos_ = itCurMoveStep->vPos_;
                     do
                     {
@@ -397,7 +397,7 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
             rMaxSpeedForStep = std::min( rMaxSpeedForStep, GET_HOOK( GetSpeedWithReinforcementObject )( entity, environment_, object) );
             if( rMaxSpeedForStep == 0 )
             {
-                rCurrentSpeed_ = 0;
+                speed_ = 0;
                 vNewPos_ = itCurMoveStep->vPos_;
                 do
                 {
@@ -420,19 +420,19 @@ bool PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveSte
     }
 
     if( rMaxSpeedForStep != std::numeric_limits< double >::max() )
-        rCurrentSpeed_ = rMaxSpeedForStep;
-    const double rDistToWalk = rTimeRemaining * rCurrentSpeed_;
+        speed_ = rMaxSpeedForStep;
+    const double rDistToWalk = rTimeRemaining * speed_;
     const MT_Vector2D vNewPosTmp( vNewPos_ + ( vNewDir_ * rDistToWalk ) );
 
     if( vNewPos_.SquareDistance( vNewPosTmp ) >= vNewPos_.SquareDistance( itNextMoveStep->vPos_ )  )
     {
-        rTimeRemaining -= ( itNextMoveStep->vPos_ - vNewPos_ ).Magnitude() / rCurrentSpeed_;
+        rTimeRemaining -= ( itNextMoveStep->vPos_ - vNewPos_ ).Magnitude() / speed_;
         vNewPos_ = itNextMoveStep->vPos_;
         return true;
     }
     else
     {
-        rTimeRemaining -= ( vNewPosTmp - vNewPos_ ).Magnitude() / rCurrentSpeed_;
+        rTimeRemaining -= ( vNewPosTmp - vNewPos_ ).Magnitude() / speed_;
         vNewPos_ = vNewPosTmp;
         return false;
     }
@@ -448,7 +448,7 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
     if( vNewPosTmp == vNewPos_ )
         return true;
 
-    if( rCurrentSpeed_ <= 0 )
+    if( speed_ <= 0 )
     {
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Current speed is not positive" );
         return false;
@@ -512,23 +512,23 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
     vNewPos_ = MT_Vector2D( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
     vNewDir_ = MT_Vector2D( entity[ "movement/direction/x" ], entity[ "movement/direction/y" ] );
 
-    if( rCurrentSpeed_ == 0 || ! entity[ "movement/can-move" ] )
+    if( speed_ == 0 || ! entity[ "movement/can-move" ] )
     {
-        rCurrentSpeed_ = 0;
+        speed_ = 0;
         PostMovement( entity );
         return eNotAllowed;
     }
 
     if( itNextPathPoint_ == pPath->GetResult().end() )
     {
-        rCurrentSpeed_ = 0;
+        speed_ = 0;
         PostMovement( entity );
         return eFinished;
     }
 
     if( ! entity[ "movement/has-resources" ] )
     {
-        rCurrentSpeed_ = 0;
+        speed_ = 0;
         if( !bFuelReportSent_ )
         {
             PostReport( entity, MIL_Report::eReport_OutOfGas );
@@ -564,7 +564,7 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
 
         if( itNextPathPoint_ == pPath->GetResult().end() )
         {
-            rCurrentSpeed_ = 0;
+            speed_ = 0;
             PostMovement( entity );
             return ( pathSet_ != ePartialPath ) ? eFinished : pathSet_;
         }
@@ -614,7 +614,7 @@ void PathWalker::PostMovement( const wrapper::View& entity ) const
     effect[ "position/y" ] = vNewPos_.rY_;
     effect[ "direction/x" ] = vNewDir_.rX_;
     effect[ "direction/y" ] = vNewDir_.rY_;
-    effect[ "speed" ] = rCurrentSpeed_;
+    effect[ "speed" ] = speed_;
     effect.Post();
     wrapper::Event event( "movement" );
     event[ "entity" ] = entity_;
