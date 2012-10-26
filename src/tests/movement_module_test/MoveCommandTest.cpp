@@ -331,7 +331,7 @@ BOOST_FIXTURE_TEST_CASE( movement_command_does_not_post_updated_truncated_path_w
     Advance( threshold - 1, sword::movement::PathWalker::eRunning );
 }
 
-BOOST_FIXTURE_TEST_CASE( _movement_command_does_not_post_updated_truncated_path_when_threshold_not_reached, LongPathStartedFixture )
+BOOST_FIXTURE_TEST_CASE( movement_command_posts_updated_truncated_path_when_threshold_reached, LongPathStartedFixture )
 {
     ExpectEffect( entity[ "movement/path" ] );
     MOCK_EXPECT( NotifyMovingOnPathPoint ).exactly( threshold - 1 );
