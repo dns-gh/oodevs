@@ -26,18 +26,13 @@ namespace actions
     enum EActionType;
 }
 
-namespace gui
-{
-    class ValuedListItem;
-}
-
 // =============================================================================
 /** @class  TimelineListView
     @brief  TimelineListView
 */
 // Created: SBO 2008-04-22
 // =============================================================================
-class TimelineListView : public Q3ListView
+class TimelineListView : public QTreeWidget
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< actions::Action_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
@@ -58,9 +53,17 @@ public:
     //@}
 
 private slots:
-    //! @name Operations
+    //! @name Slots
     //@{
-    void OnSelectionChange( Q3ListViewItem* item );
+    void OnSelectionChange( const QItemSelection&, const QItemSelection& );
+    void SetContentsPos( int dx, int dy );
+    void OnVScrollbarChanged( int y );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void ContentsMoving( int, int );
     //@}
 
 private:
@@ -68,11 +71,11 @@ private:
     //@{
     void Update();
     bool ShouldDisplay( const kernel::Entity_ABC& entity ) const;
-    gui::ValuedListItem* FindListItem( const actions::Action_ABC& action, actions::EActionType& actionType ) const;
+    QTreeWidgetItem* FindItem( const kernel::Entity_ABC* entity ) const;
+    QTreeWidgetItem* FindListItem( const actions::Action_ABC& action, actions::EActionType& actionType ) const;
     virtual void NotifyCreated( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
-    virtual void setContentsPos( int x, int y );
     //@}
 
     //! @name Types
@@ -90,6 +93,9 @@ private:
     T_Actions objectsActions_;
     T_Actions magicActions_;
     const actions::ActionsFilter_ABC* filter_;
+    QTreeWidgetItem* magicItem_;
+    QTreeWidgetItem* weatherItem_;
+    QTreeWidgetItem* objectItem_;
     //@}
 };
 

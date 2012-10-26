@@ -63,8 +63,8 @@ TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controller
     view_ = new TimelineView( box, new TimelineCanvas( this, 25 ), controllers, model, scheduler, *ruler );
     new ActionProperties( splitter, controllers, extractor );
 
-    connect( view_, SIGNAL( contentsMoving( int, int ) ), list_, SLOT( setContentsPos( int, int ) ) );
-    connect( list_, SIGNAL( contentsMoving( int, int ) ), view_, SLOT( setContentsPos( int, int ) ) );
+    connect( view_, SIGNAL( contentsMoving( int, int ) ), list_, SLOT( SetContentsPos( int, int ) ) );
+    connect( list_, SIGNAL( ContentsMoving( int, int ) ), view_, SLOT( setContentsPos( int, int ) ) );
     connect( view_, SIGNAL( contentsMoving( int, int ) ), ruler, SLOT( SetContentsPos( int, int ) ) );
 }
 

@@ -18,57 +18,88 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_gui/ValuedListItem.h"
 
+Q_DECLARE_METATYPE( const kernel::Entity_ABC* )
+
 namespace
 {
-    class TimeLineEntityListItem : public gui::ValuedListItem
+    class TimelineHeaderView : public QHeaderView
     {
     public:
-        TimeLineEntityListItem( Q3ListView* parent, Q3ListViewItem* after ) : gui::ValuedListItem( parent, after )
+        explicit TimelineHeaderView( QWidget* parent ) : QHeaderView( Qt::Horizontal, parent )
         {
-            setVisible( false );
+            setStretchLastSection(true);
         }
+        virtual ~TimelineHeaderView() {}
 
-        virtual void paintCell( QPainter* p, const QColorGroup& cg, int column, int width, int align )
+    protected:
+        virtual QSize sizeHint() const
         {
-            gui::ValuedListItem::paintCell( p, cg, column, width, align );
+            QSize s = QHeaderView::sizeHint();
+            s.setHeight( 30 );
+            return s;
+        }
+    };
+
+    class TimelineItemDelegate : public QItemDelegate
+    {
+    public:
+        explicit TimelineItemDelegate( QWidget* parent ) : QItemDelegate( parent ) {}
+        virtual ~TimelineItemDelegate() {}
+
+    protected:
+        virtual void paint( QPainter* p, const QStyleOptionViewItem& option, const QModelIndex& index) const
+        {
+            QItemDelegate::paint( p, option, index );
             const QPen oldPen = p->pen();
             p->setPen( QColor( 225, 225, 225 ) );
-            p->drawLine( 0, height() - 1, width, height() - 1 );
+            const QRect& r = option.rect;
+            p->drawLine( r.left(), r.bottom(), r.right(), r.bottom() );
             p->setPen( oldPen );
         }
 
-    protected:
-        virtual void setHeight( int )
+        virtual QSize sizeHint( const QStyleOptionViewItem& option, const QModelIndex& index) const
         {
-            gui::ValuedListItem::setHeight( 25 );
+            QSize s = QItemDelegate::sizeHint( option, index );
+            s.setHeight( 25 );
+            return s;
         }
     };
 }
-
-using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: TimelineListView constructor
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
 TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& controllers )
-    : Q3ListView( parent, "TimelineListView" )
+    : QTreeWidget( parent )
     , controllers_( controllers )
     , filter_     ( 0 )
 {
     setMinimumWidth( 200 );
-    addColumn( tr( "Units" ) );
+    setColumnCount( 1 );
+    setHeaderLabel( tr( "Units" ) );
     setBackgroundColor( Qt::white );
-    setResizeMode( LastColumn );
-    setHScrollBarMode( Q3ScrollView::AlwaysOn ); //--> to have the same height as canvasview
-    setSortColumn( -1 ); // $$$$ SBO 2008-04-25: TODO
-    gui::ValuedListItem* item = new TimeLineEntityListItem( this, lastItem() );
-    item->Set( &Action_ABC::actionTypeMagic_, tr( "Magic" ) );
-    item = new TimeLineEntityListItem( this, lastItem() );
-    item->Set( &Action_ABC::actionTypeWeather_, tr( "Weather" ) );
-    item = new TimeLineEntityListItem( this, lastItem() );
-    item->Set( &Action_ABC::actionTypeObjects_, tr( "Objects" ) );
-    connect( this, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
+    setHeader( new TimelineHeaderView( this ) );
+    header()->setModel( model() );
+    setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOn ); //--> to have the same height as canvasview
+    setVerticalScrollMode( QAbstractItemView::ScrollPerPixel );
+    setSortingEnabled( false );
+    setRootIsDecorated( false );
+    setItemDelegate( new TimelineItemDelegate( this ) );
+    magicItem_ = new QTreeWidgetItem();
+    magicItem_->setText( 0, tr( "Magic" ) );
+    weatherItem_ = new QTreeWidgetItem();
+    weatherItem_->setText( 0, tr( "Weather" ) );
+    objectItem_ = new QTreeWidgetItem();
+    objectItem_->setText( 0, tr( "Objects" ) );
+    addTopLevelItem( magicItem_ );
+    addTopLevelItem( weatherItem_ );
+    addTopLevelItem( objectItem_ );
+    magicItem_->setHidden( true );
+    weatherItem_->setHidden( true );
+    objectItem_->setHidden( true );
+    connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), SLOT( OnSelectionChange( const QItemSelection&, const QItemSelection& ) ) );
+    connect( verticalScrollBar(), SIGNAL( valueChanged( int ) ), SLOT( OnVScrollbarChanged( int ) ) );
     controllers_.Register( *this );
 }
 
@@ -82,72 +113,89 @@ TimelineListView::~TimelineListView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineListView::FindItem
+// Created: JSR 2012-10-25
+// -----------------------------------------------------------------------------
+QTreeWidgetItem* TimelineListView::FindItem( const kernel::Entity_ABC* entity ) const
+{
+    for( int i = 0; i < topLevelItemCount(); ++i )
+    {
+        QTreeWidgetItem* item = topLevelItem( i );
+        if( item && item->data( 0, Qt::UserRole ).isValid() && item->data( 0, Qt::UserRole ).value< const kernel::Entity_ABC* >() == entity )
+            return item;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineListView::FindListItem
 // Created: JSR 2011-03-03
 // -----------------------------------------------------------------------------
-gui::ValuedListItem* TimelineListView::FindListItem( const actions::Action_ABC& action, EActionType& actionType ) const
+QTreeWidgetItem* TimelineListView::FindListItem( const actions::Action_ABC& action, actions::EActionType& actionType ) const
 {
-    const ActionTasker* tasker = action.Retrieve< ActionTasker >();
+    const actions::ActionTasker* tasker = action.Retrieve< actions::ActionTasker >();
     if( tasker && tasker->GetTasker() )
     {
-        actionType = eTypeEntity;
-        return gui::FindItem( tasker->GetTasker(), firstChild() );
+        actionType = actions::eTypeEntity;
+        return FindItem( tasker->GetTasker() );
     }
     const std::string& actionTypeName = action.GetType().GetName();
     if( actionTypeName == "global_weather" || actionTypeName == "local_weather" || actionTypeName == "local_weather_destruction" )
     {
-        actionType = eTypeWeather;
-        return gui::FindItem( &Action_ABC::actionTypeWeather_, firstChild() );;
+        actionType = actions::eTypeWeather;
+        return weatherItem_;
     }
     if( actionTypeName == "create_object" || actionTypeName == "update_object" ||
         actionTypeName == "destroy_object" || actionTypeName == "request_object" )
     {
-        actionType = eTypeObjects;
-        return gui::FindItem( &Action_ABC::actionTypeObjects_, firstChild() );;
+        actionType = actions::eTypeObjects;
+        return objectItem_;
     }
-    actionType = eTypeMagic;
-    return gui::FindItem( &Action_ABC::actionTypeMagic_, firstChild() );;
+    actionType = actions::eTypeMagic;
+    return magicItem_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineListView::NotifyCreated
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineListView::NotifyCreated( const Action_ABC& action )
+void TimelineListView::NotifyCreated( const actions::Action_ABC& action )
 {
-    EActionType actionType;
-    gui::ValuedListItem* item = FindListItem( action, actionType );
+    actions::EActionType actionType;
+    QTreeWidgetItem* item = FindListItem( action, actionType );
     switch( actionType )
     {
-    case eTypeEntity :
+    case actions::eTypeEntity :
         {
-            const kernel::Entity_ABC* entity = action.Retrieve< ActionTasker >()->GetTasker(); // cannot be null
+            const kernel::Entity_ABC* entity = action.Retrieve< actions::ActionTasker >()->GetTasker(); // cannot be null
             if( !item )
             {
-                item = new TimeLineEntityListItem( this, lastItem() );
-                item->Set( entity, entity->GetName() );
+                item = new QTreeWidgetItem();
+                item->setText( 0, entity->GetName() );
+                item->setData( 0, Qt::UserRole, QVariant::fromValue( entity ) );
+                addTopLevelItem( item );
             }
             // $$$$ _RC_ JSR 2011-03-03: on cache toute la ligne si une action n'est pas autorisée?? a vérifier
-            item->setVisible( !filter_ || filter_->Allows( action ) );
+            item->setHidden( filter_ && !filter_->Allows( action ) );
             entityActions_[ entity ].push_back( &action );
         }
         break;
-    case eTypeWeather :
+    case actions::eTypeWeather :
         {
-            item->setVisible( !filter_ || filter_->Allows( action ) );
+            item->setHidden( filter_ && !filter_->Allows( action ) );
             weatherActions_.push_back( &action );
         }
         break;
-    case eTypeObjects :
+    case actions::eTypeObjects :
         {
-            item->setVisible( !filter_ || filter_->Allows( action ) );
+            item->setHidden( filter_ && !filter_->Allows( action ) );
             objectsActions_.push_back( &action );
         }
         break;
-    case eTypeMagic:
+    case actions::eTypeMagic:
     default:
         {
-            item->setVisible( !filter_ || filter_->Allows( action ) );
+            item->setHidden( filter_ && !filter_->Allows( action ) );
             magicActions_.push_back( &action );
         }
     }
@@ -157,25 +205,25 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
 // Name: TimelineListView::NotifyDeleted
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineListView::NotifyDeleted( const Action_ABC& action )
+void TimelineListView::NotifyDeleted( const actions::Action_ABC& action )
 {
-    EActionType actionType;
-    gui::ValuedListItem* item = FindListItem( action, actionType );
+    actions::EActionType actionType;
+    QTreeWidgetItem* item = FindListItem( action, actionType );
     if( !item )
         return;
     T_Actions* actions = 0;
     switch( actionType )
     {
-    case eTypeEntity :
-        actions = &entityActions_[ action.Retrieve< ActionTasker >()->GetTasker() ]; // cannot be null
+    case actions::eTypeEntity :
+        actions = &entityActions_[ action.Retrieve< actions::ActionTasker >()->GetTasker() ]; // cannot be null
         break;
-    case eTypeWeather :
+    case actions::eTypeWeather :
         actions = &weatherActions_;
         break;
-    case eTypeObjects :
+    case actions::eTypeObjects :
         actions = &objectsActions_;
         break;
-    case eTypeMagic:
+    case actions::eTypeMagic:
     default:
         actions = &magicActions_;
     }
@@ -184,13 +232,14 @@ void TimelineListView::NotifyDeleted( const Action_ABC& action )
         actions->erase( it );
     if( actions->empty() )
     {
-        if( actionType == eTypeEntity )
+        if( actionType == actions::eTypeEntity )
             delete item;
         else
-            item->setVisible( false );
+            item->setHidden( true );
         Update();
     }
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: TimelineListView::NotifyDeleted
@@ -198,7 +247,7 @@ void TimelineListView::NotifyDeleted( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineListView::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
+    if( QTreeWidgetItem* item = FindItem( &entity ) )
     {
         entityActions_.erase( &entity );
         delete item;
@@ -206,32 +255,41 @@ void TimelineListView::NotifyDeleted( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimelineListView::setContentsPos
-// Created: SBO 2008-04-22
+// Name: TimelineListView::SetContentsPos
+// Created: JSR 2012-10-26
 // -----------------------------------------------------------------------------
-void TimelineListView::setContentsPos( int x, int y )
+void TimelineListView::SetContentsPos( int /*dx*/, int dy )
 {
     blockSignals( true );
-    Q3ListView::setContentsPos( x, y );
+    verticalScrollBar()->setValue( dy );
     blockSignals( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineListView::OnVScrollbarChanged
+// Created: JSR 2012-10-26
+// -----------------------------------------------------------------------------
+void TimelineListView::OnVScrollbarChanged( int y )
+{
+    emit ContentsMoving( 0, y );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineListView::OnSelectionChange
 // Created: SBO 2008-04-29
 // -----------------------------------------------------------------------------
-void TimelineListView::OnSelectionChange( Q3ListViewItem* item )
+void TimelineListView::OnSelectionChange( const QItemSelection&, const QItemSelection& )
 {
-    gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item ) ;
-    if( valuedItem && valuedItem->IsA< const kernel::Entity_ABC >() )
-        valuedItem->Select( controllers_.actions_ );
+    QTreeWidgetItem* item = currentItem();
+    if( item && item->data( 0, Qt::UserRole ).isValid() )
+        controllers_.actions_.Select( *item->data( 0, Qt::UserRole ).value< const kernel::Entity_ABC* >() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TimelineListView::SetFilter
 // Created: SBO 2010-07-19
 // -----------------------------------------------------------------------------
-void TimelineListView::SetFilter( const ActionsFilter_ABC& filter )
+void TimelineListView::SetFilter( const actions::ActionsFilter_ABC& filter )
 {
     if( filter_ != &filter )
     {
@@ -246,13 +304,11 @@ void TimelineListView::SetFilter( const ActionsFilter_ABC& filter )
 // -----------------------------------------------------------------------------
 void TimelineListView::Update()
 {
-    Q3ListViewItemIterator it( this );
-    while( it.current() )
+    for( int i = 0; i < topLevelItemCount(); ++i)
     {
-        gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( it.current() );
-        if( item->IsA< const kernel::Entity_ABC >() )
-            item->setVisible( ShouldDisplay( *item->GetValueNoCheck< const kernel::Entity_ABC >() ) );
-        ++it;
+        QTreeWidgetItem* item = topLevelItem( i );
+        if( item && item->data( 0, Qt::UserRole ).isValid() )
+            item->setHidden( !ShouldDisplay( *item->data( 0, Qt::UserRole ).value< const kernel::Entity_ABC* >() ) );
     }
 }
 
