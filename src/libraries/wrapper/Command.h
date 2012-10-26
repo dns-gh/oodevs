@@ -40,7 +40,8 @@ namespace detail
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while creating command" );
             }
         }
-        static void Destroy( void* command, void* /*context*/ )
+        static void Destroy( void* command,
+            const SWORD_Model* /*parameters*/, const SWORD_Model* /*model*/, void* /*context*/ )
         {
             delete static_cast< T* >( command );
         }
@@ -99,7 +100,8 @@ namespace detail
                 ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while creating command" );
             }
         }
-        static void Destroy( void* command, void* /*userData*/ )
+        static void Destroy( void* command,
+            const SWORD_Model* /*parameters*/, const SWORD_Model* /*model*/, void* /*context*/ )
         {
             delete static_cast< T* >( command );
         }
