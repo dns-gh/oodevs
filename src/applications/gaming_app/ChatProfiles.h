@@ -11,6 +11,7 @@
 #define __ChatProfiles_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include <QtGui/qlistwidget.h>
 
 namespace kernel
 {
@@ -25,7 +26,7 @@ class UserProfile;
 */
 // Created: SBO 2008-06-11
 // =============================================================================
-class ChatProfiles : public Q3ListBox
+class ChatProfiles : public QListWidget
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< UserProfile >
 {
@@ -47,7 +48,7 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void OnSelected( Q3ListBoxItem* item );
+    void OnSelected( QListWidgetItem* item );
     //@}
 
 private:

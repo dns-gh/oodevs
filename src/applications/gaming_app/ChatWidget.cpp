@@ -29,6 +29,7 @@ ChatWidget::ChatWidget( QWidget* parent, kernel::Controllers& controllers, Publi
     , publisher_( new CommandPublisher( controllers, publisher ) )
 {
     tabs_ = new QTabWidget( this );
+    tabs_->setTabsClosable( true );
     {
         QWidget* tab = new ChatRoom( tabs_, *publisher_, handler_ );
         tabs_->addTab( tab, tr( "General" ) );
@@ -37,6 +38,7 @@ ChatWidget::ChatWidget( QWidget* parent, kernel::Controllers& controllers, Publi
     setStretchFactor( tabs_, 4 );
     setStretchFactor( profiles_, 1 );
     connect( profiles_, SIGNAL( Selected( const UserProfile& ) ), SLOT( OnProfileSelected( const UserProfile& ) ) );
+    connect( tabs_, SIGNAL( tabCloseRequested ( int ) ), SLOT( OnTabClosed( int ) ) );
     handler_.Register( "text", *this );
     controllers_.Register( *this );
 }
@@ -73,6 +75,21 @@ void ChatWidget::NotifyDeleted( const UserProfile& profile )
 void ChatWidget::OnProfileSelected( const UserProfile& profile )
 {
     Select( profile.GetLogin() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChatWidget::OnTabClosed
+// Created: NPT 2012-10-26
+// -----------------------------------------------------------------------------
+void ChatWidget::OnTabClosed( int index )
+{
+    T_Rooms::iterator it = rooms_.find( tabs_->tabText( index ) );
+    if( it != rooms_.end() )
+    {
+        tabs_->removePage( it->second );
+        delete it->second;
+        rooms_.erase( it );
+    }
 }
 
 // -----------------------------------------------------------------------------

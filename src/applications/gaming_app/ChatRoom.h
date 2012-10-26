@@ -65,7 +65,7 @@ private:
     CommandPublisher& publisher_;
     CommandHandler& handler_;
     QString filter_;
-    Q3TextEdit* history_;
+    QTextEdit* history_;
     QLineEdit* text_;
     QPushButton* sendBtn_;
     //@}

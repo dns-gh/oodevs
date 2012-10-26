@@ -48,6 +48,7 @@ private slots:
     //! @name Operations
     //@{
     void OnProfileSelected( const UserProfile& profile );
+    void OnTabClosed( int index );
     //@}
 
 private:
@@ -76,7 +77,7 @@ private:
     CommandHandler& handler_;
     std::auto_ptr< CommandPublisher > publisher_;
     QTabWidget* tabs_;
-    Q3ListBox* profiles_;
+    QListWidget* profiles_;
     T_Rooms rooms_;
     //@}
 };

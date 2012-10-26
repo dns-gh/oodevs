@@ -25,7 +25,7 @@ ChatRoom::ChatRoom( QWidget* parent, CommandPublisher& publisher, CommandHandler
     , handler_( handler )
     , filter_( filter )
 {
-    history_ = new Q3TextEdit( this );
+    history_ = new QTextEdit( this );
     history_->setReadOnly( true );
     {
         Q3HBox* box = new Q3HBox( this );

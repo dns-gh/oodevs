@@ -15,13 +15,15 @@
 
 namespace
 {
-    class ProfileItem : public Q3ListBoxText
+    class ProfileItem : public QListWidgetItem
     {
     public:
-        ProfileItem( Q3ListBox* parent, const UserProfile& profile )
-            : Q3ListBoxText( parent, profile.GetLogin() )
+        ProfileItem( QListWidget* parent, const UserProfile& profile )
+            : QListWidgetItem( profile.GetLogin() )
             , profile_( &profile )
-        {}
+        {
+            parent->addItem( this );
+        }
         const UserProfile* profile_;
     };
 }
@@ -31,10 +33,10 @@ namespace
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
 ChatProfiles::ChatProfiles( QWidget* parent, kernel::Controllers& controllers )
-    : Q3ListBox( parent )
+    : QListWidget( parent )
     , controllers_( controllers )
 {
-    connect( this, SIGNAL( selected( Q3ListBoxItem* ) ), SLOT( OnSelected( Q3ListBoxItem* ) ) );
+    connect( this, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ), SLOT( OnSelected( QListWidgetItem* ) ) );
     controllers_.Register( *this );
 }
 
@@ -53,8 +55,7 @@ ChatProfiles::~ChatProfiles()
 // -----------------------------------------------------------------------------
 void ChatProfiles::NotifyUpdated( const UserProfile& profile )
 {
-    Q3ListBoxItem* item = findItem( profile.GetLogin() );
-    if( !item )
+    if( findItems( profile.GetLogin(), Qt::MatchFixedString ).isEmpty() )
         new ProfileItem( this, profile );
 }
 
@@ -64,17 +65,19 @@ void ChatProfiles::NotifyUpdated( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 void ChatProfiles::NotifyDeleted( const UserProfile& profile )
 {
-    Q3ListBoxItem* item = findItem( profile.GetLogin() );
-    if( isSelected( item ) )
-        setSelected( item, false );
-    delete item;
+    if( !findItems( profile.GetLogin(), Qt::MatchFixedString ).isEmpty() )
+        if( QListWidgetItem* item = findItems( profile.GetLogin(), Qt::MatchFixedString ).at( 0 ) )
+        {
+            setItemSelected( item, false );
+            delete item;
+        }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ChatProfiles::OnSelected
 // Created: SBO 2008-06-11
 // -----------------------------------------------------------------------------
-void ChatProfiles::OnSelected( Q3ListBoxItem* item )
+void ChatProfiles::OnSelected( QListWidgetItem* item )
 {
     ProfileItem* profileItem = dynamic_cast< ProfileItem* >( item );
     if( profileItem )
