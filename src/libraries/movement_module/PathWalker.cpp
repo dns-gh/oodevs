@@ -88,9 +88,9 @@ PathWalker::~PathWalker()
 // -----------------------------------------------------------------------------
 bool PathWalker::ComputeFutureObjectCollision( const wrapper::View& entity, const KnowledgeCache& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool blockedByObject, bool applyScale ) const
 {
-    if( !pCurrentPath_ )
+    if( !path_ )
         return false;
-    return pCurrentPath_->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject, blockedByObject, applyScale );
+    return path_->ComputeFutureObjectCollision( entity, objectsToTest, rDistance, pObject, blockedByObject, applyScale );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ bool PathWalker::ComputeFutureObjectCollision( const wrapper::View& entity, cons
 // -----------------------------------------------------------------------------
 bool PathWalker::IsMovingOn( const Path_ABC& path ) const
 {
-    return pCurrentPath_.get() ? path == *pCurrentPath_ : false;
+    return path_.get() ? path == *path_ : false;
 }
 
 //-----------------------------------------------------------------------------
@@ -109,11 +109,11 @@ bool PathWalker::IsMovingOn( const Path_ABC& path ) const
 MT_Vector2D PathWalker::ExtrapolatePosition( const wrapper::View& entity, const double rTime, const bool bBoundOnPath ) const
 {
     const MT_Vector2D position( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
-    if( !pCurrentPath_.get() )
+    if( !path_.get() )
         return position;
     try
     {
-        return pCurrentPath_->GetFuturePosition( position, rTime * entity[ "movement/speed" ], bBoundOnPath );
+        return path_->GetFuturePosition( position, rTime * entity[ "movement/speed" ], bBoundOnPath );
     }
     catch( std::exception& e )
     {
@@ -175,13 +175,13 @@ namespace
 // -----------------------------------------------------------------------------
 PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const
 {
-    if( pCurrentPath_ && pPath == pCurrentPath_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
+    if( path_ && pPath == path_ && !bForcePathCheck_  /*&& !GetRole< PHY_RoleInterface_Location >().HasDoneMagicMove()*/ )
         return eRunning;
 
     pointsPassed_ = 0;
     PathWalker::E_ReturnCode rc = eRunning;
-    bool bCanSendTerrainReport = pPath != pCurrentPath_;
-    pCurrentPath_ = pPath;
+    bool bCanSendTerrainReport = pPath != path_;
+    path_ = pPath;
     pPath->InsertDecPoints(); // $$$ HIDEUX
     PostPath( entity );
     bForcePathCheck_ = false;
@@ -584,9 +584,9 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
 // -----------------------------------------------------------------------------
 void PathWalker::MoveSuspended( const boost::shared_ptr< PathResult >& pPath ) const
 {
-    if( !pCurrentPath_ && !bForcePathCheck_ )
+    if( !path_ && !bForcePathCheck_ )
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Move cannot be suspended" );
-    if( pCurrentPath_.get() && pCurrentPath_ == pPath )
+    if( path_.get() && path_ == pPath )
         bForcePathCheck_ = true;
 }
 
@@ -596,9 +596,9 @@ void PathWalker::MoveSuspended( const boost::shared_ptr< PathResult >& pPath ) c
 // -----------------------------------------------------------------------------
 void PathWalker::MoveCanceled( const boost::shared_ptr< PathResult >& pPath ) const
 {
-    if( pCurrentPath_ == pPath )
+    if( path_ == pPath )
     {
-        pCurrentPath_.reset();
+        path_.reset();
         bForcePathCheck_ = true;
     }
 }
@@ -630,8 +630,8 @@ void PathWalker::PostPath( const wrapper::View& entity ) const
 {
     wrapper::Effect effect( entity[ "movement/path" ] );
     wrapper::Node points = effect[ "points" ];
-    effect[ "identifier" ] = pCurrentPath_->GetID();
-    const PathResult::T_PathPointList& pts = pCurrentPath_->GetResult();
+    effect[ "identifier" ] = path_->GetID();
+    const PathResult::T_PathPointList& pts = path_->GetResult();
     PathResult::CIT_PathPointList it = pts.begin();
     std::advance( it, pointsPassed_ );
     for( std::size_t index = 0; it != pts.end() && index < pathSizeThreshold; ++it, ++index )

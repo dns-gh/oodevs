@@ -159,7 +159,7 @@ private:
     mutable bool bForcePathCheck_;
     mutable bool bHasMoved_;
     mutable bool bFuelReportSent_;
-    mutable boost::shared_ptr< PathResult > pCurrentPath_;
+    mutable boost::shared_ptr< PathResult > path_;
     mutable E_ReturnCode pathSet_;
     //@}
 };
