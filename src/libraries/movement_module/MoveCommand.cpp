@@ -152,8 +152,7 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
     }
     executionSuspended_ = false;
     isBlockedByObject_ = false;
-    int nReturn = pathWalker_->Move( pMainPath_, model, entity );
-
+    PathWalker::E_ReturnCode nReturn = pathWalker_->Move( pMainPath_, model, entity );
     if( nReturn == PathWalker::eRunning )
     { // NOTHING. Pathfind is computing. Just don't try to do anything in this state.
     }
@@ -172,7 +171,7 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
     { // Pathfind will be recomputed in a next tick once knowledge of the object has been obtained.
         isBlockedByObject_ = true;
     }
-    PostCallback( static_cast< PathWalker::E_ReturnCode >( nReturn ) );
+    PostCallback( nReturn );
 }
 
 // -----------------------------------------------------------------------------

@@ -488,7 +488,7 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
 // Created: NLD 2004-09-22
 // Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
-int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const
+PathWalker::E_ReturnCode PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const
 {
     if( bHasMoved_ )
         return eAlreadyMoving;
