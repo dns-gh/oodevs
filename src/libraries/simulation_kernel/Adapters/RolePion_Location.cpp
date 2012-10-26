@@ -216,15 +216,13 @@ namespace
     class SpeedListener : public RoleListener_ABC
     {
     public:
-        SpeedListener( Sink& sink, MIL_AgentPion& owner, core::Model& entity, bool& moved )
+        SpeedListener( Sink& sink, MIL_AgentPion& owner, core::Model& entity )
             : owner_   ( owner )
-            , moved_   ( moved )
             , modified_( false )
             , speed_   ( sink, entity[ "movement/speed" ], boost::bind( &SpeedListener::Changed, this ) )
         {}
         virtual void Clean()
         {
-            moved_ = false;
             modified_ = false;
         }
         virtual void SendChangedState( client::UnitAttributes& message )
@@ -240,14 +238,11 @@ namespace
         void Changed()
         {
             modified_ = true;
-            if( *speed_ != 0 )
-                moved_ = true;
             owner_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
             owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         }
     private:
         MIL_AgentPion& owner_;
-        bool& moved_;
         bool modified_;
         ListenerHelper speed_;
     };
@@ -263,7 +258,6 @@ RolePion_Location::RolePion_Location( Sink& sink, MIL_AgentPion& pion, core::Mod
     , entity_           ( entity )
     , vDirection_       ( 0, 1 )
     , pvPosition_       ( new MT_Vector2D ( position ) )   // $$$$ Devrait être 'NULL'
-    , bHasMoved_        ( false )
     , bHasDoneMagicMove_( false )
 {
     // NOTHING
@@ -286,7 +280,7 @@ void RolePion_Location::Finalize()
 {
     listeners_.push_back( boost::make_shared< PositionListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ), boost::ref( *this ), boost::ref( pvPosition_ ) ) );
     listeners_.push_back( boost::make_shared< DirectionListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ), boost::ref( vDirection_ ) ) );
-    listeners_.push_back( boost::make_shared< SpeedListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ), boost::ref( bHasMoved_ ) ) );
+    listeners_.push_back( boost::make_shared< SpeedListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ) ) );
     listeners_.push_back( boost::make_shared< HeightListener >( boost::ref( sink_ ), boost::ref( owner_ ), boost::ref( entity_ ) ) );
     listeners_.push_back( boost::make_shared< AltitudeListener >( boost::ref( sink_ ), boost::ref( entity_ ) ) );
 }
@@ -344,7 +338,7 @@ void RolePion_Location::SendFullState( client::UnitAttributes& message ) const
 // -----------------------------------------------------------------------------
 void RolePion_Location::Update( bool bIsDead )
 {
-    if( bIsDead || !bHasMoved_ )
+    if( bIsDead )
         entity_[ "movement/speed" ] = 0; // $$$$ MCO : data should not be changed without using an effect !
 }
 

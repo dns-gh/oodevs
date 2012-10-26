@@ -123,7 +123,6 @@ private:
     core::Model&                     entity_;
     MT_Vector2D                      vDirection_;
     boost::shared_ptr< MT_Vector2D > pvPosition_;
-    bool                             bHasMoved_;
     bool                             bHasDoneMagicMove_;
     std::vector< boost::shared_ptr< RoleListener_ABC > > listeners_;
     //@}
