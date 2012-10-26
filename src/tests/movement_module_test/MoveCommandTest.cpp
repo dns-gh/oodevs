@@ -341,7 +341,7 @@ BOOST_FIXTURE_TEST_CASE( movement_command_posts_updated_truncated_path_when_thre
     for( float y = threshold; y < 2 * threshold; ++y )
         builder[ sword::test::MakeModel( "x", 0 )( "y", y ) ];
     ExpectEffect( entity[ "movement/path" ], sword::test::MakeModel( "identifier", 1 )( "points", builder ) );
-    ExpectEffect( entity[ "movement" ], sword::test::MakeModel( mock::any ) );
+    ExpectEffect( entity[ "movement" ] );
     ExpectCallbackEvent( sword::movement::PathWalker::eRunning );
     const double speed = 0.5;
     ExpectMovementEvent( speed );
