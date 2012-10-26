@@ -15,6 +15,18 @@
 #include <module_api/Log.h>
 #include <stdexcept>
 
+#define WRAPPER_TRY try {
+#define WRAPPER_CATCH( tag ) \
+    } \
+    catch( std::exception& e ) \
+    { \
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() ); \
+    } \
+    catch( ... ) \
+    { \
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while " tag " command" ); \
+    }
+
 namespace sword
 {
 namespace wrapper
@@ -27,18 +39,9 @@ namespace detail
         static void Create( void** command,
             const SWORD_Model* parameters, const SWORD_Model* model, void* context )
         {
-            try
-            {
+            WRAPPER_TRY
                 *command = new T( *static_cast< C* >( context ), parameters, model );
-            }
-            catch( std::exception& e )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-            }
-            catch( ... )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while creating command" );
-            }
+            WRAPPER_CATCH( "creating" )
         }
         static void Destroy( void* command,
             const SWORD_Model* /*parameters*/, const SWORD_Model* /*model*/, void* /*context*/ )
@@ -48,36 +51,18 @@ namespace detail
         static void Execute( const void* command,
             const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
-            try
-            {
+            WRAPPER_TRY
                 if( command )
                     static_cast< const T* >( command )->Execute( parameters, model );
-            }
-            catch( std::exception& e )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-            }
-            catch( ... )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
-            }
+            WRAPPER_CATCH( "executing" )
         }
         static void ExecutePaused( const void* command,
             const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
-            try
-            {
+            WRAPPER_TRY
                 if( command )
                     static_cast< const T* >( command )->ExecutePaused( parameters, model );
-            }
-            catch( std::exception& e )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-            }
-            catch( ... )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
-            }
+            WRAPPER_CATCH( "executing" )
         }
     };
 
@@ -87,18 +72,9 @@ namespace detail
         static void Create( void** command,
             const SWORD_Model* parameters, const SWORD_Model* model, void* /*userData*/ )
         {
-            try
-            {
+            WRAPPER_TRY
                 *command = new T( parameters, model );
-            }
-            catch( std::exception& e )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-            }
-            catch( ... )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while creating command" );
-            }
+            WRAPPER_CATCH( "creating" )
         }
         static void Destroy( void* command,
             const SWORD_Model* /*parameters*/, const SWORD_Model* /*model*/, void* /*context*/ )
@@ -108,39 +84,24 @@ namespace detail
         static void Execute( const void* command,
             const SWORD_Model* parameters, const SWORD_Model* model, void* /*userData*/ )
         {
-            try
-            {
+            WRAPPER_TRY
                 if( command )
                     static_cast< const T* >( command )->Execute( parameters, model );
-            }
-            catch( std::exception& e )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-            }
-            catch( ... )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
-            }
+            WRAPPER_CATCH( "executing" )
         }
         static void ExecutePaused( const void* command,
             const SWORD_Model* parameters, const SWORD_Model* model, void* /*userData*/ )
         {
-            try
-            {
+            WRAPPER_TRY
                 if( command )
                     static_cast< const T* >( command )->ExecutePaused( parameters, model );
-            }
-            catch( std::exception& e )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, e.what() );
-            }
-            catch( ... )
-            {
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown error while executing command" );
-            }
+            WRAPPER_CATCH( "executing" )
         }
     };
 }
+
+#undef WRAPPER_TRY
+#undef WRAPPER_CATCH
 
 template< typename T >
 void RegisterCommand( const std::string& name )
