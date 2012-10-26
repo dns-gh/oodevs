@@ -63,7 +63,6 @@ void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::V
     {
         pathWalker_->MoveCanceled( pMainPath_ );
         pMainPath_->DecRef();
-        executionSuspended_ = false;
     }
     //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
 }
