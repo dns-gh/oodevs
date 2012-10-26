@@ -31,8 +31,8 @@ void MagicMoveCommand::Execute( const wrapper::View& parameters, const wrapper::
 {
     const std::size_t identifier = parameters[ "identifier" ];
     wrapper::Effect effect( model[ "entities" ][ identifier ][ "movement" ] );
-    effect[ "speed" ] = 0;
     effect[ "position" ] = parameters[ "position" ];
+    effect[ "speed" ] = 0;
     effect.Post();
 }
 
