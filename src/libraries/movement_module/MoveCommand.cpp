@@ -54,10 +54,10 @@ MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters,
 }
 
 // -----------------------------------------------------------------------------
-// Name: MoveCommand destructor
-// Bypassd: NLD 2004-08-18
+// Name: MoveCommand::Destroy
+// Created: MCO 2012-10-26
 // -----------------------------------------------------------------------------
-MoveCommand::~MoveCommand() // $$$$ _RC_ SLI 2012-01-02: moved from StopAction
+void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const // $$$$ _RC_ SLI 2012-01-02: moved from StopAction
 {
     if( pMainPath_ )
     {
@@ -65,14 +65,6 @@ MoveCommand::~MoveCommand() // $$$$ _RC_ SLI 2012-01-02: moved from StopAction
         pMainPath_->DecRef();
         executionSuspended_ = false;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MoveCommand::Destroy
-// Created: MCO 2012-10-26
-// -----------------------------------------------------------------------------
-void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
-{
     //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
 }
 

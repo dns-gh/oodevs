@@ -46,8 +46,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model );
-    ~MoveCommand();
+    MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& model );
     //@}
 
     //! @name Operations
