@@ -154,7 +154,7 @@ private:
     mutable MT_Vector2D vNewPos_;
     mutable MT_Vector2D vNewDir_;
     mutable double speed_;
-    mutable double rWalkedDistance_;
+    mutable double distance_;
     mutable std::size_t pointsPassed_;
     mutable bool bForcePathCheck_;
     mutable bool bHasMoved_;

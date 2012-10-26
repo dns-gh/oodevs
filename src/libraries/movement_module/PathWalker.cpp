@@ -63,7 +63,7 @@ PathWalker::PathWalker( ModuleFacade& module, unsigned int entity )
     , vNewPos_        ( 0, 0 )
     , vNewDir_        ( 0, 0 )
     , speed_  ( 0 )
-    , rWalkedDistance_( 0 )
+    , distance_( 0 )
     , pointsPassed_   ( 0 )
     , bForcePathCheck_( true )
     , bHasMoved_      ( false )
@@ -543,12 +543,12 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
     if( ( *itNextPathPoint_ )->GetPos() != vNewPos_ )
         vNewDir_ = ( ( *itNextPathPoint_ )->GetPos() - vNewPos_ ).Normalize();
 
-    rWalkedDistance_ = 0;
+    distance_ = 0;
     while( rTimeRemaining > 0 )
     {
         const MT_Vector2D vPosBeforeMove( vNewPos_ );
         const bool moveTryResult = TryToMoveTo( *pPath, ( *itNextPathPoint_ )->GetPos(), rTimeRemaining, model, entity );  // $$$$ VPR 2012-01-06: Modifies vNewPos_
-        rWalkedDistance_ += vPosBeforeMove.Distance( vNewPos_ );
+        distance_ += vPosBeforeMove.Distance( vNewPos_ );
 
         if( !moveTryResult )
         {
@@ -618,7 +618,7 @@ void PathWalker::PostMovement( const wrapper::View& entity ) const
     effect.Post();
     wrapper::Event event( "movement" );
     event[ "entity" ] = entity_;
-    event[ "distance" ] = rWalkedDistance_;
+    event[ "distance" ] = distance_;
     event.Post();
 }
 
