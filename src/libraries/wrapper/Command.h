@@ -74,7 +74,7 @@ namespace detail
     struct Command< T, void >
     {
         static void Create( void** command,
-            const SWORD_Model* parameters, const SWORD_Model* model, void* /*userData*/ )
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
             WRAPPER_TRY
                 *command = new T( parameters, model );
@@ -90,7 +90,7 @@ namespace detail
             delete static_cast< T* >( command );
         }
         static void Execute( const void* command,
-            const SWORD_Model* parameters, const SWORD_Model* model, void* /*userData*/ )
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
             WRAPPER_TRY
                 if( command )
@@ -98,7 +98,7 @@ namespace detail
             WRAPPER_CATCH( "executing" )
         }
         static void ExecutePaused( const void* command,
-            const SWORD_Model* parameters, const SWORD_Model* model, void* /*userData*/ )
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
             WRAPPER_TRY
                 if( command )
