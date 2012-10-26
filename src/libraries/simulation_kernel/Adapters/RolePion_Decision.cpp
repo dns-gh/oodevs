@@ -752,8 +752,8 @@ namespace
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "mode" ] = mode;
-        parameters[ "location/x" ] = location->rX_;
-        parameters[ "location/y" ] = location->rY_;
+        parameters[ "location/x" ] = location ? location->rX_ : 0.;
+        parameters[ "location/y" ] = location ? location->rY_ : 0.;
         sink.PostCommand( "vision", parameters );
     }
     bool IsPointVisible( MIL_AgentPion& pion, const core::Model& model, MT_Vector2D* pPt )
