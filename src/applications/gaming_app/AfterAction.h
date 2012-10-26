@@ -28,7 +28,6 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
     class ParametersLayer;
 }
 
@@ -53,7 +52,7 @@ class AfterAction : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,
+             AfterAction( QMainWindow* window, kernel::Controllers& controllers, AfterActionModel& model,
                           IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual ~AfterAction();
     //@}
@@ -66,7 +65,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,
+    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, AfterActionModel& model,
                                 IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyCreated( const AfterActionRequest& );

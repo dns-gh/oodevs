@@ -25,14 +25,14 @@ using namespace kernel;
 // Name: AfterAction constructor
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model,
+AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, AfterActionModel& model,
                           IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
     : window_      ( window )
     , functionsTab_( 0 )
     , aar_         ( false )
     , firstUpdate_ ( true )
 {
-    CreateAfterActionDock( window, controllers, factory, model, plotFactory, interfaceBuilder );
+    CreateAfterActionDock( window, controllers, model, plotFactory, interfaceBuilder );
     controllers.Register( *this );
 }
 
@@ -49,7 +49,7 @@ AfterAction::~AfterAction()
 // Name: AfterAction::CreateAfterActionDock
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
+void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, AfterActionModel& model, IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
 {
     aarDock_ = new QDockWidget( "aar", window );
     aarDock_->setObjectName( "aar" );
@@ -61,7 +61,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& contr
     AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, model, interfaceBuilder );
     functionsTab_->addTab( list, tools::translate( "AfterAction", "Functions" ) );
 
-    AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, factory, plotFactory );
+    AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, plotFactory );
     functionsTab_->addTab( requests, tools::translate( "AfterAction", "Requests" ) );
 
     aarDock_->setFeatures( QDockWidget::AllDockWidgetFeatures );

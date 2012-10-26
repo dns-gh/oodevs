@@ -25,16 +25,13 @@
 #include "gaming/StaticModel.h"
 #include <boost/bind.hpp>
 
-using namespace kernel;
-using namespace gui;
-
 Q_DECLARE_METATYPE( const AfterActionFunction* )
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionFunctionList constructor
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, AfterActionModel& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
+AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, kernel::Controllers& controllers, AfterActionModel& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
     : Q3VBox( parent, "AfterActionFunctionList" )
     , builder_    ( interfaceBuilder )
     , controllers_( controllers )
@@ -46,8 +43,6 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
     functions_ = new QTreeWidget( this );
     functions_->setHeaderLabel( tr( "Name" ) );
     functions_->setRootIsDecorated( false );
-    functions_->header()->setStretchLastSection( false );
-    functions_->header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     parameters_ = new Q3VGroupBox( tr( "Parameters" ), this );
     timeGroup_ = new Q3VGroupBox( tr( "Time range" ), this );
     timeGroup_->setCheckable( true );
@@ -160,7 +155,7 @@ namespace
         {
             std::string result;
             parameter.CommitTo( result );
-            request_->SetParameter( parameter.GetName().toAscii().constData(), result );
+            request_->SetParameter( parameter.GetName().toStdString(), result );
             delete& parameter;
         }
     private:
@@ -224,7 +219,7 @@ boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreatePara
     boost::shared_ptr< actions::gui::Param_ABC > result;
     if( !compatibleType.empty() )
     {
-        const OrderParameter parameter( name.toAscii().constData(), compatibleType, false, 1, nbOccur );
+        const kernel::OrderParameter parameter( name.toStdString(), compatibleType, false, 1, nbOccur );
         actions::gui::Param_ABC* param = &builder_.BuildOne( parameter, false );
         if( compatibleType == "location" )
             static_cast< actions::gui::ParamLocation* >( param )->SetShapeFilter( false, false, true, true, false );

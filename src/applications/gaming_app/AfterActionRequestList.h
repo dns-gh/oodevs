@@ -11,11 +11,10 @@
 #define __AfterActionRequestList_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include "clients_gui/ListDisplayer.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
+    class ContextMenu;
     class Controllers;
 }
 
@@ -33,23 +32,23 @@ class AfterActionRequestList : public Q3VBox
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< IndicatorRequest >
                              , public tools::ElementObserver_ABC< Simulation >
-                             , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionRequestList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory );
+             AfterActionRequestList( QWidget* parent, kernel::Controllers& controllers, IndicatorPlotFactory& plotFactory );
     virtual ~AfterActionRequestList();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnDoubleClicked( Q3ListViewItem* );
-    void OnRequestPopup( Q3ListViewItem* pItem, const QPoint& pos );
+    void OnDoubleClicked();
+    void OnRequestPopup( const QPoint& pos );
     void OnRemoveItem();
+    void ClearList();
     //@}
 
 private:
@@ -58,20 +57,19 @@ private:
     virtual void NotifyCreated( const IndicatorRequest& request );
     virtual void NotifyUpdated( const IndicatorRequest& request );
     virtual void NotifyUpdated( const Simulation& simulation );
-    void Display( const IndicatorRequest& request, gui::ValuedListItem* item );
+    void Display( const IndicatorRequest& request, QTreeWidgetItem* item );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::ItemFactory_ABC& factory_;
     IndicatorPlotFactory& plotFactory_;
-    gui::ListDisplayer< AfterActionRequestList >* requests_;
+    QTreeWidget* requests_;
     QPixmap pendingPixmap_;
     QPixmap donePixmap_;
     QPixmap failedPixmap_;
-    kernel::ContextMenu popupMenu_;
+    kernel::ContextMenu* popupMenu_;
     //@}
 };
 

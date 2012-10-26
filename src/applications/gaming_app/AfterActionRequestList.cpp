@@ -19,28 +19,34 @@
 #include "IndicatorPlotFactory.h"
 #include "icons.h"
 
+#pragma warning( disable : 4355 )
+
+Q_DECLARE_METATYPE( const IndicatorRequest* )
+
 using namespace kernel;
 using namespace gui;
 
 namespace
 {
-    // $$$$ AGE 2007-09-27:
-    class MyList : public ListDisplayer< AfterActionRequestList >
+    class MyList : public QTreeWidget
     {
     public:
-        MyList( AfterActionRequestList* parent, ItemFactory_ABC& factory )
-            : ListDisplayer< AfterActionRequestList >( parent, *parent, factory )
+        MyList( AfterActionRequestList* parent )
+            : QTreeWidget( parent )
         {
-            // NOTHING
+            setColumnCount( 2 );
+            setDragEnabled( true );
+            setRootIsDecorated( false );
+            setAllColumnsShowFocus( true );
+            header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+            setContextMenuPolicy( Qt::CustomContextMenu );
         }
-        virtual Q3DragObject* dragObject()
+        virtual void startDrag( Qt::DropActions /*supportedActions*/ )
         {
-            ValuedListItem* item = static_cast< ValuedListItem* >( selectedItem() );
-            if( !item )
-                return 0;
-            IndicatorRequest* request = item->GetValue< IndicatorRequest >();
-            dnd::CreateDragObject( request, this );
-            return 0;
+            const QModelIndex index = selectionModel()->currentIndex();
+            if( index.isValid() )
+                if( const IndicatorRequest* request = index.model()->data( index.model()->index( index.row(), 0, index.parent() ), Qt::UserRole ).value< const IndicatorRequest* >() )
+                    dnd::CreateDragObject( request, this );
         }
     };
 }
@@ -49,22 +55,21 @@ namespace
 // Name: AfterActionRequestList constructor
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-AfterActionRequestList::AfterActionRequestList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory )
+AfterActionRequestList::AfterActionRequestList( QWidget* parent, Controllers& controllers, IndicatorPlotFactory& plotFactory )
     : Q3VBox( parent, "AfterActionRequestList" )
     , controllers_  ( controllers )
-    , factory_      ( factory )
     , plotFactory_  ( plotFactory )
     , pendingPixmap_( MAKE_PIXMAP( aaa_pending ) )
     , donePixmap_   ( MAKE_PIXMAP( aaa_valid ) )
     , failedPixmap_ ( MAKE_PIXMAP( aaa_broken ) )
+    , popupMenu_( new kernel::ContextMenu( this ) )
 {
-    requests_ = new MyList( this, factory );
-    requests_->AddColumn( tr( "Request" ) );
-    requests_->AddColumn( tr( "Status" ) );
-
-    connect( requests_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint& ) ) );
-    connect( requests_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnDoubleClicked( Q3ListViewItem* ) ) );
-
+    requests_ = new MyList( this );
+    QStringList headers;
+    headers << tr( "Request" ) << tr( "Status" );
+    requests_->setHeaderLabels( headers );
+    connect( requests_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnRequestPopup( const QPoint& ) ) );
+    connect( requests_, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), SLOT( OnDoubleClicked() ) );
     controllers_.Register( *this );
 }
 
@@ -81,13 +86,16 @@ AfterActionRequestList::~AfterActionRequestList()
 // Name: AfterActionRequestList::OnDoubleClicked
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::OnDoubleClicked( Q3ListViewItem * i )
+void AfterActionRequestList::OnDoubleClicked()
 {
-    if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
+    const QModelIndex index = requests_->currentIndex();
+    if( index.isValid() )
     {
-        const IndicatorRequest* request = item->GetValue< const IndicatorRequest >();
-        if( request && request->IsDone() )
-            plotFactory_.CreatePlot( *request );
+        if( const IndicatorRequest* request = index.model()->data( index.model()->index( index.row(), 0, index.parent() ), Qt::UserRole ).value< const IndicatorRequest* >() )
+        {
+            if( request->IsDone() )
+                plotFactory_.CreatePlot( *request );
+        }
     }
 }
 
@@ -95,16 +103,27 @@ void AfterActionRequestList::OnDoubleClicked( Q3ListViewItem * i )
 // Name: AfterActionRequestList::OnRequestPopup
 // Created: ABR 2011-02-17
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::OnRequestPopup( Q3ListViewItem* pItem, const QPoint& pos )
+void AfterActionRequestList::OnRequestPopup( const QPoint& pos )
 {
-    popupMenu_.clear();
-    if( pItem != 0 )
+    popupMenu_->clear();
+    const QModelIndex index = requests_->currentIndex();
+    if( index.isValid() )
     {
-        popupMenu_.insertItem( tr( "Delete request" ), this, SLOT( OnRemoveItem() ) );
-        popupMenu_.insertSeparator();
+        popupMenu_->insertItem( tr( "Delete request" ), this, SLOT( OnRemoveItem() ) );
+        popupMenu_->insertSeparator();
     }
-    popupMenu_.insertItem( tr( "Clear list" ), requests_, SLOT( clear() ) );
-    popupMenu_.popup( pos );
+    popupMenu_->insertItem( tr( "Clear list" ), this, SLOT( ClearList() ) );
+    popupMenu_->popup( requests_->viewport()->mapToGlobal( pos ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequestList::ClearList
+// Created: JSR 2012-10-26
+// -----------------------------------------------------------------------------
+void AfterActionRequestList::ClearList()
+{
+    while( requests_->topLevelItemCount() > 0 )
+        delete requests_->takeTopLevelItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +132,9 @@ void AfterActionRequestList::OnRequestPopup( Q3ListViewItem* pItem, const QPoint
 // -----------------------------------------------------------------------------
 void AfterActionRequestList::OnRemoveItem()
 {
-    requests_->takeItem( requests_->selectedItem() );
+    const QModelIndex index = requests_->currentIndex();
+    if( index.isValid() )
+        delete requests_->takeTopLevelItem( index.row() );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +143,8 @@ void AfterActionRequestList::OnRemoveItem()
 // -----------------------------------------------------------------------------
 void AfterActionRequestList::NotifyCreated( const IndicatorRequest& request )
 {
-    ValuedListItem* item = factory_.CreateItem( requests_ );
+    QTreeWidgetItem* item = new QTreeWidgetItem();
+    requests_->addTopLevelItem( item );
     Display( request, item );
 }
 
@@ -132,8 +154,15 @@ void AfterActionRequestList::NotifyCreated( const IndicatorRequest& request )
 // -----------------------------------------------------------------------------
 void AfterActionRequestList::NotifyUpdated( const IndicatorRequest& request )
 {
-    if( ValuedListItem* item = FindItem( &request, requests_->firstChild() ) )
-        Display( request, item );
+    for( int i = 0; i < requests_->topLevelItemCount(); ++i )
+    {
+        QTreeWidgetItem* item = requests_->topLevelItem( i );
+        if( item->data( 0, Qt::UserRole ).value< const IndicatorRequest* >() == &request )
+        {
+            Display( request, item );
+            break;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -143,20 +172,25 @@ void AfterActionRequestList::NotifyUpdated( const IndicatorRequest& request )
 void AfterActionRequestList::NotifyUpdated( const Simulation& simulation )
 {
     if( !simulation.IsConnected() )
-        requests_->clear();
+        ClearList();
 }
 
 // -----------------------------------------------------------------------------
 // Name: AfterActionRequestList::Display
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::Display( const IndicatorRequest& request, ValuedListItem* item )
+void AfterActionRequestList::Display( const IndicatorRequest& request, QTreeWidgetItem* item )
 {
-    item->SetNamed( request );
-    item->setPixmap( 1, request.IsPending() ? pendingPixmap_ :
+    item->setText( 0, request.GetName() );
+    item->setData( 0, Qt::UserRole, QVariant::fromValue( &request ) );
+    item->setIcon( 1, request.IsPending() ? pendingPixmap_ :
                         request.IsDone() ? donePixmap_ :
                         request.IsFailed() ? failedPixmap_ :
                         QPixmap() );
-    item->SetToolTip( request.ErrorMessage() );
-    item->setDragEnabled( request.IsDone() );
+    item->setToolTip( 0, request.ErrorMessage() );
+    item->setToolTip( 1, request.ErrorMessage() );
+    if( request.IsDone() )
+        item->setFlags( item->flags() | Qt::ItemIsDragEnabled );
+    else
+        item->setFlags( item->flags() ^ Qt::ItemIsDragEnabled );
 }

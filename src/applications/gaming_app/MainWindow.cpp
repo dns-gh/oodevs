@@ -329,7 +329,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addToolBar( replayerToolbar );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
     IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher, *indicatorExportDialog, simulation );
-    AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, *plotFactory, *interfaceBuilder_ );
+    AfterAction* aar = new AfterAction( this, controllers_, model.aar_, *plotFactory, *interfaceBuilder_ );
 
     // Actions panel
     {
