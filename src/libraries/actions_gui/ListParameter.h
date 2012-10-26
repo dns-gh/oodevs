@@ -14,6 +14,8 @@
 #include "actions/ParameterList.h"
 #include "InterfaceBuilder_ABC.h"
 
+Q_DECLARE_METATYPE( actions::gui::Param_ABC* )
+
 class kernel::ContextMenu;
 
 namespace kernel

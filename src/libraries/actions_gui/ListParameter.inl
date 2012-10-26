@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-Q_DECLARE_METATYPE( Param_ABC* )
-
 #define ParamRole ( Qt::UserRole + 1 )
 #define IdRole    ( Qt::UserRole + 2 )
 
