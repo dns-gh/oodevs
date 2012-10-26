@@ -641,8 +641,7 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
         ( MakeOption( "terrains-dir", Utf8( GetPath( "terrain" ) ) ) )
         ( MakeOption( "models-dir", Utf8( GetPath( "model" ) ) ) )
         ( MakeOption( "exercise", Utf8( GetExercise() ) ) )
-        ( MakeOption( "session",  output.filename() ) )
-        ( "--silent" );
+        ( MakeOption( "session",  output.filename() ) );
     std::string file = "session.xml";
     Path app = "simulation_app.exe";
     if( replay )
