@@ -450,7 +450,7 @@ bool PathWalker::TryToMoveTo( const PathResult& path, const MT_Vector2D& vNewPos
 
     if( speed_ <= 0 )
     {
-        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Current speed is not positive" );
+        ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Current speed is negative" );
         return false;
     }
 
