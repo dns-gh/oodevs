@@ -102,7 +102,7 @@ Section $(^Name)
     File "${SWORD}\replayer_app.exe"
     File "${SWORD}\simulation_app.exe"
     File "${SWORD}\spatialite.dll"
-    File "${SWORD}\ssleay.dll"
+    File "${SWORD}\ssleay32.dll"
     File /x "*_d.dll" "${SWORD}\gdal*.dll"
     File /x "*_d.dll" "${SWORD}\geos*.dll"
     File /x "*D.dll" "${SWORD}\Xalan*.dll"
