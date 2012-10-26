@@ -20,6 +20,10 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
 
+Q_DECLARE_METATYPE( const kernel::EquipmentType* )
+
+#define EquipmentRole ( Qt::UserRole + 1 )
+
 using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
@@ -45,19 +49,6 @@ ParamEquipmentList::~ParamEquipmentList()
     // NOTHING
 }
 
-namespace
-{
-    Q3ListView* CreateList( QWidget* parent )
-    {
-        Q3ListView* list = new Q3ListView( parent );
-        list->addColumn( "" );
-        list->header()->hide();
-        list->setResizeMode( Q3ListView::LastColumn );
-        list->setAllColumnsShowFocus( true );
-        return list;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList::BuildInterface
 // Created: SBO 2007-03-13
@@ -68,16 +59,18 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
     kernel::MaintenanceStates_ABC* maintenance = builder_.HasCurrentEntity() ? builder_.GetCurrentEntity().Retrieve< kernel::MaintenanceStates_ABC >() : 0;
     QGridLayout* layout = new QGridLayout( group_ );
     {
-        baseList_ = CreateList( parent );
-        baseList_->setSorting( 0, true );
+        baseList_ = new QListWidget( parent );
+        baseList_->setSortingEnabled( true );
+        baseList_->sortItems( Qt::AscendingOrder );
         tools::Iterator< const kernel::EquipmentType& > it( resolver_.CreateIterator() );
         while( it.HasMoreElements() )
         {
             const kernel::EquipmentType& type = it.NextElement();
             if( !maintenance || !maintenance->HasPriority( &type ) )
             {
-                ::gui::ValuedListItem* item = new ::gui::ValuedListItem( baseList_ );
-                item->SetNamed( type );
+                QListWidgetItem* item = new QListWidgetItem( type.GetName().c_str() );
+                item->setData( EquipmentRole, QVariant::fromValue( &type ) );
+                baseList_->addItem( item );
             }
         }
 
@@ -91,21 +84,16 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
         layout->addWidget( removeBtn, 1, 1 );
 
         connect( addBtn, SIGNAL( clicked() ), SLOT( OnAdd() ) );
-        connect( baseList_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnAdd() ) );
+        connect( baseList_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnAdd() ) );
         connect( removeBtn, SIGNAL( clicked() ), SLOT( OnRemove() ) );
     }
     {
-        list_ = CreateList( parent );
-        list_->setSorting( -1, true );
-
+        list_ = new QListWidget( parent );
         if( maintenance )
         {
             std::vector< const kernel::EquipmentType* > priorities = maintenance->GetPriorities();
             for( std::vector< const kernel::EquipmentType* >::const_reverse_iterator it = priorities.rbegin(); it != priorities.rend(); ++it )
-            {
-                ::gui::ValuedListItem* item = new ::gui::ValuedListItem( list_ );
-                item->SetNamed( **it );
-            }
+                list_->addItem( QString( ( **it ).GetName().c_str() ) );
         }
 
         QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, parent );
@@ -117,7 +105,7 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
         layout->addWidget( upBtn, 0, 3 );
         layout->addWidget( downBtn, 1, 3 );
 
-        connect( list_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), SLOT( OnRemove() ) );
+        connect( list_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnRemove() ) );
         connect( upBtn, SIGNAL( clicked() ), SLOT( OnUp() ) );
         connect( downBtn, SIGNAL( clicked() ), SLOT( OnDown() ) );
     }
@@ -132,8 +120,8 @@ void ParamEquipmentList::CommitTo( actions::ParameterContainer_ABC& action ) con
 {
     std::auto_ptr< actions::parameters::MaintenancePriorities > param( new actions::parameters::MaintenancePriorities( parameter_ ) );
     if( IsChecked() )
-        for( Q3ListViewItemIterator it( list_ ); it.current(); ++it )
-            param->AddPriority( *static_cast< const ::gui::ValuedListItem* >( it.current() )->GetValue< kernel::EquipmentType >() );
+        for( int row = 0; row <  list_->count(); ++row )
+            param->AddPriority( *list_->item( row )->data( EquipmentRole ).value< const kernel::EquipmentType* >() );
     action.AddParameter( *param.release() );
 }
 
@@ -143,9 +131,15 @@ void ParamEquipmentList::CommitTo( actions::ParameterContainer_ABC& action ) con
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::OnUp()
 {
-    Q3ListViewItem* item = list_->currentItem();
-    if( item && item->itemAbove() )
-        item->itemAbove()->moveItem( item );
+    QListWidgetItem* item = list_->currentItem();
+    if( item && list_->count() > 0 && list_->row( item ) > 0 )
+    {
+        int row = list_->row( item );
+        QListWidgetItem* itemTaken = list_->takeItem( list_->row( item ) );
+        list_->insertItem( row - 1, itemTaken );
+        list_->setCurrentItem( itemTaken );
+    }
+
 }
 
 // -----------------------------------------------------------------------------
@@ -154,9 +148,14 @@ void ParamEquipmentList::OnUp()
 // -----------------------------------------------------------------------------
 void ParamEquipmentList::OnDown()
 {
-    Q3ListViewItem* item = list_->currentItem();
-    if( item && item->itemBelow() )
-        item->moveItem( item->itemBelow() );
+    QListWidgetItem* item = list_->currentItem();
+    if( item && list_->count() > 0 && list_->row( item ) < list_->count() )
+    {
+        int row = list_->row( item );
+        QListWidgetItem* itemTaken = list_->takeItem( list_->row( item ) );
+        list_->insertItem( row + 1, itemTaken );
+        list_->setCurrentItem( itemTaken );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -181,15 +180,11 @@ void ParamEquipmentList::OnRemove()
 // Name: ParamEquipmentList::Move
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-void ParamEquipmentList::Move( Q3ListView* from, Q3ListView* to )
+void ParamEquipmentList::Move( QListWidget* from, QListWidget* to )
 {
-    ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( from->selectedItem() );
-    if( item )
-    {
-        ::gui::ValuedListItem* newItem = new ::gui::ValuedListItem( to );
-        newItem->SetNamed( *item->GetValue< const kernel::EquipmentType >() );
-        delete item;
-    }
+    if(! from->selectedItems().isEmpty() )
+        if( from->currentItem() )
+            to->addItem( from->takeItem( from->row( from->currentItem() ) ) );
 }
 
 // -----------------------------------------------------------------------------

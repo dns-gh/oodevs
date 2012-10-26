@@ -25,6 +25,7 @@
 #include <QtGui/qpushbutton.h>
 #include <QtGui/qscrollarea.h>
 #include <QtGui/qtreeview.h>
+#include <QtGui/qlistwidget.h>
 #include <QtGui/qstandarditemmodel.h>
 #include <QtGui/qheaderview.h>
 

@@ -14,6 +14,10 @@
 #include "clients_kernel/OrderParameter.h"
 #include "tools/Resolver.h"
 
+#pragma warning( push, 0 )
+#include <QtGui/qlistwidget.h>
+#pragma warning( pop )
+
 namespace kernel
 {
     class EquipmentType;
@@ -61,7 +65,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    void Move( Q3ListView* from, Q3ListView* to );
+    void Move( QListWidget* from, QListWidget* to );
     //@}
 
 private:
@@ -69,8 +73,8 @@ private:
     //@{
     const tools::Resolver_ABC< kernel::EquipmentType, unsigned long >& resolver_;
     const InterfaceBuilder_ABC& builder_;
-    Q3ListView* baseList_;
-    Q3ListView* list_;
+    QListWidget* baseList_;
+    QListWidget* list_;
     //@}
 };
 }
