@@ -5,14 +5,14 @@
 rootnode
 {
     connections = { skill.links.moveToward, skill.links.dismount, skill.links.deploy },
-    feedbacks   = { "deployed" },
+    feedbacks   = { "deployDone" },
 
     -- -------------------------------------------------------------------------------- 
     -- Slots
     -- --------------------------------------------------------------------------------
-    deployed = function( self )
+    deployed = function( self ) -- call by deploy action skill
+        Feedback( self.feedbacks.deploymentDone )
         Feedback( self.feedbacks.done )
-        Feedback( self.feedbacks.deployed )
     end,
     done = function( self ) -- called by MoveToward skill
         self.isArrived = true

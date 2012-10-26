@@ -30,7 +30,7 @@
         <feedback name="done">
             <description>Sent once the agent is deployed.</description>
         </feedback>
-        <feedback name="deployed">
+        <feedback name="deploymentDone">
             <description>Sent once the agent is deployed.</description>
         </feedback>
     </feedbacks>

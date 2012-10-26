@@ -1,46 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.tasks.SeDeployer" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.DeployEffect">
-	<parameters>
-		<parameter name="objective" nullable="true">
-			<description>Position pour le déploiement</description>
-			<type>
-				<class name="properties.Positionable"/>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-	</parameters>
-	<next-task name="commander.tasks.Deploy">
-		<parameter name="objective">
-			<value>
-				<parameter>objective</parameter>
-			</value>
-		</parameter>
-		<parameter name="companyTask">
-			<value>
-				<string>company.tasks.SeDeployer</string>
-			</value>
-		</parameter>
-		<parameter name="mainTasks">
-			<value>
-				<string>platoon.tasks.SeDeployer;platoon.combat.support.log.tasks.TraiterBlesses;platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales;platoon.combat.support.log.tasks.TrierEtTraiterBlesses;platoon.combat.support.log.tasks.Reparer;platoon.combat.support.log.tasks.DecontaminerBlesses;platoon.combat.support.log.tasks.Convoyer</string>
-			</value>
-		</parameter>
-		<parameter name="supportTasks">
-			<value>
-				<string>platoon.tasks.SeDeployer;platoon.combat.support.log.tasks.TraiterBlesses;platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales;platoon.combat.support.log.tasks.TrierEtTraiterBlesses;platoon.combat.support.log.tasks.Reparer;platoon.combat.support.log.tasks.DecontaminerBlesses;platoon.combat.support.log.tasks.Convoyer</string>
-			</value>
-		</parameter>
-		<parameter name="defaultTask">
-			<value>
-				<string>platoon.tasks.Suivre</string>
-			</value>
-		</parameter>
-		<parameter name="taskForSupporting">
-			<value>
-				<string>platoon.tasks.Appuyer</string>
-			</value>
-		</parameter>
-	</next-task>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.tasks.SeDeployer" source-version="1.0.0" knowledge-class="company.tasks.knowledges.DeployEffect">
+    <parameters>
+        <parameter name="objective" nullable="true">
+            <description>Position pour le déploiement</description>
+            <type>
+                <class name="properties.Positionable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage permanent="true">
+            <skills>
+                <skill name="commander.skills.Lead">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>company.tasks.SeDeployer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>platoon.tasks.SeDeployer;platoon.combat.support.log.tasks.TraiterBlesses;platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales;platoon.combat.support.log.tasks.TrierEtTraiterBlesses;platoon.combat.support.log.tasks.Reparer;platoon.combat.support.log.tasks.DecontaminerBlesses;platoon.combat.support.log.tasks.Convoyer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>platoon.tasks.SeDeployer;platoon.combat.support.log.tasks.TraiterBlesses;platoon.combat.support.log.tasks.PrendreEnCompteReactionsMentales;platoon.combat.support.log.tasks.TrierEtTraiterBlesses;platoon.combat.support.log.tasks.Reparer;platoon.combat.support.log.tasks.DecontaminerBlesses;platoon.combat.support.log.tasks.Convoyer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="noCoordination">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                    <parameter name="disableWhenDone">
+                        <value>
+                            <boolean>false</boolean>
+                        </value>
+                    </parameter>
+                    <parameter name="manageAddedAndDeletedUnits">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

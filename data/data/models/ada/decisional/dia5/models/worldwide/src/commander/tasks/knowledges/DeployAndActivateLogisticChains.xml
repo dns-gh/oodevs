@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.knowledges.DeployAndActivateLogisticChains" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
+    <description>The knowledge of the 'DeployAndActivateLogisticChains' mission. This knowledge is used by the commander agent to perform this mission. </description>
+    <methods>
+        <method name="getDeploymentPosition">
+            <description>Returns the position to deploy onto. It returns a 'nil' value if no objective is issued.</description>
+            <return>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </return>
+        </method>
+        <method name="init">
+            <description>Called on knowledge construction.</description>
+        </method>
+    </methods>
+</class>

@@ -354,7 +354,7 @@
             <unit command-post="false" id="1099" name="MILITARY.NBC Platoon" position="29TNF4095752342" type="MILITARY.NBC Platoon"/>
           </automat>
           <automat engaged="false" id="1132" knowledge-group="321" name="MILITARY.Transportation company" symbol="symbols/sfgpust" type="MILITARY.Transportation company">
-            <unit command-post="true" id="1133" name="MILITARY.Transporter platoon" position="29TNF2913353857" type="MILITARY.Transporter platoon"/>
+            <unit command-post="true" id="1133" name="MILITARY.Transporter platoon" position="29TNF2919354027" type="MILITARY.Transporter platoon"/>
             <unit command-post="false" id="1134" name="MILITARY.Transporter platoon" position="29TNF2913353956" type="MILITARY.Transporter platoon"/>
           </automat>
           <automat engaged="true" id="1206" knowledge-group="321" name="ART.Artillery reconnaissance battery" symbol="symbols/sfgpucf" type="ART.Artillery reconnaissance battery">
@@ -398,6 +398,21 @@
             <unit command-post="true" id="1311" name="ENG.Bridging troop" position="29TNF3783752096" type="ENG.Bridging troop"/>
             <unit command-post="false" id="1312" name="ENG.Bridging troop" position="29TNF3857752012" type="ENG.Bridging troop"/>
             <unit command-post="false" id="1313" name="ENG.Bridging troop" position="29TNF3817751681" type="ENG.Bridging troop"/>
+          </automat>
+          <automat engaged="false" id="1365" knowledge-group="321" name="LOG.Supply logistic area  (corps)" symbol="symbols/sfgpust" type="LOG.Supply logistic area  (corps)">
+            <unit command-post="true" id="1366" name="LOG.Supply CP (division)" position="29TNF3013454145" type="LOG.Supply CP (division)"/>
+            <unit command-post="false" id="1367" name="LOG.Water supply group" position="29TNF3013454245" type="LOG.Water supply group"/>
+            <unit command-post="false" id="1368" name="LOG.Ammo supply group" position="29TNF3018454231" type="LOG.Ammo supply group"/>
+            <unit command-post="false" id="1369" name="LOG.Ammo supply group" position="29TNF3022054195" type="LOG.Ammo supply group"/>
+            <unit command-post="false" id="1370" name="LOG.Ammo supply group" position="29TNF3023454145" type="LOG.Ammo supply group"/>
+            <unit command-post="false" id="1371" name="LOG.Ammo supply group" position="29TNF3022154095" type="LOG.Ammo supply group"/>
+            <unit command-post="false" id="1372" name="LOG.Supply Transportation platoon (PT)" position="29TNF3018454059" type="LOG.Supply Transportation platoon (PT)"/>
+            <unit command-post="false" id="1373" name="LOG.Supply platoon (PR)" position="29TNF3013454045" type="LOG.Supply platoon (PR)"/>
+            <unit command-post="false" id="1374" name="LOG.Supply group 60m3" position="29TNF3008454058" type="LOG.Supply group 60m3"/>
+            <unit command-post="false" id="1375" name="LOG.Magazin section CAP" position="29TNF3004854095" type="LOG.Magazin section CAP"/>
+            <unit command-post="false" id="1376" name="LOG.Supply Transportation platoon" position="29TNF3003454144" type="LOG.Supply Transportation platoon"/>
+            <unit command-post="false" id="1377" name="LOG.Supply group 35m3" position="29TNF3004754194" type="LOG.Supply group 35m3"/>
+            <unit command-post="false" id="1378" name="LOG.Supply group180m3" position="29TNF3008454231" type="LOG.Supply group180m3"/>
           </automat>
           <lima name="Phase line 372">
             <point>29TNF3257758436</point>
@@ -1010,4 +1025,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3292160977" -->
+<!-- signature="3496348104" -->

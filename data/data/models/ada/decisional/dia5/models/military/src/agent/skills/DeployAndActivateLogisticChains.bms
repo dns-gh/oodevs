@@ -6,28 +6,33 @@ rootnode
 {
     connections = 
     {
-        skill.links.moveToward, 
         skill.links.dismount,
-        skill.links.activateLogisticChains 
+        skill.links.activateLogisticChains,
+        skill.links.deploy,
     },
-    feedbacks = { "logisticChainsActivated" },
+    feedbacks = { "logisticChainsActivated", "deployed" },
 
     -- -------------------------------------------------------------------------------- 
     -- Slots
     -- --------------------------------------------------------------------------------
     logisticChainsActivated = function( self ) --called by ActivatedLogisticChains action skill
+        meKnowledge:sendMessage( "Logistic functions enabled" )
         Feedback( self.feedbacks.logisticChainsActivated )
         Feedback( self.feedbacks.done )
     end,
-    done = function( self ) -- called by MoveToward skill
-        self.isArrived = true
+    deploymentDone = function( self ) -- called by deploy skill
+        Feedback( self.feedbacks.deployed )
+        self.deployed = true
+    end,
+    done = function( self ) -- called by deploy skill
+        -- $$$ NOTHING
     end,
 
     -- -------------------------------------------------------------------------------- 
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
-        self.isArrived = false
+        self.deployed  = false
         if self.params.objective == NIL then
             self.objective = meKnowledge:getMyPosition() -- deploy on self position
         else
@@ -40,11 +45,11 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        if self.isArrived then
+        if self.deployed then
             Activate( skill.links.dismount, 1 )
             Activate( skill.links.activateLogisticChains, 1 )
         end
-        Activate( skill.links.moveToward, 1, { entities = { self.objective } } )
-        self.isArrived = false
+        Activate( skill.links.deploy, 1, { objective = self.objective } )
+        self.deployed = false
     end
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.tasks.DeployOnPosisitions" source-version="1.0.0" knowledge-class="commander.tasks.knowledges.DeployOnPositions">
+    <description>For the commander agent, to order subordinates units to deploy onto the given deployment positions. Forward echelon units will receive the main task (the 'DeployOnPositions' mission), other units (rear echelon) follow the forward echelon units.</description>
     <parameters>
         <parameter name="deploymentPositions" nullable="true">
+            <description>The deployment positions to use.</description>
             <type>
                 <list>
                     <class name="properties.Positionable"/>
@@ -21,6 +23,7 @@
             </default>
         </parameter>
         <parameter name="changeAutomatically" nullable="true">
+            <description>Define if the agent needs to go automatically onto another position after having received a 'FIRE' fragmentary order.</description>
             <type>
                 <simple name="boolean"/>
             </type>

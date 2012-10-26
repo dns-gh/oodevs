@@ -13,7 +13,7 @@
     <stages>
         <stage label="Décontamination des blessés" permanent="true">
             <skills>
-                <skill name="agent.skills.ActivateLogisticChains">
+                <skill name="agent.skills.DeployAndActivateLogisticChains">
                     <parameter name="objective">
                         <value>
                             <parameter>objective</parameter>
