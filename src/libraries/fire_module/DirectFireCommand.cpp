@@ -29,25 +29,16 @@ DirectFireCommand::DirectFireCommand( ModuleFacade& module, const wrapper::View&
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireCommand destructor
-// Created: NLD 2004-08-18
+// Name: DirectFireCommand::Destroy
+// Created: MCO 2012-10-26
 // -----------------------------------------------------------------------------
-DirectFireCommand::~DirectFireCommand()
+void DirectFireCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
 {
     PostCallback( role_.GetFinalReturnCode() );
     wrapper::Event event( "direct fire pion" );
     event[ "entity/identifier" ] = identifier_;
     event[ "running" ] = false;
     event.Post();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DirectFireCommand::Destroy
-// Created: MCO 2012-10-26
-// -----------------------------------------------------------------------------
-void DirectFireCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
-{
-    // $$$$ MCO 2012-10-26: move code from destructor in here and use "entity" in "direct fire pion"
 }
 
 // -----------------------------------------------------------------------------
