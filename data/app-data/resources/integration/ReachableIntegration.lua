@@ -738,6 +738,6 @@ integration.getDestinationPoint = function( position )
     return DEC_GetDestPoint( position )
 end
 
-integration.getSafetyPositions = function( radius, safetyDistance )
+integration.findSafetyPositions = function( radius, safetyDistance )
     return DEC_FindSafetyPositions( radius, safetyDistance )
 end
