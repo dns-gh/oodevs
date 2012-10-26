@@ -17,8 +17,6 @@
 #include "clients_kernel/Controllers.h"
 #include "DisplayBuilder.h"
 #include "LabelDisplayer.h"
-#include "ValuedListItem.h"
-#include "ListDisplayer.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -42,14 +40,20 @@ PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Contro
                 .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Contaminated people:" ) )
                 .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Dead people:" ) );
 
-    pPartsListView_ = new ListDisplayer< PopulationPanel >( this, *this, factory );
-    pPartsListView_->AddColumn( tools::translate( "gui::PopulationPanel", "Chunks" ) )
-                    .AddColumn( tools::translate( "gui::PopulationPanel", "Healthy" ) )
-                    .AddColumn( tools::translate( "gui::PopulationPanel", "Wounded" ) )
-                    .AddColumn( tools::translate( "gui::PopulationPanel", "Contaminated" ) )
-                    .AddColumn( tools::translate( "gui::PopulationPanel", "Dead" ) )
-                    .AddColumn( tools::translate( "gui::PopulationPanel", "Mood" ) )
-                    .AddColumn( tools::translate( "gui::PopulationPanel", "Alive density" ) );
+    pPartsListView_ = new QTreeView();
+    pPartsListView_->setRootIsDecorated( false );
+    pPartsListView_->setModel( &pPartsModel_ );
+    pPartsModel_.setColumnCount( 7 );
+    pPartsListView_->setEditTriggers( 0 );
+    QStringList list;
+    list.append( tools::translate( "gui::PopulationPanel", "Chunks" ) );
+    list.append( tools::translate( "gui::PopulationPanel", "Healthy" ) );
+    list.append( tools::translate( "gui::PopulationPanel", "Wounded" ) );
+    list.append( tools::translate( "gui::PopulationPanel", "Contaminated" ) );
+    list.append( tools::translate( "gui::PopulationPanel", "Dead" ) );
+    list.append( tools::translate( "gui::PopulationPanel", "Mood" ) );
+    list.append( tools::translate( "gui::PopulationPanel", "Alive density" ) );
+    pPartsModel_.setHorizontalHeaderLabels( list );
     layout->addWidget( pPartsListView_ );
 
     controllers_.Register( *this );
@@ -100,27 +104,43 @@ void PopulationPanel::NotifySelected( const Population_ABC* popu )
 // -----------------------------------------------------------------------------
 void PopulationPanel::DisplayParts( const Population_ABC& population )
 {
-    ValuedListItem* item = pPartsListView_->DisplayList( population.Resolver< PopulationConcentration_ABC >::CreateIterator() );
-    item = pPartsListView_->DisplayList( population.Resolver< PopulationFlow_ABC >::CreateIterator(), pPartsListView_, item );
-    pPartsListView_->DeleteTail( item );
+    const tools::Resolver< PopulationConcentration_ABC >& concentrations = static_cast< const tools::Resolver< PopulationConcentration_ABC >& >( population );
+    const tools::Resolver< PopulationFlow_ABC >& flows = static_cast< const tools::Resolver< PopulationFlow_ABC >& >( population );
+    ResizeModelOnNewContent( &pPartsModel_, concentrations.Count() + flows.Count() );
+
+    //concentrations
+    tools::Iterator< const PopulationConcentration_ABC& > iteratorConcentration = concentrations.CreateIterator();
+    int row = 0;
+    while( iteratorConcentration.HasMoreElements() )
+    {
+        AddPopulationPartInfo( row, iteratorConcentration.NextElement() );
+        ++row;
+    }
+        
+    //flows
+    tools::Iterator< const PopulationFlow_ABC& > iteratorFlow = flows.CreateIterator();
+    while( iteratorFlow.HasMoreElements() )
+    {
+        AddPopulationPartInfo( row, iteratorFlow.NextElement() );
+        ++row;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationPanel::DisplayPart
-// Created: AGE 2006-02-17
+// Name: QList< QStandardItem* > PopulationPanel::GetPopulationPartInfo
+// Created: NPT 2012-10-26
 // -----------------------------------------------------------------------------
-void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& displayer, ValuedListItem* )
+void PopulationPanel::AddPopulationPartInfo( int row, const PopulationPart_ABC& part )
 {
     unsigned int totalHumans = part.GetHealthyHumans() + part.GetWoundedHumans() + part.GetContaminatedHumans() + part.GetDeadHumans();
-    float aliveDensity = ( totalHumans == 0 ) ? 0 :
-        part.GetDensity() * ( part.GetHealthyHumans() + part.GetWoundedHumans() + part.GetContaminatedHumans() ) / totalHumans;
-    displayer.Display( tools::translate( "gui::PopulationPanel", "Chunks" ), part.GetName() )
-             .Display( tools::translate( "gui::PopulationPanel", "Healthy" ), part.GetHealthyHumans() )
-             .Display( tools::translate( "gui::PopulationPanel", "Wounded" ), part.GetWoundedHumans() )
-             .Display( tools::translate( "gui::PopulationPanel", "Contaminated" ), part.GetContaminatedHumans() )
-             .Display( tools::translate( "gui::PopulationPanel", "Dead" ), part.GetDeadHumans() )
-             .Display( tools::translate( "gui::PopulationPanel", "Mood" ), part.GetAttitude() )
-             .Display( tools::translate( "gui::PopulationPanel", "Alive density" ), aliveDensity );
+    float aliveDensity = ( totalHumans == 0 ) ? 0 : part.GetDensity() * ( part.GetHealthyHumans() + part.GetWoundedHumans() + part.GetContaminatedHumans() ) / totalHumans;
+    pPartsModel_.item( row, 0 )->setText( part.GetName() );
+    pPartsModel_.item( row, 1 )->setText( QString::number( part.GetHealthyHumans() ) );
+    pPartsModel_.item( row, 2 )->setText( QString::number( part.GetWoundedHumans() ) );
+    pPartsModel_.item( row, 3 )->setText( QString::number( part.GetContaminatedHumans() ) );
+    pPartsModel_.item( row, 4 )->setText( QString::number( part.GetDeadHumans() ) );
+    pPartsModel_.item( row, 5 )->setText( part.GetAttitude() );
+    pPartsModel_.item( row, 6 )->setText( QString::number( aliveDensity ) );
 }
 
 // -----------------------------------------------------------------------------

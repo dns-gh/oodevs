@@ -25,10 +25,8 @@ namespace kernel
 
 namespace gui
 {
-    template< typename T > class ListDisplayer;
     class ItemFactory_ABC;
     class DisplayBuilder;
-    class ValuedListItem;
 
 // =============================================================================
 // Created: HME 2005-10-03
@@ -48,7 +46,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifySelected( const kernel::Population_ABC* popu );
-    void Display( const kernel::PopulationPart_ABC& part, kernel::Displayer_ABC& displayer, ValuedListItem* );
+    void AddPopulationPartInfo( int row, const kernel::PopulationPart_ABC& part );
     //@}
 
 private:
@@ -64,7 +62,8 @@ private:
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Population_ABC > selected_;
     DisplayBuilder* display_;
-    ListDisplayer< PopulationPanel >* pPartsListView_;
+    QTreeView* pPartsListView_;
+    QStandardItemModel pPartsModel_;
 };
 
 }
