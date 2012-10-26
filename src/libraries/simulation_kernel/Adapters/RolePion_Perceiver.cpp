@@ -73,11 +73,6 @@ namespace sword
 
 namespace
 {
-    void ToggleRecordMode( const core::Model& activation, DEC_KS_Perception& perception )
-    {
-        if( !activation )
-            perception.MakePerceptionsAvailable();
-    }
     const unsigned int nNbrStepsBetweenPeriphericalVision = 12; //$$$ En dur ...
     unsigned int nNbr = 0; // $$$$ MCO 2012-08-14: size_t ?
 }
@@ -112,13 +107,22 @@ RolePion_Perceiver::~RolePion_Perceiver()
     // NOTHING
 }
 
+namespace
+{
+    void ToggleRecordMode( const core::Model& activation, DEC_KS_Perception& perception )
+    {
+        if( !activation )
+            perception.MakePerceptionsAvailable();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::Finalize
 // Created: BAX 2012-10-08
 // -----------------------------------------------------------------------------
 void RolePion_Perceiver::Finalize()
 {
-    listeners_.push_back( boost::make_shared< ListenerHelper >( boost::ref( sink_ ), boost::cref( entity_[ "perceptions/record-mode/activated" ] ), boost::bind( &ToggleRecordMode, _1, boost::ref( owner_.GetKnowledge().GetKsPerception() ) ) ) );
+    recordModeListener_.reset( new ListenerHelper( sink_, entity_[ "perceptions/record-mode/activated" ], boost::bind( &ToggleRecordMode, _1, boost::ref( owner_.GetKnowledge().GetKsPerception() ) ) ) );
 }
 
 // -----------------------------------------------------------------------------

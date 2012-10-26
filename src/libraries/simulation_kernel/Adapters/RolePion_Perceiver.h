@@ -159,12 +159,6 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< boost::shared_ptr< ListenerHelper > > T_Listeners;
-    //@}
-
-private:
     //! @name Tools
     //@{
     bool HasChanged() const;
@@ -183,7 +177,7 @@ private:
     const core::Model& model_;
     MIL_Agent_ABC& owner_;
     core::Model& entity_;
-    T_Listeners listeners_;
+    boost::shared_ptr< ListenerHelper > recordModeListener_;
     bool bHasChanged_;
     bool bRadarStateHasChanged_;
     bool bExternalMustUpdateVisionCones_;
