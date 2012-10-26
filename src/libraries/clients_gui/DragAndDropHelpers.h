@@ -25,11 +25,11 @@ namespace dnd
     template< typename T >
     bool IsA( QStandardItem& item )
     {
-        if( item.data( gui::StandardModel::MimeTypeRole ).isValid() )
+        if( item.data( gui::Roles::MimeTypeRole ).isValid() )
         {
             std::string tmp1 = typeid( T ).name();
-            std::string tmp2 = item.data( gui::StandardModel::MimeTypeRole ).toString();
-            return typeid( T ).name() == item.data( gui::StandardModel::MimeTypeRole ).toString();
+            std::string tmp2 = item.data( gui::Roles::MimeTypeRole ).toString();
+            return typeid( T ).name() == item.data( gui::Roles::MimeTypeRole ).toString();
         }
         return typeid( T ).name() == typeid( QString ).name();
     }

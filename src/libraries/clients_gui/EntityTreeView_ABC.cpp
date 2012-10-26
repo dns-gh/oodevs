@@ -119,7 +119,7 @@ void EntityTreeView_ABC::NotifyUpdated( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 bool EntityTreeView_ABC::ApplyProfileFilter( QStandardItem& item, StandardModel& /*model*/ ) const
 {
-    if( item.data( StandardModel::SafeRole ).isValid() && item.data( StandardModel::SafeRole ).toBool() )
+    if( item.data( Roles::SafeRole ).isValid() && item.data( Roles::SafeRole ).toBool() )
     {
         const kernel::Entity_ABC* entity = dataModel_.GetDataFromItem< kernel::Entity_ABC >( item );
         if( entity )

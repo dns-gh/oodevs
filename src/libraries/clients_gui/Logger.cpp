@@ -119,7 +119,7 @@ Logger::LogElement Logger::StartLog( const QColor& color )
     const int rowCount = dataModel_.rowCount();
     QStandardItem* item = dataModel_.AddRootDataItem( rowCount, 0, QTime::currentTime().toString(), "", *output );
     item->setForeground( color );
-    item->setData( counter_++, StandardModel::OtherRole );
+    item->setData( counter_++, Roles::OtherRole );
     dataModel_.AddRootTextItem( rowCount, 1, simulation_.GetTimeAsString(), "" )->setForeground( color );
     dataModel_.AddRootItem( rowCount, 2 )->setForeground( color );
     return LogElement( *this, *output );
@@ -135,7 +135,7 @@ void Logger::End( std::stringstream& output )
     QStandardItem* item = dataModel_.FindDataItem( output, dataModel_.invisibleRootItem() );
     if( item )
     {
-        item->setData( *new QVariant(), StandardModel::DataRole );
+        item->setData( *new QVariant(), Roles::DataRole );
         QModelIndex index = dataModel_.index( item->row(), 2, dataModel_.indexFromItem( item->parent() ) );
         QStandardItem* msgItem = dataModel_.GetItemFromIndex( index );
         if( msgItem )
@@ -164,7 +164,7 @@ bool Logger::LessThan( const QModelIndex& left, const QModelIndex& right, bool& 
     if( itemLeft && itemRight)
     {
         valid = true;
-        return itemLeft->data( StandardModel::OtherRole ).toUInt() < itemRight->data( StandardModel::OtherRole ).toUInt();
+        return itemLeft->data( Roles::OtherRole ).toUInt() < itemRight->data( Roles::OtherRole ).toUInt();
     }
     return false;
 }

@@ -12,6 +12,7 @@
 
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/VariantPointer.h"
+#include "Roles.h"
 #include <boost/function.hpp>
 
 namespace gui
@@ -33,15 +34,6 @@ class StandardModel : public QStandardItemModel
 public:
     //! @name Types
     //@{
-    enum E_InternalRole
-    { 
-        DataRole        = Qt::UserRole,
-        FilterRole      = Qt::UserRole + 1,
-        MimeTypeRole    = Qt::UserRole + 2,
-        SafeRole        = Qt::UserRole + 3,
-        OtherRole       = Qt::UserRole + 4
-    };
-
     typedef boost::function< bool ( QStandardItem&, StandardModel& ) > T_FilterFunction;
     //@}
 
@@ -66,8 +58,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;
-    virtual bool setData ( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole );
+    virtual QVariant data( const QModelIndex& index, int role = Qt::DisplayRole ) const;
+    virtual bool setData( const QModelIndex& index, const QVariant& value, int role = Qt::EditRole );
 
     void SetDecorationGetter( ItemDecorationGetter_ABC* decorationGetter );
     void SetDragAndDropObserver( DragAndDropObserver_ABC* dragAndDropObserver );

@@ -28,10 +28,10 @@ QStandardItem* StandardModel::AddChildItem( QStandardItem* root, int row, int co
         root = invisibleRootItem();
     QStandardItem* item = new QStandardItem();
     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
-    item->setData( *new QVariant( showValue_ ), FilterRole );
-    item->setData( *new QVariant(), DataRole );
-    item->setData( *new QVariant(), SafeRole );
-    item->setData( *new QVariant(), MimeTypeRole );
+    item->setData( *new QVariant( showValue_ ), Roles::FilterRole );
+    item->setData( *new QVariant(), Roles::DataRole );
+    item->setData( *new QVariant(), Roles::SafeRole );
+    item->setData( *new QVariant(), Roles::MimeTypeRole );
     root->setChild( row, col, item );
     return item;
 }
@@ -82,9 +82,9 @@ QStandardItem* StandardModel::AddChildDataItem( QStandardItem* root, int row, in
 
     QVariant* variant = new QVariant();
     variant->setValue( kernel::VariantPointer( &value ) );
-    item->setData( *variant, DataRole );
-    item->setData( *new QVariant( false ), SafeRole );
-    item->setData( QString( typeid( T ).name() ), MimeTypeRole );
+    item->setData( *variant, Roles::DataRole );
+    item->setData( *new QVariant( false ), Roles::SafeRole );
+    item->setData( QString( typeid( T ).name() ), Roles::MimeTypeRole );
 
     return item;
 }
@@ -115,9 +115,9 @@ QStandardItem* StandardModel::AddChildSafeItem( QStandardItem* root, int row, in
         QVariant* variant = new QVariant();
 
         variant->setValue( kernel::VariantPointer( new kernel::SafePointer< T >( *controllers_, &value ) ) );
-        item->setData( *variant, DataRole );
-        item->setData( *new QVariant( true ), SafeRole );
-        item->setData( QString( typeid( T ).name() ), MimeTypeRole );
+        item->setData( *variant, Roles::DataRole );
+        item->setData( *new QVariant( true ), Roles::SafeRole );
+        item->setData( QString( typeid( T ).name() ), Roles::MimeTypeRole );
     }
     return item;
 }
@@ -212,10 +212,10 @@ namespace
             assert( childItem );
             RecPurgeObsoleteSafeItem< T >( childItem );
 
-            if( childItem->data( StandardModel::SafeRole ).isValid() && childItem->data( StandardModel::SafeRole ).toBool() &&
-                childItem->data( StandardModel::DataRole ).isValid() )
+            if( childItem->data( Roles::SafeRole ).isValid() && childItem->data( Roles::SafeRole ).toBool() &&
+                childItem->data( Roles::DataRole ).isValid() )
             {
-                const kernel::SafePointer< T >* childEntity = static_cast< const kernel::SafePointer< T >* >( childItem->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ );
+                const kernel::SafePointer< T >* childEntity = static_cast< const kernel::SafePointer< T >* >( childItem->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ );
                 if( childEntity && *childEntity == 0 )
                 {
                     QList< QStandardItem* > rowItems = root->takeRow( row );
@@ -301,11 +301,11 @@ void StandardModel::DeleteItemRow( QStandardItem* item )
     if( !parentItem )
         parentItem = invisibleRootItem();
     // $$$$ ABR 2012-09-20: Delete safe pointer if needed
-    if( controllers_ && item->data( StandardModel::SafeRole ).isValid() && item->data( StandardModel::SafeRole ).toBool() &&
-        item->data( StandardModel::DataRole ).isValid() )
+    if( controllers_ && item->data( Roles::SafeRole ).isValid() && item->data( Roles::SafeRole ).toBool() &&
+        item->data( Roles::DataRole ).isValid() )
     {
-        controllers_->Unregister( *const_cast< tools::Observer_ABC* >( static_cast< const tools::Observer_ABC* >( item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ ) ) );
-        delete item->data( StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_;
+        controllers_->Unregister( *const_cast< tools::Observer_ABC* >( static_cast< const tools::Observer_ABC* >( item->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ ) ) );
+        delete item->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_;
     }
     // $$$$ ABR 2012-09-20: Delete row
     QList< QStandardItem* > rowItems = parentItem->takeRow( item->row() );
@@ -348,17 +348,17 @@ template< typename T >
 inline
 T* StandardModel::GetDataFromItem( const QStandardItem& item ) const
 {
-    if( item.data( SafeRole ).isValid() && item.data( DataRole ).isValid() )
+    if( item.data( Roles::SafeRole ).isValid() && item.data( Roles::DataRole ).isValid() )
     {
-        if( item.data( SafeRole ).toBool() )
+        if( item.data( Roles::SafeRole ).toBool() )
         {
-            const kernel::SafePointer< T >* safePtr = static_cast< const kernel::SafePointer< T >* >( item.data( DataRole ).value< kernel::VariantPointer >().ptr_ );
+            const kernel::SafePointer< T >* safePtr = static_cast< const kernel::SafePointer< T >* >( item.data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ );
             if( safePtr && *safePtr )
                 return safePtr->ConstCast();
         }
         else
         {
-            return const_cast< T* >( static_cast< const T* >( item.data( DataRole ).value< kernel::VariantPointer >().ptr_ ) );
+            return const_cast< T* >( static_cast< const T* >( item.data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ ) );
         }
     }
     return 0;

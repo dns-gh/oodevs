@@ -84,7 +84,7 @@ template< typename T >
 T* UnitTreeView::GetSelected() const
 {
     QStandardItem* item = dataModel_.GetItemFromIndex( selectionModel()->currentIndex() );
-    if( item && item->data( StandardModel::MimeTypeRole ).toString() == typeid( T ).name() )
+    if( item && item->data( Roles::MimeTypeRole ).toString() == typeid( T ).name() )
         return dataModel_.GetDataFromItem< T >( *item );
     return 0;
 }

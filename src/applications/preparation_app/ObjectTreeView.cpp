@@ -99,7 +99,7 @@ QMimeData* ObjectTreeView::MimeData( const QModelIndexList& indexes, bool& overr
     ObjectMimeData* mimeData = new ObjectMimeData( *obj );
     QByteArray encodedData;
     QDataStream stream( &encodedData, QIODevice::WriteOnly );
-    stream << reinterpret_cast< unsigned int >( item->data( gui::StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ );
+    stream << reinterpret_cast< unsigned int >( item->data( gui::Roles::DataRole ).value< kernel::VariantPointer >().ptr_ );
     mimeData->setData( typeid( kernel::Object_ABC ).name(), encodedData );
     return mimeData;
 }

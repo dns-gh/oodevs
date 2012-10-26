@@ -99,10 +99,10 @@ ADN_ListViewItem::ADN_ListViewItem( void* item )
     , connector_( 0 )
 {
     setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-    setData( *new QVariant( gui::StandardModel::showValue_ ), gui::StandardModel::FilterRole );
-    setData( *new QVariant(), gui::StandardModel::DataRole );
-    setData( *new QVariant(), gui::StandardModel::SafeRole );
-    setData( *new QVariant(), gui::StandardModel::MimeTypeRole );
+    setData( *new QVariant( gui::StandardModel::showValue_ ), gui::Roles::FilterRole );
+    setData( *new QVariant(), gui::Roles::DataRole );
+    setData( *new QVariant(), gui::Roles::SafeRole );
+    setData( *new QVariant(), gui::Roles::MimeTypeRole );
 }
 
 //-----------------------------------------------------------------------------

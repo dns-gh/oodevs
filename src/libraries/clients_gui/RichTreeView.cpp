@@ -75,7 +75,7 @@ RichTreeView::RichTreeView( QWidget* parent /*= 0*/, kernel::Controllers* contro
     setItemDelegate( new HeightDelegate( this ) );
 
     setModel( proxyModel_ );
-    proxyModel_->setFilterRole( StandardModel::FilterRole );
+    proxyModel_->setFilterRole( Roles::FilterRole );
     proxyModel_->setFilterRegExp( StandardModel::showValue_ );
     proxyModel_->setDynamicSortFilter( true );
 

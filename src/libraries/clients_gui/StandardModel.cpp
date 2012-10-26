@@ -126,7 +126,7 @@ bool StandardModel::HasAnyChildVisible( QStandardItem& root, T_FilterFunction fu
         QStandardItem* childItem = root.child( row, 0 );
         assert( childItem );
         bool childVisible = HasAnyChildVisible( *childItem, func );
-        childItem->setData( childVisible ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
+        childItem->setData( childVisible ? showValue_ : hideValue_, Roles::FilterRole );
         isVisible = isVisible || childVisible;
     }
     return isVisible;
@@ -142,7 +142,7 @@ void StandardModel::ApplyFilter( T_FilterFunction func )
     {
         QStandardItem* childItem = item( row, 0 );
         assert( childItem );
-        childItem->setData( ( HasAnyChildVisible( *childItem, func ) ) ? StandardModel::showValue_ : StandardModel::hideValue_, StandardModel::FilterRole );
+        childItem->setData( ( HasAnyChildVisible( *childItem, func ) ) ? showValue_ : hideValue_, Roles::FilterRole );
     }
 }
 
@@ -196,13 +196,13 @@ QMimeData* StandardModel::mimeData( const QModelIndexList& indexes ) const
         if( index.isValid() )
         {
             QStandardItem* item = itemFromIndex( index.model() == this ? index : proxy_.mapToSource( index ) );
-            if( item && item->data( MimeTypeRole ).isValid() )
+            if( item && item->data( Roles::MimeTypeRole ).isValid() )
             {
-                const QString itemMimeType = item->data( MimeTypeRole ).value< QString >();
+                const QString itemMimeType = item->data( Roles::MimeTypeRole ).value< QString >();
                 if( mimeType.isNull() || mimeType == itemMimeType )
                 {
                     mimeType = itemMimeType;
-                    stream << reinterpret_cast< unsigned int >( item->data( DataRole ).value< kernel::VariantPointer >().ptr_ );
+                    stream << reinterpret_cast< unsigned int >( item->data( Roles::DataRole ).value< kernel::VariantPointer >().ptr_ );
                 }
             }
         }

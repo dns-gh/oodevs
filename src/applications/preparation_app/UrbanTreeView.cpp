@@ -358,7 +358,7 @@ QMimeData* UrbanTreeView::MimeData( const QModelIndexList& indexes, bool& overri
                 level = hierarchies.GetLevel();
                 QStandardItem* item = dataModel_.itemFromIndex( index.model() == &dataModel_ ? index : proxyModel_->mapToSource( index ) );
                 if( item )
-                    stream << reinterpret_cast< unsigned int >( item->data( gui::StandardModel::DataRole ).value< kernel::VariantPointer >().ptr_ );
+                    stream << reinterpret_cast< unsigned int >( item->data( gui::Roles::DataRole ).value< kernel::VariantPointer >().ptr_ );
             }
         }
     }

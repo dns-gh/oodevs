@@ -63,7 +63,7 @@ void UserProfileRights_ABC::Visit( QStandardItem& item )
     kernel::Entity_ABC* entity = model_.GetDataFromItem< kernel::Entity_ABC >( item );
     if( entity )
     {
-        const Status status = Status( item.data( gui::StandardModel::OtherRole ).toInt() );
+        const Status status = Status( item.data( gui::Roles::OtherRole ).toInt() );
         const bool isWriteable = status == eWrite;
         const bool isReadable  = status == eReadOnly;
         profile_->SetReadable ( *entity, isReadable && !isWriteable );
@@ -120,7 +120,7 @@ void UserProfileRights_ABC::OnItemClicked( const QModelIndex& index )
         return;
 
     QStandardItem* item = model_.GetItemFromIndex( model_.GetMainModelIndex( index ) );
-    const Status status = Status( item->data( gui::StandardModel::OtherRole ).toInt() );
+    const Status status = Status( item->data( gui::Roles::OtherRole ).toInt() );
     if( status == eWriteInherited || ( index.column() == 1 && status == eReadInherited ) )
         return;
     bool write = status == eWrite;
@@ -159,7 +159,7 @@ void UserProfileRights_ABC::OnHide()
 void UserProfileRights_ABC::SetStatus( QStandardItem* item, Status status )
 {
     assert( item->column() == 0 );
-    item->setData( static_cast< int >( status ), gui::StandardModel::OtherRole );
+    item->setData( static_cast< int >( status ), gui::Roles::OtherRole );
     const QModelIndex index = model_.indexFromItem( item );
     const QModelIndex index1 = model_.index( index.row(), 1, index.parent() );
     const QModelIndex index2 = model_.index( index.row(), 2, index.parent() );

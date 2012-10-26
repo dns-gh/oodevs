@@ -528,7 +528,7 @@ void ADN_ListView::OnFilterChanged( const QStringList& filterList )
     for( int i = 0; i < rowCount; ++i )
     {
         QStandardItem* item = dataModel_.item( i );
-        if( item && item->data( gui::StandardModel::FilterRole ).toString() == gui::StandardModel::showValue_ )
+        if( item && item->data( gui::Roles::FilterRole ).toString() == gui::StandardModel::showValue_ )
         {
             selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
             return;
@@ -578,7 +578,7 @@ void ADN_ListView::ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > fu
     for( int i = 0; i < rowCount; ++i )
     {
         ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( dataModel_.item( i ) );
-        item->setData( func( item ) ? gui::StandardModel::showValue_ : gui::StandardModel::hideValue_, gui::StandardModel::FilterRole ); // Use HasAnyChildVisible( item, func ) if tree view. Cf HierarchyListView_ABC
+        item->setData( func( item ) ? gui::StandardModel::showValue_ : gui::StandardModel::hideValue_, gui::Roles::FilterRole ); // Use HasAnyChildVisible( item, func ) if tree view. Cf HierarchyListView_ABC
     }
 }
 
