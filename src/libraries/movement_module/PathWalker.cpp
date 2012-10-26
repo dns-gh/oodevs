@@ -99,7 +99,7 @@ bool PathWalker::ComputeFutureObjectCollision( const wrapper::View& entity, cons
 // -----------------------------------------------------------------------------
 bool PathWalker::IsMovingOn( const Path_ABC& path ) const
 {
-    return path_.get() ? path == *path_ : false;
+    return path_ ? path == *path_ : false;
 }
 
 //-----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ bool PathWalker::IsMovingOn( const Path_ABC& path ) const
 MT_Vector2D PathWalker::ExtrapolatePosition( const wrapper::View& entity, const double rTime, const bool bBoundOnPath ) const
 {
     const MT_Vector2D position( entity[ "movement/position/x" ], entity[ "movement/position/y" ] );
-    if( !path_.get() )
+    if( !path_ )
         return position;
     try
     {
@@ -586,7 +586,7 @@ void PathWalker::MoveSuspended( const boost::shared_ptr< PathResult >& pPath ) c
 {
     if( !path_ && !bForcePathCheck_ )
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Move cannot be suspended" );
-    if( path_.get() && path_ == pPath )
+    if( path_ && path_ == pPath )
         bForcePathCheck_ = true;
 }
 
