@@ -73,11 +73,11 @@ public:
 
     //! @name  Ownership Management
     //@{
-    virtual void RequestAttributeOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& offeredAttributes);
+    virtual void RequestAttributeOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& offeredAttributes, const ::hla::VariableLengthData& tag );
     virtual void RequestDivestitureConfirmation( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& releasedAttributes);
-    virtual void AttributeOwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& securedAttributes);
+    virtual void AttributeOwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& securedAttributes, const ::hla::VariableLengthData& tag );
     virtual void AttributeOwnershipUnavailable( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& theAttributes);
-    virtual void RequestAttributeOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& candidateAttributes);
+    virtual void RequestAttributeOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& candidateAttributes, const ::hla::VariableLengthData& tag );
     virtual void ConfirmAttributeOwnershipAcquisitionCancellation( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& theAttributes);
     virtual void InformAttributeOwnership( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& theAttribute , const ::hla::FederateIdentifier& theOwner );
     virtual void AttributeIsNotOwned( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& theAttribute);

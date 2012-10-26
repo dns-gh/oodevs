@@ -23,6 +23,7 @@ namespace hla
     class InteractionIdentifier;
     class Interaction_ABC;
     class FederateAmbassador_ABC;
+    class VariableLengthData;
 }
 
 namespace plugins
@@ -67,10 +68,10 @@ public:
     virtual void Register( ::hla::FederateAmbassador_ABC& listener ) = 0;
 
     // Ownership control
-    virtual void DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes ) = 0;
+    virtual void DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag ) = 0;
     virtual void UnconditionalDivest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes ) = 0;
     virtual void AcquisitionRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes ) = 0;
-    virtual void UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes ) = 0;
+    virtual void UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag ) = 0;
     //@}
 };
 

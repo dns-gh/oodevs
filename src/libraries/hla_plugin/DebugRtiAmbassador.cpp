@@ -363,33 +363,33 @@ void DebugRtiAmbassador::UnconditionalOwnershipDivestiture( const ::hla::ObjectI
 // Name: DebugRtiAmbassador::NegotiatedOwnershipDivestiture
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void DebugRtiAmbassador::NegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+void DebugRtiAmbassador::NegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag )
 {
     Flush();
     logger_.LogInfo( "-> NegotiatedOwnershipDivestiture object " + objectID.ToString() );
-    ambassador_->NegotiatedOwnershipDivestiture( objectID, attributes );
+    ambassador_->NegotiatedOwnershipDivestiture( objectID, attributes, tag );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DebugRtiAmbassador::ConfirmDivestiture
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void DebugRtiAmbassador::ConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+void DebugRtiAmbassador::ConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag )
 {
     Flush();
     logger_.LogInfo( "-> ConfirmDivestiture object " + objectID.ToString() );
-    ambassador_->ConfirmDivestiture( objectID, attributes );
+    ambassador_->ConfirmDivestiture( objectID, attributes, tag );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DebugRtiAmbassador::OwnershipAcquisition
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void DebugRtiAmbassador::OwnershipAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+void DebugRtiAmbassador::OwnershipAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag )
 {
     Flush();
     logger_.LogInfo( "-> OwnershipAcquisition object " + objectID.ToString() );
-    ambassador_->OwnershipAcquisition( objectID, attributes );
+    ambassador_->OwnershipAcquisition( objectID, attributes, tag );
 }
 
 // -----------------------------------------------------------------------------

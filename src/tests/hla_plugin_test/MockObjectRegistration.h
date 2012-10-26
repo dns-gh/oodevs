@@ -27,8 +27,9 @@ MOCK_BASE_CLASS( MockObjectRegistration, ::hla::ObjectRegistration_ABC< T > )
     MOCK_METHOD_EXT_TPL( Destroy, 1, void( T& ), Destroy )
     MOCK_METHOD_EXT_TPL( Reflected, 1, void( T& ), Reflected )
     MOCK_METHOD_EXT_TPL( RequestConfirmDivestiture, 3, bool( const ::hla::ObjectIdentifier&, const T&, const ::hla::T_AttributeIdentifiers& ), RequestConfirmDivestiture )
-    MOCK_METHOD_EXT_TPL( OwnershipAcquisitionNotification, 3, void( const ::hla::ObjectIdentifier&, const T&, const ::hla::T_AttributeIdentifiers& ), OwnershipAcquisitionNotification )
-    MOCK_METHOD_EXT_TPL( RequestOwnershipAssumption, 3, bool( const ::hla::ObjectIdentifier&, const T&, const ::hla::T_AttributeIdentifiers& ), RequestOwnershipAssumption )
+    MOCK_METHOD_EXT_TPL( OwnershipAcquisitionNotification, 4, void( const ::hla::ObjectIdentifier&, const T&, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& ), OwnershipAcquisitionNotification )
+    MOCK_METHOD_EXT_TPL( RequestOwnershipAssumption, 4, bool( const ::hla::ObjectIdentifier&, const T&, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& ), RequestOwnershipAssumption )
+    MOCK_METHOD_EXT_TPL( RequestOwnershipRelease, 4, void( const ::hla::ObjectIdentifier&, const T&, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& ), RequestOwnershipRelease )
 };
 
 }

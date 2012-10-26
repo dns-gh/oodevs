@@ -393,9 +393,9 @@ void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned long identifie
 // Name: FederateFacade::DivestRequest
 // Created: AHC 2012-02-27
 // -----------------------------------------------------------------------------
-void FederateFacade::DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+void FederateFacade::DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag )
 {
-    federate_->DivestRequest( objectID, attributes );
+    federate_->DivestRequest( objectID, attributes, tag );
 }
 
 // -----------------------------------------------------------------------------
@@ -429,9 +429,9 @@ void FederateFacade::UnconditionalDivest( const ::hla::ObjectIdentifier& objectI
 // Name: FederateFacade::UnconditionalDivest
 // Created: AHC 2012-04-17
 // -----------------------------------------------------------------------------
-void FederateFacade::UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+void FederateFacade::UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag )
 {
-    federate_->UnconditionalAcquisition( objectID, attributes );
+    federate_->UnconditionalAcquisition( objectID, attributes, tag );
 }
 
 // -----------------------------------------------------------------------------

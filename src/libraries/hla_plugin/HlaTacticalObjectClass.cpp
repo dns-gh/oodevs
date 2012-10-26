@@ -94,7 +94,7 @@ bool HlaTacticalObjectClass::RequestConfirmDivestiture( const ::hla::ObjectIdent
 // Name: HlaTacticalObjectClass::OwnershipAcquisitionNotification
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void HlaTacticalObjectClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     // NOTHING
 }
@@ -103,7 +103,7 @@ void HlaTacticalObjectClass::OwnershipAcquisitionNotification( const ::hla::Obje
 // Name: HlaTacticalObjectClass::RequestOwnershipAssumption
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-bool HlaTacticalObjectClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+bool HlaTacticalObjectClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     return false;
 }
@@ -162,4 +162,13 @@ void HlaTacticalObjectClass::Register( ClassListener_ABC& listener )
 void HlaTacticalObjectClass::Unregister( ClassListener_ABC& listener )
 {
     pListeners_->Unregister( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaTacticalObjectClass::RequestAttributeOwnershipRelease
+// Created: AHC 2012-10-26
+// -----------------------------------------------------------------------------
+void HlaTacticalObjectClass::RequestOwnershipRelease( const ::hla::ObjectIdentifier&, const HlaObject_ABC&, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
+{
+    // NOTHING
 }

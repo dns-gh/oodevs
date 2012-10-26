@@ -184,7 +184,7 @@ void DebugFederateAmbassador::FederationSynchronized( const std::string& label )
 // Name: DebugFederateAmbassador::RequestAttributeOwnershipAssumption
 // Created:AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void DebugFederateAmbassador::RequestAttributeOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*offeredAttributes*/)
+void DebugFederateAmbassador::RequestAttributeOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*offeredAttributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     logger_.LogInfo( "<- RequestAttributeOwnershipAssumption object " + objectID.ToString() );
 }
@@ -202,7 +202,7 @@ void DebugFederateAmbassador::RequestDivestitureConfirmation( const ::hla::Objec
 // Name: DebugFederateAmbassador::AttributeOwnershipAcquisitionNotification
 // Created:AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void DebugFederateAmbassador::AttributeOwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*securedAttributes*/)
+void DebugFederateAmbassador::AttributeOwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*securedAttributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     logger_.LogInfo( "<- AttributeOwnershipAcquisitionNotification object " + objectID.ToString() );
 }
@@ -220,7 +220,7 @@ void DebugFederateAmbassador::AttributeOwnershipUnavailable( const ::hla::Object
 // Name: DebugFederateAmbassador::RequestAttributeOwnershipRelease
 // Created:AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void DebugFederateAmbassador::RequestAttributeOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*candidateAttributes*/)
+void DebugFederateAmbassador::RequestAttributeOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*candidateAttributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     logger_.LogInfo( "<- RequestAttributeOwnershipRelease object " + objectID.ToString() );
 }

@@ -135,9 +135,9 @@ void Federate::Register( ::hla::FederateAmbassador_ABC& listener )
 // Name: Federate::DivestRequest
 // Created: AHC 2012-02-27
 // -----------------------------------------------------------------------------
-void Federate::DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+void Federate::DivestRequest( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag )
 {
-    federate_->NegotiatedOwnershipDivestiture( objectID, attributes );
+    federate_->NegotiatedOwnershipDivestiture( objectID, attributes, tag );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void Federate::Tick()
 // Name: Federate::UnconditionalAcquisition
 // Created: AHC 2012-04-17
 // -----------------------------------------------------------------------------
-void Federate::UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+void Federate::UnconditionalAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag )
 {
-    federate_->OwnershipAcquisition( objectID, attributes )
+    federate_->OwnershipAcquisition( objectID, attributes, tag )
 ;}

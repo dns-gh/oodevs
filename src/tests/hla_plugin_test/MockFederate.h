@@ -36,10 +36,10 @@ MOCK_BASE_CLASS( MockFederate, Federate_ABC )
     MOCK_METHOD_EXT( Register, 4, void( const ::hla::ClassIdentifier&, ::hla::Class_ABC&, bool, bool ), RegisterClass )
     MOCK_METHOD_EXT( Register, 4, void( const ::hla::InteractionIdentifier&, ::hla::Interaction_ABC&, bool, bool ), RegisterInteraction )
     MOCK_METHOD_EXT( Register, 1, void( ::hla::FederateAmbassador_ABC& ), RegisterListener )
-    MOCK_METHOD( DivestRequest, 2 )
+    MOCK_METHOD( DivestRequest, 3 )
     MOCK_METHOD( UnconditionalDivest, 2 )
     MOCK_METHOD( AcquisitionRequest, 2 )
-    MOCK_METHOD( UnconditionalAcquisition, 2 )
+    MOCK_METHOD( UnconditionalAcquisition, 3 )
 };
 
 }

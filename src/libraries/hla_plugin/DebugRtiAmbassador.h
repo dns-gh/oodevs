@@ -96,9 +96,9 @@ public:
     //! @name Ownership management
     //@{
     virtual void UnconditionalOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes);
-    virtual void NegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
-    virtual void ConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
-    virtual void OwnershipAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void NegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void ConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
+    virtual void OwnershipAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
     virtual void OwnershipAcquisitionIfAvailable( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
     virtual void OwnershipDivestitureIfWanted( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
     virtual void CancelNegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );

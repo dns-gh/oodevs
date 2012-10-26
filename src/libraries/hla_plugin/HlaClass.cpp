@@ -21,6 +21,7 @@
 #include "OwnershipStrategy_ABC.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
+#include <hla/VariableLengthData.h>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <sstream>
@@ -162,7 +163,7 @@ bool HlaClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& objectI
 // Name: HlaClass::OwnershipAcquisitionNotification
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void HlaClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+void HlaClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     T_IdentifierSet::iterator it = acquiring_.find( objectID.ToLong() );
     assert( acquiring_.end() != it );
@@ -180,7 +181,7 @@ void HlaClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& 
 // Name: HlaClass::RequestOwnershipAssumption
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-bool HlaClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
+bool HlaClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& /*attributes*/, const ::hla::VariableLengthData& /*tag*/ )
 {
     T_IdentifierSet::iterator it = acquiring_.find( objectID.ToLong() );
     if( acquiring_.end() != it )
@@ -204,7 +205,8 @@ void HlaClass::Divest(const std::string& objectID )
     if( ownershipStrategy_.PerformAttributeOwnershipNegotiation() )
     {
         divesting_.insert( hlaIdentifiers_[objectID] );
-        federate_.DivestRequest( hlaIdentifiers_[objectID], attributes_ );
+        ::hla::VariableLengthData tag; // FIXME
+        federate_.DivestRequest( hlaIdentifiers_[objectID], attributes_, tag );
     }
     else
     {
@@ -233,6 +235,16 @@ void HlaClass::Acquire(const std::string& objectID )
     else
     {
         acquiring_.insert( hlaIdentifiers_[objectID] );
-        federate_.UnconditionalAcquisition( hlaIdentifiers_[objectID], attributes_ );
+        ::hla::VariableLengthData tag; // FIXME
+        federate_.UnconditionalAcquisition( hlaIdentifiers_[objectID], attributes_, tag );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaClass::RequestOwnershipRelease
+// Created: AHC 2012-10-26
+// -----------------------------------------------------------------------------
+void HlaClass::RequestOwnershipRelease( const ::hla::ObjectIdentifier&, const HlaObject_ABC&, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
+{
+    // NOTHING
 }

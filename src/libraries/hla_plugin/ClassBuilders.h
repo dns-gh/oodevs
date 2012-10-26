@@ -38,10 +38,10 @@ namespace hla
         virtual void Register( const ::hla::ClassIdentifier&, ::hla::Class_ABC&, bool, bool ) {}
         virtual void Register( const ::hla::InteractionIdentifier&, ::hla::Interaction_ABC&, bool, bool ) {}
         virtual void Register( ::hla::FederateAmbassador_ABC& ) {}
-        virtual void DivestRequest( const ::hla::ObjectIdentifier& , const T_AttributeIdentifiers& ) {}
+        virtual void DivestRequest( const ::hla::ObjectIdentifier& , const T_AttributeIdentifiers&, const ::hla::VariableLengthData& ) {}
         virtual void UnconditionalDivest( const ::hla::ObjectIdentifier& , const T_AttributeIdentifiers& ) {}
         virtual void AcquisitionRequest( const ::hla::ObjectIdentifier& , const T_AttributeIdentifiers& ) {}
-        virtual void UnconditionalAcquisition( const ::hla::ObjectIdentifier&, const T_AttributeIdentifiers& ) {}
+        virtual void UnconditionalAcquisition( const ::hla::ObjectIdentifier&, const T_AttributeIdentifiers&, const ::hla::VariableLengthData& ) {}
     };
     class ClassBuilder : public ClassBuilder_ABC
     {
