@@ -157,7 +157,7 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( movement_command_in_paused_execution_only_sends_paused_event, StartedFixture )
+BOOST_FIXTURE_TEST_CASE( movement_command_in_paused_execution_sends_paused_event, StartedFixture )
 {
     commands.Pause( command );
     ExpectCallbackEvent( sword::movement::PathWalker::ePaused );
