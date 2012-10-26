@@ -60,7 +60,10 @@ namespace
         }
         void Advance( float speed, int code, bool hasResources = true )
         {
-            ExpectEffect( entity[ "movement" ] );
+            ExpectEffect( entity[ "movement" ],
+                sword::test::MakeModel( "speed", hasResources && code != sword::movement::PathWalker::eFinished ? speed : 0 )
+                                      ( "direction", mock::any )
+                                      ( "position", mock::any ) );
             ExpectCallbackEvent( code );
             ExpectMovementEvent( speed );
             Step( speed, hasResources, true );
