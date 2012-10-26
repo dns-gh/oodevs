@@ -21,11 +21,6 @@ namespace
             : action( 117u )
             , command( 0u )
         {}
-        virtual ~MovementFixture()
-        {
-            MOCK_EXPECT( CancelPathFindJob );
-            StopCommand( command );
-        }
         size_t StartMoveCommand( const T_Points& points )
         {
             ConfigurePathfind( points );
@@ -85,7 +80,35 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( movement_command_sends_movement_environment_effect_when_changing_terrain_type, MovementFixture )
+BOOST_FIXTURE_TEST_CASE( stopping_command_cancels_pathfind_job, MovementFixture )
+{
+    const geometry::Point2f start( 0, 0 );
+    const geometry::Point2f end( 0, 10 );
+    UpdatePosition( start );
+    const T_Points points = boost::assign::map_list_of( start, TerrainData() )
+                                                      ( end, TerrainData() );
+    command = StartMoveCommand( points );
+    MOCK_EXPECT( CancelPathFindJob ).once();
+    ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
+    commands.Stop( command );
+    mock::verify();
+    ExecuteCommands();
+}
+
+namespace
+{
+    struct UnfinishedMovementFixture : MovementFixture
+    {
+        ~UnfinishedMovementFixture()
+        {
+            MOCK_EXPECT( CancelPathFindJob );
+            ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
+            StopCommand( command );
+        }
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( movement_command_sends_movement_environment_effect_when_changing_terrain_type, UnfinishedMovementFixture )
 {
     const T_Points points = boost::assign::map_list_of( geometry::Point2f( 0, 0 ), TerrainData() )
                                                       ( geometry::Point2f( 0, 1 ), TerrainData() )
@@ -111,7 +134,7 @@ BOOST_FIXTURE_TEST_CASE( movement_command_sends_movement_environment_effect_when
     Advance( 5, sword::movement::PathWalker::eFinished );
 }
 
-BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_does_not_move, MovementFixture )
+BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_does_not_move, UnfinishedMovementFixture )
 {
     MOCK_EXPECT( IsDestinationTrafficable ).returns( false );
     ExpectEvent( "movement report" );
@@ -126,7 +149,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
     Step( 1, true, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_and_does_not_move, MovementFixture )
+BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_and_does_not_move, UnfinishedMovementFixture )
 {
     ConfigureImpossiblePathfind();
     ExpectEvent( "movement report" );
@@ -143,7 +166,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
 
 namespace
 {
-    struct StartedFixture : public MovementFixture
+    struct StartedFixture : public UnfinishedMovementFixture
     {
         StartedFixture()
         {
@@ -194,14 +217,6 @@ BOOST_FIXTURE_TEST_CASE( movement_command_advance_on_path, StartedFixture )
     Advance( 5, sword::movement::PathWalker::eRunning );
     MOCK_EXPECT( NotifyMovingOnPathPoint ).once();
     Advance( 5, sword::movement::PathWalker::eFinished );
-}
-
-BOOST_FIXTURE_TEST_CASE( stopping_command_cancels_pathfind_job, StartedFixture )
-{
-    MOCK_EXPECT( CancelPathFindJob ).once();
-    commands.Stop( command );
-    mock::verify();
-    ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( movement_without_resources_sends_out_of_gas_report_and_not_enough_fuel_callback, StartedFixture )
@@ -302,7 +317,7 @@ namespace
 {
     const std::size_t threshold = 200; // $$$$ MCO 2012-10-24: ^c^v PathWalker.cpp => should be customizable...
 
-    struct LongPathStartedFixture : public MovementFixture
+    struct LongPathStartedFixture : public UnfinishedMovementFixture
     {
         LongPathStartedFixture()
             : size( 4 * threshold )

@@ -65,6 +65,7 @@ public:
     //@{
     int Move( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& model, const wrapper::View& entity ) const;
     void MoveSuspended( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& entity ) const;
+    void MoveStopped( const wrapper::View& entity ) const;
     void MoveCanceled( const boost::shared_ptr< PathResult >& pPath ) const;
     void Clean();
     //@}

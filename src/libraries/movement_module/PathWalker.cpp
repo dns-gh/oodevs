@@ -589,6 +589,15 @@ void PathWalker::MoveSuspended( const boost::shared_ptr< PathResult >& pPath, co
     if( path_ && path_ == pPath )
         bForcePathCheck_ = true;
     speed_ = 0;
+    MoveStopped( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PathWalker::MoveStopped
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void PathWalker::MoveStopped( const wrapper::View& entity ) const
+{
     wrapper::Effect effect( entity[ "movement" ] );
     effect[ "speed" ] = 0;
     effect.Post();

@@ -57,8 +57,10 @@ MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters,
 // Name: MoveCommand::Destroy
 // Created: MCO 2012-10-26
 // -----------------------------------------------------------------------------
-void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const // $$$$ _RC_ SLI 2012-01-02: moved from StopAction
+void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& model ) const // $$$$ _RC_ SLI 2012-01-02: moved from StopAction
 {
+    const wrapper::View& entity = model[ "entities" ][ identifier_ ];
+    pathWalker_->MoveStopped( entity );
     if( pMainPath_ )
         pMainPath_->DecRef();
     //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
