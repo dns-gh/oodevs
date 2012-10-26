@@ -10,9 +10,9 @@
 #ifndef __AfterActionFunctionList_h_
 #define __AfterActionFunctionList_h_
 
-#include "clients_gui/ListDisplayer.h"
 #include "actions_gui/ParamInterface_ABC.h"
-#include <boost/noncopyable.hpp>
+#include <tools/ElementObserver_ABC.h>
+#include <boost/shared_ptr.hpp>
 
 namespace kernel
 {
@@ -49,21 +49,15 @@ class AfterActionFunctionList : public Q3VBox
                               , public actions::gui::ParamInterface_ABC
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< Simulation >
-                              , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AfterActionFunctionList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,
+             AfterActionFunctionList( QWidget* parent, kernel::Controllers& controllers, AfterActionModel& model,
                                       actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual ~AfterActionFunctionList();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Display( const AfterActionFunction& function, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
     //! @name ParamInterface_ABC implementation
@@ -75,7 +69,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChange( Q3ListViewItem* item );
+    void OnSelectionChange();
     void Request();
     //@}
 
@@ -99,7 +93,7 @@ private:
     actions::gui::InterfaceBuilder_ABC& builder_;
     kernel::Controllers& controllers_;
     AfterActionModel& model_;
-    gui::ListDisplayer< AfterActionFunctionList >* functions_;
+    QTreeWidget* functions_;
     Q3GroupBox* parameters_;
     Q3VGroupBox* timeGroup_;
     QSpinBox* firstTick_;

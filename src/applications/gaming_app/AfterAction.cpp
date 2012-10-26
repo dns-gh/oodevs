@@ -58,7 +58,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& contr
     box->setMinimumSize( 250, 200 );
     functionsTab_ = new QTabWidget( box );
 
-    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model, interfaceBuilder );
+    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, model, interfaceBuilder );
     functionsTab_->addTab( list, tools::translate( "AfterAction", "Functions" ) );
 
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, factory, plotFactory );

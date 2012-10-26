@@ -16,8 +16,6 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_gui/ListItemToolTip.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_gui/RichSpinBox.h"
 #include "gaming/AfterActionFunction.h"
 #include "gaming/AfterActionModel.h"
@@ -30,11 +28,13 @@
 using namespace kernel;
 using namespace gui;
 
+Q_DECLARE_METATYPE( const AfterActionFunction* )
+
 // -----------------------------------------------------------------------------
 // Name: AfterActionFunctionList constructor
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
+AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, AfterActionModel& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
     : Q3VBox( parent, "AfterActionFunctionList" )
     , builder_    ( interfaceBuilder )
     , controllers_( controllers )
@@ -43,9 +43,11 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
     , request_    ( 0 )
     , title_      ( tr( "After action review" ) )
 {
-    functions_ = new ListDisplayer< AfterActionFunctionList >( this, *this, factory );
-    functions_->AddColumn( tr( "Name" ) );
-    functions_->viewport()->installEventFilter( new ListItemToolTip( functions_->viewport(), *functions_ ) );
+    functions_ = new QTreeWidget( this );
+    functions_->setHeaderLabel( tr( "Name" ) );
+    functions_->setRootIsDecorated( false );
+    functions_->header()->setStretchLastSection( false );
+    functions_->header()->setResizeMode( 0, QHeaderView::ResizeToContents );
     parameters_ = new Q3VGroupBox( tr( "Parameters" ), this );
     timeGroup_ = new Q3VGroupBox( tr( "Time range" ), this );
     timeGroup_->setCheckable( true );
@@ -60,13 +62,20 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
         new QLabel( tr( "Duration" ), box );
         duration_ = new gui::RichSpinBox( box );
     }
-    connect( functions_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
+    connect( functions_, SIGNAL( itemSelectionChanged() ), SLOT( OnSelectionChange() ) );
 
     CreateRequestButton();
     request_->setEnabled( false );
-    functions_->DeleteTail(
-        functions_->DisplayList( model_.CreateIterator() )
-        );
+    tools::Iterator< const AfterActionFunction& > it = model_.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const AfterActionFunction& function = it.NextElement();
+        QTreeWidgetItem* item = new QTreeWidgetItem();
+        item->setText( 0, function.GetName() );
+        item->setToolTip( 0, function.GetComments() );
+        item->setData( 0, Qt::UserRole, QVariant::fromValue( &function ) );
+        functions_->addTopLevelItem( item );
+    }
     controllers_.controller_.Register( *this );
 }
 
@@ -105,20 +114,10 @@ void AfterActionFunctionList::CreateRequestButton()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterActionFunctionList::Display
-// Created: AGE 2007-09-21
-// -----------------------------------------------------------------------------
-void AfterActionFunctionList::Display( const AfterActionFunction& function, Displayer_ABC&, ValuedListItem* item )
-{
-    item->SetNamed( function );
-    item->SetToolTip( function.GetComments() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AfterActionFunctionList::OnSelectionChange
 // Created: AGE 2007-09-24
 // -----------------------------------------------------------------------------
-void AfterActionFunctionList::OnSelectionChange( Q3ListViewItem* i )
+void AfterActionFunctionList::OnSelectionChange()
 {
     delete request_;
     request_ = 0;
@@ -128,19 +127,23 @@ void AfterActionFunctionList::OnSelectionChange( Q3ListViewItem* i )
     parameters_ = new Q3VGroupBox( tr( "Parameters" ), this );
     builder_.SetParamInterface( *this );
     builder_.SetParentObject( this );
-    if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
+    QTreeWidgetItem* selected = functions_->currentItem();
+    if( selected && selected->data( 0, Qt::UserRole ).isValid() )
     {
-        const AfterActionFunction* function = item->GetValue< const AfterActionFunction >();
-        tools::Iterator< const AfterActionParameter& > it = function->CreateIterator();
-        while( it.HasMoreElements() )
+        const AfterActionFunction* function = selected->data( 0, Qt::UserRole ).value< const AfterActionFunction* >();
+        if( function )
         {
-            const AfterActionParameter& parameter = it.NextElement();
-            CreateParameter( parameter );
+            tools::Iterator< const AfterActionParameter& > it = function->CreateIterator();
+            while( it.HasMoreElements() )
+            {
+                const AfterActionParameter& parameter = it.NextElement();
+                CreateParameter( parameter );
+            }
         }
     }
     parameters_->show();
     CreateRequestButton();
-    request_->setEnabled( i != 0 );
+    request_->setEnabled( selected != 0 );
 }
 
 namespace
@@ -171,8 +174,13 @@ namespace
 // -----------------------------------------------------------------------------
 void AfterActionFunctionList::Request()
 {
-    if( ValuedListItem* item = static_cast< ValuedListItem* >( functions_->selectedItem() ) )
-        if( const AfterActionFunction* function = item->GetValue< const AfterActionFunction >() )
+    QTreeWidgetItem* selected = functions_->currentItem();
+    if( !selected )
+        return;
+    if( selected->data( 0, Qt::UserRole ).isValid() )
+    {
+        const AfterActionFunction* function = selected->data( 0, Qt::UserRole ).value< const AfterActionFunction* >();
+        if( function )
         {
             IndicatorRequest& request = model_.CreateRequest( *function );
             if( timeGroup_->isChecked() )
@@ -182,6 +190,7 @@ void AfterActionFunctionList::Request()
                 boost::bind( &actions::gui::Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );
             request.Commit();
         }
+    }
 }
 
 // -----------------------------------------------------------------------------
