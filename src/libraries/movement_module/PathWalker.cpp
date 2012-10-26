@@ -99,7 +99,7 @@ bool PathWalker::ComputeFutureObjectCollision( const wrapper::View& entity, cons
 // -----------------------------------------------------------------------------
 bool PathWalker::IsMovingOn( const Path_ABC& path ) const
 {
-    return path_ ? path == *path_ : false;
+    return path_ && path == *path_;
 }
 
 //-----------------------------------------------------------------------------
