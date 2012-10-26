@@ -582,12 +582,16 @@ int PathWalker::Move( const boost::shared_ptr< PathResult >& pPath, const wrappe
 // Name: PathWalker::MoveSuspended
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void PathWalker::MoveSuspended( const boost::shared_ptr< PathResult >& pPath ) const
+void PathWalker::MoveSuspended( const boost::shared_ptr< PathResult >& pPath, const wrapper::View& entity ) const
 {
     if( !path_ && !bForcePathCheck_ )
         ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Move cannot be suspended" );
     if( path_ && path_ == pPath )
         bForcePathCheck_ = true;
+    speed_ = 0;
+    wrapper::Effect effect( entity[ "movement" ] );
+    effect[ "speed" ] = 0;
+    effect.Post();
 }
 
 // -----------------------------------------------------------------------------

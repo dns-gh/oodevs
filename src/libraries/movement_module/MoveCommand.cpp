@@ -181,11 +181,12 @@ void MoveCommand::Execute( const wrapper::View& /*parameters*/, const wrapper::V
 // Name: MoveCommand::ExecutePaused
 // Bypassd: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void MoveCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+void MoveCommand::ExecutePaused( const wrapper::View& /*parameters*/, const wrapper::View& model ) const
 {
     if( pMainPath_.get() )
     {
-        pathWalker_->MoveSuspended( pMainPath_ );
+        const wrapper::View& entity = model[ "entities" ][ identifier_ ];
+        pathWalker_->MoveSuspended( pMainPath_, entity );
         executionSuspended_ = true;
     }
     PostCallback( PathWalker::ePaused );

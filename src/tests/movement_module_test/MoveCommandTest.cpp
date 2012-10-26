@@ -157,9 +157,10 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( movement_command_in_paused_execution_sends_paused_event, StartedFixture )
+BOOST_FIXTURE_TEST_CASE( movement_command_in_paused_execution_sends_paused_event_and_sets_speed_to_zero, StartedFixture )
 {
     commands.Pause( command );
+    ExpectEffect( entity[ "movement" ], sword::test::MakeModel( "speed", 0 ) );
     ExpectCallbackEvent( sword::movement::PathWalker::ePaused );
     ExecuteCommands();
 }
