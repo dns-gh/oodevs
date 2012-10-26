@@ -38,7 +38,8 @@ namespace
             ::hla::MockInteractionNotification< Interaction > notification;
             ::hla::Interaction< Interaction > interaction( notification );
             hla::MockInteractionHandler* handler = new hla::MockInteractionHandler();
-            MOCK_EXPECT( federate.RegisterInteraction ).once().with( name, mock::any, true, true ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( *handler ) ) );
+            std::auto_ptr< ::hla::InteractionHandler_ABC > handlerPtr( handler );
+            MOCK_EXPECT( federate.RegisterInteraction ).once().with( name, mock::any, true, true ).calls( boost::bind( &hla::Interaction_ABC::SetHandler, _2, boost::ref( handlerPtr ) ) );
             BOOST_CHECK( builder.Build( interaction ) );
             mock::verify();
             mock::sequence s;

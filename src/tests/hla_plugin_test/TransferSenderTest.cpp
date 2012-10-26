@@ -67,8 +67,8 @@ namespace
         {
             BOOST_REQUIRE( transferInteraction );
             BOOST_REQUIRE( ackInteraction );
-            transferInteraction->SetHandler( *transferHandler );
-            ackInteraction->SetHandler( *ackHandler );
+            transferInteraction->SetHandler( std::auto_ptr< ::hla::InteractionHandler_ABC >( transferHandler ) );
+            ackInteraction->SetHandler( std::auto_ptr< ::hla::InteractionHandler_ABC >( ackHandler ) );
         }
         ~RprSenderFixture()
         {
@@ -342,8 +342,8 @@ namespace
         {
             BOOST_REQUIRE( requestInteraction );
             BOOST_REQUIRE( offerInteraction );
-            requestInteraction->SetHandler( *requestHandler );
-            offerInteraction->SetHandler( *offerHandler );
+            requestInteraction->SetHandler( std::auto_ptr< ::hla::InteractionHandler_ABC >( requestHandler ) );
+            offerInteraction->SetHandler( std::auto_ptr< ::hla::InteractionHandler_ABC >( offerHandler ) );
         }
         
         template <typename T>
