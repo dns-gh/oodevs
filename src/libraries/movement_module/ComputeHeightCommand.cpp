@@ -27,6 +27,15 @@ ComputeHeightCommand::ComputeHeightCommand( const wrapper::View& /*parameters*/,
 }
 
 // -----------------------------------------------------------------------------
+// Name: ComputeHeightCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void ComputeHeightCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ComputeHeightCommand::Execute
 // Created: MCO 2012-03-12
 // -----------------------------------------------------------------------------

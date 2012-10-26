@@ -24,6 +24,15 @@ TogglePerceptionCommand::TogglePerceptionCommand( const wrapper::View& /*paramet
 }
 
 // -----------------------------------------------------------------------------
+// Name: TogglePerceptionCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void TogglePerceptionCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: TogglePerceptionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

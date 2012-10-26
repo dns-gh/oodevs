@@ -42,6 +42,15 @@ DirectFireCommand::~DirectFireCommand()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DirectFireCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void DirectFireCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // $$$$ MCO 2012-10-26: move code from destructor in here and use "entity" in "direct fire pion"
+}
+
+// -----------------------------------------------------------------------------
 // Name: DirectFireCommand::Execute
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------

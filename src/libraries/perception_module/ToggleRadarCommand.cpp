@@ -25,6 +25,15 @@ ToggleRadarCommand::ToggleRadarCommand( const wrapper::View& /*parameters*/, con
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ToggleRadarCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void ToggleRadarCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
 namespace
 {
     std::string FindRadar( unsigned int radarClass, size_t entity )

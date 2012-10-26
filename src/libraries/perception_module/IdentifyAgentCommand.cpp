@@ -27,6 +27,15 @@ IdentifyAgentCommand::IdentifyAgentCommand( const wrapper::View& /*parameters*/,
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: IdentifyAgentCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void IdentifyAgentCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
 struct AgentVisitor : private boost::noncopyable
 {
     AgentVisitor( wrapper::Effect& effect, bool recordMode )

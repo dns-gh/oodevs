@@ -26,6 +26,15 @@ ToggleLocalizedPerceptionCommand::ToggleLocalizedPerceptionCommand( const wrappe
 }
 
 // -----------------------------------------------------------------------------
+// Name: ToggleLocalizedPerceptionCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void ToggleLocalizedPerceptionCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ToggleLocalizedPerceptionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

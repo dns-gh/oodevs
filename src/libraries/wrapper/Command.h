@@ -44,8 +44,12 @@ namespace detail
             WRAPPER_CATCH( "creating" )
         }
         static void Destroy( void* command,
-            const SWORD_Model* /*parameters*/, const SWORD_Model* /*model*/, void* /*context*/ )
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
+            WRAPPER_TRY
+                if( command )
+                    static_cast< const T* >( command )->Destroy( parameters, model );
+            WRAPPER_CATCH( "destroying" )
             delete static_cast< T* >( command );
         }
         static void Execute( const void* command,
@@ -77,8 +81,12 @@ namespace detail
             WRAPPER_CATCH( "creating" )
         }
         static void Destroy( void* command,
-            const SWORD_Model* /*parameters*/, const SWORD_Model* /*model*/, void* /*context*/ )
+            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
+            WRAPPER_TRY
+                if( command )
+                    static_cast< const T* >( command )->Destroy( parameters, model );
+            WRAPPER_CATCH( "destroying" )
             delete static_cast< T* >( command );
         }
         static void Execute( const void* command,

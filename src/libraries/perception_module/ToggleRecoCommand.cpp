@@ -25,6 +25,15 @@ ToggleRecoCommand::ToggleRecoCommand( const wrapper::View& /*parameters*/, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ToggleRecoCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void ToggleRecoCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ToggleRecoCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

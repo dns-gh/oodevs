@@ -23,6 +23,15 @@ VisionCommand::VisionCommand( const wrapper::View& /*parameters*/, const wrapper
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: VisionCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void VisionCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
 namespace
 {
     std::string CheckMode( const wrapper::View& mode )

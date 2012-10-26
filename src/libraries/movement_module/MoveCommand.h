@@ -52,6 +52,7 @@ public:
 
     //! @name Operations
     //@{
+    void Destroy( const wrapper::View& parameters, const wrapper::View& model ) const;
     void Execute( const wrapper::View& parameters, const wrapper::View& model ) const;
     void ExecutePaused( const wrapper::View& parameters, const wrapper::View& model ) const;
     //@}

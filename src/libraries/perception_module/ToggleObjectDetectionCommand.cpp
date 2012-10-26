@@ -25,6 +25,15 @@ ToggleObjectDetectionCommand::ToggleObjectDetectionCommand( const wrapper::View&
 }
 
 // -----------------------------------------------------------------------------
+// Name: ToggleObjectDetectionCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void ToggleObjectDetectionCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ToggleObjectDetectionCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

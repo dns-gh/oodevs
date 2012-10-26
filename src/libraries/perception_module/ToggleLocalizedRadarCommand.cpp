@@ -44,6 +44,15 @@ ToggleLocalizedRadarCommand::ToggleLocalizedRadarCommand( const wrapper::View& /
 }
 
 // -----------------------------------------------------------------------------
+// Name: ToggleLocalizedRadarCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void ToggleLocalizedRadarCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ToggleLocalizedRadarCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

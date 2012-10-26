@@ -24,6 +24,15 @@ FollowCommand::FollowCommand( const wrapper::View& /*parameters*/, const wrapper
 }
 
 // -----------------------------------------------------------------------------
+// Name: FollowCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void FollowCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: FollowCommand::Execute
 // Created: SLI 2012-10-23
 // -----------------------------------------------------------------------------

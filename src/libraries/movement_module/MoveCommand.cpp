@@ -65,6 +65,14 @@ MoveCommand::~MoveCommand() // $$$$ _RC_ SLI 2012-01-02: moved from StopAction
         pMainPath_->DecRef();
         executionSuspended_ = false;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MoveCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
     //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
 }
 

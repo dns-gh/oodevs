@@ -26,6 +26,15 @@ FloodCommand::FloodCommand( const wrapper::View& /*parameters*/, const wrapper::
 }
 
 // -----------------------------------------------------------------------------
+// Name: FloodCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void FloodCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: FloodCommand::Execute
 // Created: LGY 2012-06-12
 // -----------------------------------------------------------------------------

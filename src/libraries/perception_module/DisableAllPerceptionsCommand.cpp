@@ -26,6 +26,15 @@ DisableAllPerceptionsCommand::DisableAllPerceptionsCommand( const wrapper::View&
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: DisableAllPerceptionsCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void DisableAllPerceptionsCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
 namespace
 {
     void Deactivate( const wrapper::View& perception )

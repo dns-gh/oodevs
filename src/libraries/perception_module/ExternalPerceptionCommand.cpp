@@ -25,6 +25,15 @@ ExternalPerceptionCommand::ExternalPerceptionCommand( const wrapper::View& /*par
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExternalPerceptionCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void ExternalPerceptionCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExternalPerceptionCommand::Execute
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------

@@ -24,6 +24,15 @@ OrientateCommand::OrientateCommand( const wrapper::View& /*parameters*/, const w
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrientateCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void OrientateCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrientateCommand::Execute
 // Created: MCO 2012-03-09
 // -----------------------------------------------------------------------------

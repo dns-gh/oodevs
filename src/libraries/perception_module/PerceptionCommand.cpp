@@ -24,6 +24,15 @@ PerceptionCommand::PerceptionCommand( const wrapper::View& /*parameters*/, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PerceptionCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void PerceptionCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PerceptionCommand::Execute
 // Created: SLI 2012-03-16
 // -----------------------------------------------------------------------------

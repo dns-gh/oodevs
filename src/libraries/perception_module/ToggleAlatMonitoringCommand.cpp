@@ -39,6 +39,15 @@ ToggleAlatMonitoringCommand::ToggleAlatMonitoringCommand( const wrapper::View& /
 }
 
 // -----------------------------------------------------------------------------
+// Name: ToggleAlatMonitoringCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void ToggleAlatMonitoringCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ToggleAlatMonitoringCommand::Execute
 // Created: SLI 2012-07-26
 // -----------------------------------------------------------------------------

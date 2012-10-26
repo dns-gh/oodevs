@@ -25,6 +25,15 @@ ToggleRecognitionPointCommand::ToggleRecognitionPointCommand( const wrapper::Vie
 }
 
 // -----------------------------------------------------------------------------
+// Name: ToggleRecognitionPointCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void ToggleRecognitionPointCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ToggleRecognitionPointCommand::Execute
 // Created: SLI 2012-03-20
 // -----------------------------------------------------------------------------

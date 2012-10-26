@@ -24,6 +24,15 @@ MagicMoveCommand::MagicMoveCommand( const wrapper::View& /*parameters*/, const w
 }
 
 // -----------------------------------------------------------------------------
+// Name: MagicMoveCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void MagicMoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MagicMoveCommand::Execute
 // Created: SLI 2012-10-23
 // -----------------------------------------------------------------------------

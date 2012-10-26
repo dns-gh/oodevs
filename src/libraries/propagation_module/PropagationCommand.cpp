@@ -22,6 +22,15 @@ PropagationCommand::PropagationCommand( const wrapper::View& /*parameters*/, con
 }
 
 // -----------------------------------------------------------------------------
+// Name: PropagationCommand::Destroy
+// Created: MCO 2012-10-26
+// -----------------------------------------------------------------------------
+void PropagationCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PropagationCommand::Execute
 // Created: LGY 2012-09-20
 // -----------------------------------------------------------------------------
