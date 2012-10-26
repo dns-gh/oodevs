@@ -336,10 +336,9 @@ void RolePion_Location::SendFullState( client::UnitAttributes& message ) const
 // Name: RolePion_Location::Update
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void RolePion_Location::Update( bool bIsDead )
+void RolePion_Location::Update( bool /*bIsDead*/ )
 {
-    if( bIsDead )
-        entity_[ "movement/speed" ] = 0; // $$$$ MCO : data should not be changed without using an effect !
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
