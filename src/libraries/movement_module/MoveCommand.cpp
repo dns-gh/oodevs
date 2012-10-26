@@ -60,10 +60,7 @@ MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters,
 void MoveCommand::Destroy( const wrapper::View& /*parameters*/, const wrapper::View& /*model*/ ) const // $$$$ _RC_ SLI 2012-01-02: moved from StopAction
 {
     if( pMainPath_ )
-    {
-        pathWalker_->MoveCanceled( pMainPath_ );
         pMainPath_->DecRef();
-    }
     //PostCallback( PathWalker::eFinished ); // $$$$ _RC_ SLI 2012-01-03: remove it?
 }
 
