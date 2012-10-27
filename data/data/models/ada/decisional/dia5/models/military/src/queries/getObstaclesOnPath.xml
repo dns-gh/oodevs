@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="queries.getObstaclesOnPath" source-version="1.0.0">
-    <description>Renvoie les objects considérés comme &quot;obstacles&quot; à la mobilité le long du chemin (itinéraire calculé) lors du déplacement d'une unité. Les obstacles sont renvoyé un par un.</description>
-    <target name="objectOnPath">
-        <type>
-            <class name="world.Object"/>
-        </type>
-    </target>
-</query>

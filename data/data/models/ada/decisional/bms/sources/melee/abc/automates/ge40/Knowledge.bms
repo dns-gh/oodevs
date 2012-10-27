@@ -1,6 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/melee/abc/automates/ge40/Knowledge.bms"] = true
-
-precache_on_type = false
-
-precache_on_represented_object = false

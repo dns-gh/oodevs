@@ -1,5 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/humus/humus_population/asymetriques/common/pion/Types.bms"] = true
-
-etypeAttentat_assasinatOfficier = 0
-etypeAttentat_destructionComposanteMajeure = 1

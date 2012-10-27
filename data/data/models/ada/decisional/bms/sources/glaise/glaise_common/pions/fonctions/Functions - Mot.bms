@@ -1,9 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_common/pions/fonctions/Functions - Mot.bms"] = true
-
---[[// *****************************************************************************
-]]--[[// Fonctions Communes aux pions
-]]--[[// Thème : Motivations
-]]--[[// *****************************************************************************
-]]--[[// Ces fonctions ont été transférées dans le fichier commun aux pions et aux automates
-]]

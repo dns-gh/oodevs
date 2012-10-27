@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.queries.getTaskParameters" source-version="1.0.0">
-  <description>Retourne les paramètres de la mission courante de l'entité</description>
-  <target name="k">
-    <type>
-      <class name="directia.core.Object"/>
-    </type>
-  </target>
-</query>

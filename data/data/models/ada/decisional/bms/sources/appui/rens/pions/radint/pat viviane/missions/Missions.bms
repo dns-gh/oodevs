@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/rens/pions/radint/pat viviane/missions/Missions.bms"] = true
-
---[[//=============================================================================
-]]--[[// Cougar Horizon
-]]--[[//=============================================================================
-]]include "Appui/Rens/Pions/Radint/Pat Viviane/Missions/RenseignerSur.bms"

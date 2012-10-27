@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="crowd.roles.Foule" source-version="1.0.0" extends="behaviors.roles.Crowd"/>

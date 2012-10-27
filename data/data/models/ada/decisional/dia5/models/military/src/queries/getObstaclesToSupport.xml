@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="queries.getObstaclesToSupport" source-version="1.0.0">
-    <description>Récupérer les obstacles qui posent problème aux amis. </description>
-    <target name="obstacle">
-        <type>
-            <class name="world.EngineerObject"/>
-        </type>
-    </target>
-</query>

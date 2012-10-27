@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/artdsa/pions/satcp mistral/Globals.bms"] = true
-
-include "Appui/ArtDsa/Pions/Common/Globals.bms"
-
-include "Appui/ArtDsa/Pions/Satcp Mistral/Parameters.bms"
-

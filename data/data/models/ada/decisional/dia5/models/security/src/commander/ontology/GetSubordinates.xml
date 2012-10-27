@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.ontology.GetSubordinates" source-version="1.0.0">
-    <description>Return all the agent units subordinate to the agent commander.</description>
-    <target name="subordinate">
-        <type>
-            <class name="commander.ontology.Subordinate"/>
-        </type>
-    </target>
-</query>

@@ -1,5 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/Functions.bms"] = true
-
-include "Appui/ArtDsa/Automates/Sgpt Samp Hawk/Fonctions/Fonctions - Listes.bms"
-

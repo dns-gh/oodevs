@@ -1,4 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/common/Behaviors.bms"] = true
-
-include "Common/Actions.bms"

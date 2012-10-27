@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.RecoverHumanTransporters" source-version="1.0.0">
-    <description>Recovers human transporters</description>
-    <links>
-        <link name="manageFragOrder" skill="agent.skills.ManageFragOrder"/>
-    </links>
-</skill>

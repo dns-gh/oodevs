@@ -1,3 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/common/automates/Perception.bms"] = true
-

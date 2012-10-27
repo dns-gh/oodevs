@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.ontology.classes.Agent" source-version="1.0.0" abstract="true" extends="agent.ontology.classes.Human">
-    <description>A generic Unit from a simulated agent point of view.&#xD;
-A Unit can have, in certain condition, a specific status, such as:&#xD;
-•	Victim who can be transported,&#xD;
-•	Prisoner, Terrorist and offender, who can be jailed, arrested, destroyed.&#xD;
-•	Medical unit (such as TC2 for Military units) who can evacuate victims.&#xD;
-</description>
-</class>

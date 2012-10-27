@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/alat/pions/pc/Globals.bms"] = true
-
-include "Appui/Alat/Pions/Common/Globals.bms"
-
-include "Appui/Alat/Pions/PC/Parameters.bms"
-

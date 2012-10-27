@@ -1,4 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_common/Behaviors.bms"] = true
-
-include "Glaise/Glaise_Common/Actions.bms"

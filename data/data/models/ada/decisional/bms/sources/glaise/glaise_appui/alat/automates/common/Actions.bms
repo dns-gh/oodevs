@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/alat/automates/common/Actions.bms"] = true
-
---[[//actions communes aux Sgpts ALAT
-]]--[[//------------------------------------------------------------------------------
-]]include "glaise/glaise_Appui/Alat/Automates/Common/Actions/Actions - Manoeuvre.bms"
-

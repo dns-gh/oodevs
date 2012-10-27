@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="platoon.combat.support.log.skills.Convoyer" source-version="1.0.0">
-	<parameters/>
-	<links>
-		<link name="moveAlong" skill="platoon.skills.MoveAlong"/>
-	</links>
-</skill>

@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/common/moteur/functions/PionsRENS.bms"] = true
-
---[[// *****************************************************************************
-]]--[[// globals
-]]--[[// *****************************************************************************
-]]

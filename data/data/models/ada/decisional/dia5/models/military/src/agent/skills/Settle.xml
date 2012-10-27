@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<skill name="agent.skills.Settle" source-version="1.0.0" xmlns="http://www.masagroup.net/directia/schemas/bm">
-    <modifiers/>
-	<links>
-		<link name="moveToward" skill="agent.skills.actions.MoveAndTakePosition"/>
-	</links>
-	<resources/>
-</skill>

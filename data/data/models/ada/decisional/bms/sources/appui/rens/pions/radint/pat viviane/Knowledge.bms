@@ -1,3 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/rens/pions/radint/pat viviane/Knowledge.bms"] = true
-

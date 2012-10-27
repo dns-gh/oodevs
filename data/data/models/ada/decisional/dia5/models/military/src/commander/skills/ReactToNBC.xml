@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="commander.skills.ReactToNBC" source-version="1.0.0">
-    <description>Gere le comportement lors de la rencontre d'un objet NBC</description>
-    <links>
-        <link name="manageFragOrder" skill="commander.skills.ManageFragOrder"/>
-    </links>
-</skill>

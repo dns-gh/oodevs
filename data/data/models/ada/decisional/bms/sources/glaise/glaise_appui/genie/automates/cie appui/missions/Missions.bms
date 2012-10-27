@@ -1,6 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/genie/automates/cie appui/missions/Missions.bms"] = true
-
-include "glaise/glaise_appui/Genie/Automates/Cie Appui/Missions/SeDeployer/SeDeployer - CDT.bms"
-
-include "glaise/glaise_appui/Genie/Automates/Cie Appui/Missions/SeDeployer/SeDeployer - MRT.bms"

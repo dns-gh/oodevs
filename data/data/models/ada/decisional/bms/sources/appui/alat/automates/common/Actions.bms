@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/alat/automates/common/Actions.bms"] = true
-
---[[// Common AAC Squadron Actions
-]]--[[//----------------------------
-]]include "Appui/Alat/Automates/Common/Actions/Actions - Manoeuvre.bms"
-

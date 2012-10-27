@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resource xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.resources.Launcher" source-version="1.0.0">
-    <description>Models launching or firing effectors</description>
-</resource>

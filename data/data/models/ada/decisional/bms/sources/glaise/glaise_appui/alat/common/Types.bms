@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/alat/common/Types.bms"] = true
-
-include "glaise/glaise_Appui/Alat/Pions/Common/Types.bms"
-
-include "glaise/glaise_Appui/Alat/Automates/Common/Types.bms"
-

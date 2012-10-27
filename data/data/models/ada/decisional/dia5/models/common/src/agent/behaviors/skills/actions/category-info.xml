@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<category xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions" source-version="1.0.0">
-    <description>The present category contains action skills. Action skills are for an agent to enact the decisions resulting from the execution of decision skills. &#xD;
-&#xD;
-&#xD;
-&#xD;
-</description>
-    <glossary/>
-</category>

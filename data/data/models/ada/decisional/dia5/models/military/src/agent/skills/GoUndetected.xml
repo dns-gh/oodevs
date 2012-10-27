@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.GoUndetected" source-version="1.0.0">
-    <description>Ce skill ne gère aucune règle décisionnelle, il active simplement l'effet magique d'invisibilité de l'agent. Il est utilisé, la plupart du temps par le role des pions représentant les acteurs asymétriques (teroristes, sniper etc.).</description>
-    <body-type>
-        <class name="world.PlatoonAlly"/>
-    </body-type>
-</skill>

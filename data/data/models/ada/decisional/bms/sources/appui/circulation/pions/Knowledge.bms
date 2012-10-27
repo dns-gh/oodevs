@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/circulation/pions/Knowledge.bms"] = true
-
-precache_on_type = true
-
-precache_on_represented_object = true
-

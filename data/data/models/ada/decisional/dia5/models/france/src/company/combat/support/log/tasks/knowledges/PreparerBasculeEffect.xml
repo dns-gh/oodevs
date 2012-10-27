@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.combat.support.log.tasks.knowledges.PreparerBasculeEffect" source-version="1.0.0" extends="commander.tasks.knowledges.CompanyTask">
-  <methods>
-    <method name="getPosition"/>
-    <method name="getAutomat"/>
-  </methods>
-</class>

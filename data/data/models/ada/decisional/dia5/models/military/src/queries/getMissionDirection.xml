@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="queries.getMissionDirection" source-version="1.0.0">
-    <description>Renvoie la direction dangereuse de la mission en cours. Renvoie 'nil' si l'agent n'a pas de mission assignée.</description>
-    <target name="direction">
-        <type>
-            <class name="world.Direction"/>
-        </type>
-    </target>
-</query>

@@ -1,9 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/genie/automates/Behaviors.bms"] = true
-
-include "Common/Automates/Behaviors.bms"
-
-include "Common/Automates/Behaviors/Medo/Behaviors - Medo - GEN.bms"
-
-
-

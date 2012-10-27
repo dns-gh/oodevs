@@ -1,4 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/alat/common/Fonctions.bms"] = true
-
-include "Appui/Alat/Common/Fonctions/Fonctions - Misc.bms"

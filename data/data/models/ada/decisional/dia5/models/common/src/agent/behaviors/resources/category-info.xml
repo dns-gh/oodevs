@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<category xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.resources" source-version="1.0.0">
-    <description>Actions may require resources, which can be limited. For an agent, to arbitrate between actions competing for shared resources, its role should declare an upper bound for that resource its actions should should declare their needs for that resource. </description>
-    <glossary/>
-</category>

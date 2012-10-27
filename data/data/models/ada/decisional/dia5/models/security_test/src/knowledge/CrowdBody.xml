@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="knowledge.CrowdBody" source-version="1.0.0">
-    <realizes>agent.world.AgentBody</realizes>
-    <methods>
-        <method name="demonstrate"/>
-    </methods>
-</class>

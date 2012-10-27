@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.ontology.classes.Company" source-version="1.0.0" abstract="false">
-    <description>Represents for a company the knowledge of its physical abilities. </description>
-    <realizes>agent.world.UnitBody</realizes>
-</class>

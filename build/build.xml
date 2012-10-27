@@ -766,48 +766,6 @@
     data
     ============================================================================
     -->
-    <macrodef name="extract-knowledges">
-        <attribute name="dir"/>
-        <attribute name="tofile"/>
-        <sequential>
-            <concat destfile="@{tofile}" fixlastline="yes">
-                <fileset dir="@{dir}" includes="**/*.xml"/>
-                <filterchain>
-                    <containsregex pattern='.*name="(.*)" source.*knowledge-class="(.*)">' replace='integration.taskKnowledge["\1"] = "\2"'/>
-                </filterchain>
-            </concat>
-        </sequential>
-    </macrodef>
-
-    <target name = "generate-database-common" depends="generate-decisional-files">
-        <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
-    </target>
-
-    <target name="generate-database-crowd" depends="generate-database-common" description= "compile behavior model database for crowd">
-        <bmc src="${models.dir}/crowd/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src" luac="false"/>
-    </target>
-
-    <target name="generate-database-security" depends="generate-database-common"  description=" compile behavior model database for security">
-        <bmc src="${models.dir}/security/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src" luac="false"/>
-        <bmc src="${models.dir}/security_test/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src;${models.dir}/security/src" luac="false"/>
-    </target>
-
-    <target name ="generate-database-military" depends="generate-database-common">
-        <bmc src="${models.dir}/military/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
-    </target>
-
-    <target name="generate-database-france" depends="generate-database-military,generate-database-crowd,generate-database-security" description="compile behavior model database france">
-        <bmc src="${models.dir}/france/src/" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src;${models.dir}/crowd/src;${models.dir}/military/src" luac="false"/>
-        <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
-    </target>
-
-    <target name="generate-database-worldwide" depends="generate-database-military,generate-database-crowd,generate-database-security" description="compile behavior model database worldwide">
-        <bmc src="${models.dir}/worldwide/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/military/src" luac="false"/>
-        <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
-    </target>
-
-    <target name="generate-database" depends="deploy-application-data,generate-database-france,generate-database-worldwide" description="compile all behavior models"/>
-
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg"/>
@@ -820,25 +778,6 @@
             <arg value="${data.dir}/data/terrains"/>
             <arg value="${data.dir}/exercises"/>
         </exec>
-    </target>
-
-    <target name="generate-decisional-files">
-        <echoxml file="${data.dir}/data/models/ada/decisional/decisional.xml">
-            <decisional model-version="${version.project.major}">
-                <RepertoiresSources>
-                    <RepertoireSources namespace="none" directory="bms/sources"/>
-                    <RepertoireSources namespace="net.masagroup" directory="dia5"/>
-                </RepertoiresSources>
-            </decisional>
-        </echoxml>
-        <echoxml file="${data.dir}/data/models/training/decisional/decisional.xml">
-            <decisional model-version="${version.project.major}">
-                <RepertoiresSources>
-                    <RepertoireSources namespace="none" directory="bms/sources"/>
-                    <RepertoireSources namespace="net.masagroup" directory="dia5"/>
-                </RepertoiresSources>
-            </decisional>
-        </echoxml>
     </target>
 
     <target name="deploy-application-data" description="deploy applications data to run directory">
@@ -1769,9 +1708,8 @@
         <update name="qt"/>
         <update name="boost"/>
         <update name="masalife/brain" version="${masalife.version}"/>
-        <update name="masalife/brain" version="${masalife.version}" package="bmc" todir="${bin.dir}"/>
-        <update name="masalife/brain" version="${masalife.version}" package="directia.core.bml" todir="${models.dir}/directia.core" />
         <update name="masalife/brain" version="${masalife.version}" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
+        <update name="models" package="data" todir="${data.dir}"/>
         <update name="hla" package="include" todir="${include.dir}"/>
         <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="hla" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
@@ -1802,8 +1740,8 @@
     </target>
 
     <target name="configure" description="update packages and decisional"
-        depends="configure-update,deploy-qt-translations,generate-database,
-            generate-symbols"/>
+        depends="configure-update,deploy-qt-translations,
+            deploy-application-data,generate-symbols"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>

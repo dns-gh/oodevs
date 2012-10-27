@@ -1,9 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/artdsa/pions/pc mistral/Globals.bms"] = true
-
-include "Appui/ArtDsa/Pions/Common/Globals.bms"
-
-include "Appui/ArtDsa/Pions/PC MISTRAL/Parameters.bms"
-
-include "Appui/ArtDsa/Pions/PC MISTRAL/Macros.bms"
-

@@ -1,8 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/artdsa/automates/common/Motivations.bms"] = true
-
---[[//on inclue uniquement les variables d'etat des pions. Les automates les utilisent
-]]--[[//comment interface pour communiquer avec les pions
-]]
-include "Common/Pions/Motivations v3/Etats.bms"
-

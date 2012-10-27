@@ -1,5 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/common/pions/Perception.bms"] = true
-
---[[//contient des T_Pions
-]]

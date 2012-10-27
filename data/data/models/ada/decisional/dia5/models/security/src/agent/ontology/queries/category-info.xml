@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<category xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.ontology.queries" source-version="1.0.0">
-    <description>Queries query the simulation and are used by behaviors to retrieve relevant object sets.  </description>
-    <glossary/>
-</category>

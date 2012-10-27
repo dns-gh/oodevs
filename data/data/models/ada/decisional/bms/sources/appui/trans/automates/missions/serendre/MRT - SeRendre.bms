@@ -1,3 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/appui/trans/automates/missions/serendre/MRT - SeRendre.bms"] = true
-

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resource xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.resources.BuildCapacity" source-version="1.0.0">
-  <description>Représente la capacité physique de construction d'une entité.</description>
-</resource>

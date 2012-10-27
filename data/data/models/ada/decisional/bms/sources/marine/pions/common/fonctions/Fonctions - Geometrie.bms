@@ -1,3 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/marine/pions/common/fonctions/Fonctions - Geometrie.bms"] = true
-

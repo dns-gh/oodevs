@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<category xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent" source-version="1.0.0">
-    <description>The library provides a generic role to whom may be assigned any defined mission. </description>
-    <glossary/>
-</category>

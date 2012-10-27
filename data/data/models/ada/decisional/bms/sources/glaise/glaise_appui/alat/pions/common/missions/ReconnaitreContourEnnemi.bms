@@ -1,3 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/ReconnaitreContourEnnemi.bms"] = true
-

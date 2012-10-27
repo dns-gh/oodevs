@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.ResourceNode" source-version="1.0.0" extends="agent.world.Destination">
-    <description>Any simulation entity that produces, stocks and consumes resources</description>
-</interface>

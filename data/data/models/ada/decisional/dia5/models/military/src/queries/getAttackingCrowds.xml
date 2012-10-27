@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="queries.getAttackingCrowds" source-version="1.0.0">
-	<target>
-		<type>
-			<class name="world.Crowd"/>
-		</type>
-	</target>
-</query>

@@ -1,8 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa mp/Parameters.bms"] = true
-
-function M_POLY_DOCTRINE_NB_PISTE_TIR_PAR_SECTION()
-    return 2
-end
-
-

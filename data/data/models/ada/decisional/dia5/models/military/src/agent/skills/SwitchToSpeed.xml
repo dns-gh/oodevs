@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.skills.SwitchToSpeed" source-version="1.0.0">
-    <description>For the agent, to switch from safety posture to standard posture.</description>
-    <body-type>
-        <class name="properties.Body"/>
-    </body-type>
-</skill>

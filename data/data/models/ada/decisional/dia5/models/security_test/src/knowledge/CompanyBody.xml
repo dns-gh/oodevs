@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="knowledge.CompanyBody" source-version="1.0.0" abstract="false">
-    <realizes>agent.world.AgentBody</realizes>
-</class>

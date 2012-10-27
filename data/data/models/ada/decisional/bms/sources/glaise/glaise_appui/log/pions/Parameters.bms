@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/log/pions/Parameters.bms"] = true
-
-function M_MODELE_Pion_LOG_DELAI_MISEENPLACE()
-    return 30
-end
-

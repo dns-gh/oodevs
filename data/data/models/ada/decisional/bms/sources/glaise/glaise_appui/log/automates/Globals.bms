@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/log/automates/Globals.bms"] = true
-
-include "glaise/glaise_Common/Automates/Globals.bms"
-
-include "glaise/glaise_Common/Moteur/Functions/AutomatesLOG.bms"
-

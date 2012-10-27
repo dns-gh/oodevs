@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/air/automates/common/Types.bms"] = true
-
---[[// *****************************************************************************
-]]--[[// Structure des automates Air
-]]--[[// *****************************************************************************
-]]

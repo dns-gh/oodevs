@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="company.roles.Automate" source-version="1.0.0" extends="commander.roles.Company">
-    <skills>
-        <skill name="company.skills.Escort"/>
-        <skill name="company.combat.support.art.skills.IlluminationTirSynchronise"/>
-    </skills>
-</role>
