@@ -817,7 +817,7 @@
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,web_control_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,simulation_kernel_test,
                                  integration_decisionnal_test,checkpoint_test,protocol_test,positions_plugin_test,
-                                 actions_test,launcher_test,reports_test,flood_test,client_proxy_test" description="run all tests"/>
+                                 actions_test,launcher_test,flood_test,client_proxy_test" description="run all tests"/>
 
     <target name="3a_test" depends="3a">
         <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt" failonwarning="${failonwarning}"/>
@@ -1248,37 +1248,6 @@
             failonwarning="${failonwarning}"/>
     </target>
 
-    <macrodef name="count">
-        <attribute name="property"/>
-        <attribute name="string"/>
-        <attribute name="file"/>
-        <sequential>
-            <resourcecount property="@{property}">
-                <tokens>
-                    <concat>
-                      <filterchain>
-                          <tokenfilter>
-                              <containsstring contains="@{string}"/>
-                          </tokenfilter>
-                      </filterchain>
-                      <fileset file="@{file}"/>
-                    </concat>
-                </tokens>
-            </resourcecount>
-        </sequential>
-    </macrodef>
-
-    <target name="reports_test" description="check that ada/physical/scipio/Reports.xml and ada/physical/worldwide/Reports.xml contain the same amount of reports">
-        <count property="reports_test.worldwide" string="report id=" file="${data.dir}/data/models/Ada/physical/worldwide/Reports.xml"/>
-        <count property="reports_test.scipio" string="report id=" file="${data.dir}/data/models/Ada/physical/scipio/Reports.xml"/>
-        <fail message="File 'reports.xml' from physical databases doesn't contain the same amount of entries - France:${reports_test.scipio} vs Worldwide:${reports_test.worldwide}">
-            <condition>
-                <not>
-                    <equals arg1="${reports_test.worldwide}" arg2="${reports_test.scipio}"/>
-                </not>
-            </condition>
-        </fail>
-    </target>
 
     <!--
     ============================================================================
