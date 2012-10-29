@@ -18,7 +18,7 @@ static const std::string szADN_Version   = "ADN - " + std::string( tools::AppPro
 
 namespace
 {
-    int RunAdn( int argc, char** argv )
+    int RunAdn( int argc, char** argv, bool silent )
     {
         try
         {
@@ -27,16 +27,22 @@ namespace
         }
         catch( ADN_Exception_ABC& e )
         {
-            QMessageBox::critical( 0, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
+            MT_LOG_ERROR_MSG( e.GetExceptionMessage().c_str() );
+            if( !silent )
+                QMessageBox::critical( 0, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
         }
         catch( std::exception& exception )
         {
             MT_LOG_ERROR_MSG( exception.what() );
-            QMessageBox::critical( 0, "Critical", exception.what() );
+            if( !silent )
+                QMessageBox::critical( 0, "Critical", exception.what() );
         }
         catch( ... )
         {
-            QMessageBox::critical( 0, "Critical", "Unknown error !" );
+            const char* error = "Unknown error !";
+            MT_LOG_ERROR_MSG( error );
+            if( !silent )
+                QMessageBox::critical( 0, "Critical", error );
         }
         return EXIT_FAILURE;
     }
@@ -48,7 +54,9 @@ int main( int argc, char** argv )
     SetConsoleTitle( szADN_Version.c_str() );
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
-    const int nResultCode = RunAdn( argc, argv );
+    const QStringList args = qapp.arguments();
+    const bool silent = std::find( args.begin(), args.end(), "--silent" ) != args.end();
+    const int nResultCode = RunAdn( argc, argv, silent );
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResultCode;
 }

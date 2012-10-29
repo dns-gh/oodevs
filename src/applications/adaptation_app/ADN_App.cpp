@@ -56,6 +56,7 @@ ADN_App::ADN_App( int argc, char** argv )
     desc.add_options()
         ( "input,i" , po::value< std::string >( &inputFile_  )->default_value( "" ), "specify root input file (physical.xml)" )
         ( "output,o", po::value< std::string >( &outputFile_ )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
+        ( "silent", "silent mode" )
         ( "nosymbols,n", "turn off unit symbols view" )
         ( "noreadonly", "disable read-only protection" )
         ;
