@@ -21,7 +21,7 @@ set( FLEX_LIBRARIES
     lmgr_md
     lmgr_dongle_stub
 )
-masa_set_external_library( ANALYSYS_LIBRARIES         analysys_d analysis )
+masa_set_external_library( ANALYSYS_LIBRARIES         analysis_d analysis )
 masa_set_external_library( CORE_LIBRARIES             core_d core )
 masa_set_external_library( DIRECTIA_LIBRARIES         directia-${platform}-mt-gd-4_6 directia-${platform}-mt-4_6 )
 masa_set_external_library( EXCEL_LIBRARIES            excel_d excel )
