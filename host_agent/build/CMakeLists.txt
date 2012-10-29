@@ -4,6 +4,13 @@ enable_testing()
 
 include( ${MASA_MACROS} )
 
+# 4127 conditional expression is constant
+add_flag( CMAKE_CXX_FLAGS "/wd4127" )
+# 4505 'function' : unreferenced local function has been removed
+add_flag( CMAKE_CXX_FLAGS "/wd4505" )
+# set warnings as errors
+add_flag( CMAKE_CXX_FLAGS "/WX" )
+
 set( root_dir ${CMAKE_SOURCE_DIR}/.. )
 
 set( COMPANY "MASA Group" )
