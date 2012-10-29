@@ -29,7 +29,7 @@ Application_ABC::Application_ABC()
     : app_( *qApp )
     , invalidLicense_( true )
 {
-    app_.installEventFilter( this );
+    //app_.installEventFilter( this );
     SetLocale();
     tools::SetCodec();
 }
