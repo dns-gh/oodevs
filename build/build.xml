@@ -1509,44 +1509,44 @@
     ============================================================================
     -->
     <target name="configure-update" description="update package dependencies">
-        <update name="geometry"/>
+        <update name="asciidoc" version="8.6.8"/>
+        <update name="boost"/>
+        <update name="bugtrap"/>
+        <update name="buildtools" version="1"/>
+        <update name="excel"/>
+        <update name="flexlm"/>
+        <update name="gdal"/>
         <update name="geocoord"/>
+        <update name="geometry"/>
+        <update name="geos"/>
+        <update name="hla" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
+        <update name="hla" package="federation_app" todir="${bin.dir}"/>
+        <update name="hla" package="include" todir="${include.dir}"/>
+        <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
+        <update name="iconv"/>
+        <update name="log4cxx"/>
+        <update name="masalife/brain" version="${masalife.version}" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
+        <update name="masalife/brain" version="${masalife.version}"/>
+        <update name="models" package="data" todir="${data.dir}"/>
+        <update name="models" package="terrains" todir="${data.dir}"/>
+        <update name="mongoose"/>
+        <update name="openssl"/>
+        <update name="proj4"/>
+        <update name="protobuf" version="2.3.0"/>
+        <update name="qt"/>
+        <update name="spatialite"/>
+        <update name="steel"/>
+        <update name="svgl"/>
         <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr"/>
         <update name="terrain" package="terraintools_${platform}.zip"/>
         <update name="terrainextractor"/>
-        <update name="qt"/>
-        <update name="boost"/>
-        <update name="masalife/brain" version="${masalife.version}"/>
-        <update name="masalife/brain" version="${masalife.version}" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
-        <update name="models" package="data" todir="${data.dir}"/>
-        <update name="models" package="terrains" todir="${data.dir}"/>
-        <update name="hla" package="include" todir="${include.dir}"/>
-        <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
-        <update name="hla" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
-        <update name="hla" package="federation_app" todir="${bin.dir}"/>
         <update name="tools"/>
-        <update name="log4cxx"/>
-        <update name="flexlm"/>
+        <update name="turtle"/>
+        <update name="vcredist" package="vcredist"/>
+        <update name="xalan-c"/>
         <update name="xerces-c"/>
         <update name="xeumeuleu"/>
-        <update name="xalan-c"/>
-        <update name="svgl"/>
         <update name="zlib"/>
-        <update name="bugtrap"/>
-        <update name="mongoose"/>
-        <update name="gdal"/>
-        <update name="turtle"/>
-        <update name="protobuf" version="2.3.0"/>
-        <update name="vcredist" package="vcredist"/>
-        <update name="openssl"/>
-        <update name="excel"/>
-        <update name="spatialite"/>
-        <update name="steel"/>
-        <update name="geos"/>
-        <update name="iconv"/>
-        <update name="proj4"/>
-        <update name="asciidoc" version="8.6.8"/>
-        <update name="buildtools" version="1"/>
     </target>
 
     <target name="configure" description="update packages and decisional"
