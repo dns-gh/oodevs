@@ -38,7 +38,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
 
     // Data
     config_.reset( new Config() );
-    config_->Parse( app_.argc(), app_.argv() );
+    config_->Parse( argc, argv );
     fileLoaderObserver_.reset( new tools::NullFileLoaderObserver() );
     fileLoader_.reset( new tools::DefaultLoader( *fileLoaderObserver_ ) );
     controllers_.reset( new kernel::Controllers() );
