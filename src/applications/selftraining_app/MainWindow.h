@@ -35,6 +35,7 @@ namespace tools
     class Loader_ABC;
 }
 
+class Application;
 class Config;
 class QStackedWidget;
 class SessionTray;
@@ -54,7 +55,10 @@ class MainWindow : public gui::LanguageChangeObserver_ABC< QMainWindow >
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow( Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient );
+             MainWindow( Application& app, Config& config,
+                         const tools::Loader_ABC& fileLoader,
+                         kernel::Controllers& controllers,
+                         frontend::LauncherClient& launcherClient );
     virtual ~MainWindow();
     //@}
 

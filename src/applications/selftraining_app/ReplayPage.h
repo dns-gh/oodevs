@@ -29,6 +29,7 @@ namespace tools
     class Loader_ABC;
 }
 
+class Application;
 class ProgressPage;
 class ExerciseList;
 class SessionList;
@@ -46,7 +47,9 @@ class ReplayPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
+             ReplayPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous,
+                         const frontend::Config& config, const tools::Loader_ABC& fileLoader,
+                         kernel::Controllers& controllers, frontend::LauncherClient& launcher );
     virtual ~ReplayPage();
     //@}
 

@@ -32,6 +32,7 @@ namespace tools
     class Loader_ABC;
 }
 
+class Application;
 class Config;
 
 // =============================================================================
@@ -45,7 +46,12 @@ class SelfTrainingPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             SelfTrainingPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter );
+             SelfTrainingPage( Application& app, Q3WidgetStack* pages,
+                               Page_ABC& previous, const Config& config,
+                               const tools::Loader_ABC& fileLoader,
+                               kernel::Controllers& controllers,
+                               frontend::LauncherClient& launcher,
+                               gui::LinkInterpreter_ABC& interpreter );
     virtual ~SelfTrainingPage();
     //@}
 

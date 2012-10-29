@@ -25,7 +25,7 @@ ADN_ColorNameSelector::ADN_ColorNameSelector( QWidget* parent )
     setMinimumSize( 25, 25 );
     setMaximumWidth( 3 * height() );
     connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
+    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
     pConnector_ = new ADN_Connector_String< ADN_ColorNameSelector >( this );
 }
 

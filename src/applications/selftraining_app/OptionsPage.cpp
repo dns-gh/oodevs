@@ -32,10 +32,12 @@ namespace bfs = boost::filesystem;
 // Name: OptionsPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, Config& config,
+OptionsPage::OptionsPage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+                          Page_ABC& previous, Config& config,
                           const tools::Loader_ABC& loader, kernel::Controllers& controllers,
                           frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonApply, launcher )
+    , app_               ( app )
     , parent_            ( parent )
     , tabs_              ( new QTabWidget() )
     , config_            ( config )
@@ -383,15 +385,14 @@ void OptionsPage::ApplyAction()
 {
     CreateDataDirectory();
     assert( hasChanged_ );
-    Application& application = static_cast< Application& >( *qApp );
     if( languageHasChanged_ )
-        application.DeleteTranslators();
+        app_.DeleteTranslators();
     Commit();
     if( languageHasChanged_ )
     {
-        application.SetLocale();
-        application.CreateTranslators();
-        application.InitializeLayoutDirection();
+        app_.SetLocale();
+        app_.CreateTranslators();
+        app_.InitializeLayoutDirection();
     }
     languageHasChanged_ = false;
     hasChanged_ = false;
@@ -407,7 +408,7 @@ void OptionsPage::Commit()
     settings.setValue( "/Common/Language", selectedLanguage_.c_str() );
     settings.setValue( "/Common/DataDirectory", selectedDataDir_.c_str() );
 
-    static_cast< Application* >( qApp )->GetLauncher().SetRootDir( selectedDataDir_ );
+    app_.GetLauncher().SetRootDir( selectedDataDir_ );
     config_.SetRootDir( selectedDataDir_ );
 }
 

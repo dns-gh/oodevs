@@ -25,12 +25,12 @@
 // Name: ScenarioJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ScenarioJoinPage::ScenarioJoinPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
+ScenarioJoinPage::ScenarioJoinPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonJoin, launcher )
     , controllers_      ( controllers )
     , config_           ( config )
     , fileLoader_       ( fileLoader )
-    , progressPage_     ( new ProgressPage( pages, *this ) )
+    , progressPage_     ( new ProgressPage( app, pages, *this ) )
     , exercise_         ( 0 )
 {
     setName( "ScenarioJoinPage" );

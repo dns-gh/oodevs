@@ -26,7 +26,7 @@ ADN_Nature_GUI::ADN_Nature_GUI( QGridLayout* parent, int row /*= 0*/ )
 {
     pConnector_ = new ADN_Connector_String< ADN_Nature_GUI >( this );
     connect( this, SIGNAL( textChanged( const QString& ) ), SLOT( OnTextChanged( const QString& ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL( OpenModeToggled() ), SLOT( UpdateEnableState() ) );
+    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), SLOT( UpdateEnableState() ) );
 }
 
 // -----------------------------------------------------------------------------

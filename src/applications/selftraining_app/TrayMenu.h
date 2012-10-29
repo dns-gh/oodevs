@@ -34,6 +34,12 @@ private slots:
     //@{
     void OnQuit();
     //@}
+
+private:
+    //! @name Member data
+    //@{
+    QWidget* main_;
+    //@}
 };
 
 #endif // __TrayMenu_h_

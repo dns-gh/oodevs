@@ -31,7 +31,7 @@ ADN_CheckBox::ADN_CheckBox(QWidget* parent, const char * name)
 {
     pConnector_=new ADN_Connector_Bool<ADN_CheckBox>(this);
     connect(this        ,SIGNAL( toggled( bool ) )    ,this         , SLOT( BoolChanged(bool) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 //-----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ ADN_CheckBox::ADN_CheckBox(const QString &text, QWidget *parent, const char* nam
 {
     pConnector_=new ADN_Connector_Bool<ADN_CheckBox>(this);
     connect(this        ,SIGNAL( toggled( bool ) )    ,this         , SLOT( BoolChanged(bool) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 //-----------------------------------------------------------------------------

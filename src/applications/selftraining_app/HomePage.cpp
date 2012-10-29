@@ -22,17 +22,19 @@
 // Name: HomePage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-HomePage::HomePage( QWidget* parent, Q3WidgetStack* pages, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
+HomePage::HomePage( Application& app, QWidget* parent, Q3WidgetStack* pages, Config& config,
+                    const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers,
+                    frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, *this, eButtonAdmin | eButtonQuit )
     , config_( config )
-    , optionsPage_( new OptionsPage( parent, pages, *this, config, fileLoader, controllers, launcher ) )
+    , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader, controllers, launcher ) )
 {
     setName( "HomePage" );
-    adapt_ =   AddLink( *new AuthoringPage( parent, pages, *this, config, controllers ) );
-    editPage_ = new ScenarioEditPage( parent, pages, *this, config, fileLoader, controllers, launcher );
+    adapt_ =   AddLink( *new AuthoringPage( app, parent, pages, *this, config, controllers ) );
+    editPage_ = new ScenarioEditPage( app, parent, pages, *this, config, fileLoader, controllers, launcher );
     prepare_ = AddLink( *editPage_ );
-    play_ =    AddLink( *new SelfTrainingPage( pages, *this, config, fileLoader, controllers, launcher, interpreter ) );
-    replay_ =  AddLink( *new ReplayPage( pages, *this , config, fileLoader, controllers, launcher ) );
+    play_ =    AddLink( *new SelfTrainingPage( app, pages, *this, config, fileLoader, controllers, launcher, interpreter ) );
+    replay_ =  AddLink( *new ReplayPage( app, pages, *this , config, fileLoader, controllers, launcher ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -71,7 +71,7 @@ private:
     //! @name Helpers
     //@{
     virtual void InitializeStyle();
-    virtual bool notify( QObject* emitter, QEvent* event );
+    virtual bool eventFilter( QObject* emitter, QEvent* event );
     //@}
 
 private:

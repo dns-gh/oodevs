@@ -26,7 +26,7 @@
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
 Application::Application( int& argc, char** argv )
-    : Application_ABC( argc, argv )
+    : Application_ABC()
 {
     // License
     CheckLicense( "sword-preparation" );
@@ -46,7 +46,7 @@ Application::Application( int& argc, char** argv )
 
     // GUI
     mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *config_, GetExpiration() );
-    connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
+    qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
 }
 
 // -----------------------------------------------------------------------------
@@ -93,5 +93,5 @@ int Application::Run()
 
     mainWindow_->show();
     observer_->DisplayErrors();
-    return exec();
+    return qApp->exec();
 }

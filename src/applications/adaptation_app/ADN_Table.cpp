@@ -34,7 +34,7 @@ ADN_Table::ADN_Table( QWidget* pParent, const char* szName )
 {
     connect( this, SIGNAL( valueChanged( int, int) ), this, SLOT( doValueChanged( int, int ) ) );
     connect( this, SIGNAL( contextMenuRequested ( int, int, const QPoint &) ), this, SLOT( OnContextMenu( int, int, const QPoint & ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 //-----------------------------------------------------------------------------

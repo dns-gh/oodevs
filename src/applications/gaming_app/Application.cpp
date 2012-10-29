@@ -40,7 +40,7 @@ using namespace kernel;
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
 Application::Application( int& argc, char** argv )
-    : Application_ABC( argc, argv )
+    : Application_ABC()
 {
     // Application_ABC initialization
     Initialize();
@@ -67,7 +67,7 @@ Application::Application( int& argc, char** argv )
 
     // GUI
     mainWindow_ = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, GetExpiration() );
-    connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
+    qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ int Application::Run()
     mainWindow_->show();
     networkTimer_->start( 10 );
     config_->Connect( *network_ );
-    return exec();
+    return qApp->exec();
 }
 
 // -----------------------------------------------------------------------------

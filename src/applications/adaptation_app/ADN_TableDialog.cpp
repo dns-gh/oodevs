@@ -49,7 +49,7 @@ ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, A
     pLayout->addWidget( &table_ );
     pLayout->addWidget( pHBox );
 
-    QMainWindow* pMainWindow = static_cast< ADN_App* >( qApp )->GetMainWindow();
+    QMainWindow* pMainWindow = ADN_App::GetMainWindow();
     this->resize( static_cast< int >( pMainWindow->width() * 0.8 ), static_cast< int >( pMainWindow->height() * 0.8 ) );
     this->move( pMainWindow->x() + static_cast< int >( pMainWindow->width() * 0.1 ), pMainWindow->y() +  static_cast< int >( pMainWindow->height() * 0.1 ) );
 }

@@ -19,6 +19,8 @@ namespace frontend
     class Process_ABC;
 }
 
+class Application;
+
 // =============================================================================
 /** @class  ProgressPage
     @brief  ProgressPage
@@ -33,7 +35,7 @@ class ProgressPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ProgressPage( Q3WidgetStack* pages, Page_ABC& previous );
+             ProgressPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous );
     virtual ~ProgressPage();
     //@}
 
@@ -54,6 +56,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    Application& app_;
     boost::weak_ptr< frontend::Process_ABC > process_;
     QLabel* label_;
     Q3ProgressBar* progressBar_;

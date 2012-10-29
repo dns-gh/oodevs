@@ -11,7 +11,7 @@
 #define __Application_ABC_h_
 
 #pragma warning( push, 0 )
-#include <QtGui/qapplication.h>
+#include <QtCore/qobject.h>
 #include <QtCore/qlocale.h>
 #pragma warning( pop )
 
@@ -24,12 +24,12 @@ namespace gui
 */
 // Created: HBD 2010-06-28
 // =============================================================================
-class Application_ABC : public QApplication
+class Application_ABC : public QObject
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Application_ABC( int& argc, char** argv ) ;
+             Application_ABC() ;
     virtual ~Application_ABC();
     //@}
 
@@ -63,11 +63,22 @@ protected:
     const QString& GetExpiration() const;
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    virtual bool eventFilter( QObject* obj, QEvent* event );
+    //@}
+
 private:
     //! @name Helpers
     //@{
-    virtual bool notify( QObject* receiver, QEvent* e );
     void DisplayError( const QString& text ) const;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    QApplication& app_;
     //@}
 
 private:

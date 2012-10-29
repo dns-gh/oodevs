@@ -105,7 +105,7 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
 
     connect( pLineEdit_, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnValueChanged( const QString& ) ) );
     connect( pComboBox_, SIGNAL( activated  ( const QString& ) ), this, SLOT( OnUnitChanged ( const QString& ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
     pValidator_ = new ADN_IntValidator( 0, INT_MAX, pLineEdit_ );
     pLineEdit_->setValidator( pValidator_ );
 }

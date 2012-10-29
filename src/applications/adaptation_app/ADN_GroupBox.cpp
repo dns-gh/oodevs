@@ -38,7 +38,7 @@ ADN_GroupBox::ADN_GroupBox( QWidget * parent /* = 0*/, const char * name /* = 0*
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ ADN_GroupBox::ADN_GroupBox( const QString & title, QWidget * parent /* = 0*/, co
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ ADN_GroupBox::ADN_GroupBox( int strips, Qt::Orientation orientation, QWidget * p
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ ADN_GroupBox::ADN_GroupBox( int strips, Qt::Orientation orientation, const QStri
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +138,7 @@ ADN_GroupBox2::ADN_GroupBox2( QWidget * parent /*= 0*/, const char * name /*= 0*
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox2>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ ADN_GroupBox2::ADN_GroupBox2( const QString & title, QWidget * parent /*= 0*/, c
     this->setChecked( false );
     pConnector_ = new ADN_Connector_Bool<ADN_GroupBox2>( this );
     connect( this, SIGNAL( toggled( bool ) ), this, SLOT( BoolChanged( bool ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 // -----------------------------------------------------------------------------

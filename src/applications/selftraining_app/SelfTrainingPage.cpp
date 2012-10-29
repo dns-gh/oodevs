@@ -19,13 +19,13 @@
 // Name: SelfTrainingPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-SelfTrainingPage::SelfTrainingPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
+SelfTrainingPage::SelfTrainingPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_( config )
 {
     setName( "SelfTrainingPage" );
-    startButton_ = AddLink( *new ScenarioLauncherPage( pages, *this, controllers, config, fileLoader, launcher, interpreter ) );
-    joinButton_ = AddLink( *new ScenarioJoinPage( pages, *this, controllers, config, fileLoader, launcher ) );
+    startButton_ = AddLink( *new ScenarioLauncherPage( app, pages, *this, controllers, config, fileLoader, launcher, interpreter ) );
+    joinButton_ = AddLink( *new ScenarioJoinPage( app, pages, *this, controllers, config, fileLoader, launcher ) );
 }
 
 // -----------------------------------------------------------------------------

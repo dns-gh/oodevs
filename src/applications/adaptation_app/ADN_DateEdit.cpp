@@ -28,7 +28,7 @@ ADN_DateEdit::ADN_DateEdit( QWidget* parent )
     setCalendarPopup( true );
     pConnector_ = new ADN_Connector_String< ADN_DateEdit >( this );
     connect( this, SIGNAL( dateChanged( const QDate& ) ), this, SLOT( DateChanged( const QDate& ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
+    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
 }
 
 // -----------------------------------------------------------------------------

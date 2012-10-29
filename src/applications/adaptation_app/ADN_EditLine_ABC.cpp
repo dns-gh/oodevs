@@ -105,9 +105,8 @@ ADN_EditLine_ABC::ADN_EditLine_ABC( QWidget* parent, const char* name )
     , ADN_Gfx_ABC()
 {
     // connect edit line & connector
-    connect( this                   , SIGNAL( textChanged( const QString & ) ),
-             this                   , SLOT( TextChanged( const QString & ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( this, SIGNAL( textChanged( const QString & ) ), this, SLOT( TextChanged( const QString & ) ) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 //-----------------------------------------------------------------------------

@@ -19,8 +19,9 @@
 // Name: ProgressPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-ProgressPage::ProgressPage( Q3WidgetStack* pages, Page_ABC& previous )
+ProgressPage::ProgressPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous )
     : ContentPage( pages, previous, 0 )
+    , app_       ( app )
 {
     Q3VBox* box = new Q3VBox( this );
     box->layout()->setAlignment( Qt::AlignCenter );
@@ -78,7 +79,7 @@ void ProgressPage::UpdateProgress()
     if( percentage == 100 )
     {
         timer_->stop();
-        static_cast< Application* >( qApp )->GetMainWindow()->hide();
+        app_.GetMainWindow()->hide();
     }
 }
 
@@ -99,8 +100,8 @@ void ProgressPage::DoNotifyStopped()
 {
     timer_->stop();
     process_.reset();
-    static_cast< Application* >( qApp )->GetMainWindow()->show();
-    static_cast< Application* >( qApp )->GetMainWindow()->activateWindow();
+    app_.GetMainWindow()->show();
+    app_.GetMainWindow()->activateWindow();
     Previous();
 }
 

@@ -25,7 +25,7 @@
 // Name: MainWindow constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
+MainWindow::MainWindow( Application& app, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
     : gui::LanguageChangeObserver_ABC< QMainWindow >()
     , interpreter_( new LinkInterpreter( this, controllers ) )
     , sessionTray_( 0 )
@@ -36,7 +36,7 @@ MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, ker
     setFixedHeight( 600 );
     SetStyle();
     pages_ = new Q3WidgetStack( this );
-    HomePage* home = new HomePage( this, pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
+    HomePage* home = new HomePage( app, this, pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
     //pages_->setCurrentWidget( home ); à décommenter au passage QT4
     setCentralWidget( pages_ );
     CenterWindow();

@@ -24,17 +24,17 @@
 // Name: AuthoringPage constructor
 // Created: JSR 2010-06-04
 // -----------------------------------------------------------------------------
-AuthoringPage::AuthoringPage( QWidget* /*parent*/, Q3WidgetStack* pages, Page_ABC& previous,
-                              const Config& config, kernel::Controllers& controllers )
+AuthoringPage::AuthoringPage( Application& app, QWidget* /*parent*/, Q3WidgetStack* pages,
+                              Page_ABC& previous, const Config& config, kernel::Controllers& controllers )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_     ( config )
     , controllers_( controllers )
 {
     setName( "AuthoringPage" );
-    progressPage_ = new ProgressPage( pages, *this );
+    progressPage_ = new ProgressPage( app, pages, *this );
 
     authoring_       = AddLink( *this, SLOT( OnAuthoring() ) );
-    terrainGen_      = AddLink( *new CreateTerrainPage( pages, *this, controllers, config ) );
+    terrainGen_      = AddLink( *new CreateTerrainPage( app, pages, *this, controllers, config ) );
 }
 
 // -----------------------------------------------------------------------------

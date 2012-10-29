@@ -31,14 +31,13 @@
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv )
-    : gui::Application_ABC( argc, argv )
 {
     // Application_ABC initialization
     Initialize();
 
     // Data
     config_.reset( new Config() );
-    config_->Parse( qApp->argc(), qApp->argv() );
+    config_->Parse( app_.argc(), app_.argv() );
     fileLoaderObserver_.reset( new tools::NullFileLoaderObserver() );
     fileLoader_.reset( new tools::DefaultLoader( *fileLoaderObserver_ ) );
     controllers_.reset( new kernel::Controllers() );
@@ -48,8 +47,8 @@ Application::Application( int argc, char** argv )
     connect( timer_.get(), SIGNAL( timeout() ), SLOT( OnTimer() ) );
 
     // GUI
-    mainWindow_ = new MainWindow( *config_, *fileLoader_, *controllers_, *launcherClient_ );
-    connect( this, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
+    mainWindow_ = new MainWindow( *this, *config_, *fileLoader_, *controllers_, *launcherClient_ );
+    qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +123,7 @@ int Application::Run()
             processes.KillAll( "gaming_app.exe" );
     }
 
-    return exec();
+    return app_.exec();
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +158,7 @@ QWidget* Application::GetMainWindow()
 // Name: Application::notify
 // Created: SBO 2011-03-24
 // -----------------------------------------------------------------------------
-bool Application::notify( QObject* emitter, QEvent* event )
+bool Application::eventFilter( QObject* emitter, QEvent* event )
 {
     if( event && event->type() == QEvent::User + 666 )
         if( QString* message = static_cast< QString* >( static_cast< QCustomEvent* >( event )->data() ) )
@@ -173,5 +172,5 @@ bool Application::notify( QObject* emitter, QEvent* event )
         static_cast< ProgressPage* >( static_cast< QCustomEvent* >( event )->data() )->DoNotifyStopped();
         return true;
     }
-    return QApplication::notify( emitter, event );
+    return Application_ABC::eventFilter( emitter, event );
 }

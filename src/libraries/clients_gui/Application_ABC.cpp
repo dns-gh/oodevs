@@ -24,10 +24,11 @@ using namespace gui;
 // Name: Application_ABC constructor
 // Created: HBD 2010-06-28
 // -----------------------------------------------------------------------------
-Application_ABC::Application_ABC( int& argc, char** argv )
-    : QApplication( argc, argv )
+Application_ABC::Application_ABC()
+    : app_( *qApp )
     , invalidLicense_( true )
 {
+    installEventFilter( &app_ );
     SetLocale();
     tools::SetCodec();
 }
@@ -106,15 +107,15 @@ void Application_ABC::InitializeBugTrap()
 // -----------------------------------------------------------------------------
 void Application_ABC::InitializeStyle()
 {
-    setStyle( new QCleanlooksStyle ); // $$$$ ABR 2012-07-12: Still needed ?
-    setStyle( new gui::VerticalHeaderStyle( style() ) );
+    app_.setStyle( new QCleanlooksStyle ); // $$$$ ABR 2012-07-12: Still needed ?
+    app_.setStyle( new gui::VerticalHeaderStyle( qApp->style() ) );
 
     QFile file( "style.qss" );
     if( !file.open( QIODevice::Text | QFile::ReadOnly ) )
         QMessageBox::warning( 0, tools::translate( "Application", "Warning" ), "Style file missing. Loading default parameters." );
     else
     {
-        setStyleSheet( file.readAll () );
+        app_.setStyleSheet( file.readAll () );
         file.close();
     }
 }
@@ -125,7 +126,7 @@ void Application_ABC::InitializeStyle()
 // -----------------------------------------------------------------------------
 void Application_ABC::InitializeLayoutDirection()
 {
-    setLayoutDirection( QApplication::translate( "Application", "QT_LAYOUT_DIRECTION" ) == "RTL" ? Qt::RightToLeft : Qt::LeftToRight );
+    app_.setLayoutDirection( QApplication::translate( "Application", "QT_LAYOUT_DIRECTION" ) == "RTL" ? Qt::RightToLeft : Qt::LeftToRight );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +153,7 @@ const QString& Application_ABC::GetExpiration() const
 // -----------------------------------------------------------------------------
 void Application_ABC::AddTranslator( const char* t )
 {
-    QTranslator* translator = tools::AddTranslator( *this, locale_, t );
+    QTranslator* translator = tools::AddTranslator( app_, locale_, t );
     if( translator )
         translators_.push_back( translator );
 }
@@ -161,11 +162,11 @@ void Application_ABC::AddTranslator( const char* t )
 // Name: Application_ABC::notify
 // Created: MCO 2011-11-07
 // -----------------------------------------------------------------------------
-bool Application_ABC::notify( QObject* pReceiver, QEvent* pEvent )
+bool Application_ABC::eventFilter( QObject* pReceiver, QEvent* pEvent )
 {
     try
     {
-        return QApplication::notify( pReceiver, pEvent );
+        return QObject::eventFilter( pReceiver, pEvent );
     }
     catch( std::exception& e )
     {
@@ -188,7 +189,7 @@ void Application_ABC::DisplayError( const QString& text ) const
     if( !active )
     {
         active = true;
-        QMessageBox::critical( activeWindow(), tools::translate( "Application", "SWORD" ), text, "Ok" );
+        QMessageBox::critical( app_.activeWindow(), tools::translate( "Application", "SWORD" ), text, "Ok" );
         active = false;
     }
 }
@@ -200,6 +201,6 @@ void Application_ABC::DisplayError( const QString& text ) const
 void Application_ABC::DeleteTranslators()
 {
     for( std::vector< QTranslator* >::const_iterator it = translators_.begin(); it != translators_.end(); ++it )
-        removeTranslator( *it );
+        app_.removeTranslator( *it );
     translators_.clear();
 }

@@ -17,6 +17,7 @@ namespace kernel
     class Controllers;
 }
 
+class Application;
 class Config;
 class ProgressPage;
 
@@ -33,7 +34,8 @@ class CreateTerrainPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateTerrainPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config );
+             CreateTerrainPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous,
+                                kernel::Controllers& controllers, const Config& config );
     virtual ~CreateTerrainPage();
     //@}
 

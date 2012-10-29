@@ -27,12 +27,12 @@
 // Name: ScenarioEditPage constructor
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
-ScenarioEditPage::ScenarioEditPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+ScenarioEditPage::ScenarioEditPage( Application& app, QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, previous, eButtonBack | eButtonEdit, launcher )
     , config_( config )
     , fileLoader_( fileLoader )
     , controllers_( controllers )
-    , progressPage_( new ProgressPage( pages, *this ) )
+    , progressPage_( new ProgressPage( app, pages, *this ) )
 {
     setName( "ScenarioEditPage" );
     Q3VBox* box = new Q3VBox( this );

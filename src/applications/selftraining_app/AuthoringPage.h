@@ -17,6 +17,7 @@ namespace kernel
     class Controllers;
 }
 
+class Application;
 class Config;
 class MenuButton;
 class ProgressPage;
@@ -34,8 +35,8 @@ class AuthoringPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             AuthoringPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous,
-                            const Config& config, kernel::Controllers& controllers );
+             AuthoringPage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+                            Page_ABC& previous, const Config& config, kernel::Controllers& controllers );
     virtual ~AuthoringPage();
     //@}
 

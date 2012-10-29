@@ -35,7 +35,7 @@ public:
 
     //! @name Accessors
     //@{
-    ADN_MainWindow* GetMainWindow();
+    static QMainWindow* GetMainWindow();
     const std::string& GetOutputFile() const;
     //@}
 
@@ -50,16 +50,6 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// Name: ADN_App::GetMainWindow
-// Created: AGN 03-08-05
-//-----------------------------------------------------------------------------
-inline
-ADN_MainWindow* ADN_App::GetMainWindow()
-{
-    return mainWindow_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_App::GetOutputFile
 // Created: ABR 2012-07-12
 // -----------------------------------------------------------------------------

@@ -36,7 +36,7 @@ ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCapt
     Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
     pLayout->addWidget( pListView );
     pLayout->addWidget( pHBox );
-    QMainWindow* pMainWindow = static_cast< ADN_App* >( qApp )->GetMainWindow();
+    QMainWindow* pMainWindow = ADN_App::GetMainWindow();
     this->resize( static_cast< int >( pMainWindow->width() * 0.8 ), static_cast< int >( pMainWindow->height() * 0.8 ) );
     this->move( pMainWindow->x() + static_cast< int >( pMainWindow->width() * 0.1 ), pMainWindow->y() + static_cast< int >( pMainWindow->height() * 0.1 ) );
 }

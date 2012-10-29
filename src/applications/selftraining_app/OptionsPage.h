@@ -12,6 +12,7 @@
 
 #include "LauncherClientPage.h"
 
+class Application;
 class Config;
 class DataWidget;
 class ImportWidget;
@@ -45,7 +46,8 @@ class OptionsPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, Config& config,
+             OptionsPage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+                          Page_ABC& previous, Config& config,
                           const tools::Loader_ABC& loader, kernel::Controllers& controllers,
                           frontend::LauncherClient& launcher );
     virtual ~OptionsPage();
@@ -109,6 +111,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Application&             app_;
     QWidget*                 parent_;
     QTabWidget*              tabs_;
     Config&                  config_;

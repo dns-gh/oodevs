@@ -24,7 +24,7 @@ ADN_TextEdit_ABC::ADN_TextEdit_ABC( QWidget* parent, const char * name)
 {
     // connect edit line & connector
     connect( this, SIGNAL( textChanged() ), this, SLOT( TextChanged() ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
+    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
 }
 
 //-----------------------------------------------------------------------------

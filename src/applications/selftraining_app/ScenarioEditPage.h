@@ -28,6 +28,7 @@ namespace tools
     class Loader_ABC;
 }
 
+class Application;
 class CreateExerciceWidget;
 class ExerciseList;
 class ProgressPage;
@@ -45,7 +46,11 @@ class ScenarioEditPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioEditPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
+             ScenarioEditPage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+                               Page_ABC& previous, const frontend::Config& config,
+                               const tools::Loader_ABC& fileLoader,
+                               kernel::Controllers& controllers,
+                               frontend::LauncherClient& launcher );
     virtual ~ScenarioEditPage();
     //@}
 

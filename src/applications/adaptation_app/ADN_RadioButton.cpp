@@ -31,7 +31,7 @@ ADN_RadioButton::ADN_RadioButton(QWidget* parent, const char * name)
 {
     pConnector_=new ADN_Connector_Bool<ADN_RadioButton>(this);
     connect(this        ,SIGNAL( toggled( bool ) )    ,this         , SLOT( BoolChanged(bool) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 //-----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ ADN_RadioButton::ADN_RadioButton(const QString &text, QWidget *parent, const cha
 {
     pConnector_=new ADN_Connector_Bool<ADN_RadioButton>(this);
     connect(this        ,SIGNAL( toggled( bool ) )    ,this         , SLOT( BoolChanged(bool) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
+    connect( ADN_App::GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
 //-----------------------------------------------------------------------------

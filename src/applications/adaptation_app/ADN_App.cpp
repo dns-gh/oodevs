@@ -23,12 +23,17 @@
 
 namespace po = boost::program_options;
 
+namespace
+{
+    const char mainWindowProperty[] = "ADN_App_MainWindow";
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_App constructor
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
 ADN_App::ADN_App( int argc, char** argv )
-    : gui::Application_ABC( argc, argv )
+    : gui::Application_ABC()
 {
     // License
     CheckLicense( "sword-authoring" );
@@ -43,7 +48,8 @@ ADN_App::ADN_App( int argc, char** argv )
 
     // GUI
     mainWindow_ = new ADN_MainWindow( *config_, argc , argv );
-    connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
+    qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) ); // Make sure that once the last window is closed, the application quits.
+    qApp->setProperty( mainWindowProperty, QVariant::fromValue< QWidget* >( mainWindow_ ) );
 
     // Command line options
     po::options_description desc( "Allowed options" );
@@ -146,5 +152,14 @@ int ADN_App::Run()
         return EXIT_FAILURE;
     }
     mainWindow_->showMaximized();
-    return exec();
+    return qApp->exec();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_App::GetMainWindow
+// Created: ABR 2012-10-28
+// -----------------------------------------------------------------------------
+QMainWindow* ADN_App::GetMainWindow()
+{
+    return static_cast< QMainWindow* >( qApp->property( mainWindowProperty ).value< QWidget* >() );
 }

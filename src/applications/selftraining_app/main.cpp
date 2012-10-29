@@ -14,11 +14,11 @@
 
 int main( int argc, char* argv[] )
 {
-    int nResultCode = EXIT_FAILURE;
+    QApplication qapp( argc, argv );
     try
     {
         Application app( argc, argv );
-        nResultCode = app.Run();
+        return app.Run();
     }
     catch( std::runtime_error& e )
     {
@@ -28,7 +28,7 @@ int main( int argc, char* argv[] )
     {
         QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
     }
-    return nResultCode;
+    return EXIT_FAILURE;
 }
 
 int WINAPI WinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )

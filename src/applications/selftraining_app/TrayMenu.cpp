@@ -12,12 +12,14 @@
 #include "Application.h"
 #include "moc_TrayMenu.cpp"
 #include "clients_gui/Tools.h"
+#include <QtGui/QMainWindow>
 
 // -----------------------------------------------------------------------------
 // Name: TrayMenu constructor
 // Created: RDS 2008-08-21
 // -----------------------------------------------------------------------------
 TrayMenu::TrayMenu( QWidget* mainWindow )
+    : main_( mainWindow )
 {
     setPalette( mainWindow->palette() );
     QAction* showAction = new QAction( tools::translate( "TrayMenu", "Show Normal" ), this );
@@ -43,6 +45,6 @@ TrayMenu::~TrayMenu()
 // -----------------------------------------------------------------------------
 void TrayMenu::OnQuit()
 {
-    static_cast< Application* >( qApp )->GetMainWindow()->showNormal();
+    main_->showNormal();
     qApp->closeAllWindows();
 }

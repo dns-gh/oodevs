@@ -41,5 +41,5 @@ ADN_ProgressIndicator_ABC::~ADN_ProgressIndicator_ABC()
 // -----------------------------------------------------------------------------
 void ADN_ProgressIndicator_ABC::SetVisible( bool visible )
 {
-    static_cast< ADN_App* >( qApp )->GetMainWindow()->statusBar()->setVisible( visible );
+    ADN_App::GetMainWindow()->statusBar()->setVisible( visible );
 }

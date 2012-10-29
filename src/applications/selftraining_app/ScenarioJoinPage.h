@@ -27,6 +27,7 @@ namespace tools
     class Loader_ABC;
 }
 
+class Application;
 class Config;
 class ExerciseList;
 class ProgressPage;
@@ -45,7 +46,10 @@ class ScenarioJoinPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioJoinPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher );
+             ScenarioJoinPage( Application& app, Q3WidgetStack* pages,
+                               Page_ABC& previous, kernel::Controllers& controllers,
+                               const Config& config, const tools::Loader_ABC& fileLoader,
+                               frontend::LauncherClient& launcher );
     virtual ~ScenarioJoinPage();
     //@}
 

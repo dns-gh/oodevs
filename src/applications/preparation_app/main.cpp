@@ -14,21 +14,21 @@
 
 int main( int argc, char** argv )
 {
-    int nResultCode = EXIT_FAILURE;
+    QApplication qapp( argc, argv );
     try
     {
         Application app( argc, argv );
-        nResultCode = app.Run();
+        return app.Run();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        MessageBox( 0, e.what(), "SWORD - Invalid input data", MB_ICONERROR | MB_OK | MB_TOPMOST );
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
     }
     catch( ... )
     {
-        MessageBox( 0, "Unhandled error", "SWORD - Invalid input data", MB_ICONERROR | MB_OK | MB_TOPMOST );
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
     }
-    return nResultCode;
+    return EXIT_FAILURE;
 }
 
 int WINAPI WinMain( HINSTANCE /* hinstance */, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )

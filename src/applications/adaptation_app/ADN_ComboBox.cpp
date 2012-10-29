@@ -27,7 +27,7 @@ ADN_ComboBox::ADN_ComboBox( QWidget* parent, const char* name )
     , fromView_  ( false )
 {
     connect( this, SIGNAL( activated( int ) ), this, SLOT( ItemSelected( int ) ) );
-    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
+    connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
 }
 
 //-----------------------------------------------------------------------------
