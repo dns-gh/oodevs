@@ -38,7 +38,7 @@ find_package( Boost COMPONENTS
     unit_test_framework
     REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )
-find_package( OpenSSL REQUIRED )
+set( OPENSSL_LIBRARIES libeay32 ssleay32 )
 masa_find_qt4( REQUIRED QtCore QtGui QtNetwork )
 
 ################################################################################
