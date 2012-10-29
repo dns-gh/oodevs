@@ -110,7 +110,6 @@ ASCExtractor::~ASCExtractor()
     if( pDataset_ )
     {
         GDALClose( pDataset_ );
-        delete[] values_;
     }
 }
 
@@ -138,7 +137,7 @@ void ASCExtractor::ExtractData()
 
     int size = ncols_ * nrows_;
     float* data = new float[ size ];
-    values_ = new short[ size ];
+    values_.resize( size );
 
     pBand_->RasterIO( GF_Read, 0, 0, ncols_, nrows_, data, ncols_, nrows_, GDT_Float32, 0, 0 );
 
@@ -261,7 +260,7 @@ double ASCExtractor::GetMaximumValue() const
 // Name: ASCExtractor::GetValues
 // Created: LGY 2012-10-24
 // -----------------------------------------------------------------------------
-const short* ASCExtractor::GetValues() const
+const ASCExtractor::T_Values& ASCExtractor::GetValues() const
 {
     return values_;
 }

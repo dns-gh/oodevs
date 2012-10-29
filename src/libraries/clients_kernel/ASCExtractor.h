@@ -16,6 +16,8 @@
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
 #include <geometry/Types.h>
+#include <vector>
+
 namespace kernel
 {
 // =============================================================================
@@ -27,6 +29,8 @@ namespace kernel
 class ASCExtractor : private boost::noncopyable
 {
 public:
+    typedef std::vector< short > T_Values;
+
     //! @name Constructors/Destructor
     //@{
     explicit ASCExtractor( const std::string& file );
@@ -44,7 +48,7 @@ public:
     const geometry::Point2d& GetOrigin() const;
     const geometry::Point2d& GetPixelSize() const;
     const geometry::Rectangle2d& GetExtent() const;
-    const short* GetValues() const;
+    const T_Values& GetValues() const;
     geometry::Rectangle2d GenerateExtent( double left, double bottom, double right, double top );
     //@}
 
@@ -69,7 +73,7 @@ private:
     geometry::Rectangle2d extent_;
     geometry::Point2d origin_;
     geometry::Point2d pixelSize_;
-    short* values_;
+    T_Values values_;
     //@}
 };
 

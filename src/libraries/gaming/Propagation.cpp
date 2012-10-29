@@ -46,7 +46,8 @@ Propagation::Propagation( const std::string& file, const std::string& projection
     , pExtractor_( new kernel::ASCExtractor( file, projection ) )
     , pMap_      ( new ElevationMap( static_cast< std::size_t >( pExtractor_->GetCols() ),
                                      static_cast< std::size_t >( pExtractor_->GetRows() ),
-                                     pExtractor_->GetPixelSize().X(), pExtractor_->GetValues() ) )
+                                     pExtractor_->GetPixelSize().X(),
+                                     &pExtractor_->GetValues()[0] ) )
     , pFactory_  ( new ElevationFactory( *pMap_, *pColor_ ) )
     , pTree_     ( new TextureTree( *pFactory_, pMap_->Width(), pMap_->Height() ) )
 {
