@@ -30,7 +30,7 @@ class AlarmsWidget : public QDialog
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< Simulation >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -44,22 +44,17 @@ private slots:
     //@{
     void OnCreate();
     void OnDelete();
-    void OnSelectionChange( Q3ListViewItem* );
-    void ShowEditor( Q3ListViewItem* item );
+    void OnSelectionChange();
+    void ShowEditorSlot( QTreeWidgetItem* item );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AlarmsWidget( const AlarmsWidget& );            //!< Copy constructor
-    AlarmsWidget& operator=( const AlarmsWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
-    bool IsAfter( Q3ListViewItem* item, const QDateTime& date );
-    Q3ListViewItem* Trigger( Q3ListViewItem* item );
+    bool IsAfter( QTreeWidgetItem* item, const QDateTime& date );
+    void Trigger( QTreeWidgetItem* item );
+    void ShowEditor( QTreeWidgetItem* item, bool newAlarm );
     //@}
 
 private:
@@ -67,7 +62,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const Simulation& simulation_;
-    Q3ListView* list_;
+    QTreeWidget* list_;
     QPushButton* remove_;
     QMessageBox* messageBox_;
     //@}
