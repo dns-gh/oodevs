@@ -17,7 +17,6 @@
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  Application_ABC
     @brief  Application_ABC
@@ -26,6 +25,8 @@ namespace gui
 // =============================================================================
 class Application_ABC : public QObject
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -69,7 +70,7 @@ protected:
     virtual bool eventFilter( QObject* obj, QEvent* event );
     //@}
 
-private:
+private slots:
     //! @name Helpers
     //@{
     void DisplayError( const QString& text ) const;
@@ -90,7 +91,6 @@ private:
     std::vector< QTranslator* > translators_;
     //@}
 };
-
 } //! namespace gui
 
 #endif // __Application_ABC_h_

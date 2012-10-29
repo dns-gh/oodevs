@@ -15,6 +15,7 @@
 #include "tools/Codec.h"
 #include "tools/Version.h"
 #include "tools/Win32/BugTrap.h"
+#include "moc_Application_ABC.cpp"
 
 //#define NO_LICENSE_CHECK
 
@@ -28,7 +29,7 @@ Application_ABC::Application_ABC()
     : app_( *qApp )
     , invalidLicense_( true )
 {
-    installEventFilter( &app_ );
+    app_.installEventFilter( this );
     SetLocale();
     tools::SetCodec();
 }
@@ -166,15 +167,16 @@ bool Application_ABC::eventFilter( QObject* pReceiver, QEvent* pEvent )
 {
     try
     {
-        return QObject::eventFilter( pReceiver, pEvent );
+        pReceiver->event( pEvent );
+        return true;
     }
     catch( std::exception& e )
     {
-        DisplayError( e.what() );
+        QMetaObject::invokeMethod( this, "DisplayError", Q_ARG( QString, QString( e.what() ) ) );
     }
     catch( ... )
     {
-        DisplayError( tools::translate( "Application", "Unknown exception caught" ) );
+        QMetaObject::invokeMethod( this, "DisplayError", Q_ARG( QString, QString( tools::translate( "Application", "Unknown exception caught" ) ) ) );
     }
     return true;
 }
