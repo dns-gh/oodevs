@@ -412,9 +412,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1266,6 +1263,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_FragOrder.cpp">
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
