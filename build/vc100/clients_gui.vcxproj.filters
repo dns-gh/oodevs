@@ -1386,9 +1386,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\FilterProxyModel.h">
       <Filter>Source Files\Dialogs\Consistency</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\Application_ABC.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\PropertyItem.h">
       <Filter>Source Files\MVC\View</Filter>
     </ClInclude>
@@ -1851,6 +1848,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\LinkItemDelegate.h">
       <Filter>Source Files\MVC\View</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\Application_ABC.h">
+      <Filter>Source Files</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
