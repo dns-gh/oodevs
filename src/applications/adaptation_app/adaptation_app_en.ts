@@ -9,35 +9,35 @@
     </message>
     <message>
         <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
         <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
         <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
+        <translation>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
         <source>No PC defined for automat %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
+        <translation>No PC defined for automat %1, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
         <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
         <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
+        <translation>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
         <source>No parameter type specified for parameter %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>No parameter type specified for parameter %1.</translation>
     </message>
     <message>
         <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
+        <translation>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</translation>
     </message>
 </context>
 <context>
@@ -129,11 +129,11 @@
     </message>
     <message>
         <source>Non major equipments state weight</source>
-        <translation>Non major equipments state weight</translation>
+        <translation>Non major equipment state weight</translation>
     </message>
     <message>
         <source>Major equipments state weight</source>
-        <translation>Major equipments state weight</translation>
+        <translation>Major equipment state weight</translation>
     </message>
     <message>
         <source>Crew state weight</source>
@@ -204,7 +204,7 @@
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Resources</source>
@@ -263,7 +263,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Resources</source>
@@ -439,7 +439,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Seriousness</source>
-        <translation>Seriousness</translation>
+        <translation>Severity</translation>
     </message>
     <message>
         <source>Repair duration</source>
@@ -481,7 +481,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Wounded %</source>
-        <translation>Wounded %</translation>
+        <translation>Injury %</translation>
     </message>
     <message>
         <source>Dead %</source>
@@ -532,7 +532,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>On site fixable</source>
-        <translation>On site fixable</translation>
+        <translation>On site repairable</translation>
     </message>
     <message>
         <source>Attrition effects on humans</source>
@@ -615,15 +615,15 @@ Parked engine running</translation>
     <name>ADN_Composantes_ActiveProtectionsListView</name>
     <message>
         <source>ActiveProtections</source>
-        <translation>ActiveProtections</translation>
+        <translation>Active Protection</translation>
     </message>
     <message>
         <source>Add active protections</source>
-        <translation>Add active protections</translation>
+        <translation>Add active protection</translation>
     </message>
     <message>
         <source>Remove active protections</source>
-        <translation>Remove active protections</translation>
+        <translation>Remove active protection</translation>
     </message>
 </context>
 <context>
@@ -831,7 +831,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Active Protections</source>
-        <translation>Active Protections</translation>
+        <translation>Active Protection</translation>
     </message>
     <message>
         <source>Resources</source>
@@ -919,15 +919,15 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Treats</source>
-        <translation>Treats</translation>
+        <translation>Treatment</translation>
     </message>
     <message>
         <source>Treats NBC</source>
-        <translation>Treats NBC</translation>
+        <translation>NBC treatment</translation>
     </message>
     <message>
         <source>Treats psyop</source>
-        <translation>Treats psyop</translation>
+        <translation>Psyop treatment</translation>
     </message>
     <message>
         <source>Loading duration per person</source>
@@ -991,15 +991,15 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Seriousness level 1</source>
-        <translation>Seriousness level 1</translation>
+        <translation>Severity level 1</translation>
     </message>
     <message>
         <source>Seriousness level 2</source>
-        <translation>Seriousness level 2</translation>
+        <translation>Severity level 2</translation>
     </message>
     <message>
         <source>Seriousness level 3</source>
-        <translation>Seriousness level 3</translation>
+        <translation>Severity level 3</translation>
     </message>
     <message>
         <source>Max repair duration</source>
@@ -1039,11 +1039,11 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Equipments/</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Code NNO</source>
@@ -1291,7 +1291,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Duplicate type for missions %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicate type for missions %1.</translation>
     </message>
 </context>
 <context>
@@ -1349,11 +1349,11 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Wounded (%1)</source>
-        <translation>Wounded (%1)</translation>
+        <translation>Injury (%1)</translation>
     </message>
     <message>
         <source>Unwounded</source>
-        <translation>Unwounded</translation>
+        <translation>Healthy</translation>
     </message>
     <message>
         <source>Undamaged</source>
@@ -1364,7 +1364,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     <name>ADN_Equipement_AttritionTable</name>
     <message>
         <source>% on site fixable</source>
-        <translation>% on site fixable</translation>
+        <translation>% on site repairable</translation>
     </message>
     <message>
         <source>% maintenance support needed</source>
@@ -1413,7 +1413,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Equipment - Invalid stance &apos;%1&apos;</source>
-        <translation>Equipment - Invalid stance &apos;%1&apos;</translation>
+        <translation>Equipment - Invalid posture &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
@@ -1536,7 +1536,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Stance</source>
-        <translation>Stance</translation>
+        <translation>Posture</translation>
     </message>
     <message>
         <source>Neutralization ratio</source>
@@ -1576,7 +1576,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Mines quantity</source>
-        <translation>Mines quantity</translation>
+        <translation>Mine quantity</translation>
     </message>
     <message>
         <source>Illumination capacity</source>
@@ -1616,7 +1616,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>On site fixable</source>
-        <translation>On site fixable</translation>
+        <translation>On site repairable</translation>
     </message>
     <message>
         <source>Maintenance support needed</source>
@@ -1674,7 +1674,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Heat decrease rate</source>
-        <translation>Heat decrease rate</translation>
+        <translation>Temperature decrease rate</translation>
     </message>
 </context>
 <context>
@@ -1735,11 +1735,11 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Initial heat</source>
-        <translation>Initial heat</translation>
+        <translation>Initial temperature</translation>
     </message>
     <message>
         <source>Max heat</source>
-        <translation>Max heat</translation>
+        <translation>Max temperature</translation>
     </message>
     <message>
         <source>Increase rate</source>
@@ -1755,7 +1755,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Wounded seriousness level 1</source>
-        <translation>Wounded seriousness level 1</translation>
+        <translation>Injury severity level 1</translation>
     </message>
     <message>
         <source>%</source>
@@ -1763,19 +1763,19 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Wounded seriousness level 2</source>
-        <translation>Wounded seriousness level 2</translation>
+        <translation>Injury severity level 2</translation>
     </message>
     <message>
         <source>Wounded seriousness level 3</source>
-        <translation>Wounded seriousness level 3</translation>
+        <translation>Injury severity level 3</translation>
     </message>
     <message>
         <source>Wounded extreme seriousness</source>
-        <translation>Wounded extreme seriousness</translation>
+        <translation>Injury extreme severity</translation>
     </message>
     <message>
         <source>Killed</source>
-        <translation>Killed</translation>
+        <translation>Dead</translation>
     </message>
     <message>
         <source>Urban attrition</source>
@@ -1821,15 +1821,15 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Ambulances (evacuation) availability warnings</source>
-        <translation>Ambulances (evacuation) availability warnings</translation>
+        <translation>Ambulance (evacuation) availability warnings</translation>
     </message>
     <message>
         <source>Ambulances (collection) availability warnings</source>
-        <translation>Ambulances (collection) availability warnings</translation>
+        <translation>Ambulance (collection) availability warnings</translation>
     </message>
     <message>
         <source>Doctors availability warnings</source>
-        <translation>Doctors availability warnings</translation>
+        <translation>Doctor availability warnings</translation>
     </message>
     <message>
         <source>Psyop</source>
@@ -1849,7 +1849,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Seriousness distribution (%)</source>
-        <translation>Seriousness distribution (%)</translation>
+        <translation>Severity distribution (%)</translation>
     </message>
     <message>
         <source>Life span</source>
@@ -1864,7 +1864,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Newbie</source>
-        <translation>Newbie</translation>
+        <translation>Novice</translation>
     </message>
     <message>
         <source>Experienced</source>
@@ -1876,7 +1876,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Tiredness modifiers</source>
-        <translation>Tiredness modifiers</translation>
+        <translation>Fatigue modifiers</translation>
     </message>
     <message>
         <source>Not tired</source>
@@ -1912,7 +1912,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Tiredness</source>
-        <translation>Tiredness</translation>
+        <translation>Fatigue</translation>
     </message>
     <message>
         <source>Thresholds</source>
@@ -1972,7 +1972,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Effect on stance changes duration</source>
-        <translation>Effect on stance changes duration</translation>
+        <translation>Effect on posture changes duration</translation>
     </message>
     <message>
         <source>Effect on PH</source>
@@ -1980,7 +1980,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Effect on detection ranges</source>
-        <translation>Effect on detection ranges</translation>
+        <translation>Effect on detection range</translation>
     </message>
 </context>
 <context>
@@ -2038,13 +2038,13 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Target&apos;s stance</source>
-        <translation>Target&apos;s stance</translation>
+        <translation>Target&apos;s posture</translation>
     </message>
     <message>
         <source>Shooter&apos;s
 stance</source>
         <translation>Shooter&apos;s
-stance</translation>
+posture</translation>
     </message>
     <message>
         <source>Phs modificators</source>
@@ -2052,7 +2052,7 @@ stance</translation>
     </message>
     <message>
         <source>Shooter&apos;s stance / Target&apos;s stance</source>
-        <translation>Shooter&apos;s stance / Target&apos;s stance</translation>
+        <translation>Shooter&apos;s posture / Target&apos;s posture</translation>
     </message>
 </context>
 <context>
@@ -2492,7 +2492,7 @@ stance</translation>
     </message>
     <message>
         <source>Tow trucks availability warnings</source>
-        <translation>Tow trucks availability warnings</translation>
+        <translation>Tow truck availability warnings</translation>
     </message>
     <message>
         <source>Shifts durations</source>
@@ -2872,27 +2872,27 @@ stance</translation>
     </message>
     <message>
         <source>Unwounded</source>
-        <translation>Unwounded</translation>
+        <translation>Healthy</translation>
     </message>
     <message>
         <source>Wounded seriousness level 1</source>
-        <translation>Wounded seriousness level 1</translation>
+        <translation>Injury severity level 1</translation>
     </message>
     <message>
         <source>Wounded seriousness level 2</source>
-        <translation>Wounded seriousness level 2</translation>
+        <translation>Injury severity level 2</translation>
     </message>
     <message>
         <source>Wounded seriousness level 3</source>
-        <translation>Wounded seriousness level 3</translation>
+        <translation>Injury severity level 3</translation>
     </message>
     <message>
         <source>Wounded extreme seriousness</source>
-        <translation>Wounded extreme seriousness</translation>
+        <translation>Injury extreme severity</translation>
     </message>
     <message>
         <source>Killed</source>
-        <translation>Killed</translation>
+        <translation>Dead</translation>
     </message>
     <message>
         <source>Contamination</source>
@@ -3336,23 +3336,23 @@ The spawn capacity will be disabled.</translation>
     </message>
     <message>
         <source>Wounded seriousness level 1</source>
-        <translation>Wounded seriousness level 1</translation>
+        <translation>Injury severity level 1</translation>
     </message>
     <message>
         <source>Wounded seriousness level 2</source>
-        <translation>Wounded seriousness level 2</translation>
+        <translation>Injury severity level 2</translation>
     </message>
     <message>
         <source>Wounded seriousness level 3</source>
-        <translation>Wounded seriousness level 3</translation>
+        <translation>Injury severity level 3</translation>
     </message>
     <message>
         <source>Wounded extreme seriousness</source>
-        <translation>Wounded extreme seriousness</translation>
+        <translation>Injury extreme severity</translation>
     </message>
     <message>
         <source>Killed</source>
-        <translation>Killed</translation>
+        <translation>Dead</translation>
     </message>
     <message>
         <source>Fire propagation modifier</source>
@@ -3535,7 +3535,7 @@ Make sure the file exists.</translation>
     <name>ADN_Population_FireEffect_Protection_ListView</name>
     <message>
         <source>Protections</source>
-        <translation>Protections</translation>
+        <translation>Protection</translation>
     </message>
 </context>
 <context>
@@ -3646,11 +3646,11 @@ Make sure the file exists.</translation>
     </message>
     <message>
         <source>Fixable with evacuation</source>
-        <translation>Fixable with evacuation</translation>
+        <translation>Maintenance support needed</translation>
     </message>
     <message>
         <source>Fixable without evacuation</source>
-        <translation>Fixable without evacuation</translation>
+        <translation>On site repairable</translation>
     </message>
     <message>
         <source>Armed</source>
@@ -3880,15 +3880,15 @@ Make sure that the file is not write-protected.</translation>
     </message>
     <message>
         <source>Stance</source>
-        <translation>Stance</translation>
+        <translation>Posture</translation>
     </message>
     <message>
         <source>Target Stance</source>
-        <translation>Target Stance</translation>
+        <translation>Target Posture</translation>
     </message>
     <message>
         <source>Stance Target</source>
-        <translation>Stance Target</translation>
+        <translation>Posture Target</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -3986,7 +3986,7 @@ Make sure that the file is not write-protected.</translation>
     </message>
     <message>
         <source>Ranges</source>
-        <translation>Ranges</translation>
+        <translation>Range</translation>
     </message>
     <message>
         <source>Proximity range</source>
@@ -4010,15 +4010,15 @@ Make sure that the file is not write-protected.</translation>
     </message>
     <message>
         <source>Stance modifiers</source>
-        <translation>Stance modifiers</translation>
+        <translation>Posture modifiers</translation>
     </message>
     <message>
         <source>Stance</source>
-        <translation>Stance</translation>
+        <translation>Posture</translation>
     </message>
     <message>
         <source>Target stance</source>
-        <translation>Target stance</translation>
+        <translation>Target posture</translation>
     </message>
     <message>
         <source>Crowd modifiers</source>
@@ -4094,7 +4094,7 @@ Make sure that the file is not write-protected.</translation>
     </message>
     <message>
         <source>Target stance modifiers</source>
-        <translation>Target stance modifiers</translation>
+        <translation>Target posture modifiers</translation>
     </message>
     <message>
         <source>Sensor</source>
@@ -4279,7 +4279,7 @@ Make sure that the file is not write-protected.</translation>
     <name>ADN_Supply_TrucksDoubleTable</name>
     <message>
         <source>Trucks qty</source>
-        <translation>Trucks qty</translation>
+        <translation>Truck qty</translation>
     </message>
     <message>
         <source>Max speed modifier</source>
@@ -4298,7 +4298,7 @@ Make sure that the file is not write-protected.</translation>
     <name>ADN_Supply_TrucksTimeTable</name>
     <message>
         <source>Trucks qty</source>
-        <translation>Trucks qty</translation>
+        <translation>Truck qty</translation>
     </message>
     <message>
         <source>Duration</source>
@@ -4811,19 +4811,19 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Wounded seriousness level 1</source>
-        <translation>Wounded seriousness level 1</translation>
+        <translation>Injury severity level 1</translation>
     </message>
     <message>
         <source>Wounded seriousness level 2</source>
-        <translation>Wounded seriousness level 2</translation>
+        <translation>Injury severity level 2</translation>
     </message>
     <message>
         <source>Wounded seriousness level 3</source>
-        <translation>Wounded seriousness level 3</translation>
+        <translation>Injury severity level 3</translation>
     </message>
     <message>
         <source>Wounded extreme seriousness</source>
-        <translation>Wounded extreme seriousness</translation>
+        <translation>Injury extreme severity</translation>
     </message>
     <message>
         <source>equipment</source>
@@ -4843,15 +4843,15 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Seriousness level 1</source>
-        <translation>Seriousness level 1</translation>
+        <translation>Severity level 1</translation>
     </message>
     <message>
         <source>Seriousness level 2</source>
-        <translation>Seriousness level 2</translation>
+        <translation>Severity level 2</translation>
     </message>
     <message>
         <source>Seriousness level 3</source>
-        <translation>Seriousness level 3</translation>
+        <translation>Severity level 3</translation>
     </message>
     <message>
         <source>Real</source>
@@ -4879,7 +4879,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>On site fixable</source>
-        <translation>On site fixable</translation>
+        <translation>On site repairable</translation>
     </message>
     <message>
         <source>Destroyed</source>
@@ -5055,7 +5055,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Active Protections</source>
-        <translation>Active Protections</translation>
+        <translation>Active Protection</translation>
     </message>
     <message>
         <source>Sensors</source>
@@ -5067,7 +5067,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Resource networks</source>
@@ -5141,7 +5141,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     <name>ADN_Units_Composantes_GUI</name>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Qty</source>
@@ -5232,7 +5232,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Ranges</source>
-        <translation>Ranges</translation>
+        <translation>Range</translation>
     </message>
     <message>
         <source>Sensors</source>
@@ -5240,7 +5240,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Nature</source>
@@ -5272,7 +5272,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Stances</source>
-        <translation>Stances</translation>
+        <translation>Postures</translation>
     </message>
     <message>
         <source>Deployment</source>
@@ -5390,7 +5390,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     <name>ADN_Units_Postures_GUI</name>
     <message>
         <source>Stance</source>
-        <translation>Stance</translation>
+        <translation>Posture</translation>
     </message>
     <message>
         <source>Time to activate</source>
@@ -5409,7 +5409,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>% on site fixable</source>
-        <translation>% on site fixable</translation>
+        <translation>% on site repairable</translation>
     </message>
 </context>
 <context>
@@ -5648,7 +5648,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Tiredness</source>
-        <translation>Tiredness</translation>
+        <translation>Fatigue</translation>
     </message>
     <message>
         <source>Stress</source>
@@ -5768,7 +5768,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Heat decrease rate</source>
-        <translation>Heat decrease rate</translation>
+        <translation>Temperature decrease rate</translation>
     </message>
 </context>
 <context>
@@ -6247,7 +6247,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Sensors - Invalid stance &apos;%1&apos;</source>
-        <translation>Sensors - Invalid stance &apos;%1&apos;</translation>
+        <translation>Sensors - Invalid posture &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Sensors - Invalid object &apos;%1&apos;</source>
@@ -6305,7 +6305,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Unit types - Invalid stance &apos;%1&apos;</source>
-        <translation>Unit types - Invalid stance &apos;%1&apos;</translation>
+        <translation>Unit types - Invalid posture &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Unit types - Invalid unit type &apos;%1&apos;</source>
