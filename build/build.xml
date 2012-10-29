@@ -1561,4 +1561,26 @@
 
     <target name="all" depends="configure,checkproject,build,test,documentation,package" description="build and package distribution"/>
 
+    <target name="cmake.update" depends="configure">
+        <update name="cmake"/>
+    </target>
+
+    <target name="cmake.msvc">
+        <cmake_msvc input="${root.dir}/build"/>
+    </target>
+
+    <target name="cmake.configure">
+        <cmake_configure input="${root.dir}/build" configuration="release"/>
+    </target>
+
+    <target name="cmake.build">
+        <cmake_build target="all"/>
+    </target>
+
+    <target name="cmake.test">
+        <cmake_test/>
+    </target>
+
+    <target name="cmake.all" depends="cmake.update,cmake.configure,cmake.build,cmake.test"/>
+
 </project>
