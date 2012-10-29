@@ -29,8 +29,6 @@
 
 using namespace gui;
 
-QLocale DisplayExtractor::locale_ = QLocale();
-
 // -----------------------------------------------------------------------------
 // Name: DisplayExtractor constructor
 // Created: JSR 2012-10-18
@@ -83,7 +81,8 @@ QString DisplayExtractor::GetDisplayName( const std::string& element ) const
 // -----------------------------------------------------------------------------
 QString DisplayExtractor::GetDisplayName( const unsigned long& element ) const
 {
-    return locale_.toString( static_cast< const unsigned int >( element) );
+    static QLocale locale;
+    return locale.toString( static_cast< const unsigned int >( element) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +117,8 @@ QString DisplayExtractor::GetDisplayName( const E_HumanWound& element ) const
 #define LOCALE_TO_STRING( T ) \
 QString DisplayExtractor::GetDisplayName( const T& element ) const \
 { \
-    return locale_.toString( element); \
+    static QLocale locale; \
+    return locale.toString( element); \
 }
 
 #define GET_ENTITY_NAME( T ) \

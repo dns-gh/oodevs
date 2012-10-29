@@ -53,10 +53,9 @@ struct NumberFormatter
     template< typename T >
     void operator()( const T& value, Displayer_ABC& displayer ) const
     {
-        displayer.AddToDisplay( locale_.toString( value ) );
+        static QLocale locale;
+        displayer.AddToDisplay( locale.toString( value ) );
     }
-
-    static QLocale locale_;
 };
 
 template< >
@@ -74,7 +73,8 @@ struct Formatter< unsigned long > : public NumberFormatter
 {
     void operator()( const unsigned long& value, Displayer_ABC& displayer ) const
     {
-        displayer.AddToDisplay( locale_.toString( static_cast< const unsigned int >( value ) ) );
+        static QLocale locale;
+        displayer.AddToDisplay( locale.toString( static_cast< const unsigned int >( value ) ) );
     }
 };
 template< >

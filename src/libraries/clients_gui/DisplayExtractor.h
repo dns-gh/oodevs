@@ -113,12 +113,6 @@ signals:
     //@{
     void LinkClicked( const QString& link );
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    static QLocale locale_;
-    //@}
 };
 
 } // namespace gui
