@@ -176,7 +176,7 @@ bool Application_ABC::eventFilter( QObject* pReceiver, QEvent* pEvent )
     }
     catch( ... )
     {
-        QMetaObject::invokeMethod( this, "DisplayError", Q_ARG( QString, QString( tools::translate( "Application", "Unknown exception caught" ) ) ) );
+        QMetaObject::invokeMethod( this, "DisplayError", Q_ARG( QString, tools::translate( "Application", "Unknown exception caught" ) ) );
     }
     return true;
 }
