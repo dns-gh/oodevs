@@ -53,7 +53,6 @@ ASCExtractor::ASCExtractor( const std::string& file )
     , pTransformation_( 0 )
     , ncols_          ( 0 )
     , nrows_          ( 0 )
-    , min_            ( 1. )
     , max_            ( 1. )
     , noValueData_    ( 0. )
 {
@@ -83,7 +82,6 @@ ASCExtractor::ASCExtractor( const std::string& file, const std::string& projecti
     , pTransformation_( 0 )
     , ncols_          ( 0 )
     , nrows_          ( 0 )
-    , min_            ( 1. )
     , max_            ( 1. )
     , noValueData_    ( 0. )
 {
