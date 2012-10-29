@@ -32,7 +32,7 @@ class Application_ABC : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Application_ABC( ApplicationMonitor& monitor ) ;
+    explicit Application_ABC( ApplicationMonitor& monitor ) ;
     virtual ~Application_ABC();
     //@}
 
