@@ -207,7 +207,7 @@ struct TMR_RequestTransferModellingResponsibility : public TMR
     VariableArray< NETN_UUID > instances;
     VariableArray< UnicodeString > attributes;
     uint32 capabilityType; // TMR::CapabilityTypeEnum32
-    VariableArray< AttributeValueStruct >attributeValues;
+    VariableArray< AttributeValueStruct > attributeValues;
 };
 
 } // namespace interactions

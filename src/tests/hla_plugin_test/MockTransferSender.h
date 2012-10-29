@@ -22,7 +22,7 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockTransferSender, TransferSender_ABC )
 {
-    MOCK_METHOD( RequestTransfer, 3 )
+    MOCK_METHOD( RequestTransfer, 4 )
 };
 }
 }

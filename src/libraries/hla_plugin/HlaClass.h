@@ -81,8 +81,9 @@ private:
     virtual void OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
     virtual bool RequestOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
     virtual void RequestOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const HlaObject_ABC& object, const ::hla::T_AttributeIdentifiers& attributes, const ::hla::VariableLengthData& tag );
-    virtual void Divest(const std::string& objectID );
-    virtual void Acquire(const std::string& objectID );
+    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes );
+    virtual const T_AttributeIdentifiers& GetAttributes() const;
     //@}
 
 private:
@@ -90,7 +91,6 @@ private:
     //@{
     typedef boost::shared_ptr< HlaObject_ABC > T_Entity;
     typedef std::map< std::string, T_Entity > T_Entities;
-    typedef std::vector< ::hla::AttributeIdentifier > T_AttributeIdentifiers;
     typedef std::map< std::string, unsigned long > T_HlaIdentifiers;
     typedef std::set< unsigned long > T_IdentifierSet;
     //@}

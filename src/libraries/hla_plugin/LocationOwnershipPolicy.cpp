@@ -138,7 +138,7 @@ void LocationOwnershipPolicy::OwnershipState::DoCheck()
         case S_Local:
             state_ = S_DivestSent;
             transferSender_.RequestTransfer( agentID_, boost::bind( &LocationOwnershipPolicy::OwnershipState::TransferCallback, this, _1 ),
-                    TransferSender_ABC::E_EntityPush );
+                    TransferSender_ABC::E_EntityPush, hlaClass_.GetAttributes() );
             break;
         case S_AcquisitionPending:
         case S_AcquisitionSent:
@@ -159,7 +159,7 @@ void LocationOwnershipPolicy::OwnershipState::DoCheck()
             case S_Remote:
                     state_ = S_AcquisitionSent;
                     transferSender_.RequestTransfer( agentID_, boost::bind( &LocationOwnershipPolicy::OwnershipState::TransferCallback, this, _1 ),
-                            TransferSender_ABC::E_EntityPull );
+                            TransferSender_ABC::E_EntityPull, hlaClass_.GetAttributes() );
                 break;
             case S_DivestPending:
             case S_DivestSent:
@@ -205,7 +205,7 @@ void LocationOwnershipPolicy::OwnershipState::TransferCallback( bool accept )
         if( accept )
         {
             state_ = S_DivestPending;
-            ownershipController_.PerformDivestiture( agentID_ );
+            ownershipController_.PerformDivestiture( agentID_, hlaClass_.GetAttributes() );
         }
         else
         {
@@ -216,7 +216,7 @@ void LocationOwnershipPolicy::OwnershipState::TransferCallback( bool accept )
         if( accept )
         {
             state_ = S_AcquisitionPending;
-            ownershipController_.PerformAcquisition( agentID_ );
+            ownershipController_.PerformAcquisition( agentID_, hlaClass_.GetAttributes() );
         }
         else
             state_ = S_AcquisitionRefused;

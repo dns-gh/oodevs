@@ -62,8 +62,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void PerformDivestiture( const std::string& identifier );
-    virtual void PerformAcquisition( const std::string& identifier );
+    virtual void PerformDivestiture( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes  );
+    virtual void PerformAcquisition( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes  );
     //@}
 
 private:

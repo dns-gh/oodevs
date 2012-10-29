@@ -69,6 +69,7 @@ namespace
             BOOST_REQUIRE( ackInteraction );
             transferInteraction->SetHandler( std::auto_ptr< ::hla::InteractionHandler_ABC >( transferHandler ) );
             ackInteraction->SetHandler( std::auto_ptr< ::hla::InteractionHandler_ABC >( ackHandler ) );
+            attributes.push_back( ::hla::AttributeIdentifier( "attr1" ) );
         }
         ~RprSenderFixture()
         {
@@ -108,7 +109,7 @@ namespace
             transferInteraction->Flush();
         }
         template <typename T>
-        void CheckParameter( const ::hla::ParameterIdentifier& /*parameterID*/, ::hla::T_SerializerPtr serializer, const T& ref )
+        void CheckParameter( const ::hla::ParameterIdentifier& , ::hla::T_SerializerPtr serializer, const T& ref )
         {
             T value;
             std::vector<int8> buff( serializer->GetSize(), 0 );
@@ -133,7 +134,6 @@ namespace
             MOCK_EXPECT( transferHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "RecordSetData" ), mock::any );
             MOCK_EXPECT( transferHandler->End ).once();
         }
-        
         void CheckAck( interactions::Acknowledge::ResponseFlagEnum16 resp, uint32 requestId )
         {
             mock::sequence s;
@@ -150,9 +150,10 @@ namespace
         SenderType sender;
         ::hla::MockInteractionHandler* transferHandler;
         ::hla::MockInteractionHandler* ackHandler;
+        std::vector< ::hla::AttributeIdentifier > emptyAttributes;
+        std::vector< ::hla::AttributeIdentifier > attributes;
     };
 }
-
 
 BOOST_FIXTURE_TEST_CASE( rpr_pull_negative, RprSenderFixture< RprTransferSender > )
 {
@@ -160,7 +161,7 @@ BOOST_FIXTURE_TEST_CASE( rpr_pull_negative, RprSenderFixture< RprTransferSender 
 
     MOCK_EXPECT( contextFactory.Create ).once().returns( 42 );
     CheckTransfer( "identifier", TransferSender_ABC::E_EntityPull, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes );
     MOCK_EXPECT( ackHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( false );
     ReceiveAck( 42, interactions::Acknowledge::E_UnableToComply );
@@ -172,7 +173,7 @@ BOOST_FIXTURE_TEST_CASE( rpr_pull_positive, RprSenderFixture< RprTransferSender 
 
     MOCK_EXPECT( contextFactory.Create ).once().returns( 42 );
     CheckTransfer( "identifier", TransferSender_ABC::E_EntityPull, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes );
     MOCK_EXPECT( ackHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( true );
     ReceiveAck( 42, interactions::Acknowledge::E_AbleToComply );
@@ -184,7 +185,7 @@ BOOST_FIXTURE_TEST_CASE( rpr_push_negative, RprSenderFixture< RprTransferSender 
 
     MOCK_EXPECT( contextFactory.Create ).once().returns( 42 );
     CheckTransfer( "identifier", TransferSender_ABC::E_EntityPush, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes );
     MOCK_EXPECT( ackHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( false );
     ReceiveAck( 42, interactions::Acknowledge::E_UnableToComply );
@@ -196,7 +197,7 @@ BOOST_FIXTURE_TEST_CASE( rpr_push_positive, RprSenderFixture< RprTransferSender 
 
     MOCK_EXPECT( contextFactory.Create ).once().returns( 42 );
     CheckTransfer( "identifier", TransferSender_ABC::E_EntityPush, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes );
     MOCK_EXPECT( ackHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( true );
     ReceiveAck( 42, interactions::Acknowledge::E_AbleToComply );
@@ -215,7 +216,7 @@ BOOST_FIXTURE_TEST_CASE( rpr_receive_pull_positive, RprSenderFixture< RprTransfe
     MOCK_EXPECT( transferHandler->Flush ).once();
     MOCK_EXPECT( ownershipStrategy.AcceptDivestiture ).once().with( "identifier", true ).returns( true );
     CheckAck( interactions::Acknowledge::E_AbleToComply, 42 );
-    MOCK_EXPECT( ownershipController.PerformDivestiture ).once().with( "identifier" );
+    MOCK_EXPECT( ownershipController.PerformDivestiture ).once().with( "identifier", emptyAttributes );
     ReceiveTransfer(42, interactions::TransferControl::E_EntityPull, "identifier" );
 }
 
@@ -232,7 +233,7 @@ BOOST_FIXTURE_TEST_CASE( rpr_receive_push_positive, RprSenderFixture< RprTransfe
     MOCK_EXPECT( transferHandler->Flush ).once();
     MOCK_EXPECT( ownershipStrategy.AcceptAcquisition ).once().with( "identifier", true ).returns( true );
     CheckAck( interactions::Acknowledge::E_AbleToComply, 42 );
-    MOCK_EXPECT( ownershipController.PerformAcquisition ).once().with( "identifier" );
+    MOCK_EXPECT( ownershipController.PerformAcquisition ).once().with( "identifier", emptyAttributes );
     ReceiveTransfer(42, interactions::TransferControl::E_EntityPush, "identifier" );
 }
 
@@ -240,14 +241,14 @@ BOOST_FIXTURE_TEST_CASE( null_pull_positive, RprSenderFixture< NullTransferSende
 {
     MOCK_FUNCTOR( callback, void ( bool ) );
     MOCK_EXPECT( callback ).once().with( true );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes );
 }
 
 BOOST_FIXTURE_TEST_CASE( null_push_positive, RprSenderFixture< NullTransferSender > )
 {
     MOCK_FUNCTOR( callback, void ( bool ) );
     MOCK_EXPECT( callback ).once().with( true );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes );
 }
 
 BOOST_FIXTURE_TEST_CASE( null_receive_pull_negative, RprSenderFixture< NullTransferSender > )
@@ -263,7 +264,7 @@ BOOST_FIXTURE_TEST_CASE( null_receive_pull_positive, RprSenderFixture< NullTrans
     MOCK_EXPECT( transferHandler->Flush ).once();
     MOCK_EXPECT( ownershipStrategy.AcceptDivestiture ).once().with( "identifier", true ).returns( true );
     CheckAck( interactions::Acknowledge::E_AbleToComply, 42 );
-    MOCK_EXPECT( ownershipController.PerformDivestiture ).once().with( "identifier" );
+    MOCK_EXPECT( ownershipController.PerformDivestiture ).once().with( "identifier", emptyAttributes );
     ReceiveTransfer(42, interactions::TransferControl::E_EntityPull, "identifier" );
 }
 
@@ -280,7 +281,7 @@ BOOST_FIXTURE_TEST_CASE( null_receive_push_positive, RprSenderFixture< NullTrans
     MOCK_EXPECT( transferHandler->Flush ).once();
     MOCK_EXPECT( ownershipStrategy.AcceptAcquisition ).once().with( "identifier", true ).returns( true );
     CheckAck( interactions::Acknowledge::E_AbleToComply, 42 );
-    MOCK_EXPECT( ownershipController.PerformAcquisition ).once().with( "identifier" );
+    MOCK_EXPECT( ownershipController.PerformAcquisition ).once().with( "identifier", emptyAttributes );
     ReceiveTransfer(42, interactions::TransferControl::E_EntityPush, "identifier" );
 }
 
@@ -358,7 +359,7 @@ namespace
             p.push_back( std::make_pair( ::hla::ParameterIdentifier( paramName ), new ::hla::Deserializer( &(bufVect.back()[0]), ser.GetSize() ) ) );
         }
         template <typename T>
-        void CheckParameter( const ::hla::ParameterIdentifier& /*parameterID*/, ::hla::T_SerializerPtr serializer, const T& ref )
+        void CheckParameter( const ::hla::ParameterIdentifier& , ::hla::T_SerializerPtr serializer, const T& ref )
         {
             T value;
             std::vector<int8> buff( serializer->GetSize(), 0 );
@@ -404,12 +405,48 @@ namespace
             offerInteraction->Create( params );
             offerInteraction->Flush();
         }
+        void ReceiveRequest( uint32 requestId, interactions::TMR::TransferTypeEnum32 type, const std::string& agent )
+        {
+            static const rpr::EntityIdentifier destFederate( 0xFFFF, 0xFFFF, 0xFFFF );
+            
+            interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
+            interactions::VariableArray< NETN_UUID > instances; instances.list.push_back( NETN_UUID( agent ) ) ;
+            interactions::VariableArray< UnicodeString > attributes;
+            interactions::VariableArray< interactions::AttributeValueStruct > attributeValues;
+
+            std::list< std::vector<int8> > bufVect;
+            ::hla::Interaction_ABC::T_Parameters params;
+            FillParameter( bufVect, params, "TransactionID", trId );
+            FillParameter( bufVect, params, "RequestFederate", UnicodeString( "federateName2" ) );
+            FillParameter( bufVect, params, "ResponseFederate", UnicodeString( "federateName" ) );
+            FillParameter( bufVect, params, "TransferType", static_cast< uint32 >( type ) );
+            FillParameter( bufVect, params, "Instances", instances );
+            FillParameter( bufVect, params, "Attributes", attributes );
+            FillParameter( bufVect, params, "CapabilityType", static_cast< uint32 >( interactions::TMR::TotalTransfer ) );
+            FillParameter( bufVect, params, "InstanceAttributeValues", attributeValues );
+            requestInteraction->Create( params );
+            requestInteraction->Flush();
+        }
+        void CheckOffer( uint32 requestId, bool isOffering )
+        {
+            mock::sequence s;
+            interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
+            MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "TransactionID" ), mock::any ).
+                calls( boost::bind( &NetnTransferFixture::CheckParameter< interactions::TransactionId >, this, _1, _2, trId ) ); 
+            MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "RequestFederate" ), mock::any );
+            MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "ResponseFederate" ), mock::any );
+            MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "isOffering" ), mock::any ).
+                calls( boost::bind( &NetnTransferFixture::CheckParameter< bool >, this, _1, _2, isOffering ) ); 
+            MOCK_EXPECT( offerHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "Reason" ), mock::any );
+            MOCK_EXPECT( offerHandler->End ).once();
+        }
         const std::string federateName;
         MockLocalAgentResolver localAgentResolver;
         MockCallsignResolver callsignResolver;
         Netn2TransferSender sender;
         ::hla::MockInteractionHandler *requestHandler;
         ::hla::MockInteractionHandler *offerHandler;
+        std::vector< ::hla::AttributeIdentifier > attributes;
     };
 }
 
@@ -421,7 +458,7 @@ BOOST_FIXTURE_TEST_CASE( netn_pull_negative, NetnTransferFixture )
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
     MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( "uniqueId" );
     CheckTransfer( NETN_UUID( "uniqueId" ), TransferSender_ABC::E_EntityPull, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( false );
@@ -436,7 +473,7 @@ BOOST_FIXTURE_TEST_CASE( netn_pull_positive, NetnTransferFixture )
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
     MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( "uniqueId" );
     CheckTransfer( NETN_UUID( "uniqueId" ), TransferSender_ABC::E_EntityPull, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( true );
@@ -451,7 +488,7 @@ BOOST_FIXTURE_TEST_CASE( netn_push_negative, NetnTransferFixture )
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
     MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( "uniqueId" );
     CheckTransfer( NETN_UUID( "uniqueId" ), TransferSender_ABC::E_EntityPush, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( false );
@@ -466,9 +503,51 @@ BOOST_FIXTURE_TEST_CASE( netn_push_positive, NetnTransferFixture )
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
     MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( "uniqueId" );
     CheckTransfer( NETN_UUID( "uniqueId" ), TransferSender_ABC::E_EntityPush, 42 );
-    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush );
+    sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
     MOCK_EXPECT( callback ).once().with( true );
     ReceiveAnswer( 42, true, interactions::TMR::Reason_Other );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_receive_pull_negative, NetnTransferFixture )
+{
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( "uniqueId" ).returns( 12ul );
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 12ul ).returns( "identifier" );
+    MOCK_EXPECT( requestHandler->Flush ).once();
+    MOCK_EXPECT( ownershipStrategy.AcceptDivestiture ).once().with( "identifier", true ).returns( false );
+    CheckOffer( 42, false );
+    ReceiveRequest( 42, interactions::TMR::Acquire, "uniqueId" );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_receive_pull_positive, NetnTransferFixture )
+{
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).exactly( 2 ).with( "uniqueId" ).returns( 12ul );
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).exactly( 2 ).with( 12ul ).returns( "identifier" );
+    MOCK_EXPECT( requestHandler->Flush ).once();
+    MOCK_EXPECT( ownershipStrategy.AcceptDivestiture ).once().with( "identifier", true ).returns( true );
+    CheckOffer( 42, true );
+    MOCK_EXPECT( ownershipController.PerformDivestiture ).once().with( "identifier", attributes );
+    ReceiveRequest( 42, interactions::TMR::Acquire, "uniqueId" );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_receive_push_negative, NetnTransferFixture )
+{
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( "uniqueId" ).returns( 12ul );
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 12ul ).returns( "identifier" );
+    MOCK_EXPECT( requestHandler->Flush ).once();
+    MOCK_EXPECT( ownershipStrategy.AcceptAcquisition ).once().with( "identifier", true ).returns( false );
+    CheckOffer( 42, false );
+    ReceiveRequest( 42, interactions::TMR::Divest, "uniqueId" );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_receive_push_positive, NetnTransferFixture )
+{
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).exactly( 2 ).with( "uniqueId" ).returns( 12ul );
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).exactly( 2 ).with( 12ul ).returns( "identifier" );
+    MOCK_EXPECT( requestHandler->Flush ).once();
+    MOCK_EXPECT( ownershipStrategy.AcceptAcquisition ).once().with( "identifier", true ).returns( true );
+    CheckOffer( 42, true );
+    MOCK_EXPECT( ownershipController.PerformAcquisition ).once().with( "identifier", attributes );
+    ReceiveRequest( 42, interactions::TMR::Divest, "uniqueId" );
 }

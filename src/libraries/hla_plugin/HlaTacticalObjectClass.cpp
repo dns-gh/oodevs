@@ -40,6 +40,10 @@ HlaTacticalObjectClass::HlaTacticalObjectClass( Federate_ABC& federate, const Hl
     , pListeners_       ( new ClassListenerComposite() )
 {
     builder->Build( federate, *hlaClass_ );
+    std::vector< std::string > temp;
+    builder->GetAttributes( temp );
+    BOOST_FOREACH( const std::string& name, temp)
+        attributes_.push_back( ::hla::AttributeIdentifier( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +132,7 @@ void HlaTacticalObjectClass::Created( TacticalObject_ABC& object, unsigned int i
 // Name: HlaTacticalObjectClass::Divest
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::Divest(const std::string& /*objectID*/ )
+void HlaTacticalObjectClass::Divest(const std::string& /*objectID*/, const T_AttributeIdentifiers& )
 {
     // NOTHING
 }
@@ -137,7 +141,7 @@ void HlaTacticalObjectClass::Divest(const std::string& /*objectID*/ )
 // Name: HlaTacticalObjectClass::Acquire
 // Created: AHC 2012-08-07
 // -----------------------------------------------------------------------------
-void HlaTacticalObjectClass::Acquire(const std::string& /*objectID*/ )
+void HlaTacticalObjectClass::Acquire(const std::string& /*objectID*/, const T_AttributeIdentifiers& )
 {
     // NOTHING
 }
@@ -171,4 +175,13 @@ void HlaTacticalObjectClass::Unregister( ClassListener_ABC& listener )
 void HlaTacticalObjectClass::RequestOwnershipRelease( const ::hla::ObjectIdentifier&, const HlaObject_ABC&, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaTacticalObjectClass::GetAttributes
+// Created: AHC 2012-10-29
+// -----------------------------------------------------------------------------
+const HlaClass_ABC::T_AttributeIdentifiers& HlaTacticalObjectClass::GetAttributes() const
+{
+    return attributes_;
 }

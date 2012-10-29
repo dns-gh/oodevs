@@ -59,7 +59,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RequestTransfer( const std::string& agentID, const TransferRequestCallback& callback, TransferType type );
+    virtual void RequestTransfer( const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes );
     //@}
 
 private:
@@ -74,7 +74,12 @@ private:
     //@{
     typedef InteractionSender_ABC< interactions::Acknowledge > T_AcknowledgeSender;
     typedef InteractionSender_ABC< interactions::TransferControl > T_TransferSender;
-    typedef std::pair< std::string, TransferRequestCallback > T_RequestInfo;
+    struct T_RequestInfo
+    {
+        T_RequestInfo( const std::string& n, TransferRequestCallback cb );
+        std::string name_;
+        TransferRequestCallback callback_;
+    };
     typedef std::map< unsigned int, T_RequestInfo > T_Callbacks;
     //@}
 

@@ -67,8 +67,9 @@ public:
     virtual void Register( ClassListener_ABC& listener );
     virtual void Unregister( ClassListener_ABC& listener );
     void Created( TacticalObject_ABC& object, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
-    virtual void Divest(const std::string& objectID );
-    virtual void Acquire(const std::string& objectID );
+    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes );
+    virtual const T_AttributeIdentifiers& GetAttributes() const;
     //@}
 
 private:
@@ -99,6 +100,7 @@ private:
     std::auto_ptr< HlaTacticalObjectFactory_ABC > factory_;
     std::auto_ptr< RemoteHlaObjectFactory_ABC > remoteFactory_;
     std::auto_ptr< ::hla::Class< HlaObject_ABC > > hlaClass_;
+    T_AttributeIdentifiers attributes_;
     T_Entities localEntities_;
     T_Entities remoteEntities_;
     std::auto_ptr< ClassListenerComposite > pListeners_;

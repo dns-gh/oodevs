@@ -194,7 +194,7 @@ bool HlaClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& object
 // Name: HlaClass::Divest
 // Created: AHC 2012-03-01
 // -----------------------------------------------------------------------------
-void HlaClass::Divest(const std::string& objectID )
+void HlaClass::Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes )
 {
     T_Entities::iterator it = localEntities_.find( objectID );
     if( localEntities_.end() == it )
@@ -206,11 +206,12 @@ void HlaClass::Divest(const std::string& objectID )
     {
         divesting_.insert( hlaIdentifiers_[objectID] );
         ::hla::VariableLengthData tag; // FIXME
-        federate_.DivestRequest( hlaIdentifiers_[objectID], attributes_, tag );
+
+        federate_.DivestRequest( hlaIdentifiers_[objectID], attributes.size() != 0 ? attributes : attributes_, tag );
     }
     else
     {
-        federate_.UnconditionalDivest( hlaIdentifiers_[objectID], attributes_ );
+        federate_.UnconditionalDivest( hlaIdentifiers_[objectID], attributes.size() != 0 ? attributes : attributes_ );
         remoteEntities_[ objectID ] = it->second;
         localEntities_.erase( it );
         pListeners_->Divested( objectID );
@@ -221,7 +222,7 @@ void HlaClass::Divest(const std::string& objectID )
 // Name: HlaClass::Acquire
 // Created: AHC 2012-03-02
 // -----------------------------------------------------------------------------
-void HlaClass::Acquire(const std::string& objectID )
+void HlaClass::Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes )
 {
     T_Entities::iterator it = remoteEntities_.find( objectID );
     if( remoteEntities_.end() == it )
@@ -230,13 +231,13 @@ void HlaClass::Acquire(const std::string& objectID )
     if( ownershipStrategy_.PerformAttributeOwnershipNegotiation() )
     {
         acquiring_.insert( hlaIdentifiers_[objectID] );
-        federate_.AcquisitionRequest( hlaIdentifiers_[objectID], attributes_ );
+        federate_.AcquisitionRequest( hlaIdentifiers_[objectID], attributes );
     }
     else
     {
         acquiring_.insert( hlaIdentifiers_[objectID] );
         ::hla::VariableLengthData tag; // FIXME
-        federate_.UnconditionalAcquisition( hlaIdentifiers_[objectID], attributes_, tag );
+        federate_.UnconditionalAcquisition( hlaIdentifiers_[objectID], attributes, tag );
     }
 }
 
@@ -247,4 +248,13 @@ void HlaClass::Acquire(const std::string& objectID )
 void HlaClass::RequestOwnershipRelease( const ::hla::ObjectIdentifier&, const HlaObject_ABC&, const ::hla::T_AttributeIdentifiers&, const ::hla::VariableLengthData& )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaClass::GetAttributes
+// Created: AHC 2012-10-29
+// -----------------------------------------------------------------------------
+const HlaClass_ABC::T_AttributeIdentifiers& HlaClass::GetAttributes() const
+{
+    return attributes_;
 }

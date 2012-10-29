@@ -11,6 +11,12 @@
 
 #include <boost/function.hpp>
 #include <string>
+#include <vector>
+
+namespace hla
+{
+    class AttributeIdentifier;
+}
 
 namespace plugins
 {
@@ -41,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RequestTransfer( const std::string& agentID, const TransferRequestCallback& callback, TransferType type ) = 0;
+    virtual void RequestTransfer( const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes ) = 0;
     //@}
 };
 

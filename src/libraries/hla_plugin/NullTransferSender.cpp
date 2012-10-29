@@ -15,6 +15,7 @@
 #include <cassert>
 #include "InteractionSender.h"
 #include <hla/Interaction.h>
+#include <hla/AttributeIdentifier.h>
 #include "dispatcher/Logger_ABC.h"
 
 using namespace plugins::hla;
@@ -51,7 +52,7 @@ NullTransferSender::~NullTransferSender()
 // Name: NullTransferSender::RequestTransfer
 // Created: AHC 2012-03-22
 // -----------------------------------------------------------------------------
-void NullTransferSender::RequestTransfer(const std::string& /*agentID*/, const TransferRequestCallback& callback, TransferType /*type*/)
+void NullTransferSender::RequestTransfer(const std::string& /*agentID*/, const TransferRequestCallback& callback, TransferType /*type*/, const std::vector< ::hla::AttributeIdentifier >& /*attributes*/ )
 {
     callback( true );
     return;
@@ -80,10 +81,11 @@ void NullTransferSender::Receive( interactions::TransferControl& interaction )
                         interactions::Acknowledge::E_AbleToComply :
                         interactions::Acknowledge::E_UnableToComply );
         pAcknowledgeSender_->Send( reply );
+        std::vector< ::hla::AttributeIdentifier > attributes;
         if( resp && transferType == interactions::TransferControl::E_EntityPull )
-            ownershipController_.PerformDivestiture( interaction.transferEntity.str() );
+            ownershipController_.PerformDivestiture( interaction.transferEntity.str(), attributes );
         else if( resp && transferType == interactions::TransferControl::E_EntityPush )
-            ownershipController_.PerformAcquisition( interaction.transferEntity.str() );
+            ownershipController_.PerformAcquisition( interaction.transferEntity.str(), attributes );
     }
 }
 

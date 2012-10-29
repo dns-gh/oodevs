@@ -34,6 +34,7 @@ namespace
         MockRemoteAgentSubject remoteSubject;
         ClassListener_ABC* classListener;
         dispatcher::MockLogger logger;
+        std::vector< ::hla::AttributeIdentifier > attributes;
     };
     class ControllerFixture : public Fixture
     {
@@ -58,8 +59,8 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( ownership_push, ControllerFixture )
 {
-    MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier" );
-    ownershipController.PerformDivestiture( "identifier");
+    MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes );
+    ownershipController.PerformDivestiture( "identifier", attributes );
 }
 
 namespace
@@ -68,8 +69,8 @@ namespace
     {
         DivestedFixture()
         {
-            MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier" );
-            ownershipController.PerformDivestiture( "identifier" );
+            MOCK_EXPECT( hlaClass.Divest ).once().with( "identifier", attributes );
+            ownershipController.PerformDivestiture( "identifier", attributes );
             classListener->Divested( "identifier" );
         }
     };
@@ -77,6 +78,6 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( ownership_pull, DivestedFixture )
 {
-    MOCK_EXPECT( hlaClass.Acquire ).once().with( "identifier" );
-    ownershipController.PerformAcquisition( "identifier");
+    MOCK_EXPECT( hlaClass.Acquire ).once().with( "identifier", attributes );
+    ownershipController.PerformAcquisition( "identifier", attributes );
 }

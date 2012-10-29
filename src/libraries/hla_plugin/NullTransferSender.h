@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RequestTransfer( const std::string& agentID, const TransferRequestCallback& callback, TransferType type );
+    virtual void RequestTransfer( const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes );
     //@}
 
 private:

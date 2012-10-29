@@ -16,8 +16,20 @@
 #include <cassert>
 #include "InteractionSender.h"
 #include <hla/Interaction.h>
+#include <hla/AttributeIdentifier.h>
 
 using namespace plugins::hla;
+
+// -----------------------------------------------------------------------------
+// Name: RprTransferSender::T_RequestInfo constructor
+// Created: AHC 2012-10-29
+// -----------------------------------------------------------------------------
+RprTransferSender::T_RequestInfo::T_RequestInfo( const std::string& n, TransferRequestCallback cb )
+    : name_( n )
+    , callback_( cb )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: RprTransferSender constructor
@@ -55,7 +67,7 @@ RprTransferSender::~RprTransferSender()
 // Name: RprTransferSender::RequestTransfer
 // Created: AHC 2012-02-23
 // -----------------------------------------------------------------------------
-void RprTransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type)
+void RprTransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& /*attributes*/ )
 {
     unsigned int reqId = ctxtFactory_.Create();
     interactions::TransferControl transfer;
@@ -66,7 +78,7 @@ void RprTransferSender::RequestTransfer(const std::string& agentID, const Transf
     transfer.transferType = type == E_EntityPush ? static_cast<uint8>( interactions::TransferControl::E_EntityPush )
                                                  : static_cast<uint8>( interactions::TransferControl::E_EntityPull );
     pTransferSender_->Send( transfer );
-    callbacks_.insert( std::make_pair( reqId, std::make_pair( agentID, callback ) ) );
+    callbacks_.insert( std::make_pair( reqId, T_RequestInfo( agentID, callback ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,10 +104,11 @@ void RprTransferSender::Receive( interactions::TransferControl& interaction )
                         interactions::Acknowledge::E_AbleToComply :
                         interactions::Acknowledge::E_UnableToComply );
         pAcknowledgeSender_->Send( reply );
+        std::vector< ::hla::AttributeIdentifier > attributes;
         if( resp && transferType == interactions::TransferControl::E_EntityPull )
-            ownershipController_.PerformDivestiture( interaction.transferEntity.str() );
+            ownershipController_.PerformDivestiture( interaction.transferEntity.str(), attributes );
         else if( resp && transferType == interactions::TransferControl::E_EntityPush )
-            ownershipController_.PerformAcquisition( interaction.transferEntity.str() );
+            ownershipController_.PerformAcquisition( interaction.transferEntity.str(), attributes );
     }
 }
 
@@ -107,9 +120,9 @@ void RprTransferSender::Receive( interactions::Acknowledge& interaction )
 {
     T_Callbacks::iterator it;
     if( rpr::EntityIdentifier::Match(interaction.receivingEntity, federateID_ ) &&
-        ( it=callbacks_.find( interaction.requestIdentifier) ) != callbacks_.end() )
+        ( it=callbacks_.find( interaction.requestIdentifier ) ) != callbacks_.end() )
     {
-        (it->second.second)( interaction.responseFlag == interactions::Acknowledge::E_AbleToComply );
+        (it->second.callback_)( interaction.responseFlag == interactions::Acknowledge::E_AbleToComply );
         callbacks_.erase( interaction.requestIdentifier );
     }
 }

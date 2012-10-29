@@ -9,6 +9,13 @@
 #ifndef OWNERSHIPCONTROLLER_ABC_H_
 #define OWNERSHIPCONTROLLER_ABC_H_
 
+#include <vector>
+
+namespace hla
+{
+    class AttributeIdentifier;
+}
+
 namespace plugins
 {
 namespace hla
@@ -24,8 +31,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void PerformDivestiture( const std::string& identifier ) = 0;
-    virtual void PerformAcquisition( const std::string& identifier ) = 0;
+    virtual void PerformDivestiture( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes ) = 0;
+    virtual void PerformAcquisition( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes ) = 0;
     //@}
 };
 }

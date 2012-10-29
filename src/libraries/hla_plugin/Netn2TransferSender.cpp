@@ -16,9 +16,12 @@
 #include "LocalAgentResolver_ABC.h"
 #include "CallsignResolver_ABC.h"
 #include "InteractionSender.h"
+#include "MT_Tools/MT_Random.h"
 #include <hla/Interaction.h>
+#include <hla/AttributeIdentifier.h>
 #include <boost/foreach.hpp>
 #include <cassert>
+#include <algorithm>
 
 using namespace plugins::hla;
 
@@ -76,7 +79,7 @@ Netn2TransferSender::~Netn2TransferSender()
 // Name: Netn2TransferSender::RequestTransfer
 // Created: AHC 2012-10-25
 // -----------------------------------------------------------------------------
-void Netn2TransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type)
+void Netn2TransferSender::RequestTransfer(const std::string& agentID, const TransferRequestCallback& callback, TransferType type, const std::vector< ::hla::AttributeIdentifier >& attributes )
 {
     unsigned int reqId = ctxtFactory_.Create();
     interactions::TMR_RequestTransferModellingResponsibility transfer;
@@ -90,7 +93,10 @@ void Netn2TransferSender::RequestTransfer(const std::string& agentID, const Tran
         return;
     }
     transfer.instances.list.push_back( NETN_UUID( uniqueId ) );
-    // FIXME transfer.attributes
+    BOOST_FOREACH( const ::hla::AttributeIdentifier& attr, attributes )
+    {
+        transfer.attributes.list.push_back( UnicodeString( attr.ToString() ) );
+    }
     transfer.capabilityType = static_cast< uint32 >( interactions::TMR::TotalTransfer );
     transfer.transferType = type == E_EntityPush ? static_cast< uint32 >( interactions::TMR::Divest )
                                                  : static_cast< uint32 >( interactions::TMR::Acquire );
@@ -119,7 +125,8 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
         pOfferSender_->Send( reply );
         return;
     }
-
+    std::vector< ::hla::AttributeIdentifier > attributes( request.attributes.list.size(), ::hla::AttributeIdentifier("") );
+    std::transform( request.attributes.list.begin(), request.attributes.list.end(), attributes.begin(), std::mem_fun_ref( &UnicodeString::str ) );
     bool resp( true );
     interactions::TMR::TransferTypeEnum32 transferType( static_cast< interactions::TMR::TransferTypeEnum32 >( request.transferType ) );
     BOOST_FOREACH( const NETN_UUID& uniqueId, request.instances.list )
@@ -152,9 +159,9 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
         {
             std::string agentId( GetAgentId( uniqueId.str(), agentResolver_, callsignResolver_ ) );
             if( transferType == interactions::TMR::Acquire )
-                ownershipController_.PerformDivestiture( agentId );
+                ownershipController_.PerformDivestiture( agentId, attributes );
             else if( transferType == interactions::TMR::Divest )
-                ownershipController_.PerformAcquisition( agentId );
+                ownershipController_.PerformAcquisition( agentId, attributes );
         }
     }
 }

@@ -11,6 +11,9 @@
 #define plugins_hla_HlaClass_ABC_h
 
 #include <string>
+#include <vector>
+
+#include <hla/AttributeIdentifier.h>
 
 namespace plugins
 {
@@ -25,6 +28,11 @@ namespace hla
 class HlaClass_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::vector< ::hla::AttributeIdentifier > T_AttributeIdentifiers;
+    //@}
+
     //! @name Constructors/Destructor
     //@{
     virtual ~HlaClass_ABC() {}
@@ -32,8 +40,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Divest(const std::string& objectID ) = 0;
-    virtual void Acquire(const std::string& objectID ) = 0;
+    virtual const T_AttributeIdentifiers& GetAttributes() const = 0;
+    virtual void Divest(const std::string& objectID, const T_AttributeIdentifiers& attributes ) = 0;
+    virtual void Acquire(const std::string& objectID, const T_AttributeIdentifiers& attributes ) = 0;
     //@}
 };
 

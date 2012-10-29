@@ -38,7 +38,6 @@
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
-#include <boost/lexical_cast.hpp>
 
 #include <limits>
 
@@ -69,6 +68,8 @@ namespace
         uniqueId.clear();
         if( ! entity.GetExtension( "UUID", uniqueId ) )
             GenerateUniqueId( uniqueId, simId );
+        else
+            boost::algorithm::erase_all( uniqueId, "-" );
     }
 }
 

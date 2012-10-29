@@ -179,7 +179,7 @@ namespace
 // Name: OwnershipController::PerformDivestiture
 // Created: AHC 2010-03-12
 // -----------------------------------------------------------------------------
-void OwnershipController::PerformDivestiture( const std::string& identifier )
+void OwnershipController::PerformDivestiture( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes  )
 {
     T_OwnershipInfos::iterator it( states_.find( identifier ) );
     if( states_.end() == it )
@@ -187,14 +187,14 @@ void OwnershipController::PerformDivestiture( const std::string& identifier )
 
     logger_.LogInfo( "Starting divestiture for object " + identifier );
     it->second->state_ = OwnershipInfo::S_DivestPending;
-    it->second->hlaClass_.Divest( identifier );
+    it->second->hlaClass_.Divest( identifier, attributes );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OwnershipController::PerformAcquisition
 // Created: AHC 2010-03-12
 // -----------------------------------------------------------------------------
-void OwnershipController::PerformAcquisition( const std::string& identifier )
+void OwnershipController::PerformAcquisition( const std::string& identifier, const std::vector< ::hla::AttributeIdentifier>& attributes  )
 {
     T_OwnershipInfos::iterator it = states_.find( identifier );
     if( states_.end() == it )
@@ -202,6 +202,6 @@ void OwnershipController::PerformAcquisition( const std::string& identifier )
 
     logger_.LogInfo( "Starting acquisition for object " + identifier );
     it->second->state_ = OwnershipInfo::S_AcquisitionPending;
-    it->second->hlaClass_.Acquire( identifier );
+    it->second->hlaClass_.Acquire( identifier, attributes );
 }
 

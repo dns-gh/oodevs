@@ -23,8 +23,9 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockHlaClass, HlaClass_ABC )
 {
-    MOCK_METHOD( Divest, 1 )
-    MOCK_METHOD( Acquire, 1 )
+    MOCK_METHOD( GetAttributes, 0 )
+    MOCK_METHOD( Divest, 2 )
+    MOCK_METHOD( Acquire, 2 )
 };
 }
 }
