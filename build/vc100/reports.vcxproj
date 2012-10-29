@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\reports\reports_ar.ts" />
+    <None Include="..\..\src\libraries\reports\reports_en.ts" />
     <None Include="..\..\src\libraries\reports\reports_fr.ts" />
     <None Include="..\..\src\libraries\reports\reports_es.ts" />
     <CustomBuild Include="..\..\src\libraries\reports\translator.pro">

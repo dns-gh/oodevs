@@ -479,6 +479,9 @@
     <None Include="..\..\src\libraries\actions\actions_ar.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\actions\actions_en.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\actions\translator.pro">

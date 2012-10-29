@@ -185,6 +185,7 @@ lrelease -verbose "%(FullPath)"
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\indicators\indicators_ar.ts" />
+    <None Include="..\..\src\libraries\indicators\indicators_en.ts" />
     <None Include="..\..\src\libraries\indicators\indicators_es.ts" />
     <None Include="..\..\src\libraries\indicators\indicators_fr.ts" />
   </ItemGroup>

@@ -56,6 +56,9 @@
     <None Include="..\..\src\libraries\reports\reports_ar.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\reports\reports_en.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\reports\translator.pro">

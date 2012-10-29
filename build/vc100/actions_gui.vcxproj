@@ -513,6 +513,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\actions_gui\actions_gui_ar.ts" />
+    <None Include="..\..\src\libraries\actions_gui\actions_gui_en.ts" />
     <None Include="..\..\src\libraries\actions_gui\EntityParameter.inl" />
     <None Include="..\..\src\libraries\actions_gui\actions_gui_es.ts" />
     <None Include="..\..\src\libraries\actions_gui\actions_gui_fr.ts">

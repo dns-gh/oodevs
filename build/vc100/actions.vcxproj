@@ -245,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\actions\actions_ar.ts" />
+    <None Include="..\..\src\libraries\actions\actions_en.ts" />
     <None Include="..\..\src\libraries\actions\Parameter.inl" />
     <None Include="..\..\src\libraries\actions\Knowledge_ABC.inl" />
     <None Include="..\..\src\libraries\actions\actions_es.ts" />

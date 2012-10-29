@@ -37,6 +37,9 @@
     <None Include="..\..\src\libraries\ENT\ENT_ar.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\ENT\ENT_en.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\Ent\translator.pro">

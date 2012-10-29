@@ -1556,6 +1556,9 @@
     <None Include="..\..\src\libraries\gaming\gaming_ar.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\gaming\gaming_en.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\gaming\translator.pro">

@@ -6,4 +6,4 @@ FormulaParser.cpp \
 Function.cpp \
 FunctionParameter.cpp \
 
-TRANSLATIONS = indicators_fr.ts indicators_es.ts indicators_ar.ts
+TRANSLATIONS = indicators_en.ts indicators_fr.ts indicators_es.ts indicators_ar.ts

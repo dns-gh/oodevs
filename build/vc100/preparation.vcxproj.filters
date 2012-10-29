@@ -1058,6 +1058,9 @@
     <None Include="..\..\src\libraries\preparation\preparation_ar.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\preparation\preparation_en.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\preparation\translator.pro">

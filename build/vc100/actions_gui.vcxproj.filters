@@ -230,6 +230,9 @@
     <None Include="..\..\src\libraries\actions_gui\actions_gui_ar.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\actions_gui\actions_gui_en.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\actions_gui\LimaParameter.h">

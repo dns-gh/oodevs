@@ -2271,6 +2271,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\gaming_app_ar.ts" />
+    <None Include="..\..\src\applications\gaming_app\gaming_app_en.ts" />
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl" />
     <None Include="..\..\src\applications\gaming_app\gaming_app_es.ts" />
     <None Include="..\..\src\applications\gaming_app\gaming_app_fr.ts" />
