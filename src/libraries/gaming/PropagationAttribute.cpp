@@ -10,12 +10,10 @@
 #include "gaming_pch.h"
 #include "PropagationAttribute.h"
 #include "Simulation.h"
+#include "Propagation.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
-#include <boost/filesystem/path.hpp>
-#include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -81,7 +79,7 @@ void PropagationAttribute::ReadColor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PropagationAttribute::ReadFile( xml::xistream& xis )
 {
-    propagation_[ QDateTime::fromString( xis.attribute< std::string >( "time" ).c_str(), "yyyy-MM-dd'T'HH:mm:ss" ) ].push_back( xis.value< std::string >() );
+    propagationFiles_[ QDateTime::fromString( xis.attribute< std::string >( "time" ).c_str(), "yyyy-MM-dd'T'HH:mm:ss" ) ].push_back( xis.value< std::string >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,24 +88,21 @@ void PropagationAttribute::ReadFile( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
 {
-    if( !propagation_.empty() )
+    if( !propagationFiles_.empty() )
     {
         QDateTime current = simulation.GetDateTime();
-        IT_Propagation it = propagation_.begin();
+        IT_PropagationFiles it = propagationFiles_.begin();
         if( current >= it->first )
         {
-            tiles_.clear();
-            T_Files files = it->second;
+            propagations_.clear();
+            T_Files& files = it->second;
+            bfs::path projection( path_ / projection_ );
             for( std::size_t i = 0; i < files.size(); ++i )
             {
-                bfs::path file( it->second.at( i ) );
-                bfs::path path( path_ / file.filename() );
-                bfs::path projection( path_ / projection_ );
-                kernel::ASCExtractor extractor( path.string(), projection.string() );
-                const kernel::ASCExtractor::T_Tiles& tmp = extractor.GetTiles();
-                tiles_.insert( tiles_.end(), tmp.begin(), tmp.end() );
+                bfs::path file( path_ / bfs::path( it->second.at( i ) ).filename() );
+                propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( file.string(), projection.string() , converter_ ) ) );
             }
-            propagation_.erase( it );
+            propagationFiles_.erase( it );
         }
     }
 }
@@ -118,14 +113,6 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void PropagationAttribute::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& /*tools*/ ) const
 {
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT | GL_LIGHTING_BIT );
-    BOOST_FOREACH( kernel::ASCExtractor::T_Tile tile, tiles_ )
-    {
-        QColor color = colors_.empty() ? Qt::green : colors_.lower_bound( tile.second )->second;
-        glColor4f( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f, 1.f );
-        geometry::Point2f lb = converter_.ConvertFromGeo( tile.first.BottomLeft( ) );
-        geometry::Point2f rt = converter_.ConvertFromGeo( tile.first.TopRight( ) );
-        glRectfv( reinterpret_cast< const GLfloat* >( &lb ), reinterpret_cast< const GLfloat* >( &rt ) );
-    }
-    glPopAttrib();
+    for( CIT_Propagations it = propagations_.begin(); it != propagations_.end(); ++it )
+        (*it)->Draw();
 }

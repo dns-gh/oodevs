@@ -12,10 +12,9 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/ASCExtractor.h"
 #include "tools/ElementObserver_ABC.h"
-#include "protocol/Protocol.h"
 #include <boost/filesystem/path.hpp>
+#include <boost/shared_array.hpp>
 
 namespace sword
 {
@@ -31,6 +30,7 @@ namespace kernel
 }
 
 class Simulation;
+class Propagation;
 
 // =============================================================================
 /** @class  PropagationAttribute
@@ -74,11 +74,15 @@ private:
     //! @name Types
     //@{
     typedef std::vector< std::string >     T_Files;
-    typedef std::map< QDateTime, T_Files > T_Propagation;
-    typedef T_Propagation::iterator       IT_Propagation;
+    typedef std::map< QDateTime, T_Files > T_PropagationFiles;
+    typedef T_PropagationFiles::iterator  IT_PropagationFiles;
 
     typedef std::map< double, QColor > T_Colors;
     typedef T_Colors::const_iterator CIT_Colors;
+
+    typedef boost::shared_ptr< Propagation > T_Propagation;
+    typedef std::vector< T_Propagation >     T_Propagations;
+    typedef T_Propagations::const_iterator CIT_Propagations;
     //@}
 
 private:
@@ -88,9 +92,9 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     boost::filesystem::path path_;
     std::string projection_;
-    T_Propagation propagation_;
+    T_PropagationFiles propagationFiles_;
     T_Colors colors_;
-    kernel::ASCExtractor::T_Tiles tiles_;
+    T_Propagations propagations_;
     //@}
 };
 

@@ -27,25 +27,11 @@ namespace
         return OGRCreateCoordinateTransformation( &oSourceSRS, &oTargetSRS );
     }
 
-    float Convert( float value, float noValueData )
+    short ConvertData( double value, double max )
     {
-        if( value == noValueData )
-            return 0.f;
-        return value;
-    }
-
-    bool Configure( int i, int tileSizeX, int tileSizeY, int& offset, int& blockSize, int blocks, int count )
-    {
-        offset = i * tileSizeX;
-        if( i == blocks )
-        {
-            blockSize = static_cast< int >( count - ( tileSizeY * i ) );
-            if( blockSize == 0 )
-                return false;
-        }
-        else
-            blockSize = tileSizeY;
-        return true;
+        if( value == 0 )
+            return 0;
+        return static_cast< short >( value * std::numeric_limits< short >::max() / max  );
     }
 
     std::string ReadProjectionfile( const bfs::path& file )
@@ -61,7 +47,7 @@ namespace
 // Name: ASCExtractor constructor
 // Created: LGY 2012-10-03
 // -----------------------------------------------------------------------------
-ASCExtractor::ASCExtractor( const std::string& file, unsigned int sizeFactor )
+ASCExtractor::ASCExtractor( const std::string& file )
     : pDataset_       ( 0 )
     , pBand_          ( 0 )
     , pTransformation_( 0 )
@@ -84,14 +70,14 @@ ASCExtractor::ASCExtractor( const std::string& file, unsigned int sizeFactor )
     if( !pTransformation_ )
         throw std::runtime_error( "Invalid projection" );
 
-    ExtractData( sizeFactor );
+    ExtractData();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ASCExtractor constructor
 // Created: LGY 2012-10-12
 // -----------------------------------------------------------------------------
-ASCExtractor::ASCExtractor( const std::string& file, const std::string& projection, unsigned int sizeFactor /*= 1u*/ )
+ASCExtractor::ASCExtractor( const std::string& file, const std::string& projection )
     : pDataset_       ( 0 )
     , pBand_          ( 0 )
     , pTransformation_( 0 )
@@ -114,7 +100,7 @@ ASCExtractor::ASCExtractor( const std::string& file, const std::string& projecti
     if( !pTransformation_ )
         throw std::runtime_error( "Invalid projection" );
 
-    ExtractData( sizeFactor );
+    ExtractData();
 }
 
 // -----------------------------------------------------------------------------
@@ -124,14 +110,17 @@ ASCExtractor::ASCExtractor( const std::string& file, const std::string& projecti
 ASCExtractor::~ASCExtractor()
 {
     if( pDataset_ )
+    {
         GDALClose( pDataset_ );
+        delete[] values_;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ASCExtractor::ExtractData
 // Created: LGY 2012-10-16
 // -----------------------------------------------------------------------------
-void ASCExtractor::ExtractData( unsigned int sizeFactor )
+void ASCExtractor::ExtractData()
 {
     ncols_ = pDataset_->GetRasterXSize();
     nrows_ = pDataset_->GetRasterYSize();
@@ -149,34 +138,25 @@ void ASCExtractor::ExtractData( unsigned int sizeFactor )
                               origin_.Y() + ( nrows_ * pixelSize_.Y() ),
                               origin_.X(), origin_.Y() );
 
-    int nXBlockSize, nYBlockSize, XOffset, YOffset;
-    int tileSizeX = sizeFactor, tileSizeY = sizeFactor;
-    int nXBlocks = ncols_ / tileSizeX;
-    int nYBlocks = nrows_ / tileSizeY;
-    for( int i = 0; i <= nYBlocks; ++i )
+    int size = ncols_ * nrows_;
+    float* data = new float[ size ];
+    values_ = new short[ size ];
+
+    pBand_->RasterIO( GF_Read, 0, 0, ncols_, nrows_, data, ncols_, nrows_, GDT_Float32, 0, 0 );
+
+    for( int i = 0; i < size; ++i )
     {
-        if( !Configure( i, tileSizeX, tileSizeY, YOffset, nYBlockSize, nYBlocks, nrows_ ) )
-            break;
-
-        for( int j = 0; j <= nXBlocks; ++j )
-        {
-            if( !Configure( j, tileSizeX, tileSizeY, XOffset, nXBlockSize, nXBlocks, ncols_ ) )
-                break;
-
-            std::vector< float > row( nXBlockSize * nYBlockSize );
-            pBand_->RasterIO( GF_Read, XOffset, YOffset, nXBlockSize, 
-                              nYBlockSize, &row[0], nXBlockSize, nYBlockSize, GDT_Float32, 0, 0 );
-            std::transform( row.begin(), row.end(), row.begin(),
-                            boost::bind( Convert, _1, static_cast< float >( noValueData_ ) ) );
-            double value = std::accumulate( row.begin(), row.end(), 0. ) / row.size();
-            if( value != 0.f )
-            {
-                max_ = std::max( value, max_ );
-                min_ = std::min( value, min_ );
-                tiles_.push_back( std::make_pair( GenerateTile( XOffset, YOffset, nXBlockSize, nYBlockSize ), value ) );
-            }
-        }
+        float value = data[ i ];
+        if( value == noValueData_ )
+            data[ i ] = 0;
+        else
+            max_ = std::max< double >( max_, value );
     }
+
+    for( int i = 0; i < size; ++i )
+        values_[ i ] = ConvertData( data[ i ], max_ );
+
+    delete[] data;
 }
 
 // -----------------------------------------------------------------------------
@@ -271,15 +251,6 @@ const geometry::Point2d& ASCExtractor::GetPixelSize() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ASCExtractor::GetMinimumValue
-// Created: LGY 2012-10-05
-// -----------------------------------------------------------------------------
-double ASCExtractor::GetMinimumValue() const
-{
-    return min_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ASCExtractor::GetMaximumValue
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
@@ -289,10 +260,10 @@ double ASCExtractor::GetMaximumValue() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ASCExtractor::GetTiles
-// Created: LGY 2012-10-09
+// Name: ASCExtractor::GetValues
+// Created: LGY 2012-10-24
 // -----------------------------------------------------------------------------
-const ASCExtractor::T_Tiles& ASCExtractor::GetTiles() const
+const short* ASCExtractor::GetValues() const
 {
-    return tiles_;
+    return values_;
 }

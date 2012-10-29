@@ -16,8 +16,6 @@
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
 #include <geometry/Types.h>
-#include <vector>
-
 namespace kernel
 {
 // =============================================================================
@@ -31,15 +29,9 @@ class ASCExtractor : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ASCExtractor( const std::string& file, unsigned int sizeFactor = 1u );
-             ASCExtractor( const std::string& file, const std::string& projection, unsigned int sizeFactor = 1u );
+    explicit ASCExtractor( const std::string& file );
+             ASCExtractor( const std::string& file, const std::string& projection );
     virtual ~ASCExtractor();
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::pair< geometry::Rectangle2d, double > T_Tile;
-    typedef std::vector< T_Tile >                      T_Tiles;
     //@}
 
     //! @name Operations
@@ -47,22 +39,21 @@ public:
     int GetCols() const;
     int GetRows() const;
     double GetNoValueData() const;
-    double GetMinimumValue() const;
     double GetMaximumValue() const;
 
     const geometry::Point2d& GetOrigin() const;
     const geometry::Point2d& GetPixelSize() const;
     const geometry::Rectangle2d& GetExtent() const;
-    const T_Tiles& GetTiles() const;
+    const short* GetValues() const;
+    geometry::Rectangle2d GenerateExtent( double left, double bottom, double right, double top );
     //@}
 
 private:
     //! @name Helpers
     //@{
     geometry::Rectangle2d GenerateTile( int x, int y, int sizeX, int sizeY );
-    geometry::Rectangle2d GenerateExtent( double left, double bottom, double right, double top );
     void Project( const geometry::Point2d& point, double& rLatitudeInDegrees, double& rLongitudeInDegrees );
-    void ExtractData( unsigned int sizeFactor );
+    void ExtractData();
     //@}
 
 private:
@@ -74,12 +65,11 @@ private:
     int ncols_;
     int nrows_;
     double noValueData_;
-    double min_;
     double max_;
-    T_Tiles tiles_;
     geometry::Rectangle2d extent_;
     geometry::Point2d origin_;
     geometry::Point2d pixelSize_;
+    short* values_;
     //@}
 };
 

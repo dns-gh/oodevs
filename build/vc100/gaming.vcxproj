@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\LogFuneralConsign.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\LogisticHelpers.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\ProfileFilter.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Propagation.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\PropagationAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\RightsResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\PhysicalAttribute.cpp" />
@@ -340,6 +341,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentCapacity.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ModeController.h" />
     <ClInclude Include="..\..\src\libraries\gaming\ProfileFilter.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Propagation.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PropagationAttribute.h" />
     <ClInclude Include="..\..\src\libraries\gaming\RightsResolver.h" />
     <ClInclude Include="..\..\src\libraries\gaming\PhysicalAttribute.h" />
