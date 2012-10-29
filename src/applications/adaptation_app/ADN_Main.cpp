@@ -16,38 +16,39 @@
 
 static const std::string szADN_Version   = "ADN - " + std::string( tools::AppProjectVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
 
-int main( int argc, char** argv )
+namespace
 {
-    SetConsoleTitle( szADN_Version.c_str() );
-    MT_ConsoleLogger        consoleLogger;
-    MT_LOG_REGISTER_LOGGER( consoleLogger );
-
-    int nResultCode = EXIT_FAILURE;
-    bool isGUI = true;
-    try
+    int RunAdn( int argc, char** argv )
     {
-        ADN_App app( argc, argv );
-        isGUI = app.GetOutputFile().empty();
-        nResultCode = app.Run();
-    }
-    catch( ADN_Exception_ABC& e )
-    {
-        QMessageBox::critical( 0, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
-    }
-    catch( std::exception& exception )
-    {
-        if( isGUI )
-            MessageBox( 0, exception.what(), "Sword Adaptation Tool - Exception", MB_ICONERROR | MB_OK );
-        else
+        try
+        {
+            ADN_App app( argc, argv );
+            return app.Run();
+        }
+        catch( ADN_Exception_ABC& e )
+        {
+            QMessageBox::critical( 0, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
+        }
+        catch( std::exception& exception )
         {
             MT_LOG_ERROR_MSG( exception.what() );
             QMessageBox::critical( 0, "Critical", exception.what() );
         }
+        catch( ... )
+        {
+            QMessageBox::critical( 0, "Critical", "Unknown error !" );
+        }
+        return EXIT_FAILURE;
     }
-    catch( ... )
-    {
-        QMessageBox::critical( 0, "Critical", "Unknown error !" );
-    }
+}
+
+int main( int argc, char** argv )
+{
+    QApplication qapp( argc, argv );
+    SetConsoleTitle( szADN_Version.c_str() );
+    MT_ConsoleLogger        consoleLogger;
+    MT_LOG_REGISTER_LOGGER( consoleLogger );
+    const int nResultCode = RunAdn( argc, argv );
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResultCode;
 }
