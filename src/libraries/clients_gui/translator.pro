@@ -1,20 +1,22 @@
 HEADERS = 
 
-SOURCES = AboutDialog.cpp \
+SOURCES = \
+AboutDialog.cpp \
 ActivityTimePrototype_ABC.cpp \
 AddRasterDialog.cpp \
 AggregateToolbar.cpp \
 AltitudeModifierPrototype_ABC.cpp \
 Application_ABC.cpp \
+ApplicationMonitor.cpp\
 AutomatsLayer.cpp \
 BaseDisplayer.cpp \
 BypassPrototype_ABC.cpp \
 ChangeSuperiorDialog.cpp \
 ClearButton.cpp \
 ColorButton.cpp \
+ComboTableItem.cpp \
 ConsistencyDialog_ABC.cpp \
 ConstructionPrototype_ABC.cpp \
-ComboTableItem.cpp \
 CoordinateSystemsPanel.cpp \
 CriticalIntelligenceDialog.cpp \
 CrossingSitePrototype_ABC.cpp \
@@ -23,11 +25,11 @@ DensityWidget.cpp \
 DiffusionListDialog.cpp \
 DiffusionListEditor.cpp \
 DiplomacyDialog_ABC.cpp \
-DisplayToolbar.cpp \
 DisplayExtractor.cpp \
-DrawingCategory.cpp \
+DisplayToolbar.cpp \
 DrawerLayer.cpp \
 DrawerPanel.cpp \
+DrawingCategory.cpp \
 EditorFactory.cpp \
 ElevationExtrema.cpp \
 ElevationPanel.cpp \
@@ -51,10 +53,10 @@ LocationCreator.cpp \
 LocationEditorBox.cpp \
 LocationEditorToolbar.cpp \
 LodgingPrototype_ABC.cpp \
-Logger.cpp \
 LodgingPrototype_ABC.cpp \
-LogisticTreeView.cpp \
+Logger.cpp \
 LogisticPrototype_ABC.cpp \
+LogisticTreeView.cpp \
 MedicalTreatmentPrototype_ABC.cpp \
 MetricsLayer.cpp \
 MinePrototype_ABC.cpp \

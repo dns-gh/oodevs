@@ -17,6 +17,8 @@
 
 namespace gui
 {
+    class ApplicationMonitor;
+
 // =============================================================================
 /** @class  Application_ABC
     @brief  Application_ABC
@@ -30,7 +32,7 @@ class Application_ABC : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Application_ABC() ;
+             Application_ABC( ApplicationMonitor& monitor ) ;
     virtual ~Application_ABC();
     //@}
 
@@ -62,12 +64,6 @@ protected:
     //@{
     bool IsInvalidLicense() const;
     const QString& GetExpiration() const;
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    virtual bool eventFilter( QObject* obj, QEvent* event );
     //@}
 
 private slots:

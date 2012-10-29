@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "Application_ABC.h"
+#include "ApplicationMonitor.h"
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/Tools.h"
 #include "license_gui/LicenseDialog.h"
@@ -25,11 +26,11 @@ using namespace gui;
 // Name: Application_ABC constructor
 // Created: HBD 2010-06-28
 // -----------------------------------------------------------------------------
-Application_ABC::Application_ABC()
-    : app_( *qApp )
+Application_ABC::Application_ABC( ApplicationMonitor& monitor )
+    : app_           ( monitor )
     , invalidLicense_( true )
 {
-    //app_.installEventFilter( this );
+    connect( &app_, SIGNAL( Error( const QString& ) ), SLOT( DisplayError( const QString& ) ) );
     SetLocale();
     tools::SetCodec();
 }
@@ -157,28 +158,6 @@ void Application_ABC::AddTranslator( const char* t )
     QTranslator* translator = tools::AddTranslator( app_, locale_, t );
     if( translator )
         translators_.push_back( translator );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Application_ABC::notify
-// Created: MCO 2011-11-07
-// -----------------------------------------------------------------------------
-bool Application_ABC::eventFilter( QObject* pReceiver, QEvent* pEvent )
-{
-    try
-    {
-        pReceiver->event( pEvent );
-        return true;
-    }
-    catch( std::exception& e )
-    {
-        QMetaObject::invokeMethod( this, "DisplayError", Q_ARG( QString, QString( e.what() ) ) );
-    }
-    catch( ... )
-    {
-        QMetaObject::invokeMethod( this, "DisplayError", Q_ARG( QString, tools::translate( "Application", "Unknown exception caught" ) ) );
-    }
-    return true;
 }
 
 // -----------------------------------------------------------------------------

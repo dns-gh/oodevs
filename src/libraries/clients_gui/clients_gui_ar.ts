@@ -51,8 +51,11 @@
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>ApplicationMonitor</name>
     <message>
-        <source>Unknown exception caught</source>
+        <source>Unexpected exception</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

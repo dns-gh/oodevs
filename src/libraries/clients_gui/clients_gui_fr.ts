@@ -51,9 +51,12 @@
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
+</context>
+<context>
+    <name>ApplicationMonitor</name>
     <message>
-        <source>Unknown exception caught</source>
-        <translation>Exception inconnue</translation>
+        <source>Unexpected exception</source>
+        <translation>Une exception inattendue s'est produite</translation>
     </message>
 </context>
 <context>

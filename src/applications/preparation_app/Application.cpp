@@ -25,8 +25,8 @@
 // Name: Application::Application
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-Application::Application( int& argc, char** argv )
-    : Application_ABC()
+Application::Application( gui::ApplicationMonitor& monitor, int& argc, char** argv )
+    : Application_ABC( monitor )
 {
     // License
     CheckLicense( "sword-preparation" );

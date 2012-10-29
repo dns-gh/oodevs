@@ -30,7 +30,8 @@
 // Name: Application constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv )
+Application::Application( gui::ApplicationMonitor& monitor, int argc, char** argv )
+    : gui::Application_ABC( monitor )
 {
     // Application_ABC initialization
     Initialize();

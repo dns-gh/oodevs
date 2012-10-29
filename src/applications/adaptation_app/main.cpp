@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
+#include "clients_gui/ApplicationMonitor.h"
 #include "ADN_App.h"
 #include "ADN_Exception_ABC.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
@@ -18,11 +19,11 @@ static const std::string szADN_Version   = "ADN - " + std::string( tools::AppPro
 
 namespace
 {
-    int RunAdn( int argc, char** argv, bool silent )
+    int RunAdn( gui::ApplicationMonitor& monitor, int argc, char** argv, bool silent )
     {
         try
         {
-            ADN_App app( argc, argv );
+            ADN_App app( monitor, argc, argv );
             return app.Run();
         }
         catch( ADN_Exception_ABC& e )
@@ -50,13 +51,13 @@ namespace
 
 int main( int argc, char** argv )
 {
-    QApplication qapp( argc, argv );
+    gui::ApplicationMonitor monitor( argc, argv );
     SetConsoleTitle( szADN_Version.c_str() );
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
-    const QStringList args = qapp.arguments();
+    const QStringList args = monitor.arguments();
     const bool silent = std::find( args.begin(), args.end(), "--silent" ) != args.end();
-    const int nResultCode = RunAdn( argc, argv, silent );
+    const int nResultCode = RunAdn( monitor, argc, argv, silent );
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResultCode;
 }

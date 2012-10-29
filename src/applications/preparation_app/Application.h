@@ -12,6 +12,11 @@
 
 #include "clients_gui/Application_ABC.h"
 
+namespace gui
+{
+    class ApplicationMonitor;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -34,7 +39,7 @@ class Application : public gui::Application_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int& argc, char** argv );
+             Application( gui::ApplicationMonitor& monitor, int& argc, char** argv );
     virtual ~Application();
     //@}
 

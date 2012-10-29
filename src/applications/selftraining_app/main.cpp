@@ -8,16 +8,17 @@
 // *****************************************************************************
 
 #include "selftraining_app_pch.h"
+#include "clients_gui/ApplicationMonitor.h"
 #include "Application.h"
 #include "tools/WinArguments.h"
 #include "clients_kernel/Tools.h"
 
 int main( int argc, char* argv[] )
 {
-    QApplication qapp( argc, argv );
+    gui::ApplicationMonitor monitor( argc, argv );
     try
     {
-        Application app( argc, argv );
+        Application app( monitor, argc, argv );
         return app.Run();
     }
     catch( std::runtime_error& e )

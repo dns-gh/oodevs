@@ -32,8 +32,8 @@ namespace
 // Name: ADN_App constructor
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-ADN_App::ADN_App( int argc, char** argv )
-    : gui::Application_ABC()
+ADN_App::ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv )
+    : gui::Application_ABC( monitor )
 {
     // License
     CheckLicense( "sword-authoring" );

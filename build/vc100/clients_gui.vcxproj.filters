@@ -901,6 +901,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkItemDelegate.cpp">
       <Filter>Source Files\MVC\View</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ApplicationMonitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1850,6 +1853,9 @@
       <Filter>Source Files\MVC\View</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\Application_ABC.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ApplicationMonitor.h">
       <Filter>Source Files</Filter>
     </CustomBuild>
   </ItemGroup>

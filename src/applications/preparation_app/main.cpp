@@ -9,15 +9,16 @@
 
 #include "preparation_app_pch.h"
 #include "Application.h"
+#include "clients_gui/ApplicationMonitor.h"
 #include "tools/WinArguments.h"
 #include "clients_kernel/Tools.h"
 
 int main( int argc, char** argv )
 {
-    QApplication qapp( argc, argv );
+    gui::ApplicationMonitor monitor( argc, argv );
     try
     {
-        Application app( argc, argv );
+        Application app( monitor, argc, argv );
         return app.Run();
     }
     catch( const std::exception& e )

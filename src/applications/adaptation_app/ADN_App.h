@@ -15,6 +15,11 @@
 class ADN_MainWindow;
 class ADN_Config;
 
+namespace gui
+{
+    class ApplicationMonitor;
+}
+
 // =============================================================================
 /** @class  ADN_App
 */
@@ -22,9 +27,8 @@ class ADN_Config;
 // =============================================================================
 class ADN_App : public gui::Application_ABC
 {
-
 public:
-             ADN_App( int argc, char** argv );
+             ADN_App( gui::ApplicationMonitor& monitor, int argc, char** argv );
     virtual ~ADN_App();
 
     //! @name gui::Application_ABC operations
