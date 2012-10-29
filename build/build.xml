@@ -20,7 +20,7 @@
     <property name="svn.revision" value="0"/>
     <property name="version.minor" value="${version.major}.${svn.revision}"/>
     <property name="version.version" value="0.0.0.${svn.revision}"/><!-- required for version extension -->
-    <property name="masalife.version" value="2011-1.1.x/sword"/>
+    <property name="masalife.version" value="2011-1.1.x/current"/>
 
     <condition property="failonwarning">
         <not>
