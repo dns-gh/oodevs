@@ -1114,6 +1114,7 @@
                 <arg value="@{input}/physical.xml"/>
                 <arg value="-o"/>
                 <arg value="@{output}/physical.xml"/>
+                <arg value="--silent"/>
             </exec>
         </sequential>
     </macrodef>
