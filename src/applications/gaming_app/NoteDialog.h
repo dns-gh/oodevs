@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    void         ChangeParent( unsigned int note );
+    void         ChangeParent( unsigned int parent );
     void         SetUpdate( const Note& note );
     void         SetUpdate( bool updateStatus );
     unsigned int GetCurrentNoteEdited();
@@ -59,9 +59,9 @@ private:
     Publisher_ABC   &publisher_;
     QLineEdit*      textName_;
     QLineEdit*      textId_;
-    Q3TextEdit*      textDesc_;
+    QTextEdit*      textDesc_;
     QPushButton*    buttonOk_;
-    unsigned int    note_;
+    unsigned int    parentId_;
     bool            update_;
     unsigned int    noteId_;
 

@@ -2242,10 +2242,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">حذف الملاحظات</translation>
     </message>
     <message>
-        <source>Delete note and children notes</source>
-        <translation type="unfinished">حذف ملاحظات ملاحظات والأطفال</translation>
-    </message>
-    <message>
         <source>Add note</source>
         <translation type="unfinished">إضافة ملاحظة</translation>
     </message>
@@ -2260,10 +2256,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>No</source>
         <translation type="unfinished">لا</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete this note?</source>
-        <translation type="unfinished">هل أنت متأكد أنك تريد حذف هذه الملاحظة؟</translation>
     </message>
 </context>
 <context>

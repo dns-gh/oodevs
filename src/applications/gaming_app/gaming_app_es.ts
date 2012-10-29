@@ -2236,16 +2236,8 @@ This data can&apos;t be projected.</source>
         <translation>¿Seguro que desea eliminar esta nota y sus subalternas?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete this note?</source>
-        <translation>¿Desea borrar esta nota?</translation>
-    </message>
-    <message>
         <source>The current note edited will be recreated</source>
         <translation>La nota actualmente editada se volverá a crear</translation>
-    </message>
-    <message>
-        <source>Delete note and children notes</source>
-        <translation>Elimar la nota y sus subalternas</translation>
     </message>
     <message>
         <source>Yes</source>

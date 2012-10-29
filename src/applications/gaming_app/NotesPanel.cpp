@@ -18,6 +18,9 @@
 #include "gaming/NotesModel.h"
 #include "protocol/ServerPublisher_ABC.h"
 
+Q_DECLARE_METATYPE( const Note* )
+#define NoteRole ( Qt::UserRole + 1 )
+
 // -----------------------------------------------------------------------------
 // Name: NotesPanel constructor
 // Created: HBD 2010-01-19
@@ -29,21 +32,27 @@ NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller,
     , publisher_( publisher )
 {
     setObjectName( "notation" );
-    setCaption( tools::translate( "Notes", "Notations" ) );
+    setWindowTitle( tools::translate( "Notes", "Notations" ) );
 
-    notes_ = new Q3ListView( this );
-    notes_->addColumn( tools::translate( "Notes", "Tree" ) );
-    notes_->addColumn( tools::translate( "Notes", "Value" ) );
-    notes_->addColumn( tools::translate( "Notes", "Text" ) );
-    notes_->addColumn( tools::translate( "Notes", "Creation Date" ) );
-    notes_->addColumn( tools::translate( "Notes", "Last Update" ) );
-    notes_->setColumnWidthMode( 1, Q3ListView::Manual );
-    notes_->setColumnWidthMode( 2, Q3ListView::Manual );
-    for( int col = 0; col < 5 ; ++col )
-        notes_->setColumnAlignment( col, Qt::AlignCenter );
-
+    notes_ = new QTreeView();
     notes_->setRootIsDecorated( true );
-    connect( notes_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int) ), this, SLOT( OnContextMenu( Q3ListViewItem*, const QPoint&, int) ) );
+    notes_->setModel( &noteModel_ );
+    noteModel_.setColumnCount( 5 );
+    notes_->setEditTriggers( 0 );
+    notes_->setAllColumnsShowFocus( true );
+    notes_->setContextMenuPolicy( Qt::CustomContextMenu );
+    notes_->header()->setResizeMode( QHeaderView::ResizeToContents );
+    notes_->header()->setResizeMode( 2, QHeaderView::Stretch );
+    notes_->header()->setStretchLastSection( false );
+    QStringList list;
+    list.append( tools::translate( "Notes", "Tree" ) );
+    list.append( tools::translate( "Notes", "Value" ) );
+    list.append( tools::translate( "Notes", "Text" ) );
+    list.append( tools::translate( "Notes", "Creation Date" ) );
+    list.append( tools::translate( "Notes", "Last Update" ) );
+    noteModel_.setHorizontalHeaderLabels( list );
+
+    connect( notes_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnContextMenu( const QPoint& ) ) );
     setWidget( notes_ );
 
     noteDialog_ = new NoteDialog( this, publisher_ );
@@ -57,35 +66,34 @@ NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller,
 NotesPanel::~NotesPanel()
 {
     controller_.Unregister( *this );
-     // $$$$ _RC_ HBD 2010-02-09: Delete notes_ && itemlist
 }
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::FindParentItem
 // Created: HBD 2010-02-22
 // -----------------------------------------------------------------------------
-Q3ListViewItem* NotesPanel::FindItem( unsigned int parent ) const
+QStandardItem* NotesPanel::FindItem( const Note* element ) const
 {
-    T_Items::const_iterator it = itemsList_.begin();
-    while( it != itemsList_.end() && it->second->GetId() != parent )
-        ++it;
-    if( it == itemsList_.end() )
-        return 0;
-    return it->first;
+    return FindItem( element->GetId() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::FindParentItem
 // Created: HBD 2010-02-22
 // -----------------------------------------------------------------------------
-Q3ListViewItem* NotesPanel::FindItem(const Note* element ) const
+QStandardItem* NotesPanel::FindItem( unsigned int id, QStandardItem* parent /*= 0*/ ) const
 {
-    T_Items::const_iterator it = itemsList_.begin();
-    while( it != itemsList_.end() && it->second != element )
-        ++it;
-    if( it == itemsList_.end() )
-        return 0;
-    return it->first;
+    if( !parent ) parent = noteModel_.invisibleRootItem();
+
+    for( int row = 0; row < parent->rowCount(); ++row )
+    {
+        if( parent->child( row )->data( NoteRole ).isValid() && parent->child( row )->data( NoteRole ).value< const Note* >()->GetId() == id )
+            return parent->child( row );
+        else if( parent->child( row )->rowCount() > 0 )
+            if( QStandardItem* item = FindItem( id, parent->child( row ) ) )
+                return item;
+    }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,16 +104,11 @@ Q3ListViewItem* NotesPanel::FindItem(const Note* element ) const
 // -----------------------------------------------------------------------------
 void NotesPanel::NotifyCreated( const Note& element )
 {
-    Q3ListViewItem* item = 0;
-    unsigned int parent = element.GetParent();
-    Q3ListViewItem* parentItem = FindItem( parent );
-    if( parent && parentItem )
-        item = new Q3ListViewItem( parentItem );
+    QStandardItem* parentItem = FindItem( element.GetParent() );
+    if( parentItem )
+        AddNoteInfo( element, parentItem );
     else
-        item = new Q3ListViewItem( notes_ );
-    item->setMultiLinesEnabled( true );
-    itemsList_[ item ] = &element;
-    Display( element, item );
+        AddNoteInfo( element, noteModel_.invisibleRootItem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,23 +119,13 @@ void NotesPanel::NotifyCreated( const Note& element )
 // -----------------------------------------------------------------------------
 void NotesPanel::NotifyUpdated( const Note& element )
 {
-    if( Q3ListViewItem* item = FindItem( &element ))
+    if( QStandardItem* item = FindItem( &element ) )
     {
-        if( Q3ListViewItem* oldParent = item->parent() )
-        {
-           Q3ListViewItem* newParent = FindItem( element.GetParent() );
-           if( newParent && newParent != oldParent )
-           {
-                oldParent->takeItem( item );
-                newParent->insertItem( item );
-           }
-           if( element.GetParent() == 0 )
-           {
-               oldParent->takeItem( item );
-               notes_->insertItem( item );
-           }
-        }
-        Display( element, item );
+        QStandardItem* parent = item->parent()? item->parent() : noteModel_.invisibleRootItem();
+        parent->child( item->row(), 0 )->setText( element.GetName() );
+        parent->child( item->row(), 1 )->setText( element.GetNumber() );
+        parent->child( item->row(), 2 )->setText( element.GetDesc() );
+        parent->child( item->row(), 4 )->setText( element.GetStringLastUpdateTime() );
     }
 }
 
@@ -144,30 +137,36 @@ void NotesPanel::NotifyUpdated( const Note& element )
 // -----------------------------------------------------------------------------
 void NotesPanel::NotifyDeleted( const Note& element )
 {
-    if( Q3ListViewItem* item = FindItem( &element ))
+    if( QStandardItem* item = FindItem( &element ) )
     {
-        if( element.GetId() == noteDialog_->GetCurrentNoteEdited())
+        if( element.GetId() == noteDialog_->GetCurrentNoteEdited() )
         {
             noteDialog_->SetUpdate( false );
             QMessageBox::information( this, tools::translate( "Notes", "Current note edited has been deleted" ),
                 tools::translate( "Notes", "The current note edited will be recreated"), QMessageBox::Yes );
         }
-        itemsList_.erase( item );
-        delete item;
+        if( item->parent() )
+            item->parent()->removeRow( item->row() );
+        else
+            noteModel_.removeRow( item->row() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScorePanel::Display
-/** @param  score
-    @param  item
-*/
+// Name: ScorePanel::AddNoteInfo
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
-void NotesPanel::Display( const Note& note, Q3ListViewItem* item )
+void NotesPanel::AddNoteInfo( const Note& note, QStandardItem* parent )
 {
-    item->setDragEnabled( true );
-    note.Display( item );
+    QList< QStandardItem* > list;
+    QStandardItem* item = new QStandardItem( note.GetName() );
+    item->setData( QVariant::fromValue( &note ), NoteRole );
+    list.append( item );
+    list.append( new QStandardItem( note.GetNumber() ) );
+    list.append( new QStandardItem( note.GetDesc() ) );
+    list.append( new QStandardItem( note.GetStringCreationTime() ) );
+    list.append( new QStandardItem( note.GetStringLastUpdateTime() ) );
+    parent->appendRow( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,44 +177,23 @@ void NotesPanel::Display( const Note& note, Q3ListViewItem* item )
 // Created: HBD 2010-01-20
 // -----------------------------------------------------------------------------
 
-void NotesPanel::OnContextMenu( Q3ListViewItem* item, const QPoint& point, int)
+void NotesPanel::OnContextMenu( const QPoint& point )
 {
     kernel::ContextMenu* menu = new kernel::ContextMenu( notes_ );
-    if( item )
+    const QModelIndex index = notes_->indexAt( notes_->mapTo( notes_, point ) );
+    if( index.isValid() )
     {
-        menu->insertItem( tools::translate( "Notes", "Update note" ), this, SLOT( UpdateNote() ) );
-        menu->insertSeparator();
-        menu->insertItem( tools::translate( "Notes", "Delete note" ), this, SLOT( ConfirmDeleteNote() ) );
-        menu->insertItem( tools::translate( "Notes", "Delete note and children notes" ), this,  SLOT( ConfirmDeleteAllTreeNote() ) );
-        menu->insertSeparator();
-    }
-    menu->insertItem( tools::translate( "Notes", "Add note" ), this, SLOT( PreCreationProcess() ) );
-    menu->popup( point );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NotesPanel::ConfirmDeleteAllTreeNote
-// Created: HBD 2010-02-05
-// -----------------------------------------------------------------------------
-void NotesPanel::ConfirmDeleteAllTreeNote()
-{
-    int result = QMessageBox::question( this,
-        tools::translate( "Notes", "Delete note" ),
-        tools::translate( "Notes", "Are you sure you want to delete this note and its children?" ),
-        tools::translate( "Notes", "Yes" ), tools::translate( "Notes","No" ), QString::null, 0, 1 );
-
-    if( result == 0 )
-        if( Q3ListViewItem* item = notes_->selectedItem() )
+        if( QStandardItem* item = noteModel_.itemFromIndex( index ) )
         {
-            T_Items::iterator it = itemsList_.find( item );
-            if( it != itemsList_.end())
-            {
-                plugins::messenger::MarkerDestructionRequest message;
-                message().mutable_marker()->set_id( it->second->GetId() );
-                message().set_delete_all( true );
-                message.Send( publisher_ );
-            }
+            menu->insertItem( tools::translate( "Notes", "Update note" ), this, SLOT( UpdateNote() ) );
+            menu->insertSeparator();
+            menu->insertItem( tools::translate( "Notes", "Delete note" ), this, SLOT( ConfirmDeleteNote() ) );
+            menu->insertItem( tools::translate( "Notes", "Add note" ), this, SLOT( AddSubNote() ) );
         }
+    }
+    else
+        menu->insertItem( tools::translate( "Notes", "Add note" ), this, SLOT( AddRootNote() ) );
+    menu->popup( notes_->viewport()->mapToGlobal( point ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -226,38 +204,54 @@ void NotesPanel::ConfirmDeleteNote()
 {
     int result = QMessageBox::question( this,
         tools::translate( "Notes", "Delete note" ),
-        tools::translate( "Notes", "Are you sure you want to delete this note?" ),
-        tools::translate( "Notes", "Yes" ), tools::translate( "Notes", "No" ), QString::null, 0, 1 );
+        tools::translate( "Notes", "Are you sure you want to delete this note and its children?" ),
+        tools::translate( "Notes", "Yes" ), tools::translate( "Notes","No" ), QString::null, 0, 1 );
 
-   if( result == 0 )
-        if( Q3ListViewItem* item = notes_->selectedItem() )
-        {
-            T_Items::iterator it = itemsList_.find( item );
-            if( it != itemsList_.end())
+    if( result == 0 )
+    {
+        const QModelIndex index = notes_->selectionModel()->currentIndex();
+        if( !index.isValid() )
+            return;
+        QStandardItem* item = noteModel_.itemFromIndex( index )->parent()? noteModel_.itemFromIndex( index )->parent()->child( index.row() ) : noteModel_.item( index.row() );
+        if( item )
+            if( const Note* note = item->data( NoteRole ).value< const Note* >() )
             {
                 plugins::messenger::MarkerDestructionRequest message;
-                message().mutable_marker()->set_id( it->second->GetId() );
-                message().set_delete_all( false );
+                message().mutable_marker()->set_id( note->GetId() );
+                message().set_delete_all( true );
                 message.Send( publisher_ );
             }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: NotesPanel::PreCreationProcess
-// Created: HBD 2010-02-10
+// Name: NotesPanel::AddSubNote
+// Created: NPT 2012-10-29
 // -----------------------------------------------------------------------------
-void NotesPanel::PreCreationProcess()
+void NotesPanel::AddSubNote()
 {
     unsigned int parent = 0;
-    if( Q3ListViewItem* item = notes_->selectedItem() )
+    const QModelIndex index = notes_->selectionModel()->currentIndex();
+    if( index.isValid() )
     {
-        T_Items::iterator it = itemsList_.find( item );
-        if( it != itemsList_.end())
-            parent = it->second->GetId();
+        QStandardItem* item = noteModel_.itemFromIndex( index )->parent()? noteModel_.itemFromIndex( index )->parent()->child( index.row() ) : noteModel_.item( index.row() );
+        if( item )
+            if( const Note* note = item->data( NoteRole ).value< const Note* >() )
+                parent = note->GetId();
     }
     noteDialog_->ChangeParent( parent );
     noteDialog_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotesPanel::AddRootNote
+// Created: NPT 2012-10-29
+// -----------------------------------------------------------------------------
+void NotesPanel::AddRootNote()
+{
+    noteDialog_->ChangeParent( 0 );
+    noteDialog_->show();
+    notes_->selectionModel()->clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -266,12 +260,12 @@ void NotesPanel::PreCreationProcess()
 // -----------------------------------------------------------------------------
 void NotesPanel::UpdateNote()
 {
-   if( Q3ListViewItem* item = notes_->selectedItem() )
-   {
-       T_Items::iterator it = itemsList_.find( item );
-       if( it != itemsList_.end())
-           noteDialog_->SetUpdate( *( it->second ) );
-   }
+    const QModelIndex index = notes_->selectionModel()->currentIndex();
+    if( !index.isValid() )
+        return;
+    QStandardItem* item = noteModel_.itemFromIndex( index )->parent()? noteModel_.itemFromIndex( index )->parent()->child( index.row() ) : noteModel_.item( index.row() );
+    if( item && item->data( NoteRole ).isValid() )
+           noteDialog_->SetUpdate( *( item->data( NoteRole ).value< const Note* >() ) );
     noteDialog_->show();
 }
 
@@ -283,8 +277,7 @@ void NotesPanel::NotifyUpdated( const Simulation& simulation )
 {
     if( !simulation.IsConnected() )
     {
-        notes_->clear();
-        itemsList_.clear();
+        noteModel_.removeRows( 0, noteModel_.rowCount() );
         model_.Clear();
      }
 }

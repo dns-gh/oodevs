@@ -26,39 +26,43 @@ NoteDialog::NoteDialog( QDockWidget* parent, Publisher_ABC &publisher )
     : QDialog( parent, "New Note" )
     , publisher_( publisher )
 {
-    setCaption( tools::translate( "NoteDialog", "Create note" ) );
-    setFixedSize( 400, 200 );
+    setWindowTitle( tools::translate( "NoteDialog", "Create note" ) );
 
-    Q3GroupBox* boxId = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Value" ), this );
-    Q3GroupBox* boxName = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Name" ), this );
+    QLabel* nameLabel = new QLabel( tools::translate( "Notes", "Name" ) );
+    textName_ = new QLineEdit();
+    QHBoxLayout* nameLayout = new QHBoxLayout();
+    nameLayout->addWidget( nameLabel );
+    nameLayout->addWidget( textName_ );
+
+    QLabel* idLabel = new QLabel( tools::translate( "Notes", "Value" ) );
+    textId_  = new QLineEdit();
+    QHBoxLayout* idLayout = new QHBoxLayout();
+    idLayout->addWidget( idLabel );
+    idLayout->addWidget( textId_ );
+
     Q3GroupBox* boxDesc = new Q3GroupBox( 3, Qt::Horizontal, tools::translate( "Notes", "Text" ), this );
+    textDesc_ = new QTextEdit( boxDesc );
 
-    textName_ = new QLineEdit( boxName );
-    textId_  = new QLineEdit( boxId );
-    textDesc_ = new Q3TextEdit( boxDesc );
-
-    Q3HBox* box = new Q3HBox( this );
-    buttonOk_ = new QPushButton( tools::translate( "Notes", "Ok" ), box );
+    buttonOk_ = new QPushButton( tools::translate( "Notes", "Ok" ) );
     buttonOk_->setEnabled( false );
-    QPushButton* buttonCancel_ = new QPushButton( tools::translate( "Notes", "Cancel" ), box );
+    QPushButton* buttonCancel_ = new QPushButton( tools::translate( "Notes", "Cancel" ) );
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    buttonLayout->addWidget( buttonOk_ );
+    buttonLayout->addWidget( buttonCancel_ );
+
+    QVBoxLayout* mainLayout = new QVBoxLayout( this );
+    mainLayout->addLayout( nameLayout );
+    mainLayout->addLayout( idLayout );
+    mainLayout->addWidget( boxDesc );
+    mainLayout->addLayout( buttonLayout );
 
     connect( buttonOk_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
     connect( buttonCancel_, SIGNAL( clicked() ), SLOT( OnReject() ) );
     connect( textName_, SIGNAL( textChanged( const QString& ) ), SLOT( OnFileChanged() ) );
 
-    Q3GridLayout* grid_ = new Q3GridLayout( this, 4, 1, 0, 0, "layout");
-
-    grid_->setRowStretch( 0, 4 );
-    grid_->setRowStretch( 1, 4 );
-
-    grid_->addWidget( boxName, 0, 0 );
-    grid_->addWidget( boxId, 1, 0 );
-    grid_->addWidget( boxDesc, 2, 0 );
-    grid_->addWidget( box, 3, 0 );
-
     buttonOk_->setEnabled( false );
     update_ = false;
-    note_ = 0;
+    parentId_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +88,8 @@ void NoteDialog::OnAccept()
         message().set_number( textId_->text().toAscii().constData() );
         QString text = textDesc_->text();
         message().set_description( text.toAscii().constData() );
-        message().mutable_parent()->set_id( note_ );
+        if( parentId_ )
+            message().mutable_parent()->set_id( parentId_ );
         message.Send( publisher_ );
     }
     else
@@ -94,7 +99,8 @@ void NoteDialog::OnAccept()
         message().mutable_marker()->set_number( textId_->text().toAscii().constData() );
         QString text = textDesc_->text();
         message().mutable_marker()->set_description( text.toAscii().constData() );
-        message().mutable_marker()->mutable_parent()->set_id( note_ );
+        if( parentId_ )
+            message().mutable_marker()->mutable_parent()->set_id( parentId_ );
         message.Send( publisher_ );
     }
 
@@ -124,7 +130,7 @@ void NoteDialog::OnReject()
     textName_->clear();
     textId_->clear();
     textDesc_->clear();
-    note_ = 0;
+    parentId_ = 0;
     reject();
 }
 
@@ -132,10 +138,10 @@ void NoteDialog::OnReject()
 // Name: NoteDialog::SetParent
 // Created: HBD 2010-02-10
 // -----------------------------------------------------------------------------
-void NoteDialog::ChangeParent( unsigned int note )
+void NoteDialog::ChangeParent( unsigned int parent )
 {
      update_ = false;
-     note_ = note;
+     parentId_ = parent;
      textName_->clear();
      textId_->clear();
      textDesc_->clear();
@@ -148,7 +154,7 @@ void NoteDialog::ChangeParent( unsigned int note )
 void NoteDialog::SetUpdate( const Note& note )
 {
     update_ = true;
-    note_ = note.GetParent();
+    parentId_ = note.GetParent();
     noteId_  = note.GetId();
     textDesc_->setText( note.GetDesc() );
     textId_->setText( note.GetNumber() ) ;
@@ -173,5 +179,5 @@ unsigned int NoteDialog::GetCurrentNoteEdited()
 void NoteDialog::SetUpdate(bool up)
 {
     update_ = up;
-    note_ = 0;
+    parentId_ = 0;
 }

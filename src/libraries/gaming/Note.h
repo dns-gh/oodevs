@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/MessengerSenders.h"
-#include <Qt3Support/q3listview.h>
 #include <list>
 
 namespace kernel
@@ -41,14 +40,14 @@ public:
     QString      GetDesc() const;
     QString      GetNumber() const;
     unsigned int GetId() const;
+    QString      GetStringCreationTime() const;
+    QString      GetStringLastUpdateTime() const;
     unsigned int GetParent() const;
 
     //@}
 
     //! @name Operations
     //@{
-    virtual void Display( Q3ListViewItem* item ) const;
-
     void Update( const sword::MarkerUpdate& message );
     void Delete();
     //@}

@@ -2239,10 +2239,6 @@ This data can&apos;t be projected.</source>
         <translation>Delete note</translation>
     </message>
     <message>
-        <source>Delete note and children notes</source>
-        <translation>Delete note and children notes</translation>
-    </message>
-    <message>
         <source>Add note</source>
         <translation>Add note</translation>
     </message>
@@ -2257,10 +2253,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>No</source>
         <translation>No</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete this note?</source>
-        <translation>Are you sure you want to delete this note?</translation>
     </message>
 </context>
 <context>

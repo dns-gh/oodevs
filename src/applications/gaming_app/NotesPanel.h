@@ -45,10 +45,10 @@ public:
  private slots:
     //! @name Slots
     //@{
-     void OnContextMenu( Q3ListViewItem* item, const QPoint& point, int);
-     void ConfirmDeleteAllTreeNote();
+     void OnContextMenu( const QPoint& point );
      void ConfirmDeleteNote();
-     void PreCreationProcess();
+     void AddSubNote();
+     void AddRootNote();
      void UpdateNote();
      //@}
 
@@ -60,26 +60,21 @@ private:
     virtual void NotifyDeleted( const Note& element );
     virtual void NotifyUpdated( const Simulation& simulation );
 
-    void Display( const Note& note, Q3ListViewItem* item );
+    void AddNoteInfo( const Note& note, QStandardItem* parent );
 
-    Q3ListViewItem*  FindItem( unsigned int parent ) const;
-    Q3ListViewItem*  FindItem(const Note* element ) const;
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< Q3ListViewItem*, const Note*> T_Items;
+    QStandardItem*  FindItem( const Note* element ) const;
+    QStandardItem*  FindItem( unsigned int id, QStandardItem* parent = 0 ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    Q3ListView* notes_;
+    QTreeView* notes_;
+    QStandardItemModel noteModel_;
     NoteDialog* noteDialog_;
     NotesModel& model_;
     Publisher_ABC& publisher_;
-    T_Items itemsList_;
     //@}
 };
 

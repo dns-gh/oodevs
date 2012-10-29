@@ -2239,16 +2239,8 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Voulez-vous supprimer cette note et ses descendants ?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete this note?</source>
-        <translation>Voulez-vous supprimer cette note ?</translation>
-    </message>
-    <message>
         <source>The current note edited will be recreated</source>
         <translation>La note courante va être recréee</translation>
-    </message>
-    <message>
-        <source>Delete note and children notes</source>
-        <translation>Effacer la note et ses descendants</translation>
     </message>
     <message>
         <source>Yes</source>

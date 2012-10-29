@@ -68,21 +68,6 @@ void Note::Delete()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Score::Display
-/** @param  displayer
-*/
-// Created: HBD 2010-01-19
-// -----------------------------------------------------------------------------
-void Note::Display( Q3ListViewItem* item ) const
-{
-    item->setText( 0, name_.c_str() );
-    item->setText( 1, noteNumber_.c_str() );
-    item->setText( 2, noteText_.c_str() );
-    item->setText( 3, boost::posix_time::to_simple_string( boost::posix_time::from_iso_string( creationTime_ ) ).c_str() );
-    item->setText( 4, boost::posix_time::to_simple_string( boost::posix_time::from_iso_string( lastUpdateTime_ ) ).c_str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Note::GetName
 // Created: HBD 2010-02-05
 // -----------------------------------------------------------------------------
@@ -98,6 +83,24 @@ QString Note::GetName() const
 unsigned int Note::GetId() const
 {
     return noteId_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetStringCreationTime
+// Created: NPT 2012-10-26
+// -----------------------------------------------------------------------------
+QString Note::GetStringCreationTime() const
+{
+    return boost::posix_time::to_simple_string( boost::posix_time::from_iso_string( creationTime_ ) ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetStringLastUpdateTime
+// Created: NPT 2012-10-26
+// -----------------------------------------------------------------------------
+QString Note::GetStringLastUpdateTime() const
+{
+    return boost::posix_time::to_simple_string( boost::posix_time::from_iso_string( lastUpdateTime_ ) ).c_str();
 }
 
 // -----------------------------------------------------------------------------
