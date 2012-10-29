@@ -49,12 +49,11 @@ public:
         return locale().toString( value );
     }
 
-    virtual QValidator::State validate( QString& input, int& pos ) const
+    virtual QValidator::State validate( QString& input, int& nPos ) const
     {
-        QLocale locale;
         input = input.remove( suffix() );
         int sizeBefore = input.size();
-        input = input.remove( locale.groupSeparator() );
+        input = input.remove( locale().groupSeparator() );
         QValidator::State result = QValidator::Acceptable;
 
         if( input.contains( ',' ) || input.contains( '.' ) )
@@ -62,18 +61,23 @@ public:
         else
         {
             bool ok = true;
-            input.toLongLong( &ok );
+            long long entered = input.toLongLong( &ok );
             if( !ok )
                 result = QValidator::Invalid;
+            else if( entered > maximum() )
+                input = QString::number( maximum() );
+            else if( entered < minimum() )
+                input = QString::number( minimum() );
         }
+
         if( result == QValidator::Acceptable )
         {
             int value = input.toInt();
-            input = locale.toString( value );
+            input = locale().toString( value );
             int sizeAfter = input.size();
-            pos += ( sizeAfter - sizeBefore );
-            pos = ( pos > input.length() ) ? input.length() : ( pos < 0 ) ? 0 : pos;
-            result = QSpinBox::validate( input, pos );
+            nPos += ( sizeAfter - sizeBefore );
+            nPos = ( nPos > input.length() ) ? input.length() : ( nPos < 0 ) ? 0 : nPos;
+            result = QSpinBox::validate( input, nPos );
         }
         return result;
     }
@@ -89,9 +93,9 @@ class RichDoubleSpinBox : public QDoubleSpinBox
                         , private boost::noncopyable
 {
 public:
-    RichDoubleSpinBox( QWidget* parent = 0, double minValue = 0, double maxValue = std::numeric_limits< double >::max(), double step = 1, int decimals = 2, const QString separator = "." )
+    RichDoubleSpinBox( QWidget* parent = 0, double minValue = 0, double maxValue = std::numeric_limits< double >::max(), double step = 1, int decimals = 2 )
         : QDoubleSpinBox( parent )
-        , tolleredSeparator_( separator )
+        , tolleredSeparator_( "." )
     {
         if( !parent )
             setLocale( QLocale() ); // Get the default locale
@@ -117,42 +121,37 @@ public:
         return QDoubleSpinBox::valueFromText( copy.replace( tolleredSeparator_, locale().decimalPoint() ) );
     }
 
-    virtual void fixup( QString& input ) const
+    virtual QValidator::State validate( QString& input, int& nPos ) const
     {
-        input = input.replace( tolleredSeparator_, locale().decimalPoint() );
-        QDoubleSpinBox::fixup( input );
-    }
-
-    virtual QValidator::State validate( QString& input, int& pos ) const
-    {
-        QLocale locale;
-        input = input.replace( tolleredSeparator_, locale.decimalPoint() );
         input = input.remove( suffix() );
         int sizeBefore = input.size();
-        input = input.remove( locale.groupSeparator() );
-        input = input.replace( ',', locale.decimalPoint() );
-        input = input.replace( '.', locale.decimalPoint() );
+        input = input.remove( locale().groupSeparator() );
+        input = input.replace( tolleredSeparator_, locale().decimalPoint() );
+        input = input.replace( ',', locale().decimalPoint() );
+
         QValidator::State result = QValidator::Acceptable;
         int d = decimals();
-        int decimalPointIndex = input.find( locale.decimalPoint() );
+        int decimalPointIndex = input.find( locale().decimalPoint() );
         int trailingChars = ( decimalPointIndex == -1 ) ? d + 1 : d;
 
-        QRegExp empty( QString( " *-?" ) + locale.decimalPoint() + "? *" );
-        if( input.stripWhiteSpace() == locale.decimalPoint() )
+        QRegExp empty( QString( " *-?" ) + locale().decimalPoint() + "? *" );
+        if( minimum() >= 0 && input.stripWhiteSpace().startsWith( '-' ) )
+            result = QValidator::Invalid;
+        else if( input.stripWhiteSpace() == locale().decimalPoint() )
             result = QValidator::Invalid;
         else if( empty.exactMatch( input ) )
             result = QValidator::Intermediate;
         else
         {
             bool ok = false;
-            locale.toDouble( input, &ok );
+            double entered = locale().toDouble( input, &ok );
             if( !ok )
                 result = QValidator::Invalid;
             else if( decimalPointIndex >= 0 )
             {
                 if( d == 0 )
                     result = QValidator::Invalid;
-                else    // has decimal point, now count digits after that
+                else
                 {
                     int j = decimalPointIndex + 1;
                     while( input[ j ].isDigit() )
@@ -164,16 +163,27 @@ public:
                         result = QValidator::Invalid;
                 }
             }
+            if( result != QValidator::Invalid )
+            {
+                if( entered > maximum() )
+                {
+                    input = QString::number( maximum(), 'f', d );
+                    result = QValidator::Intermediate;
+                }
+                else
+                    result = ( entered < minimum() ) ? QValidator::Intermediate : QValidator::Acceptable;
+            }
         }
+
         if( result == QValidator::Acceptable )
         {
             double value = input.toDouble();
-            input = locale.toString( value, 'f', d );
+            input = locale().toString( value, 'f', d );
             input.truncate( input.size() - trailingChars );
             int sizeAfter = input.size();
-            pos += ( sizeAfter - sizeBefore );
-            pos = ( pos > input.length() ) ? input.length() : ( pos < 0 ) ? 0 : pos;
-            result = QDoubleSpinBox::validate( input, pos );
+            nPos += ( sizeAfter - sizeBefore );
+            nPos = ( nPos > input.length() ) ? input.length() : ( nPos < 0 ) ? 0 : nPos;
+            result = QDoubleSpinBox::validate( input, nPos );
         }
         return result;
     }
