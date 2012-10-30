@@ -1509,7 +1509,7 @@
     main
     ============================================================================
     -->
-    <target name="configure-update" description="update package dependencies">
+    <target name="update" description="update package dependencies">
         <update name="asciidoc" version="8.6.8"/>
         <update name="boost"/>
         <update name="bugtrap"/>
