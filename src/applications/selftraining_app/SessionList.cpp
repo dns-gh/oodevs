@@ -34,7 +34,7 @@ SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, c
         sessionLabel_ = new QLabel( this );
         list_ = new QListWidget( this );
         list_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
-        connect( list_, SIGNAL( highlighted( int ) ), this, SLOT( SelectSession( int ) ) );
+        connect( list_, SIGNAL( currentRowChanged( int ) ), this, SLOT( SelectSession( int ) ) );
     }
     {
         comments_ = new Q3TextEdit( this );
