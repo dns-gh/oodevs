@@ -118,8 +118,10 @@ void TacticalListView::setColumnWidth( int column, int w )
 // -----------------------------------------------------------------------------
 void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
+    item->setPixmap( 1, QPixmap() );
     if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
-        item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
+        if( decisions->IsEmbraye() )
+            item->setPixmap( 1, lock_ );
 
     if( const Attributes* attributes = static_cast< const Attributes* >( entity.Retrieve< Attributes_ABC >() ) )
     {

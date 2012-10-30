@@ -263,8 +263,12 @@ void TacticalListView::NotifyCreated( const kernel::Formation_ABC& entity )
 void TacticalListView::UpdatePixmap( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
     if( item )
+    {
+        item->setPixmap( 1, QPixmap() );
         if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
-            item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
+            if( decisions->IsEmbraye() )
+                item->setPixmap( 1, lock_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
