@@ -133,6 +133,8 @@ private:
     unsigned int timeFactor_;
     mutable bool checkTime_;
     boost::posix_time::ptime creationTime_;
+    std::string exercise_;
+    std::string session_;
     //@}
 };
 

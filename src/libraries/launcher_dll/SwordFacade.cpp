@@ -138,8 +138,8 @@ void SwordFacade::OnConnectionError( const std::string& /*endpoint*/, const std:
         statusResponse().set_status( sword::SessionStatus::breakdown );
         static const std::string msg( "La connexion avec le dispatcher est perdue. " );
         statusResponse().set_breakdown_information( msg + reason );
-        statusResponse().set_exercise( "" );
-        statusResponse().set_session( "" );
+        statusResponse().set_exercise( exercise_ );
+        statusResponse().set_session( session_ );
         statusResponse.Send( *publisher );
     }
 }
@@ -186,6 +186,8 @@ void SwordFacade::RegisterMessageHandler( int context, std::auto_ptr< MessageHan
 // -----------------------------------------------------------------------------
 void SwordFacade::CreatePermanentMessageHandler( const std::string& exercise, const std::string& session )
 {
+    exercise_ = exercise;
+    session_ = session;
     permanentHandler_.clear();
     permanentHandler_.push_back( boost::shared_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint_ ), exercise, session ) ) );
     permanentHandler_.push_back( boost::shared_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint_ ), exercise, session ) ) );
@@ -309,8 +311,8 @@ void SwordFacade::Update() const
                 statusResponse().set_status( sword::SessionStatus::breakdown );
                 static const std::string msg( "Time out : Le dispatcher n'a pas répondu au bout du temps imparti." );
                 statusResponse().set_breakdown_information( msg );
-                statusResponse().set_exercise( "" );
-                statusResponse().set_session( "" );
+                statusResponse().set_exercise( exercise_ );
+                statusResponse().set_session( session_ );
                 statusResponse.Send( *publisher );
                 checkTime_ = false;
             }
