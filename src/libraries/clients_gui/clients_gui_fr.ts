@@ -56,7 +56,7 @@
     <name>ApplicationMonitor</name>
     <message>
         <source>Unexpected exception</source>
-        <translation>Une exception inattendue s'est produite</translation>
+        <translation>Une exception inattendue s&apos;est produite</translation>
     </message>
 </context>
 <context>

@@ -107,11 +107,11 @@ ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controlle
     setPalette( p );
 
     //configure the model
-    reportModel_.setColumnCount( 2 );
+    reportModel_.setColumnCount( 3 );
     setHeaderHidden( true );
     header()->setResizeMode( 0, QHeaderView::Fixed );
     header()->resizeSection( 0, 128 );
-    header()->setResizeMode( 1, QHeaderView::Stretch );
+    header()->setResizeMode( 1, QHeaderView::ResizeToContents );
 
     //connections
     connect( this, SIGNAL( doubleClicked( const QModelIndex& ) ), this, SLOT( OnRequestCenter() ) );

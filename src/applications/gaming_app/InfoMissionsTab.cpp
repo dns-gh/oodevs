@@ -76,11 +76,18 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
     proxyFilter_->setDynamicSortFilter( true );
     setSortingEnabled( true );
 
+    //Add alternative palette
+    QPalette p( palette() );
+    p.setColor( QPalette::Base, Qt::white );
+    p.setColor( QPalette::AlternateBase, QColor( 240, 240, 240 ) );
+    setPalette( p );
+
     //configure the model
-    missionModel_.setColumnCount( 3 );
+    missionModel_.setColumnCount( 4 );
     setHeaderHidden( true );
     header()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    header()->setResizeMode( 1, QHeaderView::Stretch );
+    header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+    header()->setResizeMode( 2, QHeaderView::ResizeToContents );
 
     connect( delegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
 
