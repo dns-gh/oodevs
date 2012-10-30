@@ -87,7 +87,7 @@ namespace plugins
 {
 namespace hla
 {
-    template< unsigned int N >
+    template< std::size_t N >
     std::vector< char > MakeUniqueIdGen( const std::string& s )
     {
         std::vector< char > retval( N, 0 );
