@@ -45,7 +45,9 @@ public:
     void Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center ) const;
     bool IsCompatible( const kernel::Entity_ABC& superior ) const;
     QString GetName() const;
+    QString GetDisplayName() const;
     void Rename( const QString& name );
+    void SetDisplayName( const QString& displayName );
     //@}
 
 private:
@@ -76,6 +78,7 @@ private:
     std::auto_ptr< TemplateElement_ABC > element_;
     geometry::Point2f referencePosition_;
     QString name_;
+    QString displayName_;
     ColorController& colorController_;
     //@}
 };

@@ -94,6 +94,8 @@ void HierarchyTemplate::Serialize( xml::xostream& output ) const
                << xml::attribute( "x", referencePosition_.X() )
                << xml::attribute( "y", referencePosition_.Y() )
                << xml::attribute( "name", name_.toAscii().constData() );
+        if( !displayName_ .isEmpty() )
+            output << xml::attribute( "display-name", displayName_.toAscii().constData() );
         element_->Serialize( output );
         output << xml::end;
     }
@@ -143,15 +145,17 @@ TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, Form
 // -----------------------------------------------------------------------------
 TemplateElement_ABC* HierarchyTemplate::CreateElement( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input )
 {
-    std::string type, name;
+    std::string type, name, displayName;
     float x = 0, y = 0;
     input >> xml::optional
           >> xml::start( "element" )
              >> xml::attribute( "type", type )
              >> xml::attribute( "x", x )
              >> xml::attribute( "y", y )
-             >> xml::attribute( "name", name );
+             >> xml::attribute( "name", name )
+             >> xml::optional >> xml::attribute( "display-name", displayName );
     name_ = name.c_str();
+    displayName_ = QString::fromStdString( displayName );
 
     referencePosition_.Set( x, y );
     TemplateElement_ABC* result = 0;
@@ -180,6 +184,7 @@ bool HierarchyTemplate::IsCompatible( const kernel::Entity_ABC& superior ) const
 // -----------------------------------------------------------------------------
 void HierarchyTemplate::Rename( const QString& name )
 {
+    displayName_.clear();
     name_ = name;
     if( element_.get() )
         element_->Rename( name );
@@ -193,6 +198,16 @@ QString HierarchyTemplate::GetName() const
 {
     return element_.get() ? element_->GetName() : QString();
 }
+// -----------------------------------------------------------------------------
+// Name: HierarchyTemplate::GetDisplayName
+// Created: MMC 2012-10-26
+// -----------------------------------------------------------------------------
+QString HierarchyTemplate::GetDisplayName() const
+{
+    if( displayName_.isEmpty() )
+        return GetName();
+    return displayName_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: HierarchyTemplate::SetBasePosition
@@ -204,6 +219,13 @@ void HierarchyTemplate::SetBasePosition( geometry::Point2f center )
         (*it)->SetBasePosition( center );
     referencePosition_.Set( referencePosition_.X() - center.X(),
                             referencePosition_.Y() - center.Y() );
-
 }
 
+// -----------------------------------------------------------------------------
+// Name: HierarchyTemplate::SetDisplayName
+// Created: MMC 2012-10-26
+// -----------------------------------------------------------------------------
+void HierarchyTemplate::SetDisplayName( const QString& displayName )
+{
+    displayName_ = displayName;
+}

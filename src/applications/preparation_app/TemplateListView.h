@@ -74,7 +74,7 @@ private:
     virtual Q3DragObject* dragObject();
     void Clear();
     void ReadTemplate( xml::xistream& input );
-    gui::ValuedListItem* CreateItem( HierarchyTemplate& t );
+    void CreateItem( HierarchyTemplate& t );
     virtual void keyPressEvent( QKeyEvent* event );
     void Rename( gui::ValuedListItem& item, const QString& newName );
     //@}

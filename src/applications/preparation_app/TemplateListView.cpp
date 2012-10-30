@@ -58,11 +58,11 @@ TemplateListView::~TemplateListView()
 void TemplateListView::CreateTemplate( const kernel::Entity_ABC& entity )
 {
     HierarchyTemplate* pTemplate = new HierarchyTemplate( agents_, formations_, entity, true, colorController_ );
+    QString longName = QString::fromStdString( LongNameHelper::GetEntityLongName( entity ) );
+    if( !longName.isEmpty() )
+        pTemplate->SetDisplayName( longName );
     templates_.push_back( pTemplate );
-    ValuedListItem* item = CreateItem( *pTemplate );
-    std::string longName = LongNameHelper::GetEntityLongName( entity );
-    if( item && !longName.empty() )
-        Rename( *item, QString::fromStdString( longName ) );
+    CreateItem( *pTemplate );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,13 +166,12 @@ void TemplateListView::ReadTemplate( xml::xistream& input )
 // Name: TemplateListView::CreateItem
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-ValuedListItem* TemplateListView::CreateItem( HierarchyTemplate& t )
+void TemplateListView::CreateItem( HierarchyTemplate& t )
 {
     ValuedListItem* item = new ValuedListItem( this );
-    item->Set( &t, t.GetName() );
+    item->Set( &t, t.GetDisplayName() );
     item->setDragEnabled( true );
     item->setRenameEnabled( 0, true );
-    return item;
 }
 
 // -----------------------------------------------------------------------------
