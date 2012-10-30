@@ -265,7 +265,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pFomSerializer_.reset( new FOM_Serializer( pXis_->attribute< int >( "netn-version", 1 ) ) );
             pSubject_.reset( new AgentController( dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_,
                                                     *platforms_, *pConverter_, pXis_->attribute< bool >( "disaggregate", false ), 
-                                                    *pSideResolver_, *pLocalAgentResolver_, pXis_->attribute< bool >( "send-full-orbat", false ), logger_, *pAggregateTypeResolver_ ) );
+                                                    *pSideResolver_, *pLocalAgentResolver_, pXis_->attribute< bool >( "send-full-orbat", false ), logger_, *pAggregateTypeResolver_, pXis_->attribute< int >( "netn-version", 1 ) ) );
             pTacticalObjectSubject_.reset( new TacticalObjectController ( dynamicModel_, *pConverter_, *pEntityObjectTypeResolver_, *pEntityMunitionTypeResolver_, logger_ ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,

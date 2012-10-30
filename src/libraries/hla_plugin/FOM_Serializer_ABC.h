@@ -65,7 +65,7 @@ public:
     virtual void ReadMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, Marking& marking ) = 0;
 
     virtual void ReadCallsign( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, UnicodeString& callsign ) = 0;
-    virtual void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::string& uniqueId ) = 0;
+    virtual void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< char >& uniqueId ) = 0;
     virtual void ReadMounted( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, double& mounted ) = 0;
     virtual void ReadSymbol( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, UnicodeString& symbol ) = 0;
     virtual void ReadStatus( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, int8& status ) = 0;

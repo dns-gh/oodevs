@@ -103,10 +103,10 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_teleports_only_when_unit_has_been_creat
 
 namespace
 {
-    unsigned long resolveSimId( const std::vector< std::string >& ids, const std::string& id )
+    unsigned long resolveSimId( const std::vector< std::vector< char > >& ids, const std::vector< char >& id )
     {
         static unsigned long idx(0);
-        BOOST_CHECK_EQUAL( id, ids[idx] );
+        BOOST_REQUIRE( id == ids[idx] );
         unsigned long retval( 420+idx );
         ++idx;
         return retval;
@@ -126,7 +126,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( unit_teleporter_load_embedded_units, Fixture)
 {
     static const char* TRANSPORTED_UNITS[] = { "unit1", "unit2" };
-    std::vector< std::string > transported( TRANSPORTED_UNITS, TRANSPORTED_UNITS+( sizeof( TRANSPORTED_UNITS ) / sizeof( TRANSPORTED_UNITS[0] ) ) );
+    std::vector< std::vector< char > > transported; transported.push_back( MakeUniqueId( TRANSPORTED_UNITS[0] ) ); transported.push_back( MakeUniqueId( TRANSPORTED_UNITS[1] ) );
     sword::ClientToSim loadMessage;
 
     UnitTeleporter teleporter( agentSubject, contextHandler, publisher, contextFactory, agentResolver, callsignResolver, logger );
@@ -143,5 +143,6 @@ BOOST_FIXTURE_TEST_CASE( unit_teleporter_load_embedded_units, Fixture)
     MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).exactly( transported.size() ).calls( boost::bind( resolveSimId, boost::cref( transported ), _1 ) );
     MOCK_EXPECT( publisher.SendClientToSim ).exactly( transported.size() ).calls( boost::bind( checkMessage, unitId, _1 ) );
     MOCK_EXPECT( logger.LogInfo );
+
     remoteAgentListener->EmbeddedUnitListChanged( "identifier", transported );
 }

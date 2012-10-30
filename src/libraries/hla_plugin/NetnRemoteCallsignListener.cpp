@@ -59,7 +59,7 @@ void NetnRemoteCallsignListener::Add( const std::string& identifier )
 // Name: NetnRemoteCallsignListener::UniqueIdChanged
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void NetnRemoteCallsignListener::UniqueIdChanged( const std::string& identifier, const std::string& uniqueId )
+void NetnRemoteCallsignListener::UniqueIdChanged( const std::string& identifier, const T_UniqueId& uniqueId )
 {
     adds_[ identifier ].uniqueId = uniqueId;
     Add( identifier );
@@ -188,7 +188,7 @@ void NetnRemoteCallsignListener::Acquired( const std::string& /*identifier*/ )
 // Name: NetnRemoteCallsignListener::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
-void NetnRemoteCallsignListener::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+void NetnRemoteCallsignListener::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*units*/ )
 {
     // NOTHING
 }

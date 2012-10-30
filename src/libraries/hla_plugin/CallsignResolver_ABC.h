@@ -34,10 +34,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Add( unsigned long simulationIdentifier, const std::string& callsign, const std::string& uniqueId ) = 0;
+    virtual void Add( unsigned long simulationIdentifier, const std::string& callsign, const std::vector< char >& uniqueId ) = 0;
     virtual std::string ResolveCallsign( unsigned long simulationIdentifier ) const = 0;
-    virtual std::string ResolveUniqueId( unsigned long simulationIdentifier ) const = 0;
-    virtual unsigned long ResolveSimulationIdentifier( const std::string& uniqueId ) const = 0;
+    virtual std::vector< char > ResolveUniqueId( unsigned long simulationIdentifier ) const = 0;
+    virtual unsigned long ResolveSimulationIdentifier( const std::vector< char >& uniqueId ) const = 0;
     //@}
 };
 

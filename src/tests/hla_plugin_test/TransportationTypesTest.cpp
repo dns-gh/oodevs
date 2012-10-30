@@ -85,7 +85,7 @@ BOOST_FIXTURE_TEST_CASE( netn_object_feature_struct_no_detail_deserialization, S
 BOOST_FIXTURE_TEST_CASE( netn_object_feature_struct_with_aggregate_deserialization, SerializationFixture )
 {
     std::vector< NetnObjectDefinitionStruct > subObjectList;
-    subObjectList.push_back( NetnObjectDefinitionStruct( "callsign", "uniqueid", NetnObjectFeatureStruct() ) );
+    subObjectList.push_back( NetnObjectDefinitionStruct( "callsign", MakeUniqueId( "uniqueId" ), NetnObjectFeatureStruct() ) );
     NetnObjectFeatureStruct serializedFeature( subObjectList );
     ::hla::Deserializer deserializer = Serialize( serializedFeature );
     NetnObjectFeatureStruct deserializedFeature;
@@ -115,7 +115,7 @@ BOOST_FIXTURE_TEST_CASE( netn_object_feature_constructors, SerializationFixture 
 BOOST_FIXTURE_TEST_CASE( netn_object_definition_struct_deserialization, SerializationFixture )
 {
     const std::string callsign = "callsign";
-    const std::string uniqueId = "uniqueid";
+    const std::vector< char > uniqueId ( MakeUniqueId( "uniqueId" ) );
     const unsigned int padding = sizeof( int8 );
     const NetnObjectDefinitionStruct serializedObjectDefinition( callsign, uniqueId, NetnObjectFeatureStruct() );
     const unsigned int callsignSize = static_cast< unsigned int >( sizeof( uint32 ) + callsign.size() * sizeof( int16 ) );
@@ -125,7 +125,7 @@ BOOST_FIXTURE_TEST_CASE( netn_object_definition_struct_deserialization, Serializ
     NetnObjectDefinitionStruct deserializedObjectDefinition;
     deserializedObjectDefinition.Deserialize( deserializer );
     BOOST_CHECK_EQUAL( deserializedObjectDefinition.callsign.str(), callsign );
-    BOOST_CHECK_EQUAL( deserializedObjectDefinition.uniqueId.str(), uniqueId );
+    BOOST_CHECK( deserializedObjectDefinition.uniqueId == uniqueId );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_appointment_struct_deserialization, SerializationFixture )
@@ -148,7 +148,7 @@ BOOST_FIXTURE_TEST_CASE( netn_datat_struct_deserialization, SerializationFixture
 {
     std::vector< NetnObjectDefinitionStruct > objectToManage;
     std::string callsign("callsign3");
-    objectToManage.push_back( NetnObjectDefinitionStruct( callsign, "42", NetnObjectFeatureStruct() ) );
+    objectToManage.push_back( NetnObjectDefinitionStruct( callsign, MakeUniqueId( "42" ), NetnObjectFeatureStruct() ) );
     const NetnAppointmentStruct appointment;
     const NetnAppointmentStruct finalAppointment;
     const NetnDataTStruct serializedNetnDataTStruct( objectToManage, appointment, finalAppointment );
@@ -170,7 +170,7 @@ BOOST_FIXTURE_TEST_CASE( netn_dataed_struct_deserialization, SerializationFixtur
 {
     std::vector< NetnObjectDefinitionStruct > objectToManage;
     std::string callsign("callsign3");
-    objectToManage.push_back( NetnObjectDefinitionStruct( callsign, "42", NetnObjectFeatureStruct() ) );
+    objectToManage.push_back( NetnObjectDefinitionStruct( callsign, MakeUniqueId( "42" ), NetnObjectFeatureStruct() ) );
     const NetnAppointmentStruct appointment;
     const NetnDataEDStruct serializedNetnDataEDStruct( objectToManage, appointment );
     const unsigned int padding = sizeof( int8 );

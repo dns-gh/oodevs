@@ -65,16 +65,16 @@ namespace
 BOOST_FIXTURE_TEST_CASE( netn_remote_callsign_listener_adds_callsign_when_unit_creation_received, RegisteredFixture )
 {
     listener->CallsignChanged( "identifier", "callsign" );
-    listener->UniqueIdChanged( "identifier", "unique" );
-    MOCK_EXPECT( resolver.Add ).once().with( 42u, "callsign", "unique" );
+    listener->UniqueIdChanged( "identifier", MakeUniqueId( "unique" ) );
+    MOCK_EXPECT( resolver.Add ).once().with( 42u, "callsign", MakeUniqueId( "unique" ) );
     responseObserver->Notify( MakeCreation( 42u ), "identifier" );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_remote_callsign_listener_adds_callsign_when_callsign_received, RegisteredFixture )
 {
-    listener->UniqueIdChanged( "identifier", "unique" );
+    listener->UniqueIdChanged( "identifier", MakeUniqueId( "unique" ) );
     responseObserver->Notify( MakeCreation( 42u ), "identifier" );
-    MOCK_EXPECT( resolver.Add ).once().with( 42u, "callsign", "unique" );
+    MOCK_EXPECT( resolver.Add ).once().with( 42u, "callsign", MakeUniqueId( "unique" ) );
     listener->CallsignChanged( "identifier", "callsign" );
 }
 
@@ -82,6 +82,6 @@ BOOST_FIXTURE_TEST_CASE( netn_remote_callsign_listener_adds_callsign_when_unique
 {
     listener->CallsignChanged( "identifier", "callsign" );
     responseObserver->Notify( MakeCreation( 42u ), "identifier" );
-    MOCK_EXPECT( resolver.Add ).once().with( 42u, "callsign", "unique" );
-    listener->UniqueIdChanged( "identifier", "unique" );
+    MOCK_EXPECT( resolver.Add ).once().with( 42u, "callsign", MakeUniqueId( "unique" ) );
+    listener->UniqueIdChanged( "identifier", MakeUniqueId( "unique" ) );
 }

@@ -35,7 +35,7 @@ class NetnGroundVehicle : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnGroundVehicle( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer );
+             NetnGroundVehicle( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::vector< char >& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer );
     virtual ~NetnGroundVehicle( );
     //@}
 

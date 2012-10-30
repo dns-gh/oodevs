@@ -194,7 +194,7 @@ void EquipmentUpdater::EquipmentUpdated( const std::string& identifier, const rp
 // Name: EquipmentUpdater::UniqueIdChanged
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+void EquipmentUpdater::UniqueIdChanged( const std::string& /*identifier*/, const T_UniqueId& /*uniqueId*/ )
 {
     // NOTHING
 }
@@ -289,7 +289,7 @@ void EquipmentUpdater::Acquired( const std::string& /*identifier*/ )
 // Name: EquipmentUpdater::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
-void EquipmentUpdater::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+void EquipmentUpdater::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*units*/ )
 {
     // NOTHING
 }

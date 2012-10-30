@@ -10,6 +10,7 @@
 #ifndef plugins_hla_UniqueId_h
 #define plugins_hla_UniqueId_h
 
+#include <vector>
 #include <boost/foreach.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -31,11 +32,11 @@ public:
     //! @name Constructors/Destructor
     //@{
              UniqueIdBase() { ::memset( identifier_, 0, sizeof( identifier_ ) ); }
-    explicit UniqueIdBase( const std::string& identifier )
+    explicit UniqueIdBase( const std::vector< char >& identifier )
     {
         ::memset( identifier_, 0, sizeof( identifier_ ) );
-        const std::size_t length = std::min( sizeof( identifier_ ), identifier.length() );
-        ::memcpy( identifier_, identifier.c_str(), length );
+        const std::size_t length = std::min( sizeof( identifier_ ), identifier.size() );
+        std::copy( identifier.begin(), identifier.begin() + length, identifier_ );
     }
     virtual ~UniqueIdBase() {}
     //@}
@@ -65,6 +66,15 @@ public:
         }
         return result;
     }
+    void Read( std::vector< char >& identifier ) const
+    {
+        identifier.resize( Number, 0 );
+        std::copy( identifier_, identifier_+Number, identifier.begin() );
+    }
+    std::vector< char > data() const
+    {
+        return std::vector< char >( &identifier_[0], &identifier_[0] + Number );
+    }
 
     //@}
 
@@ -91,19 +101,19 @@ public:
     ~UniqueIdSerializer();
 
     template< typename Archive >
-    void operator()( boost::shared_ptr< std::string > id, Archive& serializer ) const
+    void operator()( boost::shared_ptr< std::vector< char > > id, Archive& serializer ) const
     {
         Serialize( *id, serializer );
     }
     template< typename Archive >
-    void operator()( const boost::shared_ptr< std::vector< std::string > >& id, Archive& serializer ) const
+    void operator()( const boost::shared_ptr< std::vector< std::vector< char > > >& id, Archive& serializer ) const
     {
-        BOOST_FOREACH( std::string v, *id )
+        BOOST_FOREACH( const std::vector< char >& v, *id )
             Serialize( v, serializer );
     }
 private:
     template< typename Archive>
-    void Serialize( const std::string& v, Archive& serializer ) const
+    void Serialize( const std::vector< char >& v, Archive& serializer ) const
     {
         switch( netnVersion_ )
         {

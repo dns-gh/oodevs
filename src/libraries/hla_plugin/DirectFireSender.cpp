@@ -159,7 +159,7 @@ void DirectFireSender::EquipmentUpdated( const std::string& /*identifier*/, cons
 // Name: DirectFireSender::UniqueIdChanged
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void DirectFireSender::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+void DirectFireSender::UniqueIdChanged( const std::string& /*identifier*/, const T_UniqueId& /*uniqueId*/ )
 {
     // NOTHING
 }
@@ -213,7 +213,7 @@ void DirectFireSender::Acquired( const std::string& /*identifier*/ )
 // Name: DirectFireSender::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
-void DirectFireSender::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+void DirectFireSender::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*units*/ )
 {
     // NOTHING
 }

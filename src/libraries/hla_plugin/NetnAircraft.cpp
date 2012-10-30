@@ -28,7 +28,7 @@ using namespace plugins::hla;
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
 NetnAircraft::NetnAircraft( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& /*agent*/, const std::string& callsign,
-        const std::string& uniqueIdentifier, const std::string& /*symbol*/, FOM_Serializer_ABC& fomSerializer )
+        const std::vector< char >& uniqueIdentifier, const std::string& /*symbol*/, FOM_Serializer_ABC& fomSerializer )
     : listeners_ ( new ObjectListenerComposite() )
     , aggregate_ ( aggregate )
     , fomSerializer_( fomSerializer )
@@ -118,7 +118,7 @@ void NetnAircraft::RegisterAttributes()
 {
     attributesUpdater_->Register( "UniqueID", boost::bind( &FOM_Serializer_ABC::ReadUniqueId, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( uniqueId_ ) ), uniqueId_, fomSerializer_.GetUniqueIdSerializer() );
     attributesUpdater_->Register( "Callsign", boost::bind( &FOM_Serializer_ABC::ReadCallsign, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( callsign_ ) ), callsign_ );
-    attributesUpdater_->Register( "EmbeddedUnitList", boost::bind( &FOM_Serializer_ABC::ReadEmbeddedUnitList, boost::ref( fomSerializer_ ), _1, _2, _3 ), std::vector< std::string >() , fomSerializer_.GetUniqueIdSerializer() );
+    attributesUpdater_->Register( "EmbeddedUnitList", boost::bind( &FOM_Serializer_ABC::ReadEmbeddedUnitList, boost::ref( fomSerializer_ ), _1, _2, _3 ), std::vector< std::vector< char > >() , fomSerializer_.GetUniqueIdSerializer() );
 }
 
 // -----------------------------------------------------------------------------

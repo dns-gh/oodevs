@@ -53,4 +53,19 @@ struct ProtobufConfig {
     }
 };
 
+namespace plugins
+{
+namespace hla
+{
+    std::vector< char > MakeUniqueId( const std::string& s )
+    {
+        return MakeUniqueIdGen< 11 >( s );
+    }
+    NETN_UUID MakeNetnUid( const std::string& s )
+    {
+        return NETN_UUID( MakeUniqueIdGen< 16 >( s ) ) ;
+    }
+}
+}
+
 BOOST_GLOBAL_FIXTURE( ProtobufConfig );

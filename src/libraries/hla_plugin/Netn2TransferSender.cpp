@@ -27,12 +27,12 @@ using namespace plugins::hla;
 
 namespace
 {
-    std::string GetUniqueId( const std::string& agentID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
+    std::vector< char > GetUniqueId( const std::string& agentID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
     {
         unsigned long simId = agentResolver.Resolve( agentID );
         return callsignResolver.ResolveUniqueId( simId );
     }
-    std::string GetAgentId( const std::string& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
+    std::string GetAgentId( const std::vector< char >& uniqueID, const LocalAgentResolver_ABC& agentResolver, const CallsignResolver_ABC& callsignResolver )
     {
         unsigned long simId = callsignResolver.ResolveSimulationIdentifier( uniqueID );
         return agentResolver.Resolve( simId );
@@ -86,7 +86,7 @@ void Netn2TransferSender::RequestTransfer(const std::string& agentID, const Tran
     transfer.transactionID.federateName = UnicodeString( federateName_ );
     transfer.transactionID.transactionCounter = reqId;
     transfer.requestFederate = UnicodeString( federateName_ );
-    std::string uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
+    std::vector< char > uniqueId( GetUniqueId( agentID, agentResolver_, callsignResolver_ ) );
     if( uniqueId.size() == 0 )
     {
         logger_.LogError( std::string( "Trying to tranfer unknown entity " ) + agentID );
@@ -131,7 +131,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     interactions::TMR::TransferTypeEnum32 transferType( static_cast< interactions::TMR::TransferTypeEnum32 >( request.transferType ) );
     BOOST_FOREACH( const NETN_UUID& uniqueId, request.instances.list )
     {
-        std::string agentId( GetAgentId( uniqueId.str(), agentResolver_, callsignResolver_ ) );
+        std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
         if( agentId.size() == 0 )
         {
             logger_.LogError( std::string( "Trying to tranfer unknown entity " ) + uniqueId.str() );
@@ -157,7 +157,7 @@ void Netn2TransferSender::Receive( interactions::TMR_RequestTransferModellingRes
     {
         BOOST_FOREACH( const NETN_UUID& uniqueId, request.instances.list )
         {
-            std::string agentId( GetAgentId( uniqueId.str(), agentResolver_, callsignResolver_ ) );
+            std::string agentId( GetAgentId( uniqueId.data(), agentResolver_, callsignResolver_ ) );
             if( transferType == interactions::TMR::Acquire )
                 ownershipController_.PerformDivestiture( agentId, attributes );
             else if( transferType == interactions::TMR::Divest )

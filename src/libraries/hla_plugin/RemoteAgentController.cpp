@@ -222,7 +222,7 @@ void RemoteAgentController::EquipmentUpdated( const std::string& identifier, con
 // Name: RemoteAgentController::UniqueIdChanged
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void RemoteAgentController::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+void RemoteAgentController::UniqueIdChanged( const std::string& /*identifier*/, const T_UniqueId& /*uniqueId*/ )
 {
     // NOTHING
 }
@@ -361,7 +361,7 @@ void RemoteAgentController::Attach( unsigned long simId )
 // Created: AHC 2010-03-09
 // -----------------------------------------------------------------------------
 void RemoteAgentController::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& /*name*/,
-        rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool isLocal, const std::string& /*uniqueId*/ )
+        rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool isLocal, const std::vector< char >& /*uniqueId*/ )
 {
     if( !isLocal )
         remoteAgents_[ identifier ] = &agent;
@@ -371,7 +371,7 @@ void RemoteAgentController::AggregateCreated( Agent_ABC& agent, unsigned long id
 // Name: RemoteAgentController::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
-void RemoteAgentController::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+void RemoteAgentController::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*units*/ )
 {
     // NOTHING
 }
@@ -380,7 +380,7 @@ void RemoteAgentController::EmbeddedUnitListChanged( const std::string& /*identi
 // Name: RemoteAgentController::PlatformCreated
 // Created: AHC 2010-03-09
 // -----------------------------------------------------------------------------
-void RemoteAgentController::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::string& /*uniqueId*/ )
+void RemoteAgentController::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::vector< char >& /*uniqueId*/ )
 {
     // NOTHING
 }

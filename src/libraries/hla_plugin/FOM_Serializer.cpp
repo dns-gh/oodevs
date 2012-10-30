@@ -151,7 +151,7 @@ void FOM_Serializer::ReadCallsign( ::hla::Deserializer_ABC& deserializer, const 
 // Name: FOM_Serializer::ReadUniqueId
 // Created: AHC 2012-09-03
 // -----------------------------------------------------------------------------
-void FOM_Serializer::ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::string& uniqueId )
+void FOM_Serializer::ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< char >& uniqueId )
 {
     switch( netnVersion_ )
     {
@@ -159,20 +159,21 @@ void FOM_Serializer::ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const 
         {
             UniqueId u;
             u.Deserialize( deserializer );
-            uniqueId = u.str();
+            u.Read( uniqueId );            
+            listener.UniqueIdChanged( identifier, u.data() );
         }
         break;
     case 2:
         {
             NETN_UUID u;
             u.Deserialize( deserializer );
-            uniqueId = u.str();
-        }
+            u.Read( uniqueId );
+            listener.UniqueIdChanged( identifier, u.data() );
+        } 
         break;
     default:
         throw std::runtime_error("wrong NETN version") ;
     }
-    listener.UniqueIdChanged( identifier, uniqueId );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,15 +209,29 @@ void FOM_Serializer::ReadStatus( ::hla::Deserializer_ABC& deserializer, const st
 // -----------------------------------------------------------------------------
 void FOM_Serializer::ReadEmbeddedUnitList( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener )
 {
-    std::vector< std::string > embeddedUnits;
+    std::vector< ObjectListener_ABC::T_UniqueId > embeddedUnits;
     uint32 size;
     deserializer >> size;
     embeddedUnits.resize(size);
     for(uint32 i=0; i < size; ++i )
     {
-        UniqueId tmp;
-        tmp.Deserialize( deserializer );
-        embeddedUnits[i]=tmp.str();
+        switch( netnVersion_ )
+        {
+        case 1:
+            {
+                UniqueId tmp;
+                tmp.Deserialize( deserializer );
+                embeddedUnits[i]=tmp.data();
+            }
+            break;
+        case 2:
+            {
+                NETN_UUID tmp;
+                tmp.Deserialize( deserializer );
+                embeddedUnits[i]=tmp.data();
+            }
+            break;
+         }
     }
     listener.EmbeddedUnitListChanged( identifier, embeddedUnits );
 }

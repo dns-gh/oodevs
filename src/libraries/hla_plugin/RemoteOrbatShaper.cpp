@@ -182,7 +182,7 @@ void RemoteOrbatShaper::EquipmentUpdated( const std::string& /*identifier*/, con
 // Name: RemoteOrbatShaper::UniqueIdChanged
 // Created: AHC 2012-10-03
 // -----------------------------------------------------------------------------
-void RemoteOrbatShaper::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+void RemoteOrbatShaper::UniqueIdChanged( const std::string& /*identifier*/, const T_UniqueId& /*uniqueId*/ )
 {
     // NOTHING
 }
@@ -476,7 +476,7 @@ void RemoteOrbatShaper::Acquired( const std::string& /*identifier*/ )
 // Name: RemoteOrbatShaper::EmbeddedUnitListChanged
 // Created: AHC 2012-10-04
 // -----------------------------------------------------------------------------
-void RemoteOrbatShaper::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*embeddedUnits*/ )
+void RemoteOrbatShaper::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*embeddedUnits*/ )
 {
 }
 

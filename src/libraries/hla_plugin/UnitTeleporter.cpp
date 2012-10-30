@@ -134,11 +134,11 @@ void UnitTeleporter::Notify( const sword::UnitCreation& message, const std::stri
     T_EmbeddedUnitsMap::iterator it( pendingLoaded_.find( identifier ) );
     if( pendingLoaded_.end() != it )
     {
-        const std::vector< std::string >& units( it->second );
-        for(std::vector< std::string >::const_iterator itU=units.begin(); itU!=units.end(); ++itU )
+        const std::vector< T_UniqueId >& units( it->second );
+        for(std::vector< T_UniqueId >::const_iterator itU=units.begin(); itU!=units.end(); ++itU )
         {
-            const std::string& transportedUniqueId = *itU;
-            logger_.LogInfo("UnitTeleporter loading " + transportedUniqueId + " in " + identifier);
+            const T_UniqueId& transportedUniqueId = *itU;
+            logger_.LogInfo("UnitTeleporter loading in " + identifier);
             unsigned long transportedId( 0 );
             try
             {
@@ -189,7 +189,7 @@ void UnitTeleporter::EquipmentUpdated( const std::string& /*identifier*/, const 
 // Name: UnitTeleporter::UniqueIdChanged
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void UnitTeleporter::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+void UnitTeleporter::UniqueIdChanged( const std::string& /*identifier*/, const std::vector< char >& /*uniqueId*/ )
 {
     // NOTHING
 }
@@ -250,7 +250,7 @@ void UnitTeleporter::Acquired( const std::string& identifier )
 // Name: UnitTeleporter::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
-void UnitTeleporter::EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units )
+void UnitTeleporter::EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units )
 {
     logger_.LogInfo("UnitTeleporter EmbeddedUnitListChanged");
     T_Identifiers::const_iterator it( identifiers_.find( identifier ) );
@@ -261,10 +261,10 @@ void UnitTeleporter::EmbeddedUnitListChanged( const std::string& identifier, con
     }
 
     unsigned long transporterId( it->second );
-    for(std::vector< std::string >::const_iterator itU=units.begin(); itU!=units.end(); ++itU )
+    for( std::vector< T_UniqueId >::const_iterator itU=units.begin(); itU!=units.end(); ++itU )
     {
-        const std::string& transportedUniqueId = *itU;
-        logger_.LogInfo("UnitTeleporter loading " + transportedUniqueId + " in " + identifier);
+        const T_UniqueId& transportedUniqueId = *itU;
+        logger_.LogInfo("UnitTeleporter loading in " + identifier);
         unsigned long transportedId( 0 );
         try
         {

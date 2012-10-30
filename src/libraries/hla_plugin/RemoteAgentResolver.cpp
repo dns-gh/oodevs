@@ -134,7 +134,7 @@ void RemoteAgentResolver::EquipmentUpdated( const std::string& /*identifier*/, c
 // Name: RemoteAgentResolver::UniqueIdChanged
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+void RemoteAgentResolver::UniqueIdChanged( const std::string& /*identifier*/, const T_UniqueId& /*uniqueId*/ )
 {
     // NOTHING
 }
@@ -200,7 +200,7 @@ void RemoteAgentResolver::Acquired( const std::string& /*identifier*/ )
 // Name: RemoteAgentResolver::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+void RemoteAgentResolver::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*units*/ )
 {
     // NOTHING
 }

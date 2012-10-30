@@ -196,7 +196,7 @@ void RemoteTacticalObjectController::EquipmentUpdated( const std::string& /*iden
 // Name: RemoteTacticalObjectController::UniqueIdChanged
 // Created: AHC 2012-09-07
 // -----------------------------------------------------------------------------
-void RemoteTacticalObjectController::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+void RemoteTacticalObjectController::UniqueIdChanged( const std::string& /*identifier*/, const T_UniqueId& /*uniqueId*/ )
 {
     // NOTHING
 }
@@ -214,7 +214,7 @@ void RemoteTacticalObjectController::CallsignChanged( const std::string& /*ident
 // Name: RemoteTacticalObjectController::EmbeddedUnitListChanged
 // Created: AHC 2012-09-07
 // -----------------------------------------------------------------------------
-void RemoteTacticalObjectController::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+void RemoteTacticalObjectController::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*units*/ )
 {
     // NOTHING
 }

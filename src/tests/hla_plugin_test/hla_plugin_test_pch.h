@@ -81,6 +81,24 @@ namespace rpr
     }
 }
 
+#include "hla_plugin/UniqueId.h"
+
+namespace plugins
+{
+namespace hla
+{
+    template< unsigned int N >
+    std::vector< char > MakeUniqueIdGen( const std::string& s )
+    {
+        std::vector< char > retval( N, 0 );
+        std::copy( s.begin(), s.begin() + std::min( N, s.size() ), retval.begin() );
+        return retval;
+    }
+    std::vector< char > MakeUniqueId( const std::string& s );
+    NETN_UUID MakeNetnUid( const std::string& s );
+}
+}
+
 #undef max
 
 #endif // hla_plugin_test_pch_h

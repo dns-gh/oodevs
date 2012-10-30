@@ -48,7 +48,7 @@ namespace
 {
     struct NullFactory : public HlaObjectFactory_ABC
     {
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC&, const std::string&, unsigned long, rpr::ForceIdentifier, const rpr::EntityType&, const std::string&, const std::string&, const std::string& ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC&, const std::string&, unsigned long, rpr::ForceIdentifier, const rpr::EntityType&, const std::string&, const std::string&, const std::vector< char >& ) const
         {
             return std::auto_ptr< HlaObject_ABC >( 0 );
         }
@@ -386,7 +386,8 @@ void FederateFacade::Register( ::hla::FederateAmbassador_ABC& listener )
 // Name: FederateFacade::AggregateCreated
 // Created: SLI 2011-10-05
 // -----------------------------------------------------------------------------
-void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, const std::string& uniqueId )
+void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force,
+        const rpr::EntityType& type, const std::string& symbol, bool isLocal, const std::vector< char >& uniqueId )
 {
     // TODO Handle vessels and aircrafts
     if( isLocal )
@@ -442,7 +443,8 @@ void FederateFacade::UnconditionalAcquisition( const ::hla::ObjectIdentifier& ob
 // Name: FederateFacade::PlatformCreated
 // Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& uniqueId )
+void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force,
+        const rpr::EntityType& type, const std::string& symbol, const std::vector< char >& uniqueId )
 {
     switch( type.Domain() )
     {

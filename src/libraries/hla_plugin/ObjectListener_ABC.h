@@ -37,6 +37,7 @@ public:
     //! @name Types
     //@{
     typedef std::set< std::string > T_EntityIDs;
+    typedef std::vector< char > T_UniqueId;
     //@}
 
     //! @name Constructors/Destructor
@@ -51,9 +52,9 @@ public:
     virtual void NameChanged( const std::string& identifier, const std::string& name ) = 0;
     virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type ) = 0;
     virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number ) = 0;
-    virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId ) = 0;
+    virtual void UniqueIdChanged( const std::string& identifier, const T_UniqueId& uniqueId ) = 0;
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign ) = 0;
-    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& embeddedUnits ) = 0;
+    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& embeddedUnits ) = 0;
     virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter ) = 0;
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId ) = 0;
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const T_EntityIDs& children ) = 0;

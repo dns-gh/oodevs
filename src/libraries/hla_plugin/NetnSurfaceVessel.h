@@ -37,7 +37,7 @@ class NetnSurfaceVessel : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer );
+             NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::vector< char >& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer );
              NetnSurfaceVessel( std::auto_ptr< HlaObject_ABC > vessel, const std::string& identifier, FOM_Serializer_ABC& fomSerializer );
     virtual ~NetnSurfaceVessel();
     //@}
@@ -67,7 +67,7 @@ private:
     FOM_Serializer_ABC& fomSerializer_;
     std::auto_ptr< AttributesUpdater > attributesUpdater_;
     UnicodeString callsign_;
-    std::string uniqueId_;
+    std::vector< char > uniqueId_;
     std::string identifier_;
     //@}
 };

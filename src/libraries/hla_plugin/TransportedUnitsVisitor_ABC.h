@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Notify( const std::string& callsign, const std::string& uniqueId ) = 0;
+    virtual void Notify( const std::string& callsign, const std::vector< char >& uniqueId ) = 0;
     //@}
 };
 

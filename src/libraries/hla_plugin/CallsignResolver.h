@@ -34,18 +34,18 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Add( unsigned long simulationIdentifier, const std::string& callsign, const std::string& uniqueId );
+    virtual void Add( unsigned long simulationIdentifier, const std::string& callsign, const std::vector< char >& uniqueId );
     virtual std::string ResolveCallsign( unsigned long simulationIdentifier ) const;
-    virtual std::string ResolveUniqueId( unsigned long simulationIdentifier ) const;
-    virtual unsigned long ResolveSimulationIdentifier( const std::string& uniqueId ) const;
+    virtual std::vector< char > ResolveUniqueId( unsigned long simulationIdentifier ) const;
+    virtual unsigned long ResolveSimulationIdentifier( const std::vector< char >& uniqueId ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::pair< std::string, std::string > T_NetnAttributes;
+    typedef std::pair< std::string, std::vector< char > > T_NetnAttributes;
     typedef std::map< unsigned long, T_NetnAttributes > T_Identifiers;
-    typedef std::map< std::string, unsigned long > T_SimulationIdentifiers;
+    typedef std::map< std::vector< char >, unsigned long > T_SimulationIdentifiers;
     //@}
 
     //! @name Member data

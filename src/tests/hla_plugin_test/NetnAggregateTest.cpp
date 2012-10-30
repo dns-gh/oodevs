@@ -47,7 +47,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", "identifier", "symbol", fomSerialization )
+            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", MakeUniqueId( "identifier" ), "symbol", fomSerialization )
         {}
         NetnAggregate entity;
     };

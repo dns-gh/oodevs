@@ -275,7 +275,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NetnObjectDefinitionStruct();
-             NetnObjectDefinitionStruct( const std::string& callsign, const std::string& uniqueId,
+             NetnObjectDefinitionStruct( const std::string& callsign, const std::vector< char >& uniqueId,
                                          const NetnObjectFeatureStruct& objectFeature );
     virtual ~NetnObjectDefinitionStruct();
     //@}
@@ -308,7 +308,7 @@ public:
     //! @name Member data
     //@{
     UnicodeString callsign;
-    UniqueId uniqueId;
+    std::vector< char > uniqueId;
     NetnObjectFeatureStruct objectFeature;
     //@}
 };

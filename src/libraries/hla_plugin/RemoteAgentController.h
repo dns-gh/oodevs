@@ -105,16 +105,16 @@ private:
     virtual void NameChanged( const std::string& identifier, const std::string& name );
     virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type );
     virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number );
-    virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId );
+    virtual void UniqueIdChanged( const std::string& identifier, const T_UniqueId& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
-    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units );
+    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units );
     virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter );
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId );
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const ObjectListener_ABC::T_EntityIDs& children );
     virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const ObjectListener_ABC::T_EntityIDs& children );
 
-    virtual void AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, const std::string& uniqueId );
-    virtual void PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::string& uniqueId ) ;
+    virtual void AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, const std::vector< char >& uniqueId );
+    virtual void PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::vector< char >& uniqueId ) ;
     //@}
 
 private:

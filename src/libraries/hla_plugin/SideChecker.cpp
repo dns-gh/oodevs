@@ -76,7 +76,9 @@ int SideChecker::Find( unsigned int identifier ) const
 // Name: SideChecker::AggregateCreated
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void SideChecker::AggregateCreated( Agent_ABC& /*agent*/, unsigned long identifier, const std::string& /*name*/, rpr::ForceIdentifier force, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool /*isLocal*/, const std::string& /*uniqueId*/ )
+void SideChecker::AggregateCreated( Agent_ABC& /*agent*/, unsigned long identifier, const std::string& /*name*/,
+        rpr::ForceIdentifier force, const rpr::EntityType& /*type*/, const std::string& /*symbol*/,
+        bool /*isLocal*/, const std::vector< char >& /*uniqueId*/ )
 {
     localSides_[ identifier ] = force;
 }
@@ -85,7 +87,8 @@ void SideChecker::AggregateCreated( Agent_ABC& /*agent*/, unsigned long identifi
 // Name: SideChecker::SurfaceVesselCreated
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void SideChecker::SurfaceVesselCreated( Agent_ABC& /*agent*/, unsigned int identifier, const std::string& /*name*/, rpr::ForceIdentifier force, const rpr::EntityType& /*type*/ )
+void SideChecker::SurfaceVesselCreated( Agent_ABC& /*agent*/, unsigned int identifier, const std::string& /*name*/,
+        rpr::ForceIdentifier force, const rpr::EntityType& /*type*/ )
 {
     localSides_[ identifier ] = force;
 }
@@ -157,7 +160,7 @@ void SideChecker::EquipmentUpdated( const std::string& /*identifier*/, const rpr
 // Name: SideChecker::UniqueIdChanged
 // Created: SLI 2011-10-11
 // -----------------------------------------------------------------------------
-void SideChecker::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+void SideChecker::UniqueIdChanged( const std::string& /*identifier*/, const T_UniqueId& /*uniqueId*/ )
 {
     // NOTHING
 }
@@ -211,7 +214,7 @@ void SideChecker::Acquired( const std::string& /*identifier*/ )
 // Name: SideChecker::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
-void SideChecker::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+void SideChecker::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*units*/ )
 {
     // NOTHING
 }
@@ -220,7 +223,8 @@ void SideChecker::EmbeddedUnitListChanged( const std::string& /*identifier*/, co
 // Name: SideChecker::PlatformCreated
 // Created: AHC 2012-07-26
 // -----------------------------------------------------------------------------
-void SideChecker::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::string& /*uniqueId*/ )
+void SideChecker::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/,
+        rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::vector< char >& /*uniqueId*/ )
 {
     // NOTHING
 }

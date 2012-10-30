@@ -217,6 +217,7 @@ NetnObjectFeatureStruct::~NetnObjectFeatureStruct()
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
 NetnObjectDefinitionStruct::NetnObjectDefinitionStruct()
+    : uniqueId( 11, static_cast< char >( 0 ) )
 {
     // NOTHING
 }
@@ -225,7 +226,7 @@ NetnObjectDefinitionStruct::NetnObjectDefinitionStruct()
 // Name: NetnObjectDefinitionStruct::NetnObjectDefinitionStruct
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
-NetnObjectDefinitionStruct::NetnObjectDefinitionStruct( const std::string& callsign, const std::string& uniqueId, const NetnObjectFeatureStruct& objectFeature )
+NetnObjectDefinitionStruct::NetnObjectDefinitionStruct( const std::string& callsign, const std::vector< char >& uniqueId, const NetnObjectFeatureStruct& objectFeature )
     : callsign     ( callsign )
     , uniqueId     ( uniqueId )
     , objectFeature( objectFeature )

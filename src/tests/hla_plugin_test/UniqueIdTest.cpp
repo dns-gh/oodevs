@@ -15,7 +15,7 @@ using namespace plugins::hla;
 
 BOOST_FIXTURE_TEST_CASE( unique_id_serializes_identifier_in_a_11_characters_buffer, SerializationFixture )
 {
-    const UniqueId id( "SWORD1" );
+    const UniqueId id( MakeUniqueId( "SWORD1" ) );
     ::hla::Deserializer deserializer = Serialize( id, 11 * sizeof( int8 ) );
     BOOST_CHECK_EQUAL( 'S', Read< int8 >( deserializer ) );
     BOOST_CHECK_EQUAL( 'W', Read< int8 >( deserializer ) );
@@ -28,7 +28,7 @@ BOOST_FIXTURE_TEST_CASE( unique_id_serializes_identifier_in_a_11_characters_buff
 
 BOOST_FIXTURE_TEST_CASE( unique_id_truncates_name_over_11_characters, SerializationFixture )
 {
-    const UniqueId id( "big_name_too_long_for_a_small_buffer" );
+    const UniqueId id( MakeUniqueId( "big_name_too_long_for_a_small_buffer") );
     ::hla::Deserializer deserializer = Serialize( id, 11 * sizeof( int8 ) );
     for( unsigned int i = 0; i < 10; ++i )
         Read< int8 >( deserializer );
@@ -38,7 +38,7 @@ BOOST_FIXTURE_TEST_CASE( unique_id_truncates_name_over_11_characters, Serializat
 BOOST_FIXTURE_TEST_CASE( unique_id_deserializes, SerializationFixture )
 {
     const std::string identifier = "SWORD1";
-    const UniqueId serializedId( identifier );
+    const UniqueId serializedId( MakeUniqueId( identifier ) );
     ::hla::Deserializer deserializer = Serialize( serializedId, 11 * sizeof( int8 ) );
     UniqueId deserializedId;
     deserializedId.Deserialize( deserializer );

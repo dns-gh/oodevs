@@ -92,13 +92,13 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sender_sends_announce_offer_to_client
     request.transportData.convoyType = NetnTransportStruct::E_Transport;
     request.transportData.dataTransport.appointment = NetnAppointmentStruct( 1, rpr::WorldLocation( 1., 2., 3. ) );
     request.transportData.dataTransport.finalAppointment = NetnAppointmentStruct( 2, rpr::WorldLocation( 4., 5., 6. ) );
-    request.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( "transported", "unique", NetnObjectFeatureStruct() ) );
+    request.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( "transported", MakeUniqueId( "unique" ), NetnObjectFeatureStruct() ) );
     sword::MessengerToClient announce;
     sword::MessengerToClient flag;
     MOCK_EXPECT( clientPublisher.SendMessengerToClient ).once().with( mock::retrieve( announce ) );
     MOCK_EXPECT( contextFactory.Create ).exactly( 2 ).returns( 42 );
     MOCK_EXPECT( clientPublisher.SendMessengerToClient ).exactly( 2 ).with( mock::retrieve( flag ) );
-    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( "unique" ).returns( 111 );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( MakeUniqueId( "unique" ) ).returns( 111 );
     transportationOfferer.Receive( request );
     mock::verify();
     BOOST_CHECK( announce.message().has_text_message() );

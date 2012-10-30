@@ -410,7 +410,7 @@ namespace
             static const rpr::EntityIdentifier destFederate( 0xFFFF, 0xFFFF, 0xFFFF );
             
             interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
-            interactions::VariableArray< NETN_UUID > instances; instances.list.push_back( NETN_UUID( agent ) ) ;
+            interactions::VariableArray< NETN_UUID > instances; instances.list.push_back( MakeNetnUid( agent ) ) ;
             interactions::VariableArray< UnicodeString > attributes;
             interactions::VariableArray< interactions::AttributeValueStruct > attributeValues;
 
@@ -456,8 +456,8 @@ BOOST_FIXTURE_TEST_CASE( netn_pull_negative, NetnTransferFixture )
 
     MOCK_EXPECT( contextFactory.Create ).once().returns( 42 );
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
-    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( "uniqueId" );
-    CheckTransfer( NETN_UUID( "uniqueId" ), TransferSender_ABC::E_EntityPull, 42 );
+    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( MakeNetnUid ("uniqueId" ).data() );
+    CheckTransfer( NETN_UUID( MakeUniqueId( "uniqueId" ) ), TransferSender_ABC::E_EntityPull, 42 );
     sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
@@ -471,8 +471,8 @@ BOOST_FIXTURE_TEST_CASE( netn_pull_positive, NetnTransferFixture )
 
     MOCK_EXPECT( contextFactory.Create ).once().returns( 42 );
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
-    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( "uniqueId" );
-    CheckTransfer( NETN_UUID( "uniqueId" ), TransferSender_ABC::E_EntityPull, 42 );
+    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( MakeNetnUid( "uniqueId" ).data() );
+    CheckTransfer( MakeNetnUid( "uniqueId" ), TransferSender_ABC::E_EntityPull, 42 );
     sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPull, attributes );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
@@ -486,8 +486,8 @@ BOOST_FIXTURE_TEST_CASE( netn_push_negative, NetnTransferFixture )
 
     MOCK_EXPECT( contextFactory.Create ).once().returns( 42 );
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
-    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( "uniqueId" );
-    CheckTransfer( NETN_UUID( "uniqueId" ), TransferSender_ABC::E_EntityPush, 42 );
+    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( MakeNetnUid( "uniqueId" ).data() );
+    CheckTransfer( MakeNetnUid( "uniqueId" ), TransferSender_ABC::E_EntityPush, 42 );
     sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
@@ -501,8 +501,8 @@ BOOST_FIXTURE_TEST_CASE( netn_push_positive, NetnTransferFixture )
 
     MOCK_EXPECT( contextFactory.Create ).once().returns( 42 );
     MOCK_EXPECT( localAgentResolver.ResolveName ).once().with( "identifier" ).returns( 12ul );
-    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( "uniqueId" );
-    CheckTransfer( NETN_UUID( "uniqueId" ), TransferSender_ABC::E_EntityPush, 42 );
+    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( 12ul ).returns( MakeNetnUid( "uniqueId" ).data() );
+    CheckTransfer( MakeNetnUid( "uniqueId" ), TransferSender_ABC::E_EntityPush, 42 );
     sender.RequestTransfer( "identifier", callback, TransferSender_ABC::E_EntityPush, attributes );
 
     MOCK_EXPECT( offerHandler->Flush ).once();
@@ -512,7 +512,7 @@ BOOST_FIXTURE_TEST_CASE( netn_push_positive, NetnTransferFixture )
 
 BOOST_FIXTURE_TEST_CASE( netn_receive_pull_negative, NetnTransferFixture )
 {
-    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( "uniqueId" ).returns( 12ul );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( MakeNetnUid( "uniqueId" ).data() ).returns( 12ul );
     MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 12ul ).returns( "identifier" );
     MOCK_EXPECT( requestHandler->Flush ).once();
     MOCK_EXPECT( ownershipStrategy.AcceptDivestiture ).once().with( "identifier", true ).returns( false );
@@ -522,7 +522,7 @@ BOOST_FIXTURE_TEST_CASE( netn_receive_pull_negative, NetnTransferFixture )
 
 BOOST_FIXTURE_TEST_CASE( netn_receive_pull_positive, NetnTransferFixture )
 {
-    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).exactly( 2 ).with( "uniqueId" ).returns( 12ul );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).exactly( 2 ).with( MakeNetnUid( "uniqueId" ).data() ).returns( 12ul );
     MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).exactly( 2 ).with( 12ul ).returns( "identifier" );
     MOCK_EXPECT( requestHandler->Flush ).once();
     MOCK_EXPECT( ownershipStrategy.AcceptDivestiture ).once().with( "identifier", true ).returns( true );
@@ -533,7 +533,7 @@ BOOST_FIXTURE_TEST_CASE( netn_receive_pull_positive, NetnTransferFixture )
 
 BOOST_FIXTURE_TEST_CASE( netn_receive_push_negative, NetnTransferFixture )
 {
-    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( "uniqueId" ).returns( 12ul );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).once().with( MakeNetnUid( "uniqueId" ).data() ).returns( 12ul );
     MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 12ul ).returns( "identifier" );
     MOCK_EXPECT( requestHandler->Flush ).once();
     MOCK_EXPECT( ownershipStrategy.AcceptAcquisition ).once().with( "identifier", true ).returns( false );
@@ -543,7 +543,7 @@ BOOST_FIXTURE_TEST_CASE( netn_receive_push_negative, NetnTransferFixture )
 
 BOOST_FIXTURE_TEST_CASE( netn_receive_push_positive, NetnTransferFixture )
 {
-    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).exactly( 2 ).with( "uniqueId" ).returns( 12ul );
+    MOCK_EXPECT( callsignResolver.ResolveSimulationIdentifier ).exactly( 2 ).with( MakeNetnUid( "uniqueId" ).data() ).returns( 12ul );
     MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).exactly( 2 ).with( 12ul ).returns( "identifier" );
     MOCK_EXPECT( requestHandler->Flush ).once();
     MOCK_EXPECT( ownershipStrategy.AcceptAcquisition ).once().with( "identifier", true ).returns( true );

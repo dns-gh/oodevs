@@ -94,7 +94,7 @@ BOOST_FIXTURE_TEST_CASE( hla_class_creates_instance_when_notified, RegisteredFix
     MOCK_EXPECT( objectNameFactory.CreateName ).once().returns( "123" );
     MOCK_EXPECT( factory->CreateIdentifier ).once().with( "123" ).returns( hla::ObjectIdentifier( 42u ) );
     MOCK_EXPECT( localResolver.Add ).once().with( 123u, "123" );
-    hlaClass.Created( agent, 123, "name", rpr::Friendly, rpr::EntityType(), "symbol", "unique_1" );
+    hlaClass.Created( agent, 123, "name", rpr::Friendly, rpr::EntityType(), "symbol", MakeUniqueId( "unique_1" ) );
     mock::verify();
     MOCK_EXPECT( factory->ReleaseIdentifier ).once().with( 42u );
 }

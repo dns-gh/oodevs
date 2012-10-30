@@ -54,12 +54,12 @@ namespace
         to.insert( T_Requests::value_type( context, automatId ) );
     }
 
-    std::string ResolveUniqueIdFromCallsign( const std::string& callsign, const interactions::ListOfUnits& listOfTransporters )
+    std::vector< char > ResolveUniqueIdFromCallsign( const std::string& callsign, const interactions::ListOfUnits& listOfTransporters )
     {
         BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, listOfTransporters.list )
             if( unit.callsign.str() == callsign )
-                return unit.uniqueId.str();
-        return "";
+                return unit.uniqueId;
+        return std::vector< char >();
     }
 
     template< typename From, typename To >
@@ -169,7 +169,7 @@ namespace
         explicit SubordinatesVisitor( std::vector< NetnObjectDefinitionStruct >& units )
             : units_( units )
         {}
-        virtual void Notify( const std::string& callsign, const std::string& uniqueId )
+        virtual void Notify( const std::string& callsign, const std::vector< char >& uniqueId )
         {
             units_.push_back( NetnObjectDefinitionStruct( callsign, uniqueId, NetnObjectFeatureStruct() ) );
         }
@@ -390,11 +390,11 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
     if( request == serviceStartedRequests_.left.end() )
         return;
     const interactions::NetnOfferConvoy& contextRequest = contextRequests_[ context ];
-    const std::string transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
+    const std::vector< char > transporterUniqueId = ResolveUniqueIdFromCallsign( transporterCallsign, contextRequest.listOfTransporters );
     const unsigned int transporterId = callsignResolver_.ResolveSimulationIdentifier( transporterUniqueId );
     BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, units.list )
     {
-        const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId.str() );
+        const unsigned int id = callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId );
         simulation::UnitMagicAction message;
         message().mutable_tasker()->mutable_unit()->set_id( transporterId );
         message().set_type( static_cast< sword::UnitMagicAction_Type >( actionType ) );
@@ -464,7 +464,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDestroyedEntities
         return;
     BOOST_FOREACH( const NetnObjectDefinitionStruct& entity, interaction.listOfEmbarkedObjectDestroyed.list )
     {
-        const unsigned int entityIdentifier = callsignResolver_.ResolveSimulationIdentifier( entity.uniqueId.str() );
+        const unsigned int entityIdentifier = callsignResolver_.ResolveSimulationIdentifier( entity.uniqueId );
         simulation::UnitMagicAction message;
         message().mutable_tasker()->mutable_unit()->set_id( entityIdentifier );
         message().set_type( sword::UnitMagicAction::destroy_all );

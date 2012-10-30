@@ -133,7 +133,7 @@ namespace
         std::string result;
         for( std::vector< NetnObjectDefinitionStruct >::const_iterator it = objectsToManage.begin(); it != objectsToManage.end(); )
         {
-            unsigned long simId( callsignResolver.ResolveSimulationIdentifier( it->uniqueId.str() ) );
+            unsigned long simId( callsignResolver.ResolveSimulationIdentifier( it->uniqueId ) );
             std::string cs ( it->callsign.str().length() != 0 ? it->callsign.str() : callsignResolver.ResolveCallsign( simId ) );
             result +=  "<a href='id://agent/" + boost::lexical_cast< std::string >( simId ) + "#select'>" + cs + "</a>";
             if( ++it == objectsToManage.end() )
@@ -323,15 +323,15 @@ void TransportationOfferer::Receive( interactions::NetnAcceptOffer& accept )
     {
     case NetnTransportStruct::E_Transport:
         BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, offer.transportData.dataTransport.objectToManage )
-            remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId.str() ) );
+            remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId ) );
         break;
     case NetnTransportStruct::E_Embarkment:
         BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, offer.transportData.dataEmbarkment.objectToManage )
-            remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId.str() ) );
+            remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId ) );
         break;
     case NetnTransportStruct::E_Disembarkment:
         BOOST_FOREACH( const NetnObjectDefinitionStruct& unit, offer.transportData.dataDisembarkment.objectToManage )
-            remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId.str() ) );
+            remainingTransported_[ serviceId ].insert( callsignResolver_.ResolveSimulationIdentifier( unit.uniqueId ) );
         break;
     }
     Transfer( offeredOffers_, acceptedOffers_, serviceId );

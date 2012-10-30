@@ -48,12 +48,12 @@ namespace
     }
     NETN_UUID objectDef2uuid( const NetnObjectDefinitionStruct& v )
     {
-        return NETN_UUID( v.uniqueId.str() ) ;
+        return NETN_UUID( v.uniqueId ) ;
     }
     NetnObjectDefinitionStruct uuid2ObjDef( const NETN_UUID& v )
     {
         NetnObjectDefinitionStruct retval;
-        retval.uniqueId = UniqueId( v.str() );
+        retval.uniqueId = v.data();
         return retval;
     }
     template< typename T>

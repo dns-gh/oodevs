@@ -148,7 +148,7 @@ namespace
         MockInteractionSender< interactions::NetnServiceReceived > receivedSender;
         MockInteractionSender< interactions::NetnCancelConvoy > cancelSender;
     };
-    bool CheckTransportedUnits( const TransportedUnits_ABC& visitable, const std::string& subordinateCallsign, const std::string& subordinateNetnUniqueId )
+    bool CheckTransportedUnits( const TransportedUnits_ABC& visitable, const std::string& subordinateCallsign, const std::vector< char >& subordinateNetnUniqueId )
     {
         MockTransportedUnitsVisitor visitor;
         MOCK_EXPECT( visitor.Notify ).once().with( subordinateCallsign, subordinateNetnUniqueId );
@@ -181,7 +181,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_transportat
     const long long embarkingTime = 1;
     const long long debarkingTime = 2;
     const std::string subordinateCallsign = "subordinate callsign";
-    const std::string subordinateNetnUniqueId = "143";
+    const std::vector< char > subordinateNetnUniqueId = MakeUniqueId( "143" );
     const std::string transportingUnitCallsign = "transporting callsign";
     sword::SimToClient_Content message = MakeTransportationMessage( transportAutomatId );
     sword::AutomatOrder* automatOrder = message.mutable_automat_order();
@@ -222,7 +222,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_transportat
     BOOST_CHECK_CLOSE( convoy.transportData.dataTransport.finalAppointment.location.Longitude(), debarkingPoint.Y(), 0.00001 );
     BOOST_CHECK_EQUAL( convoy.transportData.dataTransport.objectToManage.size(), 1u );
     BOOST_CHECK_EQUAL( convoy.transportData.dataTransport.objectToManage[ 0 ].callsign.str(), subordinateCallsign );
-    BOOST_CHECK_EQUAL( convoy.transportData.dataTransport.objectToManage[ 0 ].uniqueId.str(), subordinateNetnUniqueId );
+    BOOST_REQUIRE( convoy.transportData.dataTransport.objectToManage[ 0 ].uniqueId == subordinateNetnUniqueId );
     BOOST_CHECK_EQUAL( convoy.transportData.dataTransport.objectToManage[ 0 ].objectFeature.featureLevel, noDetail );
 }
 
@@ -232,7 +232,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_embarkment_
     const geometry::Point2d embarkingPoint;
     const long long embarkingTime = 1;
     const std::string subordinateCallsign = "subordinate callsign";
-    const std::string subordinateNetnUniqueId = "143";
+    const std::vector< char > subordinateNetnUniqueId = MakeUniqueId( "143" );
     const std::string transportingUnitCallsign = "transporting callsign";
     sword::SimToClient_Content message = MakeTransportationMessage( embarkmentAutomatId );
     sword::AutomatOrder* automatOrder = message.mutable_automat_order();
@@ -268,7 +268,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_embarkment_
     BOOST_CHECK_CLOSE( convoy.transportData.dataEmbarkment.appointment.location.Longitude(), embarkingPoint.Y(), 0.00001 );
     BOOST_CHECK_EQUAL( convoy.transportData.dataEmbarkment.objectToManage.size(), 1u );
     BOOST_CHECK_EQUAL( convoy.transportData.dataEmbarkment.objectToManage[ 0 ].callsign.str(), subordinateCallsign );
-    BOOST_CHECK_EQUAL( convoy.transportData.dataEmbarkment.objectToManage[ 0 ].uniqueId.str(), subordinateNetnUniqueId );
+    BOOST_REQUIRE( convoy.transportData.dataEmbarkment.objectToManage[ 0 ].uniqueId == subordinateNetnUniqueId );
     BOOST_CHECK_EQUAL( convoy.transportData.dataEmbarkment.objectToManage[ 0 ].objectFeature.featureLevel, noDetail );
 }
 
@@ -278,7 +278,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_disembarkme
     const geometry::Point2d disembarkingPoint;
     const long long disembarkingTime = 1;
     const std::string subordinateCallsign = "subordinate callsign";
-    const std::string subordinateNetnUniqueId = "143";
+    const std::vector< char > subordinateNetnUniqueId = MakeUniqueId( "143" );
     const std::string transportingUnitCallsign = "transporting callsign";
     sword::SimToClient_Content message = MakeTransportationMessage( disembarkmentAutomatId );
     sword::AutomatOrder* automatOrder = message.mutable_automat_order();
@@ -314,7 +314,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_disembarkme
     BOOST_CHECK_CLOSE( convoy.transportData.dataDisembarkment.appointment.location.Longitude(), disembarkingPoint.Y(), 0.00001 );
     BOOST_CHECK_EQUAL( convoy.transportData.dataDisembarkment.objectToManage.size(), 1u );
     BOOST_CHECK_EQUAL( convoy.transportData.dataDisembarkment.objectToManage[ 0 ].callsign.str(), subordinateCallsign );
-    BOOST_CHECK_EQUAL( convoy.transportData.dataDisembarkment.objectToManage[ 0 ].uniqueId.str(), subordinateNetnUniqueId );
+    BOOST_REQUIRE( convoy.transportData.dataDisembarkment.objectToManage[ 0 ].uniqueId == subordinateNetnUniqueId );
     BOOST_CHECK_EQUAL( convoy.transportData.dataDisembarkment.objectToManage[ 0 ].objectFeature.featureLevel, noDetail );
 }
 
@@ -324,7 +324,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_unit_transportation
     const geometry::Point2d embarkingPoint( 1., 2. );
     const geometry::Point2d debarkingPoint( -1., -2. );
     const std::string unitCallsign = "callsign";
-    const std::string unitNetnUniqueId = "143";
+    const std::vector< char > unitNetnUniqueId = MakeUniqueId( "143" );
     sword::SimToClient_Content message;
     sword::UnitOrder* unitOrder = message.mutable_unit_order();
     unitOrder->mutable_type()->set_id( transportUnitId );
@@ -375,10 +375,10 @@ namespace
             , debarkingTime               ( 2 )
             , automatId                   ( 42 )
             , subordinateCallsign         ( "subordinate callsign" )
-            , subordinateNetnUniqueId     ( "143" )
+            , subordinateNetnUniqueId     ( MakeUniqueId( "143" ) )
             , transportingUnitSimulationId( 43 )
             , transportingUnitCallsign    ( "transporting callsign" )
-            , transportingUnitUniqueId    ( "77777" )
+            , transportingUnitUniqueId    ( MakeUniqueId( "77777" ) )
         {
             listOfTransporters.list.push_back( NetnObjectDefinitionStruct( transportingUnitCallsign, transportingUnitUniqueId, NetnObjectFeatureStruct() ) );
             sword::SimToClient_Content message = MakeTransportationMessage( transportAutomatId );
@@ -433,10 +433,10 @@ namespace
         const long long debarkingTime;
         const unsigned long automatId;
         const std::string subordinateCallsign;
-        const std::string subordinateNetnUniqueId;
+        const std::vector< char > subordinateNetnUniqueId;
         const unsigned long transportingUnitSimulationId;
         const std::string transportingUnitCallsign;
-        const std::string transportingUnitUniqueId;
+        const std::vector< char > transportingUnitUniqueId;
         interactions::ListOfUnits listOfTransporters;
     };
 }

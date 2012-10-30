@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE( subordinates_notifies_automat_subordinates_callsign_and_un
     MOCK_EXPECT( automatResolver.Get ).once().with( automatId ).returns( boost::ref( automat ) );
     MOCK_EXPECT( automat.GetAgents ).once().returns( boost::ref( agentsResolver ) );
     MOCK_EXPECT( callsignResolver.ResolveCallsign ).once().with( agentId ).returns( "callsign" );
-    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( agentId ).returns( "unique" );
-    MOCK_EXPECT( visitor.Notify ).once().with( "callsign", "unique" );
+    MOCK_EXPECT( callsignResolver.ResolveUniqueId ).once().with( agentId ).returns( MakeUniqueId( "unique" ) );
+    MOCK_EXPECT( visitor.Notify ).once().with( "callsign", MakeUniqueId( "unique" ) );
     subordinates.Apply( automatId, visitor );
 }

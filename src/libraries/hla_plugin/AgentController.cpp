@@ -38,6 +38,9 @@
 #include <boost/foreach.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/random_generator.hpp>
+#include <boost/uuid/string_generator.hpp>
 
 #include <limits>
 
@@ -58,18 +61,38 @@ namespace
                 logger.LogWarning( std::string( "Could not find EntityType for type: " ) + typeName );
         return result;
     }
-    void GenerateUniqueId( std::string& uniqueId, unsigned long simId )
+
+    void GenerateUniqueId( std::vector< char >& uniqueId, int netnVersion )
     {
-        uniqueId = std::string( "SWORD" ) + boost::lexical_cast< std::string >( simId );
+        static boost::uuids::random_generator gen;
+        boost::uuids::uuid uid = gen();
+        std::size_t sz = netnVersion == 1 ? 11 : uid.size();
+        uniqueId.resize( sz);
+        std::copy( uid.begin(), uid.begin() + sz, uniqueId.begin() );
     }
+
     template< typename T >
-    void GetUniqueId( T& entity, std::string& uniqueId, unsigned long simId )
+    void GetUniqueId( T& entity, std::vector< char >& uniqueId, dispatcher::Logger_ABC& logger, int netnVersion )
     {
+        static boost::uuids::string_generator gen;
+        std::string tmp;
         uniqueId.clear();
-        if( ! entity.GetExtension( "UUID", uniqueId ) )
-            GenerateUniqueId( uniqueId, simId );
-        else
-            boost::algorithm::erase_all( uniqueId, "-" );
+        if( entity.GetExtension( "UUID", tmp ) )
+        {
+            try
+            {
+                boost::uuids::uuid uid = gen( tmp );
+                std::size_t sz = netnVersion == 1 ? 11 : uid.size();
+                uniqueId.resize( sz );
+                std::copy( uid.begin(), uid.begin() + sz, uniqueId.begin() );
+                return;
+            }
+            catch( const std::exception& e )
+            {
+                logger.LogError( std::string( "Invalid UUID from orbat " + tmp + " " + e.what() ) );
+            }
+        }
+        GenerateUniqueId( uniqueId, netnVersion );
     }
 }
 
@@ -82,7 +105,8 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
                                   const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes,
                                   tic::PlatformDelegateFactory_ABC& factory, const kernel::CoordinateConverter_ABC& converter,
                                   bool sendPlatforms, const SideResolver_ABC& sideResolver, const LocalAgentResolver_ABC& localAgentResolver,
-                                  bool fullOrbat, dispatcher::Logger_ABC& logger, const rpr::EntityTypeResolver_ABC& automatEntityTypeResolver )
+                                  bool fullOrbat, dispatcher::Logger_ABC& logger, const rpr::EntityTypeResolver_ABC& automatEntityTypeResolver,
+                                  int netnVersion )
     : model_                 ( model )
     , aggregatesResolver_    ( aggregatesResolver )
     , componentTypeResolver_ ( componentTypeResolver )
@@ -95,6 +119,7 @@ AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::Entit
     , localAgentResolver_    ( localAgentResolver )
     , logger_                ( logger )
     , automatEntityTypeResolver_( automatEntityTypeResolver )
+    , netnVersion_( netnVersion )
 {
     model_.RegisterFactory( *this );
 }
@@ -158,8 +183,8 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
     std::string remoteExt;
     bool isRemote = agent.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
 
-    std::string uniqueId;
-    GetUniqueId( agent, uniqueId, agent.GetId() );
+    std::vector< char > uniqueId;
+    GetUniqueId( agent, uniqueId, logger_, netnVersion_ );
     T_Agent proxy( new AgentProxy( agent, componentTypes_, componentTypeResolver_, localAgentResolver_, doDisaggregation_, logger_ ) );
     agents_.insert( T_Agents::value_type( agent.GetId(), proxy ) );
     const kernel::AgentType& agentType = agent.GetType();
@@ -219,8 +244,8 @@ void AgentController::NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agen
         logger_.LogWarning( std::string( "Could not find EntityType for equipment type: " ) + typeName );
     const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( parent.GetSuperior().GetTeam().GetId() );
     unsigned long identifier = --identifier_factory;  // FIXME AHC
-    std::string uniqueId;
-    GenerateUniqueId( uniqueId, identifier );
+    std::vector< char > uniqueId;
+    GenerateUniqueId( uniqueId, netnVersion_ );
     const std::string name( std::string( parent.GetName().toAscii().constData() ) + "_" + typeName + " " + boost::lexical_cast< std::string >( childIndex ) );
 
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
@@ -265,8 +290,8 @@ void AgentController::CreateAutomat( dispatcher::Automat_ABC& entity )
     bool isRemote = entity.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
     if( !isRemote ) 
     {
-        std::string uniqueId;
-        GetUniqueId( entity, uniqueId, entity.GetId() );
+        std::vector< char > uniqueId;
+        GetUniqueId( entity, uniqueId, logger_, netnVersion_ );
         T_Agent proxy( new AutomatProxy( entity, localAgentResolver_ ) );
         agents_.insert( T_Agents::value_type( entity.GetId(), proxy ) );
 		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );
@@ -302,8 +327,8 @@ void AgentController::CreateFormation( dispatcher::Formation_ABC& entity )
     bool isRemote = entity.GetExtension( "RemoteEntity", remoteExt ) && remoteExt == "true";
     if( !isRemote ) 
     {
-        std::string uniqueId;
-        GetUniqueId( entity, uniqueId, entity.GetId() );
+        std::vector< char > uniqueId;
+        GetUniqueId( entity, uniqueId, logger_, netnVersion_ );
         T_Agent proxy( new FormationProxy( entity, localAgentResolver_ ) );
         agents_.insert( T_Agents::value_type( entity.GetId(), proxy ) );
 		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );

@@ -75,9 +75,9 @@ private:
     virtual void NameChanged( const std::string& identifier, const std::string& name );
     virtual void TypeChanged( const std::string& identifier, const rpr::EntityType& type );
     virtual void EquipmentUpdated( const std::string& identifier, const rpr::EntityType& equipmentType, unsigned int number );
-    virtual void UniqueIdChanged( const std::string& identifier, const std::string& uniqueId );
+    virtual void UniqueIdChanged( const std::string& identifier, const std::vector< char >& uniqueId );
     virtual void CallsignChanged( const std::string& identifier, const std::string& callsign );
-    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& units );
+    virtual void EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& units );
     virtual void PerimeterChanged( const std::string& identifier, const std::vector< rpr::PerimeterPoint >& perimeter );
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId );
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children );
@@ -282,7 +282,7 @@ void LocationOwnershipPolicy::OwnershipState::EquipmentUpdated( const std::strin
 // Name: LocationOwnershipPolicy::OwnershipState::UniqueIdChanged
 // Created: AHC 2012-03-12
 // -----------------------------------------------------------------------------
-void LocationOwnershipPolicy::OwnershipState::UniqueIdChanged( const std::string& /*identifier*/, const std::string& /*uniqueId*/ )
+void LocationOwnershipPolicy::OwnershipState::UniqueIdChanged( const std::string& /*identifier*/, const T_UniqueId& /*uniqueId*/ )
 {
     // NOTHING
 }
@@ -300,7 +300,7 @@ void LocationOwnershipPolicy::OwnershipState::CallsignChanged( const std::string
 // Name: LocationOwnershipPolicy::OwnershipState::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
-void LocationOwnershipPolicy::OwnershipState::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< std::string >& /*units*/ )
+void LocationOwnershipPolicy::OwnershipState::EmbeddedUnitListChanged( const std::string& /*identifier*/, const std::vector< T_UniqueId >& /*units*/ )
 {
     // NOTHING
 }

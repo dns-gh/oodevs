@@ -94,7 +94,7 @@ void ObjectListenerComposite::EquipmentUpdated( const std::string& identifier, c
 // Name: ObjectListenerComposite::UniqueIdChanged
 // Created: AHC 2012-02-27
 // -----------------------------------------------------------------------------
-void ObjectListenerComposite::UniqueIdChanged( const std::string& identifier, const std::string& uniqueId )
+void ObjectListenerComposite::UniqueIdChanged( const std::string& identifier, const std::vector< char >& uniqueId )
 {
     copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::UniqueIdChanged, _1, identifier, uniqueId ) );
 }
@@ -130,7 +130,7 @@ void ObjectListenerComposite::Unregister( ObjectListener_ABC& listener )
 // Name: ObjectListenerComposite::EmbeddedUnitListChanged
 // Created: AHC 2010-05-29
 // -----------------------------------------------------------------------------
-void ObjectListenerComposite::EmbeddedUnitListChanged( const std::string& identifier, const std::vector< std::string >& embeddedUnits )
+void ObjectListenerComposite::EmbeddedUnitListChanged( const std::string& identifier, const std::vector< T_UniqueId >& embeddedUnits )
 {
     copyAndApply( listeners_, boost::bind( &ObjectListener_ABC::EmbeddedUnitListChanged, _1, identifier, embeddedUnits ) );
 }
