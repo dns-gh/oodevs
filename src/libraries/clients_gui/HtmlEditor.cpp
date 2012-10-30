@@ -114,8 +114,6 @@ HtmlEditor::HtmlEditor( QWidget* parent  /*= 0*/, int textParametersType_ /*eAll
     ColorChanged( textEdit_->textColor() );
     AlignmentChanged( textEdit_->alignment() );
 
-    connect( textEdit_->document(), SIGNAL( modificationChanged( bool ) ), this, SLOT( setWindowModified( bool ) ) );
-
     QVBoxLayout* missionEditorLayout = new QVBoxLayout( this );
     if( actionsToolBar_ )
         missionEditorLayout->add( actionsToolBar_ );
@@ -388,7 +386,6 @@ void HtmlEditor::SetCurrentFileName( const QString &fileName )
         shownName = QFileInfo( fileName ).fileName();
 
     setWindowTitle( shownName );
-    setWindowModified( false );
 }
 
 // -----------------------------------------------------------------------------
