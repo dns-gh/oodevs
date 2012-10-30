@@ -31,7 +31,7 @@ namespace
     {
         if( value == 0 )
             return 0;
-        return static_cast< short >( value * std::numeric_limits< short >::max() / max  );
+        return static_cast< short >( value * std::numeric_limits< short >::max() / max );
     }
 
     std::string ReadProjectionfile( const bfs::path& file )
@@ -136,10 +136,10 @@ void ASCExtractor::ExtractData()
                               origin_.X(), origin_.Y() );
 
     int size = ncols_ * nrows_;
-    float* data = new float[ size ];
+    std::vector< float > data( size );
     values_.resize( size );
 
-    pBand_->RasterIO( GF_Read, 0, 0, ncols_, nrows_, data, ncols_, nrows_, GDT_Float32, 0, 0 );
+    pBand_->RasterIO( GF_Read, 0, 0, ncols_, nrows_, &data[ 0 ], ncols_, nrows_, GDT_Float32, 0, 0 );
 
     for( int i = 0; i < size; ++i )
     {
@@ -152,8 +152,6 @@ void ASCExtractor::ExtractData()
 
     for( int i = 0; i < size; ++i )
         values_[ i ] = ConvertData( data[ i ], max_ );
-
-    delete[] data;
 }
 
 // -----------------------------------------------------------------------------
