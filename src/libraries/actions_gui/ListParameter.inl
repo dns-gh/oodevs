@@ -155,7 +155,7 @@ void ListParameter< ConcreteElement >::AddElement( Param_ABC& param )
     int id = model_.rowCount() != 0? model_.item( model_.rowCount() - 1 )->data( IdRole ).toInt() + 1 : 1 ;
     item->setData( id, IdRole );
     model_.appendRow( item );
-    list_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
+    list_->selectionModel()->select( item->index(), QItemSelectionModel::Select | QItemSelectionModel::Clear );
 
     if( group_ && IsOptional() )
         group_->setChecked( true );
@@ -215,7 +215,7 @@ void ListParameter< ConcreteElement >::OnSelectionChanged( const QItemSelection&
         }
         else
         {
-            list_->selectionModel()->select( selected_->index(), QItemSelectionModel::Select );
+            list_->selectionModel()->select( selected_->index(), QItemSelectionModel::Select | QItemSelectionModel::Clear );
             return;
         }
     }
@@ -321,7 +321,7 @@ void ListParameter< ConcreteElement >::Select( const Param_ABC& param )
         if( item )
             Param_ABC* paramItem = selected_->data( ParamRole ).value< Param_ABC* >()
             if( param == paramItem )
-                list_->selectionModel()->select( item->index(), QItemSelectionModel::Select );
+                list_->selectionModel()->select( item->index(), QItemSelectionModel::Select | QItemSelectionModel::Clear );
     }
 }
 
