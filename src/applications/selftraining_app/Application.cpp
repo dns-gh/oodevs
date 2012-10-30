@@ -50,6 +50,7 @@ Application::Application( gui::ApplicationMonitor& monitor, int argc, char** arg
     // GUI
     mainWindow_ = new MainWindow( *this, *config_, *fileLoader_, *controllers_, *launcherClient_ );
     qApp->connect( qApp, SIGNAL( lastWindowClosed() ), SLOT( quit() ) );
+    qApp->installEventFilter( this );
 }
 
 // -----------------------------------------------------------------------------
