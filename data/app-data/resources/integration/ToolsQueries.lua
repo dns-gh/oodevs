@@ -290,7 +290,7 @@ integration.getEntitiesFromAutomat = function ( automat, role, withPC)
 -- @author LMT
 -- @release 2012-07-17
 -- --------------------------------------------------------------------------------
-integration.getEntitiesFromAutomatCommunication = function ( automat, role, withPC)
+integration.getEntitiesFromAutomatCommunication = function ( automat, role, withPC )
     local temp = {}
     if withPC then
         temp = DEC_Automate_PionsDeAutomateAvecPCCommunication(automat.source)
@@ -506,4 +506,38 @@ integration.query.getPositionsToSupport = function( retrogradeWay, friendToSuppo
         positions = queries.getPositionsToSupport[ "execute" ]( { elementsToSupport = { friendToSupport }, dynamic = true})
     end
     return positions
+end
+
+-- -------------------------------------------------------------------------------- 
+-- Param ally commander
+-- Param old supported platoons ally list
+-- Return plattons to support
+-- @author GGE
+-- @release 2012-10-30
+-- --------------------------------------------------------------------------------
+integration.query.getEntitiesToCombatSupportTask = function( commander, oldSupportedPlatoonList )
+    local platoonToSupport = {}
+	local index = 0
+    -- Platoon ally in first echelon
+    local entitiesInFirstEchelon = integration.filterPionWithEchelon( 
+          integration.getEntitiesFromAutomatCommunication( commander, "none", true), eEtatEchelon_First )
+    if next(entitiesInFirstEchelon) then
+        platoonToSupport = entitiesInFirstEchelon
+    else -- no platoon in first echelon, return all unit from commander
+        platoonToSupport = integration.getEntitiesFromAutomatCommunication( commander, "none", true)
+    end
+    --Test if source items of each list are the same. If number of items is different for each list so we are sure that lists are differents => no test.
+    if #platoonToSupport == #oldSupportedPlatoonList then
+	    for i = 1, #platoonToSupport do
+	        for j = 1, #oldSupportedPlatoonList do
+		        if oldSupportedPlatoonList[j].source == platoonToSupport[i].source then
+			        index = index + 1  
+            end
+		    end
+		end
+        if index == #oldSupportedPlatoonList then -- list have same elements return old one
+	        return oldSupportedPlatoonList
+		end
+	end
+	return platoonToSupport
 end
