@@ -265,12 +265,11 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
 void DiplomacyDialog_ABC::UpdateTable()
 {
     const int nTeams = static_cast< int >( teams_.size() );
-    table_->clearContents();
-    table_->setColumnCount( static_cast< int >( nTeams ) );
-    table_->setRowCount( static_cast< int >( nTeams ) );
+    table_->setColumnCount( nTeams );
+    table_->setRowCount( nTeams );
     int maxNameWidth = 0;
     QStringList list;
-    for( std::size_t i = 0; i < nTeams; ++i )
+    for( std::size_t i = 0; i < teams_.size(); ++i )
     {
         const QString name = teams_.at( i )->GetName();
         list << name;
@@ -282,7 +281,4 @@ void DiplomacyDialog_ABC::UpdateTable()
     int newWidth = std::min( ( nTeams + 1 ) * cellWidth, maxWidth );
     int newHeight = std::min( ( nTeams + 1 ) * rowHeight, maxHeight );
     table_->setMinimumSize( newWidth, newHeight );
-    table_->resize( newWidth, newHeight );
-    for( int i = 0; i < table_->columnCount(); ++i )
-        table_->setColumnWidth( i, cellWidth );
 }
