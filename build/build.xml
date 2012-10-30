@@ -1548,7 +1548,7 @@
     </target>
 
     <target name="configure" description="update packages and decisional"
-        depends="update,deploy-qt-translations,deploy-application-data,generate-symbols"/>
+        depends="update,deploy-application-data,generate-symbols"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
