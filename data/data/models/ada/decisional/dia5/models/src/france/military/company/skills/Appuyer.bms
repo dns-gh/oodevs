@@ -4,9 +4,17 @@ rootnode
 
     done = function( self ) end,
 
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function ( self )
+        self.entitiesToSupport = {}
+    end,
+
     activate = function( self )
-            self.entitiesToSupport = integration.filterPionWithEchelon( integration.getEntitiesFromAutomatCommunication( self.params.company, "none", true), eEtatEchelon_First )
-            Activate( skill.nodes.Lead , 1, { companyTask = self.params.companyTask,
+        self.entitiesToSupport = integration.query.getEntitiesToCombatSupportTask( self.params.company, self.entitiesToSupport )
+
+        Activate( skill.nodes.Lead , 1, { companyTask = self.params.companyTask,
                                      mainTask = self.params.mainTask, supportTask = self.params.supportTask,
                                      defaultTask = self.params.defaultTask, taskForSupporting = self.params.taskForSupporting, self.entitiesToSupport } )
     end,   
