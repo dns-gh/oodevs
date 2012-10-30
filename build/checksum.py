@@ -5,14 +5,15 @@ import os
 import sys
 
 helpstring="""\
-    checksum computes checksums on <src_dir> and print each file checksum.
-    if --check <file> is specified, it compares <src_dir> and snapshot in
-    <file> instead, and print differences if any
+    checksum computes checksums on <src_dir> and prints each file checksum.
+    if --check <file> is specified, it compares <src_dir> and snapshots in
+    <file> instead, and prints differences if any
 """
 parser = optparse.OptionParser(
         usage = "checksum.py <src_dir> [--check <file>]",
         description = helpstring )
-parser.add_option("-c", "--check", action="store", type="string", dest="filename", help="Directory checksum snapshot file")
+parser.add_option("-c", "--check", action="store", type="string",
+        dest="filename", help="Directory checksum snapshot file")
 
 def get_checksum(filename):
     checksum = hashlib.md5()
@@ -48,7 +49,7 @@ def check_checksums(src, filename):
     for root, dirs, files in os.walk(src):
         for filename in sorted(files):
             full, key = parse_paths(src, root, filename)
-            if not key in checksums:
+            if key not in checksums:
                 sys.stderr.write("Unknown file " + full + "\n")
                 err = -1
                 continue
@@ -56,7 +57,7 @@ def check_checksums(src, filename):
                 sys.stderr.write("Invalid file " + full + "\n")
                 err = -1
             del checksums[key]
-    for it in checksums.keys():
+    for it in checksums:
         full = os.path.join(src, it)
         sys.stderr.write("Missing file " + full + "\n")
         err = -1
