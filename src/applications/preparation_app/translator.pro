@@ -67,6 +67,7 @@ SuccessFactorList.cpp \
 SymbolDialog.cpp \
 SymbolEditor.cpp \
 TacticalTreeView.cpp \
+TreeViewsPanel.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \
 TerrainExportDialog.cpp \
