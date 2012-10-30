@@ -1,8 +1,5 @@
 ^(bin|include|out|run|lib)/
-^data/data/models/
-^data/data/population/
-^data/data/propagations/
-^data/data/terrains/
+^data/data/
 ^data/exercises/
 
 syntax: glob
