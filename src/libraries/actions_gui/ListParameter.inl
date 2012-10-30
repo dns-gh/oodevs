@@ -300,7 +300,7 @@ bool ListParameter< ConcreteElement >::CommitChildrenTo( actions::ParameterConta
     {
         QStandardItem* item = model_.item( row );
         if( item )
-            if( Param_ABC* param = selected_->data( ParamRole ).value< Param_ABC* >() )
+            if( Param_ABC* param = item->data( ParamRole ).value< Param_ABC* >() )
                 param->CommitTo( parent );
         if( !result )
             result = true;
