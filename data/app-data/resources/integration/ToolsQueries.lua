@@ -517,7 +517,7 @@ end
 -- --------------------------------------------------------------------------------
 integration.query.getEntitiesToCombatSupportTask = function( commander, oldSupportedPlatoonList )
     local platoonToSupport = {}
-	local index = 0
+    local index = 0
     -- Platoon ally in first echelon
     local entitiesInFirstEchelon = integration.filterPionWithEchelon( 
           integration.getEntitiesFromAutomatCommunication( commander, "none", true), eEtatEchelon_First )
@@ -528,16 +528,16 @@ integration.query.getEntitiesToCombatSupportTask = function( commander, oldSuppo
     end
     --Test if source items of each list are the same. If number of items is different for each list so we are sure that lists are differents => no test.
     if #platoonToSupport == #oldSupportedPlatoonList then
-	    for i = 1, #platoonToSupport do
-	        for j = 1, #oldSupportedPlatoonList do
-		        if oldSupportedPlatoonList[j].source == platoonToSupport[i].source then
-			        index = index + 1  
+        for i = 1, #platoonToSupport do
+            for j = 1, #oldSupportedPlatoonList do
+                if oldSupportedPlatoonList[j].source == platoonToSupport[i].source then
+                    index = index + 1
+                end
             end
-		    end
-		end
+        end
         if index == #oldSupportedPlatoonList then -- list have same elements return old one
-	        return oldSupportedPlatoonList
-		end
-	end
-	return platoonToSupport
+            return oldSupportedPlatoonList
+        end
+    end
+    return platoonToSupport
 end
