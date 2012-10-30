@@ -103,6 +103,7 @@ Meteo::Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting* light, un
 // -----------------------------------------------------------------------------
 Meteo::Meteo( unsigned int id, const sword::WeatherAttributes& msg, unsigned int timeStep, const std::string& name /*= ""*/ )
     : id_              ( id )
+    , pLighting_       ( &PHY_Lighting::jourSansNuage_ )
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
@@ -117,6 +118,7 @@ Meteo::Meteo( unsigned int id, const sword::WeatherAttributes& msg, unsigned int
 // -----------------------------------------------------------------------------
 Meteo::Meteo( unsigned int id, const sword::MissionParameters& msg, const PHY_Lighting& light, unsigned int timeStep, const std::string& name /*= "" */ )
     : id_              ( id )
+    , pLighting_       ( &light )
     , name_            ( name )
     , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
     , modified_        ( false )
