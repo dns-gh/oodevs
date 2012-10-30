@@ -1,3 +1,8 @@
+^(bin|include|out|run|lib)/
+^data/data/models/
+^data/data/terrains/
+^data/exercises/
+
 syntax: glob
 *.ipch
 *.opensdf
@@ -6,11 +11,5 @@ syntax: glob
 *.sdf
 *.suo
 *.vcxproj.user
-bin/*
-data/*
-include/*
-lib/*
-out/*
-run/*
 *.ncb
 *.user
