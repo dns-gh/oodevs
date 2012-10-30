@@ -145,7 +145,7 @@ BOOST_FIXTURE_TEST_CASE( user_tokens_have_expiration_date, Fixture )
     const std::string sid = Get< std::string >( tree, "sid" );
     CheckAdmin( tree );
     CheckAdmin( users.IsAuthenticated( sid ) );
-    const boost::gregorian::date now = boost::gregorian::day_clock::local_day();
+    const boost::gregorian::date now = boost::gregorian::day_clock::universal_day();
     const int limit = users.GetExpirationLimitDays();
     for( int i = -1; i <= limit + 1; i++ )
     {
