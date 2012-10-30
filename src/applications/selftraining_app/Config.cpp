@@ -22,7 +22,7 @@ bool CheckLicenseFeature( const std::string& feature )
     try
     {
 #if !defined( NO_LICENSE_CHECK )
-        license_gui::LicenseDialog::CheckLicense( feature, false, 0, 0 );
+        license_gui::LicenseDialog::CheckLicense( feature, true, 0, 0 );
 #endif
         return true;
     }
