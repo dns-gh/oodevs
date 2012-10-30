@@ -1063,45 +1063,6 @@
         </sequential>
     </macrodef>
 
-    <macrodef name="compare-dirs">
-        <attribute name="dir1"/>
-        <attribute name="dir2"/>
-        <attribute name="excludes" default=""/>
-        <attribute name="includes" default=""/>
-        <attribute name="property"/>
-        <sequential>
-            <fileset id="@{dir1}.id" dir="@{dir1}" excludes="@{excludes}" includes="@{includes}">
-                <different targetdir="@{dir2}" ignorefiletimes="true"/>
-            </fileset>
-            <pathconvert property="@{property}.@{dir1}" refid="@{dir1}.id" setonempty="false"/>
-            <fileset id="@{dir2}.id" dir="@{dir2}" excludes="@{excludes}" includes="@{includes}">
-                <different targetdir="@{dir1}" ignorefiletimes="true"/>
-            </fileset>
-            <pathconvert property="@{property}.@{dir2}" refid="@{dir2}.id" setonempty="false"/>
-            <if>
-                <and>
-                    <isset property="@{property}.@{dir1}"/>
-                    <isset property="@{property}.@{dir2}"/>
-                </and>
-                <then>
-                    <property name="@{property}" value="${@{property}.@{dir1}};${@{property}.@{dir2}}"/>
-                </then>
-            </if>
-            <if>
-                <isset property="@{property}.@{dir1}"/>
-                <then>
-                    <property name="@{property}" value="${@{property}.@{dir1}}"/>
-                </then>
-            </if>
-            <if>
-                <isset property="@{property}.@{dir2}"/>
-                <then>
-                    <property name="@{property}" value="${@{property}.@{dir2}}"/>
-                </then>
-            </if>
-        </sequential>
-    </macrodef>
-
     <macrodef name="run-adaptation">
         <attribute name="input"/>
         <attribute name="output"/>
@@ -1121,19 +1082,24 @@
         <sequential>
             <echo>Testing models: @{input}</echo>
             <delete dir="${out.dir}/test-adaptation"/>
+            <tempfile property="@{input}.temp" destdir="${out.dir}" deleteonexit="true"/>
+            <exec taskname="checksum" executable="python" output="${@{input}.temp}" failonerror="true">
+                <arg value="checksum.py"/>
+                <arg value="@{input}"/>
+            </exec>
             <run-adaptation input="@{input}" output="${out.dir}/test-adaptation"/>
-            <compare-dirs dir1="@{input}" dir2="${out.dir}/test-adaptation"
-                excludes="**/Pathfind.xml,**/dis.xml,**/HumanProtections.xml,**/Fire.xml,**/MedicalTreatment.xml,**/NBCAgents.xml,**/templates.xml,**/ObjectNames.xml,**/mapping.xml,**/DrawingTemplates.xml,**/FOM.xml,**/Extensions.xml,**/scores.xml,**/symbols.xml,**/Filters,**/Filters/**"
-                includes="**/*.xml" property="adaptation_test.is-different"/>
-            <if>
-                <isset property="adaptation_test.is-different"/>
-                <then>
-                    <echo>ERROR: the following files differ :</echo>
-                    <echo-files files="${adaptation_test.is-different}" prefix="ERROR: "/>
-                    <echo>ERROR: did you forget to run 'ant generate-signatures' ?</echo>
-                    <fail message="saved data differ from loaded data."/>
-                </then>
-            </if>
+            <exec taskname="checksum" executable="python" failonerror="true">
+                <arg value="checksum.py"/>
+                <arg value="@{input}"/>
+                <arg value="--check"/>
+                <arg value="${@{input}.temp}"/>
+            </exec>
+            <exec taskname="checksum" executable="python" failonerror="true">
+                <arg value="checksum.py"/>
+                <arg value="${out.dir}/test-adaptation"/>
+                <arg value="--check"/>
+                <arg value="${@{input}.temp}"/>
+            </exec>
             <delete dir="${out.dir}/test-adaptation"/>
         </sequential>
     </macrodef>
