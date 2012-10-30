@@ -184,10 +184,12 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
                                          CreateFactory< Aircraft, NetnAircraft >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, entityIdentifierResolver, fomSerializer ),
                                          CreateRemoteFactory< Aircraft, NetnAircraft >( xis.attribute< bool >( "netn", true ), entityIdentifierResolver, fomSerializer ),
                                          CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis.attribute< bool >( "netn", true ) ), ownershipStrategy ) )
-    , groundVehicleClass_( new HlaClass( *federate_, resolver, *nameFactory_,
+    , groundVehicleClass_( xis.attribute< bool >( "disaggregate", false ) ?
+                           new HlaClass( *federate_, resolver, *nameFactory_,
                                          CreateFactory< GroundVehicle, NetnGroundVehicle >( xis.attribute< bool >( "netn", true ), callsignResolver, *markingFactory_, entityIdentifierResolver, fomSerializer ),
                                          std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NullRemoteFactory ),
-                                         CreateClassBuilder< GroundVehicleBuilder, NetnGroundVehicleBuilder >( xis.attribute< bool >( "netn", true ) ), ownershipStrategy ) )
+                                         CreateClassBuilder< GroundVehicleBuilder, NetnGroundVehicleBuilder >( xis.attribute< bool >( "netn", true ) ), ownershipStrategy ) 
+										 : 0 )
     , rprAggregateClass_ ( xis.attribute< bool >( "netn", true ) ?
                                 new HlaClass( *federate_, resolver, *nameFactory_,
                                      std::auto_ptr< HlaObjectFactory_ABC >( new NullFactory ),
@@ -252,7 +254,8 @@ void FederateFacade::Register( ClassListener_ABC& listener )
     aggregateClass_->Register( listener );
     surfaceVesselClass_->Register( listener );
     aircraftClass_->Register( listener );
-    groundVehicleClass_->Register( listener );
+	if( groundVehicleClass_.get() )
+		groundVehicleClass_->Register( listener );
     if( rprAggregateClass_.get() )
         rprAggregateClass_->Register( listener );
     if( rprSurfaceVesselClass_.get() )
@@ -270,7 +273,8 @@ void FederateFacade::Unregister( ClassListener_ABC& listener )
     aircraftClass_->Unregister( listener );
     surfaceVesselClass_->Unregister( listener );
     aggregateClass_->Unregister( listener );
-    groundVehicleClass_->Unregister( listener );
+	if( groundVehicleClass_.get() )
+		groundVehicleClass_->Unregister( listener );
     if( rprAggregateClass_.get() )
         rprAggregateClass_->Unregister( listener );
     if( rprSurfaceVesselClass_.get() )
@@ -443,7 +447,8 @@ void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier,
     switch( type.Domain() )
     {
     case rpr::EntityType::LAND:
-        groundVehicleClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+		if( groundVehicleClass_.get() )
+			groundVehicleClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
         break;
     case rpr::EntityType::AIR:
         aircraftClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );

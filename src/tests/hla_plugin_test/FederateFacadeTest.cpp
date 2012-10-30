@@ -53,7 +53,7 @@ namespace
 // TODO leaks
 BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_netn_by_default, Fixture )
 {
-    xml::xistringstream xis( "<root/>" );
+    xml::xistringstream xis( "<root disaggregate='1'/>" );
     xis >> xml::start( "root" );
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "", "" ).returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().in( s ).with( mock::any, "SWORD", -1 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
@@ -62,7 +62,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity.NETN_Aggregate", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", mock::any, true, true );
-    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", mock::any, true, false );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, true, true );
@@ -81,7 +81,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
 
 BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
 {
-    xml::xistringstream xis( "<root netn='false'/>" );
+    xml::xistringstream xis( "<root netn='false' disaggregate='1'/>" );
     xis >> xml::start( "root" );
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
@@ -90,7 +90,7 @@ BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.AggregateEntity", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, true, true );
-    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", mock::any, true, true );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", mock::any, true, false );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "Minefield", mock::any, true, true );
     MOCK_EXPECT( subject.Register ).once();
     MOCK_EXPECT( tacticalObjectSubject.Register ).once();
@@ -116,7 +116,7 @@ namespace
             MOCK_EXPECT( tacticalObjectSubject.Unregister ).once();
             MOCK_EXPECT( controller.Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( controller.Unregister ).once();
-            MOCK_EXPECT( federate->RegisterClass ).exactly( 8 );
+            MOCK_EXPECT( federate->RegisterClass ).exactly( 7 );
             MOCK_EXPECT( federate->Connect ).once().returns( true );
         }
     };
@@ -125,7 +125,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( hla_plugin_xml_options_overrides_default_values, BuildFixture )
 {
     xml::xistringstream xis( "<root name='name' federation='federation' host='host' port='1337'"
-                             "      time-constrained='false' time-regulating='false' lookahead='3'/>" );
+                             "      time-constrained='false' time-regulating='false' lookahead='3' />" );
     xis >> xml::start( "root" );
     MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "host", "1337" ).returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().with( mock::any, "name", 3 ).returns( std::auto_ptr< Federate_ABC >( federate ) );

@@ -165,7 +165,7 @@ BOOST_FIXTURE_TEST_CASE( groundvehicle_builder_registers_attributes, Fixture )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
                                        ( "Spatial" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.GroundVehicle", true, true );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.GroundVehicle", true, false );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_groundvehicle_builder_registers_attributes, Fixture )
@@ -180,7 +180,7 @@ BOOST_FIXTURE_TEST_CASE( netn_groundvehicle_builder_registers_attributes, Fixtur
                                        ( "UniqueID" )
                                        ( "Callsign" )
                                        ( "EmbeddedUnitList" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", true, true );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", true, false );
 }
 
 BOOST_FIXTURE_TEST_CASE( minefield_builder_registers_attributes, Fixture )

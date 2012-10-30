@@ -190,7 +190,7 @@ namespace hla
     {
     public:
         GroundVehicleBuilder()
-            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", true, true
+            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", true, false
             , boost::assign::list_of( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
@@ -202,7 +202,7 @@ namespace hla
     {
     public:
         NetnGroundVehicleBuilder()
-            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", true, true
+            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", true, false
             , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
                                     ( "EmbeddedUnitList" )
