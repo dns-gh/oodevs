@@ -176,6 +176,9 @@ activate = function( self )
         else
            meKnowledge:RC( eRC_FinMission )
         end
+        for i = 1, #self.parameters.commandingEntities do
+           F_Pion_SeteEtatEchelon( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
+        end
         myself.feedback = false
     end
     -- Gestion du CR quand les pions PE arrivent sur les limas de type LC ou LD
