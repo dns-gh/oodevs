@@ -1,5 +1,4 @@
 syntax: glob
-
 *.ipch
 *.opensdf
 *.qm
@@ -13,3 +12,5 @@ include/*
 lib/*
 out/*
 run/*
+*.ncb
+*.user
