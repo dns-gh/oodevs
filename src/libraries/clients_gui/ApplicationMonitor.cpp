@@ -18,7 +18,7 @@ using namespace gui;
 // Name: ApplicationMonitor::ApplicationMonitor
 // Created: BAX 2012-10-29
 // -----------------------------------------------------------------------------
-ApplicationMonitor::ApplicationMonitor( int argc, char** argv )
+ApplicationMonitor::ApplicationMonitor( int& argc, char** argv )
     : QApplication( argc, argv )
 {
     // NOTHING

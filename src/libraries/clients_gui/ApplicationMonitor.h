@@ -27,7 +27,7 @@ class ApplicationMonitor : public QApplication
 public:
     //! @name Constructor/Destructor
     //@{
-     ApplicationMonitor( int argc, char** argv );
+     ApplicationMonitor( int& argc, char** argv );
     ~ApplicationMonitor();
     //@}
 
