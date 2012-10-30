@@ -242,6 +242,12 @@ activate = function( self )
         Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
     end
 end,
+
+destroy = function (self )
+    for i = 1, #self.parameters.commandingEntities do
+       F_Pion_SeteEtatEchelon( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
+    end
+end,
 }
 
 node "RC"
