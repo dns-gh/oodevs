@@ -784,9 +784,6 @@
         <copy todir="${run.dir}">
             <fileset dir="${data.dir}/app-data"/>
         </copy>
-    </target>
-
-    <target name="deploy-qt-translations" description="deploy qt translations" depends="deploy-application-data">
         <copy todir="${run.dir}/resources/locales">
             <fileset dir="${run.dir}" includes="qt_*.qm"/>
         </copy>
