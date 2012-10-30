@@ -133,11 +133,11 @@
     </message>
     <message>
         <source>Stances/Current stance</source>
-        <translation>Stances/Current stance</translation>
+        <translation>Postures/Current posture</translation>
     </message>
     <message>
         <source>Stances/Setup state</source>
-        <translation>Stances/Setup state</translation>
+        <translation>Postures/Setup state</translation>
     </message>
     <message>
         <source>Communications/Jammed</source>
@@ -236,7 +236,7 @@
     <name>Automat</name>
     <message>
         <source>Info/LogisticLevel</source>
-        <translation>Info/LogisticLevel</translation>
+        <translation>Info/LogisticsLevel</translation>
     </message>
 </context>
 <context>
@@ -281,15 +281,15 @@
     </message>
     <message>
         <source>M\F\C Repartition/Male</source>
-        <translation>M\F\C Repartition/Male</translation>
+        <translation>M\F\C Distribution/Male</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Female</source>
-        <translation>M\F\C Repartition/Female</translation>
+        <translation>M\F\C Distribution/Female</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Children</source>
-        <translation>M\F\C Repartition/Children</translation>
+        <translation>M\F\C Distribution/Children</translation>
     </message>
     <message>
         <source>Healthy:</source>
@@ -422,7 +422,7 @@
     <name>Equipments</name>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Available</source>
@@ -438,7 +438,7 @@
     </message>
     <message>
         <source>On site fixable</source>
-        <translation>On site fixable</translation>
+        <translation>On site repairable</translation>
     </message>
     <message>
         <source>In maintenance</source>
@@ -453,7 +453,7 @@
     <name>Formation</name>
     <message>
         <source>Info/LogisticLevel</source>
-        <translation>Info/LogisticLevel</translation>
+        <translation>Info/LogisticsLevel</translation>
     </message>
 </context>
 <context>
@@ -464,7 +464,7 @@
     </message>
     <message>
         <source>Human factors/Tiredness</source>
-        <translation>Human factors/Tiredness</translation>
+        <translation>Human factors/Fatigue</translation>
     </message>
     <message>
         <source>Human factors/Moral</source>
@@ -488,7 +488,7 @@
     </message>
     <message>
         <source>Tiredness:</source>
-        <translation>Tiredness:</translation>
+        <translation>Fatigue:</translation>
     </message>
     <message>
         <source>Stress:</source>
@@ -499,15 +499,15 @@
     <name>Inhabitant</name>
     <message>
         <source>M\F\C Repartition/Male</source>
-        <translation>M\F\C Repartition/Male</translation>
+        <translation>M\F\C Distribution/Male</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Female</source>
-        <translation>M\F\C Repartition/Female</translation>
+        <translation>M\F\C Distribution/Female</translation>
     </message>
     <message>
         <source>M\F\C Repartition/Children</source>
-        <translation>M\F\C Repartition/Children</translation>
+        <translation>M\F\C Distribution/Children</translation>
     </message>
     <message>
         <source>Satisfactions/Health</source>
@@ -699,11 +699,11 @@
     </message>
     <message>
         <source>Logistic links/Superiors</source>
-        <translation>Logistic links/Superiors</translation>
+        <translation>Logistics links/Superiors</translation>
     </message>
     <message>
         <source>Logistic links</source>
-        <translation>Logistic links</translation>
+        <translation>Logistics links</translation>
     </message>
 </context>
 <context>
@@ -1040,7 +1040,7 @@
     </message>
     <message>
         <source>Logistic superior:</source>
-        <translation>Logistic superior:</translation>
+        <translation>Logistics superior:</translation>
     </message>
     <message>
         <source>Mining:</source>
@@ -1108,7 +1108,7 @@
     </message>
     <message>
         <source>Logistic route</source>
-        <translation>Logistic route</translation>
+        <translation>Logistics route</translation>
     </message>
     <message>
         <source>Equipped:</source>
@@ -1281,7 +1281,7 @@
     <name>Transports</name>
     <message>
         <source>Transports/Tow trucks</source>
-        <translation>Transports/Tow trucks</translation>
+        <translation>Transports/Tow truck</translation>
     </message>
     <message>
         <source>Transports/Towed units</source>

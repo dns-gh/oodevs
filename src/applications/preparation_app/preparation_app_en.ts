@@ -24,7 +24,7 @@
     <name>AgentsLayer</name>
     <message>
         <source>Logistic units can not be placed under a non logistic automat</source>
-        <translation>Logistic units can not be placed under a non logistic automat</translation>
+        <translation>Logistics units can not be placed under a non logistics automat</translation>
     </message>
 </context>
 <context>
@@ -219,7 +219,7 @@
     </message>
     <message>
         <source>logistic</source>
-        <translation>logistic</translation>
+        <translation>logistics</translation>
     </message>
 </context>
 <context>
@@ -235,6 +235,40 @@
     <message>
         <source>Creation</source>
         <translation>Creation</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translatorcomment>Units</translatorcomment>
+        <translation>Units</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translatorcomment>Objects</translatorcomment>
+        <translation>Objects</translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation>Urban</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Crowds</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
+    </message>
+    <message>
+        <source>Tactical</source>
+        <translation>Tactical</translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation>Communication</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistics</translation>
     </message>
 </context>
 <context>
@@ -480,7 +514,7 @@
     </message>
     <message>
         <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
-        <translation>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</translation>
+        <translation>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistics links as CSV files.</translation>
     </message>
     <message>
         <source>Select output directory</source>
@@ -611,7 +645,7 @@
     </message>
     <message>
         <source>Logistic links</source>
-        <translation>Logistic links</translation>
+        <translation>Logistics links</translation>
     </message>
     <message>
         <source>Stocks</source>
@@ -769,23 +803,23 @@
     <name>LogisticLinksEditor</name>
     <message>
         <source>Assign logistic subordinates</source>
-        <translation>Assign logistic subordinates</translation>
+        <translation>Assign logistics subordinates</translation>
     </message>
     <message>
         <source>Remove logistic subordinates</source>
-        <translation>Remove logistic subordinates</translation>
+        <translation>Remove logistics subordinates</translation>
     </message>
     <message>
         <source>Generate logistic links</source>
-        <translation>Generate logistic links</translation>
+        <translation>Generate logistics links</translation>
     </message>
     <message>
         <source>Remove logistic links</source>
-        <translation>Remove logistic links</translation>
+        <translation>Remove logistics links</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation>Logistic</translation>
+        <translation>Logistics</translation>
     </message>
 </context>
 <context>
@@ -808,7 +842,7 @@
     </message>
     <message>
         <source>Logistic</source>
-        <translation>Logistic</translation>
+        <translation>Logistics</translation>
     </message>
     <message>
         <source>Edit Stocks</source>
@@ -1059,7 +1093,7 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <source>Logistic...</source>
-        <translation>Logistic...</translation>
+        <translation>Logistics...</translation>
     </message>
     <message>
         <source>Small text</source>
@@ -1225,7 +1259,7 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <source>Logistic</source>
-        <translation>Logistic</translation>
+        <translation>Logistics</translation>
     </message>
     <message>
         <source>Profile</source>
@@ -1273,23 +1307,23 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <source>Some resources used by logistic subordinate(s) are not initialized: %1.</source>
-        <translation>Some resources used by logistic subordinate(s) are not initialized: %1.</translation>
+        <translation>Some resources used by logistics subordinate(s) are not initialized: %1.</translation>
     </message>
     <message>
         <source>No logistic link initialized.</source>
-        <translation>No logistic link initialized.</translation>
+        <translation>No logistics link initialized.</translation>
     </message>
     <message>
         <source>No valid logistic base defined.</source>
-        <translation>No valid logistic base defined.</translation>
+        <translation>No valid logistics base defined.</translation>
     </message>
     <message>
         <source>Logistic sector not included in a logistic base.</source>
-        <translation>Logistic sector not included in a logistic base.</translation>
+        <translation>Logistics sector not included in a logistics base.</translation>
     </message>
     <message>
         <source>Logistic base&apos;s party differs from object&apos;s party.</source>
-        <translation>Logistic base&apos;s party differs from object&apos;s party.</translation>
+        <translation>Logistics base&apos;s party differs from object&apos;s party.</translation>
     </message>
     <message>
         <source>Invalid stock resource &apos;%1&apos; in orbat.xml. This resource will not be saved.</source>
@@ -1369,7 +1403,7 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will be deleted at next save.</source>
-        <translation>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will be deleted at next save.</translation>
+        <translation>Invalid logistics subordinate for &apos;%1&apos; in orbat.xml. The link will be deleted at next save.</translation>
     </message>
     <message>
         <source>No orbat.xml found</source>
@@ -2462,23 +2496,23 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <source>Export directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Export directory:</translation>
     </message>
     <message>
         <source>Export vector data (Shapefile)</source>
-        <translation type="unfinished"></translation>
+        <translation>Export vector data (Shapefile)</translation>
     </message>
     <message>
         <source>Export raster data (GeoTIFF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Export raster data (GeoTIFF)</translation>
     </message>
     <message>
         <source>Export elevation data (ESRI Ascii GRID)</source>
-        <translation type="unfinished"></translation>
+        <translation>Export elevation data (ESRI Ascii GRID)</translation>
     </message>
     <message>
         <source>Export successful.</source>
-        <translation type="unfinished"></translation>
+        <translation>Export successful.</translation>
     </message>
 </context>
 <context>
@@ -2520,7 +2554,7 @@ This data can&apos;t be projected.</translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Resources</source>

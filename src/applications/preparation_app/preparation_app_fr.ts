@@ -47,11 +47,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Erreur</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Unhandled error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur non gérée</translation>
     </message>
 </context>
 <context>
@@ -66,7 +66,7 @@
     </message>
     <message>
         <source>Select new automat type for </source>
-        <translation>Sélectionnez un nouveau type d&apos;automate pour: </translation>
+        <translation>Sélectionnez un nouveau type d&apos;automate pour</translation>
     </message>
     <message>
         <source>Current type: </source>
@@ -235,6 +235,38 @@
     <message>
         <source>Creation</source>
         <translation>Création</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation>Urbain</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
+    </message>
+    <message>
+        <source>Tactical</source>
+        <translation>Tactique</translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation>Communication</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
     </message>
 </context>
 <context>
@@ -1158,7 +1190,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>&amp;Reload</source>
-        <translation>Recharger</translation>
+        <translation>&amp;Recharger</translation>
     </message>
     <message>
         <source>Consistency analysis...</source>
@@ -1272,7 +1304,7 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Long name size limit exceeded : %1.</source>
-        <translation>Limite de taille du nom long dépassée : %1</translation>
+        <translation>Limite de taille du nom long dépassée : %1.</translation>
     </message>
     <message>
         <source>Allocated stocks of nature %1 exceed max capacity.</source>
@@ -2461,23 +2493,23 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
     <message>
         <source>Export directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Répertoire d&apos;export :</translation>
     </message>
     <message>
         <source>Export vector data (Shapefile)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter les données vectorielles (Shapefile)</translation>
     </message>
     <message>
         <source>Export raster data (GeoTIFF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter les données raster (GeoTIFF)</translation>
     </message>
     <message>
         <source>Export elevation data (ESRI Ascii GRID)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter les données d&apos;élévation (ESRI Ascii GRID)</translation>
     </message>
     <message>
         <source>Export successful.</source>
-        <translation type="unfinished"></translation>
+        <translation>Succès de l&apos;export.</translation>
     </message>
 </context>
 <context>
@@ -2713,7 +2745,7 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>&apos;Read&apos; permission allows you to see a unit.
 &apos;Write&apos; permission allows you to control a unit.</source>
-        <translation type="unfinished">&apos;Lecture&apos; permet de voir une unité.
+        <translation>&apos;Lecture&apos; permet de voir une unité.
 &apos;Ecriture&apos; permet de contrôler une unité.</translation>
     </message>
     <message>

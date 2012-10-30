@@ -133,19 +133,19 @@
     </message>
     <message>
         <source>wounded seriousness level 1</source>
-        <translation>wounded seriousness level 1</translation>
+        <translation>injury severity level 1</translation>
     </message>
     <message>
         <source>wounded seriousness level 2</source>
-        <translation>wounded seriousness level 2</translation>
+        <translation>injury severity level 2</translation>
     </message>
     <message>
         <source>wounded seriousness level 3</source>
-        <translation>wounded seriousness level 3</translation>
+        <translation>injury severity level 3</translation>
     </message>
     <message>
         <source>wounded extreme seriousness</source>
-        <translation>wounded extreme seriousness</translation>
+        <translation>injury extreme severity</translation>
     </message>
     <message>
         <source>unknown</source>
@@ -285,11 +285,11 @@
     </message>
     <message>
         <source>newbie</source>
-        <translation>newbie</translation>
+        <translation>novice</translation>
     </message>
     <message>
         <source>moving toward logistic system</source>
-        <translation>moving toward logistic system</translation>
+        <translation>moving toward logistics system</translation>
     </message>
     <message>
         <source>waiting for available tow-truck</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>waiting for available repairer</source>
-        <translation>waiting for available repairer</translation>
+        <translation>waiting for available mechanics</translation>
     </message>
     <message>
         <source>repairing</source>
@@ -341,7 +341,7 @@
     </message>
     <message>
         <source>convoy waiting for trucks</source>
-        <translation>convoy waiting for trucks</translation>
+        <translation>convoy waiting for truck</translation>
     </message>
     <message>
         <source>convoy setting up</source>
@@ -741,7 +741,7 @@
     </message>
     <message>
         <source>On site fixable</source>
-        <translation>On site fixable</translation>
+        <translation>On site repairable</translation>
     </message>
     <message>
         <source>In maintenance</source>

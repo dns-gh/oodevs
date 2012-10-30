@@ -294,7 +294,7 @@
     </message>
     <message>
         <source>Tiredness:</source>
-        <translation>Tiredness:</translation>
+        <translation>Fatigue:</translation>
     </message>
     <message>
         <source>Moral:</source>
@@ -325,7 +325,7 @@
     <name>ChangeLogisticLinksDialog</name>
     <message>
         <source>Logistic links edition</source>
-        <translation>Logistic links edition</translation>
+        <translation>Logistics links edition</translation>
     </message>
     <message>
         <source>Nominal superior</source>
@@ -349,11 +349,11 @@
     </message>
     <message>
         <source>Change Logistic Links</source>
-        <translation>Change Logistic Links</translation>
+        <translation>Change Logistics Links</translation>
     </message>
     <message>
         <source>Change logistic links</source>
-        <translation>Change logistic links</translation>
+        <translation>Change logistics links</translation>
     </message>
 </context>
 <context>
@@ -626,7 +626,7 @@ Reason: %3
     </message>
     <message>
         <source>On site fixable</source>
-        <translation>On site fixable</translation>
+        <translation>On site repairable</translation>
     </message>
     <message>
         <source>In maintenance</source>
@@ -746,7 +746,7 @@ Reason: %3
     <name>FireResultListView</name>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Troops</source>
@@ -904,7 +904,7 @@ Reason: %3
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>Humans</source>
@@ -912,11 +912,11 @@ Reason: %3
     </message>
     <message>
         <source>Lent equipment(s)</source>
-        <translation>Lent equipment(s)</translation>
+        <translation>Lent equipment</translation>
     </message>
     <message>
         <source>Borrowed equipment(s)</source>
-        <translation>Borrowed equipment(s)</translation>
+        <translation>Borrowed equipment</translation>
     </message>
 </context>
 <context>
@@ -973,7 +973,7 @@ Reason: %3
     </message>
     <message>
         <source>Consigns</source>
-        <translation>Consigns</translation>
+        <translation>Requests</translation>
     </message>
 </context>
 <context>
@@ -984,7 +984,7 @@ Reason: %3
     </message>
     <message>
         <source>Consigns</source>
-        <translation>Consigns</translation>
+        <translation>Requests</translation>
     </message>
     <message>
         <source>Equipment availabilities</source>
@@ -999,7 +999,7 @@ Reason: %3
     </message>
     <message>
         <source>Consigns</source>
-        <translation>Consigns</translation>
+        <translation>Requests</translation>
     </message>
     <message>
         <source>Equipment availabilities</source>
@@ -1018,7 +1018,7 @@ Reason: %3
     </message>
     <message>
         <source>Stance &apos;%1&apos; at %2</source>
-        <translation>Stance &apos;%1&apos; at %2</translation>
+        <translation>Posture &apos;%1&apos; at %2</translation>
     </message>
 </context>
 <context>
@@ -1033,7 +1033,7 @@ Reason: %3
     </message>
     <message>
         <source>tiredness</source>
-        <translation>tiredness</translation>
+        <translation>fatigue</translation>
     </message>
     <message>
         <source>Experience: </source>
@@ -1045,7 +1045,7 @@ Reason: %3
     </message>
     <message>
         <source>Tiredness: </source>
-        <translation>Tiredness: </translation>
+        <translation>Fatigue: </translation>
     </message>
     <message>
         <source>Reinforcing unit &apos;%1&apos;.</source>
@@ -1064,7 +1064,7 @@ Reason: %3
     </message>
     <message>
         <source>Consigns</source>
-        <translation>Consigns</translation>
+        <translation>Requests</translation>
     </message>
     <message>
         <source>Stocks &amp;&amp; Quotas</source>
@@ -1382,11 +1382,11 @@ Reason: %3
     <name>LogisticConsignsWidget_ABC</name>
     <message>
         <source>Logistic requests</source>
-        <translation>Logistic requests</translation>
+        <translation>Logistics requests</translation>
     </message>
     <message>
         <source>Processing consigns</source>
-        <translation>Processing consigns</translation>
+        <translation>Processing requests</translation>
     </message>
     <message>
         <source>Consign:</source>
@@ -1489,7 +1489,7 @@ Reason: %3
     <name>LogisticSupplyRecompletionDialog</name>
     <message>
         <source>Recompletion</source>
-        <translation>Recompletion</translation>
+        <translation>Recover</translation>
     </message>
     <message>
         <source>Equipment - Crew</source>
@@ -1553,18 +1553,18 @@ Reason: %3
     </message>
     <message>
         <source>Partial Recovery</source>
-        <translation>Partial Recovery</translation>
+        <translation>Recover</translation>
     </message>
     <message>
         <source>Partial recompletion</source>
-        <translation>Partial recompletion</translation>
+        <translation>Recover</translation>
     </message>
 </context>
 <context>
     <name>LogisticTreeView</name>
     <message>
         <source>Change Logistic Links</source>
-        <translation>Change Logistic Links</translation>
+        <translation>Change Logistics Links</translation>
     </message>
 </context>
 <context>
@@ -1586,7 +1586,7 @@ Reason: %3
     </message>
     <message>
         <source>Recover - Equipments</source>
-        <translation>Recover - Equipments</translation>
+        <translation>Recover - Equipment</translation>
     </message>
     <message>
         <source>Recover - Resources</source>
@@ -1736,7 +1736,7 @@ This data can&apos;t be projected.</source>
     <name>MaintenanceHaulersListView</name>
     <message>
         <source>Tow trucks</source>
-        <translation>Tow trucks</translation>
+        <translation>Tow truck</translation>
     </message>
     <message>
         <source>Total</source>
@@ -1759,7 +1759,7 @@ This data can&apos;t be projected.</source>
     <name>MaintenanceRepairersListView</name>
     <message>
         <source>Repairers</source>
-        <translation>Repairers</translation>
+        <translation>Mechanics</translation>
     </message>
     <message>
         <source>Total</source>
@@ -3122,7 +3122,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Recover - Equipments</source>
-        <translation>Recover - Equipments</translation>
+        <translation>Recover - Equipment</translation>
     </message>
     <message>
         <source>Recover - Resources</source>
@@ -3161,7 +3161,7 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
 </context>
 <context>

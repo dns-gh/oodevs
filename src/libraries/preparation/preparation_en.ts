@@ -254,29 +254,29 @@
     <name>LogisticAttribute</name>
     <message>
         <source>Info/Camp attributes/Logistic base</source>
-        <translation>Info/Camp attributes/Logistic base</translation>
+        <translation>Info/Camp attributes/Logistics base</translation>
     </message>
 </context>
 <context>
     <name>LogisticBaseStates</name>
     <message>
         <source>Logistic/LogisticBase/Superior</source>
-        <translation>Logistic/LogisticBase/Superior</translation>
+        <translation>Logistics/LogisticsBase/Superior</translation>
     </message>
     <message>
         <source>Logistic/LogisticBase/Quotas</source>
-        <translation>Logistic/LogisticBase/Quotas</translation>
+        <translation>Logistics/LogisticsBase/Quotas</translation>
     </message>
     <message>
         <source>Logistic/LogisticBase/Edit Quotas</source>
-        <translation>Logistic/LogisticBase/Edit Quotas</translation>
+        <translation>Logistics/LogisticsBase/Edit Quotas</translation>
     </message>
 </context>
 <context>
     <name>LogisticLevelAttritube</name>
     <message>
         <source>Info/LogisticLevel</source>
-        <translation>Info/LogisticLevel</translation>
+        <translation>Info/LogisticsLevel</translation>
     </message>
     <message>
         <source>SWORD</source>
@@ -284,7 +284,7 @@
     </message>
     <message>
         <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
-        <translation>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</translation>
+        <translation>By disabling the logistics function on this formation, all the logistics subordinates superiors will be reset. Do you want to proceed ?</translation>
     </message>
 </context>
 <context>
@@ -446,7 +446,7 @@
     </message>
     <message>
         <source>Logistic base:</source>
-        <translation>Logistic base:</translation>
+        <translation>Logistics base:</translation>
     </message>
     <message>
         <source>Improvable:</source>
@@ -653,23 +653,23 @@ Reason: %1.</source>
     <name>SupplyRouteAttribute</name>
     <message>
         <source>Info/Logistic route attributes/Flow</source>
-        <translation>Info/Logistic route attributes/Flow</translation>
+        <translation>Info/Logistics route attributes/Flow</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Width</source>
-        <translation>Info/Logistic route attributes/Width</translation>
+        <translation>Info/Logistics route attributes/Width</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Length</source>
-        <translation>Info/Logistic route attributes/Length</translation>
+        <translation>Info/Logistics route attributes/Length</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Maximum weight</source>
-        <translation>Info/Logistic route attributes/Maximum weight</translation>
+        <translation>Info/Logistics route attributes/Maximum weight</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Equipped</source>
-        <translation>Info/Logistic route attributes/Equipped</translation>
+        <translation>Info/Logistics route attributes/Equipped</translation>
     </message>
 </context>
 <context>

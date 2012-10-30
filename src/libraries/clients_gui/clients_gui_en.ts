@@ -56,7 +56,7 @@
     <name>ApplicationMonitor</name>
     <message>
         <source>Unexpected exception</source>
-        <translation type="unfinished"></translation>
+        <translation>Unexpected exception</translation>
     </message>
 </context>
 <context>
@@ -1109,15 +1109,15 @@ Do you want to remove it?</translation>
     <name>gui::LogisticPrototype_ABC</name>
     <message>
         <source>Camp</source>
-        <translation>Camp</translation>
+        <translation>Side</translation>
     </message>
     <message>
         <source>Logistic unit:</source>
-        <translation>Logistic unit:</translation>
+        <translation>Logistics unit:</translation>
     </message>
     <message>
         <source>Camp&apos;s logistic unit</source>
-        <translation>Camp&apos;s logistic unit</translation>
+        <translation>Side&apos;s logistics unit</translation>
     </message>
 </context>
 <context>
@@ -1570,7 +1570,7 @@ Do you want to remove it?</translation>
     <name>gui::SupplyRoutePrototype_ABC</name>
     <message>
         <source>Logistic route</source>
-        <translation>Logistic route</translation>
+        <translation>Logistics route</translation>
     </message>
     <message>
         <source>Flow:</source>
@@ -1725,7 +1725,7 @@ Do you want to remove it?</translation>
     </message>
     <message>
         <source>Injury seriousness</source>
-        <translation>Injury seriousness</translation>
+        <translation>Injury severity</translation>
     </message>
     <message>
         <source>Location</source>
@@ -1760,7 +1760,7 @@ Do you want to remove it?</translation>
     <name>gui::UnitStateTableEquipment</name>
     <message>
         <source>Equipments</source>
-        <translation>Equipments</translation>
+        <translation>Equipment</translation>
     </message>
     <message>
         <source>State</source>
@@ -1791,7 +1791,7 @@ Do you want to remove it?</translation>
     </message>
     <message>
         <source>Logistic threshold (%)</source>
-        <translation>Logistic threshold (%)</translation>
+        <translation>Logistics threshold (%)</translation>
     </message>
     <message>
         <source>Normalized consumption</source>

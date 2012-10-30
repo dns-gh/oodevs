@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Logistic</source>
-        <translation>Logistic</translation>
+        <translation>Logistics</translation>
     </message>
     <message>
         <source>Mortar</source>
@@ -177,7 +177,7 @@
     <name>DisplayExtractor_ABC</name>
     <message>
         <source>Unknown element</source>
-        <translation type="unfinished"></translation>
+        <translation>Unknown element</translation>
     </message>
 </context>
 <context>
