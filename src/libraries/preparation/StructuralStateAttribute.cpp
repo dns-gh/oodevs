@@ -20,10 +20,10 @@
 // Created: JSR 2012-09-05
 // -----------------------------------------------------------------------------
 StructuralStateAttribute::StructuralStateAttribute( xml::xistream& xis, kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
-    : structuralState_( 100 )
+    : structuralState_( 100, kernel::Units::percentage )
 {
     xis >> xml::optional >> xml::start( "structural-state" )
-            >> xml::attribute( "value", structuralState_ )
+            >> xml::attribute( "value", structuralState_.value_ )
         >> xml::end;
     CreateDictionary( object, dictionary );
 }
@@ -33,7 +33,7 @@ StructuralStateAttribute::StructuralStateAttribute( xml::xistream& xis, kernel::
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
 StructuralStateAttribute::StructuralStateAttribute( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
-    : structuralState_( 100 )
+    : structuralState_( 100, kernel::Units::percentage )
 {
     CreateDictionary( object, dictionary );
 }
@@ -62,9 +62,9 @@ void StructuralStateAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void StructuralStateAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
-    if( structuralState_ != 100 )
+    if( structuralState_.value_ != 100 )
         xos << xml::start( "structural-state" )
-                << xml::attribute( "value", structuralState_ )
+                << xml::attribute( "value", structuralState_.value_ )
             << xml::end;
 }
 
@@ -74,7 +74,7 @@ void StructuralStateAttribute::SerializeObjectAttributes( xml::xostream& xos ) c
 // -----------------------------------------------------------------------------
 void StructuralStateAttribute::Update( xml::xistream& xis )
 {
-    xis >> xml::attribute( "value", structuralState_ );
+    xis >> xml::attribute( "value", structuralState_.value_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,18 +83,7 @@ void StructuralStateAttribute::Update( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 unsigned int StructuralStateAttribute::GetValue() const
 {
-    return structuralState_;
-}
-
-namespace
-{
-    struct StructuralSetter
-    {
-        void operator()( unsigned int* pValue, unsigned int value )
-        {
-            *pValue = std::min( 100u, std::max( 0u, value ) );
-        }
-    };
+    return structuralState_.value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,5 +92,5 @@ namespace
 // -----------------------------------------------------------------------------
 void StructuralStateAttribute::CreateDictionary( kernel::UrbanObject_ABC& object, kernel::PropertiesDictionary& dictionary )
 {
-    dictionary.Register( object, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_, StructuralSetter() );
+    dictionary.Register( object, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_ );
 }

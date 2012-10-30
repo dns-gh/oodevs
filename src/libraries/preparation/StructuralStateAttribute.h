@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/StructuralStateAttribute_ABC.h"
+#include "clients_kernel/Units.h"
 
 namespace kernel
 {
@@ -58,7 +59,7 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int structuralState_;
+    kernel::UnitedValue< unsigned int > structuralState_;
     //@}
 };
 
