@@ -334,6 +334,7 @@ masa_add_target( simulation_kernel server "libraries/simulation_kernel" OPTIONS 
 add_protocol_dependency( simulation_kernel )
 masa_add_target_definition( simulation_kernel PLATFORM=${platform} )
 masa_add_target_include( simulation_kernel "${root_dir}/src/libraries/simulation_kernel" )
+masa_add_target_compile_flag( simulation_kernel "/bigobj" )
 target_link_libraries( simulation_kernel
     dispatcher
     flood
