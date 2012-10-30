@@ -129,6 +129,7 @@ target_link_libraries( license_gui
 # shield
 masa_add_target( shield common "libraries/shield" OPTIONS protobuf )
 add_protocol_dependency( shield )
+masa_add_target_compile_flag( shield "/bigobj" )
 target_link_libraries( shield sword_tools )
 
 # shield_app
