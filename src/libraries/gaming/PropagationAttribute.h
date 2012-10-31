@@ -66,7 +66,7 @@ private:
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void DoUpdate( const sword::ObjectUpdate& message );
-    void ReadFile( xml::xistream& xis );
+    void ReadFile( xml::xistream& xis, const boost::filesystem::path& path );
     void ReadColor( xml::xistream& xis );
     //@}
 
@@ -90,7 +90,6 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
-    boost::filesystem::path path_;
     std::string projection_;
     T_PropagationFiles propagationFiles_;
     T_Colors colors_;

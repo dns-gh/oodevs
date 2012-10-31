@@ -48,19 +48,20 @@ void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.attributes().has_propagation() )
     {
-        bfs::path path( message.attributes().propagation().model() );
+        bfs::path path( bfs::path( message.attributes().propagation().model() ) );
+        bfs::path parent( path.parent_path() );
         xml::xifstream xis( path.string() );
         xis >> xml::start( "config" )
                 >> xml::content( "projection", projection_ )
                 >> xml::start( "files" )
-                    >> xml::list( "file", *this, &PropagationAttribute::ReadFile )
+                    >> xml::list( "file", *this, &PropagationAttribute::ReadFile, parent )
                 >> xml::end
                 >> xml::optional
                     >> xml::start( "colors" )
                         >> xml::list( "color", *this, &PropagationAttribute::ReadColor )
                     >> xml::end
             >> xml::end;
-        path_ = path.parent_path();
+        projection_ = bfs::path( parent / projection_ ).string();
     }
 }
 
@@ -77,9 +78,10 @@ void PropagationAttribute::ReadColor( xml::xistream& xis )
 // Name: PropagationAttribute::ReadFile
 // Created: LGY 2012-10-12
 // -----------------------------------------------------------------------------
-void PropagationAttribute::ReadFile( xml::xistream& xis )
+void PropagationAttribute::ReadFile( xml::xistream& xis, const boost::filesystem::path& path )
 {
-    propagationFiles_[ QDateTime::fromString( xis.attribute< std::string >( "time" ).c_str(), "yyyy-MM-dd'T'HH:mm:ss" ) ].push_back( xis.value< std::string >() );
+    propagationFiles_[ QDateTime::fromString( xis.attribute< std::string >( "time" ).c_str(), "yyyy-MM-dd'T'HH:mm:ss" ) ]
+                     .push_back( bfs::path( path / bfs::path( xis.value< std::string >() ).filename() ).string() );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,12 +98,9 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
         {
             propagations_.clear();
             T_Files& files = it->second;
-            bfs::path projection( path_ / projection_ );
             for( std::size_t i = 0; i < files.size(); ++i )
-            {
-                bfs::path file( path_ / bfs::path( it->second.at( i ) ).filename() );
-                propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( file.string(), projection.string() , converter_, colors_ ) ) );
-            }
+                propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( it->second.at( i ),
+                                         projection_, converter_, colors_ ) ) );
             propagationFiles_.erase( it );
         }
     }
