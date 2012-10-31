@@ -1382,33 +1382,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>LogisticConsignsWidget_ABC</name>
-    <message>
-        <source>Logistic requests</source>
-        <translation>Requêtes logistiques</translation>
-    </message>
-    <message>
-        <source>Processing consigns</source>
-        <translation>Consignes en traitement</translation>
-    </message>
-    <message>
-        <source>Consign:</source>
-        <translation>Consigne:</translation>
-    </message>
-    <message>
-        <source>Instruction:</source>
-        <translation>Consigne:</translation>
-    </message>
-    <message>
-        <source>Consumer:</source>
-        <translation>Consommateur:</translation>
-    </message>
-    <message>
-        <source>Handler:</source>
-        <translation>Gestionnaire:</translation>
-    </message>
-</context>
-<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1722,21 +1695,6 @@ Ces données ne peuvent pas être projetées.</translation>
     </message>
 </context>
 <context>
-    <name>MaintenanceConsignsWidget</name>
-    <message>
-        <source>Equipment:</source>
-        <translation>Equipement:</translation>
-    </message>
-    <message>
-        <source>Breakdown:</source>
-        <translation>Panne:</translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation>Etat:</translation>
-    </message>
-</context>
-<context>
     <name>MaintenanceHaulersListView</name>
     <message>
         <source>Tow trucks</source>
@@ -1853,25 +1811,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Resting</source>
         <translation>En repos</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalConsignsWidget</name>
-    <message>
-        <source>Injury:</source>
-        <translation>Blessure:</translation>
-    </message>
-    <message>
-        <source>Mentally injured:</source>
-        <translation>Réac. mentale:</translation>
-    </message>
-    <message>
-        <source>NBC contaminated:</source>
-        <translation>Contamination NBC:</translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation>Etat:</translation>
     </message>
 </context>
 <context>
@@ -2859,37 +2798,6 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Last tick speed factor/Mean speed factor</source>
         <translation>Facteur d&apos;accélération dernier tick/moyen</translation>
-    </message>
-</context>
-<context>
-    <name>SupplyConsignsWidget</name>
-    <message>
-        <source>Supplier:</source>
-        <translation>Fournisseur:</translation>
-    </message>
-    <message>
-        <source>Convoyer:</source>
-        <translation>Convoyeur:</translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation>Etat:</translation>
-    </message>
-    <message>
-        <source>Recipients</source>
-        <translation>Destinataires</translation>
-    </message>
-    <message>
-        <source>Recipient %1</source>
-        <translation>Destinataire %1</translation>
-    </message>
-    <message>
-        <source>Resources requested/granted/convoyed</source>
-        <translation>Ressources demandées/accordées/convoyées</translation>
-    </message>
-    <message>
-        <source>Current state end :</source>
-        <translation>Fin état courant :</translation>
     </message>
 </context>
 <context>

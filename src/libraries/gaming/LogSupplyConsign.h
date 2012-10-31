@@ -13,6 +13,7 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/function.hpp>
 
 class SupplyRecipientResourcesRequest;
 
@@ -21,10 +22,10 @@ namespace kernel
     class Agent_ABC;
     class Automat_ABC;
     class Controller;
-    class Displayer_ABC;
     class DotationType;
     class Entity_ABC;
     class Formation_ABC;
+    class DisplayExtractor_ABC;
 }
 
 namespace sword
@@ -35,6 +36,7 @@ namespace sword
 }
 
 class Simulation;
+class LogConsignDisplayer_ABC;
 
 // =============================================================================
 /** @class  LogSupplyConsign
@@ -50,7 +52,7 @@ public:
     //! @name Constructor / Destructor
     //@{
              LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver,
-                               const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver, const tools::Resolver_ABC< kernel::Formation_ABC >&   formationResolver,
+                               const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver, const tools::Resolver_ABC< kernel::Formation_ABC >&   formationResolver,
                                const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const Simulation& simulation, const sword::LogSupplyHandlingCreation& message );
     virtual ~LogSupplyConsign();
     //@}
@@ -58,7 +60,7 @@ public:
     //! @name Accessors
     //@{
     void Update( const sword::LogSupplyHandlingUpdate& message );
-    void Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const;
+    void Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

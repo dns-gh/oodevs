@@ -310,15 +310,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticStatusWidgets.cpp">
       <Filter>Source Files\Panels\Logistic\status</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\MaintenanceConsignsWidget.cpp">
-      <Filter>Source Files\Panels\Logistic\consigns</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\MedicalConsignsWidget.cpp">
-      <Filter>Source Files\Panels\Logistic\consigns</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.cpp">
-      <Filter>Source Files\Panels\Logistic\consigns</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\MaintenanceHaulersListView.cpp">
       <Filter>Source Files\Panels\Logistic\lists\maintenance</Filter>
     </ClCompile>
@@ -757,9 +748,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.cpp">
       <Filter>Source Files\Creation\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp">
-      <Filter>Source Files\Panels\Logistic\consigns</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\InfoFuneralDialog.cpp">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClCompile>
@@ -811,6 +799,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyValuesTableWidget.cpp">
       <Filter>Source Files\Dialogs\Magic actions\Logistic\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.cpp">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -849,16 +840,7 @@
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.h">
       <Filter>Source Files\Panels\Logistic\consigns</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceConsignsWidget.h">
-      <Filter>Source Files\Panels\Logistic\consigns</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\MedicalConsignsWidget.h">
-      <Filter>Source Files\Panels\Logistic\consigns</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticAvailabilitiesListView_ABC.h">
-      <Filter>Source Files\Panels\Logistic\lists</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.h">
       <Filter>Source Files\Panels\Logistic\lists</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceHaulersListView.h">
@@ -1137,9 +1119,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\TrafficabilityPrototype.h">
       <Filter>Source Files\Creation\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h">
-      <Filter>Source Files\Panels\Logistic\consigns</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClInclude>
@@ -1161,6 +1140,9 @@
     <ClInclude Include="..\..\src\applications\gaming_app\OrbatDockWidget.h">
       <Filter>Source Files\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticConsignsWidget.h">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl">
@@ -1177,6 +1159,9 @@
     </None>
     <None Include="..\..\src\applications\gaming_app\gaming_app_en.ts">
       <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\applications\gaming_app\LogisticConsignsWidget.inl">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -336,6 +336,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\FloodProxy.h" />
     <ClInclude Include="..\..\src\libraries\gaming\gaming_pch.h" />
     <ClInclude Include="..\..\src\libraries\gaming\HumanState.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\LogConsignDisplayer_ABC.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogFuneralConsign.h" />
     <ClInclude Include="..\..\src\libraries\gaming\LogisticHelpers.h" />
     <ClInclude Include="..\..\src\libraries\gaming\MedicalTreatmentCapacity.h" />

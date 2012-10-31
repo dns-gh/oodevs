@@ -705,6 +705,22 @@
         <source>Current state end:</source>
         <translation>Fin de l&apos;état courant:</translation>
     </message>
+    <message>
+        <source>Recipients</source>
+        <translation>Destinataires</translation>
+    </message>
+    <message>
+        <source>requested</source>
+        <translation>demandé</translation>
+    </message>
+    <message>
+        <source>granted</source>
+        <translation>accordé</translation>
+    </message>
+    <message>
+        <source>convoyed</source>
+        <translation>convoyé</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceStates</name>

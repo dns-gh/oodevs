@@ -13,6 +13,7 @@
 namespace kernel
 {
     class DotationType;
+    class DisplayExtractor_ABC;
 }
 
 // =============================================================================
@@ -31,6 +32,15 @@ public:
     //@}
 
 public:
+
+    //! @name Accessors
+    //@{
+    QString GetTypeName() const;
+    unsigned int GetRequested() const;
+    unsigned int GetGranted() const;
+    unsigned int GetConvoyed() const;
+    //@}
+
     //! @name Member data
     //@{
     const kernel::DotationType* type_;

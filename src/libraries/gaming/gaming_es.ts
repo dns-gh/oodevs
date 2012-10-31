@@ -705,6 +705,22 @@
         <source>Current state end:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>requested</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>granted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>convoyed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceStates</name>

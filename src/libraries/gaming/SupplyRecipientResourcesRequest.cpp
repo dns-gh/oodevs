@@ -11,6 +11,7 @@
 #include "SupplyRecipientResourcesRequest.h"
 #include "SupplyResourceRequest.h"
 #include "protocol/Protocol.h"
+#include "clients_kernel/Automat_ABC.h"
 #include <boost/foreach.hpp>
 
 using namespace kernel;
@@ -58,4 +59,13 @@ void SupplyRecipientResourcesRequest::Update( const sword::SupplyRecipientResour
                                                                    data.convoyed() ) );
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRecipientResourcesRequest::GetRecipientTooltip
+// Created: MMC 2012-10-29
+// -----------------------------------------------------------------------------
+QString SupplyRecipientResourcesRequest::GetRecipientTooltip() const
+{
+    return recipient_.GetTooltip();
 }

@@ -11,9 +11,12 @@
 #include "LogMedicalConsign.h"
 #include "LogisticConsigns.h"
 #include "Simulation.h"
+#include "LogConsignDisplayer_ABC.h"
+#include "clients_gui/DisplayExtractor.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DisplayExtractor_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -88,21 +91,23 @@ void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message )
 // Name: LogMedicalConsign::Display
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void LogMedicalConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDisplayer ) const
+void LogMedicalConsign::Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const
 {
-    displayer.Display( consumer_ ).Display( nState_ );
-    itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
-                 .Display( tools::translate( "Logistic", "Consumer:" ), consumer_ )
-                 .Display( tools::translate( "Logistic", "Handler:" ), pPionLogHandling_ )
-                 .Display( tools::translate( "Logistic", "Mentally injured:" ), bMentalDeceased_ )
-                 .Display( tools::translate( "Logistic", "NBC contaminated:" ), bContaminated_ )
-                 .Display( tools::translate( "Logistic", "State:" ), nState_ );
+    gui::DisplayExtractor& extractor = *static_cast< gui::DisplayExtractor* >( &displayExtractor );
+    displayer.DisplayTitle( consumer_.GetTooltip(), tools::ToString( nState_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "Instruction:" ), extractor.GetDisplayName( nID_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "Consumer:" ), extractor.GetDisplayName( consumer_ ) );
+    if( pPionLogHandling_ )
+        displayer.DisplayItem( tools::translate( "Logistic", "Handler:" ), extractor.GetDisplayName( *pPionLogHandling_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "Mentally injured:" ), extractor.GetDisplayName( bMentalDeceased_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "NBC contaminated:" ), extractor.GetDisplayName( bContaminated_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "State:" ), tools::ToString( nState_ ) );
     if( diagnosed_ )
-        itemDisplayer.Display( tools::translate( "Logistic", "Injury:" ), wound_ );
+        displayer.DisplayItem( tools::translate( "Logistic", "Injury:" ), tools::ToString( wound_ ) );
     else
-        itemDisplayer.Display( tools::translate( "Logistic", "Injury:" ), tools::translate( "Logistic", "Not diagnosed" ) );
+        displayer.DisplayItem( tools::translate( "Logistic", "Injury:" ), tools::translate( "Logistic", "Not diagnosed" ) );
     if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
-        itemDisplayer.Display( tools::translate( "Logistic", "Current state end:" ), tools::translate( "Logistic", "Unknown" ) );
+        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), tools::translate( "Logistic", "Unknown" ) );
     else
     {
         unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
@@ -114,7 +119,7 @@ void LogMedicalConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDi
             dateDisplay += endDate.date().toString() + " ";
         dateDisplay += endDate.time().toString();
 
-        itemDisplayer.Display( tools::translate( "Logistic", "Current state end:" ), dateDisplay );
+        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), dateDisplay );
     }
 }
 

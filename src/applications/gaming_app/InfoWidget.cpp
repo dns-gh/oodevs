@@ -20,6 +20,7 @@
 #include "InfoConflictsTab.h"
 #include "InfoMissionsTab.h"
 #include "icons.h"
+#include "clients_gui/DisplayExtractor.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoWidget constructor
@@ -40,7 +41,7 @@ InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const
     box->layout()->setAlignment( Qt::AlignTop | Qt::AlignLeft );
     new InfoSummariesWidget( box, controllers );
     new InfoStancesWidget( box, controllers );
-    new InfoButtonsWidget( this, controllers, itemFactory, staticModel, actionsModel, simulation, profile );
+    new InfoButtonsWidget( this, controllers , itemFactory, extractor, staticModel, actionsModel, simulation, profile );
 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->setTabShape( QTabWidget::Triangular );

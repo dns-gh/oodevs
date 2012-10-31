@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controllers;
+    class DisplayExtractor_ABC;
 }
 
 namespace gui
@@ -34,7 +35,7 @@ class InfoMedicalDialog : public InfoDialog< MedicalStates >
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor );
     virtual ~InfoMedicalDialog();
     //@}
 

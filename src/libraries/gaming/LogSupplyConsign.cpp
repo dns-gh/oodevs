@@ -11,11 +11,14 @@
 #include "LogSupplyConsign.h"
 #include "LogisticConsigns.h"
 #include "Simulation.h"
+#include "LogConsignDisplayer_ABC.h"
 #include "SupplyRecipientResourcesRequest.h"
+#include "SupplyResourceRequest.h"
+#include "clients_gui/DisplayExtractor.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DisplayExtractor_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
@@ -106,24 +109,48 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
 // Name: LogSupplyConsign::Display
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const
+void LogSupplyConsign::Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const
 {
+    gui::DisplayExtractor& extractor = *static_cast< gui::DisplayExtractor* >( &displayExtractor );
+
     unsigned nbRequests = Count();
     if( nbRequests == 0 )
-        displayer.Display( tools::translate( "Logistic", "No recipients" ) ).Display( nState_ );
+        displayer.DisplayTitle( tools::translate( "Logistic", "No recipients" ), tools::ToString( nState_ ) );
     else if( nbRequests == 1 )
-        displayer.Display( CreateIterator().NextElement().recipient_ ).Display( nState_ );
+        displayer.DisplayTitle( CreateIterator().NextElement().recipient_.GetTooltip(), tools::ToString( nState_ ) );
     else
-        displayer.Display( tools::translate( "Logistic", "Multiple recipients" ) ).Display( nState_ );
+        displayer.DisplayTitle( tools::translate( "Logistic", "Multiple recipients" ), tools::ToString( nState_ ) );
 
-    itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ );
-    itemDisplayer.Display( tools::translate( "Logistic", "Transporters provider:" ), pLogProvidingConvoyResourcesEntity_ );
-    itemDisplayer.Display( tools::translate( "Logistic", "Supplier:" ), pLogHandlingEntity_ );
-    itemDisplayer.Display( tools::translate( "Logistic", "Convoyer:" ), pPionLogConvoying_ );
-    itemDisplayer.Display( tools::translate( "Logistic", "State:" ), nState_ );
+    tools::Iterator< const SupplyRecipientResourcesRequest& > itRecipient = CreateIterator();
+    while( itRecipient.HasMoreElements() )
+    {
+        QMap< QString, LogConsignDisplayer_ABC::T_OrderedValues > requests;
+        const SupplyRecipientResourcesRequest& curRecipient= itRecipient.NextElement();
+        tools::Iterator< const SupplyResourceRequest& > itRequest = curRecipient.CreateIterator();
+        while( itRequest.HasMoreElements() )
+        {
+            const SupplyResourceRequest& curRequest = itRequest.NextElement();
+            LogConsignDisplayer_ABC::T_OrderedValues& curRequestQuantities = requests[ curRequest.GetTypeName() ];
+            curRequestQuantities.reserve( 3 );
+            curRequestQuantities.push_back( std::make_pair( tools::translate( "Logistic", "requested" ), curRequest.GetRequested() ) );
+            curRequestQuantities.push_back( std::make_pair( tools::translate( "Logistic", "granted" ), curRequest.GetGranted() ) );
+            curRequestQuantities.push_back( std::make_pair( tools::translate( "Logistic", "convoyed" ), curRequest.GetConvoyed() ) );
+        }
+        displayer.DisplaySubItemValues( tools::translate( "Logistic", "Recipients" ),
+                                        curRecipient.GetRecipientTooltip(),
+                                        requests );
+    }
 
+    if( pPionLogConvoying_ )
+        displayer.DisplayItem( tools::translate( "Logistic", "Convoyer:" ), extractor.GetDisplayName( *pPionLogConvoying_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "Instruction:" ), extractor.GetDisplayName( nID_ ) );
+    if( pLogHandlingEntity_ )
+        displayer.DisplayItem( tools::translate( "Logistic", "Supplier:" ), extractor.GetDisplayName( *pLogHandlingEntity_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "State:" ), tools::ToString( nState_ ) );
+    if( pLogProvidingConvoyResourcesEntity_ )
+        displayer.DisplayItem( tools::translate( "Logistic", "Transporters provider:" ), extractor.GetDisplayName( *pLogProvidingConvoyResourcesEntity_ ) );
     if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
-        itemDisplayer.Display( tools::translate( "Logistic", "Current state end :" ), tools::translate( "Logistic", "Unknown" ) );
+        displayer.DisplayItem( tools::translate( "Logistic", "Current state end :" ), tools::translate( "Logistic", "Unknown" ) );
     else
     {
         unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
@@ -135,7 +162,7 @@ void LogSupplyConsign::Display( kernel::Displayer_ABC& displayer, kernel::Displa
             dateDisplay += endDate.date().toString() + " ";
         dateDisplay += endDate.time().toString();
 
-        itemDisplayer.Display( tools::translate( "Logistic", "Current state end :" ), dateDisplay );
+        displayer.DisplayItem( tools::translate( "Logistic", "Current state end :" ), dateDisplay );
     }
 }
 

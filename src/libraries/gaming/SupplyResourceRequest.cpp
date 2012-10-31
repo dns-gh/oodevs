@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "SupplyResourceRequest.h"
+#include "clients_kernel/DotationType.h"
 
 using namespace kernel;
 
@@ -32,4 +33,42 @@ SupplyResourceRequest::SupplyResourceRequest( const DotationType& type, unsigned
 SupplyResourceRequest::~SupplyResourceRequest()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResourceRequest::GetTypeName
+// Created: MMC 2012-10-30
+// -----------------------------------------------------------------------------
+QString SupplyResourceRequest::GetTypeName() const
+{
+    if( !type_ )
+        return QString();
+    return QString::fromStdString( type_->GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResourceRequest::GetRequested
+// Created: MMC 2012-10-30
+// -----------------------------------------------------------------------------
+unsigned int SupplyResourceRequest::GetRequested() const
+{
+    return requested_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResourceRequest::GetRequested
+// Created: MMC 2012-10-30
+// -----------------------------------------------------------------------------
+unsigned int SupplyResourceRequest::GetGranted() const
+{
+    return granted_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyResourceRequest::GetRequested
+// Created: MMC 2012-10-30
+// -----------------------------------------------------------------------------
+unsigned int SupplyResourceRequest::GetConvoyed() const
+{
+    return convoyed_;
 }

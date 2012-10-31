@@ -158,7 +158,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\CommunicationTreeView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ConnectLoginDialog.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\gaming_app_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -168,6 +167,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\InfoFuneralDialog.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\InhabitantPanel.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LoggerProxy.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyAvailabilityTableWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyExclusiveListWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticSupplyFlowDialog_ABC.cpp" />
@@ -240,9 +240,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\FireResultListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ReportListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticStatusWidgets.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\MaintenanceConsignsWidget.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\MedicalConsignsWidget.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MaintenanceHaulersListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MaintenanceRepairersListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MedicalCollectAmbulancesListView.cpp" />
@@ -409,7 +406,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\ConnectLoginDialog.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\FuneralConsignsWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\gaming_app_pch.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\InfoFuneralDialog.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantPanel.h">
@@ -998,6 +994,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\gaming_app\LogisticConsignsWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticTreeView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\OrbatDockWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\PlanificationModePanel.h" />
@@ -1330,10 +1327,7 @@
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticStatusWidget_ABC.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticStatusWidgets.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceConsignsWidget.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\MedicalConsignsWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticAvailabilitiesListView_ABC.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceHaulersListView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceRepairersListView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MedicalCollectAmbulancesListView.h" />
@@ -2272,6 +2266,7 @@
   <ItemGroup>
     <None Include="..\..\src\applications\gaming_app\gaming_app_ar.ts" />
     <None Include="..\..\src\applications\gaming_app\gaming_app_en.ts" />
+    <None Include="..\..\src\applications\gaming_app\LogisticConsignsWidget.inl" />
     <None Include="..\..\src\applications\gaming_app\ObjectKnowledgePanel.inl" />
     <None Include="..\..\src\applications\gaming_app\gaming_app_es.ts" />
     <None Include="..\..\src\applications\gaming_app\gaming_app_fr.ts" />

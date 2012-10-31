@@ -1379,33 +1379,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>LogisticConsignsWidget_ABC</name>
-    <message>
-        <source>Logistic requests</source>
-        <translation>Logistics requests</translation>
-    </message>
-    <message>
-        <source>Processing consigns</source>
-        <translation>Processing requests</translation>
-    </message>
-    <message>
-        <source>Consign:</source>
-        <translation>Consign:</translation>
-    </message>
-    <message>
-        <source>Instruction:</source>
-        <translation>Instruction:</translation>
-    </message>
-    <message>
-        <source>Consumer:</source>
-        <translation>Consumer:</translation>
-    </message>
-    <message>
-        <source>Handler:</source>
-        <translation>Handler:</translation>
-    </message>
-</context>
-<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1718,21 +1691,6 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
-    <name>MaintenanceConsignsWidget</name>
-    <message>
-        <source>Equipment:</source>
-        <translation>Equipment:</translation>
-    </message>
-    <message>
-        <source>Breakdown:</source>
-        <translation>Breakdown:</translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation>State:</translation>
-    </message>
-</context>
-<context>
     <name>MaintenanceHaulersListView</name>
     <message>
         <source>Tow trucks</source>
@@ -1849,25 +1807,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Resting</source>
         <translation>Resting</translation>
-    </message>
-</context>
-<context>
-    <name>MedicalConsignsWidget</name>
-    <message>
-        <source>Injury:</source>
-        <translation>Injury:</translation>
-    </message>
-    <message>
-        <source>Mentally injured:</source>
-        <translation>Mentally injured:</translation>
-    </message>
-    <message>
-        <source>NBC contaminated:</source>
-        <translation>NBC contaminated:</translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation>State:</translation>
     </message>
 </context>
 <context>
@@ -2851,37 +2790,6 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Saving checkpoint...</source>
         <translation>Saving checkpoint...</translation>
-    </message>
-</context>
-<context>
-    <name>SupplyConsignsWidget</name>
-    <message>
-        <source>Supplier:</source>
-        <translation>Supplier:</translation>
-    </message>
-    <message>
-        <source>Convoyer:</source>
-        <translation>Convoyer:</translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation>State:</translation>
-    </message>
-    <message>
-        <source>Current state end :</source>
-        <translation>Current state end :</translation>
-    </message>
-    <message>
-        <source>Recipients</source>
-        <translation>Recipients</translation>
-    </message>
-    <message>
-        <source>Recipient %1</source>
-        <translation>Recipient %1</translation>
-    </message>
-    <message>
-        <source>Resources requested/granted/convoyed</source>
-        <translation>Resources requested/granted/convoyed</translation>
     </message>
 </context>
 <context>

@@ -13,12 +13,13 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include <boost/function.hpp>
 
 namespace kernel
 {
     class Agent_ABC;
     class Controller;
-    class Displayer_ABC;
+    class DisplayExtractor_ABC;
 }
 
 namespace sword
@@ -28,6 +29,7 @@ namespace sword
 }
 
 class Simulation;
+class LogConsignDisplayer_ABC;
 
 // =============================================================================
 /** @class  LogMedicalConsign
@@ -47,7 +49,7 @@ public:
     //! @name Operations
     //@{
     void Update( const sword::LogMedicalHandlingUpdate& message );
-    void Display( kernel::Displayer_ABC& displayer, kernel::Displayer_ABC& itemDisplayer ) const;
+    void Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

@@ -10,20 +10,21 @@
 #include "gaming_app_pch.h"
 #include "InfoMaintenanceDialog.h"
 #include "LogisticStatusWidgets.h"
-#include "MaintenanceConsignsWidget.h"
+#include "LogisticConsignsWidget.h"
 #include "MaintenanceHaulersListView.h"
 #include "MaintenanceRepairersListView.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/LogMaintenanceConsign.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoMaintenanceDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor )
     : InfoDialog< kernel::MaintenanceStates_ABC >( parent, controllers, tools::translate( "InfoMaintenanceDialog", "Maintenance system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
-    tabs->addTab( new MaintenanceConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoMaintenanceDialog", "Consigns" ) );
+    tabs->addTab( new LogisticConsignsWidget< LogMaintenanceConsign, LogMaintenanceConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMaintenanceDialog", "Consigns" ) );
     Q3VBox* box = new Q3VBox( tabs );
     new MaintenanceHaulersListView( box, controllers, factory );
     new MaintenanceRepairersListView( box, controllers, factory );

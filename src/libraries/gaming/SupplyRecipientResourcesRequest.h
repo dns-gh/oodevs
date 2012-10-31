@@ -43,6 +43,7 @@ public:
     //! @name Accessors
     //@{
     void Update( const sword::SupplyRecipientResourcesRequest& msg );
+    QString GetRecipientTooltip() const;
     //@}
 
 public:

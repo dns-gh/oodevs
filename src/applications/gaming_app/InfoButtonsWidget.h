@@ -24,6 +24,7 @@ namespace kernel
     class Controllers;
     class Profile_ABC;
     class Time_ABC;
+    class DisplayExtractor_ABC;
 }
 
 namespace gui
@@ -45,7 +46,8 @@ class InfoButtonsWidget : public Q3GroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const StaticModel& staticModel,
+             InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory
+                              , kernel::DisplayExtractor_ABC& extractor, const StaticModel& staticModel,
                                 actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~InfoButtonsWidget();
     //@}
@@ -55,6 +57,10 @@ private:
     //@{
     template< typename Dialog >
     void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+    template< typename Dialog >
+    void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor );
+    template< typename Dialog >
+    void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor );
     void AddButton( QDialog* dialog, const QPixmap& pixmap, const QString& tooltips, const char* toggleSlot, const char* toggleSignal );
     //@}
 };

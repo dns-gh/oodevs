@@ -10,21 +10,22 @@
 #include "gaming_app_pch.h"
 #include "InfoMedicalDialog.h"
 #include "LogisticStatusWidgets.h"
-#include "MedicalConsignsWidget.h"
+#include "LogisticConsignsWidget.h"
 #include "MedicalReliefAmbulancesListView.h"
 #include "MedicalCollectAmbulancesListView.h"
 #include "MedicalDoctorsListView.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/LogMedicalConsign.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoMedicalDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor )
     : InfoDialog< MedicalStates >( parent, controllers, tools::translate( "InfoMedicalDialog", "Medical system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
-    tabs->addTab( new MedicalConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoMedicalDialog", "Consigns" ) );
+    tabs->addTab( new LogisticConsignsWidget< LogMedicalConsign, LogMedicalConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMedicalDialog", "Consigns" ) );
     Q3VBox* box = new Q3VBox( tabs );
     new MedicalReliefAmbulancesListView( box, controllers, factory );
     new MedicalCollectAmbulancesListView( box, controllers, factory );

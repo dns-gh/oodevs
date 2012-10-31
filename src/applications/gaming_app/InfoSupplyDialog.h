@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controllers;
+    class DisplayExtractor_ABC;
 }
 
 namespace gui
@@ -37,7 +38,7 @@ class InfoSupplyDialog : public InfoDialog< SupplyStates >
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoSupplyDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor );
     virtual ~InfoSupplyDialog();
     //@}
 

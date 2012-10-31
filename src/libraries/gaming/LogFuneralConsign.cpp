@@ -11,11 +11,15 @@
 #include "LogFuneralConsign.h"
 #include "LogisticConsigns.h"
 #include "Simulation.h"
+#include "LogConsignDisplayer_ABC.h"
+#include "clients_gui/DisplayExtractor.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DotationType.h"
+// #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DisplayExtractor_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -103,18 +107,22 @@ void LogFuneralConsign::Update( const sword::LogFuneralHandlingUpdate& message )
 // Name: LogFuneralConsign::Display
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void LogFuneralConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDisplayer ) const
+void LogFuneralConsign::Display( LogConsignDisplayer_ABC& displayer, kernel::DisplayExtractor_ABC& displayExtractor ) const
 {
-    displayer.Display( consumer_ ).Display( nState_ );
-    itemDisplayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
-                 .Display( tools::translate( "Logistic", "Consumer:" ), consumer_ )
-                 .Display( tools::translate( "Logistic", "Handler:" ), handler_ )
-                 .Display( tools::translate( "Logistic", "Convoy:" ), convoy_ )
-                 .Display( tools::translate( "Logistic", "Rank:" ), rank_ )
-                 .Display( tools::translate( "Logistic", "Current packaging:" ), packagingResource_ )
-                 .Display( tools::translate( "Logistic", "State:" ), nState_ );
+    gui::DisplayExtractor& extractor = *static_cast< gui::DisplayExtractor* >( &displayExtractor );
+    displayer.DisplayTitle( consumer_.GetTooltip(), extractor.GetDisplayName( nState_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "Instruction:" ), extractor.GetDisplayName( nID_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "Consumer:" ), extractor.GetDisplayName( consumer_ ) );
+    if( handler_ )
+        displayer.DisplayItem( tools::translate( "Logistic", "Handler:" ), extractor.GetDisplayName( *handler_ ) );
+    if( convoy_ )
+        displayer.DisplayItem( tools::translate( "Logistic", "Convoy:" ), extractor.GetDisplayName( *convoy_ ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "Rank:" ), tools::ToString( rank_ ) );
+    if( packagingResource_ )
+        displayer.DisplayItem( tools::translate( "Logistic", "Current packaging:" ), extractor.GetDisplayName( packagingResource_->GetName() ) );
+    displayer.DisplayItem( tools::translate( "Logistic", "State:" ), tools::ToString( nState_ ) );
     if( currentStateEndTick_ == std::numeric_limits< unsigned int >::max() )
-        itemDisplayer.Display( tools::translate( "Logistic", "Current state end:" ), tools::translate( "Logistic", "Unknown" ) );
+        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), tools::translate( "Logistic", "Unknown" ) );
     else
     {
         unsigned int endSeconds = simulation_.GetInitialDateTime().toTime_t() + currentStateEndTick_ * simulation_.GetTickDuration();
@@ -126,7 +134,7 @@ void LogFuneralConsign::Display( Displayer_ABC& displayer, Displayer_ABC& itemDi
             dateDisplay += endDate.date().toString() + " ";
         dateDisplay += endDate.time().toString();
 
-        itemDisplayer.Display( tools::translate( "Logistic", "Current state end:" ), dateDisplay );
+        displayer.DisplayItem( tools::translate( "Logistic", "Current state end:" ), dateDisplay );
     }
 }
 

@@ -15,11 +15,7 @@
 namespace kernel
 {
     class Controllers;
-}
-
-namespace gui
-{
-    class ItemFactory_ABC;
+    class DisplayExtractor_ABC;
 }
 
 // =============================================================================
@@ -35,7 +31,7 @@ class InfoFuneralDialog : public InfoDialog_Base
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoFuneralDialog( QWidget* parent, kernel::Controllers& controllers, kernel::DisplayExtractor_ABC& extractor );
     virtual ~InfoFuneralDialog();
     //@}
 

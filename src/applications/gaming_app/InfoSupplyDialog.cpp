@@ -10,12 +10,13 @@
 #include "gaming_app_pch.h"
 #include "InfoSupplyDialog.h"
 #include "LogisticStatusWidgets.h"
-#include "SupplyConsignsWidget.h"
+#include "LogisticConsignsWidget.h"
 #include "SupplyStocksListView.h"
 #include "SupplyQuotasWidget.h"
-#include "clients_kernel/EntityHelpers.h"
 #include "SupplyTransportersListView.h"
+#include "clients_kernel/EntityHelpers.h"
 #include "clients_kernel/Tools.h"
+#include "gaming/LogSupplyConsign.h"
 
 using namespace kernel;
 using namespace EntityHelpers;
@@ -24,11 +25,11 @@ using namespace EntityHelpers;
 // Name: InfoSupplyDialog constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory, kernel::DisplayExtractor_ABC& extractor )
     : InfoDialog< SupplyStates >( parent, controllers, tools::translate( "InfoSupplyDialog", "Supply system" ) )
 {
     tabs_ = new QTabWidget( RootWidget() );
-    tabs_->addTab( new SupplyConsignsWidget( tabs_, controllers, factory ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
+    tabs_->addTab( new LogisticConsignsWidget< LogSupplyConsign, LogSupplyConsigns >( tabs_, controllers, extractor ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
     
     Q3VBox* sqbox = new Q3VBox( tabs_ );
     supplyStocksListView_ = new SupplyStocksListView( sqbox, controllers, factory );

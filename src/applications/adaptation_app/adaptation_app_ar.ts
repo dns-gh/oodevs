@@ -1,6406 +1,6406 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS[]>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
 <TS version="2.0" language="ar" sourcelanguage="en">
-  <context>
+<context>
     <name>ADNDatabaseWarnings</name>
     <message>
-      <source>Database Work in progress</source>
-      <translation type="unfinished">التقدم في عمل قاعدة البيانات</translation>
+        <source>Database Work in progress</source>
+        <translation type="unfinished">التقدم في عمل قاعدة البيانات</translation>
     </message>
     <message>
-      <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can't start with this database.</source>
-      <translation type="unfinished">قافلة الوحدة نوع غير معرف في سجل/العرض، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
+        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished">قافلة الوحدة نوع غير معرف في سجل/العرض، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
     <message>
-      <source>Convoy mission not defined in Log/Supply, because of this, the simulation can't start with this database.</source>
-      <translation type="unfinished">قافلة البعثة غير معرف في سجل/العرض، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
+        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished">قافلة البعثة غير معرف في سجل/العرض، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
     <message>
-      <source>No geometry defined for object %1, because of this, the simulation can't start with this database.</source>
-      <translation type="unfinished">هندسة ليست تعريف للكائن %1، لهذا السبب، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
+        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished">هندسة ليست تعريف للكائن %1، لهذا السبب، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
     <message>
-      <source>No PC defined for automat %1, because of this, the simulation can't start with this database.</source>
-      <translation type="unfinished">لا الكمبيوتر المعرفة من أجل [اوتومت] 1%، لهذا السبب، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
+        <source>No PC defined for automat %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished">لا الكمبيوتر المعرفة من أجل [اوتومت] 1%، لهذا السبب، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
     <message>
-      <source>Automat %1 requires at least one PC, because of this, the simulation can't start with this database.</source>
-      <translation type="unfinished">[اوتومت] %1 يتطلب جهاز كمبيوتر واحد على الأقل، بسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
+        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished">[اوتومت] %1 يتطلب جهاز كمبيوتر واحد على الأقل، بسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
     <message>
-      <source>No decisional model defined for unit %1, because of this, the simulation can't start with this database.</source>
-      <translation type="unfinished">لا يوجد نموذج مفترض المعرفة من أجل الوحدة 1%، لهذا السبب، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
+        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished">لا يوجد نموذج مفترض المعرفة من أجل الوحدة 1%، لهذا السبب، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
     <message>
-      <source>No parameter type specified for parameter %1.</source>
-      <translation type="unfinished">لا يوجد نوع المعلمة المحدد للمعلمة %1.</translation>
+        <source>No parameter type specified for parameter %1.</source>
+        <translation type="unfinished">لا يوجد نوع المعلمة المحدد للمعلمة %1.</translation>
     </message>
     <message>
-      <source>At least one armor must be defined , because of this, the simulation can't start with this database.</source>
-      <translation type="unfinished">يجب تحديد واحد على الأقل من الدروع، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
+        <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished">يجب تحديد واحد على الأقل من الدروع، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ActiveProtections_GUI</name>
     <message>
-      <source>Properties</source>
-      <translation type="unfinished">خصائص</translation>
+        <source>Properties</source>
+        <translation type="unfinished">خصائص</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Coefficient</source>
-      <translation type="unfinished">معامل</translation>
+        <source>Coefficient</source>
+        <translation type="unfinished">معامل</translation>
     </message>
     <message>
-      <source>Hard kill</source>
-      <translation type="unfinished">قتل الثابت</translation>
+        <source>Hard kill</source>
+        <translation type="unfinished">قتل الثابت</translation>
     </message>
     <message>
-      <source>Resource</source>
-      <translation type="unfinished">الموارد</translation>
+        <source>Resource</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-      <source>Usage</source>
-      <translation type="unfinished">الاستخدام</translation>
+        <source>Usage</source>
+        <translation type="unfinished">الاستخدام</translation>
     </message>
     <message>
-      <source>Ammunitions</source>
-      <translation type="unfinished">الذخيرة</translation>
+        <source>Ammunitions</source>
+        <translation type="unfinished">الذخيرة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ActiveProtections_WeaponsTable</name>
     <message>
-      <source>Coefficient</source>
-      <translation type="unfinished">معامل</translation>
+        <source>Coefficient</source>
+        <translation type="unfinished">معامل</translation>
     </message>
     <message>
-      <source>New</source>
-      <translation type="unfinished">الجديد</translation>
+        <source>New</source>
+        <translation type="unfinished">الجديد</translation>
     </message>
     <message>
-      <source>Delete</source>
-      <translation type="unfinished">حذف</translation>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_AddElementCommand</name>
     <message>
-      <source>Add </source>
-      <translation type="unfinished">إضافة</translation>
+        <source>Add </source>
+        <translation type="unfinished">إضافة</translation>
     </message>
     <message>
-      <source> to </source>
-      <translation type="unfinished">إلى</translation>
+        <source> to </source>
+        <translation type="unfinished">إلى</translation>
     </message>
     <message>
-      <source>Add new </source>
-      <translation type="unfinished">إضافة جديد</translation>
+        <source>Add new </source>
+        <translation type="unfinished">إضافة جديد</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_AiEngine_GUI</name>
     <message>
-      <source>Threat management</source>
-      <translation type="unfinished">إدارة الخطر</translation>
+        <source>Threat management</source>
+        <translation type="unfinished">إدارة الخطر</translation>
     </message>
     <message>
-      <source>Operational state maximum effect on threat</source>
-      <translation type="unfinished">الدولة التنفيذية أكبر قدر من التأثير على التهديد</translation>
+        <source>Operational state maximum effect on threat</source>
+        <translation type="unfinished">الدولة التنفيذية أكبر قدر من التأثير على التهديد</translation>
     </message>
     <message>
-      <source>%</source>
-      <translation type="unfinished">%</translation>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
-      <source>Information relevance maximum effect on threat</source>
-      <translation type="unfinished">المعلومات أهمية أكبر قدر من التأثير على التهديد</translation>
+        <source>Information relevance maximum effect on threat</source>
+        <translation type="unfinished">المعلومات أهمية أكبر قدر من التأثير على التهديد</translation>
     </message>
     <message>
-      <source>Neutralization state maximum effect on threat</source>
-      <translation type="unfinished">تحييد الدولة أقصى قدر من التأثير على التهديد</translation>
+        <source>Neutralization state maximum effect on threat</source>
+        <translation type="unfinished">تحييد الدولة أقصى قدر من التأثير على التهديد</translation>
     </message>
     <message>
-      <source>Operational state computation</source>
-      <translation type="unfinished">حساب الدولة التنفيذية</translation>
+        <source>Operational state computation</source>
+        <translation type="unfinished">حساب الدولة التنفيذية</translation>
     </message>
     <message>
-      <source>Non major equipments state weight</source>
-      <translation type="unfinished">غير المعدات الرئيسية الدولة الوزن</translation>
+        <source>Non major equipments state weight</source>
+        <translation type="unfinished">غير المعدات الرئيسية الدولة الوزن</translation>
     </message>
     <message>
-      <source>Major equipments state weight</source>
-      <translation type="unfinished">وزن الدولة المعدات الرئيسية</translation>
+        <source>Major equipments state weight</source>
+        <translation type="unfinished">وزن الدولة المعدات الرئيسية</translation>
     </message>
     <message>
-      <source>Crew state weight</source>
-      <translation type="unfinished">طاقم الدولة الوزن</translation>
+        <source>Crew state weight</source>
+        <translation type="unfinished">طاقم الدولة الوزن</translation>
     </message>
     <message>
-      <source>Decisional threshold</source>
-      <translation type="unfinished">عتبة معلقون</translation>
+        <source>Decisional threshold</source>
+        <translation type="unfinished">عتبة معلقون</translation>
     </message>
     <message>
-      <source>Urban combat computation</source>
-      <translation type="unfinished">حساب مكافحة الحضرية</translation>
+        <source>Urban combat computation</source>
+        <translation type="unfinished">حساب مكافحة الحضرية</translation>
     </message>
     <message>
-      <source>Urban combat hit ratio</source>
-      <translation type="unfinished">نسبة تصل إلى القتال في المناطق الحضرية</translation>
+        <source>Urban combat hit ratio</source>
+        <translation type="unfinished">نسبة تصل إلى القتال في المناطق الحضرية</translation>
     </message>
     <message>
-      <source>Time to acquire critical intelligence</source>
-      <translation type="unfinished">الوقت للحصول على معلومات استخباراتية حساسة</translation>
+        <source>Time to acquire critical intelligence</source>
+        <translation type="unfinished">الوقت للحصول على معلومات استخباراتية حساسة</translation>
     </message>
     <message>
-      <source>Minimum affinity</source>
-      <translation type="unfinished">تقارب الحد الأدنى</translation>
+        <source>Minimum affinity</source>
+        <translation type="unfinished">تقارب الحد الأدنى</translation>
     </message>
     <message>
-      <source>Neutral affinity</source>
-      <translation type="unfinished">تقارب محايدة</translation>
+        <source>Neutral affinity</source>
+        <translation type="unfinished">تقارب محايدة</translation>
     </message>
     <message>
-      <source>Maximum affinity</source>
-      <translation type="unfinished">تقارب الحد الأقصى</translation>
+        <source>Maximum affinity</source>
+        <translation type="unfinished">تقارب الحد الأقصى</translation>
     </message>
     <message>
-      <source>Equipment state on power indicators</source>
-      <translation type="unfinished">معدات الدولة على مؤشرات الطاقة</translation>
+        <source>Equipment state on power indicators</source>
+        <translation type="unfinished">معدات الدولة على مؤشرات الطاقة</translation>
     </message>
     <message>
-      <source>Available</source>
-      <translation type="unfinished">متاح</translation>
+        <source>Available</source>
+        <translation type="unfinished">متاح</translation>
     </message>
     <message>
-      <source>Unavailable</source>
-      <translation type="unfinished">غير متوفر</translation>
+        <source>Unavailable</source>
+        <translation type="unfinished">غير متوفر</translation>
     </message>
     <message>
-      <source>Repairable</source>
-      <translation type="unfinished">يمكن إصلاحها</translation>
+        <source>Repairable</source>
+        <translation type="unfinished">يمكن إصلاحها</translation>
     </message>
     <message>
-      <source>Repairing</source>
-      <translation type="unfinished">إصلاح</translation>
+        <source>Repairing</source>
+        <translation type="unfinished">إصلاح</translation>
     </message>
     <message>
-      <source>Captured</source>
-      <translation type="unfinished">القبض على</translation>
+        <source>Captured</source>
+        <translation type="unfinished">القبض على</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
-      <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
-      <translation type="unfinished">البند &gt; [اوتومت] &gt; وحدة &gt; شركات</translation>
+        <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
+        <translation type="unfinished">البند &gt; [اوتومت] &gt; وحدة &gt; شركات</translation>
     </message>
     <message>
-      <source>Units</source>
-      <translation type="unfinished">وحدات</translation>
+        <source>Units</source>
+        <translation type="unfinished">وحدات</translation>
     </message>
     <message>
-      <source>Equipments</source>
-      <translation type="unfinished">معدات</translation>
+        <source>Equipments</source>
+        <translation type="unfinished">معدات</translation>
     </message>
     <message>
-      <source>Resources</source>
-      <translation type="unfinished">الموارد</translation>
+        <source>Resources</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-      <source>Norm. Consumption</source>
-      <translation type="unfinished">القواعد والمعايير. الاستهلاك</translation>
+        <source>Norm. Consumption</source>
+        <translation type="unfinished">القواعد والمعايير. الاستهلاك</translation>
     </message>
     <message>
-      <source>Consumption
+        <source>Consumption
 Moving</source>
-      <translation type="unfinished">استهلاك تتحرك</translation>
+        <translation type="unfinished">استهلاك تتحرك</translation>
     </message>
     <message>
-      <source>Autonomy
+        <source>Autonomy
 Moving</source>
-      <translation type="unfinished">الحكم الذاتي التي المضي</translation>
+        <translation type="unfinished">الحكم الذاتي التي المضي</translation>
     </message>
     <message>
-      <source>Consumption
+        <source>Consumption
 Parked engine stopped</source>
-      <translation type="unfinished">استهلاك المحرك المتوقفة توقفت</translation>
+        <translation type="unfinished">استهلاك المحرك المتوقفة توقفت</translation>
     </message>
     <message>
-      <source>Autonomy
+        <source>Autonomy
 Parked engine Stopped</source>
-      <translation type="unfinished">الحكم الذاتي المتوقفة المحرك متوقف</translation>
+        <translation type="unfinished">الحكم الذاتي المتوقفة المحرك متوقف</translation>
     </message>
     <message>
-      <source>Consumption
+        <source>Consumption
 Parked engine running</source>
-      <translation type="unfinished">تشغيل المحرك المتوقفة الاستهلاك</translation>
+        <translation type="unfinished">تشغيل المحرك المتوقفة الاستهلاك</translation>
     </message>
     <message>
-      <source>Autonomy
+        <source>Autonomy
 Parked engine running</source>
-      <translation type="unfinished">تشغيل المحرك المتوقفة الحكم الذاتي</translation>
+        <translation type="unfinished">تشغيل المحرك المتوقفة الحكم الذاتي</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_AutomatLog_ListView</name>
     <message>
-      <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
-      <translation type="unfinished">[اوتومت] &gt; وحدة &gt; شركات &gt; البند</translation>
+        <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
+        <translation type="unfinished">[اوتومت] &gt; وحدة &gt; شركات &gt; البند</translation>
     </message>
     <message>
-      <source>Units</source>
-      <translation type="unfinished">وحدات</translation>
+        <source>Units</source>
+        <translation type="unfinished">وحدات</translation>
     </message>
     <message>
-      <source>Equipments</source>
-      <translation type="unfinished">معدات</translation>
+        <source>Equipments</source>
+        <translation type="unfinished">معدات</translation>
     </message>
     <message>
-      <source>Resources</source>
-      <translation type="unfinished">الموارد</translation>
+        <source>Resources</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-      <source>Norm. Consumption</source>
-      <translation type="unfinished">القواعد والمعايير. الاستهلاك</translation>
+        <source>Norm. Consumption</source>
+        <translation type="unfinished">القواعد والمعايير. الاستهلاك</translation>
     </message>
     <message>
-      <source>Consumption
+        <source>Consumption
 Moving</source>
-      <translation type="unfinished">استهلاك تتحرك</translation>
+        <translation type="unfinished">استهلاك تتحرك</translation>
     </message>
     <message>
-      <source>Autonomy
+        <source>Autonomy
 Moving</source>
-      <translation type="unfinished">الحكم الذاتي التي المضي</translation>
+        <translation type="unfinished">الحكم الذاتي التي المضي</translation>
     </message>
     <message>
-      <source>Consumption
+        <source>Consumption
 Parked engine stopped</source>
-      <translation type="unfinished">استهلاك المحرك المتوقفة توقفت</translation>
+        <translation type="unfinished">استهلاك المحرك المتوقفة توقفت</translation>
     </message>
     <message>
-      <source>Autonomy
+        <source>Autonomy
 Parked engine Stopped</source>
-      <translation type="unfinished">الحكم الذاتي المتوقفة المحرك متوقف</translation>
+        <translation type="unfinished">الحكم الذاتي المتوقفة المحرك متوقف</translation>
     </message>
     <message>
-      <source>Consumption
+        <source>Consumption
 Parked engine running</source>
-      <translation type="unfinished">تشغيل المحرك المتوقفة الاستهلاك</translation>
+        <translation type="unfinished">تشغيل المحرك المتوقفة الاستهلاك</translation>
     </message>
     <message>
-      <source>Autonomy
+        <source>Autonomy
 Parked engine running</source>
-      <translation type="unfinished">تشغيل المحرك المتوقفة الحكم الذاتي</translation>
+        <translation type="unfinished">تشغيل المحرك المتوقفة الحكم الذاتي</translation>
     </message>
     <message>
-      <source>Total</source>
-      <translation type="unfinished">المجموع</translation>
+        <source>Total</source>
+        <translation type="unfinished">المجموع</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Automata_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Doctrine model</source>
-      <translation type="unfinished">طراز مذهب</translation>
+        <source>Doctrine model</source>
+        <translation type="unfinished">طراز مذهب</translation>
     </message>
     <message>
-      <source>Command post</source>
-      <translation type="unfinished">مقر القيادة</translation>
+        <source>Command post</source>
+        <translation type="unfinished">مقر القيادة</translation>
     </message>
     <message>
-      <source>Force ratio feedback time</source>
-      <translation type="unfinished">الوقت التغذية المرتدة نسبة القوة</translation>
+        <source>Force ratio feedback time</source>
+        <translation type="unfinished">الوقت التغذية المرتدة نسبة القوة</translation>
     </message>
     <message>
-      <source>Sub-units</source>
-      <translation type="unfinished">الوحدات الفرعية</translation>
+        <source>Sub-units</source>
+        <translation type="unfinished">الوحدات الفرعية</translation>
     </message>
     <message>
-      <source>Automata [ officers/warrant officers/soldiers ]</source>
-      <translation type="unfinished">الباردون [ضباط ضباط/أمر/جنود]</translation>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">الباردون [ضباط ضباط/أمر/جنود]</translation>
     </message>
     <message>
-      <source>Unit [ officers/warrant officers/soldiers ]</source>
-      <translation type="unfinished">وحدة [ضباط ضباط/أمر/جنود]</translation>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">وحدة [ضباط ضباط/أمر/جنود]</translation>
     </message>
     <message>
-      <source>Equipment [ officers/warrant officers/soldiers ]</source>
-      <translation type="unfinished">معدات [ضباط ضباط/أمر/جنود]</translation>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">معدات [ضباط ضباط/أمر/جنود]</translation>
     </message>
     <message>
-      <source>(%1..%2) x %3 x %4 [ %5 ]</source>
-      <translation type="unfinished">(%1... %2) × %3 x %4% [5]</translation>
+        <source>(%1..%2) x %3 x %4 [ %5 ]</source>
+        <translation type="unfinished">(%1... %2) × %3 x %4% [5]</translation>
     </message>
     <message>
-      <source>%1 x %2 [ %3 ]</source>
-      <translation type="unfinished">%1 x %2% [3]</translation>
+        <source>%1 x %2 [ %3 ]</source>
+        <translation type="unfinished">%1 x %2% [3]</translation>
     </message>
     <message>
-      <source>(%1..%2) x %3 [ %4/%5/%6 ]</source>
-      <translation type="unfinished">(%1... %2) × %3 [%4/%5/%6]</translation>
+        <source>(%1..%2) x %3 [ %4/%5/%6 ]</source>
+        <translation type="unfinished">(%1... %2) × %3 [%4/%5/%6]</translation>
     </message>
     <message>
-      <source>%1 [ %2/%3/%4 ]</source>
-      <translation type="unfinished">%1 [%2/%3/%4]</translation>
+        <source>%1 [ %2/%3/%4 ]</source>
+        <translation type="unfinished">%1 [%2/%3/%4]</translation>
     </message>
     <message>
-      <source>Automata compositions</source>
-      <translation type="unfinished">التراكيب الباردون</translation>
+        <source>Automata compositions</source>
+        <translation type="unfinished">التراكيب الباردون</translation>
     </message>
     <message>
-      <source>Logistic per automat</source>
-      <translation type="unfinished">اللوجستية الواحدة [اوتومت]</translation>
+        <source>Logistic per automat</source>
+        <translation type="unfinished">اللوجستية الواحدة [اوتومت]</translation>
     </message>
     <message>
-      <source>Logistic per resource</source>
-      <translation type="unfinished">السوقي كل مورد</translation>
+        <source>Logistic per resource</source>
+        <translation type="unfinished">السوقي كل مورد</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Automata_SubUnitsTable</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Min Nbr</source>
-      <translation type="unfinished">Nbr دقيقة</translation>
+        <source>Min Nbr</source>
+        <translation type="unfinished">Nbr دقيقة</translation>
     </message>
     <message>
-      <source>Max Nbr</source>
-      <translation type="unfinished">ماكس Nbr</translation>
+        <source>Max Nbr</source>
+        <translation type="unfinished">ماكس Nbr</translation>
     </message>
     <message>
-      <source>Add subordinate</source>
-      <translation type="unfinished">أضف تابعة</translation>
+        <source>Add subordinate</source>
+        <translation type="unfinished">أضف تابعة</translation>
     </message>
     <message>
-      <source>Remove subordinate</source>
-      <translation type="unfinished">إزالة تابعة</translation>
+        <source>Remove subordinate</source>
+        <translation type="unfinished">إزالة تابعة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_AvailabilityWarningTable</name>
     <message>
-      <source>Percentage</source>
-      <translation type="unfinished">النسبة المئوية</translation>
+        <source>Percentage</source>
+        <translation type="unfinished">النسبة المئوية</translation>
     </message>
     <message>
-      <source>New warning</source>
-      <translation type="unfinished">تحذير جديد</translation>
+        <source>New warning</source>
+        <translation type="unfinished">تحذير جديد</translation>
     </message>
     <message>
-      <source>Delete warning</source>
-      <translation type="unfinished">حذف إنذار</translation>
+        <source>Delete warning</source>
+        <translation type="unfinished">حذف إنذار</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Breakdowns_GUI</name>
     <message>
-      <source>General parameters</source>
-      <translation type="unfinished">معلمات عامة</translation>
+        <source>General parameters</source>
+        <translation type="unfinished">معلمات عامة</translation>
     </message>
     <message>
-      <source>Average diagnostic duration</source>
-      <translation type="unfinished">متوسط مدة التشخيص</translation>
+        <source>Average diagnostic duration</source>
+        <translation type="unfinished">متوسط مدة التشخيص</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Seriousness</source>
-      <translation type="unfinished">خطورة</translation>
+        <source>Seriousness</source>
+        <translation type="unfinished">خطورة</translation>
     </message>
     <message>
-      <source>Repair duration</source>
-      <translation type="unfinished">مدة إصلاح</translation>
+        <source>Repair duration</source>
+        <translation type="unfinished">مدة إصلاح</translation>
     </message>
     <message>
-      <source>Repair duration variance</source>
-      <translation type="unfinished">تباين المدة إصلاح</translation>
+        <source>Repair duration variance</source>
+        <translation type="unfinished">تباين المدة إصلاح</translation>
     </message>
     <message>
-      <source>Required parts</source>
-      <translation type="unfinished">الأجزاء المطلوبة</translation>
+        <source>Required parts</source>
+        <translation type="unfinished">الأجزاء المطلوبة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Breakdowns_PartsTable</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Nbr required</source>
-      <translation type="unfinished">Nbr المطلوبة</translation>
+        <source>Nbr required</source>
+        <translation type="unfinished">Nbr المطلوبة</translation>
     </message>
     <message>
-      <source>Add required part</source>
-      <translation type="unfinished">إضافة الجزء المطلوب</translation>
+        <source>Add required part</source>
+        <translation type="unfinished">إضافة الجزء المطلوب</translation>
     </message>
     <message>
-      <source>Remove required part</source>
-      <translation type="unfinished">إزالة الجزء المطلوب</translation>
+        <source>Remove required part</source>
+        <translation type="unfinished">إزالة الجزء المطلوب</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Categories_AttritionEffect_Table</name>
     <message>
-      <source>State</source>
-      <translation type="unfinished">الدولة</translation>
+        <source>State</source>
+        <translation type="unfinished">الدولة</translation>
     </message>
     <message>
-      <source>Wounded %</source>
-      <translation type="unfinished">الجرحى %</translation>
+        <source>Wounded %</source>
+        <translation type="unfinished">الجرحى %</translation>
     </message>
     <message>
-      <source>Dead %</source>
-      <translation type="unfinished">مقتل ٪</translation>
+        <source>Dead %</source>
+        <translation type="unfinished">مقتل ٪</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Categories_GUI</name>
     <message>
-      <source>Armor classes</source>
-      <translation type="unfinished">فئات الدروع</translation>
+        <source>Armor classes</source>
+        <translation type="unfinished">فئات الدروع</translation>
     </message>
     <message>
-      <source>Armor class</source>
-      <translation type="unfinished">فئة المدرعات</translation>
+        <source>Armor class</source>
+        <translation type="unfinished">فئة المدرعات</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Neutralization</source>
-      <translation type="unfinished">تحييد</translation>
+        <source>Neutralization</source>
+        <translation type="unfinished">تحييد</translation>
     </message>
     <message>
-      <source>Average time</source>
-      <translation type="unfinished">متوسط الوقت</translation>
+        <source>Average time</source>
+        <translation type="unfinished">متوسط الوقت</translation>
     </message>
     <message>
-      <source>Variance</source>
-      <translation type="unfinished">الفرق</translation>
+        <source>Variance</source>
+        <translation type="unfinished">الفرق</translation>
     </message>
     <message>
-      <source>Breakdowns</source>
-      <translation type="unfinished">أعطال</translation>
+        <source>Breakdowns</source>
+        <translation type="unfinished">أعطال</translation>
     </message>
     <message>
-      <source>Maintenance support needed</source>
-      <translation type="unfinished">دعم الصيانة اللازمة</translation>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة اللازمة</translation>
     </message>
     <message>
-      <source>%</source>
-      <translation type="unfinished">%</translation>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
-      <source>On site fixable</source>
-      <translation type="unfinished">في الموقع يمكن حلها</translation>
+        <source>On site fixable</source>
+        <translation type="unfinished">في الموقع يمكن حلها</translation>
     </message>
     <message>
-      <source>Attrition effects on humans</source>
-      <translation type="unfinished">آثار الاستنزاف على البشر</translation>
+        <source>Attrition effects on humans</source>
+        <translation type="unfinished">آثار الاستنزاف على البشر</translation>
     </message>
     <message>
-      <source>Sizes</source>
-      <translation type="unfinished">أحجام</translation>
+        <source>Sizes</source>
+        <translation type="unfinished">أحجام</translation>
     </message>
     <message>
-      <source>Size</source>
-      <translation type="unfinished">الحجم</translation>
+        <source>Size</source>
+        <translation type="unfinished">الحجم</translation>
     </message>
     <message>
-      <source>Resource natures</source>
-      <translation type="unfinished">الموارد الطبيعة</translation>
+        <source>Resource natures</source>
+        <translation type="unfinished">الموارد الطبيعة</translation>
     </message>
     <message>
-      <source>Nature</source>
-      <translation type="unfinished">طبيعة</translation>
+        <source>Nature</source>
+        <translation type="unfinished">طبيعة</translation>
     </message>
     <message>
-      <source>Logistic resource categories</source>
-      <translation type="unfinished">فئات الموارد اللوجستية</translation>
+        <source>Logistic resource categories</source>
+        <translation type="unfinished">فئات الموارد اللوجستية</translation>
     </message>
     <message>
-      <source>Logistic resource category</source>
-      <translation type="unfinished">فئة الموارد اللوجستية</translation>
+        <source>Logistic resource category</source>
+        <translation type="unfinished">فئة الموارد اللوجستية</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ChangeValueCommand</name>
     <message>
-      <source>Change </source>
-      <translation type="unfinished">التغيير</translation>
+        <source>Change </source>
+        <translation type="unfinished">التغيير</translation>
     </message>
     <message>
-      <source> from </source>
-      <translation type="unfinished">من</translation>
+        <source> from </source>
+        <translation type="unfinished">من</translation>
     </message>
     <message>
-      <source>true</source>
-      <translation type="unfinished">صحيح</translation>
+        <source>true</source>
+        <translation type="unfinished">صحيح</translation>
     </message>
     <message>
-      <source>false</source>
-      <translation type="unfinished">false</translation>
+        <source>false</source>
+        <translation type="unfinished">false</translation>
     </message>
     <message>
-      <source> to </source>
-      <translation type="unfinished">إلى</translation>
+        <source> to </source>
+        <translation type="unfinished">إلى</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ColorNameSelector</name>
     <message>
-      <source>Select color</source>
-      <translation type="unfinished">حدد اللون</translation>
+        <source>Select color</source>
+        <translation type="unfinished">حدد اللون</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ColorSelector</name>
     <message>
-      <source>Select color</source>
-      <translation type="unfinished">حدد اللون</translation>
+        <source>Select color</source>
+        <translation type="unfinished">حدد اللون</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Communications_GUI</name>
     <message>
-      <source>Effect on reloading duration</source>
-      <translation type="unfinished">تأثير على إعادة شحن المدة</translation>
+        <source>Effect on reloading duration</source>
+        <translation type="unfinished">تأثير على إعادة شحن المدة</translation>
     </message>
     <message>
-      <source>Effect on movement speed</source>
-      <translation type="unfinished">تأثير على سرعة الحركة</translation>
+        <source>Effect on movement speed</source>
+        <translation type="unfinished">تأثير على سرعة الحركة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Composantes_ActiveProtectionsListView</name>
     <message>
-      <source>ActiveProtections</source>
-      <translation type="unfinished">أكتيفيبروتيكشنز</translation>
+        <source>ActiveProtections</source>
+        <translation type="unfinished">أكتيفيبروتيكشنز</translation>
     </message>
     <message>
-      <source>Add active protections</source>
-      <translation type="unfinished">إضافة الحماية النشطة</translation>
+        <source>Add active protections</source>
+        <translation type="unfinished">إضافة الحماية النشطة</translation>
     </message>
     <message>
-      <source>Remove active protections</source>
-      <translation type="unfinished">إزالة الحماية النشطة</translation>
+        <source>Remove active protections</source>
+        <translation type="unfinished">إزالة الحماية النشطة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Composantes_BreakdownsTable</name>
     <message>
-      <source>Odds (%)</source>
-      <translation type="unfinished">الصعاب (%)</translation>
+        <source>Odds (%)</source>
+        <translation type="unfinished">الصعاب (%)</translation>
     </message>
     <message>
-      <source>New</source>
-      <translation type="unfinished">الجديد</translation>
+        <source>New</source>
+        <translation type="unfinished">الجديد</translation>
     </message>
     <message>
-      <source>Delete</source>
-      <translation type="unfinished">حذف</translation>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Composantes_ConsumptionsTable</name>
     <message>
-      <source>Activity</source>
-      <translation type="unfinished">النشاط</translation>
+        <source>Activity</source>
+        <translation type="unfinished">النشاط</translation>
     </message>
     <message>
-      <source>Consumed item</source>
-      <translation type="unfinished">البند المستهلكة</translation>
+        <source>Consumed item</source>
+        <translation type="unfinished">البند المستهلكة</translation>
     </message>
     <message>
-      <source>Qty/hour</source>
-      <translation type="unfinished">الكمية لكل ساعة</translation>
+        <source>Qty/hour</source>
+        <translation type="unfinished">الكمية لكل ساعة</translation>
     </message>
     <message>
-      <source>Add consumption</source>
-      <translation type="unfinished">إضافة الاستهلاك</translation>
+        <source>Add consumption</source>
+        <translation type="unfinished">إضافة الاستهلاك</translation>
     </message>
     <message>
-      <source>Remove consumption</source>
-      <translation type="unfinished">إزالة الاستهلاك</translation>
+        <source>Remove consumption</source>
+        <translation type="unfinished">إزالة الاستهلاك</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Composantes_Dotations_GUI</name>
     <message>
-      <source>Category</source>
-      <translation type="unfinished">الفئة</translation>
+        <source>Category</source>
+        <translation type="unfinished">الفئة</translation>
     </message>
     <message>
-      <source>Qty</source>
-      <translation type="unfinished">الكمية</translation>
+        <source>Qty</source>
+        <translation type="unfinished">الكمية</translation>
     </message>
     <message>
-      <source>Log threshold (%)</source>
-      <translation type="unfinished">سجل عتبة (%)</translation>
+        <source>Log threshold (%)</source>
+        <translation type="unfinished">سجل عتبة (%)</translation>
     </message>
     <message>
-      <source>Normalized consumption</source>
-      <translation type="unfinished">الاستهلاك تم تسويتها</translation>
+        <source>Normalized consumption</source>
+        <translation type="unfinished">الاستهلاك تم تسويتها</translation>
     </message>
     <message>
-      <source>Add resource</source>
-      <translation type="unfinished">إضافة مورد</translation>
+        <source>Add resource</source>
+        <translation type="unfinished">إضافة مورد</translation>
     </message>
     <message>
-      <source>Remove resource</source>
-      <translation type="unfinished">إزالة مورد</translation>
+        <source>Remove resource</source>
+        <translation type="unfinished">إزالة مورد</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Composantes_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Comments</source>
-      <translation type="unfinished">تعليقات</translation>
+        <source>Comments</source>
+        <translation type="unfinished">تعليقات</translation>
     </message>
     <message>
-      <source>Armor-Plating</source>
-      <translation type="unfinished">دروع</translation>
+        <source>Armor-Plating</source>
+        <translation type="unfinished">دروع</translation>
     </message>
     <message>
-      <source>Volume</source>
-      <translation type="unfinished">وحدة التخزين</translation>
+        <source>Volume</source>
+        <translation type="unfinished">وحدة التخزين</translation>
     </message>
     <message>
-      <source>Weight</source>
-      <translation type="unfinished">الوزن</translation>
+        <source>Weight</source>
+        <translation type="unfinished">الوزن</translation>
     </message>
     <message>
-      <source>T</source>
-      <translation type="unfinished">T</translation>
+        <source>T</source>
+        <translation type="unfinished">T</translation>
     </message>
     <message>
-      <source>Max slope</source>
-      <translation type="unfinished">ماكس المنحدر</translation>
+        <source>Max slope</source>
+        <translation type="unfinished">ماكس المنحدر</translation>
     </message>
     <message>
-      <source>%</source>
-      <translation type="unfinished">%</translation>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
-      <source>Troop/Crew</source>
-      <translation type="unfinished">بقوات/الطاقم</translation>
+        <source>Troop/Crew</source>
+        <translation type="unfinished">بقوات/الطاقم</translation>
     </message>
     <message>
-      <source>Troop transport</source>
-      <translation type="unfinished">نقل القوات</translation>
+        <source>Troop transport</source>
+        <translation type="unfinished">نقل القوات</translation>
     </message>
     <message>
-      <source>Embark time per person</source>
-      <translation type="unfinished">الشروع في المرة الواحدة لكل شخص</translation>
+        <source>Embark time per person</source>
+        <translation type="unfinished">الشروع في المرة الواحدة لكل شخص</translation>
     </message>
     <message>
-      <source>Disembark time per person</source>
-      <translation type="unfinished">النزول في المرة الواحدة لكل شخص</translation>
+        <source>Disembark time per person</source>
+        <translation type="unfinished">النزول في المرة الواحدة لكل شخص</translation>
     </message>
     <message>
-      <source>Cargo transport</source>
-      <translation type="unfinished">نقل البضائع</translation>
+        <source>Cargo transport</source>
+        <translation type="unfinished">نقل البضائع</translation>
     </message>
     <message>
-      <source>Weight capacity</source>
-      <translation type="unfinished">قدرة الوزن</translation>
+        <source>Weight capacity</source>
+        <translation type="unfinished">قدرة الوزن</translation>
     </message>
     <message>
-      <source>Loading time per ton</source>
-      <translation type="unfinished">وقت التحميل للطن الواحد</translation>
+        <source>Loading time per ton</source>
+        <translation type="unfinished">وقت التحميل للطن الواحد</translation>
     </message>
     <message>
-      <source>Unloading time per ton</source>
-      <translation type="unfinished">وقت التفريغ للطن الواحد</translation>
+        <source>Unloading time per ton</source>
+        <translation type="unfinished">وقت التفريغ للطن الواحد</translation>
     </message>
     <message>
-      <source>Crowd transport</source>
-      <translation type="unfinished">النقل الحشد</translation>
+        <source>Crowd transport</source>
+        <translation type="unfinished">النقل الحشد</translation>
     </message>
     <message>
-      <source>Capacity</source>
-      <translation type="unfinished">القدرات</translation>
+        <source>Capacity</source>
+        <translation type="unfinished">القدرات</translation>
     </message>
     <message>
-      <source>Military codes</source>
-      <translation type="unfinished">رموز عسكرية</translation>
+        <source>Military codes</source>
+        <translation type="unfinished">رموز عسكرية</translation>
     </message>
     <message>
-      <source>Operational Information</source>
-      <translation type="unfinished">المعلومات التشغيلية</translation>
+        <source>Operational Information</source>
+        <translation type="unfinished">المعلومات التشغيلية</translation>
     </message>
     <message>
-      <source>Native country:</source>
-      <translation type="unfinished">البلد الأصلي:</translation>
+        <source>Native country:</source>
+        <translation type="unfinished">البلد الأصلي:</translation>
     </message>
     <message>
-      <source>Starting country:</source>
-      <translation type="unfinished">ابتداء من البلد:</translation>
+        <source>Starting country:</source>
+        <translation type="unfinished">ابتداء من البلد:</translation>
     </message>
     <message>
-      <source>Starting date:</source>
-      <translation type="unfinished">تاريخ البدء:</translation>
+        <source>Starting date:</source>
+        <translation type="unfinished">تاريخ البدء:</translation>
     </message>
     <message>
-      <source>Information origin:</source>
-      <translation type="unfinished">مصدر المعلومات:</translation>
+        <source>Information origin:</source>
+        <translation type="unfinished">مصدر المعلومات:</translation>
     </message>
     <message>
-      <source>Equipment category:</source>
-      <translation type="unfinished">فئة المعدات:</translation>
+        <source>Equipment category:</source>
+        <translation type="unfinished">فئة المعدات:</translation>
     </message>
     <message>
-      <source>Breakdowns</source>
-      <translation type="unfinished">أعطال</translation>
+        <source>Breakdowns</source>
+        <translation type="unfinished">أعطال</translation>
     </message>
     <message>
-      <source>Attrition breakdowns</source>
-      <translation type="unfinished">أعطال الاستنزاف</translation>
+        <source>Attrition breakdowns</source>
+        <translation type="unfinished">أعطال الاستنزاف</translation>
     </message>
     <message>
-      <source>Random breakdowns</source>
-      <translation type="unfinished">أعطال عشوائي</translation>
+        <source>Random breakdowns</source>
+        <translation type="unfinished">أعطال عشوائي</translation>
     </message>
     <message>
-      <source>Speeds</source>
-      <translation type="unfinished">بسرعة</translation>
+        <source>Speeds</source>
+        <translation type="unfinished">بسرعة</translation>
     </message>
     <message>
-      <source>Max speed</source>
-      <translation type="unfinished">ماكس السرعة</translation>
+        <source>Max speed</source>
+        <translation type="unfinished">ماكس السرعة</translation>
     </message>
     <message>
-      <source>km/h</source>
-      <translation type="unfinished">كم/ساعة</translation>
+        <source>km/h</source>
+        <translation type="unfinished">كم/ساعة</translation>
     </message>
     <message>
-      <source>Sensors</source>
-      <translation type="unfinished">أجهزة الاستشعار</translation>
+        <source>Sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Special sensors</source>
-      <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
+        <source>Special sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
     </message>
     <message>
-      <source>Weapon systems</source>
-      <translation type="unfinished">نظم الأسلحة</translation>
+        <source>Weapon systems</source>
+        <translation type="unfinished">نظم الأسلحة</translation>
     </message>
     <message>
-      <source>Active Protections</source>
-      <translation type="unfinished">الحماية النشطة</translation>
+        <source>Active Protections</source>
+        <translation type="unfinished">الحماية النشطة</translation>
     </message>
     <message>
-      <source>Resources</source>
-      <translation type="unfinished">الموارد</translation>
+        <source>Resources</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-      <source>Consumptions</source>
-      <translation type="unfinished">استهلاكها</translation>
+        <source>Consumptions</source>
+        <translation type="unfinished">استهلاكها</translation>
     </message>
     <message>
-      <source>Objects</source>
-      <translation type="unfinished">الكائنات</translation>
+        <source>Objects</source>
+        <translation type="unfinished">الكائنات</translation>
     </message>
     <message>
-      <source>Initial Construction Time</source>
-      <translation type="unfinished">وقت الإنشاء الأولية</translation>
+        <source>Initial Construction Time</source>
+        <translation type="unfinished">وقت الإنشاء الأولية</translation>
     </message>
     <message>
-      <source>Initial Destruction Time</source>
-      <translation type="unfinished">وقت التدمير الأولى</translation>
+        <source>Initial Destruction Time</source>
+        <translation type="unfinished">وقت التدمير الأولى</translation>
     </message>
     <message>
-      <source>Time Construction Coefficient</source>
-      <translation type="unfinished">معامل البناء في الوقت</translation>
+        <source>Time Construction Coefficient</source>
+        <translation type="unfinished">معامل البناء في الوقت</translation>
     </message>
     <message>
-      <source>Time Destruction Coefficient</source>
-      <translation type="unfinished">وقت تدمير معامل</translation>
+        <source>Time Destruction Coefficient</source>
+        <translation type="unfinished">وقت تدمير معامل</translation>
     </message>
     <message>
-      <source>Mining time</source>
-      <translation type="unfinished">التعدين في الوقت</translation>
+        <source>Mining time</source>
+        <translation type="unfinished">التعدين في الوقت</translation>
     </message>
     <message>
-      <source>Demining time</source>
-      <translation type="unfinished">وقت إزالة الألغام</translation>
+        <source>Demining time</source>
+        <translation type="unfinished">وقت إزالة الألغام</translation>
     </message>
     <message>
-      <source>Extinguishing time</source>
-      <translation type="unfinished">إطفاء الوقت</translation>
+        <source>Extinguishing time</source>
+        <translation type="unfinished">إطفاء الوقت</translation>
     </message>
     <message>
-      <source>Bypass coefficient</source>
-      <translation type="unfinished">تجاوز معامل</translation>
+        <source>Bypass coefficient</source>
+        <translation type="unfinished">تجاوز معامل</translation>
     </message>
     <message>
-      <source>Speed when bypassed</source>
-      <translation type="unfinished">السرعة عند تجاوزها</translation>
+        <source>Speed when bypassed</source>
+        <translation type="unfinished">السرعة عند تجاوزها</translation>
     </message>
     <message>
-      <source>Speed when not bypassed</source>
-      <translation type="unfinished">السرعة عند عدم تجاوزها</translation>
+        <source>Speed when not bypassed</source>
+        <translation type="unfinished">السرعة عند عدم تجاوزها</translation>
     </message>
     <message>
-      <source>Data</source>
-      <translation type="unfinished">البيانات</translation>
+        <source>Data</source>
+        <translation type="unfinished">البيانات</translation>
     </message>
     <message>
-      <source>Log</source>
-      <translation type="unfinished">سجل</translation>
+        <source>Log</source>
+        <translation type="unfinished">سجل</translation>
     </message>
     <message>
-      <source>Power indicators</source>
-      <translation type="unfinished">مؤشرات الطاقة</translation>
+        <source>Power indicators</source>
+        <translation type="unfinished">مؤشرات الطاقة</translation>
     </message>
     <message>
-      <source>Medical system</source>
-      <translation type="unfinished">النظام الطبي</translation>
+        <source>Medical system</source>
+        <translation type="unfinished">النظام الطبي</translation>
     </message>
     <message>
-      <source>Ambulance, evacuation</source>
-      <translation type="unfinished">سيارة إسعاف، الإجلاء</translation>
+        <source>Ambulance, evacuation</source>
+        <translation type="unfinished">سيارة إسعاف، الإجلاء</translation>
     </message>
     <message>
-      <source>Ambulance, collection</source>
-      <translation type="unfinished">سيارة إسعاف، جمع</translation>
+        <source>Ambulance, collection</source>
+        <translation type="unfinished">سيارة إسعاف، جمع</translation>
     </message>
     <message>
-      <source>Doctor</source>
-      <translation type="unfinished">الطبيب</translation>
+        <source>Doctor</source>
+        <translation type="unfinished">الطبيب</translation>
     </message>
     <message>
-      <source>Triage</source>
-      <translation type="unfinished">الفرز</translation>
+        <source>Triage</source>
+        <translation type="unfinished">الفرز</translation>
     </message>
     <message>
-      <source>Treats</source>
-      <translation type="unfinished">يعامل</translation>
+        <source>Treats</source>
+        <translation type="unfinished">يعامل</translation>
     </message>
     <message>
-      <source>Treats NBC</source>
-      <translation type="unfinished">يتعامل مع شبكة أن بي سي</translation>
+        <source>Treats NBC</source>
+        <translation type="unfinished">يتعامل مع شبكة أن بي سي</translation>
     </message>
     <message>
-      <source>Treats psyop</source>
-      <translation type="unfinished">يعامل psyop</translation>
+        <source>Treats psyop</source>
+        <translation type="unfinished">يعامل psyop</translation>
     </message>
     <message>
-      <source>Loading duration per person</source>
-      <translation type="unfinished">تحميل مدة للشخص الواحد</translation>
+        <source>Loading duration per person</source>
+        <translation type="unfinished">تحميل مدة للشخص الواحد</translation>
     </message>
     <message>
-      <source>Unloading duration per person</source>
-      <translation type="unfinished">مدة التفريغ للشخص الواحد</translation>
+        <source>Unloading duration per person</source>
+        <translation type="unfinished">مدة التفريغ للشخص الواحد</translation>
     </message>
     <message>
-      <source>Capabilities</source>
-      <translation type="unfinished">قدرات</translation>
+        <source>Capabilities</source>
+        <translation type="unfinished">قدرات</translation>
     </message>
     <message>
-      <source>NBC</source>
-      <translation type="unfinished">أن بي سي</translation>
+        <source>NBC</source>
+        <translation type="unfinished">أن بي سي</translation>
     </message>
     <message>
-      <source>psyop</source>
-      <translation type="unfinished">psyop</translation>
+        <source>psyop</source>
+        <translation type="unfinished">psyop</translation>
     </message>
     <message>
-      <source>Supply system</source>
-      <translation type="unfinished">نظام العرض</translation>
+        <source>Supply system</source>
+        <translation type="unfinished">نظام العرض</translation>
     </message>
     <message>
-      <source>Carrier</source>
-      <translation type="unfinished">الناقل</translation>
+        <source>Carrier</source>
+        <translation type="unfinished">الناقل</translation>
     </message>
     <message>
-      <source>Max weight carried</source>
-      <translation type="unfinished">ماكس الوزن التي تقوم</translation>
+        <source>Max weight carried</source>
+        <translation type="unfinished">ماكس الوزن التي تقوم</translation>
     </message>
     <message>
-      <source>Max volume carried</source>
-      <translation type="unfinished">حجم الحد الأقصى التي تقوم</translation>
+        <source>Max volume carried</source>
+        <translation type="unfinished">حجم الحد الأقصى التي تقوم</translation>
     </message>
     <message>
-      <source>m3</source>
-      <translation type="unfinished">m3</translation>
+        <source>m3</source>
+        <translation type="unfinished">m3</translation>
     </message>
     <message>
-      <source>Resource nature carried</source>
-      <translation type="unfinished">طبيعة الموارد التي تقوم</translation>
+        <source>Resource nature carried</source>
+        <translation type="unfinished">طبيعة الموارد التي تقوم</translation>
     </message>
     <message>
-      <source>Maintenance system</source>
-      <translation type="unfinished">صيانة النظام</translation>
+        <source>Maintenance system</source>
+        <translation type="unfinished">صيانة النظام</translation>
     </message>
     <message>
-      <source>Tow truck</source>
-      <translation type="unfinished">سحب الشاحنة</translation>
+        <source>Tow truck</source>
+        <translation type="unfinished">سحب الشاحنة</translation>
     </message>
     <message>
-      <source>Loading duration</source>
-      <translation type="unfinished">مدة التحميل</translation>
+        <source>Loading duration</source>
+        <translation type="unfinished">مدة التحميل</translation>
     </message>
     <message>
-      <source>Unloading duration</source>
-      <translation type="unfinished">مدة التفريغ</translation>
+        <source>Unloading duration</source>
+        <translation type="unfinished">مدة التفريغ</translation>
     </message>
     <message>
-      <source>Seriousness level 1</source>
-      <translation type="unfinished">خطورة مستوى 1</translation>
+        <source>Seriousness level 1</source>
+        <translation type="unfinished">خطورة مستوى 1</translation>
     </message>
     <message>
-      <source>Seriousness level 2</source>
-      <translation type="unfinished">مستوى خطورة 2</translation>
+        <source>Seriousness level 2</source>
+        <translation type="unfinished">مستوى خطورة 2</translation>
     </message>
     <message>
-      <source>Seriousness level 3</source>
-      <translation type="unfinished">خطورة المستوى 3</translation>
+        <source>Seriousness level 3</source>
+        <translation type="unfinished">خطورة المستوى 3</translation>
     </message>
     <message>
-      <source>Max repair duration</source>
-      <translation type="unfinished">مدة إصلاح ماكس</translation>
+        <source>Max repair duration</source>
+        <translation type="unfinished">مدة إصلاح ماكس</translation>
     </message>
     <message>
-      <source>Can fix electronic breakdowns</source>
-      <translation type="unfinished">يمكن إصلاح الأعطال الإلكترونية</translation>
+        <source>Can fix electronic breakdowns</source>
+        <translation type="unfinished">يمكن إصلاح الأعطال الإلكترونية</translation>
     </message>
     <message>
-      <source>Can fix mobility breakdowns</source>
-      <translation type="unfinished">يمكن إصلاح الأعطال التنقل</translation>
+        <source>Can fix mobility breakdowns</source>
+        <translation type="unfinished">يمكن إصلاح الأعطال التنقل</translation>
     </message>
     <message>
-      <source>Direct fire</source>
-      <translation type="unfinished">النار مباشرة</translation>
+        <source>Direct fire</source>
+        <translation type="unfinished">النار مباشرة</translation>
     </message>
     <message>
-      <source>Indirect fire</source>
-      <translation type="unfinished">النيران غير المباشرة</translation>
+        <source>Indirect fire</source>
+        <translation type="unfinished">النيران غير المباشرة</translation>
     </message>
     <message>
-      <source>Close combat</source>
-      <translation type="unfinished">وثيقة مكافحة</translation>
+        <source>Close combat</source>
+        <translation type="unfinished">وثيقة مكافحة</translation>
     </message>
     <message>
-      <source>Engineering</source>
-      <translation type="unfinished">هندسة</translation>
+        <source>Engineering</source>
+        <translation type="unfinished">هندسة</translation>
     </message>
     <message>
-      <source>Equipment</source>
-      <translation type="unfinished">المعدات</translation>
+        <source>Equipment</source>
+        <translation type="unfinished">المعدات</translation>
     </message>
     <message>
-      <source>Equipment speeds</source>
-      <translation type="unfinished">المعدات بسرعة</translation>
+        <source>Equipment speeds</source>
+        <translation type="unfinished">المعدات بسرعة</translation>
     </message>
     <message>
-      <source>Equipments/</source>
-      <translation type="unfinished">معدات/</translation>
+        <source>Equipments/</source>
+        <translation type="unfinished">معدات/</translation>
     </message>
     <message>
-      <source>Equipments</source>
-      <translation type="unfinished">معدات</translation>
+        <source>Equipments</source>
+        <translation type="unfinished">معدات</translation>
     </message>
     <message>
-      <source>Code NNO</source>
-      <translation type="unfinished">قوائم انتظار NNO</translation>
+        <source>Code NNO</source>
+        <translation type="unfinished">قوائم انتظار NNO</translation>
     </message>
     <message>
-      <source>Code LFRIL</source>
-      <translation type="unfinished">رمز لفريل</translation>
+        <source>Code LFRIL</source>
+        <translation type="unfinished">رمز لفريل</translation>
     </message>
     <message>
-      <source>MOS Id</source>
-      <translation type="unfinished">معرف موس</translation>
+        <source>MOS Id</source>
+        <translation type="unfinished">معرف موس</translation>
     </message>
     <message>
-      <source>Max steepness</source>
-      <translation type="unfinished">ماكس عليمخاطر</translation>
+        <source>Max steepness</source>
+        <translation type="unfinished">ماكس عليمخاطر</translation>
     </message>
     <message>
-      <source>Mounting duration per person</source>
-      <translation type="unfinished">مدة التركيب للشخص الواحد</translation>
+        <source>Mounting duration per person</source>
+        <translation type="unfinished">مدة التركيب للشخص الواحد</translation>
     </message>
     <message>
-      <source>Dismounting duration per person</source>
-      <translation type="unfinished">الترجل المدة للشخص الواحد</translation>
+        <source>Dismounting duration per person</source>
+        <translation type="unfinished">الترجل المدة للشخص الواحد</translation>
     </message>
     <message>
-      <source>Loading duration per ton</source>
-      <translation type="unfinished">مدة التحميل للطن الواحد</translation>
+        <source>Loading duration per ton</source>
+        <translation type="unfinished">مدة التحميل للطن الواحد</translation>
     </message>
     <message>
-      <source>Unloading duration per ton</source>
-      <translation type="unfinished">مدة التفريغ للطن الواحد</translation>
+        <source>Unloading duration per ton</source>
+        <translation type="unfinished">مدة التفريغ للطن الواحد</translation>
     </message>
     <message>
-      <source>Radars</source>
-      <translation type="unfinished">الرادار</translation>
+        <source>Radars</source>
+        <translation type="unfinished">الرادار</translation>
     </message>
     <message>
-      <source>Contenance</source>
-      <translation type="unfinished">القدرات</translation>
+        <source>Contenance</source>
+        <translation type="unfinished">القدرات</translation>
     </message>
     <message>
-      <source>Active protection</source>
-      <translation type="unfinished">الحماية النشطة</translation>
+        <source>Active protection</source>
+        <translation type="unfinished">الحماية النشطة</translation>
     </message>
     <message>
-      <source>Initial construction duration</source>
-      <translation type="unfinished">مدة البناء الأولية</translation>
+        <source>Initial construction duration</source>
+        <translation type="unfinished">مدة البناء الأولية</translation>
     </message>
     <message>
-      <source>Initial destruction duration</source>
-      <translation type="unfinished">المدة التدمير الأولى</translation>
+        <source>Initial destruction duration</source>
+        <translation type="unfinished">المدة التدمير الأولى</translation>
     </message>
     <message>
-      <source>Duration construction factor</source>
-      <translation type="unfinished">عامل البناء مدة</translation>
+        <source>Duration construction factor</source>
+        <translation type="unfinished">عامل البناء مدة</translation>
     </message>
     <message>
-      <source>Duration destruction factor</source>
-      <translation type="unfinished">عامل تدمير المدة</translation>
+        <source>Duration destruction factor</source>
+        <translation type="unfinished">عامل تدمير المدة</translation>
     </message>
     <message>
-      <source>Mining duration</source>
-      <translation type="unfinished">المدة التعدين</translation>
+        <source>Mining duration</source>
+        <translation type="unfinished">المدة التعدين</translation>
     </message>
     <message>
-      <source>Mine clearing duration</source>
-      <translation type="unfinished">مدة إزالة الألغام</translation>
+        <source>Mine clearing duration</source>
+        <translation type="unfinished">مدة إزالة الألغام</translation>
     </message>
     <message>
-      <source>Extinguishing duration</source>
-      <translation type="unfinished">إطفاء المدة</translation>
+        <source>Extinguishing duration</source>
+        <translation type="unfinished">إطفاء المدة</translation>
     </message>
     <message>
-      <source>Bypass factor</source>
-      <translation type="unfinished">تجاوز عامل</translation>
+        <source>Bypass factor</source>
+        <translation type="unfinished">تجاوز عامل</translation>
     </message>
     <message>
-      <source>Equipment_%1.htm</source>
-      <translation type="unfinished">Equipment_%1.htm</translation>
+        <source>Equipment_%1.htm</source>
+        <translation type="unfinished">Equipment_%1.htm</translation>
     </message>
     <message>
-      <source>Code EMAT8</source>
-      <translation type="unfinished">رمز EMAT8</translation>
+        <source>Code EMAT8</source>
+        <translation type="unfinished">رمز EMAT8</translation>
     </message>
     <message>
-      <source>Code EMAT6</source>
-      <translation type="unfinished">رمز EMAT6</translation>
+        <source>Code EMAT6</source>
+        <translation type="unfinished">رمز EMAT6</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Composantes_RadarsListView</name>
     <message>
-      <source>Special sensors</source>
-      <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
+        <source>Special sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
     </message>
     <message>
-      <source>Add sensor</source>
-      <translation type="unfinished">إضافة أجهزة الاستشعار</translation>
+        <source>Add sensor</source>
+        <translation type="unfinished">إضافة أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Remove sensor</source>
-      <translation type="unfinished">إزالة أجهزة الاستشعار</translation>
+        <source>Remove sensor</source>
+        <translation type="unfinished">إزالة أجهزة الاستشعار</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Composantes_Sensors_GUI</name>
     <message>
-      <source>Sensor</source>
-      <translation type="unfinished">أجهزة الاستشعار</translation>
+        <source>Sensor</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Height (m)</source>
-      <translation type="unfinished">الارتفاع (م)</translation>
+        <source>Height (m)</source>
+        <translation type="unfinished">الارتفاع (م)</translation>
     </message>
     <message>
-      <source>Add sensor</source>
-      <translation type="unfinished">إضافة أجهزة الاستشعار</translation>
+        <source>Add sensor</source>
+        <translation type="unfinished">إضافة أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Remove sensor</source>
-      <translation type="unfinished">إزالة أجهزة الاستشعار</translation>
+        <source>Remove sensor</source>
+        <translation type="unfinished">إزالة أجهزة الاستشعار</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Composantes_Speeds_GUI</name>
     <message>
-      <source>Ground type</source>
-      <translation type="unfinished">نوع الأرض</translation>
+        <source>Ground type</source>
+        <translation type="unfinished">نوع الأرض</translation>
     </message>
     <message>
-      <source>Speed (km/h)</source>
-      <translation type="unfinished">السرعة (كم/ساعة)</translation>
+        <source>Speed (km/h)</source>
+        <translation type="unfinished">السرعة (كم/ساعة)</translation>
     </message>
     <message>
-      <source>Construction (%)</source>
-      <translation type="unfinished">البناء (%)</translation>
+        <source>Construction (%)</source>
+        <translation type="unfinished">البناء (%)</translation>
     </message>
     <message>
-      <source>Warning</source>
-      <translation type="unfinished">تحذير</translation>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
     </message>
     <message>
-      <source>At least one speed is above the new max speed.
-Click "Ok" to bound it to the new max speed value.</source>
-      <translation type="unfinished">سرعة واحد على الأقل أعلاه أقصى سرعة جديدة.
-انقر فوق "موافق" أنها ملتزمة بقيمة أقصى سرعة جديدة.</translation>
+        <source>At least one speed is above the new max speed.
+Click &quot;Ok&quot; to bound it to the new max speed value.</source>
+        <translation type="unfinished">سرعة واحد على الأقل أعلاه أقصى سرعة جديدة.
+انقر فوق &quot;موافق&quot; أنها ملتزمة بقيمة أقصى سرعة جديدة.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Composantes_WeaponsListView</name>
     <message>
-      <source>Weapon systems</source>
-      <translation type="unfinished">نظم الأسلحة</translation>
+        <source>Weapon systems</source>
+        <translation type="unfinished">نظم الأسلحة</translation>
     </message>
     <message>
-      <source>Add weapon</source>
-      <translation type="unfinished">إضافة الأسلحة</translation>
+        <source>Add weapon</source>
+        <translation type="unfinished">إضافة الأسلحة</translation>
     </message>
     <message>
-      <source>Remove weapon</source>
-      <translation type="unfinished">إزالة الأسلحة</translation>
+        <source>Remove weapon</source>
+        <translation type="unfinished">إزالة الأسلحة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ConfigDialog</name>
     <message>
-      <source>Configuration</source>
-      <translation type="unfinished">التكوين</translation>
+        <source>Configuration</source>
+        <translation type="unfinished">التكوين</translation>
     </message>
     <message>
-      <source>SIM path</source>
-      <translation type="unfinished">مسار سيم</translation>
+        <source>SIM path</source>
+        <translation type="unfinished">مسار سيم</translation>
     </message>
     <message>
-      <source>Browse</source>
-      <translation type="unfinished">تصفح</translation>
+        <source>Browse</source>
+        <translation type="unfinished">تصفح</translation>
     </message>
     <message>
-      <source>SIM parameters</source>
-      <translation type="unfinished">معلمات سيم</translation>
+        <source>SIM parameters</source>
+        <translation type="unfinished">معلمات سيم</translation>
     </message>
     <message>
-      <source>&amp;OK</source>
-      <translation type="unfinished">آند موافق</translation>
+        <source>&amp;OK</source>
+        <translation type="unfinished">آند موافق</translation>
     </message>
     <message>
-      <source>&amp;Cancel</source>
-      <translation type="unfinished">آند إلغاء الأمر</translation>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished">آند إلغاء الأمر</translation>
     </message>
     <message>
-      <source>Sword executable (*.exe)</source>
-      <translation type="unfinished">السيف القابل للتنفيذ (*.exe)</translation>
+        <source>Sword executable (*.exe)</source>
+        <translation type="unfinished">السيف القابل للتنفيذ (*.exe)</translation>
     </message>
     <message>
-      <source>Select SIM to use for data test</source>
-      <translation type="unfinished">حدد سيم لاستخدامها لاختبار البيانات</translation>
+        <source>Select SIM to use for data test</source>
+        <translation type="unfinished">حدد سيم لاستخدامها لاختبار البيانات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ConsistencyDialog</name>
     <message>
-      <source>Description</source>
-      <translation type="unfinished">الوصف</translation>
+        <source>Description</source>
+        <translation type="unfinished">الوصف</translation>
     </message>
     <message>
-      <source>Initialization</source>
-      <translation type="unfinished">التهيئة</translation>
+        <source>Initialization</source>
+        <translation type="unfinished">التهيئة</translation>
     </message>
     <message>
-      <source>Unicity</source>
-      <translation type="unfinished">الوحدة</translation>
+        <source>Unicity</source>
+        <translation type="unfinished">الوحدة</translation>
     </message>
     <message>
-      <source>Others</source>
-      <translation type="unfinished">الآخرين</translation>
+        <source>Others</source>
+        <translation type="unfinished">الآخرين</translation>
     </message>
     <message>
-      <source>Duplicate NNO code for %1.</source>
-      <translation type="unfinished">تكرار التعليمات البرمجية NNO ل %1.</translation>
+        <source>Duplicate NNO code for %1.</source>
+        <translation type="unfinished">تكرار التعليمات البرمجية NNO ل %1.</translation>
     </message>
     <message>
-      <source>Duplicate EMAT8 code for %1.</source>
-      <translation type="unfinished">تكرار التعليمات البرمجية EMAT8 ل %1.</translation>
+        <source>Duplicate EMAT8 code for %1.</source>
+        <translation type="unfinished">تكرار التعليمات البرمجية EMAT8 ل %1.</translation>
     </message>
     <message>
-      <source>%1 has no NNO code defined.</source>
-      <translation type="unfinished">وقد %1 لم يتم تعريف رمز NNO.</translation>
+        <source>%1 has no NNO code defined.</source>
+        <translation type="unfinished">وقد %1 لم يتم تعريف رمز NNO.</translation>
     </message>
     <message>
-      <source>%1 has no EMAT8 code defined.</source>
-      <translation type="unfinished">وقد %1 لم يتم تعريف رمز EMAT8.</translation>
+        <source>%1 has no EMAT8 code defined.</source>
+        <translation type="unfinished">وقد %1 لم يتم تعريف رمز EMAT8.</translation>
     </message>
     <message>
-      <source>The equipement '</source>
-      <translation type="unfinished">المعدات اللازمة '</translation>
+        <source>The equipement &apos;</source>
+        <translation type="unfinished">المعدات اللازمة &apos;</translation>
     </message>
     <message>
-      <source>The resource '</source>
-      <translation type="unfinished">المورد '</translation>
+        <source>The resource &apos;</source>
+        <translation type="unfinished">المورد &apos;</translation>
     </message>
     <message>
-      <source> and '</source>
-      <translation type="unfinished">و '</translation>
+        <source> and &apos;</source>
+        <translation type="unfinished">و &apos;</translation>
     </message>
     <message>
-      <source>Duplicate type for missions %1.</source>
-      <translation type="unfinished">نوع مكرر للبعثات %1.</translation>
+        <source>Duplicate type for missions %1.</source>
+        <translation type="unfinished">نوع مكرر للبعثات %1.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Consumptions_Table</name>
     <message>
-      <source>Resource network</source>
-      <translation type="unfinished">شبكة الموارد</translation>
+        <source>Resource network</source>
+        <translation type="unfinished">شبكة الموارد</translation>
     </message>
     <message>
-      <source>Consumption</source>
-      <translation type="unfinished">الاستهلاك</translation>
+        <source>Consumption</source>
+        <translation type="unfinished">الاستهلاك</translation>
     </message>
     <message>
-      <source>Add resource</source>
-      <translation type="unfinished">إضافة مورد</translation>
+        <source>Add resource</source>
+        <translation type="unfinished">إضافة مورد</translation>
     </message>
     <message>
-      <source>Remove resource</source>
-      <translation type="unfinished">إزالة مورد</translation>
+        <source>Remove resource</source>
+        <translation type="unfinished">إزالة مورد</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_DataException</name>
     <message>
-      <source>Data error</source>
-      <translation type="unfinished">خطأ في البيانات</translation>
+        <source>Data error</source>
+        <translation type="unfinished">خطأ في البيانات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_DialogLog</name>
     <message>
-      <source>&amp;OK</source>
-      <translation type="unfinished">آند موافق</translation>
+        <source>&amp;OK</source>
+        <translation type="unfinished">آند موافق</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_EquipementSelector</name>
     <message>
-      <source>Click here to select</source>
-      <translation type="unfinished">انقر هنا لتحديد</translation>
+        <source>Click here to select</source>
+        <translation type="unfinished">انقر هنا لتحديد</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Equipement_AmmoListView</name>
     <message>
-      <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Equipement_AttritionGraph</name>
     <message>
-      <source>Dead</source>
-      <translation type="unfinished">الميت</translation>
+        <source>Dead</source>
+        <translation type="unfinished">الميت</translation>
     </message>
     <message>
-      <source>Wounded (%1)</source>
-      <translation type="unfinished">الجرحى (1%)</translation>
+        <source>Wounded (%1)</source>
+        <translation type="unfinished">الجرحى (1%)</translation>
     </message>
     <message>
-      <source>Unwounded</source>
-      <translation type="unfinished">المعافين</translation>
+        <source>Unwounded</source>
+        <translation type="unfinished">المعافين</translation>
     </message>
     <message>
-      <source>Undamaged</source>
-      <translation type="unfinished">غير التالفة</translation>
+        <source>Undamaged</source>
+        <translation type="unfinished">غير التالفة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Equipement_AttritionTable</name>
     <message>
-      <source>% on site fixable</source>
-      <translation type="unfinished">% في الموقع يمكن حلها</translation>
+        <source>% on site fixable</source>
+        <translation type="unfinished">% في الموقع يمكن حلها</translation>
     </message>
     <message>
-      <source>% maintenance support needed</source>
-      <translation type="unfinished">دعم الصيانة % اللازمة</translation>
+        <source>% maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة % اللازمة</translation>
     </message>
     <message>
-      <source>% destroyed</source>
-      <translation type="unfinished">% دمرت</translation>
+        <source>% destroyed</source>
+        <translation type="unfinished">% دمرت</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Equipement_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Equipment - Invalid resource type '%1'</source>
-      <translation type="unfinished">معدات-نوع المورد غير صالحة '%1'</translation>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Equipement_Data::AmmoCategoryInfo</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Equipment - Invalid armor type '%1'</source>
-      <translation type="unfinished">معدات-نوع الدروع غير صالح '%1'</translation>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع الدروع غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid urban Material type '%1'</source>
-      <translation type="unfinished">معدات-نوع المواد الحضرية '%1' غير صالح</translation>
+        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع المواد الحضرية &apos;%1&apos; غير صالح</translation>
     </message>
     <message>
-      <source>Equipment - Invalid resource type '%1'</source>
-      <translation type="unfinished">معدات-نوع المورد غير صالحة '%1'</translation>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Equipement_Data::IndirectAmmoInfos</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Equipment - Invalid stance '%1'</source>
-      <translation type="unfinished">معدات-موقف غير صالح '%1'</translation>
+        <source>Equipment - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-موقف غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid indirect fire ammo type '%1'</source>
-      <translation type="unfinished">معدات-نوع الذخيرة النيران غير المباشرة غير صالح '%1'</translation>
+        <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع الذخيرة النيران غير المباشرة غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Equipement_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Nature</source>
-      <translation type="unfinished">طبيعة</translation>
+        <source>Nature</source>
+        <translation type="unfinished">طبيعة</translation>
     </message>
     <message>
-      <source>Logistic supply class</source>
-      <translation type="unfinished">فئة الإمداد اللوجستي</translation>
+        <source>Logistic supply class</source>
+        <translation type="unfinished">فئة الإمداد اللوجستي</translation>
     </message>
     <message>
-      <source>Usable within a resource network</source>
-      <translation type="unfinished">للاستخدام داخل شبكة الموارد</translation>
+        <source>Usable within a resource network</source>
+        <translation type="unfinished">للاستخدام داخل شبكة الموارد</translation>
     </message>
     <message>
-      <source>Packaging</source>
-      <translation type="unfinished">التعبئة والتغليف</translation>
+        <source>Packaging</source>
+        <translation type="unfinished">التعبئة والتغليف</translation>
     </message>
     <message>
-      <source>Nbr per package</source>
-      <translation type="unfinished">Nbr كل حزمة</translation>
+        <source>Nbr per package</source>
+        <translation type="unfinished">Nbr كل حزمة</translation>
     </message>
     <message>
-      <source>Package weight</source>
-      <translation type="unfinished">وزن الحزمة</translation>
+        <source>Package weight</source>
+        <translation type="unfinished">وزن الحزمة</translation>
     </message>
     <message>
-      <source>T</source>
-      <translation type="unfinished">T</translation>
+        <source>T</source>
+        <translation type="unfinished">T</translation>
     </message>
     <message>
-      <source>Package volume</source>
-      <translation type="unfinished">حجم الحزمة</translation>
+        <source>Package volume</source>
+        <translation type="unfinished">حجم الحزمة</translation>
     </message>
     <message>
-      <source>m3</source>
-      <translation type="unfinished">m3</translation>
+        <source>m3</source>
+        <translation type="unfinished">m3</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Improvised explosive device</source>
-      <translation type="unfinished">جهاز متفجر مرتجل</translation>
+        <source>Improvised explosive device</source>
+        <translation type="unfinished">جهاز متفجر مرتجل</translation>
     </message>
     <message>
-      <source>Attritions</source>
-      <translation type="unfinished">أتريشنز</translation>
+        <source>Attritions</source>
+        <translation type="unfinished">أتريشنز</translation>
     </message>
     <message>
-      <source>Simulation</source>
-      <translation type="unfinished">محاكاة</translation>
+        <source>Simulation</source>
+        <translation type="unfinished">محاكاة</translation>
     </message>
     <message>
-      <source>Armor-Plating</source>
-      <translation type="unfinished">دروع</translation>
+        <source>Armor-Plating</source>
+        <translation type="unfinished">دروع</translation>
     </message>
     <message>
-      <source>Urban material</source>
-      <translation type="unfinished">المواد الحضرية</translation>
+        <source>Urban material</source>
+        <translation type="unfinished">المواد الحضرية</translation>
     </message>
     <message>
-      <source>Indirect fire</source>
-      <translation type="unfinished">النيران غير المباشرة</translation>
+        <source>Indirect fire</source>
+        <translation type="unfinished">النيران غير المباشرة</translation>
     </message>
     <message>
-      <source>Intervention</source>
-      <translation type="unfinished">التدخل</translation>
+        <source>Intervention</source>
+        <translation type="unfinished">التدخل</translation>
     </message>
     <message>
-      <source>X Dispersion</source>
-      <translation type="unfinished">× التشتت</translation>
+        <source>X Dispersion</source>
+        <translation type="unfinished">× التشتت</translation>
     </message>
     <message>
-      <source>m</source>
-      <translation type="unfinished">m</translation>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
-      <source>Y Dispersion</source>
-      <translation type="unfinished">تشتت y</translation>
+        <source>Y Dispersion</source>
+        <translation type="unfinished">تشتت y</translation>
     </message>
     <message>
-      <source>Effects</source>
-      <translation type="unfinished">آثار</translation>
+        <source>Effects</source>
+        <translation type="unfinished">آثار</translation>
     </message>
     <message>
-      <source>Explosive</source>
-      <translation type="unfinished">المتفجرة</translation>
+        <source>Explosive</source>
+        <translation type="unfinished">المتفجرة</translation>
     </message>
     <message>
-      <source>Smoke</source>
-      <translation type="unfinished">الدخان</translation>
+        <source>Smoke</source>
+        <translation type="unfinished">الدخان</translation>
     </message>
     <message>
-      <source>Illumination shell</source>
-      <translation type="unfinished">قذيفة إنارة</translation>
+        <source>Illumination shell</source>
+        <translation type="unfinished">قذيفة إنارة</translation>
     </message>
     <message>
-      <source>Mine</source>
-      <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
+        <source>Mine</source>
+        <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
     </message>
     <message>
-      <source>Effect</source>
-      <translation type="unfinished">تأثير</translation>
+        <source>Effect</source>
+        <translation type="unfinished">تأثير</translation>
     </message>
     <message>
-      <source>Explosive ammo parameters</source>
-      <translation type="unfinished">معلمات الذخيرة المتفجرة</translation>
+        <source>Explosive ammo parameters</source>
+        <translation type="unfinished">معلمات الذخيرة المتفجرة</translation>
     </message>
     <message>
-      <source>Stance</source>
-      <translation type="unfinished">موقف</translation>
+        <source>Stance</source>
+        <translation type="unfinished">موقف</translation>
     </message>
     <message>
-      <source>Neutralization ratio</source>
-      <translation type="unfinished">تحييد نسبة</translation>
+        <source>Neutralization ratio</source>
+        <translation type="unfinished">تحييد نسبة</translation>
     </message>
     <message>
-      <source>Dispersion factor per iteration</source>
-      <translation type="unfinished">معامل التشتت كل تكرار</translation>
+        <source>Dispersion factor per iteration</source>
+        <translation type="unfinished">معامل التشتت كل تكرار</translation>
     </message>
     <message>
-      <source>Smoke ammo parameters</source>
-      <translation type="unfinished">معلمات الذخيرة دخان</translation>
+        <source>Smoke ammo parameters</source>
+        <translation type="unfinished">معلمات الذخيرة دخان</translation>
     </message>
     <message>
-      <source>Activation duration</source>
-      <translation type="unfinished">مدة التنشيط</translation>
+        <source>Activation duration</source>
+        <translation type="unfinished">مدة التنشيط</translation>
     </message>
     <message>
-      <source>Span</source>
-      <translation type="unfinished">سبان</translation>
+        <source>Span</source>
+        <translation type="unfinished">سبان</translation>
     </message>
     <message>
-      <source>Flare ammo parameters</source>
-      <translation type="unfinished">معلمات الذخيرة مضيئة</translation>
+        <source>Flare ammo parameters</source>
+        <translation type="unfinished">معلمات الذخيرة مضيئة</translation>
     </message>
     <message>
-      <source>Effect ammo parameters</source>
-      <translation type="unfinished">تأثير الذخيرة المعلمات</translation>
+        <source>Effect ammo parameters</source>
+        <translation type="unfinished">تأثير الذخيرة المعلمات</translation>
     </message>
     <message>
-      <source>Created object</source>
-      <translation type="unfinished">الكائن الذي تم إنشاؤه</translation>
+        <source>Created object</source>
+        <translation type="unfinished">الكائن الذي تم إنشاؤه</translation>
     </message>
     <message>
-      <source>Mine ammo parameters</source>
-      <translation type="unfinished">معلمات ذخيرة الأعمال المتعلقة بالألغام</translation>
+        <source>Mine ammo parameters</source>
+        <translation type="unfinished">معلمات ذخيرة الأعمال المتعلقة بالألغام</translation>
     </message>
     <message>
-      <source>Mines quantity</source>
-      <translation type="unfinished">كمية الألغام</translation>
+        <source>Mines quantity</source>
+        <translation type="unfinished">كمية الألغام</translation>
     </message>
     <message>
-      <source>Illumination capacity</source>
-      <translation type="unfinished">قدرة الإضاءة</translation>
+        <source>Illumination capacity</source>
+        <translation type="unfinished">قدرة الإضاءة</translation>
     </message>
     <message>
-      <source>Range</source>
-      <translation type="unfinished">النطاق</translation>
+        <source>Range</source>
+        <translation type="unfinished">النطاق</translation>
     </message>
     <message>
-      <source>Must Maintain illumination</source>
-      <translation type="unfinished">ويجب المحافظة على الإضاءة</translation>
+        <source>Must Maintain illumination</source>
+        <translation type="unfinished">ويجب المحافظة على الإضاءة</translation>
     </message>
     <message>
-      <source>Guidance</source>
-      <translation type="unfinished">التوجيه</translation>
+        <source>Guidance</source>
+        <translation type="unfinished">التوجيه</translation>
     </message>
     <message>
-      <source>Must Maintain guidance</source>
-      <translation type="unfinished">ويجب الحفاظ على التوجيه</translation>
+        <source>Must Maintain guidance</source>
+        <translation type="unfinished">ويجب الحفاظ على التوجيه</translation>
     </message>
     <message>
-      <source>Illumination range needed</source>
-      <translation type="unfinished">مجموعة الإضاءة اللازمة</translation>
+        <source>Illumination range needed</source>
+        <translation type="unfinished">مجموعة الإضاءة اللازمة</translation>
     </message>
     <message>
-      <source>None</source>
-      <translation type="unfinished">لا شيء</translation>
+        <source>None</source>
+        <translation type="unfinished">لا شيء</translation>
     </message>
     <message>
-      <source>Ammunition</source>
-      <translation type="unfinished">الذخيرة</translation>
+        <source>Ammunition</source>
+        <translation type="unfinished">الذخيرة</translation>
     </message>
     <message>
-      <source>Target armor</source>
-      <translation type="unfinished">درع المستهدفة</translation>
+        <source>Target armor</source>
+        <translation type="unfinished">درع المستهدفة</translation>
     </message>
     <message>
-      <source>On site fixable</source>
-      <translation type="unfinished">في الموقع يمكن حلها</translation>
+        <source>On site fixable</source>
+        <translation type="unfinished">في الموقع يمكن حلها</translation>
     </message>
     <message>
-      <source>Maintenance support needed</source>
-      <translation type="unfinished">دعم الصيانة اللازمة</translation>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة اللازمة</translation>
     </message>
     <message>
-      <source>Destroyed</source>
-      <translation type="unfinished">دمرت</translation>
+        <source>Destroyed</source>
+        <translation type="unfinished">دمرت</translation>
     </message>
     <message>
-      <source>PKs</source>
-      <translation type="unfinished">تيفاتول</translation>
+        <source>PKs</source>
+        <translation type="unfinished">تيفاتول</translation>
     </message>
     <message>
-      <source>Warning</source>
-      <translation type="unfinished">تحذير</translation>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
     </message>
     <message>
-      <source>This will delete all the following associated resource network :</source>
-      <translation type="unfinished">سيؤدي هذا إلى حذف جميع شبكة الموارد ذات الصلة التالية:</translation>
+        <source>This will delete all the following associated resource network :</source>
+        <translation type="unfinished">سيؤدي هذا إلى حذف جميع شبكة الموارد ذات الصلة التالية:</translation>
     </message>
     <message>
-      <source>Proceed anyway ?</source>
-      <translation type="unfinished">هل تريد المتابعة على أية حال؟</translation>
+        <source>Proceed anyway ?</source>
+        <translation type="unfinished">هل تريد المتابعة على أية حال؟</translation>
     </message>
     <message>
-      <source>Code EMAT8</source>
-      <translation type="unfinished">رمز EMAT8</translation>
+        <source>Code EMAT8</source>
+        <translation type="unfinished">رمز EMAT8</translation>
     </message>
     <message>
-      <source>Code EMAT6</source>
-      <translation type="unfinished">رمز EMAT6</translation>
+        <source>Code EMAT6</source>
+        <translation type="unfinished">رمز EMAT6</translation>
     </message>
     <message>
-      <source>Code NNO</source>
-      <translation type="unfinished">قوائم انتظار NNO</translation>
+        <source>Code NNO</source>
+        <translation type="unfinished">قوائم انتظار NNO</translation>
     </message>
     <message>
-      <source>Code LFRIL</source>
-      <translation type="unfinished">رمز لفريل</translation>
+        <source>Code LFRIL</source>
+        <translation type="unfinished">رمز لفريل</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Equipement_Postures_GUI</name>
     <message>
-      <source>PH factor</source>
-      <translation type="unfinished">عامل PH</translation>
+        <source>PH factor</source>
+        <translation type="unfinished">عامل PH</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ExtinguisherAgentInfos_Table</name>
     <message>
-      <source>Agent</source>
-      <translation type="unfinished">وكيل</translation>
+        <source>Agent</source>
+        <translation type="unfinished">وكيل</translation>
     </message>
     <message>
-      <source>Heat decrease rate</source>
-      <translation type="unfinished">معدل انخفاض الحرارة</translation>
+        <source>Heat decrease rate</source>
+        <translation type="unfinished">معدل انخفاض الحرارة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_FireClass_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Fire - Wound '%1' data &lt; 0 or &gt; 1</source>
-      <translation type="unfinished">النار--الجرح البيانات '%1' &lt; 0="" or=""&gt; 1</translation>
+        <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation type="unfinished">النار--الجرح البيانات &apos;%1&apos; &lt; 0=&quot;&quot; or=&quot;&quot;&gt; 1</translation>
     </message>
     <message>
-      <source>Fire - Invalid wound type '%1'</source>
-      <translation type="unfinished">النار-صالح الجرح النوع '%1'</translation>
+        <source>Fire - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished">النار-صالح الجرح النوع &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Fire '%1' - Injuries data sum &gt; 100</source>
-      <translation type="unfinished">النار '%1'--بيانات الإصابات المبلغ &gt; 100</translation>
+        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
+        <translation type="unfinished">النار &apos;%1&apos;--بيانات الإصابات المبلغ &gt; 100</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_FireClass_Data::FireClassInfos</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Fire class - Invalid extinguisher agent '%1'</source>
-      <translation type="unfinished">فئة النار-عامل مطفأة غير صالح '%1'</translation>
+        <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
+        <translation type="unfinished">فئة النار-عامل مطفأة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Fire class - Invalid urban Material type '%1'</source>
-      <translation type="unfinished">فئة النار-نوع المواد الحضرية '%1' غير صالح</translation>
+        <source>Fire class - Invalid urban Material type &apos;%1&apos;</source>
+        <translation type="unfinished">فئة النار-نوع المواد الحضرية &apos;%1&apos; غير صالح</translation>
     </message>
     <message>
-      <source>Fire - Location type not found '%1'</source>
-      <translation type="unfinished">النار-موقع النوع لا تم العثور على '%1'</translation>
+        <source>Fire - Location type not found &apos;%1&apos;</source>
+        <translation type="unfinished">النار-موقع النوع لا تم العثور على &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_FireClass_GUI</name>
     <message>
-      <source>Global fire parameters</source>
-      <translation type="unfinished">معلمات النار العالمي</translation>
+        <source>Global fire parameters</source>
+        <translation type="unfinished">معلمات النار العالمي</translation>
     </message>
     <message>
-      <source>Cell size</source>
-      <translation type="unfinished">حجم الخلية</translation>
+        <source>Cell size</source>
+        <translation type="unfinished">حجم الخلية</translation>
     </message>
     <message>
-      <source>m</source>
-      <translation type="unfinished">m</translation>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Initial heat</source>
-      <translation type="unfinished">الحرارة الأولية</translation>
+        <source>Initial heat</source>
+        <translation type="unfinished">الحرارة الأولية</translation>
     </message>
     <message>
-      <source>Max heat</source>
-      <translation type="unfinished">الحرارة ماكس</translation>
+        <source>Max heat</source>
+        <translation type="unfinished">الحرارة ماكس</translation>
     </message>
     <message>
-      <source>Increase rate</source>
-      <translation type="unfinished">معدل الزيادة</translation>
+        <source>Increase rate</source>
+        <translation type="unfinished">معدل الزيادة</translation>
     </message>
     <message>
-      <source>Decrease rate</source>
-      <translation type="unfinished">انخفاض معدل</translation>
+        <source>Decrease rate</source>
+        <translation type="unfinished">انخفاض معدل</translation>
     </message>
     <message>
-      <source>Injuries</source>
-      <translation type="unfinished">الإصابات</translation>
+        <source>Injuries</source>
+        <translation type="unfinished">الإصابات</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 1</source>
-      <translation type="unfinished">مستوى خطورة إصابة 1</translation>
+        <source>Wounded seriousness level 1</source>
+        <translation type="unfinished">مستوى خطورة إصابة 1</translation>
     </message>
     <message>
-      <source>%</source>
-      <translation type="unfinished">%</translation>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 2</source>
-      <translation type="unfinished">مستوى خطورة إصابة 2</translation>
+        <source>Wounded seriousness level 2</source>
+        <translation type="unfinished">مستوى خطورة إصابة 2</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 3</source>
-      <translation type="unfinished">مستوى خطورة إصابة 3</translation>
+        <source>Wounded seriousness level 3</source>
+        <translation type="unfinished">مستوى خطورة إصابة 3</translation>
     </message>
     <message>
-      <source>Wounded extreme seriousness</source>
-      <translation type="unfinished">خطورة إصابة</translation>
+        <source>Wounded extreme seriousness</source>
+        <translation type="unfinished">خطورة إصابة</translation>
     </message>
     <message>
-      <source>Killed</source>
-      <translation type="unfinished">قتل</translation>
+        <source>Killed</source>
+        <translation type="unfinished">قتل</translation>
     </message>
     <message>
-      <source>Urban attrition</source>
-      <translation type="unfinished">الاستنزاف الحضري</translation>
+        <source>Urban attrition</source>
+        <translation type="unfinished">الاستنزاف الحضري</translation>
     </message>
     <message>
-      <source>Extinguisher agents</source>
-      <translation type="unfinished">وكلاء مطفأة</translation>
+        <source>Extinguisher agents</source>
+        <translation type="unfinished">وكلاء مطفأة</translation>
     </message>
     <message>
-      <source>Weather fire effects</source>
-      <translation type="unfinished">آثار الحرائق الطقس</translation>
+        <source>Weather fire effects</source>
+        <translation type="unfinished">آثار الحرائق الطقس</translation>
     </message>
     <message>
-      <source>Surface</source>
-      <translation type="unfinished">السطح</translation>
+        <source>Surface</source>
+        <translation type="unfinished">السطح</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_FragOrder_WizardSecondPage</name>
     <message>
-      <source>Add for all Units</source>
-      <translation type="unfinished">إضافة لجميع الوحدات</translation>
+        <source>Add for all Units</source>
+        <translation type="unfinished">إضافة لجميع الوحدات</translation>
     </message>
     <message>
-      <source>Add for all Automata</source>
-      <translation type="unfinished">إضافة لجميع الآلات</translation>
+        <source>Add for all Automata</source>
+        <translation type="unfinished">إضافة لجميع الآلات</translation>
     </message>
     <message>
-      <source>Add for all Crowds</source>
-      <translation type="unfinished">إضافة لكل الحشود</translation>
+        <source>Add for all Crowds</source>
+        <translation type="unfinished">إضافة لكل الحشود</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Health_GUI</name>
     <message>
-      <source>Diagnostic duration</source>
-      <translation type="unfinished">مدة التشخيص</translation>
+        <source>Diagnostic duration</source>
+        <translation type="unfinished">مدة التشخيص</translation>
     </message>
     <message>
-      <source>Triage duration</source>
-      <translation type="unfinished">مدة الفرز</translation>
+        <source>Triage duration</source>
+        <translation type="unfinished">مدة الفرز</translation>
     </message>
     <message>
-      <source>Ambulances (evacuation) availability warnings</source>
-      <translation type="unfinished">تحذيرات توفر سيارات الإسعاف (الإجلاء)</translation>
+        <source>Ambulances (evacuation) availability warnings</source>
+        <translation type="unfinished">تحذيرات توفر سيارات الإسعاف (الإجلاء)</translation>
     </message>
     <message>
-      <source>Ambulances (collection) availability warnings</source>
-      <translation type="unfinished">تحذيرات توفر سيارات الإسعاف (جمع)</translation>
+        <source>Ambulances (collection) availability warnings</source>
+        <translation type="unfinished">تحذيرات توفر سيارات الإسعاف (جمع)</translation>
     </message>
     <message>
-      <source>Doctors availability warnings</source>
-      <translation type="unfinished">تحذيرات توافر الأطباء</translation>
+        <source>Doctors availability warnings</source>
+        <translation type="unfinished">تحذيرات توافر الأطباء</translation>
     </message>
     <message>
-      <source>Psyop</source>
-      <translation type="unfinished">Psyop</translation>
+        <source>Psyop</source>
+        <translation type="unfinished">Psyop</translation>
     </message>
     <message>
-      <source>Contamination</source>
-      <translation type="unfinished">تلوث</translation>
+        <source>Contamination</source>
+        <translation type="unfinished">تلوث</translation>
     </message>
     <message>
-      <source>Treatment duration</source>
-      <translation type="unfinished">مدة العلاج</translation>
+        <source>Treatment duration</source>
+        <translation type="unfinished">مدة العلاج</translation>
     </message>
     <message>
-      <source>Convalescence duration</source>
-      <translation type="unfinished">فترة النقاهة</translation>
+        <source>Convalescence duration</source>
+        <translation type="unfinished">فترة النقاهة</translation>
     </message>
     <message>
-      <source>Seriousness distribution (%)</source>
-      <translation type="unfinished">خطورة التوزيع (%)</translation>
+        <source>Seriousness distribution (%)</source>
+        <translation type="unfinished">خطورة التوزيع (%)</translation>
     </message>
     <message>
-      <source>Life span</source>
-      <translation type="unfinished">مدى الحياة</translation>
+        <source>Life span</source>
+        <translation type="unfinished">مدى الحياة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_HumanFactors_GUI</name>
     <message>
-      <source>Experience modifiers</source>
-      <translation type="unfinished">تجربة المعدلات</translation>
+        <source>Experience modifiers</source>
+        <translation type="unfinished">تجربة المعدلات</translation>
     </message>
     <message>
-      <source>Newbie</source>
-      <translation type="unfinished">مبتدئ</translation>
+        <source>Newbie</source>
+        <translation type="unfinished">مبتدئ</translation>
     </message>
     <message>
-      <source>Experienced</source>
-      <translation type="unfinished">من ذوي الخبرة</translation>
+        <source>Experienced</source>
+        <translation type="unfinished">من ذوي الخبرة</translation>
     </message>
     <message>
-      <source>Veteran</source>
-      <translation type="unfinished">المخضرم</translation>
+        <source>Veteran</source>
+        <translation type="unfinished">المخضرم</translation>
     </message>
     <message>
-      <source>Tiredness modifiers</source>
-      <translation type="unfinished">معدلات التعب</translation>
+        <source>Tiredness modifiers</source>
+        <translation type="unfinished">معدلات التعب</translation>
     </message>
     <message>
-      <source>Not tired</source>
-      <translation type="unfinished">لا تعبت</translation>
+        <source>Not tired</source>
+        <translation type="unfinished">لا تعبت</translation>
     </message>
     <message>
-      <source>Tired</source>
-      <translation type="unfinished">تعبت</translation>
+        <source>Tired</source>
+        <translation type="unfinished">تعبت</translation>
     </message>
     <message>
-      <source>Exhausted</source>
-      <translation type="unfinished">استنفدت</translation>
+        <source>Exhausted</source>
+        <translation type="unfinished">استنفدت</translation>
     </message>
     <message>
-      <source>Stress modifiers</source>
-      <translation type="unfinished">معدلات الإجهاد</translation>
+        <source>Stress modifiers</source>
+        <translation type="unfinished">معدلات الإجهاد</translation>
     </message>
     <message>
-      <source>Calm</source>
-      <translation type="unfinished">الهدوء</translation>
+        <source>Calm</source>
+        <translation type="unfinished">الهدوء</translation>
     </message>
     <message>
-      <source>Worried</source>
-      <translation type="unfinished">تشعر بالقلق</translation>
+        <source>Worried</source>
+        <translation type="unfinished">تشعر بالقلق</translation>
     </message>
     <message>
-      <source>Stressed</source>
-      <translation type="unfinished">وشدد على</translation>
+        <source>Stressed</source>
+        <translation type="unfinished">وشدد على</translation>
     </message>
     <message>
-      <source>Automatic evolution</source>
-      <translation type="unfinished">التطور التلقائي</translation>
+        <source>Automatic evolution</source>
+        <translation type="unfinished">التطور التلقائي</translation>
     </message>
     <message>
-      <source>Tiredness</source>
-      <translation type="unfinished">التعب</translation>
+        <source>Tiredness</source>
+        <translation type="unfinished">التعب</translation>
     </message>
     <message>
-      <source>Thresholds</source>
-      <translation type="unfinished">عتبات</translation>
+        <source>Thresholds</source>
+        <translation type="unfinished">عتبات</translation>
     </message>
     <message>
-      <source>Exhaustion</source>
-      <translation type="unfinished">استنفاد</translation>
+        <source>Exhaustion</source>
+        <translation type="unfinished">استنفاد</translation>
     </message>
     <message>
-      <source>Evolution (per hour)</source>
-      <translation type="unfinished">تطور (كل ساعة)</translation>
+        <source>Evolution (per hour)</source>
+        <translation type="unfinished">تطور (كل ساعة)</translation>
     </message>
     <message>
-      <source>Parked, engine stopped</source>
-      <translation type="unfinished">كانت متوقفة، توقف المحرك</translation>
+        <source>Parked, engine stopped</source>
+        <translation type="unfinished">كانت متوقفة، توقف المحرك</translation>
     </message>
     <message>
-      <source>Parked, engine running</source>
-      <translation type="unfinished">تشغيل المحرك متوقفة،</translation>
+        <source>Parked, engine running</source>
+        <translation type="unfinished">تشغيل المحرك متوقفة،</translation>
     </message>
     <message>
-      <source>Moving</source>
-      <translation type="unfinished">تتحرك</translation>
+        <source>Moving</source>
+        <translation type="unfinished">تتحرك</translation>
     </message>
     <message>
-      <source>Working</source>
-      <translation type="unfinished">وتعمل</translation>
+        <source>Working</source>
+        <translation type="unfinished">وتعمل</translation>
     </message>
     <message>
-      <source>Stress</source>
-      <translation type="unfinished">الإجهاد</translation>
+        <source>Stress</source>
+        <translation type="unfinished">الإجهاد</translation>
     </message>
     <message>
-      <source>Worry</source>
-      <translation type="unfinished">تقلق</translation>
+        <source>Worry</source>
+        <translation type="unfinished">تقلق</translation>
     </message>
     <message>
-      <source>Evolution</source>
-      <translation type="unfinished">تطور</translation>
+        <source>Evolution</source>
+        <translation type="unfinished">تطور</translation>
     </message>
     <message>
-      <source>Increase per fire</source>
-      <translation type="unfinished">زيادة كل النار</translation>
+        <source>Increase per fire</source>
+        <translation type="unfinished">زيادة كل النار</translation>
     </message>
     <message>
-      <source>Decrease per hour</source>
-      <translation type="unfinished">إنقاص للساعة الواحدة</translation>
+        <source>Decrease per hour</source>
+        <translation type="unfinished">إنقاص للساعة الواحدة</translation>
     </message>
     <message>
-      <source>Effect on movement speed</source>
-      <translation type="unfinished">تأثير على سرعة الحركة</translation>
+        <source>Effect on movement speed</source>
+        <translation type="unfinished">تأثير على سرعة الحركة</translation>
     </message>
     <message>
-      <source>Effect on reloading duration</source>
-      <translation type="unfinished">تأثير على إعادة شحن المدة</translation>
+        <source>Effect on reloading duration</source>
+        <translation type="unfinished">تأثير على إعادة شحن المدة</translation>
     </message>
     <message>
-      <source>Effect on stance changes duration</source>
-      <translation type="unfinished">تأثير على موقف التغييرات المدة</translation>
+        <source>Effect on stance changes duration</source>
+        <translation type="unfinished">تأثير على موقف التغييرات المدة</translation>
     </message>
     <message>
-      <source>Effect on PH</source>
-      <translation type="unfinished">تأثير على درجة الحموضة</translation>
+        <source>Effect on PH</source>
+        <translation type="unfinished">تأثير على درجة الحموضة</translation>
     </message>
     <message>
-      <source>Effect on detection ranges</source>
-      <translation type="unfinished">تأثير على الكشف عن نطاقات</translation>
+        <source>Effect on detection ranges</source>
+        <translation type="unfinished">تأثير على الكشف عن نطاقات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_KnowledgeGroups_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Delay Parameters</source>
-      <translation type="unfinished">تأخير المعلمات</translation>
+        <source>Delay Parameters</source>
+        <translation type="unfinished">تأخير المعلمات</translation>
     </message>
     <message>
-      <source>Communication Delay</source>
-      <translation type="unfinished">تأخير الاتصال</translation>
+        <source>Communication Delay</source>
+        <translation type="unfinished">تأخير الاتصال</translation>
     </message>
     <message>
-      <source>Parameters on known units</source>
-      <translation type="unfinished">معلمات في الوحدات المعروفة</translation>
+        <source>Parameters on known units</source>
+        <translation type="unfinished">معلمات في الوحدات المعروفة</translation>
     </message>
     <message>
-      <source>Maximum life span</source>
-      <translation type="unfinished">أقصى مدى الحياة</translation>
+        <source>Maximum life span</source>
+        <translation type="unfinished">أقصى مدى الحياة</translation>
     </message>
     <message>
-      <source>Maximum distance between known unit and real unit positions</source>
-      <translation type="unfinished">المسافة القصوى بين وحدة معروفة ومواقف الوحدة الحقيقية</translation>
+        <source>Maximum distance between known unit and real unit positions</source>
+        <translation type="unfinished">المسافة القصوى بين وحدة معروفة ومواقف الوحدة الحقيقية</translation>
     </message>
     <message>
-      <source>Extrapolation duration</source>
-      <translation type="unfinished">المدة الاستقراء</translation>
+        <source>Extrapolation duration</source>
+        <translation type="unfinished">المدة الاستقراء</translation>
     </message>
     <message>
-      <source>Parameters on known crowds</source>
-      <translation type="unfinished">معلمات في الحشود معروفة</translation>
+        <source>Parameters on known crowds</source>
+        <translation type="unfinished">معلمات في الحشود معروفة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Launchers_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Indirect fire</source>
-      <translation type="unfinished">النيران غير المباشرة</translation>
+        <source>Indirect fire</source>
+        <translation type="unfinished">النيران غير المباشرة</translation>
     </message>
     <message>
-      <source>Direct fire</source>
-      <translation type="unfinished">النار مباشرة</translation>
+        <source>Direct fire</source>
+        <translation type="unfinished">النار مباشرة</translation>
     </message>
     <message>
-      <source>Phs modifiers</source>
-      <translation type="unfinished">معدلات Phs</translation>
+        <source>Phs modifiers</source>
+        <translation type="unfinished">معدلات Phs</translation>
     </message>
     <message>
-      <source>Target's stance</source>
-      <translation type="unfinished">موقف للهدف</translation>
+        <source>Target&apos;s stance</source>
+        <translation type="unfinished">موقف للهدف</translation>
     </message>
     <message>
-      <source>Shooter's
+        <source>Shooter&apos;s
 stance</source>
-      <translation type="unfinished">موقف مطلق النار على</translation>
+        <translation type="unfinished">موقف مطلق النار على</translation>
     </message>
     <message>
-      <source>Phs modificators</source>
-      <translation type="unfinished">موديفيكاتورس Phs</translation>
+        <source>Phs modificators</source>
+        <translation type="unfinished">موديفيكاتورس Phs</translation>
     </message>
     <message>
-      <source>Shooter's stance / Target's stance</source>
-      <translation type="unfinished">الموقف مطلق النار على/موقف للهدف</translation>
+        <source>Shooter&apos;s stance / Target&apos;s stance</source>
+        <translation type="unfinished">الموقف مطلق النار على/موقف للهدف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView</name>
     <message>
-      <source>Create new</source>
-      <translation type="unfinished">إنشاء جديد</translation>
+        <source>Create new</source>
+        <translation type="unfinished">إنشاء جديد</translation>
     </message>
     <message>
-      <source>Delete</source>
-      <translation type="unfinished">حذف</translation>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
     </message>
     <message>
-      <source>&lt; Using: %1 &gt;</source>
-      <translation type="unfinished">&lt; using:="" %1=""&gt;</translation>
+        <source>&lt; Using: %1 &gt;</source>
+        <translation type="unfinished">&lt; using:=&quot;&quot; %1=&quot;&quot;&gt;</translation>
     </message>
     <message>
-      <source>Search for '%1' that use</source>
-      <translation type="unfinished">البحث ل '%1' التي تستخدم</translation>
+        <source>Search for &apos;%1&apos; that use</source>
+        <translation type="unfinished">البحث ل &apos;%1&apos; التي تستخدم</translation>
     </message>
     <message>
-      <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
     <message>
-      <source>&lt;nobr&gt;&lt;b&gt;Used by the following '%1':&lt;/b&gt;&lt;/nobr&gt;</source>
-      <translation type="unfinished">&lt;nobr&gt;&lt;b&gt;المستخدمة من قبل التالي '%1':&lt;/b&gt;&lt;/nobr&gt;</translation>
+        <source>&lt;nobr&gt;&lt;b&gt;Used by the following &apos;%1&apos;:&lt;/b&gt;&lt;/nobr&gt;</source>
+        <translation type="unfinished">&lt;nobr&gt;&lt;b&gt;المستخدمة من قبل التالي &apos;%1&apos;:&lt;/b&gt;&lt;/nobr&gt;</translation>
     </message>
     <message>
-      <source>Create as copy of</source>
-      <translation type="unfinished">إنشاء نسخة من</translation>
+        <source>Create as copy of</source>
+        <translation type="unfinished">إنشاء نسخة من</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListViewDialog</name>
     <message>
-      <source>Save</source>
-      <translation type="unfinished">حفظ</translation>
+        <source>Save</source>
+        <translation type="unfinished">حفظ</translation>
     </message>
     <message>
-      <source>Print</source>
-      <translation type="unfinished">طباعة</translation>
+        <source>Print</source>
+        <translation type="unfinished">طباعة</translation>
     </message>
     <message>
-      <source>Close</source>
-      <translation type="unfinished">قم بإغلاق</translation>
+        <source>Close</source>
+        <translation type="unfinished">قم بإغلاق</translation>
     </message>
     <message>
-      <source>Excel files (*.xls)</source>
-      <translation type="unfinished">ملفات أكسل (*.xls)</translation>
+        <source>Excel files (*.xls)</source>
+        <translation type="unfinished">ملفات أكسل (*.xls)</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Categories_Armor</name>
     <message>
-      <source>Armor-Plating</source>
-      <translation type="unfinished">دروع</translation>
+        <source>Armor-Plating</source>
+        <translation type="unfinished">دروع</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Categories_DotationNature</name>
     <message>
-      <source>Resource Natures</source>
-      <translation type="unfinished">الموارد الطبيعة</translation>
+        <source>Resource Natures</source>
+        <translation type="unfinished">الموارد الطبيعة</translation>
     </message>
     <message>
-      <source>Natures</source>
-      <translation type="unfinished">طبائع</translation>
+        <source>Natures</source>
+        <translation type="unfinished">طبائع</translation>
     </message>
     <message>
-      <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Categories_LogisticSupplyClass</name>
     <message>
-      <source>Logistic categories</source>
-      <translation type="unfinished">فئات السوقي</translation>
+        <source>Logistic categories</source>
+        <translation type="unfinished">فئات السوقي</translation>
     </message>
     <message>
-      <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Categories_Size</name>
     <message>
-      <source>Sizes</source>
-      <translation type="unfinished">أحجام</translation>
+        <source>Sizes</source>
+        <translation type="unfinished">أحجام</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Composantes_Objects</name>
     <message>
-      <source>Objects</source>
-      <translation type="unfinished">الكائنات</translation>
+        <source>Objects</source>
+        <translation type="unfinished">الكائنات</translation>
     </message>
     <message>
-      <source>Add object</source>
-      <translation type="unfinished">إضافة كائن</translation>
+        <source>Add object</source>
+        <translation type="unfinished">إضافة كائن</translation>
     </message>
     <message>
-      <source>Remove object</source>
-      <translation type="unfinished">قم بإزالة الكائن</translation>
+        <source>Remove object</source>
+        <translation type="unfinished">قم بإزالة الكائن</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_FragOrderTypes</name>
     <message>
-      <source>Fragmentary orders</source>
-      <translation type="unfinished">أوامر مجزأ</translation>
+        <source>Fragmentary orders</source>
+        <translation type="unfinished">أوامر مجزأ</translation>
     </message>
     <message>
-      <source>Unit models</source>
-      <translation type="unfinished">نماذج وحدة</translation>
+        <source>Unit models</source>
+        <translation type="unfinished">نماذج وحدة</translation>
     </message>
     <message>
-      <source>Automata models</source>
-      <translation type="unfinished">نماذج الآلات</translation>
+        <source>Automata models</source>
+        <translation type="unfinished">نماذج الآلات</translation>
     </message>
     <message>
-      <source>Crowds models</source>
-      <translation type="unfinished">نماذج الحشود</translation>
+        <source>Crowds models</source>
+        <translation type="unfinished">نماذج الحشود</translation>
     </message>
     <message>
-      <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Missions</name>
     <message>
-      <source>Missions</source>
-      <translation type="unfinished">البعثات</translation>
+        <source>Missions</source>
+        <translation type="unfinished">البعثات</translation>
     </message>
     <message>
-      <source>Configure missions</source>
-      <translation type="unfinished">تكوين بعثات</translation>
+        <source>Configure missions</source>
+        <translation type="unfinished">تكوين بعثات</translation>
     </message>
     <message>
-      <source>Unit</source>
-      <translation type="unfinished">وحدة</translation>
+        <source>Unit</source>
+        <translation type="unfinished">وحدة</translation>
     </message>
     <message>
-      <source>Automate</source>
-      <translation type="unfinished">أتمتة</translation>
+        <source>Automate</source>
+        <translation type="unfinished">أتمتة</translation>
     </message>
     <message>
-      <source>Crowd</source>
-      <translation type="unfinished">الحشد</translation>
+        <source>Crowd</source>
+        <translation type="unfinished">الحشد</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Objects</name>
     <message>
-      <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-      <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
     <message>
-      <source>Unit missions</source>
-      <translation type="unfinished">وحدة البعثات</translation>
+        <source>Unit missions</source>
+        <translation type="unfinished">وحدة البعثات</translation>
     </message>
     <message>
-      <source>Automat missions</source>
-      <translation type="unfinished">بعثات [اوتومت]</translation>
+        <source>Automat missions</source>
+        <translation type="unfinished">بعثات [اوتومت]</translation>
     </message>
     <message>
-      <source>Crowd missions</source>
-      <translation type="unfinished">البعثات الحشد</translation>
+        <source>Crowd missions</source>
+        <translation type="unfinished">البعثات الحشد</translation>
     </message>
     <message>
-      <source>Fragmentary orders</source>
-      <translation type="unfinished">أوامر مجزأ</translation>
+        <source>Fragmentary orders</source>
+        <translation type="unfinished">أوامر مجزأ</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Orders</name>
     <message>
-      <source>Frag orders</source>
-      <translation type="unfinished">أوامر frag</translation>
+        <source>Frag orders</source>
+        <translation type="unfinished">أوامر frag</translation>
     </message>
     <message>
-      <source>Add frag order</source>
-      <translation type="unfinished">إضافة أمر frag</translation>
+        <source>Add frag order</source>
+        <translation type="unfinished">إضافة أمر frag</translation>
     </message>
     <message>
-      <source>Remove frag order</source>
-      <translation type="unfinished">إزالة ترتيب frag</translation>
+        <source>Remove frag order</source>
+        <translation type="unfinished">إزالة ترتيب frag</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_RoofShapes</name>
     <message>
-      <source>RoofShape</source>
-      <translation type="unfinished">روفشابي</translation>
+        <source>RoofShape</source>
+        <translation type="unfinished">روفشابي</translation>
     </message>
     <message>
-      <source>RoofShapes</source>
-      <translation type="unfinished">روفشابيس</translation>
+        <source>RoofShapes</source>
+        <translation type="unfinished">روفشابيس</translation>
     </message>
     <message>
-      <source>Templates</source>
-      <translation type="unfinished">قوالب</translation>
+        <source>Templates</source>
+        <translation type="unfinished">قوالب</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Templates</name>
     <message>
-      <source>Template</source>
-      <translation type="unfinished">قالب</translation>
+        <source>Template</source>
+        <translation type="unfinished">قالب</translation>
     </message>
     <message>
-      <source>Templates</source>
-      <translation type="unfinished">قوالب</translation>
+        <source>Templates</source>
+        <translation type="unfinished">قوالب</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_UrbanAccommodation_Type</name>
     <message>
-      <source>Activity</source>
-      <translation type="unfinished">النشاط</translation>
+        <source>Activity</source>
+        <translation type="unfinished">النشاط</translation>
     </message>
     <message>
-      <source>Activities</source>
-      <translation type="unfinished">الأنشطة</translation>
+        <source>Activities</source>
+        <translation type="unfinished">الأنشطة</translation>
     </message>
     <message>
-      <source>Templates</source>
-      <translation type="unfinished">قوالب</translation>
+        <source>Templates</source>
+        <translation type="unfinished">قوالب</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_UrbanInfrastructure_Type</name>
     <message>
-      <source>Infrastructure</source>
-      <translation type="unfinished">البنية التحتية</translation>
+        <source>Infrastructure</source>
+        <translation type="unfinished">البنية التحتية</translation>
     </message>
     <message>
-      <source>Infrastructures</source>
-      <translation type="unfinished">البنية التحتية</translation>
+        <source>Infrastructures</source>
+        <translation type="unfinished">البنية التحتية</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_UrbanMaterial_Type</name>
     <message>
-      <source>Material</source>
-      <translation type="unfinished">المواد</translation>
+        <source>Material</source>
+        <translation type="unfinished">المواد</translation>
     </message>
     <message>
-      <source>Materials</source>
-      <translation type="unfinished">المواد</translation>
+        <source>Materials</source>
+        <translation type="unfinished">المواد</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ListView_Urban_Type</name>
     <message>
-      <source>Facade</source>
-      <translation type="unfinished">الواجهة</translation>
+        <source>Facade</source>
+        <translation type="unfinished">الواجهة</translation>
     </message>
     <message>
-      <source>Facades</source>
-      <translation type="unfinished">الواجهات</translation>
+        <source>Facades</source>
+        <translation type="unfinished">الواجهات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Logistic_GUI</name>
     <message>
-      <source>Maintenance</source>
-      <translation type="unfinished">صيانة</translation>
+        <source>Maintenance</source>
+        <translation type="unfinished">صيانة</translation>
     </message>
     <message>
-      <source>Supply</source>
-      <translation type="unfinished">إمدادات</translation>
+        <source>Supply</source>
+        <translation type="unfinished">إمدادات</translation>
     </message>
     <message>
-      <source>Health</source>
-      <translation type="unfinished">الصحة</translation>
+        <source>Health</source>
+        <translation type="unfinished">الصحة</translation>
     </message>
     <message>
-      <source>Funeral</source>
-      <translation type="unfinished">جنازة</translation>
+        <source>Funeral</source>
+        <translation type="unfinished">جنازة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_MainWindow</name>
     <message>
-      <source>Sword Adaptation Tool - No Project</source>
-      <translation type="unfinished">السيف التكيف أداة--ليست المشروع</translation>
+        <source>Sword Adaptation Tool - No Project</source>
+        <translation type="unfinished">السيف التكيف أداة--ليست المشروع</translation>
     </message>
     <message>
-      <source>&amp;New</source>
-      <translation type="unfinished">آند الجديدة</translation>
+        <source>&amp;New</source>
+        <translation type="unfinished">آند الجديدة</translation>
     </message>
     <message>
-      <source>&amp;Open</source>
-      <translation type="unfinished">آند فتح</translation>
+        <source>&amp;Open</source>
+        <translation type="unfinished">آند فتح</translation>
     </message>
     <message>
-      <source>&amp;Save</source>
-      <translation type="unfinished">آند حفظ</translation>
+        <source>&amp;Save</source>
+        <translation type="unfinished">آند حفظ</translation>
     </message>
     <message>
-      <source>Save &amp;As</source>
-      <translation type="unfinished">حفظ آند كما</translation>
+        <source>Save &amp;As</source>
+        <translation type="unfinished">حفظ آند كما</translation>
     </message>
     <message>
-      <source>Back (ctrl + left)</source>
-      <translation type="unfinished">مرة أخرى (ctrl + يسار)</translation>
+        <source>Back (ctrl + left)</source>
+        <translation type="unfinished">مرة أخرى (ctrl + يسار)</translation>
     </message>
     <message>
-      <source>Forward (ctrl + right)</source>
-      <translation type="unfinished">إلى الأمام (ctrl + يمين)</translation>
+        <source>Forward (ctrl + right)</source>
+        <translation type="unfinished">إلى الأمام (ctrl + يمين)</translation>
     </message>
     <message>
-      <source>&amp;Project</source>
-      <translation type="unfinished">آند المشروع</translation>
+        <source>&amp;Project</source>
+        <translation type="unfinished">آند المشروع</translation>
     </message>
     <message>
-      <source>&amp;Export HTML</source>
-      <translation type="unfinished">آند تصدير إتش تي أم ال</translation>
+        <source>&amp;Export HTML</source>
+        <translation type="unfinished">آند تصدير إتش تي أم ال</translation>
     </message>
     <message>
-      <source>Consistency analysis</source>
-      <translation type="unfinished">تحليل في الاتساق</translation>
+        <source>Consistency analysis</source>
+        <translation type="unfinished">تحليل في الاتساق</translation>
     </message>
     <message>
-      <source>E&amp;xit</source>
-      <translation type="unfinished">ه آند زيت</translation>
+        <source>E&amp;xit</source>
+        <translation type="unfinished">ه آند زيت</translation>
     </message>
     <message>
-      <source>Consistency &amp;tables</source>
-      <translation type="unfinished">تناسق آند الجداول</translation>
+        <source>Consistency &amp;tables</source>
+        <translation type="unfinished">تناسق آند الجداول</translation>
     </message>
     <message>
-      <source>&amp;Help</source>
-      <translation type="unfinished">آند مساعدة</translation>
+        <source>&amp;Help</source>
+        <translation type="unfinished">آند مساعدة</translation>
     </message>
     <message>
-      <source>Help</source>
-      <translation type="unfinished">تعليمات</translation>
+        <source>Help</source>
+        <translation type="unfinished">تعليمات</translation>
     </message>
     <message>
-      <source>&amp;About</source>
-      <translation type="unfinished">آند حول</translation>
+        <source>&amp;About</source>
+        <translation type="unfinished">آند حول</translation>
     </message>
     <message>
-      <source>Sword Adaptation Tool - </source>
-      <translation type="unfinished">السيف التكيف أداة-</translation>
+        <source>Sword Adaptation Tool - </source>
+        <translation type="unfinished">السيف التكيف أداة-</translation>
     </message>
     <message>
-      <source>Save project as</source>
-      <translation type="unfinished">حفظ المشروع</translation>
+        <source>Save project as</source>
+        <translation type="unfinished">حفظ المشروع</translation>
     </message>
     <message>
-      <source>Warning</source>
-      <translation type="unfinished">تحذير</translation>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
     </message>
     <message>
-      <source>The database you are trying to override is read-only. Please select another directory.</source>
-      <translation type="unfinished">أنت تحاول تجاوز قاعدة البيانات للقراءة فقط. الرجاء تحديد دليل آخر.</translation>
+        <source>The database you are trying to override is read-only. Please select another directory.</source>
+        <translation type="unfinished">أنت تحاول تجاوز قاعدة البيانات للقراءة فقط. الرجاء تحديد دليل آخر.</translation>
     </message>
     <message>
-      <source>Saving error</source>
-      <translation type="unfinished">حفظ خطأ</translation>
+        <source>Saving error</source>
+        <translation type="unfinished">حفظ خطأ</translation>
     </message>
     <message>
-      <source>Something went wrong during the saving process.</source>
-      <translation type="unfinished">حدث خطأ أثناء عملية الحفظ.</translation>
+        <source>Something went wrong during the saving process.</source>
+        <translation type="unfinished">حدث خطأ أثناء عملية الحفظ.</translation>
     </message>
     <message>
-      <source>Physical model file (physical.xml)</source>
-      <translation type="unfinished">ملف النموذج المادي (physical.xml)</translation>
+        <source>Physical model file (physical.xml)</source>
+        <translation type="unfinished">ملف النموذج المادي (physical.xml)</translation>
     </message>
     <message>
-      <source>Create new project</source>
-      <translation type="unfinished">إنشاء مشروع جديد</translation>
+        <source>Create new project</source>
+        <translation type="unfinished">إنشاء مشروع جديد</translation>
     </message>
     <message>
-      <source>Open physical model project</source>
-      <translation type="unfinished">المشروع فتح النموذج المادي</translation>
+        <source>Open physical model project</source>
+        <translation type="unfinished">المشروع فتح النموذج المادي</translation>
     </message>
     <message>
-      <source>Sword Adaptation Tool - %1</source>
-      <translation type="unfinished">السيف أداة التكيف-%1</translation>
+        <source>Sword Adaptation Tool - %1</source>
+        <translation type="unfinished">السيف أداة التكيف-%1</translation>
     </message>
     <message>
-      <source> [ Read Only ]</source>
-      <translation type="unfinished">[للقراءة فقط]</translation>
+        <source> [ Read Only ]</source>
+        <translation type="unfinished">[للقراءة فقط]</translation>
     </message>
     <message>
-      <source>The signatures for the following files do not exist or are invalid : </source>
-      <translation type="unfinished">تواقيع للملفات التالية غير موجودة أو غير صحيحة:</translation>
+        <source>The signatures for the following files do not exist or are invalid : </source>
+        <translation type="unfinished">تواقيع للملفات التالية غير موجودة أو غير صحيحة:</translation>
     </message>
     <message>
-      <source>Data test</source>
-      <translation type="unfinished">بيانات الاختبار</translation>
+        <source>Data test</source>
+        <translation type="unfinished">بيانات الاختبار</translation>
     </message>
     <message>
-      <source>Project will be saved in order to execute data test.</source>
-      <translation type="unfinished">سيتم حفظ المشروع من أجل تنفيذ اختبار البيانات.</translation>
+        <source>Project will be saved in order to execute data test.</source>
+        <translation type="unfinished">سيتم حفظ المشروع من أجل تنفيذ اختبار البيانات.</translation>
     </message>
     <message>
-      <source>No project loaded, continue anyway?</source>
-      <translation type="unfinished">مواصلة المشروع ليست تحميل، على أية حال؟</translation>
+        <source>No project loaded, continue anyway?</source>
+        <translation type="unfinished">مواصلة المشروع ليست تحميل، على أية حال؟</translation>
     </message>
     <message>
-      <source>Running data check</source>
-      <translation type="unfinished">تشغيل التحقق من البيانات</translation>
+        <source>Running data check</source>
+        <translation type="unfinished">تشغيل التحقق من البيانات</translation>
     </message>
     <message>
-      <source>Data test failed</source>
-      <translation type="unfinished">فشل اختبار البيانات</translation>
+        <source>Data test failed</source>
+        <translation type="unfinished">فشل اختبار البيانات</translation>
     </message>
     <message>
-      <source>Sword Adaptation Tool</source>
-      <translation type="unfinished">أداة التكيف السيف</translation>
+        <source>Sword Adaptation Tool</source>
+        <translation type="unfinished">أداة التكيف السيف</translation>
     </message>
     <message>
-      <source>Invalid password</source>
-      <translation type="unfinished">كلمة المرور غير صالحة</translation>
+        <source>Invalid password</source>
+        <translation type="unfinished">كلمة المرور غير صالحة</translation>
     </message>
     <message>
-      <source>The password you entered is not valid. Please try again.</source>
-      <translation type="unfinished">كلمة المرور التي أدخلتها غير صالحة. الرجاء المحاولة مرة أخرى.</translation>
+        <source>The password you entered is not valid. Please try again.</source>
+        <translation type="unfinished">كلمة المرور التي أدخلتها غير صالحة. الرجاء المحاولة مرة أخرى.</translation>
     </message>
     <message>
-      <source>Save changes to project %1?</source>
-      <translation type="unfinished">هل تريد حفظ التغييرات في المشروع %1؟</translation>
+        <source>Save changes to project %1?</source>
+        <translation type="unfinished">هل تريد حفظ التغييرات في المشروع %1؟</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Maintenance_GUI</name>
     <message>
-      <source>Repairers availability warnings</source>
-      <translation type="unfinished">تحذيرات توافر المصلحون</translation>
+        <source>Repairers availability warnings</source>
+        <translation type="unfinished">تحذيرات توافر المصلحون</translation>
     </message>
     <message>
-      <source>Tow trucks availability warnings</source>
-      <translation type="unfinished">شاحنات السحب توافر تحذيرات</translation>
+        <source>Tow trucks availability warnings</source>
+        <translation type="unfinished">شاحنات السحب توافر تحذيرات</translation>
     </message>
     <message>
-      <source>Shifts durations</source>
-      <translation type="unfinished">تحولات المدد</translation>
+        <source>Shifts durations</source>
+        <translation type="unfinished">تحولات المدد</translation>
     </message>
     <message>
-      <source>Shift </source>
-      <translation type="unfinished">Shift</translation>
+        <source>Shift </source>
+        <translation type="unfinished">Shift</translation>
     </message>
     <message>
-      <source>Work duration</source>
-      <translation type="unfinished">مدة العمل</translation>
+        <source>Work duration</source>
+        <translation type="unfinished">مدة العمل</translation>
     </message>
     <message>
-      <source>Warning after</source>
-      <translation type="unfinished">تحذير بعد</translation>
+        <source>Warning after</source>
+        <translation type="unfinished">تحذير بعد</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_MissionGenObjectTypes_Table</name>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Allowed</source>
-      <translation type="unfinished">يسمح</translation>
+        <source>Allowed</source>
+        <translation type="unfinished">يسمح</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_MissionParameterValues_Table</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>New value</source>
-      <translation type="unfinished">القيمة الجديدة</translation>
+        <source>New value</source>
+        <translation type="unfinished">القيمة الجديدة</translation>
     </message>
     <message>
-      <source>Add value</source>
-      <translation type="unfinished">إضافة قيمة</translation>
+        <source>Add value</source>
+        <translation type="unfinished">إضافة قيمة</translation>
     </message>
     <message>
-      <source>Remove value</source>
-      <translation type="unfinished">إزالة القيمة</translation>
+        <source>Remove value</source>
+        <translation type="unfinished">إزالة القيمة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_MissionParameters_Table</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>DirectIA name</source>
-      <translation type="unfinished">اسم الإدارة</translation>
+        <source>DirectIA name</source>
+        <translation type="unfinished">اسم الإدارة</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Optional</source>
-      <translation type="unfinished">اختياري</translation>
+        <source>Optional</source>
+        <translation type="unfinished">اختياري</translation>
     </message>
     <message>
-      <source>Range min</source>
-      <translation type="unfinished">مجموعة دقيقة</translation>
+        <source>Range min</source>
+        <translation type="unfinished">مجموعة دقيقة</translation>
     </message>
     <message>
-      <source>Range max</source>
-      <translation type="unfinished">مجموعة ماكس</translation>
+        <source>Range max</source>
+        <translation type="unfinished">مجموعة ماكس</translation>
     </message>
     <message>
-      <source>Add parameter</source>
-      <translation type="unfinished">إضافة معلمة</translation>
+        <source>Add parameter</source>
+        <translation type="unfinished">إضافة معلمة</translation>
     </message>
     <message>
-      <source>Remove parameter</source>
-      <translation type="unfinished">إزالة المعلمة</translation>
+        <source>Remove parameter</source>
+        <translation type="unfinished">إزالة المعلمة</translation>
     </message>
     <message>
-      <source>New parameter</source>
-      <translation type="unfinished">معلمة جديدة</translation>
+        <source>New parameter</source>
+        <translation type="unfinished">معلمة جديدة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Mission_ConfigurationDlg</name>
     <message>
-      <source>Mission configuration</source>
-      <translation type="unfinished">تكوين البعثة</translation>
+        <source>Mission configuration</source>
+        <translation type="unfinished">تكوين البعثة</translation>
     </message>
     <message>
-      <source>OK</source>
-      <translation type="unfinished">موافق</translation>
+        <source>OK</source>
+        <translation type="unfinished">موافق</translation>
     </message>
     <message>
-      <source>Cancel</source>
-      <translation type="unfinished">إلغاء الأمر</translation>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Missions_GUI</name>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Allowed</source>
-      <translation type="unfinished">يسمح</translation>
+        <source>Allowed</source>
+        <translation type="unfinished">يسمح</translation>
     </message>
     <message>
-      <source>Unit missions</source>
-      <translation type="unfinished">وحدة البعثات</translation>
+        <source>Unit missions</source>
+        <translation type="unfinished">وحدة البعثات</translation>
     </message>
     <message>
-      <source>Automat missions</source>
-      <translation type="unfinished">بعثات [اوتومت]</translation>
+        <source>Automat missions</source>
+        <translation type="unfinished">بعثات [اوتومت]</translation>
     </message>
     <message>
-      <source>Crowd missions</source>
-      <translation type="unfinished">البعثات الحشد</translation>
+        <source>Crowd missions</source>
+        <translation type="unfinished">البعثات الحشد</translation>
     </message>
     <message>
-      <source>Fragmentary orders</source>
-      <translation type="unfinished">أوامر مجزأ</translation>
+        <source>Fragmentary orders</source>
+        <translation type="unfinished">أوامر مجزأ</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Parameters</source>
-      <translation type="unfinished">المعلمات</translation>
+        <source>Parameters</source>
+        <translation type="unfinished">المعلمات</translation>
     </message>
     <message>
-      <source>Enumeration values</source>
-      <translation type="unfinished">قيم التعداد</translation>
+        <source>Enumeration values</source>
+        <translation type="unfinished">قيم التعداد</translation>
     </message>
     <message>
-      <source>Allowed types</source>
-      <translation type="unfinished">أنواع المسموح بها</translation>
+        <source>Allowed types</source>
+        <translation type="unfinished">أنواع المسموح بها</translation>
     </message>
     <message>
-      <source>Limits</source>
-      <translation type="unfinished">حدود</translation>
+        <source>Limits</source>
+        <translation type="unfinished">حدود</translation>
     </message>
     <message>
-      <source>Minimum</source>
-      <translation type="unfinished">الحد الأدنى</translation>
+        <source>Minimum</source>
+        <translation type="unfinished">الحد الأدنى</translation>
     </message>
     <message>
-      <source>Maximum</source>
-      <translation type="unfinished">الحد الأقصى</translation>
+        <source>Maximum</source>
+        <translation type="unfinished">الحد الأقصى</translation>
     </message>
     <message>
-      <source>all</source>
-      <translation type="unfinished">جميع</translation>
+        <source>all</source>
+        <translation type="unfinished">جميع</translation>
     </message>
     <message>
-      <source>MRT Behavior</source>
-      <translation type="unfinished">السلوك MRT</translation>
+        <source>MRT Behavior</source>
+        <translation type="unfinished">السلوك MRT</translation>
     </message>
     <message>
-      <source>CDT Behavior</source>
-      <translation type="unfinished">سلوك التوقيت النهاري الوسطى</translation>
+        <source>CDT Behavior</source>
+        <translation type="unfinished">سلوك التوقيت النهاري الوسطى</translation>
     </message>
     <message>
-      <source>Behavior</source>
-      <translation type="unfinished">السلوك</translation>
+        <source>Behavior</source>
+        <translation type="unfinished">السلوك</translation>
     </message>
     <message>
-      <source>Symbol</source>
-      <translation type="unfinished">الرمز</translation>
+        <source>Symbol</source>
+        <translation type="unfinished">الرمز</translation>
     </message>
     <message>
-      <source>General</source>
-      <translation type="unfinished">العام</translation>
+        <source>General</source>
+        <translation type="unfinished">العام</translation>
     </message>
     <message>
-      <source>Mission sheets</source>
-      <translation type="unfinished">أوراق البعثة</translation>
+        <source>Mission sheets</source>
+        <translation type="unfinished">أوراق البعثة</translation>
     </message>
     <message>
-      <source>Available without mission</source>
-      <translation type="unfinished">متوفرة بدون بعثة</translation>
+        <source>Available without mission</source>
+        <translation type="unfinished">متوفرة بدون بعثة</translation>
     </message>
     <message>
-      <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : " |</source>
-      <translation type="unfinished">لا يمكن أن يحتوي اسم البعثة حرف التالي:/ &lt;&gt; * \: "|</translation>
+        <source>Mission name cannot contain the following caracters: / &lt; &gt; * \ : &quot; |</source>
+        <translation type="unfinished">لا يمكن أن يحتوي اسم البعثة حرف التالي:/ &lt;&gt; * \: &quot;|</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Missions_Parameter</name>
     <message>
-      <source>Invalid mission</source>
-      <translation type="unfinished">مهمة غير صالح</translation>
+        <source>Invalid mission</source>
+        <translation type="unfinished">مهمة غير صالح</translation>
     </message>
     <message>
-      <source>'%1' parameter should have at least one object.</source>
-      <translation type="unfinished">يجب أن تحتوي المعلمة '%1' كائن واحد على الأقل.</translation>
+        <source>&apos;%1&apos; parameter should have at least one object.</source>
+        <translation type="unfinished">يجب أن تحتوي المعلمة &apos;%1&apos; كائن واحد على الأقل.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Missions_data</name>
     <message>
-      <source>Unit missions</source>
-      <translation type="unfinished">وحدة البعثات</translation>
+        <source>Unit missions</source>
+        <translation type="unfinished">وحدة البعثات</translation>
     </message>
     <message>
-      <source>Automat missions</source>
-      <translation type="unfinished">بعثات [اوتومت]</translation>
+        <source>Automat missions</source>
+        <translation type="unfinished">بعثات [اوتومت]</translation>
     </message>
     <message>
-      <source>Crowd missions</source>
-      <translation type="unfinished">البعثات الحشد</translation>
+        <source>Crowd missions</source>
+        <translation type="unfinished">البعثات الحشد</translation>
     </message>
     <message>
-      <source>Fragmentary orders</source>
-      <translation type="unfinished">أوامر مجزأ</translation>
+        <source>Fragmentary orders</source>
+        <translation type="unfinished">أوامر مجزأ</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Models_GUI</name>
     <message>
-      <source>Unit models</source>
-      <translation type="unfinished">نماذج وحدة</translation>
+        <source>Unit models</source>
+        <translation type="unfinished">نماذج وحدة</translation>
     </message>
     <message>
-      <source>Automata models</source>
-      <translation type="unfinished">نماذج الآلات</translation>
+        <source>Automata models</source>
+        <translation type="unfinished">نماذج الآلات</translation>
     </message>
     <message>
-      <source>Crowds models</source>
-      <translation type="unfinished">نماذج الحشود</translation>
+        <source>Crowds models</source>
+        <translation type="unfinished">نماذج الحشود</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>DIA type</source>
-      <translation type="unfinished">نوع ديا</translation>
+        <source>DIA type</source>
+        <translation type="unfinished">نوع ديا</translation>
     </message>
     <message>
-      <source>File</source>
-      <translation type="unfinished">الملف</translation>
+        <source>File</source>
+        <translation type="unfinished">الملف</translation>
     </message>
     <message>
-      <source>Masalife</source>
-      <translation type="unfinished">ماساليفي</translation>
+        <source>Masalife</source>
+        <translation type="unfinished">ماساليفي</translation>
     </message>
     <message>
-      <source>Missions</source>
-      <translation type="unfinished">البعثات</translation>
+        <source>Missions</source>
+        <translation type="unfinished">البعثات</translation>
     </message>
     <message>
-      <source>FragOrders</source>
-      <translation type="unfinished">فراجورديرس</translation>
+        <source>FragOrders</source>
+        <translation type="unfinished">فراجورديرس</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_MultiPercentage</name>
     <message>
-      <source>%</source>
-      <translation type="unfinished">%</translation>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
-      <source>Warning: total of percentages must equal 100%.</source>
-      <translation type="unfinished">تحذير: يجب أن يساوي مجموع النسب المئوية 100%.</translation>
+        <source>Warning: total of percentages must equal 100%.</source>
+        <translation type="unfinished">تحذير: يجب أن يساوي مجموع النسب المئوية 100%.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_MultiRefWarningDialog</name>
     <message>
-      <source>Multi references</source>
-      <translation type="unfinished">مراجع متعددة</translation>
+        <source>Multi references</source>
+        <translation type="unfinished">مراجع متعددة</translation>
     </message>
     <message>
-      <source>Tab</source>
-      <translation type="unfinished">علامة التبويب</translation>
+        <source>Tab</source>
+        <translation type="unfinished">علامة التبويب</translation>
     </message>
     <message>
-      <source>Item</source>
-      <translation type="unfinished">البند</translation>
+        <source>Item</source>
+        <translation type="unfinished">البند</translation>
     </message>
     <message>
-      <source>Click "Ok" to continue.</source>
-      <translation type="unfinished">انقر فوق "موافق" الاستمرار.</translation>
+        <source>Click &quot;Ok&quot; to continue.</source>
+        <translation type="unfinished">انقر فوق &quot;موافق&quot; الاستمرار.</translation>
     </message>
     <message>
-      <source>All 'urban material'</source>
-      <translation type="unfinished">جميع 'المواد الحضرية'</translation>
+        <source>All &apos;urban material&apos;</source>
+        <translation type="unfinished">جميع &apos;المواد الحضرية&apos;</translation>
     </message>
     <message>
-      <source>All '%1'</source>
-      <translation type="unfinished">جميع '%1'</translation>
+        <source>All &apos;%1&apos;</source>
+        <translation type="unfinished">جميع &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>The following items will be &lt;b&gt;deleted&lt;/b&gt;:</source>
-      <translation type="unfinished">يتم &lt;b&gt;حذف&lt;/b&gt;العناصر التالية:</translation>
+        <source>The following items will be &lt;b&gt;deleted&lt;/b&gt;:</source>
+        <translation type="unfinished">يتم &lt;b&gt;حذف&lt;/b&gt;العناصر التالية:</translation>
     </message>
     <message>
-      <source>The following items will be &lt;b&gt;modified&lt;/b&gt;:</source>
-      <translation type="unfinished">وسوف تكون العناصر التالية &lt;b&gt;تعديل&lt;/b&gt;:</translation>
+        <source>The following items will be &lt;b&gt;modified&lt;/b&gt;:</source>
+        <translation type="unfinished">وسوف تكون العناصر التالية &lt;b&gt;تعديل&lt;/b&gt;:</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_NBC_GUI</name>
     <message>
-      <source>Propagation</source>
-      <translation type="unfinished">إكثار</translation>
+        <source>Propagation</source>
+        <translation type="unfinished">إكثار</translation>
     </message>
     <message>
-      <source>Contamination distance</source>
-      <translation type="unfinished">المسافة التلوث</translation>
+        <source>Contamination distance</source>
+        <translation type="unfinished">المسافة التلوث</translation>
     </message>
     <message>
-      <source>m</source>
-      <translation type="unfinished">m</translation>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
-      <source>Contamination quantity given</source>
-      <translation type="unfinished">كمية التلوث نظراً</translation>
+        <source>Contamination quantity given</source>
+        <translation type="unfinished">كمية التلوث نظراً</translation>
     </message>
     <message>
-      <source>Wind speed limit</source>
-      <translation type="unfinished">الحد الأقصى للسرعة الرياح</translation>
+        <source>Wind speed limit</source>
+        <translation type="unfinished">الحد الأقصى للسرعة الرياح</translation>
     </message>
     <message>
-      <source>km/h</source>
-      <translation type="unfinished">كم/ساعة</translation>
+        <source>km/h</source>
+        <translation type="unfinished">كم/ساعة</translation>
     </message>
     <message>
-      <source>NBC Suit</source>
-      <translation type="unfinished">دعوى أن بي سي</translation>
+        <source>NBC Suit</source>
+        <translation type="unfinished">دعوى أن بي سي</translation>
     </message>
     <message>
-      <source>Max speed modifier</source>
-      <translation type="unfinished">معدل سرعة ماكس</translation>
+        <source>Max speed modifier</source>
+        <translation type="unfinished">معدل سرعة ماكس</translation>
     </message>
     <message>
-      <source>Reloading time modifier</source>
-      <translation type="unfinished">إعادة شحن الوقت المعدل</translation>
+        <source>Reloading time modifier</source>
+        <translation type="unfinished">إعادة شحن الوقت المعدل</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Liquid</source>
-      <translation type="unfinished">سائل</translation>
+        <source>Liquid</source>
+        <translation type="unfinished">سائل</translation>
     </message>
     <message>
-      <source>Gaseous</source>
-      <translation type="unfinished">الغازية</translation>
+        <source>Gaseous</source>
+        <translation type="unfinished">الغازية</translation>
     </message>
     <message>
-      <source>Span</source>
-      <translation type="unfinished">سبان</translation>
+        <source>Span</source>
+        <translation type="unfinished">سبان</translation>
     </message>
     <message>
-      <source>Spread angle</source>
-      <translation type="unfinished">زاوية انتشار</translation>
+        <source>Spread angle</source>
+        <translation type="unfinished">زاوية انتشار</translation>
     </message>
     <message>
-      <source>°</source>
-      <translation type="unfinished">°</translation>
+        <source>°</source>
+        <translation type="unfinished">°</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_NBC_Intox_GUI</name>
     <message>
-      <source>Poisoning effect</source>
-      <translation type="unfinished">تأثير التسمم</translation>
+        <source>Poisoning effect</source>
+        <translation type="unfinished">تأثير التسمم</translation>
     </message>
     <message>
-      <source>Unwounded</source>
-      <translation type="unfinished">المعافين</translation>
+        <source>Unwounded</source>
+        <translation type="unfinished">المعافين</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 1</source>
-      <translation type="unfinished">مستوى خطورة إصابة 1</translation>
+        <source>Wounded seriousness level 1</source>
+        <translation type="unfinished">مستوى خطورة إصابة 1</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 2</source>
-      <translation type="unfinished">مستوى خطورة إصابة 2</translation>
+        <source>Wounded seriousness level 2</source>
+        <translation type="unfinished">مستوى خطورة إصابة 2</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 3</source>
-      <translation type="unfinished">مستوى خطورة إصابة 3</translation>
+        <source>Wounded seriousness level 3</source>
+        <translation type="unfinished">مستوى خطورة إصابة 3</translation>
     </message>
     <message>
-      <source>Wounded extreme seriousness</source>
-      <translation type="unfinished">خطورة إصابة</translation>
+        <source>Wounded extreme seriousness</source>
+        <translation type="unfinished">خطورة إصابة</translation>
     </message>
     <message>
-      <source>Killed</source>
-      <translation type="unfinished">قتل</translation>
+        <source>Killed</source>
+        <translation type="unfinished">قتل</translation>
     </message>
     <message>
-      <source>Contamination</source>
-      <translation type="unfinished">تلوث</translation>
+        <source>Contamination</source>
+        <translation type="unfinished">تلوث</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Objects_Data</name>
     <message>
-      <source>Empty object referenced by object '%1'.
+        <source>Empty object referenced by object &apos;%1&apos;.
 The spawn capacity will be disabled.</source>
-      <translation type="unfinished">فارغة الكائن المشار إليه بواسطة الكائن '%1'.
+        <translation type="unfinished">فارغة الكائن المشار إليه بواسطة الكائن &apos;%1&apos;.
 سيتم تعطيل قدرة البيضة.</translation>
     </message>
     <message>
-      <source>Unknown object '%2' referenced by object '%1'.
+        <source>Unknown object &apos;%2&apos; referenced by object &apos;%1&apos;.
 The spawn capacity will be disabled.</source>
-      <translation type="unfinished">كائن غير معروف '%2' المشار إليه بواسطة الكائن '%1'.
+        <translation type="unfinished">كائن غير معروف &apos;%2&apos; المشار إليه بواسطة الكائن &apos;%1&apos;.
 سيتم تعطيل قدرة البيضة.</translation>
     </message>
     <message>
-      <source>Reference error</source>
-      <translation type="unfinished">خطأ مرجع</translation>
+        <source>Reference error</source>
+        <translation type="unfinished">خطأ مرجع</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Fire propagation modifier - Invalid fire class '%1'</source>
-      <translation type="unfinished">معدل نشر النار-فئة النار غير صالح '%1'</translation>
+        <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
+        <translation type="unfinished">معدل نشر النار-فئة النار غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Object - Invalid Urban Material type '%1'</source>
-      <translation type="unfinished">كائن-نوع "المواد الحضرية" غير صالح '%1'</translation>
+        <source>Object - Invalid Urban Material type &apos;%1&apos;</source>
+        <translation type="unfinished">كائن-نوع &quot;المواد الحضرية&quot; غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Objects_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Point effect distance</source>
-      <translation type="unfinished">نقطة تأثير المسافة</translation>
+        <source>Point effect distance</source>
+        <translation type="unfinished">نقطة تأثير المسافة</translation>
     </message>
     <message>
-      <source>Description</source>
-      <translation type="unfinished">الوصف</translation>
+        <source>Description</source>
+        <translation type="unfinished">الوصف</translation>
     </message>
     <message>
-      <source>Geometries</source>
-      <translation type="unfinished">الهندسات</translation>
+        <source>Geometries</source>
+        <translation type="unfinished">الهندسات</translation>
     </message>
     <message>
-      <source>Polygon</source>
-      <translation type="unfinished">مضلع</translation>
+        <source>Polygon</source>
+        <translation type="unfinished">مضلع</translation>
     </message>
     <message>
-      <source>Symbol</source>
-      <translation type="unfinished">الرمز</translation>
+        <source>Symbol</source>
+        <translation type="unfinished">الرمز</translation>
     </message>
     <message>
-      <source>Point</source>
-      <translation type="unfinished">نقطة</translation>
+        <source>Point</source>
+        <translation type="unfinished">نقطة</translation>
     </message>
     <message>
-      <source>Line</source>
-      <translation type="unfinished">خط</translation>
+        <source>Line</source>
+        <translation type="unfinished">خط</translation>
     </message>
     <message>
-      <source>Circle</source>
-      <translation type="unfinished">دائرة</translation>
+        <source>Circle</source>
+        <translation type="unfinished">دائرة</translation>
     </message>
     <message>
-      <source>Activable</source>
-      <translation type="unfinished">الوزن الثقيل</translation>
+        <source>Activable</source>
+        <translation type="unfinished">الوزن الثقيل</translation>
     </message>
     <message>
-      <source>Logistic</source>
-      <translation type="unfinished">السوقي</translation>
+        <source>Logistic</source>
+        <translation type="unfinished">السوقي</translation>
     </message>
     <message>
-      <source>Supply-Route</source>
-      <translation type="unfinished">طريق إمداد</translation>
+        <source>Supply-Route</source>
+        <translation type="unfinished">طريق إمداد</translation>
     </message>
     <message>
-      <source>Decontamination</source>
-      <translation type="unfinished">إزالة التلوث</translation>
+        <source>Decontamination</source>
+        <translation type="unfinished">إزالة التلوث</translation>
     </message>
     <message>
-      <source>Extinguishable</source>
-      <translation type="unfinished">اكستينجويشابل</translation>
+        <source>Extinguishable</source>
+        <translation type="unfinished">اكستينجويشابل</translation>
     </message>
     <message>
-      <source>Interference</source>
-      <translation type="unfinished">التدخل</translation>
+        <source>Interference</source>
+        <translation type="unfinished">التدخل</translation>
     </message>
     <message>
-      <source>Occupable</source>
-      <translation type="unfinished">أوككوبابل</translation>
+        <source>Occupable</source>
+        <translation type="unfinished">أوككوبابل</translation>
     </message>
     <message>
-      <source>Supply</source>
-      <translation type="unfinished">إمدادات</translation>
+        <source>Supply</source>
+        <translation type="unfinished">إمدادات</translation>
     </message>
     <message>
-      <source>TimeLimited</source>
-      <translation type="unfinished">تيميليميتيد</translation>
+        <source>TimeLimited</source>
+        <translation type="unfinished">تيميليميتيد</translation>
     </message>
     <message>
-      <source>Delay time</source>
-      <translation type="unfinished">تأخير الوقت</translation>
+        <source>Delay time</source>
+        <translation type="unfinished">تأخير الوقت</translation>
     </message>
     <message>
-      <source>Altitude modifier</source>
-      <translation type="unfinished">تغيير الارتفاع</translation>
+        <source>Altitude modifier</source>
+        <translation type="unfinished">تغيير الارتفاع</translation>
     </message>
     <message>
-      <source>Burn</source>
-      <translation type="unfinished">حرق</translation>
+        <source>Burn</source>
+        <translation type="unfinished">حرق</translation>
     </message>
     <message>
-      <source>Universal</source>
-      <translation type="unfinished">عالمي</translation>
+        <source>Universal</source>
+        <translation type="unfinished">عالمي</translation>
     </message>
     <message>
-      <source>Stock</source>
-      <translation type="unfinished">الأوراق المالية</translation>
+        <source>Stock</source>
+        <translation type="unfinished">الأوراق المالية</translation>
     </message>
     <message>
-      <source>Resource network element</source>
-      <translation type="unfinished">عنصر شبكة الموارد</translation>
+        <source>Resource network element</source>
+        <translation type="unfinished">عنصر شبكة الموارد</translation>
     </message>
     <message>
-      <source>Lodging</source>
-      <translation type="unfinished">السكن</translation>
+        <source>Lodging</source>
+        <translation type="unfinished">السكن</translation>
     </message>
     <message>
-      <source>Underground network exit</source>
-      <translation type="unfinished">مخرج شبكة تحت الأرض</translation>
+        <source>Underground network exit</source>
+        <translation type="unfinished">مخرج شبكة تحت الأرض</translation>
     </message>
     <message>
-      <source>Fire forbidden</source>
-      <translation type="unfinished">النار المحرمة</translation>
+        <source>Fire forbidden</source>
+        <translation type="unfinished">النار المحرمة</translation>
     </message>
     <message>
-      <source>Border</source>
-      <translation type="unfinished">الحدود</translation>
+        <source>Border</source>
+        <translation type="unfinished">الحدود</translation>
     </message>
     <message>
-      <source>InteractWithSide</source>
-      <translation type="unfinished">إينتيراكتويثسيدي</translation>
+        <source>InteractWithSide</source>
+        <translation type="unfinished">إينتيراكتويثسيدي</translation>
     </message>
     <message>
-      <source>Friend</source>
-      <translation type="unfinished">صديق</translation>
+        <source>Friend</source>
+        <translation type="unfinished">صديق</translation>
     </message>
     <message>
-      <source>Enemy</source>
-      <translation type="unfinished">العدو</translation>
+        <source>Enemy</source>
+        <translation type="unfinished">العدو</translation>
     </message>
     <message>
-      <source>Neutral</source>
-      <translation type="unfinished">المحايدة</translation>
+        <source>Neutral</source>
+        <translation type="unfinished">المحايدة</translation>
     </message>
     <message>
-      <source>Constructor</source>
-      <translation type="unfinished">منشئ</translation>
+        <source>Constructor</source>
+        <translation type="unfinished">منشئ</translation>
     </message>
     <message>
-      <source>Default consumption</source>
-      <translation type="unfinished">استهلاك الافتراضي</translation>
+        <source>Default consumption</source>
+        <translation type="unfinished">استهلاك الافتراضي</translation>
     </message>
     <message>
-      <source>Model</source>
-      <translation type="unfinished">نموذج</translation>
+        <source>Model</source>
+        <translation type="unfinished">نموذج</translation>
     </message>
     <message>
-      <source>Buildable</source>
-      <translation type="unfinished">أراض</translation>
+        <source>Buildable</source>
+        <translation type="unfinished">أراض</translation>
     </message>
     <message>
-      <source>Improvable</source>
-      <translation type="unfinished">إيمبروفابل</translation>
+        <source>Improvable</source>
+        <translation type="unfinished">إيمبروفابل</translation>
     </message>
     <message>
-      <source>Terrain Heuristic</source>
-      <translation type="unfinished">الكشف عن مجريات الأمور في التضاريس</translation>
+        <source>Terrain Heuristic</source>
+        <translation type="unfinished">الكشف عن مجريات الأمور في التضاريس</translation>
     </message>
     <message>
-      <source>Avoidable</source>
-      <translation type="unfinished">يمكن تجنبها</translation>
+        <source>Avoidable</source>
+        <translation type="unfinished">يمكن تجنبها</translation>
     </message>
     <message>
-      <source>Distance</source>
-      <translation type="unfinished">المسافة</translation>
+        <source>Distance</source>
+        <translation type="unfinished">المسافة</translation>
     </message>
     <message>
-      <source>m</source>
-      <translation type="unfinished">m</translation>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
-      <source>Bypassable</source>
-      <translation type="unfinished">بيباسابل</translation>
+        <source>Bypassable</source>
+        <translation type="unfinished">بيباسابل</translation>
     </message>
     <message>
-      <source>Bypass Speed</source>
-      <translation type="unfinished">تجاوز السرعة</translation>
+        <source>Bypass Speed</source>
+        <translation type="unfinished">تجاوز السرعة</translation>
     </message>
     <message>
-      <source>km/h</source>
-      <translation type="unfinished">كم/ساعة</translation>
+        <source>km/h</source>
+        <translation type="unfinished">كم/ساعة</translation>
     </message>
     <message>
-      <source>Mobility</source>
-      <translation type="unfinished">التنقل</translation>
+        <source>Mobility</source>
+        <translation type="unfinished">التنقل</translation>
     </message>
     <message>
-      <source>Default speed</source>
-      <translation type="unfinished">السرعة الافتراضية</translation>
+        <source>Default speed</source>
+        <translation type="unfinished">السرعة الافتراضية</translation>
     </message>
     <message>
-      <source>Speed impact</source>
-      <translation type="unfinished">تأثير السرعة</translation>
+        <source>Speed impact</source>
+        <translation type="unfinished">تأثير السرعة</translation>
     </message>
     <message>
-      <source>Max agent speed</source>
-      <translation type="unfinished">ماكس عامل السرعة</translation>
+        <source>Max agent speed</source>
+        <translation type="unfinished">ماكس عامل السرعة</translation>
     </message>
     <message>
-      <source>%</source>
-      <translation type="unfinished">%</translation>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
-      <source>Trafficability</source>
-      <translation type="unfinished">ترافيكابيليتي</translation>
+        <source>Trafficability</source>
+        <translation type="unfinished">ترافيكابيليتي</translation>
     </message>
     <message>
-      <source>Default Limitation</source>
-      <translation type="unfinished">الحد الافتراضي</translation>
+        <source>Default Limitation</source>
+        <translation type="unfinished">الحد الافتراضي</translation>
     </message>
     <message>
-      <source>Max Weight</source>
-      <translation type="unfinished">وزن ماكس</translation>
+        <source>Max Weight</source>
+        <translation type="unfinished">وزن ماكس</translation>
     </message>
     <message>
-      <source>tons</source>
-      <translation type="unfinished">طن</translation>
+        <source>tons</source>
+        <translation type="unfinished">طن</translation>
     </message>
     <message>
-      <source>Workable</source>
-      <translation type="unfinished">قابلة للتطبيق</translation>
+        <source>Workable</source>
+        <translation type="unfinished">قابلة للتطبيق</translation>
     </message>
     <message>
-      <source>Max Animator: </source>
-      <translation type="unfinished">ماكس الرسوم المتحركة:</translation>
+        <source>Max Animator: </source>
+        <translation type="unfinished">ماكس الرسوم المتحركة:</translation>
     </message>
     <message>
-      <source>agents</source>
-      <translation type="unfinished">وكلاء</translation>
+        <source>agents</source>
+        <translation type="unfinished">وكلاء</translation>
     </message>
     <message>
-      <source>Attrition</source>
-      <translation type="unfinished">الاستنزاف</translation>
+        <source>Attrition</source>
+        <translation type="unfinished">الاستنزاف</translation>
     </message>
     <message>
-      <source>Use ammunition</source>
-      <translation type="unfinished">استخدام الذخيرة</translation>
+        <source>Use ammunition</source>
+        <translation type="unfinished">استخدام الذخيرة</translation>
     </message>
     <message>
-      <source>Resource</source>
-      <translation type="unfinished">الموارد</translation>
+        <source>Resource</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-      <source>Crowd attrition</source>
-      <translation type="unfinished">الاستنزاف الحشد</translation>
+        <source>Crowd attrition</source>
+        <translation type="unfinished">الاستنزاف الحشد</translation>
     </message>
     <message>
-      <source>Attrition surface</source>
-      <translation type="unfinished">سطح الاستنزاف</translation>
+        <source>Attrition surface</source>
+        <translation type="unfinished">سطح الاستنزاف</translation>
     </message>
     <message>
-      <source>m²</source>
-      <translation type="unfinished">م 2</translation>
+        <source>m²</source>
+        <translation type="unfinished">م 2</translation>
     </message>
     <message>
-      <source>PH</source>
-      <translation type="unfinished">الأس الهيدروجيني</translation>
+        <source>PH</source>
+        <translation type="unfinished">الأس الهيدروجيني</translation>
     </message>
     <message>
-      <source>Urban Destruction</source>
-      <translation type="unfinished">تدمير المناطق الحضرية</translation>
+        <source>Urban Destruction</source>
+        <translation type="unfinished">تدمير المناطق الحضرية</translation>
     </message>
     <message>
-      <source>NBC</source>
-      <translation type="unfinished">أن بي سي</translation>
+        <source>NBC</source>
+        <translation type="unfinished">أن بي سي</translation>
     </message>
     <message>
-      <source>Contamination</source>
-      <translation type="unfinished">تلوث</translation>
+        <source>Contamination</source>
+        <translation type="unfinished">تلوث</translation>
     </message>
     <message>
-      <source>Max Toxic</source>
-      <translation type="unfinished">سمية ماكس</translation>
+        <source>Max Toxic</source>
+        <translation type="unfinished">سمية ماكس</translation>
     </message>
     <message>
-      <source>items</source>
-      <translation type="unfinished">العناصر</translation>
+        <source>items</source>
+        <translation type="unfinished">العناصر</translation>
     </message>
     <message>
-      <source>Intoxication</source>
-      <translation type="unfinished">التسمم</translation>
+        <source>Intoxication</source>
+        <translation type="unfinished">التسمم</translation>
     </message>
     <message>
-      <source>Population</source>
-      <translation type="unfinished">السكان</translation>
+        <source>Population</source>
+        <translation type="unfinished">السكان</translation>
     </message>
     <message>
-      <source>Density: </source>
-      <translation type="unfinished">الكثافة:</translation>
+        <source>Density: </source>
+        <translation type="unfinished">الكثافة:</translation>
     </message>
     <message>
-      <source>Detection duration</source>
-      <translation type="unfinished">الكشف عن المدة</translation>
+        <source>Detection duration</source>
+        <translation type="unfinished">الكشف عن المدة</translation>
     </message>
     <message>
-      <source>Recognition duration</source>
-      <translation type="unfinished">مدة التسليم</translation>
+        <source>Recognition duration</source>
+        <translation type="unfinished">مدة التسليم</translation>
     </message>
     <message>
-      <source>Identification duration</source>
-      <translation type="unfinished">تحديد المدة</translation>
+        <source>Identification duration</source>
+        <translation type="unfinished">تحديد المدة</translation>
     </message>
     <message>
-      <source>Spawn</source>
-      <translation type="unfinished">تفرخ</translation>
+        <source>Spawn</source>
+        <translation type="unfinished">تفرخ</translation>
     </message>
     <message>
-      <source>Action range</source>
-      <translation type="unfinished">نطاق العمل</translation>
+        <source>Action range</source>
+        <translation type="unfinished">نطاق العمل</translation>
     </message>
     <message>
-      <source>Object</source>
-      <translation type="unfinished">كائن</translation>
+        <source>Object</source>
+        <translation type="unfinished">كائن</translation>
     </message>
     <message>
-      <source>Medical</source>
-      <translation type="unfinished">الطبية</translation>
+        <source>Medical</source>
+        <translation type="unfinished">الطبية</translation>
     </message>
     <message>
-      <source>Doctor night rate</source>
-      <translation type="unfinished">سعر الليلة الطبيب</translation>
+        <source>Doctor night rate</source>
+        <translation type="unfinished">سعر الليلة الطبيب</translation>
     </message>
     <message>
-      <source>Emergency doctor rate</source>
-      <translation type="unfinished">معدل طبيب الطوارئ</translation>
+        <source>Emergency doctor rate</source>
+        <translation type="unfinished">معدل طبيب الطوارئ</translation>
     </message>
     <message>
-      <source>Emergency bed rate</source>
-      <translation type="unfinished">سعر سرير الطوارئ</translation>
+        <source>Emergency bed rate</source>
+        <translation type="unfinished">سعر سرير الطوارئ</translation>
     </message>
     <message>
-      <source>Height interaction</source>
-      <translation type="unfinished">ذروة التفاعل</translation>
+        <source>Height interaction</source>
+        <translation type="unfinished">ذروة التفاعل</translation>
     </message>
     <message>
-      <source>Interaction max height</source>
-      <translation type="unfinished">الارتفاع الأقصى التفاعل</translation>
+        <source>Interaction max height</source>
+        <translation type="unfinished">الارتفاع الأقصى التفاعل</translation>
     </message>
     <message>
-      <source>Protection</source>
-      <translation type="unfinished">حماية</translation>
+        <source>Protection</source>
+        <translation type="unfinished">حماية</translation>
     </message>
     <message>
-      <source>Max size</source>
-      <translation type="unfinished">الحد الأقصى لحجم</translation>
+        <source>Max size</source>
+        <translation type="unfinished">الحد الأقصى لحجم</translation>
     </message>
     <message>
-      <source>Genie prepared</source>
-      <translation type="unfinished">الجني على استعداد</translation>
+        <source>Genie prepared</source>
+        <translation type="unfinished">الجني على استعداد</translation>
     </message>
     <message>
-      <source>Bridge / Road</source>
-      <translation type="unfinished">جسر/الطريق</translation>
+        <source>Bridge / Road</source>
+        <translation type="unfinished">جسر/الطريق</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Propagation</source>
-      <translation type="unfinished">إكثار</translation>
+        <source>Propagation</source>
+        <translation type="unfinished">إكثار</translation>
     </message>
     <message>
-      <source>AttitudeModifier</source>
-      <translation type="unfinished">أتيتوديموديفير</translation>
+        <source>AttitudeModifier</source>
+        <translation type="unfinished">أتيتوديموديفير</translation>
     </message>
     <message>
-      <source>Attitude</source>
-      <translation type="unfinished">موقف</translation>
+        <source>Attitude</source>
+        <translation type="unfinished">موقف</translation>
     </message>
     <message>
-      <source>Perception</source>
-      <translation type="unfinished">تصور</translation>
+        <source>Perception</source>
+        <translation type="unfinished">تصور</translation>
     </message>
     <message>
-      <source>Blinding</source>
-      <translation type="unfinished">المسببة للعمى</translation>
+        <source>Blinding</source>
+        <translation type="unfinished">المسببة للعمى</translation>
     </message>
     <message>
-      <source>Scattering</source>
-      <translation type="unfinished">نثر</translation>
+        <source>Scattering</source>
+        <translation type="unfinished">نثر</translation>
     </message>
     <message>
-      <source>Number of humans per simulation step</source>
-      <translation type="unfinished">عدد من البشر كل خطوة المحاكاة</translation>
+        <source>Number of humans per simulation step</source>
+        <translation type="unfinished">عدد من البشر كل خطوة المحاكاة</translation>
     </message>
     <message>
-      <source>Structural state</source>
-      <translation type="unfinished">هيكلية الدولة</translation>
+        <source>Structural state</source>
+        <translation type="unfinished">هيكلية الدولة</translation>
     </message>
     <message>
-      <source>Initial value</source>
-      <translation type="unfinished">القيمة الأولية</translation>
+        <source>Initial value</source>
+        <translation type="unfinished">القيمة الأولية</translation>
     </message>
     <message>
-      <source>Flood</source>
-      <translation type="unfinished">الفيضانات</translation>
+        <source>Flood</source>
+        <translation type="unfinished">الفيضانات</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 1</source>
-      <translation type="unfinished">مستوى خطورة إصابة 1</translation>
+        <source>Wounded seriousness level 1</source>
+        <translation type="unfinished">مستوى خطورة إصابة 1</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 2</source>
-      <translation type="unfinished">مستوى خطورة إصابة 2</translation>
+        <source>Wounded seriousness level 2</source>
+        <translation type="unfinished">مستوى خطورة إصابة 2</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 3</source>
-      <translation type="unfinished">مستوى خطورة إصابة 3</translation>
+        <source>Wounded seriousness level 3</source>
+        <translation type="unfinished">مستوى خطورة إصابة 3</translation>
     </message>
     <message>
-      <source>Wounded extreme seriousness</source>
-      <translation type="unfinished">خطورة إصابة</translation>
+        <source>Wounded extreme seriousness</source>
+        <translation type="unfinished">خطورة إصابة</translation>
     </message>
     <message>
-      <source>Killed</source>
-      <translation type="unfinished">قتل</translation>
+        <source>Killed</source>
+        <translation type="unfinished">قتل</translation>
     </message>
     <message>
-      <source>Fire propagation modifier</source>
-      <translation type="unfinished">معدل انتشار الحريق</translation>
+        <source>Fire propagation modifier</source>
+        <translation type="unfinished">معدل انتشار الحريق</translation>
     </message>
     <message>
-      <source>Infos</source>
-      <translation type="unfinished">معلومات</translation>
+        <source>Infos</source>
+        <translation type="unfinished">معلومات</translation>
     </message>
     <message>
-      <source>Capacities</source>
-      <translation type="unfinished">قدرات</translation>
+        <source>Capacities</source>
+        <translation type="unfinished">قدرات</translation>
     </message>
     <message>
-      <source>Objects/</source>
-      <translation type="unfinished">كائنات/</translation>
+        <source>Objects/</source>
+        <translation type="unfinished">كائنات/</translation>
     </message>
     <message>
-      <source>Objects</source>
-      <translation type="unfinished">الكائنات</translation>
+        <source>Objects</source>
+        <translation type="unfinished">الكائنات</translation>
     </message>
     <message>
-      <source>Geometry</source>
-      <translation type="unfinished">هندسة</translation>
+        <source>Geometry</source>
+        <translation type="unfinished">هندسة</translation>
     </message>
     <message>
-      <source>Disaster</source>
-      <translation type="unfinished">الكوارث</translation>
+        <source>Disaster</source>
+        <translation type="unfinished">الكوارث</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_OpenFile_Exception</name>
     <message>
-      <source>File error</source>
-      <translation type="unfinished">خطأ في ملف</translation>
+        <source>File error</source>
+        <translation type="unfinished">خطأ في ملف</translation>
     </message>
     <message>
-      <source>Could not open file '%1'.
+        <source>Could not open file &apos;%1&apos;.
 Make sure the file exists.</source>
-      <translation type="unfinished">تعذر فتح الملف '%1'.
+        <translation type="unfinished">تعذر فتح الملف &apos;%1&apos;.
 تأكد من وجود الملف.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_OpenMode_Dialog</name>
     <message>
-      <source>Open mode configuration</source>
-      <translation type="unfinished">تكوين وضع الفتح</translation>
+        <source>Open mode configuration</source>
+        <translation type="unfinished">تكوين وضع الفتح</translation>
     </message>
     <message>
-      <source>Normal mode</source>
-      <translation type="unfinished">الوضع العادي</translation>
+        <source>Normal mode</source>
+        <translation type="unfinished">الوضع العادي</translation>
     </message>
     <message>
-      <source>Admin mode</source>
-      <translation type="unfinished">وضع المسؤول</translation>
+        <source>Admin mode</source>
+        <translation type="unfinished">وضع المسؤول</translation>
     </message>
     <message>
-      <source>Password:</source>
-      <translation type="unfinished">كلمة المرور:</translation>
+        <source>Password:</source>
+        <translation type="unfinished">كلمة المرور:</translation>
     </message>
     <message>
-      <source>Ok</source>
-      <translation type="unfinished">موافق</translation>
+        <source>Ok</source>
+        <translation type="unfinished">موافق</translation>
     </message>
     <message>
-      <source>Cancel</source>
-      <translation type="unfinished">إلغاء الأمر</translation>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_People_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Associated Crowd</source>
-      <translation type="unfinished">الحشد المرتبطين بها</translation>
+        <source>Associated Crowd</source>
+        <translation type="unfinished">الحشد المرتبطين بها</translation>
     </message>
     <message>
-      <source>Angry crowd mission</source>
-      <translation type="unfinished">البعثة حشد غاضب</translation>
+        <source>Angry crowd mission</source>
+        <translation type="unfinished">البعثة حشد غاضب</translation>
     </message>
     <message>
-      <source>Distribution</source>
-      <translation type="unfinished">التوزيع</translation>
+        <source>Distribution</source>
+        <translation type="unfinished">التوزيع</translation>
     </message>
     <message>
-      <source>Males</source>
-      <translation type="unfinished">الذكور</translation>
+        <source>Males</source>
+        <translation type="unfinished">الذكور</translation>
     </message>
     <message>
-      <source>Females</source>
-      <translation type="unfinished">الإناث</translation>
+        <source>Females</source>
+        <translation type="unfinished">الإناث</translation>
     </message>
     <message>
-      <source>Children</source>
-      <translation type="unfinished">الأطفال</translation>
+        <source>Children</source>
+        <translation type="unfinished">الأطفال</translation>
     </message>
     <message>
-      <source>Security satisfaction level</source>
-      <translation type="unfinished">مستوى رضا الأمن</translation>
+        <source>Security satisfaction level</source>
+        <translation type="unfinished">مستوى رضا الأمن</translation>
     </message>
     <message>
-      <source>Loss on fire</source>
-      <translation type="unfinished">الخسائر الناجمة عن الحرائق</translation>
+        <source>Loss on fire</source>
+        <translation type="unfinished">الخسائر الناجمة عن الحرائق</translation>
     </message>
     <message>
-      <source>%</source>
-      <translation type="unfinished">%</translation>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
-      <source>Gain per hour</source>
-      <translation type="unfinished">الحصول على كل ساعة</translation>
+        <source>Gain per hour</source>
+        <translation type="unfinished">الحصول على كل ساعة</translation>
     </message>
     <message>
-      <source>Health satisfaction</source>
-      <translation type="unfinished">الارتياح الصحة</translation>
+        <source>Health satisfaction</source>
+        <translation type="unfinished">الارتياح الصحة</translation>
     </message>
     <message>
-      <source>Number of people per medical infrastructure</source>
-      <translation type="unfinished">عدد الأشخاص لكل البنية التحتية الطبية</translation>
+        <source>Number of people per medical infrastructure</source>
+        <translation type="unfinished">عدد الأشخاص لكل البنية التحتية الطبية</translation>
     </message>
     <message>
-      <source>Moving weekly schedule</source>
-      <translation type="unfinished">نقل الجدول الأسبوعي</translation>
+        <source>Moving weekly schedule</source>
+        <translation type="unfinished">نقل الجدول الأسبوعي</translation>
     </message>
     <message>
-      <source>Transfer time</source>
-      <translation type="unfinished">وقت نقل</translation>
+        <source>Transfer time</source>
+        <translation type="unfinished">وقت نقل</translation>
     </message>
     <message>
-      <source>Consumptions</source>
-      <translation type="unfinished">استهلاكها</translation>
+        <source>Consumptions</source>
+        <translation type="unfinished">استهلاكها</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Point_GUI</name>
     <message>
-      <source>Ground Type</source>
-      <translation type="unfinished">نوع الأرض</translation>
+        <source>Ground Type</source>
+        <translation type="unfinished">نوع الأرض</translation>
     </message>
     <message>
-      <source>Distance (m)</source>
-      <translation type="unfinished">المسافة (م)</translation>
+        <source>Distance (m)</source>
+        <translation type="unfinished">المسافة (م)</translation>
     </message>
     <message>
-      <source>Add point</source>
-      <translation type="unfinished">إضافة نقطة</translation>
+        <source>Add point</source>
+        <translation type="unfinished">إضافة نقطة</translation>
     </message>
     <message>
-      <source>Remove point</source>
-      <translation type="unfinished">إزالة نقطة</translation>
+        <source>Remove point</source>
+        <translation type="unfinished">إزالة نقطة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Population_FireEffectRoe_GUI</name>
     <message>
-      <source>ROE</source>
-      <translation type="unfinished">قواعد الاشتباك</translation>
+        <source>ROE</source>
+        <translation type="unfinished">قواعد الاشتباك</translation>
     </message>
     <message>
-      <source>Attrition Surface (m²)</source>
-      <translation type="unfinished">الاستنزاف السطح (م 2)</translation>
+        <source>Attrition Surface (m²)</source>
+        <translation type="unfinished">الاستنزاف السطح (م 2)</translation>
     </message>
     <message>
-      <source>PH</source>
-      <translation type="unfinished">الأس الهيدروجيني</translation>
+        <source>PH</source>
+        <translation type="unfinished">الأس الهيدروجيني</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Population_FireEffect_Attitude_ListView</name>
     <message>
-      <source>Attitudes</source>
-      <translation type="unfinished">المواقف</translation>
+        <source>Attitudes</source>
+        <translation type="unfinished">المواقف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Population_FireEffect_Protection_ListView</name>
     <message>
-      <source>Protections</source>
-      <translation type="unfinished">سبل الحماية</translation>
+        <source>Protections</source>
+        <translation type="unfinished">سبل الحماية</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Population_GUI</name>
     <message>
-      <source>Global parameters</source>
-      <translation type="unfinished">معلمات العمومية</translation>
+        <source>Global parameters</source>
+        <translation type="unfinished">معلمات العمومية</translation>
     </message>
     <message>
-      <source>Crowd effects on units firing capability</source>
-      <translation type="unfinished">آثار الحشد على وحدات إطلاق القدرة</translation>
+        <source>Crowd effects on units firing capability</source>
+        <translation type="unfinished">آثار الحشد على وحدات إطلاق القدرة</translation>
     </message>
     <message>
-      <source>Density</source>
-      <translation type="unfinished">الكثافة</translation>
+        <source>Density</source>
+        <translation type="unfinished">الكثافة</translation>
     </message>
     <message>
-      <source>people/m²</source>
-      <translation type="unfinished">الشعب/م 2</translation>
+        <source>people/m²</source>
+        <translation type="unfinished">الشعب/م 2</translation>
     </message>
     <message>
-      <source>Modifier</source>
-      <translation type="unfinished">التغيير</translation>
+        <source>Modifier</source>
+        <translation type="unfinished">التغيير</translation>
     </message>
     <message>
-      <source>Time between two NBC applications</source>
-      <translation type="unfinished">الوقت بين اثنين من التطبيقات شبكة أن بي سي</translation>
+        <source>Time between two NBC applications</source>
+        <translation type="unfinished">الوقت بين اثنين من التطبيقات شبكة أن بي سي</translation>
     </message>
     <message>
-      <source>Details</source>
-      <translation type="unfinished">تفاصيل</translation>
+        <source>Details</source>
+        <translation type="unfinished">تفاصيل</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Behavior model</source>
-      <translation type="unfinished">نموذج السلوك</translation>
+        <source>Behavior model</source>
+        <translation type="unfinished">نموذج السلوك</translation>
     </message>
     <message>
-      <source>Density while moving</source>
-      <translation type="unfinished">كثافة أثناء تحريك</translation>
+        <source>Density while moving</source>
+        <translation type="unfinished">كثافة أثناء تحريك</translation>
     </message>
     <message>
-      <source>Average movement speed</source>
-      <translation type="unfinished">سرعة حركة متوسط</translation>
+        <source>Average movement speed</source>
+        <translation type="unfinished">سرعة حركة متوسط</translation>
     </message>
     <message>
-      <source>km/h</source>
-      <translation type="unfinished">كم/ساعة</translation>
+        <source>km/h</source>
+        <translation type="unfinished">كم/ساعة</translation>
     </message>
     <message>
-      <source>Armed individuals</source>
-      <translation type="unfinished">الأفراد المسلحين</translation>
+        <source>Armed individuals</source>
+        <translation type="unfinished">الأفراد المسلحين</translation>
     </message>
     <message>
-      <source>%</source>
-      <translation type="unfinished">%</translation>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
-      <source>Males</source>
-      <translation type="unfinished">الذكور</translation>
+        <source>Males</source>
+        <translation type="unfinished">الذكور</translation>
     </message>
     <message>
-      <source>Females</source>
-      <translation type="unfinished">الإناث</translation>
+        <source>Females</source>
+        <translation type="unfinished">الإناث</translation>
     </message>
     <message>
-      <source>Children</source>
-      <translation type="unfinished">الأطفال</translation>
+        <source>Children</source>
+        <translation type="unfinished">الأطفال</translation>
     </message>
     <message>
-      <source>Decontamination delay</source>
-      <translation type="unfinished">تأخير إزالة التلوث</translation>
+        <source>Decontamination delay</source>
+        <translation type="unfinished">تأخير إزالة التلوث</translation>
     </message>
     <message>
-      <source>Crowd effects on units movement capability</source>
-      <translation type="unfinished">آثار الحشد على قدرة حركة الوحدات</translation>
+        <source>Crowd effects on units movement capability</source>
+        <translation type="unfinished">آثار الحشد على قدرة حركة الوحدات</translation>
     </message>
     <message>
-      <source>Effect</source>
-      <translation type="unfinished">تأثير</translation>
+        <source>Effect</source>
+        <translation type="unfinished">تأثير</translation>
     </message>
     <message>
-      <source>Max speed</source>
-      <translation type="unfinished">ماكس السرعة</translation>
+        <source>Max speed</source>
+        <translation type="unfinished">ماكس السرعة</translation>
     </message>
     <message>
-      <source>Attritions</source>
-      <translation type="unfinished">أتريشنز</translation>
+        <source>Attritions</source>
+        <translation type="unfinished">أتريشنز</translation>
     </message>
     <message>
-      <source>Crowd -&gt; Units</source>
-      <translation type="unfinished">الحشد-&gt; الوحدات</translation>
+        <source>Crowd -&gt; Units</source>
+        <translation type="unfinished">الحشد-&gt; الوحدات</translation>
     </message>
     <message>
-      <source>Intensity</source>
-      <translation type="unfinished">كثافة</translation>
+        <source>Intensity</source>
+        <translation type="unfinished">كثافة</translation>
     </message>
     <message>
-      <source>Unarmed</source>
-      <translation type="unfinished">العزل</translation>
+        <source>Unarmed</source>
+        <translation type="unfinished">العزل</translation>
     </message>
     <message>
-      <source>Destruction</source>
-      <translation type="unfinished">تدمير</translation>
+        <source>Destruction</source>
+        <translation type="unfinished">تدمير</translation>
     </message>
     <message>
-      <source>Fixable with evacuation</source>
-      <translation type="unfinished">يمكن حلها مع إجلاء</translation>
+        <source>Fixable with evacuation</source>
+        <translation type="unfinished">يمكن حلها مع إجلاء</translation>
     </message>
     <message>
-      <source>Fixable without evacuation</source>
-      <translation type="unfinished">يمكن حلها دون إخلاء</translation>
+        <source>Fixable without evacuation</source>
+        <translation type="unfinished">يمكن حلها دون إخلاء</translation>
     </message>
     <message>
-      <source>Armed</source>
-      <translation type="unfinished">المسلحة</translation>
+        <source>Armed</source>
+        <translation type="unfinished">المسلحة</translation>
     </message>
     <message>
-      <source>Units -&gt; Crowd</source>
-      <translation type="unfinished">وحدات-&gt; الحشد</translation>
+        <source>Units -&gt; Crowd</source>
+        <translation type="unfinished">وحدات-&gt; الحشد</translation>
     </message>
     <message>
-      <source>Urban area destruction</source>
-      <translation type="unfinished">تدمير المنطقة الحضرية</translation>
+        <source>Urban area destruction</source>
+        <translation type="unfinished">تدمير المنطقة الحضرية</translation>
     </message>
     <message>
-      <source>Time to destruct a urban block</source>
-      <translation type="unfinished">الوقت للتدمير كتلة حضرية</translation>
+        <source>Time to destruct a urban block</source>
+        <translation type="unfinished">الوقت للتدمير كتلة حضرية</translation>
     </message>
     <message>
-      <source>Time</source>
-      <translation type="unfinished">الوقت</translation>
+        <source>Time</source>
+        <translation type="unfinished">الوقت</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Population_SpeedEffect_Attitude_ListView</name>
     <message>
-      <source>Attitudes</source>
-      <translation type="unfinished">المواقف</translation>
+        <source>Attitudes</source>
+        <translation type="unfinished">المواقف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Population_SpeedEffect_Volume_ListView</name>
     <message>
-      <source>Volumes</source>
-      <translation type="unfinished">وحدات التخزين</translation>
+        <source>Volumes</source>
+        <translation type="unfinished">وحدات التخزين</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Population_UrbanEffect_Attitude_ListView</name>
     <message>
-      <source>Attitudes</source>
-      <translation type="unfinished">المواقف</translation>
+        <source>Attitudes</source>
+        <translation type="unfinished">المواقف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Radars_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Range</source>
-      <translation type="unfinished">النطاق</translation>
+        <source>Range</source>
+        <translation type="unfinished">النطاق</translation>
     </message>
     <message>
-      <source>m</source>
-      <translation type="unfinished">m</translation>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
-      <source>Min. height</source>
-      <translation type="unfinished">ارتفاع الحد الأدنى</translation>
+        <source>Min. height</source>
+        <translation type="unfinished">ارتفاع الحد الأدنى</translation>
     </message>
     <message>
-      <source>Max. height</source>
-      <translation type="unfinished">ماكس. الارتفاع</translation>
+        <source>Max. height</source>
+        <translation type="unfinished">ماكس. الارتفاع</translation>
     </message>
     <message>
-      <source>Detectable activities</source>
-      <translation type="unfinished">الأنشطة القابلة للاكتشاف</translation>
+        <source>Detectable activities</source>
+        <translation type="unfinished">الأنشطة القابلة للاكتشاف</translation>
     </message>
     <message>
-      <source>Durations</source>
-      <translation type="unfinished">المدد الزمنية</translation>
+        <source>Durations</source>
+        <translation type="unfinished">المدد الزمنية</translation>
     </message>
     <message>
-      <source>Detection duration</source>
-      <translation type="unfinished">الكشف عن المدة</translation>
+        <source>Detection duration</source>
+        <translation type="unfinished">الكشف عن المدة</translation>
     </message>
     <message>
-      <source>Recognition duration</source>
-      <translation type="unfinished">مدة التسليم</translation>
+        <source>Recognition duration</source>
+        <translation type="unfinished">مدة التسليم</translation>
     </message>
     <message>
-      <source>Identification duration</source>
-      <translation type="unfinished">تحديد المدة</translation>
+        <source>Identification duration</source>
+        <translation type="unfinished">تحديد المدة</translation>
     </message>
     <message>
-      <source>CP durations</source>
-      <translation type="unfinished">CP المدد</translation>
+        <source>CP durations</source>
+        <translation type="unfinished">CP المدد</translation>
     </message>
     <message>
-      <source>When 'Durations' is unchecked, units are recognized instantly.
-When 'HQ Durations' is unchecked, the detection times for HQs are the same as the others.</source>
-      <translation type="unfinished">عندما 'مدد' دون رادع، وحدات يتم التعرف عليها على الفور.
-عند 'HQ المدد' دون رادع، مرات الكشف للمقار هي نفسها كالآخرين.</translation>
+        <source>When &apos;Durations&apos; is unchecked, units are recognized instantly.
+When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
+        <translation type="unfinished">عندما &apos;مدد&apos; دون رادع، وحدات يتم التعرف عليها على الفور.
+عند &apos;HQ المدد&apos; دون رادع، مرات الكشف للمقار هي نفسها كالآخرين.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Radars_ListView</name>
     <message>
-      <source>Special sensors</source>
-      <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
+        <source>Special sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_RemoveElementCommand</name>
     <message>
-      <source>Remove </source>
-      <translation type="unfinished">إزالة</translation>
+        <source>Remove </source>
+        <translation type="unfinished">إزالة</translation>
     </message>
     <message>
-      <source> from </source>
-      <translation type="unfinished">من</translation>
+        <source> from </source>
+        <translation type="unfinished">من</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_ResourceNetworks_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Category</source>
-      <translation type="unfinished">الفئة</translation>
+        <source>Category</source>
+        <translation type="unfinished">الفئة</translation>
     </message>
     <message>
-      <source>Default production</source>
-      <translation type="unfinished">إنتاج الافتراضي</translation>
+        <source>Default production</source>
+        <translation type="unfinished">إنتاج الافتراضي</translation>
     </message>
     <message>
-      <source>Color</source>
-      <translation type="unfinished">لون</translation>
+        <source>Color</source>
+        <translation type="unfinished">لون</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_SaveFile_Exception</name>
     <message>
-      <source>File error</source>
-      <translation type="unfinished">خطأ في ملف</translation>
+        <source>File error</source>
+        <translation type="unfinished">خطأ في ملف</translation>
     </message>
     <message>
-      <source>Could not save file '%1'.
+        <source>Could not save file &apos;%1&apos;.
 Make sure that the file is not write-protected.</source>
-      <translation type="unfinished">تعذر حفظ الملف '%1'.
+        <translation type="unfinished">تعذر حفظ الملف &apos;%1&apos;.
 تأكد من أن الملف غير محمي ضد الكتابة.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Schedule_Table</name>
     <message>
-      <source>Day</source>
-      <translation type="unfinished">اليوم</translation>
+        <source>Day</source>
+        <translation type="unfinished">اليوم</translation>
     </message>
     <message>
-      <source>From</source>
-      <translation type="unfinished">من</translation>
+        <source>From</source>
+        <translation type="unfinished">من</translation>
     </message>
     <message>
-      <source>To</source>
-      <translation type="unfinished">إلى</translation>
+        <source>To</source>
+        <translation type="unfinished">إلى</translation>
     </message>
     <message>
-      <source>Activity</source>
-      <translation type="unfinished">النشاط</translation>
+        <source>Activity</source>
+        <translation type="unfinished">النشاط</translation>
     </message>
     <message>
-      <source>monday</source>
-      <translation type="unfinished">الاثنين</translation>
+        <source>monday</source>
+        <translation type="unfinished">الاثنين</translation>
     </message>
     <message>
-      <source>tuesday</source>
-      <translation type="unfinished">اليوم الثلاثاء</translation>
+        <source>tuesday</source>
+        <translation type="unfinished">اليوم الثلاثاء</translation>
     </message>
     <message>
-      <source>wednesday</source>
-      <translation type="unfinished">الأربعاء</translation>
+        <source>wednesday</source>
+        <translation type="unfinished">الأربعاء</translation>
     </message>
     <message>
-      <source>thursday</source>
-      <translation type="unfinished">اليوم الخميس</translation>
+        <source>thursday</source>
+        <translation type="unfinished">اليوم الخميس</translation>
     </message>
     <message>
-      <source>friday</source>
-      <translation type="unfinished">الجمعة</translation>
+        <source>friday</source>
+        <translation type="unfinished">الجمعة</translation>
     </message>
     <message>
-      <source>saturday</source>
-      <translation type="unfinished">السبت</translation>
+        <source>saturday</source>
+        <translation type="unfinished">السبت</translation>
     </message>
     <message>
-      <source>sunday</source>
-      <translation type="unfinished">الأحد</translation>
+        <source>sunday</source>
+        <translation type="unfinished">الأحد</translation>
     </message>
     <message>
-      <source>Add</source>
-      <translation type="unfinished">إضافة</translation>
+        <source>Add</source>
+        <translation type="unfinished">إضافة</translation>
     </message>
     <message>
-      <source>Remove</source>
-      <translation type="unfinished">إزالة</translation>
+        <source>Remove</source>
+        <translation type="unfinished">إزالة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_DetectionAlgorithmPrevision</name>
     <message>
-      <source>Identified</source>
-      <translation type="unfinished">وحدد</translation>
+        <source>Identified</source>
+        <translation type="unfinished">وحدد</translation>
     </message>
     <message>
-      <source>Recognized</source>
-      <translation type="unfinished">المعترف بها</translation>
+        <source>Recognized</source>
+        <translation type="unfinished">المعترف بها</translation>
     </message>
     <message>
-      <source>Detected</source>
-      <translation type="unfinished">تم الكشف عن</translation>
+        <source>Detected</source>
+        <translation type="unfinished">تم الكشف عن</translation>
     </message>
     <message>
-      <source>Unseen</source>
-      <translation type="unfinished">الغيب</translation>
+        <source>Unseen</source>
+        <translation type="unfinished">الغيب</translation>
     </message>
     <message>
-      <source>Simulation</source>
-      <translation type="unfinished">محاكاة</translation>
+        <source>Simulation</source>
+        <translation type="unfinished">محاكاة</translation>
     </message>
     <message>
-      <source>Stance</source>
-      <translation type="unfinished">موقف</translation>
+        <source>Stance</source>
+        <translation type="unfinished">موقف</translation>
     </message>
     <message>
-      <source>Target Stance</source>
-      <translation type="unfinished">الموقف المستهدف</translation>
+        <source>Target Stance</source>
+        <translation type="unfinished">الموقف المستهدف</translation>
     </message>
     <message>
-      <source>Stance Target</source>
-      <translation type="unfinished">الموقف المستهدف</translation>
+        <source>Stance Target</source>
+        <translation type="unfinished">الموقف المستهدف</translation>
     </message>
     <message>
-      <source>Volume</source>
-      <translation type="unfinished">وحدة التخزين</translation>
+        <source>Volume</source>
+        <translation type="unfinished">وحدة التخزين</translation>
     </message>
     <message>
-      <source>Weather</source>
-      <translation type="unfinished">الطقس</translation>
+        <source>Weather</source>
+        <translation type="unfinished">الطقس</translation>
     </message>
     <message>
-      <source>Illumination</source>
-      <translation type="unfinished">الإضاءة</translation>
+        <source>Illumination</source>
+        <translation type="unfinished">الإضاءة</translation>
     </message>
     <message>
-      <source>Environment</source>
-      <translation type="unfinished">البيئة</translation>
+        <source>Environment</source>
+        <translation type="unfinished">البيئة</translation>
     </message>
     <message>
-      <source>Urban Material</source>
-      <translation type="unfinished">المواد الحضرية</translation>
+        <source>Urban Material</source>
+        <translation type="unfinished">المواد الحضرية</translation>
     </message>
     <message>
-      <source>Crowd Value</source>
-      <translation type="unfinished">قيمة الحشد</translation>
+        <source>Crowd Value</source>
+        <translation type="unfinished">قيمة الحشد</translation>
     </message>
     <message>
-      <source>Urban Height Ratio</source>
-      <translation type="unfinished">نسبة الارتفاع في المناطق الحضرية</translation>
+        <source>Urban Height Ratio</source>
+        <translation type="unfinished">نسبة الارتفاع في المناطق الحضرية</translation>
     </message>
     <message>
-      <source>Urban Occupation Value</source>
-      <translation type="unfinished">الحضرية الاحتلال القيمة</translation>
+        <source>Urban Occupation Value</source>
+        <translation type="unfinished">الحضرية الاحتلال القيمة</translation>
     </message>
     <message>
-      <source>Perception</source>
-      <translation type="unfinished">تصور</translation>
+        <source>Perception</source>
+        <translation type="unfinished">تصور</translation>
     </message>
     <message>
-      <source>Distance (m)</source>
-      <translation type="unfinished">المسافة (م)</translation>
+        <source>Distance (m)</source>
+        <translation type="unfinished">المسافة (م)</translation>
     </message>
     <message>
-      <source>Cannot be selected.</source>
-      <translation type="unfinished">لا يمكن تحديدها.</translation>
+        <source>Cannot be selected.</source>
+        <translation type="unfinished">لا يمكن تحديدها.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_Environments_GUI</name>
     <message id="0">
-      <source>ADN_Sensors_Environments_GUI</source>
-      <oldsource>New armor plating creation</oldsource>
-      <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
+        <source>ADN_Sensors_Environments_GUI</source>
+        <oldsource>New armor plating creation</oldsource>
+        <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
     </message>
     <message>
-      <source>Environments</source>
-      <translation type="unfinished">البيئات</translation>
+        <source>Environments</source>
+        <translation type="unfinished">البيئات</translation>
     </message>
     <message>
-      <source>Modifiers</source>
-      <translation type="unfinished">المعدلات</translation>
+        <source>Modifiers</source>
+        <translation type="unfinished">المعدلات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Delay</source>
-      <translation type="unfinished">تأخير</translation>
+        <source>Delay</source>
+        <translation type="unfinished">تأخير</translation>
     </message>
     <message>
-      <source>Can detect units</source>
-      <translation type="unfinished">يمكن الكشف عن الوحدات</translation>
+        <source>Can detect units</source>
+        <translation type="unfinished">يمكن الكشف عن الوحدات</translation>
     </message>
     <message>
-      <source>Angle</source>
-      <translation type="unfinished">زاوية</translation>
+        <source>Angle</source>
+        <translation type="unfinished">زاوية</translation>
     </message>
     <message>
-      <source>°</source>
-      <translation type="unfinished">°</translation>
+        <source>°</source>
+        <translation type="unfinished">°</translation>
     </message>
     <message>
-      <source>Can perform scanning</source>
-      <translation type="unfinished">ويمكن إجراء المسح الضوئي</translation>
+        <source>Can perform scanning</source>
+        <translation type="unfinished">ويمكن إجراء المسح الضوئي</translation>
     </message>
     <message>
-      <source>Firer Detection range</source>
-      <translation type="unfinished">القذيفة كشف المدى</translation>
+        <source>Firer Detection range</source>
+        <translation type="unfinished">القذيفة كشف المدى</translation>
     </message>
     <message>
-      <source>m</source>
-      <translation type="unfinished">m</translation>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
-      <source>Ranges</source>
-      <translation type="unfinished">نطاقات</translation>
+        <source>Ranges</source>
+        <translation type="unfinished">نطاقات</translation>
     </message>
     <message>
-      <source>Proximity range</source>
-      <translation type="unfinished">النطاق قرب</translation>
+        <source>Proximity range</source>
+        <translation type="unfinished">النطاق قرب</translation>
     </message>
     <message>
-      <source>Detection range</source>
-      <translation type="unfinished">كشف المدى</translation>
+        <source>Detection range</source>
+        <translation type="unfinished">كشف المدى</translation>
     </message>
     <message>
-      <source>Recognition range</source>
-      <translation type="unfinished">نطاق الاعتراف</translation>
+        <source>Recognition range</source>
+        <translation type="unfinished">نطاق الاعتراف</translation>
     </message>
     <message>
-      <source>Identification range</source>
-      <translation type="unfinished">تحديد النطاق</translation>
+        <source>Identification range</source>
+        <translation type="unfinished">تحديد النطاق</translation>
     </message>
     <message>
-      <source>Terrain modifiers</source>
-      <translation type="unfinished">معدلات التضاريس</translation>
+        <source>Terrain modifiers</source>
+        <translation type="unfinished">معدلات التضاريس</translation>
     </message>
     <message>
-      <source>Stance modifiers</source>
-      <translation type="unfinished">موقف المعدلات</translation>
+        <source>Stance modifiers</source>
+        <translation type="unfinished">موقف المعدلات</translation>
     </message>
     <message>
-      <source>Stance</source>
-      <translation type="unfinished">موقف</translation>
+        <source>Stance</source>
+        <translation type="unfinished">موقف</translation>
     </message>
     <message>
-      <source>Target stance</source>
-      <translation type="unfinished">الموقف المستهدف</translation>
+        <source>Target stance</source>
+        <translation type="unfinished">الموقف المستهدف</translation>
     </message>
     <message>
-      <source>Crowd modifiers</source>
-      <translation type="unfinished">معدلات الحشد</translation>
+        <source>Crowd modifiers</source>
+        <translation type="unfinished">معدلات الحشد</translation>
     </message>
     <message>
-      <source>Density</source>
-      <translation type="unfinished">الكثافة</translation>
+        <source>Density</source>
+        <translation type="unfinished">الكثافة</translation>
     </message>
     <message>
-      <source>people/m²</source>
-      <translation type="unfinished">الشعب/م 2</translation>
+        <source>people/m²</source>
+        <translation type="unfinished">الشعب/م 2</translation>
     </message>
     <message>
-      <source>Modifier</source>
-      <translation type="unfinished">التغيير</translation>
+        <source>Modifier</source>
+        <translation type="unfinished">التغيير</translation>
     </message>
     <message>
-      <source>Limited To Sensors</source>
-      <translation type="unfinished">المحدودة لأجهزة الاستشعار</translation>
+        <source>Limited To Sensors</source>
+        <translation type="unfinished">المحدودة لأجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Can detect objects</source>
-      <translation type="unfinished">يمكن الكشف عن الكائنات</translation>
+        <source>Can detect objects</source>
+        <translation type="unfinished">يمكن الكشف عن الكائنات</translation>
     </message>
     <message>
-      <source>Parameters</source>
-      <translation type="unfinished">المعلمات</translation>
+        <source>Parameters</source>
+        <translation type="unfinished">المعلمات</translation>
     </message>
     <message>
-      <source>Sensors</source>
-      <translation type="unfinished">أجهزة الاستشعار</translation>
+        <source>Sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Survey durations for army aviation</source>
-      <translation type="unfinished">مدد الدراسة الاستقصائية لجيش الطيران</translation>
+        <source>Survey durations for army aviation</source>
+        <translation type="unfinished">مدد الدراسة الاستقصائية لجيش الطيران</translation>
     </message>
     <message>
-      <source>/ha</source>
-      <translation type="unfinished">/ha</translation>
+        <source>/ha</source>
+        <translation type="unfinished">/ha</translation>
     </message>
     <message>
-      <source>Counter battery radar</source>
-      <translation type="unfinished">رادار بطارية مضادة</translation>
+        <source>Counter battery radar</source>
+        <translation type="unfinished">رادار بطارية مضادة</translation>
     </message>
     <message>
-      <source>Range</source>
-      <translation type="unfinished">النطاق</translation>
+        <source>Range</source>
+        <translation type="unfinished">النطاق</translation>
     </message>
     <message>
-      <source>Special sensors</source>
-      <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
+        <source>Special sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
     </message>
     <message>
-      <source>Target size</source>
-      <translation type="unfinished">حجم الهدف</translation>
+        <source>Target size</source>
+        <translation type="unfinished">حجم الهدف</translation>
     </message>
     <message>
-      <source>Weather modifiers</source>
-      <translation type="unfinished">معدلات الطقس</translation>
+        <source>Weather modifiers</source>
+        <translation type="unfinished">معدلات الطقس</translation>
     </message>
     <message>
-      <source>Illumination modifiers</source>
-      <translation type="unfinished">معدلات الإضاءة</translation>
+        <source>Illumination modifiers</source>
+        <translation type="unfinished">معدلات الإضاءة</translation>
     </message>
     <message>
-      <source>Environement modifiers</source>
-      <translation type="unfinished">معدلات البيئة</translation>
+        <source>Environement modifiers</source>
+        <translation type="unfinished">معدلات البيئة</translation>
     </message>
     <message>
-      <source>UrbanBlock material modifiers</source>
-      <translation type="unfinished">معدلات المواد أوربانبلوك</translation>
+        <source>UrbanBlock material modifiers</source>
+        <translation type="unfinished">معدلات المواد أوربانبلوك</translation>
     </message>
     <message>
-      <source>Target stance modifiers</source>
-      <translation type="unfinished">المعدلات المستهدفة موقف</translation>
+        <source>Target stance modifiers</source>
+        <translation type="unfinished">المعدلات المستهدفة موقف</translation>
     </message>
     <message>
-      <source>Sensor</source>
-      <translation type="unfinished">أجهزة الاستشعار</translation>
+        <source>Sensor</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Object</source>
-      <translation type="unfinished">كائن</translation>
+        <source>Object</source>
+        <translation type="unfinished">كائن</translation>
     </message>
     <message>
-      <source>Dectection distance (m)</source>
-      <translation type="unfinished">ديكتيكشن المسافة (م)</translation>
+        <source>Dectection distance (m)</source>
+        <translation type="unfinished">ديكتيكشن المسافة (م)</translation>
     </message>
     <message>
-      <source>Agent detection</source>
-      <translation type="unfinished">كشف وكيل</translation>
+        <source>Agent detection</source>
+        <translation type="unfinished">كشف وكيل</translation>
     </message>
     <message>
-      <source>Object detection</source>
-      <translation type="unfinished">الكشف عن الكائن</translation>
+        <source>Object detection</source>
+        <translation type="unfinished">الكشف عن الكائن</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_Illumination_GUI</name>
     <message>
-      <source>Illumination</source>
-      <translation type="unfinished">الإضاءة</translation>
+        <source>Illumination</source>
+        <translation type="unfinished">الإضاءة</translation>
     </message>
     <message>
-      <source>Modifiers</source>
-      <translation type="unfinished">المعدلات</translation>
+        <source>Modifiers</source>
+        <translation type="unfinished">المعدلات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_LimitedToSensorsListView</name>
     <message>
-      <source>Sensors</source>
-      <translation type="unfinished">أجهزة الاستشعار</translation>
+        <source>Sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Add sensor</source>
-      <translation type="unfinished">إضافة أجهزة الاستشعار</translation>
+        <source>Add sensor</source>
+        <translation type="unfinished">إضافة أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Add special sensor</source>
-      <translation type="unfinished">إضافة أجهزة الاستشعار الخاصة</translation>
+        <source>Add special sensor</source>
+        <translation type="unfinished">إضافة أجهزة الاستشعار الخاصة</translation>
     </message>
     <message>
-      <source>Remove item</source>
-      <translation type="unfinished">إزالة العنصر</translation>
+        <source>Remove item</source>
+        <translation type="unfinished">إزالة العنصر</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_Meteos_GUI</name>
     <message>
-      <source>Meteos</source>
-      <translation type="unfinished">الطقس</translation>
+        <source>Meteos</source>
+        <translation type="unfinished">الطقس</translation>
     </message>
     <message>
-      <source>Modifiers</source>
-      <translation type="unfinished">المعدلات</translation>
+        <source>Modifiers</source>
+        <translation type="unfinished">المعدلات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_Postures_GUI</name>
     <message>
-      <source>Modifiers</source>
-      <translation type="unfinished">المعدلات</translation>
+        <source>Modifiers</source>
+        <translation type="unfinished">المعدلات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_Sizes_GUI</name>
     <message>
-      <source>Volumes</source>
-      <translation type="unfinished">وحدات التخزين</translation>
+        <source>Volumes</source>
+        <translation type="unfinished">وحدات التخزين</translation>
     </message>
     <message>
-      <source>Modifiers</source>
-      <translation type="unfinished">المعدلات</translation>
+        <source>Modifiers</source>
+        <translation type="unfinished">المعدلات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_TargetsListView</name>
     <message>
-      <source>Targets</source>
-      <translation type="unfinished">الأهداف</translation>
+        <source>Targets</source>
+        <translation type="unfinished">الأهداف</translation>
     </message>
     <message>
-      <source>Add object</source>
-      <translation type="unfinished">إضافة كائن</translation>
+        <source>Add object</source>
+        <translation type="unfinished">إضافة كائن</translation>
     </message>
     <message>
-      <source>Remove object</source>
-      <translation type="unfinished">قم بإزالة الكائن</translation>
+        <source>Remove object</source>
+        <translation type="unfinished">قم بإزالة الكائن</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_Targets_GUI</name>
     <message>
-      <source>Objects</source>
-      <translation type="unfinished">الكائنات</translation>
+        <source>Objects</source>
+        <translation type="unfinished">الكائنات</translation>
     </message>
     <message>
-      <source>Detection time (s)</source>
-      <translation type="unfinished">الكشف عن الزمن (s)</translation>
+        <source>Detection time (s)</source>
+        <translation type="unfinished">الكشف عن الزمن (s)</translation>
     </message>
     <message>
-      <source>Detection distance (m)</source>
-      <translation type="unfinished">الكشف عن المسافة (م)</translation>
+        <source>Detection distance (m)</source>
+        <translation type="unfinished">الكشف عن المسافة (م)</translation>
     </message>
     <message>
-      <source>Add object</source>
-      <translation type="unfinished">إضافة كائن</translation>
+        <source>Add object</source>
+        <translation type="unfinished">إضافة كائن</translation>
     </message>
     <message>
-      <source>Remove object</source>
-      <translation type="unfinished">قم بإزالة الكائن</translation>
+        <source>Remove object</source>
+        <translation type="unfinished">قم بإزالة الكائن</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Sensors_UrbanBlockMaterial_GUI</name>
     <message>
-      <source>Material</source>
-      <translation type="unfinished">المواد</translation>
+        <source>Material</source>
+        <translation type="unfinished">المواد</translation>
     </message>
     <message>
-      <source>Modifiers</source>
-      <translation type="unfinished">المعدلات</translation>
+        <source>Modifiers</source>
+        <translation type="unfinished">المعدلات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_SupplyUnitSelector</name>
     <message>
-      <source>Click here to select</source>
-      <translation type="unfinished">انقر هنا لتحديد</translation>
+        <source>Click here to select</source>
+        <translation type="unfinished">انقر هنا لتحديد</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Supply_GUI</name>
     <message>
-      <source>Unit type</source>
-      <translation type="unfinished">نوع الوحدة</translation>
+        <source>Unit type</source>
+        <translation type="unfinished">نوع الوحدة</translation>
     </message>
     <message>
-      <source>Mission</source>
-      <translation type="unfinished">البعثة</translation>
+        <source>Mission</source>
+        <translation type="unfinished">البعثة</translation>
     </message>
     <message>
-      <source>Convoy type</source>
-      <translation type="unfinished">نوع القافلة</translation>
+        <source>Convoy type</source>
+        <translation type="unfinished">نوع القافلة</translation>
     </message>
     <message>
-      <source>Between logistic bases</source>
-      <translation type="unfinished">بين قواعد لوجستية</translation>
+        <source>Between logistic bases</source>
+        <translation type="unfinished">بين قواعد لوجستية</translation>
     </message>
     <message>
-      <source>For final unit supply </source>
-      <translation type="unfinished">لإمداد الوحدة النهائية</translation>
+        <source>For final unit supply </source>
+        <translation type="unfinished">لإمداد الوحدة النهائية</translation>
     </message>
     <message>
-      <source>Conveyors availability warnings</source>
-      <translation type="unfinished">تحذيرات توافر الناقلات</translation>
+        <source>Conveyors availability warnings</source>
+        <translation type="unfinished">تحذيرات توافر الناقلات</translation>
     </message>
     <message>
-      <source>Convoy setup duration</source>
-      <translation type="unfinished">مدة الإعداد القافلة</translation>
+        <source>Convoy setup duration</source>
+        <translation type="unfinished">مدة الإعداد القافلة</translation>
     </message>
     <message>
-      <source>Convoy loading duration</source>
-      <translation type="unfinished">قافلة تحميل المدة</translation>
+        <source>Convoy loading duration</source>
+        <translation type="unfinished">قافلة تحميل المدة</translation>
     </message>
     <message>
-      <source>Convoy unloading duration</source>
-      <translation type="unfinished">قافلة مدة التفريغ</translation>
+        <source>Convoy unloading duration</source>
+        <translation type="unfinished">قافلة مدة التفريغ</translation>
     </message>
     <message>
-      <source>Convoy speed modifiers</source>
-      <translation type="unfinished">معدلات سرعة القافلة</translation>
+        <source>Convoy speed modifiers</source>
+        <translation type="unfinished">معدلات سرعة القافلة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Supply_TrucksDoubleTable</name>
     <message>
-      <source>Trucks qty</source>
-      <translation type="unfinished">Qty الشاحنات</translation>
+        <source>Trucks qty</source>
+        <translation type="unfinished">Qty الشاحنات</translation>
     </message>
     <message>
-      <source>Max speed modifier</source>
-      <translation type="unfinished">معدل سرعة ماكس</translation>
+        <source>Max speed modifier</source>
+        <translation type="unfinished">معدل سرعة ماكس</translation>
     </message>
     <message>
-      <source>New</source>
-      <translation type="unfinished">الجديد</translation>
+        <source>New</source>
+        <translation type="unfinished">الجديد</translation>
     </message>
     <message>
-      <source>Delete</source>
-      <translation type="unfinished">حذف</translation>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Supply_TrucksTimeTable</name>
     <message>
-      <source>Trucks qty</source>
-      <translation type="unfinished">Qty الشاحنات</translation>
+        <source>Trucks qty</source>
+        <translation type="unfinished">Qty الشاحنات</translation>
     </message>
     <message>
-      <source>Duration</source>
-      <translation type="unfinished">المدة</translation>
+        <source>Duration</source>
+        <translation type="unfinished">المدة</translation>
     </message>
     <message>
-      <source>New</source>
-      <translation type="unfinished">الجديد</translation>
+        <source>New</source>
+        <translation type="unfinished">الجديد</translation>
     </message>
     <message>
-      <source>Delete</source>
-      <translation type="unfinished">حذف</translation>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_SurfaceFireInfos_Table</name>
     <message>
-      <source>Ground type</source>
-      <translation type="unfinished">نوع الأرض</translation>
+        <source>Ground type</source>
+        <translation type="unfinished">نوع الأرض</translation>
     </message>
     <message>
-      <source>Ignition threshold</source>
-      <translation type="unfinished">عتبة الاشتعال</translation>
+        <source>Ignition threshold</source>
+        <translation type="unfinished">عتبة الاشتعال</translation>
     </message>
     <message>
-      <source>Max combustion energy</source>
-      <translation type="unfinished">ماكس احتراق الطاقة</translation>
+        <source>Max combustion energy</source>
+        <translation type="unfinished">ماكس احتراق الطاقة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
-      <source>Save</source>
-      <translation type="unfinished">حفظ</translation>
+        <source>Save</source>
+        <translation type="unfinished">حفظ</translation>
     </message>
     <message>
-      <source>Print</source>
-      <translation type="unfinished">طباعة</translation>
+        <source>Print</source>
+        <translation type="unfinished">طباعة</translation>
     </message>
     <message>
-      <source>Close</source>
-      <translation type="unfinished">قم بإغلاق</translation>
+        <source>Close</source>
+        <translation type="unfinished">قم بإغلاق</translation>
     </message>
     <message>
-      <source>Excel files (*.xls)</source>
-      <translation type="unfinished">ملفات أكسل (*.xls)</translation>
+        <source>Excel files (*.xls)</source>
+        <translation type="unfinished">ملفات أكسل (*.xls)</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Table_Objects_FirePropagationModifier</name>
     <message>
-      <source>Fire model</source>
-      <translation type="unfinished">نموذج النار</translation>
+        <source>Fire model</source>
+        <translation type="unfinished">نموذج النار</translation>
     </message>
     <message>
-      <source>Ignition threshold</source>
-      <translation type="unfinished">عتبة الاشتعال</translation>
+        <source>Ignition threshold</source>
+        <translation type="unfinished">عتبة الاشتعال</translation>
     </message>
     <message>
-      <source>Max combustion energy</source>
-      <translation type="unfinished">ماكس احتراق الطاقة</translation>
+        <source>Max combustion energy</source>
+        <translation type="unfinished">ماكس احتراق الطاقة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Table_Objects_LocationScore</name>
     <message>
-      <source>Ground Type</source>
-      <translation type="unfinished">نوع الأرض</translation>
+        <source>Ground Type</source>
+        <translation type="unfinished">نوع الأرض</translation>
     </message>
     <message>
-      <source>Weight</source>
-      <translation type="unfinished">الوزن</translation>
+        <source>Weight</source>
+        <translation type="unfinished">الوزن</translation>
     </message>
     <message>
-      <source>Add terrain</source>
-      <translation type="unfinished">إضافة التضاريس</translation>
+        <source>Add terrain</source>
+        <translation type="unfinished">إضافة التضاريس</translation>
     </message>
     <message>
-      <source>Remove terrain</source>
-      <translation type="unfinished">إزالة التضاريس</translation>
+        <source>Remove terrain</source>
+        <translation type="unfinished">إزالة التضاريس</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Template_Usages</name>
     <message>
-      <source>Usage</source>
-      <translation type="unfinished">الاستخدام</translation>
+        <source>Usage</source>
+        <translation type="unfinished">الاستخدام</translation>
     </message>
     <message>
-      <source>Proportion(%)</source>
-      <translation type="unfinished">Proportion(%)</translation>
+        <source>Proportion(%)</source>
+        <translation type="unfinished">Proportion(%)</translation>
     </message>
     <message>
-      <source>New</source>
-      <translation type="unfinished">الجديد</translation>
+        <source>New</source>
+        <translation type="unfinished">الجديد</translation>
     </message>
     <message>
-      <source>Delete</source>
-      <translation type="unfinished">حذف</translation>
+        <source>Delete</source>
+        <translation type="unfinished">حذف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Tools</name>
     <message>
-      <source>Multi references</source>
-      <translation type="unfinished">مراجع متعددة</translation>
+        <source>Multi references</source>
+        <translation type="unfinished">مراجع متعددة</translation>
     </message>
     <message>
-      <source>This item is referenced by at least one other item.
-Click "Ok" to destroy it and all its references.</source>
-      <translation type="unfinished">هذا البند هو المشار إليه بواسطة عنصر آخر واحد على الأقل.
-انقر فوق "موافق" لتدمير أنه وجميع إشاراته.</translation>
+        <source>This item is referenced by at least one other item.
+Click &quot;Ok&quot; to destroy it and all its references.</source>
+        <translation type="unfinished">هذا البند هو المشار إليه بواسطة عنصر آخر واحد على الأقل.
+انقر فوق &quot;موافق&quot; لتدمير أنه وجميع إشاراته.</translation>
     </message>
     <message>
-      <source>Delete?</source>
-      <translation type="unfinished">حذف؟</translation>
+        <source>Delete?</source>
+        <translation type="unfinished">حذف؟</translation>
     </message>
     <message>
-      <source>Really delete this item?
-Click "Ok" to delete it.</source>
-      <translation type="unfinished">حقاً حذف هذا العنصر؟
-انقر فوق "موافق" لحذف ذلك.</translation>
+        <source>Really delete this item?
+Click &quot;Ok&quot; to delete it.</source>
+        <translation type="unfinished">حقاً حذف هذا العنصر؟
+انقر فوق &quot;موافق&quot; لحذف ذلك.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Tr</name>
     <message>
-      <source>explosive</source>
-      <translation type="unfinished">المتفجرة</translation>
+        <source>explosive</source>
+        <translation type="unfinished">المتفجرة</translation>
     </message>
     <message>
-      <source>smoke</source>
-      <translation type="unfinished">الدخان</translation>
+        <source>smoke</source>
+        <translation type="unfinished">الدخان</translation>
     </message>
     <message>
-      <source>illumination shell</source>
-      <translation type="unfinished">قذيفة إنارة</translation>
+        <source>illumination shell</source>
+        <translation type="unfinished">قذيفة إنارة</translation>
     </message>
     <message>
-      <source>mine</source>
-      <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
+        <source>mine</source>
+        <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
     </message>
     <message>
-      <source>effect</source>
-      <translation type="unfinished">تأثير</translation>
+        <source>effect</source>
+        <translation type="unfinished">تأثير</translation>
     </message>
     <message>
-      <source>Parked, engine stopped</source>
-      <translation type="unfinished">كانت متوقفة، توقف المحرك</translation>
+        <source>Parked, engine stopped</source>
+        <translation type="unfinished">كانت متوقفة، توقف المحرك</translation>
     </message>
     <message>
-      <source>Parked, engine running</source>
-      <translation type="unfinished">تشغيل المحرك متوقفة،</translation>
+        <source>Parked, engine running</source>
+        <translation type="unfinished">تشغيل المحرك متوقفة،</translation>
     </message>
     <message>
-      <source>Moving</source>
-      <translation type="unfinished">تتحرك</translation>
+        <source>Moving</source>
+        <translation type="unfinished">تتحرك</translation>
     </message>
     <message>
-      <source>Working</source>
-      <translation type="unfinished">وتعمل</translation>
+        <source>Working</source>
+        <translation type="unfinished">وتعمل</translation>
     </message>
     <message>
-      <source>Ground</source>
-      <translation type="unfinished">الأرض</translation>
+        <source>Ground</source>
+        <translation type="unfinished">الأرض</translation>
     </message>
     <message>
-      <source>Empty</source>
-      <translation type="unfinished">فارغة</translation>
+        <source>Empty</source>
+        <translation type="unfinished">فارغة</translation>
     </message>
     <message>
-      <source>Forest</source>
-      <translation type="unfinished">الغابات</translation>
+        <source>Forest</source>
+        <translation type="unfinished">الغابات</translation>
     </message>
     <message>
-      <source>Urban area</source>
-      <translation type="unfinished">المنطقة الحضرية</translation>
+        <source>Urban area</source>
+        <translation type="unfinished">المنطقة الحضرية</translation>
     </message>
     <message>
-      <source>forest</source>
-      <translation type="unfinished">الغابات</translation>
+        <source>forest</source>
+        <translation type="unfinished">الغابات</translation>
     </message>
     <message>
-      <source>urban area</source>
-      <translation type="unfinished">المنطقة الحضرية</translation>
+        <source>urban area</source>
+        <translation type="unfinished">المنطقة الحضرية</translation>
     </message>
     <message>
-      <source>crossroad</source>
-      <translation type="unfinished">مفترق طرق</translation>
+        <source>crossroad</source>
+        <translation type="unfinished">مفترق طرق</translation>
     </message>
     <message>
-      <source>bridge</source>
-      <translation type="unfinished">جسر</translation>
+        <source>bridge</source>
+        <translation type="unfinished">جسر</translation>
     </message>
     <message>
-      <source>lima</source>
-      <translation type="unfinished">ليما</translation>
+        <source>lima</source>
+        <translation type="unfinished">ليما</translation>
     </message>
     <message>
-      <source>Infantry</source>
-      <translation type="unfinished">المشاة</translation>
+        <source>Infantry</source>
+        <translation type="unfinished">المشاة</translation>
     </message>
     <message>
-      <source>Anti air</source>
-      <translation type="unfinished">المضادة للجو</translation>
+        <source>Anti air</source>
+        <translation type="unfinished">المضادة للجو</translation>
     </message>
     <message>
-      <source>Army aviation</source>
-      <translation type="unfinished">جيش الطيران</translation>
+        <source>Army aviation</source>
+        <translation type="unfinished">جيش الطيران</translation>
     </message>
     <message>
-      <source>Intelligence</source>
-      <translation type="unfinished">الاستخبارات</translation>
+        <source>Intelligence</source>
+        <translation type="unfinished">الاستخبارات</translation>
     </message>
     <message>
-      <source>NBC</source>
-      <translation type="unfinished">أن بي سي</translation>
+        <source>NBC</source>
+        <translation type="unfinished">أن بي سي</translation>
     </message>
     <message>
-      <source>Armor</source>
-      <translation type="unfinished">درع</translation>
+        <source>Armor</source>
+        <translation type="unfinished">درع</translation>
     </message>
     <message>
-      <source>Engineer</source>
-      <translation type="unfinished">مهندس</translation>
+        <source>Engineer</source>
+        <translation type="unfinished">مهندس</translation>
     </message>
     <message>
-      <source>Ground artillery</source>
-      <translation type="unfinished">المدفعية الأرضية</translation>
+        <source>Ground artillery</source>
+        <translation type="unfinished">المدفعية الأرضية</translation>
     </message>
     <message>
-      <source>Communication</source>
-      <translation type="unfinished">الاتصالات</translation>
+        <source>Communication</source>
+        <translation type="unfinished">الاتصالات</translation>
     </message>
     <message>
-      <source>Logistic close support</source>
-      <translation type="unfinished">الدعم الوثيق السوقي</translation>
+        <source>Logistic close support</source>
+        <translation type="unfinished">الدعم الوثيق السوقي</translation>
     </message>
     <message>
-      <source>Medical system, brigade level</source>
-      <translation type="unfinished">النظام الطبي، مستوى اللواء</translation>
+        <source>Medical system, brigade level</source>
+        <translation type="unfinished">النظام الطبي، مستوى اللواء</translation>
     </message>
     <message>
-      <source>Maintenance system, brigade level</source>
-      <translation type="unfinished">صيانة النظام، مستوى اللواء</translation>
+        <source>Maintenance system, brigade level</source>
+        <translation type="unfinished">صيانة النظام، مستوى اللواء</translation>
     </message>
     <message>
-      <source>Supply system, brigade level</source>
-      <translation type="unfinished">نظام الإمداد، مستوى اللواء</translation>
+        <source>Supply system, brigade level</source>
+        <translation type="unfinished">نظام الإمداد، مستوى اللواء</translation>
     </message>
     <message>
-      <source>Medical system, division level</source>
-      <translation type="unfinished">النظام الطبي، مستوى الشعبة</translation>
+        <source>Medical system, division level</source>
+        <translation type="unfinished">النظام الطبي، مستوى الشعبة</translation>
     </message>
     <message>
-      <source>Maintenance system, division level</source>
-      <translation type="unfinished">صيانة النظام، مستوى الشعبة</translation>
+        <source>Maintenance system, division level</source>
+        <translation type="unfinished">صيانة النظام، مستوى الشعبة</translation>
     </message>
     <message>
-      <source>Supply system, division level</source>
-      <translation type="unfinished">نظام الإمداد، مستوى الشعبة</translation>
+        <source>Supply system, division level</source>
+        <translation type="unfinished">نظام الإمداد، مستوى الشعبة</translation>
     </message>
     <message>
-      <source>Convoy</source>
-      <translation type="unfinished">قافلة</translation>
+        <source>Convoy</source>
+        <translation type="unfinished">قافلة</translation>
     </message>
     <message>
-      <source>Movement support</source>
-      <translation type="unfinished">دعم حركة</translation>
+        <source>Movement support</source>
+        <translation type="unfinished">دعم حركة</translation>
     </message>
     <message>
-      <source>Refugee</source>
-      <translation type="unfinished">اللاجئين</translation>
+        <source>Refugee</source>
+        <translation type="unfinished">اللاجئين</translation>
     </message>
     <message>
-      <source>Militia</source>
-      <translation type="unfinished">الميليشيا</translation>
+        <source>Militia</source>
+        <translation type="unfinished">الميليشيا</translation>
     </message>
     <message>
-      <source>Joint</source>
-      <translation type="unfinished">المشتركة</translation>
+        <source>Joint</source>
+        <translation type="unfinished">المشتركة</translation>
     </message>
     <message>
-      <source>Asymetric threat</source>
-      <translation type="unfinished">التهديد Asymetric</translation>
+        <source>Asymetric threat</source>
+        <translation type="unfinished">التهديد Asymetric</translation>
     </message>
     <message>
-      <source>Emergency management</source>
-      <translation type="unfinished">إدارة حالات الطوارئ</translation>
+        <source>Emergency management</source>
+        <translation type="unfinished">إدارة حالات الطوارئ</translation>
     </message>
     <message>
-      <source>Organization</source>
-      <translation type="unfinished">المنظمة</translation>
+        <source>Organization</source>
+        <translation type="unfinished">المنظمة</translation>
     </message>
     <message>
-      <source>Notable</source>
-      <translation type="unfinished">الجدير بالذكر</translation>
+        <source>Notable</source>
+        <translation type="unfinished">الجدير بالذكر</translation>
     </message>
     <message>
-      <source>Journalist</source>
-      <translation type="unfinished">الصحافي</translation>
+        <source>Journalist</source>
+        <translation type="unfinished">الصحافي</translation>
     </message>
     <message>
-      <source>Civilian</source>
-      <translation type="unfinished">المدنيين</translation>
+        <source>Civilian</source>
+        <translation type="unfinished">المدنيين</translation>
     </message>
     <message>
-      <source>Commander, Combined Arms</source>
-      <translation type="unfinished">قائد، الجمع بين الأسلحة</translation>
+        <source>Commander, Combined Arms</source>
+        <translation type="unfinished">قائد، الجمع بين الأسلحة</translation>
     </message>
     <message>
-      <source>Commander, Infantry</source>
-      <translation type="unfinished">قائد، مشاة</translation>
+        <source>Commander, Infantry</source>
+        <translation type="unfinished">قائد، مشاة</translation>
     </message>
     <message>
-      <source>Commander, Anti air</source>
-      <translation type="unfinished">قائد، المضادة للجو</translation>
+        <source>Commander, Anti air</source>
+        <translation type="unfinished">قائد، المضادة للجو</translation>
     </message>
     <message>
-      <source>Commander, Army aviation</source>
-      <translation type="unfinished">قائد، جيش الطيران</translation>
+        <source>Commander, Army aviation</source>
+        <translation type="unfinished">قائد، جيش الطيران</translation>
     </message>
     <message>
-      <source>Commander, Intelligence</source>
-      <translation type="unfinished">قائد الاستخبارات</translation>
+        <source>Commander, Intelligence</source>
+        <translation type="unfinished">قائد الاستخبارات</translation>
     </message>
     <message>
-      <source>Commander, NBC</source>
-      <translation type="unfinished">قائد، أن بي سي</translation>
+        <source>Commander, NBC</source>
+        <translation type="unfinished">قائد، أن بي سي</translation>
     </message>
     <message>
-      <source>Commander, Armor</source>
-      <translation type="unfinished">قائد، درع</translation>
+        <source>Commander, Armor</source>
+        <translation type="unfinished">قائد، درع</translation>
     </message>
     <message>
-      <source>Commander, Engineer</source>
-      <translation type="unfinished">قائد، مهندس</translation>
+        <source>Commander, Engineer</source>
+        <translation type="unfinished">قائد، مهندس</translation>
     </message>
     <message>
-      <source>Commander, Ground artillery</source>
-      <translation type="unfinished">قائد المدفعية الأرضية</translation>
+        <source>Commander, Ground artillery</source>
+        <translation type="unfinished">قائد المدفعية الأرضية</translation>
     </message>
     <message>
-      <source>Commander, Communication</source>
-      <translation type="unfinished">قائد، الاتصالات</translation>
+        <source>Commander, Communication</source>
+        <translation type="unfinished">قائد، الاتصالات</translation>
     </message>
     <message>
-      <source>Commander, Logistic close support</source>
-      <translation type="unfinished">قائد، الدعم اللوجيستي قم بإغلاق</translation>
+        <source>Commander, Logistic close support</source>
+        <translation type="unfinished">قائد، الدعم اللوجيستي قم بإغلاق</translation>
     </message>
     <message>
-      <source>Commander, Medical system, brigade level</source>
-      <translation type="unfinished">قائد، والنظام الطبي، مستوى اللواء</translation>
+        <source>Commander, Medical system, brigade level</source>
+        <translation type="unfinished">قائد، والنظام الطبي، مستوى اللواء</translation>
     </message>
     <message>
-      <source>Commander, Maintenance system, brigade level</source>
-      <translation type="unfinished">قائد، وصيانة النظام، مستوى اللواء</translation>
+        <source>Commander, Maintenance system, brigade level</source>
+        <translation type="unfinished">قائد، وصيانة النظام، مستوى اللواء</translation>
     </message>
     <message>
-      <source>Commander, Supply system, brigade level</source>
-      <translation type="unfinished">القائد، ونظام العرض، مستوى اللواء</translation>
+        <source>Commander, Supply system, brigade level</source>
+        <translation type="unfinished">القائد، ونظام العرض، مستوى اللواء</translation>
     </message>
     <message>
-      <source>Commander, Medical system, division level</source>
-      <translation type="unfinished">قائد، النظام الطبي، ومستوى شعبة</translation>
+        <source>Commander, Medical system, division level</source>
+        <translation type="unfinished">قائد، النظام الطبي، ومستوى شعبة</translation>
     </message>
     <message>
-      <source>Commander, Maintenance system, division level</source>
-      <translation type="unfinished">قائد، وصيانة النظام، مستوى الشعبة</translation>
+        <source>Commander, Maintenance system, division level</source>
+        <translation type="unfinished">قائد، وصيانة النظام، مستوى الشعبة</translation>
     </message>
     <message>
-      <source>Commander, Supply system, division level</source>
-      <translation type="unfinished">القائد، ونظام العرض، مستوى شعبة</translation>
+        <source>Commander, Supply system, division level</source>
+        <translation type="unfinished">القائد، ونظام العرض، مستوى شعبة</translation>
     </message>
     <message>
-      <source>Commander, Movement support</source>
-      <translation type="unfinished">قائد، دعم حركة</translation>
+        <source>Commander, Movement support</source>
+        <translation type="unfinished">قائد، دعم حركة</translation>
     </message>
     <message>
-      <source>Commander, Refugee</source>
-      <translation type="unfinished">قائد، اللاجئين</translation>
+        <source>Commander, Refugee</source>
+        <translation type="unfinished">قائد، اللاجئين</translation>
     </message>
     <message>
-      <source>Commander, Militia</source>
-      <translation type="unfinished">قائد ميليشيا</translation>
+        <source>Commander, Militia</source>
+        <translation type="unfinished">قائد ميليشيا</translation>
     </message>
     <message>
-      <source>Commander, Joint</source>
-      <translation type="unfinished">قائد، المشتركة</translation>
+        <source>Commander, Joint</source>
+        <translation type="unfinished">قائد، المشتركة</translation>
     </message>
     <message>
-      <source>Commander, Asymetric threat</source>
-      <translation type="unfinished">قائد، التهديد Asymetric</translation>
+        <source>Commander, Asymetric threat</source>
+        <translation type="unfinished">قائد، التهديد Asymetric</translation>
     </message>
     <message>
-      <source>Commander, Emergency management</source>
-      <translation type="unfinished">قائد، إدارة الطوارئ</translation>
+        <source>Commander, Emergency management</source>
+        <translation type="unfinished">قائد، إدارة الطوارئ</translation>
     </message>
     <message>
-      <source>Commander, Organization</source>
-      <translation type="unfinished">قائد المنظمة</translation>
+        <source>Commander, Organization</source>
+        <translation type="unfinished">قائد المنظمة</translation>
     </message>
     <message>
-      <source>Commander, Notable</source>
-      <translation type="unfinished">قائد، جديرة بالذكر</translation>
+        <source>Commander, Notable</source>
+        <translation type="unfinished">قائد، جديرة بالذكر</translation>
     </message>
     <message>
-      <source>Commander, Journalist</source>
-      <translation type="unfinished">قائد، صحفي</translation>
+        <source>Commander, Journalist</source>
+        <translation type="unfinished">قائد، صحفي</translation>
     </message>
     <message>
-      <source>Commander, Civilian</source>
-      <translation type="unfinished">قائد، المدنية</translation>
+        <source>Commander, Civilian</source>
+        <translation type="unfinished">قائد، المدنية</translation>
     </message>
     <message>
-      <source>CP</source>
-      <translation type="unfinished">CP</translation>
+        <source>CP</source>
+        <translation type="unfinished">CP</translation>
     </message>
     <message>
-      <source>Logistic</source>
-      <translation type="unfinished">السوقي</translation>
+        <source>Logistic</source>
+        <translation type="unfinished">السوقي</translation>
     </message>
     <message>
-      <source>Other</source>
-      <translation type="unfinished">الأخرى</translation>
+        <source>Other</source>
+        <translation type="unfinished">الأخرى</translation>
     </message>
     <message>
-      <source>Mortar</source>
-      <translation type="unfinished">قذائف هاون</translation>
+        <source>Mortar</source>
+        <translation type="unfinished">قذائف هاون</translation>
     </message>
     <message>
-      <source>Rocket launcher</source>
-      <translation type="unfinished">قاذفة صواريخ</translation>
+        <source>Rocket launcher</source>
+        <translation type="unfinished">قاذفة صواريخ</translation>
     </message>
     <message>
-      <source>Vehicle</source>
-      <translation type="unfinished">مركبة</translation>
+        <source>Vehicle</source>
+        <translation type="unfinished">مركبة</translation>
     </message>
     <message>
-      <source>Dismounted infantry</source>
-      <translation type="unfinished">المشاة dismounted</translation>
+        <source>Dismounted infantry</source>
+        <translation type="unfinished">المشاة dismounted</translation>
     </message>
     <message>
-      <source>Helicopter</source>
-      <translation type="unfinished">طائرات الهليكوبتر</translation>
+        <source>Helicopter</source>
+        <translation type="unfinished">طائرات الهليكوبتر</translation>
     </message>
     <message>
-      <source>Anti air artillery</source>
-      <translation type="unfinished">المضادة للمدفعية الجوية</translation>
+        <source>Anti air artillery</source>
+        <translation type="unfinished">المضادة للمدفعية الجوية</translation>
     </message>
     <message>
-      <source>Undefined</source>
-      <translation type="unfinished">غير معرف</translation>
+        <source>Undefined</source>
+        <translation type="unfinished">غير معرف</translation>
     </message>
     <message>
-      <source>Slowest</source>
-      <translation type="unfinished">أبطأ</translation>
+        <source>Slowest</source>
+        <translation type="unfinished">أبطأ</translation>
     </message>
     <message>
-      <source>Object, Max speed</source>
-      <translation type="unfinished">كائن، سرعة ماكس</translation>
+        <source>Object, Max speed</source>
+        <translation type="unfinished">كائن، سرعة ماكس</translation>
     </message>
     <message>
-      <source>Unit, Max speed</source>
-      <translation type="unfinished">وحدة، سرعة ماكس</translation>
+        <source>Unit, Max speed</source>
+        <translation type="unfinished">وحدة، سرعة ماكس</translation>
     </message>
     <message>
-      <source>Urban block speed</source>
-      <translation type="unfinished">سرعة الكتلة الحضرية</translation>
+        <source>Urban block speed</source>
+        <translation type="unfinished">سرعة الكتلة الحضرية</translation>
     </message>
     <message>
-      <source>0m</source>
-      <translation type="unfinished">0 م</translation>
+        <source>0m</source>
+        <translation type="unfinished">0 م</translation>
     </message>
     <message>
-      <source>1m</source>
-      <translation type="unfinished">م 1</translation>
+        <source>1m</source>
+        <translation type="unfinished">م 1</translation>
     </message>
     <message>
-      <source>&gt;1m</source>
-      <translation type="unfinished">&gt; م 1</translation>
+        <source>&gt;1m</source>
+        <translation type="unfinished">&gt; م 1</translation>
     </message>
     <message>
-      <source>No rainfall</source>
-      <translation type="unfinished">لم تهطل الأمطار</translation>
+        <source>No rainfall</source>
+        <translation type="unfinished">لم تهطل الأمطار</translation>
     </message>
     <message>
-      <source>Sand storm</source>
-      <translation type="unfinished">العاصفة الرملية</translation>
+        <source>Sand storm</source>
+        <translation type="unfinished">العاصفة الرملية</translation>
     </message>
     <message>
-      <source>Fog</source>
-      <translation type="unfinished">وسوف</translation>
+        <source>Fog</source>
+        <translation type="unfinished">وسوف</translation>
     </message>
     <message>
-      <source>Drizzle</source>
-      <translation type="unfinished">رذاذ</translation>
+        <source>Drizzle</source>
+        <translation type="unfinished">رذاذ</translation>
     </message>
     <message>
-      <source>Rain</source>
-      <translation type="unfinished">المطر</translation>
+        <source>Rain</source>
+        <translation type="unfinished">المطر</translation>
     </message>
     <message>
-      <source>Snow</source>
-      <translation type="unfinished">سنو</translation>
+        <source>Snow</source>
+        <translation type="unfinished">سنو</translation>
     </message>
     <message>
-      <source>Smoke</source>
-      <translation type="unfinished">الدخان</translation>
+        <source>Smoke</source>
+        <translation type="unfinished">الدخان</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 1</source>
-      <translation type="unfinished">مستوى خطورة إصابة 1</translation>
+        <source>Wounded seriousness level 1</source>
+        <translation type="unfinished">مستوى خطورة إصابة 1</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 2</source>
-      <translation type="unfinished">مستوى خطورة إصابة 2</translation>
+        <source>Wounded seriousness level 2</source>
+        <translation type="unfinished">مستوى خطورة إصابة 2</translation>
     </message>
     <message>
-      <source>Wounded seriousness level 3</source>
-      <translation type="unfinished">مستوى خطورة إصابة 3</translation>
+        <source>Wounded seriousness level 3</source>
+        <translation type="unfinished">مستوى خطورة إصابة 3</translation>
     </message>
     <message>
-      <source>Wounded extreme seriousness</source>
-      <translation type="unfinished">خطورة إصابة</translation>
+        <source>Wounded extreme seriousness</source>
+        <translation type="unfinished">خطورة إصابة</translation>
     </message>
     <message>
-      <source>equipment</source>
-      <translation type="unfinished">المعدات</translation>
+        <source>equipment</source>
+        <translation type="unfinished">المعدات</translation>
     </message>
     <message>
-      <source>human</source>
-      <translation type="unfinished">البشرية</translation>
+        <source>human</source>
+        <translation type="unfinished">البشرية</translation>
     </message>
     <message>
-      <source>Eletronic</source>
-      <translation type="unfinished">الإلكترونية</translation>
+        <source>Eletronic</source>
+        <translation type="unfinished">الإلكترونية</translation>
     </message>
     <message>
-      <source>Mobility</source>
-      <translation type="unfinished">التنقل</translation>
+        <source>Mobility</source>
+        <translation type="unfinished">التنقل</translation>
     </message>
     <message>
-      <source>Seriousness level 1</source>
-      <translation type="unfinished">خطورة مستوى 1</translation>
+        <source>Seriousness level 1</source>
+        <translation type="unfinished">خطورة مستوى 1</translation>
     </message>
     <message>
-      <source>Seriousness level 2</source>
-      <translation type="unfinished">مستوى خطورة 2</translation>
+        <source>Seriousness level 2</source>
+        <translation type="unfinished">مستوى خطورة 2</translation>
     </message>
     <message>
-      <source>Seriousness level 3</source>
-      <translation type="unfinished">خطورة المستوى 3</translation>
+        <source>Seriousness level 3</source>
+        <translation type="unfinished">خطورة المستوى 3</translation>
     </message>
     <message>
-      <source>Real</source>
-      <translation type="unfinished">ريال مدريد</translation>
+        <source>Real</source>
+        <translation type="unfinished">ريال مدريد</translation>
     </message>
     <message>
-      <source>Virtual</source>
-      <translation type="unfinished">الظاهري</translation>
+        <source>Virtual</source>
+        <translation type="unfinished">الظاهري</translation>
     </message>
     <message>
-      <source>radar</source>
-      <translation type="unfinished">الرادار</translation>
+        <source>radar</source>
+        <translation type="unfinished">الرادار</translation>
     </message>
     <message>
-      <source>listening</source>
-      <translation type="unfinished">الاستماع</translation>
+        <source>listening</source>
+        <translation type="unfinished">الاستماع</translation>
     </message>
     <message>
-      <source>radar listening</source>
-      <translation type="unfinished">رادار الاستماع</translation>
+        <source>radar listening</source>
+        <translation type="unfinished">رادار الاستماع</translation>
     </message>
     <message>
-      <source>Maintenance support needed</source>
-      <translation type="unfinished">دعم الصيانة اللازمة</translation>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة اللازمة</translation>
     </message>
     <message>
-      <source>On site fixable</source>
-      <translation type="unfinished">في الموقع يمكن حلها</translation>
+        <source>On site fixable</source>
+        <translation type="unfinished">في الموقع يمكن حلها</translation>
     </message>
     <message>
-      <source>Destroyed</source>
-      <translation type="unfinished">دمرت</translation>
+        <source>Destroyed</source>
+        <translation type="unfinished">دمرت</translation>
     </message>
     <message>
-      <source>Agent</source>
-      <translation type="unfinished">وكيل</translation>
+        <source>Agent</source>
+        <translation type="unfinished">وكيل</translation>
     </message>
     <message>
-      <source>Automat</source>
-      <translation type="unfinished">تلقائياً</translation>
+        <source>Automat</source>
+        <translation type="unfinished">تلقائياً</translation>
     </message>
     <message>
-      <source>Boolean</source>
-      <translation type="unfinished">قيمة منطقية</translation>
+        <source>Boolean</source>
+        <translation type="unfinished">قيمة منطقية</translation>
     </message>
     <message>
-      <source>Integer</source>
-      <translation type="unfinished">عدد صحيح</translation>
+        <source>Integer</source>
+        <translation type="unfinished">عدد صحيح</translation>
     </message>
     <message>
-      <source>String</source>
-      <translation type="unfinished">السلسلة</translation>
+        <source>String</source>
+        <translation type="unfinished">السلسلة</translation>
     </message>
     <message>
-      <source>Heading</source>
-      <translation type="unfinished">العنوان</translation>
+        <source>Heading</source>
+        <translation type="unfinished">العنوان</translation>
     </message>
     <message>
-      <source>Date Time</source>
-      <translation type="unfinished">التاريخ الوقت</translation>
+        <source>Date Time</source>
+        <translation type="unfinished">التاريخ الوقت</translation>
     </message>
     <message>
-      <source>Enumeration</source>
-      <translation type="unfinished">التعداد</translation>
+        <source>Enumeration</source>
+        <translation type="unfinished">التعداد</translation>
     </message>
     <message>
-      <source>Nature Atlas</source>
-      <translation type="unfinished">أطلس الطبيعة</translation>
+        <source>Nature Atlas</source>
+        <translation type="unfinished">أطلس الطبيعة</translation>
     </message>
     <message>
-      <source>Agent knowledge</source>
-      <translation type="unfinished">عامل المعرفة</translation>
+        <source>Agent knowledge</source>
+        <translation type="unfinished">عامل المعرفة</translation>
     </message>
     <message>
-      <source>Object knowledge</source>
-      <translation type="unfinished">الكائن المعرفة</translation>
+        <source>Object knowledge</source>
+        <translation type="unfinished">الكائن المعرفة</translation>
     </message>
     <message>
-      <source>Crowd knowledge</source>
-      <translation type="unfinished">المعرفة الحشد</translation>
+        <source>Crowd knowledge</source>
+        <translation type="unfinished">المعرفة الحشد</translation>
     </message>
     <message>
-      <source>Planned work</source>
-      <translation type="unfinished">العمل المخطط له</translation>
+        <source>Planned work</source>
+        <translation type="unfinished">العمل المخطط له</translation>
     </message>
     <message>
-      <source>Path</source>
-      <translation type="unfinished">مسار</translation>
+        <source>Path</source>
+        <translation type="unfinished">مسار</translation>
     </message>
     <message>
-      <source>Point</source>
-      <translation type="unfinished">نقطة</translation>
+        <source>Point</source>
+        <translation type="unfinished">نقطة</translation>
     </message>
     <message>
-      <source>Polygon</source>
-      <translation type="unfinished">مضلع</translation>
+        <source>Polygon</source>
+        <translation type="unfinished">مضلع</translation>
     </message>
     <message>
-      <source>Location</source>
-      <translation type="unfinished">موقع</translation>
+        <source>Location</source>
+        <translation type="unfinished">موقع</translation>
     </message>
     <message>
-      <source>Equipment type</source>
-      <translation type="unfinished">نوع المعدات</translation>
+        <source>Equipment type</source>
+        <translation type="unfinished">نوع المعدات</translation>
     </message>
     <message>
-      <source>Resource type</source>
-      <translation type="unfinished">نوع المورد</translation>
+        <source>Resource type</source>
+        <translation type="unfinished">نوع المورد</translation>
     </message>
     <message>
-      <source>Maintenance priorities</source>
-      <translation type="unfinished">أولويات الصيانة</translation>
+        <source>Maintenance priorities</source>
+        <translation type="unfinished">أولويات الصيانة</translation>
     </message>
     <message>
-      <source>Medical priorities</source>
-      <translation type="unfinished">الأولويات الطبية</translation>
+        <source>Medical priorities</source>
+        <translation type="unfinished">الأولويات الطبية</translation>
     </message>
     <message>
-      <source>Indirect fire</source>
-      <translation type="unfinished">النيران غير المباشرة</translation>
+        <source>Indirect fire</source>
+        <translation type="unfinished">النيران غير المباشرة</translation>
     </message>
     <message>
-      <source>Limit</source>
-      <translation type="unfinished">الحد الأقصى</translation>
+        <source>Limit</source>
+        <translation type="unfinished">الحد الأقصى</translation>
     </message>
     <message>
-      <source>Phase line</source>
-      <translation type="unfinished">الخط المرحلة</translation>
+        <source>Phase line</source>
+        <translation type="unfinished">الخط المرحلة</translation>
     </message>
     <message>
-      <source>Urban knowledge</source>
-      <translation type="unfinished">المعرفة الحضرية</translation>
+        <source>Urban knowledge</source>
+        <translation type="unfinished">المعرفة الحضرية</translation>
     </message>
     <message>
-      <source>Location composite</source>
-      <translation type="unfinished">موقع مركب</translation>
+        <source>Location composite</source>
+        <translation type="unfinished">موقع مركب</translation>
     </message>
     <message>
-      <source>Resource network node</source>
-      <translation type="unfinished">عقده شبكة الموارد</translation>
+        <source>Resource network node</source>
+        <translation type="unfinished">عقده شبكة الموارد</translation>
     </message>
     <message>
-      <source>Resource network type</source>
-      <translation type="unfinished">نوع مورد شبكة الاتصال</translation>
+        <source>Resource network type</source>
+        <translation type="unfinished">نوع مورد شبكة الاتصال</translation>
     </message>
     <message>
-      <source>Raw</source>
-      <translation type="unfinished">الخام</translation>
+        <source>Raw</source>
+        <translation type="unfinished">الخام</translation>
     </message>
     <message>
-      <source>Density</source>
-      <translation type="unfinished">الكثافة</translation>
+        <source>Density</source>
+        <translation type="unfinished">الكثافة</translation>
     </message>
     <message>
-      <source>Fire</source>
-      <translation type="unfinished">الحريق</translation>
+        <source>Fire</source>
+        <translation type="unfinished">الحريق</translation>
     </message>
     <message>
-      <source>Cloud</source>
-      <translation type="unfinished">سحابة</translation>
+        <source>Cloud</source>
+        <translation type="unfinished">سحابة</translation>
     </message>
     <message>
-      <source>Categories</source>
-      <translation type="unfinished">فئات</translation>
+        <source>Categories</source>
+        <translation type="unfinished">فئات</translation>
     </message>
     <message>
-      <source>Symbols</source>
-      <translation type="unfinished">رموز</translation>
+        <source>Symbols</source>
+        <translation type="unfinished">رموز</translation>
     </message>
     <message>
-      <source>UnitSymbols</source>
-      <translation type="unfinished">أونيتسيمبولس</translation>
+        <source>UnitSymbols</source>
+        <translation type="unfinished">أونيتسيمبولس</translation>
     </message>
     <message>
-      <source>Urban</source>
-      <translation type="unfinished">المناطق الحضرية</translation>
+        <source>Urban</source>
+        <translation type="unfinished">المناطق الحضرية</translation>
     </message>
     <message>
-      <source>Launchers</source>
-      <translation type="unfinished">قاذفات</translation>
+        <source>Launchers</source>
+        <translation type="unfinished">قاذفات</translation>
     </message>
     <message>
-      <source>Resources</source>
-      <translation type="unfinished">الموارد</translation>
+        <source>Resources</source>
+        <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-      <source>Fires</source>
-      <translation type="unfinished">حرائق</translation>
+        <source>Fires</source>
+        <translation type="unfinished">حرائق</translation>
     </message>
     <message>
-      <source>Drawings</source>
-      <translation type="unfinished">رسومات</translation>
+        <source>Drawings</source>
+        <translation type="unfinished">رسومات</translation>
     </message>
     <message>
-      <source>Objects</source>
-      <translation type="unfinished">الكائنات</translation>
+        <source>Objects</source>
+        <translation type="unfinished">الكائنات</translation>
     </message>
     <message>
-      <source>Weapon systems</source>
-      <translation type="unfinished">نظم الأسلحة</translation>
+        <source>Weapon systems</source>
+        <translation type="unfinished">نظم الأسلحة</translation>
     </message>
     <message>
-      <source>Active Protections</source>
-      <translation type="unfinished">الحماية النشطة</translation>
+        <source>Active Protections</source>
+        <translation type="unfinished">الحماية النشطة</translation>
     </message>
     <message>
-      <source>Sensors</source>
-      <translation type="unfinished">أجهزة الاستشعار</translation>
+        <source>Sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Breakdowns</source>
-      <translation type="unfinished">أعطال</translation>
+        <source>Breakdowns</source>
+        <translation type="unfinished">أعطال</translation>
     </message>
     <message>
-      <source>Equipments</source>
-      <translation type="unfinished">معدات</translation>
+        <source>Equipments</source>
+        <translation type="unfinished">معدات</translation>
     </message>
     <message>
-      <source>Resource networks</source>
-      <translation type="unfinished">شبكات للموارد</translation>
+        <source>Resource networks</source>
+        <translation type="unfinished">شبكات للموارد</translation>
     </message>
     <message>
-      <source>Op. indicators</source>
-      <translation type="unfinished">مؤشرات على.</translation>
+        <source>Op. indicators</source>
+        <translation type="unfinished">مؤشرات على.</translation>
     </message>
     <message>
-      <source>Missions</source>
-      <translation type="unfinished">البعثات</translation>
+        <source>Missions</source>
+        <translation type="unfinished">البعثات</translation>
     </message>
     <message>
-      <source>Doctrine models</source>
-      <translation type="unfinished">نماذج نظرية</translation>
+        <source>Doctrine models</source>
+        <translation type="unfinished">نماذج نظرية</translation>
     </message>
     <message>
-      <source>Units</source>
-      <translation type="unfinished">وحدات</translation>
+        <source>Units</source>
+        <translation type="unfinished">وحدات</translation>
     </message>
     <message>
-      <source>Automata</source>
-      <translation type="unfinished">تلقائي</translation>
+        <source>Automata</source>
+        <translation type="unfinished">تلقائي</translation>
     </message>
     <message>
-      <source>Jamming</source>
-      <translation type="unfinished">التشويش</translation>
+        <source>Jamming</source>
+        <translation type="unfinished">التشويش</translation>
     </message>
     <message>
-      <source>Human factors</source>
-      <translation type="unfinished">العوامل البشرية</translation>
+        <source>Human factors</source>
+        <translation type="unfinished">العوامل البشرية</translation>
     </message>
     <message>
-      <source>Knowledge groups</source>
-      <translation type="unfinished">المجموعات المعرفة</translation>
+        <source>Knowledge groups</source>
+        <translation type="unfinished">المجموعات المعرفة</translation>
     </message>
     <message>
-      <source>Crowds</source>
-      <translation type="unfinished">الحشود</translation>
+        <source>Crowds</source>
+        <translation type="unfinished">الحشود</translation>
     </message>
     <message>
-      <source>Populations</source>
-      <translation type="unfinished">السكان</translation>
+        <source>Populations</source>
+        <translation type="unfinished">السكان</translation>
     </message>
     <message>
-      <source>Reports</source>
-      <translation type="unfinished">تقارير</translation>
+        <source>Reports</source>
+        <translation type="unfinished">تقارير</translation>
     </message>
     <message>
-      <source>Log</source>
-      <translation type="unfinished">سجل</translation>
+        <source>Log</source>
+        <translation type="unfinished">سجل</translation>
     </message>
     <message>
-      <source>ASCII grid input</source>
-      <translation type="unfinished">إدخال شبكة ASCII</translation>
+        <source>ASCII grid input</source>
+        <translation type="unfinished">إدخال شبكة ASCII</translation>
     </message>
     <message>
-      <source>Shapefile input</source>
-      <translation type="unfinished">إدخال مدخلات</translation>
+        <source>Shapefile input</source>
+        <translation type="unfinished">إدخال مدخلات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Type_Repartition</name>
     <message>
-      <source>Invalid repartition on tab '%1' - Males/Females/Children repartition must be 100%. Current value for '%2': %3%.</source>
-      <translation type="unfinished">يجب أن تكون إعادة تقسيم غير صالح في علامة التبويب '%1'--إعادة تقسيم الذكور/الإناث/الأطفال 100%. القيمة الحالية ل '%2': % %3.</translation>
+        <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition must be 100%. Current value for &apos;%2&apos;: %3%.</source>
+        <translation type="unfinished">يجب أن تكون إعادة تقسيم غير صالح في علامة التبويب &apos;%1&apos;--إعادة تقسيم الذكور/الإناث/الأطفال 100%. القيمة الحالية ل &apos;%2&apos;: % %3.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Units_Composantes_GUI</name>
     <message>
-      <source>Equipments</source>
-      <translation type="unfinished">معدات</translation>
+        <source>Equipments</source>
+        <translation type="unfinished">معدات</translation>
     </message>
     <message>
-      <source>Qty</source>
-      <translation type="unfinished">الكمية</translation>
+        <source>Qty</source>
+        <translation type="unfinished">الكمية</translation>
     </message>
     <message>
-      <source>Major</source>
-      <translation type="unfinished">الرئيسية</translation>
+        <source>Major</source>
+        <translation type="unfinished">الرئيسية</translation>
     </message>
     <message>
-      <source>Loadable</source>
-      <translation type="unfinished">متحركاً (ديناميكياً)</translation>
+        <source>Loadable</source>
+        <translation type="unfinished">متحركاً (ديناميكياً)</translation>
     </message>
     <message>
-      <source>Conveyor</source>
-      <translation type="unfinished">ناقل</translation>
+        <source>Conveyor</source>
+        <translation type="unfinished">ناقل</translation>
     </message>
     <message>
-      <source>Crew size</source>
-      <translation type="unfinished">حجم الطاقم</translation>
+        <source>Crew size</source>
+        <translation type="unfinished">حجم الطاقم</translation>
     </message>
     <message>
-      <source>Add equipment</source>
-      <translation type="unfinished">إضافة معدات</translation>
+        <source>Add equipment</source>
+        <translation type="unfinished">إضافة معدات</translation>
     </message>
     <message>
-      <source>Remove equipment</source>
-      <translation type="unfinished">إزالة المعدات</translation>
+        <source>Remove equipment</source>
+        <translation type="unfinished">إزالة المعدات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Units_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>The type of unit in the simulation. This type must match the associated decisional model.</source>
-      <translation type="unfinished">نوع وحدة في المحاكاة. يجب أن يطابق هذا النوع نموذج مفترض المرتبطة بها.</translation>
+        <source>The type of unit in the simulation. This type must match the associated decisional model.</source>
+        <translation type="unfinished">نوع وحدة في المحاكاة. يجب أن يطابق هذا النوع نموذج مفترض المرتبطة بها.</translation>
     </message>
     <message>
-      <source>Doctrine model</source>
-      <translation type="unfinished">طراز مذهب</translation>
+        <source>Doctrine model</source>
+        <translation type="unfinished">طراز مذهب</translation>
     </message>
     <message>
-      <source>The decisional model associated to the unit.</source>
-      <translation type="unfinished">نموذج مفترض المرتبطة بالوحدة.</translation>
+        <source>The decisional model associated to the unit.</source>
+        <translation type="unfinished">نموذج مفترض المرتبطة بالوحدة.</translation>
     </message>
     <message>
-      <source>Decontamination delay</source>
-      <translation type="unfinished">تأخير إزالة التلوث</translation>
+        <source>Decontamination delay</source>
+        <translation type="unfinished">تأخير إزالة التلوث</translation>
     </message>
     <message>
-      <source>Force ratio feedback time</source>
-      <translation type="unfinished">الوقت التغذية المرتدة نسبة القوة</translation>
+        <source>Force ratio feedback time</source>
+        <translation type="unfinished">الوقت التغذية المرتدة نسبة القوة</translation>
     </message>
     <message>
-      <source>Can fly</source>
-      <translation type="unfinished">يمكن أن تطير</translation>
+        <source>Can fly</source>
+        <translation type="unfinished">يمكن أن تطير</translation>
     </message>
     <message>
-      <source>Crossing height</source>
-      <translation type="unfinished">عبور الارتفاع</translation>
+        <source>Crossing height</source>
+        <translation type="unfinished">عبور الارتفاع</translation>
     </message>
     <message>
-      <source>Is autonomous (UAV)</source>
-      <translation type="unfinished">هي المتمتعة بالحكم الذاتي (بدون طيار)</translation>
+        <source>Is autonomous (UAV)</source>
+        <translation type="unfinished">هي المتمتعة بالحكم الذاتي (بدون طيار)</translation>
     </message>
     <message>
-      <source>Scan</source>
-      <translation type="unfinished">المسح الضوئي</translation>
+        <source>Scan</source>
+        <translation type="unfinished">المسح الضوئي</translation>
     </message>
     <message>
-      <source>Width</source>
-      <translation type="unfinished">العرض</translation>
+        <source>Width</source>
+        <translation type="unfinished">العرض</translation>
     </message>
     <message>
-      <source>m</source>
-      <translation type="unfinished">m</translation>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
-      <source>Depth</source>
-      <translation type="unfinished">عمق</translation>
+        <source>Depth</source>
+        <translation type="unfinished">عمق</translation>
     </message>
     <message>
-      <source>Ranges</source>
-      <translation type="unfinished">نطاقات</translation>
+        <source>Ranges</source>
+        <translation type="unfinished">نطاقات</translation>
     </message>
     <message>
-      <source>Sensors</source>
-      <translation type="unfinished">أجهزة الاستشعار</translation>
+        <source>Sensors</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
     </message>
     <message>
-      <source>Equipments</source>
-      <translation type="unfinished">معدات</translation>
+        <source>Equipments</source>
+        <translation type="unfinished">معدات</translation>
     </message>
     <message>
-      <source>Nature</source>
-      <translation type="unfinished">طبيعة</translation>
+        <source>Nature</source>
+        <translation type="unfinished">طبيعة</translation>
     </message>
     <message>
-      <source>Level:</source>
-      <translation type="unfinished">المستوى:</translation>
+        <source>Level:</source>
+        <translation type="unfinished">المستوى:</translation>
     </message>
     <message>
-      <source>Atlas:</source>
-      <translation type="unfinished">أطلس:</translation>
+        <source>Atlas:</source>
+        <translation type="unfinished">أطلس:</translation>
     </message>
     <message>
-      <source>UnitSymbol</source>
-      <translation type="unfinished">أونيتسيمبول</translation>
+        <source>UnitSymbol</source>
+        <translation type="unfinished">أونيتسيمبول</translation>
     </message>
     <message>
-      <source>Command</source>
-      <translation type="unfinished">الأمر</translation>
+        <source>Command</source>
+        <translation type="unfinished">الأمر</translation>
     </message>
     <message>
-      <source>Nbr of officer(s)</source>
-      <translation type="unfinished">Nbr officer(s)</translation>
+        <source>Nbr of officer(s)</source>
+        <translation type="unfinished">Nbr officer(s)</translation>
     </message>
     <message>
-      <source>Nbr of warrant officer(s)</source>
-      <translation type="unfinished">Nbr warrant officer(s)</translation>
+        <source>Nbr of warrant officer(s)</source>
+        <translation type="unfinished">Nbr warrant officer(s)</translation>
     </message>
     <message>
-      <source>Stances</source>
-      <translation type="unfinished">المواقف</translation>
+        <source>Stances</source>
+        <translation type="unfinished">المواقف</translation>
     </message>
     <message>
-      <source>Deployment</source>
-      <translation type="unfinished">نشر</translation>
+        <source>Deployment</source>
+        <translation type="unfinished">نشر</translation>
     </message>
     <message>
-      <source>Deployment duration</source>
-      <translation type="unfinished">مدة النشر</translation>
+        <source>Deployment duration</source>
+        <translation type="unfinished">مدة النشر</translation>
     </message>
     <message>
-      <source>Un-deployment duration</source>
-      <translation type="unfinished">مدة نشر الأمم المتحدة</translation>
+        <source>Un-deployment duration</source>
+        <translation type="unfinished">مدة نشر الأمم المتحدة</translation>
     </message>
     <message>
-      <source>Key terrain features range</source>
-      <translation type="unfinished">مجموعة ملامح التضاريس الرئيسية</translation>
+        <source>Key terrain features range</source>
+        <translation type="unfinished">مجموعة ملامح التضاريس الرئيسية</translation>
     </message>
     <message>
-      <source>Complementary resources</source>
-      <translation type="unfinished">الموارد التكميلية</translation>
+        <source>Complementary resources</source>
+        <translation type="unfinished">الموارد التكميلية</translation>
     </message>
     <message>
-      <source>Stock</source>
-      <translation type="unfinished">الأوراق المالية</translation>
+        <source>Stock</source>
+        <translation type="unfinished">الأوراق المالية</translation>
     </message>
     <message>
-      <source>Skills</source>
-      <translation type="unfinished">المهارات</translation>
+        <source>Skills</source>
+        <translation type="unfinished">المهارات</translation>
     </message>
     <message>
-      <source>Recon</source>
-      <translation type="unfinished">ريكون</translation>
+        <source>Recon</source>
+        <translation type="unfinished">ريكون</translation>
     </message>
     <message>
-      <source>%</source>
-      <translation type="unfinished">%</translation>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
     </message>
     <message>
-      <source>Combat support</source>
-      <translation type="unfinished">مكافحة الدعم</translation>
+        <source>Combat support</source>
+        <translation type="unfinished">مكافحة الدعم</translation>
     </message>
     <message>
-      <source>Combat</source>
-      <translation type="unfinished">مكافحة</translation>
+        <source>Combat</source>
+        <translation type="unfinished">مكافحة</translation>
     </message>
     <message>
-      <source>Mobility support</source>
-      <translation type="unfinished">دعم الحراك</translation>
+        <source>Mobility support</source>
+        <translation type="unfinished">دعم الحراك</translation>
     </message>
     <message>
-      <source>Counter mobility support</source>
-      <translation type="unfinished">دعم الحراك العداد</translation>
+        <source>Counter mobility support</source>
+        <translation type="unfinished">دعم الحراك العداد</translation>
     </message>
     <message>
-      <source>Protection support</source>
-      <translation type="unfinished">دعم الحماية</translation>
+        <source>Protection support</source>
+        <translation type="unfinished">دعم الحماية</translation>
     </message>
     <message>
-      <source>Engineering recon</source>
-      <translation type="unfinished">ركن الهندسة</translation>
+        <source>Engineering recon</source>
+        <translation type="unfinished">ركن الهندسة</translation>
     </message>
     <message>
-      <source>Efficiencies</source>
-      <translation type="unfinished">زيادة الكفاءة</translation>
+        <source>Efficiencies</source>
+        <translation type="unfinished">زيادة الكفاءة</translation>
     </message>
     <message>
-      <source>Urban area efficiency</source>
-      <translation type="unfinished">كفاءة المجال الحضري</translation>
+        <source>Urban area efficiency</source>
+        <translation type="unfinished">كفاءة المجال الحضري</translation>
     </message>
     <message>
-      <source>Civilian</source>
-      <translation type="unfinished">المدنيين</translation>
+        <source>Civilian</source>
+        <translation type="unfinished">المدنيين</translation>
     </message>
     <message>
-      <source>Males</source>
-      <translation type="unfinished">الذكور</translation>
+        <source>Males</source>
+        <translation type="unfinished">الذكور</translation>
     </message>
     <message>
-      <source>Females</source>
-      <translation type="unfinished">الإناث</translation>
+        <source>Females</source>
+        <translation type="unfinished">الإناث</translation>
     </message>
     <message>
-      <source>Children</source>
-      <translation type="unfinished">الأطفال</translation>
+        <source>Children</source>
+        <translation type="unfinished">الأطفال</translation>
     </message>
     <message>
-      <source>Units/</source>
-      <translation type="unfinished">الوحدات/</translation>
+        <source>Units/</source>
+        <translation type="unfinished">الوحدات/</translation>
     </message>
     <message>
-      <source>Units</source>
-      <translation type="unfinished">وحدات</translation>
+        <source>Units</source>
+        <translation type="unfinished">وحدات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
-      <source>Logistic supply class</source>
-      <translation type="unfinished">فئة الإمداد اللوجستي</translation>
+        <source>Logistic supply class</source>
+        <translation type="unfinished">فئة الإمداد اللوجستي</translation>
     </message>
     <message>
-      <source>Log threshold (%)</source>
-      <translation type="unfinished">سجل عتبة (%)</translation>
+        <source>Log threshold (%)</source>
+        <translation type="unfinished">سجل عتبة (%)</translation>
     </message>
     <message>
-      <source>Add class</source>
-      <translation type="unfinished">إضافة فئة</translation>
+        <source>Add class</source>
+        <translation type="unfinished">إضافة فئة</translation>
     </message>
     <message>
-      <source>Remove class</source>
-      <translation type="unfinished">إزالة الطبقة</translation>
+        <source>Remove class</source>
+        <translation type="unfinished">إزالة الطبقة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Units_Postures_GUI</name>
     <message>
-      <source>Stance</source>
-      <translation type="unfinished">موقف</translation>
+        <source>Stance</source>
+        <translation type="unfinished">موقف</translation>
     </message>
     <message>
-      <source>Time to activate</source>
-      <translation type="unfinished">الوقت لتنشيط</translation>
+        <source>Time to activate</source>
+        <translation type="unfinished">الوقت لتنشيط</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Urban_AttritionTable</name>
     <message>
-      <source>% destroyed</source>
-      <translation type="unfinished">% دمرت</translation>
+        <source>% destroyed</source>
+        <translation type="unfinished">% دمرت</translation>
     </message>
     <message>
-      <source>% maintenance support needed</source>
-      <translation type="unfinished">دعم الصيانة % اللازمة</translation>
+        <source>% maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة % اللازمة</translation>
     </message>
     <message>
-      <source>% on site fixable</source>
-      <translation type="unfinished">% في الموقع يمكن حلها</translation>
+        <source>% on site fixable</source>
+        <translation type="unfinished">% في الموقع يمكن حلها</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Urban_Data</name>
     <message>
-      <source>Urban data - Invalid material type '%1'</source>
-      <translation type="unfinished">نوع البيانات الحضرية-المواد غير صالح '%1'</translation>
+        <source>Urban data - Invalid material type &apos;%1&apos;</source>
+        <translation type="unfinished">نوع البيانات الحضرية-المواد غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Urban data - Invalid roof-shape type '%1'</source>
-      <translation type="unfinished">نوع البيانات الحضرية-سقف-الشكل غير صالح '%1'</translation>
+        <source>Urban data - Invalid roof-shape type &apos;%1&apos;</source>
+        <translation type="unfinished">نوع البيانات الحضرية-سقف-الشكل غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Urban data - Invalid accomodation type '%1'</source>
-      <translation type="unfinished">نوع البيانات الحضرية-الإقامة في غير صالح '%1'</translation>
+        <source>Urban data - Invalid accomodation type &apos;%1&apos;</source>
+        <translation type="unfinished">نوع البيانات الحضرية-الإقامة في غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Equipment - Invalid armor type '%1'</source>
-      <translation type="unfinished">معدات-نوع الدروع غير صالح '%1'</translation>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع الدروع غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Urban_GUI</name>
     <message>
-      <source>Materials</source>
-      <translation type="unfinished">المواد</translation>
+        <source>Materials</source>
+        <translation type="unfinished">المواد</translation>
     </message>
     <message>
-      <source>Material</source>
-      <translation type="unfinished">المواد</translation>
+        <source>Material</source>
+        <translation type="unfinished">المواد</translation>
     </message>
     <message>
-      <source>Facades</source>
-      <translation type="unfinished">الواجهات</translation>
+        <source>Facades</source>
+        <translation type="unfinished">الواجهات</translation>
     </message>
     <message>
-      <source>Facade</source>
-      <translation type="unfinished">الواجهة</translation>
+        <source>Facade</source>
+        <translation type="unfinished">الواجهة</translation>
     </message>
     <message>
-      <source>RoofShapes</source>
-      <translation type="unfinished">روفشابيس</translation>
+        <source>RoofShapes</source>
+        <translation type="unfinished">روفشابيس</translation>
     </message>
     <message>
-      <source>RoofShape</source>
-      <translation type="unfinished">روفشابي</translation>
+        <source>RoofShape</source>
+        <translation type="unfinished">روفشابي</translation>
     </message>
     <message>
-      <source>Activities</source>
-      <translation type="unfinished">الأنشطة</translation>
+        <source>Activities</source>
+        <translation type="unfinished">الأنشطة</translation>
     </message>
     <message>
-      <source>Default nominal capacity</source>
-      <translation type="unfinished">القدرة الاسمية الافتراضي</translation>
+        <source>Default nominal capacity</source>
+        <translation type="unfinished">القدرة الاسمية الافتراضي</translation>
     </message>
     <message>
-      <source>persons/m2</source>
-      <translation type="unfinished">الأشخاص/m2</translation>
+        <source>persons/m2</source>
+        <translation type="unfinished">الأشخاص/m2</translation>
     </message>
     <message>
-      <source>Default maximal capacity</source>
-      <translation type="unfinished">القدرة القصوى الافتراضية</translation>
+        <source>Default maximal capacity</source>
+        <translation type="unfinished">القدرة القصوى الافتراضية</translation>
     </message>
     <message>
-      <source>Activity</source>
-      <translation type="unfinished">النشاط</translation>
+        <source>Activity</source>
+        <translation type="unfinished">النشاط</translation>
     </message>
     <message>
-      <source>Type</source>
-      <translation type="unfinished">نوع</translation>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
-      <source>Nominal capacity</source>
-      <translation type="unfinished">القدرة الاسمية</translation>
+        <source>Nominal capacity</source>
+        <translation type="unfinished">القدرة الاسمية</translation>
     </message>
     <message>
-      <source>Maximal capacity</source>
-      <translation type="unfinished">القدرة القصوى</translation>
+        <source>Maximal capacity</source>
+        <translation type="unfinished">القدرة القصوى</translation>
     </message>
     <message>
-      <source>Infrastructures</source>
-      <translation type="unfinished">البنية التحتية</translation>
+        <source>Infrastructures</source>
+        <translation type="unfinished">البنية التحتية</translation>
     </message>
     <message>
-      <source>Infrastructure</source>
-      <translation type="unfinished">البنية التحتية</translation>
+        <source>Infrastructure</source>
+        <translation type="unfinished">البنية التحتية</translation>
     </message>
     <message>
-      <source>Symbol</source>
-      <translation type="unfinished">الرمز</translation>
+        <source>Symbol</source>
+        <translation type="unfinished">الرمز</translation>
     </message>
     <message>
-      <source>Medical</source>
-      <translation type="unfinished">الطبية</translation>
+        <source>Medical</source>
+        <translation type="unfinished">الطبية</translation>
     </message>
     <message>
-      <source>Doctor night rate</source>
-      <translation type="unfinished">سعر الليلة الطبيب</translation>
+        <source>Doctor night rate</source>
+        <translation type="unfinished">سعر الليلة الطبيب</translation>
     </message>
     <message>
-      <source>Emergency doctor rate</source>
-      <translation type="unfinished">معدل طبيب الطوارئ</translation>
+        <source>Emergency doctor rate</source>
+        <translation type="unfinished">معدل طبيب الطوارئ</translation>
     </message>
     <message>
-      <source>Emergency bed rate</source>
-      <translation type="unfinished">سعر سرير الطوارئ</translation>
+        <source>Emergency bed rate</source>
+        <translation type="unfinished">سعر سرير الطوارئ</translation>
     </message>
     <message>
-      <source>Templates</source>
-      <translation type="unfinished">قوالب</translation>
+        <source>Templates</source>
+        <translation type="unfinished">قوالب</translation>
     </message>
     <message>
-      <source>Template</source>
-      <translation type="unfinished">قالب</translation>
+        <source>Template</source>
+        <translation type="unfinished">قالب</translation>
     </message>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Color</source>
-      <translation type="unfinished">لون</translation>
+        <source>Color</source>
+        <translation type="unfinished">لون</translation>
     </message>
     <message>
-      <source>Alpha</source>
-      <translation type="unfinished">ألفا</translation>
+        <source>Alpha</source>
+        <translation type="unfinished">ألفا</translation>
     </message>
     <message>
-      <source>Architecture</source>
-      <translation type="unfinished">الهندسة المعمارية</translation>
+        <source>Architecture</source>
+        <translation type="unfinished">الهندسة المعمارية</translation>
     </message>
     <message>
-      <source>Floor number</source>
-      <translation type="unfinished">رقم الطابق</translation>
+        <source>Floor number</source>
+        <translation type="unfinished">رقم الطابق</translation>
     </message>
     <message>
-      <source>Parking floors</source>
-      <translation type="unfinished">أرضيات مواقف السيارات</translation>
+        <source>Parking floors</source>
+        <translation type="unfinished">أرضيات مواقف السيارات</translation>
     </message>
     <message>
-      <source>Occupation</source>
-      <translation type="unfinished">الاحتلال</translation>
+        <source>Occupation</source>
+        <translation type="unfinished">الاحتلال</translation>
     </message>
     <message>
-      <source>Height</source>
-      <translation type="unfinished">الارتفاع</translation>
+        <source>Height</source>
+        <translation type="unfinished">الارتفاع</translation>
     </message>
     <message>
-      <source>Trafficability</source>
-      <translation type="unfinished">ترافيكابيليتي</translation>
+        <source>Trafficability</source>
+        <translation type="unfinished">ترافيكابيليتي</translation>
     </message>
     <message>
-      <source>Roof shape</source>
-      <translation type="unfinished">شكل السقف</translation>
+        <source>Roof shape</source>
+        <translation type="unfinished">شكل السقف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_WeaponFilter</name>
     <message>
-      <source>Warning</source>
-      <translation type="unfinished">تحذير</translation>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
     </message>
     <message>
-      <source>This will delete all the following associated weapon systems :</source>
-      <translation type="unfinished">سيؤدي هذا إلى حذف كافة أنظمة الأسلحة المرتبطة بها التالية:</translation>
+        <source>This will delete all the following associated weapon systems :</source>
+        <translation type="unfinished">سيؤدي هذا إلى حذف كافة أنظمة الأسلحة المرتبطة بها التالية:</translation>
     </message>
     <message>
-      <source>Proceed anyway ?</source>
-      <translation type="unfinished">هل تريد المتابعة على أية حال؟</translation>
+        <source>Proceed anyway ?</source>
+        <translation type="unfinished">هل تريد المتابعة على أية حال؟</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Weapons_GUI</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Launcher</source>
-      <translation type="unfinished">قاذفة</translation>
+        <source>Launcher</source>
+        <translation type="unfinished">قاذفة</translation>
     </message>
     <message>
-      <source>Ammo</source>
-      <translation type="unfinished">الذخيرة</translation>
+        <source>Ammo</source>
+        <translation type="unfinished">الذخيرة</translation>
     </message>
     <message>
-      <source>Rounds per burst</source>
-      <translation type="unfinished">طلقة في الاندفاع</translation>
+        <source>Rounds per burst</source>
+        <translation type="unfinished">طلقة في الاندفاع</translation>
     </message>
     <message>
-      <source>Burst duration</source>
-      <translation type="unfinished">انفجر المدة</translation>
+        <source>Burst duration</source>
+        <translation type="unfinished">انفجر المدة</translation>
     </message>
     <message>
-      <source>Rounds per reload</source>
-      <translation type="unfinished">طلقة في تحديث</translation>
+        <source>Rounds per reload</source>
+        <translation type="unfinished">طلقة في تحديث</translation>
     </message>
     <message>
-      <source>Reload duration</source>
-      <translation type="unfinished">تحديث المدة</translation>
+        <source>Reload duration</source>
+        <translation type="unfinished">تحديث المدة</translation>
     </message>
     <message>
-      <source>Direct fire</source>
-      <translation type="unfinished">النار مباشرة</translation>
+        <source>Direct fire</source>
+        <translation type="unfinished">النار مباشرة</translation>
     </message>
     <message>
-      <source>Ph (%)</source>
-      <translation type="unfinished">الرقم الهيدروجيني (%)</translation>
+        <source>Ph (%)</source>
+        <translation type="unfinished">الرقم الهيدروجيني (%)</translation>
     </message>
     <message>
-      <source>Distance (m)</source>
-      <translation type="unfinished">المسافة (م)</translation>
+        <source>Distance (m)</source>
+        <translation type="unfinished">المسافة (م)</translation>
     </message>
     <message>
-      <source>Simulation</source>
-      <translation type="unfinished">محاكاة</translation>
+        <source>Simulation</source>
+        <translation type="unfinished">محاكاة</translation>
     </message>
     <message>
-      <source>Fire posture</source>
-      <translation type="unfinished">الموقف النار</translation>
+        <source>Fire posture</source>
+        <translation type="unfinished">الموقف النار</translation>
     </message>
     <message>
-      <source>Target posture</source>
-      <translation type="unfinished">الموقف المستهدف</translation>
+        <source>Target posture</source>
+        <translation type="unfinished">الموقف المستهدف</translation>
     </message>
     <message>
-      <source>Experience</source>
-      <translation type="unfinished">تجربة</translation>
+        <source>Experience</source>
+        <translation type="unfinished">تجربة</translation>
     </message>
     <message>
-      <source>Tiredness</source>
-      <translation type="unfinished">التعب</translation>
+        <source>Tiredness</source>
+        <translation type="unfinished">التعب</translation>
     </message>
     <message>
-      <source>Stress</source>
-      <translation type="unfinished">الإجهاد</translation>
+        <source>Stress</source>
+        <translation type="unfinished">الإجهاد</translation>
     </message>
     <message>
-      <source>Indirect fire</source>
-      <translation type="unfinished">النيران غير المباشرة</translation>
+        <source>Indirect fire</source>
+        <translation type="unfinished">النيران غير المباشرة</translation>
     </message>
     <message>
-      <source>Average speed</source>
-      <translation type="unfinished">متوسط سرعة</translation>
+        <source>Average speed</source>
+        <translation type="unfinished">متوسط سرعة</translation>
     </message>
     <message>
-      <source>km/h</source>
-      <translation type="unfinished">كم/ساعة</translation>
+        <source>km/h</source>
+        <translation type="unfinished">كم/ساعة</translation>
     </message>
     <message>
-      <source>Min range</source>
-      <translation type="unfinished">مجموعة دقيقة</translation>
+        <source>Min range</source>
+        <translation type="unfinished">مجموعة دقيقة</translation>
     </message>
     <message>
-      <source>m</source>
-      <translation type="unfinished">m</translation>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
-      <source>Max range</source>
-      <translation type="unfinished">مجموعة ماكس</translation>
+        <source>Max range</source>
+        <translation type="unfinished">مجموعة ماكس</translation>
     </message>
     <message>
-      <source>Weapon system</source>
-      <translation type="unfinished">نظام الأسلحة</translation>
+        <source>Weapon system</source>
+        <translation type="unfinished">نظام الأسلحة</translation>
     </message>
     <message>
-      <source>Rnd per burst</source>
-      <translation type="unfinished">Rnd كل الاندفاع</translation>
+        <source>Rnd per burst</source>
+        <translation type="unfinished">Rnd كل الاندفاع</translation>
     </message>
     <message>
-      <source>Burst duration (s)</source>
-      <translation type="unfinished">انفجر المدة (s)</translation>
+        <source>Burst duration (s)</source>
+        <translation type="unfinished">انفجر المدة (s)</translation>
     </message>
     <message>
-      <source>Rnd per reload</source>
-      <translation type="unfinished">Rnd كل تحديث</translation>
+        <source>Rnd per reload</source>
+        <translation type="unfinished">Rnd كل تحديث</translation>
     </message>
     <message>
-      <source>Reload duration (s)</source>
-      <translation type="unfinished">تحديث المدة (s)</translation>
+        <source>Reload duration (s)</source>
+        <translation type="unfinished">تحديث المدة (s)</translation>
     </message>
     <message>
-      <source>Target size</source>
-      <translation type="unfinished">حجم الهدف</translation>
+        <source>Target size</source>
+        <translation type="unfinished">حجم الهدف</translation>
     </message>
     <message>
-      <source>Weapon systems</source>
-      <translation type="unfinished">نظم الأسلحة</translation>
+        <source>Weapon systems</source>
+        <translation type="unfinished">نظم الأسلحة</translation>
     </message>
     <message>
-      <source>PHs</source>
-      <translation type="unfinished">PHs</translation>
+        <source>PHs</source>
+        <translation type="unfinished">PHs</translation>
     </message>
     <message>
-      <source>WeaponSystems/</source>
-      <translation type="unfinished">ويبونسيستيمس/</translation>
+        <source>WeaponSystems/</source>
+        <translation type="unfinished">ويبونسيستيمس/</translation>
     </message>
     <message>
-      <source>Weapon Systems</source>
-      <translation type="unfinished">نظم الأسلحة</translation>
+        <source>Weapon Systems</source>
+        <translation type="unfinished">نظم الأسلحة</translation>
     </message>
     <message>
-      <source>WeaponSystem_%1.htm</source>
-      <translation type="unfinished">WeaponSystem_%1.htm</translation>
+        <source>WeaponSystem_%1.htm</source>
+        <translation type="unfinished">WeaponSystem_%1.htm</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Weapons_PhSizeListView</name>
     <message>
-      <source>Target size</source>
-      <translation type="unfinished">حجم الهدف</translation>
+        <source>Target size</source>
+        <translation type="unfinished">حجم الهدف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Weapons_PhTable</name>
     <message>
-      <source>Distance</source>
-      <translation type="unfinished">المسافة</translation>
+        <source>Distance</source>
+        <translation type="unfinished">المسافة</translation>
     </message>
     <message>
-      <source>Percentage (PH)</source>
-      <translation type="unfinished">النسبة المئوية (PH)</translation>
+        <source>Percentage (PH)</source>
+        <translation type="unfinished">النسبة المئوية (PH)</translation>
     </message>
     <message>
-      <source>New Ph</source>
-      <translation type="unfinished">الرقم الهيدروجيني جديدة</translation>
+        <source>New Ph</source>
+        <translation type="unfinished">الرقم الهيدروجيني جديدة</translation>
     </message>
     <message>
-      <source>Delete Ph</source>
-      <translation type="unfinished">حذف الرقم الهيدروجيني</translation>
+        <source>Delete Ph</source>
+        <translation type="unfinished">حذف الرقم الهيدروجيني</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Weapons_WizardPage</name>
     <message>
-      <source>Warning</source>
-      <translation type="unfinished">تحذير</translation>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
     </message>
     <message>
-      <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
-      <translation type="unfinished">الأسلحة والذخيرة غير متوافقة (مباشر/غير مباشر). الرجاء تعديل الخيارات الخاصة بك.</translation>
+        <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
+        <translation type="unfinished">الأسلحة والذخيرة غير متوافقة (مباشر/غير مباشر). الرجاء تعديل الخيارات الخاصة بك.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_WeatherFireEffects_Table</name>
     <message>
-      <source>Weather</source>
-      <translation type="unfinished">الطقس</translation>
+        <source>Weather</source>
+        <translation type="unfinished">الطقس</translation>
     </message>
     <message>
-      <source>Heat decrease rate</source>
-      <translation type="unfinished">معدل انخفاض الحرارة</translation>
+        <source>Heat decrease rate</source>
+        <translation type="unfinished">معدل انخفاض الحرارة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Wizard</name>
     <message>
-      <source>Name</source>
-      <translation type="unfinished">الاسم</translation>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-      <source>Create new</source>
-      <translation type="unfinished">إنشاء جديد</translation>
+        <source>Create new</source>
+        <translation type="unfinished">إنشاء جديد</translation>
     </message>
     <message>
-      <source>Create a copy of:</source>
-      <translation type="unfinished">قم بإنشاء نسخة من:</translation>
+        <source>Create a copy of:</source>
+        <translation type="unfinished">قم بإنشاء نسخة من:</translation>
     </message>
     <message>
-      <source>Unable to create</source>
-      <translation type="unfinished">غير قادر على إنشاء</translation>
+        <source>Unable to create</source>
+        <translation type="unfinished">غير قادر على إنشاء</translation>
     </message>
     <message>
-      <source>The provided name is either empty or already in use, please pick another one.</source>
-      <translation type="unfinished">هو اسم المقدمة أما فارغة أو الفعل قيد الاستخدام، يرجى اختيار واحد آخر.</translation>
+        <source>The provided name is either empty or already in use, please pick another one.</source>
+        <translation type="unfinished">هو اسم المقدمة أما فارغة أو الفعل قيد الاستخدام، يرجى اختيار واحد آخر.</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Wizard_Default</name>
     <message>
-      <source>%1: Creation of a new element</source>
-      <translation type="unfinished">%1: إنشاء عنصر جديد</translation>
+        <source>%1: Creation of a new element</source>
+        <translation type="unfinished">%1: إنشاء عنصر جديد</translation>
     </message>
     <message>
-      <source>Creation helper</source>
-      <translation type="unfinished">مساعد إنشاء</translation>
+        <source>Creation helper</source>
+        <translation type="unfinished">مساعد إنشاء</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ADN_Workspace</name>
     <message>
-      <source>Loading GUI...</source>
-      <translation type="unfinished">تحميل واجهة المستخدم الرسومية...</translation>
+        <source>Loading GUI...</source>
+        <translation type="unfinished">تحميل واجهة المستخدم الرسومية...</translation>
     </message>
     <message>
-      <source>GUI loaded</source>
-      <translation type="unfinished">تحميل واجهة المستخدم الرسومية</translation>
+        <source>GUI loaded</source>
+        <translation type="unfinished">تحميل واجهة المستخدم الرسومية</translation>
     </message>
     <message>
-      <source>Reseting project...</source>
-      <translation type="unfinished">مشروع الإعادة...</translation>
+        <source>Reseting project...</source>
+        <translation type="unfinished">مشروع الإعادة...</translation>
     </message>
     <message>
-      <source>Unloading: %1...</source>
-      <translation type="unfinished">تفريغ: %1...</translation>
+        <source>Unloading: %1...</source>
+        <translation type="unfinished">تفريغ: %1...</translation>
     </message>
     <message>
-      <source>Project reseted</source>
-      <translation type="unfinished">المشروع reseted</translation>
+        <source>Project reseted</source>
+        <translation type="unfinished">المشروع reseted</translation>
     </message>
     <message>
-      <source>Loading project...</source>
-      <translation type="unfinished">تحميل المشروع...</translation>
+        <source>Loading project...</source>
+        <translation type="unfinished">تحميل المشروع...</translation>
     </message>
     <message>
-      <source>Loading: %1...</source>
-      <translation type="unfinished">التحميل: %1...</translation>
+        <source>Loading: %1...</source>
+        <translation type="unfinished">التحميل: %1...</translation>
     </message>
     <message>
-      <source>Sword Adaptation Tool - Saving Errors</source>
-      <translation type="unfinished">السيف أداة التكيف--إنقاذ أخطاء</translation>
+        <source>Sword Adaptation Tool - Saving Errors</source>
+        <translation type="unfinished">السيف أداة التكيف--إنقاذ أخطاء</translation>
     </message>
     <message>
-      <source>Error(s) have been encountered during saving of project </source>
-      <translation type="unfinished">قد تم مصادفة خطأ (أخطاء) أثناء الحفظ للمشروع</translation>
+        <source>Error(s) have been encountered during saving of project </source>
+        <translation type="unfinished">قد تم مصادفة خطأ (أخطاء) أثناء الحفظ للمشروع</translation>
     </message>
     <message>
-      <source>&lt;p&gt;- Unable to save %s : file is write protected&lt;/p&gt;</source>
-      <translation type="unfinished">&lt;p&gt;-غير قادر على حفظ % s: هو ملف محمي ضد الكتابة&lt;/p&gt;</translation>
+        <source>&lt;p&gt;- Unable to save %s : file is write protected&lt;/p&gt;</source>
+        <translation type="unfinished">&lt;p&gt;-غير قادر على حفظ % s: هو ملف محمي ضد الكتابة&lt;/p&gt;</translation>
     </message>
     <message>
-      <source>Saving project...</source>
-      <translation type="unfinished">حفظ المشروع...</translation>
+        <source>Saving project...</source>
+        <translation type="unfinished">حفظ المشروع...</translation>
     </message>
     <message>
-      <source>ADN - Data export</source>
-      <translation type="unfinished">ADN-تصدير البيانات</translation>
+        <source>ADN - Data export</source>
+        <translation type="unfinished">ADN-تصدير البيانات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>ActiveProtections_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Equipment - Invalid amunition '%1/%2'</source>
-      <translation type="unfinished">معدات-أمونيتيون غير صالح '%1/%2'</translation>
+        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
+        <translation type="unfinished">معدات-أمونيتيون غير صالح &apos;%1/%2&apos;</translation>
     </message>
     <message>
-      <source>Active Protection</source>
-      <translation type="unfinished">الحماية النشطة</translation>
+        <source>Active Protection</source>
+        <translation type="unfinished">الحماية النشطة</translation>
     </message>
     <message>
-      <source>Active protection '%1' - Invalid ammunition type '%2'</source>
-      <translation type="unfinished">الحماية النشطة '%1'--نوع الذخيرة غير صالح '%2'</translation>
+        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
+        <translation type="unfinished">الحماية النشطة &apos;%1&apos;--نوع الذخيرة غير صالح &apos;%2&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>AiEngine_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
-      <translation type="unfinished">المرجع مؤشرات-إدارة مؤشر الترابط-غير صالح أهمية تأثير قيمة (يجب أن تكون &gt; = 0 و&lt;= 100)&gt;&lt;/= 100)&gt;</translation>
+        <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
+        <translation type="unfinished">المرجع مؤشرات-إدارة مؤشر الترابط-غير صالح أهمية تأثير قيمة (يجب أن تكون &gt; = 0 و&lt;= 100)&gt;&lt;/= 100)&gt;</translation>
     </message>
     <message>
-      <source>Op. Indicators - Thread management - Invalid operational state effect value (must be &gt;=0 and &lt;= 100)</source>
-      <translation type="unfinished">قيمة تأثير غير صالح الدولة التنفيذية مؤشرات-إدارة مؤشر الترابط-المرجع (يجب أن تكون &gt; = 0 و&lt;= 100)&gt;&lt;/= 100)&gt;</translation>
+        <source>Op. Indicators - Thread management - Invalid operational state effect value (must be &gt;=0 and &lt;= 100)</source>
+        <translation type="unfinished">قيمة تأثير غير صالح الدولة التنفيذية مؤشرات-إدارة مؤشر الترابط-المرجع (يجب أن تكون &gt; = 0 و&lt;= 100)&gt;&lt;/= 100)&gt;</translation>
     </message>
     <message>
-      <source>Op. Indicators - Thread management - Invalid neutralization state effect value (must be &gt;=0 and &lt;= 100)</source>
-      <translation type="unfinished">المرجع مؤشرات-إدارة مؤشر الترابط-تحييد غير صالح الدولة تأثير قيمة (يجب أن تكون &gt; = 0 و&lt;= 100)&gt;&lt;/= 100)&gt;</translation>
+        <source>Op. Indicators - Thread management - Invalid neutralization state effect value (must be &gt;=0 and &lt;= 100)</source>
+        <translation type="unfinished">المرجع مؤشرات-إدارة مؤشر الترابط-تحييد غير صالح الدولة تأثير قيمة (يجب أن تكون &gt; = 0 و&lt;= 100)&gt;&lt;/= 100)&gt;</translation>
     </message>
     <message>
-      <source>Op. Indicators - Op. state computation - Invalid equipment weight sum (must be &gt;=0 and &lt;= 1)</source>
-      <translation type="unfinished">المرجع المؤشرات-حساب الدولة المرجع-معدات غير صالحة مجموع الوزن (يجب أن تكون &gt; = 0 و&lt;= 1)&gt;&lt;/= 1)&gt;</translation>
+        <source>Op. Indicators - Op. state computation - Invalid equipment weight sum (must be &gt;=0 and &lt;= 1)</source>
+        <translation type="unfinished">المرجع المؤشرات-حساب الدولة المرجع-معدات غير صالحة مجموع الوزن (يجب أن تكون &gt; = 0 و&lt;= 1)&gt;&lt;/= 1)&gt;</translation>
     </message>
     <message>
-      <source>Op. Indicators - Op. state computation - Invalid threshold (must be &gt;=0 and &lt;= 1)</source>
-      <translation type="unfinished">المرجع المؤشرات-حساب الدولة المرجع-عتبة غير صالح (يجب أن تكون &gt; = 0 و&lt;= 1)&gt;&lt;/= 1)&gt;</translation>
+        <source>Op. Indicators - Op. state computation - Invalid threshold (must be &gt;=0 and &lt;= 1)</source>
+        <translation type="unfinished">المرجع المؤشرات-حساب الدولة المرجع-عتبة غير صالح (يجب أن تكون &gt; = 0 و&lt;= 1)&gt;&lt;/= 1)&gt;</translation>
     </message>
     <message>
-      <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
-      <translation type="unfinished">المرجع المؤشرات-حساب الدولة المرجع-الطاقم غير صالح الدولة الوزن (يجب أن تكون &gt; = 0 و&lt;= 1)&gt;&lt;/= 1)&gt;</translation>
+        <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
+        <translation type="unfinished">المرجع المؤشرات-حساب الدولة المرجع-الطاقم غير صالح الدولة الوزن (يجب أن تكون &gt; = 0 و&lt;= 1)&gt;&lt;/= 1)&gt;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Application</name>
     <message>
-      <source>SWORD</source>
-      <translation type="unfinished">السيف</translation>
+        <source>SWORD</source>
+        <translation type="unfinished">السيف</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Automata_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Automat - Invalid unit type '%1'</source>
-      <translation type="unfinished">[اوتومت]-نوع الوحدة غير صالح '%1'</translation>
+        <source>Automat - Invalid unit type &apos;%1&apos;</source>
+        <translation type="unfinished">[اوتومت]-نوع الوحدة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Automat - Invalid doctrine model '%1'</source>
-      <translation type="unfinished">[اوتومت]-نموذج نظرية غير صالح '%1'</translation>
+        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
+        <translation type="unfinished">[اوتومت]-نموذج نظرية غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Breakdown_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Breakdowns - Invalid part '%1'</source>
-      <translation type="unfinished">أعطال-جزء غير صالح '%1'</translation>
+        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
+        <translation type="unfinished">أعطال-جزء غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>New breakdown</source>
-      <translation type="unfinished">انهيار جديد</translation>
+        <source>New breakdown</source>
+        <translation type="unfinished">انهيار جديد</translation>
     </message>
     <message>
-      <source>Breakdowns - Invalid breakdown type '%1'</source>
-      <translation type="unfinished">اكتب أعطال-انهيار غير صالح '%1'</translation>
+        <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
+        <translation type="unfinished">اكتب أعطال-انهيار غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Logistic supply system - Invalid supply convoy type '%1'</source>
-      <translation type="unfinished">نظام الإمداد اللوجستي-نوع قافلة إمدادات غير صالح '%1'</translation>
+        <source>Logistic supply system - Invalid supply convoy type &apos;%1&apos;</source>
+        <translation type="unfinished">نظام الإمداد اللوجستي-نوع قافلة إمدادات غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Categories_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Categories - Duplicated volume type name '%1'</source>
-      <translation type="unfinished">فئات-اسم نوع وحدة التخزين المكررة '%1'</translation>
+        <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
+        <translation type="unfinished">فئات-اسم نوع وحدة التخزين المكررة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Categories - Duplicated resource nature type name '%1'</source>
-      <translation type="unfinished">فئات-اسم نوع المورد المكررة الطبيعة '%1'</translation>
+        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
+        <translation type="unfinished">فئات-اسم نوع المورد المكررة الطبيعة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Categories - Duplicated resource logistic category '%1'</source>
-      <translation type="unfinished">فئات-ازدواجية الموارد اللوجستية الفئة '%1'</translation>
+        <source>Categories - Duplicated resource logistic category &apos;%1&apos;</source>
+        <translation type="unfinished">فئات-ازدواجية الموارد اللوجستية الفئة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Categories - Duplicated volume type names</source>
-      <translation type="unfinished">فئات-أسماء نوع وحدة التخزين المكررة</translation>
+        <source>Categories - Duplicated volume type names</source>
+        <translation type="unfinished">فئات-أسماء نوع وحدة التخزين المكررة</translation>
     </message>
     <message>
-      <source>Categories - Invalid volume type name</source>
-      <translation type="unfinished">فئات-اسم نوع وحدة التخزين غير صحيحة</translation>
+        <source>Categories - Invalid volume type name</source>
+        <translation type="unfinished">فئات-اسم نوع وحدة التخزين غير صحيحة</translation>
     </message>
     <message>
-      <source>Categories - Duplicated armor type names</source>
-      <translation type="unfinished">فئات-أسماء أنواع الدروع المكررة</translation>
+        <source>Categories - Duplicated armor type names</source>
+        <translation type="unfinished">فئات-أسماء أنواع الدروع المكررة</translation>
     </message>
     <message>
-      <source>Categories - Duplicated resource nature names</source>
-      <translation type="unfinished">فئات-أسماء طبيعة الموارد المكررة</translation>
+        <source>Categories - Duplicated resource nature names</source>
+        <translation type="unfinished">فئات-أسماء طبيعة الموارد المكررة</translation>
     </message>
     <message>
-      <source>Categories - Invalid resource nature</source>
-      <translation type="unfinished">فئات-طبيعة المورد غير صحيح</translation>
+        <source>Categories - Invalid resource nature</source>
+        <translation type="unfinished">فئات-طبيعة المورد غير صحيح</translation>
     </message>
     <message>
-      <source>Categories - Duplicated logistic resource category</source>
-      <translation type="unfinished">فئات-تكرار فئة الموارد اللوجستية</translation>
+        <source>Categories - Duplicated logistic resource category</source>
+        <translation type="unfinished">فئات-تكرار فئة الموارد اللوجستية</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Composante_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Equipment - Invalid resource nature '%1'</source>
-      <translation type="unfinished">معدات-طبيعة المورد غير صحيحة '%1'</translation>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-طبيعة المورد غير صحيحة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid breakdown type '%1'</source>
-      <translation type="unfinished">معدات-انهيار غير صالح نوع '%1'</translation>
+        <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-انهيار غير صالح نوع &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment '%1' - Invalid breakdown data : sum != 100</source>
-      <translation type="unfinished">معدات '%1'--البيانات توزيعاً غير صالحة: sum! = 100</translation>
+        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
+        <translation type="unfinished">معدات &apos;%1&apos;--البيانات توزيعاً غير صالحة: sum! = 100</translation>
     </message>
     <message>
-      <source>Equipment - Invalid sensor type '%1'</source>
-      <translation type="unfinished">معدات-نوع استشعار غير صالح '%1'</translation>
+        <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع استشعار غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid radar type '%1'</source>
-      <translation type="unfinished">معدات-نوع الرادار غير صالح '%1'</translation>
+        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع الرادار غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid weapon system '%1/%2'</source>
-      <translation type="unfinished">معدات-منظومة سلاح غير صالح '%1/%2'</translation>
+        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
+        <translation type="unfinished">معدات-منظومة سلاح غير صالح &apos;%1/%2&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid active protection type '%1'</source>
-      <translation type="unfinished">معدات-نوع الحماية النشطة غير صالح '%1'</translation>
+        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع الحماية النشطة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid resource type '%1'</source>
-      <translation type="unfinished">معدات-نوع المورد غير صالحة '%1'</translation>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid object type '%1'</source>
-      <translation type="unfinished">معدات-نوع كائن غير صالح '%1'</translation>
+        <source>Equipment - Invalid object type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع كائن غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid activty '%1'</source>
-      <translation type="unfinished">معدات-المنشأة غير صالح '%1'</translation>
+        <source>Equipment - Invalid activty &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-المنشأة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid armor and/or volume</source>
-      <translation type="unfinished">معدات-الدروع غير صحيحة و/أو وحدة التخزين</translation>
+        <source>Equipment - Invalid armor and/or volume</source>
+        <translation type="unfinished">معدات-الدروع غير صحيحة و/أو وحدة التخزين</translation>
     </message>
     <message>
-      <source>Missing breakdown</source>
-      <translation type="unfinished">انهيار مفقود</translation>
+        <source>Missing breakdown</source>
+        <translation type="unfinished">انهيار مفقود</translation>
     </message>
     <message>
-      <source>Equipment - Shall contain at least one breakdown for </source>
-      <translation type="unfinished">المعدات-يجب أن يتضمن على الأقل واحد من انهيار</translation>
+        <source>Equipment - Shall contain at least one breakdown for </source>
+        <translation type="unfinished">المعدات-يجب أن يتضمن على الأقل واحد من انهيار</translation>
     </message>
     <message>
-      <source>Do you want to save anyway ?</source>
-      <translation type="unfinished">هل تريد حفظ على أية حال؟</translation>
+        <source>Do you want to save anyway ?</source>
+        <translation type="unfinished">هل تريد حفظ على أية حال؟</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Composantes_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Equipment - Invalid terrain type '%1'</source>
-      <translation type="unfinished">معدات-نوع التضاريس غير صالح '%1'</translation>
+        <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع التضاريس غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Equipment_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Equipment - Invalid resource nature '%1'</source>
-      <translation type="unfinished">معدات-طبيعة المورد غير صحيحة '%1'</translation>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-طبيعة المورد غير صحيحة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Equipment - Invalid resource logistic supply class '%1'</source>
-      <translation type="unfinished">معدات-فئة الإمداد اللوجستي المورد غير صالحة '%1'</translation>
+        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-فئة الإمداد اللوجستي المورد غير صالحة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Object type - Invalid object '%1'</source>
-      <translation type="unfinished">نوع الكائن-كائن غير صالح '%1'</translation>
+        <source>Object type - Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished">نوع الكائن-كائن غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Health_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Logistic medical system - Invalid wound type '%1'</source>
-      <translation type="unfinished">النظام الطبي السوقي-صالح الجرح النوع '%1'</translation>
+        <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished">النظام الطبي السوقي-صالح الجرح النوع &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Models_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Doctrine models - Invalid frag order '%1'</source>
-      <translation type="unfinished">نماذج نظرية-frag غير صالحة من أجل '%1'</translation>
+        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
+        <translation type="unfinished">نماذج نظرية-frag غير صالحة من أجل &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Doctrine models - Invalid mission '%1'</source>
-      <translation type="unfinished">نماذج نظرية-البعثة غير صالح '%1'</translation>
+        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
+        <translation type="unfinished">نماذج نظرية-البعثة غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>NBC_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>NBC - Wound '%1' data &lt; 0 or &gt; 1</source>
-      <translation type="unfinished">أن بي سي--البيانات '%1' الجرح &lt; 0="" or=""&gt; 1</translation>
+        <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation type="unfinished">أن بي سي--البيانات &apos;%1&apos; الجرح &lt; 0=&quot;&quot; or=&quot;&quot;&gt; 1</translation>
     </message>
     <message>
-      <source>NBC - Invalid wound type '%1'</source>
-      <translation type="unfinished">أن بي سي--نوع الجرح غير صالح '%1'</translation>
+        <source>NBC - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished">أن بي سي--نوع الجرح غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>NBC - Agent '%1' - Poisoning effect data sum &lt; 100</source>
-      <translation type="unfinished">أن بي سي--وكيل '%1'-تسمم أثر البيانات المبلغ&lt; 100&gt;&lt;/ 100&gt;</translation>
+        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
+        <translation type="unfinished">أن بي سي--وكيل &apos;%1&apos;-تسمم أثر البيانات المبلغ&lt; 100&gt;&lt;/ 100&gt;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Object_Data</name>
     <message>
-      <source>Flood - Injuries data sum &gt; 100</source>
-      <translation type="unfinished">الفيضانات-جمع بيانات الإصابات &gt; 100</translation>
+        <source>Flood - Injuries data sum &gt; 100</source>
+        <translation type="unfinished">الفيضانات-جمع بيانات الإصابات &gt; 100</translation>
     </message>
     <message>
-      <source>Flood - Wound '%1' data &lt; 0 or &gt; 1</source>
-      <translation type="unfinished">الفيضانات--البيانات '%1' الجرح &lt; 0="" or=""&gt; 1</translation>
+        <source>Flood - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation type="unfinished">الفيضانات--البيانات &apos;%1&apos; الجرح &lt; 0=&quot;&quot; or=&quot;&quot;&gt; 1</translation>
     </message>
     <message>
-      <source>Flood - Invalid wound type '%1'</source>
-      <translation type="unfinished">الفيضانات-صالح الجرح النوع '%1'</translation>
+        <source>Flood - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished">الفيضانات-صالح الجرح النوع &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Objects - Invalid level '%1'</source>
-      <translation type="unfinished">الكائنات-صالح مستوى '%1'</translation>
+        <source>Objects - Invalid level &apos;%1&apos;</source>
+        <translation type="unfinished">الكائنات-صالح مستوى &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Crowd types - Invalid crowd attitude '%1'</source>
-      <translation type="unfinished">أنواع الحشد--موقف الحشد غير صالح '%1'</translation>
+        <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>
+        <translation type="unfinished">أنواع الحشد--موقف الحشد غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>People_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Population - Invalid resource '%1/%2'</source>
-      <translation type="unfinished">السكان-الموارد غير صالح '%1/%2'</translation>
+        <source>Population - Invalid resource &apos;%1/%2&apos;</source>
+        <translation type="unfinished">السكان-الموارد غير صالح &apos;%1/%2&apos;</translation>
     </message>
     <message>
-      <source>Population</source>
-      <translation type="unfinished">السكان</translation>
+        <source>Population</source>
+        <translation type="unfinished">السكان</translation>
     </message>
     <message>
-      <source>Invalid schedule - You have already an appointment on the same moment :</source>
-      <translation type="unfinished">الجدول غير صالح--لديك بالفعل تعيين في نفس اللحظة:</translation>
+        <source>Invalid schedule - You have already an appointment on the same moment :</source>
+        <translation type="unfinished">الجدول غير صالح--لديك بالفعل تعيين في نفس اللحظة:</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Population_Data</name>
     <message>
-      <source>Population types - Invalid Population type '%1'</source>
-      <translation type="unfinished">اكتب أنواع السكان-"السكان غير صالح" '%1'</translation>
+        <source>Population types - Invalid Population type &apos;%1&apos;</source>
+        <translation type="unfinished">اكتب أنواع السكان-&quot;السكان غير صالح&quot; &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Crowd</source>
-      <translation type="unfinished">الحشد</translation>
+        <source>Crowd</source>
+        <translation type="unfinished">الحشد</translation>
     </message>
     <message>
-      <source>Crowd types - Invalid behavior model '%1'</source>
-      <translation type="unfinished">أنواع الحشد--نموذج سلوك غير صالح '%1'</translation>
+        <source>Crowd types - Invalid behavior model &apos;%1&apos;</source>
+        <translation type="unfinished">أنواع الحشد--نموذج سلوك غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Crowd types - Invalid crowd attitude '%1'</source>
-      <translation type="unfinished">أنواع الحشد--موقف الحشد غير صالح '%1'</translation>
+        <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>
+        <translation type="unfinished">أنواع الحشد--موقف الحشد غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Crowd types - Invalid crowd 'rules of engagment' '%1'</source>
-      <translation type="unfinished">الحشد أنواع-الحشد غير صالح 'قواعد الخطبة' '%1'</translation>
+        <source>Crowd types - Invalid crowd &apos;rules of engagment&apos; &apos;%1&apos;</source>
+        <translation type="unfinished">الحشد أنواع-الحشد غير صالح &apos;قواعد الخطبة&apos; &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>QObject</name>
     <message>
-      <source>d</source>
-      <translation type="unfinished">د</translation>
+        <source>d</source>
+        <translation type="unfinished">د</translation>
     </message>
     <message>
-      <source>h</source>
-      <translation type="unfinished">ح</translation>
+        <source>h</source>
+        <translation type="unfinished">ح</translation>
     </message>
     <message>
-      <source>m</source>
-      <translation type="unfinished">m</translation>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
-      <source>s</source>
-      <translation type="unfinished">s</translation>
+        <source>s</source>
+        <translation type="unfinished">s</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Radars_Data</name>
     <message>
-      <source>Sensors - Invalid level '%1'</source>
-      <translation type="unfinished">أجهزة الاستشعار-صالح مستوى '%1'</translation>
+        <source>Sensors - Invalid level &apos;%1&apos;</source>
+        <translation type="unfinished">أجهزة الاستشعار-صالح مستوى &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>New special sensor</source>
-      <translation type="unfinished">أجهزة الاستشعار الخاصة الجديدة</translation>
+        <source>New special sensor</source>
+        <translation type="unfinished">أجهزة الاستشعار الخاصة الجديدة</translation>
     </message>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Sensors - Invalid radar type '%1'</source>
-      <translation type="unfinished">أجهزة الاستشعار--اكتب الرادار غير صالح '%1'</translation>
+        <source>Sensors - Invalid radar type &apos;%1&apos;</source>
+        <translation type="unfinished">أجهزة الاستشعار--اكتب الرادار غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Sensors - Invalid activity '%1'</source>
-      <translation type="unfinished">أجهزة الاستشعار-نشاط غير صالح '%1'</translation>
+        <source>Sensors - Invalid activity &apos;%1&apos;</source>
+        <translation type="unfinished">أجهزة الاستشعار-نشاط غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Sensor_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Sensors - Invalid stance '%1'</source>
-      <translation type="unfinished">أجهزة الاستشعار-موقف غير صالح '%1'</translation>
+        <source>Sensors - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished">أجهزة الاستشعار-موقف غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Sensors - Invalid object '%1'</source>
-      <translation type="unfinished">أجهزة الاستشعار--كائن غير صالح '%1'</translation>
+        <source>Sensors - Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished">أجهزة الاستشعار--كائن غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Sensors - Invalid unit volume '%1'</source>
-      <translation type="unfinished">أجهزة الاستشعار--حجم وحدة غير صالح '%1'</translation>
+        <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
+        <translation type="unfinished">أجهزة الاستشعار--حجم وحدة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Sensors - Invalid weather '%1'</source>
-      <translation type="unfinished">أجهزة الاستشعار--الطقس غير صالح '%1'</translation>
+        <source>Sensors - Invalid weather &apos;%1&apos;</source>
+        <translation type="unfinished">أجهزة الاستشعار--الطقس غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Supply_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Logistic supply system - Invalid unit '%1'</source>
-      <translation type="unfinished">نظام الإمداد اللوجستي-وحدة غير صالح '%1'</translation>
+        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
+        <translation type="unfinished">نظام الإمداد اللوجستي-وحدة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Logistic supply system - Invalid mission '%1'</source>
-      <translation type="unfinished">نظام الإمداد اللوجستي-البعثة غير صالح '%1'</translation>
+        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
+        <translation type="unfinished">نظام الإمداد اللوجستي-البعثة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Logistic supply system - Invalid unit type for convoy units</source>
-      <translation type="unfinished">نظام الإمداد اللوجستي-نوع الوحدة غير صالحة لوحدات القافلة</translation>
+        <source>Logistic supply system - Invalid unit type for convoy units</source>
+        <translation type="unfinished">نظام الإمداد اللوجستي-نوع الوحدة غير صالحة لوحدات القافلة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Units_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Unit types - Invalid equipment '%1'</source>
-      <translation type="unfinished">أنواع وحدة-معدات غير صالحة '%1'</translation>
+        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
+        <translation type="unfinished">أنواع وحدة-معدات غير صالحة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Unit has no crew in equipment '%1'</source>
-      <translation type="unfinished">وحدة قد لا الطاقم في المعدات '%1'</translation>
+        <source>Unit has no crew in equipment &apos;%1&apos;</source>
+        <translation type="unfinished">وحدة قد لا الطاقم في المعدات &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Unit - Invalid resource logistic supply class '%1'</source>
-      <translation type="unfinished">وحدة-فئة الإمداد اللوجستي المورد غير صالحة '%1'</translation>
+        <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
+        <translation type="unfinished">وحدة-فئة الإمداد اللوجستي المورد غير صالحة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Units</source>
-      <translation type="unfinished">وحدات</translation>
+        <source>Units</source>
+        <translation type="unfinished">وحدات</translation>
     </message>
     <message>
-      <source>Unit types - Invalid stance '%1'</source>
-      <translation type="unfinished">أنواع وحدة-موقف غير صالح '%1'</translation>
+        <source>Unit types - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished">أنواع وحدة-موقف غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Unit types - Invalid unit type '%1'</source>
-      <translation type="unfinished">اكتب أنواع الوحدة-وحدة غير صالح '%1'</translation>
+        <source>Unit types - Invalid unit type &apos;%1&apos;</source>
+        <translation type="unfinished">اكتب أنواع الوحدة-وحدة غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Unit types - Invalid doctrine model '%1'</source>
-      <translation type="unfinished">أنواع وحدة-نموذج المذهب غير صالح '%1'</translation>
+        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
+        <translation type="unfinished">أنواع وحدة-نموذج المذهب غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Unit types - Invalid hierarchical level '%1'</source>
-      <translation type="unfinished">أنواع وحدة-صالح مستوى التسلسل الهرمي '%1'</translation>
+        <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
+        <translation type="unfinished">أنواع وحدة-صالح مستوى التسلسل الهرمي &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Unit types - Invalid 'Atlas' attribute '%1'</source>
-      <translation type="unfinished">أنواع وحدة-غير صالح 'أطلس' السمة '%1'</translation>
+        <source>Unit types - Invalid &apos;Atlas&apos; attribute &apos;%1&apos;</source>
+        <translation type="unfinished">أنواع وحدة-غير صالح &apos;أطلس&apos; السمة &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Unit types - Invalid crossing height '%1'</source>
-      <translation type="unfinished">أنواع وحدة-الارتفاع عبور غير صالح '%1'</translation>
+        <source>Unit types - Invalid crossing height &apos;%1&apos;</source>
+        <translation type="unfinished">أنواع وحدة-الارتفاع عبور غير صالح &apos;%1&apos;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Urban_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Facade - Duplicated material type name '%1'</source>
-      <translation type="unfinished">الواجهة-نوع المواد المكررة اسم '%1'</translation>
+        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
+        <translation type="unfinished">الواجهة-نوع المواد المكررة اسم &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Material - Duplicated volume type names</source>
-      <translation type="unfinished">مادة-أسماء نوع وحدة التخزين المكررة</translation>
+        <source>Material - Duplicated volume type names</source>
+        <translation type="unfinished">مادة-أسماء نوع وحدة التخزين المكررة</translation>
     </message>
     <message>
-      <source>Facade - Invalid volume type name</source>
-      <translation type="unfinished">الواجهة-اسم نوع وحدة التخزين غير صحيحة</translation>
+        <source>Facade - Invalid volume type name</source>
+        <translation type="unfinished">الواجهة-اسم نوع وحدة التخزين غير صحيحة</translation>
     </message>
     <message>
-      <source>Material attribute is empty for '%1' template.</source>
-      <translation type="unfinished">السمة المادية فارغ للقالب '%1'.</translation>
+        <source>Material attribute is empty for &apos;%1&apos; template.</source>
+        <translation type="unfinished">السمة المادية فارغ للقالب &apos;%1&apos;.</translation>
     </message>
     <message>
-      <source>RoofShape attribute is empty for '%1' template.</source>
-      <translation type="unfinished">السمة روفشابي فارغ للقالب '%1'.</translation>
+        <source>RoofShape attribute is empty for &apos;%1&apos; template.</source>
+        <translation type="unfinished">السمة روفشابي فارغ للقالب &apos;%1&apos;.</translation>
     </message>
     <message>
-      <source>RoofShape - Invalid roofShape type name</source>
-      <translation type="unfinished">روفشابي-اسم نوع روفشابي غير صالحة</translation>
+        <source>RoofShape - Invalid roofShape type name</source>
+        <translation type="unfinished">روفشابي-اسم نوع روفشابي غير صالحة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>Weapons_Data</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Weapon systems '%1'/'%2' - Invalid launcher type</source>
-      <translation type="unfinished">سلاح نظم '%1'/'%2'--نوع المشغل غير صالحة</translation>
+        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
+        <translation type="unfinished">سلاح نظم &apos;%1&apos;/&apos;%2&apos;--نوع المشغل غير صالحة</translation>
     </message>
     <message>
-      <source>Weapon systems '%1'/'%2' - Invalid ammunition type</source>
-      <translation type="unfinished">سلاح نظم '%1'/'%2'--نوع الذخيرة غير صالحة</translation>
+        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
+        <translation type="unfinished">سلاح نظم &apos;%1&apos;/&apos;%2&apos;--نوع الذخيرة غير صالحة</translation>
     </message>
     <message>
-      <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
-      <translation type="unfinished">سلاح %1-النيران غير المباشرة-مجموعة ماكس&lt; min range min=""&gt;&lt;/ min range&gt;</translation>
+        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
+        <translation type="unfinished">سلاح %1-النيران غير المباشرة-مجموعة ماكس&lt; min range min=&quot;&quot;&gt;&lt;/ min range&gt;</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>helpers::ADN_UrbanModifiersTable</name>
     <message>
-      <source>Material</source>
-      <translation type="unfinished">المواد</translation>
+        <source>Material</source>
+        <translation type="unfinished">المواد</translation>
     </message>
     <message>
-      <source>Modifiers</source>
-      <translation type="unfinished">المعدلات</translation>
+        <source>Modifiers</source>
+        <translation type="unfinished">المعدلات</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>helpers::ArmorInfos</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Categories - Invalid armor type '%1'</source>
-      <translation type="unfinished">فئات--اكتب الدروع غير صالح '%1'</translation>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished">فئات--اكتب الدروع غير صالح &apos;%1&apos;</translation>
     </message>
     <message>
-      <source>Categories - Duplicated armor type name</source>
-      <translation type="unfinished">فئات-اسم نوع الدروع المكررة</translation>
+        <source>Categories - Duplicated armor type name</source>
+        <translation type="unfinished">فئات-اسم نوع الدروع المكررة</translation>
     </message>
-  </context>
-  <context>
+</context>
+<context>
     <name>helpers::AttritionEffectOnHuman</name>
     <message>
-      <source>Invalid data</source>
-      <translation type="unfinished">بيانات غير صالحة</translation>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
     </message>
     <message>
-      <source>Categories - Invalid equipment state '%1'</source>
-      <translation type="unfinished">فئات-المعدات غير صالح الدولة '%1'</translation>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation type="unfinished">فئات-المعدات غير صالح الدولة &apos;%1&apos;</translation>
     </message>
-  </context>
+</context>
 </TS>
