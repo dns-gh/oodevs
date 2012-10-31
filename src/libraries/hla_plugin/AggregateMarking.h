@@ -42,7 +42,7 @@ public:
         ::memcpy( markingData_, name.c_str(), length );
     }
 
-    RprMarking( const std::string& name, unsigned int identifier )
+    RprMarking( const std::string& name, unsigned long identifier )
         : markingType_( 1 ) // ASCII
     {
         std::string data = name;

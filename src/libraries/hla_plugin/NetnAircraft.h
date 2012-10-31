@@ -37,7 +37,8 @@ class NetnAircraft : public HlaObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NetnAircraft( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::vector< char >& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer );
+             NetnAircraft( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, 
+                 const std::vector< char >& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId );
              NetnAircraft( std::auto_ptr< HlaObject_ABC > vessel, const std::string& identifier, FOM_Serializer_ABC& fomSerializer );
     virtual ~NetnAircraft();
     //@}

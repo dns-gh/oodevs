@@ -59,4 +59,32 @@ namespace hla
     }
 }
 
+namespace plugins
+{
+namespace hla
+{
+    template < typename T >
+    struct VariableArray
+    {
+        typedef T ElemType;
+        template< typename Archive >
+        void Serialize( Archive& archive ) const
+        {
+            int32 size = static_cast< int32 >( list.size() );
+            archive << size
+                    << list;
+        }
+        template< typename Archive >
+        void Deserialize( Archive& archive )
+        {
+            int32 size = 0;
+            archive >> size;
+            list.resize( size );
+            archive >> list;
+        }
+        std::vector< ElemType > list;
+    };
+}
+}
+
 #endif // plugins_hla_SerializationTools_h

@@ -58,6 +58,10 @@ namespace hla
             serializer << static_cast< SizeType >( value_.size() );
             serializer << value_;
         }
+        const VectorType& operator*() const
+        {
+            return value_;
+        }
     private:
         VectorType value_;
     };

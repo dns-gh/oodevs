@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual AggregateMarking CreateAggregateMarking( const std::string& name, unsigned int identifier ) const = 0;
-    virtual Marking CreateMarking( const std::string& name, unsigned int identifier ) const = 0;
+    virtual AggregateMarking CreateAggregateMarking( const std::string& name, unsigned long identifier ) const = 0;
+    virtual Marking CreateMarking( const std::string& name, unsigned long identifier ) const = 0;
     //@}
 };
 

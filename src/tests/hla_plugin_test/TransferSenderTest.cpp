@@ -303,12 +303,13 @@ namespace hla
         {
             return lhs.federateName == rhs.federateName &&
                 lhs.transactionCounter == rhs.transactionCounter;
-        }
-        template < typename T >
-        bool operator==( const VariableArray< T >& lhs, const VariableArray< T >& rhs )
-        {
-            return lhs.list == rhs.list;
-        }
+        }    
+    }
+    
+    template < typename T >
+    bool operator==( const VariableArray< T >& lhs, const VariableArray< T >& rhs )
+    {
+        return lhs.list == rhs.list;
     }
 }
 }
@@ -371,7 +372,7 @@ namespace
         void CheckTransfer( const NETN_UUID& uniqueId, TransferSender_ABC::TransferType type, uint32 requestId )
         {
             interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
-            interactions::VariableArray< NETN_UUID > instances; instances.list.push_back( uniqueId );
+            VariableArray< NETN_UUID > instances; instances.list.push_back( uniqueId );
             
             mock::sequence s;
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "TransactionID" ), mock::any ).
@@ -384,7 +385,7 @@ namespace
                 calls( boost::bind( &NetnTransferFixture::CheckParameter< uint32 >, this, _1, _2, 
                                     type == TransferSender_ABC::E_EntityPull ? static_cast< uint32 >( interactions::TMR::Acquire ) : static_cast< uint32 >( interactions::TMR::Divest ) ) );
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "Instances" ), mock::any ).
-                calls( boost::bind( &NetnTransferFixture::CheckParameter< interactions::VariableArray< NETN_UUID > >, this, _1, _2, instances ) ); 
+                calls( boost::bind( &NetnTransferFixture::CheckParameter< VariableArray< NETN_UUID > >, this, _1, _2, instances ) ); 
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "Attributes" ), mock::any );
             MOCK_EXPECT( requestHandler->Visit ).once().in( s ).with( ::hla::ParameterIdentifier( "CapabilityType" ), mock::any ).
                 calls( boost::bind( &NetnTransferFixture::CheckParameter< uint32 >, this, _1, _2, static_cast< uint32 >( interactions::TMR::TotalTransfer ) ) ); 
@@ -410,9 +411,9 @@ namespace
             static const rpr::EntityIdentifier destFederate( 0xFFFF, 0xFFFF, 0xFFFF );
             
             interactions::TransactionId trId; trId.federateName = UnicodeString( federateName ); trId.transactionCounter = requestId;
-            interactions::VariableArray< NETN_UUID > instances; instances.list.push_back( MakeNetnUid( agent ) ) ;
-            interactions::VariableArray< UnicodeString > attributes;
-            interactions::VariableArray< interactions::AttributeValueStruct > attributeValues;
+            VariableArray< NETN_UUID > instances; instances.list.push_back( MakeNetnUid( agent ) ) ;
+            VariableArray< UnicodeString > attributes;
+            VariableArray< interactions::AttributeValueStruct > attributeValues;
 
             std::list< std::vector<int8> > bufVect;
             ::hla::Interaction_ABC::T_Parameters params;

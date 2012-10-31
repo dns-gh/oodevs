@@ -29,7 +29,8 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 GroundVehicle::GroundVehicle( Agent_ABC& agent, const std::string& name,
                               rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                              const rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId )
+                              const rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& /*entityIdentifierResolver*/, 
+                              FOM_Serializer_ABC& fomSerializer, const std::string& rtiId, unsigned long simId )
     :  identifier_( rtiId )
     , listeners_ ( new ObjectListenerComposite() )
     , fomSerializer_( fomSerializer )
@@ -39,7 +40,7 @@ GroundVehicle::GroundVehicle( Agent_ABC& agent, const std::string& name,
     attributes_->Register( "EntityType", type );
     attributes_->Register( "EntityIdentifier", entityId );
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
-    attributes_->Register( "Marking", markingFactory.CreateMarking( name, entityId.GetNumber() ) );
+    attributes_->Register( "Marking", markingFactory.CreateMarking( name, simId ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
     agent_.Register( *this );
 }

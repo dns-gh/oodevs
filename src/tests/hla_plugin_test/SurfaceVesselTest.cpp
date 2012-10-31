@@ -51,7 +51,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( agent,  "name", rpr::Friendly, rpr::EntityType(), factory, entityId, entityIdResolver, fomSerialization, "rtiId" )
+            : entity( agent,  "name", rpr::Friendly, rpr::EntityType(), factory, entityId, entityIdResolver, fomSerialization, "rtiId", 42 )
         {}
         SurfaceVessel entity;
     };

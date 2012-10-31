@@ -41,7 +41,7 @@ namespace
 SurfaceVessel::SurfaceVessel( Agent_ABC& agent, const std::string& name,
                               rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
                               const rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer,
-                              const std::string& rtiId )
+                              const std::string& rtiId, unsigned long simId )
     : identifier_( rtiId )
     , listeners_ ( new ObjectListenerComposite() )
     , agent_     ( &agent )
@@ -50,7 +50,7 @@ SurfaceVessel::SurfaceVessel( Agent_ABC& agent, const std::string& name,
     , attributesUpdater_( new AttributesUpdater(identifier_, *listeners_) )
     , force_ ( force )
     , type_ ( type )
-    , marking_( markingFactory.CreateMarking( name, entityId.GetNumber() ) )
+    , marking_( markingFactory.CreateMarking( name, simId ) )
     , entityIdentifier_( entityId )
     , spatial_ ( true, 0., 0., 0., 0., 0. )
 {

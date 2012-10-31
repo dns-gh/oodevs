@@ -41,7 +41,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign,
-                     const std::vector< char >& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer );
+                     const std::vector< char >& uniqueIdentifier, const std::string& symbol, FOM_Serializer_ABC& fomSerializer,
+                     const std::string& rtiId );
              NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, const std::string& identifier, FOM_Serializer_ABC& fomSerializer );
     virtual ~NetnAggregate();
     //@}

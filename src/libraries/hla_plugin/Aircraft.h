@@ -56,7 +56,8 @@ public:
     //@{
              Aircraft( Agent_ABC& agent, const std::string& name,
                             rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory,
-                            const rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer, const std::string& rtiId );
+                            const rpr::EntityIdentifier& entityId, EntityIdentifierResolver_ABC& entityIdentifierResolver, 
+                            FOM_Serializer_ABC& fomSerializer, const std::string& rtiId, unsigned long simId );
              Aircraft( const std::string& identifier, EntityIdentifierResolver_ABC& entityIdentifierResolver, FOM_Serializer_ABC& fomSerializer );
     virtual ~Aircraft();
     //@}

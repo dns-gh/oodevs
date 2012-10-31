@@ -36,7 +36,7 @@ MarkingFactory::~MarkingFactory()
 // Name: MarkingFactory::CreateAggregateMarking
 // Created: SLI 2011-11-07
 // -----------------------------------------------------------------------------
-AggregateMarking MarkingFactory::CreateAggregateMarking( const std::string& name, unsigned int identifier ) const
+AggregateMarking MarkingFactory::CreateAggregateMarking( const std::string& name, unsigned long identifier ) const
 {
     return addIdentifier_ ? AggregateMarking( name, identifier ) : AggregateMarking( name );
 }
@@ -45,7 +45,7 @@ AggregateMarking MarkingFactory::CreateAggregateMarking( const std::string& name
 // Name: MarkingFactory::CreateMarking
 // Created: SLI 2011-11-07
 // -----------------------------------------------------------------------------
-Marking MarkingFactory::CreateMarking( const std::string& name, unsigned int identifier ) const
+Marking MarkingFactory::CreateMarking( const std::string& name, unsigned long identifier ) const
 {
     return addIdentifier_ ? Marking( name, identifier ) : Marking( name );
 }
