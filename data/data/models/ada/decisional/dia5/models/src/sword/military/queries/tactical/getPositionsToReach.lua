@@ -17,11 +17,15 @@ queryImplementation "getPositionsToReach"
                 objectPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), scaledObject )
                 position = CreateKnowledge( sword.military.world.Point, objectPosition )
             else
-                position = element:getMyPosition() -- reaching element
+                if not element:isValid() then -- element is not valid yet
+                    meKnowledge:RC( eRC_InvalidTarget )
+                else
+                    position = element:getMyPosition() -- reaching element
+                    if position:isReachingFor( element ) then
+                        newResult[ #newResult + 1 ] = position
+                    end
+                end -- cas des BU non traficable par exemple
             end
-            if position:isReachingFor( element ) then
-                newResult[ #newResult + 1 ] = position
-            end -- cas des BU non traficable par exemple
         end
 
         -- -------------------------------------------------------------------------------- 
