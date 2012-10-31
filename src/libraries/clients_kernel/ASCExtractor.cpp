@@ -155,19 +155,6 @@ geometry::Rectangle2d ASCExtractor::GenerateExtent( double left, double bottom, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ASCExtractor::GenerateTile
-// Created: LGY 2012-10-09
-// -----------------------------------------------------------------------------
-geometry::Rectangle2d ASCExtractor::GenerateTile( int x, int y, int sizeX, int sizeY )
-{
-    double heighttop = y * pixelSize_.Y();
-    double heightbottom = ( y + sizeY ) * pixelSize_.Y();
-    double widthmin = x * pixelSize_.X();
-    double widthmax = ( x + sizeX ) * pixelSize_.X();
-    return GenerateExtent( origin_.X() + widthmin, origin_.Y() + heightbottom, origin_.X() + widthmax, origin_.Y() + heighttop );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ASCExtractor::Project
 // Created: LGY 2012-10-10
 // -----------------------------------------------------------------------------

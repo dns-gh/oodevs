@@ -55,7 +55,6 @@ public:
 private:
     //! @name Helpers
     //@{
-    geometry::Rectangle2d GenerateTile( int x, int y, int sizeX, int sizeY );
     void Project( const geometry::Point2d& point, double& rLatitudeInDegrees, double& rLongitudeInDegrees );
     void ExtractData();
     //@}
