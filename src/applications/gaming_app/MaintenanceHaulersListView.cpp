@@ -48,7 +48,7 @@ void MaintenanceHaulersListView::NotifyUpdated( const kernel::MaintenanceStates_
     if( ShouldUpdate( a ) )
     {
         ResizeModelOnNewContent( static_cast< int >( a.GetDispoHaulers().size() ) );
-        for( int i = 0; i < a.GetDispoHaulers().size(); ++i )
+        for( unsigned int i = 0; i < a.GetDispoHaulers().size(); ++i )
         {
             model_.item( i, 0 )->setText( QString( a.GetDispoHaulers()[ i ].type_->GetName().c_str() ) );
             model_.item( i, 1 )->setText( QString::number( a.GetDispoHaulers()[ i ].total_ ) );

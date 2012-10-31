@@ -47,7 +47,7 @@ void MedicalReliefAmbulancesListView::NotifyUpdated( const MedicalStates& a )
     if( ShouldUpdate( a ) )
     {
         ResizeModelOnNewContent( static_cast< int >( a.dispoReleveAmbulances_.size() ) );
-        for( int i = 0; i < a.dispoReleveAmbulances_.size(); ++i )
+        for( unsigned int i = 0; i < a.dispoReleveAmbulances_.size(); ++i )
         {
             model_.item( i, 0 )->setText( QString( a.dispoReleveAmbulances_[ i ].type_->GetName().c_str() ) );
             model_.item( i, 1 )->setText( QString::number( a.dispoReleveAmbulances_[ i ].total_ ) );

@@ -46,7 +46,7 @@ void MedicalDoctorsListView::NotifyUpdated( const MedicalStates& a )
     if( ShouldUpdate( a ) )
     {
         ResizeModelOnNewContent( static_cast< int >( a.dispoDoctors_.size() ) );
-        for( int i = 0; i < a.dispoDoctors_.size(); ++i )
+        for( unsigned int i = 0; i < a.dispoDoctors_.size(); ++i )
         {
             model_.item( i, 0 )->setText( QString( a.dispoDoctors_[ i ].type_->GetName().c_str() ) );
             model_.item( i, 1 )->setText( QString::number( a.dispoDoctors_[ i ].total_ ) );
