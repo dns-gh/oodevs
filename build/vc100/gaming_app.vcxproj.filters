@@ -837,9 +837,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticStatusWidgets.h">
       <Filter>Source Files\Panels\Logistic\status</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.h">
-      <Filter>Source Files\Panels\Logistic\consigns</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticAvailabilitiesListView_ABC.h">
       <Filter>Source Files\Panels\Logistic\lists</Filter>
     </ClInclude>
@@ -1471,6 +1468,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\LogisticSupplyValuesTableWidget.h">
       <Filter>Source Files\Dialogs\Magic actions\Logistic\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.h">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

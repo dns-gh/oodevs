@@ -1326,7 +1326,14 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticStatusWidget_ABC.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticStatusWidgets.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.h" />
+    <CustomBuild Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticAvailabilitiesListView_ABC.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceHaulersListView.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceRepairersListView.h" />
