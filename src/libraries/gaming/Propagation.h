@@ -11,12 +11,9 @@
 #define Propagation_h
 
 #include <boost/noncopyable.hpp>
-#include <graphics/ElevationMap.h>
-#include <graphics/ElevationLayer.h>
-#include <graphics/ElevationFactory.h>
+#include <graphics/RGBATextureFactory.h>
 #include <graphics/TextureTree.h>
-#include <graphics/Visitor2d.h>
-#include <graphics/TextureVisitor_ABC.h>
+#include <map>
 
 namespace
 {
@@ -41,7 +38,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Propagation( const std::string& file, const std::string& projection,
-                          const kernel::CoordinateConverter_ABC& converter );
+                          const kernel::CoordinateConverter_ABC& converter,
+                          const std::map< double, QColor >& colors );
     virtual ~Propagation();
     //@}
 
@@ -55,10 +53,8 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     std::auto_ptr< kernel::ASCExtractor > pExtractor_;
-    std::auto_ptr< ElevationMap > pMap_;
-    std::auto_ptr< ElevationFactory > pFactory_;
+    std::auto_ptr< RGBATextureFactory > pFactory_;
     std::auto_ptr< TextureTree > pTree_;
-    std::auto_ptr< ColorFactory > pColor_;
     //@}
 };
 

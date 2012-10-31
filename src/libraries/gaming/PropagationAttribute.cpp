@@ -100,7 +100,7 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
             for( std::size_t i = 0; i < files.size(); ++i )
             {
                 bfs::path file( path_ / bfs::path( it->second.at( i ) ).filename() );
-                propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( file.string(), projection.string() , converter_ ) ) );
+                propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( file.string(), projection.string() , converter_, colors_ ) ) );
             }
             propagationFiles_.erase( it );
         }

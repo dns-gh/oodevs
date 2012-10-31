@@ -11,28 +11,12 @@
 #include "Propagation.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ASCExtractor.h"
-#include <boost/chrono.hpp>
+#include <graphics/Visitor2d.h>
+#include <graphics/TextureVisitor_ABC.h>
 
 namespace
 {
-    class ColorFactory : public ElevationColor_ABC
-    {
-    public:
-                 ColorFactory() {};
-        virtual ~ColorFactory() {};
 
-        virtual void SelectColor( short elevation, short max, unsigned char* color )
-        {
-            color[ 0 ] = 255 - unsigned char( float( elevation ) / float( max ) * 128 );
-            color[ 1 ] = 0;
-            color[ 2 ] = 0;
-            color[ 3 ] = elevation > 0 ? 255 : 0;
-        }
-        virtual bool IsTransparencyEnabled() const
-        {
-            return true;
-        }
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -40,18 +24,25 @@ namespace
 // Created: LGY 2012-10-26
 // -----------------------------------------------------------------------------
 Propagation::Propagation( const std::string& file, const std::string& projection,
-                          const kernel::CoordinateConverter_ABC& converter )
+                          const kernel::CoordinateConverter_ABC& converter,
+                          const std::map< double, QColor >& colors )
     : converter_ ( converter )
-    , pColor_    ( new ColorFactory() )
     , pExtractor_( new kernel::ASCExtractor( file, projection ) )
-    , pMap_      ( new ElevationMap( static_cast< std::size_t >( pExtractor_->GetCols() ),
-                                     static_cast< std::size_t >( pExtractor_->GetRows() ),
-                                     pExtractor_->GetPixelSize().X(),
-                                     &pExtractor_->GetValues()[0] ) )
-    , pFactory_  ( new ElevationFactory( *pMap_, *pColor_ ) )
-    , pTree_     ( new TextureTree( *pFactory_, pMap_->Width(), pMap_->Height() ) )
 {
-    // NOTHING
+    const kernel::ASCExtractor::T_Values& values = pExtractor_->GetValues();
+    std::vector< unsigned char > rgba( values.size() * 4 );
+    for( unsigned int i = 0; i < values.size(); ++i )
+    {
+        float value = values[ i ];
+        QColor color = colors.empty() ? Qt::green : colors.lower_bound( value )->second;
+        rgba[ 4 * i ] = static_cast< char >( color.red() );
+        rgba[ 4 * i + 1] = static_cast< char >(  color.green() );
+        rgba[ 4 * i + 2 ] = static_cast< char >( color.blue() );
+        rgba[ 4 * i + 3 ] = static_cast< char >( value > 0.f ? 255 : 0 );
+    }
+
+    pFactory_.reset( new RGBATextureFactory( &rgba[ 0 ], pExtractor_->GetCols(), pExtractor_->GetPixelSize().X() ) );
+    pTree_.reset( new TextureTree( *pFactory_, pExtractor_->GetCols(), pExtractor_->GetRows() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,8 +70,6 @@ namespace
             const geometry::Rectangle2d& extent = extractor_.GetExtent();
             const geometry::Rectangle2f project( converter_.ConvertFromGeo( extent.BottomLeft() ),
                                                  converter_.ConvertFromGeo( extent.TopRight() ) );
-            glDisable ( GL_TEXTURE_GEN_S );
-            glDisable ( GL_TEXTURE_GEN_T );
             glBegin( GL_QUADS );
             glTexCoord2d( 0., 0. );
             glVertex2d( project.Left(), project.Top() );

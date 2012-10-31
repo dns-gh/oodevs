@@ -27,13 +27,6 @@ namespace
         return OGRCreateCoordinateTransformation( &oSourceSRS, &oTargetSRS );
     }
 
-    short ConvertData( double value, double max )
-    {
-        if( value == 0 )
-            return 0;
-        return static_cast< short >( value * std::numeric_limits< short >::max() / max );
-    }
-
     std::string ReadProjectionfile( const bfs::path& file )
     {
         std::string projection;
@@ -108,9 +101,7 @@ ASCExtractor::ASCExtractor( const std::string& file, const std::string& projecti
 ASCExtractor::~ASCExtractor()
 {
     if( pDataset_ )
-    {
         GDALClose( pDataset_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -136,22 +127,18 @@ void ASCExtractor::ExtractData()
                               origin_.X(), origin_.Y() );
 
     int size = ncols_ * nrows_;
-    std::vector< float > data( size );
     values_.resize( size );
 
-    pBand_->RasterIO( GF_Read, 0, 0, ncols_, nrows_, &data[ 0 ], ncols_, nrows_, GDT_Float32, 0, 0 );
+    pBand_->RasterIO( GF_Read, 0, 0, ncols_, nrows_, &values_[ 0 ], ncols_, nrows_, GDT_Float32, 0, 0 );
 
     for( int i = 0; i < size; ++i )
     {
-        float value = data[ i ];
+        float value = values_[ i ];
         if( value == noValueData_ )
-            data[ i ] = 0;
+            values_[ i ] = 0;
         else
             max_ = std::max< double >( max_, value );
     }
-
-    for( int i = 0; i < size; ++i )
-        values_[ i ] = ConvertData( data[ i ], max_ );
 }
 
 // -----------------------------------------------------------------------------

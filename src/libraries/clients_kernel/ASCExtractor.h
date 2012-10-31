@@ -29,7 +29,7 @@ namespace kernel
 class ASCExtractor : private boost::noncopyable
 {
 public:
-    typedef std::vector< short > T_Values;
+    typedef std::vector< float > T_Values;
 
     //! @name Constructors/Destructor
     //@{
