@@ -12,7 +12,6 @@
 #include "moc_TemplateListView.cpp"
 #include "preparation/HierarchyTemplate.h"
 #include "clients_gui/DragAndDropHelpers.h"
-#include "clients_gui/LongNameHelper.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <tools/XmlCrc32Signature.h>
@@ -53,11 +52,7 @@ void TemplateListView::CreateTemplate( const kernel::Entity_ABC& entity )
 {
     HierarchyTemplate* pTemplate = new HierarchyTemplate( agents_, formations_, entity, true, colorController_ );
     templates_.push_back( pTemplate );
-    std::string longName = gui::longname::GetEntityLongName( entity );
-    if( longName.empty() )
-        CreateItem( *pTemplate );
-    else
-        CreateItem( *pTemplate, QString::fromStdString( longName ) );
+    CreateItem( *pTemplate );
 }
 
 // -----------------------------------------------------------------------------
