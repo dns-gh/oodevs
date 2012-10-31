@@ -10,7 +10,8 @@
 #ifndef __MedicalReliefAmbulancesListView_h_
 #define __MedicalReliefAmbulancesListView_h_
 
-#include "LogisticAvailabilitiesListView_ABC.h"
+#include "ResourcesListView_ABC.h"
+#include "gaming/MedicalStates.h"
 
 // =============================================================================
 /** @class  MedicalReliefAmbulancesListView
@@ -18,12 +19,12 @@
 */
 // Created: SBO 2007-02-20
 // =============================================================================
-class MedicalReliefAmbulancesListView : public MedicalAvailabilitiesListView_ABC
+class MedicalReliefAmbulancesListView : public ResourcesListView_ABC< MedicalStates >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalReliefAmbulancesListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             MedicalReliefAmbulancesListView( QWidget* parent, kernel::Controllers& controllers );
     virtual ~MedicalReliefAmbulancesListView();
     //@}
 

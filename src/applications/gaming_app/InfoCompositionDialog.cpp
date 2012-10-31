@@ -21,16 +21,16 @@
 // Name: InfoCompositionDialog constructor
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
-InfoCompositionDialog::InfoCompositionDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+InfoCompositionDialog::InfoCompositionDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& /*factory*/ )
     : InfoDialog_Base( parent, tools::translate( "InfoCompositionDialog", "Composition" ) )
     , controllers_( controllers )
 {
     controllers_.Register( *this );
 
-    new EquipmentsListView( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Equipments" ), RootWidget() ), controllers, factory );
-    new HumansListView    ( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Humans" ), RootWidget() ), controllers, factory );
-    new LendingsListView( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Lent equipment(s)" ), RootWidget() ), controllers, factory );
-    new BorrowingsListView( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Borrowed equipment(s)" ), RootWidget() ), controllers, factory );
+    new EquipmentsListView( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Equipments" ), RootWidget() ), controllers );
+    new HumansListView    ( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Humans" ), RootWidget() ), controllers );
+    new LendingsListView( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Lent equipment(s)" ), RootWidget() ), controllers );
+    new BorrowingsListView( new Q3HGroupBox( tools::translate( "InfoCompositionDialog", "Borrowed equipment(s)" ), RootWidget() ), controllers );
 }
 
 // -----------------------------------------------------------------------------

@@ -32,12 +32,12 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, Controllers& controllers, g
     tabs_->addTab( new LogisticConsignsWidget< LogSupplyConsign, LogSupplyConsigns >( tabs_, controllers, extractor ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
     
     Q3VBox* sqbox = new Q3VBox( tabs_ );
-    supplyStocksListView_ = new SupplyStocksListView( sqbox, controllers, factory );
+    supplyStocksListView_ = new SupplyStocksListView( sqbox, controllers );
     supplyQuotasWidget_ = new SupplyQuotasWidget( sqbox, controllers, factory );
     tabs_->addTab( sqbox, tools::translate( "InfoSupplyDialog", "Stocks && Quotas" ) );
 
     Q3VBox* tbox = new Q3VBox( tabs_ );
-    new SupplyTransportersListView( tbox, controllers, factory );
+    new SupplyTransportersListView( tbox, controllers );
     tabs_->addTab( tbox, tools::translate( "InfoSupplyDialog", "Transporters" ) );
     
     new SupplyStatusWidget( RootWidget(), controllers, factory );

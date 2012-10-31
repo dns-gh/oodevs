@@ -10,7 +10,8 @@
 #ifndef __SupplyTransportersListView_h_
 #define __SupplyTransportersListView_h_
 
-#include "LogisticAvailabilitiesListView_ABC.h"
+#include "ResourcesListView_ABC.h"
+#include "gaming/SupplyStates.h"
 
 // =============================================================================
 /** @class  SupplyTransportersListView
@@ -18,12 +19,12 @@
 */
 // Created: SBO 2007-02-20
 // =============================================================================
-class SupplyTransportersListView : public SupplyAvailabilitiesListView_ABC
+class SupplyTransportersListView : public ResourcesListView_ABC< SupplyStates >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyTransportersListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             SupplyTransportersListView( QWidget* parent, kernel::Controllers& controllers );
     virtual ~SupplyTransportersListView();
     //@}
 

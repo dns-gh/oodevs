@@ -16,13 +16,15 @@
 // Name: HumansListView constructor
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
-HumansListView::HumansListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : ResourcesListView_ABC< HumansListView, TroopsCompatibilityVersion >( parent, *this, controllers, factory )
+HumansListView::HumansListView( QWidget* parent, kernel::Controllers& controllers )
+    : ResourcesListView_ABC< TroopsCompatibilityVersion >( parent, controllers )
 {
-    AddColumn( tr( "Rank" ) )
-    .AddColumn( tr( "Officer" ) )
-    .AddColumn( tr( "Warrant-officer" ) )
-    .AddColumn( tr( "Private" ) );
+    QStringList list;
+    list.append( tr( "Rank" ) );
+    list.append( tr( "Officer" ) );
+    list.append( tr( "Warrant-officer" ) );
+    list.append( tr( "Private" ) );
+    model_.setHorizontalHeaderLabels( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,23 +37,21 @@ HumansListView::~HumansListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: HumansListView::Display
-// Created: SBO 2007-02-16
-// -----------------------------------------------------------------------------
-void HumansListView::Display( const Humans& humans, kernel::Displayer_ABC& displayer, gui::ValuedListItem* )
-{
-    displayer.Display( tr( "Rank" ), humans.state_ )
-             .Display( tr( "Officer" ), humans.officers_ )
-             .Display( tr( "Warrant-officer" ), humans.subOfficers_ )
-             .Display( tr( "Private" ), humans.troopers_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: HumansListView::NotifyUpdated
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
 void HumansListView::NotifyUpdated( const TroopsCompatibilityVersion& a )
 {
     if( ShouldUpdate( a ) )
-        DeleteTail( DisplayList( &*a.humans_, a.humans_ + kernel::eTroopHealthStateNbrStates ) );
+    {
+        int count = static_cast< int >( kernel::eTroopHealthStateNbrStates );
+        ResizeModelOnNewContent( count );
+        for( int i = 0; i < count; ++i )
+        {
+            model_.item( i, 0 )->setText( QString::number( a.humans_[ i ].state_ ) );
+            model_.item( i, 1 )->setText( QString::number( a.humans_[ i ].officers_ ) );
+            model_.item( i, 2 )->setText( QString::number( a.humans_[ i ].subOfficers_ ) );
+            model_.item( i, 3 )->setText( QString::number( a.humans_[ i ].troopers_ ) );
+        }
+    }
 }

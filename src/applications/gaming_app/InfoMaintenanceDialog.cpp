@@ -26,8 +26,8 @@ InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controlle
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     tabs->addTab( new LogisticConsignsWidget< LogMaintenanceConsign, LogMaintenanceConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMaintenanceDialog", "Consigns" ) );
     Q3VBox* box = new Q3VBox( tabs );
-    new MaintenanceHaulersListView( box, controllers, factory );
-    new MaintenanceRepairersListView( box, controllers, factory );
+    new MaintenanceHaulersListView( box, controllers );
+    new MaintenanceRepairersListView( box, controllers );
     tabs->addTab( box, tools::translate( "InfoMaintenanceDialog", "Equipment availabilities" ) );
     new MaintenanceStatusWidget( RootWidget(), controllers, factory );
 }

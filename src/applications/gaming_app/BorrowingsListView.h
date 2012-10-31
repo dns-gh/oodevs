@@ -14,36 +14,21 @@
 #include "gaming/Borrowings.h"
 #include "ResourcesListView_ABC.h"
 
-namespace kernel
-{
-    class Displayer_ABC;
-}
-
-namespace gui
-{
-    class ValuedListItem;
-}
-
 // =============================================================================
 /** @class  BorrowingsListView
     @brief  BorrowingsListView
 */
 // Created: SBO 2007-02-16
 // =============================================================================
-class BorrowingsListView : public ResourcesListView_ABC< BorrowingsListView, Borrowings >
+class BorrowingsListView : public ResourcesListView_ABC< Borrowings >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             BorrowingsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             BorrowingsListView( QWidget* parent, kernel::Controllers& controllers );
     virtual ~BorrowingsListView();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Display( const Loan& loan, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:

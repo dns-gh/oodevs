@@ -27,9 +27,9 @@ InfoMedicalDialog::InfoMedicalDialog( QWidget* parent, kernel::Controllers& cont
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     tabs->addTab( new LogisticConsignsWidget< LogMedicalConsign, LogMedicalConsigns >( tabs, controllers, extractor ), tools::translate( "InfoMedicalDialog", "Consigns" ) );
     Q3VBox* box = new Q3VBox( tabs );
-    new MedicalReliefAmbulancesListView( box, controllers, factory );
-    new MedicalCollectAmbulancesListView( box, controllers, factory );
-    new MedicalDoctorsListView( box, controllers, factory );
+    new MedicalReliefAmbulancesListView( box, controllers );
+    new MedicalCollectAmbulancesListView( box, controllers );
+    new MedicalDoctorsListView( box, controllers );
     tabs->addTab( box, tools::translate( "InfoMedicalDialog", "Equipment availabilities" ) );
     new MedicalStatusWidget( RootWidget(), controllers, factory );
 }

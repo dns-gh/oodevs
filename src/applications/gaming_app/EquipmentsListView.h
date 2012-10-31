@@ -14,36 +14,21 @@
 #include "gaming/Equipments.h"
 #include "ResourcesListView_ABC.h"
 
-namespace kernel
-{
-    class Displayer_ABC;
-}
-
-namespace gui
-{
-    class ValuedListItem;
-}
-
 // =============================================================================
 /** @class  EquipmentsListView
     @brief  EquipmentsListView
 */
 // Created: SBO 2007-02-16
 // =============================================================================
-class EquipmentsListView : public ResourcesListView_ABC< EquipmentsListView, Equipments >
+class EquipmentsListView : public ResourcesListView_ABC<  Equipments >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EquipmentsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             EquipmentsListView( QWidget* parent, kernel::Controllers& controllers );
     virtual ~EquipmentsListView();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Display( const Equipment& equipment, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:

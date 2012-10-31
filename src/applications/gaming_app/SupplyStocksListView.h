@@ -10,12 +10,14 @@
 #ifndef __SupplyStocksListView_h_
 #define __SupplyStocksListView_h_
 
-#include "LogisticAvailabilitiesListView_ABC.h"
-
 namespace kernel
 {
     class Entity_ABC;
 }
+#include "clients_kernel/Controllers.h"
+#include "ResourcesListView_ABC.h"
+#include "gaming/Dotation.h"
+#include "gaming/SupplyStates.h"
 
 // =============================================================================
 /** @class  SupplyStocksListView
@@ -23,12 +25,12 @@ namespace kernel
 */
 // Created: SBO 2007-02-20
 // =============================================================================
-class SupplyStocksListView : public SupplyAvailabilitiesListView_ABC
+class SupplyStocksListView : public ResourcesListView_ABC< SupplyStates >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStocksListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             SupplyStocksListView( QWidget* parent, kernel::Controllers& controllers );
     virtual ~SupplyStocksListView();
     //@}
 

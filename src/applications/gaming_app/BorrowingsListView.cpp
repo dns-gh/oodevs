@@ -10,17 +10,21 @@
 #include "gaming_app_pch.h"
 #include "BorrowingsListView.h"
 #include "moc_BorrowingsListView.cpp"
+#include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/Agent_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: BorrowingsListView constructor
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
-BorrowingsListView::BorrowingsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : ResourcesListView_ABC< BorrowingsListView, Borrowings >( parent, *this, controllers, factory )
+BorrowingsListView::BorrowingsListView( QWidget* parent, kernel::Controllers& controllers )
+    : ResourcesListView_ABC< Borrowings >( parent, controllers )
 {
-    AddColumn( tr( "Lender" ) )
-    .AddColumn( tr( "Equipment" ) )
-    .AddColumn( tr( "Quantity" ) );
+    QStringList list;
+    list.append( tr( "Lender" ) );
+    list.append( tr( "Equipment" ) );
+    list.append( tr( "Quantity" ) );
+    model_.setHorizontalHeaderLabels( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,22 +37,19 @@ BorrowingsListView::~BorrowingsListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: BorrowingsListView::Display
-// Created: SBO 2007-02-16
-// -----------------------------------------------------------------------------
-void BorrowingsListView::Display( const Loan& loan, kernel::Displayer_ABC& displayer, gui::ValuedListItem* )
-{
-    displayer.Display( QString(), loan.agent_ )
-             .Display( tr( "Equipment" ), loan.type_ )
-             .Display( tr( "Quantity" ), loan.quantity_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: BorrowingsListView::NotifyUpdated
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
 void BorrowingsListView::NotifyUpdated( const Borrowings& a )
 {
     if( ShouldUpdate( a ) )
-        DeleteTail( DisplayList( a.borrowings_.begin(), a.borrowings_.end() ) );
+    {
+        ResizeModelOnNewContent( static_cast< int >( a.borrowings_.size() ) );
+        for( int i = 0; i < a.borrowings_.size(); ++i )
+        {
+            model_.item( i, 0 )->setText( QString( a.borrowings_[ i ].type_->GetName().c_str() ) );
+            model_.item( i, 1 )->setText( QString( a.borrowings_[ i ].agent_->GetName() ) );
+            model_.item( i, 2 )->setText( QString::number( a.borrowings_[ i ].quantity_ ) );
+        }
+    }
 }

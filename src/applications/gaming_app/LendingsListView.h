@@ -30,20 +30,15 @@ namespace gui
 */
 // Created: SBO 2007-02-16
 // =============================================================================
-class LendingsListView : public ResourcesListView_ABC< LendingsListView, Lendings >
+class LendingsListView : public ResourcesListView_ABC< Lendings >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LendingsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             LendingsListView( QWidget* parent, kernel::Controllers& controllers );
     virtual ~LendingsListView();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Display( const Loan& loan, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:

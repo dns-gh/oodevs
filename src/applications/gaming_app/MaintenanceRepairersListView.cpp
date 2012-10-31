@@ -10,19 +10,23 @@
 #include "gaming_app_pch.h"
 #include "MaintenanceRepairersListView.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/Availability.h"
+#include "clients_kernel/EquipmentType.h"
 
 // -----------------------------------------------------------------------------
 // Name: MaintenanceRepairersListView constructor
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
-MaintenanceRepairersListView::MaintenanceRepairersListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : MaintenanceAvailabilitiesListView_ABC( parent, controllers, factory )
+MaintenanceRepairersListView::MaintenanceRepairersListView( QWidget* parent, kernel::Controllers& controllers )
+    : ResourcesListView_ABC< kernel::MaintenanceStates_ABC >( parent, controllers )
 {
-    AddColumn( tools::translate( "MaintenanceRepairersListView", "Repairers" ) )
-    .AddColumn( tools::translate( "MaintenanceRepairersListView", "Total" ) )
-    .AddColumn( tools::translate( "MaintenanceRepairersListView", "Available" ) )
-    .AddColumn( tools::translate( "MaintenanceRepairersListView", "Working" ) )
-    .AddColumn( tools::translate( "MaintenanceRepairersListView", "Resting" ) );
+    QStringList list;
+    list.append( tools::translate( "MaintenanceRepairersListView", "Repairers" ) );
+    list.append( tools::translate( "MaintenanceRepairersListView", "Total" ) );
+    list.append( tools::translate( "MaintenanceRepairersListView", "Available" ) );
+    list.append( tools::translate( "MaintenanceRepairersListView", "Working" ) );
+    list.append( tools::translate( "MaintenanceRepairersListView", "Resting" ) );
+    model_.setHorizontalHeaderLabels( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,5 +45,15 @@ MaintenanceRepairersListView::~MaintenanceRepairersListView()
 void MaintenanceRepairersListView::NotifyUpdated( const kernel::MaintenanceStates_ABC& a )
 {
     if( ShouldUpdate( a ) )
-        DeleteTail( DisplayList( a.GetDispoRepairers().begin(), a.GetDispoRepairers().end() ) );
+    {
+        ResizeModelOnNewContent( static_cast< int >( a.GetDispoRepairers().size() ) );
+        for( int i = 0; i < a.GetDispoHaulers().size(); ++i )
+        {
+            model_.item( i, 0 )->setText( QString( a.GetDispoRepairers()[ i ].type_->GetName().c_str() ) );
+            model_.item( i, 1 )->setText( QString::number( a.GetDispoRepairers()[ i ].total_ ) );
+            model_.item( i, 2 )->setText( QString::number( a.GetDispoRepairers()[ i ].available_ ) );
+            model_.item( i, 3 )->setText( QString::number( a.GetDispoRepairers()[ i ].atWork_ ) );
+            model_.item( i, 4 )->setText( QString::number( a.GetDispoRepairers()[ i ].atRest_ ) );
+        }
+    }
 }

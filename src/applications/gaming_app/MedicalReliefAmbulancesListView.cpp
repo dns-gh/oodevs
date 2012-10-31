@@ -10,19 +10,23 @@
 #include "gaming_app_pch.h"
 #include "MedicalReliefAmbulancesListView.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/EquipmentType.h"
 
 // -----------------------------------------------------------------------------
 // Name: MedicalReliefAmbulancesListView constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-MedicalReliefAmbulancesListView::MedicalReliefAmbulancesListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : MedicalAvailabilitiesListView_ABC( parent, controllers, factory )
+MedicalReliefAmbulancesListView::MedicalReliefAmbulancesListView( QWidget* parent, kernel::Controllers& controllers )
+    : ResourcesListView_ABC< MedicalStates >( parent, controllers )
 {
-    AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Relief ambulances" ) )
-    .AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Total" ) )
-    .AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Available" ) )
-    .AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Working" ) )
-    .AddColumn( tools::translate( "MedicalReliefAmbulancesListView", "Resting" ) );
+    QStringList list;
+    list.append( tools::translate( "MedicalReliefAmbulancesListView", "Relief ambulances" ) );
+    list.append( tools::translate( "MedicalReliefAmbulancesListView", "Total" ) );
+    list.append( tools::translate( "MedicalReliefAmbulancesListView", "Available" ) );
+    list.append( tools::translate( "MedicalReliefAmbulancesListView", "Working" ) );
+    list.append( tools::translate( "MedicalReliefAmbulancesListView", "Resting" ) );
+    model_.setHorizontalHeaderLabels( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,5 +45,15 @@ MedicalReliefAmbulancesListView::~MedicalReliefAmbulancesListView()
 void MedicalReliefAmbulancesListView::NotifyUpdated( const MedicalStates& a )
 {
     if( ShouldUpdate( a ) )
-        DeleteTail( DisplayList( a.dispoReleveAmbulances_.begin(), a.dispoReleveAmbulances_.end() ) );
+    {
+        ResizeModelOnNewContent( static_cast< int >( a.dispoReleveAmbulances_.size() ) );
+        for( int i = 0; i < a.dispoReleveAmbulances_.size(); ++i )
+        {
+            model_.item( i, 0 )->setText( QString( a.dispoReleveAmbulances_[ i ].type_->GetName().c_str() ) );
+            model_.item( i, 1 )->setText( QString::number( a.dispoReleveAmbulances_[ i ].total_ ) );
+            model_.item( i, 2 )->setText( QString::number( a.dispoReleveAmbulances_[ i ].available_ ) );
+            model_.item( i, 3 )->setText( QString::number( a.dispoReleveAmbulances_[ i ].atWork_ ) );
+            model_.item( i, 4 )->setText( QString::number( a.dispoReleveAmbulances_[ i ].atRest_ ) );
+        }
+    }
 }

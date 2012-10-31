@@ -27,12 +27,13 @@ using namespace logistic_helpers;
 // Name: SupplyStocksListView constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-SupplyStocksListView::SupplyStocksListView( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : SupplyAvailabilitiesListView_ABC( parent, controllers, factory )
+SupplyStocksListView::SupplyStocksListView( QWidget* parent, Controllers& controllers )
+    : ResourcesListView_ABC< SupplyStates >( parent, controllers )
 {
-    AddColumn( tools::translate( "SupplyStocksListView", "Stock" ) )
-    .AddColumn( tools::translate( "SupplyStocksListView", "Quantity" ) );
-    setColumnWidth( 0, 140 );
+    QStringList list;
+    list.append( tools::translate( "SupplyStocksListView", "Stock" ) );
+    list.append( tools::translate( "SupplyStocksListView", "Quantity" ) );
+    model_.setHorizontalHeaderLabels( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +51,16 @@ SupplyStocksListView::~SupplyStocksListView()
 // -----------------------------------------------------------------------------
 void SupplyStocksListView::NotifyUpdated( const tools::Resolver< Dotation >& dotations )
 {
-    DeleteTail( DisplayList( dotations.CreateIterator() ) );
+    ResizeModelOnNewContent( dotations.Count() );
+    int i = 0;
+    tools::Iterator< const Dotation& > iterator = dotations.CreateIterator();
+    while( iterator.HasMoreElements() )
+    {
+        const Dotation& dotation = iterator.NextElement();
+        model_.item( i, 0 )->setText( QString( dotation.type_->GetName().c_str() ) );
+        model_.item( i, 1 )->setText( QString::number( dotation.quantity_ ) );
+        ++i;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +70,7 @@ void SupplyStocksListView::NotifyUpdated( const tools::Resolver< Dotation >& dot
 void SupplyStocksListView::NotifyUpdated( const SupplyStates& supplyStates )
 {
     if( ShouldUpdate( supplyStates ) )
-        DeleteTail( DisplayList( supplyStates.CreateIterator() ) );
+        NotifyUpdated( static_cast< const tools::Resolver< Dotation >& >( supplyStates ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +96,7 @@ void SupplyStocksListView::NotifySelected( const Entity_ABC* entity )
     }
     else
         hide();
-    SupplyAvailabilitiesListView_ABC::UpdateSelected( entity );
+    ResourcesListView_ABC::UpdateSelected( entity );
 }
 
 // -----------------------------------------------------------------------------

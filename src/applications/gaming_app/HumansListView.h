@@ -13,16 +13,6 @@
 #include "gaming/TroopsCompatibilityVersion.h"
 #include "ResourcesListView_ABC.h"
 
-namespace kernel
-{
-    class Displayer_ABC;
-}
-
-namespace gui
-{
-    class ValuedListItem;
-}
-
 class Humans;
 
 // =============================================================================
@@ -31,20 +21,15 @@ class Humans;
 */
 // Created: SBO 2007-02-16
 // =============================================================================
-class HumansListView : public ResourcesListView_ABC< HumansListView, TroopsCompatibilityVersion >
+class HumansListView : public ResourcesListView_ABC< TroopsCompatibilityVersion >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             HumansListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             HumansListView( QWidget* parent, kernel::Controllers& controllers );
     virtual ~HumansListView();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Display( const Humans& humans, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:

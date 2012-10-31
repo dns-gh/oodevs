@@ -10,16 +10,19 @@
 #include "gaming_app_pch.h"
 #include "DotationsListView.h"
 #include "moc_DotationsListView.cpp"
+#include "clients_kernel/DotationType.h"
 
 // -----------------------------------------------------------------------------
 // Name: DotationsListView constructor
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
-DotationsListView::DotationsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : DotationsListViewBase( parent, *this, controllers, factory )
+DotationsListView::DotationsListView( QWidget* parent, kernel::Controllers& controllers )
+    : ResourcesListView_ABC< kernel::Dotations_ABC >( parent, controllers )
 {
-    AddColumn( tr( "Resource" ) )
-    .AddColumn( tr( "Quantity" ) );
+    QStringList list;
+    list.append( tr( "Resource" ) );
+    list.append( tr( "Quantity" ) );
+    model_.setHorizontalHeaderLabels( list );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,16 +32,6 @@ DotationsListView::DotationsListView( QWidget* parent, kernel::Controllers& cont
 DotationsListView::~DotationsListView()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DotationsListView::Display
-// Created: SBO 2007-02-16
-// -----------------------------------------------------------------------------
-void DotationsListView::Display( const Dotation& dotation, kernel::Displayer_ABC& displayer, gui::ValuedListItem* )
-{
-    displayer.Display( tr( "Resource" ), dotation.type_ )
-             .Display( tr( "Quantity" ), dotation.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +45,16 @@ void DotationsListView::NotifyUpdated( const kernel::Dotations_ABC& a )
         const Dotations* dotations = dynamic_cast< const Dotations* >( &a );
         if( !dotations )
             throw std::runtime_error( __FUNCTION__ ": Unhandled Dotations_ABC" );
-        DeleteTail( DisplayList( dotations->CreateIterator() ) );
+
+        ResizeModelOnNewContent( dotations->Count() );
+        int i = 0;
+        tools::Iterator< const Dotation& > iterator = dotations->CreateIterator();
+        while( iterator.HasMoreElements() )
+        {
+            const Dotation& dotation = iterator.NextElement();
+            model_.item( i, 0 )->setText( QString( dotation.type_->GetName().c_str() ) );
+            model_.item( i, 1 )->setText( QString::number( dotation.quantity_ ) );
+            ++i;
+        }
     }
 }

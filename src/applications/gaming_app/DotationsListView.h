@@ -14,39 +14,21 @@
 #include "gaming/Dotations.h"
 #include "ResourcesListView_ABC.h"
 
-namespace kernel
-{
-    class Displayer_ABC;
-}
-
-namespace gui
-{
-    class ValuedListItem;
-}
-
-class DotationsListView;
-typedef ResourcesListView_ABC< DotationsListView, kernel::Dotations_ABC > DotationsListViewBase;
-
 // =============================================================================
 /** @class  DotationsListView
     @brief  DotationsListView
 */
 // Created: SBO 2007-02-16
 // =============================================================================
-class DotationsListView : public DotationsListViewBase
+class DotationsListView : public ResourcesListView_ABC< kernel::Dotations_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationsListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             DotationsListView( QWidget* parent, kernel::Controllers& controllers );
     virtual ~DotationsListView();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Display( const Dotation& dotation, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:

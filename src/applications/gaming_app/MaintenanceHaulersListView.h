@@ -10,7 +10,8 @@
 #ifndef __MaintenanceHaulersListView_h_
 #define __MaintenanceHaulersListView_h_
 
-#include "LogisticAvailabilitiesListView_ABC.h"
+#include "ResourcesListView_ABC.h"
+#include "clients_kernel/MaintenanceStates_ABC.h"
 
 // =============================================================================
 /** @class  MaintenanceHaulersListView
@@ -18,12 +19,12 @@
 */
 // Created: SBO 2007-02-19
 // =============================================================================
-class MaintenanceHaulersListView : public MaintenanceAvailabilitiesListView_ABC
+class MaintenanceHaulersListView : public ResourcesListView_ABC< kernel::MaintenanceStates_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceHaulersListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             MaintenanceHaulersListView( QWidget* parent, kernel::Controllers& controllers );
     virtual ~MaintenanceHaulersListView();
     //@}
 
