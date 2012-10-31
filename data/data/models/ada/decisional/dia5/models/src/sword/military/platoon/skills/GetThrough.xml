@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.GetThrough" source-version="1.0.0">
+	<parameters>
+		<parameter name="crossingSite">
+			<description>The prepared crossing site to use.</description>
+			<type>
+				<class name="directia.core.Object"/>
+			</type>
+		</parameter>
+		<parameter name="meetingPoint">
+			<description>The final destination beyond the water obstacle.</description>
+			<type>
+				<class name="sword.military.knowledge.decisional.Reachable"/>
+			</type>
+		</parameter>
+	</parameters>
+	<modifiers/>
+	<links>
+		<link name="moveToward" skill="sword.military.platoon.skills.primitives.MoveToward"/>
+	</links>
+</skill>

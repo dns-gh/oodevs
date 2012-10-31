@@ -1,0 +1,31 @@
+rootnode {
+    connections = { skill.links.moveToward },
+
+    failed = function( self ) -- return by moveTo
+        Feedback( self.feedbacks.done, additionalParams )
+    end,
+    done = function( self ) -- return by moveTo
+        myself.arrived = true
+    end,
+    
+
+    create = function( self )
+        myself.arrived = false
+    end,
+    
+    activate = function( self )
+        local Activate = Activate
+        local positions
+        if not myself.arrived then
+         positions = sword.military.queries.tactical.getPositionsToReach[ "execute" ]( { elementsToReach = {self.params.crossingSite} } )
+             Activate( skill.links.moveToward, 1, { entities = {self.params.crossingSite} , 
+                                                   positions = positions , 
+                                                   pathType = eTypeItiMouvement } )
+        else
+         positions = sword.military.queries.tactical.getPositionsToReach[ "execute" ]( { elementsToReach = {self.params.meetingPoint} } )
+            Activate( skill.links.moveToward, 1, { entities = {self.params.meetingPoint} , 
+                                                   positions = positions , 
+                                                   pathType = eTypeItiMouvement } )
+        end
+    end,
+}

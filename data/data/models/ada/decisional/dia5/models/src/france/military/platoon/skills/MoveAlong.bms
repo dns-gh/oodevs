@@ -31,6 +31,9 @@ rootnode
         end
         myself.isEscorted = false
     end,
+    failed = function( self, params, additionalParams )
+        self:done()
+    end,
 
     create = function( self )
         self.nextTargetIndex = 1

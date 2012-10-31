@@ -13,6 +13,9 @@ rootnode
     done = function( self, params, additionalParams )
         Feedback( self.feedbacks.done, additionalParams )
     end,
+    failed = function( self, params, additionalParams )
+        Feedback( self.feedbacks.done, additionalParams )
+    end,
 
     -- -------------------------------------------------------------------------------- 
     -- Init:get positions to reach the entities issued as paramters

@@ -6,6 +6,7 @@
 rootnode
 {
     connections = { skill.nodes.MoveTowardElement },
+    feedbacks = { "failed" },
 
     -- --------------------------------------------------------------------------------
     -- Main effect is reached: send feedback with the position occupied, when
@@ -16,7 +17,7 @@ rootnode
     end,
 
     notReached = function( self, params, additionalParams )
-        Feedback( self.feedbacks.done, { reason = additionalParams.reason, element = additionalParams.element } )
+        Feedback( self.feedbacks.failed, { reason = additionalParams.reason, element = additionalParams.element } )
     end,
     
     create = function( self )
