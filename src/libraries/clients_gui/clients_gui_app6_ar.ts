@@ -1,835 +1,835 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS[]>
 <TS version="2.0" language="ar" sourcelanguage="en">
-<context>
+  <context>
     <name>models::app6</name>
     <message>
-        <source>undefined</source>
-        <translation type="unfinished">non défini</translation>
+      <source>undefined</source>
+      <translation type="unfinished">غير معرف</translation>
     </message>
     <message>
-        <source>type</source>
-        <translation type="unfinished">type</translation>
+      <source>type</source>
+      <translation type="unfinished">نوع</translation>
     </message>
     <message>
-        <source>agent</source>
-        <translation type="unfinished">agent</translation>
+      <source>agent</source>
+      <translation type="unfinished">وكيل</translation>
     </message>
     <message>
-        <source>category</source>
-        <translation type="unfinished">catégorie</translation>
+      <source>category</source>
+      <translation type="unfinished">الفئة</translation>
     </message>
     <message>
-        <source>combat</source>
-        <translation type="unfinished">combat</translation>
+      <source>combat</source>
+      <translation type="unfinished">مكافحة</translation>
     </message>
     <message>
-        <source>weapon</source>
-        <translation type="unfinished">arme</translation>
+      <source>weapon</source>
+      <translation type="unfinished">سلاح</translation>
     </message>
     <message>
-        <source>air defense</source>
-        <translation type="unfinished">défense anti-aérienne</translation>
+      <source>air defense</source>
+      <translation type="unfinished">الدفاع الجوي</translation>
     </message>
     <message>
-        <source>capacity</source>
-        <translation type="unfinished">capacité</translation>
+      <source>capacity</source>
+      <translation type="unfinished">القدرات</translation>
     </message>
     <message>
-        <source>composite</source>
-        <translation type="unfinished">composite</translation>
+      <source>composite</source>
+      <translation type="unfinished">مركب</translation>
     </message>
     <message>
-        <source>gun unit</source>
-        <translation type="unfinished">canon</translation>
+      <source>gun unit</source>
+      <translation type="unfinished">وحدة البندقية</translation>
     </message>
     <message>
-        <source>specialization</source>
-        <translation type="unfinished">spécialisation</translation>
+      <source>specialization</source>
+      <translation type="unfinished">التخصص</translation>
     </message>
     <message>
-        <source>qualifier</source>
-        <translation type="unfinished">catégorie</translation>
+      <source>qualifier</source>
+      <translation type="unfinished">مؤهل</translation>
     </message>
     <message>
-        <source>heavy</source>
-        <translation type="unfinished">lourd</translation>
+      <source>heavy</source>
+      <translation type="unfinished">الثقيلة</translation>
     </message>
     <message>
-        <source>light</source>
-        <translation type="unfinished">léger</translation>
+      <source>light</source>
+      <translation type="unfinished">الضوء</translation>
     </message>
     <message>
-        <source>medium</source>
-        <translation type="unfinished">moyen</translation>
+      <source>medium</source>
+      <translation type="unfinished">المتوسطة</translation>
     </message>
     <message>
-        <source>short range</source>
-        <translation type="unfinished">courte portée</translation>
+      <source>short range</source>
+      <translation type="unfinished">قصير المدى</translation>
     </message>
     <message>
-        <source>h_mad</source>
-        <translation type="unfinished">moyenne et longue portée</translation>
+      <source>h_mad</source>
+      <translation type="unfinished">h_mad</translation>
     </message>
     <message>
-        <source>motorized avenger</source>
-        <translation type="unfinished">motorisé (avenger)</translation>
+      <source>motorized avenger</source>
+      <translation type="unfinished">يجهز المنتقم</translation>
     </message>
     <message>
-        <source>targeting unit</source>
-        <translation type="unfinished">unité de ciblage</translation>
+      <source>targeting unit</source>
+      <translation type="unfinished">استهداف وحدة</translation>
     </message>
     <message>
-        <source>theater missile defense unit</source>
-        <translation type="unfinished">unité missile dsa de théâtre</translation>
+      <source>theater missile defense unit</source>
+      <translation type="unfinished">وحدة الدفاع الصاروخي المسرح</translation>
     </message>
     <message>
-        <source>anti armor</source>
-        <translation type="unfinished">antichar</translation>
+      <source>anti armor</source>
+      <translation type="unfinished">المضادة للدروع</translation>
     </message>
     <message>
-        <source>mobility</source>
-        <translation type="unfinished">mobilité</translation>
+      <source>mobility</source>
+      <translation type="unfinished">التنقل</translation>
     </message>
     <message>
-        <source>air assault</source>
-        <translation type="unfinished">assaut par air</translation>
+      <source>air assault</source>
+      <translation type="unfinished">الهجوم الجوي</translation>
     </message>
     <message>
-        <source>airborne</source>
-        <translation type="unfinished">aéroporté</translation>
+      <source>airborne</source>
+      <translation type="unfinished">المحمولة جوا</translation>
     </message>
     <message>
-        <source>arctic</source>
-        <translation type="unfinished">arctique</translation>
+      <source>arctic</source>
+      <translation type="unfinished">القطب الشمالي</translation>
     </message>
     <message>
-        <source>armored</source>
-        <translation type="unfinished">blindé</translation>
+      <source>armored</source>
+      <translation type="unfinished">المدرعة</translation>
     </message>
     <message>
-        <source>track</source>
-        <translation type="unfinished">à chenilles</translation>
+      <source>track</source>
+      <translation type="unfinished">المسار</translation>
     </message>
     <message>
-        <source>tracked</source>
-        <translation type="unfinished">à chenilles</translation>
+      <source>tracked</source>
+      <translation type="unfinished">تعقب</translation>
     </message>
     <message>
-        <source>wheeled</source>
-        <translation type="unfinished">à roues</translation>
+      <source>wheeled</source>
+      <translation type="unfinished">ذات العجلات</translation>
     </message>
     <message>
-        <source>dismounted</source>
-        <translation type="unfinished">débarqué</translation>
+      <source>dismounted</source>
+      <translation type="unfinished">إلغاء تحميل</translation>
     </message>
     <message>
-        <source>motorized</source>
-        <translation type="unfinished">motorisé</translation>
+      <source>motorized</source>
+      <translation type="unfinished">المزودة بمحركات</translation>
     </message>
     <message>
-        <source>mountain</source>
-        <translation type="unfinished">de montagne</translation>
+      <source>mountain</source>
+      <translation type="unfinished">الجبال</translation>
     </message>
     <message>
-        <source>armor</source>
-        <translation type="unfinished">blindé</translation>
+      <source>armor</source>
+      <translation type="unfinished">درع</translation>
     </message>
     <message>
-        <source>amphibious</source>
-        <translation type="unfinished">amphibie</translation>
+      <source>amphibious</source>
+      <translation type="unfinished">برمائية</translation>
     </message>
     <message>
-        <source>recovery</source>
-        <translation type="unfinished">dépannage</translation>
+      <source>recovery</source>
+      <translation type="unfinished">الاسترداد</translation>
     </message>
     <message>
-        <source>fixed_wing</source>
-        <translation type="unfinished">voilure fixe</translation>
+      <source>fixed_wing</source>
+      <translation type="unfinished">fixed_wing</translation>
     </message>
     <message>
-        <source>fixed wing</source>
-        <translation type="unfinished">voilure fixe</translation>
+      <source>fixed wing</source>
+      <translation type="unfinished">الأجنحة الثابتة</translation>
     </message>
     <message>
-        <source>attack</source>
-        <translation type="unfinished">attaque</translation>
+      <source>attack</source>
+      <translation type="unfinished">الهجوم</translation>
     </message>
     <message>
-        <source>recon</source>
-        <translation type="unfinished">reconnaissance</translation>
+      <source>recon</source>
+      <translation type="unfinished">ريكون</translation>
     </message>
     <message>
-        <source>utility</source>
-        <translation type="unfinished">utilitaire</translation>
+      <source>utility</source>
+      <translation type="unfinished">الأداة المساعدة</translation>
     </message>
     <message>
-        <source>rotary_wing</source>
-        <translation type="unfinished">voilure tournante</translation>
+      <source>rotary_wing</source>
+      <translation type="unfinished">rotary_wing</translation>
     </message>
     <message>
-        <source>rotary wing</source>
-        <translation type="unfinished">voilure tournante</translation>
+      <source>rotary wing</source>
+      <translation type="unfinished">دوارة</translation>
     </message>
     <message>
-        <source>antisubmarine warfare</source>
-        <translation type="unfinished">lutte anti-sous-marin</translation>
+      <source>antisubmarine warfare</source>
+      <translation type="unfinished">حرب الغواصات</translation>
     </message>
     <message>
-        <source>medevac</source>
-        <translation type="unfinished">evacuation sanitaire</translation>
+      <source>medevac</source>
+      <translation type="unfinished">الإجلاء الطبي</translation>
     </message>
     <message>
-        <source>mine countermeasure</source>
-        <translation type="unfinished">lutte contre les mines</translation>
+      <source>mine countermeasure</source>
+      <translation type="unfinished">مضاد الألغام</translation>
     </message>
     <message>
-        <source>scout</source>
-        <translation type="unfinished">reconnaissance</translation>
+      <source>scout</source>
+      <translation type="unfinished">الكشفية</translation>
     </message>
     <message>
-        <source>search and rescue</source>
-        <translation type="unfinished">recherche et sauvetage</translation>
+      <source>search and rescue</source>
+      <translation type="unfinished">البحث والإنقاذ</translation>
     </message>
     <message>
-        <source>unmanned aerial vehicle</source>
-        <translation type="unfinished">u.a.v(drone)</translation>
+      <source>unmanned aerial vehicle</source>
+      <translation type="unfinished">المركبات الجوية بدون طيار</translation>
     </message>
     <message>
-        <source>vertical short takeoff and landing</source>
-        <translation type="unfinished">décollage et poser vertical/court</translation>
+      <source>vertical short takeoff and landing</source>
+      <translation type="unfinished">عمودي الإقلاع القصير والهبوط</translation>
     </message>
     <message>
-        <source>engineer</source>
-        <translation type="unfinished">génie</translation>
+      <source>engineer</source>
+      <translation type="unfinished">مهندس</translation>
     </message>
     <message>
-        <source>mechanized</source>
-        <translation type="unfinished">mécanisé</translation>
+      <source>mechanized</source>
+      <translation type="unfinished">ميكانيكية</translation>
     </message>
     <message>
-        <source>artillery survey</source>
-        <translation type="unfinished">observation</translation>
+      <source>artillery survey</source>
+      <translation type="unfinished">مسح المدفعية</translation>
     </message>
     <message>
-        <source>field artillery</source>
-        <translation type="unfinished">artillerie sol - sol</translation>
+      <source>field artillery</source>
+      <translation type="unfinished">مدفعية الميدان</translation>
     </message>
     <message>
-        <source>howiltzer gun</source>
-        <translation type="unfinished">obusier/canon</translation>
+      <source>howiltzer gun</source>
+      <translation type="unfinished">بندقية هولتزر</translation>
     </message>
     <message>
-        <source>self-propelled</source>
-        <translation type="unfinished">autoporteur</translation>
+      <source>self-propelled</source>
+      <translation type="unfinished">ذاتية الحركة</translation>
     </message>
     <message>
-        <source>self_propelled</source>
-        <translation type="unfinished">autoporteur</translation>
+      <source>self_propelled</source>
+      <translation type="unfinished">self_propelled</translation>
     </message>
     <message>
-        <source>meteorological</source>
-        <translation type="unfinished">météorologie</translation>
+      <source>meteorological</source>
+      <translation type="unfinished">الأرصاد الجوية</translation>
     </message>
     <message>
-        <source>mortar</source>
-        <translation type="unfinished">mortier</translation>
+      <source>mortar</source>
+      <translation type="unfinished">قذائف هاون</translation>
     </message>
     <message>
-        <source>self-propelled track</source>
-        <translation type="unfinished">auto-moteur à chenilles</translation>
+      <source>self-propelled track</source>
+      <translation type="unfinished">المسار ذاتية الحركة</translation>
     </message>
     <message>
-        <source>self-propelled tracked</source>
-        <translation type="unfinished">auto-moteur à chenilles</translation>
+      <source>self-propelled tracked</source>
+      <translation type="unfinished">ذاتية الدفع المتعقبة</translation>
     </message>
     <message>
-        <source>self-propelled wheeled</source>
-        <translation type="unfinished">auto-moteur à roues</translation>
+      <source>self-propelled wheeled</source>
+      <translation type="unfinished">ذاتية الدفع ذات عجلات</translation>
     </message>
     <message>
-        <source>towed</source>
-        <translation type="unfinished">tracté</translation>
+      <source>towed</source>
+      <translation type="unfinished">مقطور</translation>
     </message>
     <message>
-        <source>rocket</source>
-        <translation type="unfinished">roquette</translation>
+      <source>rocket</source>
+      <translation type="unfinished">صاروخ</translation>
     </message>
     <message>
-        <source>single rocket launcher</source>
-        <translation type="unfinished">lance roquette simple</translation>
+      <source>single rocket launcher</source>
+      <translation type="unfinished">قاذفة صواريخ واحدة</translation>
     </message>
     <message>
-        <source>multi rocket launcher</source>
-        <translation type="unfinished">lance roquette multiple</translation>
+      <source>multi rocket launcher</source>
+      <translation type="unfinished">قاذفة صواريخ متعددة</translation>
     </message>
     <message>
-        <source>truck</source>
-        <translation type="unfinished">vhl tout terrain</translation>
+      <source>truck</source>
+      <translation type="unfinished">شاحنة</translation>
     </message>
     <message>
-        <source>target acquisition</source>
-        <translation type="unfinished">acquisition d&apos;objectifs</translation>
+      <source>target acquisition</source>
+      <translation type="unfinished">الاستحواذ على الهدف</translation>
     </message>
     <message>
-        <source>sound</source>
-        <translation type="unfinished">son</translation>
+      <source>sound</source>
+      <translation type="unfinished">الصوت</translation>
     </message>
     <message>
-        <source>infantry</source>
-        <translation type="unfinished">infanterie</translation>
+      <source>infantry</source>
+      <translation type="unfinished">المشاة</translation>
     </message>
     <message>
-        <source>infantry fighting vehicle</source>
-        <translation type="unfinished">vbci</translation>
+      <source>infantry fighting vehicle</source>
+      <translation type="unfinished">مركبة قتال مشاة</translation>
     </message>
     <message>
-        <source>internal security forces</source>
-        <translation type="unfinished">forces de sécurité interne</translation>
+      <source>internal security forces</source>
+      <translation type="unfinished">قوي الأمن الداخلي</translation>
     </message>
     <message>
-        <source>ground</source>
-        <translation type="unfinished">terrestre</translation>
+      <source>ground</source>
+      <translation type="unfinished">الأرض</translation>
     </message>
     <message>
-        <source>railroad</source>
-        <translation type="unfinished">voie ferrée</translation>
+      <source>railroad</source>
+      <translation type="unfinished">السكك الحديدية</translation>
     </message>
     <message>
-        <source>riverine</source>
-        <translation type="unfinished">fluvial</translation>
+      <source>riverine</source>
+      <translation type="unfinished">النهرية</translation>
     </message>
     <message>
-        <source>wheeled mechanized</source>
-        <translation type="unfinished">mécanisé à roues</translation>
+      <source>wheeled mechanized</source>
+      <translation type="unfinished">عجلات ميكانيكية</translation>
     </message>
     <message>
-        <source>strategic</source>
-        <translation type="unfinished">stratégique</translation>
+      <source>strategic</source>
+      <translation type="unfinished">الاستراتيجية</translation>
     </message>
     <message>
-        <source>tactical</source>
-        <translation type="unfinished">tactique</translation>
+      <source>tactical</source>
+      <translation type="unfinished">التكتيكية</translation>
     </message>
     <message>
-        <source>cavalry</source>
-        <translation type="unfinished">cavalerie</translation>
+      <source>cavalry</source>
+      <translation type="unfinished">الفرسان</translation>
     </message>
     <message>
-        <source>horse</source>
-        <translation type="unfinished">(u.s. - cavalry)</translation>
+      <source>horse</source>
+      <translation type="unfinished">الحصان</translation>
     </message>
     <message>
-        <source>long range surveillance</source>
-        <translation type="unfinished">surveillance dans la profondeur</translation>
+      <source>long range surveillance</source>
+      <translation type="unfinished">مراقبة طويلة المدى</translation>
     </message>
     <message>
-        <source>light armored reconnaissance</source>
-        <translation type="unfinished">reconnaissance légère blindée(rlb/lar)</translation>
+      <source>light armored reconnaissance</source>
+      <translation type="unfinished">الاستطلاع المدرعة الخفيفة</translation>
     </message>
     <message>
-        <source>combat service support</source>
-        <translation type="unfinished">soutien</translation>
+      <source>combat service support</source>
+      <translation type="unfinished">دعم خدمة قتالية</translation>
     </message>
     <message>
-        <source>level</source>
-        <translation type="unfinished">niveau</translation>
+      <source>level</source>
+      <translation type="unfinished">مستوى</translation>
     </message>
     <message>
-        <source>theater</source>
-        <translation type="unfinished">théâtre</translation>
+      <source>theater</source>
+      <translation type="unfinished">مسرح</translation>
     </message>
     <message>
-        <source>judge advocate general</source>
-        <translation type="unfinished">juridique</translation>
+      <source>judge advocate general</source>
+      <translation type="unfinished">القاضي المحامي العام</translation>
     </message>
     <message>
-        <source>labor</source>
-        <translation type="unfinished">main d&apos;oeuvre</translation>
+      <source>labor</source>
+      <translation type="unfinished">حزب العمل</translation>
     </message>
     <message>
-        <source>personnel services</source>
-        <translation type="unfinished">services du personnel</translation>
+      <source>personnel services</source>
+      <translation type="unfinished">خدمات شؤون الموظفين</translation>
     </message>
     <message>
-        <source>morale warfare recreation</source>
-        <translation type="unfinished">moral</translation>
+      <source>morale warfare recreation</source>
+      <translation type="unfinished">الترويح حربية معنويات</translation>
     </message>
     <message>
-        <source>mortuary graves registry</source>
-        <translation type="unfinished">enregistrement des tombes</translation>
+      <source>mortuary graves registry</source>
+      <translation type="unfinished">مشرحة مقابر التسجيل</translation>
     </message>
     <message>
-        <source>public affairs</source>
-        <translation type="unfinished">affaires publiques</translation>
+      <source>public affairs</source>
+      <translation type="unfinished">الشؤون العامة</translation>
     </message>
     <message>
-        <source>broadcast</source>
-        <translation type="unfinished">diffusion</translation>
+      <source>broadcast</source>
+      <translation type="unfinished">البث</translation>
     </message>
     <message>
-        <source>joint information bureau</source>
-        <translation type="unfinished">bureau interarmées d&apos;information</translation>
+      <source>joint information bureau</source>
+      <translation type="unfinished">المكتب الإعلامي المشترك</translation>
     </message>
     <message>
-        <source>quartermaster</source>
-        <translation type="unfinished">commissariat</translation>
+      <source>quartermaster</source>
+      <translation type="unfinished">مستودعات التموين</translation>
     </message>
     <message>
-        <source>religious chaplain</source>
-        <translation type="unfinished">aumonier</translation>
+      <source>religious chaplain</source>
+      <translation type="unfinished">قسيس الدينية</translation>
     </message>
     <message>
-        <source>replacement holding unit</source>
-        <translation type="unfinished">unité de remplacement</translation>
+      <source>replacement holding unit</source>
+      <translation type="unfinished">استبدال عقد الوحدة</translation>
     </message>
     <message>
-        <source>maintenance</source>
-        <translation type="unfinished">maintenance</translation>
+      <source>maintenance</source>
+      <translation type="unfinished">صيانة</translation>
     </message>
     <message>
-        <source>electro-optical</source>
-        <translation type="unfinished">electro-optique</translation>
+      <source>electro-optical</source>
+      <translation type="unfinished">الكهربائية-البصرية</translation>
     </message>
     <message>
-        <source>ordnance</source>
-        <translation type="unfinished">ordonnance</translation>
+      <source>ordnance</source>
+      <translation type="unfinished">الذخائر</translation>
     </message>
     <message>
-        <source>medical</source>
-        <translation type="unfinished">médical</translation>
+      <source>medical</source>
+      <translation type="unfinished">الطبية</translation>
     </message>
     <message>
-        <source>dental</source>
-        <translation type="unfinished">dentiste</translation>
+      <source>dental</source>
+      <translation type="unfinished">طب الأسنان</translation>
     </message>
     <message>
-        <source>medical treatment facility</source>
-        <translation type="unfinished">centre médical de soins</translation>
+      <source>medical treatment facility</source>
+      <translation type="unfinished">مرفق للعلاج الطبي</translation>
     </message>
     <message>
-        <source>psychological</source>
-        <translation type="unfinished">psychologique</translation>
+      <source>psychological</source>
+      <translation type="unfinished">نفسية</translation>
     </message>
     <message>
-        <source>veterinary</source>
-        <translation type="unfinished">vétérinaire</translation>
+      <source>veterinary</source>
+      <translation type="unfinished">الطب البيطري</translation>
     </message>
     <message>
-        <source>supply</source>
-        <translation type="unfinished">ravitaillement</translation>
+      <source>supply</source>
+      <translation type="unfinished">إمدادات</translation>
     </message>
     <message>
-        <source>class i</source>
-        <translation type="unfinished">classe i</translation>
+      <source>class i</source>
+      <translation type="unfinished">الفئة الأولى</translation>
     </message>
     <message>
-        <source>class ii</source>
-        <translation type="unfinished">classe ii</translation>
+      <source>class ii</source>
+      <translation type="unfinished">الفئة الثانية</translation>
     </message>
     <message>
-        <source>class iii</source>
-        <translation type="unfinished">classe iii</translation>
+      <source>class iii</source>
+      <translation type="unfinished">الدرجة الثالثة</translation>
     </message>
     <message>
-        <source>class iv</source>
-        <translation type="unfinished">classe iv</translation>
+      <source>class iv</source>
+      <translation type="unfinished">الفئة الرابعة</translation>
     </message>
     <message>
-        <source>class v</source>
-        <translation type="unfinished">classe v</translation>
+      <source>class v</source>
+      <translation type="unfinished">الفئة v</translation>
     </message>
     <message>
-        <source>class vi</source>
-        <translation type="unfinished">classe vi</translation>
+      <source>class vi</source>
+      <translation type="unfinished">الفئة السادسة</translation>
     </message>
     <message>
-        <source>class vii</source>
-        <translation type="unfinished">classe vii</translation>
+      <source>class vii</source>
+      <translation type="unfinished">الفئة السابعة</translation>
     </message>
     <message>
-        <source>class viii</source>
-        <translation type="unfinished">classe viii</translation>
+      <source>class viii</source>
+      <translation type="unfinished">الصف الثامن</translation>
     </message>
     <message>
-        <source>class ix</source>
-        <translation type="unfinished">classe ix</translation>
+      <source>class ix</source>
+      <translation type="unfinished">الصف التاسع</translation>
     </message>
     <message>
-        <source>class x</source>
-        <translation type="unfinished">classe x</translation>
+      <source>class x</source>
+      <translation type="unfinished">فئة x</translation>
     </message>
     <message>
-        <source>laundry bath</source>
-        <translation type="unfinished">blanchisserie/bains</translation>
+      <source>laundry bath</source>
+      <translation type="unfinished">حمام غسيل الملابس</translation>
     </message>
     <message>
-        <source>water</source>
-        <translation type="unfinished">eau</translation>
+      <source>water</source>
+      <translation type="unfinished">المياه</translation>
     </message>
     <message>
-        <source>purification</source>
-        <translation type="unfinished">purification</translation>
+      <source>purification</source>
+      <translation type="unfinished">تنقية</translation>
     </message>
     <message>
-        <source>transportation</source>
-        <translation type="unfinished">transport</translation>
+      <source>transportation</source>
+      <translation type="unfinished">النقل</translation>
     </message>
     <message>
-        <source>apod apoe</source>
-        <translation type="unfinished">apod apoe</translation>
+      <source>apod apoe</source>
+      <translation type="unfinished">نقطة الوصول الجوية الذين</translation>
     </message>
     <message>
-        <source>movement control center</source>
-        <translation type="unfinished">centre de controle des mouvements (ccm)</translation>
+      <source>movement control center</source>
+      <translation type="unfinished">مركز مراقبة الحركة</translation>
     </message>
     <message>
-        <source>railhead</source>
-        <translation type="unfinished">tête de voie ferrée</translation>
+      <source>railhead</source>
+      <translation type="unfinished">التجميع</translation>
     </message>
     <message>
-        <source>spod spoe</source>
-        <translation type="unfinished">spod spoe</translation>
+      <source>spod spoe</source>
+      <translation type="unfinished">سبود سبو</translation>
     </message>
     <message>
-        <source>combat support</source>
-        <translation type="unfinished">appui</translation>
+      <source>combat support</source>
+      <translation type="unfinished">دعم مكافحة</translation>
     </message>
     <message>
-        <source>explosive ordinance disposal</source>
-        <translation type="unfinished">neutralisation d&apos;explosifs et munitions</translation>
+      <source>explosive ordinance disposal</source>
+      <translation type="unfinished">التخلص من المتفجرة</translation>
     </message>
     <message>
-        <source>information warfare unit</source>
-        <translation type="unfinished">guerre de l&apos;information</translation>
+      <source>information warfare unit</source>
+      <translation type="unfinished">وحدة حرب المعلومات</translation>
     </message>
     <message>
-        <source>landing support</source>
-        <translation type="unfinished">soutien au débarquement</translation>
+      <source>landing support</source>
+      <translation type="unfinished">دعم الهبوط</translation>
     </message>
     <message>
-        <source>law enforcement unit</source>
-        <translation type="unfinished">maintien de l&apos;ordre</translation>
+      <source>law enforcement unit</source>
+      <translation type="unfinished">وحدة إنفاذ القانون</translation>
     </message>
     <message>
-        <source>central intelligence division</source>
-        <translation type="unfinished">unité centrale de renseignement</translation>
+      <source>central intelligence division</source>
+      <translation type="unfinished">شعبة الاستخبارات المركزية</translation>
     </message>
     <message>
-        <source>civilian law enforcement</source>
-        <translation type="unfinished">maintien de l&apos;ordre civil</translation>
+      <source>civilian law enforcement</source>
+      <translation type="unfinished">إنفاذ القوانين المدنية</translation>
     </message>
     <message>
-        <source>military police</source>
-        <translation type="unfinished">police militaire</translation>
+      <source>military police</source>
+      <translation type="unfinished">الشرطة العسكرية</translation>
     </message>
     <message>
-        <source>security police</source>
-        <translation type="unfinished">police (sécurité)</translation>
+      <source>security police</source>
+      <translation type="unfinished">شرطة الأمن</translation>
     </message>
     <message>
-        <source>shore patrol</source>
-        <translation type="unfinished">patrouille</translation>
+      <source>shore patrol</source>
+      <translation type="unfinished">دورية للشاطئ</translation>
     </message>
     <message>
-        <source>military intelligence</source>
-        <translation type="unfinished">renseignement militaire</translation>
+      <source>military intelligence</source>
+      <translation type="unfinished">الاستخبارات العسكرية</translation>
     </message>
     <message>
-        <source>aerial exploitation</source>
-        <translation type="unfinished">exploitation aerienne</translation>
+      <source>aerial exploitation</source>
+      <translation type="unfinished">الاستغلال الجوي</translation>
     </message>
     <message>
-        <source>counter intelligence</source>
-        <translation type="unfinished">contre renseignement</translation>
+      <source>counter intelligence</source>
+      <translation type="unfinished">استخبارات مكافحة</translation>
     </message>
     <message>
-        <source>interrogation</source>
-        <translation type="unfinished">interrogation</translation>
+      <source>interrogation</source>
+      <translation type="unfinished">الاستجواب</translation>
     </message>
     <message>
-        <source>joint intelligence center</source>
-        <translation type="unfinished">centre interarmées de renseignement</translation>
+      <source>joint intelligence center</source>
+      <translation type="unfinished">مركز الاستخبارات المشترك</translation>
     </message>
     <message>
-        <source>operations</source>
-        <translation type="unfinished">opérations</translation>
+      <source>operations</source>
+      <translation type="unfinished">عمليات</translation>
     </message>
     <message>
-        <source>signal intelligence</source>
-        <translation type="unfinished">renseignement electronique (sigint)</translation>
+      <source>signal intelligence</source>
+      <translation type="unfinished">استخبارات الإشارات</translation>
     </message>
     <message>
-        <source>electronic warfare</source>
-        <translation type="unfinished">guerre electronique</translation>
+      <source>electronic warfare</source>
+      <translation type="unfinished">الحرب الإلكترونية</translation>
     </message>
     <message>
-        <source>armored wheeled vehicle</source>
-        <translation type="unfinished">véhicule blindé à roues</translation>
+      <source>armored wheeled vehicle</source>
+      <translation type="unfinished">المركبات ذات العجلات المدرعة</translation>
     </message>
     <message>
-        <source>direction finding</source>
-        <translation type="unfinished">localisation</translation>
+      <source>direction finding</source>
+      <translation type="unfinished">تحديد الاتجاه</translation>
     </message>
     <message>
-        <source>intercept</source>
-        <translation type="unfinished">interception</translation>
+      <source>intercept</source>
+      <translation type="unfinished">اعتراض</translation>
     </message>
     <message>
-        <source>jamming</source>
-        <translation type="unfinished">brouillage</translation>
+      <source>jamming</source>
+      <translation type="unfinished">التشويش</translation>
     </message>
     <message>
-        <source>surveillance</source>
-        <translation type="unfinished">surveillance</translation>
+      <source>surveillance</source>
+      <translation type="unfinished">المراقبة</translation>
     </message>
     <message>
-        <source>ground station module</source>
-        <translation type="unfinished">module de station terrestre</translation>
+      <source>ground station module</source>
+      <translation type="unfinished">الوحدة النمطية لمحطة أرضية</translation>
     </message>
     <message>
-        <source>ground surveillance radar</source>
-        <translation type="unfinished">radar terrestre de surveillance</translation>
+      <source>ground surveillance radar</source>
+      <translation type="unfinished">رادار المراقبة الأرضية</translation>
     </message>
     <message>
-        <source>sensor</source>
-        <translation type="unfinished">capteur</translation>
+      <source>sensor</source>
+      <translation type="unfinished">أجهزة الاستشعار</translation>
     </message>
     <message>
-        <source>scm</source>
-        <translation type="unfinished">gestion des logiciels de g.e.</translation>
+      <source>scm</source>
+      <translation type="unfinished">المجلس الأعلى للقضاة</translation>
     </message>
     <message>
-        <source>tactical exploit</source>
-        <translation type="unfinished">exploitation tactique</translation>
+      <source>tactical exploit</source>
+      <translation type="unfinished">استغلال التكتيكية</translation>
     </message>
     <message>
-        <source>biological</source>
-        <translation type="unfinished">biologique</translation>
+      <source>biological</source>
+      <translation type="unfinished">البيولوجية</translation>
     </message>
     <message>
-        <source>wheeled armored vehicle</source>
-        <translation type="unfinished">véhicule blindé à roues</translation>
+      <source>wheeled armored vehicle</source>
+      <translation type="unfinished">عجلات عربة مدرعة</translation>
     </message>
     <message>
-        <source>wheeled armored vehicle surveillance</source>
-        <translation type="unfinished">véhicule blindé à roues - reconnaissance</translation>
+      <source>wheeled armored vehicle surveillance</source>
+      <translation type="unfinished">عجلات عربة مدرعة المراقبة</translation>
     </message>
     <message>
-        <source>smoke</source>
-        <translation type="unfinished">fumée</translation>
+      <source>smoke</source>
+      <translation type="unfinished">الدخان</translation>
     </message>
     <message>
-        <source>smoke decon</source>
-        <translation type="unfinished">décontamination/fumée</translation>
+      <source>smoke decon</source>
+      <translation type="unfinished">ديكون الدخان</translation>
     </message>
     <message>
-        <source>decontamination</source>
-        <translation type="unfinished">décontamination</translation>
+      <source>decontamination</source>
+      <translation type="unfinished">إزالة التلوث</translation>
     </message>
     <message>
-        <source>nuclear</source>
-        <translation type="unfinished">nucléaire</translation>
+      <source>nuclear</source>
+      <translation type="unfinished">النووية</translation>
     </message>
     <message>
-        <source>chemical</source>
-        <translation type="unfinished">chimique</translation>
+      <source>chemical</source>
+      <translation type="unfinished">المادة الكيميائية</translation>
     </message>
     <message>
-        <source>recon equipped</source>
-        <translation type="unfinished">équipe de détection motorisée</translation>
+      <source>recon equipped</source>
+      <translation type="unfinished">ريكون مجهزة</translation>
     </message>
     <message>
-        <source>signal unit</source>
-        <translation type="unfinished">transmissions</translation>
+      <source>signal unit</source>
+      <translation type="unfinished">وحدة إشارة</translation>
     </message>
     <message>
-        <source>area</source>
-        <translation type="unfinished">maillage de zone</translation>
+      <source>area</source>
+      <translation type="unfinished">المنطقة</translation>
     </message>
     <message>
-        <source>command operations</source>
-        <translation type="unfinished">commandement des opérations</translation>
+      <source>command operations</source>
+      <translation type="unfinished">قيادة عمليات</translation>
     </message>
     <message>
-        <source>communication configured package</source>
-        <translation type="unfinished">paquetage de communication configuré</translation>
+      <source>communication configured package</source>
+      <translation type="unfinished">حزمة الاتصالات تكوين</translation>
     </message>
     <message>
-        <source>large communication configured package</source>
-        <translation type="unfinished">grand paquetage de communication configuré</translation>
+      <source>large communication configured package</source>
+      <translation type="unfinished">حزمة الاتصالات الكبيرة بتكوين</translation>
     </message>
     <message>
-        <source>electronic ranging</source>
-        <translation type="unfinished">ranging electronique</translation>
+      <source>electronic ranging</source>
+      <translation type="unfinished">تتراوح الإلكترونية</translation>
     </message>
     <message>
-        <source>forward communications</source>
-        <translation type="unfinished">communications de l&apos;avant</translation>
+      <source>forward communications</source>
+      <translation type="unfinished">الاتصالات إلى الأمام</translation>
     </message>
     <message>
-        <source>multiple subscriber element</source>
-        <translation type="unfinished">element souscripteur multiple</translation>
+      <source>multiple subscriber element</source>
+      <translation type="unfinished">العنصر المشترك متعددة</translation>
     </message>
     <message>
-        <source>large extension node</source>
-        <translation type="unfinished">grande extension nodale</translation>
+      <source>large extension node</source>
+      <translation type="unfinished">عقده امتداد كبير</translation>
     </message>
     <message>
-        <source>node center</source>
-        <translation type="unfinished">centre nodal</translation>
+      <source>node center</source>
+      <translation type="unfinished">مركز العقدة</translation>
     </message>
     <message>
-        <source>small extension node</source>
-        <translation type="unfinished">extension nodale simple</translation>
+      <source>small extension node</source>
+      <translation type="unfinished">عقده ملحق صغير</translation>
     </message>
     <message>
-        <source>radio unit</source>
-        <translation type="unfinished">radio</translation>
+      <source>radio unit</source>
+      <translation type="unfinished">وحدة الإذاعة</translation>
     </message>
     <message>
-        <source>relay</source>
-        <translation type="unfinished">relais</translation>
+      <source>relay</source>
+      <translation type="unfinished">ترحيل</translation>
     </message>
     <message>
-        <source>tactical satellite</source>
-        <translation type="unfinished">satellite tactique</translation>
+      <source>tactical satellite</source>
+      <translation type="unfinished">الأقمار الصناعية التكتيكية</translation>
     </message>
     <message>
-        <source>teletype center</source>
-        <translation type="unfinished">centre teletype</translation>
+      <source>teletype center</source>
+      <translation type="unfinished">مركز المبرقة</translation>
     </message>
     <message>
-        <source>signal support</source>
-        <translation type="unfinished">soutien aux transmissions</translation>
+      <source>signal support</source>
+      <translation type="unfinished">إشارة دعم</translation>
     </message>
     <message>
-        <source>telephone switch</source>
-        <translation type="unfinished">centre de raccordement téléphonique</translation>
+      <source>telephone switch</source>
+      <translation type="unfinished">تبديل الهاتف</translation>
     </message>
     <message>
-        <source>special c2 headquarters component</source>
-        <translation type="unfinished">unité spéciale c2 pc</translation>
+      <source>special c2 headquarters component</source>
+      <translation type="unfinished">c2 الخاص المقر المكون</translation>
     </message>
     <message>
-        <source>emergency</source>
-        <translation type="unfinished">sécurité civile</translation>
+      <source>emergency</source>
+      <translation type="unfinished">حالات الطوارئ</translation>
     </message>
     <message>
-        <source>hospital</source>
-        <translation type="unfinished">hôpital</translation>
+      <source>hospital</source>
+      <translation type="unfinished">مستشفى</translation>
     </message>
     <message>
-        <source>evacuation</source>
-        <translation type="unfinished">relève</translation>
+      <source>evacuation</source>
+      <translation type="unfinished">الإجلاء</translation>
     </message>
     <message>
-        <source>ambulance</source>
-        <translation type="unfinished">ambulance</translation>
+      <source>ambulance</source>
+      <translation type="unfinished">سيارة إسعاف</translation>
     </message>
     <message>
-        <source>helicopter</source>
-        <translation type="unfinished">hélicoptère</translation>
+      <source>helicopter</source>
+      <translation type="unfinished">طائرات الهليكوبتر</translation>
     </message>
     <message>
-        <source>firefighter</source>
-        <translation type="unfinished">pompier</translation>
+      <source>firefighter</source>
+      <translation type="unfinished">رجال الإطفاء</translation>
     </message>
     <message>
-        <source>fire station</source>
-        <translation type="unfinished">caserne</translation>
+      <source>fire station</source>
+      <translation type="unfinished">محطة إطفاء</translation>
     </message>
     <message>
-        <source>fire hydrant</source>
-        <translation type="unfinished">hydrant</translation>
+      <source>fire hydrant</source>
+      <translation type="unfinished">صنبور مياه الإطفاء</translation>
     </message>
     <message>
-        <source>fire suppression</source>
-        <translation type="unfinished">extinction du feu</translation>
+      <source>fire suppression</source>
+      <translation type="unfinished">إطفاء الحرائق</translation>
     </message>
     <message>
-        <source>law enforcement</source>
-        <translation type="unfinished">maintien de l&apos;ordre</translation>
+      <source>law enforcement</source>
+      <translation type="unfinished">إنفاذ القانون</translation>
     </message>
     <message>
-        <source>border patrol</source>
-        <translation type="unfinished">patrouille frontalière</translation>
+      <source>border patrol</source>
+      <translation type="unfinished">دوريات الحدود</translation>
     </message>
     <message>
-        <source>public safety</source>
-        <translation type="unfinished">sécurité publique</translation>
+      <source>public safety</source>
+      <translation type="unfinished">السلامة العامة</translation>
     </message>
     <message>
-        <source>structure</source>
-        <translation type="unfinished">structure</translation>
+      <source>structure</source>
+      <translation type="unfinished">هيكل</translation>
     </message>
     <message>
-        <source>operation center</source>
-        <translation type="unfinished">centre d&apos;opérations</translation>
+      <source>operation center</source>
+      <translation type="unfinished">مركز العمليات</translation>
     </message>
     <message>
-        <source>shelter</source>
-        <translation type="unfinished">abri</translation>
+      <source>shelter</source>
+      <translation type="unfinished">المأوى</translation>
     </message>
     <message>
-        <source>staging area</source>
-        <translation type="unfinished">point de rassemblement des moyens</translation>
+      <source>staging area</source>
+      <translation type="unfinished">ناحية التدريج</translation>
     </message>
     <message>
-        <source>incident command center</source>
-        <translation type="unfinished">PC d&apos;incident</translation>
+      <source>incident command center</source>
+      <translation type="unfinished">مركز قيادة الحوادث</translation>
     </message>
     <message>
-        <source>teams</source>
-        <translation type="unfinished">équipes</translation>
+      <source>teams</source>
+      <translation type="unfinished">فرق</translation>
     </message>
     <message>
-        <source>o</source>
-        <translation type="unfinished">o Equipe</translation>
+      <source>o</source>
+      <translation type="unfinished">أن</translation>
     </message>
     <message>
-        <source>b</source>
-        <translation type="unfinished">b Binôme</translation>
+      <source>b</source>
+      <translation type="unfinished">ب</translation>
     </message>
     <message>
-        <source>c</source>
-        <translation type="unfinished">c Détachement</translation>
+      <source>c</source>
+      <translation type="unfinished">ج</translation>
     </message>
     <message>
-        <source>oo</source>
-        <translation type="unfinished">oo Groupe</translation>
+      <source>oo</source>
+      <translation type="unfinished">سين سين</translation>
     </message>
     <message>
-        <source>ooo</source>
-        <translation type="unfinished">ooo Section</translation>
+      <source>ooo</source>
+      <translation type="unfinished">OOo</translation>
     </message>
     <message>
-        <source>i</source>
-        <translation type="unfinished">i Compagnie</translation>
+      <source>i</source>
+      <translation type="unfinished">أنا</translation>
     </message>
     <message>
-        <source>ii</source>
-        <translation type="unfinished">ii Bataillon</translation>
+      <source>ii</source>
+      <translation type="unfinished">ثانيا</translation>
     </message>
     <message>
-        <source>iii</source>
-        <translation type="unfinished">iii Régiment</translation>
+      <source>iii</source>
+      <translation type="unfinished">ثالثا</translation>
     </message>
     <message>
-        <source>x</source>
-        <translation type="unfinished">x Brigade</translation>
+      <source>x</source>
+      <translation type="unfinished">x</translation>
     </message>
     <message>
-        <source>xx</source>
-        <translation type="unfinished">xx Division</translation>
+      <source>xx</source>
+      <translation type="unfinished">XX</translation>
     </message>
     <message>
-        <source>xxx</source>
-        <translation type="unfinished">xxx Corps d'armée</translation>
+      <source>xxx</source>
+      <translation type="unfinished">xxx</translation>
     </message>
     <message>
-        <source>xxxx</source>
-        <translation type="unfinished">xxxx Armée</translation>
+      <source>xxxx</source>
+      <translation type="unfinished">xxxx</translation>
     </message>
-</context>
+  </context>
 </TS>

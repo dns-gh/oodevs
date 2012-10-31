@@ -1,3394 +1,3393 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS[]>
 <TS version="2.0" language="ar" sourcelanguage="en">
-<context>
+  <context>
     <name>ActionProperties</name>
     <message>
-        <source>Properties</source>
-        <translation type="unfinished">خصائص</translation>
+      <source>Properties</source>
+      <translation type="unfinished">خصائص</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ActionsToolbar</name>
     <message>
-        <source>Load actions file</source>
-        <translation type="unfinished">تحميل ملف مشترك</translation>
+      <source>Load actions file</source>
+      <translation type="unfinished">تحميل ملف الإجراءات</translation>
     </message>
     <message>
-        <source>Save actions in active timeline to file</source>
-        <translation type="unfinished">حفظ الجدول الزمني في الإجراءات الفعالة لتقديم</translation>
+      <source>Save actions in active timeline to file</source>
+      <translation type="unfinished">حفظ الإجراءات في جدول زمني نشط إلى ملف</translation>
     </message>
     <message>
-        <source>Planning mode on/off</source>
-        <translation type="unfinished">وضع التخطيط على / قبالة</translation>
+      <source>Planning mode on/off</source>
+      <translation type="unfinished">وضع التخطيط تشغيل/إيقاف تشغيل</translation>
     </message>
     <message>
-        <source>Delete recorded actions</source>
-        <translation type="unfinished">حذف الإجراءات المسجلة</translation>
+      <source>Delete recorded actions</source>
+      <translation type="unfinished">حذف الإجراءات المسجلة</translation>
     </message>
     <message>
-        <source>Actions recorder</source>
-        <translation type="unfinished">الإجراءات مسجل</translation>
+      <source>Actions recorder</source>
+      <translation type="unfinished">مسجل الإجراءات</translation>
     </message>
     <message>
-        <source>Reload</source>
-        <translation type="unfinished">تحديث</translation>
+      <source>Reload</source>
+      <translation type="unfinished">إعادة تحميل</translation>
     </message>
     <message>
-        <source>Actions files (*.ord)</source>
-        <translation type="unfinished">مشاركة الملفات (*. ORD)</translation>
+      <source>Actions files (*.ord)</source>
+      <translation type="unfinished">إجراءات الملفات (*.ord)</translation>
     </message>
     <message>
-        <source>Load</source>
-        <translation type="unfinished">حمل</translation>
+      <source>Load</source>
+      <translation type="unfinished">تحميل</translation>
     </message>
     <message>
-        <source>Error loading actions file</source>
-        <translation type="unfinished">خطأ في تحميل ملف مشاركة</translation>
+      <source>Error loading actions file</source>
+      <translation type="unfinished">حدث خطأ أثناء تحميل ملف الإجراءات</translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation type="unfinished">حفظ</translation>
+      <source>Save</source>
+      <translation type="unfinished">حفظ</translation>
     </message>
     <message>
-        <source>Delete recorded actions?</source>
-        <translation type="unfinished">حذف الإجراءات المسجلة؟</translation>
+      <source>Delete recorded actions?</source>
+      <translation type="unfinished">حذف الإجراءات المسجلة؟</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>AffinitiesDialog</name>
     <message>
-        <source>Activate</source>
-        <translation type="unfinished">تفعيل</translation>
+      <source>Activate</source>
+      <translation type="unfinished">تنشيط</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>AfterAction</name>
     <message>
-        <source>Functions</source>
-        <translation type="unfinished">وظائف</translation>
+      <source>Functions</source>
+      <translation type="unfinished">وظائف</translation>
     </message>
     <message>
-        <source>Requests</source>
-        <translation type="unfinished">طلبات</translation>
+      <source>Requests</source>
+      <translation type="unfinished">طلبات</translation>
     </message>
     <message>
-        <source>After action review</source>
-        <translation type="unfinished">بعد استعراض عملي</translation>
+      <source>After action review</source>
+      <translation type="unfinished">وبعد استعراض العمل</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>AfterActionFunctionList</name>
     <message>
-        <source>After action review</source>
-        <translation type="unfinished">بعد استعراض عملي</translation>
+      <source>After action review</source>
+      <translation type="unfinished">وبعد استعراض العمل</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation type="unfinished">اسم</translation>
+      <source>Name</source>
+      <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-        <source>Parameters</source>
-        <translation type="unfinished">المعلمات</translation>
+      <source>Parameters</source>
+      <translation type="unfinished">المعلمات</translation>
     </message>
     <message>
-        <source>Time range</source>
-        <translation type="unfinished">الوقت صفوف</translation>
+      <source>Time range</source>
+      <translation type="unfinished">النطاق الزمني</translation>
     </message>
     <message>
-        <source>First tick</source>
-        <translation type="unfinished">أول علامة</translation>
+      <source>First tick</source>
+      <translation type="unfinished">القراد أول</translation>
     </message>
     <message>
-        <source>Duration</source>
-        <translation type="unfinished">مدة</translation>
+      <source>Duration</source>
+      <translation type="unfinished">المدة</translation>
     </message>
     <message>
-        <source>Request</source>
-        <translation type="unfinished">طلب</translation>
+      <source>Request</source>
+      <translation type="unfinished">طلب</translation>
     </message>
     <message>
-        <source>Send request</source>
-        <translation type="unfinished">إرسال طلب</translation>
+      <source>Send request</source>
+      <translation type="unfinished">إرسال الطلب</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>AfterActionRequestList</name>
     <message>
-        <source>Request</source>
-        <translation type="unfinished">طلب</translation>
+      <source>Request</source>
+      <translation type="unfinished">طلب</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation type="unfinished">حالة</translation>
+      <source>Status</source>
+      <translation type="unfinished">مركز</translation>
     </message>
     <message>
-        <source>Delete request</source>
-        <translation type="unfinished">حذف طلب</translation>
+      <source>Delete request</source>
+      <translation type="unfinished">حذف الطلب</translation>
     </message>
     <message>
-        <source>Clear list</source>
-        <translation type="unfinished">قائمة واضحة</translation>
+      <source>Clear list</source>
+      <translation type="unfinished">قائمة واضحة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>AgentKnowledge</name>
     <message>
-        <source>Unit knowledge</source>
-        <translation type="unfinished">وحدة المعرفة</translation>
+      <source>Unit knowledge</source>
+      <translation type="unfinished">وحدة المعرفة</translation>
     </message>
     <message>
-        <source>Known units</source>
-        <translation type="unfinished">المعروفة وحدات</translation>
+      <source>Known units</source>
+      <translation type="unfinished">الوحدات المعروفة</translation>
     </message>
     <message>
-        <source>Details</source>
-        <translation type="unfinished">تفاصيل</translation>
+      <source>Details</source>
+      <translation type="unfinished">تفاصيل</translation>
     </message>
     <message>
-        <source>Unit</source>
-        <translation type="unfinished">وحدة</translation>
+      <source>Unit</source>
+      <translation type="unfinished">وحدة</translation>
     </message>
     <message>
-        <source>Perception level</source>
-        <translation type="unfinished">تصور مستوى</translation>
+      <source>Perception level</source>
+      <translation type="unfinished">مستوى الإدراك</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>AlarmEditor</name>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>AlarmsWidget</name>
     <message>
-        <source>Alarms</source>
-        <translation type="unfinished">إنذار</translation>
+      <source>Alarms</source>
+      <translation type="unfinished">أجهزة الإنذار</translation>
     </message>
     <message>
-        <source>Trigger date</source>
-        <translation type="unfinished">الوقت الزناد</translation>
+      <source>Trigger date</source>
+      <translation type="unfinished">تاريخ الزناد</translation>
     </message>
     <message>
-        <source>Message</source>
-        <translation type="unfinished">رسالة</translation>
+      <source>Message</source>
+      <translation type="unfinished">رسالة</translation>
     </message>
     <message>
-        <source>Create new alarm</source>
-        <translation type="unfinished">إنشاء منبه جديد</translation>
+      <source>Create new alarm</source>
+      <translation type="unfinished">إنشاء إنذار جديد</translation>
     </message>
     <message>
-        <source>Remove alarm</source>
-        <translation type="unfinished">حذف التنبيه</translation>
+      <source>Remove alarm</source>
+      <translation type="unfinished">إزالة منبه</translation>
     </message>
     <message>
-        <source>Alarm triggered</source>
-        <translation type="unfinished">أثار إنذار</translation>
+      <source>Alarm triggered</source>
+      <translation type="unfinished">إنذار آثار</translation>
     </message>
     <message>
-        <source>Alarm parameters</source>
-        <translation type="unfinished">إنذار المعلمات</translation>
+      <source>Alarm parameters</source>
+      <translation type="unfinished">معلمات التنبيه</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Application</name>
     <message>
-        <source>SWORD</source>
-        <translation type="unfinished">SWORD</translation>
+      <source>SWORD</source>
+      <translation type="unfinished">السيف</translation>
     </message>
     <message>
-        <source> - Planning mode on</source>
-        <translation type="unfinished">- وضع تخطيط على</translation>
+      <source> - Planning mode on</source>
+      <translation type="unfinished">-وضع التخطيط في</translation>
     </message>
     <message>
-        <source>Gaming</source>
-        <translation type="unfinished">الألعاب</translation>
+      <source>Gaming</source>
+      <translation type="unfinished">الألعاب</translation>
     </message>
     <message>
-        <source>Unhandled error</source>
-        <translation type="unfinished">غير معالج خطأ</translation>
+      <source>Unhandled error</source>
+      <translation type="unfinished">خطأ لم تتم معالجته</translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="unfinished">خطأ</translation>
+      <source>Error</source>
+      <translation type="unfinished">خطأ</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>BorrowingsListView</name>
     <message>
-        <source>Lender</source>
-        <translation type="unfinished">المقرض</translation>
+      <source>Lender</source>
+      <translation type="unfinished">المقرض</translation>
     </message>
     <message>
-        <source>Equipment</source>
-        <translation type="unfinished">معدات</translation>
+      <source>Equipment</source>
+      <translation type="unfinished">المعدات</translation>
     </message>
     <message>
-        <source>Quantity</source>
-        <translation type="unfinished">كمية</translation>
+      <source>Quantity</source>
+      <translation type="unfinished">الكمية</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>BriefingDialog</name>
     <message>
-        <source>Briefing</source>
-        <translation type="unfinished">إحاطة</translation>
+      <source>Briefing</source>
+      <translation type="unfinished">إحاطة إعلامية</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ChangeAffinitiesDialog</name>
     <message>
-        <source>Change affinities</source>
-        <translation type="unfinished">تغيير الانتماءات</translation>
+      <source>Change affinities</source>
+      <translation type="unfinished">تغيير الانتماءات</translation>
     </message>
     <message>
-        <source>Magic orders</source>
-        <translation type="unfinished">السحر أوامر</translation>
+      <source>Magic orders</source>
+      <translation type="unfinished">أوامر السحر</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ChangeDiplomacyDialog</name>
     <message>
-        <source>Change Diplomacy</source>
-        <translation type="unfinished">تغيير الدبلوماسية</translation>
+      <source>Change Diplomacy</source>
+      <translation type="unfinished">تغير الدبلوماسية</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ChangeHealthStateDialog_ABC</name>
     <message>
-        <source>Change health state</source>
-        <translation type="unfinished">الحالة الصحية الصرف</translation>
+      <source>Change health state</source>
+      <translation type="unfinished">تغيير الحالة الصحية</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ChangeHumanFactorsDialog</name>
     <message>
-        <source>Human factors</source>
-        <translation type="unfinished">العوامل البشرية</translation>
+      <source>Human factors</source>
+      <translation type="unfinished">العوامل البشرية</translation>
     </message>
     <message>
-        <source>Tiredness:</source>
-        <translation type="unfinished">التعب:</translation>
+      <source>Tiredness:</source>
+      <translation type="unfinished">التعب:</translation>
     </message>
     <message>
-        <source>Moral:</source>
-        <translation type="unfinished">أخلاقي</translation>
+      <source>Moral:</source>
+      <translation type="unfinished">الأخلاقية:</translation>
     </message>
     <message>
-        <source>Experience:</source>
-        <translation type="unfinished">الخبرة:</translation>
+      <source>Experience:</source>
+      <translation type="unfinished">الخبرة:</translation>
     </message>
     <message>
-        <source>Stress:</source>
-        <translation type="unfinished">الإجهاد:</translation>
+      <source>Stress:</source>
+      <translation type="unfinished">الإجهاد:</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Change Human Factors</source>
-        <translation type="unfinished">تغيير العوامل البشرية</translation>
+      <source>Change Human Factors</source>
+      <translation type="unfinished">تغيير العوامل البشرية</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ChangeLogisticLinksDialog</name>
     <message>
-        <source>Logistic links edition</source>
-        <translation type="unfinished">اللوجستية الروابط طبعة</translation>
+      <source>Logistic links edition</source>
+      <translation type="unfinished">الطبعة روابط السوقي</translation>
     </message>
     <message>
-        <source>Nominal superior</source>
-        <translation type="unfinished">متفوقة الاسمية</translation>
+      <source>Nominal superior</source>
+      <translation type="unfinished">الأعلى تصنيفا</translation>
     </message>
     <message>
-        <source>Current superior</source>
-        <translation type="unfinished">الحالي متفوقة</translation>
+      <source>Current superior</source>
+      <translation type="unfinished">العليا الحالية</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="unfinished">لا شيء</translation>
+      <source>None</source>
+      <translation type="unfinished">لا شيء</translation>
     </message>
     <message>
-        <source>Change Logistic Links</source>
-        <translation type="unfinished">تبادل الروابط اللوجستية</translation>
+      <source>Change Logistic Links</source>
+      <translation type="unfinished">تغيير الارتباطات السوقية</translation>
     </message>
     <message>
-        <source>Change logistic links</source>
-        <translation type="unfinished">تبادل الروابط اللوجستية</translation>
+      <source>Change logistic links</source>
+      <translation type="unfinished">تغيير الارتباطات السوقية</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ChatDock</name>
     <message>
-        <source>Chat</source>
-        <translation type="unfinished">قط</translation>
+      <source>Chat</source>
+      <translation type="unfinished">دردشة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ChatRoom</name>
     <message>
-        <source>Send</source>
-        <translation type="unfinished">إرسال</translation>
+      <source>Send</source>
+      <translation type="unfinished">إرسال</translation>
     </message>
     <message>
-        <source>Me</source>
-        <translation type="unfinished">أنا</translation>
+      <source>Me</source>
+      <translation type="unfinished">لي</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ChatWidget</name>
     <message>
-        <source>General</source>
-        <translation type="unfinished">عام</translation>
+      <source>General</source>
+      <translation type="unfinished">العام</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ClockDock</name>
     <message>
-        <source>Clock</source>
-        <translation type="unfinished">ساعة</translation>
+      <source>Clock</source>
+      <translation type="unfinished">على مدار الساعة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ClockEditDialog</name>
     <message>
-        <source>Edit current time</source>
-        <translation type="unfinished">تحرير الوقت الحالي</translation>
+      <source>Edit current time</source>
+      <translation type="unfinished">تحرير الوقت الحالي</translation>
     </message>
     <message>
-        <source>Set current date and time: </source>
-        <translation type="unfinished">تعيين التاريخ والوقت الحالي:</translation>
+      <source>Set current date and time: </source>
+      <translation type="unfinished">قم بتعيين التاريخ الحالي والوقت:</translation>
     </message>
     <message>
-        <source>New date and time: </source>
-        <translation type="unfinished">جديد تاريخ ووقت:</translation>
+      <source>New date and time: </source>
+      <translation type="unfinished">جديد التاريخ والوقت:</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ClockWidget</name>
     <message>
-        <source>Day 1</source>
-        <translation type="unfinished">يوم 1</translation>
+      <source>Day 1</source>
+      <translation type="unfinished">1 يوم</translation>
     </message>
     <message>
-        <source>Change date and time</source>
-        <translation type="unfinished">تغيير التاريخ والوقت</translation>
+      <source>Change date and time</source>
+      <translation type="unfinished">تغيير التاريخ والوقت</translation>
     </message>
     <message>
-        <source>Configure alarms</source>
-        <translation type="unfinished">تكوين أجهزة الإنذار</translation>
+      <source>Configure alarms</source>
+      <translation type="unfinished">تكوين أجهزة الإنذار</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>CommunicationTreeView</name>
     <message>
-        <source>Change Knowledge Group</source>
-        <translation type="unfinished">تغيير مجموعة المعارف</translation>
+      <source>Change Knowledge Group</source>
+      <translation type="unfinished">تغيير مجموعة المعارف</translation>
     </message>
     <message>
-        <source>Change knowledge group</source>
-        <translation type="unfinished">تبادل المعارف مجموعة</translation>
+      <source>Change knowledge group</source>
+      <translation type="unfinished">تغيير مجموعة المعارف</translation>
     </message>
     <message>
-        <source>Unit Change Superior</source>
-        <translation type="unfinished">تغيير وحدة متفوقة</translation>
+      <source>Unit Change Superior</source>
+      <translation type="unfinished">وحدة التغيير متفوقة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ConnectDialog</name>
     <message>
-        <source>Connection parameters</source>
-        <translation type="unfinished">الاتصال المعلمات</translation>
+      <source>Connection parameters</source>
+      <translation type="unfinished">معلمات الاتصال</translation>
     </message>
     <message>
-        <source>Host name</source>
-        <translation type="unfinished">اسم المضيف</translation>
+      <source>Host name</source>
+      <translation type="unfinished">اسم المضيف</translation>
     </message>
     <message>
-        <source>Port</source>
-        <translation type="unfinished">ميناء</translation>
+      <source>Port</source>
+      <translation type="unfinished">منفذ</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Not connected to %1:%2
+      <source>Not connected to %1:%2
 Reason: %3
 </source>
-        <translation type="unfinished">غير متصل ب٪ 1:٪ 2
-السبب:٪ 3</translation>
+      <translation type="unfinished">غير متصل إلى %1:2 % والسبب: %3</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ConnectionMenu</name>
     <message>
-        <source>&amp;Connect...</source>
-        <translation type="unfinished">وربط ...</translation>
+      <source>&amp;Connect...</source>
+      <translation type="unfinished">آند الاتصال...</translation>
     </message>
     <message>
-        <source>Recents</source>
-        <translation type="unfinished">الأخيرة</translation>
+      <source>Recents</source>
+      <translation type="unfinished">الأخيرة</translation>
     </message>
     <message>
-        <source>&amp;Disconnect...</source>
-        <translation type="unfinished">وقطع ...</translation>
+      <source>&amp;Disconnect...</source>
+      <translation type="unfinished">آند قطع الاتصال...</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>CreateFormationDialog</name>
     <message>
-        <source>Create formation</source>
-        <translation type="unfinished">إيجاد فرص التدريب</translation>
+      <source>Create formation</source>
+      <translation type="unfinished">إنشاء تكوين</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>CriticalIntelligenceDialog</name>
     <message>
-        <source>Change critical intelligence</source>
-        <translation type="unfinished">تبادل المعلومات الاستخبارية الحاسمة</translation>
+      <source>Change critical intelligence</source>
+      <translation type="unfinished">تغيير معلومات استخباراتية حساسة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Crowd</name>
     <message>
-        <source>Concentration - </source>
-        <translation type="unfinished">التركيز -</translation>
+      <source>Concentration - </source>
+      <translation type="unfinished">تركيز-</translation>
     </message>
     <message>
-        <source>Flow - </source>
-        <translation type="unfinished">تدفق -</translation>
+      <source>Flow - </source>
+      <translation type="unfinished">تدفق-</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>DisconnectDialog</name>
     <message>
-        <source>Disconnect</source>
-        <translation type="unfinished">قطع</translation>
+      <source>Disconnect</source>
+      <translation type="unfinished">قطع الاتصال</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>DotationsListView</name>
     <message>
-        <source>Resource</source>
-        <translation type="unfinished">مورد</translation>
+      <source>Resource</source>
+      <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-        <source>Quantity</source>
-        <translation type="unfinished">كمية</translation>
+      <source>Quantity</source>
+      <translation type="unfinished">الكمية</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>EfficientRangeDialog</name>
     <message>
-        <source>Efficient Range</source>
-        <translation type="unfinished">متوسط كفاءة</translation>
+      <source>Efficient Range</source>
+      <translation type="unfinished">مجموعة فعالة</translation>
     </message>
     <message>
-        <source>Display Parameters</source>
-        <translation type="unfinished">عرض معلمات</translation>
+      <source>Display Parameters</source>
+      <translation type="unfinished">عرض معلمات</translation>
     </message>
     <message>
-        <source>Percentage (PH):</source>
-        <translation type="unfinished">نسبة (PH):</translation>
+      <source>Percentage (PH):</source>
+      <translation type="unfinished">النسبة المئوية (PH):</translation>
     </message>
     <message>
-        <source>Size:</source>
-        <translation type="unfinished">الحجم:</translation>
+      <source>Size:</source>
+      <translation type="unfinished">الحجم:</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>EquipmentTransferDialog</name>
     <message>
-        <source>Equipment transfer</source>
-        <translation type="unfinished">معدات نقل</translation>
+      <source>Equipment transfer</source>
+      <translation type="unfinished">نقل المعدات</translation>
     </message>
     <message>
-        <source>From:</source>
-        <translation type="unfinished">من:</translation>
+      <source>From:</source>
+      <translation type="unfinished">من:</translation>
     </message>
     <message>
-        <source>To:</source>
-        <translation type="unfinished">إلى:</translation>
+      <source>To:</source>
+      <translation type="unfinished">إلى:</translation>
     </message>
     <message>
-        <source>Equipment</source>
-        <translation type="unfinished">معدات</translation>
+      <source>Equipment</source>
+      <translation type="unfinished">المعدات</translation>
     </message>
     <message>
-        <source>Quantity</source>
-        <translation type="unfinished">كمية</translation>
+      <source>Quantity</source>
+      <translation type="unfinished">الكمية</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>SWORD</source>
-        <translation type="unfinished">SWORD</translation>
+      <source>SWORD</source>
+      <translation type="unfinished">السيف</translation>
     </message>
     <message>
-        <source>Invalid destination unit.</source>
-        <translation type="unfinished">الوجهة غير صالح الوحدة.</translation>
+      <source>Invalid destination unit.</source>
+      <translation type="unfinished">وحدة الوجهة غير صالح.</translation>
     </message>
     <message>
-        <source>Invalid equipment quantity, at least one must be &gt; 0.</source>
-        <translation type="unfinished">معدات غير صالحة الكمية، على الأقل يجب أن يكون المرء&gt; 0.</translation>
+      <source>Invalid equipment quantity, at least one must be &gt; 0.</source>
+      <translation type="unfinished">كمية المعدات غير صالحة، يجب أن يكون على الأقل أحد &gt; 0.</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>EquipmentsListView</name>
     <message>
-        <source>Equipment</source>
-        <translation type="unfinished">معدات</translation>
+      <source>Equipment</source>
+      <translation type="unfinished">المعدات</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation type="unfinished">متاح</translation>
+      <source>Available</source>
+      <translation type="unfinished">متاح</translation>
     </message>
     <message>
-        <source>Unavailable</source>
-        <translation type="unfinished">غير متاح</translation>
+      <source>Unavailable</source>
+      <translation type="unfinished">غير متوفر</translation>
     </message>
     <message>
-        <source>Repairable</source>
-        <translation type="unfinished">للإصلاح</translation>
+      <source>Repairable</source>
+      <translation type="unfinished">يمكن إصلاحها</translation>
     </message>
     <message>
-        <source>On site fixable</source>
-        <translation type="unfinished">على موقع قابل للتثبيت</translation>
+      <source>On site fixable</source>
+      <translation type="unfinished">في الموقع يمكن حلها</translation>
     </message>
     <message>
-        <source>In maintenance</source>
-        <translation type="unfinished">في الصيانة</translation>
+      <source>In maintenance</source>
+      <translation type="unfinished">في الصيانة</translation>
     </message>
     <message>
-        <source>Prisoner</source>
-        <translation type="unfinished">سجين</translation>
+      <source>Prisoner</source>
+      <translation type="unfinished">السجين</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>EventToolbar</name>
     <message>
-        <source>Messages</source>
-        <translation type="unfinished">المشاركات</translation>
+      <source>Messages</source>
+      <translation type="unfinished">رسائل</translation>
     </message>
     <message>
-        <source>Out of gas</source>
-        <translation type="unfinished">من الغاز</translation>
+      <source>Out of gas</source>
+      <translation type="unfinished">الخروج من الغاز</translation>
     </message>
     <message>
-        <source>Conflicts</source>
-        <translation type="unfinished">الصراعات</translation>
+      <source>Conflicts</source>
+      <translation type="unfinished">الصراعات</translation>
     </message>
     <message>
-        <source>%L1 pending messages</source>
-        <translation type="unfinished">L1٪ انتظار الرسائل</translation>
+      <source>%L1 pending messages</source>
+      <translation type="unfinished">% L1 انتظار الرسائل</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ExtensionsPanel</name>
     <message>
-        <source>Validate</source>
-        <translation type="unfinished">التحقق من صحة</translation>
+      <source>Validate</source>
+      <translation type="unfinished">التحقق من صحة</translation>
     </message>
     <message>
-        <source>Reset</source>
-        <translation type="unfinished">إعادة تعيين</translation>
+      <source>Reset</source>
+      <translation type="unfinished">إعادة تعيين</translation>
     </message>
     <message>
-        <source>Change extension</source>
-        <translation type="unfinished">تغيير التمديد</translation>
+      <source>Change extension</source>
+      <translation type="unfinished">قم بتغيير ملحق</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>FireCreationPanel</name>
     <message>
-        <source>Strike</source>
-        <translation type="unfinished">ضرب</translation>
+      <source>Strike</source>
+      <translation type="unfinished">الإضراب</translation>
     </message>
     <message>
-        <source>Strike order description</source>
-        <translation type="unfinished">يشتري وصف الإضراب</translation>
+      <source>Strike order description</source>
+      <translation type="unfinished">وصف ترتيب الإضراب</translation>
     </message>
     <message>
-        <source>Strike type:</source>
-        <translation type="unfinished">ضرب نوع:</translation>
+      <source>Strike type:</source>
+      <translation type="unfinished">نوع الإضراب:</translation>
     </message>
     <message>
-        <source>Strike on unit</source>
-        <translation type="unfinished">ضرب وحدة واحدة</translation>
+      <source>Strike on unit</source>
+      <translation type="unfinished">الإضراب في وحدة</translation>
     </message>
     <message>
-        <source>Strike on position</source>
-        <translation type="unfinished">ضرب وظيفة واحدة</translation>
+      <source>Strike on position</source>
+      <translation type="unfinished">الإضراب في موقف</translation>
     </message>
     <message>
-        <source>Location target:</source>
-        <translation type="unfinished">استئجار الهدف:</translation>
+      <source>Location target:</source>
+      <translation type="unfinished">موقع الهدف:</translation>
     </message>
     <message>
-        <source>---</source>
-        <translation type="unfinished">---</translation>
+      <source>---</source>
+      <translation type="unfinished">---</translation>
     </message>
     <message>
-        <source>Strike order: location target</source>
-        <translation type="unfinished">أجل الإضراب: موقع الهدف</translation>
+      <source>Strike order: location target</source>
+      <translation type="unfinished">الإضراب أمر: الموقع المستهدف</translation>
     </message>
     <message>
-        <source>Target:</source>
-        <translation type="unfinished">الهدف:</translation>
+      <source>Target:</source>
+      <translation type="unfinished">الهدف:</translation>
     </message>
     <message>
-        <source>Reporter:</source>
-        <translation type="unfinished">مراسل:</translation>
+      <source>Reporter:</source>
+      <translation type="unfinished">المحرر:</translation>
     </message>
     <message>
-        <source>Ammunition:</source>
-        <translation type="unfinished">الذخيرة:</translation>
+      <source>Ammunition:</source>
+      <translation type="unfinished">الذخيرة:</translation>
     </message>
     <message>
-        <source>Iteration:</source>
-        <translation type="unfinished">التكرار:</translation>
+      <source>Iteration:</source>
+      <translation type="unfinished">التكرار:</translation>
     </message>
     <message>
-        <source>Launch strike</source>
-        <translation type="unfinished">إطلاق الإضراب</translation>
+      <source>Launch strike</source>
+      <translation type="unfinished">الشروع في الإضراب</translation>
     </message>
     <message>
-        <source>Strike order on location</source>
-        <translation type="unfinished">أجل الهجوم على الموقع</translation>
+      <source>Strike order on location</source>
+      <translation type="unfinished">أمر الإضراب في الموقع</translation>
     </message>
     <message>
-        <source>Strike order</source>
-        <translation type="unfinished">إضراب أجل</translation>
+      <source>Strike order</source>
+      <translation type="unfinished">أمر الإضراب</translation>
     </message>
     <message>
-        <source>Strike order: reporter</source>
-        <translation type="unfinished">أجل الإضراب: مراسل</translation>
+      <source>Strike order: reporter</source>
+      <translation type="unfinished">الإضراب أمر: مراسل</translation>
     </message>
     <message>
-        <source>Strike order: unit target</source>
-        <translation type="unfinished">أجل الإضراب: هدف الوحدة</translation>
+      <source>Strike order: unit target</source>
+      <translation type="unfinished">ضرب النظام: وحدة الهدف</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>FireResultListView</name>
     <message>
-        <source>Equipments</source>
-        <translation type="unfinished">المعدات</translation>
+      <source>Equipments</source>
+      <translation type="unfinished">معدات</translation>
     </message>
     <message>
-        <source>Troops</source>
-        <translation type="unfinished">القوات</translation>
+      <source>Troops</source>
+      <translation type="unfinished">القوات</translation>
     </message>
     <message>
-        <source>Dead:</source>
-        <translation type="unfinished">الميت:</translation>
+      <source>Dead:</source>
+      <translation type="unfinished">الميت:</translation>
     </message>
     <message>
-        <source>Wounded:</source>
-        <translation type="unfinished">أصيب:</translation>
+      <source>Wounded:</source>
+      <translation type="unfinished">إصابة كل:</translation>
     </message>
     <message>
-        <source>Scattered:</source>
-        <translation type="unfinished">مبعثرة:</translation>
+      <source>Scattered:</source>
+      <translation type="unfinished">المنتشرة:</translation>
     </message>
     <message>
-        <source> (avail, unavail, repairable):</source>
-        <translation type="unfinished">(جدوى، unavail، للإصلاح)</translation>
+      <source> (avail, unavail, repairable):</source>
+      <translation type="unfinished">(الاستفادة، أونافايل، يمكن إصلاحها):</translation>
     </message>
     <message>
-        <source> (officer, warrant-off., private)</source>
-        <translation type="unfinished">(موظف، أمر حالا.، الخاص)</translation>
+      <source> (officer, warrant-off., private)</source>
+      <translation type="unfinished">(موظف، وأمر الجميع، القطاع الخاص)</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>HumansListView</name>
     <message>
-        <source>Rank</source>
-        <translation type="unfinished">ترتيب</translation>
+      <source>Rank</source>
+      <translation type="unfinished">رتبة</translation>
     </message>
     <message>
-        <source>Officer</source>
-        <translation type="unfinished">ضابط</translation>
+      <source>Officer</source>
+      <translation type="unfinished">موظف</translation>
     </message>
     <message>
-        <source>Warrant-officer</source>
-        <translation type="unfinished">أمر ضابط-</translation>
+      <source>Warrant-officer</source>
+      <translation type="unfinished">ضابط صف</translation>
     </message>
     <message>
-        <source>Private</source>
-        <translation type="unfinished">خاص</translation>
+      <source>Private</source>
+      <translation type="unfinished">القطاع الخاص</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>IndicatorExportDialog</name>
     <message>
-        <source>Impossible to create file in specified directory</source>
-        <translation type="unfinished">غير قادر على إنشاء ملف في الدليل المحدد</translation>
+      <source>Impossible to create file in specified directory</source>
+      <translation type="unfinished">من المستحيل إنشاء الملف في الدليل المحدد</translation>
     </message>
     <message>
-        <source>Can not save indicator file :</source>
-        <translation type="unfinished">لا يمكن حفظ الملف المؤشر:</translation>
+      <source>Can not save indicator file :</source>
+      <translation type="unfinished">لا يمكن حفظ الملف المؤشر:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>IndicatorPlot</name>
     <message>
-        <source>Value</source>
-        <translation type="unfinished">قيمة</translation>
+      <source>Value</source>
+      <translation type="unfinished">القيمة</translation>
     </message>
     <message>
-        <source>Time (Tick)</source>
-        <translation type="unfinished">الوقت (القراد)</translation>
+      <source>Time (Tick)</source>
+      <translation type="unfinished">الوقت (التجزئة)</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>IndicatorReports</name>
     <message>
-        <source>Create report</source>
-        <translation type="unfinished">إنشاء تقرير</translation>
+      <source>Create report</source>
+      <translation type="unfinished">إنشاء تقرير</translation>
     </message>
     <message>
-        <source>Template</source>
-        <translation type="unfinished">قالب</translation>
+      <source>Template</source>
+      <translation type="unfinished">قالب</translation>
     </message>
     <message>
-        <source>File: </source>
-        <translation type="unfinished">ملف:</translation>
+      <source>File: </source>
+      <translation type="unfinished">ملف:</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation type="unfinished">تصفح ...</translation>
+      <source>Browse...</source>
+      <translation type="unfinished">استعراض...</translation>
     </message>
     <message>
-        <source>Output</source>
-        <translation type="unfinished">إنتاج</translation>
+      <source>Output</source>
+      <translation type="unfinished">الإخراج</translation>
     </message>
     <message>
-        <source>Show generated report</source>
-        <translation type="unfinished">عرض التقرير إنشاؤها</translation>
+      <source>Show generated report</source>
+      <translation type="unfinished">إظهار التقرير الذي تم إنشاؤه</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Report template (*.html)</source>
-        <translation type="unfinished">قالب تقرير (*. الاكواد)</translation>
+      <source>Report template (*.html)</source>
+      <translation type="unfinished">قالب التقرير (*.html)</translation>
     </message>
     <message>
-        <source>Load report template file</source>
-        <translation type="unfinished">تحميل ملف قالب تقرير</translation>
+      <source>Load report template file</source>
+      <translation type="unfinished">تحميل ملف قالب التقرير</translation>
     </message>
     <message>
-        <source>Report (*.html)</source>
-        <translation type="unfinished">تقرير (*. الاكواد)</translation>
+      <source>Report (*.html)</source>
+      <translation type="unfinished">تقرير (*.html)</translation>
     </message>
     <message>
-        <source>Save report to</source>
-        <translation type="unfinished">حفظ التقرير إلى</translation>
+      <source>Save report to</source>
+      <translation type="unfinished">حفظ التقرير إلى</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Indicators</name>
     <message>
-        <source>Time</source>
-        <translation type="unfinished">مرة</translation>
+      <source>Time</source>
+      <translation type="unfinished">الوقت</translation>
     </message>
     <message>
-        <source>Export data...</source>
-        <translation type="unfinished">تصدير البيانات ...</translation>
+      <source>Export data...</source>
+      <translation type="unfinished">تصدير البيانات...</translation>
     </message>
     <message>
-        <source>Export score data...</source>
-        <translation type="unfinished">تصدير البيانات نقاط ...</translation>
+      <source>Export score data...</source>
+      <translation type="unfinished">تصدير نقاط البيانات...</translation>
     </message>
     <message>
-        <source>Create report...</source>
-        <translation type="unfinished">إنشاء التقرير ...</translation>
+      <source>Create report...</source>
+      <translation type="unfinished">إنشاء تقرير...</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>IndicatorsReports</name>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished">تحذير</translation>
+      <source>Warning</source>
+      <translation type="unfinished">تحذير</translation>
     </message>
     <message>
-        <source>The specified output file is the also the input template.
+      <source>The specified output file is the also the input template.
  Are you sure you want to overwrite the template file?</source>
-        <translation type="unfinished">ملف الإخراج المحدد هو aussi القالب الإدخال.
-  هل أنت متأكد أنك تريد الكتابة فوق ملف القالب؟</translation>
+      <translation type="unfinished">ملف الإخراج المحدد الإدخال القالب أيضا.
+ هل أنت متأكد من أنك تريد الكتابة فوق ملف القالب؟</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoCompositionDialog</name>
     <message>
-        <source>Composition</source>
-        <translation type="unfinished">تركيب</translation>
+      <source>Composition</source>
+      <translation type="unfinished">تكوين</translation>
     </message>
     <message>
-        <source>Equipments</source>
-        <translation type="unfinished">المعدات</translation>
+      <source>Equipments</source>
+      <translation type="unfinished">معدات</translation>
     </message>
     <message>
-        <source>Humans</source>
-        <translation type="unfinished">البشر</translation>
+      <source>Humans</source>
+      <translation type="unfinished">البشر</translation>
     </message>
     <message>
-        <source>Lent equipment(s)</source>
-        <translation type="unfinished">بطء معدات (ق)</translation>
+      <source>Lent equipment(s)</source>
+      <translation type="unfinished">Equipment(s) يسلف</translation>
     </message>
     <message>
-        <source>Borrowed equipment(s)</source>
-        <translation type="unfinished">اقترضت المعدات (ق)</translation>
+      <source>Borrowed equipment(s)</source>
+      <translation type="unfinished">Equipment(s) مستعارة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoDock</name>
     <message>
-        <source>Info</source>
-        <translation type="unfinished">معلومات</translation>
+      <source>Info</source>
+      <translation type="unfinished">معلومات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoEventsWidget</name>
     <message>
-        <source>Communication: jammed</source>
-        <translation type="unfinished">التشويش الاتصالات</translation>
+      <source>Communication: jammed</source>
+      <translation type="unfinished">الاتصالات: التشويش</translation>
     </message>
     <message>
-        <source>Communication: radio emitter silence</source>
-        <translation type="unfinished">الاتصالات: الصمت راديو باعث</translation>
+      <source>Communication: radio emitter silence</source>
+      <translation type="unfinished">الاتصالات: راديو باعث الصمت</translation>
     </message>
     <message>
-        <source>Communication: radio receiver silence</source>
-        <translation type="unfinished">الاتصالات: راديو الصمت استقبال</translation>
+      <source>Communication: radio receiver silence</source>
+      <translation type="unfinished">الاتصالات: الصمت جهاز استقبال راديو</translation>
     </message>
     <message>
-        <source>Communication: radar enabled</source>
-        <translation type="unfinished">الاتصالات الرادار تمكين</translation>
+      <source>Communication: radar enabled</source>
+      <translation type="unfinished">الاتصالات: رادار تمكين</translation>
     </message>
     <message>
-        <source>Communication: stealth mode</source>
-        <translation type="unfinished">الاتصالات: وضع الشبح</translation>
+      <source>Communication: stealth mode</source>
+      <translation type="unfinished">الاتصالات: وضع التخفي</translation>
     </message>
     <message>
-        <source>NBC: suit on</source>
-        <translation type="unfinished">NBC تتابع</translation>
+      <source>NBC: suit on</source>
+      <translation type="unfinished">أن بي سي: ضاغط على</translation>
     </message>
     <message>
-        <source>Underground</source>
-        <translation type="unfinished">تحت الارض</translation>
+      <source>Underground</source>
+      <translation type="unfinished">تحت الأرض</translation>
     </message>
     <message>
-        <source>Refugees handled</source>
-        <translation type="unfinished">التعامل مع اللاجئين</translation>
+      <source>Refugees handled</source>
+      <translation type="unfinished">التعامل مع اللاجئين</translation>
     </message>
     <message>
-        <source>NBC: contamination of type &apos;%1&apos; level &apos;%2&apos;</source>
-        <translation type="unfinished">NBC تلوث نوع &apos;٪ 1&apos; &apos;٪ 2&apos; مستوى</translation>
+      <source>NBC: contamination of type '%1' level '%2'</source>
+      <translation type="unfinished">أن بي سي: تلوث نوع '%1' المستوى '%2'</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoFuneralDialog</name>
     <message>
-        <source>Funeral system</source>
-        <translation type="unfinished">جنازة النظام</translation>
+      <source>Funeral system</source>
+      <translation type="unfinished">نظام جنازة</translation>
     </message>
     <message>
-        <source>Consigns</source>
-        <translation type="unfinished">يودع</translation>
+      <source>Consigns</source>
+      <translation type="unfinished">يلقي</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoMaintenanceDialog</name>
     <message>
-        <source>Maintenance system</source>
-        <translation type="unfinished">صيانة النظام</translation>
+      <source>Maintenance system</source>
+      <translation type="unfinished">صيانة النظام</translation>
     </message>
     <message>
-        <source>Consigns</source>
-        <translation type="unfinished">يودع</translation>
+      <source>Consigns</source>
+      <translation type="unfinished">يلقي</translation>
     </message>
     <message>
-        <source>Equipment availabilities</source>
-        <translation type="unfinished">معدات التوفر</translation>
+      <source>Equipment availabilities</source>
+      <translation type="unfinished">التوفر المعدات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoMedicalDialog</name>
     <message>
-        <source>Medical system</source>
-        <translation type="unfinished">نظام الطبية</translation>
+      <source>Medical system</source>
+      <translation type="unfinished">النظام الطبي</translation>
     </message>
     <message>
-        <source>Consigns</source>
-        <translation type="unfinished">يودع</translation>
+      <source>Consigns</source>
+      <translation type="unfinished">يلقي</translation>
     </message>
     <message>
-        <source>Equipment availabilities</source>
-        <translation type="unfinished">معدات التوفر</translation>
+      <source>Equipment availabilities</source>
+      <translation type="unfinished">التوفر المعدات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoStancesWidget</name>
     <message>
-        <source>Movement</source>
-        <translation type="unfinished">حركة</translation>
+      <source>Movement</source>
+      <translation type="unfinished">حركة</translation>
     </message>
     <message>
-        <source>Installation</source>
-        <translation type="unfinished">تركيب</translation>
+      <source>Installation</source>
+      <translation type="unfinished">التثبيت</translation>
     </message>
     <message>
-        <source>Stance &apos;%1&apos; at %2</source>
-        <translation type="unfinished">موقف &apos;٪ 1&apos; في 2٪</translation>
+      <source>Stance '%1' at %2</source>
+      <translation type="unfinished">موقف '%1' في %2</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoStatusWidget</name>
     <message>
-        <source>Goto parent unit</source>
-        <translation type="unfinished">انتقل الى الوالدين وحدة</translation>
+      <source>Goto parent unit</source>
+      <translation type="unfinished">الانتقال إلى وحدة الأصل</translation>
     </message>
     <message>
-        <source>morale</source>
-        <translation type="unfinished">أخلاق</translation>
+      <source>morale</source>
+      <translation type="unfinished">الآداب العامة</translation>
     </message>
     <message>
-        <source>tiredness</source>
-        <translation type="unfinished">تعب</translation>
+      <source>tiredness</source>
+      <translation type="unfinished">التعب</translation>
     </message>
     <message>
-        <source>Experience: </source>
-        <translation type="unfinished">الخبرة:</translation>
+      <source>Experience: </source>
+      <translation type="unfinished">الخبرة:</translation>
     </message>
     <message>
-        <source>Morale: </source>
-        <translation type="unfinished">أخلاقي</translation>
+      <source>Morale: </source>
+      <translation type="unfinished">الأخلاقية:</translation>
     </message>
     <message>
-        <source>Tiredness: </source>
-        <translation type="unfinished">التعب:</translation>
+      <source>Tiredness: </source>
+      <translation type="unfinished">التعب:</translation>
     </message>
     <message>
-        <source>Reinforcing unit &apos;%1&apos;.</source>
-        <translation type="unfinished">تعزيز وحدة &apos;٪ 1&apos;.</translation>
+      <source>Reinforcing unit '%1'.</source>
+      <translation type="unfinished">تعزيز الوحدة '%1'.</translation>
     </message>
     <message>
-        <source>Reinforced by: </source>
-        <translation type="unfinished">يعززه:</translation>
+      <source>Reinforced by: </source>
+      <translation type="unfinished">تعززها:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoSupplyDialog</name>
     <message>
-        <source>Supply system</source>
-        <translation type="unfinished">توريد نظام</translation>
+      <source>Supply system</source>
+      <translation type="unfinished">نظام العرض</translation>
     </message>
     <message>
-        <source>Consigns</source>
-        <translation type="unfinished">يودع</translation>
+      <source>Consigns</source>
+      <translation type="unfinished">يلقي</translation>
     </message>
     <message>
-        <source>Stocks &amp;&amp; Quotas</source>
-        <translation type="unfinished">الأسهم &amp;&amp; الحصص</translation>
+      <source>Stocks &amp;&amp; Quotas</source>
+      <translation type="unfinished">الأرصدة آند آند الحصص</translation>
     </message>
     <message>
-        <source>Transporters</source>
-        <translation type="unfinished">نقل</translation>
+      <source>Transporters</source>
+      <translation type="unfinished">الناقلون</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InfoWidget</name>
     <message>
-        <source>Reports</source>
-        <translation type="unfinished">تقارير</translation>
+      <source>Reports</source>
+      <translation type="unfinished">تقارير</translation>
     </message>
     <message>
-        <source>Conflicts</source>
-        <translation type="unfinished">الصراعات</translation>
+      <source>Conflicts</source>
+      <translation type="unfinished">الصراعات</translation>
     </message>
     <message>
-        <source>Missions</source>
-        <translation type="unfinished">البعثات</translation>
+      <source>Missions</source>
+      <translation type="unfinished">البعثات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InhabitantChangeAlertedStateDialog</name>
     <message>
-        <source>Change alert state</source>
-        <translation type="unfinished">تغيير الدولة التنبيه</translation>
+      <source>Change alert state</source>
+      <translation type="unfinished">تغيير حالة التنبيه</translation>
     </message>
     <message>
-        <source>Alerted</source>
-        <translation type="unfinished">نبهت</translation>
+      <source>Alerted</source>
+      <translation type="unfinished">نبهت</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InhabitantChangeConfinedStateDialog</name>
     <message>
-        <source>Change confine state</source>
-        <translation type="unfinished">تغيير حدود الدولة</translation>
+      <source>Change confine state</source>
+      <translation type="unfinished">تغيير حالة حصر</translation>
     </message>
     <message>
-        <source>Confined</source>
-        <translation type="unfinished">تقتصر</translation>
+      <source>Confined</source>
+      <translation type="unfinished">تقتصر</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InhabitantChangeHealthStateDialog</name>
     <message>
-        <source>New total:</source>
-        <translation type="unfinished">إجمالي جديدة:</translation>
+      <source>New total:</source>
+      <translation type="unfinished">مجموعة جديدة:</translation>
     </message>
     <message>
-        <source>Original total:</source>
-        <translation type="unfinished">مجموع الأصلي:</translation>
+      <source>Original total:</source>
+      <translation type="unfinished">الإجمالي الأصلي:</translation>
     </message>
     <message>
-        <source>Healthy:</source>
-        <translation type="unfinished">صحية:</translation>
+      <source>Healthy:</source>
+      <translation type="unfinished">صحية:</translation>
     </message>
     <message>
-        <source>Wounded:</source>
-        <translation type="unfinished">أصيب:</translation>
+      <source>Wounded:</source>
+      <translation type="unfinished">إصابة كل:</translation>
     </message>
     <message>
-        <source>Dead:</source>
-        <translation type="unfinished">الميت:</translation>
+      <source>Dead:</source>
+      <translation type="unfinished">الميت:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InhabitantExtractCrowdDialog</name>
     <message>
-        <source>Extract crowd</source>
-        <translation type="unfinished">استخراج الحشد</translation>
+      <source>Extract crowd</source>
+      <translation type="unfinished">استخراج الحشد</translation>
     </message>
     <message>
-        <source>Crowd type:</source>
-        <translation type="unfinished">الحشد نوع:</translation>
+      <source>Crowd type:</source>
+      <translation type="unfinished">نوع الحشد:</translation>
     </message>
     <message>
-        <source>Alive:</source>
-        <translation type="unfinished">على قيد الحياة:</translation>
+      <source>Alive:</source>
+      <translation type="unfinished">على قيد الحياة:</translation>
     </message>
     <message>
-        <source>Wounded:</source>
-        <translation type="unfinished">أصيب:</translation>
+      <source>Wounded:</source>
+      <translation type="unfinished">إصابة كل:</translation>
     </message>
     <message>
-        <source>Dead:</source>
-        <translation type="unfinished">الميت:</translation>
+      <source>Dead:</source>
+      <translation type="unfinished">الميت:</translation>
     </message>
     <message>
-        <source>Crowd size:</source>
-        <translation type="unfinished">الحشد الحجم:</translation>
+      <source>Crowd size:</source>
+      <translation type="unfinished">حجم الحشد:</translation>
     </message>
     <message>
-        <source>Remaining population:</source>
-        <translation type="unfinished">المتبقية السكان:</translation>
+      <source>Remaining population:</source>
+      <translation type="unfinished">تبقى من السكان:</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>InhabitantPanel</name>
     <message>
-        <source>Living area</source>
-        <translation type="unfinished">تعيش المنطقة</translation>
+      <source>Living area</source>
+      <translation type="unfinished">الذين يعيشون في المنطقة</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation type="unfinished">اسم</translation>
+      <source>Name</source>
+      <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-        <source>Resident</source>
-        <translation type="unfinished">مقيم</translation>
+      <source>Resident</source>
+      <translation type="unfinished">المقيم</translation>
     </message>
     <message>
-        <source>Angriness</source>
-        <translation type="unfinished">Angriness</translation>
+      <source>Angriness</source>
+      <translation type="unfinished">أنجرينيس</translation>
     </message>
     <message>
-        <source>Alerted</source>
-        <translation type="unfinished">نبهت</translation>
+      <source>Alerted</source>
+      <translation type="unfinished">نبهت</translation>
     </message>
     <message>
-        <source>Confined</source>
-        <translation type="unfinished">تقتصر</translation>
+      <source>Confined</source>
+      <translation type="unfinished">تقتصر</translation>
     </message>
     <message>
-        <source>Evacuated</source>
-        <translation type="unfinished">إخلاء</translation>
+      <source>Evacuated</source>
+      <translation type="unfinished">تم إجلاء</translation>
     </message>
     <message>
-        <source>Yes</source>
-        <translation type="unfinished">نعم</translation>
+      <source>Yes</source>
+      <translation type="unfinished">نعم</translation>
     </message>
     <message>
-        <source>No</source>
-        <translation type="unfinished">لا</translation>
+      <source>No</source>
+      <translation type="unfinished">لا</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>KnowledgeAddInGroupDialog</name>
     <message>
-        <source>Add to knowledge group</source>
-        <translation type="unfinished">إضافة إلى مجموعة المعرفة</translation>
+      <source>Add to knowledge group</source>
+      <translation type="unfinished">إضافة إلى مجموعة المعارف</translation>
     </message>
     <message>
-        <source>Target: </source>
-        <translation type="unfinished">الهدف:</translation>
+      <source>Target: </source>
+      <translation type="unfinished">الهدف:</translation>
     </message>
     <message>
-        <source>Perception: </source>
-        <translation type="unfinished">التصور:</translation>
+      <source>Perception: </source>
+      <translation type="unfinished">التصور:</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>KnowledgeGroupMagicOrdersInterface</name>
     <message>
-        <source>Desactivate</source>
-        <translation type="unfinished">عطل</translation>
+      <source>Desactivate</source>
+      <translation type="unfinished">ديساكتيفاتي</translation>
     </message>
     <message>
-        <source>Activate</source>
-        <translation type="unfinished">تفعيل</translation>
+      <source>Activate</source>
+      <translation type="unfinished">تنشيط</translation>
     </message>
     <message>
-        <source>Add knowledge</source>
-        <translation type="unfinished">إضافة المعرفة</translation>
+      <source>Add knowledge</source>
+      <translation type="unfinished">إضافة المعرفة</translation>
     </message>
     <message>
-        <source>Change Type</source>
-        <translation type="unfinished">تغيير نوع</translation>
+      <source>Change Type</source>
+      <translation type="unfinished">تغيير نوع</translation>
     </message>
     <message>
-        <source>Create Knowledge Group</source>
-        <translation type="unfinished">إنشاء مجموعة المعارف</translation>
+      <source>Create Knowledge Group</source>
+      <translation type="unfinished">إنشاء مجموعة المعارف</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LendingsListView</name>
     <message>
-        <source>Borrower</source>
-        <translation type="unfinished">مقترض</translation>
+      <source>Borrower</source>
+      <translation type="unfinished">المقترض</translation>
     </message>
     <message>
-        <source>Equipment</source>
-        <translation type="unfinished">معدات</translation>
+      <source>Equipment</source>
+      <translation type="unfinished">المعدات</translation>
     </message>
     <message>
-        <source>Quantity</source>
-        <translation type="unfinished">كمية</translation>
+      <source>Quantity</source>
+      <translation type="unfinished">الكمية</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LineEdit</name>
     <message>
-        <source>Checkpoint name: </source>
-        <translation type="unfinished">نقطة تفتيش الاسم:</translation>
+      <source>Checkpoint name: </source>
+      <translation type="unfinished">اسم نقطة تفتيش:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LoginDialog</name>
     <message>
-        <source>Select user profile</source>
-        <translation type="unfinished">حدد ملف تعريف المستخدم</translation>
+      <source>Select user profile</source>
+      <translation type="unfinished">حدد التشكيل الجانبي للمستخدم</translation>
     </message>
     <message>
-        <source>Please enter the password...</source>
-        <translation type="unfinished">الرجاء إدخال كلمة المرور ...</translation>
+      <source>Please enter the password...</source>
+      <translation type="unfinished">الرجاء إدخال كلمة المرور...</translation>
     </message>
     <message>
-        <source>Password: </source>
-        <translation type="unfinished">كلمة السر:</translation>
+      <source>Password: </source>
+      <translation type="unfinished">كلمة المرور:</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Anonymous</source>
-        <translation type="unfinished">مجهول</translation>
+      <source>Anonymous</source>
+      <translation type="unfinished">مجهول</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Logistic : Push supply flow</name>
     <message>
-        <source>Move waypoint up</source>
-        <translation type="unfinished">نقل إحداثية يصل</translation>
+      <source>Move waypoint up</source>
+      <translation type="unfinished">نقل إحداثية أعلى</translation>
     </message>
     <message>
-        <source>Move waypoint down</source>
-        <translation type="unfinished">الانتقال إلى أسفل إحداثية</translation>
+      <source>Move waypoint down</source>
+      <translation type="unfinished">نقل إحداثية لأسفل</translation>
     </message>
     <message>
-        <source>Delete Waypoint</source>
-        <translation type="unfinished">حذف نقطة الطريق</translation>
+      <source>Delete Waypoint</source>
+      <translation type="unfinished">حذف إحداثية</translation>
     </message>
     <message>
-        <source>Add Waypoint</source>
-        <translation type="unfinished">إضافة نقطة الطريق</translation>
+      <source>Add Waypoint</source>
+      <translation type="unfinished">إضافة إحداثية</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation type="unfinished">مورد</translation>
+      <source>Resource</source>
+      <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation type="unfinished">متاح</translation>
+      <source>Available</source>
+      <translation type="unfinished">متاح</translation>
     </message>
     <message>
-        <source>Quantity</source>
-        <translation type="unfinished">كمية</translation>
+      <source>Quantity</source>
+      <translation type="unfinished">الكمية</translation>
     </message>
     <message>
-        <source>Manual selection of transport carriers</source>
-        <translation type="unfinished">دليل شركات النقل اختيار</translation>
+      <source>Manual selection of transport carriers</source>
+      <translation type="unfinished">التحديد اليدوي لشركات النقل</translation>
     </message>
     <message>
-        <source>Type</source>
-        <translation type="unfinished">نوع</translation>
+      <source>Type</source>
+      <translation type="unfinished">نوع</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Logistic : supply flow</name>
     <message>
-        <source>Resources</source>
-        <translation type="unfinished">موارد</translation>
+      <source>Resources</source>
+      <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-        <source>Carriers</source>
-        <translation type="unfinished">شركات الطيران</translation>
+      <source>Carriers</source>
+      <translation type="unfinished">حاملات</translation>
     </message>
     <message>
-        <source>Route</source>
-        <translation type="unfinished">طريق</translation>
+      <source>Route</source>
+      <translation type="unfinished">الطريق</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LogisticConsignsWidget_ABC</name>
     <message>
-        <source>Logistic requests</source>
-        <translation type="unfinished">اللوجستية طلبات</translation>
+      <source>Logistic requests</source>
+      <translation type="unfinished">طلبات السوقي</translation>
     </message>
     <message>
-        <source>Processing consigns</source>
-        <translation type="unfinished">تجهيز يودع</translation>
+      <source>Processing consigns</source>
+      <translation type="unfinished">يلقي تجهيز</translation>
     </message>
     <message>
-        <source>Consign:</source>
-        <translation type="unfinished">ودع:</translation>
+      <source>Consign:</source>
+      <translation type="unfinished">أودع:</translation>
     </message>
     <message>
-        <source>Instruction:</source>
-        <translation type="unfinished">التعليمات:</translation>
+      <source>Instruction:</source>
+      <translation type="unfinished">التعليمات:</translation>
     </message>
     <message>
-        <source>Consumer:</source>
-        <translation type="unfinished">المستهلك:</translation>
+      <source>Consumer:</source>
+      <translation type="unfinished">المستهلك:</translation>
     </message>
     <message>
-        <source>Handler:</source>
-        <translation type="unfinished">المعالج:</translation>
+      <source>Handler:</source>
+      <translation type="unfinished">معالج:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
-        <source>Supply quotas allocation</source>
-        <translation type="unfinished">إمدادات الحصص تخصيص</translation>
+      <source>Supply quotas allocation</source>
+      <translation type="unfinished">تخصيص حصص إمدادات</translation>
     </message>
     <message>
-        <source>Target:</source>
-        <translation type="unfinished">الهدف:</translation>
+      <source>Target:</source>
+      <translation type="unfinished">الهدف:</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation type="unfinished">مورد</translation>
+      <source>Resource</source>
+      <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-        <source>Quota</source>
-        <translation type="unfinished">كوتا</translation>
+      <source>Quota</source>
+      <translation type="unfinished">حصة</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Allocate supply quotas</source>
-        <translation type="unfinished">تخصيص حصص التوريد</translation>
+      <source>Allocate supply quotas</source>
+      <translation type="unfinished">تخصيص حصص</translation>
     </message>
     <message>
-        <source>Log Supply Change Quotas</source>
-        <translation type="unfinished">توريد الحصص غير المفتاح</translation>
+      <source>Log Supply Change Quotas</source>
+      <translation type="unfinished">تسجيل تغيير حصص</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LogisticSupplyFlowDialog_ABC</name>
     <message>
-        <source>Supply flow</source>
-        <translation type="unfinished">تزويد تدفق</translation>
+      <source>Supply flow</source>
+      <translation type="unfinished">تدفق الإمدادات</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LogisticSupplyPullFlowDialog</name>
     <message>
-        <source>Pull supply flow</source>
-        <translation type="unfinished">سحب تدفق إمدادات</translation>
+      <source>Pull supply flow</source>
+      <translation type="unfinished">سحب تدفق الإمدادات</translation>
     </message>
     <message>
-        <source>Log Supply Pull Flow</source>
-        <translation type="unfinished">تسجيل سحب تدفق الإمدادات</translation>
+      <source>Log Supply Pull Flow</source>
+      <translation type="unfinished">سجل تدفق سحب الإمدادات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LogisticSupplyPushFlowDialog</name>
     <message>
-        <source>Push supply flow</source>
-        <translation type="unfinished">دفع تدفق إمدادات</translation>
+      <source>Push supply flow</source>
+      <translation type="unfinished">دفع تدفق الإمدادات</translation>
     </message>
     <message>
-        <source>Log Supply Push Flow</source>
-        <translation type="unfinished">تسجيل الدخول ادفع تدفق الإمدادات</translation>
+      <source>Log Supply Push Flow</source>
+      <translation type="unfinished">سجل العرض دفع تدفق</translation>
     </message>
     <message>
-        <source>Add recipient</source>
-        <translation type="unfinished">إضافة مستلم</translation>
+      <source>Add recipient</source>
+      <translation type="unfinished">إضافة مستلم</translation>
     </message>
     <message>
-        <source>Remove recipient</source>
-        <translation type="unfinished">إزالة الحاويات</translation>
+      <source>Remove recipient</source>
+      <translation type="unfinished">إزالة مستلم</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LogisticSupplyRecompletionDialog</name>
     <message>
-        <source>Recompletion</source>
-        <translation type="unfinished">Recompleting</translation>
+      <source>Recompletion</source>
+      <translation type="unfinished">ريكومبليشن</translation>
     </message>
     <message>
-        <source>Equipment - Crew</source>
-        <translation type="unfinished">المعدات - الطاقم</translation>
+      <source>Equipment - Crew</source>
+      <translation type="unfinished">معدات-الطاقم</translation>
     </message>
     <message>
-        <source>Equipment</source>
-        <translation type="unfinished">معدات</translation>
+      <source>Equipment</source>
+      <translation type="unfinished">المعدات</translation>
     </message>
     <message>
-        <source>Count</source>
-        <translation type="unfinished">عد</translation>
+      <source>Count</source>
+      <translation type="unfinished">العد</translation>
     </message>
     <message>
-        <source>Max</source>
-        <translation type="unfinished">ماكس</translation>
+      <source>Max</source>
+      <translation type="unfinished">ماكس</translation>
     </message>
     <message>
-        <source>Crew</source>
-        <translation type="unfinished">طاقم</translation>
+      <source>Crew</source>
+      <translation type="unfinished">الطاقم</translation>
     </message>
     <message>
-        <source>Resources</source>
-        <translation type="unfinished">موارد</translation>
+      <source>Resources</source>
+      <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-        <source>Resource</source>
-        <translation type="unfinished">مورد</translation>
+      <source>Resource</source>
+      <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-        <source>Quantity %</source>
-        <translation type="unfinished">الكمية٪</translation>
+      <source>Quantity %</source>
+      <translation type="unfinished">% الكمية</translation>
     </message>
     <message>
-        <source>Ammo</source>
-        <translation type="unfinished">ذخيرة</translation>
+      <source>Ammo</source>
+      <translation type="unfinished">الذخيرة</translation>
     </message>
     <message>
-        <source>Stocks</source>
-        <translation type="unfinished">أسهم</translation>
+      <source>Stocks</source>
+      <translation type="unfinished">الأرصدة</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>officers</source>
-        <translation type="unfinished">ضباط</translation>
+      <source>officers</source>
+      <translation type="unfinished">ضباط</translation>
     </message>
     <message>
-        <source>warrant-officers</source>
-        <translation type="unfinished">أمر ضباط-</translation>
+      <source>warrant-officers</source>
+      <translation type="unfinished">أمر الضباط</translation>
     </message>
     <message>
-        <source>private</source>
-        <translation type="unfinished">خاص</translation>
+      <source>private</source>
+      <translation type="unfinished">القطاع الخاص</translation>
     </message>
     <message>
-        <source>Partial Recovery</source>
-        <translation type="unfinished">استعادة جزئية</translation>
+      <source>Partial Recovery</source>
+      <translation type="unfinished">انتعاش جزئي</translation>
     </message>
     <message>
-        <source>Partial recompletion</source>
-        <translation type="unfinished">جزئية recompleting</translation>
+      <source>Partial recompletion</source>
+      <translation type="unfinished">ريكومبليشن جزئي</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>LogisticTreeView</name>
     <message>
-        <source>Change Logistic Links</source>
-        <translation type="unfinished">تبادل الروابط اللوجستية</translation>
+      <source>Change Logistic Links</source>
+      <translation type="unfinished">تغيير الارتباطات السوقية</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Magic orders</name>
     <message>
-        <source>Magic orders</source>
-        <translation type="unfinished">السحر أوامر</translation>
+      <source>Magic orders</source>
+      <translation type="unfinished">أوامر السحر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MagicAction</name>
     <message>
-        <source>Recover - All</source>
-        <translation type="unfinished">استرداد - جميع</translation>
+      <source>Recover - All</source>
+      <translation type="unfinished">استرداد--الجميع</translation>
     </message>
     <message>
-        <source>Recover - Troops</source>
-        <translation type="unfinished">استرداد - القوات</translation>
+      <source>Recover - Troops</source>
+      <translation type="unfinished">استرداد-القوات</translation>
     </message>
     <message>
-        <source>Recover - Equipments</source>
-        <translation type="unfinished">استرداد - معدات</translation>
+      <source>Recover - Equipments</source>
+      <translation type="unfinished">استرداد--المعدات</translation>
     </message>
     <message>
-        <source>Recover - Resources</source>
-        <translation type="unfinished">استرداد - الموارد</translation>
+      <source>Recover - Resources</source>
+      <translation type="unfinished">استرداد-الموارد</translation>
     </message>
     <message>
-        <source>Destroy - All</source>
-        <translation type="unfinished">تدمير - جميع</translation>
+      <source>Destroy - All</source>
+      <translation type="unfinished">تدمير-كل</translation>
     </message>
     <message>
-        <source>Cancel - Surrender</source>
-        <translation type="unfinished">إلغاء - استسلام</translation>
+      <source>Cancel - Surrender</source>
+      <translation type="unfinished">إلغاء الأمر--استسلام</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MainWindow</name>
     <message>
-        <source>Orbat</source>
-        <translation type="unfinished">Orbat</translation>
+      <source>Orbat</source>
+      <translation type="unfinished">أوربات</translation>
     </message>
     <message>
-        <source>Log</source>
-        <translation type="unfinished">سجل</translation>
+      <source>Log</source>
+      <translation type="unfinished">سجل</translation>
     </message>
     <message>
-        <source>Objects</source>
-        <translation type="unfinished">الأجسام</translation>
+      <source>Objects</source>
+      <translation type="unfinished">الكائنات</translation>
     </message>
     <message>
-        <source>Crowds</source>
-        <translation type="unfinished">الحشود</translation>
+      <source>Crowds</source>
+      <translation type="unfinished">الحشود</translation>
     </message>
     <message>
-        <source>Populations</source>
-        <translation type="unfinished">الناس</translation>
+      <source>Populations</source>
+      <translation type="unfinished">السكان</translation>
     </message>
     <message>
-        <source>Properties</source>
-        <translation type="unfinished">خصائص</translation>
+      <source>Properties</source>
+      <translation type="unfinished">خصائص</translation>
     </message>
     <message>
-        <source>Knowledge</source>
-        <translation type="unfinished">معرفة</translation>
+      <source>Knowledge</source>
+      <translation type="unfinished">المعرفة</translation>
     </message>
     <message>
-        <source>Profiling</source>
-        <translation type="unfinished">جانبي</translation>
+      <source>Profiling</source>
+      <translation type="unfinished">التنميط</translation>
     </message>
     <message>
-        <source>Creation</source>
-        <translation type="unfinished">خلق</translation>
+      <source>Creation</source>
+      <translation type="unfinished">إنشاء</translation>
     </message>
     <message>
-        <source>Elevation</source>
-        <translation type="unfinished">ارتفاع</translation>
+      <source>Elevation</source>
+      <translation type="unfinished">ارتفاع</translation>
     </message>
     <message>
-        <source>Raster</source>
-        <translation type="unfinished">النقطية</translation>
+      <source>Raster</source>
+      <translation type="unfinished">الشبكة</translation>
     </message>
     <message>
-        <source>Terrain</source>
-        <translation type="unfinished">حقل</translation>
+      <source>Terrain</source>
+      <translation type="unfinished">حقل</translation>
     </message>
     <message>
-        <source>Contour Lines</source>
-        <translation type="unfinished">الخطوط الكنتورية</translation>
+      <source>Contour Lines</source>
+      <translation type="unfinished">الخطوط الكنتورية</translation>
     </message>
     <message>
-        <source>Watershed</source>
-        <translation type="unfinished">نقطة تحول</translation>
+      <source>Watershed</source>
+      <translation type="unfinished">مستجمعات المياه</translation>
     </message>
     <message>
-        <source>Formations</source>
-        <translation type="unfinished">تدريب</translation>
+      <source>Formations</source>
+      <translation type="unfinished">التدريب</translation>
     </message>
     <message>
-        <source>Units</source>
-        <translation type="unfinished">الوحدات</translation>
+      <source>Units</source>
+      <translation type="unfinished">وحدات</translation>
     </message>
     <message>
-        <source>Automats</source>
-        <translation type="unfinished">الأوتوماتيكية</translation>
+      <source>Automats</source>
+      <translation type="unfinished">الدائرة</translation>
     </message>
     <message>
-        <source>Logo</source>
-        <translation type="unfinished">شعار</translation>
+      <source>Logo</source>
+      <translation type="unfinished">شعار</translation>
     </message>
     <message>
-        <source>Error loading exercise: </source>
-        <translation type="unfinished">خطأ في تحميل ممارسة:</translation>
+      <source>Error loading exercise: </source>
+      <translation type="unfinished">خطأ في تحميل التمرين:</translation>
     </message>
     <message>
-        <source> - Not connected</source>
-        <translation type="unfinished">- غير متصل</translation>
+      <source> - Not connected</source>
+      <translation type="unfinished">--غير متصل</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation type="unfinished">تحذير</translation>
+      <source>Warning</source>
+      <translation type="unfinished">تحذير</translation>
     </message>
     <message>
-        <source>This functionality is not available with old terrain format.</source>
-        <translation type="unfinished">هذا غير متوفر مع وظائف على تنسيق حقل القديمة.</translation>
+      <source>This functionality is not available with old terrain format.</source>
+      <translation type="unfinished">هذه الوظيفة غير متوفرة مع تنسيق التضاريس القديمة.</translation>
     </message>
     <message>
-        <source>Error loading image file</source>
-        <translation type="unfinished">الملف خطأ في تحميل الصور</translation>
+      <source>Error loading image file</source>
+      <translation type="unfinished">حدث خطأ أثناء تحميل ملف الصورة</translation>
     </message>
     <message>
-        <source>The following raster you add is missing spatial reference information.
-This data can&apos;t be projected.</source>
-        <translation type="unfinished">وفيما يلي قمت بإضافة المعلومات المرجعية المكانية النقطية مفقود.
-لا يمكن أن يتوقع هذه البيانات.</translation>
+      <source>The following raster you add is missing spatial reference information.
+This data can't be projected.</source>
+      <translation type="unfinished">يفتقد النقطية التالية يمكنك إضافة المعلومات المرجعية المكانية.
+لا يمكن وضع إسقاطات لهذه البيانات.</translation>
     </message>
     <message>
-        <source>The following raster you add is missing extent information.</source>
-        <translation type="unfinished">وفيما يلي قمت بإضافة حد النقطية مفقود المعلومات.</translation>
+      <source>The following raster you add is missing extent information.</source>
+      <translation type="unfinished">يفتقد النقطية التالية يمكنك إضافة قدر من المعلومات.</translation>
     </message>
     <message>
-        <source>Fatal error adding Raster source.</source>
-        <translation type="unfinished">خطأ فادح مضيفا مصدر النقطية.</translation>
+      <source>Fatal error adding Raster source.</source>
+      <translation type="unfinished">خطأ فادح: إضافة النقطية المصدر.</translation>
     </message>
     <message>
-        <source>User layer [%1]</source>
-        <translation type="unfinished">طبقة المستخدم [٪ 1]</translation>
+      <source>User layer [%1]</source>
+      <translation type="unfinished">طبقة المستخدم [%1]</translation>
     </message>
     <message>
-        <source>Error while loading Raster source.</source>
-        <translation type="unfinished">خطأ أثناء تحميل المصدر النقطية.</translation>
+      <source>Error while loading Raster source.</source>
+      <translation type="unfinished">حدث خطأ أثناء تحميل النقطية المصدر.</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MaintenanceConsignsWidget</name>
     <message>
-        <source>Equipment:</source>
-        <translation type="unfinished">المعدات:</translation>
+      <source>Equipment:</source>
+      <translation type="unfinished">المعدات:</translation>
     </message>
     <message>
-        <source>Breakdown:</source>
-        <translation type="unfinished">انهيار:</translation>
+      <source>Breakdown:</source>
+      <translation type="unfinished">تفصيل:</translation>
     </message>
     <message>
-        <source>State:</source>
-        <translation type="unfinished">الدولة:</translation>
+      <source>State:</source>
+      <translation type="unfinished">الدولة:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MaintenanceHaulersListView</name>
     <message>
-        <source>Tow trucks</source>
-        <translation type="unfinished">سحب الشاحنات</translation>
+      <source>Tow trucks</source>
+      <translation type="unfinished">شاحنات الجر</translation>
     </message>
     <message>
-        <source>Total</source>
-        <translation type="unfinished">مجموع</translation>
+      <source>Total</source>
+      <translation type="unfinished">المجموع</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation type="unfinished">متاح</translation>
+      <source>Available</source>
+      <translation type="unfinished">متاح</translation>
     </message>
     <message>
-        <source>Working</source>
-        <translation type="unfinished">عامل</translation>
+      <source>Working</source>
+      <translation type="unfinished">وتعمل</translation>
     </message>
     <message>
-        <source>Resting</source>
-        <translation type="unfinished">يستريح</translation>
+      <source>Resting</source>
+      <translation type="unfinished">يستريح</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MaintenanceRepairersListView</name>
     <message>
-        <source>Repairers</source>
-        <translation type="unfinished">المصلحون</translation>
+      <source>Repairers</source>
+      <translation type="unfinished">مصلحي</translation>
     </message>
     <message>
-        <source>Total</source>
-        <translation type="unfinished">مجموع</translation>
+      <source>Total</source>
+      <translation type="unfinished">المجموع</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation type="unfinished">متاح</translation>
+      <source>Available</source>
+      <translation type="unfinished">متاح</translation>
     </message>
     <message>
-        <source>Working</source>
-        <translation type="unfinished">عامل</translation>
+      <source>Working</source>
+      <translation type="unfinished">وتعمل</translation>
     </message>
     <message>
-        <source>Resting</source>
-        <translation type="unfinished">يستريح</translation>
+      <source>Resting</source>
+      <translation type="unfinished">يستريح</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MaintenanceStates</name>
     <message>
-        <source>Maintenance system state</source>
-        <translation type="unfinished">صيانة نظام الدولة</translation>
+      <source>Maintenance system state</source>
+      <translation type="unfinished">صيانة نظام الدولة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MedicalCapacityUpdateDialog</name>
     <message>
-        <source>Update medical capacity</source>
-        <translation type="unfinished">تحديث القدرات الطبية</translation>
+      <source>Update medical capacity</source>
+      <translation type="unfinished">تحديث القدرات الطبية</translation>
     </message>
     <message>
-        <source>MedicalTreatment Type</source>
-        <translation type="unfinished">نوع MedicalTreatment</translation>
+      <source>MedicalTreatment Type</source>
+      <translation type="unfinished">نوع ميديكالتريتمينت</translation>
     </message>
     <message>
-        <source>Hospital ID:</source>
-        <translation type="unfinished">مستشفى ID:</translation>
+      <source>Hospital ID:</source>
+      <translation type="unfinished">معرف المستشفى:</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation type="unfinished">حالة</translation>
+      <source>Status</source>
+      <translation type="unfinished">مركز</translation>
     </message>
     <message>
-        <source>Status:</source>
-        <translation type="unfinished">الحالة:</translation>
+      <source>Status:</source>
+      <translation type="unfinished">الحالة:</translation>
     </message>
     <message>
-        <source>Doctors</source>
-        <translation type="unfinished">الأطباء</translation>
+      <source>Doctors</source>
+      <translation type="unfinished">الأطباء</translation>
     </message>
     <message>
-        <source>Doctors:</source>
-        <translation type="unfinished">الأطباء:</translation>
+      <source>Doctors:</source>
+      <translation type="unfinished">الأطباء:</translation>
     </message>
     <message>
-        <source>Bed Capacities (Patients/Baseline)</source>
-        <translation type="unfinished">القدرات السرير (المرضى / خط الأساس)</translation>
+      <source>Bed Capacities (Patients/Baseline)</source>
+      <translation type="unfinished">سرير القدرات (المرضى/خط الأساس)</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MedicalCollectAmbulancesListView</name>
     <message>
-        <source>Collect ambulances</source>
-        <translation type="unfinished">جمع سيارات الإسعاف</translation>
+      <source>Collect ambulances</source>
+      <translation type="unfinished">تجميع سيارات الإسعاف</translation>
     </message>
     <message>
-        <source>Total</source>
-        <translation type="unfinished">مجموع</translation>
+      <source>Total</source>
+      <translation type="unfinished">المجموع</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation type="unfinished">متاح</translation>
+      <source>Available</source>
+      <translation type="unfinished">متاح</translation>
     </message>
     <message>
-        <source>Working</source>
-        <translation type="unfinished">عامل</translation>
+      <source>Working</source>
+      <translation type="unfinished">وتعمل</translation>
     </message>
     <message>
-        <source>Resting</source>
-        <translation type="unfinished">يستريح</translation>
+      <source>Resting</source>
+      <translation type="unfinished">يستريح</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MedicalConsignsWidget</name>
     <message>
-        <source>Injury:</source>
-        <translation type="unfinished">إصابة:</translation>
+      <source>Injury:</source>
+      <translation type="unfinished">الإصابة:</translation>
     </message>
     <message>
-        <source>Mentally injured:</source>
-        <translation type="unfinished">أصيب عقليا:</translation>
+      <source>Mentally injured:</source>
+      <translation type="unfinished">أصيب عقلياً:</translation>
     </message>
     <message>
-        <source>NBC contaminated:</source>
-        <translation type="unfinished">NBC الملوثة:</translation>
+      <source>NBC contaminated:</source>
+      <translation type="unfinished">أن بي سي الملوثة:</translation>
     </message>
     <message>
-        <source>State:</source>
-        <translation type="unfinished">الدولة:</translation>
+      <source>State:</source>
+      <translation type="unfinished">الدولة:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MedicalDoctorsListView</name>
     <message>
-        <source>Doctors</source>
-        <translation type="unfinished">الأطباء</translation>
+      <source>Doctors</source>
+      <translation type="unfinished">الأطباء</translation>
     </message>
     <message>
-        <source>Total</source>
-        <translation type="unfinished">مجموع</translation>
+      <source>Total</source>
+      <translation type="unfinished">المجموع</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation type="unfinished">متاح</translation>
+      <source>Available</source>
+      <translation type="unfinished">متاح</translation>
     </message>
     <message>
-        <source>Working</source>
-        <translation type="unfinished">عامل</translation>
+      <source>Working</source>
+      <translation type="unfinished">وتعمل</translation>
     </message>
     <message>
-        <source>Resting</source>
-        <translation type="unfinished">يستريح</translation>
+      <source>Resting</source>
+      <translation type="unfinished">يستريح</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MedicalReliefAmbulancesListView</name>
     <message>
-        <source>Relief ambulances</source>
-        <translation type="unfinished">الإغاثة سيارات الإسعاف</translation>
+      <source>Relief ambulances</source>
+      <translation type="unfinished">سيارات الإسعاف في الإغاثة</translation>
     </message>
     <message>
-        <source>Total</source>
-        <translation type="unfinished">مجموع</translation>
+      <source>Total</source>
+      <translation type="unfinished">المجموع</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation type="unfinished">متاح</translation>
+      <source>Available</source>
+      <translation type="unfinished">متاح</translation>
     </message>
     <message>
-        <source>Working</source>
-        <translation type="unfinished">عامل</translation>
+      <source>Working</source>
+      <translation type="unfinished">وتعمل</translation>
     </message>
     <message>
-        <source>Resting</source>
-        <translation type="unfinished">يستريح</translation>
+      <source>Resting</source>
+      <translation type="unfinished">يستريح</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MedicalStates</name>
     <message>
-        <source>Medical system state</source>
-        <translation type="unfinished">الطبية نظام الدولة</translation>
+      <source>Medical system state</source>
+      <translation type="unfinished">حالة النظام الطبي</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Menu</name>
     <message>
-        <source>&amp;Quit</source>
-        <translation type="unfinished">وإنهاء</translation>
+      <source>&amp;Quit</source>
+      <translation type="unfinished">آند قم بإنهاء</translation>
     </message>
     <message>
-        <source>&amp;File</source>
-        <translation type="unfinished">&amp; ملف</translation>
+      <source>&amp;File</source>
+      <translation type="unfinished">آند الملف</translation>
     </message>
     <message>
-        <source>Units toolbar</source>
-        <translation type="unfinished">وحدات شريط الأدوات</translation>
+      <source>Units toolbar</source>
+      <translation type="unfinished">شريط أدوات وحدات</translation>
     </message>
     <message>
-        <source>Vision lines</source>
-        <translation type="unfinished">رؤية خطوط</translation>
+      <source>Vision lines</source>
+      <translation type="unfinished">خطوط الرؤية</translation>
     </message>
     <message>
-        <source>Vision cones</source>
-        <translation type="unfinished">رؤية مخاريط</translation>
+      <source>Vision cones</source>
+      <translation type="unfinished">الرؤية والأقماع</translation>
     </message>
     <message>
-        <source>Vision surfaces</source>
-        <translation type="unfinished">رؤية السطوح</translation>
+      <source>Vision surfaces</source>
+      <translation type="unfinished">رؤية الأسطح</translation>
     </message>
     <message>
-        <source>Weapon ranges</source>
-        <translation type="unfinished">سلاح النطاقات</translation>
+      <source>Weapon ranges</source>
+      <translation type="unfinished">نطاقات سلاح</translation>
     </message>
     <message>
-        <source>Efficient Range</source>
-        <translation type="unfinished">متوسط كفاءة</translation>
+      <source>Efficient Range</source>
+      <translation type="unfinished">مجموعة فعالة</translation>
     </message>
     <message>
-        <source>Routes</source>
-        <translation type="unfinished">الطرق</translation>
+      <source>Routes</source>
+      <translation type="unfinished">طرق</translation>
     </message>
     <message>
-        <source>Covered routes</source>
-        <translation type="unfinished">غطت الطرق</translation>
+      <source>Covered routes</source>
+      <translation type="unfinished">الطرق المغطاة</translation>
     </message>
     <message>
-        <source>Direction</source>
-        <translation type="unfinished">اتجاه</translation>
+      <source>Direction</source>
+      <translation type="unfinished">الاتجاه</translation>
     </message>
     <message>
-        <source>Convex hulls</source>
-        <translation type="unfinished">محدب أجسام</translation>
+      <source>Convex hulls</source>
+      <translation type="unfinished">أجسام محدبة</translation>
     </message>
     <message>
-        <source>Current Mission</source>
-        <translation type="unfinished">بعثة الحالي</translation>
+      <source>Current Mission</source>
+      <translation type="unfinished">البعثة الحالية</translation>
     </message>
     <message>
-        <source>Decisional State</source>
-        <translation type="unfinished">في اتخاذ القرارات والدولة</translation>
+      <source>Decisional State</source>
+      <translation type="unfinished">الدولة معلقون</translation>
     </message>
     <message>
-        <source>Units...</source>
-        <translation type="unfinished">وحدات ...</translation>
+      <source>Units...</source>
+      <translation type="unfinished">وحدات...</translation>
     </message>
     <message>
-        <source>Logistics toolbar</source>
-        <translation type="unfinished">شريط الأدوات اللوجستية</translation>
+      <source>Logistics toolbar</source>
+      <translation type="unfinished">شريط الأدوات اللوجستية</translation>
     </message>
     <message>
-        <source>Links</source>
-        <translation type="unfinished">روابط</translation>
+      <source>Links</source>
+      <translation type="unfinished">روابط</translation>
     </message>
     <message>
-        <source>Missing links</source>
-        <translation type="unfinished">الحلقات المفقودة</translation>
+      <source>Missing links</source>
+      <translation type="unfinished">روابط مفقودة</translation>
     </message>
     <message>
-        <source>Real time actions</source>
-        <translation type="unfinished">الأسهم في الوقت الحقيقي</translation>
+      <source>Real time actions</source>
+      <translation type="unfinished">الإجراءات في الوقت الحقيقي</translation>
     </message>
     <message>
-        <source>Resource networks</source>
-        <translation type="unfinished">الموارد شبكات</translation>
+      <source>Resource networks</source>
+      <translation type="unfinished">شبكات للموارد</translation>
     </message>
     <message>
-        <source>On</source>
-        <translation type="unfinished">نحن</translation>
+      <source>On</source>
+      <translation type="unfinished">على</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation type="unfinished">بعيدا</translation>
+      <source>Off</source>
+      <translation type="unfinished">قبالة</translation>
     </message>
     <message>
-        <source>Selected: all links</source>
-        <translation type="unfinished">المختارة: جميع الروابط</translation>
+      <source>Selected: all links</source>
+      <translation type="unfinished">المحددة: كافة الارتباطات</translation>
     </message>
     <message>
-        <source>Selected: outgoing links</source>
-        <translation type="unfinished">المختارة: روابط المنتهية ولايته</translation>
+      <source>Selected: outgoing links</source>
+      <translation type="unfinished">المحددة: المنتهية ولايته الروابط</translation>
     </message>
     <message>
-        <source>Logistic...</source>
-        <translation type="unfinished">اللوجستية ...</translation>
+      <source>Logistic...</source>
+      <translation type="unfinished">السوقي...</translation>
     </message>
     <message>
-        <source>Terrain toolbar</source>
-        <translation type="unfinished">الأراضي شريط الأدوات</translation>
+      <source>Terrain toolbar</source>
+      <translation type="unfinished">شريط الأدوات التضاريس</translation>
     </message>
     <message>
-        <source>Small texts</source>
-        <translation type="unfinished">النصوص الصغيرة</translation>
+      <source>Small texts</source>
+      <translation type="unfinished">نصوص صغيرة</translation>
     </message>
     <message>
-        <source>Large texts</source>
-        <translation type="unfinished">نصوص كبيرة</translation>
+      <source>Large texts</source>
+      <translation type="unfinished">النصوص الكبيرة</translation>
     </message>
     <message>
-        <source>Tactical lines</source>
-        <translation type="unfinished">خطوط التكتيكية</translation>
+      <source>Tactical lines</source>
+      <translation type="unfinished">خطوط التكتيكية</translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation type="unfinished">حالة الطقس</translation>
+      <source>Weather</source>
+      <translation type="unfinished">الطقس</translation>
     </message>
     <message>
-        <source>Grid</source>
-        <translation type="unfinished">شبكة</translation>
+      <source>Grid</source>
+      <translation type="unfinished">الشبكة</translation>
     </message>
     <message>
-        <source>100m</source>
-        <translation type="unfinished">100M</translation>
+      <source>100m</source>
+      <translation type="unfinished">100 متر</translation>
     </message>
     <message>
-        <source>250m</source>
-        <translation type="unfinished">250M</translation>
+      <source>250m</source>
+      <translation type="unfinished">250 م</translation>
     </message>
     <message>
-        <source>500m</source>
-        <translation type="unfinished">500M</translation>
+      <source>500m</source>
+      <translation type="unfinished">500 م</translation>
     </message>
     <message>
-        <source>1km</source>
-        <translation type="unfinished">1km</translation>
+      <source>1km</source>
+      <translation type="unfinished">1 كم</translation>
     </message>
     <message>
-        <source>2.5km</source>
-        <translation type="unfinished">2.5km</translation>
+      <source>2.5km</source>
+      <translation type="unfinished">2.5 كيلو متر</translation>
     </message>
     <message>
-        <source>5km</source>
-        <translation type="unfinished">5KM</translation>
+      <source>5km</source>
+      <translation type="unfinished">5 كم</translation>
     </message>
     <message>
-        <source>10km</source>
-        <translation type="unfinished">10km</translation>
+      <source>10km</source>
+      <translation type="unfinished">على بعد 10 كم</translation>
     </message>
     <message>
-        <source>Population</source>
-        <translation type="unfinished">سكان</translation>
+      <source>Population</source>
+      <translation type="unfinished">السكان</translation>
     </message>
     <message>
-        <source>Show population display tool</source>
-        <translation type="unfinished">أداة عرض الشاشة السكان</translation>
+      <source>Show population display tool</source>
+      <translation type="unfinished">إظهار أداة العرض السكان</translation>
     </message>
     <message>
-        <source>Terrain...</source>
-        <translation type="unfinished">حقل ...</translation>
+      <source>Terrain...</source>
+      <translation type="unfinished">الحقل...</translation>
     </message>
     <message>
-        <source>2D</source>
-        <translation type="unfinished">2D</translation>
+      <source>2D</source>
+      <translation type="unfinished">2D</translation>
     </message>
     <message>
-        <source>3D</source>
-        <translation type="unfinished">3D</translation>
+      <source>3D</source>
+      <translation type="unfinished">3D</translation>
     </message>
     <message>
-        <source>Display mode</source>
-        <translation type="unfinished">عرض الوضع</translation>
+      <source>Display mode</source>
+      <translation type="unfinished">وضع العرض</translation>
     </message>
     <message>
-        <source>Toggle fullscreen mode</source>
-        <translation type="unfinished">تبديل وضع ملء الشاشة</translation>
+      <source>Toggle fullscreen mode</source>
+      <translation type="unfinished">تبديل وضع ملء الشاشة</translation>
     </message>
     <message>
-        <source>Toggle dock windows</source>
-        <translation type="unfinished">تبديل النوافذ قفص الاتهام</translation>
+      <source>Toggle dock windows</source>
+      <translation type="unfinished">تبديل windows قفص الاتهام</translation>
     </message>
     <message>
-        <source>&amp;Preferences...</source>
-        <translation type="unfinished">وتفضيلات ...</translation>
+      <source>&amp;Preferences...</source>
+      <translation type="unfinished">آند تفضيلات...</translation>
     </message>
     <message>
-        <source>&amp;Display</source>
-        <translation type="unfinished">وعرض</translation>
+      <source>&amp;Display</source>
+      <translation type="unfinished">آند عرض</translation>
     </message>
     <message>
-        <source>Profiles...</source>
-        <translation type="unfinished">ملامح ...</translation>
+      <source>Profiles...</source>
+      <translation type="unfinished">التشكيلات الجانبية...</translation>
     </message>
     <message>
-        <source>Profi&amp;les</source>
-        <translation type="unfinished">وعلى بروفي</translation>
+      <source>Profi&amp;les</source>
+      <translation type="unfinished">بروفي &amp;amp;</translation>
     </message>
     <message>
-        <source>&amp;Exercise</source>
-        <translation type="unfinished">والتمارين الرياضية</translation>
+      <source>&amp;Exercise</source>
+      <translation type="unfinished">آند ممارسة</translation>
     </message>
     <message>
-        <source>&amp;Windows</source>
-        <translation type="unfinished">ويندوز</translation>
+      <source>&amp;Windows</source>
+      <translation type="unfinished">آند Windows</translation>
     </message>
     <message>
-        <source>Help</source>
-        <translation type="unfinished">مساعدة</translation>
+      <source>Help</source>
+      <translation type="unfinished">تعليمات</translation>
     </message>
     <message>
-        <source>About</source>
-        <translation type="unfinished">حول</translation>
+      <source>About</source>
+      <translation type="unfinished">حول</translation>
     </message>
     <message>
-        <source>&amp;?</source>
-        <translation type="unfinished">و؟</translation>
+      <source>&amp;?</source>
+      <translation type="unfinished">&amp;?</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>MissionPanel</name>
     <message>
-        <source>Mission</source>
-        <translation type="unfinished">بعثة</translation>
+      <source>Mission</source>
+      <translation type="unfinished">البعثة</translation>
     </message>
     <message>
-        <source>Agent missions</source>
-        <translation type="unfinished">وكيل البعثات</translation>
+      <source>Agent missions</source>
+      <translation type="unfinished">وكيل البعثات</translation>
     </message>
     <message>
-        <source>Automat missions</source>
-        <translation type="unfinished">بعثة الآلي</translation>
+      <source>Automat missions</source>
+      <translation type="unfinished">بعثات [اوتومت]</translation>
     </message>
     <message>
-        <source>Engage</source>
-        <translation type="unfinished">جذب</translation>
+      <source>Engage</source>
+      <translation type="unfinished">الدخول</translation>
     </message>
     <message>
-        <source>Disengage</source>
-        <translation type="unfinished">فك</translation>
+      <source>Disengage</source>
+      <translation type="unfinished">فك الارتباط</translation>
     </message>
     <message>
-        <source>Crowd missions</source>
-        <translation type="unfinished">حشد البعثات</translation>
+      <source>Crowd missions</source>
+      <translation type="unfinished">البعثات الحشد</translation>
     </message>
     <message>
-        <source>Fragmentary orders</source>
-        <translation type="unfinished">مجزأة أوامر</translation>
+      <source>Fragmentary orders</source>
+      <translation type="unfinished">أوامر مجزأ</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>NoteDialog</name>
     <message>
-        <source>Create note</source>
-        <translation type="unfinished">إنشاء ملاحظات</translation>
+      <source>Create note</source>
+      <translation type="unfinished">إنشاء ملاحظة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Notes</name>
     <message>
-        <source>Value</source>
-        <translation type="unfinished">قيمة</translation>
+      <source>Value</source>
+      <translation type="unfinished">القيمة</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation type="unfinished">اسم</translation>
+      <source>Name</source>
+      <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-        <source>Text</source>
-        <translation type="unfinished">نص</translation>
+      <source>Text</source>
+      <translation type="unfinished">نص</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Notations</source>
-        <translation type="unfinished">الترميزات</translation>
+      <source>Notations</source>
+      <translation type="unfinished">تدوينات</translation>
     </message>
     <message>
-        <source>Tree</source>
-        <translation type="unfinished">شجرة</translation>
+      <source>Tree</source>
+      <translation type="unfinished">شجرة</translation>
     </message>
     <message>
-        <source>Creation Date</source>
-        <translation type="unfinished">تاريخ الإنشاء</translation>
+      <source>Creation Date</source>
+      <translation type="unfinished">تاريخ الإنشاء</translation>
     </message>
     <message>
-        <source>Last Update</source>
-        <translation type="unfinished">آخر تحديث</translation>
+      <source>Last Update</source>
+      <translation type="unfinished">آخر تحديث</translation>
     </message>
     <message>
-        <source>Current note edited has been deleted</source>
-        <translation type="unfinished">لقد تم حذف التصنيف الحالي تحريرها</translation>
+      <source>Current note edited has been deleted</source>
+      <translation type="unfinished">تم حذف الملاحظة الحالية تحرير</translation>
     </message>
     <message>
-        <source>The current note edited will be recreated</source>
-        <translation type="unfinished">فإن التصويت الحالي أن تعدل صوغه</translation>
+      <source>The current note edited will be recreated</source>
+      <translation type="unfinished">سيتم إعادة إنشاء الملاحظة الحالية تحرير</translation>
     </message>
     <message>
-        <source>Update note</source>
-        <translation type="unfinished">تحديث تلاحظ</translation>
+      <source>Update note</source>
+      <translation type="unfinished">ملاحظة التحديث</translation>
     </message>
     <message>
-        <source>Delete note</source>
-        <translation type="unfinished">حذف الملاحظات</translation>
+      <source>Delete note</source>
+      <translation type="unfinished">حذف ملاحظة</translation>
     </message>
     <message>
-        <source>Add note</source>
-        <translation type="unfinished">إضافة ملاحظة</translation>
+      <source>Add note</source>
+      <translation type="unfinished">إضافة ملاحظة</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete this note and its children?</source>
-        <translation type="unfinished">هل أنت متأكد أنك تريد حذف هذه المذكرة والأطفال تكنولوجيا المعلومات والاتصالات؟</translation>
+      <source>Are you sure you want to delete this note and its children?</source>
+      <translation type="unfinished">هل أنت متأكد من أنك تريد حذف هذه المذكرة وأطفاله؟</translation>
     </message>
     <message>
-        <source>Yes</source>
-        <translation type="unfinished">نعم</translation>
+      <source>Yes</source>
+      <translation type="unfinished">نعم</translation>
     </message>
     <message>
-        <source>No</source>
-        <translation type="unfinished">لا</translation>
+      <source>No</source>
+      <translation type="unfinished">لا</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ObjectCreationPanel</name>
     <message>
-        <source>Objects</source>
-        <translation type="unfinished">الأجسام</translation>
+      <source>Objects</source>
+      <translation type="unfinished">الكائنات</translation>
     </message>
     <message>
-        <source>Create</source>
-        <translation type="unfinished">خلق</translation>
+      <source>Create</source>
+      <translation type="unfinished">إنشاء</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ObjectKnowledgePanel</name>
     <message>
-        <source>Object knowledges</source>
-        <translation type="unfinished">كائن knowledges</translation>
+      <source>Object knowledges</source>
+      <translation type="unfinished">Knowledges الكائن</translation>
     </message>
     <message>
-        <source>Known objects</source>
-        <translation type="unfinished">المعروفة الأجسام</translation>
+      <source>Known objects</source>
+      <translation type="unfinished">الكائنات المعروفة</translation>
     </message>
     <message>
-        <source>Agent</source>
-        <translation type="unfinished">وكيل</translation>
+      <source>Agent</source>
+      <translation type="unfinished">وكيل</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ObjectMagicOrdersInterface</name>
     <message>
-        <source>Build</source>
-        <translation type="unfinished">بناء</translation>
+      <source>Build</source>
+      <translation type="unfinished">بناء</translation>
     </message>
     <message>
-        <source>Destroy</source>
-        <translation type="unfinished">هدم</translation>
+      <source>Destroy</source>
+      <translation type="unfinished">تدمير</translation>
     </message>
     <message>
-        <source>Mine</source>
-        <translation type="unfinished">منجم</translation>
+      <source>Mine</source>
+      <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
     </message>
     <message>
-        <source>Sweep mines</source>
-        <translation type="unfinished">اكتساح الألغام</translation>
+      <source>Sweep mines</source>
+      <translation type="unfinished">اكتساح الألغام</translation>
     </message>
     <message>
-        <source>Deactivate reserved obstacle</source>
-        <translation type="unfinished">إيقاف عقبة محفوظة</translation>
+      <source>Deactivate reserved obstacle</source>
+      <translation type="unfinished">إلغاء تنشيط عقبة المحجوزة</translation>
     </message>
     <message>
-        <source>Activate reserved obstacle</source>
-        <translation type="unfinished">تفعيل عقبة محفوظة</translation>
+      <source>Activate reserved obstacle</source>
+      <translation type="unfinished">تنشيط عقبة المحجوزة</translation>
     </message>
     <message>
-        <source>Deactivate exit</source>
-        <translation type="unfinished">تعطيل الخروج</translation>
+      <source>Deactivate exit</source>
+      <translation type="unfinished">إلغاء تنشيط الخروج</translation>
     </message>
     <message>
-        <source>Activate exit</source>
-        <translation type="unfinished">تنشيط خروج</translation>
+      <source>Activate exit</source>
+      <translation type="unfinished">تنشيط الخروج</translation>
     </message>
     <message>
-        <source>Limit Trafficability</source>
-        <translation type="unfinished">الحد Trafficability</translation>
+      <source>Limit Trafficability</source>
+      <translation type="unfinished">ترافيكابيليتي الحد</translation>
     </message>
     <message>
-        <source>Change Urban state</source>
-        <translation type="unfinished">تغيير حالة الحضرية</translation>
+      <source>Change Urban state</source>
+      <translation type="unfinished">تغيير حالة الحضري</translation>
     </message>
     <message>
-        <source>Alert</source>
-        <translation type="unfinished">إنذار</translation>
+      <source>Alert</source>
+      <translation type="unfinished">تنبيه</translation>
     </message>
     <message>
-        <source>Stop alert</source>
-        <translation type="unfinished">وقف تنبيه</translation>
+      <source>Stop alert</source>
+      <translation type="unfinished">إيقاف التنبيه</translation>
     </message>
     <message>
-        <source>Confine</source>
-        <translation type="unfinished">حبس</translation>
+      <source>Confine</source>
+      <translation type="unfinished">الحدود</translation>
     </message>
     <message>
-        <source>Stop confine</source>
-        <translation type="unfinished">وقف الحدود</translation>
+      <source>Stop confine</source>
+      <translation type="unfinished">إيقاف الحدود</translation>
     </message>
     <message>
-        <source>Evacuate</source>
-        <translation type="unfinished">إخلاء</translation>
+      <source>Evacuate</source>
+      <translation type="unfinished">إخلاء</translation>
     </message>
     <message>
-        <source>Stop evacuate</source>
-        <translation type="unfinished">وقف إخلاء</translation>
+      <source>Stop evacuate</source>
+      <translation type="unfinished">وقف إجلاء</translation>
     </message>
     <message>
-        <source>Change Threshold</source>
-        <translation type="unfinished">تغيير عتبة</translation>
+      <source>Change Threshold</source>
+      <translation type="unfinished">عتبة التغيير</translation>
     </message>
     <message>
-        <source>Disable</source>
-        <translation type="unfinished">تعطيل</translation>
+      <source>Disable</source>
+      <translation type="unfinished">تعطيل</translation>
     </message>
     <message>
-        <source>Enable</source>
-        <translation type="unfinished">تمكين</translation>
+      <source>Enable</source>
+      <translation type="unfinished">تمكين</translation>
     </message>
     <message>
-        <source>Type-in value then press &apos;Enter&apos;</source>
-        <translation type="unfinished">نوع في القيمة ثم اضغط &apos;أدخل&apos;</translation>
+      <source>Type-in value then press 'Enter'</source>
+      <translation type="unfinished">في نوع القيمة ثم اضغط 'Enter'</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ObjectReportPanel</name>
     <message>
-        <source>Reports</source>
-        <translation type="unfinished">تقارير</translation>
+      <source>Reports</source>
+      <translation type="unfinished">تقارير</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ObjectStateDialog</name>
     <message>
-        <source>Change object state</source>
-        <translation type="unfinished">تغيير الدولة الكائن</translation>
+      <source>Change object state</source>
+      <translation type="unfinished">تغيير حالة الكائن</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Construction:</source>
-        <translation type="unfinished">البناء:</translation>
+      <source>Construction:</source>
+      <translation type="unfinished">البناء:</translation>
     </message>
     <message>
-        <source>Mining:</source>
-        <translation type="unfinished">التعدين:</translation>
+      <source>Mining:</source>
+      <translation type="unfinished">التعدين:</translation>
     </message>
     <message>
-        <source>Bypass:</source>
-        <translation type="unfinished">تجاوز:</translation>
+      <source>Bypass:</source>
+      <translation type="unfinished">الالتفافية:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>OrbatDockWidget</name>
     <message>
-        <source>Tactical</source>
-        <translation type="unfinished">تكتيكي</translation>
+      <source>Tactical</source>
+      <translation type="unfinished">التكتيكية</translation>
     </message>
     <message>
-        <source>Communication</source>
-        <translation type="unfinished">اتصالات</translation>
+      <source>Communication</source>
+      <translation type="unfinished">الاتصالات</translation>
     </message>
     <message>
-        <source>Objects</source>
-        <translation type="unfinished">الأجسام</translation>
+      <source>Objects</source>
+      <translation type="unfinished">الكائنات</translation>
     </message>
     <message>
-        <source>Crowds</source>
-        <translation type="unfinished">الحشود</translation>
+      <source>Crowds</source>
+      <translation type="unfinished">الحشود</translation>
     </message>
     <message>
-        <source>Populations</source>
-        <translation type="unfinished">الناس</translation>
+      <source>Populations</source>
+      <translation type="unfinished">السكان</translation>
     </message>
     <message>
-        <source>Logistic</source>
-        <translation type="unfinished">سوقي</translation>
+      <source>Logistic</source>
+      <translation type="unfinished">السوقي</translation>
     </message>
     <message>
-        <source>Units</source>
-        <translation type="unfinished">الوحدات</translation>
+      <source>Units</source>
+      <translation type="unfinished">وحدات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>OrbatPanel</name>
     <message>
-        <source>Operational state color</source>
-        <translation type="unfinished">لون التشغيلية الدولة</translation>
+      <source>Operational state color</source>
+      <translation type="unfinished">لون الدولة التنفيذية</translation>
     </message>
     <message>
-        <source>Neutralized:</source>
-        <translation type="unfinished">تحييد:</translation>
+      <source>Neutralized:</source>
+      <translation type="unfinished">تحييد:</translation>
     </message>
     <message>
-        <source>Tactically destroyed:</source>
-        <translation type="unfinished">دمرت الناحية التكتيكية:</translation>
+      <source>Tactically destroyed:</source>
+      <translation type="unfinished">تكتيكيا دمرت:</translation>
     </message>
     <message>
-        <source>Totally destroyed:</source>
-        <translation type="unfinished">دمرت تماما:</translation>
+      <source>Totally destroyed:</source>
+      <translation type="unfinished">دمرت تماما:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>OrbatToolbar</name>
     <message>
-        <source>Remove filter</source>
-        <translation type="unfinished">إزالة تصفية</translation>
+      <source>Remove filter</source>
+      <translation type="unfinished">إزالة عامل تصفية</translation>
     </message>
     <message>
-        <source>Filter view</source>
-        <translation type="unfinished">مرشح الشخصي</translation>
+      <source>Filter view</source>
+      <translation type="unfinished">عامل تصفية طريقة عرض</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Parameter</name>
     <message>
-        <source>Parameter</source>
-        <translation type="unfinished">المعلمة</translation>
+      <source>Parameter</source>
+      <translation type="unfinished">المعلمة</translation>
     </message>
     <message>
-        <source>Value</source>
-        <translation type="unfinished">قيمة</translation>
+      <source>Value</source>
+      <translation type="unfinished">القيمة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PlanificationModePanel</name>
     <message>
-        <source>Planification mode</source>
-        <translation type="unfinished">طريقة التخطيط</translation>
+      <source>Planification mode</source>
+      <translation type="unfinished">وضع التخطيط</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PopulationChangeHealthStateDialog</name>
     <message>
-        <source>Healthy:</source>
-        <translation type="unfinished">صحية:</translation>
+      <source>Healthy:</source>
+      <translation type="unfinished">صحية:</translation>
     </message>
     <message>
-        <source>Wounded:</source>
-        <translation type="unfinished">أصيب:</translation>
+      <source>Wounded:</source>
+      <translation type="unfinished">إصابة كل:</translation>
     </message>
     <message>
-        <source>Contaminated:</source>
-        <translation type="unfinished">الملوثة:</translation>
+      <source>Contaminated:</source>
+      <translation type="unfinished">الملوثة:</translation>
     </message>
     <message>
-        <source>Dead:</source>
-        <translation type="unfinished">الميت:</translation>
+      <source>Dead:</source>
+      <translation type="unfinished">الميت:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PopulationKnowledgePanel</name>
     <message>
-        <source>Crowd knowledges</source>
-        <translation type="unfinished">الحشد knowledges</translation>
+      <source>Crowd knowledges</source>
+      <translation type="unfinished">Knowledges الحشد</translation>
     </message>
     <message>
-        <source>Known crowds</source>
-        <translation type="unfinished">المعروفة الحشود</translation>
+      <source>Known crowds</source>
+      <translation type="unfinished">حشود المعروفة</translation>
     </message>
     <message>
-        <source>Details</source>
-        <translation type="unfinished">تفاصيل</translation>
+      <source>Details</source>
+      <translation type="unfinished">تفاصيل</translation>
     </message>
     <message>
-        <source>Concentration</source>
-        <translation type="unfinished">تركيز</translation>
+      <source>Concentration</source>
+      <translation type="unfinished">تركيز</translation>
     </message>
     <message>
-        <source>Flow</source>
-        <translation type="unfinished">تدفق</translation>
+      <source>Flow</source>
+      <translation type="unfinished">تدفق</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PopulationMagicOrdersInterface</name>
     <message>
-        <source>Teleport</source>
-        <translation type="unfinished">النقل الفضائي</translation>
+      <source>Teleport</source>
+      <translation type="unfinished">النقل الفضائي</translation>
     </message>
     <message>
-        <source>Kill all</source>
-        <translation type="unfinished">قتل جميع</translation>
+      <source>Kill all</source>
+      <translation type="unfinished">قتل جميع</translation>
     </message>
     <message>
-        <source>Change armed individuals:</source>
-        <translation type="unfinished">تغيير الأفراد المسلحين:</translation>
+      <source>Change armed individuals:</source>
+      <translation type="unfinished">تغيير الأفراد المسلحة:</translation>
     </message>
     <message>
-        <source>Change crowd attitude</source>
-        <translation type="unfinished">تغيير موقف الحشد</translation>
+      <source>Change crowd attitude</source>
+      <translation type="unfinished">تغير موقف الحشد</translation>
     </message>
     <message>
-        <source>Crowd Total Destruction</source>
-        <translation type="unfinished">تدمير الحشد إجمالي</translation>
+      <source>Crowd Total Destruction</source>
+      <translation type="unfinished">التدمير التام الحشد</translation>
     </message>
     <message>
-        <source>Reload brain</source>
-        <translation type="unfinished">تحديث الدماغ</translation>
+      <source>Reload brain</source>
+      <translation type="unfinished">إعادة تحميل الدماغ</translation>
     </message>
     <message>
-        <source>Crowd Change Armed Individuals</source>
-        <translation type="unfinished">تغيير الأفراد الحشد المسلحة</translation>
+      <source>Crowd Change Armed Individuals</source>
+      <translation type="unfinished">التغيير حشد أفراد مسلحون</translation>
     </message>
     <message>
-        <source>Crowd Change Attitude</source>
-        <translation type="unfinished">حشد موقف التغيير</translation>
+      <source>Crowd Change Attitude</source>
+      <translation type="unfinished">الحشد تغير الموقف</translation>
     </message>
     <message>
-        <source>Enter value</source>
-        <translation type="unfinished">أدخل القيمة</translation>
+      <source>Enter value</source>
+      <translation type="unfinished">أدخل القيمة</translation>
     </message>
     <message>
-        <source>Type-in value then press &apos;Enter&apos;</source>
-        <translation type="unfinished">نوع في القيمة ثم اضغط &apos;أدخل&apos;</translation>
+      <source>Type-in value then press 'Enter'</source>
+      <translation type="unfinished">في نوع القيمة ثم اضغط 'Enter'</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>PopulationOptionChooser</name>
     <message>
-        <source>Population Display Options</source>
-        <translation type="unfinished">خيارات العرض السكان</translation>
+      <source>Population Display Options</source>
+      <translation type="unfinished">خيارات عرض السكان</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation type="unfinished">بعيدا</translation>
+      <source>Off</source>
+      <translation type="unfinished">قبالة</translation>
     </message>
     <message>
-        <source>Density</source>
-        <translation type="unfinished">كثافة</translation>
+      <source>Density</source>
+      <translation type="unfinished">الكثافة</translation>
     </message>
     <message>
-        <source>Occupation</source>
-        <translation type="unfinished">احتلال</translation>
+      <source>Occupation</source>
+      <translation type="unfinished">الاحتلال</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Profiles</name>
     <message>
-        <source>Profiles</source>
-        <translation type="unfinished">ملامح</translation>
+      <source>Profiles</source>
+      <translation type="unfinished">التشكيلات الجانبية</translation>
     </message>
     <message>
-        <source>Reconnect with...</source>
-        <translation type="unfinished">إعادة الاتصال مع ...</translation>
+      <source>Reconnect with...</source>
+      <translation type="unfinished">إعادة الاتصال مع...</translation>
     </message>
     <message>
-        <source>Filter view</source>
-        <translation type="unfinished">مرشح الشخصي</translation>
+      <source>Filter view</source>
+      <translation type="unfinished">عامل تصفية طريقة عرض</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ProfilingPanel</name>
     <message>
-        <source>Incoming bytes: </source>
-        <translation type="unfinished">الواردة بايت:</translation>
+      <source>Incoming bytes: </source>
+      <translation type="unfinished">وحدات البايت الواردة:</translation>
     </message>
     <message>
-        <source>Incoming messages: </source>
-        <translation type="unfinished">الواردة الرسائل:</translation>
+      <source>Incoming messages: </source>
+      <translation type="unfinished">الرسائل الواردة:</translation>
     </message>
     <message>
-        <source>Nb messages</source>
-        <translation type="unfinished">عدد الرسائل</translation>
+      <source>Nb messages</source>
+      <translation type="unfinished">ملاحظة: الرسائل</translation>
     </message>
     <message>
-        <source>Outgoing bytes: </source>
-        <translation type="unfinished">المنتهية ولايته بايت:</translation>
+      <source>Outgoing bytes: </source>
+      <translation type="unfinished">وحدات البايت الصادرة:</translation>
     </message>
     <message>
-        <source>Outgoing messages: </source>
-        <translation type="unfinished">المنتهية ولايته رسائل:</translation>
+      <source>Outgoing messages: </source>
+      <translation type="unfinished">الرسائل الصادرة:</translation>
     </message>
     <message>
-        <source>Network</source>
-        <translation type="unfinished">شبكة</translation>
+      <source>Network</source>
+      <translation type="unfinished">شبكة</translation>
     </message>
     <message>
-        <source>Memory: </source>
-        <translation type="unfinished">الذاكرة:</translation>
+      <source>Memory: </source>
+      <translation type="unfinished">الذاكرة:</translation>
     </message>
     <message>
-        <source>Usage (MiB)</source>
-        <translation type="unfinished">استخدام (صالحه)</translation>
+      <source>Usage (MiB)</source>
+      <translation type="unfinished">الاستخدام (MiB)</translation>
     </message>
     <message>
-        <source>Virtual memory: </source>
-        <translation type="unfinished">الذاكرة الظاهرية:</translation>
+      <source>Virtual memory: </source>
+      <translation type="unfinished">الذاكرة الظاهرية:</translation>
     </message>
     <message>
-        <source>Memory</source>
-        <translation type="unfinished">ذاكرة</translation>
+      <source>Memory</source>
+      <translation type="unfinished">الذاكرة</translation>
     </message>
     <message>
-        <source>Shorts: </source>
-        <translation type="unfinished">السراويل:</translation>
+      <source>Shorts: </source>
+      <translation type="unfinished">سراويل داخلية:</translation>
     </message>
     <message>
-        <source>Count</source>
-        <translation type="unfinished">عد</translation>
+      <source>Count</source>
+      <translation type="unfinished">العد</translation>
     </message>
     <message>
-        <source>Longs: </source>
-        <translation type="unfinished">الطويل:</translation>
+      <source>Longs: </source>
+      <translation type="unfinished">الميزة:</translation>
     </message>
     <message>
-        <source>Pathfinds</source>
-        <translation type="unfinished">Pathfinds</translation>
+      <source>Pathfinds</source>
+      <translation type="unfinished">باثفيندس</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>RcEntityResolver</name>
     <message>
-        <source>[Unknown]</source>
-        <translation type="unfinished">[غير معروف]</translation>
+      <source>[Unknown]</source>
+      <translation type="unfinished">[معروف]</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ReplayerToolbar</name>
     <message>
-        <source>Replay control</source>
-        <translation type="unfinished">إعادة السيطرة</translation>
+      <source>Replay control</source>
+      <translation type="unfinished">إعادة السيطرة</translation>
     </message>
     <message>
-        <source>Time table</source>
-        <translation type="unfinished">الجدول الزمني</translation>
+      <source>Time table</source>
+      <translation type="unfinished">الجدول الزمني</translation>
     </message>
     <message>
-        <source>Tick %L1</source>
-        <translation type="unfinished">وضع علامة L1٪</translation>
+      <source>Tick %L1</source>
+      <translation type="unfinished">التجزئة % L1</translation>
     </message>
     <message>
-        <source>Refresh</source>
-        <translation type="unfinished">تحديث</translation>
+      <source>Refresh</source>
+      <translation type="unfinished">قم بتحديث</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ReportListView</name>
     <message>
-        <source>Clear</source>
-        <translation type="unfinished">مسح</translation>
+      <source>Clear</source>
+      <translation type="unfinished">واضحة</translation>
     </message>
     <message>
-        <source>Clear traces</source>
-        <translation type="unfinished">آثار واضحة</translation>
+      <source>Clear traces</source>
+      <translation type="unfinished">آثار واضحة</translation>
     </message>
     <message>
-        <source>Show reports</source>
-        <translation type="unfinished">تظهر التقارير</translation>
+      <source>Show reports</source>
+      <translation type="unfinished">إظهار التقارير</translation>
     </message>
     <message>
-        <source>Show traces</source>
-        <translation type="unfinished">تظهر آثار</translation>
+      <source>Show traces</source>
+      <translation type="unfinished">وتظهر آثار</translation>
     </message>
     <message>
-        <source>Show events</source>
-        <translation type="unfinished">تظهر الأحداث</translation>
+      <source>Show events</source>
+      <translation type="unfinished">تظهر الأحداث</translation>
     </message>
     <message>
-        <source>Show messages</source>
-        <translation type="unfinished">عرض المشاركات</translation>
+      <source>Show messages</source>
+      <translation type="unfinished">إظهار الرسائل</translation>
     </message>
     <message>
-        <source>Show warnings</source>
-        <translation type="unfinished">تظهر تحذيرات</translation>
+      <source>Show warnings</source>
+      <translation type="unfinished">إظهار تحذيرات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ResourceLinksDialog</name>
     <message>
-        <source>Change resource links</source>
-        <translation type="unfinished">تبادل الموارد وصلات</translation>
+      <source>Change resource links</source>
+      <translation type="unfinished">تغيير وصلات الموارد</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>SIMControlToolbar</name>
     <message>
-        <source>Simulation control</source>
-        <translation type="unfinished">محاكاة للمراقبة</translation>
+      <source>Simulation control</source>
+      <translation type="unfinished">محاكاة التحكم</translation>
     </message>
     <message>
-        <source>Connect (Alt+C)</source>
-        <translation type="unfinished">الاتصال (البديل + C)</translation>
+      <source>Connect (Alt+C)</source>
+      <translation type="unfinished">الاتصال (Alt + C)</translation>
     </message>
     <message>
-        <source>Pause (Alt+P)</source>
-        <translation type="unfinished">وقفة (البديل + P)</translation>
+      <source>Pause (Alt+P)</source>
+      <translation type="unfinished">إيقاف مؤقت (Alt + P)</translation>
     </message>
     <message>
-        <source>Step (Alt+S)</source>
-        <translation type="unfinished">الخطوة (البديل + S)</translation>
+      <source>Step (Alt+S)</source>
+      <translation type="unfinished">الخطوة (Alt + S)</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Save checkpoint</source>
-        <translation type="unfinished">حفظ نقطة تفتيش</translation>
+      <source>Save checkpoint</source>
+      <translation type="unfinished">حفظ نقطة تفتيش</translation>
     </message>
     <message>
-        <source>Speed factor: </source>
-        <translation type="unfinished">تسريع عامل:</translation>
+      <source>Speed factor: </source>
+      <translation type="unfinished">عامل السرعة:</translation>
     </message>
     <message>
-        <source>Connecting</source>
-        <translation type="unfinished">الرابط</translation>
+      <source>Connecting</source>
+      <translation type="unfinished">الاتصال</translation>
     </message>
     <message>
-        <source>Disconnect (Alt+C)</source>
-        <translation type="unfinished">قطع (البديل + C)</translation>
+      <source>Disconnect (Alt+C)</source>
+      <translation type="unfinished">قطع الاتصال (Alt + C)</translation>
     </message>
     <message>
-        <source>Unpause (Alt+P)</source>
-        <translation type="unfinished">إلغاء الإيقاف المؤقت (البديل + P)</translation>
+      <source>Unpause (Alt+P)</source>
+      <translation type="unfinished">إلغاء الإيقاف المؤقت (Alt + P)</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Score</name>
     <message>
-        <source>Name</source>
-        <translation type="unfinished">اسم</translation>
+      <source>Name</source>
+      <translation type="unfinished">الاسم</translation>
     </message>
     <message>
-        <source>Value</source>
-        <translation type="unfinished">قيمة</translation>
+      <source>Value</source>
+      <translation type="unfinished">القيمة</translation>
     </message>
     <message>
-        <source>Tendency</source>
-        <translation type="unfinished">ميل</translation>
+      <source>Tendency</source>
+      <translation type="unfinished">ميل</translation>
     </message>
     <message>
-        <source>Gauge</source>
-        <translation type="unfinished">قياس</translation>
+      <source>Gauge</source>
+      <translation type="unfinished">قياس</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>ScorePanel</name>
     <message>
-        <source>Scores</source>
-        <translation type="unfinished">عشرات</translation>
+      <source>Scores</source>
+      <translation type="unfinished">عشرات</translation>
     </message>
     <message>
-        <source>View graph</source>
-        <translation type="unfinished">عرض الرسم البياني</translation>
+      <source>View graph</source>
+      <translation type="unfinished">عرض الرسم البياني</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Scores</name>
     <message>
-        <source>Export data</source>
-        <translation type="unfinished">تصدير البيانات</translation>
+      <source>Export data</source>
+      <translation type="unfinished">تصدير البيانات</translation>
     </message>
     <message>
-        <source>Output</source>
-        <translation type="unfinished">إنتاج</translation>
+      <source>Output</source>
+      <translation type="unfinished">الإخراج</translation>
     </message>
     <message>
-        <source>File: </source>
-        <translation type="unfinished">ملف:</translation>
+      <source>File: </source>
+      <translation type="unfinished">ملف:</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation type="unfinished">تصفح ...</translation>
+      <source>Browse...</source>
+      <translation type="unfinished">استعراض...</translation>
     </message>
     <message>
-        <source>Separator: </source>
-        <translation type="unfinished">فاصل:</translation>
+      <source>Separator: </source>
+      <translation type="unfinished">فاصل:</translation>
     </message>
     <message>
-        <source>Headers</source>
-        <translation type="unfinished">رؤوس</translation>
+      <source>Headers</source>
+      <translation type="unfinished">رؤوس</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
     <message>
-        <source>CSV (*.csv)</source>
-        <translation type="unfinished">CSV (*. CSV)</translation>
+      <source>CSV (*.csv)</source>
+      <translation type="unfinished">CSV (*.csv)</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>StatisticsWidget</name>
     <message>
-        <source>Rate (B)</source>
-        <translation type="unfinished">معدل (B)</translation>
+      <source>Rate (B)</source>
+      <translation type="unfinished">(ب) معدل</translation>
     </message>
     <message>
-        <source>Time (Tick)</source>
-        <translation type="unfinished">الوقت (القراد)</translation>
+      <source>Time (Tick)</source>
+      <translation type="unfinished">الوقت (التجزئة)</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>StatusBar</name>
     <message>
-        <source>Last tick speed factor/Mean speed factor</source>
-        <translation type="unfinished">مشاركة القراد السرعة السرعة متوسط عامل / عامل</translation>
+      <source>Last tick speed factor/Mean speed factor</source>
+      <translation type="unfinished">القراد السرعة عامل/يعني السرعة العامل الأخير</translation>
     </message>
     <message>
-        <source>Saving checkpoint...</source>
-        <translation type="unfinished">إنقاذ نقطة تفتيش ...</translation>
+      <source>Saving checkpoint...</source>
+      <translation type="unfinished">حفظ نقطة تفتيش...</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>SupplyConsignsWidget</name>
     <message>
-        <source>Supplier:</source>
-        <translation type="unfinished">المورد:</translation>
+      <source>Supplier:</source>
+      <translation type="unfinished">المورد:</translation>
     </message>
     <message>
-        <source>Convoyer:</source>
-        <translation type="unfinished">نقل:</translation>
+      <source>Convoyer:</source>
+      <translation type="unfinished">كونفويير:</translation>
     </message>
     <message>
-        <source>State:</source>
-        <translation type="unfinished">الدولة:</translation>
+      <source>State:</source>
+      <translation type="unfinished">الدولة:</translation>
     </message>
     <message>
-        <source>Current state end :</source>
-        <translation type="unfinished">الدولة الحالي النهاية:</translation>
+      <source>Current state end :</source>
+      <translation type="unfinished">نهاية الدولة الحالي:</translation>
     </message>
     <message>
-        <source>Recipients</source>
-        <translation type="unfinished">المستلمين</translation>
+      <source>Recipients</source>
+      <translation type="unfinished">المستلمين</translation>
     </message>
     <message>
-        <source>Recipient %1</source>
-        <translation type="unfinished">حاوية٪ 1</translation>
+      <source>Recipient %1</source>
+      <translation type="unfinished">مستلم %1</translation>
     </message>
     <message>
-        <source>Resources requested/granted/convoyed</source>
-        <translation type="unfinished">الموارد المطلوبة / منح / convoyed</translation>
+      <source>Resources requested/granted/convoyed</source>
+      <translation type="unfinished">الموارد المطلوبة/منح/نقلها</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>SupplyStates</name>
     <message>
-        <source>Supply system state</source>
-        <translation type="unfinished">توريد حالة النظام</translation>
+      <source>Supply system state</source>
+      <translation type="unfinished">توريد نظام الدولة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>SupplyStocksListView</name>
     <message>
-        <source>Stock</source>
-        <translation type="unfinished">الأوراق المالية</translation>
+      <source>Stock</source>
+      <translation type="unfinished">الأوراق المالية</translation>
     </message>
     <message>
-        <source>Quantity</source>
-        <translation type="unfinished">كمية</translation>
+      <source>Quantity</source>
+      <translation type="unfinished">الكمية</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>SupplyTransportersListView</name>
     <message>
-        <source>Transporters</source>
-        <translation type="unfinished">نقل</translation>
+      <source>Transporters</source>
+      <translation type="unfinished">الناقلون</translation>
     </message>
     <message>
-        <source>Total</source>
-        <translation type="unfinished">مجموع</translation>
+      <source>Total</source>
+      <translation type="unfinished">المجموع</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation type="unfinished">متاح</translation>
+      <source>Available</source>
+      <translation type="unfinished">متاح</translation>
     </message>
     <message>
-        <source>Working</source>
-        <translation type="unfinished">عامل</translation>
+      <source>Working</source>
+      <translation type="unfinished">وتعمل</translation>
     </message>
     <message>
-        <source>Resting</source>
-        <translation type="unfinished">يستريح</translation>
+      <source>Resting</source>
+      <translation type="unfinished">يستريح</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TacticalTreeView</name>
     <message>
-        <source>Unit Change Superior</source>
-        <translation type="unfinished">تغيير وحدة متفوقة</translation>
+      <source>Unit Change Superior</source>
+      <translation type="unfinished">وحدة التغيير متفوقة</translation>
     </message>
     <message>
-        <source>Change Automat Superior</source>
-        <translation type="unfinished">تغيير فخمة الآلي</translation>
+      <source>Change Automat Superior</source>
+      <translation type="unfinished">تغير [اوتومت] متفوقة</translation>
     </message>
     <message>
-        <source>Change Formation Superior</source>
-        <translation type="unfinished">تغيير التدريب فخمة</translation>
+      <source>Change Formation Superior</source>
+      <translation type="unfinished">تغيير تشكيل متفوقة</translation>
     </message>
     <message>
-        <source>Change superior</source>
-        <translation type="unfinished">تغيير متفوقة</translation>
+      <source>Change superior</source>
+      <translation type="unfinished">تغير عليا</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TimeTableDialog</name>
     <message>
-        <source>Time Table</source>
-        <translation type="unfinished">الجدول الزمني</translation>
+      <source>Time Table</source>
+      <translation type="unfinished">الجدول الزمني</translation>
     </message>
     <message>
-        <source>Tick</source>
-        <translation type="unfinished">علامة</translation>
+      <source>Tick</source>
+      <translation type="unfinished">التجزئة</translation>
     </message>
     <message>
-        <source>Sim time</source>
-        <translation type="unfinished">سيم الوقت</translation>
+      <source>Sim time</source>
+      <translation type="unfinished">نعم الوقت</translation>
     </message>
     <message>
-        <source>Real time</source>
-        <translation type="unfinished">في الوقت الحقيقي</translation>
+      <source>Real time</source>
+      <translation type="unfinished">الوقت الحقيقي</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TimeTableRequestDialog</name>
     <message>
-        <source>Time Table Request</source>
-        <translation type="unfinished">الجدول الزمني طلب</translation>
+      <source>Time Table Request</source>
+      <translation type="unfinished">طلب جدول الوقت</translation>
     </message>
     <message>
-        <source>Time range</source>
-        <translation type="unfinished">الوقت صفوف</translation>
+      <source>Time range</source>
+      <translation type="unfinished">النطاق الزمني</translation>
     </message>
     <message>
-        <source>Begin tick:</source>
-        <translation type="unfinished">بدء وضع علامة:</translation>
+      <source>Begin tick:</source>
+      <translation type="unfinished">يبدأ القراد:</translation>
     </message>
     <message>
-        <source>End tick:</source>
-        <translation type="unfinished">إنهاء وضع علامة:</translation>
+      <source>End tick:</source>
+      <translation type="unfinished">نهاية التجزئة:</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TimelineActionItem</name>
     <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation type="unfinished">&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt; &lt;TR&gt; &lt;TD&gt; &lt;img source=&quot;mission&quot;&gt; &lt;/ TD&gt; &lt;TD&gt; &lt;NOBR&gt; &lt;B&gt;٪ 1 &lt;/ B&gt; &lt;/ nobr&gt; &lt;/ TD&gt; &lt;/ TR&gt; &lt;/ TABLE&gt;</translation>
+      <source>&lt;table cellspacing='0' cellpadding='0'&gt;&lt;tr&gt;&lt;td&gt;&lt;img source="mission"&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+      <translation type="unfinished">&lt;table cellspacing='0' cellpadding='0'&gt;&lt;tr&gt;&lt;td&gt;&lt;img source="mission"&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <source>&lt;i&gt;issued by automat&lt;/i&gt;</source>
-        <translation type="unfinished">الصادرة عن &lt;I&gt; الآلي &lt;/ I&gt;</translation>
+      <source>&lt;i&gt;issued by automat&lt;/i&gt;</source>
+      <translation type="unfinished">&lt;i&gt;صادر عن [اوتومت]&lt;/i&gt;</translation>
     </message>
     <message>
-        <source>&lt;i&gt;disabled&lt;/i&gt;</source>
-        <translation type="unfinished">&lt;I&gt; تعطيل &lt;/ I&gt;</translation>
+      <source>&lt;i&gt;disabled&lt;/i&gt;</source>
+      <translation type="unfinished">&lt;i&gt;تعطيل&lt;/i&gt;</translation>
     </message>
     <message>
-        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Starts: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation type="unfinished">&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt; &lt;TR&gt; &lt;TD&gt; يبدأ في: &lt;/ TD&gt; &lt;TD&gt; &lt;I&gt;٪ 1 &lt;/ ط&gt; &lt;/ TD&gt; &lt;/ TR&gt; &lt;/ TABLE&gt;</translation>
+      <source>&lt;table cellspacing='0' cellpadding='0'&gt;&lt;tr&gt;&lt;td&gt;Starts: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+      <translation type="unfinished">&lt;table cellspacing='0' cellpadding='0'&gt;&lt;tr&gt;&lt;td&gt;بدء تشغيل:&lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <source>Press enter to rename, unfocus field to cancel</source>
-        <translation type="unfinished">اضغط ENTER لإعادة تسمية، unfocus مجال لإلغاء</translation>
+      <source>Press enter to rename, unfocus field to cancel</source>
+      <translation type="unfinished">اضغط enter لإعادة تسمية، أونفوكوس مجال لإلغاء</translation>
     </message>
     <message>
-        <source>Rename</source>
-        <translation type="unfinished">إعادة تسمية</translation>
+      <source>Rename</source>
+      <translation type="unfinished">إعادة تسمية</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation type="unfinished">حذف</translation>
+      <source>Delete</source>
+      <translation type="unfinished">حذف</translation>
     </message>
     <message>
-        <source>Disable</source>
-        <translation type="unfinished">تعطيل</translation>
+      <source>Disable</source>
+      <translation type="unfinished">تعطيل</translation>
     </message>
     <message>
-        <source>Enable</source>
-        <translation type="unfinished">تمكين</translation>
+      <source>Enable</source>
+      <translation type="unfinished">تمكين</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TimelineListView</name>
     <message>
-        <source>Units</source>
-        <translation type="unfinished">الوحدات</translation>
+      <source>Units</source>
+      <translation type="unfinished">وحدات</translation>
     </message>
     <message>
-        <source>Magic</source>
-        <translation type="unfinished">سحر</translation>
+      <source>Magic</source>
+      <translation type="unfinished">ماجيك</translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation type="unfinished">حالة الطقس</translation>
+      <source>Weather</source>
+      <translation type="unfinished">الطقس</translation>
     </message>
     <message>
-        <source>Objects</source>
-        <translation type="unfinished">الأجسام</translation>
+      <source>Objects</source>
+      <translation type="unfinished">الكائنات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TimelinePanel</name>
     <message>
-        <source>Actions timeline</source>
-        <translation type="unfinished">حصة زمني</translation>
+      <source>Actions timeline</source>
+      <translation type="unfinished">الإجراءات المخطط الزمني</translation>
     </message>
     <message>
-        <source>Global view</source>
-        <translation type="unfinished">مشاهدة العالمية</translation>
+      <source>Global view</source>
+      <translation type="unfinished">العرض العالمي</translation>
     </message>
     <message>
-        <source>Current session</source>
-        <translation type="unfinished">الدورة الحالية</translation>
+      <source>Current session</source>
+      <translation type="unfinished">الدورة الحالية</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>TimelineView</name>
     <message>
-        <source>Zoom In</source>
-        <translation type="unfinished">تكبير</translation>
+      <source>Zoom In</source>
+      <translation type="unfinished">التكبير</translation>
     </message>
     <message>
-        <source>Zoom Out</source>
-        <translation type="unfinished">تصغير</translation>
+      <source>Zoom Out</source>
+      <translation type="unfinished">التصغير</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UnitMagicOrdersInterface</name>
     <message>
-        <source>Teleport</source>
-        <translation type="unfinished">النقل الفضائي</translation>
+      <source>Teleport</source>
+      <translation type="unfinished">النقل الفضائي</translation>
     </message>
     <message>
-        <source>Recover - Transporters</source>
-        <translation type="unfinished">استرداد - ناقلات</translation>
+      <source>Recover - Transporters</source>
+      <translation type="unfinished">استرداد-الناقلون</translation>
     </message>
     <message>
-        <source>Destroy - Component</source>
-        <translation type="unfinished">تدمير - مكون</translation>
+      <source>Destroy - Component</source>
+      <translation type="unfinished">تدمير-المكون</translation>
     </message>
     <message>
-        <source>Finish logistic handlings</source>
-        <translation type="unfinished">إنهاء handlings اللوجستية</translation>
+      <source>Finish logistic handlings</source>
+      <translation type="unfinished">إنهاء هاندلينجس السوقي</translation>
     </message>
     <message>
-        <source>Destroy Component</source>
-        <translation type="unfinished">تدمير مكونات</translation>
+      <source>Destroy Component</source>
+      <translation type="unfinished">تدمير المكون</translation>
     </message>
     <message>
-        <source>Recover Transporters</source>
-        <translation type="unfinished">استرداد ناقلات</translation>
+      <source>Recover Transporters</source>
+      <translation type="unfinished">استرداد الناقلين</translation>
     </message>
     <message>
-        <source>Surrender</source>
-        <translation type="unfinished">استسلام</translation>
+      <source>Surrender</source>
+      <translation type="unfinished">استسلام</translation>
     </message>
     <message>
-        <source>Reload brain</source>
-        <translation type="unfinished">تحديث الدماغ</translation>
+      <source>Reload brain</source>
+      <translation type="unfinished">إعادة تحميل الدماغ</translation>
     </message>
     <message>
-        <source>Recover - All</source>
-        <translation type="unfinished">استرداد - جميع</translation>
+      <source>Recover - All</source>
+      <translation type="unfinished">استرداد--الجميع</translation>
     </message>
     <message>
-        <source>Recover - Troops</source>
-        <translation type="unfinished">استرداد - القوات</translation>
+      <source>Recover - Troops</source>
+      <translation type="unfinished">استرداد-القوات</translation>
     </message>
     <message>
-        <source>Recover - Equipments</source>
-        <translation type="unfinished">استرداد - معدات</translation>
+      <source>Recover - Equipments</source>
+      <translation type="unfinished">استرداد--المعدات</translation>
     </message>
     <message>
-        <source>Recover - Resources</source>
-        <translation type="unfinished">استرداد - الموارد</translation>
+      <source>Recover - Resources</source>
+      <translation type="unfinished">استرداد-الموارد</translation>
     </message>
     <message>
-        <source>Destroy - All</source>
-        <translation type="unfinished">تدمير - جميع</translation>
+      <source>Destroy - All</source>
+      <translation type="unfinished">تدمير-كل</translation>
     </message>
     <message>
-        <source>Cancel surrender</source>
-        <translation type="unfinished">إلغاء الاستسلام</translation>
+      <source>Cancel surrender</source>
+      <translation type="unfinished">إلغاء الاستسلام</translation>
     </message>
     <message>
-        <source>Surrender to</source>
-        <translation type="unfinished">الاستسلام لل</translation>
+      <source>Surrender to</source>
+      <translation type="unfinished">الاستسلام إلى</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UnitStateDialog</name>
     <message>
-        <source>Resources</source>
-        <translation type="unfinished">موارد</translation>
+      <source>Resources</source>
+      <translation type="unfinished">الموارد</translation>
     </message>
     <message>
-        <source>Composition</source>
-        <translation type="unfinished">تركيب</translation>
+      <source>Composition</source>
+      <translation type="unfinished">تكوين</translation>
     </message>
     <message>
-        <source>Unit state</source>
-        <translation type="unfinished">وحدة الدولة</translation>
+      <source>Unit state</source>
+      <translation type="unfinished">وحدة الدولة</translation>
     </message>
     <message>
-        <source>Crew</source>
-        <translation type="unfinished">طاقم</translation>
+      <source>Crew</source>
+      <translation type="unfinished">الطاقم</translation>
     </message>
     <message>
-        <source>Equipments</source>
-        <translation type="unfinished">المعدات</translation>
+      <source>Equipments</source>
+      <translation type="unfinished">معدات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UnitStateTableCrew</name>
     <message>
-        <source>Change human state</source>
-        <translation type="unfinished">تغيير الدولة الإنسان</translation>
+      <source>Change human state</source>
+      <translation type="unfinished">تغيير حالة الإنسان</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UnitStateTableEquipment</name>
     <message>
-        <source>Random</source>
-        <translation type="unfinished">عشوائي</translation>
+      <source>Random</source>
+      <translation type="unfinished">عشوائية</translation>
     </message>
     <message>
-        <source>Change equipment state</source>
-        <translation type="unfinished">تغيير المعدات الدولة</translation>
+      <source>Change equipment state</source>
+      <translation type="unfinished">تغيير حالة المعدات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UnitStateTableResource</name>
     <message>
-        <source>Maximal capacity</source>
-        <translation type="unfinished">الحد الأقصى لقدرة</translation>
+      <source>Maximal capacity</source>
+      <translation type="unfinished">القدرة القصوى</translation>
     </message>
     <message>
-        <source>Change dotations</source>
-        <translation type="unfinished">تبادل الاستهلاك</translation>
+      <source>Change dotations</source>
+      <translation type="unfinished">تبادل المقتنيات</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>Urban</name>
     <message>
-        <source>Known blocks</source>
-        <translation type="unfinished">كتل معروفة</translation>
+      <source>Known blocks</source>
+      <translation type="unfinished">كتل معروفة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UrbanKnowledgePanel</name>
     <message>
-        <source>Urban knowledges</source>
-        <translation type="unfinished">knowledges الحضرية</translation>
+      <source>Urban knowledges</source>
+      <translation type="unfinished">Knowledges الحضرية</translation>
     </message>
     <message>
-        <source>Details</source>
-        <translation type="unfinished">تفاصيل</translation>
+      <source>Details</source>
+      <translation type="unfinished">تفاصيل</translation>
     </message>
     <message>
-        <source>Identifier:</source>
-        <translation type="unfinished">معرف:</translation>
+      <source>Identifier:</source>
+      <translation type="unfinished">المعرف:</translation>
     </message>
     <message>
-        <source>Associated block:</source>
-        <translation type="unfinished">كتلة المرتبطة:</translation>
+      <source>Associated block:</source>
+      <translation type="unfinished">كتلة المرتبطة بها:</translation>
     </message>
     <message>
-        <source>Perceived:</source>
-        <translation type="unfinished">ينظر:</translation>
+      <source>Perceived:</source>
+      <translation type="unfinished">ينظر إلى:</translation>
     </message>
     <message>
-        <source>Progress:</source>
-        <translation type="unfinished">التقدم:</translation>
+      <source>Progress:</source>
+      <translation type="unfinished">التقدم:</translation>
     </message>
     <message>
-        <source>Maximum Progress:</source>
-        <translation type="unfinished">الحد الأقصى التقدم:</translation>
+      <source>Maximum Progress:</source>
+      <translation type="unfinished">أقصى قدر من التقدم:</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UserProfileDialog</name>
     <message>
-        <source>User profiles</source>
-        <translation type="unfinished">ملفات تعريف المستخدمين</translation>
+      <source>User profiles</source>
+      <translation type="unfinished">التشكيلات الجانبية للمستخدم</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">حسنا</translation>
+      <source>Ok</source>
+      <translation type="unfinished">موافق</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+      <source>Cancel</source>
+      <translation type="unfinished">إلغاء الأمر</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UserProfileList</name>
     <message>
-        <source>Create</source>
-        <translation type="unfinished">خلق</translation>
+      <source>Create</source>
+      <translation type="unfinished">إنشاء</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation type="unfinished">حذف</translation>
+      <source>Delete</source>
+      <translation type="unfinished">حذف</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UserProfileRights</name>
     <message>
-        <source>Read</source>
-        <translation type="unfinished">قرأ</translation>
+      <source>Read</source>
+      <translation type="unfinished">القراءة</translation>
     </message>
     <message>
-        <source>Write</source>
-        <translation type="unfinished">الكتابة</translation>
+      <source>Write</source>
+      <translation type="unfinished">الكتابة</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>UserProfileWidget</name>
     <message>
-        <source>Profile information</source>
-        <translation type="unfinished">معلومات الملف الشخصي</translation>
+      <source>Profile information</source>
+      <translation type="unfinished">المعلومات الشخصية</translation>
     </message>
     <message>
-        <source>Login:</source>
-        <translation type="unfinished">الدخول:</translation>
+      <source>Login:</source>
+      <translation type="unfinished">تسجيل الدخول:</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation type="unfinished">كلمة السر:</translation>
+      <source>Password:</source>
+      <translation type="unfinished">كلمة المرور:</translation>
     </message>
     <message>
-        <source>General</source>
-        <translation type="unfinished">عام</translation>
+      <source>General</source>
+      <translation type="unfinished">العام</translation>
     </message>
     <message>
-        <source>Access permissions</source>
-        <translation type="unfinished">أذونات الوصول</translation>
+      <source>Access permissions</source>
+      <translation type="unfinished">أذونات الوصول</translation>
     </message>
     <message>
-        <source>Supervisor actions</source>
-        <translation type="unfinished">المشرف الأسهم</translation>
+      <source>Supervisor actions</source>
+      <translation type="unfinished">إجراءات المشرف</translation>
     </message>
     <message>
-        <source>Units</source>
-        <translation type="unfinished">الوحدات</translation>
+      <source>Units</source>
+      <translation type="unfinished">وحدات</translation>
     </message>
     <message>
-        <source>Crowds</source>
-        <translation type="unfinished">الحشود</translation>
+      <source>Crowds</source>
+      <translation type="unfinished">الحشود</translation>
     </message>
     <message>
-        <source>Permissions</source>
-        <translation type="unfinished">أذونات</translation>
+      <source>Permissions</source>
+      <translation type="unfinished">أذونات</translation>
     </message>
     <message>
-        <source>&apos;Read&apos; permission allows you to see a unit.
-&apos;Write&apos; permission allows you to control a unit.</source>
-        <translation type="unfinished">&apos;قراءة&apos; إذن يسمح لك أن ترى وحدة.
-&apos;الكتابة&apos; إذن يسمح لك للسيطرة على حدة.</translation>
+      <source>'Read' permission allows you to see a unit.
+'Write' permission allows you to control a unit.</source>
+      <translation type="unfinished">إذن 'قراءة' يسمح لك أن ترى وحدة.
+'الكتابة' إذن يسمح لك بالتحكم في وحدة.</translation>
     </message>
     <message>
-        <source>Profile edition</source>
-        <translation type="unfinished">الملف الشخصي طبعة</translation>
+      <source>Profile edition</source>
+      <translation type="unfinished">الطبعة الشخصية</translation>
     </message>
     <message>
-        <source>Profile has changed, commit modifications?</source>
-        <translation type="unfinished">تم تغيير الملف، والتغيرات الالتزام؟</translation>
+      <source>Profile has changed, commit modifications?</source>
+      <translation type="unfinished">تغيرت الشخصية، التعديلات الالتزام؟</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>WeatherListView</name>
     <message>
-        <source>Local weather </source>
-        <translation type="unfinished">الطقس المحلية</translation>
+      <source>Local weather </source>
+      <translation type="unfinished">الطقس المحلي</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>WeatherPanel</name>
     <message>
-        <source>Weather parameters</source>
-        <translation type="unfinished">الطقس المعلمات</translation>
+      <source>Weather parameters</source>
+      <translation type="unfinished">معلمات الطقس</translation>
     </message>
     <message>
-        <source>Change Global Weather</source>
-        <translation type="unfinished">الطقس العالمي التغيير</translation>
+      <source>Change Global Weather</source>
+      <translation type="unfinished">تغير الطقس العالمي</translation>
     </message>
     <message>
-        <source>Change Local Weather</source>
-        <translation type="unfinished">أحوال الطقس تغير</translation>
+      <source>Change Local Weather</source>
+      <translation type="unfinished">تغير الطقس المحلي</translation>
     </message>
     <message>
-        <source>SWORD</source>
-        <translation type="unfinished">SWORD</translation>
+      <source>SWORD</source>
+      <translation type="unfinished">السيف</translation>
     </message>
     <message>
-        <source>Invalid local weather %1, please correct time or position settings</source>
-        <translation type="unfinished">٪ 1 غير صالح الطقس المحلي، يرجى الوقت الصحيح أو إعدادات موقف</translation>
+      <source>Invalid local weather %1, please correct time or position settings</source>
+      <translation type="unfinished">الطقس %1 المحلي غير صالح، الرجاء إعدادات الوقت أو الموقف الصحيح</translation>
     </message>
     <message>
-        <source>Local Weather Destruction</source>
-        <translation type="unfinished">الطقس المحلية تدمير</translation>
+      <source>Local Weather Destruction</source>
+      <translation type="unfinished">تدمير الطقس المحلي</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>gamig_app::Action</name>
     <message>
-        <source>Knowledge Group Activation Change</source>
-        <translation type="unfinished">تمكين تبادل المعرفة المجموعة</translation>
+      <source>Knowledge Group Activation Change</source>
+      <translation type="unfinished">تغيير التنشيط مجموعة المعارف</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>gaming_app::Action</name>
     <message>
-        <source>Knowledge Group Add knowledge</source>
-        <translation type="unfinished">إضافة مجموعة المعارف المعرفة</translation>
+      <source>Knowledge Group Add knowledge</source>
+      <translation type="unfinished">مجموعة المعارف إضافة المعرفة</translation>
     </message>
     <message>
-        <source>Object Update</source>
-        <translation type="unfinished">تحديث الكائن</translation>
+      <source>Object Update</source>
+      <translation type="unfinished">تحديث الكائن</translation>
     </message>
     <message>
-        <source>Object Creation</source>
-        <translation type="unfinished">إنشاء كائن</translation>
+      <source>Object Creation</source>
+      <translation type="unfinished">إنشاء كائن</translation>
     </message>
     <message>
-        <source>Object Destruction</source>
-        <translation type="unfinished">كائن تدمير</translation>
+      <source>Object Destruction</source>
+      <translation type="unfinished">تدمير الكائن</translation>
     </message>
-</context>
-<context>
+  </context>
+  <context>
     <name>tools</name>
     <message>
-        <source> - Not connected</source>
-        <translation type="unfinished">- غير متصل</translation>
+      <source> - Not connected</source>
+      <translation type="unfinished">--غير متصل</translation>
     </message>
-</context>
+  </context>
 </TS>
