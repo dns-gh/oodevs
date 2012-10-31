@@ -4,7 +4,7 @@
 -- ****************************************************************************
 rootnode 
 {
-    connections = { skill.nodes.Interrogate, skill.links.moveToward },
+    connections = { skill.nodes.Interrogate, skill.links.moveToward, skill.nodes.Reports },
 
     -- -------------------------------------------------------------------------------- 
     -- Feedback when objective is relieved
@@ -21,6 +21,13 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
+
+        if not self.params.entity:isValid() then -- Check if unit/crowd is valid
+            Activate( skill.nodes.Reports, 1, { report = eRC_InvalidTarget } )
+            Feedback( self.feedbacks.done )
+            return
+        end
+
         -- once movement is over, interrogate the entity
         if self.arrived then
             Activate( skill.nodes.Interrogate, 1, { entity = self.params.entity } )
@@ -44,5 +51,12 @@ node "Interrogate"
         if self.params.entity:interrogateIt() then
             Feedback( self.feedbacks.interrogated )
         end
+    end
+}
+
+node "Reports"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.report )
     end
 }
