@@ -1167,7 +1167,9 @@
 
     <target name="exercises_test" description="validates some significant exercises">
         <test-exercise exercise="worldwide/Egypt"/>
+        <!--
         <test-exercise exercise="scipio/Poseidon VA"/>
+        -->
     </target>
 
     <macrodef name="test-data-migration">
