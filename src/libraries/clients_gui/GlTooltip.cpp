@@ -271,7 +271,10 @@ void GlTooltip::GenerateImage( unsigned int width, unsigned int height )
             for( QStringList::const_iterator itLine = list.begin(); itLine != list.end(); ++itLine )
             {
                 if( !(*itLine).isEmpty() )
-                    p.drawText( x, y, *itLine );
+                    if( QApplication::isLeftToRight() )
+                        p.drawText( x, y, *itLine );
+                    else
+                        p.drawText( p.window().width() - x - metrics.width( *itLine ), y, *itLine );
                 if( itLine == list.fromLast() )
                     x += metrics.width( *itLine );
                 else
