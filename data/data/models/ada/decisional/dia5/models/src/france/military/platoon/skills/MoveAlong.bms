@@ -32,7 +32,7 @@ rootnode
         myself.isEscorted = false
     end,
     failed = function( self, params, additionalParams )
-        self:done()
+        self:done(params, additionalParams)
     end,
 
     create = function( self )
