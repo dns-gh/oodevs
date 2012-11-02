@@ -33,7 +33,7 @@ FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& co
 {
     setFrameStyle( Q3Frame::Plain );
     setMouseTracking( true );
-    setColumnCount( 3 );
+    setColumnCount( 4 );
     setHeaderHidden( true );
     setRootIsDecorated( false );
     gui::LinkItemDelegate* delegate = new gui::LinkItemDelegate( this );
@@ -104,11 +104,23 @@ void FireResultListView::Display( const AgentFireResult& result, QTreeWidgetItem
     if( item->childCount() == 0 )
     {
         QStringList equipments;
-        equipments << tools::translate( "FireResultListView", "Equipments" ) << tools::translate( "FireResultListView", " (avail, unavail, repairable):" ) << "";
+        equipments << tools::translate( "FireResultListView", "Equipments" ) 
+                   << tools::translate( "FireResultListView", "( avail, " )
+                   << tools::translate( "FireResultListView", "unavail," )
+                   << tools::translate( "FireResultListView", "repairable )" );
         item->addChild( new QTreeWidgetItem( equipments ) );
         QStringList troops;
-        troops << tools::translate( "FireResultListView", "Troops" ) << tools::translate( "FireResultListView", " (officer, warrant-off., private)" ) << "";
+        troops << tools::translate( "FireResultListView", "Troops" ) 
+               << tools::translate( "FireResultListView", "( officer," )
+               << tools::translate( "FireResultListView", "warrant-off.," )
+               << tools::translate( "FireResultListView", "private )" );
         item->addChild( new QTreeWidgetItem( troops ) );
+        item->child( 0 )->setTextAlignment( 1, Qt::AlignCenter );
+        item->child( 0 )->setTextAlignment( 2, Qt::AlignCenter );
+        item->child( 0 )->setTextAlignment( 3, Qt::AlignCenter );
+        item->child( 1 )->setTextAlignment( 1, Qt::AlignCenter );
+        item->child( 1 )->setTextAlignment( 2, Qt::AlignCenter );
+        item->child( 1 )->setTextAlignment( 3, Qt::AlignCenter );
     }
     assert( item->childCount() == 2 );
     SetNumberOfChildren( item->child( 0 ), result.Count() );
@@ -161,10 +173,13 @@ void FireResultListView::Display( const PopulationFireResult& result, QTreeWidge
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const Equipment& equipment, QTreeWidgetItem* item )
 {
-    item->setText( 1, extractor_.GetDisplayName( equipment.type_ ) );
-    item->setText( 2, extractor_.GetDisplayName( equipment.available_ )
-           + " / "  + extractor_.GetDisplayName( equipment.unavailable_ )
-           + " / "  + extractor_.GetDisplayName( equipment.repairable_ + equipment.onSiteFixable_ ) );
+    item->setText( 0, extractor_.GetDisplayName( equipment.type_ ) );
+    item->setText( 1, extractor_.GetDisplayName( equipment.available_ ) );
+    item->setTextAlignment( 1, Qt::AlignCenter );
+    item->setText( 2, extractor_.GetDisplayName( equipment.unavailable_ ) );
+    item->setTextAlignment( 2, Qt::AlignCenter );
+    item->setText( 3, extractor_.GetDisplayName( equipment.repairable_ + equipment.onSiteFixable_ ) );
+    item->setTextAlignment( 3, Qt::AlignCenter );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,10 +188,13 @@ void FireResultListView::Display( const Equipment& equipment, QTreeWidgetItem* i
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const Casualties& casualties, QTreeWidgetItem* item )
 {
-    item->setText( 1, extractor_.GetDisplayName( casualties.wound_ ) );
-    item->setText( 2, extractor_.GetDisplayName( casualties.officers_ )
-        + " / "  + extractor_.GetDisplayName( casualties.subOfficers_ )
-        + " / "  + extractor_.GetDisplayName( casualties.troopers_ ) );
+    item->setText( 0, extractor_.GetDisplayName( casualties.wound_ ) );
+    item->setText( 1, extractor_.GetDisplayName( casualties.officers_ ) );
+    item->setTextAlignment( 1, Qt::AlignCenter );
+    item->setText( 2, extractor_.GetDisplayName( casualties.subOfficers_ ) );
+    item->setTextAlignment( 2, Qt::AlignCenter );
+    item->setText( 3, extractor_.GetDisplayName( casualties.troopers_ ) );
+    item->setTextAlignment( 3, Qt::AlignCenter );
 }
 
 // -----------------------------------------------------------------------------

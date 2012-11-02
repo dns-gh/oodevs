@@ -765,12 +765,28 @@ Reason: %3
         <translation>Scattered:</translation>
     </message>
     <message>
-        <source> (avail, unavail, repairable):</source>
-        <translation> (avail, unavail, repairable):</translation>
+        <source>unavail,</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> (officer, warrant-off., private)</source>
-        <translation> (officer, warrant-off., private)</translation>
+        <source>warrant-off.,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>( avail, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>repairable )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>( officer,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>private )</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

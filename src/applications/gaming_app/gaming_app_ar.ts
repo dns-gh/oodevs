@@ -765,12 +765,28 @@ Reason: %3
         <translation type="unfinished">المنتشرة:</translation>
     </message>
     <message>
-        <source> (avail, unavail, repairable):</source>
-        <translation type="unfinished">(الاستفادة، أونافايل، يمكن إصلاحها):</translation>
+        <source>unavail,</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> (officer, warrant-off., private)</source>
-        <translation type="unfinished">(موظف، وأمر الجميع، القطاع الخاص)</translation>
+        <source>warrant-off.,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>( avail, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>repairable )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>( officer,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>private )</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

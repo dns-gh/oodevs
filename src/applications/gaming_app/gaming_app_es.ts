@@ -753,16 +753,8 @@ Reason: %3
         <translation>Muerto:</translation>
     </message>
     <message>
-        <source> (avail, unavail, repairable):</source>
-        <translation> (dispo., no dispo., reparable):</translation>
-    </message>
-    <message>
         <source>Troops</source>
         <translation>Topas</translation>
-    </message>
-    <message>
-        <source> (officer, warrant-off., private)</source>
-        <translation>(oficial, sub-oficial., militares de rango)</translation>
     </message>
     <message>
         <source>Wounded:</source>
@@ -770,6 +762,30 @@ Reason: %3
     </message>
     <message>
         <source>Scattered:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unavail,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warrant-off.,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>( avail, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>repairable )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>( officer,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>private )</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

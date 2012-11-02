@@ -755,16 +755,8 @@ Raison: %3
         <translation>Morts:</translation>
     </message>
     <message>
-        <source> (avail, unavail, repairable):</source>
-        <translation> (dispo., non dispo., réparable):</translation>
-    </message>
-    <message>
         <source>Troops</source>
         <translation>Personnel</translation>
-    </message>
-    <message>
-        <source> (officer, warrant-off., private)</source>
-        <translation>(officier, sous-off., militaires du rang)</translation>
     </message>
     <message>
         <source>Wounded:</source>
@@ -773,6 +765,30 @@ Raison: %3
     <message>
         <source>Scattered:</source>
         <translation>Dispersés:</translation>
+    </message>
+    <message>
+        <source>unavail,</source>
+        <translation>non dispo.,</translation>
+    </message>
+    <message>
+        <source>warrant-off.,</source>
+        <translation> sous-off.,</translation>
+    </message>
+    <message>
+        <source>( avail, </source>
+        <translation>( dispo.,</translation>
+    </message>
+    <message>
+        <source>repairable )</source>
+        <translation>réparable )</translation>
+    </message>
+    <message>
+        <source>( officer,</source>
+        <translation>(officier,</translation>
+    </message>
+    <message>
+        <source>private )</source>
+        <translation>militaires du rang )</translation>
     </message>
 </context>
 <context>
