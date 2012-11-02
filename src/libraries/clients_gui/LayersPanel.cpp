@@ -71,6 +71,7 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers, GlS
         Q3HBox* box = new Q3HBox( vBox );
         box->setSpacing( 5 );
         layersList_ = new QTreeView( box );
+        layersList_->setRootIsDecorated( false );
         layersList_->header()->hide();
         layersList_->setModel( layersModel_ );
         connect( layersList_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), SLOT( OnSelectionChanged() ) );
