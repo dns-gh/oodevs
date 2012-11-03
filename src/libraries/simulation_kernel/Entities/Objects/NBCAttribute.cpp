@@ -13,8 +13,8 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 #include "MIL_NbcAgentType.h"
-#include "protocol/Protocol.h"
 #include <boost/lexical_cast.hpp>
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCAttribute )
