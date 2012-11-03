@@ -192,7 +192,7 @@ template< typename Consign, typename Extension >
 void LogisticConsignsWidget< Consign, Extension >::DisplayConsigns( const std::set< const Consign* >& consigns, QTreeWidgetItem& rootItem )
 {
     DeleteChilds( rootItem );
-    for( std::set< const Consign* >::iterator it = consigns.begin(); it != consigns.end(); ++it )
+    for( std::set< const Consign* >::const_iterator it = consigns.begin(); it != consigns.end(); ++it )
     {
         const Consign* pConsign = *it;
         if( !pConsign )
