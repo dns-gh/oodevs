@@ -30,6 +30,7 @@
 #include "Urban/MIL_UrbanCache.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "protocol/Protocol.h"
+#include <boost/noncopyable.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_Army )
 
@@ -194,7 +195,7 @@ namespace
     // Created: NLD 2006-05-05
     // -----------------------------------------------------------------------------
     template< typename T >
-    class sObjectKnowledgesInZoneFilteredInserter
+    class sObjectKnowledgesInZoneFilteredInserter : private boost::noncopyable
     {
     public:
         sObjectKnowledgesInZoneFilteredInserter( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const T& zone )
@@ -239,7 +240,7 @@ void DEC_KnowledgeBlackBoard_Army::GetObjectsInZone( T_KnowledgeObjectDiaIDVecto
 
 namespace
 {
-    class sObjectKnowledgesInZoneCapacityInserter
+    class sObjectKnowledgesInZoneCapacityInserter : private boost::noncopyable
     {
     public:
         sObjectKnowledgesInZoneCapacityInserter( T_KnowledgeObjectDiaIDVector& container, const std::string& capacity, const TER_Localisation& zone )
@@ -278,7 +279,7 @@ void DEC_KnowledgeBlackBoard_Army::GetObjectsWithCapacityInZone( T_KnowledgeObje
 
 namespace
 {
-    class sObjectKnowledgesCapacityPositionInside
+    class sObjectKnowledgesCapacityPositionInside : private boost::noncopyable
     {
     public:
         sObjectKnowledgesCapacityPositionInside( const std::string& capacity, const MT_Vector2D& loc )
@@ -328,7 +329,7 @@ namespace
     // Name: DEC_KnowledgeBlackBoard_Army::sObjectKnowledgesFilteredHeightInserter
     // Created: NLD 2005-05-09
     // -----------------------------------------------------------------------------
-    class sObjectKnowledgesFilteredHeightInserter
+    class sObjectKnowledgesFilteredHeightInserter : private boost::noncopyable
     {
     public:
         sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, const MIL_Agent_ABC& agent, const MIL_ObjectFilter& filter, const MIL_Army_ABC* army )
@@ -742,7 +743,7 @@ namespace
         }
     }
 
-    class sResourceNetworkInserter
+    class sResourceNetworkInserter : private boost::noncopyable
     {
     public:
         sResourceNetworkInserter( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string& type )

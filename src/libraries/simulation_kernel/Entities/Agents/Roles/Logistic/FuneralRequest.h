@@ -11,6 +11,7 @@
 #define __FuneralRequest_h_
 
 #include "FuneralRequest_ABC.h"
+#include <boost/noncopyable.hpp>
 
 class Human_ABC;
 
@@ -24,6 +25,7 @@ namespace logistic {
 // Created: NLD 2011-08-24
 // =============================================================================
 class FuneralRequest : public FuneralRequest_ABC
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

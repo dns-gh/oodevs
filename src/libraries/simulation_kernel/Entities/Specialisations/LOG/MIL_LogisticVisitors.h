@@ -24,6 +24,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include <boost/foreach.hpp>
+#include <boost/noncopyable.hpp>
 
 class MIL_AutomateLOG;
 
@@ -73,6 +74,7 @@ private:
 // MAINTENANCE
 // =============================================================================
 class MaintenanceTransportVisitor : public MIL_LogisticEntitiesVisitor
+                                  , private boost::noncopyable
 {
     public:
         MaintenanceTransportVisitor( const PHY_ComposantePion& composante )
@@ -100,6 +102,7 @@ class MaintenanceTransportVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class MaintenanceRepairVisitor : public MIL_LogisticEntitiesVisitor
+                               , private boost::noncopyable
 {
     public:
         MaintenanceRepairVisitor( const PHY_MaintenanceComposanteState& state )
@@ -130,6 +133,7 @@ class MaintenanceRepairVisitor : public MIL_LogisticEntitiesVisitor
 // MEDICAL
 // =============================================================================
 class MedicalThirdPartyEvacuationVisitor : public MIL_LogisticEntitiesVisitor
+                                         , private boost::noncopyable
 {
     public:
         MedicalThirdPartyEvacuationVisitor( MIL_AgentPion& pion, Human_ABC& human )
@@ -152,6 +156,7 @@ class MedicalThirdPartyEvacuationVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class MedicalEvacuationVisitor : public MIL_LogisticEntitiesVisitor
+                               , private boost::noncopyable
 {
     public:
         MedicalEvacuationVisitor( const Human_ABC& human )
@@ -179,6 +184,7 @@ class MedicalEvacuationVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class MedicalCollectionVisitor : public MIL_LogisticEntitiesVisitor
+                               , private boost::noncopyable
 {
     public:
         MedicalCollectionVisitor( const PHY_MedicalHumanState& humanState )
@@ -206,6 +212,7 @@ class MedicalCollectionVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class MedicalSortingVisitor : public MIL_LogisticEntitiesVisitor
+                            , private boost::noncopyable
 {
     public:
         MedicalSortingVisitor()
@@ -231,6 +238,7 @@ class MedicalSortingVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class MedicalHealingVisitor : public MIL_LogisticEntitiesVisitor
+                            , private boost::noncopyable
 {
     public:
         MedicalHealingVisitor( const PHY_MedicalHumanState& humanState )
@@ -258,6 +266,7 @@ class MedicalHealingVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class MedicalCollectionAmbulanceAuthorizedToGoVisitor : public MIL_LogisticEntitiesVisitor
+                                                      , private boost::noncopyable
 {
     public:
         MedicalCollectionAmbulanceAuthorizedToGoVisitor( const PHY_MedicalCollectionAmbulance& ambulance  )
@@ -281,6 +290,7 @@ class MedicalCollectionAmbulanceAuthorizedToGoVisitor : public MIL_LogisticEntit
 };
 
 class SupplyStockReservationVisitor : public MIL_LogisticEntitiesVisitor
+                                    , private boost::noncopyable
 {
     public:
         SupplyStockReservationVisitor( const PHY_DotationCategory& dotationCategory, double requestedQuantity )
@@ -314,6 +324,7 @@ class SupplyStockReservationVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class SupplyStockReturnVisitor : public MIL_LogisticEntitiesVisitor
+                               , private boost::noncopyable
 {
     public:
         SupplyStockReturnVisitor( const PHY_DotationCategory& dotationCategory, double quantity )
@@ -345,6 +356,7 @@ class SupplyStockReturnVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class SupplyStockContainerVisitor : public MIL_LogisticEntitiesVisitor
+                                  , private boost::noncopyable
 {
     public:
         SupplyStockContainerVisitor( const PHY_DotationCategory& dotationCategory )
@@ -369,6 +381,7 @@ class SupplyStockContainerVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class SupplyConvoyAvailabilityVisitor : public MIL_LogisticEntitiesVisitor
+                                      , private boost::noncopyable
 {
     public:
         SupplyConvoyAvailabilityVisitor( const PHY_DotationCategory& dotationCategory )
@@ -411,6 +424,7 @@ class SupplyConvoyAvailabilityVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class SupplyConvoyTransporterVisitor : public MIL_LogisticEntitiesVisitor
+                                     , private boost::noncopyable
 {
     public:
         SupplyConvoyTransporterVisitor( const PHY_ComposanteTypePion& type )
@@ -447,6 +461,7 @@ class SupplyConvoyTransporterVisitor : public MIL_LogisticEntitiesVisitor
 };
 
 class SupplyConvoyCapacityVisitor : public MIL_LogisticEntitiesVisitor
+                                  , private boost::noncopyable
 {
     public:
         SupplyConvoyCapacityVisitor()

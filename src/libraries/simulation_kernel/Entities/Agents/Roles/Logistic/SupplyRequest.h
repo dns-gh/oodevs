@@ -11,6 +11,7 @@
 #define __SupplyRequest_h_
 
 #include "SupplyRequest_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace logistic {
     class SupplySupplier_ABC;
@@ -22,6 +23,7 @@ namespace logistic {
 // Created: NLD 2011-01-10
 // =============================================================================
 class SupplyRequest : public SupplyRequest_ABC
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/_
