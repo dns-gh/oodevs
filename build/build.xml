@@ -88,7 +88,7 @@
     </target>
 
     <target name="simulation_kernel" depends="tools,protocol,simulation_terrain,meteo,resource_network,flood" description="build simulation_kernel static library">
-        <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd" excludes="**/DEC_Knowledge_ObjectAttributeProxy_ABC.h">
+        <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd" excludes="**/DEC_Knowledge_ObjectAttributeProxy_ABC.h" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
             <defineset>
                 <define name="PLATFORM" value="${platform}"/>
@@ -1481,7 +1481,6 @@
             <arg value="--exclude=module_tester"/>
             <!-- These should be fixed -->
             <arg value="--exclude=actions"/>
-            <arg value="--exclude=simulation_kernel"/>
             <arg value="--exclude=hla_plugin"/>
         </exec>
     </target>
