@@ -129,7 +129,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vConnectors[ eModifIllumination ] = &pIllu->GetConnector();
     ADN_Sensors_Environments_GUI* pEnv = new ADN_Sensors_Environments_GUI( pAgentDetectionModifiersGroup );
     pEnv->setObjectName( strClassName_ + "_EnvModifiers" );
-    vConnectors[ eModifEnvironement ] = &pEnv->GetConnector();
+    vConnectors[ eModifEnvironment ] = &pEnv->GetConnector();
     ADN_Sensors_UrbanBlockMaterial_GUI* pMaterial = new ADN_Sensors_UrbanBlockMaterial_GUI( pAgentDetectionModifiersGroup );
     pMaterial->setObjectName( strClassName_ + "_MaterialModifiers" );
     vConnectors[ eModifUrbanBlockMaterial ] = &pMaterial->GetConnector();
@@ -217,7 +217,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vConnectors[ ePreviewModifSizes ] = &pComposantes->GetConnector();
     vConnectors[ ePreviewModifWeather ] = &pMeteos->GetConnector();
     vConnectors[ ePreviewModifIllumination ] = &pIllu->GetConnector();
-    vConnectors[ ePreviewModifEnvironement ] = &pEnv->GetConnector();
+    vConnectors[ ePreviewModifEnvironment ] = &pEnv->GetConnector();
     vConnectors[ ePreviewModifUrbanBlockMaterial ] = &pMaterial->GetConnector();
     vConnectors[ ePreviewModifStances ] = &pStance->GetConnector();
     vConnectors[ ePreviewModifTargetStances ] = &pTargetStance->GetConnector();
@@ -436,7 +436,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 
     ::AddHeaders( pTable, nCol, tr( "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
     ::AddHeaders( pTable, nCol, tr( "Illumination modifiers" ), ENT_Tr::ConvertFromLightingType, eNbrLightingType );
-    ::AddHeaders( pTable, nCol, tr( "Environement modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
+    ::AddHeaders( pTable, nCol, tr( "Environment modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
     AddHeaders( pTable, nCol, tr( "UrbanBlock material modifiers" ), materials );
     ::AddHeaders( pTable, nCol, tr( "Stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
     ::AddHeaders( pTable, nCol, tr( "Target stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );

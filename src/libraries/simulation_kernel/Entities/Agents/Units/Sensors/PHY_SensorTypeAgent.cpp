@@ -446,10 +446,10 @@ bool PHY_SensorTypeAgent::IsLimitedToSensors( const MIL_Agent_ABC& target ) cons
 }
 
 //-----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ComputeEnvironementFactor
+// Name: PHY_SensorTypeAgent::ComputeEnvironmentFactor
 // Created: JVT 03-04-28
 //-----------------------------------------------------------------------------
-double PHY_SensorTypeAgent::ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const
+double PHY_SensorTypeAgent::ComputeEnvironmentFactor( PHY_RawVisionData::envBits nEnv ) const
 {
     double res = nEnv & PHY_RawVisionData::eVisionEmpty ? environmentFactors_.find( 0 )->second : 1.;
     for( unsigned int mask = 1, idx = 1; idx < PHY_RawVisionData::eNbrVisionObjects; mask <<= 1, ++idx )
@@ -475,7 +475,7 @@ double PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& 
     rDistanceModificator *= lightingFactors_[ env.GetLighting().GetID() ];
     rDistanceModificator *= precipitationFactors_ [ env.GetPrecipitation().GetID() ];
     if( !bIsAroundBU )
-        rDistanceModificator *= ComputeEnvironementFactor( env.GetCurrentEnv() );
+        rDistanceModificator *= ComputeEnvironmentFactor( env.GetCurrentEnv() );
     return rDistanceModificator <= epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
 }
 
@@ -810,10 +810,10 @@ bool PHY_SensorTypeAgent::CanDetectFirer( double distance ) const
 }
 
 //-----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx
+// Name: PHY_SensorTypeAgent::ConvertEnvironmentToObjectIdx
 // Created: JVT 03-04-28
 //-----------------------------------------------------------------------------
-unsigned int PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx( PHY_RawVisionData::E_VisionObject obj )
+unsigned int PHY_SensorTypeAgent::ConvertEnvironmentToObjectIdx( PHY_RawVisionData::E_VisionObject obj )
 {
     if( obj == PHY_RawVisionData::eVisionEmpty )
         return 0;

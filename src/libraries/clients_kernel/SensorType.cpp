@@ -161,12 +161,12 @@ float SensorType::GetMaxDistance( float distanceModificator ) const
 }
 
 //-----------------------------------------------------------------------------
-// Name: SensorType::ComputeEnvironementFactor
+// Name: SensorType::ComputeEnvironmentFactor
 // Created: JVT 03-04-28
 // Modified: JVT 2004-09-27
 //-----------------------------------------------------------------------------
 inline
-float SensorType::ComputeEnvironementFactor( bool inForest, bool inTown, bool inGround ) const
+float SensorType::ComputeEnvironmentFactor( bool inForest, bool inTown, bool inGround ) const
 {
     float res = 1.f;
     if( inForest )
@@ -188,7 +188,7 @@ float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentN
     bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, material );
     if( rCurrentNRJ > 0 && !material )
     {
-        rDistanceModificator *= ComputeEnvironementFactor( inForest, inTown, inGround );
+        rDistanceModificator *= ComputeEnvironmentFactor( inForest, inTown, inGround );
         return rDistanceModificator <= 1e-8 ? -1.f : rCurrentNRJ - distance / rDistanceModificator;
     }
     else

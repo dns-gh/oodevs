@@ -65,7 +65,7 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eModifSizes]->Connect( &pInfos->vModifSizes_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifWeather]->Connect( &pInfos->vModifWeather_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifIllumination]->Connect( &pInfos->vModifIlluminations_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::eModifEnvironement]->Connect( &pInfos->vModifEnvironments_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eModifEnvironment]->Connect( &pInfos->vModifEnvironments_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifUrbanBlockMaterial]->Connect( &pInfos->vModifUrbanBlocks_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifStances]->Connect( &pInfos->vModifStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
@@ -82,7 +82,7 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifSizes]->Connect( &pInfos->vModifSizes_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifWeather]->Connect( &pInfos->vModifWeather_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifIllumination]->Connect( &pInfos->vModifIlluminations_, bConnect );
-    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifEnvironement]->Connect( &pInfos->vModifEnvironments_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifEnvironment]->Connect( &pInfos->vModifEnvironments_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifUrbanBlockMaterial]->Connect( &pInfos->vModifUrbanBlocks_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifStances]->Connect( &pInfos->vModifStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );

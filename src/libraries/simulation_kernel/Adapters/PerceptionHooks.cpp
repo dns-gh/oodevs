@@ -92,7 +92,7 @@ namespace
 {
     const double epsilon = 1e-8;
 
-    double ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv, double(*FindEnvironmentFactor)( unsigned int environment, const void* userData ), const void* userData )
+    double ComputeEnvironmentFactor( PHY_RawVisionData::envBits nEnv, double(*FindEnvironmentFactor)( unsigned int environment, const void* userData ), const void* userData )
     {
         double res = nEnv & PHY_RawVisionData::eVisionEmpty ? FindEnvironmentFactor( 0, userData ) : 1.;
         for( unsigned int mask = 1, idx = 1; idx < PHY_RawVisionData::eNbrVisionObjects; mask <<= 1, ++idx )
@@ -107,7 +107,7 @@ namespace
         rDistanceModificator *= lightingFactors[ env.GetLighting().GetID() ];
         rDistanceModificator *= precipitationFactors[ env.GetPrecipitation().GetID() ];
         if( !bIsAroundBU )
-            rDistanceModificator *= ComputeEnvironementFactor( env.GetCurrentEnv(), FindEnvironmentFactor, userData );
+            rDistanceModificator *= ComputeEnvironmentFactor( env.GetCurrentEnv(), FindEnvironmentFactor, userData );
         return rDistanceModificator <= epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
     }
     bool ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ, const double* urbanBlockFactors )

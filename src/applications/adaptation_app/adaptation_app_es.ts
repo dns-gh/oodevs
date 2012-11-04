@@ -4083,7 +4083,7 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation>Modificadores de iluminación</translation>
     </message>
     <message>
-        <source>Environement modifiers</source>
+        <source>Environment modifiers</source>
         <translation>Modificadores de entorno</translation>
     </message>
     <message>

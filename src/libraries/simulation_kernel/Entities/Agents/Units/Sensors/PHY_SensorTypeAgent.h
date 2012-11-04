@@ -90,10 +90,10 @@ private:
     //! @name Tools
     //@{
     PHY_RawVisionData::E_VisionObject ConvertObjectIdxToEnvironnement( unsigned int val );
-    unsigned int                              ConvertEnvironementToObjectIdx ( PHY_RawVisionData::E_VisionObject obj );
+    unsigned int                              ConvertEnvironmentToObjectIdx ( PHY_RawVisionData::E_VisionObject obj );
 
     const PHY_PerceptionLevel& RayTrace                 ( const MT_Vector2D& vSource, double rSourceAltitude, const MT_Vector2D& vTarget, double rTargetAltitude, double rDistanceMaxModificator ) const;
-    double                   ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const;
+    double                   ComputeEnvironmentFactor( PHY_RawVisionData::envBits nEnv ) const;
     double                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rInitialCoef, bool bIsAroundBU ) const;
     bool                       ComputeUrbanExtinction   ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ ) const;
     bool                       ComputeGlobalUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, double& rVisionNRJ ) const;

@@ -4085,8 +4085,8 @@ Make sure that the file is not write-protected.</translation>
         <translation>Illumination modifiers</translation>
     </message>
     <message>
-        <source>Environement modifiers</source>
-        <translation>Environement modifiers</translation>
+        <source>Environment modifiers</source>
+        <translation>Environment modifiers</translation>
     </message>
     <message>
         <source>UrbanBlock material modifiers</source>

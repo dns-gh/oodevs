@@ -111,7 +111,7 @@ public:
     double GetMaxAltitude() const;
     void CalcMinMaxAltitude();
 
-    static unsigned int ConvertEnvironementToObjectIdx( E_VisionObject obj );
+    static unsigned int ConvertEnvironmentToObjectIdx( E_VisionObject obj );
     static E_VisionObject ConvertObjectIdxToEnvironnement( unsigned int );
 
     template< typename T >

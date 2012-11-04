@@ -71,7 +71,7 @@ private:
     void ReadDistance                       ( xml::xistream& xis );
 
     float GetPostureSourceFactor            ( const Agent_ABC& agent ) const;
-    float ComputeEnvironementFactor         ( bool inForest, bool inTown, bool inGround ) const;
+    float ComputeEnvironmentFactor         ( bool inForest, bool inTown, bool inGround ) const;
     bool ComputeUrbanExtinction             ( float& skyRock, float distance, const boost::optional< std::string >& material ) const;
     //@}
 

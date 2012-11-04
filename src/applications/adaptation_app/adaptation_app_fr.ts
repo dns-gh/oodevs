@@ -4009,7 +4009,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>Modificateurs dus à l&apos;éclairement</translation>
     </message>
     <message>
-        <source>Environement modifiers</source>
+        <source>Environment modifiers</source>
         <translation>Modificateurs dus au terrain</translation>
     </message>
     <message>

@@ -4073,7 +4073,7 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished">معدلات الإضاءة</translation>
     </message>
     <message>
-        <source>Environement modifiers</source>
+        <source>Environment modifiers</source>
         <translation type="unfinished">معدلات البيئة</translation>
     </message>
     <message>
