@@ -101,11 +101,9 @@ namespace
         return res;
     }
     double ComputeExtinction( const PHY_RawVisionDataIterator& env, double rDistanceModificator, double rVisionNRJ, bool bIsAroundBU,
-                              double maxDectectionDistance, const double* lightingFactors, const double* precipitationFactors,
+                              double /*maxDetectionDistance*/, const double* lightingFactors, const double* precipitationFactors,
                               double(*FindEnvironmentFactor)( unsigned int environment, const void* userData ), const void* userData )
     {
-        assert( rVisionNRJ <= maxDectectionDistance );
-        assert( rVisionNRJ > 0 );
         rDistanceModificator *= lightingFactors[ env.GetLighting().GetID() ];
         rDistanceModificator *= precipitationFactors[ env.GetPrecipitation().GetID() ];
         if( !bIsAroundBU )
