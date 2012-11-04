@@ -1494,7 +1494,7 @@
         <update name="asciidoc" version="8.6.8"/>
         <update name="boost"/>
         <update name="bugtrap"/>
-        <update name="buildtools" version="1"/>
+        <update name="buildtools"/>
         <update name="excel"/>
         <update name="flexlm"/>
         <update name="gdal"/>
