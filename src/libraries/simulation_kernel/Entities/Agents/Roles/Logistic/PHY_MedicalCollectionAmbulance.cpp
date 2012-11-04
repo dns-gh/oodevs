@@ -361,12 +361,9 @@ unsigned int PHY_MedicalCollectionAmbulance::GetNbrHumans() const
 // -----------------------------------------------------------------------------
 int PHY_MedicalCollectionAmbulance::GetTimer() const
 {
-    if( nState_ == eLoading )
-        return rInfoTimer_;
-    else if( nState_ == eUnloading )
-        return rInfoTimer_;
-    else
-        return nTimer_;
+    if( nState_ == eLoading || nState_ == eUnloading )
+        return static_cast< int >( rInfoTimer_ );
+    return nTimer_;
 }
 
 // -----------------------------------------------------------------------------

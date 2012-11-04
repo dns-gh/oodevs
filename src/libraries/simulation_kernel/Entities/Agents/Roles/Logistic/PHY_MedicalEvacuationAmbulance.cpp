@@ -276,12 +276,9 @@ bool PHY_MedicalEvacuationAmbulance::Update()
 // -----------------------------------------------------------------------------
 int PHY_MedicalEvacuationAmbulance::GetTimer() const
 {
-    if( nState_ == eLoading )
-        return rInfoTimer_;
-    else if( nState_ == eUnloading )
-        return rInfoTimer_;
-    else
-        return nTimer_;
+    if( nState_ == eLoading || nState_ == eUnloading )
+        return static_cast< int >( rInfoTimer_ );
+    return nTimer_;
 }
 
 // -----------------------------------------------------------------------------

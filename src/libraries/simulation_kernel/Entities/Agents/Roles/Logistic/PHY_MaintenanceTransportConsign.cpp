@@ -197,7 +197,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierLoading()
     assert( pCarrier_ );
 
     SetState( eCarrierLoading );
-    ResetTimer( pCarrier_->GetType().GetHaulerLoadingTime() );
+    ResetTimer( static_cast< int >( pCarrier_->GetType().GetHaulerLoadingTime() ));
     pComposanteState_->NotifyHandledByMaintenance();
 }
 
@@ -224,7 +224,7 @@ void PHY_MaintenanceTransportConsign::EnterStateCarrierUnloading()
     assert( pCarrier_ );
 
     SetState( eCarrierUnloading );
-    ResetTimer( pCarrier_->GetType().GetHaulerUnloadingTime() );
+    ResetTimer( static_cast< int >( pCarrier_->GetType().GetHaulerUnloadingTime() ));
 }
 
 // -----------------------------------------------------------------------------
