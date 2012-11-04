@@ -9,7 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_CheckPointOutArchive.h"
+#pragma warning( push , 0 )
 #include <boost/archive/impl/basic_binary_oprimitive.ipp>
+#pragma warning( pop )
 #include <boost/archive/impl/basic_binary_oarchive.ipp>
 #include <boost/archive/impl/archive_serializer_map.ipp>
 
