@@ -27,15 +27,14 @@ public:
     virtual std::string GetName() const { throw; }
     virtual std::string GetGroupName() { return std::string(); }
     virtual void EndCleanStateAfterCrash() {}
-    virtual void RegisterUserFunctions( directia::brain::Brain& ) {}
-    virtual void RegisterSelf( directia::brain::Brain& /*brain*/, bool /*isMasalife*/, const std::string& /*groupName*/ ) {}
-    virtual void UpdateMeKnowledge( directia::brain::Brain& ) {}
+    virtual void RegisterUserFunctions( sword::Brain& ) {}
+    virtual void RegisterSelf( sword::Brain& /*brain*/, bool /*isMasalife*/, const std::string& /*groupName*/ ) {}
     template< typename FunctionType >
-    void RegisterFunction( const std::string& strFunctionName, FunctionType function )
+    void RegisterFunction( const char* const strFunctionName, FunctionType function )
     {
         DEC_Decision< T >::RegisterFunction( strFunctionName, function );
     }
-    virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& ) {}
+    virtual void RegisterUserArchetypeFunctions ( sword::Brain& ) {}
 private:
     std::auto_ptr< DEC_Model > model_;
 };

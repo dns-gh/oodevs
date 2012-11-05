@@ -295,7 +295,7 @@ MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Entit
 // Name: MIL_AutomateType::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AutomateType::RegisterFunctions( directia::brain::Brain& /*brain*/, MIL_Automate& /*automat*/ ) const
+void MIL_AutomateType::RegisterFunctions( sword::Brain& /*brain*/, MIL_Automate& /*automat*/ ) const
 {
     // NOTHING
 }

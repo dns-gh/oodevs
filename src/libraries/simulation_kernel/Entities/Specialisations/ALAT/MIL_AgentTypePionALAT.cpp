@@ -10,13 +10,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_AgentTypePionALAT.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_PerceptionFunctions.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionALAT constructor

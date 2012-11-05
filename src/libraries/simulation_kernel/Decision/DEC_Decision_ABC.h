@@ -13,12 +13,9 @@
 #include "MT_Tools/Role_ABC.h"
 #include <directia/tools/binders/ScriptRef.h>
 
-namespace directia
-{
-namespace brain
+namespace sword
 {
     class Brain;
-}
 }
 
 class DEC_AutomateDecision;
@@ -177,7 +174,7 @@ private:
     //@{
     directia::tools::binders::ScriptRef GetScriptRef( const std::string& id );
 
-    virtual directia::brain::Brain& GetBrain() = 0;
+    virtual sword::Brain& GetBrain() = 0;
     template< typename T > static void SetScriptVariable( const T& source, T& dest );
     //@}
 };

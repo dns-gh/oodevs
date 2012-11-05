@@ -154,19 +154,19 @@ protected:
 
     virtual std::string GetGroupName() = 0;
     virtual void EndCleanStateAfterCrash  () = 0;
-    virtual void RegisterUserFunctions( directia::brain::Brain& brain ) = 0;
-    virtual void RegisterUserArchetypeFunctions ( directia::brain::Brain& brain ) = 0;
-    void RegisterReportFunctions( directia::brain::Brain& brain );
+    virtual void RegisterUserFunctions( sword::Brain& brain ) = 0;
+    virtual void RegisterUserArchetypeFunctions( sword::Brain& brain ) = 0;
+    void RegisterReportFunctions( sword::Brain& brain );
 
-    template< typename FunctionType >
-    void RegisterFunction( const std::string& strFunctionName, FunctionType function )
+    template< typename Function >
+    void RegisterFunction( const char* const name, const Function& function )
     {
-        (*pBrain_)[ strFunctionName ] = function;
+        pBrain_->RegisterFunction( name, function );
     }
     template< typename MethodType >
-    void RegisterMethod( const char* strFunctionName, MethodType function )
+    void RegisterMethod( const char* name, MethodType function )
     {
-        pBrain_->Register( strFunctionName, function );
+        pBrain_->RegisterMethod( name, function );
     }
     //@}
 
@@ -175,9 +175,9 @@ private://! @name Helpers
     void HandleUpdateDecisionError( const std::exception* error = 0 );
     /* virtual */ void LogError   ( const std::exception* error = 0 ) const;
 
-    virtual directia::brain::Brain& GetBrain();
+    virtual sword::Brain& GetBrain();
 
-    virtual void RegisterSelf( directia::brain::Brain& brain, bool isMasalife, const std::string& groupName ) = 0;
+    virtual void RegisterSelf( sword::Brain& brain, bool isMasalife, const std::string& groupName ) = 0;
     //@}
 
 protected:
@@ -193,7 +193,7 @@ protected:
 private:
     //!@name Data
     //@{
-    boost::shared_ptr< directia::brain::Brain > pBrain_;
+    boost::shared_ptr< sword::Brain > pBrain_;
     std::auto_ptr< struct ScriptRefs > pRefs_;
     bool                               isMasalife_;
     //@}
@@ -202,7 +202,7 @@ private:
 struct ScriptRefs
 {
 public:
-    ScriptRefs( directia::brain::Brain& brain );
+    ScriptRefs( sword::Brain& brain );
 
     directia::tools::binders::ScriptRef sendEvent_;
     directia::tools::binders::ScriptRef startEvent_;

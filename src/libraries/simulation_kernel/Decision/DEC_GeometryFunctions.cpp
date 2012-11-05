@@ -14,6 +14,7 @@
 #include "DEC_FrontAndBackLinesComputer.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Decision/Brain.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -38,7 +39,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Random.h"
-#include <directia/brain/Brain.h>
 #include <boost/foreach.hpp>
 
 #define PRECISION 0.0000001

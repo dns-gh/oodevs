@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Decision_ABC.h"
-#include <directia/brain/Brain.h>
+#include "Brain.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC constructor
@@ -35,5 +35,5 @@ DEC_Decision_ABC::~DEC_Decision_ABC()
 // -----------------------------------------------------------------------------
 directia::tools::binders::ScriptRef DEC_Decision_ABC::GetScriptRef( const std::string& id )
 {
-    return GetBrain()[ id ];
+    return GetBrain().GetScriptRef( id );
 }

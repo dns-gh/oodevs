@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_TerrainFunctions.h"
 #include "DEC_Decision.h"
+#include "Brain.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "simulation_terrain/TER_World.h"
@@ -19,12 +20,11 @@
 // Name: DEC_TerrainFunctions::GetCrossroads
 // Created: MGD 2009-08-19
 // -----------------------------------------------------------------------------
-void DEC_TerrainFunctions::GetCrossroads( directia::brain::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
+void DEC_TerrainFunctions::GetCrossroads( sword::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().GetCrossroads( points );
-
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.point" ], points, true );
+    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.point" ), points, true );
 }
 
 // -----------------------------------------------------------------------------

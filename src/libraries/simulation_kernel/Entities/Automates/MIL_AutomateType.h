@@ -21,12 +21,9 @@ namespace xml
     class xistream;
 }
 
-namespace directia
+namespace sword
 {
-    namespace brain
-    {
-        class Brain;
-    }
+    class Brain;
 }
 
 class DEC_Model_ABC;
@@ -84,7 +81,7 @@ public:
 
     //! @name Logistic
     //@{
-    virtual void RegisterFunctions( directia::brain::Brain& brain, MIL_Automate& automat ) const;
+    virtual void RegisterFunctions( sword::Brain& brain, MIL_Automate& automat ) const;
     //@}
 
 protected:

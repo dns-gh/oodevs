@@ -21,12 +21,9 @@ namespace xml
     class xistream;
 }
 
-namespace directia
-{
-namespace brain
+namespace sword
 {
     class Brain;
-}
 }
 
 class AlgorithmsFactories;
@@ -82,7 +79,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& agent ) const;
+    virtual void RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const;
     //@}
 
 protected:

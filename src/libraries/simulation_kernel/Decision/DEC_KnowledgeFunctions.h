@@ -18,12 +18,13 @@ class MIL_Agent_ABC;
 class TER_Localisation;
 class MT_Vector2D;
 
-namespace directia
-{
-namespace brain
+namespace sword
 {
     class Brain;
 }
+
+namespace directia
+{
 namespace tools
 {
 namespace binders
@@ -57,13 +58,13 @@ public:
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInFuseau( const MIL_AgentPion& callerAgent );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius );
 
-    static void GetObservableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
-    static void GetUrbanBlock( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
+    static void GetObservableKnowledge( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
+    static void GetUrbanBlock( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
     static T_UrbanObjectVector GetUrbanBlockInCircle( boost::shared_ptr< MT_Vector2D > center, float radius );
     static T_UrbanObjectVector GetUrbanBlockInZone( const MIL_AgentPion& pion, TER_Localisation* );
     static const MIL_UrbanObject_ABC* GetUrbanBlockForPosition( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& point );
-    static void GetDestroyableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
-    static void GetIdentifiableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
+    static void GetDestroyableKnowledge( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
+    static void GetIdentifiableKnowledge( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
 
     template< typename T > static T_ConstKnowledgeAgentVector GetLivingEnemiesPerceivedByPion( const T& caller, const DEC_Decision_ABC* perceiver );
 

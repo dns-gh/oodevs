@@ -12,12 +12,9 @@
 
 #include <boost/shared_ptr.hpp>
 
-namespace directia
+namespace sword
 {
-    namespace brain
-    {
-        class Brain;
-    }
+    class Brain;
 }
 
 class DEC_Decision_ABC;
@@ -35,7 +32,7 @@ class DEC_TelepathyFunctions
 public:
     //! @name Registering all those functions in the brain
     //@{
-    static void Register( directia::brain::Brain& brain );
+    static void Register( sword::Brain& brain );
     //@}
 
     //! @name Functions used to directly access or modify another brain

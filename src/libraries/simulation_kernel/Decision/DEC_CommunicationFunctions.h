@@ -10,12 +10,9 @@
 #ifndef __DEC_CommunicationFunctions_h_
 #define __DEC_CommunicationFunctions_h_
 
-namespace directia
+namespace sword
 {
-    namespace brain
-    {
-        class Brain;
-    }
+    class Brain;
 }
 
 class DEC_Decision_ABC;
@@ -34,7 +31,7 @@ class TER_Localisation;
 class DEC_CommunicationFunctions
 {
 public:
-    static void Register( directia::brain::Brain& brain );
+    static void Register( sword::Brain& brain );
 
     static int F_Pion_GeteEtatDecPrudence( DEC_Decision_ABC* pPion );
     static void F_Pion_SeteEtatDecPrudence( DEC_Decision_ABC* pPion, int value );

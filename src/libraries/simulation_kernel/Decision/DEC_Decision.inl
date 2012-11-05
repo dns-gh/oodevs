@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "DEC_Model_ABC.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_PathFunctions.h"
 #include "Decision/DEC_DIAFunctions.h"
 #include "Entities/MIL_EntityManager.h"
@@ -15,7 +16,6 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_Logger.h"
-#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision constructor
@@ -43,9 +43,9 @@ DEC_Decision< T >::~DEC_Decision()
 
 namespace DEC_DecisionImpl
 {
-    void RegisterCommonUserFunctions( directia::brain::Brain& brain , bool isMasalife );
-    void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
-    bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type, bool reload );
+    void RegisterCommonUserFunctions( sword::Brain& brain , bool isMasalife );
+    void RegisterMissionParameters( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
+    bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type, bool reload );
 }
 
 namespace directia
@@ -72,7 +72,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     }
     
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
-    boost::shared_ptr< directia::brain::Brain > pArchetypeBrain;
+    boost::shared_ptr< sword::Brain > pArchetypeBrain;
 
     bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload );
 
@@ -85,8 +85,8 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     RegisterUserFunctions( *pBrain_ );
 
     //Enregistrement à la main de BreakForDebug
-    (*pBrain_)[ "BreakForDebug" ] =
-        boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) ;
+    pBrain_->RegisterFunction( "BreakForDebug",
+        boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) );
 
     RegisterSelf( *pBrain_, isMasalife_, groupName );
 
@@ -202,7 +202,7 @@ void DEC_Decision< T >::HandleUpdateDecisionError( const std::exception* error )
 // Created: LDC 2009-07-02
 // -----------------------------------------------------------------------------
 template< class T >
-directia::brain::Brain& DEC_Decision< T >::GetBrain()
+sword::Brain& DEC_Decision< T >::GetBrain()
 {
     return *pBrain_;
 }
@@ -273,7 +273,7 @@ void DEC_Decision< T >::ActivateOrder( const std::string& strBehavior, const boo
 {
     pMission_ = mission;
     // Register mission parameters in the brain...
-    directia::tools::binders::ScriptRef refMission( *pBrain_ );
+    directia::tools::binders::ScriptRef refMission = pBrain_->GetScriptRef();
     refMission = pMission_;
     DEC_DecisionImpl::RegisterMissionParameters( *pBrain_, pRefs_->initTaskParameter_, refMission, pMission_, isMasalife_ );
     pRefs_->startEvent_( strBehavior, refMission );

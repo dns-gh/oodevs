@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeFunctions.h"
+#include "Brain.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
@@ -230,22 +231,22 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( co
 // Name: DEC_KnowledgeFunctions::GetObservableKnowledge
 // Created: MGD 2010-02-09
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetObservableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
+void DEC_KnowledgeFunctions::GetObservableKnowledge( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Agents
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.agentKnowledge" ], pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies(), true );
+    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.agentKnowledge" ), pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies(), true );
 
     //Object
     T_KnowledgeObjectVector objectsKn;
     pion.GetArmy().GetKnowledge().GetObjects( objectsKn );
 
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.object" ], objectsKn, true );
+    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.object" ), objectsKn, true );
 
     //Urban
     T_UrbanObjectVector blocks;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
 
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.urbanBlock" ], blocks, true );
+    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.urbanBlock" ), blocks, true );
 
 }
 
@@ -253,12 +254,12 @@ void DEC_KnowledgeFunctions::GetObservableKnowledge( directia::brain::Brain& bra
 // Name: DEC_KnowledgeFunctions::GetUrbanBlock
 // Created: DDA 2010-03-15
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetUrbanBlock( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
+void DEC_KnowledgeFunctions::GetUrbanBlock( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Urban
     T_UrbanObjectVector blocks;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.urbanBlock" ], blocks, true );
+    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.urbanBlock" ), blocks, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,20 +314,20 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInZone( const MIL_Agent
 // Name: DEC_KnowledgeFunctions::GetDestroyableKnowledge
 // Created: MGD 2010-02-10
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetDestroyableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
+void DEC_KnowledgeFunctions::GetDestroyableKnowledge( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Agents //@TODO Add private tools function
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.agentKnowledge" ], pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies(), true );
+    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.agentKnowledge" ), pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies(), true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetIdentifiableKnowledge
 // Created: PSN & GGE 2010-03-25
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetIdentifiableKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
+void DEC_KnowledgeFunctions::GetIdentifiableKnowledge( sword::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Agents //@TODO Add private tools function
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.agentKnowledge" ], pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies(), true );
+    knowledgeCreateFunction( table, brain.GetScriptRef( "integration.ontology.types.agentKnowledge" ), pion.GetKnowledgeGroup()->GetKnowledge().GetEnemies(), true );
 }
 
 // -----------------------------------------------------------------------------

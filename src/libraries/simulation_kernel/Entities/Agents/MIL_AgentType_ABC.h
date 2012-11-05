@@ -22,12 +22,9 @@ class PHY_NatureLevel;
 class PHY_UnitType;
 class TerrainData;
 
-namespace directia
-{
-namespace brain
+namespace sword
 {
     class Brain;
-}
 }
 
 // =============================================================================
@@ -55,7 +52,7 @@ public:
     virtual bool IsTerrorist() const;
     virtual const PHY_UnitType& GetUnitType() const = 0;
     virtual double GetFeedbackTime() const = 0;
-    virtual void RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& agent ) const = 0;
+    virtual void RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& agent ) const = 0;
     virtual const DEC_Model_ABC& GetModel() const = 0;
     virtual double GetDistanceAvantPoint ( const TerrainData& nType ) const = 0;
     virtual double GetDistanceAvantLima () const = 0;

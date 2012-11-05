@@ -12,10 +12,10 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePionCirculation.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/Brain.h"
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
-#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionCirculation constructor
@@ -48,7 +48,7 @@ const MIL_AgentTypePion* MIL_AgentTypePionCirculation::Create( const std::string
 // Name: MIL_AgentTypePionCirculation::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionCirculation::RegisterFunctions( directia::brain::Brain& brain, MIL_Agent_ABC& /*agent*/ ) const
+void MIL_AgentTypePionCirculation::RegisterFunctions( sword::Brain& brain, MIL_Agent_ABC& /*agent*/ ) const
 {
-    brain[ "DEC_Circulation_EquiperItineraireLogistique" ] = &DEC_KnowledgeObjectFunctions::EquipLogisticRoute;
+    brain.RegisterFunction( "DEC_Circulation_EquiperItineraireLogistique", &DEC_KnowledgeObjectFunctions::EquipLogisticRoute );
 }

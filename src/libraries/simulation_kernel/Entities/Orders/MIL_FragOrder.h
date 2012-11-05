@@ -34,12 +34,9 @@ class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
 class PHY_HumanWound;
 
-namespace directia
+namespace sword
 {
-    namespace brain
-    {
-        class Brain;
-    }
+    class Brain;
 }
 
 namespace client
@@ -66,7 +63,7 @@ public:
 
     //! @name Operations
     //@{
-    static void Register( directia::brain::Brain& brain );
+    static void Register( sword::Brain& brain );
     static boost::shared_ptr< MIL_FragOrder > CreateFragOrder( std::string );
     void Send( MIL_AgentPion& pion ) const;
     void Send( MIL_Automate& automat ) const;

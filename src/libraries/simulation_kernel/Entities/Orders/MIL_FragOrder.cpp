@@ -16,6 +16,7 @@
 #include "MIL_Report.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/Brain.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -26,7 +27,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrder constructor
@@ -88,37 +88,37 @@ std::string MIL_FragOrder::GetDIAType() const
 // Name: MIL_FragOrder::Register
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-void MIL_FragOrder::Register( directia::brain::Brain& brain )
+void MIL_FragOrder::Register( sword::Brain& brain )
 {
-    brain[ "CreateFragOrder" ] = &MIL_FragOrder::CreateFragOrder;
-    brain.Register( "GetType", &MIL_FragOrder::GetDIAType );
-    brain.Register( "GetambianceMission_", &MIL_FragOrder::GetAmbianceMission );
-    brain.Register( "Getmunitions_", &MIL_FragOrder::GetMunitions );
-    brain.Register( "GetnbIT_", &MIL_FragOrder::GetNbIT );
-    brain.Register( "GetnbrAmbulances_", &MIL_FragOrder::GetNbrAmbulances );
-    brain.Register( "GetnbrRemorqueurs_", &MIL_FragOrder::GetNbrRemorqueurs );
-    brain.Register( "GetorderConduiteAutomateActiverObstacle_", &MIL_FragOrder::GetOrderConduiteAutomateActiverObstacle );
-    brain.Register( "GetorderConduiteChangerAmbiance_", &MIL_FragOrder::GetOrderConduiteChangerAmbiance );
-    brain.Register( "SetorderConduiteChangerAmbiance_", &MIL_FragOrder::SetOrderConduiteChangerAmbiance );
-    brain.Register( "GetorderConduiteChangerPositionDebarquement_", &MIL_FragOrder::GetOrderConduiteChangerPositionDebarquement );
-    brain.Register( "GetorderConduiteChangerReglesEngagementPopulation_", &MIL_FragOrder::GetOrderConduiteChangerReglesEngagementPopulation );
-    brain.Register( "GetorderConduiteChangerReglesEngagement_", &MIL_FragOrder::GetOrderConduiteChangerReglesEngagement );
-    brain.Register( "GetorderConduiteModifierPrioritesBlesses_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses );
-    brain.Register( "GetorderConduiteModifierPrioritesReparations_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations );
-    brain.Register( "GetorderConduiteModifierPrioritesTactiquesBlesses_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesBlesses );
-    brain.Register( "GetorderConduiteModifierPrioritesTactiquesReparations_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesReparations );
-    brain.Register( "GetorderConduiteModifierRegimeTravailMaintenance_", &MIL_FragOrder::GetOrderConduiteModifierRegimeTravailMaintenance );
-    brain.Register( "GetorderConduitePopulationChangerAttitude_", &MIL_FragOrder::GetOrderConduitePopulationChangerAttitude );
-    brain.Register( "GetpionARenforcer_", &MIL_FragOrder::GetPionARenforcer );
-    brain.Register( "GetpionRenforce_", &MIL_FragOrder::GetPionRenforce );
-    brain.Register( "GetpointCible_", &MIL_FragOrder::GetPointCible );
-    brain.Register( "GetzoneCible_", &MIL_FragOrder::GetZoneCible );
-    brain.Register( "GetporteeAction_", &MIL_FragOrder::GetPorteeAction );
-    brain.Register( "GetsiteFranchissementOriginal_", &MIL_FragOrder::GetSiteFranchissementOriginal );
-    brain.Register( "GetsiteFranchissementVariante_", &MIL_FragOrder::GetSiteFranchissementVariante );
-    brain.Register( "GetAgentKnowledge_", &MIL_FragOrder::GetAgentKnowledge );
-    brain.Register( "GetObjectKnowledge_", &MIL_FragOrder::GetObjectKnowledge );
-    brain.Register( "GetAgent_", &MIL_FragOrder::GetAgent );
+    brain.RegisterFunction( "CreateFragOrder", &MIL_FragOrder::CreateFragOrder );
+    brain.RegisterMethod( "GetType", &MIL_FragOrder::GetDIAType );
+    brain.RegisterMethod( "GetambianceMission_", &MIL_FragOrder::GetAmbianceMission );
+    brain.RegisterMethod( "Getmunitions_", &MIL_FragOrder::GetMunitions );
+    brain.RegisterMethod( "GetnbIT_", &MIL_FragOrder::GetNbIT );
+    brain.RegisterMethod( "GetnbrAmbulances_", &MIL_FragOrder::GetNbrAmbulances );
+    brain.RegisterMethod( "GetnbrRemorqueurs_", &MIL_FragOrder::GetNbrRemorqueurs );
+    brain.RegisterMethod( "GetorderConduiteAutomateActiverObstacle_", &MIL_FragOrder::GetOrderConduiteAutomateActiverObstacle );
+    brain.RegisterMethod( "GetorderConduiteChangerAmbiance_", &MIL_FragOrder::GetOrderConduiteChangerAmbiance );
+    brain.RegisterMethod( "SetorderConduiteChangerAmbiance_", &MIL_FragOrder::SetOrderConduiteChangerAmbiance );
+    brain.RegisterMethod( "GetorderConduiteChangerPositionDebarquement_", &MIL_FragOrder::GetOrderConduiteChangerPositionDebarquement );
+    brain.RegisterMethod( "GetorderConduiteChangerReglesEngagementPopulation_", &MIL_FragOrder::GetOrderConduiteChangerReglesEngagementPopulation );
+    brain.RegisterMethod( "GetorderConduiteChangerReglesEngagement_", &MIL_FragOrder::GetOrderConduiteChangerReglesEngagement );
+    brain.RegisterMethod( "GetorderConduiteModifierPrioritesBlesses_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses );
+    brain.RegisterMethod( "GetorderConduiteModifierPrioritesReparations_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations );
+    brain.RegisterMethod( "GetorderConduiteModifierPrioritesTactiquesBlesses_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesBlesses );
+    brain.RegisterMethod( "GetorderConduiteModifierPrioritesTactiquesReparations_", &MIL_FragOrder::GetOrderConduiteModifierPrioritesTactiquesReparations );
+    brain.RegisterMethod( "GetorderConduiteModifierRegimeTravailMaintenance_", &MIL_FragOrder::GetOrderConduiteModifierRegimeTravailMaintenance );
+    brain.RegisterMethod( "GetorderConduitePopulationChangerAttitude_", &MIL_FragOrder::GetOrderConduitePopulationChangerAttitude );
+    brain.RegisterMethod( "GetpionARenforcer_", &MIL_FragOrder::GetPionARenforcer );
+    brain.RegisterMethod( "GetpionRenforce_", &MIL_FragOrder::GetPionRenforce );
+    brain.RegisterMethod( "GetpointCible_", &MIL_FragOrder::GetPointCible );
+    brain.RegisterMethod( "GetzoneCible_", &MIL_FragOrder::GetZoneCible );
+    brain.RegisterMethod( "GetporteeAction_", &MIL_FragOrder::GetPorteeAction );
+    brain.RegisterMethod( "GetsiteFranchissementOriginal_", &MIL_FragOrder::GetSiteFranchissementOriginal );
+    brain.RegisterMethod( "GetsiteFranchissementVariante_", &MIL_FragOrder::GetSiteFranchissementVariante );
+    brain.RegisterMethod( "GetAgentKnowledge_", &MIL_FragOrder::GetAgentKnowledge );
+    brain.RegisterMethod( "GetObjectKnowledge_", &MIL_FragOrder::GetObjectKnowledge );
+    brain.RegisterMethod( "GetAgent_", &MIL_FragOrder::GetAgent );
 }
 
 // -----------------------------------------------------------------------------

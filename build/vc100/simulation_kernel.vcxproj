@@ -150,6 +150,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Location.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\Brain.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendSpecificComposantes.cpp" />
@@ -917,6 +918,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\RolePion_Perceiver.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\Brain.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h" />

@@ -15,12 +15,13 @@ class MIL_AgentPion;
 class TER_Localisation;
 class MT_Vector2D;
 
-namespace directia
-{
-namespace brain
+namespace sword
 {
     class Brain;
 }
+
+namespace directia
+{
 namespace tools
 {
 namespace binders
@@ -43,7 +44,7 @@ public:
     //@{
 
     // Keypoint
-    static void GetCrossroads( directia::brain::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
+    static void GetCrossroads( sword::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
     static std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( MIL_AgentPion& pion, float radius, float safetyDistance );
     static std::vector< boost::shared_ptr< MT_Vector2D > > GetRoadIntersectionsWithZone( const TER_Localisation* zone );
 

@@ -92,29 +92,28 @@ public:
     virtual std::string GetName() const { return "Test Decision"; }
     virtual void EndCleanStateAfterCrash() {}
     virtual std::string GetGroupName() { return std::string(); };
-    virtual void RegisterSelf( directia::brain::Brain& brain, bool /*isMasalife*/, const std::string& /*groupName*/ )
+    virtual void RegisterSelf( sword::Brain& brain, bool /*isMasalife*/, const std::string& /*groupName*/ )
     {
-        brain[ "myself" ] = this;
+        brain.GetScriptRef( "myself" ) = this;
     }
-    void UpdateMeKnowledge( directia::brain::Brain& /*brain*/ ) {}
 
     void UsedByDIA() {}
     void ReleasedByDIA () {}
 
 protected:
-    virtual void RegisterUserFunctions( directia::brain::Brain& brain )
+    virtual void RegisterUserFunctions( sword::Brain& brain )
     {
-        brain[ "DEC_TestBehaviorCalled" ] = &NotifyCallFromScript;
-        brain[ "DEC_TestMissionCalled" ] = &NotifyMissionCallFromScript;
-        brain[ "DEC_GetRawMission" ] = &GetRawMission;
-        directia::tools::binders::ScriptRef initFunction = brain[ "InitTaskParameter" ];
+        brain.RegisterFunction( "DEC_TestBehaviorCalled", &NotifyCallFromScript );
+        brain.RegisterFunction( "DEC_TestMissionCalled", &NotifyMissionCallFromScript );
+        brain.RegisterFunction( "DEC_GetRawMission", &GetRawMission );
+        directia::tools::binders::ScriptRef initFunction = brain.GetScriptRef( "InitTaskParameter" );
         bool isMasalife = false;
-        brain[ "DEC_FillMissionParameters" ] =
-            boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( initFunction ), _1 , _2, isMasalife ) );
+        brain.RegisterFunction( "DEC_FillMissionParameters",
+            boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( initFunction ), _1 , _2, isMasalife ) ) );
         if( pOther_ )
-            brain[ "other" ] = pOther_;
+            brain.GetScriptRef( "other" ) = pOther_;
     }
-    virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& ) {}
+    virtual void RegisterUserArchetypeFunctions( sword::Brain& ) {}
 private:
     DEC_TestPopulationDecision* pOther_;
 };

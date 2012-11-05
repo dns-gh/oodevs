@@ -65,16 +65,16 @@ private:
 
     boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const double time, bool bBoundOnPath ) const;
     boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const double time, bool bBoundOnPath ) const;
-    //@}
 
     template< typename Result, typename Function >
-    void RegisterCommand( const std::string& name, Function fun );
+    void RegisterCommand( const char* const name, Function fun );
     template< typename Result, typename Function, typename Arg1 >
-    void RegisterCommand( const std::string& name, Function fun, Arg1 arg1 );
+    void RegisterCommand( const char* const name, Function fun, Arg1 arg1 );
     template< typename Result, typename Function, typename Arg1, typename Arg2 >
-    void RegisterCommand( const std::string& name, Function fun, Arg1 arg1, Arg2 arg2 );
+    void RegisterCommand( const char* const name, Function fun, Arg1 arg1, Arg2 arg2 );
     template< typename Result, typename Function, typename Arg1, typename Arg2, typename Arg3 >
-    void RegisterCommand( const std::string& name, Function fun, Arg1 arg1, Arg2 arg2, Arg3 arg3 );
+    void RegisterCommand( const char* const name, Function fun, Arg1 arg1, Arg2 arg2, Arg3 arg3 );
+    //@}
 
     //! @name Checkpoint
     //@{

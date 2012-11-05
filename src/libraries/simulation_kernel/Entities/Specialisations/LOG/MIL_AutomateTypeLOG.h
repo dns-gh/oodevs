@@ -44,7 +44,7 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual void RegisterFunctions( directia::brain::Brain& brain, MIL_Automate& automat ) const;
+    virtual void RegisterFunctions( sword::Brain& brain, MIL_Automate& automat ) const;
     //@}
 
     //! @name Main

@@ -46,7 +46,6 @@
 #include <core/UserData.h>
 #include <core/Convert.h>
 #include <module_api/Hook.h>
-#include <directia/brain/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/lambda/core.hpp>
 #include <boost/make_shared.hpp>
@@ -177,7 +176,7 @@ void RolePion_Decision::save( Archive& archive, const unsigned int ) const
 // Created: SLI 2012-04-03
 // -----------------------------------------------------------------------------
 template< typename Result, typename Function >
-void RolePion_Decision::RegisterCommand( const std::string& name, Function fun )
+void RolePion_Decision::RegisterCommand( const char* const name, Function fun )
 {
     RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( sink_ ), boost::ref( GetPion() ) ) ) );
 }
@@ -187,7 +186,7 @@ void RolePion_Decision::RegisterCommand( const std::string& name, Function fun )
 // Created: SLI 2012-04-03
 // -----------------------------------------------------------------------------
 template< typename Result, typename Function, typename Arg1 >
-void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, Arg1 arg1 )
+void RolePion_Decision::RegisterCommand( const char* const name, Function fun, Arg1 arg1 )
 {
     RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( sink_ ), boost::ref( GetPion() ), arg1 ) ) );
 }
@@ -197,7 +196,7 @@ void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, 
 // Created: SLI 2012-04-03
 // -----------------------------------------------------------------------------
 template< typename Result, typename Function, typename Arg1, typename Arg2 >
-void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, Arg1 arg1, Arg2 arg2 )
+void RolePion_Decision::RegisterCommand( const char* const name, Function fun, Arg1 arg1, Arg2 arg2 )
 {
     RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( sink_ ), boost::ref( GetPion() ), arg1, arg2 ) ) );
 }
@@ -207,10 +206,11 @@ void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, 
 // Created: SLI 2012-04-03
 // -----------------------------------------------------------------------------
 template< typename Result, typename Function, typename Arg1, typename Arg2, typename Arg3 >
-void RolePion_Decision::RegisterCommand( const std::string& name, Function fun, Arg1 arg1, Arg2 arg2, Arg3 arg3 )
+void RolePion_Decision::RegisterCommand( const char* const name, Function fun, Arg1 arg1, Arg2 arg2, Arg3 arg3 )
 {
     RegisterFunction( name, boost::function< Result >( boost::bind( fun, boost::ref( sink_ ), boost::ref( GetPion() ), arg1, arg2, arg3 ) ) );
 }
+
 namespace
 {
     unsigned int StartCommand( Sink& sink, MIL_AgentPion& pion, const std::string& name, core::Model& parameters )

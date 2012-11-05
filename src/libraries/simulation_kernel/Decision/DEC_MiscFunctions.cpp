@@ -173,14 +173,14 @@ void DEC_MiscFunctions::DeleteOrderRepresentation( MIL_Entity_ABC& callerAgent, 
 
 namespace DEC_DecisionImpl
 {
-    void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
+    void RegisterMissionParameters( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::FillMissionParameters
 // Created: LDC 2009-05-04
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::FillMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > pMission, bool isMasalife )
+void DEC_MiscFunctions::FillMissionParameters( sword::Brain& brain, directia::tools::binders::ScriptRef& initTaskFunction, const directia::tools::binders::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > pMission, bool isMasalife )
 {
     if( pMission )
         DEC_DecisionImpl::RegisterMissionParameters( brain, initTaskFunction, refMission, pMission, isMasalife );

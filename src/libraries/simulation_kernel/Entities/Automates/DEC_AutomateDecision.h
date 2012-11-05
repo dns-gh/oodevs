@@ -122,14 +122,14 @@ protected:
     virtual void EndCleanStateAfterCrash();
     virtual std::string GetGroupName();
 
-    virtual void RegisterUserFunctions( directia::brain::Brain& brain );
-    virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
+    virtual void RegisterUserFunctions( sword::Brain& brain );
+    virtual void RegisterUserArchetypeFunctions( sword::Brain& brain );
     //@}
 
 private:
     //! @name Tools
     //@{
-    virtual void RegisterSelf( directia::brain::Brain& brain, bool isMasalife, const std::string& groupName );
+    virtual void RegisterSelf( sword::Brain& brain, bool isMasalife, const std::string& groupName );
     //@}
 
     //! @name Functions
