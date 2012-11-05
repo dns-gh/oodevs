@@ -1,6 +1,6 @@
 pragma "once"
-include "Decisional.lua"
 include "Integration.lua"
+include "Decisional.lua"
 
 
 local libPath = select(1,...)

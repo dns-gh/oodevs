@@ -1,7 +1,7 @@
 pragma "once"
 --@TODO mutualiser les parties indépendantes  du modèle
-include "Decisional.lua"
 include "Integration.lua"
+include "Decisional.lua"
 
 local libPath = select(1,...)
 local role    = select(2,...)

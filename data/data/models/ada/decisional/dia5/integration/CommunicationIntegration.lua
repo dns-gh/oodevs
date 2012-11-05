@@ -11,7 +11,6 @@
 -------------------------------------------------------------------------------
 
 integration.taskKnowledge = {}
-include "TaskKnowledge.lua"
 
 integration.communication = {}
 
