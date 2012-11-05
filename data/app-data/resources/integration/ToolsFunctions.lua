@@ -599,3 +599,12 @@ end
 getSimulationTime = function()
     return DEC_TempsSim()
 end
+
+local swordErrorHandler = function( err )
+    DEC_Trace( tostring( err )..debug.traceback() )
+    return err
+end
+
+installErrorHandler = function()
+    errorhandlermanager.installErrorHandler( swordErrorHandler )
+end
