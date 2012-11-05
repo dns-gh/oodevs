@@ -80,7 +80,6 @@
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_Population.h"
 #include "Tools/MIL_IDManager.h"
-#include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Loader_ABC.h"
 #include "Urban/PHY_AccomodationType.h"
