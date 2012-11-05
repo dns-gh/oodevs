@@ -20,27 +20,22 @@
 // Created: JSR 2011-01-31
 // =============================================================================
 class ADN_Consumptions_Table
-    : public ADN_Table2
+    : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Consumptions_Table( QWidget* parent = 0 );
+    explicit ADN_Consumptions_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Consumptions_Table();
     //@}
 
     //! @name Operations
     //@{
-    virtual void OnContextMenu( int row, int col, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
+    virtual void AddRow( int row, void* data );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_Consumptions_Table( const ADN_Consumptions_Table& );            //!< Copy constructor
-    ADN_Consumptions_Table& operator=( const ADN_Consumptions_Table& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateNewConsumption( int resource );

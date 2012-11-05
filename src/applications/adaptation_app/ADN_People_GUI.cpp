@@ -84,9 +84,7 @@ void ADN_People_GUI::Build()
 
     // Consumptions
     Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
-    ADN_Consumptions_Table* pConsumptions = new ADN_Consumptions_Table( pConsumptionsGroup );
-    pConsumptions->setObjectName( strClassName_ + "_Consumptions" );
-    vInfosConnectors[ eConsumptions ] = &pConsumptions->GetConnector();
+    new ADN_Consumptions_Table( strClassName_ + "_Consumptions" , vInfosConnectors[ eConsumptions ], pConsumptionsGroup );
 
     // -------------------------------------------------------------------------
     // Layouts

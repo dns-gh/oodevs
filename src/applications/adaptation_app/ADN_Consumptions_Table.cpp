@@ -9,65 +9,24 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Consumptions_Table.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_People_Data.h"
-
-//-----------------------------------------------------------------------------
-// Internal Table connector to be connected with
-//-----------------------------------------------------------------------------
-class ADN_Consumptions_Table_Connector
-    : public ADN_Connector_Table_ABC
-{
-public:
-    explicit ADN_Consumptions_Table_Connector( ADN_Consumptions_Table& tab )
-        : ADN_Connector_Table_ABC( tab, false )
-    {
-        // NOTHING
-    }
-
-    void AddSubItems( int i, void* obj )
-    {
-        assert(obj);
-        ADN_TableItem_String* pItemCombo = 0;
-        ADN_TableItem_Int* pItemInt = 0;
-        // add a new row & set new values
-        tab_.setItem( i, 0, pItemCombo = new ADN_TableItem_String( &tab_, obj, Q3TableItem::Never ) );
-        tab_.setItem( i, 1, pItemInt = new ADN_TableItem_Int( &tab_, obj ) );
-        tab_.adjustColumn( 0 );
-        tab_.adjustColumn( 1 );
-        // set table item properties
-        pItemInt->GetValidator().setBottom( 0 );
-        // connect items & datas
-        pItemCombo->GetConnector().Connect( &static_cast< ADN_People_Data::PeopleInfosConsumption* >( obj )->ptrResource_.GetData()->strName_ );
-        pItemInt->GetConnector().Connect( &static_cast< ADN_People_Data::PeopleInfosConsumption* >( obj )->consumption_ );
-    }
-private:
-    ADN_Consumptions_Table_Connector& operator=( const ADN_Consumptions_Table_Connector& );
-};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Consumptions_Table constructor
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-ADN_Consumptions_Table::ADN_Consumptions_Table( QWidget* parent /* = 0*/ )
-    : ADN_Table2( parent, "ADN_Consumptions_Table" )
+ADN_Consumptions_Table::ADN_Consumptions_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    // peut etre selectionne & trie
-    setSorting( true );
-    setSelectionMode( Q3Table::Single );
-    setShowGrid( false );
-    setLeftMargin( 0 );
-    // hide vertical header
-    verticalHeader()->hide();
-    // tab with 2 columns
-    setNumCols( 2 );
-    setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-    horizontalHeader()->setLabel( 0, tr( "Resource network" ) );
-    horizontalHeader()->setLabel( 1, tr( "Consumption" ) );
-    // connector creation
-    pConnector_ = new ADN_Consumptions_Table_Connector( *this );
+    dataModel_.setColumnCount( 2 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Resource network" )
+                      << tr( "Consumption" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddSpinBoxOnColumn( 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,12 +42,12 @@ ADN_Consumptions_Table::~ADN_Consumptions_Table()
 // Name: ADN_Consumptions_Table::OnContextMenu
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-void ADN_Consumptions_Table::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
+void ADN_Consumptions_Table::OnContextMenu( const QPoint& pt )
 {
     std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu( this ) );
     // Get the list of the possible munitions
     bool bDisplayAdd = false;
-    bool bDisplayRem = GetCurrentData() != 0;
+    bool bDisplayRem = GetSelectedData() != 0;
     ADN_ResourceNetworks_Data::T_ResourceNetworkInfosVector& vAllResources = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos();
     for( ADN_ResourceNetworks_Data::IT_ResourceNetworkInfosVector it = vAllResources.begin(); it != vAllResources.end(); ++it )
     {
@@ -135,7 +94,7 @@ void ADN_Consumptions_Table::CreateNewConsumption( int resource )
 // -----------------------------------------------------------------------------
 void ADN_Consumptions_Table::RemoveCurrentConsumption()
 {
-    ADN_People_Data::PeopleInfosConsumption* pCurResource = static_cast< ADN_People_Data::PeopleInfosConsumption* >( GetCurrentData() );
+    ADN_People_Data::PeopleInfosConsumption* pCurResource = static_cast< ADN_People_Data::PeopleInfosConsumption* >( GetSelectedData() );
     if( pCurResource )
     {
         // remove current data from list
@@ -151,7 +110,7 @@ void ADN_Consumptions_Table::RemoveCurrentConsumption()
 bool ADN_Consumptions_Table::Contains( const ADN_ResourceNetworks_Data::ResourceNetworkInfos& infos ) const
 {
     int n = 0;
-    while( ADN_TableItem_ABC* pItem = static_cast< ADN_TableItem_ABC* >( item( n, 1 ) ) )
+    while( ADN_StandardItem* pItem =  static_cast< ADN_StandardItem* >( dataModel_.item( n, 1 ) ) )
     {
         ADN_People_Data::PeopleInfosConsumption* pInfos = static_cast< ADN_People_Data::PeopleInfosConsumption* >( pItem->GetData() );
         if( pInfos->ptrResource_.GetData() == &infos )
@@ -159,4 +118,18 @@ bool ADN_Consumptions_Table::Contains( const ADN_ResourceNetworks_Data::Resource
         ++n;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Consumptions_Table::AddRow
+// Created: NPT 2012-11-05
+// -----------------------------------------------------------------------------
+void ADN_Consumptions_Table::AddRow( int row, void* data )
+{
+    ADN_People_Data::PeopleInfosConsumption* pCurResource = static_cast< ADN_People_Data::PeopleInfosConsumption* >( data );
+    if( !pCurResource )
+        return;
+    
+    AddItem( row, 0, data, QString( pCurResource->GetItemName().c_str() ), Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &pCurResource->consumption_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }
