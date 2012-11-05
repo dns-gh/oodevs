@@ -566,7 +566,7 @@ unsigned int PHY_HumansComposante::GetNbrHealthyHumans( const PHY_HumanRank& ran
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove )
 {
-    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end() && humansToRemove > 0; )
+    for( std::vector< Human_ABC* >::iterator it = humans_.begin(); it != humans_.end() && humansToRemove > 0; )
     {
         if( ( *it )->GetRank() != rank || ( *it )->IsDead() || ( *it )->IsWounded() || ( *it )->IsContaminated() || ( *it )->IsMentalDiseased() )
              ++it;
