@@ -129,7 +129,7 @@ void ADN_Consumptions_Table::AddRow( int row, void* data )
     ADN_People_Data::PeopleInfosConsumption* pCurResource = static_cast< ADN_People_Data::PeopleInfosConsumption* >( data );
     if( !pCurResource )
         return;
-    
+
     AddItem( row, 0, data, QString( pCurResource->GetItemName().c_str() ), Qt::ItemIsSelectable );
     AddItem( row, 1, data, &pCurResource->consumption_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }

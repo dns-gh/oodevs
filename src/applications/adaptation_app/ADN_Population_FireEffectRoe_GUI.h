@@ -17,13 +17,18 @@
 //*****************************************************************************
 // Created: JDY 03-07-08
 //*****************************************************************************
-class ADN_Population_FireEffectRoe_GUI : public ADN_Table2
+class ADN_Population_FireEffectRoe_GUI : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Population_FireEffectRoe_GUI( QWidget * parent = 0 );
+    explicit ADN_Population_FireEffectRoe_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Population_FireEffectRoe_GUI();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void AddRow( int row, void* data );
     //@}
 };
 

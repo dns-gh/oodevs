@@ -187,9 +187,7 @@ void ADN_Population_GUI::Build()
 
         // Fire Roe effects
         Q3GroupBox* pFireEffectRoeGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Units -> Crowd" ), pFireEffectGlobalGroup );
-        ADN_Population_FireEffectRoe_GUI* pFireEffectRoe = new ADN_Population_FireEffectRoe_GUI( pFireEffectRoeGroup );
-        pFireEffectRoe->setObjectName( strClassName_ + "_FireEffectRoe" );
-        vInfosConnectors[ eFireEffectRoe ] = &pFireEffectRoe->GetConnector();
+        new ADN_Population_FireEffectRoe_GUI( strClassName_ + "_FireEffectRoe", vInfosConnectors[ eFireEffectRoe ], pFireEffectRoeGroup );
     //}
 
     // Urban area destruction
