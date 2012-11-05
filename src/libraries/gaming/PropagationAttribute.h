@@ -73,9 +73,9 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< std::string >     T_Files;
-    typedef std::map< QDateTime, T_Files > T_PropagationFiles;
-    typedef T_PropagationFiles::iterator  IT_PropagationFiles;
+    typedef std::vector< std::string >           T_Files;
+    typedef std::map< QDateTime, T_Files >       T_PropagationFiles;
+    typedef T_PropagationFiles::const_iterator CIT_PropagationFiles;
 
     typedef std::map< double, QColor > T_Colors;
     typedef T_Colors::const_iterator CIT_Colors;
@@ -94,6 +94,7 @@ private:
     T_PropagationFiles propagationFiles_;
     T_Colors colors_;
     T_Propagations propagations_;
+    QDateTime last_;
     //@}
 };
 

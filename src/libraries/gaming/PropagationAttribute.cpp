@@ -1,9 +1,9 @@
-// *****************************************************************************
+ï»¿// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 MathÃ©matiques AppliquÃ©es SA (MASA)
 //
 // *****************************************************************************
 
@@ -92,16 +92,17 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
 {
     if( !propagationFiles_.empty() )
     {
-        QDateTime current = simulation.GetDateTime();
-        IT_PropagationFiles it = propagationFiles_.begin();
-        if( current >= it->first )
+        QDateTime time = simulation.GetDateTime();
+        if( time < propagationFiles_.begin()->first )
+            propagations_.clear();
+        CIT_PropagationFiles it = propagationFiles_.lower_bound( time );
+        if( it != propagationFiles_.end() && time >= it->first && last_ != it->first )
         {
             propagations_.clear();
-            T_Files& files = it->second;
-            for( std::size_t i = 0; i < files.size(); ++i )
+            for( std::size_t i = 0; i < it->second.size(); ++i )
                 propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( it->second.at( i ),
                                          projection_, converter_, colors_ ) ) );
-            propagationFiles_.erase( it );
+            last_ = it->first;
         }
     }
 }
