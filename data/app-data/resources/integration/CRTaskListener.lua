@@ -147,3 +147,35 @@ function RegisterDoneTaskListener()
     end
     masalife.brain.core.registerTaskListener( doneTaskListener )
 end
+
+integration.RC_String = function( myself, typeMessage, id, list )
+    DEC_RC_String( myself, typeMessage, id, list )
+end
+
+integration.RC_ObjectKnowledge = function( myself, typeMessage, id, list )
+    DEC_RC_ObjectKnowledge( myself, typeMessage, id, list )
+end
+
+integration.RC_AgentKnowledge = function( myself, typeMessage, id, list )
+    DEC_RC_AgentKnowledge( myself, typeMessage, id, list )
+end
+
+integration.RC_Pion_Automate = function( myself, typeMessage, id, list )
+    DEC_RC_Pion_Automate( myself, typeMessage, id, list )
+end
+
+integration.RC_Pion_Pion = function( myself, typeMessage, id, list )
+    DEC_RC_Pion_Pion( myself, typeMessage, id, list )
+end
+
+integration.RC_Id = function( myself, typeMessage, id, list )
+    DEC_RC_Id( myself, typeMessage, id, list )
+end
+
+integration.RC_PopulationKnowledge = function( myself, typeMessage, id, list )
+    DEC_RC_PopulationKnowledge( myself, typeMessage, id, list )
+end
+
+integration.RC_Float = function( myself, typeMessage, id, list )
+    DEC_RC_Float( myself, typeMessage, id, list )
+end
