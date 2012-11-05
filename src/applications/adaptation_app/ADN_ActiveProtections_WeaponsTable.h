@@ -11,28 +11,28 @@
 #define __ADN_ActiveProtections_WeaponsTable_h_
 
 #include "ADN_CommonGfx.h"
+#include "ADN_Equipement_Data.h"
 
 // =============================================================================
 //  @class  ADN_ActiveProtections_WeaponsTable
 //  @brief  ADN_ActiveProtections_WeaponsTable
 // Created: FDS 2010-02-24
 // =============================================================================
-class ADN_ActiveProtections_WeaponsTable : public ADN_Table2
+class ADN_ActiveProtections_WeaponsTable : public ADN_Table3
 {
-    Q_OBJECT
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_ActiveProtections_WeaponsTable( const std::string& strName, QWidget* pParent = 0 );
+             ADN_ActiveProtections_WeaponsTable( const QString& strName, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_ActiveProtections_WeaponsTable();
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
-    virtual bool Contains( ADN_Equipement_Data::CategoryInfo& category );
+    virtual void AddRow( int row, void* data );
+    virtual void OnContextMenu( const QPoint& pt );
+    bool Contains( ADN_Equipement_Data::CategoryInfo& category );
     //@}
 };
 

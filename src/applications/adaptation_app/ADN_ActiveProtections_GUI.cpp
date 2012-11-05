@@ -64,10 +64,8 @@ void ADN_ActiveProtections_GUI::Build()
 
     // Weapons
     Q3GroupBox* pWeaponsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ) );
-    ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Ammunitions" ).toAscii().constData(), pWeaponsGroup_ );
-    pWeapons->setObjectName( strClassName_ + tr( "Ammunitions" ) );
+    ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Ammunitions" ), strClassName_ + tr( "Ammunitions" ), vConnectors[ eActiveProtectionWeapons ], pWeaponsGroup_ );
     pWeapons->SetGoToOnDoubleClick( ::eEquipement );
-    vConnectors[eActiveProtectionWeapons] = &pWeapons->GetConnector();
 
     // -------------------------------------------------------------------------
     // Layouts

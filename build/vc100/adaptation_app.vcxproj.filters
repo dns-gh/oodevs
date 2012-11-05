@@ -1909,6 +1909,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Postures_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_WeaponsTable.h">
+      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2140,9 +2143,6 @@
       <Filter>Source Files\Workspace\Population\Population GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_GUI.h">
-      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_WeaponsTable.h">
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ActiveProtectionsListView.h">
