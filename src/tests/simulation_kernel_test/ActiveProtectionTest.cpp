@@ -36,6 +36,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
+#include "Entities/Orders/MIL_PionOrderManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/Role_ABC.h"

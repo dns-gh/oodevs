@@ -19,6 +19,7 @@
 #include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Urban/MIL_UrbanObject_ABC.h"

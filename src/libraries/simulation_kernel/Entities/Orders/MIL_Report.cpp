@@ -14,6 +14,7 @@
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Formation.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "MIL_MissionParameter_ABC.h"

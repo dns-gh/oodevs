@@ -13,6 +13,7 @@
 #include "PHY_ComposantePion.h"
 #include "MIL_Singletons.h"
 #include "WeaponAvailabilityComputer_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"

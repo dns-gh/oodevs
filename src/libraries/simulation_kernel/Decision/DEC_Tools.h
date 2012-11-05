@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 #include "MIL_AgentServer.h"
-#include "Tools/MIL_ProfilerMgr.h"
 
 class DEC_Decision_ABC;
 class DEC_FrontAndBackLinesComputer;

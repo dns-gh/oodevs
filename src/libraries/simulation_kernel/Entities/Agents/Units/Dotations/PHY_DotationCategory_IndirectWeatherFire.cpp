@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
 #include "PHY_IndirectFireDotationClass.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Effects/MIL_Effect_Weather.h"
 #include "Entities/Effects/MIL_EffectManager.h"

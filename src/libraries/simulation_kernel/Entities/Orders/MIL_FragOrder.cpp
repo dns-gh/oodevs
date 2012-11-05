@@ -17,6 +17,7 @@
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "MIL_MissionParameter_ABC.h"

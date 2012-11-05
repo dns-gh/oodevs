@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_TerrainFunctions.h"
 #include "DEC_Decision.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AnalyzerManager.h"

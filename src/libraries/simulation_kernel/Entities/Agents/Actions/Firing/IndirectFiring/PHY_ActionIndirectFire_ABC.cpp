@@ -13,6 +13,7 @@
 
 #include "PHY_ActionIndirectFire_ABC.h"
 #include "PHY_RoleAction_IndirectFiring.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Decision_ABC.h"
 

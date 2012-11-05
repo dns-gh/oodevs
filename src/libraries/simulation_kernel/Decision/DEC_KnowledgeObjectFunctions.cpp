@@ -15,6 +15,7 @@
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects_DataComputer.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/AnimatorAttribute.h"

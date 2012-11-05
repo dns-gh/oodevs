@@ -22,6 +22,7 @@
 #include "wrapper/Hook.h"
 #include <module_api/Log.h>
 #include <boost/foreach.hpp>
+#include <sstream>
 
 using namespace sword;
 using namespace sword::movement;

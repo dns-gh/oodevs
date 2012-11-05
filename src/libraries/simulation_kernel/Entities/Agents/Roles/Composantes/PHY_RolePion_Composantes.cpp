@@ -14,6 +14,8 @@
 #include "MIL_AgentServer.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"

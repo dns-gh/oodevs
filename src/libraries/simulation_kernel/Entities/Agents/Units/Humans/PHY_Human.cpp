@@ -16,6 +16,7 @@
 #include "PHY_HumanWound.h"
 #include "MIL_Singletons.h"
 #include "Checkpoints/SerializationTools.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConsign.h"
 #include "Entities/Agents/Roles/Logistic/FuneralRequest.h"

@@ -15,6 +15,7 @@
 #include "Decision/DEC_Population_Path.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathPoint.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"

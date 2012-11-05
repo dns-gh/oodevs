@@ -13,6 +13,7 @@
 #include "PHY_ActionIndirectFire_Knowledge.h"
 #include "PHY_RoleAction_IndirectFiring.h"
 #include "Decision/DEC_Tools.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"

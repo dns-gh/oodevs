@@ -11,6 +11,7 @@
 #include "PHY_DotationCategory_IndirectFire.h"
 #include "PHY_DotationCategory.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
