@@ -1,14 +1,14 @@
-^(bin|include|out|run|lib)/
+^(bin|dist|include|out|run|lib)/
 ^data/data/
 ^data/exercises/
 
 syntax: glob
 *.ipch
+*.ncb
 *.opensdf
 *.qm
 *.rej
 *.sdf
 *.suo
-*.vcxproj.user
-*.ncb
 *.user
+*.vcxproj.user
