@@ -91,13 +91,11 @@ void ADN_Automata_GUI::Build()
     // Sub units
     QGroupBox* pSubUnitsGroup = new QGroupBox( tr( "Sub-units" ) );
     QVBoxLayout* pSubUnitsLayout = new QVBoxLayout( pSubUnitsGroup );
-    ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( pSubUnitsGroup );
-    pSubUnitsTable->setObjectName( strClassName_ + "_Subunits" );
+    ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( strClassName_ + "_Subunits", vInfosConnectors[eSubUnit], pSubUnitsGroup );
     pSubUnitsTable->SetGoToOnDoubleClick( ::eUnits );
     pSubUnitsLayout->addWidget( pSubUnitsTable, 1 );
-    vInfosConnectors[eSubUnit] = &pSubUnitsTable->GetConnector();
-    connect( pSubUnitsTable, SIGNAL( AddItem( const std::string& ) ), this, SLOT( OnItemAdded( const std::string& ) ) );
-    connect( pSubUnitsTable, SIGNAL( RemoveItem( const std::string& ) ), this, SLOT( OnItemRemoved( const std::string& ) ) );
+    connect( pSubUnitsTable, SIGNAL( ItemAdded( const std::string& ) ), this, SLOT( OnItemAdded( const std::string& ) ) );
+    connect( pSubUnitsTable, SIGNAL( ItemRemoved( const std::string& ) ), this, SLOT( OnItemRemoved( const std::string& ) ) );
 
     // -------------------------------------------------------------------------
     // Layouts

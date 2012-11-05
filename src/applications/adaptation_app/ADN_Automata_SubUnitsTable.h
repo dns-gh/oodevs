@@ -12,6 +12,7 @@
 
 #include "ADN_Table.h"
 #include <boost/noncopyable.hpp>
+#include "ADN_Units_Data.h"
 
 // =============================================================================
 /** @class  ADN_Automata_SubUnitsTable
@@ -19,7 +20,7 @@
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Automata_SubUnitsTable : public ADN_Table2
+class ADN_Automata_SubUnitsTable : public ADN_Table3
                                  , private boost::noncopyable
 {
     Q_OBJECT
@@ -27,26 +28,27 @@ class ADN_Automata_SubUnitsTable : public ADN_Table2
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Automata_SubUnitsTable( QWidget* pParent = 0 );
+    explicit ADN_Automata_SubUnitsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Automata_SubUnitsTable();
     //@}
 
     //! @name Operations
     //@{
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
+    virtual void AddRow( int row, void* data );
     void AddSubItems( const std::string& name );
     //@}
 
 private:
-    void AddNewElement( int n );
+    void AddNewElement( ADN_Units_Data::UnitInfos* );
     void RemoveCurrentElement();
 
 private slots:
     void MenuListItemSelected();
 
 signals:
-    void AddItem( const std::string& name );
-    void RemoveItem( const std::string& name );
+    void ItemAdded( const std::string& name );
+    void ItemRemoved( const std::string& name );
 
 private:
     bool bMenuListItemSelected_;
