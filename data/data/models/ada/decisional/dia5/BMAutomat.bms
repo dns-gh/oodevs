@@ -1,7 +1,6 @@
 pragma "once"
-include "Types_CR.lua"
+include "Decisional.lua"
 include "Integration.lua"
-include "FragOrder.lua"
 
 
 local libPath = select(1,...)
