@@ -69,10 +69,8 @@ void ADN_Breakdowns_GUI::Build()
     // Parts
     QGroupBox* pPartsGroup = new QGroupBox( tr( "Required parts" ) );
     QVBoxLayout* pPartsLayout = new QVBoxLayout( pPartsGroup );
-    ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable();
-    pPartsTable->setObjectName( strClassName_ + "_Parts" );
+    ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable( strClassName_ + "_Parts", vInfosConnectors[ eParts ] );
     pPartsTable->SetGoToOnDoubleClick( ::eEquipement );
-    vInfosConnectors[eParts] = & pPartsTable->GetConnector();
     pPartsLayout->addWidget( pPartsTable );
 
     // -------------------------------------------------------------------------

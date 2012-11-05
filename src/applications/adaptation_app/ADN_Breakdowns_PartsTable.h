@@ -19,20 +19,21 @@
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Breakdowns_PartsTable : public ADN_Table2
+class ADN_Breakdowns_PartsTable : public ADN_Table3
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Breakdowns_PartsTable( QWidget* pParent = 0 );
+             ADN_Breakdowns_PartsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Breakdowns_PartsTable();
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void AddRow( int row, void* data );
+    virtual void OnContextMenu( const QPoint& pt );
     bool Contains( ADN_Equipement_Data::CategoryInfo& category );
     //@}
 };
