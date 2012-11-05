@@ -44,11 +44,8 @@ void DEC_Decision_ABC::SetScriptVariable( const T& source, T& dest )
 template< typename T >
 T DEC_Decision_ABC::GetVariable( const std::string& name )
 {
-    T value = T();
     directia::tools::binders::ScriptRef scriptRef = GetScriptRef( name );
     if( !scriptRef )
-        scriptRef = value;
-    GetScriptRef( "DEC_SetVariable__" ) = boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) );
-    GetScriptRef( "DEC_SetVariable__" )( GetScriptRef( name ) );
-    return value;
+        scriptRef = T();
+    return scriptRef;
 }
