@@ -27,6 +27,7 @@ public:
     //! @name Constructors / Destructor
     //@{
             ADN_Table3( const QString& objectName, QWidget* pParent = 0 );
+            ADN_Table3( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent = 0 );
             ADN_Table3( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Table3();
     //@}

@@ -100,14 +100,13 @@ void ADN_Maintenance_GUI::Build()
     ADN_WorkingSchemeTable* pWorkingSchemeTable = new ADN_WorkingSchemeTable( strClassName_ + "_Durations", workingShemeBox );
     pWorkingSchemeTable->Initialize( data_ );
 
+    //vRepairerWarnings_
     Q3HGroupBox* pRepairerGroup = new Q3HGroupBox( tr( "Repairers availability warnings" ) );
-    ADN_AvailabilityWarningTable* pRepairerWarningTable = new ADN_AvailabilityWarningTable( pRepairerGroup );
-    pRepairerWarningTable->setObjectName( strClassName_ + "_Repairers" );
-    pRepairerWarningTable->GetConnector().Connect( & data_.vRepairerWarnings_ );
+    new ADN_AvailabilityWarningTable( strClassName_ + "_Repairers", data_.vRepairerWarnings_, pRepairerGroup );
+
+    //vHaulerWarnings_
     Q3HGroupBox* pHaulerGroup = new Q3HGroupBox( tr( "Tow trucks availability warnings" ) );
-    ADN_AvailabilityWarningTable* pHaulerWarningTable = new ADN_AvailabilityWarningTable( pHaulerGroup );
-    pHaulerGroup->setObjectName( strClassName_+ "Haulers" );
-    pHaulerWarningTable->GetConnector().Connect( & data_.vHaulerWarnings_ );
+    new ADN_AvailabilityWarningTable( strClassName_+ "_Haulers", data_.vHaulerWarnings_, pHaulerGroup );
 
     // -------------------------------------------------------------------------
     // Layouts

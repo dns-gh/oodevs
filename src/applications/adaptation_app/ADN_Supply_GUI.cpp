@@ -66,9 +66,7 @@ void ADN_Supply_GUI::Build()
     }
 
     Q3HGroupBox* pVectorGroup = new Q3HGroupBox( tr( "Conveyors availability warnings" ) );
-    ADN_AvailabilityWarningTable* pWarningTable = new ADN_AvailabilityWarningTable( pVectorGroup );
-    pWarningTable->setObjectName( strClassName_ + "_Conveyors" );
-    pWarningTable->GetConnector().Connect( & data_.infos_.vVectorWarnings_ );
+    new ADN_AvailabilityWarningTable( strClassName_ + "_Conveyors", data_.infos_.vVectorWarnings_, pVectorGroup );
 
     Q3HGroupBox* pSetupGroup = new Q3HGroupBox( tr( "Convoy setup duration" ) );
     ADN_Supply_TrucksTimeTable* pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pSetupGroup );

@@ -18,18 +18,19 @@
 */
 // Created: SBO 2006-08-03
 // =============================================================================
-class ADN_AvailabilityWarningTable : public ADN_Table2
+class ADN_AvailabilityWarningTable : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_AvailabilityWarningTable( QWidget* pParent );
+    explicit ADN_AvailabilityWarningTable( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent = 0 );
     virtual ~ADN_AvailabilityWarningTable();
     //@}
 
     //! @name Operations
     //@{
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
+    virtual void AddRow( int row, void* data );
     //@}
 
 private:

@@ -37,6 +37,21 @@ ADN_Table3::ADN_Table3( const QString& objectName, QWidget* pParent /*= 0*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Table::ADN_Table3
+// Created: NPT 2012-11-05
+// -----------------------------------------------------------------------------
+ADN_Table3::ADN_Table3( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
+    : QTableView( pParent )
+    , dataModel_( pParent )
+    , delegate_ ( pParent )
+{
+    Initialize( objectName );
+
+    pConnector_ = new ADN_Connector_Table_ABC2( *this, false, "ADN_Connector_Table" );
+    pConnector_->Connect( &vector );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Table3::ADN_Table3
 // Created: ABR 2012-10-18
 // -----------------------------------------------------------------------------

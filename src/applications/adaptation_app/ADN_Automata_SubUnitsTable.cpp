@@ -83,7 +83,7 @@ namespace
             connect( listView_, SIGNAL( itemEntered( QListWidgetItem* ) ), receiver_, SLOT( MenuListItemSelected() ) );
             return listView_;
         }
-        ADN_Units_Data::UnitInfos * SelectedValue() const
+        ADN_Units_Data::UnitInfos* SelectedValue() const
         {
             if( listView_ )
                 if( QListWidgetItem* item = listView_->currentItem() )
