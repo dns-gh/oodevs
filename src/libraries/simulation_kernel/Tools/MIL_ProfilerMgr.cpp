@@ -40,8 +40,7 @@ MIL_ProfilerMgr::MIL_ProfilerMgr( bool bEnabled )
 //-----------------------------------------------------------------------------
 MIL_ProfilerMgr::~MIL_ProfilerMgr()
 {
-    decFunctionsFile_.close();
-    decisionUpdateFile_.close();
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -62,7 +61,6 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_AgentPion& pion, double r
     if( !bEnabled_ )
         return;
     decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " P " << pion.GetID() << " \"" << pion.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
-    decisionUpdateFile_.flush();
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +72,6 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, doubl
     if( !bEnabled_ )
         return;
     decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << automate.GetID() << " \"" << automate.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
-    decisionUpdateFile_.flush();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,5 +83,4 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Population& population, d
     if( !bEnabled_ )
         return;
     decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " Pop " << population.GetID() << " \"" << population.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
-    decisionUpdateFile_.flush();
 }
