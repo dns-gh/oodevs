@@ -50,6 +50,10 @@ integration.getCommanderROE = function( )
     return DEC_Automate_ROE( )
 end
 
+integration.getCommanderROEExist = function( )
+    return DEC_Automate_ROE
+end
+
 integration.isEngagedCommander = function( )
     return DEC_Automate_EstEmbraye( )
 end
