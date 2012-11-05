@@ -739,7 +739,7 @@
 
     <target name="generate-database" description="compile behavior model database">
         <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
-        <extract-knowledges dir="${models.dir}" tofile="${models.dir}/../integration/TaskKnowledge.lua"/>
+        <extract-knowledges dir="${models.dir}" tofile="${models.dir}/../TaskKnowledge.lua"/>
     </target>
 
     <target name="generate-symbols" description="generate symbols">
