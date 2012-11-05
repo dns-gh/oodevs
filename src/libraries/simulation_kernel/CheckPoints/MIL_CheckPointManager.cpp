@@ -406,7 +406,9 @@ bool MIL_CheckPointManager::SaveCheckPoint( bool automatic, const std::string& n
         file.close();
     }
 
-    const bool bNotOk = !SaveOrbatCheckPoint( checkpointName ) || !SaveFullCheckPoint( checkpointName, userName );
+    bool bNotOk = !SaveOrbatCheckPoint( checkpointName );
+    MT_LOG_INFO_MSG( "End save orbat" );
+    bNotOk |= !SaveFullCheckPoint( checkpointName, userName );
     MT_LOG_INFO_MSG( "End save checkpoint" );
     client::ControlCheckPointSaveEnd msg;
     msg().set_name( checkpointName );
