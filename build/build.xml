@@ -1459,6 +1459,10 @@
             <arg value="/DOUTFILE=${output}"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
+        <check_depends file="${output}">
+            <arg value="*.exe"/>
+            <arg value="*_module.dll"/>
+        </check_depends>
         <safe-move file="${output}"/>
     </target>
 
