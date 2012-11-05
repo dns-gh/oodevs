@@ -791,22 +791,6 @@
         </copy>
     </target>
 
-    <macrodef name="extract-knowledges">
-        <attribute name="dir"/>
-        <attribute name="tofile"/>
-        <sequential>
-            <concat destfile="@{tofile}" fixlastline="yes">
-                <fileset dir="@{dir}" includes="**/*.xml"/>
-                <filterchain>
-                    <containsregex pattern='.*name="(.*)" source.*knowledge-class="(.*)">' replace='integration.taskKnowledge["\1"] = "\2"'/>
-                </filterchain>
-            </concat>
-        </sequential>
-    </macrodef>
-
-    <target name="generate-integration" description="generate integration files from decisional">
-        <extract-knowledges dir="${models.dir}" tofile="${run.dir}/resources/integration/TaskKnowledge.lua"/>
-    </target>
     <!--
     ============================================================================
     license
@@ -1533,7 +1517,7 @@
         <update name="zlib"/>
     </target>
 
-    <target name="configure" description="update packages and decisional" depends="update,generate-integration,deploy-application-data,generate-symbols"/>
+    <target name="configure" description="update packages and decisional" depends="update,deploy-application-data,generate-symbols"/>
 
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>

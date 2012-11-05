@@ -11,7 +11,6 @@
 -------------------------------------------------------------------------------
 
 integration.taskKnowledge = {}
-include "TaskKnowledge.lua"
 
 integration.communication = {}
 
@@ -291,3 +290,4 @@ end
 integration.getAORWidth = function( AOR )
     return DEC_Fuseau_Width( AOR )
 end
+
