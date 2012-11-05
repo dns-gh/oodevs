@@ -21,7 +21,7 @@
     <message>
         <source>QT_LAYOUT_DIRECTION</source>
         <translatorcomment>Define the layout orientation</translatorcomment>
-        <translation>QT_LAYOUT_DIRECTION</translation>
+        <translation>RTL</translation>
     </message>
     <message>
         <source>About</source>
