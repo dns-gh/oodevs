@@ -48,7 +48,8 @@ UnitStateTableResource::UnitStateTableResource( kernel::Controllers& controllers
     , simulation_  ( simulation )
     , selected_    ( controllers )
 {
-    delegate_.AddSpinBoxOnColumn( eQuantity, 0, 0, 10, -1, eMaximum );
+    delegate_.AddSpinBoxOnColumn( eQuantity, 0, std::numeric_limits< int >::max(), 10 );
+    delegate_.SetColumnDependency( eQuantity, eMaximum, gui::CommonDelegate::eLTE );
     controllers_.Register( *this );
 }
 

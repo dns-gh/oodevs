@@ -35,10 +35,10 @@ public:
 
     //! @name QItemDelegate operations
     //@{
-    QWidget *createEditor( QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
-    void setEditorData( QWidget* editor, const QModelIndex& index ) const;
-    void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const;
-    void updateEditorGeometry( QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
+    virtual QWidget *createEditor( QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
+    virtual void setEditorData( QWidget* editor, const QModelIndex& index ) const;
+    virtual void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const;
+    virtual void updateEditorGeometry( QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
     //@}
 
     //! @name Operations
@@ -46,48 +46,90 @@ public:
     void Purge();
     void SetReadOnly( bool readOnly );
     bool IsReadOnly() const;
+    bool IsCheckBox( const QModelIndex& index ) const;
+
     const QStringList* GetComboContent( int row, int col ) const;
     void SetComboContent( int row, int col, const QStringList& content );
+
     template< typename T >
     void SetSpinBoxMinMax( int row, int col, T min, T max );
+
+    template< typename T >
+    const T* Find( const std::map< unsigned int, T >& container, unsigned int key ) const;
     //@}
 
     //! @name Base operations
     //@{
     // FromRow/Col and ToRow/Col are used if value != -1
     // LinkedRow/Col is used if value != -1
-    unsigned int AddSpinBox( int fromRow, int toRow, int fromCol, int toCol,
-                             int min = 0, int max = 100, int gap = 1,
-                             int minLinkedRow = -1, int maxLinkedRow = -1, int minLinkedCol = -1, int maxLinkedCol = -1 );
-    unsigned int AddDoubleSpinBox( int fromRow, int toRow, int fromCol, int toCol,
-                                   double min = 0., double max = 100., double gap = 1., int precision = 2,
-                                   int minLinkedRow = -1, int maxLinkedRow = -1, int minLinkedCol = -1, int maxLinkedCol = -1 );
-    unsigned int AddComboBox( int fromRow, int toRow, int fromCol, int toCol,
-                              QStringList stringList );
+    unsigned int AddSpinBox( int fromRow, int toRow, int fromCol, int toCol, int min = 0, int max = 100, int gap = 1 );
+    unsigned int AddDoubleSpinBox( int fromRow, int toRow, int fromCol, int toCol, double min = 0., double max = 100., double gap = 1., int precision = 2 );
+    unsigned int AddComboBox( int fromRow, int toRow, int fromCol, int toCol, QStringList stringList );
     template< typename T >
-    unsigned int AddComboBox( int fromRow, int toRow, int fromCol, int toCol,
-                              T enumMax );
+    unsigned int AddComboBox( int fromRow, int toRow, int fromCol, int toCol, T enumMax );
+    unsigned int AddLineEdit( int fromRow, int toRow, int fromCol, int toCol );
+    unsigned int AddCheckBox( int fromRow, int toRow, int fromCol, int toCol );
     //@}
 
     //! @name Row operations
     //@{
-    unsigned int AddSpinBoxOnRow( int row, int min = 0, int max = 100, int gap = 1, int minLinkedRow = -1, int maxLinkedRow = -1 );
-    unsigned int AddDoubleSpinBoxOnRow( int row, double min = 0., double max = 100., double gap = 1., int precision = 2, int minLinkedRow = -1, int maxLinkedRow = -1 );
+    unsigned int AddSpinBoxOnRow( int row, int min = 0, int max = 100, int gap = 1 );
+    unsigned int AddDoubleSpinBoxOnRow( int row, double min = 0., double max = 100., double gap = 1., int precision = 2 );
     unsigned int AddComboBoxOnRow( int row, QStringList stringList );
     template< typename T >
     unsigned int AddComboBoxOnRow( int row, T enumMax );
+    unsigned int AddLineEditOnRow( int row );
+    unsigned int AddCheckBoxOnRow( int row );
     //@}
 
     //! @name Column operations
     //@{
-    unsigned int AddSpinBoxOnColumn( int column, int min = 0, int max = 100, int gap = 1, int minLinkedCol = -1, int maxLinkedCol = -1 );
-    unsigned int AddDoubleSpinBoxOnColumn( int column, double min = 0., double max = 100., double gap = 1., int precision = 2, int minLinkedCol = -1, int maxLinkedCol = -1 );
+    unsigned int AddSpinBoxOnColumn( int column, int min = 0, int max = 100, int gap = 1 );
+    unsigned int AddDoubleSpinBoxOnColumn( int column, double min = 0., double max = 100., double gap = 1., int precision = 2 );
     unsigned int AddComboBoxOnColumn( int column, QStringList stringList );
     template< typename T >
     unsigned int AddComboBoxOnColumn( int column, T enumMax );
+    unsigned int AddLineEditOnColumn( int column );
+    unsigned int AddCheckBoxOnColumn( int column );
     //@}
 
-private:
+    //! @name Public types
+    //@{
+    enum E_LinksType
+    {
+        eLT,
+        eLTE,
+        eGT,
+        eGTE
+        //eEQ,
+        //eDIFF
+    };
+    //@}
+
+    //! @name Links
+    //@{
+    template< typename T >
+    void SetColumnsSumRestriction( std::vector< int > columns, E_LinksType type, T sum );
+    void SetColumnDependency( int dependentColumn, int referenceColumn, E_LinksType dependencyType );
+
+    template< typename T >
+    void SetRowsSumRestriction( std::vector< int > rows, E_LinksType type, T sum );
+    void SetRowDependency( int dependentRow, int referenceRow, E_LinksType dependencyType );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void OnItemChanged( QStandardItem* item );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void CheckedStateChanged( const QStandardItem& );
+    //@}
+
+protected:
     //! @name Types
     //@{
     struct DelegatePosition
@@ -105,41 +147,80 @@ private:
         }
 
         unsigned int id_;
+        // $$$$ ABR 2012-10-24: Add a priority here to handle multi editor on the same item
         int fromRow_;
         int toRow_;
         int fromCol_;
         int toCol_;
     };
+    typedef std::vector< DelegatePosition >    T_Positions;
+    typedef T_Positions::const_iterator      CIT_Positions;
 
     template< typename T >
     struct SpinBoxDescription
     {
-        SpinBoxDescription( T min, T max, T gap, int precision, int minLinkedRow, int maxLinkedRow, int minLinkedCol, int maxLinkedCol )
+        SpinBoxDescription()
+            : min_( 0 )
+            , max_( 0 )
+            , gap_( 0 )
+            , precision_( 0 )
+        {}
+        SpinBoxDescription( T min, T max, T gap, int precision )
             : min_( min )
             , max_( max )
             , gap_( gap )
             , precision_( precision )
-            , minLinkedRow_( minLinkedRow )
-            , maxLinkedRow_( maxLinkedRow )
-            , minLinkedCol_( minLinkedCol )
-            , maxLinkedCol_( maxLinkedCol ) 
             {}
+
 
         T   min_;
         T   max_;
         T   gap_;
         int precision_;
-        int minLinkedRow_;
-        int maxLinkedRow_;
-        int minLinkedCol_;
-        int maxLinkedCol_;
     };
-    typedef std::vector< DelegatePosition >         T_Positions;
-    typedef T_Positions::iterator                  IT_Positions;
-    typedef T_Positions::const_iterator           CIT_Positions;
+
+    struct Dependency
+    {
+        Dependency( int dependent, int reference, E_LinksType type, bool isRow = false )
+            : dependent_( dependent )
+            , reference_( reference )
+            , type_( type )
+            , isRow_( isRow )
+            {}
+
+        bool isRow_;
+        int dependent_;
+        int reference_;
+        E_LinksType type_;
+    };
+    typedef std::vector< Dependency >         T_Dependencies;
+    typedef T_Dependencies::const_iterator  CIT_Dependencies;
+
+    template< typename T >
+    struct SumRestriction
+    {
+        SumRestriction( std::vector< int > targets, E_LinksType type, T value, bool isRow = false )
+            : targets_( targets )
+            , type_( type )
+            , value_( value )
+            , isRow_( isRow )
+        {}
+
+        bool isRow_;
+        std::vector< int > targets_;
+        E_LinksType type_;
+        T value_;
+    };
+    typedef std::vector< SumRestriction< int > >    T_IntSumRestrictions;
+    typedef std::vector< SumRestriction< double > > T_DoubleSumRestrictions;
+
+    typedef std::map< unsigned int, SpinBoxDescription< int > >    T_SpinBoxs;
+    typedef std::map< unsigned int, SpinBoxDescription< double > > T_DoubleSpinBoxs;
+    typedef std::map< unsigned int, QStringList >                  T_ComboBoxs;
+    typedef std::vector< unsigned int >                            T_SimpleWidget;
     //@}
 
-private:
+protected:
     //! @name Helpers
     //@{
     QModelIndex GetIndexFromSource( const QModelIndex& index ) const;
@@ -148,20 +229,27 @@ private:
     void Populate( Enum size, QStringList& content ) const;
 
     template< typename T >
-    std::pair< T, T > GetMinMax( const SpinBoxDescription< T >& spinbox, const QModelIndex& index ) const;
+    std::pair< T, T > GetMinMax( const SpinBoxDescription< T >& spinbox, const QModelIndex& index, const std::vector< SumRestriction< T > >& sumRestriction ) const;
 
     unsigned int GetNewId();
+    void CreatePosition( unsigned int id, int fromRow, int toRow, int fromCol, int toCol );
     const DelegatePosition* IsInPosition( int row, int col ) const;
     const DelegatePosition* FindPosition( int fromRow, int toRow, int fromCol, int toCol ) const;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
-    tools::Resolver< SpinBoxDescription< int > >    spinBoxs_;
-    tools::Resolver< SpinBoxDescription< double > > doubleSpinBoxs_;
-    tools::Resolver< QStringList >                  comboBoxs_;
+    T_SpinBoxs       spinBoxs_;
+    T_DoubleSpinBoxs doubleSpinBoxs_;
+    T_ComboBoxs      comboBoxs_;
+    T_SimpleWidget   lineEdits_;
+    T_SimpleWidget   checkBoxs_;
+
     T_Positions                                     positions_;
+    T_Dependencies                                  dependencies_;
+    std::vector< SumRestriction< int > >            intRestrictions_;
+    std::vector< SumRestriction< double > >         doubleRestrictions_;
     bool                                            readOnly_;
 
     unsigned int                                    currentId_;
