@@ -21,8 +21,7 @@ class MT_Profiler : private boost::noncopyable
 {
 
 public:
-             MT_Profiler();
-    virtual ~MT_Profiler();
+    MT_Profiler();
 
     void Reset();
 
