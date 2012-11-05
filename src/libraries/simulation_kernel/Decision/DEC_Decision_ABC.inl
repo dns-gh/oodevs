@@ -52,19 +52,3 @@ T DEC_Decision_ABC::GetVariable( const std::string& name )
     GetScriptRef( "DEC_SetVariable__" )( GetScriptRef( name ) );
     return value;
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Decision_ABC::GetScalarVariable
-// Created: LDC 2009-07-31
-// -----------------------------------------------------------------------------
-template< typename T >
-T DEC_Decision_ABC::GetScalarVariable( const std::string& name )
-{
-    T value = 0;
-    directia::tools::binders::ScriptRef scriptRef = GetScriptRef( name );
-    if( !scriptRef )
-        scriptRef = value;
-    GetScriptRef( "DEC_SetVariable__" ) = boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) );
-    GetScriptRef( "DEC_SetVariable__" )( GetScriptRef( name ) );
-    return value;
-}

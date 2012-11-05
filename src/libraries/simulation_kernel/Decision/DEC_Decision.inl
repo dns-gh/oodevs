@@ -684,7 +684,7 @@ void DEC_Decision< T >::SetAppuieFreinage( bool value )
 template< class T >
 bool DEC_Decision< T >::GetDemandeOrdreConduitePoursuivre()
 {
-    return GetScalarVariable<bool>( "myself.bDemandeOrdreConduitePoursuivre_" );
+    return GetVariable<bool>( "myself.bDemandeOrdreConduitePoursuivre_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -694,7 +694,7 @@ bool DEC_Decision< T >::GetDemandeOrdreConduitePoursuivre()
 template< class T >
 bool DEC_Decision< T >::GetEnCoursExtractionPersonnel()
 {
-    return GetScalarVariable<bool>( "myself.bEnCoursExtractionPersonnel_" );
+    return GetVariable<bool>( "myself.bEnCoursExtractionPersonnel_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -704,7 +704,7 @@ bool DEC_Decision< T >::GetEnCoursExtractionPersonnel()
 template< class T >
 bool DEC_Decision< T >::GetEnExploitation()
 {
-    return GetScalarVariable<bool>( "myself.bEnExploitation_" );
+    return GetVariable<bool>( "myself.bEnExploitation_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -724,7 +724,7 @@ void DEC_Decision< T >::SetbEnExploitation( bool value )
 template< class T >
 bool DEC_Decision< T >::GetEnPhaseRavitaillement()
 {
-    return GetScalarVariable<bool>( "myself.bEnPhaseRavitaillement_" );
+    return GetVariable<bool>( "myself.bEnPhaseRavitaillement_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -744,7 +744,7 @@ void DEC_Decision< T >::SetEnPhaseRavitaillement( bool value )
 template< class T >
 bool DEC_Decision< T >::GetMiseEnOeuvre()
 {
-    return GetScalarVariable<bool>( "myself.bMiseEnOeuvre_" );
+    return GetVariable<bool>( "myself.bMiseEnOeuvre_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -764,7 +764,7 @@ void DEC_Decision< T >::SetMiseEnOeuvre( bool value )
 template< class T >
 int DEC_Decision< T >::GetEtatFeu()
 {
-    return GetScalarVariable<int>( "myself.eEtatFeu_" );
+    return GetVariable<int>( "myself.eEtatFeu_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -864,7 +864,7 @@ void DEC_Decision< T >::SetPlotRavitaillementAssigne( boost::shared_ptr< DEC_Kno
 template< class T >
 int DEC_Decision< T >::GetPorteeAction()
 {
-    return GetScalarVariable<int>( "myself.porteeAction_" );
+    return GetVariable<int>( "myself.porteeAction_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -884,7 +884,7 @@ void DEC_Decision< T >::SetPorteeAction( int value )
 template< class T >
 float DEC_Decision< T >::GetNiveauAlerteRavitaillement()
 {
-    return GetScalarVariable<float>( "myself.rNiveauAlerteRavitaillement_" );
+    return GetVariable<float>( "myself.rNiveauAlerteRavitaillement_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -988,7 +988,7 @@ void DEC_Decision< T >::SetNbIt( int value )
 template< class T >
 int DEC_Decision< T >::GetNbIt()
 {
-    return GetScalarVariable< int >( "myself.nbIT_" );
+    return GetVariable< int >( "myself.nbIT_" );
 }
 
 // -----------------------------------------------------------------------------

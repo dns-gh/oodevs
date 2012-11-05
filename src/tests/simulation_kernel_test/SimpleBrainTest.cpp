@@ -288,5 +288,5 @@ BOOST_FIXTURE_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua, Missi
 BOOST_FIXTURE_TEST_CASE( DEC_Decision_GetterTest, Mission )
 {
     decision.SetVariable( "myself.AValue", 42 );
-    BOOST_CHECK_EQUAL( 42, decision.GetScalarVariable< int >( "myself.AValue" ) );
+    BOOST_CHECK_EQUAL( 42, decision.GetVariable< int >( "myself.AValue" ) );
 }
