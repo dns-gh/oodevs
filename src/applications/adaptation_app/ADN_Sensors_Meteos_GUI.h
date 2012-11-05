@@ -12,25 +12,7 @@
 #ifndef __ADN_Sensors_Meteos_GUI_h_
 #define __ADN_Sensors_Meteos_GUI_h_
 
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Sensors_ModificatorTable.h"
-
-//-----------------------------------------------------------------------------
-// Internal Table connector
-//-----------------------------------------------------------------------------
-class ADN_CT_Sensors_Meteos : public ADN_Connector_Table_ABC
-{
-public:
-    //! @name Constructor / Destructor
-    //@{
-    ADN_CT_Sensors_Meteos( ADN_Table& tab );
-    //@}
-
-    //! @name Operations
-    //@{
-    void AddSubItems(int i,void *obj);
-    //@}
-};
 
 // =============================================================================
 /** @class  ADN_Sensors_Meteos_GUI
@@ -38,17 +20,17 @@ public:
 */
 // Created: ABR 2012-01-16
 // =============================================================================
-class ADN_Sensors_Meteos_GUI : public ADN_Sensors_ModificatorTable< ADN_CT_Sensors_Meteos >
+class ADN_Sensors_Meteos_GUI : public ADN_Sensors_ModificatorTable_ABC
 {
-
 public:
-    explicit ADN_Sensors_Meteos_GUI(QWidget * parent = 0 );
+             ADN_Sensors_Meteos_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Sensors_Meteos_GUI();
 
 private:
     //! @name ADN_Sensors_MaterialsTable implementation
     //@{
     virtual void InternalEmit();
+    virtual void AddRow( int row, void* data );
     //@}
 };
 

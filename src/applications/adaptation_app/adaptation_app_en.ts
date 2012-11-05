@@ -3930,12 +3930,9 @@ Make sure that the file is not write-protected.</translation>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
     <message id="0">
-        <source>ADN_Sensors_Environments_GUI</source>
-        <translation>ADN_Sensors_Environments_GUI</translation>
-    </message>
-    <message>
         <source>Environments</source>
-        <translation>Environments</translation>
+        <oldsource>ADN_Sensors_Environments_GUI</oldsource>
+        <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
     </message>
     <message>
         <source>Modifiers</source>
@@ -4112,10 +4109,6 @@ Make sure that the file is not write-protected.</translation>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
     <message>
-        <source>Illumination</source>
-        <translation>Illumination</translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation>Modifiers</translation>
     </message>
@@ -4142,10 +4135,6 @@ Make sure that the file is not write-protected.</translation>
 <context>
     <name>ADN_Sensors_Meteos_GUI</name>
     <message>
-        <source>Meteos</source>
-        <translation>Meteos</translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation>Modifiers</translation>
     </message>
@@ -4154,15 +4143,11 @@ Make sure that the file is not write-protected.</translation>
     <name>ADN_Sensors_Postures_GUI</name>
     <message>
         <source>Modifiers</source>
-        <translation>Modifiers</translation>
+        <translation type="unfinished">Modifiers</translation>
     </message>
 </context>
 <context>
     <name>ADN_Sensors_Sizes_GUI</name>
-    <message>
-        <source>Volumes</source>
-        <translation>Volumes</translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation>Modifiers</translation>
@@ -4208,10 +4193,6 @@ Make sure that the file is not write-protected.</translation>
 </context>
 <context>
     <name>ADN_Sensors_UrbanBlockMaterial_GUI</name>
-    <message>
-        <source>Material</source>
-        <translation>Material</translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation>Modifiers</translation>

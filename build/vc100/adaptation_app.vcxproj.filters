@@ -1906,6 +1906,9 @@
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_StandardItem.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Postures_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -1983,9 +1986,6 @@
     <None Include="..\..\src\applications\adaptation_app\style_scipio.css" />
     <None Include="..\..\src\applications\adaptation_app\ADN_TextEdit.inl">
       <Filter>Source Files\Common widgets\Edit line</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.inl">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_ar.ts">
       <Filter>Translations</Filter>
@@ -2074,9 +2074,6 @@
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_GUI.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Postures_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_ActiveProtectionsListView.h">

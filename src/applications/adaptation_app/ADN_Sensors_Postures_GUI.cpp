@@ -9,54 +9,15 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Postures_GUI.h"
-#include "ADN_App.h"
-#include "ADN_CommonGfx.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Sensors_Data.h"
-#include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"
-
-typedef ADN_Sensors_Data::ModificatorPostureInfos    ModificatorPostureInfos;
-
-// -----------------------------------------------------------------------------
-// Name: ADN_CT_Sensors_Postures constructor
-// Created: ABR 2012-01-24
-// -----------------------------------------------------------------------------
-ADN_CT_Sensors_Postures::ADN_CT_Sensors_Postures( ADN_Table& table )
-    : ADN_Connector_Table_ABC( table, false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_CT_Sensors_Postures::AddSubItems
-// Created: ABR 2012-01-24
-// -----------------------------------------------------------------------------
-void ADN_CT_Sensors_Postures::AddSubItems( int i, void *pObj )
-{
-    assert( pObj != 0 );
-    ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, pObj );
-    ADN_TableItem_Double* pItemDouble = new ADN_TableItem_Double( &tab_, pObj );
-
-    // Add a new row & set the new values.
-    tab_.setItem( i, 0, pItemString );
-    tab_.setItem( i, 1, pItemDouble );
-
-    // Setup the row header item.
-    pItemString->setEnabled( true );
-    pItemString->setText( ENT_Tr::ConvertFromUnitPosture( static_cast<ModificatorPostureInfos*>( pObj )->eType_, ENT_Tr_ABC::eToTr ).c_str() );
-
-    // Setup the value item.
-    pItemDouble->GetValidator().setRange( 0, 1, 3 );
-    pItemDouble->GetConnector().Connect( &static_cast<ModificatorPostureInfos*>( pObj )->rCoeff_ );
-}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Postures_GUI constructor
 // Created: ABR 2012-01-24
 // -----------------------------------------------------------------------------
-ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption, QWidget * parent /*= 0*/ )
-    : ADN_Sensors_ModificatorTable< ADN_CT_Sensors_Postures >( parent, tr( "Sensors_Postures" ), strColCaption, tr( "Modifiers" ) )
+ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Sensors_ModificatorTable_ABC( strColCaption + tools::translate( "ADN_Sensors_Postures_GUI", "" ), tools::translate( "ADN_Sensors_Postures_GUI", "Modifiers" ), objectName, connector, pParent ) // hack : first translation not seen by Qt (unknown reason)
 {
     // NOTHING
 }
@@ -76,6 +37,20 @@ ADN_Sensors_Postures_GUI::~ADN_Sensors_Postures_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Postures_GUI::InternalEmit()
 {
-    if( ModificatorPostureInfos* data = static_cast< ModificatorPostureInfos* >( GetCurrentData() ) )
+    if( ADN_Sensors_Data::ModificatorPostureInfos* data = static_cast< ADN_Sensors_Data::ModificatorPostureInfos* >( GetSelectedData() ) )
         emit ContentChanged( data->GetItemName(), data->rCoeff_.GetData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Postures_GUI::AddRow
+// Created: JSR 2012-11-05
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Postures_GUI::AddRow( int row, void* data )
+{
+    ADN_Sensors_Data::ModificatorPostureInfos* pInfos = static_cast< ADN_Sensors_Data::ModificatorPostureInfos* >( data );
+    if( !pInfos )
+        return;
+
+    AddItem( row, 0, data, ENT_Tr::ConvertFromUnitPosture( pInfos->eType_, ENT_Tr_ABC::eToTr ).c_str(), Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &pInfos->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

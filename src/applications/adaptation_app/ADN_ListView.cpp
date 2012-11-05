@@ -176,7 +176,7 @@ int ADN_ListView::ChildCount() const
 // -----------------------------------------------------------------------------
 void ADN_ListView::Clear()
 {
-    dataModel_.clear();
+    dataModel_.removeRows( 0, dataModel_.rowCount() );
 }
 
 // -----------------------------------------------------------------------------

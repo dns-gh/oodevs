@@ -269,7 +269,7 @@ void* ADN_Table3::GetDataFromIndex( const QModelIndex& index )
 void* ADN_Table3::GetSelectedData()
 {
     QModelIndexList indexes = selectedIndexes();
-    if( indexes.size() == 1 )
+    if( indexes.size() > 0 )
         return GetDataFromIndex( indexes[ 0 ] );
     return 0;
 }

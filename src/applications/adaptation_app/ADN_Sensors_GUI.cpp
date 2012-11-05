@@ -117,21 +117,11 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // Modificators (group 1)
     QGroupBox* pAgentDetectionModifiersGroup = new QGroupBox( tr( "Terrain modifiers" ) );
 
-    ADN_Sensors_Sizes_GUI* pComposantes = new ADN_Sensors_Sizes_GUI( pAgentDetectionModifiersGroup );
-    pComposantes->setObjectName( strClassName_ + "_SizeModifiers" );
-    vConnectors[ eModifSizes ] = &pComposantes->GetConnector();
-    ADN_Sensors_Meteos_GUI* pMeteos = new ADN_Sensors_Meteos_GUI( pAgentDetectionModifiersGroup );
-    pMeteos->setObjectName( strClassName_ + "_WeatherModifiers" );
-    vConnectors[ eModifWeather ] = &pMeteos->GetConnector();
-    ADN_Sensors_Illumination_GUI* pIllu = new ADN_Sensors_Illumination_GUI( pAgentDetectionModifiersGroup );
-    pIllu->setObjectName( strClassName_ + "_IlluModifiers" );
-    vConnectors[ eModifIllumination ] = &pIllu->GetConnector();
-    ADN_Sensors_Environments_GUI* pEnv = new ADN_Sensors_Environments_GUI( pAgentDetectionModifiersGroup );
-    pEnv->setObjectName( strClassName_ + "_EnvModifiers" );
-    vConnectors[ eModifEnvironment ] = &pEnv->GetConnector();
-    ADN_Sensors_UrbanBlockMaterial_GUI* pMaterial = new ADN_Sensors_UrbanBlockMaterial_GUI( pAgentDetectionModifiersGroup );
-    pMaterial->setObjectName( strClassName_ + "_MaterialModifiers" );
-    vConnectors[ eModifUrbanBlockMaterial ] = &pMaterial->GetConnector();
+    ADN_Sensors_Sizes_GUI* pComposantes = new ADN_Sensors_Sizes_GUI( strClassName_ + "_SizeModifiers", vConnectors[ eModifSizes ], pAgentDetectionModifiersGroup );
+    ADN_Sensors_Meteos_GUI* pMeteos = new ADN_Sensors_Meteos_GUI( strClassName_ + "_WeatherModifiers", vConnectors[ eModifWeather ], pAgentDetectionModifiersGroup );
+    ADN_Sensors_Illumination_GUI* pIllu = new ADN_Sensors_Illumination_GUI( strClassName_ + "_IlluModifiers", vConnectors[ eModifIllumination ], pAgentDetectionModifiersGroup );
+    ADN_Sensors_Environments_GUI* pEnv = new ADN_Sensors_Environments_GUI( strClassName_ + "_EnvModifiers", vConnectors[ eModifEnvironment ], pAgentDetectionModifiersGroup );
+    ADN_Sensors_UrbanBlockMaterial_GUI* pMaterial = new ADN_Sensors_UrbanBlockMaterial_GUI( strClassName_ + "_MaterialModifiers", vConnectors[ eModifUrbanBlockMaterial ], pAgentDetectionModifiersGroup );
 
     QHBoxLayout* pAgentDetectionModifiersLayout = new QHBoxLayout();
     pAgentDetectionModifiersLayout->setSpacing( 5 );
@@ -145,15 +135,8 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // Modificators (group 2)
     QGroupBox* pAgentDetectionModifiersGroup2 = new QGroupBox( tr( "Stance modifiers" ) );
 
-    ADN_Sensors_Postures_GUI* pStance = new ADN_Sensors_Postures_GUI( tr( "Stance" ) );
-    pStance->setObjectName( strClassName_ + "_PostureModifiers" );
-    vConnectors[ eModifStances ] = &pStance->GetConnector();
-    pStance->setSelectionMode( Q3Table::SingleRow );
-
-    ADN_Sensors_Postures_GUI* pTargetStance = new ADN_Sensors_Postures_GUI( tr( "Target stance" ) );
-    pTargetStance->setObjectName( strClassName_ + "_TargetPostureModifiers" );
-    vConnectors[ eModifTargetStances ] = &pTargetStance->GetConnector();
-    pTargetStance->setSelectionMode( Q3Table::SingleRow );
+    ADN_Sensors_Postures_GUI* pStance = new ADN_Sensors_Postures_GUI( tr( "Stance" ), strClassName_ + "_PostureModifiers", vConnectors[ eModifStances ] );
+    ADN_Sensors_Postures_GUI* pTargetStance = new ADN_Sensors_Postures_GUI( tr( "Target stance" ), strClassName_ + "_TargetPostureModifiers", vConnectors[ eModifTargetStances ] );
 
     QVBoxLayout* pAgentDetectionModifiersLayout2 = new QVBoxLayout();
     pAgentDetectionModifiersLayout2->setSpacing( 5 );
@@ -200,9 +183,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     builder.AddField< ADN_EditLine_Double >( pObjPopulationModifiersGroup, tr( "Density" ) , vTargetConnectors[ eObjPopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Double >( pObjPopulationModifiersGroup, tr( "Modifier" ), vTargetConnectors[ eObjPopulationModifier ], 0, eGreaterEqualZero );
 
-    ADN_Sensors_Postures_GUI* pObjPostures = new ADN_Sensors_Postures_GUI( tr( "Stance" ) );
-    pObjPostures->setObjectName( strClassName_ + "Stances" );
-    vTargetConnectors[ eObjModifStances ] = &pObjPostures->GetConnector();
+    ADN_Sensors_Postures_GUI* pObjPostures = new ADN_Sensors_Postures_GUI( tr( "Stance" ), strClassName_ + "Stances", vTargetConnectors[ eObjModifStances ] );
 
     QVBoxLayout* pTargetParamsGroupLayout = new QVBoxLayout();
     pTargetParamsGroupLayout->setSpacing( 5 );

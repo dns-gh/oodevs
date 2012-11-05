@@ -3917,13 +3917,9 @@ Make sure that the file is not write-protected.</source>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
     <message id="0">
-        <source>ADN_Sensors_Environments_GUI</source>
-        <oldsource>New armor plating creation</oldsource>
-        <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
-    </message>
-    <message>
         <source>Environments</source>
-        <translation type="unfinished">البيئات</translation>
+        <oldsource>ADN_Sensors_Environments_GUI</oldsource>
+        <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
     </message>
     <message>
         <source>Modifiers</source>
@@ -4100,10 +4096,6 @@ Make sure that the file is not write-protected.</source>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
     <message>
-        <source>Illumination</source>
-        <translation type="unfinished">الإضاءة</translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>
     </message>
@@ -4130,10 +4122,6 @@ Make sure that the file is not write-protected.</source>
 <context>
     <name>ADN_Sensors_Meteos_GUI</name>
     <message>
-        <source>Meteos</source>
-        <translation type="unfinished">الطقس</translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>
     </message>
@@ -4147,10 +4135,6 @@ Make sure that the file is not write-protected.</source>
 </context>
 <context>
     <name>ADN_Sensors_Sizes_GUI</name>
-    <message>
-        <source>Volumes</source>
-        <translation type="unfinished">وحدات التخزين</translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>
@@ -4196,10 +4180,6 @@ Make sure that the file is not write-protected.</source>
 </context>
 <context>
     <name>ADN_Sensors_UrbanBlockMaterial_GUI</name>
-    <message>
-        <source>Material</source>
-        <translation type="unfinished">المواد</translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>

@@ -3931,17 +3931,13 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
     <message id="0">
-        <source>ADN_Sensors_Environments_GUI</source>
-        <oldsource>New armor plating creation</oldsource>
+        <source>Environments</source>
+        <oldsource>ADN_Sensors_Environments_GUI</oldsource>
         <translation type="unfinished">ADN_Sensors_Environments_GU</translation>
     </message>
     <message>
         <source>Modifiers</source>
         <translation>Modificadores</translation>
-    </message>
-    <message>
-        <source>Environments</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4114,10 +4110,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
     <message>
-        <source>Illumination</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation></translation>
     </message>
@@ -4144,10 +4136,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 <context>
     <name>ADN_Sensors_Meteos_GUI</name>
     <message>
-        <source>Meteos</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation></translation>
     </message>
@@ -4156,15 +4144,11 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <name>ADN_Sensors_Postures_GUI</name>
     <message>
         <source>Modifiers</source>
-        <translation>Modificadores</translation>
+        <translation type="unfinished">Modificadores</translation>
     </message>
 </context>
 <context>
     <name>ADN_Sensors_Sizes_GUI</name>
-    <message>
-        <source>Volumes</source>
-        <translation></translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation></translation>
@@ -4210,10 +4194,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 </context>
 <context>
     <name>ADN_Sensors_UrbanBlockMaterial_GUI</name>
-    <message>
-        <source>Material</source>
-        <translation></translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation></translation>

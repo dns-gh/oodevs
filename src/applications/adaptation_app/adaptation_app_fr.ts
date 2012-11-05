@@ -3937,13 +3937,9 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Modifiers</source>
         <translation>Modificateurs</translation>
     </message>
-    <message>
+    <message id="0">
         <source>Environments</source>
         <translation>Type terrain</translation>
-    </message>
-    <message id="0">
-        <source>ADN_Sensors_Environments_GUI</source>
-        <translation>ADN_Sensors_Environments_GUI</translation>
     </message>
 </context>
 <context>
@@ -4116,10 +4112,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
     <message>
-        <source>Illumination</source>
-        <translation>Eclairement</translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation>Modificateurs</translation>
     </message>
@@ -4146,10 +4138,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
 <context>
     <name>ADN_Sensors_Meteos_GUI</name>
     <message>
-        <source>Meteos</source>
-        <translation>Précipitations</translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation>Modificateurs</translation>
     </message>
@@ -4163,10 +4151,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
 </context>
 <context>
     <name>ADN_Sensors_Sizes_GUI</name>
-    <message>
-        <source>Volumes</source>
-        <translation>Volumes</translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation>Modificateurs</translation>
@@ -4212,10 +4196,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
 </context>
 <context>
     <name>ADN_Sensors_UrbanBlockMaterial_GUI</name>
-    <message>
-        <source>Material</source>
-        <translation>Matériau</translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation>Modificateurs</translation>
