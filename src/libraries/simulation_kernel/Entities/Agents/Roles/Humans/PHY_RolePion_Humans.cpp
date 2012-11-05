@@ -10,6 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "PHY_HumanState.h"
 #include "PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
@@ -172,27 +173,31 @@ void PHY_RolePion_Humans::serialize( Archive& file, const unsigned int )
 void PHY_RolePion_Humans::WriteODB( xml::xostream& xos ) const
 {
     bool found = false;
+    std::list< const PHY_HumanState* > unwounded;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
-        if( ( state.contaminated_ || state.psyop_ || state.state_ != &PHY_HumanWound::notWounded_ ) && state.number_ != 0 )
+        const PHY_HumanState& state = **it;
+        if( ( state.contaminated_ || state.psyop_ || state.state_ != &PHY_HumanWound::notWounded_ ) )
         {
-            if( ! found )
+            if( state.number_ != 0 )
             {
-                found = true;
-                xos.start( "humans" );
+                if( ! found )
+                {
+                    found = true;
+                    xos.start( "humans" );
+                }
+                state.Write( xos );
             }
-            xos << xml::start( "human" )
-                    << xml::attribute( "number", state.number_ )
-                    << xml::attribute( "rank", state.rank_->GetName() )
-                    << xml::attribute( "state", state.state_->GetName() )
-                    << xml::attribute( "contaminated", state.contaminated_ )
-                    << xml::attribute( "psyop", state.psyop_ )
-                << xml::end; // human
         }
+        else
+            unwounded.push_back( &state );
     }
     if( found )
+    {
+        for( std::list< const PHY_HumanState* >::const_iterator it = unwounded.begin(); it != unwounded.end(); ++it )
+            (*it)->Write( xos );
         xos.end(); // humans
+    }
 }
 
 
@@ -209,7 +214,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const Human_ABC& human )
     bool founded = false;
     for( IT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        HumanState* state = *it;
+        PHY_HumanState* state = *it;
         if( state->rank_->GetID() == human.GetRank().GetID() &&
             state->state_->GetID() == human.GetWound().GetID() &&
             state->location_ == human.GetLocation() &&
@@ -244,7 +249,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const Human_ABC& human )
     bool merged = false;
     for( IT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        HumanState& state = **it;
+        PHY_HumanState& state = **it;
         if( state.rank_->GetID() == human.GetRank().GetID() &&
             state.state_->GetID() == human.GetWound().GetID() &&
             state.location_ == human.GetLocation() &&
@@ -257,7 +262,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const Human_ABC& human )
         }
     }
     if( !merged )
-        humansStates_.push_back( new HumanState( 1, human.GetRank(), human.GetWound(), human.GetLocation(), human.IsContaminated(), human.IsMentalDiseased() ) );
+        humansStates_.push_back( new PHY_HumanState( 1, human.GetRank(), human.GetWound(), human.GetLocation(), human.IsContaminated(), human.IsMentalDiseased() ) );
     if( human.IsUsable() )
         ++ nNbrUsableHumans_;
 }
@@ -394,7 +399,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
 {
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
+        const PHY_HumanState& state = **it;
         sword::HumanDotations::HumanDotation& personnel = *message().mutable_human_dotations()->add_elem();
 
         // Quantity
@@ -578,7 +583,7 @@ unsigned int PHY_RolePion_Humans::GetNbrTotal( const PHY_HumanRank& rank ) const
     unsigned int result = 0;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
+        const PHY_HumanState& state = **it;
         if( state.rank_->GetID() == rank.GetID() )
             result += state.number_;
     }
@@ -594,7 +599,7 @@ unsigned int PHY_RolePion_Humans::GetNbrOperational( const PHY_HumanRank& rank )
     unsigned int result = 0;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
+        const PHY_HumanState& state = **it;
         if( state.rank_->GetID() == rank.GetID() && state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ && !state.contaminated_ )
             result += state.number_;
     }
@@ -611,7 +616,7 @@ bool PHY_RolePion_Humans::HasNoMoreOperationalHumans() const
         return false;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
+        const PHY_HumanState& state = **it;
         if( state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ && !state.contaminated_ )
             return false;
     }
@@ -625,6 +630,21 @@ bool PHY_RolePion_Humans::HasNoMoreOperationalHumans() const
 unsigned int PHY_RolePion_Humans::GetNbrUsableHumans() const
 {
     return nNbrUsableHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::GetNumber
+// Created: LDC 2012-06-21
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Humans::GetNumber() const
+{
+    unsigned int result = 0;
+    for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
+    {
+        const PHY_HumanState& state = **it;
+        result += state.number_;
+    }
+    return result;
 }
 
 } // namespace human

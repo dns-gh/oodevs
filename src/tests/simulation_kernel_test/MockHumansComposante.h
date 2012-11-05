@@ -20,6 +20,8 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
 {
     MOCK_METHOD( ChangeHumanRank, 3 );
     MOCK_METHOD( ChangeHumanState, 1 );
+    MOCK_METHOD( ChangeHumanSize, 1 );
+    MOCK_METHOD( RemoveHealthyHumans, 2 );
     MOCK_METHOD( ApplyContamination, 1 );
     MOCK_METHOD( ApplyPoisonous, 1 );
     MOCK_METHOD( ApplyInjury, 1 );
@@ -44,6 +46,7 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( EvacuateWoundedHumans, 1 );
     MOCK_METHOD( GetComposante, 0 );
     MOCK_METHOD( GetNbrUsableHumans, 0 );
+    MOCK_METHOD( GetNbrHealthyHumans, 1 );
     MOCK_METHOD( GetInjury, 0 );
 
     //! @name Serialization

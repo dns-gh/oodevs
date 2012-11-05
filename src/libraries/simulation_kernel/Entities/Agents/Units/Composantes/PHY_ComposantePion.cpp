@@ -826,6 +826,15 @@ unsigned int PHY_ComposantePion::GetNbrUsableHumans() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetNbrHealthyHumans
+// Created: LDC 2012-10-26
+// -----------------------------------------------------------------------------
+unsigned int PHY_ComposantePion::GetNbrHealthyHumans( const PHY_HumanRank& rank ) const
+{
+    return pHumans_->GetNbrHealthyHumans( rank );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetBreakdown
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
@@ -1597,3 +1606,21 @@ void PHY_ComposantePion::ChangeHumanState( sword::MissionParameters& msg )
     pHumans_->ChangeHumanState( msg );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ChangeHumanSize
+// Created: ABR 2011-12-05
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ChangeHumanSize( unsigned int newHumanSize )
+{
+    assert( pHumans_ );
+    return pHumans_->ChangeHumanSize( newHumanSize );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::RemoveHealthyHumans
+// Created: JSR 2012-10-26
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove )
+{
+    pHumans_->RemoveHealthyHumans( rank, humansToRemove );
+}

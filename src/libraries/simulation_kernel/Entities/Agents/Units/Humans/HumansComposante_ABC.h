@@ -63,6 +63,8 @@ public:
     virtual unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop = false, bool contaminated = false ) = 0;
     virtual unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound ) = 0;
     virtual void ChangeHumanState( sword::MissionParameters& msg ) = 0;
+    virtual void ChangeHumanSize( unsigned int newHumanSize ) = 0;
+    virtual void RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove ) = 0;
 
     virtual PHY_InjuredHuman* GetInjury() = 0;
     virtual double GetOperationalState() const = 0;
@@ -94,6 +96,7 @@ public:
     //@{
     virtual const PHY_ComposantePion& GetComposante() const = 0;
     virtual unsigned int GetNbrUsableHumans() const = 0;
+    virtual unsigned int GetNbrHealthyHumans( const PHY_HumanRank& rank ) const = 0;
     //@}
 };
 

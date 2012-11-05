@@ -33,6 +33,8 @@ class PHY_HumanWound;
 namespace human
 {
 
+class PHY_HumanState;
+
 // =============================================================================
 // @class  PHY_RolePion_Humans
 // Created: JVT 2004-08-03
@@ -55,6 +57,7 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned int GetNbrUsableHumans() const;
+    virtual unsigned int GetNumber() const;
     bool HasNoMoreOperationalHumans() const;
     //@}
 
@@ -108,7 +111,7 @@ private:
     INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( PHY_RolePion_Humans )
     //@}
 
-private:
+public:
     //! @name Types
     //@{
     class HumanState
@@ -139,7 +142,7 @@ private:
         //@}
     };
 
-    typedef std::vector< HumanState* >                T_HumanStateVector;
+    typedef std::vector< PHY_HumanState* >            T_HumanStateVector;
     typedef T_HumanStateVector::iterator             IT_HumanStateVector;
     typedef T_HumanStateVector::const_iterator      CIT_HumanStateVector;
 

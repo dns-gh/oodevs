@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_HumansComposante.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
@@ -523,3 +524,57 @@ void PHY_HumansComposante::ChangeHumanState( sword::MissionParameters& msg )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::ChangeHumanSize
+// Created: ABR 2011-12-05
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::ChangeHumanSize( unsigned int newHumanSize )
+{
+    if( humans_.size() > newHumanSize )
+        while( humans_.size() > newHumanSize )
+        {
+            Human_ABC* human = humans_.back();
+            if( human )
+                human->CancelLogisticRequests();
+            delete human;
+            humans_.pop_back();
+        }
+    else
+        while( humans_.size() < newHumanSize )
+            humans_.push_back( new PHY_Human( MIL_AgentServer::GetWorkspace(), *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::GetNbrHealthyHumans
+// Created: LDC 2012-10-26
+// -----------------------------------------------------------------------------
+unsigned int PHY_HumansComposante::GetNbrHealthyHumans( const PHY_HumanRank& rank ) const
+{
+    unsigned int result = 0;
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+    {
+        if( (*it)->GetRank() != rank || ( *it)->IsDead() || ( *it)->IsWounded() || ( *it)->IsContaminated() || ( *it)->IsMentalDiseased() )
+            continue;
+        ++result;
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::RemoveHealthyHumans
+// Created: LDC 2012-10-26
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove )
+{
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end() && humansToRemove > 0; )
+    {
+        if( ( *it )->GetRank() != rank || ( *it )->IsDead() || ( *it )->IsWounded() || ( *it )->IsContaminated() || ( *it )->IsMentalDiseased() )
+             ++it;
+        else
+        {
+            --humansToRemove;
+            delete( *it );
+            it = humans_.erase( it );
+        }
+    }
+}
