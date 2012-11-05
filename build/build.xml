@@ -1367,6 +1367,19 @@
         <safe-move file="${output}"/>
     </target>
 
+    <macrodef name="check_depends">
+        <attribute name="file"/>
+        <element name="elements" optional="true" implicit="true"/>
+        <sequential>
+            <exec taskname="depends" executable="python" failonerror="true">
+                <env key="PATH" path="${env.PATH}:${bin.dir}/7z:${bin.dir}/depends"/>
+                <arg value="${bin.dir}/buildtools/checkdepends.py"/>
+                <arg value="@{file}"/>
+                <elements/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <target name="package.binaries" description="create a zip with all binaries">
         <local name="output"/>
         <property name="output" value="${out.dir}/SWORD_binaries_${platform}_${version.project}.zip"/>
@@ -1377,6 +1390,7 @@
             </mappedresources>
             <fileset dir="${run.dir}"/>
         </zip>
+        <check_depends file="${output}"/>
         <safe-move file="${output}"/>
     </target>
 
@@ -1389,12 +1403,13 @@
                      includes="*.qm,
                                *.qss,
                                *.xml,
-                               BugTrap.dll,
+                               BugTrap*.dll,
                                gdal19.dll,
                                geos.dll,
                                geos_c.dll,
                                libeay32.dll,
                                libexpat.dll,
+                               libiconv-2.dll,
                                libpq.dll,
                                proj.dll,
                                Qt3Support4.dll,
@@ -1412,6 +1427,7 @@
                                zlib1.dll"/>
             <fileset dir="${run.dir}" includes="resources/**"/>
         </zip>
+        <check_depends file="${output}"/>
         <safe-move file="${output}"/>
     </target>
 
@@ -1475,10 +1491,12 @@
     ============================================================================
     -->
     <target name="update" description="update package dependencies">
+        <update name="7z"/>
         <update name="asciidoc" version="8.6.8"/>
         <update name="boost"/>
         <update name="bugtrap"/>
         <update name="buildtools"/>
+        <update name="depends"/>
         <update name="excel"/>
         <update name="flexlm"/>
         <update name="gdal"/>
