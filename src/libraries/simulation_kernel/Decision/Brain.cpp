@@ -9,8 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "Brain.h"
+#include "MT_Tools/MT_Logger.h"
 
 using namespace sword;
+
+Brain::T_Profilers Brain::profilers_;
+bool Brain::profiling_ = false;
 
 // -----------------------------------------------------------------------------
 // Name: Brain constructor
@@ -65,5 +69,25 @@ directia::tools::binders::ScriptRef Brain::GetScriptRef( const std::string& s )
 // -----------------------------------------------------------------------------
 directia::tools::binders::ScriptRef Brain::GetScriptRef()
 {
-    return (*brain_);
+    return *brain_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Brain::SetProfiling
+// Created: MCO 2012-11-05
+// -----------------------------------------------------------------------------
+void Brain::SetProfiling( bool enabled )
+{
+    profiling_ = enabled;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Brain::LogProfiling
+// Created: MCO 2012-11-05
+// -----------------------------------------------------------------------------
+void Brain::LogProfiling()
+{
+    for( T_Profilers::const_iterator it = profilers_.begin(); it != profilers_.end(); ++it )
+        MT_LOG_INFO_MSG( "<profiling> " << it->first << " " << it->second.GetCount() << " " << it->second.GetTotalTime() );
+    profilers_.clear();
 }

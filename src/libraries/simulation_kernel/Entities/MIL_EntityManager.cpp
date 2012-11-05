@@ -89,6 +89,7 @@
 #include "Populations/MIL_PopulationType.h"
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_Population.h"
+#include "Decision/Brain.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_ProfilerMgr.h"
@@ -360,6 +361,8 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading ODB    ----" );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
+
+    Brain::SetProfiling( config.IsProfilingEnabled() );
 
     const std::string strOrbat = config.GetOrbatFile();
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
@@ -919,6 +922,7 @@ void MIL_EntityManager::Update()
     UpdateEffects();
     UpdateStates();
     UpdateKnowledgeGroups(); // LTO
+    Brain::LogProfiling();
 }
 
 // -----------------------------------------------------------------------------
