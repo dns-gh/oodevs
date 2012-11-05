@@ -328,9 +328,6 @@
         <build-lib name="script_plugin" pattern="lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
-        <copy todir="${run.dir}/resources/scripts">
-            <fileset dir="${libraries.dir}/script_plugin" includes="**/*.lua"/>
-        </copy>
     </target>
 
     <target name="score_plugin" depends="dispatcher,3a,indicators" description="build score_plugin static library">
@@ -788,6 +785,9 @@
         </copy>
         <copy todir="${run.dir}/resources/locales">
             <fileset dir="${run.dir}" includes="qt_*.qm"/>
+        </copy>
+        <copy todir="${run.dir}/resources/scripts">
+            <fileset dir="${libraries.dir}/script_plugin" includes="**/*.lua"/>
         </copy>
     </target>
 
