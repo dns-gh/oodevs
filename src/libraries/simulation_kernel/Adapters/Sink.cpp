@@ -311,7 +311,6 @@ namespace
         knowledge[ "identifier" ] = agent->GetAgentKnown().GetID();
         knowledge[ "dead" ] = agent->IsDead();
         core::Model& components = knowledge[ "components" ];
-        components.Clear();
         const core::Model& components2 = entity[ "components" ];
         const T_KnowledgeComposanteVector& composantes = agent->GetComposantes();
         for( std::size_t i = 0; i < composantes.size(); ++i )
@@ -340,9 +339,6 @@ namespace
     }
     void UpdateKnowledgeGroupBlackBoard( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends, const MIL_KnowledgeGroup& group )
     {
-        knowledges.Clear();
-        enemies.Clear();
-        friends.Clear();
         typedef DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::value_type T_Agent;
         const DEC_BlackBoard_CanContainKnowledgeAgent& blackboard = group.GetKnowledge().GetKnowledgeAgentContainer();
         BOOST_FOREACH( const T_Agent& agent, blackboard.GetKnowledgeAgents() )
@@ -362,6 +358,9 @@ namespace
     }
     void UpdateKnowledges( const core::Model& entities, core::Model& knowledges, core::Model& enemies, core::Model& friends )
     {
+        knowledges.Clear();
+        enemies.Clear();
+        friends.Clear();
         const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
         for( tools::Iterator< const MIL_Army_ABC& > it = armies.CreateIterator(); it.HasMoreElements(); )
         {
