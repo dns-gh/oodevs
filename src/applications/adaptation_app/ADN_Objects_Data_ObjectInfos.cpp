@@ -9,7 +9,9 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
+#include "ADN_DataException.h"
 #include "ADN_Objects_Data.h"
+#include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos
@@ -18,7 +20,7 @@
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos( const std::string& type )
     : ADN_Ref_ABC()
     , strType_   ( type )
-    , geometries_( "polygon" )
+    , geometries_( eLocationType_Polygon )
     , pointSize_ ( 0. )
 {
     symbol_.SetParentNode( *this );
@@ -33,13 +35,13 @@ ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos( const std::string& t
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos()
     : ADN_Ref_ABC()
     , strType_   ()
-    , geometries_( "polygon" )
+    , geometries_( eLocationType_Polygon )
     , pointSize_ ( 0. )
 {
     symbol_.SetParentNode( *this );
     geometries_.SetParentNode( *this );
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    symbol_.SetVector( drawingsData.GetGeometryDrawings( geometries_.GetData(), ADN_Drawings_Data::eObjects ) );
+    symbol_.SetVector( drawingsData.GetGeometryDrawings( ENT_Tr::ConvertFromLocationType( geometries_.GetData() ), ADN_Drawings_Data::eObjects ) );
     InitializeCapacities();
 }
 
@@ -142,14 +144,19 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
 {
     std::string code;
     xis >> xml::attribute( "name", strName_ )
-        >> xml::attribute( "type", strType_ )
-        >> xml::attribute( "geometry", geometries_ )
-        >> xml::optional >> xml::attribute( "symbol", code )
+        >> xml::attribute( "type", strType_ );
+    std::string geometries;
+    xis >> xml::attribute( "geometry", geometries );
+    E_LocationType eGeometryType = ENT_Tr::ConvertToLocationType( geometries );
+    if( eGeometryType == (E_LocationType)-1 )
+        throw ADN_DataException( tools::translate( "ADN_Objects_Data_ObjectInfos", "Invalid data" ).toAscii().constData(), tools::translate( "ADN_Objects_Data_ObjectInfos", "Object - invalid geometry '%1'" ).arg( geometries.c_str() ).toAscii().constData() );
+    geometries_ = eGeometryType;
+    xis >> xml::optional >> xml::attribute( "symbol", code )
         >> xml::optional >> xml::attribute( "point-size", pointSize_ )
         >> xml::list( *this, &ADN_Objects_Data_ObjectInfos::ReadCapacityArchive );
 
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    symbol_.SetVector( drawingsData.GetGeometryDrawings( geometries_.GetData(), ADN_Drawings_Data::eObjects ) );
+    symbol_.SetVector( drawingsData.GetGeometryDrawings( ENT_Tr::ConvertFromLocationType( geometries_.GetData() ), ADN_Drawings_Data::eObjects ) );
     symbol_.SetData( drawingsData.GetDrawing( code ), false );
 }
 
@@ -162,7 +169,7 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
     std::string code = ( symbol_.GetData() ) ? symbol_.GetData()->GetCode() : "";
     xos << xml::start( "object" )
         << xml::attribute( "name", strName_ )
-        << xml::attribute( "geometry", geometries_.GetData() )
+        << xml::attribute( "geometry", ENT_Tr::ConvertFromLocationType( geometries_.GetData() ) )
         << xml::attribute( "symbol", code );
     if( pointSize_.GetData() )
         xos << xml::attribute( "point-size", pointSize_.GetData() );

@@ -42,7 +42,7 @@ private:
 public:
     ADN_Type_String strName_;
     ADN_Type_String strType_;
-    ADN_Type_String geometries_;
+    ADN_Type_Enum<E_LocationType,eNbrLocationType> geometries_;
     ADN_Type_Double pointSize_;
     ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
 

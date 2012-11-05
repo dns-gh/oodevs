@@ -73,8 +73,7 @@ void ADN_Objects_GUI::Build()
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
 
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name"), vInfosConnectors[ eName ] );
-    ADN_EditLine_String* geometry = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Geometry"), vInfosConnectors[ eGeometry ] );
-    builder.SetEnabled( false );
+    ADN_ComboBox_Enum< E_LocationType >* geometry = builder.AddEnumField< E_LocationType >( pInfoHolder, tr( "Geometry"), vInfosConnectors[ eGeometry ], &ENT_Tr::ConvertFromLocationType );
     pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ], tr( "m" ), eGreaterEqualZero );
     connect( geometry, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnGeometryChanged ( const QString& ) ) );
     pPointDistance_->SetAutoEnabled( false );
@@ -391,7 +390,7 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
         ADN_Objects_Data_ObjectInfos& object = **it;
         indexBuilder.TableItem( n, 0, object.strName_.GetData().c_str() );
         indexBuilder.TableItem( n, 1, object.strType_.GetData().c_str() );
-        indexBuilder.TableItem( n, 2, object.geometries_.GetData().c_str() );
+        indexBuilder.TableItem( n, 2, ENT_Tr::ConvertFromLocationType( object.geometries_.GetData() ).c_str() );
 
         ADN_HtmlBuilder listBuilder;
         listBuilder.BeginList();

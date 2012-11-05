@@ -209,7 +209,7 @@
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0"/>
   </object>
-  <object geometry="line point" name="pont flottant continu" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
+  <object geometry="line" name="pont flottant continu" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
     <bridging type="bridge"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
@@ -357,7 +357,7 @@
     <protection geniePrepared="false" max-size="1"/>
     <workable max-animator="1"/>
   </object>
-  <object geometry="line point" name="pont flottant discontinu" symbol="S*GPEVEB--*****" type="discontinuous pontoon bridge">
+  <object geometry="line" name="pont flottant discontinu" symbol="S*GPEVEB--*****" type="discontinuous pontoon bridge">
     <bridging type="bridge"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
@@ -445,4 +445,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="4293041246" -->
+<!-- signature="3054053840" -->
