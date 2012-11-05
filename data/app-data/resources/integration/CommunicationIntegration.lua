@@ -70,7 +70,10 @@ local AssignMissionParameterList = function ( missionPion, parameterName, value 
         for i = 1, nValues do
             local currentValue = value[i]
             if InferType( currentValue ) ~= "world.Point" then
-                error( "Expected point in path, received something else: "..tostring( InferType( currentValue ) ) )
+                currentValue = value[i]:getMyPosition() -- Transform the parameter into a point
+                if InferType( currentValue ) ~= "world.Point" then
+                    error( "Expected point in path, received something else: "..tostring( InferType( currentValue ) ) )
+                end
             end
             listParams[i] = currentValue.source
         end
