@@ -36,9 +36,9 @@ public:
     //@{
     bool        IsStarted() const;
     void        Start();
-    double      Stop ();             // Stop the timer and return the time elapsed since the Start() method was called, in milliseconds
-    double      GetLastTime() const;       // return last mesured time
-    double      GetAverageTime() const;    // return average of mesured time (useful in a frame by frame systeme)
+    double      Stop ();                // Stop the timer and return the time elapsed since the Start() method was called, in milliseconds
+    double      GetLastTime() const;    // Return last mesured time
+    double      GetAverageTime() const; // Return average of mesured time (useful in a frame by frame system)
     double      GetTotalTime() const;
     int         GetCount() const;
     //@}
@@ -47,10 +47,10 @@ private:
     static long long int nFrequency_;
 
 private:
-    long long int nCounterStart_; // l'heure du start
-    double rLastTime_;            // la derniere valeur mesurée
-    double rTotalTime_;           // sum of all start/stop elapsing (in ms)
-    int nNbrCount_;               // Number of start Profiler was started (for GetAverageTime );
+    long long int nCounterStart_; // Start time
+    double rLastTime_;            // Last measured value (in ms)
+    double rTotalTime_;           // Sum of all start/stop elapsing (in ms)
+    int nNbrCount_;               // Number of start Profiler was started (for GetAverageTime);
 
 };
 
