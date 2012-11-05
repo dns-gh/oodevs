@@ -1,4 +1,5 @@
 pragma "once"
+include "Types_CR.lua"
 include "Integration.lua"
 include "FragOrder.lua"
 

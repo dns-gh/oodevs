@@ -1,6 +1,5 @@
 include "integration/ToolsFunctions.lua"
 include "integration/KnowledgeManager.lua"
-include "integration/Types_CR.lua"
 include "integration/Types.lua"
 include "integration/BaseTaskKnowledge.lua"
 
