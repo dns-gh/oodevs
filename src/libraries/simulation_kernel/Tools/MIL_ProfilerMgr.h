@@ -41,7 +41,6 @@ public:
     void NotifyTickBegin( unsigned int nTick );
     void NotifyTickEnd( unsigned int nTick );
     double GetLastTickDuration();
-    double GetAverageTickDuration();
 
     void NotifyDecisionUpdated( const MIL_AgentPion& pion, double rTime );
     void NotifyDecisionUpdated( const MIL_Automate& automate, double rTime );
@@ -49,25 +48,10 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    struct sDecFunctionProfiling
-    {
-        unsigned int nAgentID_;
-        std::string strFunction_;
-        double rTime_;
-    };
-
-    typedef std::vector< sDecFunctionProfiling >           T_DecFunctionProfilingVector;
-    typedef T_DecFunctionProfilingVector::const_iterator CIT_DecFunctionProfilingVector;
-    //@}
-
-private:
     //! @name Member data
     //@{
     const bool bEnabled_;
     MT_Profiler tickDurationProfiler_;
-    std::ofstream decFunctionsFile_;
     std::ofstream decisionUpdateFile_;
     //@}
 };

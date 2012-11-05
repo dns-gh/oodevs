@@ -31,16 +31,6 @@ double MIL_ProfilerMgr::GetLastTickDuration()
     return tickDurationProfiler_.GetLastTime();
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_ProfilerMgr::GetAverageTickDuration
-// Created: AML 03-05-21
-//-----------------------------------------------------------------------------
-inline
-double MIL_ProfilerMgr::GetAverageTickDuration()
-{
-    return tickDurationProfiler_.GetAverageTime();
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::IsProfilingEnabled
 // Created: NLD 2005-03-15
