@@ -28,7 +28,7 @@ public:
     // ConvertFrom functions
     static const std::string& ConvertFromLocationType( E_LocationType, E_Conversion = eToSim );
     static const std::string& ConvertFromDotationFamily( E_DotationFamily, E_Conversion = eToSim );
-	static const std::string& ConvertFromAmmunitionType( E_MunitionType, E_Conversion = eToSim );
+	static const std::string& ConvertFromAmmunitionType( E_AmmunitionType, E_Conversion = eToSim );
     static const std::string& ConvertFromNatureLevel( E_NatureLevel, E_Conversion = eToSim );
     static const std::string& ConvertFromDiplomacy( E_Diplomacy, E_Conversion = eToSim );
     static const std::string& ConvertFromForceRatioStatus( E_ForceRatioStatus, E_Conversion = eToSim );
@@ -66,7 +66,7 @@ public:
     // ConvertTo functions
     static E_LocationType ConvertToLocationType( const std::string& );
     static E_DotationFamily ConvertToDotationFamily( const std::string& );
-    static E_MunitionType ConvertToAmmunitionType( const std::string& );
+    static E_AmmunitionType ConvertToAmmunitionType( const std::string& );
     static E_NatureLevel ConvertToNatureLevel( const std::string& );
     static E_Diplomacy ConvertToDiplomacy( const std::string& );
     static E_ForceRatioStatus ConvertToForceRatioStatus( const std::string& );
@@ -105,7 +105,7 @@ private:
     // Typedefs
     typedef ENT_Tr::converter<E_LocationType> T_ConverterLocationType;
     typedef ENT_Tr::converter<E_DotationFamily> T_ConverterDotationFamily;
-    typedef ENT_Tr::converter<E_MunitionType> T_ConverterAmmunitionType;
+    typedef ENT_Tr::converter<E_AmmunitionType> T_ConverterAmmunitionType;
     typedef ENT_Tr::converter<E_NatureLevel> T_ConverterNatureLevel;
     typedef ENT_Tr::converter<E_Diplomacy> T_ConverterDiplomacy;
     typedef ENT_Tr::converter<E_ForceRatioStatus> T_ConverterForceRatioStatus;

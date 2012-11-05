@@ -278,11 +278,11 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
 void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 {
     munitionsFamilyTable_->setRowCount( 0 );
-    AddAmmunition( eMunitionType_Obus,          ENT_Tr::ConvertFromAmmunitionType( eMunitionType_Obus, ENT_Tr::eToTr ).c_str() );
-    AddAmmunition( eMunitionType_MissileSol,    ENT_Tr::ConvertFromAmmunitionType( eMunitionType_MissileSol, ENT_Tr::eToTr ).c_str() );
-    AddAmmunition( eMunitionType_MissileAir,    ENT_Tr::ConvertFromAmmunitionType( eMunitionType_MissileAir, ENT_Tr::eToTr ).c_str() );
-    AddAmmunition( eMunitionType_Mitraille,     ENT_Tr::ConvertFromAmmunitionType( eMunitionType_Mitraille, ENT_Tr::eToTr ).c_str() );
-    AddAmmunition( eMunitionType_ALR,           ENT_Tr::ConvertFromAmmunitionType( eMunitionType_ALR, ENT_Tr::eToTr ).c_str() );
+    AddAmmunition( eAmmunitionType_Obus,          ENT_Tr::ConvertFromAmmunitionType( eAmmunitionType_Obus, ENT_Tr::eToTr ).c_str() );
+    AddAmmunition( eAmmunitionType_MissileSol,    ENT_Tr::ConvertFromAmmunitionType( eAmmunitionType_MissileSol, ENT_Tr::eToTr ).c_str() );
+    AddAmmunition( eAmmunitionType_MissileAir,    ENT_Tr::ConvertFromAmmunitionType( eAmmunitionType_MissileAir, ENT_Tr::eToTr ).c_str() );
+    AddAmmunition( eAmmunitionType_Mitraille,     ENT_Tr::ConvertFromAmmunitionType( eAmmunitionType_Mitraille, ENT_Tr::eToTr ).c_str() );
+    AddAmmunition( eAmmunitionType_ALR,           ENT_Tr::ConvertFromAmmunitionType( eAmmunitionType_ALR, ENT_Tr::eToTr ).c_str() );
     munitionsFamilyTable_->setMinimumHeight( std::max< int >( munitionsFamilyTable_->rowHeight( 0 ) * 4, 20 ) );
 }
 
