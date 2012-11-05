@@ -2535,6 +2535,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendSpecificComposantes.cpp">
       <Filter>Source Files\Entities\Agents\Actions\ComposanteLending</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Humans\PHY_HumanState.cpp">
+      <Filter>Source Files\Entities\Agents\Roles\Humans</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4981,6 +4984,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendSpecificComposantes.h">
       <Filter>Source Files\Entities\Agents\Actions\ComposanteLending</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Humans\PHY_HumanState.h">
+      <Filter>Source Files\Entities\Agents\Roles\Humans</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

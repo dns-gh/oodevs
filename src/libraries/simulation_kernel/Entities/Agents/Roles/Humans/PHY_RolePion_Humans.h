@@ -32,6 +32,8 @@ class PHY_HumanWound;
 namespace human
 {
 
+class PHY_HumanState;
+
 // =============================================================================
 // @class  PHY_RolePion_Humans
 // Created: JVT 2004-08-03
@@ -109,38 +111,10 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, const unsigned int /*version*/ );
     //@}
 
-private:
+public:
     //! @name Types
     //@{
-    class HumanState
-    {
-    public:
-        //! @name Constructors/Destructor
-        //@{
-        explicit HumanState();
-                 HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, Human_ABC::E_Location location = Human_ABC::eBattleField, bool contaminated = false, bool psyop = false );
-        virtual ~HumanState();
-        //@}
-
-        //! @name Serialization
-        //@{
-        BOOST_SERIALIZATION_SPLIT_MEMBER();
-        void load( MIL_CheckPointInArchive&, const unsigned int );
-        void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-        //@}
-
-        //! @name Member data
-        //@{
-        unsigned int          number_;
-        const PHY_HumanRank*  rank_;
-        const PHY_HumanWound* state_;
-        Human_ABC::E_Location location_;
-        bool                  contaminated_;
-        bool                  psyop_;
-        //@}
-    };
-
-    typedef std::vector< HumanState* >                T_HumanStateVector;
+    typedef std::vector< PHY_HumanState* >            T_HumanStateVector;
     typedef T_HumanStateVector::iterator             IT_HumanStateVector;
     typedef T_HumanStateVector::const_iterator      CIT_HumanStateVector;
 

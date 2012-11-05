@@ -388,15 +388,30 @@ void PHY_RolePion_Composantes::ReadHuman( xml::xistream& xis )
     bool psyop = xis.attribute< bool >( "psyop" );
     unsigned int number = xis.attribute< unsigned int >( "number" );
     if( !contaminated && !psyop && pWound == &PHY_HumanWound::notWounded_ )
-        return;
-    PHY_ComposantePion::CIT_ComposantePionVector itCurrentComp = composantes_.begin();
-    while( number )
     {
-        number -= ( *itCurrentComp )->OverloadHumans( *pRank, number, *pWound, psyop, contaminated );
-        if( ++itCurrentComp == composantes_.end() && number > 0 )
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         {
-            MT_LOG_WARNING_MSG( "Agent " << pion_->GetID() << " - Cannot apply all the human wounds overloading specified in ODB : " << number << " " << pRank->GetName() << " " << pWound->GetName() << " remaining" );
-            return;
+            unsigned int healthy = ( *it )->GetNbrHealthyHumans( *pRank );
+            if( number > healthy )
+                number -= healthy;
+            else if( healthy )
+            {
+                ( *it )->RemoveHealthyHumans( *pRank, healthy - number );
+                number = 0;
+            }
+        }
+    }
+    else
+    {
+        PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin();
+        while( number )
+        {
+            number -= ( *it )->OverloadHumans( *pRank, number, *pWound, psyop, contaminated );
+            if( ++it == composantes_.end() && number > 0 )
+            {
+                MT_LOG_WARNING_MSG( "Agent " << pion_->GetID() << " - Cannot apply all the human wounds overloading specified in ODB : " << number << " " << pRank->GetName() << " " << pWound->GetName() << " remaining" );
+                return;
+            }
         }
     }
 }

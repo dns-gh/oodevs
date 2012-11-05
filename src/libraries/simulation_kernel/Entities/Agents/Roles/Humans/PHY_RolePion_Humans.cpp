@@ -10,6 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "PHY_HumanState.h"
 #include "PHY_RolePion_Humans.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
@@ -56,90 +57,6 @@ inline void load_construct_data( Archive& archive, PHY_RolePion_Humans* role, co
     ::new( role )PHY_RolePion_Humans( *pion );
 }
 
-
-// =============================================================================
-// HUMANSTATE
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::HumanState Constructor
-// Created: ABR 2011-07-18
-// -----------------------------------------------------------------------------
-PHY_RolePion_Humans::HumanState::HumanState()
-    : number_               ( 0 )
-    , rank_                 ( &PHY_HumanRank::officier_ )
-    , state_                ( &PHY_HumanWound::notWounded_ )
-    , location_             ( Human_ABC::eBattleField )
-    , contaminated_         ( false )
-    , psyop_                ( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::HumanState constructor
-// Created: ABR 2011-07-18
-// -----------------------------------------------------------------------------
-PHY_RolePion_Humans::HumanState::HumanState( unsigned int number, const PHY_HumanRank& rank, const PHY_HumanWound& state, Human_ABC::E_Location location /*= Human_ABC::eBattleField*/, bool contaminated /*= false*/, bool psyop /*= false*/ )
-    : number_               ( number )
-    , rank_                 ( &rank )
-    , state_                ( &state )
-    , location_             ( location )
-    , contaminated_         ( contaminated )
-    , psyop_                ( psyop )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::HumanState destructor
-// Created: ABR 2011-07-18
-// -----------------------------------------------------------------------------
-PHY_RolePion_Humans::HumanState::~HumanState()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::HumanState::load
-// Created: ABR 2011-07-18
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::HumanState::load( MIL_CheckPointInArchive& file, const unsigned int )
-{
-    unsigned int rankId;
-    unsigned int stateId;
-    file >> number_
-         >> rankId
-         >> stateId
-         >> location_
-         >> contaminated_
-         >> psyop_;
-    rank_ = PHY_HumanRank::Find( rankId );
-    state_ = PHY_HumanWound::Find( stateId );
-    assert( rank_ && state_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::HumanState::save
-// Created: ABR 2011-07-18
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::HumanState::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
-{
-    const unsigned int rankId = rank_->GetID();
-    const unsigned int stateId = state_->GetID();
-    file << number_
-         << rankId
-         << stateId
-         << location_
-         << contaminated_
-         << psyop_;
-}
-
-
-// =============================================================================
-// PHY_ROLEPION_HUMANS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans constructor
 // Created: NLD 2004-08-13
@@ -165,11 +82,6 @@ PHY_RolePion_Humans::~PHY_RolePion_Humans()
     // NOTHING
 }
 
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::serialize
 // Created: JVT 2005-03-31
@@ -192,27 +104,31 @@ void PHY_RolePion_Humans::serialize( Archive& file, const unsigned int )
 void PHY_RolePion_Humans::WriteODB( xml::xostream& xos ) const
 {
     bool found = false;
+    std::list< const PHY_HumanState* > unwounded;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
-        if( ( state.contaminated_ || state.psyop_ || state.state_ != &PHY_HumanWound::notWounded_ ) && state.number_ != 0 )
+        const PHY_HumanState& state = **it;
+        if( ( state.contaminated_ || state.psyop_ || state.state_ != &PHY_HumanWound::notWounded_ ) )
         {
-            if( ! found )
+            if( state.number_ != 0 )
             {
-                found = true;
-                xos.start( "humans" );
+                if( ! found )
+                {
+                    found = true;
+                    xos.start( "humans" );
+                }
+                state.Write( xos );
             }
-            xos << xml::start( "human" )
-                    << xml::attribute( "number", state.number_ )
-                    << xml::attribute( "rank", state.rank_->GetName() )
-                    << xml::attribute( "state", state.state_->GetName() )
-                    << xml::attribute( "contaminated", state.contaminated_ )
-                    << xml::attribute( "psyop", state.psyop_ )
-                << xml::end; // human
         }
+        else
+            unwounded.push_back( &state );
     }
     if( found )
+    {
+        for( std::list< const PHY_HumanState* >::const_iterator it = unwounded.begin(); it != unwounded.end(); ++it )
+            (*it)->Write( xos );
         xos.end(); // humans
+    }
 }
 
 
@@ -229,7 +145,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const Human_ABC& human )
     bool founded = false;
     for( IT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        HumanState* state = *it;
+        PHY_HumanState* state = *it;
         if( state->rank_->GetID() == human.GetRank().GetID() &&
             state->state_->GetID() == human.GetWound().GetID() &&
             state->location_ == human.GetLocation() &&
@@ -264,7 +180,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const Human_ABC& human )
     bool merged = false;
     for( IT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        HumanState& state = **it;
+        PHY_HumanState& state = **it;
         if( state.rank_->GetID() == human.GetRank().GetID() &&
             state.state_->GetID() == human.GetWound().GetID() &&
             state.location_ == human.GetLocation() &&
@@ -277,7 +193,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const Human_ABC& human )
         }
     }
     if( !merged )
-        humansStates_.push_back( new HumanState( 1, human.GetRank(), human.GetWound(), human.GetLocation(), human.IsContaminated(), human.IsMentalDiseased() ) );
+        humansStates_.push_back( new PHY_HumanState( 1, human.GetRank(), human.GetWound(), human.GetLocation(), human.IsContaminated(), human.IsMentalDiseased() ) );
     if( human.IsUsable() )
         ++ nNbrUsableHumans_;
 }
@@ -414,7 +330,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
 {
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
+        const PHY_HumanState& state = **it;
         sword::HumanDotations::HumanDotation& personnel = *message().mutable_human_dotations()->add_elem();
 
         // Quantity
@@ -598,7 +514,7 @@ unsigned int PHY_RolePion_Humans::GetNbrTotal( const PHY_HumanRank& rank ) const
     unsigned int result = 0;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
+        const PHY_HumanState& state = **it;
         if( state.rank_->GetID() == rank.GetID() )
             result += state.number_;
     }
@@ -614,7 +530,7 @@ unsigned int PHY_RolePion_Humans::GetNbrOperational( const PHY_HumanRank& rank )
     unsigned int result = 0;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
+        const PHY_HumanState& state = **it;
         if( state.rank_->GetID() == rank.GetID() && state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ && !state.contaminated_ )
             result += state.number_;
     }
@@ -631,7 +547,7 @@ bool PHY_RolePion_Humans::HasNoMoreOperationalHumans() const
         return false;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
+        const PHY_HumanState& state = **it;
         if( state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ && !state.contaminated_ )
             return false;
     }
@@ -656,7 +572,7 @@ unsigned int PHY_RolePion_Humans::GetNumber() const
     unsigned int result = 0;
     for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
-        const HumanState& state = **it;
+        const PHY_HumanState& state = **it;
         result += state.number_;
     }
     return result;

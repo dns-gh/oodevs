@@ -545,3 +545,38 @@ void PHY_HumansComposante::ChangeHumanSize( unsigned int newHumanSize )
         while( humans_.size() < newHumanSize )
             humans_.push_back( new PHY_Human( MIL_AgentServer::GetWorkspace(), *this ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::GetNbrHealthyHumans
+// Created: LDC 2012-10-26
+// -----------------------------------------------------------------------------
+unsigned int PHY_HumansComposante::GetNbrHealthyHumans( const PHY_HumanRank& rank ) const
+{
+    unsigned int result = 0;
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+    {
+        if( (*it)->GetRank() != rank || ( *it)->IsDead() || ( *it)->IsWounded() || ( *it)->IsContaminated() || ( *it)->IsMentalDiseased() )
+            continue;
+        ++result;
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::RemoveHealthyHumans
+// Created: LDC 2012-10-26
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove )
+{
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end() && humansToRemove > 0; )
+    {
+        if( ( *it )->GetRank() != rank || ( *it )->IsDead() || ( *it )->IsWounded() || ( *it )->IsContaminated() || ( *it )->IsMentalDiseased() )
+             ++it;
+        else
+        {
+            --humansToRemove;
+            delete( *it );
+            it = humans_.erase( it );
+        }
+    }
+}

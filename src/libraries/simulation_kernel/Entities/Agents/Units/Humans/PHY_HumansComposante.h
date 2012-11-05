@@ -69,6 +69,7 @@ public:
     unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
     void ChangeHumanState( sword::MissionParameters& msg );
     void ChangeHumanSize( unsigned int newHumanSize );
+    void RemoveHealthyHumans( const PHY_HumanRank& rank, unsigned int humansToRemove );
 
     double GetOperationalState() const;
     bool IsViable() const;
@@ -99,6 +100,7 @@ public:
     //@{
     const PHY_ComposantePion& GetComposante() const;
     unsigned int GetNbrUsableHumans() const;
+    unsigned int GetNbrHealthyHumans( const PHY_HumanRank& rank ) const;
     //@}
 
 private:
