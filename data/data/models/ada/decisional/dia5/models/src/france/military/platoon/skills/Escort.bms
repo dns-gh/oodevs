@@ -93,5 +93,6 @@ rootnode
     destroy = function( self )
         myself.speedModulation.escort = 1
         F_Pion_SetpionEnEscorte( self.escortableUnit.source, nil )
+        meKnowledge:sendNeedRoute( self.escortableUnit, false )
     end,
 }

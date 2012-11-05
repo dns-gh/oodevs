@@ -84,5 +84,6 @@ rootnode
 
     destroy = function( self )
         myself.isEscorted = false
+        myself.getRouteForEscorting = nil
     end,
 }
