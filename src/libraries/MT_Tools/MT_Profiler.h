@@ -12,12 +12,10 @@
 #ifndef __MT_Profiler_h_
 #define __MT_Profiler_h_
 
-#include <boost/noncopyable.hpp>
-
 //=============================================================================
 // Created: NLD 2002-10-14
 //=============================================================================
-class MT_Profiler : private boost::noncopyable
+class MT_Profiler
 {
 
 public:
