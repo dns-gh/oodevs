@@ -26,6 +26,7 @@ class ADN_Table3 : public QTableView
 public:
     //! @name Constructors / Destructor
     //@{
+            ADN_Table3( const QString& objectName, QWidget* pParent = 0 );
             ADN_Table3( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Table3();
     //@}
@@ -66,6 +67,12 @@ protected:
     virtual bool eventFilter( QObject* watched, QEvent* event );
     virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
     virtual void contextMenuEvent( QContextMenuEvent* event );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void Initialize( const QString& objectName );
     //@}
 
 private slots:

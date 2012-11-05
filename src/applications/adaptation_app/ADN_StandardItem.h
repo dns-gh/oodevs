@@ -33,8 +33,9 @@ public:
         eDouble      = 2,
         eEnum        = 3,
         eString      = 4,
-        eTime        = 5, // $$$$ ABR 2012-10-30: TODO
-        ePtrInVector = 6  // $$$$ ABR 2012-10-30: TODO
+        eDelay       = 5,
+        eTime        = 6, // $$$$ ABR 2012-10-30: TODO
+        ePtrInVector = 7  // $$$$ ABR 2012-10-30: TODO
     };
 
 public:

@@ -36,12 +36,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    Q3GroupBox* BuildWorkingSchemeTable();
-    //@}
-
-private:
     //! @name Member data
     //@{
     ADN_Maintenance_Data& data_;

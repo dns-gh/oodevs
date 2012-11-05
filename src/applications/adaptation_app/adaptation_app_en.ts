@@ -2502,18 +2502,6 @@ posture</translation>
         <source>Shifts durations</source>
         <translation>Shifts durations</translation>
     </message>
-    <message>
-        <source>Shift </source>
-        <translation>Shift </translation>
-    </message>
-    <message>
-        <source>Work duration</source>
-        <translation>Work duration</translation>
-    </message>
-    <message>
-        <source>Warning after</source>
-        <translation>Warning after</translation>
-    </message>
 </context>
 <context>
     <name>ADN_MissionGenObjectTypes_Table</name>
@@ -5811,6 +5799,21 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Creation helper</source>
         <translation>Creation helper</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WorkingSchemeTable</name>
+    <message>
+        <source>Shift </source>
+        <translation>Shift </translation>
+    </message>
+    <message>
+        <source>Work duration (h)</source>
+        <translation>Work duration (h)</translation>
+    </message>
+    <message>
+        <source>Warning after</source>
+        <translation>Warning after</translation>
     </message>
 </context>
 <context>

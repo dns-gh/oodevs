@@ -93,6 +93,8 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
     pLayout->setMargin( 0 );
 
     pLineEdit_ = new ADN_TimeField_EditLine( this );
+    pLineEdit_->setAlignment( qApp->isRightToLeft() ? Qt::AlignLeft : Qt::AlignRight );
+
     pLayout->addWidget( pLineEdit_ );
 
     setFocusProxy( pLineEdit_ );

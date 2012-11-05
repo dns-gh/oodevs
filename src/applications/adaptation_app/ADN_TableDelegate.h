@@ -43,6 +43,13 @@ public:
     const std::pair< double, double >* GetColorType( int row, int col ) const;
     //@}
 
+    //! @name Delay
+    //@{
+    unsigned int AddDelayEditorOnRow( int row );
+    unsigned int AddDelayEditorOnColumn( int column );
+    unsigned int AddDelayEditor( int fromRow, int toRow, int fromCol, int toCol );
+    //@}
+
 protected:
     //! @name Operations
     //@{
@@ -55,7 +62,8 @@ private:
     //! @name Member data
     //@{
     T_Positions colorPositions_;
-    T_Colors    colors_;
+    T_Colors colors_;
+    T_SimpleWidget delayEditors_;
     //@}
 };
 

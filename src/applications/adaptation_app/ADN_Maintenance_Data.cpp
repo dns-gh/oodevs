@@ -27,7 +27,7 @@ ADN_Maintenance_Data::WorkingSchemeInfo::WorkingSchemeInfo( unsigned int nIdx )
 , ADN_DataTreeNode_ABC()
 , nIdx_               ( nIdx )
 , nWorkTime_          ( 0 )
-, warningDelay_       ()
+, warningDelay_       ( "0s" )
 {
 }
 

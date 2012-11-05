@@ -2489,18 +2489,6 @@ stance</source>
         <source>Shifts durations</source>
         <translation type="unfinished">تحولات المدد</translation>
     </message>
-    <message>
-        <source>Shift </source>
-        <translation type="unfinished">Shift</translation>
-    </message>
-    <message>
-        <source>Work duration</source>
-        <translation type="unfinished">مدة العمل</translation>
-    </message>
-    <message>
-        <source>Warning after</source>
-        <translation type="unfinished">تحذير بعد</translation>
-    </message>
 </context>
 <context>
     <name>ADN_MissionGenObjectTypes_Table</name>
@@ -5799,6 +5787,21 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Creation helper</source>
         <translation type="unfinished">مساعد إنشاء</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WorkingSchemeTable</name>
+    <message>
+        <source>Shift </source>
+        <translation type="unfinished">Shift</translation>
+    </message>
+    <message>
+        <source>Work duration (h)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning after</source>
+        <translation type="unfinished">تحذير بعد</translation>
     </message>
 </context>
 <context>

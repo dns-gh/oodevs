@@ -2499,18 +2499,6 @@ du tireur</translation>
         <translation>Durée de tournée</translation>
     </message>
     <message>
-        <source>Shift </source>
-        <translation>Tournée </translation>
-    </message>
-    <message>
-        <source>Work duration</source>
-        <translation>Durée de travail</translation>
-    </message>
-    <message>
-        <source>Warning after</source>
-        <translation>Alerte</translation>
-    </message>
-    <message>
         <source>Repairers availability warnings</source>
         <translation>Alertes de disponibilité des réparateurs</translation>
     </message>
@@ -5826,6 +5814,21 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>%1: Creation of a new element</source>
         <translation>%1 : Création d&apos;un nouvel élément</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WorkingSchemeTable</name>
+    <message>
+        <source>Shift </source>
+        <translation>Régime de travail </translation>
+    </message>
+    <message>
+        <source>Work duration (h)</source>
+        <translation>Durée de travail (h)</translation>
+    </message>
+    <message>
+        <source>Warning after</source>
+        <translation>Alerte</translation>
     </message>
 </context>
 <context>

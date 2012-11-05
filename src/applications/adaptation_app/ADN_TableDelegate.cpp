@@ -9,12 +9,13 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_TableDelegate.h"
+#include "ADN_CheckBox.h"
 #include "ADN_ComboBox_Enum.h"
 #include "ADN_EditLine.h"
 #include "ADN_StandardItem.h"
-#include "ADN_CheckBox.h"
-#include "clients_kernel/VariantPointer.h"
+#include "ADN_TimeField.h"
 #include "clients_gui/Roles.h"
+#include "clients_kernel/VariantPointer.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDelegate constructor
@@ -82,6 +83,36 @@ const std::pair< double, double >* ADN_TableDelegate::GetColorType( int row, int
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddDelayEditorOnRow
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddDelayEditorOnRow( int row )
+{
+    return AddDelayEditor( row, row, -1, -1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddDelayEditorOnColumn
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddDelayEditorOnColumn( int col )
+{
+    return AddDelayEditor( -1, -1, col, col );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddDelayEditor
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddDelayEditor( int fromRow, int toRow, int fromCol, int toCol )
+{
+    unsigned int id = GetNewId();
+    CreatePosition( id, fromRow, toRow, fromCol, toCol );
+    delayEditors_.push_back( id );
+    return id;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_TableDelegate::createEditor
 // Created: ABR 2011-10-03
 // -----------------------------------------------------------------------------
@@ -136,6 +167,12 @@ QWidget* ADN_TableDelegate::createEditor( QWidget* parent, const QStyleOptionVie
     {
         return 0;
     }
+    else if( std::find( delayEditors_.begin(), delayEditors_.end(), position->id_ ) != delayEditors_.end() )
+    {
+        ADN_TimeField* editor = new ADN_TimeField( parent );
+        editor->GetConnector().Connect( data );
+        return editor;
+    }
     assert( false );
     return 0;
 }
@@ -169,7 +206,8 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnetor = &static_cast< ADN_ComboBox_Enum* >( editor )->GetConnector();
     else if( std::find( lineEdits_.begin(), lineEdits_.end(), position->id_ ) != lineEdits_.end() )
         guiConnetor = &static_cast< ADN_EditLine_String* >( editor )->GetConnector();
-
+    else if( std::find( delayEditors_.begin(), delayEditors_.end(), position->id_ ) != delayEditors_.end() )
+        guiConnetor = &static_cast< ADN_TimeField* >( editor )->GetConnector();
     if( guiConnetor )
         guiConnetor->Disconnect( data );
 }

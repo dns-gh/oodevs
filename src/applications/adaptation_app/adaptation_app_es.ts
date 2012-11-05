@@ -2498,18 +2498,6 @@ tirador</translation>
         <translation>Duración de cambios</translation>
     </message>
     <message>
-        <source>Shift </source>
-        <translation>Cambio </translation>
-    </message>
-    <message>
-        <source>Work duration</source>
-        <translation>Duración de trabajo</translation>
-    </message>
-    <message>
-        <source>Warning after</source>
-        <translation>Advertencia (después)</translation>
-    </message>
-    <message>
         <source>Repairers availability warnings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5815,6 +5803,21 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>%1: Creation of a new element</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WorkingSchemeTable</name>
+    <message>
+        <source>Shift </source>
+        <translation>Cambio </translation>
+    </message>
+    <message>
+        <source>Work duration (h)</source>
+        <translation>Duración de trabajo (h)</translation>
+    </message>
+    <message>
+        <source>Warning after</source>
+        <translation>Advertencia (después)</translation>
     </message>
 </context>
 <context>

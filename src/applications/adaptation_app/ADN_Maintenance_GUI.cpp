@@ -16,8 +16,51 @@
 #include "ADN_TableItem_Edit.h"
 #include "ADN_TableItem_TimeField.h"
 #include "ADN_AvailabilityWarningTable.h"
-
 #include "ENT/ENT_Tr.h"
+
+namespace
+{
+    class ADN_WorkingSchemeTable : public ADN_Table3
+    {
+    public:
+        ADN_WorkingSchemeTable( const QString& objectName, QWidget* pParent = 0 )
+            : ADN_Table3( objectName, pParent )
+        {
+            setSortingEnabled( false );
+
+            delegate_.AddSpinBoxOnRow( 0, 1, std::numeric_limits< int >::max(), 1 );
+            delegate_.AddDelayEditorOnRow( 1 );
+        }
+        virtual ~ADN_WorkingSchemeTable()
+        {
+            // NOTHING
+        }
+
+        void Initialize( ADN_Maintenance_Data& data )
+        {
+            dataModel_.setColumnCount( static_cast< int >( data.vWorkingSchemes_.size() ) );
+            QStringList horizontalHeaders;
+            for( ADN_Maintenance_Data::IT_WorkingSchemeInfo_Vector it = data.vWorkingSchemes_.begin(); it != data.vWorkingSchemes_.end(); ++it )
+                horizontalHeaders << tools::translate( "ADN_WorkingSchemeTable", "Shift " ) + QString::number( ( **it ).nIdx_.GetData() );
+            dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+            horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+
+            dataModel_.setRowCount( 2 );
+            QStringList verticalHeaders;
+            verticalHeaders << tools::translate( "ADN_WorkingSchemeTable", "Work duration (h)" )
+                            << tools::translate( "ADN_WorkingSchemeTable", "Warning after" );
+            dataModel_.setVerticalHeaderLabels( verticalHeaders );
+
+            int n = 0;
+            for( ADN_Maintenance_Data::IT_WorkingSchemeInfo_Vector it = data.vWorkingSchemes_.begin(); it != data.vWorkingSchemes_.end(); ++it, ++n )
+            {
+                ADN_Maintenance_Data::WorkingSchemeInfo& modifiers = **it;
+                AddItem( 0, n, &modifiers, &modifiers.nWorkTime_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+                AddItem( 1, n, &modifiers, &modifiers.warningDelay_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+            }
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_GUI constructor
@@ -51,8 +94,11 @@ void ADN_Maintenance_GUI::Build()
     assert( pMainWidget_ == 0 );
 
     // Maintenance
-    Q3GroupBox* workingShemeBox = BuildWorkingSchemeTable();
+
+    Q3GroupBox* workingShemeBox = new Q3HGroupBox( tr( "Shifts durations" ) );
     workingShemeBox->setFixedHeight( 200 );
+    ADN_WorkingSchemeTable* pWorkingSchemeTable = new ADN_WorkingSchemeTable( strClassName_ + "_Durations", workingShemeBox );
+    pWorkingSchemeTable->Initialize( data_ );
 
     Q3HGroupBox* pRepairerGroup = new Q3HGroupBox( tr( "Repairers availability warnings" ) );
     ADN_AvailabilityWarningTable* pRepairerWarningTable = new ADN_AvailabilityWarningTable( pRepairerGroup );
@@ -88,43 +134,3 @@ void ADN_Maintenance_GUI::Build()
     pMainWidget_->setObjectName( strClassName_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Maintenance_GUI::BuildWorkingSchemeTable
-// Created: SBO 2006-08-04
-// -----------------------------------------------------------------------------
-Q3GroupBox* ADN_Maintenance_GUI::BuildWorkingSchemeTable()
-{
-    ADN_GuiBuilder builder( strClassName_ );
-
-    Q3GroupBox* pGroup = new Q3HGroupBox( tr( "Shifts durations" ) );
-
-    ADN_Table* pTable = builder.CreateTable( pGroup );
-    pTable->setObjectName( strClassName_ + "_Durations");
-    pTable->setNumCols( static_cast< int >( data_.vWorkingSchemes_.size() ) );
-    pTable->setNumRows( 2 );
-    pTable->verticalHeader()->show();
-    pTable->setLeftMargin( 5 );
-    pTable->setSorting( false );
-
-    uint n = 0;
-    for( ADN_Maintenance_Data::IT_WorkingSchemeInfo_Vector it = data_.vWorkingSchemes_.begin(); it != data_.vWorkingSchemes_.end(); ++it )
-    {
-        pTable->horizontalHeader()->setLabel( n, tr( "Shift " ) + QString::number( ( **it ).nIdx_.GetData() ) );
-        pTable->setColumnStretchable( n, true );
-        ++n;
-    }
-
-    pTable->verticalHeader()->setLabel( 0, tr( "Work duration" ) );
-    pTable->verticalHeader()->setLabel( 1, tr( "Warning after" ) );
-
-    n = 0;
-    for( ADN_Maintenance_Data::IT_WorkingSchemeInfo_Vector it = data_.vWorkingSchemes_.begin(); it != data_.vWorkingSchemes_.end(); ++it )
-    {
-        ADN_Maintenance_Data::WorkingSchemeInfo& modifiers = **it;
-        builder.AddTableCell< ADN_TableItem_Int >( pTable, &modifiers, 0, n, modifiers.nWorkTime_, eGreaterZero );
-        builder.AddTableCell< ADN_TableItem_TimeField >( pTable, &modifiers, 1, n, modifiers.warningDelay_ );
-        ++n;
-    }
-
-    return pGroup;
-}
