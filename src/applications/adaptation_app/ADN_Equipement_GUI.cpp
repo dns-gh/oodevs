@@ -10,8 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Equipement_GUI.h"
 #include "moc_ADN_Equipement_GUI.cpp"
-#include "ADN_ComboBox_Equipment_Nature.h"
-#include "ADN_ComboBox_Equipment_LogisticSupplyClass.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_DataException.h"
 #include "ADN_Equipement_AmmoListView.h"
@@ -34,17 +32,19 @@ class ADN_Equipement_UrbanModifiersTable : public helpers::ADN_UrbanModifiersTab
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Equipement_UrbanModifiersTable( QWidget* pParent, ADN_Connector_ABC*& pGuiConnector ) : ADN_UrbanModifiersTable( pParent, pGuiConnector ) {}
+             ADN_Equipement_UrbanModifiersTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 )
+                 : ADN_UrbanModifiersTable( objectName, connector, pParent ) {}
     virtual ~ADN_Equipement_UrbanModifiersTable() {}
     //@}
 
-protected slots:
-    //! @name Slots
+protected:
+    //! @name Operations
     //@{
-    virtual void doValueChanged( int row, int col )
+    virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
     {
-        ADN_UrbanModifiersTable::doValueChanged( row, col );
-        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+        ADN_UrbanModifiersTable::dataChanged( topLeft, bottomRight );
+        if( topLeft == bottomRight )
+            ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
     }
     //@}
 };
@@ -122,8 +122,8 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT8" ), vConnectors[ eGenEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eGenEMAT6Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code LFRIL" ), vConnectors[eGenLFRILCode ] );
-    builder.AddField< ADN_ComboBox_Equipment_Nature >( pInfoHolder, tr( "Nature" ), vConnectors[ eGenNature] );
-    builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
+    builder.AddField< ADN_ComboBox_Vector< helpers::ResourceNatureInfos > >( pInfoHolder, tr( "Nature" ), vConnectors[ eGenNature] );
+    builder.AddField< ADN_ComboBox_Vector< helpers::LogisticSupplyClass > >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Usable within a resource network" ), vConnectors[ eGenNetworkUsable ] );
     vNetworkUsableCheckBoxs_.push_back( networkUsableCheckBox );
     connect( networkUsableCheckBox, SIGNAL( stateChanged( int ) ), SLOT( NetworkUsableActivated( int ) ) );
@@ -187,9 +187,9 @@ void ADN_Equipement_GUI::BuildAmmunition()
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT8" ), vConnectors[ eEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eEMAT6Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code LFRIL" ), vConnectors[ eLFRILCode ] );
-    builder.AddEnumField< E_MunitionType >( pInfoHolder, tr( "Type" ), vConnectors[ eType ], ENT_Tr::ConvertFromAmmunitionType );
-    builder.AddField< ADN_ComboBox_Equipment_Nature >( pInfoHolder, tr( "Nature" ), vConnectors[ eNature ] );
-    builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
+    builder.AddEnumField( pInfoHolder, tr( "Type" ), vConnectors[ eType ] );
+    builder.AddField< ADN_ComboBox_Vector< helpers::ResourceNatureInfos > >( pInfoHolder, tr( "Nature" ), vConnectors[ eNature ] );
+    builder.AddField< ADN_ComboBox_Vector< helpers::LogisticSupplyClass > >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Usable within a resource network" ), vConnectors[ eNetworkUsable ] );
     networkUsableCheckBox->setObjectName( strClassName_ + "AmmunitionUsable" );
     vNetworkUsableCheckBoxs_.push_back( networkUsableCheckBox );
@@ -206,11 +206,8 @@ void ADN_Equipement_GUI::BuildAmmunition()
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( tr( "Attritions" ) );
     pDirectGroup->setObjectName( strClassName_ + "MunitionsAttritions" );
     vConnectors[ eDirect ] = &pDirectGroup->GetConnector();
-    pAttritionTable_ = new ADN_Equipement_AttritionTable( pDirectGroup );
-    pAttritionTable_->setObjectName( strClassName_ + "MunitionsAttritionsTable" );
-    vConnectors[ eAttritions ] = &pAttritionTable_->GetConnector();
-    ADN_Equipement_UrbanModifiersTable* pUrbanTable = new ADN_Equipement_UrbanModifiersTable( pDirectGroup, vConnectors[ eUrbanAttritions ] );
-    pUrbanTable->setObjectName( strClassName_ + "MunitionsUrbanTable" );
+    pAttritionTable_ = new ADN_Equipement_AttritionTable( strClassName_ + "MunitionsAttritionsTable", vConnectors[ eAttritions ], pDirectGroup );
+    ADN_Equipement_UrbanModifiersTable* pUrbanTable = new ADN_Equipement_UrbanModifiersTable( strClassName_ + "MunitionsUrbanTable", vConnectors[ eUrbanAttritions ], pDirectGroup );
 
     QGroupBox* pAttritionVisualisation = new QGroupBox( tr( "Simulation" ) );
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );

@@ -11,7 +11,6 @@
 #define __ADN_UrbanModifiersTable_h_
 
 #include "ADN_Table.h"
-#include <boost/noncopyable.hpp>
 
 namespace helpers
 {
@@ -22,15 +21,20 @@ namespace helpers
 */
 // Created: SLG 2010-04-13
 // =============================================================================
-class ADN_UrbanModifiersTable : public ADN_Table2
-                              , private boost::noncopyable
+class ADN_UrbanModifiersTable : public ADN_Table3
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_UrbanModifiersTable( QWidget* pParent, ADN_Connector_ABC*& pGuiConnector );
+             ADN_UrbanModifiersTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_UrbanModifiersTable();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void AddRow( int row, void* data );
     //@}
 };
 

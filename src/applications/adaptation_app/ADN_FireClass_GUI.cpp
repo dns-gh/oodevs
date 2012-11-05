@@ -76,8 +76,7 @@ void ADN_FireClass_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eNbrDead ], tr( "%" ), ePercentage  );
     // Urban
     Q3GroupBox* pUrbanModifiersGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Urban attrition" ) );
-    helpers::ADN_UrbanModifiersTable* urbanTable = new helpers::ADN_UrbanModifiersTable( pUrbanModifiersGroup, vInfosConnectors[ eUrbanAttrition ] );
-    urbanTable->setObjectName( strClassName_ + "Urban" );
+    new helpers::ADN_UrbanModifiersTable( strClassName_ + "Urban", vInfosConnectors[ eUrbanAttrition ], pUrbanModifiersGroup );
     // Extinguisher
     Q3GroupBox* pExtinguisherAgentsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ) );
     ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( pExtinguisherAgentsGroup );

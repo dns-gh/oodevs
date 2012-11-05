@@ -53,6 +53,7 @@ public:
 
     void CreateTableFrom( ADN_ListView& listView );
     void CreateTableFrom( Q3Table& table );
+    void CreateTableFrom( QTableView& table );
 
     void WriteToFile( const char* strFileName );
     //@}

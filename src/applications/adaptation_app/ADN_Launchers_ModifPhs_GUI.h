@@ -17,14 +17,21 @@
 //*****************************************************************************
 // Created: JDY 03-09-01
 //*****************************************************************************
-class ADN_Launchers_ModifPhs_GUI
-: public ADN_Table2
+class ADN_Launchers_ModifPhs_GUI : public ADN_Table3
 {
 public:
-    explicit ADN_Launchers_ModifPhs_GUI( QWidget* pParent = 0 );
+    //! @name Constructors/Destructor
+    //@{
+             ADN_Launchers_ModifPhs_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Launchers_ModifPhs_GUI();
+    //@}
 
-    virtual void doValueChanged( int row, int col );
+public:
+    //! @name Operations
+    //@{
+    virtual void AddRow( int row, void* data );
+    virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
+    //@}
 };
 
 #endif // __ADN_Launchers_ModifPhs_GUI_h_

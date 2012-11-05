@@ -12,6 +12,198 @@
 
 #include "ADN_Gfx_ABC.h"
 #include "ADN_NavigationInfos.h"
+#include "ADN_TableDelegate.h"
+#include "ADN_Types.h"
+#include "ADN_StandardItem.h"
+#include "clients_gui/Roles.h"
+#include "clients_kernel/VariantPointer.h"
+
+class ADN_Table3 : public QTableView
+                 , public ADN_Gfx_ABC
+{
+    Q_OBJECT
+
+public:
+    //! @name Constructors / Destructor
+    //@{
+            ADN_Table3( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
+    virtual ~ADN_Table3();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    // $$$$ ABR 2012-10-23: To Remove when migration finish
+    int numRows() const;
+    void setNumRows( int numRows );
+
+    virtual void AddRow( int row, void* data );
+    void RemoveItem( void* item );
+
+    void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
+    void ActivateRatioColor() {}
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    QStandardItem* AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
+    template< typename T >
+    QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags = 0 );
+    template< typename Enum, int Max >
+    QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data,  const QStringList& content, Qt::ItemFlags flags = 0 );
+
+    QStandardItem* GetItemFromIndex( const QModelIndex& index ) const;
+
+    virtual void OnContextMenu( const QPoint& pt );
+    void* GetSelectedData();
+    void* GetDataFromIndex( const QModelIndex& index );
+    //@}
+
+
+    //! @name QTableView overload
+    //@{
+    virtual bool eventFilter( QObject* watched, QEvent* event );
+    virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
+    virtual void contextMenuEvent( QContextMenuEvent* event );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnGotoRequested( const QModelIndex& index );
+    void OnCheckedStateChanged( const QStandardItem& item );
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void GoToRequested( const ADN_NavigationInfos::GoTo& );
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    QStandardItemModel dataModel_;
+    ADN_TableDelegate delegate_;
+    QSortFilterProxyModel proxyModel_;
+    ADN_NavigationInfos::GoTo goToInfo_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::AddItem
+// Created: ABR 2012-10-18
+// -----------------------------------------------------------------------------
+inline
+QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags /* = 0 */ )
+{
+    if( !parentData )
+        return 0;
+
+    ADN_StandardItem* item = new ADN_StandardItem( parentData );
+    item->setFlags( Qt::ItemIsEnabled | flags );
+
+    item->setData( text, Qt::EditRole );
+    item->setData( text, gui::Roles::DataRole );
+
+    dataModel_.setItem( row, col, item );
+
+    return item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::AddItem
+// Created: ABR 2012-10-18
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags /* = 0 */ )
+{
+    if( !data || !parentData )
+        return 0;
+
+    // Item creation
+    ADN_StandardItem* item = new ADN_StandardItem( parentData, type );
+    dataModel_.setItem( row, col, item );
+
+    // Flags
+    if( delegate_.IsCheckBox( item->index() ) )
+    {
+        assert( type == ADN_StandardItem::eBool );
+        flags = flags | Qt::ItemIsUserCheckable;
+    }
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
+
+    // Alignment
+    if( type != ADN_StandardItem::eString )
+        item->setTextAlignment( Qt::AlignRight );
+
+    // Variant
+    QVariant* variant = new QVariant();
+    variant->setValue( kernel::VariantPointer( data ) );
+    item->setData( *variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
+
+    // ADN Connection
+    item->Connect( data );
+    return item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::AddItem
+// Created: ABR 2012-10-26
+// -----------------------------------------------------------------------------
+template< typename Enum, int Max >
+inline
+QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags /*= 0*/ )
+{
+    if( !data || !parentData )
+        return 0;
+
+    // Item creation
+    ADN_StandardItem* item = new ADN_StandardItem( parentData, ADN_StandardItem::eEnum );
+    dataModel_.setItem( row, col, item );
+
+    // Flags
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
+
+    // Variant
+    QVariant* variant = new QVariant();
+    variant->setValue( kernel::VariantPointer( data ) );
+    item->setData( *variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_Type_ABC<> pointer
+
+    // ADN Connection
+    item->Connect( data, &content );
+    return item;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //*****************************************************************************
 // Created: JDY 03-07-07

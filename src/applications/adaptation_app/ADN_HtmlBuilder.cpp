@@ -253,3 +253,36 @@ void ADN_HtmlBuilder::CreateTableFrom( Q3Table& table )
     }
     strOutput_ << "</table>\n";
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_HtmlBuilder::CreateTableFrom
+// Created: JSR 2012-10-31
+// -----------------------------------------------------------------------------
+void ADN_HtmlBuilder::CreateTableFrom( QTableView& table )
+{
+    strOutput_ << "<table border = 1>\n";
+
+    if( ! table.horizontalHeader()->isHidden() )
+    {
+        strOutput_ << "<tr>\n";
+        if( ! table.verticalHeader()->isHidden() )
+            strOutput_ << "<th></th>";
+        for( int n = 0; n < table.horizontalHeader()->count(); ++n )
+            strOutput_ << "<th>" << table.model()->headerData( n, Qt::Horizontal ).toString().toStdString() << "</th>";
+        strOutput_ << "</tr>\n";
+    }
+
+    for( int nR = 0; nR < table.model()->rowCount(); ++nR )
+    {
+        strOutput_ << "<tr>";
+        if( ! table.verticalHeader()->isHidden() )
+            strOutput_ << "<th>" << table.model()->headerData( nR, Qt::Vertical ).toString().toStdString() << "</th>";
+        for( int nC = 0; nC < table.model()->columnCount(); ++nC )
+        {
+            QModelIndex index = table.model()->index( nR, nC );
+            strOutput_ << "<td>" << table.model()->data( index ).toString().toStdString() << "</td>";
+        }
+        strOutput_ << "</tr>\n";
+    }
+    strOutput_ << "</table>\n";
+}

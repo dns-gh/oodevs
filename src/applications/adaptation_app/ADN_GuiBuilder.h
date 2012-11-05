@@ -75,11 +75,9 @@ public:
     template< class T >
         T* AddOptionnalField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemOptionConnector, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
 
-    template< typename T >
-        ADN_ComboBox_Enum<T>* AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, typename ADN_ComboBox_Enum<T>::T_Converter converter );
+        ADN_ComboBox_Enum* AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector );
 
-    template< typename T >
-        ADN_ComboBox_Enum<T>* AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector, typename ADN_ComboBox_Enum<T>::T_Converter converter );
+        ADN_ComboBox_Enum* AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector );
 
     ADN_FileChooser* AddFileField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter = "(*.*)" );
     ADN_FileChooser* AddFileField( QWidget* pParent, const char* szName, ADN_Type_String& strFileNameConnector, const char* szFilter = "(*.*)" );
@@ -267,12 +265,12 @@ T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* szName, ADN_
 // Name: ADN_GuiBuilder::AddEnumField
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-template< typename T >
-ADN_ComboBox_Enum<T>* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, typename ADN_ComboBox_Enum<T>::T_Converter converter )
+inline
+ADN_ComboBox_Enum* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector )
 {
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
-    ADN_ComboBox_Enum<T>* pField = new ADN_ComboBox_Enum<T>( converter, pParent );
+    ADN_ComboBox_Enum* pField = new ADN_ComboBox_Enum( pParent );
     pField->setObjectName( name_ + szName );
 
     pCurrentFieldWidget1_ = pNameLabel;
@@ -290,12 +288,12 @@ ADN_ComboBox_Enum<T>* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char
 // Name: ADN_GuiBuilder::AddEnumField
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-template< typename T >
-ADN_ComboBox_Enum<T>* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector, typename ADN_ComboBox_Enum<T>::T_Converter converter )
+inline
+ADN_ComboBox_Enum* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector )
 {
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
-    ADN_ComboBox_Enum<T>* pField = new ADN_ComboBox_Enum<T>( converter, pParent );
+    ADN_ComboBox_Enum* pField = new ADN_ComboBox_Enum( pParent );
     pField->setObjectName( name_ + szName );
 
     pCurrentFieldWidget1_ = pNameLabel;

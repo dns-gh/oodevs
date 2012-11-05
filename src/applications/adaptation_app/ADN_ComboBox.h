@@ -16,7 +16,7 @@
 #include "ADN_ComboBoxItem.h"
 #include "ADN_Connector_ABC.h"
 #include "ADN_Connector_Enum.h"
-#include "ADN_Connector_Combo_ABC.h"
+#include "ADN_Connector_Combo.h"
 
 class ADN_ComboBoxItem;
 

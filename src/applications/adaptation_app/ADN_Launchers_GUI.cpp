@@ -74,9 +74,7 @@ void ADN_Launchers_GUI::Build()
     //pShooterLabel->setAlignment( Qt::AlignVCenter );
 
     // modifiers tab
-    pModifPhs_ = new ADN_Launchers_ModifPhs_GUI();
-    pModifPhs_->setObjectName( strClassName_ + "ModifPh" );
-    vConnectors[ ePhModifiers ] = &pModifPhs_->GetConnector();
+    pModifPhs_ = new ADN_Launchers_ModifPhs_GUI( strClassName_ + "ModifPh", vConnectors[ ePhModifiers ] );
 
     // -------------------------------------------------------------------------
     // Layouts

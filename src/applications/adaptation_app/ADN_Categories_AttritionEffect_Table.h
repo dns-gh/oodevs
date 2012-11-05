@@ -12,28 +12,24 @@
 
 #include "ADN_Table.h"
 
-// =============================================================================
-/** @class  ADN_Categories_AttritionEffect_Table
-    @brief  ADN_Categories_AttritionEffect_Table
-*/
-// Created: SBO 2006-07-28
-// =============================================================================
-class ADN_Categories_AttritionEffect_Table
-    : public ADN_Table2
+class ADN_Categories_AttritionEffect_Table : public ADN_Table3
 {
-        Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Categories_AttritionEffect_Table( QWidget* pParent = 0 );
+             ADN_Categories_AttritionEffect_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Categories_AttritionEffect_Table();
     //@}
 
-protected slots:
-    //! @name slots
+    //! @name Operations
     //@{
-    virtual void doValueChanged( int row, int col );
+    virtual void AddRow( int row, void* data );
+    //@}
+
+protected:
+    //! @name Slots
+    //@{
+    virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
     //@}
 };
 

@@ -20,43 +20,15 @@
 #include "ADN_ListView_Orders.h"
 
 #include "ADN_App.h"
-#include "ADN_Connector_ListView_ABC.h"
+#include "ADN_Connector_ListView.h"
 #include "ADN_Models_Data.h"
+#include "ADN_StandardItem.h"
 #include "ADN_Workspace.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
 typedef ADN_Models_Data::OrderInfos OrderInfos;
-
-//-----------------------------------------------------------------------------
-// Internal List View connector
-//-----------------------------------------------------------------------------
-class ADN_CLV_Orders
-: public ADN_Connector_ListView_ABC
-{
-
-public:
-
-    ADN_CLV_Orders(ADN_ListView_Orders& list)
-    : ADN_Connector_ListView_ABC(list)
-    {}
-
-    virtual ~ADN_CLV_Orders()
-    {}
-
-    ADN_ListViewItem* CreateItem(void * obj)
-    {
-        // create new list item
-        ADN_ListViewItem *pItem = new ADN_ListViewItem( obj );
-
-        // connect list item with object's name
-        pItem->Connect( &static_cast< OrderInfos* >( obj )->strName_);
-        return pItem;
-    }
-private:
-    ADN_CLV_Orders& operator=( const ADN_CLV_Orders& );
-};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Orders constructor
@@ -67,7 +39,7 @@ ADN_ListView_Orders::ADN_ListView_Orders( bool usedWithMission, QWidget* parent 
     , usedWithMission_ ( usedWithMission )
 {
     // connector creation
-    pConnector_=new ADN_CLV_Orders(*this);
+    pConnector_=new ADN_Connector_ListView< OrderInfos >(*this);
 
     this->SetDeletionEnabled( true );
 }
@@ -136,7 +108,7 @@ bool ADN_ListView_Orders::Contains( const std::string& strComposanteName ) const
     const int rowCount = dataModel_.rowCount();
     for( int row = 0; row < rowCount; ++row )
     {
-        ADN_ListViewItem* pItem = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
+        ADN_StandardItem* pItem = static_cast< ADN_StandardItem* >( dataModel_.item( row ) );
         if( strComposanteName == pItem->text().toStdString() )
             return true;
     }
@@ -171,7 +143,7 @@ void ADN_ListView_Orders::CreateNewItem( int n )
             }
         ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCList->AddItem( pNewInfo );
-        if( ADN_ListViewItem* item = FindItem( pNewInfo ) )
+        if( ADN_StandardItem* item = FindItem( pNewInfo ) )
             selectionModel()->setCurrentIndex( dataModel_.indexFromItem( item ), QItemSelectionModel::ClearAndSelect );
     }
 }

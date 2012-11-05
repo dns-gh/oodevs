@@ -11,80 +11,37 @@
 #include "ADN_Equipement_AttritionTable.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Equipement_GUI.h"
-#include "ADN_Connector_Table_ABC.h"
-#include "ADN_TableItem_Edit.h"
-#include "ADN_AttritionInfos.h"
-#include <boost/noncopyable.hpp>
-
-typedef helpers::AttritionInfos AttritionInfos;
-
-//-----------------------------------------------------------------------------
-// Internal Table connector to be connected with
-//-----------------------------------------------------------------------------
-class ADN_Equipement_AttritionTable_Connector : public ADN_Connector_Table_ABC
-{
-
-public:
-    explicit ADN_Equipement_AttritionTable_Connector( ADN_Equipement_AttritionTable& tab )
-        : ADN_Connector_Table_ABC( tab, false )
-    {}
-
-    void  AddSubItems( int i, void* pObj )
-    {
-        assert( pObj != 0 );
-        AttritionInfos* pAttrition = (AttritionInfos*)pObj;
-
-        tab_.verticalHeader()->setLabel( i, pAttrition->ptrArmor_.GetData()->strName_.GetData().c_str() );
-
-        // add a new row & set new values
-        ADN_TableItem_DoublePercentage* pItem0 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
-        pItem0->SetUseColor( true );
-        tab_.setItem( i, 0, pItem0 );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
-        pItem0->GetConnector().Connect( & pAttrition->rRepairNoEvac_ );
-
-        ADN_TableItem_DoublePercentage* pItem1 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
-        pItem1->SetUseColor( true );
-        tab_.setItem( i, 1, pItem1 );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
-        pItem1->GetConnector().Connect( & pAttrition->rRepairWithEvac_ );
-
-        ADN_TableItem_DoublePercentage* pItem2 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
-        pItem2->SetUseColor( true );
-        tab_.setItem( i, 2, pItem2 );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
-        pItem2->GetConnector().Connect( & pAttrition->rDestroy_ );
-    }
-};
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Equipement_AttritionTable constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( QWidget* pParent )
-: ADN_Table2( pParent, "ADN_Equipement_AttritionTable" )
+ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    // Selection and style.
-    //$$$$ Find a better policy
-    setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-    setMinimumHeight( 160 );
-    setSelectionMode( Q3Table::NoSelection );
-    setShowGrid( false );
+    dataModel_.setColumnCount( 4 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Armor" )
+                      << tr( "% on site fixable" )
+                      << tr( "% maintenance support needed" )
+                      << tr( "% destroyed" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+    setFixedHeight( 180 );
 
-    // Set up the columns.
-    setNumCols(3);
-    horizontalHeader()->setLabel( 0, tr( "% on site fixable" ) );
-    horizontalHeader()->setLabel( 1, tr( "% maintenance support needed" ) );
-    horizontalHeader()->setLabel( 2, tr( "% destroyed" ) );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-    setColumnStretchable( 2, true );
-
-    // Connector creation.
-    pConnector_ = new ADN_Equipement_AttritionTable_Connector( *this );
+    delegate_.AddColorOnColumn( 1, 0., 100. );
+    delegate_.AddColorOnColumn( 2, 0., 100. );
+    delegate_.AddColorOnColumn( 3, 0., 100. );
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddDoubleSpinBoxOnColumn( 1 );
+    delegate_.AddDoubleSpinBoxOnColumn( 2 );
+    delegate_.AddDoubleSpinBoxOnColumn( 3 );
+    std::vector< int > linkedList;
+    linkedList.push_back( 1 );
+    linkedList.push_back( 2 );
+    linkedList.push_back( 3 );
+    delegate_.SetColumnsSumRestriction( linkedList, gui::CommonDelegate::eLTE, 100. );
 }
 
 //-----------------------------------------------------------------------------
@@ -93,15 +50,32 @@ ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_Equipement_AttritionTable::~ADN_Equipement_AttritionTable()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionTable::doValueChanged
-// Created: JSR 2010-04-30
+// Name: ADN_Equipement_AttritionTable::AddRow
+// Created: JSR 2012-10-31
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionTable::doValueChanged( int row, int col )
+void ADN_Equipement_AttritionTable::AddRow( int row, void* data )
 {
-    ADN_Table2::doValueChanged( row, col );
-    ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+    helpers::AttritionInfos* pAttrition = static_cast< helpers::AttritionInfos* >( data );
+    if( !pAttrition )
+        return;
+
+    AddItem( row, 0, data, &pAttrition->ptrArmor_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 1, data, &pAttrition->rDestroy_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &pAttrition->rRepairWithEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 3, data, &pAttrition->rRepairNoEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_AttritionTable::dataChanged
+// Created: JSR 2012-10-31
+// -----------------------------------------------------------------------------
+void ADN_Equipement_AttritionTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
+{
+    ADN_Table3::dataChanged( topLeft, bottomRight );
+    if( topLeft == bottomRight )
+        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
 }

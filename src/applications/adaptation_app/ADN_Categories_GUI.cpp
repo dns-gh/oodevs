@@ -83,7 +83,7 @@ void ADN_Categories_GUI::Build()
     QWidget* pHolder = builder.AddFieldHolder( pArmorInfoGroup );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vArmorInfosConnectors[ eArmorName ], 0, eVarName );
 
-    pComboType_ = builder.AddEnumField< E_ProtectionType >( pHolder, tr( "Type" ), vArmorInfosConnectors[ eArmorType ], ADN_Tr::ConvertFromProtectionType );
+    pComboType_ = builder.AddEnumField( pHolder, tr( "Type" ), vArmorInfosConnectors[ eArmorType ] );
     connect( pComboType_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
 
     Q3GroupBox* pArmorNeutralizationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Neutralization" ), pArmorInfoGroup );
@@ -95,9 +95,12 @@ void ADN_Categories_GUI::Build()
     builder.AddField< ADN_EditLine_Double >( pArmorBreakdownGroup_, tr( "On site fixable" ), vArmorInfosConnectors[ eBreakdownNEVA ], tr( "%" ), ePercentage );
 
     pAttritionEffectGroup_ = new Q3VGroupBox( tr( "Attrition effects on humans" ), pArmorGroup );
-    pAttritionEffects_ = new ADN_Categories_AttritionEffect_Table( pAttritionEffectGroup_ );
-    pAttritionEffects_->setObjectName( strClassName_ + "_Attrition" );
-    vArmorInfosConnectors[ eAttritionEffects ] = &pAttritionEffects_->GetConnector();
+    //pAttritionEffects_ = new ADN_Categories_AttritionEffect_Table( pAttritionEffectGroup_ );
+    //pAttritionEffects_->setObjectName( strClassName_ + "_Attrition" );
+    //vArmorInfosConnectors[ eAttritionEffects ] = &pAttritionEffects_->GetConnector();
+
+    //ADN_Categories_AttritionEffect_Table2* test = 
+    new ADN_Categories_AttritionEffect_Table( strClassName_ + "_Attrition", vArmorInfosConnectors[ eAttritionEffects ], pAttritionEffectGroup_ );
 
     Q3VBox* pBox = new Q3VBox();
     ///////////////////

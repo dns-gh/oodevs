@@ -132,12 +132,12 @@ void ADN_ListView_Missions::FillList( Q3CheckListItem* pParent, ADN_Missions_Dat
 // Name: ADN_ListView_Missions::FindItem
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
-ADN_ListViewItem* ADN_ListView_Missions::FindItem( const std::string& strMissionName )
+ADN_StandardItem* ADN_ListView_Missions::FindItem( const std::string& strMissionName )
 {
     const int rowCount = dataModel_.rowCount();
     for( int row = 0; row < rowCount; ++row )
     {
-        ADN_ListViewItem* pItem = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
+        ADN_StandardItem* pItem = static_cast< ADN_StandardItem* >( dataModel_.item( row ) );
         if( strMissionName == pItem->text().toStdString() )
             return pItem;
     }

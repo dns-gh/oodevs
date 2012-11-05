@@ -10,15 +10,13 @@
 //*****************************************************************************
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Connector_Enum<T> constructor
+// Name: ADN_Connector_Enum< T > constructor
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template<class T>
-ADN_Connector_Enum<T>::ADN_Connector_Enum(T* pGfx)
-: ADN_Connector_Vector_ABC()
+template< class T >
+ADN_Connector_Enum< T >::ADN_Connector_Enum(T* pGfx)
+: ADN_Connector_ABC()
 , pGfx_(pGfx)
-, nNb_(0)
-, nextItem_( -1 )
 , bIsConnected_( false )
 {
     assert(pGfx_);
@@ -27,100 +25,61 @@ ADN_Connector_Enum<T>::ADN_Connector_Enum(T* pGfx)
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Connector_Enum<T> destructor
+// Name: ADN_Connector_Enum< T > destructor
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template<class T>
-ADN_Connector_Enum<T>::~ADN_Connector_Enum()
+template< class T >
+ADN_Connector_Enum< T >::~ADN_Connector_Enum()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Connector_Enum::AddEnumValue
+// Created: ABR 2012-10-26
+// -----------------------------------------------------------------------------
+template< class T >
+void ADN_Connector_Enum< T >::AddEnumValue( const std::string& text )
+{
+    pGfx_->insertItem( text.c_str(), -1 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum::ConnectPrivateSub
-// Created: APE 2005-02-28
+// Created: ABR 2012-10-26
 // -----------------------------------------------------------------------------
-template<class T>
-void ADN_Connector_Enum<T>::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
+template< class T >
+void ADN_Connector_Enum< T >::ConnectPrivateSub( ADN_Connector_ABC* pTarget )
 {
-    ADN_Connector_ABC::ConnectPrivateSub( (ADN_Connector_ABC*)pTarget );
-
-    connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
-    connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    connect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
-    connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
-
+    ADN_Connector_ABC::ConnectPrivateSub( pTarget );
     bIsConnected_ = true;
     if( pGfx_->IsAutoEnabled() )
-        pGfx_->setEnabled(true);
-    pTarget->Initialize( *this );
+        pGfx_->setEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum::DisconnectPrivateSub
-// Created: APE 2005-02-28
+// Created: ABR 2012-10-26
 // -----------------------------------------------------------------------------
-template<class T>
-void ADN_Connector_Enum<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
+template< class T >
+void ADN_Connector_Enum< T >::DisconnectPrivateSub( ADN_Connector_ABC* pTarget )
 {
-    ADN_Connector_ABC::DisconnectPrivateSub( (ADN_Connector_ABC*)pTarget );
-
-    disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
-    disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    disconnect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
-    disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
-
+    ADN_Connector_ABC::DisconnectPrivateSub( pTarget );
     bIsConnected_ = false;
-    Clear();
+    pGfx_->setCurrentItem(-1);
+    pGfx_->clear();
     if( pGfx_->IsAutoEnabled() )
-        pGfx_->setEnabled(false);
+        pGfx_->setEnabled( false );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Connector_Enum<T>::AddItemPrivate
+// Name: ADN_Connector_Enum< T >::ClearPrivate
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template<class T>
-bool ADN_Connector_Enum<T>::AddItemPrivate(void *obj,bool /*bInConnection*/)
+template< class T >
+void ADN_Connector_Enum< T >::ClearPrivate(bool bInConnection )
 {
-    if( obj == 0 )
-        return false;
-    ++nNb_;
-    pGfx_->insertItem( QString(GetItem(obj).c_str()), nextItem_ );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Enum::SetNextItemIndex
-// Created: LDC 2011-01-03
-// -----------------------------------------------------------------------------
-template<class T>
-void ADN_Connector_Enum< T >::SetNextItemIndex( int index )
-{
-    nextItem_ = index;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Enum::RemItemPrivate
-// Created: AGN 2004-05-11
-// -----------------------------------------------------------------------------
-template<class T>
-bool ADN_Connector_Enum< T >::RemItemPrivate(void *item)
-{
-    if( item == 0 )
-        return false;
-    --nNb_;
-    pGfx_->removeItem(*(int*)item);
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Connector_Enum<T>::ClearPrivate
-// Created: JDY 03-07-18
-//-----------------------------------------------------------------------------
-template<class T>
-void ADN_Connector_Enum<T>::ClearPrivate(bool bInConnection )
-{
-    if (!bInConnection)
+    if ( !bInConnection )
     {
         pGfx_->setCurrentItem(-1);
         pGfx_->clear();
@@ -128,11 +87,11 @@ void ADN_Connector_Enum<T>::ClearPrivate(bool bInConnection )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Connector_Enum<T>::SetNdxChanged
+// Name: ADN_Connector_Enum< T >::SetNdxChanged
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template<class T>
-void* ADN_Connector_Enum<T>::SetNdxChanged(int ndx)
+template< class T >
+void* ADN_Connector_Enum< T >::SetNdxChanged( int ndx )
 {
     emit DataChanged(&ndx);
     if( ndx == -1 )
@@ -142,11 +101,11 @@ void* ADN_Connector_Enum<T>::SetNdxChanged(int ndx)
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Connector_Enum<T>::SetDataPrivate
+// Name: ADN_Connector_Enum< T >::SetDataPrivate
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template<class T>
-void ADN_Connector_Enum<T>::SetDataPrivate(void *data)
+template< class T >
+void ADN_Connector_Enum< T >::SetDataPrivate( void* data)
 {
     // current selected data changed
     int ndx=*(int*)data;
@@ -156,11 +115,9 @@ void ADN_Connector_Enum<T>::SetDataPrivate(void *data)
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum::IsConnected
-/** @return
-*/
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------
-template<class T>
+template< class T >
 bool ADN_Connector_Enum< T >::IsConnected() const
 {
     return bIsConnected_;

@@ -61,8 +61,8 @@ void ADN_Breakdowns_GUI::Build()
     // Info holder
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddEnumField<E_BreakdownType>( pInfoHolder, tr( "Type" ), vInfosConnectors[eType], ADN_Tr::ConvertFromBreakdownType );
-    builder.AddEnumField<E_BreakdownNTI>( pInfoHolder, tr( "Seriousness" ), vInfosConnectors[eNTI], ADN_Tr::ConvertFromBreakdownNTI );
+    builder.AddEnumField( pInfoHolder, tr( "Type" ), vInfosConnectors[eType] );
+    builder.AddEnumField( pInfoHolder, tr( "Seriousness" ), vInfosConnectors[eNTI] );
     builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
     builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
 

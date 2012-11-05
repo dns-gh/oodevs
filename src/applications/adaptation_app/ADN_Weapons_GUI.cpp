@@ -247,9 +247,7 @@ void ADN_Weapons_GUI::Build()
     vInfosConnectors[ ePhs ] = &pPhSizeListView->GetConnector();
     T_ConnectorVector vPhConnectors( eNbrPhSizeGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    ADN_Weapons_PhTable* pPhTable = new ADN_Weapons_PhTable( /*pDirectGroup*/ );
-    pPhTable->setObjectName( strClassName_ + "_PHTable" );
-    vPhConnectors[ ePhVector ] = & pPhTable->GetConnector();
+    ADN_Weapons_PhTable* pPhTable = new ADN_Weapons_PhTable( strClassName_ + "_PHTable", vPhConnectors[ ePhVector ] );
 
     pPhSizeListView->SetItemConnectors( vPhConnectors );
 
@@ -260,15 +258,15 @@ void ADN_Weapons_GUI::Build()
     QWidget* pModifiersHolder = builder.AddFieldHolder( pSimulation );
     // $$$$ LDC Code review: Should be extracted in its own method
     pModifiersHolder->layout()->setAlignment( Qt::AlignTop );
-    ADN_ComboBox* pFirePostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Fire posture" ), vInfosConnectors[ eFirePosture ], ENT_Tr::ConvertFromUnitPosture );
+    ADN_ComboBox* pFirePostureCombo = builder.AddEnumField( pModifiersHolder, tr( "Fire posture" ), vInfosConnectors[ eFirePosture ] );
     connect( pFirePostureCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-    ADN_ComboBox* pTargetPostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Target posture" ), vInfosConnectors[ eTargetPosture ], ENT_Tr::ConvertFromUnitPosture );
+    ADN_ComboBox* pTargetPostureCombo = builder.AddEnumField( pModifiersHolder, tr( "Target posture" ), vInfosConnectors[ eTargetPosture ] );
     connect( pTargetPostureCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-    ADN_ComboBox* pExperienceCombo = builder.AddEnumField< E_UnitExperience >( pModifiersHolder, tr( "Experience" ), vInfosConnectors[ eExperience ], ENT_Tr::ConvertFromUnitExperience );
+    ADN_ComboBox* pExperienceCombo = builder.AddEnumField( pModifiersHolder, tr( "Experience" ), vInfosConnectors[ eExperience ] );
     connect( pExperienceCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-    ADN_ComboBox* pTirednessCombo = builder.AddEnumField< E_UnitTiredness >( pModifiersHolder, tr( "Tiredness" ), vInfosConnectors[ eTiredness ], ENT_Tr::ConvertFromUnitTiredness );
+    ADN_ComboBox* pTirednessCombo = builder.AddEnumField( pModifiersHolder, tr( "Tiredness" ), vInfosConnectors[ eTiredness ] );
     connect( pTirednessCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-    ADN_ComboBox* pStressCombo = builder.AddEnumField< E_UnitStress >( pModifiersHolder, tr( "Stress" ), vInfosConnectors[ eStress ], ENT_Tr::ConvertFromUnitStress );
+    ADN_ComboBox* pStressCombo = builder.AddEnumField( pModifiersHolder, tr( "Stress" ), vInfosConnectors[ eStress ] );
     connect( pStressCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
 
     // Indirect group

@@ -63,4 +63,53 @@ bool ADN_Connector_Table_ABC::IsConnected() const
     return bIsConnected_;
 }
 
+
+
+//*****************************************************************************
+// Created: JDY 03-07-09
+//*****************************************************************************
+class ADN_Connector_Table_ABC2 : public ADN_Connector_Vector_ABC
+                               , private boost::noncopyable
+{
+
+public:
+             ADN_Connector_Table_ABC2( ADN_Table3& tab, bool bWithSort, const char* szName = 0 );
+    virtual ~ADN_Connector_Table_ABC2();
+
+    virtual bool LessComparison( void* pL, void* pR ) const;
+
+    bool IsConnected() const;
+
+protected:
+    virtual void AddSubItems( int nRow, void* pObj );
+
+private:
+    virtual void ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
+    virtual void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
+
+    virtual bool AddItemPrivate(void *item, bool bCreateCommand = false );
+    virtual bool RemItemPrivate(void *item, bool bCreateCommand = false );
+
+    void ClearPrivate(bool bInConnection=false);
+    void SetDataPrivate(void *data);
+
+protected:
+    std::vector<void*> vDatas_;
+    ADN_Table3& tab_;
+
+    bool bIsConnected_;
+    bool bWithSort_;
+};
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Connector_Table_ABC2::IsConnected
+// Created: AGN 2004-05-25
+// -----------------------------------------------------------------------------
+inline
+bool ADN_Connector_Table_ABC2::IsConnected() const
+{
+    return bIsConnected_;
+}
+
+
 #endif // __ADN_Connector_Table_ABC_h_

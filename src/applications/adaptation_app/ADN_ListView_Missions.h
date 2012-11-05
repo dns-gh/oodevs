@@ -18,6 +18,7 @@
 enum E_EntityType;
 
 class ADN_ListView_Models;
+class ADN_StandardItem;
 
 // =============================================================================
 /** @class  ADN_ListView_Missions
@@ -37,7 +38,7 @@ private:
     void OnContextMenu( const QPoint& pt );
 
     void FillList( Q3CheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions );
-    ADN_ListViewItem* FindItem( const std::string& strMissionName );
+    ADN_StandardItem* FindItem( const std::string& strMissionName );
     void ApplyModifications( Q3CheckListItem* pStart );
 
 private:

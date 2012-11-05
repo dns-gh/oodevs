@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListViewToolTip.h"
-#include "ADN_ListViewItem.h"
 #include "ADN_ListView.h"
 
 // -----------------------------------------------------------------------------

@@ -259,9 +259,8 @@ void ADN_TypePtr_InVector_ABC<T>::InvalidatePrivate(void *ptr,bool bDel)
     {
         ADN_TypePtr_InVector_ABC<T>::SetData((T_TypePtr)0,false);
         ADN_Ref_ABC::InvalidatePrivate(this);
-        emit Invalidated(ptr,bDel); // $$$$ SBO 2006-09-12: see below
+        emit Invalidated(ptr,bDel);
     }
-//    emit Invalidated(ptr,bDel); // $$$$ SBO 2006-09-12: recursive deletion problem...
 }
 
 // -----------------------------------------------------------------------------

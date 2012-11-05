@@ -823,7 +823,7 @@ ADN_Composantes_Data::SpeedInfos::SpeedInfos( E_Location nTypeTerrain )
 std::string ADN_Composantes_Data::SpeedInfos::GetNodeName()
 {
     std::string strResult( "sur terrain de type " );
-    return strResult + ADN_Tr::ConvertFromLocation( nTypeTerrain_, ENT_Tr_ABC::eToTr );
+    return strResult + ENT_Tr::ConvertFromLocation( nTypeTerrain_, ENT_Tr_ABC::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -852,7 +852,7 @@ void ADN_Composantes_Data::SpeedInfos::ReadArchive( xml::xistream& input )
 void ADN_Composantes_Data::SpeedInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "speed" )
-            << xml::attribute( "terrain", ADN_Tr::ConvertFromLocation( nTypeTerrain_ ) )
+            << xml::attribute( "terrain", ENT_Tr::ConvertFromLocation( nTypeTerrain_ ) )
             << xml::attribute( "value", rSpeed_ );
     if( nConstruction_ != 100 )
         output << xml::attribute( "construction-speed", nConstruction_ );
@@ -1982,7 +1982,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadSpeed( xml::xistream& input )
 
     try
     {
-        E_Location nLocation = ADN_Tr::ConvertToLocation( strLocation );
+        E_Location nLocation = ENT_Tr::ConvertToLocation( strLocation );
         vSpeeds_.at( nLocation )->ReadArchive( input );
     }
     catch ( const std::exception& /*ex*/ )

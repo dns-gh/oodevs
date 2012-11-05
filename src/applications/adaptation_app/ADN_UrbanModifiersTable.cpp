@@ -17,58 +17,22 @@
 using namespace helpers;
 
 //-----------------------------------------------------------------------------
-// Internal Table connector to be connected with
-//-----------------------------------------------------------------------------
-class ADN_UrbanModifiersTable_Connector : public ADN_Connector_Table_ABC
-{
-
-public:
-    explicit ADN_UrbanModifiersTable_Connector( ADN_UrbanModifiersTable& tab )
-        : ADN_Connector_Table_ABC( tab, false )
-    {}
-
-    void AddSubItems( int i, void* obj )
-    {
-        assert( obj );
-        ADN_TableItem_String *pItemString = 0;
-        ADN_TableItem_Double *pItemDouble = 0;
-        // add a new row & set new values
-        tab_.setItem( i, 0, pItemString = new ADN_TableItem_String( &tab_, obj ) );
-        tab_.setItem( i, 1, pItemDouble = new ADN_TableItem_Double( &tab_, obj ) );
-        // disable first column
-        pItemString->setEnabled( false );
-        // set table item properties
-        pItemDouble->GetValidator().setRange( 0, 1, 2 );
-        // connect items & datas
-        pItemString->GetConnector().Connect( &static_cast< helpers::ADN_UrbanAttritionInfos* >( obj )->ptrMaterial_.GetData()->strName_ );
-        pItemDouble->GetConnector().Connect( &static_cast< helpers::ADN_UrbanAttritionInfos* >( obj )->rCoeff_ );
-    }
-};
-
-//-----------------------------------------------------------------------------
 // Name: ADN_UrbanModifiersTable constructor
 // Created: SLG 2010-04-13
 //-----------------------------------------------------------------------------
-ADN_UrbanModifiersTable::ADN_UrbanModifiersTable( QWidget* pParent, ADN_Connector_ABC*& pGuiConnector )
-    : ADN_Table2( pParent, "ADN_UrbanModifiersTable" )
+ADN_UrbanModifiersTable::ADN_UrbanModifiersTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    // peut etre selectionne & trie
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
+    dataModel_.setColumnCount( 2 );
     setShowGrid( false );
-    setLeftMargin( 0 );
-    // hide vertical header
-    verticalHeader()->hide();
-    // tab with 2 columns
-    setNumCols( 2 );
-    setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-    horizontalHeader()->setLabel( 0, tr( "Material" ) );
-    horizontalHeader()->setLabel( 1, tr( "Modifiers" ) );
-    // connector creation
-    pConnector_ = new ADN_UrbanModifiersTable_Connector( *this );
-    pGuiConnector = pConnector_;
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Material" )
+        << tr( "Modifiers" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+
+    delegate_.AddDoubleSpinBoxOnColumn( 1, 0, 1, 0.01 );
 }
 
 //-----------------------------------------------------------------------------
@@ -77,5 +41,19 @@ ADN_UrbanModifiersTable::ADN_UrbanModifiersTable( QWidget* pParent, ADN_Connecto
 //-----------------------------------------------------------------------------
 ADN_UrbanModifiersTable::~ADN_UrbanModifiersTable()
 {
-    delete pConnector_;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_UrbanModifiersTable::AddRow
+// Created: JSR 2012-10-31
+// -----------------------------------------------------------------------------
+void ADN_UrbanModifiersTable::AddRow( int row, void* data )
+{
+    helpers::ADN_UrbanAttritionInfos* pAttritions = static_cast< helpers::ADN_UrbanAttritionInfos* >( data );
+    if( !pAttritions )
+        return;
+
+    AddItem( row, 0, data, &pAttritions->ptrMaterial_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 1, data, &pAttritions->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

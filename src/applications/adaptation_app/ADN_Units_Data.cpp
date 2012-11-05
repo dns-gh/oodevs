@@ -535,7 +535,6 @@ void ADN_Units_Data::UnitInfos::Initialize()
     vPostures_.SetParentNode( *this );
     vPointInfos_.SetParentNode( *this );
 
-    ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>::SetConverter( &ADN_Tr::ConvertFromAgentTypePion );
     eTypeId_.SetDataName( "le type" );
     eTypeId_.SetParentNode( *this );
 
@@ -554,18 +553,15 @@ void ADN_Units_Data::UnitInfos::Initialize()
     vComposantes_.SetItemTypeName( "an equipment" );
     vComposantes_.SetParentNode( *this );
 
-    ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>::SetConverter( &ENT_Tr::ConvertFromNatureLevel );
     eNatureLevel_.SetDataName( "la taille" );
     eNatureLevel_.SetParentNode( *this );
 
-    ADN_Type_Enum<E_NatureAtlasType,eNbrNatureAtlas>::SetConverter( &ADN_Tr::ConvertFromNatureAtlasType );
     eNatureAtlas_.SetDataName( "la nature ATLAS" );
     eNatureAtlas_.SetParentNode( *this );
 
     strNature_.SetDataName( "la nature, les arbres et les oiseaux" );
     strNature_.SetParentNode( *this );
 
-    ADN_Type_Enum< E_CrossingHeight, eNbrCrossingHeight >::SetConverter( &ADN_Tr::ConvertFromCrossingHeight );
     eCrossingHeight_.SetDataName( "la hauteur de franchisssement" );
     eCrossingHeight_.SetParentNode( *this );
 
@@ -844,13 +840,13 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "unit" )
             << xml::attribute( "name", strName_ )
-            << xml::attribute( "type", ADN_Tr::ConvertFromAgentTypePion( eTypeId_.GetData() ) )
+            << xml::attribute( "type", eTypeId_.Convert() )
             << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
             << xml::attribute( "id", nId_ );
 
     output << xml::start( "nature" )
-            << xml::attribute( "level", ENT_Tr::ConvertFromNatureLevel( eNatureLevel_.GetData() ) )
-            << xml::attribute( "atlas-nature", ADN_Tr::ConvertFromNatureAtlasType( eNatureAtlas_.GetData() ) )
+            << xml::attribute( "level", eNatureLevel_.Convert() )
+            << xml::attribute( "atlas-nature", eNatureAtlas_.Convert() )
             << xml::attribute( "nature-app6", strNature_ )
           << xml::end;
 
@@ -941,7 +937,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
     }
 
     output << xml::start( "crossing-height" )
-            << xml::attribute( "height", ADN_Tr::ConvertFromCrossingHeight( eCrossingHeight_.GetData() ) )
+            << xml::attribute( "height", eCrossingHeight_.Convert() )
            << xml::end;
 
     if( bCanFly_.GetData() )

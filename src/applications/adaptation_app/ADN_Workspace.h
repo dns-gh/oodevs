@@ -164,6 +164,7 @@ public slots:
 
 private:
     void Initialize();
+    void InitializeEnumType();
     void AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element );
 
 private:

@@ -6,20 +6,12 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-07 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Weapons_PhSizeListView.cpp $
-// $Author: Ape $
-// $Modtime: 2/03/05 17:27 $
-// $Revision: 3 $
-// $Workfile: ADN_Weapons_PhSizeListView.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_PhSizeListView.h"
 
 #include "ADN_Connector_ListView_ABC.h"
+#include "ADN_StandardItem.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
 #include "ADN_Tr.h"
@@ -44,7 +36,7 @@ public:
     virtual ~ADN_CLV_PhSizes()
     {}
 
-    ADN_ListViewItem* CreateItem( void* pObj )
+    ADN_StandardItem* CreateItem( void* pObj )
     {
         // Retrieve the display icon for this item from the plot.
         GQ_PlotData* pData = plot_.FindPlotData( (uint)pObj );
@@ -53,7 +45,7 @@ public:
         pData->DrawCaption( icon );
 
         // Create a new list item.
-        ADN_ListViewItem *pItem = new ADN_ListViewItem( pObj );
+        ADN_StandardItem *pItem = new ADN_StandardItem( pObj );
         pItem->setIcon( icon );
 
         // Connect it with the size info.

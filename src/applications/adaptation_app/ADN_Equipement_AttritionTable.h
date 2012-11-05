@@ -15,26 +15,25 @@
 // =============================================================================
 /** @class  ADN_Equipement_AttritionTable
     @brief  ADN_Equipement_AttritionTable
-    @par    Using example
-    @code
-    ADN_Equipement_AttritionTable;
-    @endcode
 */
 // Created: APE 2004-12-29
 // =============================================================================
-class ADN_Equipement_AttritionTable : public ADN_Table2
-                                    , private boost::noncopyable
+class ADN_Equipement_AttritionTable : public ADN_Table3
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Equipement_AttritionTable( QWidget* pParent = 0 );
+             ADN_Equipement_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Equipement_AttritionTable();
     //@}
 
 public:
-    virtual void doValueChanged( int row, int col );
+    //! @name Operations
+    //@{
+    virtual void AddRow( int row, void* data );
+    virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
+    //@}
 };
 
 #endif // __ADN_Equipement_AttritionTable_h_

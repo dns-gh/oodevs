@@ -174,7 +174,7 @@ public:
         virtual void Initialize();
 
     public:
-        ADN_Type_Enum< E_MunitionType, eNbrMunitionType > nType_;
+        ADN_Type_Enum< E_AmmunitionType, eNbrAmmunitionType > nType_;
 
         ADN_Type_Bool bDirect_;
         ADN_Type_Bool bIndirect_;

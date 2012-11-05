@@ -84,7 +84,7 @@ void ADN_Units_GUI::Build()
     ADN_EditLine_String* pNameEditLine = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
     connect( pNameEditLine, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnNameChanged() ) );
     // Unit type
-    pTypeCombo_ = builder.AddEnumField<E_AgentTypePion>( pInfoHolder, tr( "Type" ), vInfosConnectors[ eTypeId ], &ADN_Tr::ConvertFromAgentTypePion );
+    pTypeCombo_ = builder.AddEnumField( pInfoHolder, tr( "Type" ), vInfosConnectors[ eTypeId ] );
     builder.SetToolTip( tr( "The type of unit in the simulation. This type must match the associated decisional model." ) );
     connect( pTypeCombo_, SIGNAL( activated( const QString& ) ), this, SLOT( OnTypeChanged() ) );
     // Model
@@ -100,7 +100,7 @@ void ADN_Units_GUI::Build()
     // Can fly
     builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Can fly" ), vInfosConnectors[ eCanFly ] );
     // Crossing height
-    builder.AddEnumField< E_CrossingHeight >( pInfoHolder, tr( "Crossing height" ), vInfosConnectors[ eCrossingHeight ], &ADN_Tr::ConvertFromCrossingHeight );
+    builder.AddEnumField( pInfoHolder, tr( "Crossing height" ), vInfosConnectors[ eCrossingHeight ] );
     // Is autonomous
     builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Is autonomous (UAV)" ), vInfosConnectors[ eIsAutonomous ] );
     builder.AddStretcher( pInfoHolder, Qt::Vertical );
@@ -130,8 +130,8 @@ void ADN_Units_GUI::Build()
         subLayout->setMargin( 0 );
         subLayout->setInsideMargin( 0 );
         subLayout->setFrameStyle( Q3Frame::Plain );
-        builder.AddEnumField< E_NatureLevel >( subLayout, tr( "Level:" ), vInfosConnectors[ eNatureLevel ], ENT_Tr::ConvertFromNatureLevel );
-        builder.AddEnumField< E_NatureAtlasType >( subLayout, tr( "Atlas:" ), vInfosConnectors[ eNatureAtlas ], ADN_Tr::ConvertFromNatureAtlasType );
+        builder.AddEnumField( subLayout, tr( "Level:" ), vInfosConnectors[ eNatureLevel ] );
+        builder.AddEnumField( subLayout, tr( "Atlas:" ), vInfosConnectors[ eNatureAtlas ] );
         // Separator
         QFrame* separator = new QFrame;
         separator->setFrameStyle( QFrame::HLine | QFrame::Raised );

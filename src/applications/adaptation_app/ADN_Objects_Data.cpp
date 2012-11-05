@@ -42,7 +42,7 @@ ADN_Objects_Data::ScoreLocationInfos::ScoreLocationInfos()
 std::string ADN_Objects_Data::ScoreLocationInfos::GetNodeName()
 {
     std::string strResult( "sur un terrain de type " );
-    return strResult + ADN_Tr::ConvertFromLocation( nLocation_.GetData(), ADN_Tr::eToTr );
+    return strResult + nLocation_.Convert( ADN_Tr::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ std::string ADN_Objects_Data::ScoreLocationInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Objects_Data::ScoreLocationInfos::GetItemName()
 {
-    return ADN_Tr::ConvertFromLocation( nLocation_.GetData(), ADN_Tr::eToTr );
+    return nLocation_.Convert( ADN_Tr::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ void ADN_Objects_Data::ScoreLocationInfos::ReadArchive( xml::xistream& input )
     std::string strTerrain;
     input >> xml::attribute( "type", strTerrain )
           >> xml::attribute( "value", nScore_ );
-    nLocation_ = ADN_Tr::ConvertToLocation( strTerrain );
+    nLocation_ = ENT_Tr::ConvertToLocation( strTerrain );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ void ADN_Objects_Data::ScoreLocationInfos::ReadArchive( xml::xistream& input )
 void ADN_Objects_Data::ScoreLocationInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "terrain" )
-             << xml::attribute( "type", ADN_Tr::ConvertFromLocation( nLocation_.GetData() ) )
+             << xml::attribute( "type", nLocation_.Convert() )
              << xml::attribute( "value", nScore_ )
            << xml::end;
 }
@@ -244,8 +244,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::attribute( "default-consumption-mode", ADN_Tr::ConvertFromConsumptionType( nDefaultConsumption_.GetData() ) )
-        << xml::attribute( "unit-type", ADN_Tr::ConvertFromConstructorType( nUnitType_.GetData() ) );
+    xos << xml::attribute( "default-consumption-mode", nDefaultConsumption_.Convert() )
+        << xml::attribute( "unit-type", nUnitType_.Convert() );
     if( ptrBuildable_->bPresent_.GetData() )
     {
         xos << xml::start( ADN_CapacityInfos_Buildable::TAG );
@@ -352,7 +352,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Mobility::ReadArchive( xml::xistream& x
 void ADN_Objects_Data::ADN_CapacityInfos_Mobility::WriteArchive( xml::xostream& xos )
 {
     xos << xml::attribute( "default-speed", rDefaultSpeed_ )
-        << xml::attribute( "unit-speed-impact-mode", ADN_Tr::ConvertFromSpeedImpact( nSpeedModifier_.GetData() ) )
+        << xml::attribute( "unit-speed-impact-mode", nSpeedModifier_.Convert() )
         << xml::attribute( "max-unit-percentage-speed", rMaxAgentSpeed_ );
 }
 
@@ -676,7 +676,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Propagation::ReadArchive( xml::xistream
 
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::attribute( "model", ADN_Tr::ConvertFromPropagationModel( nModel_.GetData() ) );
+    xos << xml::attribute( "model", nModel_.Convert() );
 }
 //@}
 
@@ -853,7 +853,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Bridging::ReadArchive( xml::xistream& x
 
 void ADN_Objects_Data::ADN_CapacityInfos_Bridging::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::attribute( "type", ENT_Tr::ConvertFromCrossingType( type_.GetData() ) );
+    xos << xml::attribute( "type", type_.Convert() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1071,7 +1071,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ReadArchive( xml::xis
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::WriteArchive( xml::xostream& output )
 {
-    output << xml::attribute( "attitude", ENT_Tr::ConvertFromPopulationAttitude( attitude_.GetData() ) );
+    output << xml::attribute( "attitude", attitude_.Convert() );
 }
 
 // -----------------------------------------------------------------------------

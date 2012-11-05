@@ -10,106 +10,105 @@
 #include "adaptation_app_pch.h"
 #include "ADN_MissionParameters_Table.h"
 #include "moc_ADN_MissionParameters_Table.cpp"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Missions_Data.h"
-#include "ADN_TableItem_CheckItem.h"
-#include "ADN_MissionParameterType.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Tr.h"
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameters_Table::ADN_MissionParameters_Table
+// Created: ABR 2012-10-25
+// -----------------------------------------------------------------------------
+ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    class ADN_CT_MissionParameters : public ADN_Connector_Table_ABC
-    {
-    public:
-        ADN_CT_MissionParameters( ADN_MissionParameters_Table& tab, T_ConnectorVector& itemConnectors )
-            : ADN_Connector_Table_ABC( tab, false ), itemConnectors_( itemConnectors ) {}
+    dataModel_.setColumnCount( 6 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Name" )
+                      << tr( "DirectIA name" )
+                      << tr( "Type" )
+                      << tr( "Optional" )
+                      << tr( "Range min" )
+                      << tr( "Range max" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
+    horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+    horizontalHeader()->setResizeMode( 2, QHeaderView::Stretch );
+    horizontalHeader()->setResizeMode( 3, QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 4, QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 5, QHeaderView::ResizeToContents );
+    verticalHeader()->setVisible( false );
 
-        void AddSubItems( int i, void* obj )
-        {
-            assert( obj );
+    for( unsigned int i = 0; i < unsigned int( eNbrMissionParameterType ); ++i )
+        parameterTypes_ << ADN_Tr::ConvertFromMissionParameterType( static_cast< E_MissionParameterType >( i ), ENT_Tr_ABC::eToTr ).c_str();
 
-            static_cast< ADN_MissionParameters_Table& >( tab_ ).ResetCurrent();
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddLineEditOnColumn( 1 );
+    delegate_.AddComboBoxOnColumn( 2, parameterTypes_ );
+    delegate_.AddCheckBoxOnColumn( 3 );
+    delegate_.AddSpinBoxOnColumn( 4, 0, std::numeric_limits< int >::max() );
+    delegate_.AddSpinBoxOnColumn( 5, 0, std::numeric_limits< int >::max() );
 
-            ADN_Missions_Parameter* param = static_cast< ADN_Missions_Parameter* >( obj );
-
-            ADN_TableItem_String*     itemName     = new ADN_TableItem_String    ( &tab_, obj );
-            ADN_TableItem_String*     itemDiaName  = new ADN_TableItem_String    ( &tab_, obj );
-            ADN_MissionParameterType* itemType     = new ADN_MissionParameterType( &tab_, obj, itemConnectors_ );
-            ADN_TableItem_CheckItem*  itemOptional = new ADN_TableItem_CheckItem ( &tab_, obj );
-            ADN_TableItem_Int*        itemMin      = new ADN_TableItem_Int       ( &tab_, obj );
-            ADN_TableItem_Int*        itemMax      = new ADN_TableItem_Int       ( &tab_, obj );
-
-            tab_.setItem( i, 0, itemName );
-            tab_.setItem( i, 1, itemDiaName );
-            tab_.setItem( i, 2, itemType );
-            tab_.setItem( i, 3, itemOptional );
-            tab_.setItem( i, 4, itemMin );
-            tab_.setItem( i, 5, itemMax );
-
-            itemName->GetConnector().Connect( &param->strName_ );
-            itemDiaName->GetConnector().Connect( &param->diaName_ );
-            itemType->GetConnector().Connect( &param->type_ );
-            itemOptional->GetConnector().Connect( &param->isOptional_ );
-            itemMin->GetConnector().Connect( &param->minOccurs_ );
-            itemMax->GetConnector().Connect( &param->maxOccurs_ );
-
-            connect( itemType, SIGNAL( TypeChanged( E_MissionParameterType ) ), &tab_, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
-
-            static_cast< ADN_MissionParameters_Table& >( tab_ ).ResetCurrent();
-            tab_.AdjustColumns();
-        }
-
-    private:
-        T_ConnectorVector& itemConnectors_;
-    };
+    connect( selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged( const QItemSelection&, const QItemSelection& ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MissionParameters_Table constructor
-// Created: SBO 2006-12-04
-// -----------------------------------------------------------------------------
-ADN_MissionParameters_Table::ADN_MissionParameters_Table( QWidget* parent /* = 0*/ )
-    : ADN_Table2( parent, "ADN_MissionParameters_Table" )
-    , current_  ( 0 )
-{
-    verticalHeader()->hide();
-    setLeftMargin( 0 );
-    setNumCols( 6 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-    setColumnStretchable( 2, true );
-    setNumRows( 0 );
-    horizontalHeader()->setLabel( 0, tr( "Name" ) );
-    horizontalHeader()->setLabel( 1, tr( "DirectIA name" ) );
-    horizontalHeader()->setLabel( 2, tr( "Type" ) );
-    horizontalHeader()->setLabel( 3, tr( "Optional" ) );
-    horizontalHeader()->setLabel( 4, tr( "Range min" ) );
-    horizontalHeader()->setLabel( 5, tr( "Range max" ) );
-    pConnector_ = new ADN_CT_MissionParameters( *this, itemConnectors_ );
-
-    connect( this, SIGNAL( selectionChanged() ), this, SLOT( OnSelectionChanged() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MissionParameters_Table destructor
-// Created: SBO 2006-12-04
+// Name: ADN_MissionParameters_Table::~ADN_MissionParameters_Table
+// Created: ABR 2012-10-25
 // -----------------------------------------------------------------------------
 ADN_MissionParameters_Table::~ADN_MissionParameters_Table()
 {
-    delete pConnector_;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameters_Table::AddRow
+// Created: ABR 2012-10-23
+// -----------------------------------------------------------------------------
+void ADN_MissionParameters_Table::AddRow( int row, void* data )
+{
+    ADN_Missions_Parameter* pMission = static_cast< ADN_Missions_Parameter* >( data );
+    if( !pMission )
+        return;
+
+    addingRow_ = true;
+    AddItem( row, 0, data, &pMission->strName_, ADN_StandardItem::eString, Qt::ItemIsEditable );
+    AddItem( row, 1, data, &pMission->diaName_, ADN_StandardItem::eString, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &pMission->type_, parameterTypes_, Qt::ItemIsEditable );
+    AddItem( row, 3, data, &pMission->isOptional_, ADN_StandardItem::eBool, Qt::ItemIsEditable );
+    AddItem( row, 4, data, &pMission->minOccurs_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    AddItem( row, 5, data, &pMission->maxOccurs_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    addingRow_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameters_Table::SetItemConnectors
+// Created: ABR 2012-10-30
+// -----------------------------------------------------------------------------
+void ADN_MissionParameters_Table::SetItemConnectors( const T_ConnectorVector& itemConnectors )
+{
+    itemConnectors_ = itemConnectors;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameters_Table::OnTypeChanged
+// Created: ABR 2012-10-25
+// -----------------------------------------------------------------------------
+void ADN_MissionParameters_Table::OnTypeChanged( E_MissionParameterType type )
+{
+    emit TypeChanged( type );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameters_Table::OnContextMenu
-// Created: SBO 2006-12-05
+// Created: ABR 2012-10-29
 // -----------------------------------------------------------------------------
-void ADN_MissionParameters_Table::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
+void ADN_MissionParameters_Table::OnContextMenu( const QPoint& pt )
 {
+    QModelIndex index = indexAt( pt );
     Q3PopupMenu popup( this );
 
     popup.insertItem( tr( "Add parameter"), 0 );
-    if( GetCurrentData() != 0 )
+    if( GetSelectedData() != 0 )
         popup.insertItem( tr( "Remove parameter"), 1 );
 
     int result = popup.exec( pt );
@@ -121,52 +120,28 @@ void ADN_MissionParameters_Table::OnContextMenu( int /*row*/, int /*col*/, const
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameters_Table::AddNewElement
-// Created: SBO 2006-12-05
+// Created: ABR 2012-10-25
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::AddNewElement()
 {
     ADN_Missions_Parameter* newElement = new ADN_Missions_Parameter();
     newElement->strName_ = tr( "New parameter" ).toAscii().constData();
 
-    ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-    pCTable->AddItem( newElement );
-    pCTable->AddItem( 0 );
+    ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
+    connector->AddItem( newElement );
+    connector->AddItem( 0 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameters_Table::RemoveCurrentElement
-// Created: SBO 2006-12-05
+// Created: ABR 2012-10-25
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::RemoveCurrentElement()
 {
-    ADN_Missions_Parameter* param = (ADN_Missions_Parameter*)GetCurrentData();
+    ADN_Missions_Parameter* param = (ADN_Missions_Parameter*)GetSelectedData();
     if( param )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
     ResetCurrent();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MissionParameters_Table::SetItemConnector
-// Created: SBO 2006-12-05
-// -----------------------------------------------------------------------------
-void ADN_MissionParameters_Table::SetItemConnectors( const T_ConnectorVector& itemConnectors  )
-{
-    itemConnectors_ = itemConnectors;
-    ResetCurrent();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MissionParameters_Table::OnSelectionChanged
-// Created: SBO 2006-12-06
-// -----------------------------------------------------------------------------
-void ADN_MissionParameters_Table::OnSelectionChanged()
-{
-    ADN_MissionParameterType* current = static_cast< ADN_MissionParameterType* >( item( currentRow(), 2 ) );
-    if( current_ && current_ != current )
-        current_->Disconnect();
-    if( current )
-        current->Update();
-    current_ = current;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,15 +150,64 @@ void ADN_MissionParameters_Table::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::ResetCurrent()
 {
-    current_ = 0;
     emit TypeChanged( eNbrMissionParameterType );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MissionParameters_Table::OnTypeChanged
-// Created: LGY 2012-04-18
+// Name: ADN_MissionParameters_Table::dataChanged
+// Created: ABR 2012-10-23
 // -----------------------------------------------------------------------------
-void ADN_MissionParameters_Table::OnTypeChanged( E_MissionParameterType type )
+void ADN_MissionParameters_Table::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-    emit TypeChanged( type );
+    if( !addingRow_ && topLeft == bottomRight && topLeft.column() == 2 )
+        Reconnect( topLeft );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameters_Table::OnSelectionChanged
+// Created: ABR 2012-10-25
+// -----------------------------------------------------------------------------
+void ADN_MissionParameters_Table::OnSelectionChanged( const QItemSelection& selected, const QItemSelection& deselected )
+{
+    if( deselected.indexes().size() == 1 &&
+        ( selected.indexes().size() == 0 || ( selected.indexes().size() == 1 && selected.indexes()[ 0 ] != deselected.indexes()[ 0 ] ) ) )
+    {
+        ADN_Missions_Parameter* oldParam = static_cast< ADN_Missions_Parameter* >( GetDataFromIndex( deselected.indexes()[ 0 ] ) );
+        if( oldParam )
+        {
+            itemConnectors_[ ADN_Missions_GUI::eParameterValues ]->Disconnect( &oldParam->values_ );
+            itemConnectors_[ ADN_Missions_GUI::eChoiceValues ]->Disconnect( &oldParam->choices_ );
+            itemConnectors_[ ADN_Missions_GUI::eMinValue ]->Disconnect( &oldParam->minValue_ );
+            itemConnectors_[ ADN_Missions_GUI::eMaxValue ]->Disconnect( &oldParam->maxValue_ );
+            itemConnectors_[ ADN_Missions_GUI::eGenObjects ]->Disconnect( &oldParam->genObjects_ );
+        }
+    }
+    if( selected.indexes().size() == 1 )
+        Reconnect( selected.indexes()[ 0 ] );
+    else if( selected.indexes().size() == 0 )
+        ResetCurrent();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameters_Table::Reconnect
+// Created: ABR 2012-10-25
+// -----------------------------------------------------------------------------
+void ADN_MissionParameters_Table::Reconnect( const QModelIndex& index )
+{
+    ADN_Missions_Parameter* param = static_cast< ADN_Missions_Parameter* >( GetDataFromIndex( index ) );
+    if( !param )
+        return;
+    E_MissionParameterType current = param->type_.GetData();
+    bool isEnum = current == eMissionParameterTypeEnumeration;
+    if( !isEnum )
+        param->values_.Clear();
+    itemConnectors_[ADN_Missions_GUI::eParameterValues]->Connect( &param->values_, isEnum );
+    bool isChoice = current == eMissionParameterTypeLocationComposite;
+    itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Connect( &param->choices_, isChoice );
+    bool isNumeric = current == eMissionParameterTypeNumeric;
+    itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_, isNumeric );
+    itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_, isNumeric );
+    bool isGenObjects = current == eMissionParameterTypeGenObject;
+    itemConnectors_[ADN_Missions_GUI::eGenObjects]->Connect( &param->genObjects_, isGenObjects );
+    emit TypeChanged( current );
 }

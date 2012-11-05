@@ -1378,6 +1378,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>% on site fixable</source>
         <translation>% réparable sur place</translation>
     </message>
+    <message>
+        <source>Armor</source>
+        <translation>Blindé</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Data</name>
@@ -4750,14 +4754,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Blessure extrêmement grave</translation>
     </message>
     <message>
-        <source>equipment</source>
-        <translation>équipement</translation>
-    </message>
-    <message>
-        <source>human</source>
-        <translation>humain</translation>
-    </message>
-    <message>
         <source>Eletronic</source>
         <translation>Electronique</translation>
     </message>
@@ -5137,6 +5133,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Shapefile input</source>
         <translation>Données Shapefile</translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipement</translation>
+    </message>
+    <message>
+        <source>Human</source>
+        <translation>Humain</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5425,6 +5429,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>% on site fixable</source>
         <translation>% réparable sur place</translation>
+    </message>
+    <message>
+        <source>Armor</source>
+        <translation>Blindé</translation>
     </message>
 </context>
 <context>

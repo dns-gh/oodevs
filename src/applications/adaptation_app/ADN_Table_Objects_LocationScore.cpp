@@ -57,7 +57,7 @@ public:
         pItemString->SetAutoEnabled(false);
 
         // connect items & datas
-        pItemString->setText( ADN_Tr::ConvertFromLocation( static_cast<ScoreLocationInfos*>(obj)->nLocation_.GetData(),ENT_Tr_ABC::eToTr).c_str());
+        pItemString->setText( static_cast< ScoreLocationInfos* >( obj )->nLocation_.Convert( ENT_Tr_ABC::eToTr ).c_str() );
         pItemInt->GetConnector().Connect(&static_cast<ScoreLocationInfos*>(obj)->nScore_);
     }
 
@@ -122,7 +122,7 @@ void ADN_Table_Objects_LocationScore::OnContextMenu(int /*row*/,int /*col*/,cons
     // Get the list of the possible munitions
     for( int i = 0; i < eNbrLocation; ++i )
     {
-        std::string strTerrainName = ADN_Tr::ConvertFromLocation( (E_Location)i, ENT_Tr_ABC::eToTr );
+        std::string strTerrainName = ENT_Tr::ConvertFromLocation( (E_Location)i, ENT_Tr_ABC::eToTr );
         if( Contains( strTerrainName ) )
             continue;
 

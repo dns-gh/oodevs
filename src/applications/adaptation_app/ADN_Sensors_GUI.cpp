@@ -28,7 +28,6 @@
 #include "ADN_Sensors_Postures_GUI.h"
 #include "ADN_Sensors_LimitedToSensorsListView.h" // LTO
 #include "ADN_Sensors_TargetsListView.h"
-#include "ADN_ComboBox_Composantes_Sizes.h"
 #include "ADN_Sensors_DetectionAlgorithmPrevision.h"
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"

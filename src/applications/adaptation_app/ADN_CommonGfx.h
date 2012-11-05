@@ -20,9 +20,8 @@
 #include "ADN_ComboBox_Enum.h"
 #include "ADN_EditLine.h"
 #include "ADN_ListView.h"
-#include "ADN_ListViewItem.h"
 #include "ADN_Table.h"
+#include "ADN_StandardItem.h"
 #include "ADN_TableItem_Edit.h"
-#include "ADN_TableItem_ComboBox.h"
 
 #endif // __ADN_CommonGfx_h_

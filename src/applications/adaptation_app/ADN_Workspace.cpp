@@ -79,6 +79,7 @@
 #include "ADN_Weapons_GUI.h"
 #include "ADN_WorkspaceElement.h"
 #include "qtundo.h"
+#include "ENT/ENT_Tr.h"
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
 #include <errno.h>
@@ -137,6 +138,7 @@ ADN_Workspace::ADN_Workspace()
 // -----------------------------------------------------------------------------
 void ADN_Workspace::Initialize()
 {
+    InitializeEnumType();
     projectData_ = new ADN_Project_Data();
     // Creation order
     elements_[eDrawings]          = new ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI>                   ( eDrawings );
@@ -167,6 +169,44 @@ void ADN_Workspace::Initialize()
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >                    ( eReports );
     elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >                ( eFireClasses );
     elements_[eLogistic]          = new ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >                  ( eLogistic );
+}
+
+#define INITIALIZE_ADN_ENUMTYPE( TypeName ) \
+    ADN_Type_Enum< E_##TypeName, eNbr##TypeName >::SetConverter( &ADN_Tr::ConvertFrom##TypeName );
+
+#define INITIALIZE_ENT_ENUMTYPE( TypeName ) \
+    ADN_Type_Enum< E_##TypeName, eNbr##TypeName >::SetConverter( &ENT_Tr::ConvertFrom##TypeName );
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::InitializeEnumType
+// Created: ABR 2012-10-29
+// -----------------------------------------------------------------------------
+void ADN_Workspace::InitializeEnumType()
+{
+    INITIALIZE_ADN_ENUMTYPE( AgentTypeAutomate );
+    INITIALIZE_ADN_ENUMTYPE( AgentTypePion );
+    INITIALIZE_ADN_ENUMTYPE( BreakdownNTI );
+    INITIALIZE_ADN_ENUMTYPE( BreakdownType );
+    INITIALIZE_ADN_ENUMTYPE( ConstructorType );
+    INITIALIZE_ADN_ENUMTYPE( ConsumptionType );
+    INITIALIZE_ADN_ENUMTYPE( CrossingHeight );
+    INITIALIZE_ENT_ENUMTYPE( CrossingType );
+    INITIALIZE_ADN_ENUMTYPE( EquipmentState_ADN );
+    INITIALIZE_ENT_ENUMTYPE( Location );
+    INITIALIZE_ADN_ENUMTYPE( MissionParameterType );
+    INITIALIZE_ENT_ENUMTYPE( AmmunitionType );
+    INITIALIZE_ADN_ENUMTYPE( NatureAtlasType );
+    INITIALIZE_ENT_ENUMTYPE( NatureLevel );
+    INITIALIZE_ENT_ENUMTYPE( PopulationAttitude );
+    INITIALIZE_ADN_ENUMTYPE( PropagationModel );
+    INITIALIZE_ADN_ENUMTYPE( ProtectionType );
+    INITIALIZE_ADN_ENUMTYPE( RadarType );
+    INITIALIZE_ADN_ENUMTYPE( SpeedImpact );
+    INITIALIZE_ADN_ENUMTYPE( SupplyConvoyType );
+    INITIALIZE_ENT_ENUMTYPE( UnitExperience );
+    INITIALIZE_ENT_ENUMTYPE( UnitPosture );
+    INITIALIZE_ENT_ENUMTYPE( UnitStress );
+    INITIALIZE_ENT_ENUMTYPE( UnitTiredness );
 }
 
 //-----------------------------------------------------------------------------

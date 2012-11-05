@@ -20,7 +20,7 @@
 #define __ADN_Connector_ListView_h_
 
 #include "ADN_Connector_ListView_ABC.h"
-#include "ADN_ListViewItem.h"
+#include "ADN_StandardItem.h"
 #include <boost/noncopyable.hpp>
 
 class ADN_ListView;
@@ -49,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    ADN_ListViewItem* CreateItem( void* pObj );
+    ADN_StandardItem* CreateItem( void* pObj );
     //@}
 };
 
@@ -77,10 +77,10 @@ ADN_Connector_ListView<T>::~ADN_Connector_ListView()
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
 template< typename T >
-ADN_ListViewItem* ADN_Connector_ListView<T>::CreateItem( void* pObj )
+ADN_StandardItem* ADN_Connector_ListView<T>::CreateItem( void* pObj )
 {
     // Create the new list item.
-    ADN_ListViewItem* pItem = new ADN_ListViewItem( pObj );
+    ADN_StandardItem* pItem = new ADN_StandardItem( pObj );
 
     // Connect list item with object's name
     pItem->Connect( & static_cast< T* >( pObj )->strName_ );

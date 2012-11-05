@@ -13,14 +13,14 @@
 #define __ADN_Connector_ListView_ABC_h_
 
 #include "ADN_ListView.h"
-#include "ADN_ListViewItem.h"
 #include "ADN_Connector_Vector_ABC.h"
+
+class ADN_StandardItem;
 
 //*****************************************************************************
 // Created: JDY 03-07-09
 //*****************************************************************************
-class ADN_Connector_ListView_ABC
-: public ADN_Connector_Vector_ABC
+class ADN_Connector_ListView_ABC : public ADN_Connector_Vector_ABC
 {
 public:
     explicit ADN_Connector_ListView_ABC( ADN_ListView& list, const char* szName = 0 );
@@ -38,7 +38,7 @@ protected:
     virtual void SwapItemPrivate( int i, int j );
     virtual void ClearPrivate( bool bInConnection = false );
 
-    virtual ADN_ListViewItem* CreateItem( void* obj ) = 0;
+    virtual ADN_StandardItem* CreateItem( void* obj ) = 0;
 
 private:
     ADN_Connector_ListView_ABC& operator=( const ADN_Connector_ListView_ABC& );

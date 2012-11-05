@@ -80,7 +80,7 @@ void ADN_Reports_Data::ReportParameterValue::WriteArchive( xml::xostream& output
 // -----------------------------------------------------------------------------
 ADN_Reports_Data::ReportParameter::ReportParameter()
 {
-    ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType >::SetConverter( &ADN_Tr::ConvertFromMissionParameterType );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ void ADN_Reports_Data::ReportParameter::ReadParameterValue( xml::xistream& input
 void ADN_Reports_Data::ReportParameter::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "parameter" )
-           << xml::attribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData()  ) );
+           << xml::attribute( "type", type_.Convert() );
     for( unsigned long i = 0; i < values_.size(); ++i )
         values_[i]->WriteArchive( output, i );
     output << xml::end;

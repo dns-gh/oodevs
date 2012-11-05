@@ -183,8 +183,8 @@ ADN_Tr::T_ConverterDoctorSkills ADN_Tr::doctorSkillsConverter_[] =
 
 ADN_Tr::T_ConverterProtectionType ADN_Tr::protectionTypeConverter_[] =
 {
-    T_ConverterProtectionType( "materiel", QT_TRANSLATE_NOOP( "ADN_Tr", "equipment" ), eProtectionType_Material ),
-    T_ConverterProtectionType( "humain",   QT_TRANSLATE_NOOP( "ADN_Tr", "human" ),     eProtectionType_Human ),
+    T_ConverterProtectionType( "materiel", QT_TRANSLATE_NOOP( "ADN_Tr", "Equipment" ), eProtectionType_Material ),
+    T_ConverterProtectionType( "humain",   QT_TRANSLATE_NOOP( "ADN_Tr", "Human" ),     eProtectionType_Human ),
     T_ConverterProtectionType( "", "", (E_ProtectionType)-1 )
 };
 
@@ -310,15 +310,6 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "logistic",         QT_TRANSLATE_NOOP("ADN_Tr", "Log" ),                  eLogistic ),
     T_ConverterWorkspaceElements( "", "", (E_WorkspaceElements)-1 )
 };
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertFromLocation
-// Created: APE 2005-02-18
-// -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromLocation( E_Location  nValue, E_Conversion nConversion )
-{
-    return ENT_Tr::ConvertFromLocation( nValue, nConversion );
-}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromConsumptionType
@@ -450,7 +441,7 @@ const std::string& ADN_Tr::ConvertFromRadarType( E_RadarType nValue, E_Conversio
 // Name: ADN_Tr::ConvertFromEquipmentState
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromEquipmentState( E_EquipmentState_ADN nValue, E_Conversion nConversion )
+const std::string& ADN_Tr::ConvertFromEquipmentState_ADN( E_EquipmentState_ADN nValue, E_Conversion nConversion )
 {
     return ADN_Tr::InverseFindInConverter( equipmentStateConverter_, nValue, nConversion );
 }
@@ -507,15 +498,6 @@ const std::string& ADN_Tr::ConvertFromPropagationModel( E_PropagationModel nValu
 const std::string& ADN_Tr::ConvertFromWorkspaceElement( E_WorkspaceElements nValue, E_Conversion nConverterType )
 {
     return ADN_Tr::InverseFindInConverter( workspaceElementsConverter_, nValue, nConverterType );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToLocation
-// Created: APE 2005-02-18
-// -----------------------------------------------------------------------------
-E_Location ADN_Tr::ConvertToLocation( const std::string& strName )
-{
-    return ENT_Tr::ConvertToLocation( strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -648,7 +630,7 @@ E_RadarType ADN_Tr::ConvertToRadarType( const std::string& strName )
 // Name: ADN_Tr::ConvertToEquipmentState
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
-E_EquipmentState_ADN ADN_Tr::ConvertToEquipmentState( const std::string& strName )
+E_EquipmentState_ADN ADN_Tr::ConvertToEquipmentState_ADN( const std::string& strName )
 {
     return ADN_Tr::FindInConverter( equipmentStateConverter_, strName );
 }

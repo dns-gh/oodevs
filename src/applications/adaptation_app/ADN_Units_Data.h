@@ -200,7 +200,7 @@ public:
         ADN_Type_String                                             strName_;
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos>       ptrModel_;
         ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>                eNatureLevel_;
-        ADN_Type_Enum<E_NatureAtlasType,eNbrNatureAtlas>            eNatureAtlas_;
+        ADN_Type_Enum<E_NatureAtlasType, eNbrNatureAtlasType>       eNatureAtlas_;
         ADN_Type_String                                             strNature_;
         ADN_Type_Int                                                nNbOfficer_;        // officer
         ADN_Type_Int                                                nNbNCOfficer_;      // non-commisioned officer

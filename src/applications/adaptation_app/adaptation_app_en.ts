@@ -1374,6 +1374,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <source>% destroyed</source>
         <translation>% destroyed</translation>
     </message>
+    <message>
+        <source>Armor</source>
+        <translation>Armor</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Data</name>
@@ -4826,14 +4830,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Injury extreme severity</translation>
     </message>
     <message>
-        <source>equipment</source>
-        <translation>equipment</translation>
-    </message>
-    <message>
-        <source>human</source>
-        <translation>human</translation>
-    </message>
-    <message>
         <source>Eletronic</source>
         <translation>Eletronic</translation>
     </message>
@@ -5129,6 +5125,14 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Shapefile input</source>
         <translation>Shapefile input</translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipment</translation>
+    </message>
+    <message>
+        <source>Human</source>
+        <translation>Human</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5410,6 +5414,10 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>% on site fixable</source>
         <translation>% on site repairable</translation>
+    </message>
+    <message>
+        <source>Armor</source>
+        <translation>Armor</translation>
     </message>
 </context>
 <context>

@@ -224,7 +224,7 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "automat" )
             << xml::attribute( "name", strName_ )
-            << xml::attribute( "type", ADN_Tr::ConvertFromAgentTypeAutomate( nAgentType_.GetData() ) )
+            << xml::attribute( "type", nAgentType_.Convert() )
             << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
             << xml::attribute( "id", nId_ );
     if( bStrengthRatioFeedbackTime_.GetData() )

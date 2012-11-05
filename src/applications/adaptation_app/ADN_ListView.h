@@ -18,8 +18,8 @@
 #include "clients_gui/RichTreeView.h"
 #include <boost/function.hpp>
 
-class ADN_ListViewItem;
 class ADN_Connector_ListView_ABC;
+class ADN_StandardItem;
 class ADN_ObjectCreator_ABC;
 
 namespace YExcel
@@ -48,18 +48,18 @@ public:
     explicit ADN_ListView( QWidget* pParent, const char* szName, const QString title = "" );
     virtual ~ADN_ListView();
 
-    ADN_ListViewItem*   ItemAt( int i );
-    ADN_ListViewItem*   FindItem( void* pData );
-    ADN_ListViewItem*   FindItem( const QString& itemName );
+    ADN_StandardItem*   ItemAt( int i );
+    ADN_StandardItem*   FindItem( void* pData );
+    ADN_StandardItem*   FindItem( const QString& itemName );
     void*               GetCurrentData();
     void                SetItemConnectors( const T_ConnectorVector& v );
 
-    void InsertItem( ADN_ListViewItem* item );
+    void InsertItem( ADN_StandardItem* item );
     void InsertItems( const QList< QStandardItem* >& items );
-    void TakeItem( ADN_ListViewItem* item );
-    void MoveItem( ADN_ListViewItem* src, ADN_ListViewItem* dest );
-    void MoveItemAbove( ADN_ListViewItem* src, ADN_ListViewItem* dest );
-    void Swap( ADN_ListViewItem* src, ADN_ListViewItem* dest );
+    void TakeItem( ADN_StandardItem* item );
+    void MoveItem( ADN_StandardItem* src, ADN_StandardItem* dest );
+    void MoveItemAbove( ADN_StandardItem* src, ADN_StandardItem* dest );
+    void Swap( ADN_StandardItem* src, ADN_StandardItem* dest );
     int ChildCount() const;
     void Clear();
     void CreateTableFrom( std::stringstream& stream ) const;
@@ -98,9 +98,9 @@ private:
     virtual QStringList MimeTypes() const { return QStringList(); }
     virtual void Drop( const QString& /*mimeType*/, void* /*data*/, QStandardItem& /*target*/ ) {}
     virtual QMimeData* MimeData( const QModelIndexList& /*indexes*/, bool& /*overriden*/ ) const { return 0; }
-    bool ApplyFilterLine( ADN_ListViewItem* item );
-    bool ApplyFilterList( ADN_ListViewItem* item );
-    void ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > func );
+    bool ApplyFilterLine( ADN_StandardItem* item );
+    bool ApplyFilterList( ADN_StandardItem* item );
+    void ApplyFilter( boost::function< bool ( ADN_StandardItem* ) > func );
     void SaveToSheet( YExcel::BasicExcel& xls, const char* sheetName, int sheetNumber, QStandardItem* item, int maxDepth, int nbRow ) const;
     void RecursiveFillSheetFromItem( QStandardItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
     void FillSheetFromItem( QStandardItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;

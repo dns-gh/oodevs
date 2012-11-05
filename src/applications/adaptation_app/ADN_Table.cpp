@@ -17,10 +17,271 @@
 #include "ADN_Enums.h"
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
+#include "ADN_Connector_StandardItem.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "excel/ExcelFormat.h"
+#include "clients_kernel/VariantPointer.h"
 
 using namespace ExcelFormat;
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table3::ADN_Table3
+// Created: ABR 2012-10-18
+// -----------------------------------------------------------------------------
+ADN_Table3::ADN_Table3( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : QTableView( pParent )
+    , dataModel_( pParent )
+    , delegate_ ( pParent )
+{
+    setObjectName( objectName );
+
+    proxyModel_.setSourceModel( &dataModel_ );
+    proxyModel_.setSortRole( Qt::UserRole );
+    setModel( &proxyModel_ );
+    setItemDelegate( &delegate_ );
+    setEditTriggers( AllEditTriggers );
+
+    setSortingEnabled( true );
+    setShowGrid( false );
+    setAlternatingRowColors( true );
+    verticalHeader()->setDefaultSectionSize( 20 );
+
+    setSelectionMode( SingleSelection );
+    setSelectionBehavior( SelectItems );
+    setEditTriggers( AllEditTriggers );
+
+    connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), &delegate_, SLOT( OnItemChanged( QStandardItem* ) ) );
+    connect( &delegate_, SIGNAL( CheckedStateChanged( const QStandardItem& ) ), this, SLOT( OnCheckedStateChanged( const QStandardItem& ) ) );
+
+    pConnector_ = new ADN_Connector_Table_ABC2( *this, false, "ADN_Connector_Table" );
+    connector = pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table3::~ADN_Table3
+// Created: ABR 2012-10-18
+// -----------------------------------------------------------------------------
+ADN_Table3::~ADN_Table3()
+{
+    delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::numRows
+// Created: ABR 2012-10-18
+// -----------------------------------------------------------------------------
+int ADN_Table3::numRows() const
+{
+    return dataModel_.rowCount();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::setNumRows
+// Created: ABR 2012-10-18
+// -----------------------------------------------------------------------------
+void ADN_Table3::setNumRows( int numRows )
+{
+    selectionModel()->clearSelection();
+    setCurrentIndex( QModelIndex() );
+    dataModel_.setRowCount( numRows );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::AddRow
+// Created: ABR 2012-10-19
+// -----------------------------------------------------------------------------
+void ADN_Table3::AddRow( int /* row */, void* /* data */ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::RemoveItem
+// Created: ABR 2012-10-18
+// -----------------------------------------------------------------------------
+void ADN_Table3::RemoveItem( void* pData )
+{
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
+    {
+        ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row, 0 ) );
+        if( item->GetData() == pData )
+        {
+            dataModel_.removeRow( row );
+            break;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::contextMenuEvent
+// Created: ABR 2012-10-29
+// -----------------------------------------------------------------------------
+void ADN_Table3::contextMenuEvent( QContextMenuEvent* event )
+{
+    OnContextMenu( event->globalPos() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::OnContextMenu
+// Created: ABR 2012-10-29
+// -----------------------------------------------------------------------------
+void ADN_Table3::OnContextMenu( const QPoint& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::OnCheckedStateChanged
+// Created: ABR 2012-10-30
+// -----------------------------------------------------------------------------
+void ADN_Table3::OnCheckedStateChanged( const QStandardItem& item )
+{
+    const ADN_StandardItem& adnItem = static_cast< const ADN_StandardItem& >( item );
+    assert( adnItem.GetType() == ADN_StandardItem::eBool );
+    ADN_Connector_StandardItem* connector = adnItem.GetConnector();
+    if( connector )
+        connector->SetDataChanged( "" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::eventFilter
+// Created: ABR 2012-10-23
+// -----------------------------------------------------------------------------
+bool ADN_Table3::eventFilter( QObject* watched, QEvent* event )
+{
+    if( QMouseEvent* mouseEvent = dynamic_cast< QMouseEvent* >( event ) )
+        if( mouseEvent && ( mouseEvent->button() == Qt::XButton1 || mouseEvent->button() == Qt::XButton2 ) )
+            return false;
+    return QTableView::eventFilter( watched, event );
+}
+
+namespace
+{
+    template< typename T >
+    QColor GetColorFromValue( const std::pair< double, double >& minMax, T value )
+    {
+        double rRatio = ( value - minMax.first ) / ( minMax.second - minMax.first );
+        rRatio = std::min< double >( 1.0, std::max< double >( 0.0, rRatio ) );
+        QColor backgroundColor;
+        backgroundColor.setHsv( int( 120 * rRatio ), 30, 255 );
+        return backgroundColor;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::dataChanged
+// Created: ABR 2012-10-24
+// -----------------------------------------------------------------------------
+void ADN_Table3::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
+{
+    if( topLeft == bottomRight )
+    {
+        bool ok = false;
+        QStandardItem* item = GetItemFromIndex( topLeft );
+        if( !item )
+            return;
+        double value = item->data( gui::Roles::DataRole ).toDouble( &ok );
+        if( !ok )
+            return;
+        if( const std::pair< double, double >* colorGap = delegate_.GetColorType( item->row(), item->column() ) )
+            item->setData( GetColorFromValue( *colorGap, value ), Qt::BackgroundColorRole );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::SetGoToOnDoubleClick
+// Created: ABR 2012-10-23
+// -----------------------------------------------------------------------------
+void ADN_Table3::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab /*= -1*/, int col /*= 0*/ )
+{
+    goToInfo_.targetTab_ = targetTab;
+    goToInfo_.subTargetTab_ = subTargetTab;
+    goToInfo_.sourceColumn_ = col;
+    connect( this, SIGNAL( activated( const QModelIndex& ) ), this, SLOT( OnGotoRequested( const QModelIndex& ) ) );
+    connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetItemFromIndex
+// Created: ABR 2012-10-23
+// -----------------------------------------------------------------------------
+QStandardItem* ADN_Table3::GetItemFromIndex( const QModelIndex& index ) const
+{
+    if( !index.isValid() )
+        return 0;
+    return dataModel_.itemFromIndex( index.model() == &dataModel_ ? index : proxyModel_.mapToSource( index ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::OnGotoRequested
+// Created: ABR 2012-10-23
+// -----------------------------------------------------------------------------
+void ADN_Table3::OnGotoRequested( const QModelIndex& index )
+{
+    QStandardItem* item = GetItemFromIndex( index );
+    if( !item || item->column() != goToInfo_.sourceColumn_ )
+        return;
+
+    goToInfo_.targetName_ = item->data( Qt::EditRole ).toString();
+    assert( goToInfo_.targetTab_ != eNbrWorkspaceElements );
+    emit( GoToRequested( goToInfo_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetDataFromIndex
+// Created: ABR 2012-10-29
+// -----------------------------------------------------------------------------
+void* ADN_Table3::GetDataFromIndex( const QModelIndex& index )
+{
+    if( !index.isValid() )
+        return 0;
+    ADN_StandardItem* oldItem = static_cast< ADN_StandardItem* >( GetItemFromIndex( index ) );
+    if( !oldItem )
+        return 0;
+    return oldItem->GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetCurrentData
+// Created: ABR 2012-10-29
+// -----------------------------------------------------------------------------
+void* ADN_Table3::GetSelectedData()
+{
+    QModelIndexList indexes = selectedIndexes();
+    if( indexes.size() == 1 )
+        return GetDataFromIndex( indexes[ 0 ] );
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Table constructor

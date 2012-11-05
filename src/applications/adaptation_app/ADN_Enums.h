@@ -169,12 +169,12 @@ enum E_NatureAtlasType
     eNatureAtlas_Helicoptere,
     eNatureAtlas_ASA,
     eNatureAtlas_Indefini,
-    eNbrNatureAtlas
+    eNbrNatureAtlasType
 };
 
 enum
 {
-    ePostureNeedTimeStart = 3
+    ePostureNeedTimeStart = 3 // $$$$ ABR 2012-10-29: OMG
 };
 
 enum E_SpeedImpact
@@ -241,7 +241,7 @@ enum E_SupplyConvoyType
 {
     eSupplyConvoy_Real,
     eSupplyConvoy_Virtual,
-    eNbrSupplyConvoy,
+    eNbrSupplyConvoyType,
 };
 
 enum E_CapacityMission
@@ -355,7 +355,7 @@ enum E_EquipmentState_ADN
     eEquipmentState_ADN_FixableWithEvac,
     eEquipmentState_ADN_FixableInPlace,
     eEquipmentState_ADN_Destroyed,
-    eNbrEquipmentStateADN
+    eNbrEquipmentState_ADN
 };
 
 enum E_TypeMunitionTirIndirect

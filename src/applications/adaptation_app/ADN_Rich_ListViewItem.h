@@ -13,7 +13,6 @@
 #define __ADN_Rich_ListViewItem_h_
 
 class ADN_ListView;
-class ADN_ListViewItem;
 
 //*****************************************************************************
 // Created: SBO 2006-01-04

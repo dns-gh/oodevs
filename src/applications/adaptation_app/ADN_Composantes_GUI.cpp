@@ -19,7 +19,6 @@
 #include "ADN_Composantes_WeaponsListView.h"
 #include "ADN_Composantes_ActiveProtectionsListView.h"
 #include "ADN_ListView_Composantes_Objects.h"
-#include "ADN_ComboBox_Composantes_Sizes.h"
 #include "ADN_Composantes_Speeds_GUI.h"
 #include "ADN_Composantes_Sensors_GUI.h"
 #include "ADN_Composantes_RadarsListView.h"
@@ -27,7 +26,6 @@
 #include "ADN_Composantes_ConsumptionsTable.h"
 #include "ADN_Composantes_BreakdownsTable.h"
 #include "ADN_ComboBox_Vector.h"
-#include "ADN_ComboBox_Equipment_Nature.h"
 #include "ADN_DateEdit.h"
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
@@ -36,6 +34,7 @@
 #include "ADN_MainWindow.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_TimeField.h"
+#include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_GUI constructor
@@ -88,7 +87,7 @@ void ADN_Composantes_GUI::Build()
     QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector<helpers::ArmorInfos> >( pInfoHolder, tr( "Armor-Plating" ), vInfosConnectors[ eArmor ] );
     connect( pCombo, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );
     // Size
-    builder.AddField< ADN_ComboBox_Composantes_Sizes >( pInfoHolder, tr( "Volume" ), vInfosConnectors[ eSize ]  );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Categories_Data::SizeInfos > >( pInfoHolder, tr( "Volume" ), vInfosConnectors[ eSize ]  );
     // Weight
     builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Weight" ), vInfosConnectors[ eWeight ], tr( "T" ), eGreaterZero );
     // Max slope
@@ -374,7 +373,7 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
 
     builder.AddField< ADN_EditLine_Double >( pCarrierGroup , tr( "Max weight carried"  ), vInfosConnectors[ eLogCarryWeightCapacity ], tr( "T" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pCarrierGroup , tr( "Max volume carried"  ), vInfosConnectors[ eLogCarryVolumeCapacity ], tr( "m3" ), eGreaterZero );
-    builder.AddField< ADN_ComboBox_Equipment_Nature >( pCarrierGroup, tr( "Resource nature carried" ), vInfosConnectors[ eLogCarryNature ] );
+    builder.AddField< ADN_ComboBox_Vector< helpers::ResourceNatureInfos > >( pCarrierGroup, tr( "Resource nature carried" ), vInfosConnectors[ eLogCarryNature ] );
 
     return pSupplyGroup;
 }
@@ -461,13 +460,13 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
     pTable->setNumCols( eNbrLocation + 1 );
     pTable->horizontalHeader()->setLabel( 0, tr( "Equipment" ) );
     for( uint n = 0; n < eNbrLocation; ++n )
-        pTable->horizontalHeader()->setLabel( n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );
+        pTable->horizontalHeader()->setLabel( n + 1, ENT_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );
     pTable->horizontalHeader()->show();
 
     pTable->setNumRows( static_cast< int >( data_.vComposantes_.size() + 1 ) );
     builder.AddTableCell( pTable, 0, 0, tr( "Equipment" ) );
     for( uint n = 0; n < eNbrLocation; ++n )
-        builder.AddTableCell( pTable, 0, n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );
+        builder.AddTableCell( pTable, 0, n + 1, ENT_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );
     pTable->AddBoldGridCol( 1 );
     pTable->AddBoldGridRow( 1 );
     pTable->hideRow( 0 );

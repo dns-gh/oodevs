@@ -166,8 +166,8 @@ void ADN_Objects_GUI::Build()
         constr->setLayout( new Q3GridLayout( 2, 3 ) );
 
         // Consumption
-        builder.AddEnumField< E_ConsumptionType >( constr, tr( "Default consumption" ), vInfosConnectors[ eConstructorCapacity_DefaultConsumption ], ADN_Tr::ConvertFromConsumptionType );
-        builder.AddEnumField< E_ConstructorType >( constr, tr( "Model" ), vInfosConnectors[ eConstructorCapacity_UnitType ], ADN_Tr::ConvertFromConstructorType );
+        builder.AddEnumField( constr, tr( "Default consumption" ), vInfosConnectors[ eConstructorCapacity_DefaultConsumption ] );
+        builder.AddEnumField( constr, tr( "Model" ), vInfosConnectors[ eConstructorCapacity_UnitType ] );
         // Buildable
         ADN_GroupBox* buildable = CreateCapacityGroupBox( 3, tr( "Buildable" ), vInfosConnectors[ eBuildableCapacityPresent], constructor );
         ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, buildable, false );
@@ -204,7 +204,7 @@ void ADN_Objects_GUI::Build()
         ADN_GroupBox* mobility = CreateCapacityGroupBox( 3, tr( "Mobility" ), vInfosConnectors[ eMobilityCapacityPresent ] );
         // Default speed
         builder.AddField< ADN_EditLine_Double >( mobility, tr( "Default speed" ), vInfosConnectors[ eMobilityCapacity_DefaultSpeed ], tr( "km/h" ) );
-        pSpeedImpactCombo_ = builder.AddEnumField< E_SpeedImpact >( mobility, tr( "Speed impact" ), vInfosConnectors[ eMobilityCapacity_SpeedModifier ], ADN_Tr::ConvertFromSpeedImpact );
+        pSpeedImpactCombo_ = builder.AddEnumField( mobility, tr( "Speed impact" ), vInfosConnectors[ eMobilityCapacity_SpeedModifier ] );
         pMaxAgentSpeed_ = builder.AddField< ADN_EditLine_Double >( mobility, tr( "Max agent speed" ), vInfosConnectors[ eMobilityCapacity_MaxAgentSpeed ], tr( "%" ), ePercentage );
         connect( pSpeedImpactCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSpeedImpactComboChanged() ) );
 
@@ -228,8 +228,7 @@ void ADN_Objects_GUI::Build()
 
         // Urban Destruction
         ADN_GroupBox* urbanDestruction = CreateCapacityGroupBox( 1, tr( "Urban Destruction" ), vInfosConnectors[ eUrbanDestructionCapacityPresent ] );
-        helpers::ADN_UrbanModifiersTable* urbanModifiersTable = new helpers::ADN_UrbanModifiersTable( urbanDestruction, vInfosConnectors[ eUrbanDestructionCapacity_Data ] );
-        urbanModifiersTable->setObjectName( strClassName_ + "_UrbanDestructionTable" );
+        new helpers::ADN_UrbanModifiersTable( strClassName_ + "_UrbanDestructionTable", vInfosConnectors[ eUrbanDestructionCapacity_Data ], urbanDestruction );
 
         // NBC
         Q3GroupBox* gNBC = new Q3GroupBox( 2, Qt::Horizontal, tr( "NBC" ) );
@@ -273,13 +272,13 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_CheckBox >( protection, tr( "Genie prepared" ), vInfosConnectors[ eProtectionCapacity_GeniePrepared ] );
 
         ADN_GroupBox* bridging = CreateCapacityGroupBox( 3, tr( "Bridge / Road" ), vInfosConnectors[ eBridgingCapacityPresent ] );
-        builder.AddEnumField< E_CrossingType >( bridging, tr( "Type" ), vInfosConnectors[ eBridgingCapacity_Type ], ENT_Tr::ConvertFromCrossingType );
+        builder.AddEnumField( bridging, tr( "Type" ), vInfosConnectors[ eBridgingCapacity_Type ] );
 
         ADN_GroupBox* propagation = CreateCapacityGroupBox( 3, tr( "Propagation" ), vInfosConnectors[ ePropagationCapacityPresent ] );
-        builder.AddEnumField< E_PropagationModel >( propagation, tr( "Model" ), vInfosConnectors[ ePropagationCapacity_ModelType ], ADN_Tr::ConvertFromPropagationModel);
+        builder.AddEnumField( propagation, tr( "Model" ), vInfosConnectors[ ePropagationCapacity_ModelType ] );
 
         ADN_GroupBox* attitudeModifier = CreateCapacityGroupBox( 3, tr( "AttitudeModifier" ), vInfosConnectors[ eAttitudeModifierCapacityPresent ] );
-        builder.AddEnumField< E_PopulationAttitude >( attitudeModifier, tr( "Attitude" ), vInfosConnectors[ eAttitudeModifierCapacity_Attitude ], ENT_Tr::ConvertFromPopulationAttitude );
+        builder.AddEnumField( attitudeModifier, tr( "Attitude" ), vInfosConnectors[ eAttitudeModifierCapacity_Attitude ] );
 
         ADN_GroupBox* perception = CreateCapacityGroupBox( 3, tr( "Perception" ), vInfosConnectors[ ePerceptionCapacityPresent ] );
         builder.AddField< ADN_CheckBox >( perception, tr( "Blinding" ), vInfosConnectors[ ePerceptionCapacity_Blinded ] );

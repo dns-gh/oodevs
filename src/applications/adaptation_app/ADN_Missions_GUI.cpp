@@ -139,9 +139,11 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     // Parameters
     QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
 
-    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
-    paramList->setObjectName( builderName + "MissionParams" );
-    vInfosConnectors[ eParameters ] = &paramList->GetConnector();
+    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( builderName + "MissionParams", vInfosConnectors[ eParameters ] );
+
+    //ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
+    //paramList->setObjectName( builderName + "MissionParams" );
+    //vInfosConnectors[ eParameters ] = &paramList->GetConnector();
 
     ADN_MissionParameter_GroupBox* pEnum = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), eMissionParameterTypeEnumeration );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
@@ -176,14 +178,14 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     // Layouts
     // -------------------------------------------------------------------------
     // Parameters layout
-    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 2, 3 );
+    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 5, 1 );
     parameterLayout->setMargin( 10 );
     parameterLayout->setSpacing( 10 );
-    parameterLayout->addWidget( paramList, 0, 0, 1, 3 );
-    parameterLayout->addWidget( pLimit );
-    parameterLayout->addWidget( pEnum );
-    parameterLayout->addWidget( pChoice );
-    parameterLayout->addWidget( pGenObject );
+    parameterLayout->addWidget( paramList, 0, 0 );
+    parameterLayout->addWidget( pLimit, 1, 0 );
+    parameterLayout->addWidget( pEnum, 2, 0 );
+    parameterLayout->addWidget( pChoice, 3, 0 );
+    parameterLayout->addWidget( pGenObject, 4, 0 );
 
     // General tab layout
     QWidget* pGeneral= new QWidget();
@@ -273,9 +275,12 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
 
     // Parameters
     QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
-    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
-    paramList->setObjectName( strClassName_ + "_FragordersParams" );
-    vInfosConnectors[ eParameters ] = &paramList->GetConnector();
+
+    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( strClassName_ + "_FragordersParams", vInfosConnectors[ eParameters ] );
+
+    //ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
+    //paramList->setObjectName( strClassName_ + "_FragordersParams" );
+    //vInfosConnectors[ eParameters ] = &paramList->GetConnector();
 
     ADN_MissionParameter_GroupBox* pEnum = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), eMissionParameterTypeEnumeration );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
@@ -303,10 +308,8 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     //Html Mission Sheet Editor
     ADN_HtmlEditor* editor = new ADN_HtmlEditor( gui::HtmlEditor::eAllMask ^ gui::HtmlEditor::ePoliceType );
     vInfosConnectors[ eMissionSheetDescription ] = &editor->GetConnector();
-
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
-
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------

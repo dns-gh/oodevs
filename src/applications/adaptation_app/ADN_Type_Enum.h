@@ -13,12 +13,14 @@
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_DataTreeNode_ABC.h"
 #include "ENT/ENT_Tr_ABC.h"
+#include "ADN_Tr.h"
+#include "ADN_ComboBox.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-22
 //*****************************************************************************
-template <class T,int nb>
-class ADN_Type_Enum : public ADN_Connector_Vector_ABC
+template< class T, int nb >
+class ADN_Type_Enum : public ADN_Connector_ABC
                     , public ADN_DataTreeNode_ABC
 {
 public:
@@ -33,7 +35,7 @@ public:
     //-------------------------------------------------------------------------
     //@{
     const T GetData() const;
-    virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
+    virtual void Initialize( ADN_Connector_ABC& dest ) const;
     virtual std::string GetNodeName();
     //@}
 
@@ -49,9 +51,8 @@ public:
     bool          operator !=(const T& val) const;
     //@}
 
-    static std::string ConvertValue( T nVal, ENT_Tr_ABC::E_Conversion nConversion );
     static void SetConverter( typename ADN_Type_Enum::T_Converter enumConverter );
-
+    const std::string& Convert( ENT_Tr_ABC::E_Conversion nConversion = ENT_Tr_ABC::eToSim ) const;
     void SetDataName( const std::string& strName );
 
 protected:

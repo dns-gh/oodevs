@@ -26,7 +26,6 @@ ADN_Missions_Parameter::ADN_Missions_Parameter()
     , maxValue_  ( std::numeric_limits< int >::max() )
     , genObjects_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() )
 {
-    ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType >::SetConverter( &ADN_Tr::ConvertFromMissionParameterType );
     FillChoices();
 }
 

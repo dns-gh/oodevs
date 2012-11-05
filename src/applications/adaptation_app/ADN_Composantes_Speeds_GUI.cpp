@@ -12,6 +12,7 @@
 #include "moc_ADN_Composantes_Speeds_GUI.cpp"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Composantes_Data.h"
+#include "ENT/ENT_Tr.h"
 
 typedef ADN_Composantes_Data::SpeedInfos SpeedInfos;
 typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
@@ -42,7 +43,7 @@ public:
 
         SpeedInfos* infos = static_cast< SpeedInfos* >( obj );
         pItemString->setEnabled( false );
-        pItemString->setText( ADN_Tr::ConvertFromLocation( infos->nTypeTerrain_, ENT_Tr_ABC::eToTr ).c_str() );
+        pItemString->setText( ENT_Tr::ConvertFromLocation( infos->nTypeTerrain_, ENT_Tr_ABC::eToTr ).c_str() );
 
         pItemSpeed->GetValidator().setBottom( 0 );
 

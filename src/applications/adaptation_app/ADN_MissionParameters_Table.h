@@ -12,63 +12,63 @@
 
 #include "ADN_CommonGfx.h"
 
-class ADN_MissionParameterType;
-
 // =============================================================================
 /** @class  ADN_MissionParameters_Table
     @brief  ADN_MissionParameters_Table
 */
 // Created: SBO 2006-12-04
 // =============================================================================
-class ADN_MissionParameters_Table : public ADN_Table2
+class ADN_MissionParameters_Table : public ADN_Table3
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_MissionParameters_Table( QWidget* parent = 0 );
+             ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_MissionParameters_Table();
     //@}
 
     //! @name Operations
     //@{
     void SetItemConnectors( const T_ConnectorVector& itemConnectors );
-    void ResetCurrent();
     //@}
 
-    signals:
-    //! @name Signals
+    //! @name ADN_Table Re-implementation
     //@{
-    void TypeChanged( E_MissionParameterType type );
+    virtual void AddRow( int row, void* data );
+    virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
+    virtual void OnContextMenu( const QPoint& pt );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void AddNewElement();
+    void RemoveCurrentElement();
+    void ResetCurrent();
+    void Reconnect( const QModelIndex& index );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged();
+    void OnSelectionChanged( const QItemSelection&, const QItemSelection& );
     void OnTypeChanged( E_MissionParameterType type );
     //@}
 
-private:
-    //! @name Copy/Assignment
+signals:
+    //! @name Signals
     //@{
-    ADN_MissionParameters_Table( const ADN_MissionParameters_Table& );            //!< Copy constructor
-    ADN_MissionParameters_Table& operator=( const ADN_MissionParameters_Table& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void AddNewElement();
-    void RemoveCurrentElement();
-    virtual void OnContextMenu( int row, int col, const QPoint& pt );
+    void TypeChanged( E_MissionParameterType type );
     //@}
 
 private:
     //! @name Member data
     //@{
     T_ConnectorVector itemConnectors_;
-    ADN_MissionParameterType* current_;
+    QStringList parameterTypes_;
+    bool addingRow_;
     //@}
 };
 

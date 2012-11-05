@@ -10,6 +10,8 @@
 #ifndef __ADN_ListViewToolTip_h_
 #define __ADN_ListViewToolTip_h_
 
+#include <boost/noncopyable.hpp>
+
 class ADN_ListView;
 
 // =============================================================================
@@ -19,6 +21,7 @@ class ADN_ListView;
 // Created: RBA 2011-08-24
 // =============================================================================
 class ADN_ListViewToolTip : public QObject
+                          , private boost::noncopyable
 {
 
 public:
@@ -26,13 +29,6 @@ public:
     //@{
              ADN_ListViewToolTip( QWidget* parent, ADN_ListView& list );
     virtual ~ADN_ListViewToolTip();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_ListViewToolTip( const ADN_ListViewToolTip& );            //!< Copy constructor
-    ADN_ListViewToolTip& operator=( const ADN_ListViewToolTip& ); //!< Assignment operator
     //@}
 
 protected:

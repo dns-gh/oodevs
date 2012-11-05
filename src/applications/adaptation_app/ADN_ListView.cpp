@@ -11,7 +11,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ListView.h"
 #include "moc_ADN_ListView.cpp"
-#include "ADN_ListViewItem.h"
+#include "ADN_StandardItem.h"
 #include "ADN_Workspace.h"
 #include "ADN_Enums.h"
 #include "ADN_Connector_ListView_ABC.h"
@@ -66,22 +66,22 @@ ADN_ListView::~ADN_ListView()
 // Name: ADN_ListView::ItemAt
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
-ADN_ListViewItem* ADN_ListView::ItemAt( int i )
+ADN_StandardItem* ADN_ListView::ItemAt( int i )
 {
     assert( i < dataModel_.rowCount() );
-    return static_cast< ADN_ListViewItem* >( dataModel_.item( i ) );
+    return static_cast< ADN_StandardItem* >( dataModel_.item( i ) );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::FindItem
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListViewItem* ADN_ListView::FindItem( void* data )
+ADN_StandardItem* ADN_ListView::FindItem( void* data )
 {
     const int rowCount = dataModel_.rowCount();
     for( int i = 0; i < rowCount; ++i )
     {
-        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( i ) );
+        ADN_StandardItem* pCurr = static_cast< ADN_StandardItem* >( dataModel_.item( i ) );
         if( pCurr->GetData() == data )
             return pCurr;
     }
@@ -92,12 +92,12 @@ ADN_ListViewItem* ADN_ListView::FindItem( void* data )
 // Name: ADN_ListView::FindItem
 // Created: ABR 2012-03-09
 // -----------------------------------------------------------------------------
-ADN_ListViewItem* ADN_ListView::FindItem( const QString& itemName  )
+ADN_StandardItem* ADN_ListView::FindItem( const QString& itemName  )
 {
     const int rowCount = dataModel_.rowCount();
     for( int i = 0; i < rowCount; ++i )
     {
-        ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( i ) );
+        ADN_StandardItem* pCurr = static_cast< ADN_StandardItem* >( dataModel_.item( i ) );
         if( pCurr->text() == itemName )
             return pCurr;
     }
@@ -108,7 +108,7 @@ ADN_ListViewItem* ADN_ListView::FindItem( const QString& itemName  )
 // Name: ADN_ListView::InsertItem
 // Created: JSR 2012-10-02
 // -----------------------------------------------------------------------------
-void ADN_ListView::InsertItem( ADN_ListViewItem* item )
+void ADN_ListView::InsertItem( ADN_StandardItem* item )
 {
     dataModel_.appendRow( item );
 }
@@ -126,7 +126,7 @@ void ADN_ListView::InsertItems( const QList< QStandardItem* >& items )
 // Name: ADN_ListView::TakeItem
 // Created: JSR 2012-10-02
 // -----------------------------------------------------------------------------
-void ADN_ListView::TakeItem( ADN_ListViewItem* item )
+void ADN_ListView::TakeItem( ADN_StandardItem* item )
 {
     const QModelIndex index = dataModel_.indexFromItem( item );
     dataModel_.removeRow( index.row(), index.parent() );
@@ -136,7 +136,7 @@ void ADN_ListView::TakeItem( ADN_ListViewItem* item )
 // Name: ADN_ListView::MoveItem
 // Created: JSR 2012-10-02
 // -----------------------------------------------------------------------------
-void ADN_ListView::MoveItem( ADN_ListViewItem* src, ADN_ListViewItem* dest )
+void ADN_ListView::MoveItem( ADN_StandardItem* src, ADN_StandardItem* dest )
 {
     dataModel_.insertRow( dest->row() + 1, dataModel_.takeRow( src->row() ) );
 }
@@ -145,7 +145,7 @@ void ADN_ListView::MoveItem( ADN_ListViewItem* src, ADN_ListViewItem* dest )
 // Name: ADN_ListView::MoveItemAbove
 // Created: JSR 2012-10-02
 // -----------------------------------------------------------------------------
-void ADN_ListView::MoveItemAbove( ADN_ListViewItem* src, ADN_ListViewItem* dest )
+void ADN_ListView::MoveItemAbove( ADN_StandardItem* src, ADN_StandardItem* dest )
 {
     dataModel_.insertRow( dest->row(), dataModel_.takeRow( src->row() ) );
 }
@@ -154,7 +154,7 @@ void ADN_ListView::MoveItemAbove( ADN_ListViewItem* src, ADN_ListViewItem* dest 
 // Name: ADN_ListView::Swap
 // Created: JSR 2012-10-02
 // -----------------------------------------------------------------------------
-void ADN_ListView::Swap( ADN_ListViewItem* src, ADN_ListViewItem* dest )
+void ADN_ListView::Swap( ADN_StandardItem* src, ADN_StandardItem* dest )
 {
     int destSrc = dest->row();
     MoveItem( dest, src );
@@ -253,7 +253,7 @@ bool ADN_ListView::SetCurrentItem( const QString& itemName )
     QStandardItem* pItem = FindItem( itemName );
 
     if( pItem != 0 )
-        return SetCurrentItem( static_cast< ADN_ListViewItem* >( pItem )->GetData() );
+        return SetCurrentItem( static_cast< ADN_StandardItem* >( pItem )->GetData() );
     else
         return SetCurrentItem( (void*)0 );
 }
@@ -422,7 +422,7 @@ bool ADN_ListView::SetCurrentItem()
     {
         QStandardItem* item = dataModel_.GetItemFromIndex( index );
         if( item )
-            return SetCurrentItem( static_cast< ADN_ListViewItem* >( item )->GetData() );
+            return SetCurrentItem( static_cast< ADN_StandardItem* >( item )->GetData() );
     }
     return SetCurrentItem( 0 );
 }
@@ -540,7 +540,7 @@ void ADN_ListView::OnFilterChanged( const QStringList& filterList )
 // Name: ADN_ListView::ApplyFilterLine
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-bool ADN_ListView::ApplyFilterLine( ADN_ListViewItem* item )
+bool ADN_ListView::ApplyFilterLine( ADN_StandardItem* item )
 {
     if( filterLine_.isEmpty() )
         return true;
@@ -559,7 +559,7 @@ bool ADN_ListView::ApplyFilterLine( ADN_ListViewItem* item )
 // Name: ADN_ListView::ApplyFilterList
 // Created: ABR 2012-01-19
 // -----------------------------------------------------------------------------
-bool ADN_ListView::ApplyFilterList( ADN_ListViewItem* item )
+bool ADN_ListView::ApplyFilterList( ADN_StandardItem* item )
 {
     if( filterList_.isEmpty() )
         return true;
@@ -572,13 +572,13 @@ bool ADN_ListView::ApplyFilterList( ADN_ListViewItem* item )
 // Name: ADN_ListView::ApplyFilter
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-void ADN_ListView::ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > func )
+void ADN_ListView::ApplyFilter( boost::function< bool ( ADN_StandardItem* ) > func )
 {
     const int rowCount = dataModel_.rowCount();
     for( int i = 0; i < rowCount; ++i )
     {
-        ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( dataModel_.item( i ) );
-        item->setData( func( item ) ? gui::StandardModel::showValue_ : gui::StandardModel::hideValue_, gui::Roles::FilterRole ); // Use HasAnyChildVisible( item, func ) if tree view. Cf HierarchyListView_ABC
+        ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( i ) );
+        item->setData( func( item ) ? gui::StandardModel::showValue_ : gui::StandardModel::hideValue_, gui::Roles::FilterRole );
     }
 }
 

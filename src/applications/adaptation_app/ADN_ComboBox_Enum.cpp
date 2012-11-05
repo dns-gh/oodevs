@@ -7,16 +7,17 @@
 //
 // *****************************************************************************
 
+#include "adaptation_app_pch.h"
+#include "ADN_ComboBox_Enum.h"
+
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Enum constructor
 // Created: JDY 03-08-29
 //-----------------------------------------------------------------------------
-template <class EnumType>
-ADN_ComboBox_Enum<EnumType>::ADN_ComboBox_Enum(T_Converter cv,QWidget * parent, const char * name)
-    : ADN_ComboBox(parent,name)
-    , converter_(cv)
+ADN_ComboBox_Enum::ADN_ComboBox_Enum( QWidget* parent, const char * name )
+    : ADN_ComboBox( parent, name )
 {
-    pConnector_=new ADN_CCB(*this);
+    pConnector_ = new ADN_Connector_EnumComboBox(this);
     assert(pConnector_);
 }
 
@@ -24,8 +25,7 @@ ADN_ComboBox_Enum<EnumType>::ADN_ComboBox_Enum(T_Converter cv,QWidget * parent, 
 // Name: ADN_ComboBox_Enum destructor
 // Created: JDY 03-08-29
 //-----------------------------------------------------------------------------
-template <class EnumType>
-ADN_ComboBox_Enum<EnumType>::~ADN_ComboBox_Enum()
+ADN_ComboBox_Enum::~ADN_ComboBox_Enum()
 {
     delete pConnector_;
 }
@@ -34,9 +34,30 @@ ADN_ComboBox_Enum<EnumType>::~ADN_ComboBox_Enum()
 // Name: ADN_ComboBox_Enum::UpdateEnableState
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------
-template <class EnumType>
-void ADN_ComboBox_Enum< EnumType >::UpdateEnableState()
+void ADN_ComboBox_Enum::UpdateEnableState()
 {
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
         setEnabled( static_cast< ADN_Connector_EnumComboBox* >( pConnector_ )->IsConnected() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ComboBox_Enum::SetCurrentData
+// Created: ABR 2012-10-26
+// -----------------------------------------------------------------------------
+void ADN_ComboBox_Enum::SetCurrentData(void *data)
+{
+    if( !data )
+        clear();
+        //SetAutoClear( true );
+
+    DisconnectItem();
+
+    pCurData_ = data;
+
+    ConnectItem();
+
+    if( !data )
+        clear();
+        //SetAutoClear( false );
+
 }

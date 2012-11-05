@@ -79,7 +79,7 @@ void ADN_Automata_GUI::Build()
     // Name
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
     // Automaton type
-    builder.AddEnumField<E_AgentTypeAutomate>( pInfoHolder, tr( "Type" ), vInfosConnectors[eAgentType], ADN_Tr::ConvertFromAgentTypeAutomate );
+    builder.AddEnumField( pInfoHolder, tr( "Type" ), vInfosConnectors[eAgentType] );
     // Model
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, eEntityType_Automat );
     goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );

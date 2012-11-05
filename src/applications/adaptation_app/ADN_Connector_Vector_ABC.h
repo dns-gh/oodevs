@@ -55,7 +55,7 @@ public slots:
     void AddItem( void* pObj );
     void RemItem( void* pObj );
 
-    void AddItemNoEmit( void* pObj, int index = -1 );
+    void AddItemNoEmit( void* pObj );
     void RemItemNoEmit( void* pObj );
 
     void SwapItem( int i, int j );
@@ -84,7 +84,6 @@ public:
 
     virtual void SetDataPrivate( void* pData );
     virtual bool AddItemPrivate( void* pObj, bool bCreateCommand = false );
-    virtual void SetNextItemIndex( int index );
     virtual bool RemItemPrivate( void* pObj, bool bCreateCommand = false );
     virtual void SwapItemPrivate( int i, int j );
     virtual void SortPrivate( ADN_BinaryPredicateWrapper& lessComp );

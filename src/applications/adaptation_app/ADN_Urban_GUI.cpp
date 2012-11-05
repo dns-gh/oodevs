@@ -87,11 +87,10 @@ void ADN_Urban_GUI::Build()
         pEdit->setObjectName( strClassName_ + "_MaterialName" );
         vMaterialInfosConnectors[ eUrbanMaterialName ] = &pEdit->GetConnector();
 
-        pAttritionTable_ = new ADN_Urban_AttritionTable( pGroupMaterial );
-        pAttritionTable_->setObjectName( strClassName_ + "_MaterialAttrition" );
+        pAttritionTable_ = new ADN_Urban_AttritionTable( strClassName_ + "_MaterialAttrition", vMaterialInfosConnectors[ eUrbanMaterialAttrition ], pGroupMaterial );
+        //pAttritionTable_->setObjectName( strClassName_ + "_MaterialAttrition" );
         pAttritionTable_->setFixedHeight( 180 );
-
-        vMaterialInfosConnectors[ eUrbanMaterialAttrition ] = &pAttritionTable_->GetConnector();
+        //vMaterialInfosConnectors[ eUrbanMaterialAttrition ] = &pAttritionTable_->GetConnector();
     }
 
     // Facades

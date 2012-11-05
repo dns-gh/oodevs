@@ -203,7 +203,7 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
     output << xml::start( "breakdown" )
            << xml::attribute( "name", strName_ )
            << xml::attribute( "id", nId_ )
-           << xml::attribute( "type", ADN_Tr::ConvertFromBreakdownType( nType_.GetData() ) )
+           << xml::attribute( "type", nType_.Convert() )
            << xml::attribute( "average-repairing-time", repairTime_ )
            << xml::attribute( "variance", repairTimeVariance_ );
     for( IT_RepairPartInfoVector it = vRepairParts_.begin(); it != vRepairParts_.end(); ++it )

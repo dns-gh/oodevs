@@ -12,6 +12,7 @@
 #include "ADN_DataException.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tr.h"
+#include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos
@@ -145,7 +146,7 @@ void ADN_FireClass_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
 ADN_FireClass_Data::FireSurfaceInfos::FireSurfaceInfos( E_Location location )
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
-    , strName_            ( ADN_Tr::ConvertFromLocation( location ) )
+    , strName_            ( ENT_Tr::ConvertFromLocation( location ) )
     , ignitionThreshold_  ( 0 )
     , maxCombustionEnergy_( 0 )
 {
@@ -364,7 +365,7 @@ void ADN_FireClass_Data::FireClassInfos::ReadUrbanModifer( xml::xistream& input 
 void ADN_FireClass_Data::FireClassInfos::ReadSurface( xml::xistream& input )
 {
     std::string type = input.attribute< std::string >( "type" );
-    /*E_Location location = ADN_Tr::ConvertToLocation( type );
+    /*E_Location location = ENT_Tr::ConvertToLocation( type );
     if( location == static_cast< E_Location >( -1 ) )
         throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Fire - Invalid location type '%1'" ).arg( type.c_str() ).toAscii().constData() );*/
     IT_FireSurfaceInfos_Vector it = std::find_if( surfaceInfos_.begin(), surfaceInfos_.end(), FireSurfaceInfos::Cmp( type ) );

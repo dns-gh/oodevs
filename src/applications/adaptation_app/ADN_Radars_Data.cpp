@@ -247,7 +247,7 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "radar" )
             << xml::attribute( "name", strName_ )
-            << xml::attribute( "type", ADN_Tr::ConvertFromRadarType( nType_.GetData() ) )
+            << xml::attribute( "type", nType_.Convert() )
             << xml::attribute( "action-range", rRange_ );
     if( bHasMinHeight_.GetData() )
         output << xml::attribute( "min-height", rMinHeight_ );

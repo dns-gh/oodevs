@@ -267,10 +267,10 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
     {
         output << xml::start( "type" )
                     << xml::start( "dotation-supply" )
-                        << xml::attribute( "type", ADN_Tr::ConvertFromSupplyConvoyType( dotationSupplyConvoyType_.GetData() ) )
+                        << xml::attribute( "type", dotationSupplyConvoyType_.Convert() )
                     << xml::end
                     << xml::start( "stock-supply" )
-                        << xml::attribute( "type", ADN_Tr::ConvertFromSupplyConvoyType( stockSupplyConvoyType_.GetData() ) )
+                        << xml::attribute( "type", dotationSupplyConvoyType_.Convert() )
                     << xml::end
                << xml::end;
     }

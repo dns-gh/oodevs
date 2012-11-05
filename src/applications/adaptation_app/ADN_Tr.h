@@ -25,8 +25,7 @@ class ADN_Tr : public ENT_Tr_ABC
 public:
     //! @name Convert From functions
     //@{
-    static const std::string& ConvertFromLocation ( E_Location , E_Conversion = eToSim );
-    static const std::string& ConvertFromConsumptionType ( E_ConsumptionType, E_Conversion = eToSim );
+    static const std::string& ConvertFromConsumptionType( E_ConsumptionType, E_Conversion = eToSim );
     static const std::string& ConvertFromVisionObject( E_VisionObject, E_Conversion = eToSim );
     static const std::string& ConvertFromKeyPoint( E_KeyPoint, E_Conversion = eToSim );
     static const std::string& ConvertFromAgentTypePion( E_AgentTypePion, E_Conversion = eToSim );
@@ -40,7 +39,7 @@ public:
     static const std::string& ConvertFromBreakdownType( E_BreakdownType, E_Conversion = eToSim );
     static const std::string& ConvertFromBreakdownNTI( E_BreakdownNTI, E_Conversion = eToSim );
     static const std::string& ConvertFromRadarType( E_RadarType, E_Conversion = eToSim );
-    static const std::string& ConvertFromEquipmentState( E_EquipmentState_ADN, E_Conversion = eToSim );
+    static const std::string& ConvertFromEquipmentState_ADN( E_EquipmentState_ADN, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
     static const std::string& ConvertFromMissionParameterType( E_MissionParameterType, E_Conversion = eToSim );
     static const std::string& ConvertFromSupplyConvoyType( E_SupplyConvoyType, E_Conversion = eToSim );
@@ -51,7 +50,6 @@ public:
 
     //! @name Convert To functions
     //@{
-    static E_Location        ConvertToLocation         ( const std::string& );
     static E_ConsumptionType ConvertToConsumptionType  ( const std::string& );
     static E_VisionObject    ConvertToVisionObject     ( const std::string& );
     static E_KeyPoint        ConvertToKeyPoint         ( const std::string& );
@@ -66,7 +64,7 @@ public:
     static E_BreakdownType   ConvertToBreakdownType    ( const std::string& );
     static E_BreakdownNTI    ConvertToBreakdownNTI     ( const std::string& );
     static E_RadarType       ConvertToRadarType        ( const std::string& );
-    static E_EquipmentState_ADN  ConvertToEquipmentState( const std::string& );
+    static E_EquipmentState_ADN ConvertToEquipmentState_ADN( const std::string& );
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
     static E_MissionParameterType ConvertToMissionParameterType( const std::string& );
     static E_SupplyConvoyType   ConvertToSupplyConvoyType( const std::string& );

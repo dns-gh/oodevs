@@ -81,8 +81,8 @@ void ADN_ChangeValueCommand_Enum< EnumType, nb >::UpdateDescription()
 
     strDescription += qApp->translate("ADN_ChangeValueCommand"," from ");
 
-    strDescription += ADN_Type_Enum< EnumType, nb >::ConvertValue( oldValue_, ENT_Tr_ABC::eToTr ).c_str();
-    strDescription += qApp->translate("ADN_ChangeValueCommand"," to ");
-    strDescription += ADN_Type_Enum< EnumType, nb >::ConvertValue( newValue_, ENT_Tr_ABC::eToTr ).c_str();
+    //strDescription += ADN_Type_Enum< EnumType, nb >::ConvertValue( oldValue_ ).c_str();
+    //strDescription += qApp->translate("ADN_ChangeValueCommand"," to ");
+    //strDescription += ADN_Type_Enum< EnumType, nb >::ConvertValue( newValue_ ).c_str();
     setDescription( strDescription );
 }

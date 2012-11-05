@@ -1377,6 +1377,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>% on site fixable</source>
         <translation>% reparable en sitio</translation>
     </message>
+    <message>
+        <source>Armor</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Data</name>
@@ -4782,14 +4786,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation></translation>
     </message>
     <message>
-        <source>equipment</source>
-        <translation>équipement</translation>
-    </message>
-    <message>
-        <source>human</source>
-        <translation>humain</translation>
-    </message>
-    <message>
         <source>Eletronic</source>
         <translation>Electronique</translation>
     </message>
@@ -5133,6 +5129,14 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Shapefile input</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished">Equipo</translation>
+    </message>
+    <message>
+        <source>Human</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5414,6 +5418,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>% on site fixable</source>
         <translation>% réparable sur place</translation>
+    </message>
+    <message>
+        <source>Armor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

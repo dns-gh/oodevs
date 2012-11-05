@@ -164,24 +164,14 @@ void  ADN_Connector_Vector_ABC::AddItem( void* pObj )
 // Name: ADN_Connector_Vector_ABC::AddItemNoEmit
 // Created: AGN 2004-03-19
 // -----------------------------------------------------------------------------
-void ADN_Connector_Vector_ABC::AddItemNoEmit( void* pObj, int index )
+void ADN_Connector_Vector_ABC::AddItemNoEmit( void* pObj )
 {
     if( ! SlotsBlocked() )
     {
         BlockSlots( true );
-        SetNextItemIndex( index );
         AddItemPrivate( pObj );
         BlockSlots( false );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Vector_ABC::SetNextItemIndex
-// Created: LDC 2011-01-03
-// -----------------------------------------------------------------------------
-void ADN_Connector_Vector_ABC::SetNextItemIndex( int /*index*/ )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

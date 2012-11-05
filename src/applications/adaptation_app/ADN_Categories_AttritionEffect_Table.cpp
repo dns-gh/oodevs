@@ -9,96 +9,68 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Categories_AttritionEffect_Table.h"
-
-#include "moc_ADN_Categories_AttritionEffect_Table.cpp"
-
-#include "ADN_Categories_Data.h"
-#include "ADN_Connector_Table_ABC.h"
-#include "ADN_Categories_GUI.h"
 #include "ADN_Equipement_GUI.h"
-#include "ADN_TableItem_Edit.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
-typedef helpers::AttritionEffectOnHuman AttritionEffectOnHuman;
-
-//-----------------------------------------------------------------------------
-// Internal table connector
-//-----------------------------------------------------------------------------
-class ADN_Connector_AttritionEffectTable
-    : public ADN_Connector_Table_ABC
-{
-public:
-    ADN_Connector_AttritionEffectTable( ADN_Categories_AttritionEffect_Table& tab )
-        : ADN_Connector_Table_ABC( tab, false, "ADN_Connector_AttritionEffect_ListView" )
-    {
-        // NOTHING
-    }
-    void AddSubItems( int i, void* pObj )
-    {
-        assert( pObj );
-        AttritionEffectOnHuman* pAttrition = static_cast< AttritionEffectOnHuman* >( pObj );
-
-        // Add a new row.
-        ADN_TableItem_String* pItemState = new ADN_TableItem_String( &tab_, pObj );
-        ADN_TableItem_IntPercentage* pItemWounded = new ADN_TableItem_IntPercentage( &tab_, pObj );
-        static_cast< ADN_IntPercentageValidator* >( &pItemWounded->GetValidator() )->AddLinkedValue( pAttrition->nDeadPercentage_ );
-        ADN_TableItem_IntPercentage* pItemDead = new ADN_TableItem_IntPercentage( &tab_, pObj );
-        static_cast< ADN_IntPercentageValidator* >( &pItemDead->GetValidator() )->AddLinkedValue( pAttrition->nInjuredPercentage_ );
-        tab_.setItem( i, 0, pItemState );
-        tab_.setItem( i, 1, pItemWounded );
-        tab_.setItem( i, 2, pItemDead );
-        // Connect the items.
-        pItemState->setText( ADN_Tr::ConvertFromEquipmentState( pAttrition->nEquipmentState_.GetData(), ENT_Tr_ABC::eToTr ).c_str() );
-        pItemWounded->GetConnector().Connect( &pAttrition->nInjuredPercentage_ );
-        pItemDead->GetConnector().Connect( &pAttrition->nDeadPercentage_ );
-    }
-};
-
 // -----------------------------------------------------------------------------
-// Name: ADN_Categories_AttritionEffect_Table constructor
-// Created: SBO 2006-07-28
+// Name: ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table
+// Created: ABR 2012-10-18
 // -----------------------------------------------------------------------------
-ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table( QWidget* pParent /* = 0*/ )
-    : ADN_Table2( pParent, "ADN_Categories_AttritionEffect_Table" )
+ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    // Selection and sorting.
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
-    setShowGrid( false );
-    setLeftMargin( 0 );
-    this->setMaximumHeight( 300 );
-    // Hide the vertical header.
-    verticalHeader()->hide();
-    // Setup 2 columns.
-    setNumCols( 3 );
-    setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-    setColumnStretchable( 2, true );
-    horizontalHeader()->setLabel( 0, tr( "State" ) );
-    horizontalHeader()->setLabel( 1, tr( "Wounded %" ) );
-    horizontalHeader()->setLabel( 2, tr( "Dead %" ) );
-    setColumnReadOnly( 0, true );
-    // Create the connector.
-    pConnector_ = new ADN_Connector_AttritionEffectTable( *this );
+    dataModel_.setColumnCount( 3 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "State" )
+                      << tr( "Wounded %" )
+                      << tr( "Dead %" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+    setMaximumHeight( 300 );
+
+    delegate_.AddColorOnColumn( 1, 0., 100. );
+    delegate_.AddColorOnColumn( 2, 0., 100. );
+    delegate_.AddSpinBoxOnColumn( 1, 0, 100 );
+    delegate_.AddSpinBoxOnColumn( 2, 0, 100 );
+    std::vector< int > linkedList;
+    linkedList.push_back( 1 );
+    linkedList.push_back( 2 );
+    delegate_.SetColumnsSumRestriction( linkedList, gui::CommonDelegate::eLTE, 100 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Categories_AttritionEffect_Table destructor
-// Created: SBO 2006-07-28
+// Name: ADN_Categories_AttritionEffect_Table::~ADN_Categories_AttritionEffect_Table
+// Created: ABR 2012-10-18
 // -----------------------------------------------------------------------------
 ADN_Categories_AttritionEffect_Table::~ADN_Categories_AttritionEffect_Table()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Categories_AttritionEffect_Table::doValueChanged
-// Created: JSR 2010-05-03
+// Name: ADN_Categories_AttritionEffect_Table::AddRow
+// Created: ABR 2012-10-19
 // -----------------------------------------------------------------------------
-void ADN_Categories_AttritionEffect_Table::doValueChanged( int row, int col )
+void ADN_Categories_AttritionEffect_Table::AddRow( int row, void* data )
 {
-    ADN_Table2::doValueChanged( row, col );
-    ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+    helpers::AttritionEffectOnHuman* pAttrition = static_cast< helpers::AttritionEffectOnHuman* >( data );
+    if( !pAttrition )
+        return;
+
+    AddItem( row, 0, data, ADN_Tr::ConvertFromEquipmentState_ADN( pAttrition->nEquipmentState_.GetData(), ENT_Tr_ABC::eToTr ).c_str() );
+    AddItem( row, 1, data, &pAttrition->nInjuredPercentage_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &pAttrition->nDeadPercentage_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_AttritionEffect_Table::dataChanged
+// Created: ABR 2012-10-23
+// -----------------------------------------------------------------------------
+void ADN_Categories_AttritionEffect_Table::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
+{
+    ADN_Table3::dataChanged( topLeft, bottomRight );
+    if( topLeft == bottomRight )
+        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
 }

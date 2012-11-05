@@ -35,7 +35,7 @@ void AttritionEffectOnHuman::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "equipment-state", equipment )
         >> xml::attribute( "injured-percentage", nInjuredPercentage_ )
         >> xml::attribute( "dead-percentage", nDeadPercentage_ );
-    nEquipmentState_ = ADN_Tr::ConvertToEquipmentState( equipment );
+    nEquipmentState_ = ADN_Tr::ConvertToEquipmentState_ADN( equipment );
     if( nEquipmentState_ == E_EquipmentState_ADN( -1 ) )
         throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Categories - Invalid equipment state '%1'" ).arg( equipment.c_str() ).toAscii().constData() );
 }
@@ -47,7 +47,7 @@ void AttritionEffectOnHuman::ReadArchive( xml::xistream& input )
 void AttritionEffectOnHuman::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "attrition-effect" )
-        << xml::attribute( "equipment-state", ADN_Tr::ConvertFromEquipmentState( nEquipmentState_.GetData() ) )
+        << xml::attribute( "equipment-state", ADN_Tr::ConvertFromEquipmentState_ADN( nEquipmentState_.GetData() ) )
         << xml::attribute( "injured-percentage", nInjuredPercentage_ )
         << xml::attribute( "dead-percentage", nDeadPercentage_ )
         << xml::end;

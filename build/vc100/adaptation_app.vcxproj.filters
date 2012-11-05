@@ -535,9 +535,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Data.cpp">
       <Filter>Source Files\Workspace\Equipement\Equipement Data</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_Nature.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AmmoListView.cpp">
       <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
     </ClCompile>
@@ -630,9 +627,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_Data.cpp">
       <Filter>Source Files\Workspace\Composantes\Composantes Data</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Composantes_Sizes.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_ActiveProtectionsListView.cpp">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
@@ -784,9 +778,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameters_Table.cpp">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameterType.cpp">
-      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameterValues_Table.cpp">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClCompile>
@@ -887,9 +878,6 @@
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtectionsListView.cpp">
-      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_ActiveProtection_Dotations.cpp">
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.cpp">
@@ -1081,19 +1069,10 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_CheckItem.cpp">
       <Filter>Source Files\Common widgets\Table</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_ComboBox.cpp">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_ComboBoxItem.cpp">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_TimeField.cpp">
       <Filter>Source Files\Common widgets\Table</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView.cpp">
-      <Filter>Source Files\Common widgets\List view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListViewItem.cpp">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.cpp">
@@ -1161,9 +1140,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.cpp">
       <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_LogisticSupplyClass.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.cpp">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
@@ -1267,6 +1243,18 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDelegate.cpp">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_StandardItem.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Enum.cpp">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_StandardItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1282,9 +1270,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.h">
-      <Filter>Source Files\Common types</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Choice.h">
       <Filter>Source Files\Common types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Enum.h">
@@ -1386,9 +1371,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Data.h">
       <Filter>Source Files\Workspace\Equipement\Equipement Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_Nature.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_AmmoListView.h">
       <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
     </ClInclude>
@@ -1442,9 +1424,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Data.h">
       <Filter>Source Files\Workspace\Composantes\Composantes Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Composantes_Sizes.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Sensors_GUI.h">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
@@ -1611,9 +1590,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Data.h">
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_ActiveProtection_Dotations.h">
-      <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.h">
       <Filter>Source Files\Workspace\Zurb\Zurb Data</Filter>
     </ClInclude>
@@ -1770,17 +1746,8 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_CheckItem.h">
       <Filter>Source Files\Common widgets\Table</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_ComboBox.h">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_ComboBoxItem.h">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_Edit.h">
       <Filter>Source Files\Common widgets\Table</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListViewItem.h">
-      <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.h">
       <Filter>Source Files\Common widgets\List view</Filter>
@@ -1820,9 +1787,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.h">
       <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_LogisticSupplyClass.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.h">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
@@ -1929,15 +1893,25 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_FragOrder.h">
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableDelegate.h">
+      <Filter>Source Files\Common widgets\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Categories_AttritionEffect_Table.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_StandardItem.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Combo.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_StandardItem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
       <Filter>Source Files</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.inl">
-      <Filter>Source Files\Common types</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_Type_Choice.inl">
       <Filter>Source Files\Common types</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_Type_Enum.inl">
@@ -1973,9 +1947,6 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Bool.inl">
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Combo_ABC.inl">
-      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
-    </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Double.inl">
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </None>
@@ -1990,9 +1961,6 @@
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_TableItem_Edit.inl">
       <Filter>Source Files\Common widgets\Table</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Enum.inl">
-      <Filter>Source Files\Common widgets\Combo box</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.inl">
       <Filter>Source Files\Common widgets\Combo box</Filter>
@@ -2030,6 +1998,9 @@
     </None>
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_en.ts">
       <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Combo.inl">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -2282,9 +2253,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\translator.pro">
       <Filter>Translations</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Categories_AttritionEffect_Table.h">
-      <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ColorNameSelector.h">
       <Filter>Source Files\Common widgets\Color selector</Filter>
     </CustomBuild>
@@ -2317,9 +2285,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.h">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionParameterType.h">
-      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>

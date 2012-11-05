@@ -10,77 +10,36 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Launchers_ModifPhs_GUI.h"
-
-#include "ADN_Tools.h"
-#include "ADN_App.h"
-#include "ADN_Workspace.h"
-#include "ADN_CommonGfx.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Weapons_GUI.h"
 #include "ENT/ENT_Tr.h"
-
-typedef ADN_Launchers_Data::ModifPhsInfos ModifPhsInfos;
-
-//-----------------------------------------------------------------------------
-// Internal Table connector to be connected with
-//-----------------------------------------------------------------------------
-class ADN_Launchers_ModifPhs_GUI_Connector
-:public ADN_Connector_Table_ABC
-{
-public:
-
-    ADN_Launchers_ModifPhs_GUI_Connector(ADN_Launchers_ModifPhs_GUI& tab)
-    : ADN_Connector_Table_ABC(tab,false)
-    {}
-
-    void  AddSubItems(int i,void *obj)
-    {
-        assert(obj);
-        ADN_TableItem_Double              *pItemDouble=0;
-        ADN_Type_Line_ABC<ModifPhsInfos>  *pLine=(ADN_Type_Line_ABC<ModifPhsInfos>*)obj;
-        for( int j=0;j<eNbrUnitPosture;++j)
-        {
-            // add a new row & set new values
-            pItemDouble = new ADN_TableItem_Double(&tab_,obj);
-            pItemDouble->SetUseColor( true );
-            pItemDouble->SetRangeForColor( 0.0, 100.0 );
-            tab_.setItem(i,j, pItemDouble );
-            pItemDouble->GetValidator().setRange( 0, 100, 5 );
-            pItemDouble->GetConnector().Connect(pLine->operator[](j));
-        }
-    }
-
-private:
-    ADN_Launchers_ModifPhs_GUI_Connector& operator=( const ADN_Launchers_ModifPhs_GUI_Connector& );
-};
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_ModifPhs_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( QWidget * parent )
-:   ADN_Table2( parent, "ADN_Launchers_ModifPhs_GUI" )
+ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    :   ADN_Table3( objectName, connector, pParent )
 {
-    // peut etre selectionne & trie
-    setSelectionMode( Q3Table::NoSelection );
+    setSelectionMode( QAbstractItemView::NoSelection );
     setShowGrid( false );
 
-    // columns
-    setNumCols( eNbrUnitPosture );
-    setNumRows( eNbrUnitPosture );
-    for( int i=0; i < eNbrUnitPosture; ++i )
+    dataModel_.setColumnCount( eNbrUnitPosture );
+    dataModel_.setRowCount( eNbrUnitPosture );
+    QStringList headers;
+    for( int i = 0; i < eNbrUnitPosture; ++i )
     {
-        setColumnStretchable(i,true);
-        horizontalHeader()->setLabel(i,ENT_Tr::ConvertFromUnitPosture((E_UnitPosture)i,ENT_Tr_ABC::eToTr).c_str());
-        verticalHeader()->setLabel(i,ENT_Tr::ConvertFromUnitPosture((E_UnitPosture)i,ENT_Tr_ABC::eToTr).c_str());
+        headers.append( ENT_Tr::ConvertFromUnitPosture( static_cast< E_UnitPosture >( i ), ENT_Tr_ABC::eToTr).c_str() );
+        delegate_.AddColorOnColumn( i, 0., 100. );
+        delegate_.AddDoubleSpinBoxOnColumn( i, 0, 100, 1, 5 );
     }
+    dataModel_.setHorizontalHeaderLabels( headers );
+    dataModel_.setVerticalHeaderLabels( headers );
+
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
 
     int nRowHeight = this->rowHeight( 0 );
     this->setMaximumHeight( ( eNbrUnitPosture + 1 ) * nRowHeight + 5);
-
-    // connector creation
-    pConnector_=new ADN_Launchers_ModifPhs_GUI_Connector(*this);
 }
 
 //-----------------------------------------------------------------------------
@@ -89,15 +48,30 @@ ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( QWidget * parent )
 //-----------------------------------------------------------------------------
 ADN_Launchers_ModifPhs_GUI::~ADN_Launchers_ModifPhs_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Launchers_ModifPhs_GUI::doValueChanged
-// Created: JSR 2010-04-28
+// Name: ADN_Launchers_ModifPhs_GUI::AddRow
+// Created: JSR 2012-10-31
 // -----------------------------------------------------------------------------
-void ADN_Launchers_ModifPhs_GUI::doValueChanged( int row, int col )
+void ADN_Launchers_ModifPhs_GUI::AddRow( int row, void* data )
 {
-    ADN_Table2::doValueChanged( row, col );
-    ADN_Workspace::GetWorkspace().GetWeapons().GetGui().UpdateModifiers();
+    ADN_Type_Line_ABC< ADN_Launchers_Data::ModifPhsInfos >* pLine = static_cast< ADN_Type_Line_ABC< ADN_Launchers_Data::ModifPhsInfos >* >( data );
+    if( !pLine )
+        return;
+    
+    for( int col = 0; col < eNbrUnitPosture; ++col )
+        AddItem( row, col, data, pLine->operator[]( col ), ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Launchers_ModifPhs_GUI::dataChanged
+// Created: JSR 2012-10-31
+// -----------------------------------------------------------------------------
+void ADN_Launchers_ModifPhs_GUI::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
+{
+    ADN_Table3::dataChanged( topLeft, bottomRight );
+    if( topLeft == bottomRight )
+        ADN_Workspace::GetWorkspace().GetWeapons().GetGui().UpdateModifiers();
 }

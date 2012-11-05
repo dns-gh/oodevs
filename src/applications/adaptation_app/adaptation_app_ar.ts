@@ -1362,6 +1362,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>% destroyed</source>
         <translation type="unfinished">% دمرت</translation>
     </message>
+    <message>
+        <source>Armor</source>
+        <translation type="unfinished">درع</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Data</name>
@@ -4814,14 +4818,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">خطورة إصابة</translation>
     </message>
     <message>
-        <source>equipment</source>
-        <translation type="unfinished">المعدات</translation>
-    </message>
-    <message>
-        <source>human</source>
-        <translation type="unfinished">البشرية</translation>
-    </message>
-    <message>
         <source>Eletronic</source>
         <translation type="unfinished">الإلكترونية</translation>
     </message>
@@ -5117,6 +5113,14 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Shapefile input</source>
         <translation type="unfinished">إدخال مدخلات</translation>
     </message>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished">المعدات</translation>
+    </message>
+    <message>
+        <source>Human</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5398,6 +5402,10 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>% on site fixable</source>
         <translation type="unfinished">% في الموقع يمكن حلها</translation>
+    </message>
+    <message>
+        <source>Armor</source>
+        <translation type="unfinished">درع</translation>
     </message>
 </context>
 <context>

@@ -95,7 +95,7 @@ bool ADN_Connector_ListView_ABC::RemItemPrivate( void* item, bool )
 {
     if( item == 0 )
         return false;
-    ADN_ListViewItem *pItem = list_.FindItem( item );
+    ADN_StandardItem *pItem = list_.FindItem( item );
     if( pItem )
         list_.TakeItem( pItem );
     return true;
@@ -117,8 +117,8 @@ void ADN_Connector_ListView_ABC::SwapItemPrivate(int i,int j)
         SwapItem( j, i );
     else if( !bSwap_)
     {
-        ADN_ListViewItem* pItemJ = list_.ItemAt( j );
-        ADN_ListViewItem* pItemI = list_.ItemAt( i );
+        ADN_StandardItem* pItemJ = list_.ItemAt( j );
+        ADN_StandardItem* pItemI = list_.ItemAt( i );
 
         if( i == 0)
         {

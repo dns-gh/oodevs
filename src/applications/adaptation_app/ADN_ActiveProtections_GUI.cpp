@@ -13,7 +13,6 @@
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ActiveProtections_WeaponsTable.h"
 #include "ADN_Composantes_Dotations_GUI.h"
-#include "ADN_ComboBox_ActiveProtection_Dotations.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GoToButton.h"
 #include "ADN_GroupBox.h"

@@ -18,8 +18,7 @@
 // Created: JDY 03-07-08
 //*****************************************************************************
 template <class T>
-class ADN_Connector_Int
-: public ADN_Connector_ABC
+class ADN_Connector_Int : public ADN_Connector_ABC
 {
 public:
     explicit ADN_Connector_Int(T* gfx);

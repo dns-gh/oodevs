@@ -121,7 +121,10 @@ void ADN_ComboBox::ItemSelected( int ndx )
         ndx = vItemsEnum_.at( ndx );
     fromView_ = false;
     if( pConnector_ )
-        pCurData_ = static_cast< ADN_Connector_Combo_ABC* >( pConnector_ )->SetNdxChanged( ndx );
+    {
+        if( ADN_Connector_Combo_ABC* connectorCombo = dynamic_cast< ADN_Connector_Combo_ABC* >( pConnector_ ) )
+            pCurData_ = connectorCombo->SetNdxChanged( ndx );
+    }
     else
         pCurData_ = 0;
     ConnectItem();
@@ -252,7 +255,8 @@ void ADN_ComboBox::setEnabled( bool b )
 void ADN_ComboBox::UpdateEnableState()
 {
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() && pConnector_ )
-        setEnabled( static_cast< ADN_Connector_Combo_ABC* >( pConnector_ )->IsConnected() );
+        if( ADN_Connector_Combo_ABC* connectorCombo = dynamic_cast< ADN_Connector_Combo_ABC* >( pConnector_ ) )
+            setEnabled( connectorCombo->IsConnected() );
 }
 
 // -----------------------------------------------------------------------------

@@ -126,7 +126,6 @@ void ADN_Connector_ABC::DisconnectPrivate( ADN_Connector_Vector_ABC* /*pTarget*/
 void ADN_Connector_ABC::ConnectPrivateSub( ADN_Connector_ABC* pTarget )
 {
     ADN_Ref_ABC::ConnectPrivateSub( (ADN_Ref_ABC*)pTarget );
-
     pTarget->Initialize( *this );
     connect( pTarget, SIGNAL( DataChanged( void* ) ), this, SLOT( SetData( void* ) ) );
 }

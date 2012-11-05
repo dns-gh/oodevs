@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-21 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Connector_Combo_ABC.inl $
-// $Author: Ape $
-// $Modtime: 3/03/05 15:48 $
-// $Revision: 3 $
-// $Workfile: ADN_Connector_Combo_ABC.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2012 MASA Group
+//
+// *****************************************************************************
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo<T> constructor
@@ -15,9 +13,9 @@
 //-----------------------------------------------------------------------------
 template< class T >
 ADN_Connector_Combo<T>::ADN_Connector_Combo(T* combo)
-: ADN_Connector_Combo_ABC()
-, pCombo_(combo)
-, bIsConnected_(false)
+    : ADN_Connector_Combo_ABC()
+    , pCombo_(combo)
+    , bIsConnected_(false)
 {
     assert(pCombo_);
     if (pCombo_->IsAutoEnabled())

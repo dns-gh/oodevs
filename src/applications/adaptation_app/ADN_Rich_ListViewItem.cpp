@@ -1,17 +1,16 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-02 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ListViewItem.cpp $
-// $Author: Ape $
-// $Modtime: 28/02/05 11:13 $
-// $Revision: 5 $
-// $Workfile: ADN_ListViewItem.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Rich_ListViewItem.h"
-
 #include "ADN_ListView.h"
+#include "ADN_StandardItem.h"
 
 QColor ADN_Rich_ListViewItem::warningColor_( 255, 185, 125 );
 QColor ADN_Rich_ListViewItem::errorColor_  ( 255, 125, 125 );

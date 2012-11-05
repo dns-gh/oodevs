@@ -61,8 +61,8 @@ void ADN_Supply_GUI::Build()
     Q3GroupBox* pTypeGroup = new Q3GroupBox( 2, Qt::Vertical, tr( "Convoy type" ) );
     {
         QWidget* pHolder = builder.AddFieldHolder( pTypeGroup );
-        builder.AddEnumField< E_SupplyConvoyType >( pHolder, tr( "Between logistic bases" ), data_.infos_.stockSupplyConvoyType_, ADN_Tr::ConvertFromSupplyConvoyType );
-        builder.AddEnumField< E_SupplyConvoyType >( pHolder, tr( "For final unit supply " ), data_.infos_.dotationSupplyConvoyType_, ADN_Tr::ConvertFromSupplyConvoyType );
+        builder.AddEnumField( pHolder, tr( "Between logistic bases" ), data_.infos_.stockSupplyConvoyType_ );
+        builder.AddEnumField( pHolder, tr( "For final unit supply " ), data_.infos_.dotationSupplyConvoyType_ );
     }
 
     Q3HGroupBox* pVectorGroup = new Q3HGroupBox( tr( "Conveyors availability warnings" ) );

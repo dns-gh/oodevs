@@ -74,7 +74,7 @@ void ADN_WizardPage< T >::Build()
 
     proxy_ = new QSortFilterProxyModel( view_ );
     proxy_->setSourceModel( model_ );
-    proxy_->setSortRole( Qt::DisplayRole );
+    proxy_->setSortRole( Qt::EditRole );
 
     view_->setModel( proxy_ );
     view_->setSelectionBehavior( QAbstractItemView::SelectRows );
