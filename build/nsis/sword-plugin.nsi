@@ -24,7 +24,7 @@ Var /GLOBAL INSTDATADIR
 !insertmacro OT.Initialize
 
 Name "${PRODUCT_NAME}"
-OutFile "${DISTDIR}\SWORD_${PLUGIN}_${PLATFORM}_${APP_VERSION_MAJOR}${PRODUCT_EVALUATION}.exe"
+OutFile "${OUTFILE}"
 
 !include "WordFunc.nsh"
 !insertmacro VersionCompare

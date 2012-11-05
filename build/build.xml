@@ -1336,22 +1336,28 @@
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.hla,package.plugin.dis" description="package plugin individual installers"/>
 
+    <macrodef name="package_plugin">
+        <attribute name="name"/>
+        <sequential>
+            <local name="output"/>
+            <property name="output" value="${out.dir}/SWORD_plugin-@{name}_${platform}_${version.project.major}.exe"/>
+            <nsis name="sword-plugin" script="sword-plugin.nsi" license="true" todir="${out.dir}">
+                <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
+                <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
+                <arg value="/DPLUGIN=plugin-@{name}"/>
+                <arg value="/DPLUGIN_VERSION=1.0"/>
+                <arg value="/DOUTFILE=${output}"/>
+            </nsis>
+            <safe-move file="${output}"/>
+        </sequential>
+    </macrodef>
+
     <target name="package.plugin.hla" description="create hla plugin installer">
-        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-            <arg value="/DPLUGIN=plugin-hla"/>
-            <arg value="/DPLUGIN_VERSION=1.0"/>
-        </nsis>
+        <package_plugin name="hla"/>
     </target>
 
     <target name="package.plugin.dis" description="create dis plugin installer">
-        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
-            <arg value="/DPLUGIN=plugin-dis"/>
-            <arg value="/DPLUGIN_VERSION=1.0"/>
-        </nsis>
+        <package_plugin name="dis"/>
     </target>
 
     <!-- Package misc -->
@@ -1445,11 +1451,15 @@
 
      <!-- Package Application -->
     <target name="package.app" description="package des applications runtime">
-        <nsis name="sword" script="sword.nsi" nsh="config.nsh">
+        <local name="output"/>
+        <property name="output" value="${out.dir}\SWORD_${platform}_${version.project.major}.exe"/>
+        <nsis name="sword" script="sword.nsi" nsh="config.nsh" todir="${out.dir}">
             <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
+            <arg value="/DOUTFILE=${output}"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
+        <safe-move file="${output}"/>
     </target>
 
     <!-- Package documentation/SDK -->
