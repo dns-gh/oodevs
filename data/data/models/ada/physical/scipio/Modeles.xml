@@ -1899,7 +1899,9 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
-        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="PION MELEE Interdire"/>
         <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Harceler"/>
@@ -1952,7 +1954,9 @@
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
         <mission name="PION Sortir du reseau souterrain"/>
-        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="PION MELEE Appuyer En Mouvement"/>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Interdire"/>
@@ -2272,7 +2276,9 @@
         <mission name="PION MELEE Controler foule"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
-        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="PION MELEE Neutraliser"/>
         <mission name="PION MELEE Renseigner Sur"/>
         <mission name="PION MELEE Tenir"/>
@@ -2345,7 +2351,9 @@
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
-        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="PION MELEE Interdire"/>
         <mission name="PION MELEE Neutraliser"/>
         <mission name="PION MELEE Renseigner Sur"/>
@@ -2508,7 +2516,9 @@
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Couvrir"/>
         <mission name="PION MELEE Flanc-Garder"/>
-        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="PION MELEE Interdire"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="PION MELEE Reconnaitre"/>
@@ -5090,6 +5100,7 @@
         <mission name="AUTOMATE MELEE Surveiller"/>
         <mission name="AUTOMATE MELEE Freiner">
           <fragorder name="Activer Obstacles"/>
+          <fragorder name="Decrocher"/>
         </mission>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
@@ -7493,4 +7504,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2346765759" -->
+<!-- signature="0140288283" -->
