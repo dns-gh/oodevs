@@ -17,7 +17,6 @@
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
-#include "MT_Tools/MT_Profiler.h"
 
 class MIL_AgentPion;
 class DEC_Knowledge_Agent;
