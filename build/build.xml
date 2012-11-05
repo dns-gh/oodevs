@@ -1267,7 +1267,7 @@
             <arg value="-c"/>
             <arg value='find \"${src.dir.unix}/libraries/simulation_kernel\" -name \"*.cpp\" | xargs grep -e \"brain\\.Register(\" -e \"brain\\[.*=\" | grep -v \"\\.svn\" | grep -o \".*\.cpp\" | sort -u > ${out.dir.unix}/dec_api/dec_files.txt' />
         </exec>
-        <exec executable="python">
+        <exec executable="python" failonerror="true">
             <arg value="decfilter.py"/>
             <arg value="${out.dir}/dec_api/dec_files.txt"/>
             <arg value="${src.dir}/libraries/simulation_kernel/"/>
