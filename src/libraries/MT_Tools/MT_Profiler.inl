@@ -25,7 +25,7 @@ bool MT_Profiler::IsStarted() const
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
 inline
-double MT_Profiler::GetLastTime()
+double MT_Profiler::GetLastTime() const
 {
     return rLastTime_;
 }
@@ -35,7 +35,7 @@ double MT_Profiler::GetLastTime()
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
 inline
-double MT_Profiler::GetAverageTime()
+double MT_Profiler::GetAverageTime() const
 {
     return nNbrCount_ ? rTotalTime_ / static_cast< double >( nNbrCount_ ) : 0;
 }

@@ -40,8 +40,8 @@ public:
     bool        IsStarted() const;
     void        Start();
     double      Stop ();             // Stop the timer and return the time elapsed since the Start() method was called, in milliseconds
-    double      GetLastTime();       // return last mesured time
-    double      GetAverageTime();    // return average of mesured time (useful in a frame by frame systeme)
+    double      GetLastTime() const;       // return last mesured time
+    double      GetAverageTime() const;    // return average of mesured time (useful in a frame by frame systeme)
     //@}
 
 private:
