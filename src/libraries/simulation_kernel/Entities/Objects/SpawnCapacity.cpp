@@ -15,7 +15,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "Entities/MIL_EntityManager.h"
-#include "MIL_Singletons.h"
 #include "MT_Tools/MT_Logger.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
