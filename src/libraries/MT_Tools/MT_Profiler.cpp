@@ -75,3 +75,21 @@ double MT_Profiler::Stop()
     nCounterStart_ = 0;
     return rTime;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MT_Profiler::GetTotalTime
+// Created: MCO 2012-11-05
+// -----------------------------------------------------------------------------
+double MT_Profiler::GetTotalTime() const
+{
+    return rTotalTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_Profiler::GetCount
+// Created: MCO 2012-11-05
+// -----------------------------------------------------------------------------
+int MT_Profiler::GetCount() const
+{
+    return nNbrCount_;
+}
