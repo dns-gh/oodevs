@@ -19,20 +19,21 @@
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Supply_TrucksDoubleTable : public ADN_Table2
+class ADN_Supply_TrucksDoubleTable : public ADN_Table3
                                    , private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Supply_TrucksDoubleTable( QWidget* pParent = 0 );
+    explicit ADN_Supply_TrucksDoubleTable( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent = 0 );
     virtual ~ADN_Supply_TrucksDoubleTable();
     //@}
 
     //! @name Operations
     //@{
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
+    virtual void AddRow( int row, void* data );
     //@}
 };
 

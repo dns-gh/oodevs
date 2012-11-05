@@ -69,24 +69,16 @@ void ADN_Supply_GUI::Build()
     new ADN_AvailabilityWarningTable( strClassName_ + "_Conveyors", data_.infos_.vVectorWarnings_, pVectorGroup );
 
     Q3HGroupBox* pSetupGroup = new Q3HGroupBox( tr( "Convoy setup duration" ) );
-    ADN_Supply_TrucksTimeTable* pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pSetupGroup );
-    pTrucksTimeTable->setObjectName( strClassName_ + "ConvoySetup" );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoySetupInfos_ );
+    new ADN_Supply_TrucksTimeTable( strClassName_ + "ConvoySetup", data_.infos_.vConvoySetupInfos_, pSetupGroup );
 
     Q3HGroupBox* pLoadingGroup = new Q3HGroupBox( tr( "Convoy loading duration" ) );
-    pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pLoadingGroup );
-    pTrucksTimeTable->setObjectName( strClassName_ + "ConvoyLoading" );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyLoadingInfos_ );
-
+    new ADN_Supply_TrucksTimeTable( strClassName_ + "ConvoyLoading", data_.infos_.vConvoyLoadingInfos_, pLoadingGroup );
+ 
     Q3HGroupBox* pUnloadingGroup = new Q3HGroupBox( tr( "Convoy unloading duration" ) );
-    pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pUnloadingGroup );
-    pTrucksTimeTable->setObjectName( strClassName_ + "ConvoyUnloading" );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyUnloadingInfos_ );
+    new ADN_Supply_TrucksTimeTable( strClassName_ + "ConvoyUnloading", data_.infos_.vConvoyUnloadingInfos_, pUnloadingGroup );
 
     Q3HGroupBox* pSpeedGroup = new Q3HGroupBox( tr( "Convoy speed modifiers" ) );
-    ADN_Supply_TrucksDoubleTable* pTrucksDoubleTable = new ADN_Supply_TrucksDoubleTable( pSpeedGroup );
-    pTrucksDoubleTable->setObjectName( strClassName_ + "ConvoyModifiers" );
-    pTrucksDoubleTable->GetConnector().Connect( & data_.infos_.vConvoySpeedModificatorInfos_ );
+    new ADN_Supply_TrucksDoubleTable( strClassName_ + "ConvoyModifiers", data_.infos_.vConvoySpeedModificatorInfos_, pSpeedGroup );
 
     // -------------------------------------------------------------------------
     // Layouts

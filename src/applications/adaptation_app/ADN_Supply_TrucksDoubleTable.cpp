@@ -19,70 +19,28 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Supply_TrucksDoubleTable.h"
 #include "ADN_Supply_Data.h"
-#include "ADN_Connector_Table_ABC.h"
-#include "ADN_TableItem_Edit.h"
-#include "ADN_TableItem_TimeField.h"
-#include "ADN_Validator.h"
 
 typedef ADN_Supply_Data::ConvoyInfo< ADN_Type_Double > ConvoyInfo;
-
-//-----------------------------------------------------------------------------
-// Internal table connector
-//-----------------------------------------------------------------------------
-class ADN_Connector_TrucksDoubleTable
-    : public ADN_Connector_Table_ABC
-{
-public:
-    ADN_Connector_TrucksDoubleTable( ADN_Supply_TrucksDoubleTable& tab )
-        : ADN_Connector_Table_ABC( tab, false, "ADN_Connector_TrucksDoubleTable" )
-    {}
-
-    void AddSubItems( int i, void* pObj )
-    {
-        assert( pObj );
-
-        // Add a new row.
-        ADN_TableItem_Int* pItemNbrTrucks = new ADN_TableItem_Int( &tab_, pObj );
-        ADN_TableItem_Double* pItemDouble = new ADN_TableItem_Double( &tab_, pObj );
-        tab_.setItem( i, 0, pItemNbrTrucks );
-        tab_.setItem( i, 1, pItemDouble );
-        pItemNbrTrucks->GetValidator().setBottom( 1 );
-
-        // Connect the items.
-        pItemNbrTrucks->GetConnector().Connect( &static_cast<ConvoyInfo*>(pObj)->nNbrTrucks_ );
-        pItemDouble->GetConnector().Connect( &static_cast<ConvoyInfo*>(pObj)->value_ );
-    }
-};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_TrucksDoubleTable constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( QWidget* pParent )
-: ADN_Table2( pParent, "ADN_Supply_TrucksDoubleTable" )
+ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
+: ADN_Table3( objectName, vector, pParent )
 {
-    // Selection and sorting.
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
-    setShowGrid( false );
-    setLeftMargin( 0 );
-
+    setSortingEnabled( true );
+    dataModel_.setSortRole( Qt::Ascending );
     this->setMaximumHeight( 300 );
-
-    // Hide the vertical header.
-    verticalHeader()->hide();
-
-    // Setup 2 columns.
-    setNumCols( 2 );
-    setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-
-    horizontalHeader()->setLabel( 0, tr( "Trucks qty" ) );
-    horizontalHeader()->setLabel( 1, tr( "Max speed modifier" ) );
-
-    // Create the connector.
-    pConnector_ = new ADN_Connector_TrucksDoubleTable( *this );
+    dataModel_.setColumnCount( 2 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Trucks qty" )
+                      << tr( "Max speed modifier" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+    delegate_.AddSpinBoxOnColumn( 0, 1, INT_MAX );
+    delegate_.AddDoubleSpinBoxOnColumn( 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,13 +56,13 @@ ADN_Supply_TrucksDoubleTable::~ADN_Supply_TrucksDoubleTable()
 // Name: ADN_Supply_TrucksDoubleTable::OnContextMenu
 // Created: APE 2005-01-10
 // -----------------------------------------------------------------------------
-void ADN_Supply_TrucksDoubleTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const QPoint& pt )
+void ADN_Supply_TrucksDoubleTable::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu menu( this );
 
     menu.insertItem( tr( "New" ), 0 );
     menu.insertItem( tr( "Delete" ), 1 );
-    menu.setItemEnabled( 1, GetCurrentData() != 0 );
+    menu.setItemEnabled( 1, GetSelectedData() != 0 );
 
     int nMenuResult = menu.exec( pt );
 
@@ -113,7 +71,7 @@ void ADN_Supply_TrucksDoubleTable::OnContextMenu( int /*nRow*/, int /*nCol*/, co
     else if( nMenuResult == 1 )
     {
         // Delete the current element.
-        ConvoyInfo* pCurrentPart = (ConvoyInfo*)GetCurrentData();
+        ConvoyInfo* pCurrentPart = (ConvoyInfo*)GetSelectedData();
         if( pCurrentPart != 0 )
             static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentPart );
     }
@@ -128,3 +86,15 @@ void ADN_Supply_TrucksDoubleTable::OnContextMenu( int /*nRow*/, int /*nCol*/, co
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_TrucksDoubleTable::AddRow
+// Created: NPT 2012-11-05
+// -----------------------------------------------------------------------------
+void ADN_Supply_TrucksDoubleTable::AddRow( int row, void* data )
+{
+    ConvoyInfo* info = static_cast< ConvoyInfo* >( data );
+    if (!info )
+        return;
+    AddItem( row, 0, data, &info->nNbrTrucks_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    AddItem( row, 1, data, &info->value_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+}
