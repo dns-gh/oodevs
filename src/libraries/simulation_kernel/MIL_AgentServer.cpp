@@ -8,6 +8,7 @@
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Decision/Brain.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MIL_BurningCells.h"
 #include "Entities/Objects/ResourceTools.h"
@@ -101,6 +102,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "---- SIM Initialized ----" );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
+    sword::Brain::SetProfiling( config_.IsProfilingEnabled() );
 }
 
 //-----------------------------------------------------------------------------
@@ -284,6 +286,7 @@ void MIL_AgentServer::MainSimLoop()
                      visitor.Count(), visitor.agents_, visitor.objects_, visitor.populations_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "%d Agents - %d Automats - %d Crowds" , pEntityManager_->GetAgentsCount(),
                             pEntityManager_->GetAutomatsCount(), pEntityManager_->GetCrowdsCount() ) );
+    sword::Brain::LogProfiling();
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     SendMsgEndTick();
     pEntityManager_->Clean();
