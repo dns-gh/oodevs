@@ -60,10 +60,40 @@ function( add_target target group dir )
     message( "-- ${target}" )
     masa_extract_options( options ${ARGN} )
     grab_item( has_protocol "protocol" options )
+    grab_item( is_plugin "plugin" options )
+    masa_has_item( executable "executable" ${options} )
+    masa_has_item( shared "shared" ${options} )
+    masa_has_item( test "test" ${options} )
     masa_add_target( ${target} ${group} ${dir} OPTIONS ${options} )
+    if( executable )
+        set_target_properties( ${target} PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO
+            "${root_dir}/out/${platform}/release/${dir}" )
+    elseif( shared )
+        set_target_properties( ${target} PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY
+            "${root_dir}/run/${platform}" )
+        # remove _dll suffix from output name
+        if( ${target} MATCHES "_dll$" )
+            string( REGEX REPLACE "(.+)_dll" "\\1" next ${target} )
+            masa_set_target_output_name( ${target} ${next}_d ${next} )
+        endif()
+    elseif( test )
+        # nothing
+    else()
+        # add lib prefix
+        masa_get_library_full_name( lib${target} debug release )
+        masa_set_target_output_name( ${target} ${debug} ${release} )
+    endif()
     if( has_protocol )
         masa_add_target_include( ${target} "${CMAKE_CURRENT_BINARY_DIR}/protocol.out" )
         target_link_libraries( ${target} protocol )
+    endif()
+    if( is_plugin )
+        string( REGEX REPLACE "(.+)_plugin_dll" "\\1" next ${target} )    
+        set_target_properties( ${target} PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY
+            "${root_dir}/run/${platform}/plugins/${next}" )        
     endif()
 endfunction()
 
@@ -268,7 +298,7 @@ add_target( dispatcher_test tests "tests/dispatcher_test" OPTIONS protocol test 
 target_link_libraries( dispatcher_test dispatcher )
 
 # dis_plugin_dll
-add_target( dis_plugin_dll plugins "libraries/dis_plugin_dll" OPTIONS shared )
+add_target( dis_plugin_dll plugins "libraries/dis_plugin_dll" OPTIONS plugin shared )
 masa_add_target_definition( dis_plugin_dll DIS_PLUGIN_DLL_EXPORTS )
 target_link_libraries( dis_plugin_dll
     clients_kernel
@@ -278,7 +308,7 @@ target_link_libraries( dis_plugin_dll
 )
 
 # hla_plugin_dll
-add_target( hla_plugin_dll plugins "libraries/hla_plugin_dll" OPTIONS shared )
+add_target( hla_plugin_dll plugins "libraries/hla_plugin_dll" OPTIONS plugin shared )
 masa_add_target_definition( hla_plugin_dll HLA_PLUGIN_DLL_EXPORTS )
 target_link_libraries( hla_plugin_dll
     dispatcher
@@ -293,7 +323,7 @@ add_target( hla_plugin_test tests "tests/hla_plugin_test" OPTIONS protocol test 
 target_link_libraries( hla_plugin_test hla_plugin_dll )
 
 # logistic_plugin_dll
-add_target( logistic_plugin_dll plugins "libraries/logistic_plugin_dll" OPTIONS protocol shared )
+add_target( logistic_plugin_dll plugins "libraries/logistic_plugin_dll" OPTIONS protocol plugin shared )
 masa_add_target_definition( logistic_plugin_dll LOGISTIC_PLUGIN_DLL_EXPORTS )
 target_link_libraries( logistic_plugin_dll
     clients_kernel
@@ -301,7 +331,7 @@ target_link_libraries( logistic_plugin_dll
 )
 
 # web_control_plugin_dll
-add_target( web_control_plugin_dll plugins "libraries/web_control_plugin_dll" OPTIONS protocol shared )
+add_target( web_control_plugin_dll plugins "libraries/web_control_plugin_dll" OPTIONS protocol plugin shared )
 masa_add_target_definition( web_control_plugin_dll WEB_CONTROL_PLUGIN_DLL_EXPORTS )
 target_link_libraries( web_control_plugin_dll web_control_plugin )
 
@@ -372,7 +402,6 @@ function( add_module target )
     add_target( ${target} modules "libraries/${target}" )
     target_link_libraries( ${target} ${XERCES_LIBRARIES} )
     add_target( ${target}_dll modules "libraries/${target}_dll" OPTIONS shared )
-    masa_set_target_output_name( ${target}_dll ${target}_d ${target} )
     target_link_libraries( ${target}_dll
         ${target}
         wrapper
