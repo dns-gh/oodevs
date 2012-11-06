@@ -265,21 +265,13 @@ void MIL_AgentServer::MainSimLoop()
     pMeteoDataManager_->Update( nRealTime_ );
     pResourceNetworkModel_->Update();
     pPathFindManager_->UpdateInSimulationThread();
-    if( pProcessMonitor_->MonitorProcess() )
-    {
-        MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms - PathFind : %d short %d long %d done - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
-        nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(),
-        pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), rWaitTime_, pPathFindManager_->GetNbrShortRequests(),
-        pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
-    }
-    else
-    {
-        MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms - PathFind : %d short %d long %d done - Model : %d nodes",
-        nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(), pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(),
-        pEntityManager_->GetPopulationsDecisionTime(), pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(), rWaitTime_, pPathFindManager_->GetNbrShortRequests(),
-        pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pEntityManager_->GetModelCount() ) );
-    }
-
+    pProcessMonitor_->MonitorProcess();
+    MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms - PathFind : %d short %d long %d done - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
+        nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(),
+        pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), pEntityManager_->GetPopulationsDecisionTime(),
+        pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(),
+        rWaitTime_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(),
+        pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     KnowledgesVisitor visitor;
     pEntityManager_->Accept( visitor );
     MT_LOG_INFO_MSG( MT_FormatString( "%d Objects - %d Knowledges ( %d Knowledge agents, %d Knowledge objects, %d Knowledge populations )" , pEntityManager_->GetObjectsCount(),
