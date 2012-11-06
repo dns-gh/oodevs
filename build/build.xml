@@ -1336,7 +1336,7 @@
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.hla,package.plugin.dis" description="package plugin individual installers"/>
 
-    <macrodef name="package_plugin">
+    <macrodef name="package-plugin">
         <attribute name="name"/>
         <sequential>
             <local name="output"/>
@@ -1353,11 +1353,11 @@
     </macrodef>
 
     <target name="package.plugin.hla" description="create hla plugin installer">
-        <package_plugin name="hla"/>
+        <package-plugin name="hla"/>
     </target>
 
     <target name="package.plugin.dis" description="create dis plugin installer">
-        <package_plugin name="dis"/>
+        <package-plugin name="dis"/>
     </target>
 
     <!-- Package misc -->
