@@ -16,72 +16,24 @@
 typedef ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass ModifierByFireClass;
 
 //-----------------------------------------------------------------------------
-// Internal Table connector to be connected with
-//-----------------------------------------------------------------------------
-class ADN_Table_Objects_FirePropagationModifier_Connector
-    : public ADN_Connector_Table_ABC
-{
-public:
-    ADN_Table_Objects_FirePropagationModifier_Connector( ADN_Table_Objects_FirePropagationModifier& tab )
-        : ADN_Connector_Table_ABC( tab, false )
-    {}
-
-    void AddSubItems( int i, void *obj )
-    {
-        assert(obj);
-        ModifierByFireClass* pModifier = static_cast< ModifierByFireClass* >( obj );
-        if( pModifier->ptrFireClass_.GetData()->isSurface_.GetData() )
-        {
-            ADN_TableItem_String *pNameItem = new ADN_TableItem_String( &tab_, obj );
-            ADN_TableItem_Int *pIgnitionThresholdItem = new ADN_TableItem_Int( &tab_, obj );
-            ADN_TableItem_Int *pMaxCombustionEnergyItem = new ADN_TableItem_Int( &tab_, obj );
-            pIgnitionThresholdItem->GetValidator().setRange( 0, INT_MAX );
-            pMaxCombustionEnergyItem->GetValidator().setRange( 0, INT_MAX );
-
-            // add a new row & set new values
-            tab_.setItem( i, 0, pNameItem );
-            tab_.setItem( i, 1, pIgnitionThresholdItem );
-            tab_.setItem( i, 2, pMaxCombustionEnergyItem );
-            tab_.setColumnWidth( 1, 140 );
-            tab_.setColumnWidth( 2, 140 );
-            // disable first column
-            pNameItem->setEnabled( false );
-            // connect items & datas
-            pNameItem->GetConnector().Connect( &pModifier->ptrFireClass_.GetData()->strName_ );
-            pIgnitionThresholdItem->GetConnector().Connect( &pModifier->ignitionThreshold_ );
-            pMaxCombustionEnergyItem->GetConnector().Connect( &pModifier->maxCombustionEnergy_ );
-            tab_.showRow( i );
-        }
-        else
-            tab_.hideRow( i );
-    }
-};
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Table_Objects_FirePropagationModifier constructor
 // Created: BCI 2010-12-02
 //-----------------------------------------------------------------------------
-ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModifier( QWidget* pParent )
-    : ADN_Table2( pParent, "ADN_Table_Objects_FirePropagationModifier" )
+ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModifier( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    // peut etre selectionne & trie
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
-    setShowGrid( false );
+    dataModel_.setColumnCount( 3 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Fire model" )
+                      << tr( "Ignition threshold" ) 
+                      << tr( "Max combustion energy" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    verticalHeader()->setVisible( false );
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddSpinBoxOnColumn( 1, 0, INT_MAX );
+    delegate_.AddSpinBoxOnColumn( 2, 0, INT_MAX );
     setMinimumHeight( 80 );
-    setLeftMargin( 0 );
-    // hide vertical header
-    verticalHeader()->hide();
-    // tab with 2 columns
-    setNumCols( 3 );
-    setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-    horizontalHeader()->setLabel( 0, tr( "Fire model" ) );
-    horizontalHeader()->setLabel( 1, tr( "Ignition threshold" ) );
-    horizontalHeader()->setLabel( 2, tr( "Max combustion energy" ) );
-    // connector creation
-    pConnector_ = new ADN_Table_Objects_FirePropagationModifier_Connector( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -91,4 +43,21 @@ ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModi
 ADN_Table_Objects_FirePropagationModifier::~ADN_Table_Objects_FirePropagationModifier()
 {
     delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_FireEffectRoe_GUI::AddRow
+// Created: MMC 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_Table_Objects_FirePropagationModifier::AddRow( int row, void* data )
+{
+    ModifierByFireClass* pModifier = static_cast< ModifierByFireClass* >( data );
+    if( !pModifier )
+        return;
+    if( pModifier->ptrFireClass_.GetData()->isSurface_.GetData() )
+    {
+        AddItem( row, 0, data, &pModifier->ptrFireClass_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+        AddItem( row, 1, data, &pModifier->ignitionThreshold_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+        AddItem( row, 2, data, &pModifier->maxCombustionEnergy_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    }
 }

@@ -28,17 +28,24 @@
 // Created: AGN 2004-05-24
 // =============================================================================
 class ADN_Table_Objects_LocationScore
-: public ADN_Table2
+: public ADN_Table3
 {
 public:
-    explicit ADN_Table_Objects_LocationScore(QWidget * parent = 0 );
+    explicit ADN_Table_Objects_LocationScore( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Table_Objects_LocationScore();
 
-    virtual void OnContextMenu(int row,int col,const QPoint& pt);
+    //! @name Operations
+    //@{
+    virtual void OnContextMenu( const QPoint& pt );
+    virtual void AddRow( int row, void* data );
+    //@}
 
+    //! @name Helpers
+    //@{
     void AddNewElement( int n );
     void RemoveCurrentElement();
     bool Contains( const std::string& strMunitionName );
+    //@}
 };
 
 #endif // __ADN_Table_Objects_LocationScore_h_

@@ -19,13 +19,18 @@
 // Created: BCI 2010-12-02
 // =============================================================================
 class ADN_Table_Objects_FirePropagationModifier
-    : public ADN_Table2
+    : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Table_Objects_FirePropagationModifier( QWidget* pParent = 0 );
+    explicit ADN_Table_Objects_FirePropagationModifier( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Table_Objects_FirePropagationModifier();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void AddRow( int row, void* data );
     //@}
 };
 

@@ -186,9 +186,7 @@ void ADN_Objects_GUI::Build()
 
         // Heuristic
         ADN_GroupBox* heuristic = CreateCapacityGroupBox( 3, tr( "Terrain Heuristic" ), vInfosConnectors[ eTerrainHeuristicCapacityPresent ] );
-        ADN_Table_Objects_LocationScore* pScoreLocation = new ADN_Table_Objects_LocationScore( heuristic );
-        pScoreLocation->setObjectName( strClassName_ + "_HeuristicScore" );
-        vInfosConnectors[ eTerrainHeuristicCapacity_LocationScore ] = &pScoreLocation->GetConnector();
+        new ADN_Table_Objects_LocationScore( strClassName_ + "_HeuristicScore", vInfosConnectors[ eTerrainHeuristicCapacity_LocationScore ], heuristic );
 
         // Avoidable
         ADN_GroupBox* avoidable = CreateCapacityGroupBox( 3, tr( "Avoidable" ), vInfosConnectors[ eAvoidableCapacityPresent ] );
@@ -299,9 +297,7 @@ void ADN_Objects_GUI::Build()
         floodDeadHuman_ = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eFloodCapacity_DeadHumans ], tr( "%" ), ePercentage  );
 
         ADN_GroupBox* firePropagationModifier = CreateCapacityGroupBox( 3, tr( "Fire propagation modifier" ), vInfosConnectors[ eFirePropagationModifierCapacityPresent ] );
-        ADN_Table_Objects_FirePropagationModifier* pFirePropagationModifierTable = new ADN_Table_Objects_FirePropagationModifier( firePropagationModifier );
-        pFirePropagationModifierTable->setObjectName( strClassName_ + "_FirePropagationTable" );
-        vInfosConnectors[ eFirePropagationModifierCapacity_Modifiers ] = &pFirePropagationModifierTable->GetConnector();
+        new ADN_Table_Objects_FirePropagationModifier( strClassName_ + "_FirePropagationTable", vInfosConnectors[ eFirePropagationModifierCapacity_Modifiers ], firePropagationModifier );
 
         grid->addWidget( constructor, 0, 0, 4, 1 );
         grid->addWidget( heuristic, 0, 1 );
