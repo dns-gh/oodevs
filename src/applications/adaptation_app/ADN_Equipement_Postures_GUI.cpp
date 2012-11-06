@@ -21,62 +21,23 @@
 typedef ADN_Equipement_Data::ModificatorPostureInfos ModificatorPostureInfos;
 
 //-----------------------------------------------------------------------------
-// Internal Table connector for ADN_Equipement_Postures_GUI
-//-----------------------------------------------------------------------------
-class ADN_CT_Equipement_Postures : public ADN_Connector_Table_ABC
-{
-
-public:
-    explicit ADN_CT_Equipement_Postures( ADN_Equipement_Postures_GUI& tab )
-        : ADN_Connector_Table_ABC( tab, false )
-    {}
-
-    void AddSubItems( int i, void* pObj )
-    {
-        assert( pObj != 0 );
-        ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, pObj );
-        ADN_TableItem_Double* pItemDouble = new ADN_TableItem_Double( &tab_, pObj );
-
-        // Add a new row & set the new values.
-        tab_.setItem( i, 0, pItemString );
-        tab_.setItem( i, 1, pItemDouble );
-
-        // Setup the row header item.
-        pItemString->setEnabled( false );
-        pItemString->setText( ENT_Tr::ConvertFromUnitPosture( static_cast<ModificatorPostureInfos*>(pObj)->eType_, ENT_Tr_ABC::eToTr ).c_str() );
-
-        // Setup the value item.
-        pItemDouble->GetValidator().setRange( 0, 1, 2 );
-        pItemDouble->GetConnector().Connect( &static_cast<ModificatorPostureInfos*>(pObj)->rCoeff_ );
-    }
-};
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Equipement_Postures_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& strColCaption, QWidget* pParent )
-    : ADN_Table2( pParent, "ADN_Equipement_Postures_GUI" )
+ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& objectName, const QString& strColCaption, ADN_Connector_ABC*& connector,  QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    // Setup the table properties.
-    setSelectionMode( Q3Table::NoSelection );
-    setSorting( true );
-    setShowGrid( false );
-    setLeftMargin( 0 );
+    dataModel_.setColumnCount( 2 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << strColCaption
+                      << tr( "PH factor" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddDoubleSpinBoxOnColumn( 1, 0, 1, 0.01, 2 );
     setMinimumHeight( int( ( eNbrUnitPosture + 1.2 ) * 20 ) );
-
-    // Setup the columns and headers
-    setNumCols( 2 );
-    setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-
-    verticalHeader()->hide();
-    horizontalHeader()->setLabel( 0, strColCaption );
-    horizontalHeader()->setLabel( 1, tr( "PH factor" ) );
-
-    // Create the connector.
-    pConnector_ = new ADN_CT_Equipement_Postures( *this );
+    setShowGrid( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -85,5 +46,18 @@ ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& strColC
 //-----------------------------------------------------------------------------
 ADN_Equipement_Postures_GUI::~ADN_Equipement_Postures_GUI()
 {
-    delete pConnector_;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Postures_GUI::AddRow
+// Created: MMC 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Postures_GUI::AddRow( int row, void* data )
+{
+    ModificatorPostureInfos* pPostureInfo = static_cast< ModificatorPostureInfos* >( data );
+    if( !pPostureInfo )
+        return;
+    AddItem( row, 0, data, QString::fromStdString( ENT_Tr::ConvertFromUnitPosture( pPostureInfo->eType_, ENT_Tr_ABC::eToTr ) ), Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &pPostureInfo->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

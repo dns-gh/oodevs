@@ -17,11 +17,19 @@
 //*****************************************************************************
 // Created: JDY 03-09-29
 //*****************************************************************************
-class ADN_Equipement_Postures_GUI : public ADN_Table2
+class ADN_Equipement_Postures_GUI : public ADN_Table3
 {
 public:
-    explicit ADN_Equipement_Postures_GUI( const QString& strColCaption, QWidget* pParent = 0 );
+    //! @name Constructors/Destructor
+    //@{
+    explicit ADN_Equipement_Postures_GUI( const QString& objectName, const QString& strColCaption, ADN_Connector_ABC*& connector,  QWidget* pParent = 0 );
     virtual ~ADN_Equipement_Postures_GUI();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void AddRow( int row, void* data );
+    //@}
 };
 
 #endif // __ADN_Equipement_Postures_GUI_h_

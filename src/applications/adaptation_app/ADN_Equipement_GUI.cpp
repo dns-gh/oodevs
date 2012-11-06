@@ -254,9 +254,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
     {
         // Explosive parameters
         pExplosiveParametersGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Explosive ammo parameters" ), pEffectsInfo );
-        ADN_Equipement_Postures_GUI* pStance = new ADN_Equipement_Postures_GUI( tr( "Stance" ), pExplosiveParametersGroup_ );
-        pStance->setObjectName( strClassName_ + "AmmunitionsStance" );
-        vConnectors[ eModifStances ] = &pStance->GetConnector();
+        new ADN_Equipement_Postures_GUI( strClassName_ + "AmmunitionsStance", tr( "Stance" ), vConnectors[ eModifStances ], pExplosiveParametersGroup_ );
         QWidget* pExplosiveParametersGroupHolder = builder.AddFieldHolder( pExplosiveParametersGroup_ );
         builder.AddField< ADN_EditLine_Double >( pExplosiveParametersGroupHolder, tr( "Neutralization ratio" ), vConnectors[ eNeutralizationRatio ] );
         builder.SetValidator( new ADN_DoubleValidator( 1, INT_MAX, 2, this ) );
