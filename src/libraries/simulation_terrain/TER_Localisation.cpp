@@ -365,6 +365,17 @@ bool TER_Localisation::Reset( E_LocationType nType, const T_PointVector& pointVe
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::Reset
+// Created: JSR 2012-11-06
+// -----------------------------------------------------------------------------
+bool TER_Localisation::Reset( E_LocationType nType, const T_PointList& pointList, double rPointSize /*= 250.*/ )
+{
+    Reset( pointList );
+    nType_ = nType;
+    return Initialize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::Reset
 // Created: NLD 2003-08-19
 // -----------------------------------------------------------------------------
 void TER_Localisation::Reset( const MT_Vector2D& vPos )

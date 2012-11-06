@@ -163,6 +163,7 @@ private:
     // Split
     const MIL_Object_ABC* pSplittingObject_;
     const MIL_Object_ABC* pBlockingObject_;
+    const MIL_Object_ABC* pFirstSplittingObject_;
     double armedIndividualsBeforeSplit_;
     unsigned int personsPassedThroughObject_;
     static MIL_IDManager idManager_;

@@ -81,6 +81,7 @@ public:
     //@{
     // $$$$ JVT : ?????
     bool Reset( E_LocationType nType, const T_PointVector& pointVector, double rPointSize = 250. );
+    bool Reset( E_LocationType nType, const T_PointList& pointList, double rPointSize = 250. );
     void Reset();
     void Reset( const TER_Localisation& localisation, double rPointSize = 0. );
     void Reset( const MT_Vector2D& vPos );
