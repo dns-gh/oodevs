@@ -1475,9 +1475,7 @@
             <fileset dir="${out.dir}/sdk/doc/html" />
         </copy>
         <copy todir="${dist.dir}/sdk-${platform}/proto">
-            <fileset dir="${src.dir}/libraries/protocol/proto">
-                <include name="*.proto" />
-            </fileset>
+            <fileset dir="${src.dir}/libraries/protocol/proto" includes="*.proto"/>
         </copy>
     </target>
 
