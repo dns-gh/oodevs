@@ -292,5 +292,5 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
 // -----------------------------------------------------------------------------
 bool OrderParameter::HasGenObject( const std::string& type ) const
 {
-    return genObjects_.find( type ) != genObjects_.end();
+    return genObjects_.empty() || ( genObjects_.find( type ) != genObjects_.end() );
 }
