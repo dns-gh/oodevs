@@ -11,7 +11,6 @@
 #define WRAPPER_VIEW_H
 
 #include <module_api/Model.h>
-#include <boost/function.hpp>
 #include <string>
 
 namespace sword
@@ -59,16 +58,48 @@ public:
 
     void* GetUserData() const;
 
-    typedef boost::function< void( const std::string& key, const View& child ) > T_NamedChildrenVisitor;
-    void VisitNamedChildren( T_NamedChildrenVisitor visitor ) const;
-    typedef boost::function< void( std::size_t key, const View& child ) > T_IdentifiedChildrenVisitor;
-    void VisitIdentifiedChildren( T_IdentifiedChildrenVisitor visitor ) const;
+    template< typename T >
+    void VisitNamedChildren( T visitor ) const
+    {
+        struct Caster
+        {
+            static void Call( const char* key, const SWORD_Model* child, void* userData )
+            {
+                (*static_cast< T* >( userData ))( key, child );
+            }
+        };
+        if( ! SWORD_VisitNamedChildren( model_, &Caster::Call, AddressOf( visitor ) ) )
+            throw std::runtime_error( "could not visit named children" );
+    }
+    template< typename T >
+    void VisitIdentifiedChildren( T visitor ) const
+    {
+        struct Caster
+        {
+            static void Call( std::size_t key, const SWORD_Model* child, void* userData )
+            {
+                (*static_cast< T* >( userData ))( key, child );
+            }
+        };
+        if( ! SWORD_VisitIdentifiedChildren( model_, &Caster::Call, AddressOf( visitor ) ) )
+            throw std::runtime_error( "could not visit identified children" );
+    }
     //@}
 
     //! @name Operators
     //@{
     bool operator==( const View& rhs ) const;
     bool operator!=( const View& rhs ) const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    template< typename T >
+    T* AddressOf( T& t ) const
+    {
+        return reinterpret_cast< T* >( &const_cast< char& >( reinterpret_cast< const char& >( t ) ) );
+    }
     //@}
 
 private:

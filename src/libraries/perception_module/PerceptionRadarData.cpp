@@ -18,6 +18,7 @@
 #include "wrapper/Hook.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <boost/bind.hpp>
+#include <cassert>
 
 using namespace sword;
 using namespace sword::perception;
