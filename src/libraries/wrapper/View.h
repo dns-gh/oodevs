@@ -61,27 +61,13 @@ public:
     template< typename T >
     void VisitNamedChildren( T visitor ) const
     {
-        struct Caster
-        {
-            static void Call( const char* key, const SWORD_Model* child, void* userData )
-            {
-                (*static_cast< T* >( userData ))( key, child );
-            }
-        };
-        if( ! SWORD_VisitNamedChildren( model_, &Caster::Call, AddressOf( visitor ) ) )
+        if( ! SWORD_VisitNamedChildren( model_, &Apply< T, const char* >, AddressOf( visitor ) ) )
             throw std::runtime_error( "could not visit named children" );
     }
     template< typename T >
     void VisitIdentifiedChildren( T visitor ) const
     {
-        struct Caster
-        {
-            static void Call( std::size_t key, const SWORD_Model* child, void* userData )
-            {
-                (*static_cast< T* >( userData ))( key, child );
-            }
-        };
-        if( ! SWORD_VisitIdentifiedChildren( model_, &Caster::Call, AddressOf( visitor ) ) )
+        if( ! SWORD_VisitIdentifiedChildren( model_, &Apply< T, std::size_t >, AddressOf( visitor ) ) )
             throw std::runtime_error( "could not visit identified children" );
     }
     //@}
@@ -95,6 +81,11 @@ public:
 private:
     //! @name Helpers
     //@{
+    template< typename T, typename K >
+    static void Apply( K key, const SWORD_Model* child, void* userData )
+    {
+        (*static_cast< T* >( userData ))( key, child );
+    }
     template< typename T >
     T* AddressOf( T& t ) const
     {
