@@ -20,13 +20,14 @@
 // Created: JDY 03-07-22
 //*****************************************************************************
 class ADN_Composantes_Sensors_GUI
-    : public ADN_Table2
+    : public ADN_Table3
 {
 public:
-    explicit ADN_Composantes_Sensors_GUI(QWidget* parent = 0 );
+    explicit ADN_Composantes_Sensors_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Composantes_Sensors_GUI();
 
-    virtual void OnContextMenu( int row, int col, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
+    virtual void AddRow( int row, void* data );
 
     void CreateNewSensor( int nSensor );
     void RemoveCurrentSensor();

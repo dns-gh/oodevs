@@ -13,7 +13,6 @@
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Workspace.h"
 #include <Qt3Support/q3popupmenu.h>
@@ -21,59 +20,26 @@
 typedef ADN_Composantes_Data::SensorInfos SensorInfos;
 
 //-----------------------------------------------------------------------------
-// Internal Table connector to be connected with
-//-----------------------------------------------------------------------------
-class ADN_Composantes_Sensors_GUI_Connector
-    : public ADN_Connector_Table_ABC
-{
-public:
-    explicit ADN_Composantes_Sensors_GUI_Connector( ADN_Composantes_Sensors_GUI& tab )
-        : ADN_Connector_Table_ABC( tab, false )
-    {
-        // NOTHING
-    }
-
-    void AddSubItems( int i, void* obj )
-    {
-        assert(obj);
-        ADN_TableItem_String* pItemCombo = 0;
-        ADN_TableItem_Double* pItemInt = 0;
-        // add a new row & set new values
-        tab_.setItem( i, 0, pItemCombo = new ADN_TableItem_String( &tab_, obj, Q3TableItem::Never ) );
-        tab_.setItem( i, 1, pItemInt = new ADN_TableItem_Double( &tab_, obj ) );
-        // set table item properties
-        pItemInt->GetValidator().setBottom( 0 );
-        // connect items & datas
-        pItemCombo->GetConnector().Connect( &static_cast< SensorInfos* >( obj )->ptrSensor_.GetData()->strName_ );
-        pItemInt->GetConnector().Connect( &static_cast< SensorInfos* >( obj )->rHeight_ );
-    }
-private:
-    ADN_Composantes_Sensors_GUI_Connector& operator=( const ADN_Composantes_Sensors_GUI_Connector& );
-};
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Sensors_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Sensors_GUI::ADN_Composantes_Sensors_GUI( QWidget * parent )
-    : ADN_Table2( parent, "ADN_Composantes_Sensors_GUI" )
+ADN_Composantes_Sensors_GUI::ADN_Composantes_Sensors_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
 {
     // peut etre selectionne & trie
-    setSorting( true );
-    setSelectionMode( Q3Table::Single );
-    setShowGrid( false );
-    setLeftMargin( 0 );
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
-    // hide vertical header
-    verticalHeader()->hide();
-    // tab with 2 columns
-    setNumCols( 2 );
-    setNumRows( 0 );
-    horizontalHeader()->setLabel( 0, tr( "Sensor" ) );
-    horizontalHeader()->setLabel( 1, tr( "Height (m)" ) );
-    // connector creation
-    pConnector_ = new ADN_Composantes_Sensors_GUI_Connector( *this );
+    setSelectionMode( QTableView::SingleSelection );
+    setSortingEnabled( true );
+    dataModel_.setColumnCount( 2 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Sensor" )
+                      << tr( "Height (m)" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddDoubleSpinBoxOnColumn( 1, 0, INT_MAX );
 }
 
 //-----------------------------------------------------------------------------
@@ -89,12 +55,12 @@ ADN_Composantes_Sensors_GUI::~ADN_Composantes_Sensors_GUI()
 // Name: ADN_Composantes_Sensors_GUI::OnContextMenu
 // Created: AGN 03-08-01
 //-----------------------------------------------------------------------------
-void ADN_Composantes_Sensors_GUI::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
+void ADN_Composantes_Sensors_GUI::OnContextMenu( const QPoint& pt )
 {
     std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu( this ) );
     // Get the list of the possible munitions
     bool bDisplayAdd = false;
-    bool bDisplayRem = GetCurrentData() != 0;
+    bool bDisplayRem = GetSelectedData() != 0;
     ADN_Sensors_Data::T_SensorsInfos_Vector& vAllSensors = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos();
     for( ADN_Sensors_Data::T_SensorsInfos_Vector::iterator it = vAllSensors.begin(); it != vAllSensors.end(); ++it )
     {
@@ -140,11 +106,24 @@ void ADN_Composantes_Sensors_GUI::CreateNewSensor( int nSensor )
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Sensors_GUI::RemoveCurrentSensor()
 {
-    SensorInfos* pCurSensor = static_cast< SensorInfos* >( GetCurrentData() );
+    SensorInfos* pCurSensor = static_cast< SensorInfos* >( GetSelectedData() );
     if( pCurSensor )
     {
         // remove current data from list
         // take care cause pCurData_ can change!!
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurSensor );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Sensors_GUI::AddRow
+// Created: NPT 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Sensors_GUI::AddRow( int row, void* data )
+{
+    SensorInfos* infos = static_cast< SensorInfos* >( data );
+    if( !infos )
+        return;
+    AddItem( row, 0, data, &infos->ptrSensor_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &infos->rHeight_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

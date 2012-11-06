@@ -154,10 +154,8 @@ void ADN_Composantes_GUI::Build()
 
     // Sensors
     Q3HGroupBox* pSensorsGroup = new Q3HGroupBox( tr( "Sensors" ) );
-    pSensors_ = new ADN_Composantes_Sensors_GUI( pSensorsGroup );
-    pSensors_->setObjectName( strClassName_ + "_Sensors" );
+    pSensors_ = new ADN_Composantes_Sensors_GUI( strClassName_ + "_Sensors", vInfosConnectors[ eSensors ], pSensorsGroup );
     pSensors_->SetGoToOnDoubleClick( ::eSensors, 0 );
-    vInfosConnectors[ eSensors ] = &pSensors_->GetConnector();
     // Special sensors
     Q3HGroupBox* pRadarsGroup = new Q3HGroupBox( tr( "Special sensors" ) );
     pRadars_ = new ADN_Composantes_RadarsListView( pRadarsGroup );
