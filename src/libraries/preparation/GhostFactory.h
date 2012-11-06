@@ -33,7 +33,6 @@ namespace tools
 }
 
 class Model;
-class MT_Vector2D;
 class StaticModel;
 
 // =============================================================================
