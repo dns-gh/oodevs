@@ -16,7 +16,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/OrderType.h"
-#include "clients_gui/ValuedListItem.h"
+#include "clients_kernel/ActionController.h"
 
 Q_DECLARE_METATYPE( const kernel::Entity_ABC* )
 

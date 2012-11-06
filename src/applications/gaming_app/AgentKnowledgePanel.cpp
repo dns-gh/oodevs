@@ -143,16 +143,6 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::Display
-// Created: AGE 2006-02-21
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Display( const AgentKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
-{
-    item->SetValue( &k );
-    displayer.Display( tools::translate( "AgentKnowledge", "Known units" ), k.GetEntity() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentKnowledgePanel::BeforeSelection
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
@@ -318,15 +308,4 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
         perceptionModel_.item( i, 0 )->setData( QVariant::fromValue( perceptions.perceptions_[ i ].detected_ ), EntityRole );
         perceptionModel_.item( i, 1 )->setText( tools::ToString( perceptions.perceptions_[ i ].level_ ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::Display
-// Created: AGE 2006-02-22
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* item )
-{
-    item->SetValue( perception.detected_ );
-    displayer.Display( tools::translate( "AgentKnowledge", "Unit" ), perception.detected_->GetName() ); // to prevent link
-    displayer.Display( tools::translate( "AgentKnowledge", "Perception level" ), perception.level_ );
 }

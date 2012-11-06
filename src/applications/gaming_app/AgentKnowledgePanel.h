@@ -28,7 +28,6 @@ namespace gui
 {
     template< typename T > class ListDisplayer;
     class DisplayBuilder;
-    class ValuedListItem;
     class ItemFactory_ABC;
 }
 
@@ -57,12 +56,6 @@ public:
     //@{
              AgentKnowledgePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~AgentKnowledgePanel();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Display( const kernel::AgentKnowledge_ABC& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
-    void Display( const Perception& perception, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private:

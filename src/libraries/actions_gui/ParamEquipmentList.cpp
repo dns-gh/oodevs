@@ -13,7 +13,6 @@
 #include "InterfaceBuilder_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/MaintenancePriorities.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_gui/resources.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/MaintenanceStates_ABC.h"

@@ -19,11 +19,6 @@ namespace kernel
     class Displayer_ABC;
 }
 
-namespace gui
-{
-    class ValuedListItem;
-}
-
 // =============================================================================
 /** @class  LendingsListView
     @brief  LendingsListView

@@ -16,7 +16,6 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/Tools.h"
-#include "clients_gui/ValuedListItem.h"
 
 using namespace actions::gui;
 

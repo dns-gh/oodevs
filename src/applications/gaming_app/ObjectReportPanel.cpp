@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ObjectReportPanel.h"
 #include "FireResultListView.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
 #include "gaming/Explosions.h"
