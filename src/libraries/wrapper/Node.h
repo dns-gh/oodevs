@@ -10,7 +10,6 @@
 #ifndef WRAPPER_NODE_H
 #define WRAPPER_NODE_H
 
-#include <module_api/Config.h>
 #include <module_api/Model.h>
 #include <string>
 

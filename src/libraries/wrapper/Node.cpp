@@ -9,7 +9,6 @@
 
 #include "Node.h"
 #include "View.h"
-#include <module_api/Model.h>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <stdexcept>
@@ -27,7 +26,7 @@ Node::Node( SWORD_Model* node )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::GET/SET
+// Name: Node::SET
 // Created: BAX 2012-01-25
 // -----------------------------------------------------------------------------
 #define DECLARE_SET( TYPE_NAME, TYPE ) \
@@ -118,7 +117,7 @@ Node Node::operator[]( size_t key )
 Node Node::AddElement()
 {
     SWORD_Model* element = ::SWORD_AddElement( node_ );
-    if( ! element )
+    if( !element )
         throw std::runtime_error( "could not add element to node" );
     return Node( element );
 }

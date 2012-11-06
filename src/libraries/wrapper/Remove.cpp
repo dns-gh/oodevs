@@ -18,7 +18,7 @@ using namespace sword::wrapper;
 // Created: MCO 2012-10-12
 // -----------------------------------------------------------------------------
 Remove::Remove( const View& target )
-    :target_( target )
+    : target_( target )
 {
     // NOTHING
 }

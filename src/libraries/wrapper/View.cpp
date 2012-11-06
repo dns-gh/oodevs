@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "View.h"
-#include <module_api/Model.h>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 

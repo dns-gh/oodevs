@@ -10,7 +10,6 @@
 #ifndef WRAPPER_VIEW_H
 #define WRAPPER_VIEW_H
 
-#include <module_api/Config.h>
 #include <module_api/Model.h>
 #include <boost/function.hpp>
 #include <string>
