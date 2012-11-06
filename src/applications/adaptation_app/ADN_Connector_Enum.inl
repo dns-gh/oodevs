@@ -39,9 +39,9 @@ ADN_Connector_Enum< T >::~ADN_Connector_Enum()
 // Created: ABR 2012-10-26
 // -----------------------------------------------------------------------------
 template< class T >
-void ADN_Connector_Enum< T >::AddEnumValue( const std::string& text )
+void ADN_Connector_Enum< T >::AddEnumValue( const std::string& text, int index )
 {
-    pGfx_->insertItem( text.c_str(), -1 );
+    pGfx_->insertItem( text.c_str(), index );
 }
 
 // -----------------------------------------------------------------------------

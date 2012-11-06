@@ -27,7 +27,7 @@ public:
     virtual ~ADN_Connector_Enum();
     virtual void* SetNdxChanged(int ndx);
     virtual bool IsConnected() const;
-    void AddEnumValue( const std::string& text );
+    void AddEnumValue( const std::string& text, int index );
 
 protected:
     virtual void ConnectPrivateSub( ADN_Connector_ABC* pTarget );
