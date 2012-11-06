@@ -76,6 +76,8 @@ public:
 
     static void SetProfiling( bool enabled );
     static void LogProfiling();
+
+    static double GetTotalTime();
     //@}
 
 private:

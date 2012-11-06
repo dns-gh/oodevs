@@ -266,9 +266,9 @@ void MIL_AgentServer::MainSimLoop()
     pResourceNetworkModel_->Update();
     pPathFindManager_->UpdateInSimulationThread();
     pProcessMonitor_->MonitorProcess();
-    MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms - PathFind : %d short %d long %d done - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
+    MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f DEC:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms - PathFind : %d short %d long %d done - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
         nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(),
-        pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), pEntityManager_->GetPopulationsDecisionTime(),
+        pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), pEntityManager_->GetPopulationsDecisionTime(), sword::Brain::GetTotalTime(),
         pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(),
         rWaitTime_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(),
         pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );

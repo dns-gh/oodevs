@@ -91,3 +91,15 @@ void Brain::LogProfiling()
         MT_LOG_INFO_MSG( "<profiling> " << it->first << " " << it->second.GetCount() << " " << it->second.GetTotalTime() );
     profilers_.clear();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Brain::GetTotalTime
+// Created: MCO 2012-11-06
+// -----------------------------------------------------------------------------
+double Brain::GetTotalTime()
+{
+    double result = 0;
+    for( T_Profilers::const_iterator it = profilers_.begin(); it != profilers_.end(); ++it )
+        result += it->second.GetTotalTime();
+    return result;
+}
