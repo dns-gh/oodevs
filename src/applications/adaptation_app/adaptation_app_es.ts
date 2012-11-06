@@ -1789,30 +1789,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation>Duración de triaje(clasificación)</translation>
     </message>
     <message>
-        <source>Psyop</source>
-        <translation>Op. psicológicas</translation>
-    </message>
-    <message>
-        <source>Contamination</source>
-        <translation>Contaminación</translation>
-    </message>
-    <message>
-        <source>Treatment duration</source>
-        <translation>Duración de tratamiento</translation>
-    </message>
-    <message>
-        <source>Convalescence duration</source>
-        <translation>Duración de convalescencia</translation>
-    </message>
-    <message>
-        <source>Seriousness distribution (%)</source>
-        <translation>Distribución de gravedad (%)</translation>
-    </message>
-    <message>
-        <source>Life span</source>
-        <translation>Esperanza de vida</translation>
-    </message>
-    <message>
         <source>Doctors availability warnings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5804,6 +5780,33 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>ADN - Data export</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WoundTable</name>
+    <message>
+        <source>Psyop</source>
+        <translation type="unfinished">Op. psicológicas</translation>
+    </message>
+    <message>
+        <source>Contamination</source>
+        <translation type="unfinished">Contaminación</translation>
+    </message>
+    <message>
+        <source>Treatment duration</source>
+        <translation type="unfinished">Duración de tratamiento</translation>
+    </message>
+    <message>
+        <source>Convalescence duration</source>
+        <translation type="unfinished">Duración de convalescencia</translation>
+    </message>
+    <message>
+        <source>Seriousness distribution (%)</source>
+        <translation type="unfinished">Distribución de gravedad (%)</translation>
+    </message>
+    <message>
+        <source>Life span</source>
+        <translation type="unfinished">Esperanza de vida</translation>
     </message>
 </context>
 <context>

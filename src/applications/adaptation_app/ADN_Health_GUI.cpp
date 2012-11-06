@@ -23,16 +23,58 @@
 namespace
 {
 
-class ADN_WoundTable : public ADN_Table
+class ADN_WoundTable : public ADN_Table3
 {
 public:
-    explicit ADN_WoundTable( QWidget* pParent = 0, const char* szName = 0 )
-        : ADN_Table( pParent, szName ) {}
+    explicit ADN_WoundTable( const QString& objectName, void* data, QWidget* pParent = 0 )
+        : ADN_Table3( objectName, pParent )
+    {
+        setSortingEnabled( true );
+        dataModel_.setColumnCount( eNbrDoctorSkills + 2 );
+        dataModel_.setRowCount( 4 );
+
+        QStringList horizontalHeaders;
+        for( int n = 0; n < eNbrDoctorSkills; ++n )
+            horizontalHeaders << ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str();
+        horizontalHeaders << tr( "Psyop" ) << tr( "Contamination" );
+        dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+        horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+
+        QStringList verticalHeaders;
+        verticalHeaders << tr( "Treatment duration" ) << tr( "Convalescence duration" ) << tr( "Seriousness distribution (%)" ) << tr( "Life span" ) ;
+        dataModel_.setVerticalHeaderLabels( verticalHeaders );
+        delegate_.AddDelayEditOnRow( 0 );
+        delegate_.AddDelayEditOnRow( 1 );
+        delegate_.AddDoubleSpinBoxOnRow( 2, 0, 100 );
+        delegate_.AddDelayEditOnRow( 3 );
+
+        ADN_Health_Data* health = static_cast< ADN_Health_Data* >( data );
+        if( !health )
+            return;
+        int n = 0;
+        for( n = 0 ; n < eNbrDoctorSkills; ++n )
+        {
+            ADN_Health_Data::WoundInfo& wound = health->wounds[n];
+            AddItem( 0, n, data, &wound.treatTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+            AddItem( 1, n, data, &wound.restingTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+            AddItem( 2, n, data, &wound.rPercentage_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+            AddItem( 3, n, data, &wound.lifeExpectancy_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+        }
+        AddItem( 0, n, data, &health->shockTreatTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+        AddItem( 1, n, data, &health->shockRestingTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+        AddItem( 2, n, data, &health->rShockPercentage_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+        AddItem( 3, n, &data, QString() );
+
+        AddItem( 0, n+1, &data, &health->contaminationTreatTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+        AddItem( 1, n+1, &data, &health->contaminationRestingTime_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+        AddItem( 2, n+1, &data, QString() );
+        AddItem( 3, n+1, &data, QString() );
+    }
 
 protected slots:
-    virtual void doValueChanged( int row, int col )
+    virtual void OnItemChanged( QStandardItem* item )
     {
-        ADN_Table::doValueChanged( row, col );
+        delegate_.OnItemChanged( item );
         ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
     }
 };
@@ -78,7 +120,7 @@ void ADN_Health_GUI::Build()
     builder.AddStretcher( pHolder, Qt::Vertical );
 
     // wounds
-    ADN_Table* woundTable = BuildWoundsTable();
+    ADN_WoundTable* woundTable = new ADN_WoundTable( strClassName_ + "_WoundsTable", &data_ );
     woundTable->setObjectName( strClassName_ + "_WoundsTable" );
 
     // Warning tables
@@ -122,61 +164,4 @@ void ADN_Health_GUI::Build()
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );
     pMainWidget_->setObjectName( strClassName_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Health_GUI::BuildWoundsTable
-// Created: ABR 2012-01-24
-// -----------------------------------------------------------------------------
-ADN_Table* ADN_Health_GUI::BuildWoundsTable()
-{
-    ADN_GuiBuilder builder;
-    ADN_WoundTable* pWoundTable = new ADN_WoundTable();
-    pWoundTable->setFixedHeight( 200 );
-    pWoundTable->setSorting( true );
-    pWoundTable->setSelectionMode( Q3Table::NoSelection );
-    pWoundTable->setShowGrid( true );
-    pWoundTable->verticalHeader()->hide();
-    pWoundTable->setLeftMargin( 0 );
-    pWoundTable->setNumCols( eNbrDoctorSkills + 2 );
-    pWoundTable->setNumRows( 4 );
-    pWoundTable->verticalHeader()->show();
-    pWoundTable->setLeftMargin( 5 );
-    pWoundTable->setSorting( false );
-
-    int n = 0;
-    for( ; n < eNbrDoctorSkills; ++n )
-    {
-        pWoundTable->horizontalHeader()->setLabel( n, ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str() );
-        pWoundTable->setColumnStretchable( n, true );
-    }
-    pWoundTable->horizontalHeader()->setLabel( n, tr( "Psyop" ) );
-    pWoundTable->setColumnStretchable( n, true );
-    pWoundTable->horizontalHeader()->setLabel( n + 1, tr( "Contamination" ) );
-    pWoundTable->setColumnStretchable( n + 1, true );
-
-    pWoundTable->verticalHeader()->setLabel( 0, tr( "Treatment duration" ) );
-    pWoundTable->verticalHeader()->setLabel( 1, tr( "Convalescence duration" ) );
-    pWoundTable->verticalHeader()->setLabel( 2, tr( "Seriousness distribution (%)" ) );
-    pWoundTable->verticalHeader()->setLabel( 3, tr( "Life span" ) );
-
-    for( n = 0; n < eNbrDoctorSkills; ++n )
-    {
-        ADN_Health_Data::WoundInfo& wound = data_.wounds[n];
-        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 0, n, wound.treatTime_ );
-        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 1, n, wound.restingTime_ );
-        builder.AddTableCell< ADN_TableItem_Double    >( pWoundTable, &wound, 2, n, wound.rPercentage_, ePercentage );
-        builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &wound, 3, n, wound.lifeExpectancy_ );
-    }
-    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n, data_.shockTreatTime_ );
-    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 1, n, data_.shockRestingTime_ );
-    builder.AddTableCell< ADN_TableItem_Double    >( pWoundTable, &data_, 2, n, data_.rShockPercentage_, ePercentage );
-    pWoundTable->setItem( 3, n, new Q3TableItem( pWoundTable, Q3TableItem::Never ) );
-
-    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 0, n + 1, data_.contaminationTreatTime_ );
-    builder.AddTableCell< ADN_TableItem_TimeField >( pWoundTable, &data_, 1, n + 1, data_.contaminationRestingTime_ );
-    pWoundTable->setItem( 2, n + 1, new Q3TableItem( pWoundTable, Q3TableItem::Never ) );
-    pWoundTable->setItem( 3, n + 1, new Q3TableItem( pWoundTable, Q3TableItem::Never ) );
-
-    return pWoundTable;
 }

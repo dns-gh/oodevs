@@ -1797,30 +1797,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <source>Doctors availability warnings</source>
         <translation>Doctor availability warnings</translation>
     </message>
-    <message>
-        <source>Psyop</source>
-        <translation>Psyop</translation>
-    </message>
-    <message>
-        <source>Contamination</source>
-        <translation>Contamination</translation>
-    </message>
-    <message>
-        <source>Treatment duration</source>
-        <translation>Treatment duration</translation>
-    </message>
-    <message>
-        <source>Convalescence duration</source>
-        <translation>Convalescence duration</translation>
-    </message>
-    <message>
-        <source>Seriousness distribution (%)</source>
-        <translation>Severity distribution (%)</translation>
-    </message>
-    <message>
-        <source>Life span</source>
-        <translation>Life span</translation>
-    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>
@@ -5801,6 +5777,33 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>ADN - Data export</source>
         <translation>ADN - Data export</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WoundTable</name>
+    <message>
+        <source>Psyop</source>
+        <translation type="unfinished">Psyop</translation>
+    </message>
+    <message>
+        <source>Contamination</source>
+        <translation type="unfinished">Contamination</translation>
+    </message>
+    <message>
+        <source>Treatment duration</source>
+        <translation type="unfinished">Treatment duration</translation>
+    </message>
+    <message>
+        <source>Convalescence duration</source>
+        <translation type="unfinished">Convalescence duration</translation>
+    </message>
+    <message>
+        <source>Seriousness distribution (%)</source>
+        <translation type="unfinished">Severity distribution (%)</translation>
+    </message>
+    <message>
+        <source>Life span</source>
+        <translation type="unfinished">Life span</translation>
     </message>
 </context>
 <context>

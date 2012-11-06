@@ -1782,36 +1782,12 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
 <context>
     <name>ADN_Health_GUI</name>
     <message>
-        <source>Contamination</source>
-        <translation>Contamination</translation>
-    </message>
-    <message>
         <source>Diagnostic duration</source>
         <translation>Durée de diagnostic</translation>
     </message>
     <message>
         <source>Triage duration</source>
         <translation>Durée de triage</translation>
-    </message>
-    <message>
-        <source>Psyop</source>
-        <translation>Psy</translation>
-    </message>
-    <message>
-        <source>Treatment duration</source>
-        <translation>Durée de traitement</translation>
-    </message>
-    <message>
-        <source>Convalescence duration</source>
-        <translation>Durée de convalescence</translation>
-    </message>
-    <message>
-        <source>Seriousness distribution (%)</source>
-        <translation>Répartition des gravités (%)</translation>
-    </message>
-    <message>
-        <source>Life span</source>
-        <translation>Durée de vie</translation>
     </message>
     <message>
         <source>Ambulances (evacuation) availability warnings</source>
@@ -5815,6 +5791,33 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>ADN - Data export</source>
         <translation>Adaptation - Export des données</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WoundTable</name>
+    <message>
+        <source>Psyop</source>
+        <translation>Psy</translation>
+    </message>
+    <message>
+        <source>Contamination</source>
+        <translation>Contamination</translation>
+    </message>
+    <message>
+        <source>Treatment duration</source>
+        <translation>Durée de traitement</translation>
+    </message>
+    <message>
+        <source>Convalescence duration</source>
+        <translation>Durée de convalescence</translation>
+    </message>
+    <message>
+        <source>Seriousness distribution (%)</source>
+        <translation>Répartition des gravités (%)</translation>
+    </message>
+    <message>
+        <source>Life span</source>
+        <translation>Durée de vie</translation>
     </message>
 </context>
 <context>

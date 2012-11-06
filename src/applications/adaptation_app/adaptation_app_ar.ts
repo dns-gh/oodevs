@@ -1785,30 +1785,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Doctors availability warnings</source>
         <translation type="unfinished">تحذيرات توافر الأطباء</translation>
     </message>
-    <message>
-        <source>Psyop</source>
-        <translation type="unfinished">Psyop</translation>
-    </message>
-    <message>
-        <source>Contamination</source>
-        <translation type="unfinished">تلوث</translation>
-    </message>
-    <message>
-        <source>Treatment duration</source>
-        <translation type="unfinished">مدة العلاج</translation>
-    </message>
-    <message>
-        <source>Convalescence duration</source>
-        <translation type="unfinished">فترة النقاهة</translation>
-    </message>
-    <message>
-        <source>Seriousness distribution (%)</source>
-        <translation type="unfinished">خطورة التوزيع (%)</translation>
-    </message>
-    <message>
-        <source>Life span</source>
-        <translation type="unfinished">مدى الحياة</translation>
-    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>
@@ -5788,6 +5764,33 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>ADN - Data export</source>
         <translation type="unfinished">ADN-تصدير البيانات</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WoundTable</name>
+    <message>
+        <source>Psyop</source>
+        <translation type="unfinished">Psyop</translation>
+    </message>
+    <message>
+        <source>Contamination</source>
+        <translation type="unfinished">تلوث</translation>
+    </message>
+    <message>
+        <source>Treatment duration</source>
+        <translation type="unfinished">مدة العلاج</translation>
+    </message>
+    <message>
+        <source>Convalescence duration</source>
+        <translation type="unfinished">فترة النقاهة</translation>
+    </message>
+    <message>
+        <source>Seriousness distribution (%)</source>
+        <translation type="unfinished">خطورة التوزيع (%)</translation>
+    </message>
+    <message>
+        <source>Life span</source>
+        <translation type="unfinished">مدى الحياة</translation>
     </message>
 </context>
 <context>

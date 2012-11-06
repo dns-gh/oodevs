@@ -38,12 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    ADN_Table* BuildWoundsTable();
-    //@}
-
-private:
     //! @name Member data
     //@{
     ADN_Health_Data& data_;
