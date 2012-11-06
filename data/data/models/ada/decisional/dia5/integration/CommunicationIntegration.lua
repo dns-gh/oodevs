@@ -69,9 +69,9 @@ local AssignMissionParameterList = function ( missionPion, parameterName, value 
     if DEC_Mission_IsPath( missionPion, parameterName ) then
         for i = 1, nValues do
             local currentValue = value[i]
-            if InferType( currentValue ) ~= "world.Point" then
+            if InferType( currentValue ) ~= "sword.military.world.Point" then
                 currentValue = value[i]:getMyPosition() -- Transform the parameter into a point
-                if InferType( currentValue ) ~= "world.Point" then
+                if InferType( currentValue ) ~= "sword.military.world.Point" then
                     error( "Expected point in path, received something else: "..tostring( InferType( currentValue ) ) )
                 end
             end
