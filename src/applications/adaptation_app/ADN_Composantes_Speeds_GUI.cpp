@@ -47,7 +47,7 @@ ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, con
 //-----------------------------------------------------------------------------
 ADN_Composantes_Speeds_GUI::~ADN_Composantes_Speeds_GUI()
 {
-    delete pConnector_;
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------

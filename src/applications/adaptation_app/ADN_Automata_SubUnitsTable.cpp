@@ -55,7 +55,7 @@ ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( const QString& objectNam
 // -----------------------------------------------------------------------------
 ADN_Automata_SubUnitsTable::~ADN_Automata_SubUnitsTable()
 {
-    delete pConnector_;
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------

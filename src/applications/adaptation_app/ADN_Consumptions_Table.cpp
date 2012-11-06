@@ -35,7 +35,7 @@ ADN_Consumptions_Table::ADN_Consumptions_Table( const QString& objectName, ADN_C
 // -----------------------------------------------------------------------------
 ADN_Consumptions_Table::~ADN_Consumptions_Table()
 {
-    delete pConnector_;
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -50,7 +50,7 @@ ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( const QStr
 //-----------------------------------------------------------------------------
 ADN_FuneralPackagingResources_GUI::~ADN_FuneralPackagingResources_GUI()
 {
-    delete pConnector_;
+    //NOTHING
 }
 
 //-----------------------------------------------------------------------------

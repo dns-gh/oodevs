@@ -37,7 +37,7 @@ ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( const QString& objec
 // -----------------------------------------------------------------------------
 ADN_AvailabilityWarningTable::~ADN_AvailabilityWarningTable()
 {
-    delete pConnector_;
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------

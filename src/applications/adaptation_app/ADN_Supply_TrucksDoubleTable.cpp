@@ -49,7 +49,7 @@ ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( const QString& objec
 // -----------------------------------------------------------------------------
 ADN_Supply_TrucksDoubleTable::~ADN_Supply_TrucksDoubleTable()
 {
-    delete pConnector_;
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -48,7 +48,7 @@ ADN_Supply_TrucksTimeTable::ADN_Supply_TrucksTimeTable( const QString& objectNam
 // -----------------------------------------------------------------------------
 ADN_Supply_TrucksTimeTable::~ADN_Supply_TrucksTimeTable()
 {
-    delete pConnector_;
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -44,7 +44,7 @@ ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI( const QStrin
 //-----------------------------------------------------------------------------
 ADN_Population_FireEffectRoe_GUI::~ADN_Population_FireEffectRoe_GUI()
 {
-    delete pConnector_;
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
