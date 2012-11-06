@@ -170,17 +170,7 @@ void ADN_MissionParameters_Table::OnSelectionChanged( const QItemSelection& sele
 {
     if( deselected.indexes().size() == 1 &&
         ( selected.indexes().size() == 0 || ( selected.indexes().size() == 1 && selected.indexes()[ 0 ] != deselected.indexes()[ 0 ] ) ) )
-    {
-        ADN_Missions_Parameter* oldParam = static_cast< ADN_Missions_Parameter* >( GetDataFromIndex( deselected.indexes()[ 0 ] ) );
-        if( oldParam )
-        {
-            itemConnectors_[ ADN_Missions_GUI::eParameterValues ]->Disconnect( &oldParam->values_ );
-            itemConnectors_[ ADN_Missions_GUI::eChoiceValues ]->Disconnect( &oldParam->choices_ );
-            itemConnectors_[ ADN_Missions_GUI::eMinValue ]->Disconnect( &oldParam->minValue_ );
-            itemConnectors_[ ADN_Missions_GUI::eMaxValue ]->Disconnect( &oldParam->maxValue_ );
-            itemConnectors_[ ADN_Missions_GUI::eGenObjects ]->Disconnect( &oldParam->genObjects_ );
-        }
-    }
+        Disconnect( static_cast< ADN_Missions_Parameter* >( GetDataFromIndex( deselected.indexes()[ 0 ] ) ) );
     if( selected.indexes().size() == 1 )
         Reconnect( selected.indexes()[ 0 ] );
     else if( selected.indexes().size() == 0 )
@@ -196,17 +186,38 @@ void ADN_MissionParameters_Table::Reconnect( const QModelIndex& index )
     ADN_Missions_Parameter* param = static_cast< ADN_Missions_Parameter* >( GetDataFromIndex( index ) );
     if( !param )
         return;
+    Disconnect( param );
     E_MissionParameterType current = param->type_.GetData();
-    bool isEnum = current == eMissionParameterTypeEnumeration;
-    if( !isEnum )
+    if( current == eMissionParameterTypeEnumeration )
+        itemConnectors_[ADN_Missions_GUI::eParameterValues]->Connect( &param->values_ );
+    else
+    {
         param->values_.Clear();
-    itemConnectors_[ADN_Missions_GUI::eParameterValues]->Connect( &param->values_, isEnum );
-    bool isChoice = current == eMissionParameterTypeLocationComposite;
-    itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Connect( &param->choices_, isChoice );
-    bool isNumeric = current == eMissionParameterTypeNumeric;
-    itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_, isNumeric );
-    itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_, isNumeric );
-    bool isGenObjects = current == eMissionParameterTypeGenObject;
-    itemConnectors_[ADN_Missions_GUI::eGenObjects]->Connect( &param->genObjects_, isGenObjects );
+        if( current == eMissionParameterTypeLocationComposite )
+            itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Connect( &param->choices_ );
+        else if( current == eMissionParameterTypeNumeric )
+        {
+            itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_ );
+            itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_ );
+        }
+        else if( current == eMissionParameterTypeGenObject )
+            itemConnectors_[ADN_Missions_GUI::eGenObjects]->Connect( &param->genObjects_ );
+    }
     emit TypeChanged( current );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameters_Table::Disconnect
+// Created: JSR 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_MissionParameters_Table::Disconnect( ADN_Missions_Parameter* param )
+{
+    if( param )
+    {
+        itemConnectors_[ ADN_Missions_GUI::eParameterValues ]->Disconnect( &param->values_ );
+        itemConnectors_[ ADN_Missions_GUI::eChoiceValues ]->Disconnect( &param->choices_ );
+        itemConnectors_[ ADN_Missions_GUI::eMinValue ]->Disconnect( &param->minValue_ );
+        itemConnectors_[ ADN_Missions_GUI::eMaxValue ]->Disconnect( &param->maxValue_ );
+        itemConnectors_[ ADN_Missions_GUI::eGenObjects ]->Disconnect( &param->genObjects_ );
+    }
 }

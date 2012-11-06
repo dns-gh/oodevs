@@ -12,6 +12,8 @@
 
 #include "ADN_CommonGfx.h"
 
+class ADN_Missions_Parameter;
+
 // =============================================================================
 /** @class  ADN_MissionParameters_Table
     @brief  ADN_MissionParameters_Table
@@ -48,6 +50,7 @@ private:
     void RemoveCurrentElement();
     void ResetCurrent();
     void Reconnect( const QModelIndex& index );
+    void Disconnect( ADN_Missions_Parameter* param );
     //@}
 
 private slots:

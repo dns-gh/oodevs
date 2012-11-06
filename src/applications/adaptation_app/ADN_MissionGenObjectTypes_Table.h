@@ -18,15 +18,14 @@
 */
 // Created: LGY 2012-04-18
 // =============================================================================
-class ADN_MissionGenObjectTypes_Table : public ADN_Table
-                                      , private boost::noncopyable
+class ADN_MissionGenObjectTypes_Table : public ADN_Table3
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_MissionGenObjectTypes_Table( QWidget* pParent, ADN_Connector_ABC*& pGuiConnector, QCheckBox* all );
+             ADN_MissionGenObjectTypes_Table( QCheckBox* all, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_MissionGenObjectTypes_Table();
     //@}
 
@@ -39,7 +38,8 @@ public slots:
 private:
     //! @name Operations
     //@{
-    virtual void doValueChanged( int row, int col );
+    virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
+    virtual void AddRow( int row, void* data );
     //@}
 
 private:
@@ -58,6 +58,7 @@ private:
     //! @name Data Member
     //@{
     QCheckBox* all_;
+    bool isAdding_;
     //@}
 };
 

@@ -18,27 +18,22 @@
 */
 // Created: SBO 2006-12-05
 // =============================================================================
-class ADN_MissionParameterValues_Table : public ADN_Table2
+class ADN_MissionParameterValues_Table : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_MissionParameterValues_Table( QWidget* pParent, const char* szName );
+             ADN_MissionParameterValues_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_MissionParameterValues_Table();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_MissionParameterValues_Table( const ADN_MissionParameterValues_Table& );            //!< Copy constructor
-    ADN_MissionParameterValues_Table& operator=( const ADN_MissionParameterValues_Table& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void AddNewElement();
     void RemoveCurrentElement();
-    virtual void OnContextMenu( int row, int col, const QPoint& pt );
+    virtual void AddRow( int row, void* data );
+    virtual void OnContextMenu( const QPoint& pt );
     //@}
 };
 

@@ -13,44 +13,42 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_CommonGfx.h"
 
-namespace
-{
-    class ADN_CT_MissionParameterValues : public ADN_Connector_Table_ABC
-    {
-    public:
-        ADN_CT_MissionParameterValues( ADN_MissionParameterValues_Table& tab )
-            : ADN_Connector_Table_ABC( tab, false )
-        {
-            SetAutoClear( true );
-        }
-
-        void AddSubItems( int i, void* obj )
-        {
-            assert( obj );
-
-            ADN_Missions_ParameterValue* param = static_cast< ADN_Missions_ParameterValue* >( obj );
-            ADN_TableItem_String* itemName = new ADN_TableItem_String( &tab_, obj );
-            tab_.setItem( i, 0, itemName );
-            itemName->GetConnector().Connect( &param->name_ );
-            tab_.show();
-        }
-    };
-}
+// namespace
+// {
+//     class ADN_CT_MissionParameterValues : public ADN_Connector_Table_ABC
+//     {
+//     public:
+//         ADN_CT_MissionParameterValues( ADN_MissionParameterValues_Table& tab )
+//             : ADN_Connector_Table_ABC( tab, false )
+//         {
+//             SetAutoClear( true );
+//         }
+// 
+//         void AddSubItems( int i, void* obj )
+//         {
+//             assert( obj );
+// 
+//             ADN_Missions_ParameterValue* param = static_cast< ADN_Missions_ParameterValue* >( obj );
+//             ADN_TableItem_String* itemName = new ADN_TableItem_String( &tab_, obj );
+//             tab_.setItem( i, 0, itemName );
+//             itemName->GetConnector().Connect( &param->name_ );
+//             tab_.show();
+//         }
+//     };
+// }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameterValues_Table constructor
 // Created: SBO 2006-12-05
 // -----------------------------------------------------------------------------
-ADN_MissionParameterValues_Table::ADN_MissionParameterValues_Table( QWidget* pParent, const char* szName )
-    : ADN_Table2( pParent, szName )
+ADN_MissionParameterValues_Table::ADN_MissionParameterValues_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    verticalHeader()->hide();
-    setLeftMargin( 0 );
-    setNumCols( 1 );
-    setNumRows( 0 );
-    horizontalHeader()->setLabel( 0, tr( "Name" ) );
-    setColumnStretchable( 0, true );
-    pConnector_ = new ADN_CT_MissionParameterValues( *this );
+    setShowGrid( false );
+    verticalHeader()->setVisible( false );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    dataModel_.setHorizontalHeaderLabels( QStringList( tr( "Name" ) ) );
+    delegate_.AddLineEditOnColumn( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +57,7 @@ ADN_MissionParameterValues_Table::ADN_MissionParameterValues_Table( QWidget* pPa
 // -----------------------------------------------------------------------------
 ADN_MissionParameterValues_Table::~ADN_MissionParameterValues_Table()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +67,7 @@ ADN_MissionParameterValues_Table::~ADN_MissionParameterValues_Table()
 void ADN_MissionParameterValues_Table::AddNewElement()
 {
     ADN_Missions_ParameterValue* newElement = new ADN_Missions_ParameterValue();
-    newElement->name_ = tr( "New value" ).toAscii().constData();
+    newElement->name_ = tr( "New value" ).toStdString();
 
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( newElement );
@@ -82,7 +80,7 @@ void ADN_MissionParameterValues_Table::AddNewElement()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameterValues_Table::RemoveCurrentElement()
 {
-    ADN_Missions_ParameterValue* param = (ADN_Missions_ParameterValue*)GetCurrentData();
+    ADN_Missions_ParameterValue* param = static_cast< ADN_Missions_ParameterValue* >( GetSelectedData() );
     if( param )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
 }
@@ -91,12 +89,12 @@ void ADN_MissionParameterValues_Table::RemoveCurrentElement()
 // Name: ADN_MissionParameterValues_Table::OnContextMenu
 // Created: SBO 2006-12-05
 // -----------------------------------------------------------------------------
-void ADN_MissionParameterValues_Table::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
+void ADN_MissionParameterValues_Table::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popup( this );
 
     popup.insertItem( tr( "Add value"), 0 );
-    if( GetCurrentData() != 0 )
+    if( GetSelectedData() != 0 )
         popup.insertItem( tr( "Remove value"), 1 );
 
     int result = popup.exec( pt );
@@ -104,4 +102,16 @@ void ADN_MissionParameterValues_Table::OnContextMenu( int /*row*/, int /*col*/, 
         RemoveCurrentElement();
     else if( result == 0 )
         AddNewElement();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameterValues_Table::AddRow
+// Created: JSR 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_MissionParameterValues_Table::AddRow( int row, void* data )
+{
+    ADN_Missions_ParameterValue* pInfos = static_cast< ADN_Missions_ParameterValue* >( data );
+    if( !pInfos )
+        return;
+    AddItem( row, 0, data, &pInfos->name_, ADN_StandardItem::eString, Qt::ItemIsEditable );
 }

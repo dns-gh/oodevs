@@ -15,58 +15,23 @@
 #include "ADN_TableItem_CheckItem.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
 
-class ADN_MissionGenObjectTypes_Table_Connector : public ADN_Connector_Table_ABC
-{
-
-public:
-    explicit ADN_MissionGenObjectTypes_Table_Connector( ADN_MissionGenObjectTypes_Table& tab )
-        : ADN_Connector_Table_ABC( tab, false )
-    {}
-
-    void AddSubItems( int i, void* obj )
-    {
-        assert( obj );
-        ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, obj );
-        ADN_TableItem_CheckItem* pItemAllowed = new ADN_TableItem_CheckItem ( &tab_, obj );
-
-        // add a new row & set new values
-        tab_.setItem( i, 0, pItemString );
-        tab_.setItem( i, 1, pItemAllowed );
-
-        // connect items & datas
-        pItemString->GetConnector().Connect( &static_cast< helpers::ADN_MissionGenObjectTypes_Infos* >( obj )->ptrObject_.GetData()->strName_ );
-        pItemAllowed->GetConnector().Connect( &static_cast< helpers::ADN_MissionGenObjectTypes_Infos* >( obj )->isAllowed_ );
-    }
-};
-
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionGenObjectTypes_Table constructor
 // Created: LGY 2012-04-18
 // -----------------------------------------------------------------------------
-ADN_MissionGenObjectTypes_Table::ADN_MissionGenObjectTypes_Table( QWidget* pParent, ADN_Connector_ABC*& pGuiConnector, QCheckBox* all )
-    : ADN_Table( pParent, "ADN_MissionGenObjectTypes_Table" )
+ADN_MissionGenObjectTypes_Table::ADN_MissionGenObjectTypes_Table( QCheckBox* all, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
     , all_( all )
+    , isAdding_( false )
 {
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
     setShowGrid( false );
-    setLeftMargin( 0 );
-
-    // hide vertical header
-    verticalHeader()->hide();
-
-    // tab with 2 columns
-    setNumCols( 2 );
-    setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-    setColumnReadOnly( 0, true );
-
-    horizontalHeader()->setLabel( 0, tr( "Type" ) );
-    horizontalHeader()->setLabel( 1, tr( "Allowed" ) );
-
-    pConnector_ = new ADN_MissionGenObjectTypes_Table_Connector( *this );
-    pGuiConnector = pConnector_;
+    dataModel_.setColumnCount( 2 );
+    verticalHeader()->setVisible( false );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Type" ) << tr( "Allowed" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    delegate_.AddCheckBoxOnColumn( 1 );
     connect( all_, SIGNAL( stateChanged( int ) ), this, SLOT( OnStateChanged( int ) ) );
 }
 
@@ -85,26 +50,44 @@ ADN_MissionGenObjectTypes_Table::~ADN_MissionGenObjectTypes_Table()
 // -----------------------------------------------------------------------------
 bool ADN_MissionGenObjectTypes_Table::IsChecked() const
 {
-    bool allChecked = true;
-    for( int nRow = 0; nRow < numRows(); ++nRow )
+    for( int nRow = 0; nRow < dataModel_.rowCount(); ++nRow )
     {
-        ADN_TableItem_CheckItem* pData = static_cast< ADN_TableItem_CheckItem* >( item( nRow, 1 ) );
-        if( !static_cast< helpers::ADN_MissionGenObjectTypes_Infos* >( pData->GetData() )->isAllowed_.GetData() )
+        const QModelIndex index = dataModel_.index( nRow, 1 );
+        helpers::ADN_MissionGenObjectTypes_Infos* pInfos = static_cast< helpers::ADN_MissionGenObjectTypes_Infos* >( GetDataFromIndex( index ) );
+        if( pInfos && !pInfos->isAllowed_.GetData() )
             return false;
     }
-    return allChecked;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionGenObjectTypes_Table::doValueChanged
 // Created: LGY 2012-04-19
 // -----------------------------------------------------------------------------
-void ADN_MissionGenObjectTypes_Table::doValueChanged( int row, int col )
+void ADN_MissionGenObjectTypes_Table::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-    ADN_Table::doValueChanged( row, col );
-    all_->blockSignals( true );
-    all_->setChecked( IsChecked() );
-    all_->blockSignals( false );
+    ADN_Table3::dataChanged( topLeft, bottomRight );
+    if( !isAdding_ )
+    {
+        all_->blockSignals( true );
+        all_->setChecked( IsChecked() );
+        all_->blockSignals( false );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionGenObjectTypes_Table::AddRow
+// Created: JSR 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_MissionGenObjectTypes_Table::AddRow( int row, void* data )
+{
+    helpers::ADN_MissionGenObjectTypes_Infos* pInfos = static_cast< helpers::ADN_MissionGenObjectTypes_Infos* >( data );
+    if( !pInfos )
+        return;
+    isAdding_ = true;
+    AddItem( row, 0, data, &pInfos->ptrObject_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 1, data, &pInfos->isAllowed_, ADN_StandardItem::eBool, Qt::ItemIsEditable );
+    isAdding_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,17 +110,10 @@ void ADN_MissionGenObjectTypes_Table::OnTypeChanged( E_MissionParameterType type
 // -----------------------------------------------------------------------------
 void ADN_MissionGenObjectTypes_Table::OnStateChanged( int state )
 {
-    if( numRows() > 0 && numCols() > 0)
-        setCurrentCell( 0, 0 );
-    for( int nRow = 0; nRow < numRows(); ++nRow )
-    {
-        ADN_TableItem_CheckItem* pData = static_cast< ADN_TableItem_CheckItem* >( item( nRow, 1 ) );
-        if( pData )
-        {
-            bool active = state == Qt::Checked;
-            static_cast< helpers::ADN_MissionGenObjectTypes_Infos* >( pData->GetData() )->isAllowed_ = active;
-            pData->setChecked( state == Qt::Checked );
-        }
-    }
-    repaintContents( true );
+    if( dataModel_.rowCount() > 0 && dataModel_.columnCount() > 0)
+        selectionModel()->setCurrentIndex( dataModel_.index( 0, 0 ), QItemSelectionModel::ClearAndSelect );
+    for( int nRow = 0; nRow < dataModel_.rowCount(); ++nRow )
+        if( QStandardItem* item = GetItemFromIndex( dataModel_.index( nRow, 1 ) ) )
+            item->setCheckState( state == Qt::Checked ? Qt::Checked : Qt::Unchecked );
+    doItemsLayout();
 }

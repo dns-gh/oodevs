@@ -276,7 +276,7 @@ void ADN_Table3::OnGotoRequested( const QModelIndex& index )
 // Name: ADN_Table::GetDataFromIndex
 // Created: ABR 2012-10-29
 // -----------------------------------------------------------------------------
-void* ADN_Table3::GetDataFromIndex( const QModelIndex& index )
+void* ADN_Table3::GetDataFromIndex( const QModelIndex& index ) const
 {
     if( !index.isValid() )
         return 0;
@@ -290,7 +290,7 @@ void* ADN_Table3::GetDataFromIndex( const QModelIndex& index )
 // Name: ADN_Table::GetCurrentData
 // Created: ABR 2012-10-29
 // -----------------------------------------------------------------------------
-void* ADN_Table3::GetSelectedData()
+void* ADN_Table3::GetSelectedData() const
 {
     QModelIndexList indexes = selectedIndexes();
     if( indexes.size() > 0 )

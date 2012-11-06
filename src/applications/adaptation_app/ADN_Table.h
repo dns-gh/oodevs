@@ -62,8 +62,8 @@ protected:
 
 
     virtual void OnContextMenu( const QPoint& pt );
-    void* GetSelectedData();
-    void* GetDataFromIndex( const QModelIndex& index );
+    void* GetSelectedData() const;
+    void* GetDataFromIndex( const QModelIndex& index ) const;
     //@}
 
 

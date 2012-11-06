@@ -18,21 +18,19 @@
 */
 // Created: LDC 2010-08-19
 // =============================================================================
-class ADN_MissionTypes_Table : public ADN_Table2
+class ADN_MissionTypes_Table : public ADN_Table3
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_MissionTypes_Table( QWidget* pParent, const char* szName );
+             ADN_MissionTypes_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_MissionTypes_Table();
     //@}
 
-private:
-    //! @name Copy/Assignment
+public:
+    //! @name Operations
     //@{
-    ADN_MissionTypes_Table( const ADN_MissionTypes_Table& );            //!< Copy constructor
-    ADN_MissionTypes_Table& operator=( const ADN_MissionTypes_Table& ); //!< Assignment operator
+    virtual void AddRow( int row, void* data );
     //@}
 };
 
