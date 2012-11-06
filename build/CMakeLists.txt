@@ -391,6 +391,7 @@ masa_add_target_definition( simulation_app PLATFORM=${platform} )
 masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
 masa_add_target_definition( simulation_app _WIN32_WINNT=0x501 )
 masa_add_target_definition( simulation_app WINVER=0x501 )
+set_property( TARGET simulation_app APPEND PROPERTY LINK_FLAGS "/LARGEADDRESSAWARE" )
 target_link_libraries( simulation_app
     simulation_kernel
     dispatcher
