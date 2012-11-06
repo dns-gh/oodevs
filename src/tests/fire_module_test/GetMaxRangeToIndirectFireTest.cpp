@@ -83,7 +83,7 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_indirect_fire_is_zero_when_weapon_type_wit
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Exception in GetMaxRangeToIndirectFire hook: Unknown weapon type : non existing weapon" ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMaxRangeToIndirectFire hook: Unknown weapon type : non existing weapon" );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToIndirectFire( firer, filter, ammo_2.c_str(), true ) );
 }
 
@@ -92,7 +92,7 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_indirect_fire_is_zero_when_weapon_type_wit
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Exception in GetMaxRangeToIndirectFire hook: Unknown weapon type : non existing weapon" ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMaxRangeToIndirectFire hook: Unknown weapon type : non existing weapon" );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToIndirectFire( firer, filter, ammo_2.c_str(), false ) );
 }
 
@@ -101,7 +101,7 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_indirect_fire_is_zero_when_weapon_type_wit
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Exception in GetMaxRangeToIndirectFire hook: Unknown weapon type : non existing weapon" ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMaxRangeToIndirectFire hook: Unknown weapon type : non existing weapon" );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToIndirectFire( firer, filter, 0, true ) );
 }
 
@@ -110,7 +110,7 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_indirect_fire_is_zero_when_weapon_type_wit
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Exception in GetMaxRangeToIndirectFire hook: Unknown weapon type : non existing weapon" ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMaxRangeToIndirectFire hook: Unknown weapon type : non existing weapon" );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToIndirectFire( firer, filter, 0, false ) );
 }
 

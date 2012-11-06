@@ -48,7 +48,7 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_fire_on_with_posture_is_zero_when_weapon_d
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "non existing weapon";
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Exception in GetMinRangeToFireOnWithPosture hook: Unknown weapon type : non existing weapon" ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMinRangeToFireOnWithPosture hook: Unknown weapon type : non existing weapon" );
     BOOST_CHECK_EQUAL( 0, GetMinRangeToFireOnWithPosture( firer, enemy, filter, 0.5 ) );
 }
 
@@ -72,7 +72,7 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_fire_on_with_posture_is_zero_when_volume_i
     component_2[ "volume" ] = 42;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
-    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, std::string( "Exception in GetMinRangeToFireOnWithPosture hook: Invalid target volume identifier in GetMinDistanceForPH : 42" ) );
+    MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetMinRangeToFireOnWithPosture hook: Invalid target volume identifier in GetMinDistanceForPH : 42" );
     BOOST_CHECK_EQUAL( 0, GetMinRangeToFireOnWithPosture( firer, enemy, filter, 0.5 ) );
 }
 
@@ -85,7 +85,7 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_fire_on_with_posture_is_zero_when_ph_modif
     component_2[ "volume" ] = volume_1;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
-    MOCK_EXPECT( GetPhModificator ).once().with( firer, enemy, std::string( "launcher_1" ) ).returns( 0 );
+    MOCK_EXPECT( GetPhModificator ).once().with( firer, enemy, "launcher_1" ).returns( 0 );
     BOOST_CHECK_EQUAL( 0, GetMinRangeToFireOnWithPosture( firer, enemy, filter, 0.5 ) );
 }
 
@@ -98,6 +98,6 @@ BOOST_FIXTURE_TEST_CASE( min_range_to_fire_on_with_posture_is_non_zero, QueryFix
     component_2[ "volume" ] = volume_1;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
-    MOCK_EXPECT( GetPhModificator ).once().with( firer, enemy, std::string( "launcher_1" ) ).returns( 1 );
+    MOCK_EXPECT( GetPhModificator ).once().with( firer, enemy, "launcher_1" ).returns( 1 );
     BOOST_CHECK_LT( 0, GetMinRangeToFireOnWithPosture( firer, enemy, filter, 0.5 ) );
 }

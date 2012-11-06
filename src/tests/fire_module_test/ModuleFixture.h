@@ -88,10 +88,10 @@ namespace fire
             target[ "data" ] = "data";
             target[ "dead" ] = false;
             mock::sequence s1, s2;
-            MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, std::string( "Initializing launchers" ) ).in( s1 );
-            MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, std::string( "Initializing dotations" ) ).in( s2 );
-            MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, std::string( "Initializing weapons" ) ).in( s1 ).in( s2 );
-            MOCK_EXPECT( GetVolumeId ).with( std::string( "volume_1" ) ).returns( volume_1 );
+            MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, "Initializing launchers" ).in( s1 );
+            MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, "Initializing dotations" ).in( s2 );
+            MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_INFO, "Initializing weapons" ).in( s1 ).in( s2 );
+            MOCK_EXPECT( GetVolumeId ).with( "volume_1" ).returns( volume_1 );
             InitializeLaunchers( "<launchers>"
                                  "  <launcher name='launcher_1' indirect-fire='true'>"
                                  "    <ph-modifiers posture='posture_1'>"

@@ -92,20 +92,20 @@ namespace perception
                 "  </sensors>"
                 "</sensors>" );
             MOCK_EXPECT( GetConsumptionTypeSize ).returns( 1 );
-            MOCK_EXPECT( FindConsumptionType ).with( std::string( "activity" ), mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _2, 0, _3 ) );
+            MOCK_EXPECT( FindConsumptionType ).with( "activity", mock::any, mock::any ).calls( boost::bind( boost::apply< void >(), _2, 0, _3 ) );
             MOCK_EXPECT( ConvertSecondsToSim ).calls( boost::bind( &ConvertSeconds, _1 ) );
             MOCK_EXPECT( GetVolumeSize ).returns( 1 );
-            MOCK_EXPECT( GetVolumeIdentifier ).with( std::string( "volume" ), mock::any ).calls( boost::bind( &Assign, _2 ) );
+            MOCK_EXPECT( GetVolumeIdentifier ).with( "volume", mock::any ).calls( boost::bind( &Assign, _2 ) );
             MOCK_EXPECT( GetPrecipitationSize ).returns( 1 );
-            MOCK_EXPECT( GetPrecipitationIdentifier ).with( std::string( "precipitation" ), mock::any ).calls( boost::bind( &Assign, _2 ) );
+            MOCK_EXPECT( GetPrecipitationIdentifier ).with( "precipitation", mock::any ).calls( boost::bind( &Assign, _2 ) );
             MOCK_EXPECT( GetLightingSize ).returns( 1 );
-            MOCK_EXPECT( GetLightingIdentifier ).with( std::string( "lighting" ), mock::any ).calls( boost::bind( &Assign, _2 ) );
+            MOCK_EXPECT( GetLightingIdentifier ).with( "lighting", mock::any ).calls( boost::bind( &Assign, _2 ) );
             MOCK_EXPECT( GetPostureSize ).returns( 1 );
-            MOCK_EXPECT( GetPostureIdentifier ).with( std::string( "posture" ), mock::any ).calls( boost::bind( &Assign, _2 ) );
+            MOCK_EXPECT( GetPostureIdentifier ).with( "posture", mock::any ).calls( boost::bind( &Assign, _2 ) );
             MOCK_EXPECT( PostureCanModifyDetection ).returns( true );
             MOCK_EXPECT( GetMaterialTypeSize ).returns( 1 );
-            MOCK_EXPECT( IsMaterialType ).with( std::string( "urban" ) ).returns( true );
-            MOCK_EXPECT( FindObjectType ).with( std::string( "object" ) ).returns( 0 );
+            MOCK_EXPECT( IsMaterialType ).with( "urban" ).returns( true );
+            MOCK_EXPECT( FindObjectType ).with( "object" ).returns( 0 );
             InitializePerceptionTypes( xml.c_str() );
         }
     };

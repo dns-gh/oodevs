@@ -373,10 +373,10 @@ namespace core
     MOCK_STATIC_METHOD( hook, arity, result parameters, hook );
 
 #define EXPECT_REGISTER_HOOK( hook, arity, result, parameters ) \
-    MOCK_EXPECT( RegisterHook ).at_least( 1 ).with( mock::any, mock::any, mock::any, std::string( #hook ), std::string( #result#parameters ) ).calls( boost::bind( &RegisterHookHelper< hook##Hook >, boost::ref( hooks ), _1, _2, _3, _4, _5 ) );
+    MOCK_EXPECT( RegisterHook ).at_least( 1 ).with( mock::any, mock::any, mock::any, #hook, #result#parameters ).calls( boost::bind( &RegisterHookHelper< hook##Hook >, boost::ref( hooks ), _1, _2, _3, _4, _5 ) );
 
 #define EXPECT_USE_HOOK( hook, arity, result, parameters ) \
-    MOCK_EXPECT( UseHook ).at_least( 1 ).with( mock::any, std::string( #hook ), std::string( #result#parameters ) ).calls( boost::bind( &UseHookHelper< hook##Hook >, boost::ref( hooks ), _1, _2, _3 ) );
+    MOCK_EXPECT( UseHook ).at_least( 1 ).with( mock::any, #hook, #result#parameters ).calls( boost::bind( &UseHookHelper< hook##Hook >, boost::ref( hooks ), _1, _2, _3 ) );
 
 #define REGISTER_HOOK( hook, arity, result, parameters ) \
     hooks.RegisterHook< hook##Hook >( 0, &hook##_, hook, #hook, #result#parameters );
