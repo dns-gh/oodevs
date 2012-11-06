@@ -170,17 +170,6 @@ activate = function( self )
     local pionsSE =  echelons[2]
     local pionsEE =  echelons[3]
 
-    if myself.feedback then
-        if self.params.disableWhenDone then
-           Feedback( self.feedbacks.done )
-        else
-           meKnowledge:RC( eRC_FinMission )
-        end
-        for i = 1, #self.parameters.commandingEntities do
-           F_Pion_SeteEtatEchelon( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
-        end
-        myself.feedback = false
-    end
     -- Gestion du CR quand les pions PE arrivent sur les limas de type LC ou LD
     Activate( skill.links.synchronizeRC, 1, { entities = pionsPE } )
 
@@ -240,6 +229,18 @@ activate = function( self )
     Activate( skill.links.AssignSETask, 1, { SE = pionsSE, tasks = tasksForSE, parameters = self.parameters, companyTask = self.companyTask })
     if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then
         Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
+    end
+    
+    if myself.feedback then
+        if self.params.disableWhenDone then
+           Feedback( self.feedbacks.done )
+        else
+           meKnowledge:RC( eRC_FinMission )
+        end
+        for i = 1, #self.parameters.commandingEntities do
+           F_Pion_SeteEtatEchelon( self.parameters.commandingEntities[i].source, eEtatEchelon_None )
+        end
+        myself.feedback = false
     end
 end,
 
