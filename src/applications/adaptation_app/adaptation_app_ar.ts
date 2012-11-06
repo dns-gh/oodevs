@@ -4055,29 +4055,6 @@ Make sure that the file is not write-protected.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Sensors_Targets_GUI</name>
-    <message>
-        <source>Objects</source>
-        <translation type="unfinished">الكائنات</translation>
-    </message>
-    <message>
-        <source>Detection time (s)</source>
-        <translation type="unfinished">الكشف عن الزمن (s)</translation>
-    </message>
-    <message>
-        <source>Detection distance (m)</source>
-        <translation type="unfinished">الكشف عن المسافة (م)</translation>
-    </message>
-    <message>
-        <source>Add object</source>
-        <translation type="unfinished">إضافة كائن</translation>
-    </message>
-    <message>
-        <source>Remove object</source>
-        <translation type="unfinished">قم بإزالة الكائن</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Sensors_UrbanBlockMaterial_GUI</name>
     <message>
         <source>Modifiers</source>

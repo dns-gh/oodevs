@@ -4068,29 +4068,6 @@ Make sure that the file is not write-protected.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Sensors_Targets_GUI</name>
-    <message>
-        <source>Objects</source>
-        <translation>Objects</translation>
-    </message>
-    <message>
-        <source>Detection time (s)</source>
-        <translation>Detection time (s)</translation>
-    </message>
-    <message>
-        <source>Detection distance (m)</source>
-        <translation>Detection distance (m)</translation>
-    </message>
-    <message>
-        <source>Add object</source>
-        <translation>Add object</translation>
-    </message>
-    <message>
-        <source>Remove object</source>
-        <translation>Remove object</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Sensors_UrbanBlockMaterial_GUI</name>
     <message>
         <source>Modifiers</source>

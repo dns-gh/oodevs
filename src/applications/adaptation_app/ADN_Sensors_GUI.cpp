@@ -19,7 +19,6 @@
 #include "ADN_Sensors_Data.h"
 #include "ADN_ListView_Sensors.h"
 #include "ADN_SearchListView.h"
-#include "ADN_Sensors_Targets_GUI.h"
 #include "ADN_Sensors_Sizes_GUI.h"
 #include "ADN_Sensors_Meteos_GUI.h"
 #include "ADN_Sensors_Illumination_GUI.h"

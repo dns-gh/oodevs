@@ -595,9 +595,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Sizes_GUI.cpp">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Targets_GUI.cpp">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_TargetsListView.cpp">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClCompile>
@@ -1366,9 +1363,6 @@
       <Filter>Source Files\Workspace\Weapons\Weapons GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_LimitedToSensorsListView.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Targets_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_TargetsListView.h">

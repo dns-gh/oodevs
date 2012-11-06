@@ -4071,29 +4071,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Sensors_Targets_GUI</name>
-    <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Detection time (s)</source>
-        <translation>Temps de détection (s)</translation>
-    </message>
-    <message>
-        <source>Detection distance (m)</source>
-        <translation>Distance de détection (m)</translation>
-    </message>
-    <message>
-        <source>Add object</source>
-        <translation>Ajouter un objet</translation>
-    </message>
-    <message>
-        <source>Remove object</source>
-        <translation>Enlever cet objet</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Sensors_UrbanBlockMaterial_GUI</name>
     <message>
         <source>Modifiers</source>
