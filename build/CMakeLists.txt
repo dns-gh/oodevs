@@ -41,10 +41,11 @@ masa_set_external_library( SPATIALCONTAINER_LIBRARIES spatialcontainer_d spatial
 masa_set_external_library( SPATIALITE_LIBRARIES       spatialite_d spatialite )
 masa_set_external_library( SVGL_LIBRARIES             svgl_d svgl )
 masa_set_external_library( TERRAIN_LIBRARIES          terrain_d terrain )
-masa_set_external_library( TOOLS_LIBRARIES            tools_d     tools )
-masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D  Xalan-C_1 )
+masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
+masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
 masa_set_external_library( ZIPSTREAM_LIBRARIES        zipstream_d zipstream )
+masa_set_external_library( MASALLOC_LIBRARIES         masalloc_d masalloc )
 
 macro( grab_item output name items )
     list( LENGTH ${items} len )
@@ -369,6 +370,7 @@ target_link_libraries( simulation_kernel
     ${GEODATA_LIBRARIES}
     ${LOG4CXX_LIBRARIES}
     ${TERRAIN_LIBRARIES}
+    ${MASALLOC_LIBRARIES}
 )
 
 # simulation_kernel_test
