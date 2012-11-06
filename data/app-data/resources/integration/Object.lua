@@ -56,6 +56,10 @@ integration.isCamp = function( object )
     return DEC_ObjectKnowledge_HasCapacity( object.source, "logistic" )
 end
 
+integration.isTrafficable = function( object )
+    return DEC_ObjectKnowledge_HasCapacity( object.source, "trafficability" )
+end
+
 integration.getPositionsAroundObject = function( object )
     object.getObjectNearestBorderPosition = object.getObjectNearestBorderPosition or nil
     if object.getObjectNearestBorderPosition == nil then
