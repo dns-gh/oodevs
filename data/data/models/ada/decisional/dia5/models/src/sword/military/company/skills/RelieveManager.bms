@@ -27,14 +27,7 @@ activate = function( self )
            if bestReleve then
                DEC_Automate_PionRelevePion( bestReleve.source, pion.source )
                F_Pion_SeteEtatEchelon( bestReleve.source, F_Pion_GeteEtatEchelon( pion.source ) )
-               meKnowledge:sendTaskToPion(pion, self.params.followTask, {objective = bestReleve }, eEtatEchelon_None )
            else
-               for _, unit in pairs ( self.params.pions ) do
-                   if unit ~= pion then           
-                      meKnowledge:sendTaskToPion(pion, self.params.followTask, { objective = unit }, eEtatEchelon_None )
-                      return
-                   end
-               end
                F_Pion_SeteEtatEchelon( pion.source, eEtatEchelon_None )
            end
       end

@@ -222,7 +222,7 @@ activate = function( self )
     end
 
     -- Gestion de la rélève
-    Activate( skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE, followTask = self.params.defaultTask })
+    Activate( skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE })
 
     -- Gestion du SE (car les objectifs ne sont plus les mêmes)
     local tasksForSE = self.params.supportTasks..";"..self.params.defaultTask

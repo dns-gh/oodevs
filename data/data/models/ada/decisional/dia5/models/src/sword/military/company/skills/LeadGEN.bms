@@ -346,6 +346,8 @@ activate = function( self )
     -- Gestion du soutien
     Activate( skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
 
+    -- Gestion de la rélève
+    Activate( skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE })
     if self.params.noCoordination then
         return
     end
@@ -392,9 +394,6 @@ activate = function( self )
     -- Gestion de l'élongation inter echelon
     Activate( skill.links.coordinationManager , 1, { enititesFromEchelon = fusionList( pionsPE, pionsSE ), progressionInAOR = self.progressionInAOR, distance = maxsupportDistance } )
     
-    -- Gestion de la rélève
-    Activate( skill.links.relieveManager, 1, { pions = pionsPE, releve = pionsSE, followTask = self.params.defaultTask })
-
     -- Gestion du SE (car les objectifs ne sont plus les mêmes)
     Activate( skill.links.AssignSETask, 1, { SE = pionsSE, tasks = self.params.supportTasks, parameters = self.parameters, companyTask = self.companyTask })
     if not next(integration.getPionsInEchelons( self.parameters.commandingEntities )[1]) then

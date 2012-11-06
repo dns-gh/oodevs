@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.skills.RelieveManager" source-version="1.0.0">
-  <parameters>
-    <parameter name="pions">
-      <description>Toutes les unités de l'automate qui peuvent être relevées.</description>
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Commanding"/>
-        </list>
-      </type>
-    </parameter>
-    <parameter name="releve">
-      <description>Toutes les unités de l'automate qui peuvent relever.</description>
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Commanding"/>
-        </list>
-      </type>
-    </parameter>
-    <parameter name="followTask">
-      <type>
-        <simple name="string"/>
-      </type>
-    </parameter>
-  </parameters>
-  <modifiers/>
-  <resources/>
+	<parameters>
+		<parameter name="pions">
+			<description>Toutes les unités de l'automate qui peuvent être relevées.</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Commanding"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="releve">
+			<description>Toutes les unités de l'automate qui peuvent relever.</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Commanding"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<modifiers/>
+	<resources/>
 </skill>
