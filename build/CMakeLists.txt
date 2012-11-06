@@ -57,6 +57,7 @@ macro( grab_item output name items )
 endmacro()
 
 function( add_target target group dir )
+    message( "-- ${target}" )
     masa_extract_options( options ${ARGN} )
     grab_item( has_protocol "protocol" options )
     masa_add_target( ${target} ${group} ${dir} OPTIONS ${options} )
