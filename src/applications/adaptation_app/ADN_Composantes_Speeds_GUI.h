@@ -16,12 +16,12 @@
 // Created: JDY 03-07-15
 //*****************************************************************************
 class ADN_Composantes_Speeds_GUI
-    : public ADN_Table2
+    : public ADN_Table3
 {
     Q_OBJECT
 
 public:
-    explicit ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, QWidget* parent = 0 );
+    explicit ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Composantes_Speeds_GUI();
 
 public slots:
@@ -30,6 +30,7 @@ public slots:
 
 private:
     bool UpdateSpeedsValidator( double maxSpeed );
+    virtual void AddRow( int row, void* data );
 
 private:
     QLineEdit* maxSpeed_;

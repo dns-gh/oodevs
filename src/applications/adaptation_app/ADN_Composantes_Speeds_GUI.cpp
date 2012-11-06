@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_Speeds_GUI.h"
 #include "moc_ADN_Composantes_Speeds_GUI.cpp"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Composantes_Data.h"
 #include "ENT/ENT_Tr.h"
 
@@ -18,64 +17,27 @@ typedef ADN_Composantes_Data::SpeedInfos SpeedInfos;
 typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
 
 //-----------------------------------------------------------------------------
-// Internal Table connector to be connected with ADN_Composantes_Speeds_GUI
-//-----------------------------------------------------------------------------
-class ADN_CT_Composantes_Speeds
-    :public ADN_Connector_Table_ABC
-{
-public:
-    ADN_CT_Composantes_Speeds( ADN_Composantes_Speeds_GUI& tab )
-        : ADN_Connector_Table_ABC( tab, false )
-    {
-        // NOTHING
-    }
-
-    void AddSubItems( int i, void *obj )
-    {
-        assert( obj );
-        ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, obj );
-        ADN_TableItem_Double* pItemSpeed = new ADN_TableItem_Double( &tab_, obj );
-        ADN_TableItem_IntPercentage* pItemConstruction = new ADN_TableItem_IntPercentage( &tab_, obj );
-
-        tab_.setItem( i, 0, pItemString );
-        tab_.setItem( i, 1, pItemSpeed );
-        tab_.setItem( i, 2, pItemConstruction );
-
-        SpeedInfos* infos = static_cast< SpeedInfos* >( obj );
-        pItemString->setEnabled( false );
-        pItemString->setText( ENT_Tr::ConvertFromLocation( infos->nTypeTerrain_, ENT_Tr_ABC::eToTr ).c_str() );
-
-        pItemSpeed->GetValidator().setBottom( 0 );
-
-        pItemSpeed->GetConnector().Connect( &infos->rSpeed_ );
-        pItemConstruction->GetConnector().Connect( &infos->nConstruction_ );
-        tab_.AdjustColumns( 10 );
-    }
-
-private:
-    ADN_CT_Composantes_Speeds& operator=( const ADN_CT_Composantes_Speeds& );
-};
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Speeds_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, QWidget* parent )
-    : ADN_Table2( parent, "ADN_Composantes_Speeds_GUI" )
+ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
     , maxSpeed_( maxSpeed )
     , popupIsDisplayed_( false )
 {
-    setSorting( true );
-    setSelectionMode( Q3Table::Single );
-    setShowGrid( false );
-    setLeftMargin( 0 );
-    verticalHeader()->hide();
-    setNumCols( 3 );
-    setNumRows( 0 );
-    horizontalHeader()->setLabel( 0, tr( "Ground type" ) );
-    horizontalHeader()->setLabel( 1, tr( "Speed (km/h)" ) );
-    horizontalHeader()->setLabel( 2, tr( "Construction (%)" ) );
-    pConnector_ = new ADN_CT_Composantes_Speeds( *this );
+
+    dataModel_.setColumnCount( 3 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Ground type" )
+                      << tr( "Speed (km/h)" )
+                      << tr( "Construction (%)" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddDoubleSpinBoxOnColumn( 1, 0, INT_MAX );
+    delegate_.AddSpinBoxOnColumn( 2, 0, 100 );
+    setSortingEnabled( true );
     connect( maxSpeed, SIGNAL( editingFinished() ), SLOT( OnMaxSpeedFinishedEditing() ) );
 }
 
@@ -97,10 +59,9 @@ bool ADN_Composantes_Speeds_GUI::UpdateSpeedsValidator( double maxSpeed )
     bool needReBound = false;
     for( int row = 0; row < numRows(); ++row )
     {
-        ADN_TableItem_Double* item = static_cast< ADN_TableItem_Double* >( this->item( row, 1 ) );
-        item->GetValidator().setTop( maxSpeed );
+        delegate_.SetSpinBoxMinMax< double >( row, 1, 0, maxSpeed );
         bool ok = false;
-        double value = locale().toDouble( item->text(), &ok );
+        double value = dataModel_.item( row, 1 )->text().toDouble( &ok );
         if( !needReBound && ok && value > maxSpeed )
             needReBound = true;
     }
@@ -144,7 +105,7 @@ void ADN_Composantes_Speeds_GUI::OnMaxSpeedFinishedEditing()
         {
             for( int row = 0; row < numRows(); ++row )
             {
-                ADN_TableItem_Double* item = static_cast< ADN_TableItem_Double* >( this->item( row, 1 ) );
+                ADN_StandardItem* item = static_cast< ADN_StandardItem* >( dataModel_.item( row, 1 ) );
                 SpeedInfos* infos = static_cast< SpeedInfos* >( item->GetData() );
                 if( infos->rSpeed_.GetData() > maxSpeed )
                     infos->rSpeed_ = maxSpeed;
@@ -158,3 +119,19 @@ void ADN_Composantes_Speeds_GUI::OnMaxSpeedFinishedEditing()
     }
     oldMaxSpeed_ = maxSpeed;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Speeds_GUI::AddRow
+// Created: NPT 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Speeds_GUI::AddRow( int row, void* data )
+{
+    SpeedInfos* infos = static_cast< SpeedInfos* >( data );
+    if( !infos )
+        return;
+    QString typeTerrain = ENT_Tr::ConvertFromLocation( infos->nTypeTerrain_, ENT_Tr_ABC::eToTr ).c_str();
+    AddItem( row, 0, data, typeTerrain );
+    AddItem( row, 1, data, &infos->rSpeed_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &infos->nConstruction_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+}
+

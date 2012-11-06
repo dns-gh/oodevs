@@ -148,9 +148,7 @@ void ADN_Composantes_GUI::Build()
     QWidget* pMaxSpeedHolder = builder.AddFieldHolder( pSpeedGroup );
     // Max speed
     ADN_EditLine_Double* maxSpeed = builder.AddField< ADN_EditLine_Double >( pMaxSpeedHolder, tr( "Max speed" ), vInfosConnectors[ eMaxSpeed ], tr( "km/h" ), eGreaterZero );
-    pSpeeds_ = new ADN_Composantes_Speeds_GUI( maxSpeed, pSpeedGroup );
-    pSpeeds_->setObjectName( strClassName_ + "_Speeds" );
-    vInfosConnectors[ eSpeeds ] = &pSpeeds_->GetConnector();
+    pSpeeds_ = new ADN_Composantes_Speeds_GUI( maxSpeed, strClassName_ + "_Speeds", vInfosConnectors[ eSpeeds ], pSpeedGroup );
 
     // Sensors
     Q3HGroupBox* pSensorsGroup = new Q3HGroupBox( tr( "Sensors" ) );
