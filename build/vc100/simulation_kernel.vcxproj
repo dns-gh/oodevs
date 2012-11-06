@@ -540,7 +540,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PerceptionCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PoisoningCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PopulationFilterCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ProtectionCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ResourceNetworkCapacity.cpp" />
@@ -1399,7 +1398,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MobilityCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PerceptionCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PoisoningCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PopulationFilterCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PropagationCapacity_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ProtectionCapacity.h" />

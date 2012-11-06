@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "Object.h"
-#include "BurnSurfaceAttribute.h"
 #include "ConstructionAttribute.h"
 #include "MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"

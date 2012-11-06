@@ -1422,9 +1422,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PoisoningCapacity.cpp">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PopulationFilterCapacity.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClCompile>
@@ -3840,9 +3837,6 @@
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PHY_ObjectExplosionFireResult.h">
-      <Filter>Source Files\Entities\Objects\Capacities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PoisoningCapacity.h">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PopulationFilterCapacity.h">
