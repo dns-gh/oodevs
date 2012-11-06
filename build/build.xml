@@ -1373,7 +1373,7 @@
         <safe-move file="${output}"/>
     </target>
 
-    <macrodef name="check_depends">
+    <macrodef name="check-depends">
         <attribute name="file"/>
         <element name="elements" optional="true" implicit="true"/>
         <sequential>
@@ -1396,7 +1396,7 @@
             </mappedresources>
             <fileset dir="${run.dir}"/>
         </zip>
-        <check_depends file="${output}"/>
+        <check-depends file="${output}"/>
         <safe-move file="${output}"/>
     </target>
 
@@ -1433,7 +1433,7 @@
                                zlib1.dll"/>
             <fileset dir="${run.dir}" includes="resources/**"/>
         </zip>
-        <check_depends file="${output}"/>
+        <check-depends file="${output}"/>
         <safe-move file="${output}"/>
     </target>
 
@@ -1459,10 +1459,10 @@
             <arg value="/DOUTFILE=${output}"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
-        <check_depends file="${output}">
+        <check-depends file="${output}">
             <arg value="*.exe"/>
             <arg value="*_module.dll"/>
-        </check_depends>
+        </check-depends>
         <safe-move file="${output}"/>
     </target>
 
