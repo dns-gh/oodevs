@@ -103,7 +103,7 @@ namespace
     }
     DEFINE_HOOK( CanFire, 3, bool, ( const SWORD_Model* component, const char* dotation, const SWORD_Model* parameters ) )
     {
-        const PHY_ComposantePion& compFirer = (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >();
+        const PHY_ComposantePion& compFirer = (*core::Convert( component ))[ "data" ].GetUserData< PHY_ComposantePion >();
         if( !compFirer.CanFire() )
             return false;
         const core::Model& param = (*core::Convert( parameters ));
@@ -128,11 +128,11 @@ namespace
     }
     DEFINE_HOOK( CanComponentFire, 1, bool, ( const SWORD_Model* component ) )
     {
-        return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanFire();
+        return (*core::Convert( component ))[ "data" ].GetUserData< PHY_ComposantePion >().CanFire();
     }
     DEFINE_HOOK( CanComponentBeFiredAt, 2, bool, ( const SWORD_Model* component, const SWORD_Model* parameters ) )
     {
-        const core::Model& comp = (*core::Convert( component ))[ "component" ];
+        const core::Model& comp = (*core::Convert( component ))[ "data" ];
         if( (*core::Convert( parameters ))[ "major" ] && ! comp[ "major" ] )
             return false;
         return comp.GetUserData< PHY_ComposantePion >().CanBeFired();
@@ -211,7 +211,7 @@ namespace
             MT_LOG_ERROR_MSG( "Unknown dotation category in ModifyDangerosity hook implementation : " << dotation );
             return 0;
         }
-        return category->GetAttritionScore( (*core::Convert( compTarget ))[ "component" ].GetUserData< PHY_ComposantePion >().GetType().GetProtection() );
+        return category->GetAttritionScore( (*core::Convert( compTarget ))[ "data" ].GetUserData< PHY_ComposantePion >().GetType().GetProtection() );
     }
     DEFINE_HOOK( EvaluateDangerosity, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) )
     {

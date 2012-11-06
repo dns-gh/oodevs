@@ -237,7 +237,7 @@ void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper:
     event[ "entity/identifier" ] = static_cast< std::size_t >( firer[ "identifier" ] );
     event[ "entity/data" ] = firer[ "data" ];
     event[ "enemy/data" ] = target[ "data" ];
-    event[ "component" ] = compTarget[ "component" ];
+    event[ "component/data" ] = compTarget[ "data" ];
     event[ "dotation" ] = dotation_.GetName();
     event[ "running" ] = true;
     event[ "missed" ] = missed;

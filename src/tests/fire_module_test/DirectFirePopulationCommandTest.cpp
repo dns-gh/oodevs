@@ -165,13 +165,13 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_hits
                                                                 ( "components", mock::any )
                                                                 ( "knowledges", mock::any )
                                                                 ( "data", mock::any ) ) // $$$$ MCO 2012-09-21: this is actually a copy of 'entity'
-                                          ( "population", 53 )
-                                          ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
-                                          ( "paused", false ) );
+                              ( "population", 53 )
+                              ( "element/data", sword::test::MakeUserData( &data ) )
+                              ( "paused", false ) );
     ExpectEvent( "direct fire population",
         sword::test::MakeModel( "entity/identifier", 42 )
                               ( "entity/data", "data" )
-                              ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
+                              ( "element/data", sword::test::MakeUserData( &data ) )
                               ( "dotation", ammo_1 )
                               ( "hits", 2 )
                               ( "running", true ) );
@@ -190,13 +190,13 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_population_command_reports_running_and_no_h
                                                                 ( "components", mock::any )
                                                                 ( "knowledges", mock::any )
                                                                 ( "data", mock::any ) ) // $$$$ MCO 2012-09-21: this is actually a copy of 'entity'
-            ( "population", 53 )
-            ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
-            ( "paused", false ) );
+                               ( "population", 53 )
+                               ( "element/data", sword::test::MakeUserData( &data ) )
+                               ( "paused", false ) );
     ExpectEvent( "direct fire population",
         sword::test::MakeModel( "entity/identifier", 42 )
                               ( "entity/data", "data" )
-                              ( "element", sword::test::MakeModel( "data", sword::test::MakeUserData( &data ) ) )
+                              ( "element/data", sword::test::MakeUserData( &data ) )
                               ( "dotation", ammo_1 )
                               ( "hits", 2 )
                               ( "running", true ) );

@@ -322,7 +322,7 @@ namespace
             component[ "score" ] = composante.GetMajorScore();
             component[ "major" ] = composante.IsMajor();
             const core::Model& component2 = components2.GetElement( i );
-            component[ "component" ] = component2[ "component" ];
+            component[ "data" ] = component2[ "data" ];
             component[ "weapons" ] = component2[ "weapons" ]; // $$$$ MCO 2012-07-02: could be a link because that info is 'static'
         }
     }
@@ -438,7 +438,7 @@ namespace
         for( std::size_t c = 0; c < components.GetSize(); ++c )
         {
             core::Model& component = components.GetElement( c );
-            const PHY_ComposantePion& composante = component[ "component" ].GetUserData< PHY_ComposantePion >();
+            const PHY_ComposantePion& composante = component[ "data" ].GetUserData< PHY_ComposantePion >();
             component[ "score" ] = composante.GetMajorScore();
             component[ "can-perceive" ] = composante.CanPerceive( loading );
         }

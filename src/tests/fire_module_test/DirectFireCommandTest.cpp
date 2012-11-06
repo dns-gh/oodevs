@@ -177,7 +177,7 @@ namespace
             MOCK_EXPECT( GetDistance ).with( firer, enemy ).returns( 500 );
             MOCK_EXPECT( CanComponentBeFiredAt ).with( core::Convert( &component_2 ), mock::any ).returns( true );
             component_2[ "volume" ] = volume_1;
-            component_2[ "component" ].SetUserData( &data );
+            component_2[ "data" ].SetUserData( &data );
         }
         core::Model& component_1;
         core::Model& component_2;
@@ -199,7 +199,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_fir
                               ( "report", true )
                               ( "paused", false ) );
     ExpectEvent( "direct fire pion",
-        sword::test::MakeModel( "component", sword::test::MakeUserData( &data ) )
+        sword::test::MakeModel( "component/data", sword::test::MakeUserData( &data ) )
                               ( "dotation", ammo_1 )
                               ( "enemy/data", "data" )
                               ( "entity/identifier", 42 )
@@ -224,7 +224,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing
                               ( "report", true )
                               ( "paused", false ) );
     ExpectEvent( "direct fire pion",
-        sword::test::MakeModel( "component", sword::test::MakeUserData( &data ) )
+        sword::test::MakeModel( "component/data", sword::test::MakeUserData( &data ) )
                               ( "dotation", ammo_1 )
                               ( "enemy/data", "data" )
                               ( "entity/identifier", 42 )
@@ -249,7 +249,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
                               ( "report", true )
                               ( "paused", false ) );
     ExpectEvent( "direct fire pion",
-        sword::test::MakeModel( "component", sword::test::MakeUserData( &data ) )
+        sword::test::MakeModel( "component/data", sword::test::MakeUserData( &data ) )
                               ( "dotation", ammo_1 )
                               ( "enemy/data", "data" )
                               ( "entity/identifier", 42 )

@@ -839,7 +839,7 @@ namespace
 {
     bool CanFire( const SWORD_Model* component )
     {
-        return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanFire();
+        return (*core::Convert( component ))[ "data" ].GetUserData< PHY_ComposantePion >().CanFire();
     }
     bool IsMajor( const SWORD_Model* component )
     {
@@ -893,7 +893,7 @@ namespace
     }
     bool CanFireWhenUnloaded( const SWORD_Model* component )
     {
-        return (*core::Convert( component ))[ "component" ].GetUserData< PHY_ComposantePion >().CanFireWhenUnloaded();
+        return (*core::Convert( component ))[ "data" ].GetUserData< PHY_ComposantePion >().CanFireWhenUnloaded();
     }
     double GetMaxRangeToFireOnEnemyWhenUnloaded( const MIL_AgentPion& agent, const core::Model& model, boost::shared_ptr< DEC_Knowledge_Agent > target, float rWantedPH )
     {

@@ -138,7 +138,7 @@ void DirectFirePionEventListener::Update( const core::Model& event )
     }
     if( ! event[ "missed" ] )
     {
-        PHY_ComposantePion& component = event[ "component" ].GetUserData< PHY_ComposantePion >();
+        PHY_ComposantePion& component = event[ "component/data" ].GetUserData< PHY_ComposantePion >();
         PHY_FireResults_Pion*& results = results_[ event[ "entity/identifier" ] ]; // $$$$ MCO 2012-04-26: use command id instead ? can a unit have several direct fire running in parallel ?
         if( ! results )
         {

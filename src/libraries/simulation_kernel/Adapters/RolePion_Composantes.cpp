@@ -99,7 +99,7 @@ SWORD_USER_DATA_EXPORT( PHY_ComposantePion* )
 void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante, std::map< const PHY_DotationCategory*, double >* dotations )
 {
     core::Model& component = entity_->AddElement();
-    component[ "component" ].SetUserData( &composante );
+    component[ "data" ].SetUserData( &composante );
     component[ "major" ] = composante.IsMajor();
     component[ "volume" ] = composante.GetType().GetVolume().GetID();
     component[ "score" ] = composante.GetMajorScore();
