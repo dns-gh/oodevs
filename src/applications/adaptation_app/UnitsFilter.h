@@ -11,7 +11,6 @@
 #define __UnitsFilter_h_
 
 #include "ADN_ComboBox_Vector.h"
-#include "ADN_Units_Data.h"
 #include <set>
 
 // =============================================================================
@@ -20,14 +19,14 @@
 */
 // Created: LGY 2011-11-03
 // =============================================================================
-class UnitsFilter : public ADN_ComboBox_Vector< ADN_Units_Data::UnitInfos >
+class UnitsFilter : public ADN_ComboBox_Vector
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitsFilter( QWidget* pParent = 0, const char* szName = 0 );
+             UnitsFilter( QWidget* pParent = 0 );
     virtual ~UnitsFilter();
     //@}
 

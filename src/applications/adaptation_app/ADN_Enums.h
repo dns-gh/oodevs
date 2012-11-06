@@ -426,4 +426,16 @@ enum E_EntityType
     eNbrEntityTypes                 = 3
 };
 
+enum E_Days
+{
+    eDays_Monday    = 0,
+    eDays_Tuesday   = 1,
+    eDays_Wednesday = 2,
+    eDays_Thursday  = 3,
+    eDays_Friday    = 4,
+    eDays_Saturday  = 5,
+    eDays_Sunday    = 6,
+    eNbrDays        = 7
+};
+
 #endif // __ADN_Enums_h_

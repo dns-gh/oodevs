@@ -11,6 +11,7 @@
 #define __ADN_Breakdowns_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Tr.h"
@@ -29,14 +30,10 @@ class ADN_Breakdowns_Data : public ADN_Data_ABC
 public:
 // *****************************************************************************
     class RepairPartInfo : public ADN_Ref_ABC
-                         , public ADN_DataTreeNode_ABC
     {
     public:
                  RepairPartInfo();
         virtual ~RepairPartInfo() {}
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         RepairPartInfo* CreateCopy();
 
@@ -53,16 +50,12 @@ public:
 
 // *****************************************************************************
 
-    class BreakdownInfo : public ADN_Ref_ABC
-                        , public ADN_DataTreeNode_ABC
+    class BreakdownInfo : public ADN_RefWithName
     {
     public:
                  BreakdownInfo();
                  BreakdownInfo( unsigned int id );
         virtual ~BreakdownInfo();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         BreakdownInfo* CreateCopy();
 
@@ -71,7 +64,6 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_String   strName_;
         ADN_Type_Enum<E_BreakdownNTI, eNbrBreakdownNTI>    nNTI_;
         ADN_Type_Enum<E_BreakdownType, eNbrBreakdownType>  nType_;
         ADN_Type_Int      nId_;

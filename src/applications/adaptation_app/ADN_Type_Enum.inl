@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-#include "ADN_ChangeValueCommand_Enum.h"
 #include "ADN_Workspace.h"
 #include "MT_Tools/MT_FormatString.h"
 
@@ -43,6 +42,7 @@ template< class T, int nb >
 ADN_Type_Enum< T, nb >::ADN_Type_Enum()
     : ADN_Connector_ABC()
     , data_((T)0)
+    , sortAlphabetically_( true )
 {
     // NOTHING
 }
@@ -55,6 +55,7 @@ template< class T, int nb >
 ADN_Type_Enum< T, nb >::ADN_Type_Enum( const T& value )
     : ADN_Connector_ABC()
     , data_( value )
+    , sortAlphabetically_( true )
 {
     // NOTHING
 }
@@ -86,7 +87,7 @@ const T ADN_Type_Enum< T, nb >::GetData() const
 template< class T, int nb >
 ADN_Type_Enum< T, nb >& ADN_Type_Enum< T, nb >::operator =(const ADN_Type_Enum& o)
 {
-    SetData(o.GetData(),false);
+    SetData( o.GetData() );
     return *this;
 }
 
@@ -97,7 +98,7 @@ ADN_Type_Enum< T, nb >& ADN_Type_Enum< T, nb >::operator =(const ADN_Type_Enum& 
 template< class T, int nb >
 ADN_Type_Enum< T, nb >& ADN_Type_Enum< T, nb >::operator =(const T& val)
 {
-    SetDataPrivate(val,false);
+    SetDataPrivate( val );
     return *this;
 }
 
@@ -148,7 +149,7 @@ bool ADN_Type_Enum< T, nb >::operator !=(const T& val) const
 template< class T, int nb >
 void ADN_Type_Enum< T, nb >::SetDataPrivate(void *data)
 {
-    SetDataPrivate(*(T*)data,true);
+    SetDataPrivate( *(T*)data );
 }
 
 //-----------------------------------------------------------------------------
@@ -156,12 +157,12 @@ void ADN_Type_Enum< T, nb >::SetDataPrivate(void *data)
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T, int nb >
-void ADN_Type_Enum< T, nb >::SetDataPrivate(const T& value, bool )
+void ADN_Type_Enum< T, nb >::SetDataPrivate( const T& value )
 {
-    if( data_!= value)
+    if( data_!= value )
     {
-        data_     =value;
-        emit DataChanged(&data_);
+        data_ = value;
+        emit DataChanged( &data_ );
     }
 }
 
@@ -176,27 +177,17 @@ void ADN_Type_Enum< T, nb >::Initialize( ADN_Connector_ABC& dest ) const
     {
         assert( converter_ );
         for( int i = 0; i < nb; ++i )
-            combo->AddEnumValue( converter_( static_cast< T >( i ), ENT_Tr_ABC::eToTr ) );
+            combo->AddEnumValue( converter_( static_cast< T >( i ), ENT_Tr_ABC::eToTr ), sortAlphabetically_ ? -1 : i );
     }
     dest.SetData( &const_cast< ADN_Type_Enum< T, nb >* >( this )->data_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Type_Enum::GetName
-// Created: AGN 2004-05-13
+// Name: ADN_Type_Enum::SetAlphabeticalSort
+// Created: ABR 2012-11-06
 // -----------------------------------------------------------------------------
 template< class T, int nb >
-std::string ADN_Type_Enum< T, nb >::GetNodeName()
+void ADN_Type_Enum< T, nb >::SetAlphabeticalSort( bool sort )
 {
-    return strDataName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_Enum::SetDataName
-// Created: AGN 2004-05-13
-// -----------------------------------------------------------------------------
-template< class T, int nb >
-void ADN_Type_Enum< T, nb >::SetDataName( const std::string& strName )
-{
-    strDataName_ = strName;
+    sortAlphabetically_ = sort;
 }

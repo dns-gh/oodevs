@@ -20,7 +20,7 @@ class ADN_Equipement_AttritionTable;
 class ADN_Equipement_AttritionGraph;
 class ADN_ListView;
 class ADN_Table;
-template < class T > class ADN_ComboBox_Vector;
+class ADN_ComboBox_Vector;
 
 namespace helpers
 {
@@ -150,18 +150,18 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ADN_Equipement_Data&                                        data_;
-    std::vector< ADN_CheckBox* >                                vNetworkUsableCheckBoxs_;
-    ADN_Equipement_AttritionTable*                              pAttritionTable_;
-    ADN_Equipement_AttritionGraph*                              pAttritionGraph_;
-    ADN_ComboBox_Vector< helpers::ArmorInfos >*                 pArmorCombo_;
-    ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos >*    pMaterialCombo_;
-    QButtonGroup*                                               buttonGroup_;
-    Q3GroupBox*                                                 pExplosiveParametersGroup_;
-    Q3GroupBox*                                                 pFlareParametersGroup_;
-    Q3GroupBox*                                                 pEffectParametersGroup_;
-    Q3GroupBox*                                                 pMineParametersGroup_;
-    Q3GroupBox*                                                 pSmokeParametersGroup_;
+    ADN_Equipement_Data&            data_;
+    std::vector< ADN_CheckBox* >    vNetworkUsableCheckBoxs_;
+    ADN_Equipement_AttritionTable*  pAttritionTable_;
+    ADN_Equipement_AttritionGraph*  pAttritionGraph_;
+    ADN_ComboBox_Vector*            pArmorCombo_;
+    ADN_ComboBox_Vector*            pMaterialCombo_;
+    QButtonGroup*                   buttonGroup_;
+    Q3GroupBox*                     pExplosiveParametersGroup_;
+    Q3GroupBox*                     pFlareParametersGroup_;
+    Q3GroupBox*                     pEffectParametersGroup_;
+    Q3GroupBox*                     pMineParametersGroup_;
+    Q3GroupBox*                     pSmokeParametersGroup_;
     //@}
 };
 

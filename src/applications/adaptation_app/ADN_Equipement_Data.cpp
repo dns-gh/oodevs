@@ -33,8 +33,6 @@ tools::IdManager ADN_Equipement_Data::idManager_;
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo::CategoryInfo()
     : nId_( 0 )
-    , ADN_Ref_ABC( "ADN_Equipement_Data::CategoryInfo" )
-    , ADN_DataTreeNode_ABC()
     , parentResource_( *gpDummyDotationInfos )
     , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
     , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
@@ -47,11 +45,8 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo()
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
-    : ADN_Ref_ABC         ( "ADN_Equipement_Data::CategoryInfo" )
-    , ADN_DataTreeNode_ABC()
-    , nId_                   ( ADN_Equipement_Data::idManager_.GetNextId() )
+    : nId_                   ( ADN_Equipement_Data::idManager_.GetNextId() )
     , parentResource_        ( parentDotation )
-    , strName_               ()
     , category_              ( ENT_Tr::ConvertFromDotationFamily( parentDotation.nType_ ) )
     , strCodeEMAT6_          ()
     , strCodeEMAT8_          ()
@@ -65,8 +60,6 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     , bNetworkUsable_        ( false )
 {
     BindExistenceTo( &ptrResourceNature_ );
-    strName_.SetDataName( "le nom d'" );
-    strName_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,11 +67,8 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, unsigned int id )
-    : ADN_Ref_ABC         ( "ADN_Equipement_Data::CategoryInfo" )
-    , ADN_DataTreeNode_ABC()
-    , nId_                   ( id )
+    : nId_                   ( id )
     , parentResource_        ( parentDotation )
-    , strName_               ()
     , category_              ( ENT_Tr::ConvertFromDotationFamily( parentDotation.nType_ ) )
     , strCodeEMAT6_          ()
     , strCodeEMAT8_          ()
@@ -92,27 +82,7 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation, 
     , bNetworkUsable_        ( false )
 {
     BindExistenceTo( &ptrResourceNature_ );
-    strName_.SetDataName( "le nom d'" );
-    strName_.SetParentNode( *this );
     ADN_Equipement_Data::idManager_.Lock( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CategoryInfo::GetNodeName
-// Created: APE 2004-12-13
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::CategoryInfo::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CategoryInfo::GetItemName
-// Created: APE 2004-12-13
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::CategoryInfo::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -215,31 +185,10 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output ) co
 // Created: JDY 03-09-29
 //-----------------------------------------------------------------------------
 ADN_Equipement_Data::ModificatorPostureInfos::ModificatorPostureInfos( const E_UnitPosture& e )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , eType_ ( e )
+    : eType_ ( e )
     , rCoeff_(1.0)
 {
-    rCoeff_.SetDataName( "le modificateur de dégats selon la posture " );
-    rCoeff_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorPostureInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::ModificatorPostureInfos::GetNodeName()
-{
-    return ENT_Tr::ConvertFromUnitPosture( eType_,  ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorPostureInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::ModificatorPostureInfos::GetItemName()
-{
-    return ENT_Tr::ConvertFromUnitPosture( eType_,  ENT_Tr_ABC::eToTr );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -285,17 +234,8 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     , smokeLifeTime_       ( "0s" )
     , nMineNumber_         ( 0 )
     , effectLifeTime_      ( "0s" )
-    , objectType_          ( ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, "" ) )
+    , objectType_          ( ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0 ) )
 {
-    bExplosive_.SetParentNode( *this );
-    bSmoke_.SetParentNode( *this );
-    bFlare_.SetParentNode( *this );
-    bMine_.SetParentNode( *this );
-    bEffect_.SetParentNode( *this );
-
-    smokeDeployTime_.SetParentNode( *this );
-    smokeLifeTime_.SetParentNode( *this );
-
     for( int i = 0; i < eNbrUnitPosture; ++i )
     {
         ModificatorPostureInfos* pNew = new ModificatorPostureInfos( ( E_UnitPosture )i );
@@ -713,11 +653,9 @@ bool ADN_Equipement_Data::AmmoCategoryInfo::HasUrbanAttrition() const
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::ResourceInfos::ResourceInfos( E_DotationFamily nType )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , nType_                 ( nType )
-    , strName_               ( ENT_Tr::ConvertFromDotationFamily( nType ) )
-    , categories_            ( true, "ADN_Equipement_Data::ResourceInfos::categories_" )
+    : ADN_RefWithName( ENT_Tr::ConvertFromDotationFamily( nType ) )
+    , nType_( nType )
+    , categories_( true )
 {
     // NOTHING
 }
@@ -738,24 +676,6 @@ ADN_Equipement_Data::ResourceInfos::~ResourceInfos()
 void ADN_Equipement_Data::ResourceInfos::Reset()
 {
     categories_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceInfos::GetNodeName
-// Created: APE 2004-12-13
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::ResourceInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceInfos::GetItemName
-// Created: APE 2004-12-13
-// -----------------------------------------------------------------------------
-std::string ADN_Equipement_Data::ResourceInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------

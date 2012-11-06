@@ -39,7 +39,7 @@ void ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit()
 {
     if( ADN_Sensors_Data::ModificatorUrbanBlockInfos* data = static_cast< ADN_Sensors_Data::ModificatorUrbanBlockInfos* >( GetSelectedData() ) )
         if( data  && data->ptrMaterial_.GetData() )
-            emit ContentChanged( data->GetItemName(), data->rCoeff_.GetData() );
+            emit ContentChanged( data->ptrMaterial_.GetData()->strName_.GetData(), data->rCoeff_.GetData() );
 }
 
 // -----------------------------------------------------------------------------

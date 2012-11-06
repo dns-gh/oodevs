@@ -11,7 +11,6 @@
 #define __ADN_Type_Vector_ABC_h_
 
 #include "ADN_Connector_Vector_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
 
 //*****************************************************************************
 // Created: JDY 03-06-26
@@ -19,7 +18,6 @@
 template < class T >
 class ADN_Type_Vector_ABC : public ADN_Connector_Vector_ABC
                           , public std::vector< T* >
-                          , public ADN_DataTreeNode_ABC
 {
 
 public:
@@ -28,7 +26,7 @@ public:
     typedef T_PtrVector::const_iterator    CIT_PtrVector;
 
 public:
-    explicit ADN_Type_Vector_ABC( bool bAutoRef = true, const char* szName = 0 );
+    explicit ADN_Type_Vector_ABC( bool bAutoRef = true );
     virtual ~ADN_Type_Vector_ABC();
 
     virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
@@ -37,16 +35,10 @@ public:
             void Reset();
             void Delete();
 
-    virtual std::string GetNodeName();
-    void SetNodeName( const std::string& strNodeName );
-
-    const std::string& GetItemTypeName() const;
-    void SetItemTypeName( const std::string& strItemTypeName );
-
 protected:
     virtual void SetDataPrivate( void* pData );
-    virtual bool AddItemPrivate( void* pObj, bool bCreateCommand = false );
-    virtual bool RemItemPrivate( void* pObj, bool bCreateCommand = false );
+    virtual bool AddItemPrivate( void* pObj );
+    virtual bool RemItemPrivate( void* pObj );
     virtual void SwapItemPrivate( int i, int j );
     virtual void SortPrivate( ADN_BinaryPredicateWrapper& lessComp );
     virtual void ClearPrivate( bool bInConnection = false );
@@ -62,9 +54,6 @@ public:
 
 protected:
     bool bAutoRef_;
-
-    std::string strNodeName_;
-    std::string strItemTypeName_;
 };
 
 #include "ADN_Type_Vector_ABC.inl"

@@ -114,7 +114,7 @@ void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::RadarInfos::RadarInfos()
-    : strName_                 ( tools::translate( "Radars_Data", "New special sensor" ).toAscii().constData() )
+    : ADN_RefWithName( tools::translate( "Radars_Data", "New special sensor" ) )
     , rRange_                  ( 0 )
     , bHasMaxHeight_           ( false )
     , rMaxHeight_              ( 0 )
@@ -135,24 +135,6 @@ ADN_Radars_Data::RadarInfos::RadarInfos()
 ADN_Radars_Data::RadarInfos::~RadarInfos()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: RadarInfos::GetNodeName
-// Created: APE 2005-05-03
-// -----------------------------------------------------------------------------
-std::string ADN_Radars_Data::RadarInfos::GetNodeName()
-{
-    return "";
-}
-
-// -----------------------------------------------------------------------------
-// Name: RadarInfos::GetItemName
-// Created: APE 2005-05-03
-// -----------------------------------------------------------------------------
-std::string ADN_Radars_Data::RadarInfos::GetItemName()
-{
-    return "";
 }
 
 // -----------------------------------------------------------------------------

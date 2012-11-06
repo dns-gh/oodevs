@@ -40,8 +40,8 @@ namespace
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline ADN_ComboBox_Drawings< T >::ADN_ComboBox_Drawings( QWidget* pParent /*= 0*/, const char* szName /*= 0*/ )
-    : ADN_ComboBox( pParent, szName )
+inline ADN_ComboBox_Drawings< T >::ADN_ComboBox_Drawings( QWidget* pParent /*= 0*/ )
+    : ADN_ComboBox( pParent )
 {
     setIconSize( QSize( drawingsIconSize_, drawingsIconSize_ ) );
     setStyle( new DrawingsStyle() );

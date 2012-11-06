@@ -47,34 +47,6 @@ ADN_Units_Data::ComposanteInfos::ComposanteInfos()
 , nNb_          ( 1 )
 {
     BindExistenceTo( &ptrComposante_ );
-
-    bLoadable_.SetDataName( "la propriété" );
-    bLoadable_.SetParentNode( *this );
-    bMajor_.SetDataName( "la primauté" );
-    bMajor_.SetParentNode( *this );
-    bConveyor_.SetDataName( "hein ?" ); //XXX
-    bConveyor_.SetParentNode( *this );
-    nNbrHumanInCrew_.SetDataName( "Comprends pas ..." );
-    nNbrHumanInCrew_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ComposanteInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::ComposanteInfos::GetNodeName()
-{
-    std::string strResult( "d'une composante de type " );
-    return strResult + GetItemName();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ComposanteInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::ComposanteInfos::GetItemName()
-{
-    return ptrComposante_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -144,30 +116,10 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool 
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
 ADN_Units_Data::StockLogThresholdInfos::StockLogThresholdInfos()
-: ADN_DataTreeNode_ABC()
-, ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
-, rLogThreshold_      ( 0. )
+    : ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
+    , rLogThreshold_      ( 0. )
 {
-//    strName_.SetDataName( "la catégorie de stock" );
-//    strName_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Data::StockLogThresholdInfos::GetNodeName
-// Created: SBO 2006-01-10
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::StockLogThresholdInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Data::StockLogThresholdInfos::GetItemName
-// Created: SBO 2006-01-10
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::StockLogThresholdInfos::GetItemName()
-{
-    return std::string();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -219,27 +171,8 @@ ADN_Units_Data::StockLogThresholdInfos* ADN_Units_Data::StockLogThresholdInfos::
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
 ADN_Units_Data::StockInfos::StockInfos()
-: ADN_DataTreeNode_ABC()
-, vLogThresholds_     ()
+    : vLogThresholds_     ()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Data::StockInfos::GetNodeName
-// Created: SBO 2006-01-10
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::StockInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Data::StockInfos::GetItemName
-// Created: SBO 2006-01-10
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::StockInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -296,30 +229,10 @@ void ADN_Units_Data::StockInfos::CopyFrom( StockInfos& src )
 // Created: AGN 2003-12-01
 // -----------------------------------------------------------------------------
 ADN_Units_Data::PointInfos::PointInfos()
-: nTypeTerrain_( (E_KeyPoint)-1 )
-, nDistance_( 100 )
+    : nTypeTerrain_( (E_KeyPoint)-1 )
+    , nDistance_( 100 )
 {
-    nDistance_.SetDataName( "la distance avant un point" );
-    nDistance_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PointInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::PointInfos::GetNodeName()
-{
-    std::string strResult( "sur un terrain " );
-    return strResult + ADN_Tr::ConvertFromKeyPoint( nTypeTerrain_, ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PointInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::PointInfos::GetItemName()
-{
-    return std::string();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -367,30 +280,10 @@ void ADN_Units_Data::PointInfos::WriteArchive( xml::xostream& output ) const
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
 ADN_Units_Data::PostureInfos::PostureInfos(const E_UnitPosture& nPosture)
-:   nPosture_       ( nPosture )
-,   timeToActivate_ ( "0s" )
+    :   nPosture_       ( nPosture )
+    ,   timeToActivate_ ( "0s" )
 {
-    timeToActivate_.SetParentNode( *this );
-    timeToActivate_.SetDataName( "le délai de mise en posture" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PostureInfos::GetNodeName
-
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::PostureInfos::GetNodeName()
-{
-    return ENT_Tr::ConvertFromUnitPosture( nPosture_, ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PostureInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::PostureInfos::GetItemName()
-{
-    return std::string();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -423,9 +316,7 @@ void ADN_Units_Data::PostureInfos::WriteArchive( xml::xostream& output ) const
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
 ADN_Units_Data::UnitInfos::UnitInfos()
-    : ADN_Ref_ABC()
-    , eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
-    , strName_                          ()
+    : eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
     , nId_                              ( ADN_Units_Data::idManager_.GetNextId() )
     , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
     , eNatureLevel_                     ( static_cast< E_NatureLevel >( 0 ) )
@@ -470,9 +361,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
 // Created: JDY 03-07-25
 //-----------------------------------------------------------------------------
 ADN_Units_Data::UnitInfos::UnitInfos( unsigned int id )
-    : ADN_Ref_ABC()
-    , eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
-    , strName_                          ()
+    : eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
     , nId_                              ( id )
     , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
     , eNatureLevel_                     ( static_cast< E_NatureLevel >( 0 ) )
@@ -532,66 +421,13 @@ void ADN_Units_Data::UnitInfos::Initialize()
 {
     BindExistenceTo(&ptrModel_);
 
-    vPostures_.SetParentNode( *this );
-    vPointInfos_.SetParentNode( *this );
-
-    eTypeId_.SetDataName( "le type" );
-    eTypeId_.SetParentNode( *this );
-
-    strName_.SetDataName( "le nom" );
-    strName_.SetParentNode( *this );
-
-    nNbOfficer_.SetDataName( "le nombre d'officiers" );
-    nNbOfficer_.SetParentNode( *this );
-
-    nNbNCOfficer_.SetDataName( "le nombre de sous-officiers" );
-    nNbNCOfficer_.SetParentNode( *this );
-
-    ptrModel_.SetNodeName( "le modèle décisionnel" );
-    ptrModel_.SetParentNode( *this );
-
-    vComposantes_.SetItemTypeName( "an equipment" );
-    vComposantes_.SetParentNode( *this );
-
-    eNatureLevel_.SetDataName( "la taille" );
-    eNatureLevel_.SetParentNode( *this );
-
-    eNatureAtlas_.SetDataName( "la nature ATLAS" );
-    eNatureAtlas_.SetParentNode( *this );
-
-    strNature_.SetDataName( "la nature, les arbres et les oiseaux" );
-    strNature_.SetParentNode( *this );
-
-    eCrossingHeight_.SetDataName( "la hauteur de franchisssement" );
-    eCrossingHeight_.SetParentNode( *this );
-
     // postures initialization
     for( int i = ePostureNeedTimeStart; i < eNbrUnitPosture; ++i )
         vPostures_.AddItem( new PostureInfos((E_UnitPosture)i) );
 
-    natureSymbol_.SetParentNode( *this );
     ADN_UnitSymbols_Data& unitSymbolsData = ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData();
     natureSymbol_.SetVector( unitSymbolsData.GetSymbols() );
-    natureSymbol_.SetData( unitSymbolsData.GetSymbol(), false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Data::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::UnitInfos::GetNodeName()
-{
-    std::string strResult( "du pion " );
-    return strResult + strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_Data::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Units_Data::UnitInfos::GetItemName()
-{
-    return strName_.GetData();
+    natureSymbol_.SetData( unitSymbolsData.GetSymbol() );
 }
 
 // -----------------------------------------------------------------------------
@@ -747,7 +583,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     ADN_UnitSymbols_Data& unitSymbols = ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData();
     natureSymbol_.SetVector( unitSymbols.GetSymbols() );
-    natureSymbol_.SetData( unitSymbols.GetSymbol(), false );
+    natureSymbol_.SetData( unitSymbols.GetSymbol() );
 
     input >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &ADN_Units_Data::UnitInfos::ReadEquipment )

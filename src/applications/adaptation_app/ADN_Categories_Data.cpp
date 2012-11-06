@@ -34,20 +34,13 @@ tools::IdManager ADN_Categories_Data::idManager_;
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
 ADN_Categories_Data::ADN_Categories_Data()
-: ADN_Data_ABC()
-, vArmors_()
-, vSizes_()
-, vDotationNatures_()
-, vLogisticSupplyClasses_()
+    : ADN_Data_ABC()
+    , vArmors_()
+    , vSizes_()
+    , vDotationNatures_()
+    , vLogisticSupplyClasses_()
 {
-    vArmors_.SetNodeName( "la liste des catégories de blindage" );
-    vArmors_.SetItemTypeName( "la catégorie de blindage" );
-    vSizes_.SetNodeName( "la liste des catégories de volume" );
-    vSizes_.SetItemTypeName( "la catégorie de volume" );
-    vDotationNatures_.SetNodeName( "la liste des nature de dotations" );
-    vDotationNatures_.SetItemTypeName( "la nature de dotation" );
-    vLogisticSupplyClasses_.SetNodeName( "la liste des categories logistiques pour les dotations" );
-    vLogisticSupplyClasses_.SetItemTypeName( "la categorie logistique" );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -205,7 +198,6 @@ void ADN_Categories_Data::ReadVolume( xml::xistream& input )
 
     SizeInfos* pNewArmor = new SizeInfos();
     pNewArmor->strName_ = strName;
-    pNewArmor->strName_.SetDataName( "le nom de la catégorie de volume" );
     vSizes_.AddItem( pNewArmor );
 }
 
@@ -258,7 +250,6 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
     if( !id )
         id = idManager_.GetNextId();
     helpers::ResourceNatureInfos* pNew = new helpers::ResourceNatureInfos( strName, id );
-    pNew->strName_.SetDataName( "le nom de la nature de dotation" );
     vDotationNatures_.AddItem( pNew );
     idManager_.Lock( id );
 }
@@ -279,7 +270,6 @@ void ADN_Categories_Data::ReadLogisticSupplyClass( xml::xistream& input )
     if( !id )
         id = idManager_.GetNextId();
     helpers::LogisticSupplyClass* pNew = new helpers::LogisticSupplyClass( strName, id );
-    pNew->strName_.SetDataName( "le nom de la categorie logistic de dotation" );
     vLogisticSupplyClasses_.AddItem( pNew );
     idManager_.Lock( id );
 }

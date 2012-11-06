@@ -11,6 +11,7 @@
 #define __ADN_Weapons_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
@@ -30,19 +31,14 @@ class ADN_Weapons_Data : public ADN_Data_ABC
 
 public:
 // *****************************************************************************
-    class PhInfos : public ADN_DataTreeNode_ABC
+    class PhInfos
     {
     public:
         PhInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         PhInfos* CreateCopy();
-
         void SetPhModifiers( double phModifier, double distModifier );
         void ApplyPhModifiers();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
@@ -60,14 +56,10 @@ public:
 
 // *****************************************************************************
     class PhSizeInfos : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
     {
     public:
         explicit PhSizeInfos( ADN_Categories_Data::SizeInfos *ptr );
         virtual ~PhSizeInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void ReadHp( xml::xistream& input );
@@ -112,24 +104,17 @@ public:
     typedef T_PhSizeInfosVector::iterator        IT_PhSizeInfosVector;
 
 // *****************************************************************************
-    class WeaponInfos : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
+    class WeaponInfos : public ADN_RefWithName
     {
     public:
         WeaponInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         WeaponInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void ReadTargetSize( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_String strName_; // $$$ Dummy for  ADN_ChangeValueCommand_Pointer<>::UpdateDescription()
-
         ADN_TypePtr_InVector_ABC<ADN_Launchers_Data::LauncherInfos>         ptrLauncher_;
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::AmmoCategoryInfo>     ptrAmmunition_;
 

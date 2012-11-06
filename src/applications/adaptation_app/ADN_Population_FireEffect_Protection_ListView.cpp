@@ -22,7 +22,7 @@ class ADN_Protections : public ADN_Connector_ListView_ABC
 
 public:
     ADN_Protections( ADN_Population_FireEffect_Protection_ListView& list )
-        : ADN_Connector_ListView_ABC( list, "ADN_Protections" )
+        : ADN_Connector_ListView_ABC( list )
     {
         // NOTHING
     }

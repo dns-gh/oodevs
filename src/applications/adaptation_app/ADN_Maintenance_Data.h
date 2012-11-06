@@ -28,14 +28,10 @@ class ADN_Maintenance_Data : public ADN_Data_ABC
 
 public:
     class WorkingSchemeInfo : public ADN_Ref_ABC
-                            , public ADN_DataTreeNode_ABC
     {
     public:
         explicit WorkingSchemeInfo( unsigned int nIdx );
         virtual ~WorkingSchemeInfo() {}
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );

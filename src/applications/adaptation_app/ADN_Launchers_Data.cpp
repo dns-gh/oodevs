@@ -24,30 +24,13 @@
 // Created: JDY 03-07-15
 //-----------------------------------------------------------------------------
 ADN_Launchers_Data::LauncherInfos::LauncherInfos()
-: ADN_Ref_ABC           ()
-, ADN_DataTreeNode_ABC  ()
-, strName_              ()
-, tabModifs_            ( eNbrUnitPosture, eNbrUnitPosture )
-, bDirect_              ( false )
-, bIndirect_            ( false )
+    : tabModifs_            ( eNbrUnitPosture, eNbrUnitPosture )
+    , bDirect_              ( false )
+    , bIndirect_            ( false )
 {
-    strName_.SetParentNode( *this );
-    strName_.SetDataName( "le nom" );
-    bIndirect_.SetParentNode( *this );
-    bIndirect_.SetDataName( "la capacité de tir indirect" );
-
     for( int i = 0; i < eNbrUnitPosture; ++i )
-    {
         for( int j = 0; j < eNbrUnitPosture; ++j )
-        {
-            ModifPhsInfos& modifPh = tabModifs_.Get( i, j );
-            std::string strModifName( "le modificateur de PH pour les postures (" );
-            strModifName += ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)i, ENT_Tr_ABC::eToTr ) + "," + ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)j, ENT_Tr_ABC::eToTr ) + ")";
-            modifPh.SetDataName( strModifName );
-            modifPh.SetParentNode( *this );
             tabModifs_.Get( i, j ) = 0.0;
-        }
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -56,25 +39,7 @@ ADN_Launchers_Data::LauncherInfos::LauncherInfos()
 //-----------------------------------------------------------------------------
 ADN_Launchers_Data::LauncherInfos::~LauncherInfos()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: LauncherInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Launchers_Data::LauncherInfos::GetNodeName()
-{
-    std::string strResult( "du lanceur " );
-    return strResult + strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LauncherInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Launchers_Data::LauncherInfos::GetItemName()
-{
-    return strName_.GetData();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

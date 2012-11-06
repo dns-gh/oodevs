@@ -39,7 +39,7 @@ class ADN_Connector_ConsumptionTable
 {
 public:
     ADN_Connector_ConsumptionTable( ADN_Composantes_ConsumptionsTable& tab )
-        : ADN_Connector_Table_ABC( tab, true, "ADN_Connector_ConsumptionTable" )
+        : ADN_Connector_Table_ABC( tab, true )
     {}
 
     void AddSubItems( int n, void* pObj )

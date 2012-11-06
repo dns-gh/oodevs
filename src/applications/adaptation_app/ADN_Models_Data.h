@@ -11,7 +11,7 @@
 #define __ADN_Models_Data_h_
 
 #include "ADN_Data_ABC.h"
-
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Enums.h"
@@ -30,16 +30,12 @@ class ADN_Models_Data : public ADN_Data_ABC
 
 public:
 //*****************************************************************************
-    class OrderInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class OrderInfos : public ADN_RefWithName
     {
 
     public:
         OrderInfos();
         OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name );
-
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -47,34 +43,26 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Missions_FragOrder >       fragOrder_;
-        ADN_Type_String                                          strName_; // do not use directly !!!
     };
 
     typedef ADN_Type_Vector_ABC<OrderInfos> T_OrderInfos_Vector;
     typedef T_OrderInfos_Vector::iterator   IT_OrderInfos_Vector;
 
 //*****************************************************************************
-    class MissionInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class MissionInfos : public ADN_RefWithName
     {
 
     public:
         explicit MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions );
         virtual ~MissionInfos();
 
-        std::string GetItemName();
-        virtual std::string GetNodeName();
-
         MissionInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void ReadFragOrder( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Missions_Mission > mission_;
-        ADN_Type_String                          strName_; // do not use directly !!!
         T_OrderInfos_Vector                      vOrders_;
     };
 
@@ -82,9 +70,7 @@ public:
     typedef T_MissionInfos_Vector::iterator   IT_MissionInfos_Vector;
 
 //*****************************************************************************
-    class ModelInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ModelInfos : public ADN_RefWithName
     {
 
     public:
@@ -92,11 +78,7 @@ public:
         explicit ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions );
         virtual ~ModelInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         ModelInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void ReadMission( xml::xistream& input );
         void ReadOrder( xml::xistream& input );
@@ -106,7 +88,6 @@ public:
 
     public:
         ADN_Missions_Data::T_Mission_Vector& missions_;
-        ADN_Type_String                     strName_;
         ADN_Type_String                     strDiaType_;
         ADN_Type_String                     strFile_;
         ADN_Type_Bool                       isMasalife_;

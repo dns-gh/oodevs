@@ -11,6 +11,7 @@
 #define __ADN_Reports_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 
@@ -29,7 +30,6 @@ class ADN_Reports_Data : public ADN_Data_ABC
 // =============================================================================
 public:
     class ReportParameterValue : public ADN_Ref_ABC
-                               , public ADN_DataTreeNode_ABC
     {
     public:
                  ReportParameterValue();
@@ -49,8 +49,7 @@ public:
     typedef T_ReportParameterValue_Vector::iterator   IT_ReportParameterValue_Vector;
 
 public:
-    class ReportParameter : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
+    class ReportParameter : public ADN_RefWithName
     {
     public:
                  ReportParameter();
@@ -64,7 +63,6 @@ public:
         void WriteArchive      ( xml::xostream& output );
 
     public:
-        ADN_Type_String                                                   strName_;
         ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
         T_ReportParameterValue_Vector                                     values_;
     };
@@ -78,7 +76,6 @@ public:
 
 public:
     class ReportInfo : public ADN_Ref_ABC
-                     , public ADN_DataTreeNode_ABC
     {
     public:
                  ReportInfo();

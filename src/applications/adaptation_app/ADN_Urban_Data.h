@@ -22,6 +22,7 @@
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Types.h"
 #include "ADN_Symbols_Data.h"
+#include "ADN_RefWithName.h"
 #include <string>
 #include <map>
 #include <boost/shared_ptr.hpp>
@@ -42,16 +43,13 @@ class ADN_Urban_Data : public ADN_Data_ABC
 
 //*****************************************************************************
 public:
-    class AccommodationInfos : public ADN_Ref_ABC
-                             , public ADN_DataTreeNode_ABC
+    class AccommodationInfos : public ADN_RefWithName
     {
     public:
                  AccommodationInfos();
         explicit AccommodationInfos( xml::xistream& input, const std::string& role );
         virtual ~AccommodationInfos();
 
-        virtual std::string GetNodeName();
-        virtual std::string GetItemName();
         bool operator==( const std::string& str );
         void WriteAccommodation( xml::xostream& output );
         AccommodationInfos* CreateCopy();
@@ -59,7 +57,6 @@ public:
     public:
         //! @name Member Data
         //@{
-        ADN_Type_String strName_;
         ADN_Type_Double nominalCapacity_;
         ADN_Type_Double maxCapacity_;
         //@}
@@ -71,16 +68,13 @@ public:
 
 //*****************************************************************************
 public:
-    class InfrastructureInfos : public ADN_Ref_ABC
-                              , public ADN_DataTreeNode_ABC
+    class InfrastructureInfos : public ADN_RefWithName
     {
     public:
                  InfrastructureInfos();
         explicit InfrastructureInfos( xml::xistream& input );
         virtual ~InfrastructureInfos();
 
-        virtual std::string GetNodeName();
-        virtual std::string GetItemName();
         bool operator==( const std::string& str );
         void WriteInfrastructure( xml::xostream& output );
         InfrastructureInfos* CreateCopy();
@@ -95,7 +89,6 @@ public:
     public:
         //! @name Member Data
         //@{
-        ADN_Type_String strName_;
         ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolsInfra > pSymbol_;
         T_CapacityMap capacities_;
         //@}
@@ -107,16 +100,13 @@ public:
 
 //*****************************************************************************
 public:
-    class UrbanMaterialInfos : public ADN_Ref_ABC
-                             , public ADN_DataTreeNode_ABC
+    class UrbanMaterialInfos : public ADN_RefWithName
     {
     public:
                  UrbanMaterialInfos();
         explicit UrbanMaterialInfos( xml::xistream& input );
         virtual ~UrbanMaterialInfos();
 
-        virtual std::string GetNodeName();
-        virtual std::string GetItemName();
         bool operator==( const std::string& str );
         void WriteMaterial( xml::xostream& output );
         UrbanMaterialInfos* CreateCopy();
@@ -131,7 +121,6 @@ public:
     public:
         //! @name Member Data
         //@{
-        ADN_Type_String strName_;
         helpers::T_AttritionInfos_Vector vAttritionInfos_;
         //@}
     };
@@ -143,8 +132,7 @@ public:
 //*****************************************************************************
 
 public:
-    class RoofShapeInfos : public ADN_Ref_ABC
-                        , public ADN_DataTreeNode_ABC
+    class RoofShapeInfos : public ADN_RefWithName
     {
     public:
                  RoofShapeInfos();
@@ -152,13 +140,8 @@ public:
         virtual ~RoofShapeInfos();
 
         bool operator==( const std::string& str );
-        virtual std::string GetNodeName();
-        virtual std::string GetItemName();
         void WriteRoofShape( xml::xostream& output );
         RoofShapeInfos* CreateCopy() { return new RoofShapeInfos(); }
-
-    public:
-        ADN_Type_String strName_;
     };
 
     typedef ADN_Type_Vector_ABC< RoofShapeInfos >     T_RoofShapeInfos_Vector;
@@ -168,16 +151,12 @@ public:
 //*****************************************************************************
 
 public:
-    class UrbanInfos : public ADN_Ref_ABC
-                     , public ADN_DataTreeNode_ABC
+    class UrbanInfos : public ADN_RefWithName
     {
     public:
         UrbanInfos() {}
         UrbanInfos* CreateCopy() { return new UrbanInfos(); }
         std::string GetItemName() { return strName_.GetData(); }
-
-    public:
-        ADN_Type_String strName_;
     };
     typedef ADN_Type_Vector_ABC< UrbanInfos > T_UrbanInfos_Vector;
     typedef T_UrbanInfos_Vector::iterator    IT_UrbanInfos_Vector;
@@ -185,7 +164,6 @@ public:
 //*****************************************************************************
 
     class UsageTemplateInfos : public ADN_Ref_ABC
-                             , public ADN_DataTreeNode_ABC
     {
     public:
                  UsageTemplateInfos();
@@ -194,8 +172,6 @@ public:
 
         virtual ~UsageTemplateInfos();
 
-        virtual std::string GetNodeName();
-        virtual std::string GetItemName();
         void Write( xml::xostream& output );
         UsageTemplateInfos* CreateCopy();
 
@@ -210,11 +186,11 @@ public:
     class T_UsageTemplateInfosVector : public ADN_Type_Vector_ABC< UsageTemplateInfos >
     {
     public:
-        explicit T_UsageTemplateInfosVector( ADN_Ref_ABC* parent, bool bAutoRef = true, const char* szName = 0 );
+        explicit T_UsageTemplateInfosVector( ADN_Ref_ABC* parent, bool bAutoRef = true );
         virtual ~T_UsageTemplateInfosVector();
 
     protected:
-        virtual bool AddItemPrivate( void* pObj, bool bCreateCommand = false );
+        virtual bool AddItemPrivate( void* pObj );
 
     private:
         ADN_Ref_ABC* parent_;
@@ -225,16 +201,13 @@ public:
 //*****************************************************************************
 
 public:
-    class UrbanTemplateInfos : public ADN_Ref_ABC
-                             , public ADN_DataTreeNode_ABC
+    class UrbanTemplateInfos : public ADN_RefWithName
     {
     public:
                  UrbanTemplateInfos();
         explicit UrbanTemplateInfos( xml::xistream& input );
         virtual ~UrbanTemplateInfos();
 
-        virtual std::string GetNodeName();
-        virtual std::string GetItemName();
         void Write( xml::xostream& output );
         UrbanTemplateInfos* CreateCopy();
 
@@ -244,7 +217,6 @@ public:
     public:
         //! @name Member Data
         //@{
-        ADN_Type_String strName_;
         ADN_Type_String color_;
         ADN_Type_Int alpha_;
         ADN_Type_Int height_;

@@ -45,9 +45,23 @@ public:
 
     //! @name Delay
     //@{
-    unsigned int AddDelayEditorOnRow( int row );
-    unsigned int AddDelayEditorOnColumn( int column );
-    unsigned int AddDelayEditor( int fromRow, int toRow, int fromCol, int toCol );
+    unsigned int AddDelayEditOnRow( int row );
+    unsigned int AddDelayEditOnColumn( int column );
+    unsigned int AddDelayEdit( int fromRow, int toRow, int fromCol, int toCol );
+    //@}
+
+    //! @name Time
+    //@{
+    unsigned int AddTimeEditOnRow( int row );
+    unsigned int AddTimeEditOnColumn( int column );
+    unsigned int AddTimeEdit( int fromRow, int toRow, int fromCol, int toCol );
+    //@}
+
+    //! @name PtrInVector
+    //@{
+    unsigned int AddComboPtrInVectorOnRow( int row );
+    unsigned int AddComboPtrInVectorOnColumn( int column );
+    unsigned int AddComboPtrInVector( int fromRow, int toRow, int fromCol, int toCol );
     //@}
 
 protected:
@@ -63,7 +77,9 @@ private:
     //@{
     T_Positions colorPositions_;
     T_Colors colors_;
-    T_SimpleWidget delayEditors_;
+    T_SimpleWidget delayEdits_;
+    T_SimpleWidget timeEdits_;
+    T_SimpleWidget comboPtrInVectors_;
     //@}
 };
 

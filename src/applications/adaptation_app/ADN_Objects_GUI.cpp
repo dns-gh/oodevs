@@ -221,7 +221,7 @@ void ADN_Objects_GUI::Build()
         // Attrition
         ADN_GroupBox* attrition = CreateCapacityGroupBox( 1, tr( "Attrition" ), vInfosConnectors[ eAttritionCapacityPresent ] );
         ADN_GroupBox* dotation = CreateCapacityGroupBox( 2, tr( "Use ammunition" ), vInfosConnectors[ eAttritionCapacity_UseDotation ], attrition );
-        builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::AmmoCategoryInfo > >( dotation, tr( "Resource" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
+        builder.AddField< ADN_ComboBox_Vector >( dotation, tr( "Resource" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
         Q3GroupBox* attritionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd attrition" ), attrition );
         builder.AddField< ADN_EditLine_Double >( attritionBox, tr( "Attrition surface" ), vInfosConnectors[ eAttritionCapacity_Surface ], tr( "m²" ), eGreaterEqualZero );
         builder.AddField< ADN_EditLine_Double >( attritionBox, tr( "PH" ), vInfosConnectors[ eAttritionCapacity_Ph ], 0, eZeroOne );
@@ -255,7 +255,7 @@ void ADN_Objects_GUI::Build()
         // Spawn
         ADN_GroupBox* spawn = CreateCapacityGroupBox( 3, tr( "Spawn" ), vInfosConnectors[ eSpawnCapacityPresent ] );
         builder.AddField< ADN_EditLine_Double >( spawn, tr( "Action range" ), vInfosConnectors[ eSpawnCapacity_ActionRange ], tr( "m" ), eGreaterEqualZero );
-        builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data_ObjectInfos > >( spawn, tr( "Object" ), vInfosConnectors[ eSpawnCapacity_ObjectType ] );
+        builder.AddField< ADN_ComboBox_Vector >( spawn, tr( "Object" ), vInfosConnectors[ eSpawnCapacity_ObjectType ] );
         builder.AddField< ADN_CheckBox >( spawn, tr( "NBC" ), vInfosConnectors[ eSpawnCapacity_NBC ] );
 
         ADN_GroupBox* medical = CreateCapacityGroupBox( 3, tr( "Medical" ), vInfosConnectors[ eMedicalCapacityPresent ] );

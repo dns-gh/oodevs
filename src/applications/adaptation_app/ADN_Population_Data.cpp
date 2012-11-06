@@ -33,9 +33,7 @@ tools::IdManager ADN_Population_Data::idManager_;
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( helpers::ArmorInfos* ptr )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , strName_                  ( ptr->strName_.GetData() )
+    : ADN_RefWithName( ptr )
     , ptrProtection_            ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr )
     , rUnarmedDestruction_              ( 0. )
     , rUnarmedFixableWithEvacuation_    ( 0. )
@@ -107,35 +105,15 @@ ADN_Population_Data::FireEffectProtectionInfos::~FireEffectProtectionInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::FireEffectProtectionInfos::GetNodeName
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::FireEffectProtectionInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::FireEffectProtectionInfos::GetItemName
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::FireEffectProtectionInfos::GetItemName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::FireEffectInfos::FireEffectInfos
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_Population_Data::FireEffectInfos::FireEffectInfos( E_PopulationAttitude nAttitude )
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, nAttitude_        ( nAttitude )
-, strName_          ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
-, vProtectionInfos_ ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
-, rIntensityDensity_( 0. )
-, rIntensityFactor_ ( 0. )
+    : ADN_RefWithName( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
+    , nAttitude_        ( nAttitude )
+    , vProtectionInfos_ ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+    , rIntensityDensity_( 0. )
+    , rIntensityFactor_ ( 0. )
 {
     // NOTHING
 }
@@ -192,32 +170,12 @@ ADN_Population_Data::FireEffectInfos::~FireEffectInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::FireEffectInfos::GetNodeName
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::FireEffectInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::FireEffectInfos::GetItemName
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::FireEffectInfos::GetItemName()
-{
-    return strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos
 // Created: SBO 2005-11-21
 // -----------------------------------------------------------------------------
 ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos( E_PopulationRoe nRoe )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
+    : ADN_RefWithName( ENT_Tr::ConvertFromPopulationRoe( nRoe ) )
     , nRoe_             ( nRoe )
-    , strName_          ( ENT_Tr::ConvertFromPopulationRoe( nRoe ) )
     , rAttritionSurface_( 0. )
     , rPH_              ( 0. )
 {
@@ -231,24 +189,6 @@ ADN_Population_Data::FireEffectRoeInfos::FireEffectRoeInfos( E_PopulationRoe nRo
 ADN_Population_Data::FireEffectRoeInfos::~FireEffectRoeInfos()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::FireEffectRoeInfos::GetNodeName
-// Created: SBO 2005-11-21
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::FireEffectRoeInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::FireEffectRoeInfos::GetItemName
-// Created: SBO 2005-11-21
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::FireEffectRoeInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -290,9 +230,7 @@ void ADN_Population_Data::FireEffectRoeInfos::WriteArchive( xml::xostream& outpu
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_Population_Data::SpeedEffectVolumeInfos::SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , strName_  ( ptr->strName_.GetData() )
+    : ADN_RefWithName( ptr )
     , ptrVolume_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr )
     , rDensity_ ( 0. )
     , rMaxSpeed_( 0. )
@@ -334,24 +272,6 @@ ADN_Population_Data::SpeedEffectVolumeInfos::~SpeedEffectVolumeInfos()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::SpeedEffectVolumeInfos::GetNodeName
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::SpeedEffectVolumeInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::SpeedEffectVolumeInfos::GetItemName
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::SpeedEffectVolumeInfos::GetItemName()
-{
-    return std::string();
-}
-
 // =============================================================================
 // ADN_Population_Data::SpeedEffectInfos
 // =============================================================================
@@ -361,10 +281,8 @@ std::string ADN_Population_Data::SpeedEffectVolumeInfos::GetItemName()
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
 ADN_Population_Data::SpeedEffectInfos::SpeedEffectInfos( E_PopulationAttitude nAttitude )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
+    : ADN_RefWithName( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
     , nAttitude_   ( nAttitude )
-    , strName_     ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
     , vVolumeInfos_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
 {
     // NOTHING
@@ -415,24 +333,6 @@ ADN_Population_Data::SpeedEffectInfos::~SpeedEffectInfos()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::SpeedEffectInfos::GetNodeName
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::SpeedEffectInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::SpeedEffectInfos::GetItemName
-// Created: SBO 2005-10-24
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::SpeedEffectInfos::GetItemName()
-{
-    return strName_.GetData();
-}
-
 // =============================================================================
 // ADN_Population_Data::UrbanEffectInfos
 // =============================================================================
@@ -442,10 +342,8 @@ std::string ADN_Population_Data::SpeedEffectInfos::GetItemName()
 // Created: MMC 2011-03-30
 // -----------------------------------------------------------------------------
 ADN_Population_Data::UrbanEffectInfos::UrbanEffectInfos( E_PopulationAttitude nAttitude )
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
+: ADN_RefWithName( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
 , nAttitude_   ( nAttitude )
-, strName_     ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
 , rDensity_    ( 0.0 )
 , rTime_       ( "0s" )
 {
@@ -459,24 +357,6 @@ ADN_Population_Data::UrbanEffectInfos::UrbanEffectInfos( E_PopulationAttitude nA
 ADN_Population_Data::UrbanEffectInfos::~UrbanEffectInfos()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::UrbanEffectInfos::GetNodeName
-// Created: MMC 2011-03-30
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::UrbanEffectInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::UrbanEffectInfos::GetItemName
-// Created: MMC 2011-03-30
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::UrbanEffectInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -511,9 +391,7 @@ void ADN_Population_Data::UrbanEffectInfos::WriteArchive( xml::xostream& output 
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Population_Data::PopulationInfos::PopulationInfos()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , nId_                  ( ADN_Population_Data::idManager_.GetNextId() )
+    : nId_                  ( ADN_Population_Data::idManager_.GetNextId() )
     , ptrModel_             ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
     , rConcentrationDensity_( 0. )
     , rMoveDensity_         ( 0. )
@@ -533,9 +411,7 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Population_Data::PopulationInfos::PopulationInfos( unsigned int id )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , nId_                  ( id )
+    : nId_                  ( id )
     , ptrModel_             ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
     , rConcentrationDensity_( 0. )
     , rMoveDensity_         ( 0. )
@@ -586,24 +462,6 @@ void ADN_Population_Data::PopulationInfos::Initialize()
 ADN_Population_Data::PopulationInfos::~PopulationInfos()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationInfos::GetNodeName
-// Created: APE 2004-12-02
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::PopulationInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationInfos::GetItemName
-// Created: APE 2004-12-02
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::PopulationInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------

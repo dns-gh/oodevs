@@ -18,7 +18,7 @@
 class ADN_ComboBox_Enum : public ADN_ComboBox
 {
 public:
-    explicit ADN_ComboBox_Enum( QWidget * parent = 0, const char * name = 0 );
+    explicit ADN_ComboBox_Enum( QWidget * parent = 0 );
     virtual ~ADN_ComboBox_Enum();
 
 protected:

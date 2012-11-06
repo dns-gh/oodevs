@@ -30,37 +30,14 @@
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
 ADN_Weapons_Data::PhInfos::PhInfos()
-: ADN_DataTreeNode_ABC()
-, nDistance_(0)
-, rPerc_(0.0)
-, nModifiedDistance_( 0 )
-, rModifiedPerc_( 0.0 )
-, distModifier_( 1.0 )
-, phModifier_( 1.0 )
+    : nDistance_(0)
+    , rPerc_(0.0)
+    , nModifiedDistance_( 0 )
+    , rModifiedPerc_( 0.0 )
+    , distModifier_( 1.0 )
+    , phModifier_( 1.0 )
 {
-    nDistance_.SetParentNode( *this );
-    nModifiedDistance_.SetParentNode( *this );
-    rPerc_.SetParentNode( *this );
-    rPerc_.SetDataName( "le pourcentage de chance de toucher à" );
-    rModifiedPerc_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PhInfos::GetNodeName
-// Created: APE 2004-11-22
-// -----------------------------------------------------------------------------
-std::string ADN_Weapons_Data::PhInfos::GetNodeName()
-{
-    return MT_FormatString( "la distance de tir %d", nDistance_.GetData() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PhInfos::GetItemName
-// Created: APE 2004-11-22
-// -----------------------------------------------------------------------------
-std::string ADN_Weapons_Data::PhInfos::GetItemName()
-{
-    return MT_FormatString( "à %d mètres", nDistance_.GetData() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -128,13 +105,10 @@ void ADN_Weapons_Data::PhInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
 ADN_Weapons_Data::PhSizeInfos::PhSizeInfos( ADN_Categories_Data::SizeInfos* ptr )
-: ADN_Ref_ABC           ()
-, ADN_DataTreeNode_ABC  ()
-, ptrSize_              ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr )
-, vPhs_                 ( false )
+    : ptrSize_              ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), ptr )
+    , vPhs_                 ( false )
 {
     this->BindExistenceTo(&ptrSize_);
-    vPhs_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,25 +118,6 @@ ADN_Weapons_Data::PhSizeInfos::PhSizeInfos( ADN_Categories_Data::SizeInfos* ptr 
 ADN_Weapons_Data::PhSizeInfos::~PhSizeInfos()
 {
     vPhs_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PhSizeInfos::GetNodeName
-// Created: APE 2004-11-22
-// -----------------------------------------------------------------------------
-std::string ADN_Weapons_Data::PhSizeInfos::GetNodeName()
-{
-    std::string strResult( "sur une cible de taille " );
-    return strResult + ptrSize_.GetData()->strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PhSizeInfos::GetItemName
-// Created: APE 2004-11-22
-// -----------------------------------------------------------------------------
-std::string ADN_Weapons_Data::PhSizeInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -203,47 +158,27 @@ void ADN_Weapons_Data::PhSizeInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2004-11-22
 // -----------------------------------------------------------------------------
 ADN_Weapons_Data::WeaponInfos::WeaponInfos()
-: ADN_Ref_ABC         ()
-, ADN_DataTreeNode_ABC()
-, ptrLauncher_      ( ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos(), 0 )
-, ptrAmmunition_    ( (ADN_Equipement_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
-, nRoundsPerBurst_  ( 1 )
-, burstDuration_    ( "1s" )
-, nRoundsPerReload_ ( 1 )
-, reloadDuration_   ( "1s" )
-, bDirect_        ( false )
-, phs_            ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
-, bSimulation_    ( false )
-, nFirePosture_   ( eUnitPosture_PostureArret )
-, nTargetPosture_ ( eUnitPosture_PostureArret )
-, nExperience_    ( eUnitExperience_Veteran )
-, nTiredness_     ( eUnitTiredness_Normal )
-, nStress_        ( eUnitStress_Calm )
-, bIndirect_    ( false )
-, rAverageSpeed_( 0 )
-, rMinRange_    ( 0 )
-, rMaxRange_    ( 0 )
+    : ptrLauncher_      ( ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos(), 0 )
+    , ptrAmmunition_    ( (ADN_Equipement_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
+    , nRoundsPerBurst_  ( 1 )
+    , burstDuration_    ( "1s" )
+    , nRoundsPerReload_ ( 1 )
+    , reloadDuration_   ( "1s" )
+    , bDirect_        ( false )
+    , phs_            ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
+    , bSimulation_    ( false )
+    , nFirePosture_   ( eUnitPosture_PostureArret )
+    , nTargetPosture_ ( eUnitPosture_PostureArret )
+    , nExperience_    ( eUnitExperience_Veteran )
+    , nTiredness_     ( eUnitTiredness_Normal )
+    , nStress_        ( eUnitStress_Calm )
+    , bIndirect_    ( false )
+    , rAverageSpeed_( 0 )
+    , rMinRange_    ( 0 )
+    , rMaxRange_    ( 0 )
 {
     BindExistenceTo( &ptrLauncher_ );
     BindExistenceTo( &ptrAmmunition_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeaponInfos::GetNodeName
-// Created: APE 2004-11-22
-// -----------------------------------------------------------------------------
-std::string ADN_Weapons_Data::WeaponInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeaponInfos::GetItemName
-// Created: APE 2004-11-22
-// -----------------------------------------------------------------------------
-std::string ADN_Weapons_Data::WeaponInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------

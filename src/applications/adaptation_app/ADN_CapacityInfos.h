@@ -17,9 +17,7 @@ namespace helpers
 
 struct NullType {};
 
-class ADN_TypeCapacity_Infos
-    : public ADN_Ref_ABC
-    , public ADN_DataTreeNode_ABC
+class ADN_TypeCapacity_Infos : public ADN_Ref_ABC
 {
 public:
     ADN_TypeCapacity_Infos() : bPresent_ ( false ) {}

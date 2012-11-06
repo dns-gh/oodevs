@@ -27,31 +27,9 @@
 // -----------------------------------------------------------------------------
 template< typename T >
 ADN_Supply_Data::ConvoyInfo< T >::ConvoyInfo( typename T::BaseType value )
-: ADN_Ref_ABC         ()
-, ADN_DataTreeNode_ABC()
-, nNbrTrucks_         ( 1 )
+: nNbrTrucks_         ( 1 )
 , value_              ( value )
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConvoyInfo::GetNodeName
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-template< typename T >
-std::string ADN_Supply_Data::ConvoyInfo< T >::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConvoyInfo::GetItemName
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-template< typename T >
-std::string ADN_Supply_Data::ConvoyInfo< T >::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -83,9 +61,7 @@ void ADN_Supply_Data::ConvoyInfo< T >::WriteArchive( const std::string& section,
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
 ADN_Supply_Data::SupplyDataInfos::SupplyDataInfos()
-    : ADN_Ref_ABC         ()
-    , ADN_DataTreeNode_ABC()
-    , ptrUnit_            ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
+    : ptrUnit_            ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
     , ptrSupplyMission_   ( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions(), 0 )
 {
     // NOTHING
@@ -111,8 +87,8 @@ void ADN_Supply_Data::SupplyDataInfos::Reset()
     vConvoyUnloadingInfos_.Reset();
     vConvoySpeedModificatorInfos_.Reset();
     vVectorWarnings_.Reset();
-    ptrSupplyMission_.SetData( 0, false );
-    ptrUnit_.SetData( 0, false );
+    ptrSupplyMission_.SetData( 0 );
+    ptrUnit_.SetData( 0 );
 }
 
 // -----------------------------------------------------------------------------

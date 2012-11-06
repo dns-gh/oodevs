@@ -10,14 +10,14 @@
 #ifndef __ADN_ResourceNatureInfos_h_
 #define __ADN_ResourceNatureInfos_h_
 
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 
 namespace helpers
 {
 
-class ResourceNatureInfos : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
+class ResourceNatureInfos : public ADN_RefWithName
 {
 
 public:
@@ -27,7 +27,6 @@ public:
     ResourceNatureInfos* CreateCopy();
 
 public:
-    ADN_Type_String strName_;
     ADN_Type_Int nId_;
 };
 

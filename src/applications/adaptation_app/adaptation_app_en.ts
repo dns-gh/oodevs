@@ -87,21 +87,6 @@
     </message>
 </context>
 <context>
-    <name>ADN_AddElementCommand</name>
-    <message>
-        <source>Add </source>
-        <translation>Add </translation>
-    </message>
-    <message>
-        <source> to </source>
-        <translation> to </translation>
-    </message>
-    <message>
-        <source>Add new </source>
-        <translation>Add new </translation>
-    </message>
-</context>
-<context>
     <name>ADN_AiEngine_GUI</name>
     <message>
         <source>Threat management</source>
@@ -561,29 +546,6 @@ Parked engine running</translation>
     <message>
         <source>Logistic resource category</source>
         <translation>Logistic resource category</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ChangeValueCommand</name>
-    <message>
-        <source>Change </source>
-        <translation>Change </translation>
-    </message>
-    <message>
-        <source> from </source>
-        <translation> from </translation>
-    </message>
-    <message>
-        <source>true</source>
-        <translation>true</translation>
-    </message>
-    <message>
-        <source>false</source>
-        <translation>false</translation>
-    </message>
-    <message>
-        <source> to </source>
-        <translation> to </translation>
     </message>
 </context>
 <context>
@@ -3751,17 +3713,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
-    <name>ADN_RemoveElementCommand</name>
-    <message>
-        <source>Remove </source>
-        <translation>Remove </translation>
-    </message>
-    <message>
-        <source> from </source>
-        <translation> from </translation>
-    </message>
-</context>
-<context>
     <name>ADN_ResourceNetworks_GUI</name>
     <message>
         <source>Name</source>
@@ -3810,34 +3761,6 @@ Make sure that the file is not write-protected.</translation>
     <message>
         <source>Activity</source>
         <translation>Activity</translation>
-    </message>
-    <message>
-        <source>monday</source>
-        <translation>monday</translation>
-    </message>
-    <message>
-        <source>tuesday</source>
-        <translation>tuesday</translation>
-    </message>
-    <message>
-        <source>wednesday</source>
-        <translation>wednesday</translation>
-    </message>
-    <message>
-        <source>thursday</source>
-        <translation>thursday</translation>
-    </message>
-    <message>
-        <source>friday</source>
-        <translation>friday</translation>
-    </message>
-    <message>
-        <source>saturday</source>
-        <translation>saturday</translation>
-    </message>
-    <message>
-        <source>sunday</source>
-        <translation>sunday</translation>
     </message>
     <message>
         <source>Add</source>
@@ -5102,6 +5025,34 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Human</source>
         <translation>Human</translation>
     </message>
+    <message>
+        <source>Monday</source>
+        <translation>Monday</translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation>Tuesday</translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation>Wednesday</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation>Thursday</translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation>Vendredi</translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation>Saturday</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation>Sunday</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5863,10 +5814,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Equipment - Invalid amunition &apos;%1/%2&apos;</translation>
     </message>
     <message>
-        <source>Active Protection</source>
-        <translation>Active Protection</translation>
-    </message>
-    <message>
         <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
         <translation>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</translation>
     </message>
@@ -6164,6 +6111,10 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Population</source>
         <translation>Population</translation>
+    </message>
+    <message>
+        <source>Population - Invalid accommodation &apos;%1&apos;</source>
+        <translation>Population - Invalid accommodation &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Invalid schedule - You have already an appointment on the same moment :</source>

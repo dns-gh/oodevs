@@ -15,9 +15,8 @@
 // Name: ADN_Connector_Vector_ABC constructor
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
-ADN_Connector_Vector_ABC::ADN_Connector_Vector_ABC( const char* szName )
-    : ADN_Connector_ABC( szName )
-    , bConnecting_     ( false )
+ADN_Connector_Vector_ABC::ADN_Connector_Vector_ABC()
+    : bConnecting_     ( false )
 {
     // NOTHING
 }
@@ -178,7 +177,7 @@ void ADN_Connector_Vector_ABC::AddItemNoEmit( void* pObj )
 // Name: ADN_Connector_Vector_ABC::AddItemPrivate
 // Created: AGN 2004-03-19
 // -----------------------------------------------------------------------------
-bool ADN_Connector_Vector_ABC::AddItemPrivate( void*, bool )
+bool ADN_Connector_Vector_ABC::AddItemPrivate( void* )
 {
     // nothing
     return false;
@@ -217,7 +216,7 @@ void ADN_Connector_Vector_ABC::RemItemNoEmit( void* pObj )
 // Name: ADN_Connector_Vector_ABC::RemItemPrivate
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
-bool ADN_Connector_Vector_ABC::RemItemPrivate( void*, bool )
+bool ADN_Connector_Vector_ABC::RemItemPrivate( void* )
 {
     // nothing
     return false;

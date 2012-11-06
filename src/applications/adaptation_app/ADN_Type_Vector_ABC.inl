@@ -7,8 +7,6 @@
 //
 // *****************************************************************************
 
-#include "ADN_AddElementCommand.h"
-#include "ADN_RemoveElementCommand.h"
 #include "ADN_Workspace.h"
 
 //-----------------------------------------------------------------------------
@@ -16,11 +14,8 @@
 // Created: JDY 03-06-25
 //-----------------------------------------------------------------------------
 template< class T >
-ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( bool bAutoRef, const char* szName )
-    : ADN_Connector_Vector_ABC( szName )
-    , std::vector<T*>()
-    , ADN_DataTreeNode_ABC()
-    , bAutoRef_( bAutoRef )
+ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( bool bAutoRef )
+    : bAutoRef_( bAutoRef )
 {
     // NOTHING
 }
@@ -31,12 +26,8 @@ ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( bool bAutoRef, const char* szName )
 //-----------------------------------------------------------------------------
 template <class T>
 ADN_Type_Vector_ABC<T>::ADN_Type_Vector_ABC( const ADN_Type_Vector_ABC& o )
-    : ADN_Connector_Vector_ABC()
-    , ADN_DataTreeNode_ABC()
-    , std::vector<T*>( o )
+    : std::vector<T*>( o )
     , bAutoRef_( o.bAutoRef_ )
-    , strNodeName_( o.strNodeName_ )
-    , strItemTypeName_( o.strItemTypeName_ )
 {
     // NOTHING
 }
@@ -67,18 +58,12 @@ ADN_Type_Vector_ABC<T>& ADN_Type_Vector_ABC<T>::operator =( const ADN_Type_Vecto
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
 template <class T>
-bool ADN_Type_Vector_ABC<T>::AddItemPrivate( void* pItem, bool bCreateCommand )
+bool ADN_Type_Vector_ABC<T>::AddItemPrivate( void* pItem )
 {
     if( pItem == 0 )
         return true;
 
     T* pCastItem = static_cast< T* >( pItem );
-
-    pCastItem->SetParentNode( *this );
-
-    if( bCreateCommand )
-        ADN_Workspace::GetWorkspace().AddCommand( new ADN_AddElementCommand< T >( *this, pCastItem ) );
-
     if( bAutoRef_ )
         connect( static_cast< ADN_Ref_ABC* >( pItem ), SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
 
@@ -91,7 +76,7 @@ bool ADN_Type_Vector_ABC<T>::AddItemPrivate( void* pItem, bool bCreateCommand )
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
 template <class T>
-bool ADN_Type_Vector_ABC< T >::RemItemPrivate( void* pItem, bool bCreateCommand )
+bool ADN_Type_Vector_ABC< T >::RemItemPrivate( void* pItem )
 {
     if( pItem == 0 )
         return true;
@@ -102,9 +87,6 @@ bool ADN_Type_Vector_ABC< T >::RemItemPrivate( void* pItem, bool bCreateCommand 
     IT_PtrVector it = std::find( begin(), end(), pCastItem );
     if( it == end() )
         return false;
-
-    if( bCreateCommand )
-        ADN_Workspace::GetWorkspace().AddCommand( new ADN_RemoveElementCommand< T >( *this, pCastItem ) );
 
     erase(it);
 
@@ -264,46 +246,6 @@ void ADN_Type_Vector_ABC<T>::Initialize( ADN_Connector_Vector_ABC& dest ) const
         dest.AddItemNoEmit( pObj );
     }
     dest.AddItemNoEmit( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC::GetNodeName
-// Created: AGN 2004-05-13
-// -----------------------------------------------------------------------------
-template <class T>
-std::string ADN_Type_Vector_ABC< T >::GetNodeName()
-{
-    return strNodeName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC::SetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-template <class T>
-void ADN_Type_Vector_ABC< T >::SetNodeName( const std::string& strNodeName )
-{
-    strNodeName_ = strNodeName;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC::GetItemTypeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-template <class T>
-const std::string& ADN_Type_Vector_ABC< T >::GetItemTypeName() const
-{
-    return strItemTypeName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC::SetItemTypeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-template <class T>
-void ADN_Type_Vector_ABC< T >::SetItemTypeName( const std::string& strItemTypeName )
-{
-    strItemTypeName_ = strItemTypeName;
 }
 
 // -----------------------------------------------------------------------------

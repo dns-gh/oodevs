@@ -36,7 +36,7 @@ public:
     typedef ADN_ComboBoxItem T_ItemType;
 
 public:
-    explicit ADN_ComboBox( QWidget * parent = 0, const char * name = 0 );
+    explicit ADN_ComboBox( QWidget * parent = 0 );
     virtual ~ADN_ComboBox();
 
     void                        SetItemConnectors(const T_ConnectorVector& v);
@@ -48,9 +48,9 @@ public:
     virtual void                DisconnectItem();
     virtual void                setCurrentItem ( int index );
 
-    virtual void                insertItem ( ADN_ComboBoxItem* item, int index = -1 );
-    virtual void                insertItem ( const QString& txt, int index = -1 );
-    void                        removeItem ( int index );
+    virtual void                insertItem( ADN_ComboBoxItem* item, int index = -1 );
+    virtual void                insertItem( const QString& txt, int index = -1 );
+    void                        removeItem( int index );
     void                        clear();
     int                         FindNdx( const ADN_ComboBoxItem* item ) const;
     int                         FindNdx( void * data) const;
@@ -75,8 +75,8 @@ protected slots:
     virtual void UpdateEnableState();
 };
 
-typedef ADN_Connector_Combo<ADN_ComboBox> ADN_Connector_ComboBox;
-typedef ADN_Connector_Enum<ADN_ComboBox>  ADN_Connector_EnumComboBox;
+typedef ADN_Connector_Combo< ADN_ComboBox > ADN_Connector_ComboBox;
+typedef ADN_Connector_Enum< ADN_ComboBox >  ADN_Connector_EnumComboBox;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::GetCurrentData

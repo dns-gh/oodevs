@@ -16,19 +16,13 @@
 namespace helpers
 {
 
-class AttritionInfos
-    : public ADN_Ref_ABC
-    , public ADN_DataTreeNode_ABC
+class AttritionInfos : public ADN_Ref_ABC
 {
 
 public:
     explicit AttritionInfos( ArmorInfos* ptr );
 
-    virtual std::string GetNodeName();
-    std::string GetItemName();
-
     void CopyFrom( AttritionInfos& attritions );
-
     void ReadArchive( xml::xistream& );
     void WriteArchive( xml::xostream&, const std::string& tag = "attrition" );
 

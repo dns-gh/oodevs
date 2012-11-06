@@ -10,6 +10,7 @@
 #ifndef __ADN_AttritionEffectOnHuman_h_
 #define __ADN_AttritionEffectOnHuman_h_
 
+#include "ADN_RefWithName.h"
 #include "ADN_Type_Enum.h"
 #include "ADN_Enums.h"
 #include "ADN_Types.h"
@@ -17,9 +18,7 @@
 namespace helpers
 {
 
-class AttritionEffectOnHuman
-    : public ADN_Ref_ABC
-    , public ADN_DataTreeNode_ABC
+class AttritionEffectOnHuman : public ADN_RefWithName
 {
 
 public:
@@ -34,7 +33,6 @@ public:
     ADN_Type_Enum< E_EquipmentState_ADN, eNbrEquipmentState_ADN > nEquipmentState_;
     ADN_Type_Int nInjuredPercentage_;
     ADN_Type_Int nDeadPercentage_;
-    ADN_Type_String strName_;
 };
 
 typedef ADN_Type_Vector_ABC<AttritionEffectOnHuman>   T_AttritionEffectOnHuman_Vector;

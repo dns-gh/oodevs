@@ -104,7 +104,6 @@ void ADN_MissionParameters_Table::OnTypeChanged( E_MissionParameterType type )
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::OnContextMenu( const QPoint& pt )
 {
-    QModelIndex index = indexAt( pt );
     Q3PopupMenu popup( this );
 
     popup.insertItem( tr( "Add parameter"), 0 );

@@ -93,9 +93,9 @@ namespace
 ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, const std::string& category )
     : template_( new gui::DrawingTemplate( xis, "Tactical graphics", renderer ) ) // $$$$ ABR 2011-04-18: hard coded
     , tools_   ( tools )
-    , strName_ ( template_->GetName().toAscii().constData() )
     , category_( category )
 {
+    strName_ = template_->GetName().toStdString();
     Initialize();
     Draw();
     glFlush();
@@ -112,24 +112,6 @@ ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRender
 ADN_Drawings_Data::DrawingInfo::~DrawingInfo()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::GetNodeName
-// Created: SBO 2011-04-18
-// -----------------------------------------------------------------------------
-std::string ADN_Drawings_Data::DrawingInfo::GetNodeName()
-{
-    return strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::DrawingInfo::GetItemName
-// Created: SBO 2011-04-18
-// -----------------------------------------------------------------------------
-std::string ADN_Drawings_Data::DrawingInfo::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------

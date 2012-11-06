@@ -39,7 +39,7 @@ ADN_Sensors_Illumination_GUI::~ADN_Sensors_Illumination_GUI()
 void ADN_Sensors_Illumination_GUI::InternalEmit()
 {
     if( ADN_Sensors_Data::ModificatorIlluminationInfos* data = static_cast< ADN_Sensors_Data::ModificatorIlluminationInfos* >( GetSelectedData() ) )
-        emit ContentChanged( data->GetItemName(), data->rCoeff_.GetData() );
+        emit ContentChanged( ENT_Tr::ConvertFromLightingType( data->eType_, ENT_Tr_ABC::eToTr ), data->rCoeff_.GetData() );
 }
 
 // -----------------------------------------------------------------------------

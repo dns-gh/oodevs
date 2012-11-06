@@ -148,10 +148,6 @@ public:
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
 
-    QtUndoStack& GetUndoStack();
-
-    void AddCommand( QtCommand* pNewCommand );
-
     E_OpenMode GetOpenMode() const;
     void SetOpenMode( E_OpenMode nNewMode );
 
@@ -175,7 +171,6 @@ private:
     ADN_Project_Data* projectData_;
     ADN_WorkspaceElement_ABC* elements_[ eNbrWorkspaceElements ];
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
-    QtUndoStack* pUndoStack_;
     E_OpenMode nOpenMode_;
     bool symbols_;
     static ADN_Workspace* pWorkspace_;

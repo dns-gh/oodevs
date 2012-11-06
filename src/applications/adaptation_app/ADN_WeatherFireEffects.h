@@ -20,7 +20,6 @@
 // Created: BCI 2010-12-02
 // =============================================================================
 class ADN_WeatherFireEffects : public ADN_Ref_ABC
-                                 , public ADN_DataTreeNode_ABC
 
 {
 public:
@@ -32,11 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetNodeName();
-    std::string GetItemName();
-
     void CopyFrom( ADN_WeatherFireEffects& other );
-
     void ReadArchive( xml::xistream& );
     void WriteArchive( xml::xostream&, const std::string& tag = "weather-effect" );
     //@}

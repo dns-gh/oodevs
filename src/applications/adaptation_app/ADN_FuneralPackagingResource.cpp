@@ -36,24 +36,6 @@ ADN_FuneralPackagingResource::~ADN_FuneralPackagingResource()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FuneralPackagingResource::GetNodeName
-// Created: SBO 2006-08-04
-// -----------------------------------------------------------------------------
-std::string ADN_FuneralPackagingResource::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_FuneralPackagingResource::GetItemName
-// Created: SBO 2006-08-04
-// -----------------------------------------------------------------------------
-std::string ADN_FuneralPackagingResource::GetItemName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_FuneralPackagingResource::ReadArchive
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
@@ -92,11 +74,11 @@ void ADN_FuneralPackagingResource::ExchangeData( ADN_FuneralPackagingResource& p
     std::string curProcessDuration  = processDuration_.GetData();
     bool curTerminal                = terminal_.GetData();
 
-    resource_.SetData( packResource.resource_.GetData(), true );
+    resource_.SetData( packResource.resource_.GetData() );
     processDuration_    = packResource.processDuration_.GetData();
     terminal_           = packResource.terminal_.GetData();
 
-    packResource.resource_.SetData( curResource, true );
+    packResource.resource_.SetData( curResource );
     packResource.processDuration_   = curProcessDuration;
     packResource.terminal_          = curTerminal;
 }

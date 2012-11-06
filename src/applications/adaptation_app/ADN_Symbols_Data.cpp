@@ -24,7 +24,6 @@
 // Created: SLG 2011-02-17
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::SymbolsInfra::SymbolsInfra( xml::xistream& input )
-: strName_ ( "" )
 {
     input >> xml::attribute( "name", strName_ );
 }
@@ -36,24 +35,6 @@ ADN_Symbols_Data::SymbolsInfra::SymbolsInfra( xml::xistream& input )
 ADN_Symbols_Data::SymbolsInfra::~SymbolsInfra()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Symbols_Data::SymbolsInfra::GetNodeName
-// Created: SLG 2011-02-17
-// -----------------------------------------------------------------------------
-std::string ADN_Symbols_Data::SymbolsInfra::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Symbols_Data::SymbolsInfra::GetItemName
-// Created: SLG 2011-02-17
-// -----------------------------------------------------------------------------
-std::string ADN_Symbols_Data::SymbolsInfra::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------

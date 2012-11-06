@@ -11,6 +11,7 @@
 #define __ADN_Population_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
@@ -30,28 +31,23 @@ class ADN_Population_Data : public ADN_Data_ABC
 
 public:
 // *****************************************************************************
-    class FireEffectProtectionInfos : public ADN_Ref_ABC
-                                    , public ADN_DataTreeNode_ABC
+    class FireEffectProtectionInfos : public ADN_RefWithName
     {
     public:
         explicit FireEffectProtectionInfos( helpers::ArmorInfos* ptr );
         virtual ~FireEffectProtectionInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_Type_String                                           strName_;
-        ADN_TypePtr_InVector_ABC<helpers::ArmorInfos> ptrProtection_;
-        ADN_Type_Double                                           rUnarmedDestruction_;
-        ADN_Type_Double                                           rUnarmedFixableWithEvacuation_;
-        ADN_Type_Double                                           rUnarmedFixableWithoutEvacuation_;
-        ADN_Type_Double                                           rArmedDestruction_;
-        ADN_Type_Double                                           rArmedFixableWithEvacuation_;
-        ADN_Type_Double                                           rArmedFixableWithoutEvacuation_;
+        ADN_TypePtr_InVector_ABC< helpers::ArmorInfos > ptrProtection_;
+        ADN_Type_Double                                 rUnarmedDestruction_;
+        ADN_Type_Double                                 rUnarmedFixableWithEvacuation_;
+        ADN_Type_Double                                 rUnarmedFixableWithoutEvacuation_;
+        ADN_Type_Double                                 rArmedDestruction_;
+        ADN_Type_Double                                 rArmedFixableWithEvacuation_;
+        ADN_Type_Double                                 rArmedFixableWithoutEvacuation_;
 
     public:
         typedef helpers::ArmorInfos T_Item;
@@ -72,22 +68,17 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC<FireEffectProtectionInfos>, FireEffectProtectionInfosVector )
 
 // *****************************************************************************
-    class FireEffectInfos : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
+    class FireEffectInfos : public ADN_RefWithName
     {
     public:
         explicit FireEffectInfos( E_PopulationAttitude nAttitude );
         virtual ~FireEffectInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void ReadProtection( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_Type_String                   strName_;
         E_PopulationAttitude              nAttitude_;
         ADN_Type_Double                   rIntensityDensity_;
         ADN_Type_Double                   rIntensityFactor_;
@@ -110,22 +101,18 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<FireEffectInfos>, FireEffectInfosVector )
 
 // *****************************************************************************
-    class FireEffectRoeInfos : public ADN_Ref_ABC
-                             , public ADN_DataTreeNode_ABC
+    class FireEffectRoeInfos : public ADN_RefWithName
     {
     public:
         explicit FireEffectRoeInfos( E_PopulationRoe nRoe );
         virtual ~FireEffectRoeInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
         unsigned int GetRoe();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_Type_String strName_;
         E_PopulationRoe nRoe_;
         ADN_Type_Double rAttritionSurface_;
         ADN_Type_Double rPH_;
@@ -133,21 +120,16 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<FireEffectRoeInfos>, FireEffectRoeInfosVector )
 
 // *****************************************************************************
-    class SpeedEffectVolumeInfos : public ADN_Ref_ABC
-                                 , public ADN_DataTreeNode_ABC
+    class SpeedEffectVolumeInfos : public ADN_RefWithName
     {
     public:
         explicit SpeedEffectVolumeInfos( ADN_Categories_Data::SizeInfos* ptr );
         virtual ~SpeedEffectVolumeInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_Type_String                                          strName_;
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos> ptrVolume_;
         ADN_Type_Double                                          rDensity_;
         ADN_Type_Double                                          rMaxSpeed_;
@@ -171,15 +153,11 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC<SpeedEffectVolumeInfos>, SpeedEffectVolumeInfosVector )
 
 // *****************************************************************************
-    class SpeedEffectInfos : public ADN_Ref_ABC
-                           , public ADN_DataTreeNode_ABC
+    class SpeedEffectInfos : public ADN_RefWithName
     {
     public:
         explicit SpeedEffectInfos( E_PopulationAttitude nAttitude );
         virtual ~SpeedEffectInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void ReadSpeedEffect( xml::xistream& input );
@@ -187,36 +165,29 @@ public:
 
     public:
         E_PopulationAttitude           nAttitude_;
-        ADN_Type_String                strName_;
         T_SpeedEffectVolumeInfosVector vVolumeInfos_;
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<SpeedEffectInfos>, SpeedEffectInfosVector )
 
 // *****************************************************************************
-    class UrbanEffectInfos : public ADN_Ref_ABC
-                            , public ADN_DataTreeNode_ABC
+    class UrbanEffectInfos : public ADN_RefWithName
     {
     public:
         explicit UrbanEffectInfos( E_PopulationAttitude nAttitude );
         virtual ~UrbanEffectInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_PopulationAttitude    nAttitude_;
-        ADN_Type_String         strName_;
         ADN_Type_Double         rDensity_;
         ADN_Type_Time           rTime_;
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<UrbanEffectInfos>, UrbanEffectInfosVector )
 
 // *****************************************************************************
-    class PopulationInfos : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
+    class PopulationInfos : public ADN_RefWithName
     {
     public:
                  PopulationInfos();
@@ -224,12 +195,7 @@ public:
         virtual ~PopulationInfos();
 
         void Initialize();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         PopulationInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void ReadSlowingEffect( xml::xistream& input );
         void ReadAttritionEffect( xml::xistream& input );
@@ -239,7 +205,6 @@ public:
 
     public:
         ADN_Type_Int                                          nId_;
-        ADN_Type_String                                       strName_;
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos> ptrModel_;
         ADN_Type_Double                                       rConcentrationDensity_;
         ADN_Type_Double                                       rMoveDensity_;

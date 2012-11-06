@@ -87,21 +87,6 @@
     </message>
 </context>
 <context>
-    <name>ADN_AddElementCommand</name>
-    <message>
-        <source>Add </source>
-        <translation type="unfinished">إضافة</translation>
-    </message>
-    <message>
-        <source> to </source>
-        <translation type="unfinished">إلى</translation>
-    </message>
-    <message>
-        <source>Add new </source>
-        <translation type="unfinished">إضافة جديد</translation>
-    </message>
-</context>
-<context>
     <name>ADN_AiEngine_GUI</name>
     <message>
         <source>Threat management</source>
@@ -549,29 +534,6 @@ Parked engine running</source>
     <message>
         <source>Logistic resource category</source>
         <translation type="unfinished">فئة الموارد اللوجستية</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ChangeValueCommand</name>
-    <message>
-        <source>Change </source>
-        <translation type="unfinished">التغيير</translation>
-    </message>
-    <message>
-        <source> from </source>
-        <translation type="unfinished">من</translation>
-    </message>
-    <message>
-        <source>true</source>
-        <translation type="unfinished">صحيح</translation>
-    </message>
-    <message>
-        <source>false</source>
-        <translation type="unfinished">false</translation>
-    </message>
-    <message>
-        <source> to </source>
-        <translation type="unfinished">إلى</translation>
     </message>
 </context>
 <context>
@@ -3738,17 +3700,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     </message>
 </context>
 <context>
-    <name>ADN_RemoveElementCommand</name>
-    <message>
-        <source>Remove </source>
-        <translation type="unfinished">إزالة</translation>
-    </message>
-    <message>
-        <source> from </source>
-        <translation type="unfinished">من</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ResourceNetworks_GUI</name>
     <message>
         <source>Name</source>
@@ -3799,40 +3750,12 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished">النشاط</translation>
     </message>
     <message>
-        <source>monday</source>
-        <translation type="unfinished">الاثنين</translation>
-    </message>
-    <message>
-        <source>tuesday</source>
-        <translation type="unfinished">اليوم الثلاثاء</translation>
-    </message>
-    <message>
-        <source>wednesday</source>
-        <translation type="unfinished">الأربعاء</translation>
-    </message>
-    <message>
-        <source>thursday</source>
-        <translation type="unfinished">اليوم الخميس</translation>
-    </message>
-    <message>
-        <source>friday</source>
-        <translation type="unfinished">الجمعة</translation>
-    </message>
-    <message>
-        <source>saturday</source>
-        <translation type="unfinished">السبت</translation>
-    </message>
-    <message>
-        <source>sunday</source>
-        <translation type="unfinished">الأحد</translation>
-    </message>
-    <message>
         <source>Add</source>
-        <translation type="unfinished">إضافة</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">إزالة</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5089,6 +5012,34 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Monday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5850,10 +5801,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">معدات-أمونيتيون غير صالح &apos;%1/%2&apos;</translation>
     </message>
     <message>
-        <source>Active Protection</source>
-        <translation type="unfinished">الحماية النشطة</translation>
-    </message>
-    <message>
         <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
         <translation type="unfinished">الحماية النشطة &apos;%1&apos;--نوع الذخيرة غير صالح &apos;%2&apos;</translation>
     </message>
@@ -6154,7 +6101,11 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Invalid schedule - You have already an appointment on the same moment :</source>
-        <translation type="unfinished">الجدول غير صالح--لديك بالفعل تعيين في نفس اللحظة:</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population - Invalid accommodation &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

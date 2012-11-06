@@ -11,6 +11,7 @@
 #define ADAPTATIONS_ADN_MISSIONS_PARAMETER_H
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "ADN_Drawings_Data.h"
@@ -26,8 +27,7 @@ namespace xml
     class xostream;
 }
 
-class ADN_Missions_Parameter : public ADN_Ref_ABC
-                             , public ADN_DataTreeNode_ABC
+class ADN_Missions_Parameter : public ADN_RefWithName
 {
 public:
     typedef ADN_Type_Vector_ABC<ADN_Missions_ParameterValue>  T_MissionParameterValue_Vector;
@@ -55,7 +55,6 @@ private:
 
 public:
     ADN_Type_String                                                   strMission_;
-    ADN_Type_String                                                   strName_;
     ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
     ADN_Type_Bool                                                     isOptional_;
     ADN_Type_Int                                                      minOccurs_;

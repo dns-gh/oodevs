@@ -14,25 +14,7 @@ AttritionInfos::AttritionInfos( ArmorInfos* ptr )
     , rRepairWithEvac_ ( 0.0 )
     , rRepairNoEvac_   ( 0.0 )
 {
-    this->BindExistenceTo( &ptrArmor_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::GetNodeName
-// Created: APE 2004-12-13
-// -----------------------------------------------------------------------------
-std::string AttritionInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttritionInfos::GetItemName
-// Created: APE 2004-12-13
-// -----------------------------------------------------------------------------
-std::string AttritionInfos::GetItemName()
-{
-    return std::string();
+    BindExistenceTo( &ptrArmor_ );
 }
 
 // -----------------------------------------------------------------------------

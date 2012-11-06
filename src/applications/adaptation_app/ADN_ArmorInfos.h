@@ -10,6 +10,7 @@
 #ifndef __ADN_ArmorInfos_h_
 #define __ADN_ArmorInfos_h_
 
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "ADN_AttritionEffectOnHuman.h"
@@ -17,9 +18,7 @@
 namespace helpers
 {
 
-class ArmorInfos
-    : public ADN_Ref_ABC
-    , public ADN_DataTreeNode_ABC
+class ArmorInfos : public ADN_RefWithName
 {
 
 public:
@@ -33,7 +32,6 @@ public:
     void CreateDefaultAttrition();
 
 public:
-    ADN_Type_String strName_;
     ADN_Type_Enum< E_ProtectionType, eNbrProtectionType > nType_;
     ADN_Type_Time   neutralizationAverageTime_;
     ADN_Type_Time   neutralizationVariance_;

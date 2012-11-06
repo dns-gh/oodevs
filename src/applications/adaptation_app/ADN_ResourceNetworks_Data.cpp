@@ -17,16 +17,10 @@
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------
 ADN_ResourceNetworks_Data::ResourceNetworkInfos::ResourceNetworkInfos()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , strName_    ( "" )
-    , strColor_   ( "0xffffff" )
+    : strColor_   ( "0xffffff" )
     , nProduction_( 0 )
     , ptrCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNetworkUsableDotation(), 0 )
 {
-    strColor_.SetParentNode( *this );
-    nProduction_.SetParentNode( *this );
-    ptrCategory_.SetParentNode( *this );
     BindExistenceTo( &ptrCategory_ );
 }
 
@@ -37,25 +31,6 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos::ResourceNetworkInfos()
 ADN_ResourceNetworks_Data::ResourceNetworkInfos::~ResourceNetworkInfos()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceNetworkInfos::GetNodeName
-// Created: JSR 2010-09-13
-// -----------------------------------------------------------------------------
-std::string ADN_ResourceNetworks_Data::ResourceNetworkInfos::GetNodeName()
-{
-    std::string strResult( "de la ressource " );
-    return strResult + strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceNetworkInfos::GetItemName
-// Created: JSR 2010-09-13
-// -----------------------------------------------------------------------------
-std::string ADN_ResourceNetworks_Data::ResourceNetworkInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------

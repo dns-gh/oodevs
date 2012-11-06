@@ -24,9 +24,7 @@ tools::IdManager ADN_NBC_Datas::idManager_;
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::NbcIntoxInfos::NbcIntoxInfos( const std::string& nodeName )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , nodeName_             ( nodeName )
+    : nodeName_             ( nodeName )
     , bIntoxPresent_        ( false )
     , rNbAlivedHumans_      ( 100.0 )
     , rNbHurtedHumans1_     ( 0.0 )
@@ -36,36 +34,7 @@ ADN_NBC_Datas::NbcIntoxInfos::NbcIntoxInfos( const std::string& nodeName )
     , rNbDeadHumans_        ( 0.0 )
     , bContaminationPresent_( false )
 {
-    rNbAlivedHumans_.SetDataName( "le pourcentage d'humains survivants dans" );
-    rNbAlivedHumans_.SetParentNode( *this );
-    rNbHurtedHumans1_.SetDataName( "le pourcentage d'humains blessés de niveau U1 dans" );
-    rNbHurtedHumans1_.SetParentNode( *this );
-    rNbHurtedHumans2_.SetDataName( "le pourcentage d'humains blessés de niveau U2 dans" );
-    rNbHurtedHumans2_.SetParentNode( *this );
-    rNbHurtedHumans3_.SetDataName( "le pourcentage d'humains blessés de niveau U3 dans" );
-    rNbHurtedHumans3_.SetParentNode( *this );
-    rNbHurtedHumansE_.SetDataName( "le pourcentage d'humains blessés de niveau UE dans" );
-    rNbHurtedHumansE_.SetParentNode( *this );
-    rNbDeadHumans_.SetDataName( "le pourcentage d'humains décédés dans" );
-    rNbDeadHumans_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::GetNodeName
-// Created: SBO 2006-10-30
-// -----------------------------------------------------------------------------
-std::string ADN_NBC_Datas::NbcIntoxInfos::GetNodeName()
-{
-    return nodeName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::GetItemName
-// Created: SBO 2006-10-31
-// -----------------------------------------------------------------------------
-std::string ADN_NBC_Datas::NbcIntoxInfos::GetItemName()
-{
-    return nodeName_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -94,11 +63,11 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadEffect( xml::xistream& input )
     std::transform( wound.begin(), wound.end(), wound.begin(), std::tolower );
     ADN_Type_Double* pWound =
         wound == "healthy" ? &rNbAlivedHumans_ :
-        wound == "u1"        ? &rNbHurtedHumans1_ :
-        wound == "u2"        ? &rNbHurtedHumans2_ :
-        wound == "u3"        ? &rNbHurtedHumans3_ :
-        wound == "ue"        ? &rNbHurtedHumansE_ :
-        wound == "dead"      ? &rNbDeadHumans_ :
+        wound == "u1"      ? &rNbHurtedHumans1_ :
+        wound == "u2"      ? &rNbHurtedHumans2_ :
+        wound == "u3"      ? &rNbHurtedHumans3_ :
+        wound == "ue"      ? &rNbHurtedHumansE_ :
+        wound == "dead"    ? &rNbDeadHumans_ :
         0;
     if( pWound )
     {
@@ -121,7 +90,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
     {
         input >> xml::list( "effect", *this, &ADN_NBC_Datas::NbcIntoxInfos::ReadEffect );
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw ADN_DataException( tools::translate( "NBC_Data", "Invalid data" ).toAscii().constData(), tools::translate( "NBC_Data","NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).toAscii().constData() );
+            throw ADN_DataException( tools::translate( "NBC_Data", "Invalid data" ).toAscii().constData(), tools::translate( "NBC_Data","NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( "" ).toAscii().constData() ); // $$$$ ABR 2012-11-05: TODO NODE: Give parent name
     }
     input >> xml::optional >> xml::attribute( "contamination", bContaminationPresent_ );
 }
@@ -148,7 +117,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
     if( bIntoxPresent_.GetData() )
     {
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw ADN_DataException( tools::translate( "NBC_Data","Invalid data" ).toAscii().constData(), tools::translate( "NBC_Data", "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( GetParentNode()->GetNodeName().c_str() ).toAscii().constData() );
+            throw ADN_DataException( tools::translate( "NBC_Data","Invalid data" ).toAscii().constData(), tools::translate( "NBC_Data", "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( "" ).toAscii().constData() ); // $$$$ ABR 2012-11-05: TODO NODE: Give parent name
         output << xml::attribute( "affliction", "true" )
                << xml::start( "effect" )
                 << xml::attribute( "wound", "healthy" )
@@ -188,29 +157,7 @@ ADN_NBC_Datas::NbcGazInfos::NbcGazInfos()
     , lifeTime_    ( "1s" )
     , rSpreadAngle_( 20 )
 {
-    intoxInfos_.SetParentNode( *this );
-    lifeTime_.SetDataName( "la durée de vie d'" );
-    lifeTime_.SetParentNode( *this );
-    rSpreadAngle_.SetDataName( "l'angle de propagation dû au vent d'" );
-    rSpreadAngle_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::GetNodeName
-// Created: SBO 2006-10-30
-// -----------------------------------------------------------------------------
-std::string ADN_NBC_Datas::NbcGazInfos::GetNodeName()
-{
-    return GetParentNode()->GetNodeName();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::GetItemName
-// Created: SBO 2006-10-31
-// -----------------------------------------------------------------------------
-std::string ADN_NBC_Datas::NbcGazInfos::GetItemName()
-{
-    return "";
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -255,22 +202,14 @@ void ADN_NBC_Datas::NbcGazInfos::WriteArchive( xml::xostream& output )
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , strName_()
-    , nId_( ADN_NBC_Datas::idManager_.GetNextId() )
+    : nId_( ADN_NBC_Datas::idManager_.GetNextId() )
     , liquidInfos_( "liquide" )
     , category_( "chemical" )
     , bGazPresent_( false )
     , bLiquidPresent_( false )
     , gazInfos_()
 {
-    strName_.SetDataName( "le nom d'" );
-    strName_.SetParentNode( *this );
-    liquidInfos_.SetParentNode( *this );
-    bGazPresent_.SetParentNode( *this );
-    bLiquidPresent_.SetParentNode( *this );
-    gazInfos_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -278,41 +217,14 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos( unsigned int id )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , strName_()
-    , nId_( id )
+    : nId_( id )
     , liquidInfos_( "liquide" )
     , category_( "chemical" )
     , bGazPresent_( false )
     , bLiquidPresent_( false )
     , gazInfos_()
 {
-    strName_.SetDataName( "le nom d'" );
-    strName_.SetParentNode( *this );
-    liquidInfos_.SetParentNode( *this );
-    bGazPresent_.SetParentNode( *this );
-    bLiquidPresent_.SetParentNode( *this );
-    gazInfos_.SetParentNode( *this );
     ADN_NBC_Datas::idManager_.Lock( id );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NbcAgentInfos::GetNodeName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_NBC_Datas::NbcAgentInfos::GetNodeName()
-{
-    return strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_NBC_Datas::GetItemName
-// Created: SBO 2006-10-31
-// -----------------------------------------------------------------------------
-std::string ADN_NBC_Datas::NbcAgentInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -390,7 +302,7 @@ ADN_NBC_Datas::ADN_NBC_Datas()
     , rNbcSuitMaxSpeedMultiplier_   ( 0.f )
     , rNbcSuitReloadSpeedMultiplier_( 0.f )
 {
-    vNbcAgent_.SetItemTypeName( "un agent NBC" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

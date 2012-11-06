@@ -90,7 +90,7 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
     {
         // Add the sensor to the list.
         ADN_Sensors_Data::LimitedToSensorsInfos* pNewInfo = new ADN_Sensors_Data::LimitedToSensorsInfos();
-        pNewInfo->strName_ = reinterpret_cast< ADN_Sensors_Data::LimitedToSensorsInfos* >( nMenuResult )->GetItemName();
+        pNewInfo->strName_ = reinterpret_cast< ADN_Sensors_Data::LimitedToSensorsInfos* >( nMenuResult )->strName_.GetData();
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         if( ADN_ListViewItem* item = FindItem( pNewInfo ) )

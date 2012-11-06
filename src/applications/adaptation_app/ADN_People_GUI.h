@@ -40,6 +40,7 @@ public:
         eGainPerHour,
         eHealthNeed,
         eTransferTime,
+        eSchedule,
         eConsumptions,
         eNbrGuiElements,
     };

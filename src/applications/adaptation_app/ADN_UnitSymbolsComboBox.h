@@ -27,7 +27,7 @@ class ADN_UnitSymbolsComboBox
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_UnitSymbolsComboBox( QWidget* pParent = 0, const char* szName = 0 );
+    explicit ADN_UnitSymbolsComboBox( QWidget* pParent = 0 );
     virtual ~ADN_UnitSymbolsComboBox();
     //@}
 

@@ -11,7 +11,7 @@
 #define __ADN_Drawings_Data_h_
 
 #include "ADN_Data_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Ref_ABC.h"
 #include "ADN_Types.h"
 #include "clients_kernel/Types.h"
@@ -43,8 +43,7 @@ namespace
 class ADN_Drawings_Data : public ADN_Data_ABC
 {
 public:
-    class DrawingInfo : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
+    class DrawingInfo : public ADN_RefWithName
     {
     public:
         //! @name Constructors/Destructor
@@ -55,8 +54,6 @@ public:
 
         //! @name Accessors
         //@{
-        virtual std::string GetNodeName();
-        std::string GetItemName();
         const QPixmap& GetPixmap() const;
         const std::string GetCode() const;
         const std::string GetGeometry() const;
@@ -82,12 +79,6 @@ public:
         kernel::GlTools_ABC& tools_;
         QPixmap* pixmap_;
         std::string category_;
-        //@}
-
-    public:
-        //! @name Public member data
-        //@{
-        ADN_Type_String strName_;
         //@}
     };
 

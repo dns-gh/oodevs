@@ -11,7 +11,7 @@
 #define __ADN_ActiveProtections_Data_h_
 
 #include "ADN_Data_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
@@ -29,11 +29,8 @@ class ADN_ActiveProtections_Data : public ADN_Data_ABC
 
 public:
 
-    class ActiveProtectionsInfosWeapons
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ActiveProtectionsInfosWeapons : public ADN_RefWithName
     {
-
     public:
                  ActiveProtectionsInfosWeapons();
         virtual ~ActiveProtectionsInfosWeapons() {}
@@ -43,7 +40,6 @@ public:
         void WriteArchive( xml::xostream& xos );
 
     public:
-        ADN_Type_String strName_; // To use with ADN_Tools::NameCmp
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo> ptrWeapon_;
         ADN_Type_Double coefficient_;
     };
@@ -53,11 +49,8 @@ public:
 
     //! @name Types
     //@{
-    class ActiveProtectionsInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class ActiveProtectionsInfos : public ADN_RefWithName
     {
-
     public:
                  ActiveProtectionsInfos();
         virtual ~ActiveProtectionsInfos() {}
@@ -72,7 +65,6 @@ public:
         T_ActiveProtectionsInfosWeaponsVector& GetActiveProtectionsInfosWeapons();
 
     public:
-        ADN_Type_String strName_; // To use with ADN_Tools::NameCmp
         ADN_Type_Double coefficient_;
         ADN_Type_Bool hardKill_;
         ADN_Type_Double usage_;

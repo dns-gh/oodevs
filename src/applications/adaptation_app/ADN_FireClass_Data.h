@@ -11,6 +11,7 @@
 #define __ADN_FireClass_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_ExtinguisherAgentInfos.h"
@@ -29,15 +30,11 @@ class ADN_FireClass_Data : public ADN_Data_ABC
 
 public:
     class FireInjuryInfos : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
     {
 
     public:
         explicit FireInjuryInfos( const std::string& nodeName );
         virtual ~FireInjuryInfos() {}
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void CopyFrom( FireInjuryInfos& infos );
 
@@ -54,8 +51,7 @@ public:
         ADN_Type_Int nNbDeadHumans_;
     };
 
-    class FireSurfaceInfos : public ADN_Ref_ABC
-                           , public ADN_DataTreeNode_ABC
+    class FireSurfaceInfos : public ADN_RefWithName
     {
     public:
         explicit FireSurfaceInfos( E_Location location );
@@ -68,7 +64,6 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_String strName_;
         ADN_Type_Int ignitionThreshold_;
         ADN_Type_Int maxCombustionEnergy_;
 
@@ -91,8 +86,7 @@ public:
     typedef ADN_Type_Vector_ABC< FireSurfaceInfos > T_FireSurfaceInfos_Vector;
     typedef T_FireSurfaceInfos_Vector::iterator    IT_FireSurfaceInfos_Vector;
 
-    class FireClassInfos : public ADN_Ref_ABC
-                              , public ADN_DataTreeNode_ABC
+    class FireClassInfos : public ADN_RefWithName
     {
     public:
         //! @name Constructors/Destructor
@@ -103,8 +97,6 @@ public:
 
         //! @name Operations
         //@{
-        virtual std::string GetNodeName();
-        std::string GetItemName();
         FireClassInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -122,7 +114,6 @@ public:
     public:
         //! @name Member data
         //@{
-        ADN_Type_String strName_;
         ADN_Type_Int initialHeat_;
         ADN_Type_Int maxHeat_;
         ADN_Type_Int increaseRate_;

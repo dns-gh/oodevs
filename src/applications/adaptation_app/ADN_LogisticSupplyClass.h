@@ -10,14 +10,14 @@
 #ifndef __ADN_LogisticSupplyClass_h_
 #define __ADN_LogisticSupplyClass_h_
 
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 
 namespace helpers
 {
 
-class LogisticSupplyClass : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
+class LogisticSupplyClass : public ADN_RefWithName
 {
 public:
     LogisticSupplyClass();
@@ -26,7 +26,6 @@ public:
     std::string GetItemName() { return strName_.GetData(); }
 
 public:
-    ADN_Type_String strName_;
     ADN_Type_Int nId_;
 };
 

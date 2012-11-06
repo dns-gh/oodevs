@@ -14,6 +14,7 @@
 #include <boost/shared_ptr.hpp>
 #include "ADN_CapacityInfos.h"
 #include "ADN_Drawings_Data.h"
+#include "ADN_RefWithName.h"
 
 // =============================================================================
 /** @class  ADN_Objects_Data_ObjectInfos
@@ -21,8 +22,7 @@
 */
 // Created: ABR 2011-12-06
 // =============================================================================
-class ADN_Objects_Data_ObjectInfos : public ADN_Ref_ABC
-                                   , public ADN_DataTreeNode_ABC
+class ADN_Objects_Data_ObjectInfos : public ADN_RefWithName
 {
 public:
     //! @name Constructors/Destructor
@@ -34,8 +34,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetNodeName();
-    std::string GetItemName();
     ADN_Objects_Data_ObjectInfos* CreateCopy();
     void ReadArchive( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
@@ -61,7 +59,6 @@ public:
 
     //! @name Member data
     //@{
-    ADN_Type_String strName_;
     ADN_Type_String strType_;
     ADN_Type_String description_;
     ADN_Type_Double pointSize_;

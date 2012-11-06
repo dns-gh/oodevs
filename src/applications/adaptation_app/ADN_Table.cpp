@@ -47,7 +47,7 @@ ADN_Table3::ADN_Table3( const QString& objectName, ADN_Ref_ABC& vector, QWidget*
 {
     Initialize( objectName );
 
-    pConnector_ = new ADN_Connector_Table_ABC2( *this, false, "ADN_Connector_Table" );
+    pConnector_ = new ADN_Connector_Table_ABC2( *this, false );
     pConnector_->Connect( &vector );
 }
 
@@ -62,7 +62,7 @@ ADN_Table3::ADN_Table3( const QString& objectName, ADN_Connector_ABC*& connector
 {
     Initialize( objectName );
 
-    pConnector_ = new ADN_Connector_Table_ABC2( *this, false, "ADN_Connector_Table" );
+    pConnector_ = new ADN_Connector_Table_ABC2( *this, false );
     connector = pConnector_;
 }
 
@@ -174,7 +174,7 @@ void ADN_Table3::OnCheckedStateChanged( const QStandardItem& item )
 {
     const ADN_StandardItem& adnItem = static_cast< const ADN_StandardItem& >( item );
     assert( adnItem.GetType() == ADN_StandardItem::eBool );
-    ADN_Connector_StandardItem* connector = adnItem.GetConnector();
+    ADN_Connector_StandardItem* connector = static_cast< ADN_Connector_StandardItem* >( adnItem.GetConnector() );
     if( connector )
         connector->SetDataChanged( "" );
 }

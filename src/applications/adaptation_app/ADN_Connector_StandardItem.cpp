@@ -58,7 +58,6 @@ void ADN_Connector_StandardItem::SetDataPrivate( void* data )
             item_.setData( *value, gui::Roles::DataRole );
             break;
         }
-    case ADN_StandardItem::eDelay:
     case ADN_StandardItem::eString:
         {
             std::string* text = static_cast< std::string* >( data );
@@ -82,7 +81,6 @@ void ADN_Connector_StandardItem::SetDataPrivate( void* data )
             item_.setCheckState( ( *value ) ? Qt::Checked : Qt::Unchecked );
             break;
         }
-    case ADN_StandardItem::eTime:
     case ADN_StandardItem::ePtrInVector:
     default:
         assert( 0 );
@@ -110,7 +108,6 @@ void ADN_Connector_StandardItem::SetDataChanged( const QString& text )
             emit DataChanged( &newval );
             break;
         }
-    case ADN_StandardItem::eDelay:
     case ADN_StandardItem::eString:
         {
             std::string newval = text.toStdString();
@@ -131,10 +128,9 @@ void ADN_Connector_StandardItem::SetDataChanged( const QString& text )
             emit DataChanged( &checked );
             break;
         }
-    case ADN_StandardItem::eTime:
     case ADN_StandardItem::ePtrInVector:
     default:
-        assert( false );
+        assert( 0 );
         break;
     }
 }

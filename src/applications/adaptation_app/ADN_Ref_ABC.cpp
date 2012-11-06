@@ -15,8 +15,8 @@
 // Name: ADN_Ref_ABC constructor
 // Created: JDY 03-08-25
 //-----------------------------------------------------------------------------
-ADN_Ref_ABC::ADN_Ref_ABC( const char* szName )
-    : QObject       ( 0, szName )
+ADN_Ref_ABC::ADN_Ref_ABC()
+    : QObject       ( 0 )
     , bConnecting_  ( false )
     , bSlotsBlocked_( false )
     , nRef_         ( 0 )

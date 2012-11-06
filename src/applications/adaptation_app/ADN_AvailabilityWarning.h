@@ -27,9 +27,7 @@ class xml::xostream;
 */
 // Created: SBO 2006-08-04
 // =============================================================================
-class ADN_AvailabilityWarning
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+class ADN_AvailabilityWarning : public ADN_Ref_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -40,9 +38,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetNodeName();
-    std::string GetItemName();
-
     void ReadArchive( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
     void WriteArchive( xml::xostream& output, const std::string& attribute, const std::string& value );

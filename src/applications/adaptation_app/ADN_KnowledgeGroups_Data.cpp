@@ -94,31 +94,11 @@ void ADN_KnowledgeGroups_Data::PopulationGroupInfo::WriteArchive( xml::xostream&
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_KnowledgeGroups_Data::GroupInfo::GroupInfo()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , agentInfos_        ()
+    : agentInfos_        ()
     , populationInfos_   ()
     , communicationDelay_( "0s" ) // LTO
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: GroupInfo::GetNodeName
-// Created: APE 2005-03-21
-// -----------------------------------------------------------------------------
-std::string ADN_KnowledgeGroups_Data::GroupInfo::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: GroupInfo::GetItemName
-// Created: APE 2005-03-21
-// -----------------------------------------------------------------------------
-std::string ADN_KnowledgeGroups_Data::GroupInfo::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------

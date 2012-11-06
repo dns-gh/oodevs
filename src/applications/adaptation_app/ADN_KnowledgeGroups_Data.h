@@ -11,6 +11,7 @@
 #define __ADN_KnowledgeGroups_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 
 namespace xml { class xistream; }
@@ -58,23 +59,17 @@ public:
     };
 
 // *****************************************************************************
-    class GroupInfo : public ADN_Ref_ABC
-                    , public ADN_DataTreeNode_ABC
+    class GroupInfo : public ADN_RefWithName
     {
 
     public:
         GroupInfo();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         GroupInfo* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_String     strName_;
         ADN_Type_Time       communicationDelay_; // LTO
 
         AgentGroupInfo      agentInfos_;

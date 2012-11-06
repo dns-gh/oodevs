@@ -25,7 +25,7 @@ class ADN_Connector_ABC : public ADN_Ref_ABC
     Q_OBJECT
 
 public:
-    explicit ADN_Connector_ABC( const char* szName = 0 );
+             ADN_Connector_ABC();
     virtual ~ADN_Connector_ABC();
 
     //! @name Connection

@@ -30,13 +30,9 @@ public:
 // *****************************************************************************
     template< typename T >
     class ConvoyInfo : public ADN_Ref_ABC
-                     , public ADN_DataTreeNode_ABC
     {
     public:
         explicit ConvoyInfo( typename T::BaseType value );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( const std::string& attribute, xml::xistream& input );
         void WriteArchive( const std::string& section, const std::string& attribute, xml::xostream& output );
@@ -53,7 +49,6 @@ public:
     typedef T_ConvoyDoubleInfoVector::iterator                   IT_ConvoyDoubleInfoVector;
 
     class SupplyDataInfos : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
     {
     public:
                  SupplyDataInfos();

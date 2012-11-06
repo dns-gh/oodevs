@@ -60,7 +60,7 @@ public:
         // NOTHING
     }
 
-    bool AddItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
+    bool AddItemPrivate( void* pItem )
     {
         if( pItem == 0 )
             return false;
@@ -70,7 +70,7 @@ public:
         return true;
     }
 
-    bool RemItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
+    bool RemItemPrivate( void* pItem )
     {
         graphData_.DeleteData( pItem );
         return true;
@@ -199,14 +199,14 @@ void ADN_Weapons_GUI::Build()
     builder.SetEnabled( false );
     {
         ADN_GoToButton* goToButton = new ADN_GoToButton( ::eLaunchers );
-        ADN_ComboBox_Vector< ADN_Launchers_Data::LauncherInfos >* combo = builder.AddField< ADN_ComboBox_Vector< ADN_Launchers_Data::LauncherInfos > >( pInfoHolder, tr( "Launcher" ), vInfosConnectors[ eLauncher ], 0, eNone, goToButton );
+        ADN_ComboBox_Vector* combo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Launcher" ), vInfosConnectors[ eLauncher ], 0, eNone, goToButton );
         combo->setObjectName( strClassName_ + "_Launchers" );
         goToButton->SetLinkedCombo( combo );
         builder.SetEnabled( false );
     }
     {
         ADN_GoToButton* goToButton = new ADN_GoToButton( ::eEquipement, 0 );
-        ADN_ComboBox_Vector< ADN_Equipement_Data::AmmoCategoryInfo >* combo = builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::AmmoCategoryInfo > >( pInfoHolder, tr( "Ammo" ), vInfosConnectors[eAmmo], 0, eNone, goToButton );
+        ADN_ComboBox_Vector* combo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Ammo" ), vInfosConnectors[eAmmo], 0, eNone, goToButton );
         combo->setObjectName( strClassName_ + "_Ammos" );
         goToButton->SetLinkedCombo( combo );
         builder.SetEnabled( false );

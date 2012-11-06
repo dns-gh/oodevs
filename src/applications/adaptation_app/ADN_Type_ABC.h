@@ -11,7 +11,6 @@
 #define __ADN_Type_ABC_h_
 
 #include "ADN_Connector_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
 #include <iostream>
 #include <xeumeuleu/xml.h>
 
@@ -20,7 +19,6 @@
 //*****************************************************************************
 template <class T >
 class ADN_Type_ABC : public ADN_Connector_ABC
-                   , public ADN_DataTreeNode_ABC
 {
 
 public:
@@ -46,10 +44,6 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    void SetDataName( const std::string& strName );
-    virtual std::string GetNodeName();
-    void SetUndoAvailable( bool b );
-
     virtual void Initialize( ADN_Connector_ABC& dest ) const;
     //@}
 
@@ -79,12 +73,10 @@ public:
     };
 
 protected:
-    void SetData(const T& data, bool bCanBeUndone );
-    void SetDataPrivate(void *data);
+    void SetData( const T& data );
+    void SetDataPrivate( void *data );
 
 private:
-    bool bUndoAvailable_;
-    std::string strDataName_;
     T val_;
 };
 

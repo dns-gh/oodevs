@@ -19,43 +19,14 @@
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
 ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos( const std::string& nodeName )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , nodeName_      ( nodeName )
+    : nodeName_      ( nodeName )
     , nNbHurtHumans1_( 0 )
     , nNbHurtHumans2_( 0 )
     , nNbHurtHumans3_( 0 )
     , nNbHurtHumansE_( 0 )
     , nNbDeadHumans_ ( 0 )
 {
-    nNbHurtHumans1_.SetDataName( "le pourcentage d'humains blessés de niveau U1 dans" );
-    nNbHurtHumans1_.SetParentNode( *this );
-    nNbHurtHumans2_.SetDataName( "le pourcentage d'humains blessés de niveau U2 dans" );
-    nNbHurtHumans2_.SetParentNode( *this );
-    nNbHurtHumans3_.SetDataName( "le pourcentage d'humains blessés de niveau U3 dans" );
-    nNbHurtHumans3_.SetParentNode( *this );
-    nNbHurtHumansE_.SetDataName( "le pourcentage d'humains blessés de niveau UE dans" );
-    nNbHurtHumansE_.SetParentNode( *this );
-    nNbDeadHumans_.SetDataName( "le pourcentage d'humains décédés dans" );
-    nNbDeadHumans_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireInjuryInfos::GetNodeName
-// Created: JSR 2010-12-02
-// -----------------------------------------------------------------------------
-std::string ADN_FireClass_Data::FireInjuryInfos::GetNodeName()
-{
-    return nodeName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireInjuryInfos::GetItemName
-// Created: JSR 2010-12-02
-// -----------------------------------------------------------------------------
-std::string ADN_FireClass_Data::FireInjuryInfos::GetItemName()
-{
-    return nodeName_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +75,7 @@ void ADN_FireClass_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::list( "injury", *this, &ADN_FireClass_Data::FireInjuryInfos::ReadInjury );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toAscii().constData(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( GetParentNode()->GetNodeName().c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toAscii().constData(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( "" ).toAscii().constData() ); // $$$$ ABR 2012-11-05: TODO NODE: Give parent name
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +86,7 @@ void ADN_FireClass_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "injuries" );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toAscii().constData(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( GetParentNode()->GetNodeName().c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toAscii().constData(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( "" ).toAscii().constData() ); // $$$$ ABR 2012-11-05: TODO NODE: Give parent name
     output  << xml::start( "injury" )
                 << xml::attribute( "type", "u1" )
                 << xml::attribute( "percentage", nNbHurtHumans1_.GetData() / 100. )
@@ -144,16 +115,11 @@ void ADN_FireClass_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
 // Created: JSR 2010-12-03
 // -----------------------------------------------------------------------------
 ADN_FireClass_Data::FireSurfaceInfos::FireSurfaceInfos( E_Location location )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , strName_            ( ENT_Tr::ConvertFromLocation( location ) )
+    : ADN_RefWithName( ENT_Tr::ConvertFromLocation( location ) )
     , ignitionThreshold_  ( 0 )
     , maxCombustionEnergy_( 0 )
 {
-    ignitionThreshold_.SetDataName( "le seuil d'ignition dans" );
-    ignitionThreshold_.SetParentNode( *this );
-    maxCombustionEnergy_.SetDataName( "l'énergie de combustion maximale dans" );
-    maxCombustionEnergy_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -214,21 +180,11 @@ ADN_FireClass_Data::FireClassInfos::FireClassInfos()
     , isSurface_       ( false )
     , surfaceInfos_    ( "surfaces" )
 {
-    agents_.SetParentNode( *this );
-    initialHeat_.SetParentNode( *this );
-    maxHeat_.SetParentNode( *this );
-    increaseRate_.SetParentNode( *this );
-    decreaseRate_.SetParentNode( *this );
-    injuryInfos_.SetParentNode( *this );
-    weatherEffects_.SetParentNode( *this );
     for( int i= 0 ; i< eNbrSensorWeatherModifiers ; ++i)
     {
         ADN_WeatherFireEffects* pEffect = new ADN_WeatherFireEffects((E_SensorWeatherModifiers)i);
         weatherEffects_.AddItem( pEffect );
     }
-
-    isSurface_.SetParentNode( *this );
-    surfaceInfos_.SetParentNode( *this );
 
      for( int i = 0; i < eNbrLocation; ++i )
          surfaceInfos_.AddItem( new FireSurfaceInfos( E_Location( i ) ) );
@@ -241,25 +197,6 @@ ADN_FireClass_Data::FireClassInfos::FireClassInfos()
 ADN_FireClass_Data::FireClassInfos::~FireClassInfos()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::GetNodeName
-// Created: JSR 2010-12-01
-// -----------------------------------------------------------------------------
-std::string ADN_FireClass_Data::FireClassInfos::GetNodeName()
-{
-    std::string strResult( "de la classe d'incendie " );
-    return strResult + strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_FireClass_Data::FireClassInfos::GetItemName
-// Created: JSR 2010-12-01
-// -----------------------------------------------------------------------------
-std::string ADN_FireClass_Data::FireClassInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------

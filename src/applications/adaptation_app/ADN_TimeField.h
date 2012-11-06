@@ -18,6 +18,8 @@ class ADN_TimeField_EditLine;
 class QComboBox;
 class ADN_IntValidator;
 
+// $$$$ ABR 2012-11-05: This class should be rename in ADN_DelayEdit
+
 // =============================================================================
 // Created: SBO 2005-09-09
 // =============================================================================

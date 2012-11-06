@@ -23,7 +23,7 @@ class ADN_StandardItem;
 class ADN_Connector_ListView_ABC : public ADN_Connector_Vector_ABC
 {
 public:
-    explicit ADN_Connector_ListView_ABC( ADN_ListView& list, const char* szName = 0 );
+    explicit ADN_Connector_ListView_ABC( ADN_ListView& list );
     virtual ~ADN_Connector_ListView_ABC();
 
     bool IsConnected() const;
@@ -33,8 +33,8 @@ protected:
     virtual void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
 
     virtual void SetDataPrivate( void* data );
-    virtual bool AddItemPrivate( void* obj, bool bCreateCommand = false );
-    virtual bool RemItemPrivate( void* item, bool bCreateCommand = false );
+    virtual bool AddItemPrivate( void* obj );
+    virtual bool RemItemPrivate( void* item );
     virtual void SwapItemPrivate( int i, int j );
     virtual void ClearPrivate( bool bInConnection = false );
 

@@ -17,29 +17,11 @@ using namespace helpers;
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
 ADN_UrbanAttritionInfos::ADN_UrbanAttritionInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-    : ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
+    : ADN_RefWithName( *ptr )
+    , ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
     , rCoeff_     ( 0. )
-    , strName_    ( ptrMaterial_.GetData()->strName_ )
 {
     BindExistenceTo( &ptrMaterial_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_UrbanAttritionInfos::GetNodeName
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-std::string ADN_UrbanAttritionInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_UrbanAttritionInfos::GetItemName
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-std::string ADN_UrbanAttritionInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------

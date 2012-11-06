@@ -47,6 +47,18 @@ void CommonDelegate::CreatePosition( unsigned int id, int fromRow, int toRow, in
 }
 
 // -----------------------------------------------------------------------------
+// Name: CommonDelegate::AddSimpleWidget
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int CommonDelegate::AddSimpleWidget( int fromRow, int toRow, int fromCol, int toCol, T_SimpleWidget& vector )
+{
+    unsigned int id = GetNewId();
+    CreatePosition( id, fromRow, toRow, fromCol, toCol );
+    vector.push_back( id );
+    return id;
+}
+
+// -----------------------------------------------------------------------------
 // Name: CommonDelegate::AddSpinBox
 // Created: ABR 2011-10-11
 // -----------------------------------------------------------------------------
@@ -88,10 +100,7 @@ unsigned int CommonDelegate::AddComboBox( int fromRow, int toRow, int fromCol, i
 // -----------------------------------------------------------------------------
 unsigned int CommonDelegate::AddLineEdit( int fromRow, int toRow, int fromCol, int toCol )
 {
-    unsigned int id = GetNewId();
-    CreatePosition( id, fromRow, toRow, fromCol, toCol );
-    lineEdits_.push_back( id );
-    return id;
+    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, lineEdits_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,12 +109,8 @@ unsigned int CommonDelegate::AddLineEdit( int fromRow, int toRow, int fromCol, i
 // -----------------------------------------------------------------------------
 unsigned int CommonDelegate::AddCheckBox( int fromRow, int toRow, int fromCol, int toCol )
 {
-    unsigned int id = GetNewId();
-    CreatePosition( id, fromRow, toRow, fromCol, toCol );
-    checkBoxs_.push_back( id );
-    return id;
+    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, checkBoxs_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: CommonDelegate::SetSpinBoxMinMax

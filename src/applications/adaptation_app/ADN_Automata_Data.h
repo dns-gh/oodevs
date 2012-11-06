@@ -11,6 +11,7 @@
 #define __ADN_Automata_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Units_Data.h"
@@ -27,16 +28,11 @@ class ADN_Automata_Data : public ADN_Data_ABC
 
 public:
 // *****************************************************************************
-    class UnitInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class UnitInfos : public ADN_Ref_ABC
     {
 
     public:
         UnitInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         UnitInfos* CreateCopy();
 
@@ -45,25 +41,19 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;
-        ADN_Type_Int                                     min_;
-        ADN_Type_Int                                     max_;
+        ADN_Type_Int min_;
+        ADN_Type_Int max_;
     };
 
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<UnitInfos>, UnitInfosVector );
 
 // *****************************************************************************
-    class AutomatonInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class AutomatonInfos : public ADN_RefWithName
     {
-
     public:
         AutomatonInfos();
         AutomatonInfos( unsigned int id );
         ~AutomatonInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         AutomatonInfos* CreateCopy();
 
@@ -74,7 +64,6 @@ public:
 
     public:
         ADN_Type_Int                                          nId_;
-        ADN_Type_String                                       strName_;
         ADN_Type_Enum<E_AgentTypeAutomate,eNbrAgentTypeAutomate> nAgentType_;
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos> ptrModel_;
         T_UnitInfosVector                                     vSubUnits_;

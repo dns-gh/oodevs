@@ -46,31 +46,33 @@ public:
     static const std::string& ConvertFromConstructorType( E_ConstructorType, E_Conversion = eToSim );
     static const std::string& ConvertFromPropagationModel( E_PropagationModel, E_Conversion = eToSim );
     static const std::string& ConvertFromWorkspaceElement( E_WorkspaceElements, E_Conversion = eToTr );
+    static const std::string& ConvertFromDays( E_Days, E_Conversion = eToTr );
     //@}
 
     //! @name Convert To functions
     //@{
-    static E_ConsumptionType ConvertToConsumptionType  ( const std::string& );
-    static E_VisionObject    ConvertToVisionObject     ( const std::string& );
-    static E_KeyPoint        ConvertToKeyPoint         ( const std::string& );
-    static E_AgentTypePion   ConvertToAgentTypePion    ( const std::string& );
-    static E_AgentTypeAutomate   ConvertToAgentTypeAutomate( const std::string& );
-    static E_NatureAtlasType ConvertToNatureAtlasType  ( const std::string& );
-    static E_SpeedImpact     ConvertToSpeedImpact      ( const std::string& );
-    static E_CrossingHeight  ConvertToCrossingHeight   ( const std::string& );
-    static E_SensorWeatherModifiers ConvertToSensorWeatherModifiers( const std::string& );
-    static E_DoctorSkills    ConvertToDoctorSkills     ( const std::string& );
-    static E_ProtectionType  ConvertToProtectionType   ( const std::string& );
-    static E_BreakdownType   ConvertToBreakdownType    ( const std::string& );
-    static E_BreakdownNTI    ConvertToBreakdownNTI     ( const std::string& );
-    static E_RadarType       ConvertToRadarType        ( const std::string& );
-    static E_EquipmentState_ADN ConvertToEquipmentState_ADN( const std::string& );
+    static E_ConsumptionType         ConvertToConsumptionType  ( const std::string& );
+    static E_VisionObject            ConvertToVisionObject     ( const std::string& );
+    static E_KeyPoint                ConvertToKeyPoint         ( const std::string& );
+    static E_AgentTypePion           ConvertToAgentTypePion    ( const std::string& );
+    static E_AgentTypeAutomate       ConvertToAgentTypeAutomate( const std::string& );
+    static E_NatureAtlasType         ConvertToNatureAtlasType  ( const std::string& );
+    static E_SpeedImpact             ConvertToSpeedImpact      ( const std::string& );
+    static E_CrossingHeight          ConvertToCrossingHeight   ( const std::string& );
+    static E_SensorWeatherModifiers  ConvertToSensorWeatherModifiers( const std::string& );
+    static E_DoctorSkills            ConvertToDoctorSkills     ( const std::string& );
+    static E_ProtectionType          ConvertToProtectionType   ( const std::string& );
+    static E_BreakdownType           ConvertToBreakdownType    ( const std::string& );
+    static E_BreakdownNTI            ConvertToBreakdownNTI     ( const std::string& );
+    static E_RadarType               ConvertToRadarType        ( const std::string& );
+    static E_EquipmentState_ADN      ConvertToEquipmentState_ADN( const std::string& );
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
-    static E_MissionParameterType ConvertToMissionParameterType( const std::string& );
-    static E_SupplyConvoyType   ConvertToSupplyConvoyType( const std::string& );
+    static E_MissionParameterType    ConvertToMissionParameterType( const std::string& );
+    static E_SupplyConvoyType        ConvertToSupplyConvoyType( const std::string& );
     static E_ConstructorType         ConvertToConstructorType( const std::string& );
     static E_PropagationModel        ConvertToPropagationModel( const std::string& );
     static E_WorkspaceElements       ConvertToWorkspaceElements( const std::string& );
+    static E_Days                    ConvertToDays( const std::string& );
     //@}
 
     //! @name Initializer
@@ -81,28 +83,29 @@ public:
 public:
     //! @name Types
     //@{
-    typedef converter<E_Location>                   T_ConverterLocation;
-    typedef converter<E_ConsumptionType>            T_ConverterConsumptionType;
-    typedef converter<E_VisionObject>               T_ConverterVisionObject;
-    typedef converter<E_KeyPoint>                   T_ConverterKeyPoint;
-    typedef converter<E_AgentTypePion>              T_ConverterAgentTypePion;
-    typedef converter<E_AgentTypeAutomate>          T_ConverterAgentTypeAutomate;
-    typedef converter<E_NatureAtlasType>            T_ConverterNatureAtlasType;
-    typedef converter<E_SpeedImpact>                T_ConverterSpeedImpact;
-    typedef converter<E_CrossingHeight>             T_ConverterCrossingHeight;
-    typedef converter<E_SensorWeatherModifiers>     T_ConverterSensorWeatherModifiers;
-    typedef converter<E_DoctorSkills>               T_ConverterDoctorSkills;
-    typedef converter<E_ProtectionType>             T_ConverterProtectionType;
-    typedef converter<E_BreakdownType>              T_ConverterBreakdownType;
-    typedef converter<E_BreakdownNTI>               T_ConverterBreakdownNTI;
-    typedef converter<E_RadarType>                  T_ConverterRadarType;
-    typedef converter<E_EquipmentState_ADN>         T_ConverterEquipmentState;
-    typedef converter<E_TypeMunitionTirIndirect>    T_ConverterTypeMunitionTirIndirect;
-    typedef converter<E_MissionParameterType>       T_ConverterMissionParameterType;
-    typedef converter<E_SupplyConvoyType>           T_ConverterSupplyConvoyType;
-    typedef converter< E_ConstructorType >         T_ConverterConstructorType;
-    typedef converter< E_PropagationModel >        T_ConverterPropagationModel;
-    typedef converter< E_WorkspaceElements >       T_ConverterWorkspaceElements;
+    typedef converter< E_Location >                 T_ConverterLocation;
+    typedef converter< E_ConsumptionType >          T_ConverterConsumptionType;
+    typedef converter< E_VisionObject >             T_ConverterVisionObject;
+    typedef converter< E_KeyPoint >                 T_ConverterKeyPoint;
+    typedef converter< E_AgentTypePion >            T_ConverterAgentTypePion;
+    typedef converter< E_AgentTypeAutomate >        T_ConverterAgentTypeAutomate;
+    typedef converter< E_NatureAtlasType >          T_ConverterNatureAtlasType;
+    typedef converter< E_SpeedImpact >              T_ConverterSpeedImpact;
+    typedef converter< E_CrossingHeight >           T_ConverterCrossingHeight;
+    typedef converter< E_SensorWeatherModifiers >   T_ConverterSensorWeatherModifiers;
+    typedef converter< E_DoctorSkills >             T_ConverterDoctorSkills;
+    typedef converter< E_ProtectionType >           T_ConverterProtectionType;
+    typedef converter< E_BreakdownType >            T_ConverterBreakdownType;
+    typedef converter< E_BreakdownNTI >             T_ConverterBreakdownNTI;
+    typedef converter< E_RadarType >                T_ConverterRadarType;
+    typedef converter< E_EquipmentState_ADN >       T_ConverterEquipmentState;
+    typedef converter< E_TypeMunitionTirIndirect >  T_ConverterTypeMunitionTirIndirect;
+    typedef converter< E_MissionParameterType >     T_ConverterMissionParameterType;
+    typedef converter< E_SupplyConvoyType >         T_ConverterSupplyConvoyType;
+    typedef converter< E_ConstructorType >          T_ConverterConstructorType;
+    typedef converter< E_PropagationModel >         T_ConverterPropagationModel;
+    typedef converter< E_WorkspaceElements >        T_ConverterWorkspaceElements;
+    typedef converter< E_Days >                     T_ConverterDays;
     //@}
 
     //! @name Converters
@@ -125,9 +128,10 @@ public:
     static T_ConverterTypeMunitionTirIndirect munitionTirIndirectConverter_ [];
     static T_ConverterMissionParameterType missionParameterTypeConverter_ [];
     static T_ConverterSupplyConvoyType  supplyConvoyTypeConverter_[];
-    static T_ConverterConstructorType         constructorTypeConverter_[];
-    static T_ConverterPropagationModel        propagationModelConverter_[];
-    static T_ConverterWorkspaceElements       workspaceElementsConverter_[];
+    static T_ConverterConstructorType   constructorTypeConverter_[];
+    static T_ConverterPropagationModel  propagationModelConverter_[];
+    static T_ConverterWorkspaceElements workspaceElementsConverter_[];
+    static T_ConverterDays              daysConverter_[];
     //@}
 };
 

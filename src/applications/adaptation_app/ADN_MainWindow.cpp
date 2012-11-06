@@ -33,7 +33,6 @@
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
-#include "qtundo.h"
 #include <shlobj.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -230,7 +229,6 @@ void ADN_MainWindow::Build()
     }
 
     connect( pCoheranceTablesMenu_, SIGNAL( activated( int ) ), this, SLOT( ShowCoheranceTable( int ) ) );
-    connect( &workspace_.GetUndoStack(), SIGNAL( cleanChanged(bool) ), this, SLOT( ChangeSaveState(bool) ) );
 }
 
 // -----------------------------------------------------------------------------

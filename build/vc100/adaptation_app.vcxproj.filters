@@ -275,18 +275,6 @@
     <Filter Include="Source Files\Workspace\Drawings\GUI">
       <UniqueIdentifier>{a0aa9113-e72c-42ed-8591-3b26acaec938}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Undo &amp; redo">
-      <UniqueIdentifier>{9536a758-3cf5-4f2e-8bdc-945ec75e12c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Undo &amp; redo\qt undo pattern">
-      <UniqueIdentifier>{18d254ac-ee45-4cb3-893f-5af5148ab1bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Undo &amp; redo\change value">
-      <UniqueIdentifier>{45ad8a5a-b815-4bd2-9b66-22797f6680e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Undo &amp; redo\vector commands">
-      <UniqueIdentifier>{c0c0a083-a47a-4294-8ffa-6f6018cc1389}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\open mode dialog">
       <UniqueIdentifier>{edbd886b-23e1-408f-bf88-9f60dcbbae86}</UniqueIdentifier>
     </Filter>
@@ -430,9 +418,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Type_Repartition.cpp">
       <Filter>Source Files\Common types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataTreeNode_ABC.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DialogLog.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -455,9 +440,6 @@
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tr_Gen.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DataException.cpp">
@@ -982,36 +964,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Drawings_GUI.cpp">
       <Filter>Source Files\Workspace\Drawings\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\qtundo.cpp">
-      <Filter>Source Files\Undo &amp; redo\qt undo pattern</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Bool.cpp">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Double.cpp">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Enum.cpp">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Helper.cpp">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Int.cpp">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Pointer.cpp">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_String.cpp">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AddElementCommand.cpp">
-      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RemoveElementCommand.cpp">
-      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_OpenMode_Dialog.cpp">
       <Filter>Source Files\open mode dialog</Filter>
     </ClCompile>
@@ -1253,7 +1205,13 @@
       <Filter>Source Files\Common widgets\Combo box</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_StandardItem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TimeEdit.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.cpp">
+      <Filter>Source Files\Common widgets\Combo box</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1294,9 +1252,6 @@
       <Filter>Source Files\Common types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Callback.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DataTreeNode_ABC.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DialogLog.h">
@@ -1680,21 +1635,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Drawings_GUI.h">
       <Filter>Source Files\Workspace\Drawings\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Enum.h">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Helper.h">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Pointer.h">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_AddElementCommand.h">
-      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_RemoveElementCommand.h">
-      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_OpenMode_Dialog.h">
       <Filter>Source Files\open mode dialog</Filter>
     </ClInclude>
@@ -1905,7 +1845,12 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Combo.h">
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_StandardItem.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_StandardItem.h">
+      <Filter>Source Files\Common widgets\Standard Connectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_RefWithName.h">
+      <Filter>Source Files\Common types</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Postures_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClInclude>
@@ -1938,18 +1883,6 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Drawings.inl">
       <Filter>Source Files\Workspace\Drawings\GUI</Filter>
     </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Enum.inl">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Pointer.inl">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_AddElementCommand.inl">
-      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_RemoveElementCommand.inl">
-      <Filter>Source Files\Undo &amp; redo\vector commands</Filter>
-    </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_Connector_Bool.inl">
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </None>
@@ -1967,9 +1900,6 @@
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_TableItem_Edit.inl">
       <Filter>Source Files\Common widgets\Table</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.inl">
-      <Filter>Source Files\Common widgets\Combo box</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_EditLine.inl">
       <Filter>Source Files\Common widgets\Edit line</Filter>
@@ -2163,21 +2093,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_FireClass_GUI.h">
       <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\qtundo.h">
-      <Filter>Source Files\Undo &amp; redo\qt undo pattern</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Bool.h">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Double.h">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_Int.h">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ChangeValueCommand_String.h">
-      <Filter>Source Files\Undo &amp; redo\change value</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\GQ_Plot.h">
       <Filter>Source Files\GQ</Filter>
     </CustomBuild>
@@ -2303,6 +2218,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_MissionTypes.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TimeEdit.h">
+      <Filter>Source Files\Common widgets</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@
 #define __ADN_UrbanAttritionInfos_h_
 
 #include "ADN_Urban_Data.h"
+#include "ADN_RefWithName.h"
 
 namespace helpers
 {
@@ -21,8 +22,7 @@ namespace helpers
 */
 // Created: JSR 2010-12-02
 // =============================================================================
-class ADN_UrbanAttritionInfos : public ADN_Ref_ABC
-                              , public ADN_DataTreeNode_ABC
+class ADN_UrbanAttritionInfos : public ADN_RefWithName
 {
 
 public:
@@ -34,8 +34,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetNodeName();
-    virtual std::string GetItemName();
     virtual void CopyFrom( ADN_UrbanAttritionInfos& attritions );
     virtual void ReadArchive( xml::xistream& );
     virtual void WriteArchive( xml::xostream&, const std::string& tag = "urban-modifier" );
@@ -46,7 +44,6 @@ public:
     //@{
     ADN_TypePtr_InVector_ABC< ADN_Urban_Data::UrbanMaterialInfos > ptrMaterial_;
     ADN_Type_Double rCoeff_;
-    ADN_Type_String& strName_;
     //@}
 
 public:

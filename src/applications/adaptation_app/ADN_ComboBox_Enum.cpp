@@ -14,11 +14,11 @@
 // Name: ADN_ComboBox_Enum constructor
 // Created: JDY 03-08-29
 //-----------------------------------------------------------------------------
-ADN_ComboBox_Enum::ADN_ComboBox_Enum( QWidget* parent, const char * name )
-    : ADN_ComboBox( parent, name )
+ADN_ComboBox_Enum::ADN_ComboBox_Enum( QWidget* parent )
+    : ADN_ComboBox( parent )
 {
-    pConnector_ = new ADN_Connector_EnumComboBox(this);
-    assert(pConnector_);
+    pConnector_ = new ADN_Connector_EnumComboBox( this );
+    assert( pConnector_ );
 }
 
 //-----------------------------------------------------------------------------

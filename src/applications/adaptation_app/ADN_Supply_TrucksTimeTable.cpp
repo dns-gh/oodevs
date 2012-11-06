@@ -39,7 +39,7 @@ ADN_Supply_TrucksTimeTable::ADN_Supply_TrucksTimeTable( const QString& objectNam
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
     delegate_.AddSpinBoxOnColumn( 0, 1, INT_MAX );
-    delegate_.AddDelayEditorOnColumn( 1 );
+    delegate_.AddDelayEditOnColumn( 1 );
 }
 
 // -----------------------------------------------------------------------------

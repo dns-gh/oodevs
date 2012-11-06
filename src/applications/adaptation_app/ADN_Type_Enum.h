@@ -11,7 +11,6 @@
 #define __ADN_Type_Enum_h_
 
 #include "ADN_Connector_Vector_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
 #include "ENT/ENT_Tr_ABC.h"
 #include "ADN_Tr.h"
 #include "ADN_ComboBox.h"
@@ -21,7 +20,6 @@
 //*****************************************************************************
 template< class T, int nb >
 class ADN_Type_Enum : public ADN_Connector_ABC
-                    , public ADN_DataTreeNode_ABC
 {
 public:
     typedef typename const std::string& (*T_Converter)( T, ENT_Tr_ABC::E_Conversion );
@@ -36,7 +34,6 @@ public:
     //@{
     const T GetData() const;
     virtual void Initialize( ADN_Connector_ABC& dest ) const;
-    virtual std::string GetNodeName();
     //@}
 
     //-------------------------------------------------------------------------
@@ -51,22 +48,20 @@ public:
     bool          operator !=(const T& val) const;
     //@}
 
+    void SetAlphabeticalSort( bool sort );
     static void SetConverter( typename ADN_Type_Enum::T_Converter enumConverter );
     const std::string& Convert( ENT_Tr_ABC::E_Conversion nConversion = ENT_Tr_ABC::eToSim ) const;
-    void SetDataName( const std::string& strName );
 
 protected:
-    virtual void SetDataPrivate(void *data);
-            void SetDataPrivate(const T& value, bool bCanBeUndone );
+    virtual void SetDataPrivate( void *data );
+            void SetDataPrivate( const T& value );
 
 private:
     explicit ADN_Type_Enum(const ADN_Type_Enum& e);
 
 private:
-
-    std::string strDataName_;
-    T           data_;
-
+    bool sortAlphabetically_;
+    T data_;
     static T_Converter converter_;
 };
 

@@ -38,7 +38,7 @@
 // Created: MMC 2011-07-07
 // -----------------------------------------------------------------------------
 ADN_UnitSymbols_Data::UnitSymbolInfo::UnitSymbolInfo( const std::string& name, const std::string& symbol )
-    : strName_ ( name )
+    : ADN_RefWithName( name )
     , fileName_( symbol )
     , guiSvgRender_( new gui::SvglRenderer() )
     , symbols_( new gui::GLSymbols( *guiSvgRender_ ) )
@@ -62,24 +62,6 @@ ADN_UnitSymbols_Data::UnitSymbolInfo::UnitSymbolInfo( const std::string& name, c
 ADN_UnitSymbols_Data::UnitSymbolInfo::~UnitSymbolInfo()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_UnitSymbols_Data::SymbolInfo::GetNodeName
-// Created: MMC 2011-07-07
-// -----------------------------------------------------------------------------
-std::string ADN_UnitSymbols_Data::UnitSymbolInfo::GetNodeName()
-{
-    return strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_UnitSymbols_Data::SymbolInfo::GetItemName
-// Created: MMC 2011-07-07
-// -----------------------------------------------------------------------------
-std::string ADN_UnitSymbols_Data::UnitSymbolInfo::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------

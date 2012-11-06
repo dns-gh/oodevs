@@ -56,7 +56,7 @@ void ADN_People_GUI::Build()
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::ePopulation );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pInfoHolder, tr( "Associated Crowd" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Associated Crowd" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Angry crowd mission" ), vInfosConnectors[ eAngryCrowdMission ] );
     // repartition
     Q3GroupBox* pRepartition = new Q3GroupBox( 3, Qt::Horizontal, tr( "Distribution" ) );
@@ -79,8 +79,8 @@ void ADN_People_GUI::Build()
     // Schedule
     Q3GroupBox* pScheduleGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Moving weekly schedule" ) );
     builder.AddField< ADN_TimeField >( pScheduleGroup, tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
-    ADN_Schedule_Table* pTable = new ADN_Schedule_Table( pScheduleGroup );
-    pTable->setObjectName( strClassName_ + "_ScheduleTable" );
+
+    ADN_Schedule_Table* pTable = new ADN_Schedule_Table( strClassName_ + "_ScheduleTable", vInfosConnectors[ eSchedule ], pScheduleGroup );
 
     // Consumptions
     Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );

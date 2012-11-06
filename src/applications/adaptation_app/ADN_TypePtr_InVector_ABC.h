@@ -12,14 +12,12 @@
 
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_Type_Vector_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-18
 //*****************************************************************************
 template <class T>
 class ADN_TypePtr_InVector_ABC : public ADN_Connector_Vector_ABC
-                               , public ADN_DataTreeNode_ABC
 {
 
 public:
@@ -27,9 +25,9 @@ public:
     typedef typename ADN_Type_Vector_ABC<T>  T_TypeVector;
 
 public:
-    explicit ADN_TypePtr_InVector_ABC( const char* szName = 0 );
-    explicit ADN_TypePtr_InVector_ABC( const T_TypePtr& value, const char* szName = 0 );
-    explicit ADN_TypePtr_InVector_ABC( T_TypeVector& v, const T_TypePtr& value, const char* szName = 0 );
+             ADN_TypePtr_InVector_ABC();
+    explicit ADN_TypePtr_InVector_ABC( const T_TypePtr& value );
+    explicit ADN_TypePtr_InVector_ABC( T_TypeVector& v, const T_TypePtr& value );
     virtual ~ADN_TypePtr_InVector_ABC();
 
     //-------------------------------------------------------------------------
@@ -39,15 +37,11 @@ public:
     virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
     virtual void Initialize( ADN_Connector_ABC& dest ) const;
 
-    void SetData(const T_TypePtr& value, bool bCanBeUndone );
+    void SetData(const T_TypePtr& value );
     const T_TypePtr GetData() const;
 
     void          SetVector(const T_TypeVector& v);
     T_TypeVector& GetVector();
-
-    virtual std::string GetNodeName();
-    void SetNodeName( const char* szName );  // $$$$ AGN 2004-05-14: const char* car si on utilise
-                                             // un const std::string& on a une FATAL INTERNAL COMPILER ERROR.
     //@}
 
     //-------------------------------------------------------------------------
@@ -66,11 +60,10 @@ protected:
 
     virtual void  SetDataPrivate(void *data);
     virtual void  InvalidatePrivate( void *ptr ,bool bDel=false);
-    virtual bool  AddItemPrivate(void *item,bool bCreateCommand = false );
-    virtual bool  RemItemPrivate(void *item, bool bCreateCommand = false );
+    virtual bool  AddItemPrivate(void *item );
+    virtual bool  RemItemPrivate(void *item );
 
 private:
-    std::string     strDataName_;
     T_TypePtr       pData_;
     T_TypeVector*   pVector_;
 };

@@ -20,10 +20,10 @@ LogisticSupplyClass::LogisticSupplyClass()
 // Created: RPD 2010-10-29
 // -----------------------------------------------------------------------------
 LogisticSupplyClass::LogisticSupplyClass( const std::string& name, int id )
-    : strName_( name )
+    : ADN_RefWithName( name )
     , nId_( id )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

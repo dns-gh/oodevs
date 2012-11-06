@@ -842,7 +842,10 @@ void ADN_ListView::GoToOnDoubleClicked( const QModelIndex& index )
 {
     if( !index.isValid() )
         return;
-    goToInfo_.targetName_ = dataModel_.itemFromIndex( index )->text();
+    QStandardItem* item = dataModel_.GetItemFromIndex( index );
+    if( !item )
+        return;
+    goToInfo_.targetName_ = item->text();
     assert( goToInfo_.targetTab_ != eNbrWorkspaceElements );
     emit( GoToRequested( goToInfo_ ) );
 }

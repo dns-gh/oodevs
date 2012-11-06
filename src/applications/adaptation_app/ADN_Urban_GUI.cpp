@@ -167,7 +167,7 @@ void ADN_Urban_GUI::Build()
         QWidget* pHolder = builder.AddFieldHolder( pGroupInfrastructure );
 
         builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );
-        builder.AddField< ADN_ComboBox_Vector< ADN_Symbols_Data::SymbolsInfra > >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
+        builder.AddField< ADN_ComboBox_Vector >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
 
         ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), pGroupInfrastructures );
         medical->setObjectName( strClassName_ + "_Medical" );
@@ -208,8 +208,8 @@ void ADN_Urban_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( pArchitectureBox2, tr( "Trafficability" ), vUsageInfosConnectors[ eUrbanUsageTrafficability ], 0, eGreaterEqualZero );
         Q3HBox* pArchitectureBox3 = new Q3HBox( pArchitecture );
         pArchitectureBox3->setSpacing( 10 );
-        builder.AddField< ADN_ComboBox_Vector< ADN_Urban_Data::UrbanMaterialInfos > >( pArchitectureBox3, tr( "Material" ), vUsageInfosConnectors[ eUrbanUsageMaterial ] );
-        builder.AddField< ADN_ComboBox_Vector< ADN_Urban_Data::RoofShapeInfos > >( pArchitectureBox3, tr( "Roof shape" ), vUsageInfosConnectors[ eUrbanUsageRoofShape ] );
+        builder.AddField< ADN_ComboBox_Vector >( pArchitectureBox3, tr( "Material" ), vUsageInfosConnectors[ eUrbanUsageMaterial ] );
+        builder.AddField< ADN_ComboBox_Vector >( pArchitectureBox3, tr( "Roof shape" ), vUsageInfosConnectors[ eUrbanUsageRoofShape ] );
         pUsages_ = new ADN_Template_Usages( pGroupTemplate );
         pUsages_->setObjectName( strClassName_ + "_Usages" );
         vUsageInfosConnectors[ eUrbanUsageRole ] = &pUsages_->GetConnector();

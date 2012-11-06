@@ -11,6 +11,7 @@
 #define ADAPTATION_ADN_MISSIONS_FRAGORDER_H
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "ADN_Missions_ParameterValue.h"
@@ -22,8 +23,7 @@ namespace xml
     class xostream;
 }
 
-class ADN_Missions_FragOrder : public ADN_Ref_ABC
-                             , public ADN_DataTreeNode_ABC
+class ADN_Missions_FragOrder : public ADN_RefWithName
 {
 public:
     typedef ADN_Type_Vector_ABC<ADN_Missions_Parameter>       T_MissionParameter_Vector;
@@ -47,7 +47,6 @@ public:
 
 public:
     ADN_Type_Int              id_;
-    ADN_Type_String           strName_;
     T_MissionParameter_Vector parameters_;
     ADN_Type_String           diaType_;
     ADN_Type_Bool             isAvailableWithoutMission_;

@@ -13,13 +13,13 @@
 #define __ADN_Sensors_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Urban_Data.h"
-#include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Radars_Data.h"
 
 //*****************************************************************************
@@ -30,23 +30,15 @@ class ADN_Sensors_Data : public ADN_Data_ABC
 public:
 // LTO begin
 //*****************************************************************************
-    class LimitedToSensorsInfos : public ADN_Ref_ABC
-                                , public ADN_DataTreeNode_ABC
+    class LimitedToSensorsInfos : public ADN_RefWithName
     {
     public:
                  LimitedToSensorsInfos();
         virtual ~LimitedToSensorsInfos();
 
-        std::string GetItemName();
         LimitedToSensorsInfos* CreateCopy();
-
-        std::string GetNodeName();
-
         void ReadArchive ( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
-
-    public:
-        ADN_Type_String strName_;
     };
 
     typedef ADN_Type_Vector_ABC<LimitedToSensorsInfos>  T_LimitedToSensorsInfos_Vector;
@@ -55,13 +47,9 @@ public:
 
 //*****************************************************************************
     class ModificatorSizeInfos : public ADN_Ref_ABC
-                               , public ADN_DataTreeNode_ABC
     {
     public:
         explicit ModificatorSizeInfos( ADN_Categories_Data::SizeInfos* ptr );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -110,13 +98,9 @@ public:
 
 //*****************************************************************************
     class ModificatorIlluminationInfos : public ADN_Ref_ABC
-                                       , public ADN_DataTreeNode_ABC
     {
     public:
         explicit ModificatorIlluminationInfos( const E_LightingType& e );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -147,13 +131,9 @@ public:
 
 //*****************************************************************************
     class ModificatorMeteoInfos : public ADN_Ref_ABC
-                                , public ADN_DataTreeNode_ABC
     {
     public:
         explicit ModificatorMeteoInfos( const E_SensorWeatherModifiers& e );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -182,13 +162,9 @@ public:
 
 //*****************************************************************************
     class ModificatorEnvironmentInfos : public ADN_Ref_ABC
-                                      , public ADN_DataTreeNode_ABC
     {
     public:
         explicit ModificatorEnvironmentInfos( const E_VisionObject& e );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -219,13 +195,9 @@ public:
 
     //*****************************************************************************
     class ModificatorUrbanBlockInfos : public ADN_Ref_ABC
-                                     , public ADN_DataTreeNode_ABC
     {
     public:
         explicit ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -272,13 +244,9 @@ public:
 
 //*****************************************************************************
     class ModificatorPostureInfos : public ADN_Ref_ABC
-                                  , public ADN_DataTreeNode_ABC
     {
     public:
         explicit ModificatorPostureInfos( const E_UnitPosture& e );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -308,7 +276,7 @@ public:
     typedef T_ModificatorPostureInfos_Vector::iterator   IT_ModificatorPostureInfos_Vector;
 
 //*****************************************************************************
-    class PopulationInfos : public ADN_Ref_ABC
+    class PopulationInfos : public ADN_RefWithName
     {
     public:
                  PopulationInfos();
@@ -321,31 +289,24 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_String strName_;
         ADN_Type_Double rDensity_;
         ADN_Type_Double rModifier_;
     };
 
 //*****************************************************************************
-    class TargetInfos : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
+    class TargetInfos : public ADN_RefWithName
     {
     public:
                  TargetInfos();
         virtual ~TargetInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         TargetInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void ReadPosture( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >  ptrObject_;
-        ADN_Type_String                                           strName_;  //!< For code convenience, not for editing.
         ADN_Type_Double                                           rDistanceDetection_;
         T_ModificatorPostureInfos_Vector                          vModifStance_;
         PopulationInfos                                           populationInfos_;
@@ -355,17 +316,13 @@ public:
     typedef T_TargetsInfos_Vector::iterator  IT_TargetsInfos_Vector;
 
 //*****************************************************************************
-    class SensorInfos : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
+    class SensorInfos : public ADN_RefWithName
     {
     public:
                  SensorInfos();
         virtual ~SensorInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
         SensorInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void ReadLimitedToSensorsList( xml::xistream& input ); // LTO
         void ReadBaseDistance( xml::xistream& input );
@@ -383,7 +340,6 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_String                         strName_;
         ADN_Type_Bool                           bCanDetectAgents_;
         ADN_Type_Bool                           bCanScan_;
         ADN_Type_Double                         rFirerDetectionRange_;

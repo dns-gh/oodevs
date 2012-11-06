@@ -11,6 +11,7 @@
 #define __ADN_StandardItem_h_
 
 #include <QtGui/qstandarditem>
+#include "ADN_Connector_Vector_ABC.h"
 
 class ADN_Connector_ABC;
 class ADN_Connector_StandardItem;
@@ -33,9 +34,9 @@ public:
         eDouble      = 2,
         eEnum        = 3,
         eString      = 4,
-        eDelay       = 5,
-        eTime        = 6, // $$$$ ABR 2012-10-30: TODO
-        ePtrInVector = 7  // $$$$ ABR 2012-10-30: TODO
+        ePtrInVector = 5,
+        eDelay       = eString,
+        eTime        = eString
     };
 
 public:
@@ -48,7 +49,7 @@ public:
     //! @name Operations
     //@{
     void* GetData() const;
-    ADN_Connector_StandardItem* GetConnector() const;
+    ADN_Connector_ABC* GetConnector() const;
     E_Type GetType() const;
     void Connect( ADN_Connector_ABC* data, const QStringList* enumContent =  0  );
     //@}
@@ -57,7 +58,7 @@ private:
     //! @name Member data
     //@{
     void* pData_;
-    ADN_Connector_StandardItem* connector_;
+    ADN_Connector_ABC* connector_;
     E_Type type_;
     //@}
 };

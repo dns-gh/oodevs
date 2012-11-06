@@ -42,15 +42,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , rRepairingModificator_       ( 100.f )
     , rCapturedModificator_        ( 100.f )
 {
-    rMinorEquipmentWeight_.SetDataName( "Poids des composantes non majeures." );
-    rMajorEquipmentWeight_.SetDataName( "Poids des composantes majeures." );
-    rMajorEquipmentWeight_.SetUndoAvailable( false );
-    rHumanWeight_         .SetDataName( "Poids du personnel." );
-    rDecisionalThreshold_ .SetDataName( "Seuil décisionnel." );
-
-    rPertinenceMaxDecrease_.SetDataName( "la dégradation de la dangerosité par la pertinence" );
-    rOperationalStateMaxDecrease_.SetDataName( "la dégradation de la dangerosité par l'état opérationnel" );
-    rNeutralizedStateMaxDecrease_.SetDataName( "la dégradation de la dangerosité par l'état de neutralisation" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

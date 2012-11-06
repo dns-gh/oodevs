@@ -11,6 +11,7 @@
 #define __ADN_ResourceNetworks_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Equipement_Data.h"
 
@@ -24,8 +25,7 @@ class ADN_ResourceNetworks_Data : public ADN_Data_ABC
 {
 
 public:
-    class ResourceNetworkInfos : public ADN_Ref_ABC
-                               , public ADN_DataTreeNode_ABC
+    class ResourceNetworkInfos : public ADN_RefWithName
     {
     public:
         //! @name Constructors/Destructor
@@ -36,8 +36,6 @@ public:
 
         //! @name Operations
         //@{
-        virtual std::string GetNodeName();
-        std::string GetItemName();
         ResourceNetworkInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -46,7 +44,6 @@ public:
     public:
         //! @name Member data
         //@{
-        ADN_Type_String strName_;
         ADN_Type_String strColor_;
         ADN_Type_Int nProduction_;
         ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > ptrCategory_;

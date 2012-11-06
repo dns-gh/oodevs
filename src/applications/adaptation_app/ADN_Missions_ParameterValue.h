@@ -11,7 +11,6 @@
 #define ADAPTATION_ADN_MISSIONS_DATA_PARAMETERVALUE_H
 
 #include "ADN_Ref_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Types.h"
 
 namespace xml
@@ -21,7 +20,6 @@ namespace xml
 }
 
 class ADN_Missions_ParameterValue : public ADN_Ref_ABC
-                                  , public ADN_DataTreeNode_ABC
 {
 public:
              ADN_Missions_ParameterValue();

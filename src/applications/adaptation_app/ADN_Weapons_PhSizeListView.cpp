@@ -29,7 +29,7 @@ class ADN_CLV_PhSizes : public ADN_Connector_ListView_ABC
 
 public:
     ADN_CLV_PhSizes( ADN_Weapons_PhSizeListView& list, GQ_Plot& plot )
-    : ADN_Connector_ListView_ABC( list, "ADN_CLV_PhSizes" )
+    : ADN_Connector_ListView_ABC( list )
     , plot_ ( plot )
     {}
 

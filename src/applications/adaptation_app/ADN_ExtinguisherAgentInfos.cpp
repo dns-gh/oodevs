@@ -32,24 +32,6 @@ ADN_ExtinguisherAgentInfos::~ADN_ExtinguisherAgentInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ExtinguisherAgentInfos::GetNodeName
-// Created: JSR 2010-12-01
-// -----------------------------------------------------------------------------
-std::string ADN_ExtinguisherAgentInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_ExtinguisherAgentInfos::GetItemName
-// Created: JSR 2010-12-01
-// -----------------------------------------------------------------------------
-std::string ADN_ExtinguisherAgentInfos::GetItemName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_ExtinguisherAgentInfos::CopyFrom
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------

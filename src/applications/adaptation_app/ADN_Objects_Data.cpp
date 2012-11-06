@@ -26,32 +26,10 @@
 // Created: AGN 2004-05-24
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ScoreLocationInfos::ScoreLocationInfos()
-    : ADN_Ref_ABC         ()
-    , ADN_DataTreeNode_ABC()
-    , nLocation_          ( static_cast< E_Location >( 0 ) )
+    : nLocation_          ( static_cast< E_Location >( 0 ) )
     , nScore_             ( 0 )
 {
-    nScore_.SetDataName( "le poids de placement" );
-    nScore_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScoreLocationInfos::GetNodeName
-// Created: AGN 2004-05-24
-// -----------------------------------------------------------------------------
-std::string ADN_Objects_Data::ScoreLocationInfos::GetNodeName()
-{
-    std::string strResult( "sur un terrain de type " );
-    return strResult + nLocation_.Convert( ADN_Tr::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ScoreLocationInfos::GetItemName
-// Created: AGN 2004-05-24
-// -----------------------------------------------------------------------------
-std::string ADN_Objects_Data::ScoreLocationInfos::GetItemName()
-{
-    return nLocation_.Convert( ADN_Tr::eToTr );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +73,7 @@ namespace
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Buildable::ADN_CapacityInfos_Buildable()
 {
-    categories_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +133,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Improvable::ADN_CapacityInfos_Improvable()
 {
-    categories_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -219,10 +197,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Constructor::ADN_CapacityInfos_Constructor()
     , ptrBuildable_       ( new ADN_CapacityInfos_Buildable() )
     , ptrImprovable_      ( new ADN_CapacityInfos_Improvable() )
 {
-    nDefaultConsumption_.SetParentNode( *this );
-    nUnitType_.SetParentNode( *this );
-    ptrBuildable_->SetParentNode( *this );
-    ptrImprovable_->SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -267,7 +242,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostrea
 ADN_Objects_Data::ADN_CapacityInfos_Avoidable::ADN_CapacityInfos_Avoidable()
     : rDistance_( 0. )
 {
-    rDistance_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -296,7 +271,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Avoidable::WriteArchive( xml::xostream&
 ADN_Objects_Data::ADN_CapacityInfos_Bypassable::ADN_CapacityInfos_Bypassable()
     : rSpeed_( 0. )
 {
-    rSpeed_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -327,9 +302,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Mobility::ADN_CapacityInfos_Mobility()
     , nSpeedModifier_( eSpeedImpact_AuPlusLent )
     , rMaxAgentSpeed_( 0 )
 {
-    rDefaultSpeed_.SetParentNode( *this );
-    nSpeedModifier_.SetParentNode( *this );
-    rMaxAgentSpeed_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -364,8 +337,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Trafficability::ADN_CapacityInfos_Trafficabi
     : limited_  ( false )
     , maxWeight_( 0. )
 {
-    limited_.SetParentNode( *this );
-    maxWeight_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -395,16 +367,12 @@ void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::WriteArchive( xml::xost
 //@{
 
 ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
-    : ammoCategory_    ( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
+    : ammoCategory_    ( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
     , useAmmo_         ( false )
     , attritionSurface_( 0 )
     , ph_              ( 0 )
 {
-    category_.SetParentNode( *this );
-    ammoCategory_.SetParentNode( *this );
-    useAmmo_.SetParentNode( *this );
-    attritionSurface_.SetParentNode( *this );
-    ph_.SetParentNode( *this );
+    // NOTHING
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& xis )
@@ -478,7 +446,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::WriteArchive( xml::xo
 ADN_Objects_Data::ADN_CapacityInfos_Contamination::ADN_CapacityInfos_Contamination()
     : max_toxic_( 0 )
 {
-    max_toxic_.SetParentNode( *this );
+    // NOTHING
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Contamination::ReadArchive( xml::xistream& xis )
@@ -504,11 +472,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Flood::ADN_CapacityInfos_Flood()
     , nNbHurtHumansE_( 0 )
     , nNbDeadHumans_ ( 0 )
 {
-    nNbHurtHumans1_.SetParentNode( *this );
-    nNbHurtHumans2_.SetParentNode( *this );
-    nNbHurtHumans3_.SetParentNode( *this );
-    nNbHurtHumansE_.SetParentNode( *this );
-    nNbDeadHumans_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -587,7 +551,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Flood::WriteArchive( xml::xostream& xos
 ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::ADN_CapacityInfos_InteractionHeight()
     : height_( 0 )
 {
-    height_.SetParentNode( *this );
+    // NOTHING
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::ReadArchive( xml::xistream& xis )
@@ -607,7 +571,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::WriteArchive( xml::x
 ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ADN_CapacityInfos_Intoxication()
     : max_toxic_( 0 )
 {
-    max_toxic_.SetParentNode( *this );
+    // NOTHING
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ReadArchive( xml::xistream& xis )
@@ -645,7 +609,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::WriteArchive( xml::xos
 ADN_Objects_Data::ADN_CapacityInfos_Population::ADN_CapacityInfos_Population()
     : density_( 0 )
 {
-    density_.SetParentNode( *this );
+    // NOTHING
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Population::ReadArchive( xml::xistream& xis )
@@ -665,7 +629,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Population::WriteArchive( xml::xostream
 ADN_Objects_Data::ADN_CapacityInfos_Propagation::ADN_CapacityInfos_Propagation()
     : nModel_( eFire )
 {
-    nModel_.SetParentNode( *this );
+    // NOTHING
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::ReadArchive( xml::xistream& xis )
@@ -688,8 +652,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Protection::ADN_CapacityInfos_Protection()
     : max_size_     ( 1 )
     , geniePrepared_( false )
 {
-    max_size_.SetParentNode( *this );
-    geniePrepared_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -720,7 +683,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Protection::WriteArchive( xml::xostream
 ADN_Objects_Data::ADN_CapacityInfos_Workable::ADN_CapacityInfos_Workable()
     : worker_( 0 )
 {
-    worker_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -749,9 +712,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Medical::ADN_CapacityInfos_Medical()
     , emergencyDoctorsRate_( 0 )
     , nightDoctorsRate_    ( 0 )
 {
-    emergencyBedsRate_.SetParentNode( *this );
-    emergencyDoctorsRate_.SetParentNode( *this );
-    nightDoctorsRate_.SetParentNode( *this );
+    // NOTHING
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Medical::ReadArchive( xml::xistream& xis )
 {
@@ -796,7 +757,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Occupable::WriteArchive( xml::xostream&
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ADN_CapacityInfos_TerrainHeuristic()
 {
-    scores_.SetParentNode( *this );
+    // NOTHING
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadArchive( xml::xistream& xis )
@@ -842,7 +803,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostrea
 ADN_Objects_Data::ADN_CapacityInfos_Bridging::ADN_CapacityInfos_Bridging()
     : type_( eBridge )
 {
-    type_.SetParentNode( *this );
+    // NOTHING
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Bridging::ReadArchive( xml::xistream& xis )
@@ -867,11 +828,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Detection::ADN_CapacityInfos_Detection()
     , bRecoTime_  ( false ) // LTO
     , identTime_  ( "0s" ) // LTO
 {
-    bDetectTime_.SetParentNode( *this );
-    detectTime_.SetParentNode( *this ); // LTO
-    bIdentTime_.SetParentNode( *this ); // LTO
-    recoTime_.SetParentNode( *this ); // LTO
-    identTime_.SetParentNode( *this ); // LTO
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -957,8 +914,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
     , objectName_  ( "" )
     , nbc_         ( false )
 {
-    object_.SetParentNode( *this );
-    rActionRange_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1020,7 +976,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& out
 ADN_Objects_Data::ADN_CapacityInfos_Structural::ADN_CapacityInfos_Structural()
     : rStructuralState_( 100 )
 {
-    rStructuralState_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1140,7 +1096,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Scattering::WriteArchive( xml::xostream
 ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ADN_CapacityInfos_FirePropagationModifier()
     : modifiers_( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos() )
 {
-    modifiers_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1221,9 +1177,7 @@ ADN_Objects_Data::ADN_CapacityInfos_InteractWithSide::ADN_CapacityInfos_Interact
     , bEnemySide_  ( false )
     , bNeutralSide_( false )
 {
-    bFriendSide_.SetParentNode( *this );
-    bEnemySide_.SetParentNode( *this );
-    bNeutralSide_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

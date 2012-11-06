@@ -78,7 +78,6 @@
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
 #include "ADN_WorkspaceElement.h"
-#include "qtundo.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
@@ -126,7 +125,6 @@ void ADN_Workspace::CleanWorkspace()
 //-----------------------------------------------------------------------------
 ADN_Workspace::ADN_Workspace()
     : pProgressIndicator_( 0 )
-    , pUndoStack_        ( 0 )
     , nOpenMode_         ( eOpenMode_Normal )
 {
     // NOTHING
@@ -191,6 +189,7 @@ void ADN_Workspace::InitializeEnumType()
     INITIALIZE_ADN_ENUMTYPE( ConsumptionType );
     INITIALIZE_ADN_ENUMTYPE( CrossingHeight );
     INITIALIZE_ENT_ENUMTYPE( CrossingType );
+    INITIALIZE_ADN_ENUMTYPE( Days );
     INITIALIZE_ADN_ENUMTYPE( EquipmentState_ADN );
     INITIALIZE_ENT_ENUMTYPE( Location );
     INITIALIZE_ADN_ENUMTYPE( MissionParameterType );
@@ -218,7 +217,6 @@ ADN_Workspace::~ADN_Workspace()
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
         delete elements_[n];
     delete projectData_;
-    delete pUndoStack_;
 }
 
 //-----------------------------------------------------------------------------
@@ -227,7 +225,6 @@ ADN_Workspace::~ADN_Workspace()
 //-----------------------------------------------------------------------------
 void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
 {
-    pUndoStack_ = new QtUndoStack( & mainwindow );
     pProgressIndicator_->SetVisible( true );
     pProgressIndicator_->Reset( tr( "Loading GUI..." ) );
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
@@ -308,8 +305,6 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
         pProgressIndicator_->Reset( tr( "Project reseted" ) );
         pProgressIndicator_->SetVisible( false );
     }
-
-    GetUndoStack().clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -518,7 +513,6 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     pProgressIndicator_->Increment( "" );
     pProgressIndicator_->SetVisible( false );
 
-    GetUndoStack().clear();
     // Save is ended
     ResetProgressIndicator();
     projectData_->GetDataInfos().DisableReadOnly();
@@ -532,27 +526,6 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
 bool ADN_Workspace::Save( const tools::Loader_ABC& fileLoader )
 {
     return SaveAs( GetProject().GetFileInfos().GetFileNameFull(), fileLoader );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetUndoStack
-// Created: AGN 2004-05-12
-// -----------------------------------------------------------------------------
-QtUndoStack& ADN_Workspace::GetUndoStack()
-{
-    assert( pUndoStack_ != 0 );
-    return *pUndoStack_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::AddCommand
-// Created: AGN 2004-05-13
-// -----------------------------------------------------------------------------
-void ADN_Workspace::AddCommand( QtCommand* pNewCommand )
-{
-    if( pNewCommand == 0 )
-        return;
-    pUndoStack_->push( pNewCommand );
 }
 
 // -----------------------------------------------------------------------------

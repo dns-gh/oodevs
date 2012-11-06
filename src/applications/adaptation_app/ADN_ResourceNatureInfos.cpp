@@ -20,10 +20,10 @@ ResourceNatureInfos::ResourceNatureInfos()
 // Created: RPD 2010-10-29
 // -----------------------------------------------------------------------------
 ResourceNatureInfos::ResourceNatureInfos( const std::string& name, int id )
-    : nId_( id )
-    , strName_( name )
+    : ADN_RefWithName( name )
+    , nId_( id )
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

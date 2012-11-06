@@ -87,21 +87,6 @@
     </message>
 </context>
 <context>
-    <name>ADN_AddElementCommand</name>
-    <message>
-        <source>Add </source>
-        <translation>Ajouter </translation>
-    </message>
-    <message>
-        <source> to </source>
-        <translation> à </translation>
-    </message>
-    <message>
-        <source>Add new </source>
-        <translation>Ajouter nouveau </translation>
-    </message>
-</context>
-<context>
     <name>ADN_AiEngine_GUI</name>
     <message>
         <source>%</source>
@@ -561,29 +546,6 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Logistic resource category</source>
         <translation>Catégorie de ressource logistique</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ChangeValueCommand</name>
-    <message>
-        <source>Change </source>
-        <translation>Changer </translation>
-    </message>
-    <message>
-        <source> from </source>
-        <translation> de </translation>
-    </message>
-    <message>
-        <source> to </source>
-        <translation> à </translation>
-    </message>
-    <message>
-        <source>true</source>
-        <translation>vrai</translation>
-    </message>
-    <message>
-        <source>false</source>
-        <translation>faux</translation>
     </message>
 </context>
 <context>
@@ -3755,17 +3717,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     </message>
 </context>
 <context>
-    <name>ADN_RemoveElementCommand</name>
-    <message>
-        <source>Remove </source>
-        <translation>Enlever </translation>
-    </message>
-    <message>
-        <source> from </source>
-        <translation> de </translation>
-    </message>
-</context>
-<context>
     <name>ADN_ResourceNetworks_GUI</name>
     <message>
         <source>Name</source>
@@ -3812,44 +3763,16 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>A</translation>
     </message>
     <message>
+        <source>Activity</source>
+        <translation>Activité</translation>
+    </message>
+    <message>
         <source>Add</source>
         <translation>Ajouter</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>monday</source>
-        <translation>lundi</translation>
-    </message>
-    <message>
-        <source>tuesday</source>
-        <translation>mardi</translation>
-    </message>
-    <message>
-        <source>wednesday</source>
-        <translation>mercredi</translation>
-    </message>
-    <message>
-        <source>thursday</source>
-        <translation>jeudi</translation>
-    </message>
-    <message>
-        <source>friday</source>
-        <translation>vendredi</translation>
-    </message>
-    <message>
-        <source>saturday</source>
-        <translation>samedi</translation>
-    </message>
-    <message>
-        <source>sunday</source>
-        <translation>dimanche</translation>
-    </message>
-    <message>
-        <source>Activity</source>
-        <translation>Activité</translation>
     </message>
 </context>
 <context>
@@ -5109,6 +5032,34 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Human</source>
         <translation>Humain</translation>
     </message>
+    <message>
+        <source>Monday</source>
+        <translation>Lundi</translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation>Mardi</translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation>Mercredi</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation>Jeudi</translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation>Vendredi</translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation>Samedi</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation>Dimanche</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5880,10 +5831,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
         <translation>Protection active &apos;%1&apos; - Type de munition invalide &apos;%2&apos;</translation>
     </message>
-    <message>
-        <source>Active Protection</source>
-        <translation>Protection active</translation>
-    </message>
 </context>
 <context>
     <name>AiEngine_Data</name>
@@ -6182,6 +6129,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Population</source>
         <translation>Population</translation>
+    </message>
+    <message>
+        <source>Population - Invalid accommodation &apos;%1&apos;</source>
+        <translation>Population - Activité invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

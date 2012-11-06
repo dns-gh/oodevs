@@ -18,7 +18,6 @@
 #include "ADN_CapacityInfos.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Composantes_Data.h"
-#include "ADN_DataTreeNode_ABC.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
@@ -38,14 +37,10 @@ class ADN_Objects_Data : public ADN_Data_ABC
 public:
 //*****************************************************************************
     class ScoreLocationInfos : public ADN_Ref_ABC
-                             , public ADN_DataTreeNode_ABC
     {
 
     public:
         ScoreLocationInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -560,7 +555,6 @@ public:
     public:
 
         class ModifierByFireClass : public ADN_Ref_ABC
-                                  , public ADN_DataTreeNode_ABC
         {
         public:
             explicit ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* );

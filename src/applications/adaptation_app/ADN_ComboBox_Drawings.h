@@ -25,7 +25,7 @@ class ADN_ComboBox_Drawings : public ADN_ComboBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ComboBox_Drawings( QWidget* pParent = 0, const char* szName = 0 );
+             ADN_ComboBox_Drawings( QWidget* pParent = 0 );
     virtual ~ADN_ComboBox_Drawings();
     //@}
 

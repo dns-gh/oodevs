@@ -20,8 +20,8 @@
 // Name: ADN_ComboBox constructor
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-ADN_ComboBox::ADN_ComboBox( QWidget* parent, const char* name )
-    : QComboBox  ( parent, name )
+ADN_ComboBox::ADN_ComboBox( QWidget* parent )
+    : QComboBox  ( parent )
     , ADN_Gfx_ABC()
     , pCurData_  ( 0 )
     , fromView_  ( false )

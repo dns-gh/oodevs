@@ -11,6 +11,7 @@
 #define __ADN_NBC_Datas_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "tools/IdManager.h"
@@ -26,20 +27,13 @@ class ADN_NBC_Datas : public ADN_Data_ABC
 
 public:
 //*****************************************************************************
-    class NbcIntoxInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class NbcIntoxInfos : public ADN_Ref_ABC
     {
-
     public:
         explicit NbcIntoxInfos( const std::string& nodeName );
         virtual ~NbcIntoxInfos() {}
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         void CopyFrom( NbcIntoxInfos& infos );
-
         void ReadEffect( xml::xistream& input );
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
@@ -57,20 +51,13 @@ public:
         ADN_Type_Bool bContaminationPresent_;
     };
 
-    class NbcGazInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class NbcGazInfos : public ADN_Ref_ABC
     {
-
     public:
                  NbcGazInfos();
         virtual ~NbcGazInfos() {}
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         void CopyFrom( NbcGazInfos& infos );
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
@@ -80,26 +67,20 @@ public:
         ADN_Type_Double rSpreadAngle_;
     };
 
-    class NbcAgentInfos : public ADN_Ref_ABC
-                        , public ADN_DataTreeNode_ABC
+    class NbcAgentInfos : public ADN_RefWithName
     {
     public:
                  NbcAgentInfos();
                  NbcAgentInfos( unsigned int id );
         virtual ~NbcAgentInfos() {}
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         NbcAgentInfos* CreateCopy();
-
         void ReadEffect( xml::xistream& input );
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
     public:
         ADN_Type_Int nId_;
-        ADN_Type_String strName_;
         ADN_Type_String category_;
         NbcIntoxInfos liquidInfos_;
         ADN_Type_Bool bGazPresent_;

@@ -87,21 +87,6 @@
     </message>
 </context>
 <context>
-    <name>ADN_AddElementCommand</name>
-    <message>
-        <source>Add </source>
-        <translation>Agregar </translation>
-    </message>
-    <message>
-        <source> to </source>
-        <translation> a </translation>
-    </message>
-    <message>
-        <source>Add new </source>
-        <translation>Agregar nuevo </translation>
-    </message>
-</context>
-<context>
     <name>ADN_AiEngine_GUI</name>
     <message>
         <source>%</source>
@@ -561,29 +546,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>Logistic resource category</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ChangeValueCommand</name>
-    <message>
-        <source>Change </source>
-        <translation>Cambiar </translation>
-    </message>
-    <message>
-        <source> from </source>
-        <translation> de </translation>
-    </message>
-    <message>
-        <source> to </source>
-        <translation> a </translation>
-    </message>
-    <message>
-        <source>true</source>
-        <translation>verdadero</translation>
-    </message>
-    <message>
-        <source>false</source>
-        <translation>falso</translation>
     </message>
 </context>
 <context>
@@ -3752,17 +3714,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
 </context>
 <context>
-    <name>ADN_RemoveElementCommand</name>
-    <message>
-        <source>Remove </source>
-        <translation>Remover </translation>
-    </message>
-    <message>
-        <source> from </source>
-        <translation> de </translation>
-    </message>
-</context>
-<context>
     <name>ADN_ResourceNetworks_GUI</name>
     <message>
         <source>Name</source>
@@ -3811,34 +3762,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Activity</source>
         <translation>Actividad</translation>
-    </message>
-    <message>
-        <source>monday</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tuesday</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>wednesday</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>thursday</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>friday</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>saturday</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sunday</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add</source>
@@ -5105,6 +5028,34 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Monday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>
@@ -5866,10 +5817,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation>Equipo – munición inválida &apos;%1/%2&apos;</translation>
     </message>
     <message>
-        <source>Active Protection</source>
-        <translation>Protecciones activas</translation>
-    </message>
-    <message>
         <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
         <translation>Protección activa &apos;%1&apos; – Tipo de munición inválido &apos;%2&apos;</translation>
     </message>
@@ -6170,6 +6117,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Invalid schedule - You have already an appointment on the same moment :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population - Invalid accommodation &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

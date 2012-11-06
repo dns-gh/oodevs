@@ -23,7 +23,6 @@ namespace helpers
 // Created: LGY 2012-04-18
 // =============================================================================
 class ADN_MissionGenObjectTypes_Infos : public ADN_Ref_ABC
-                                      , public ADN_DataTreeNode_ABC
 {
 
 public:
@@ -36,8 +35,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetNodeName();
-    virtual std::string GetItemName();
     virtual void WriteArchive( xml::xostream& );
     ADN_MissionGenObjectTypes_Infos* CreateCopy();
     //@}

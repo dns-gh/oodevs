@@ -23,50 +23,6 @@ typedef ADN_Type_ABC<double>        ADN_Type_Double;
 typedef ADN_Type_ABC<std::string>   ADN_Type_String;
 typedef ADN_Type_ABC<std::string>   ADN_Type_Time;
 
-template<>
-class ADN_ChangeValueCommand_Chooser< bool >
-{
-public:
-    static
-    QtCommand* CreateCommand( ADN_Type_ABC< bool >& data, bool oVal , bool nVal )
-    {
-        return ADN_CreateCommand( data, oVal, nVal );
-    };
-};
-
-template<>
-class ADN_ChangeValueCommand_Chooser< double >
-{
-public:
-    static
-    QtCommand* CreateCommand( ADN_Type_ABC< double >& data, double oVal, double nVal )
-    {
-        return ADN_CreateCommand( data, oVal, nVal );
-    };
-};
-
-template<>
-class ADN_ChangeValueCommand_Chooser< int >
-{
-public:
-    static
-    QtCommand* CreateCommand( ADN_Type_ABC< int >& data, int oVal , int nVal )
-    {
-        return ADN_CreateCommand( data, oVal, nVal );
-    };
-};
-
-template<>
-class ADN_ChangeValueCommand_Chooser< std::string >
-{
-public:
-    static
-    QtCommand* CreateCommand( ADN_Type_ABC< std::string >& data, const std::string& oVal, const std::string& nVal )
-    {
-        return ADN_CreateCommand( data, oVal, nVal );
-    };
-};
-
 #define TYPEDEF_DECLARATION( BaseType, NewName )                        \
     typedef BaseType T_ ## NewName;
 

@@ -235,6 +235,8 @@ protected:
     void CreatePosition( unsigned int id, int fromRow, int toRow, int fromCol, int toCol );
     const DelegatePosition* IsInPosition( int row, int col ) const;
     const DelegatePosition* FindPosition( int fromRow, int toRow, int fromCol, int toCol ) const;
+
+    unsigned int AddSimpleWidget( int fromRow, int toRow, int fromCol, int toCol, T_SimpleWidget& vector );
     //@}
 
 protected:

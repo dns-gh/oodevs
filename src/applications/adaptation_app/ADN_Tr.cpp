@@ -311,6 +311,19 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "", "", (E_WorkspaceElements)-1 )
 };
 
+ADN_Tr::T_ConverterDays ADN_Tr::daysConverter_[] =
+{
+    T_ConverterDays( "monday",    QT_TRANSLATE_NOOP( "ADN_Tr", "Monday" ),    eDays_Monday ),
+    T_ConverterDays( "tuesday",   QT_TRANSLATE_NOOP( "ADN_Tr", "Tuesday" ),   eDays_Tuesday ),
+    T_ConverterDays( "wednesday", QT_TRANSLATE_NOOP( "ADN_Tr", "Wednesday" ), eDays_Wednesday ),
+    T_ConverterDays( "thursday",  QT_TRANSLATE_NOOP( "ADN_Tr", "Thursday" ),  eDays_Thursday ),
+    T_ConverterDays( "friday",    QT_TRANSLATE_NOOP( "ADN_Tr", "Friday" ),    eDays_Friday ),
+    T_ConverterDays( "saturday",  QT_TRANSLATE_NOOP( "ADN_Tr", "Saturday" ),  eDays_Saturday ),
+    T_ConverterDays( "sunday",    QT_TRANSLATE_NOOP( "ADN_Tr", "Sunday" ),    eDays_Sunday ),
+
+    T_ConverterDays( "", "", (E_Days)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromConsumptionType
 // Created: APE 2005-02-18
@@ -498,6 +511,15 @@ const std::string& ADN_Tr::ConvertFromPropagationModel( E_PropagationModel nValu
 const std::string& ADN_Tr::ConvertFromWorkspaceElement( E_WorkspaceElements nValue, E_Conversion nConverterType )
 {
     return ADN_Tr::InverseFindInConverter( workspaceElementsConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromDays
+// Created: ABR 2012-07-24
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromDays( E_Days nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( daysConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -690,6 +712,15 @@ E_WorkspaceElements ADN_Tr::ConvertToWorkspaceElements( const std::string& strNa
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToDays
+// Created: ABR 2012-07-24
+// -----------------------------------------------------------------------------
+E_Days ADN_Tr::ConvertToDays( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( daysConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -716,4 +747,5 @@ void ADN_Tr::InitTranslations()
     InitTr( constructorTypeConverter_, "ADN_Tr" );
     InitTr( propagationModelConverter_, "ADN_Tr" );
     InitTr( workspaceElementsConverter_, "ADN_Tr" );
+    InitTr( daysConverter_, "ADN_Tr" );
 }

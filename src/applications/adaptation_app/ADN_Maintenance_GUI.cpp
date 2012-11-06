@@ -29,7 +29,7 @@ namespace
             setSortingEnabled( false );
 
             delegate_.AddSpinBoxOnRow( 0, 1, std::numeric_limits< int >::max(), 1 );
-            delegate_.AddDelayEditorOnRow( 1 );
+            delegate_.AddDelayEditOnRow( 1 );
         }
         virtual ~ADN_WorkingSchemeTable()
         {

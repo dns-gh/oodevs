@@ -113,10 +113,7 @@ void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfosWeapons()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , strName_    ( "" )
-    , ptrWeapon_  ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
+    : ptrWeapon_  ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
     , coefficient_( 0 )
 {
     BindExistenceTo(&ptrWeapon_);
@@ -164,13 +161,10 @@ std::string ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::GetItemNa
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , strName_      ( tools::translate( "ActiveProtections_Data", "Active Protection" ).toAscii().constData() )
-    , coefficient_  ( 0 )
+    : coefficient_  ( 0 )
     , hardKill_     ( false )
     , usage_        ( 0 )
-    , ptrAmmunition_( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
+    , ptrAmmunition_( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
 {
     BindExistenceTo( &ptrAmmunition_ );
 }

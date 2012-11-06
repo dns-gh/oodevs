@@ -58,7 +58,7 @@ void ADN_ActiveProtections_GUI::Build()
     QWidget* pHolder = new QWidget( pDotationGroup );
     new Q3GridLayout( pHolder, 0, 3, 5, 5 );
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eEquipement );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pHolder, tr( "Resource" ), vConnectors[eActiveProtectionDotation], 0, eNone, goToButton ) );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pHolder, tr( "Resource" ), vConnectors[eActiveProtectionDotation], 0, eNone, goToButton ) );
     builder.SetEnabled( true );
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
 

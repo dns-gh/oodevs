@@ -30,11 +30,10 @@ public:
 // Name: ADN_Connector_Table_ABC constructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
-ADN_Connector_Table_ABC::ADN_Connector_Table_ABC(ADN_Table& tab, bool bWithSort, const char* szName )
-: ADN_Connector_Vector_ABC( szName )
-, tab_(tab)
-, bIsConnected_(false)
-, bWithSort_( bWithSort )
+ADN_Connector_Table_ABC::ADN_Connector_Table_ABC( ADN_Table& tab, bool bWithSort )
+    : tab_(tab)
+    , bIsConnected_(false)
+    , bWithSort_( bWithSort )
 {
     if( tab_.IsAutoEnabled())
         tab_.setEnabled(false);
@@ -94,7 +93,7 @@ void ADN_Connector_Table_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pT
 // Name: ADN_Connector_Table_ABC::AddItemPrivate
 // Created: AGN 2004-03-19
 // -----------------------------------------------------------------------------
-bool ADN_Connector_Table_ABC::AddItemPrivate(void *obj,bool)
+bool ADN_Connector_Table_ABC::AddItemPrivate( void* obj )
 {
     if( obj)
     {
@@ -129,7 +128,7 @@ bool ADN_Connector_Table_ABC::AddItemPrivate(void *obj,bool)
 // Name: ADN_Connector_Table_ABC::RemItemPrivate
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
-bool ADN_Connector_Table_ABC::RemItemPrivate( void* pItem, bool )
+bool ADN_Connector_Table_ABC::RemItemPrivate( void* pItem )
 {
     if( pItem == 0 )
         return false;
@@ -234,9 +233,8 @@ public:
 // Name: ADN_Connector_Table_ABC2 constructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
-ADN_Connector_Table_ABC2::ADN_Connector_Table_ABC2(ADN_Table3& tab, bool bWithSort, const char* szName )
-    : ADN_Connector_Vector_ABC( szName )
-    , tab_(tab)
+ADN_Connector_Table_ABC2::ADN_Connector_Table_ABC2(ADN_Table3& tab, bool bWithSort )
+    : tab_(tab)
     , bIsConnected_(false)
     , bWithSort_( bWithSort )
 {
@@ -298,7 +296,7 @@ void ADN_Connector_Table_ABC2::DisconnectPrivateSub( ADN_Connector_Vector_ABC* p
 // Name: ADN_Connector_Table_ABC2::AddItemPrivate
 // Created: AGN 2004-03-19
 // -----------------------------------------------------------------------------
-bool ADN_Connector_Table_ABC2::AddItemPrivate(void *obj,bool)
+bool ADN_Connector_Table_ABC2::AddItemPrivate( void* obj )
 {
     if( obj)
     {
@@ -331,7 +329,7 @@ bool ADN_Connector_Table_ABC2::AddItemPrivate(void *obj,bool)
 // Name: ADN_Connector_Table_ABC2::RemItemPrivate
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
-bool ADN_Connector_Table_ABC2::RemItemPrivate( void* pItem, bool )
+bool ADN_Connector_Table_ABC2::RemItemPrivate( void* pItem )
 {
     if( pItem == 0 )
         return false;

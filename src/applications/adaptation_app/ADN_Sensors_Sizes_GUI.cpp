@@ -39,7 +39,7 @@ void ADN_Sensors_Sizes_GUI::InternalEmit()
 {
     ADN_Sensors_Data::ModificatorSizeInfos* data = static_cast< ADN_Sensors_Data::ModificatorSizeInfos* >( GetSelectedData() );
     if( data  && data->ptrSize_.GetData() )
-        emit ContentChanged( data->GetItemName(), data->rCoeff_.GetData() );
+        emit ContentChanged( data->ptrSize_.GetData()->strName_.GetData(), data->rCoeff_.GetData() );
 }
 
 // -----------------------------------------------------------------------------

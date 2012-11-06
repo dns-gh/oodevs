@@ -11,11 +11,11 @@
 #define __ADN_Radars_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Enums.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
 #include <boost/noncopyable.hpp>
 
 // =============================================================================
@@ -48,25 +48,18 @@ public:
     };
 
 //*****************************************************************************
-    class RadarInfos : public ADN_Ref_ABC
-                     , public ADN_DataTreeNode_ABC
+    class RadarInfos : public ADN_RefWithName
     {
     public:
                  RadarInfos();
         virtual ~RadarInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         RadarInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void ReadDetectableActivity( xml::xistream& input );
-
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_Type_String strName_;
         ADN_Type_Enum<E_RadarType, eNbrRadarType>  nType_;
         ADN_Type_Double rRange_;
         ADN_Type_Bool bHasMaxHeight_;

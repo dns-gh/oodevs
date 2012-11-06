@@ -22,6 +22,7 @@ class ADN_DateEdit : public QDateEdit
                    , public ADN_Gfx_ABC
 {
     Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{

@@ -10,8 +10,7 @@
 #ifndef ADAPTATION_ADN_MISSIONS_MISSION_H
 #define ADAPTATION_ADN_MISSIONS_MISSION_H
 
-#include "ADN_Ref_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "ADN_Drawings_Data.h"
@@ -21,8 +20,7 @@ enum E_EntityType;
 
 namespace xml { class xistream; }
 
-class ADN_Missions_Mission : public ADN_Ref_ABC
-                           , public ADN_DataTreeNode_ABC
+class ADN_Missions_Mission : public ADN_RefWithName
 {
 public:
     typedef ADN_Type_Vector_ABC<ADN_Missions_Parameter>       T_MissionParameter_Vector;
@@ -47,7 +45,6 @@ public:
 
 public:
     ADN_Type_Int id_;
-    ADN_Type_String strName_;
     T_MissionParameter_Vector parameters_;
     ADN_Type_String diaType_;
     ADN_Type_String diaBehavior_;

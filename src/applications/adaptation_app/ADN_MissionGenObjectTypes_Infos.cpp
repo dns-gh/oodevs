@@ -47,24 +47,6 @@ ADN_MissionGenObjectTypes_Infos::~ADN_MissionGenObjectTypes_Infos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MissionGenObjectTypes_Infos::GetNodeName
-// Created: LGY 2012-04-18
-// -----------------------------------------------------------------------------
-std::string ADN_MissionGenObjectTypes_Infos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MissionGenObjectTypes_Infos::GetItemName
-// Created: LGY 2012-04-18
-// -----------------------------------------------------------------------------
-std::string ADN_MissionGenObjectTypes_Infos::GetItemName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_MissionGenObjectTypes_Infos::WriteArchive
 // Created: LGY 2012-04-18
 // -----------------------------------------------------------------------------

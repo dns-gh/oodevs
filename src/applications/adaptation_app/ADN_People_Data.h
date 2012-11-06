@@ -11,6 +11,7 @@
 #define __ADN_People_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Repartition.h"
 #include "ADN_Type_Vector_ABC.h"
@@ -34,30 +35,25 @@ class ADN_People_Data : public ADN_Data_ABC
 public:
 // *****************************************************************************
     class EventInfos : public ADN_Ref_ABC
-                     , public ADN_DataTreeNode_ABC
     {
     public:
          EventInfos();
         ~EventInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         EventInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_Type_String day_;
+        ADN_Type_Enum< E_Days, eNbrDays > day_;
         ADN_Type_String from_;
         ADN_Type_String to_;
-        ADN_Type_String motivation_;
+        ADN_TypePtr_InVector_ABC< ADN_Urban_Data::AccommodationInfos > ptrAccommodation_;
     };
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< EventInfos >, EventInfosVector )
 
     class PeopleInfosConsumption
         : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
     {
 
     public:
@@ -77,35 +73,24 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< PeopleInfosConsumption >, PeopleInfosConsumptionVector )
 
 // *****************************************************************************
-    class PeopleInfos
-        : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class PeopleInfos : public ADN_RefWithName
     {
     public:
         PeopleInfos();
         PeopleInfos( unsigned int );
         ~PeopleInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         PeopleInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
-        typedef std::map< int, boost::shared_ptr< EventInfos > > T_Events;
-        typedef T_Events::iterator                              IT_Events;
-        typedef T_Events::const_iterator                       CIT_Events;
-
     private:
-        void ReadEvent( xml::xistream& input, int& index );
+        void ReadEvent( xml::xistream& input );
         void ReadConsumption( xml::xistream& input );
         const std::string CheckErrors() const;
 
     public:
         ADN_Type_Int nId_;
-        ADN_Type_String strName_;
         ADN_TypePtr_InVector_ABC<ADN_Population_Data::PopulationInfos> ptrModel_;
         ADN_Type_String strAngryCrowdMission_;
         ADN_Type_Repartition repartition_;
@@ -113,7 +98,7 @@ public:
         ADN_Type_Double securityLossOnFire_;
         ADN_Type_Double securityGainPerHour_;
         ADN_Type_Int healthNeed_;
-        T_Events schedule_;
+        T_EventInfosVector schedule_;
         T_PeopleInfosConsumptionVector consumptions_;
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< PeopleInfos >, PeopleInfosVector )

@@ -33,25 +33,6 @@ ADN_WeatherFireEffects::~ADN_WeatherFireEffects()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_WeatherFireEffects::GetNodeName
-// Created: JSR 2010-12-01
-// -----------------------------------------------------------------------------
-std::string ADN_WeatherFireEffects::GetNodeName()
-{
-    std::string strResult( "à la condition météo " );
-    return strResult + ADN_Tr::ConvertFromSensorWeatherModifiers( weatherType_, ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_WeatherFireEffects::GetItemName
-// Created: JSR 2010-12-01
-// -----------------------------------------------------------------------------
-std::string ADN_WeatherFireEffects::GetItemName()
-{
-    return ADN_Tr::ConvertFromSensorWeatherModifiers( weatherType_, ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_WeatherFireEffects::CopyFrom
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------

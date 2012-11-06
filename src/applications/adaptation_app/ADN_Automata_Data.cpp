@@ -25,31 +25,11 @@ tools::IdManager ADN_Automata_Data::idManager_;
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::UnitInfos::UnitInfos()
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
-, min_( 0 )
-, max_( -1 )
+    : ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
+    , min_( 0 )
+    , max_( -1 )
 {
     BindExistenceTo( &ptrUnit_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitInfos::GetNodeName
-// Created: APE 2004-12-02
-// -----------------------------------------------------------------------------
-std::string ADN_Automata_Data::UnitInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitInfos::GetItemName
-// Created: APE 2004-12-02
-// -----------------------------------------------------------------------------
-std::string ADN_Automata_Data::UnitInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,9 +83,7 @@ void ADN_Automata_Data::UnitInfos::WriteArchive( xml::xostream& output, const AD
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, nId_( ADN_Automata_Data::idManager_.GetNextId() )
+: nId_( ADN_Automata_Data::idManager_.GetNextId() )
 , ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
 , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos(), 0 )
 , bStrengthRatioFeedbackTime_( false )
@@ -120,9 +98,7 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , nId_( id )
+    : nId_( id )
     , ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
     , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos(), 0 )
     , bStrengthRatioFeedbackTime_( false )
@@ -140,24 +116,6 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos( unsigned int id )
 ADN_Automata_Data::AutomatonInfos::~AutomatonInfos()
 {
     vSubUnits_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatonInfos::GetNodeName
-// Created: APE 2004-12-02
-// -----------------------------------------------------------------------------
-std::string ADN_Automata_Data::AutomatonInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatonInfos::GetItemName
-// Created: APE 2004-12-02
-// -----------------------------------------------------------------------------
-std::string ADN_Automata_Data::AutomatonInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------

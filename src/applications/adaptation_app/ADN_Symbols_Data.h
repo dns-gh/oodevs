@@ -11,7 +11,7 @@
 #define __ADN_Symbols_Data_h_
 
 #include "ADN_Data_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Ref_ABC.h"
 #include "ADN_Tools.h"
 #include "ADN_Types.h"
@@ -39,22 +39,13 @@ class ADN_Symbols_Data : public ADN_Data_ABC
 
 //*****************************************************************************
 public:
-    class SymbolsInfra : public ADN_Ref_ABC
-                       , public ADN_DataTreeNode_ABC
+    class SymbolsInfra : public ADN_RefWithName
     {
     public:
         explicit SymbolsInfra( xml::xistream& input );
         virtual ~SymbolsInfra();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
         bool operator==( const std::string& str );
-
-    public:
-        //! @name Member Data
-        //@{
-        ADN_Type_String strName_;
-        //@}
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< SymbolsInfra >, SymbolsInfra_Vector )
 

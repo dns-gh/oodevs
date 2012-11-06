@@ -89,7 +89,7 @@ void ADN_Units_GUI::Build()
     connect( pTypeCombo_, SIGNAL( activated( const QString& ) ), this, SLOT( OnTypeChanged() ) );
     // Model
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, eEntityType_Pawn );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
     builder.SetToolTip( tr( "The decisional model associated to the unit." ) );
 
     // Decontamination delay

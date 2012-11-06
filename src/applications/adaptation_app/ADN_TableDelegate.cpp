@@ -11,8 +11,10 @@
 #include "ADN_TableDelegate.h"
 #include "ADN_CheckBox.h"
 #include "ADN_ComboBox_Enum.h"
+#include "ADN_ComboBox_Vector.h"
 #include "ADN_EditLine.h"
 #include "ADN_StandardItem.h"
+#include "ADN_TimeEdit.h"
 #include "ADN_TimeField.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/VariantPointer.h"
@@ -86,30 +88,81 @@ const std::pair< double, double >* ADN_TableDelegate::GetColorType( int row, int
 // Name: ADN_TableDelegate::AddDelayEditorOnRow
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
-unsigned int ADN_TableDelegate::AddDelayEditorOnRow( int row )
+unsigned int ADN_TableDelegate::AddDelayEditOnRow( int row )
 {
-    return AddDelayEditor( row, row, -1, -1 );
+    return AddDelayEdit( row, row, -1, -1 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDelegate::AddDelayEditorOnColumn
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
-unsigned int ADN_TableDelegate::AddDelayEditorOnColumn( int col )
+unsigned int ADN_TableDelegate::AddDelayEditOnColumn( int col )
 {
-    return AddDelayEditor( -1, -1, col, col );
+    return AddDelayEdit( -1, -1, col, col );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableDelegate::AddDelayEditor
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
-unsigned int ADN_TableDelegate::AddDelayEditor( int fromRow, int toRow, int fromCol, int toCol )
+unsigned int ADN_TableDelegate::AddDelayEdit( int fromRow, int toRow, int fromCol, int toCol )
 {
-    unsigned int id = GetNewId();
-    CreatePosition( id, fromRow, toRow, fromCol, toCol );
-    delayEditors_.push_back( id );
-    return id;
+    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, delayEdits_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddTimeEditorOnRow
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddTimeEditOnRow( int row )
+{
+    return AddTimeEdit( row, row, -1, -1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddTimeEditorOnColumn
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddTimeEditOnColumn( int col )
+{
+    return AddTimeEdit( -1, -1, col, col );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddTimeEditor
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddTimeEdit( int fromRow, int toRow, int fromCol, int toCol )
+{
+    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, timeEdits_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddComboPtrInVectorOnRow
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddComboPtrInVectorOnRow( int row )
+{
+    return AddComboPtrInVector( row, row, -1, -1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddComboPtrInVectorOnColumn
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddComboPtrInVectorOnColumn( int col )
+{
+    return AddComboPtrInVector( -1, -1, col, col );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddComboPtrInVector
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddComboPtrInVector( int fromRow, int toRow, int fromCol, int toCol )
+{
+    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, comboPtrInVectors_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,20 +209,32 @@ QWidget* ADN_TableDelegate::createEditor( QWidget* parent, const QStyleOptionVie
         editor->GetConnector().Connect( data );
         return editor;
     }
+    else if( std::find( comboPtrInVectors_.begin(), comboPtrInVectors_.end(), position->id_ ) != comboPtrInVectors_.end() )
+    {
+        ADN_ComboBox_Vector* editor = new ADN_ComboBox_Vector( parent );
+        editor->GetConnector().Connect( static_cast< ADN_Connector_Vector_ABC* >( data ) );
+        return editor;
+    }
     else if( std::find( lineEdits_.begin(), lineEdits_.end(), position->id_ ) != lineEdits_.end() )
     {
         ADN_EditLine_String* editor = new ADN_EditLine_String( parent );
         editor->GetConnector().Connect( data );
-        editor->setAlignment( qApp->isRightToLeft() ? Qt::AlignLeft : Qt::AlignRight );
+        editor->setAlignment( qApp->isRightToLeft() ? Qt::AlignRight : Qt::AlignLeft );
         return editor;
     }
     else if( std::find( checkBoxs_.begin(), checkBoxs_.end(), position->id_ ) != checkBoxs_.end() )
     {
         return 0;
     }
-    else if( std::find( delayEditors_.begin(), delayEditors_.end(), position->id_ ) != delayEditors_.end() )
+    else if( std::find( delayEdits_.begin(), delayEdits_.end(), position->id_ ) != delayEdits_.end() )
     {
         ADN_TimeField* editor = new ADN_TimeField( parent );
+        editor->GetConnector().Connect( data );
+        return editor;
+    }
+    else if( std::find( timeEdits_.begin(), timeEdits_.end(), position->id_ ) != timeEdits_.end() )
+    {
+        ADN_TimeEdit* editor = new ADN_TimeEdit( parent );
         editor->GetConnector().Connect( data );
         return editor;
     }
@@ -204,10 +269,14 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnetor = &static_cast< ADN_EditLine_Double* >( editor )->GetConnector();
     else if( const QStringList* element = Find( comboBoxs_, position->id_ ) )
         guiConnetor = &static_cast< ADN_ComboBox_Enum* >( editor )->GetConnector();
+    else if( std::find( comboPtrInVectors_.begin(), comboPtrInVectors_.end(), position->id_ ) != comboPtrInVectors_.end() )
+        guiConnetor = &static_cast< ADN_ComboBox_Vector* >( editor )->GetConnector();
     else if( std::find( lineEdits_.begin(), lineEdits_.end(), position->id_ ) != lineEdits_.end() )
         guiConnetor = &static_cast< ADN_EditLine_String* >( editor )->GetConnector();
-    else if( std::find( delayEditors_.begin(), delayEditors_.end(), position->id_ ) != delayEditors_.end() )
+    else if( std::find( delayEdits_.begin(), delayEdits_.end(), position->id_ ) != delayEdits_.end() )
         guiConnetor = &static_cast< ADN_TimeField* >( editor )->GetConnector();
+    else if( std::find( timeEdits_.begin(), timeEdits_.end(), position->id_ ) != timeEdits_.end() )
+        guiConnetor = &static_cast< ADN_TimeEdit* >( editor )->GetConnector();
     if( guiConnetor )
         guiConnetor->Disconnect( data );
 }

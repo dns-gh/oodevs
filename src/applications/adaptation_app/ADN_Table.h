@@ -54,6 +54,8 @@ protected:
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags = 0 );
     template< typename Enum, int Max >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data,  const QStringList& content, Qt::ItemFlags flags = 0 );
+    template< typename T >
+    QStandardItem* AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags = 0 );
 
     QStandardItem* GetItemFromIndex( const QModelIndex& index ) const;
 
@@ -185,7 +187,33 @@ QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_Type
     return item;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::AddItem
+// Created: ABR 2012-11-05
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags /*= 0*/ )
+{
+    if( !data || !parentData )
+        return 0;
 
+    // Item creation
+    ADN_StandardItem* item = new ADN_StandardItem( parentData, ADN_StandardItem::ePtrInVector );
+    dataModel_.setItem( row, col, item );
+
+    // Flags
+    item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | flags );
+
+    // Variant
+    QVariant* variant = new QVariant();
+    variant->setValue( kernel::VariantPointer( data ) );
+    item->setData( *variant, gui::Roles::SafeRole ); // $$$$ ABR 2012-10-25: Use SafeRole to stock the ADN_TypePtrInVector<> pointer
+
+    // ADN Connection
+    item->Connect( data );
+    return item;
+}
 
 
 

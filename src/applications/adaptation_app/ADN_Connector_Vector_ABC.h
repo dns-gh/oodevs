@@ -38,7 +38,7 @@ class ADN_Connector_Vector_ABC : public ADN_Connector_ABC
     Q_OBJECT
 
 public:
-    explicit ADN_Connector_Vector_ABC( const char* szName = 0 );
+             ADN_Connector_Vector_ABC();
     virtual ~ADN_Connector_Vector_ABC();
 
     //! @name Connection
@@ -83,8 +83,8 @@ public:
     //@}
 
     virtual void SetDataPrivate( void* pData );
-    virtual bool AddItemPrivate( void* pObj, bool bCreateCommand = false );
-    virtual bool RemItemPrivate( void* pObj, bool bCreateCommand = false );
+    virtual bool AddItemPrivate( void* pObj );
+    virtual bool RemItemPrivate( void* pObj);
     virtual void SwapItemPrivate( int i, int j );
     virtual void SortPrivate( ADN_BinaryPredicateWrapper& lessComp );
     virtual void ClearPrivate( bool bInConnection = false );

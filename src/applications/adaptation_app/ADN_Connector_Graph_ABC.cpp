@@ -63,7 +63,7 @@ void ADN_Connector_Graph_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pT
 // Name: ADN_Connector_Graph_ABC::AddItemPrivate
 // Created: APE 2004-12-15
 // -----------------------------------------------------------------------------
-bool ADN_Connector_Graph_ABC::AddItemPrivate( void* pObj, bool /*bCreateCommand*/ )
+bool ADN_Connector_Graph_ABC::AddItemPrivate( void* pObj )
 {
     if( pObj == 0 )
         return false;
@@ -75,7 +75,7 @@ bool ADN_Connector_Graph_ABC::AddItemPrivate( void* pObj, bool /*bCreateCommand*
 // Name: ADN_Connector_Graph_ABC::RemItemPrivate
 // Created: APE 2004-12-15
 // -----------------------------------------------------------------------------
-bool ADN_Connector_Graph_ABC::RemItemPrivate(void* pObj, bool /*bCreateCommand*/ )
+bool ADN_Connector_Graph_ABC::RemItemPrivate(void* pObj )
 {
     if( pObj == 0 )
         return false;

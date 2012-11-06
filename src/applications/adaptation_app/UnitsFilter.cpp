@@ -15,8 +15,8 @@
 // Name: UnitsFilter constructor
 // Created: LGY 2011-11-03
 // -----------------------------------------------------------------------------
-UnitsFilter::UnitsFilter( QWidget* pParent /*= 0*/, const char* szName /*= 0*/ )
-    : ADN_ComboBox_Vector< ADN_Units_Data::UnitInfos >( pParent, szName )
+UnitsFilter::UnitsFilter( QWidget* pParent /*= 0*/ )
+    : ADN_ComboBox_Vector( pParent )
 {
     // NOTHING
 }

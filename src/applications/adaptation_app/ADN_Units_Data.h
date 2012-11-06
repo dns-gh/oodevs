@@ -14,6 +14,7 @@
 
 #include "ADN_Composantes_Data.h"
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Enums.h"
 #include "ADN_Models_Data.h"
 #include "ADN_Types.h"
@@ -30,16 +31,11 @@ class ADN_Units_Data : public ADN_Data_ABC
 public:
     //*****************************************************************************
     class ComposanteInfos : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
     {
     public:
         ComposanteInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         ComposanteInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output, bool bIsAutonomous ) const;
 
@@ -73,17 +69,12 @@ public:
     //*****************************************************************************
 
     class StockLogThresholdInfos : public ADN_Ref_ABC
-                                 , public ADN_DataTreeNode_ABC
     {
 
     public:
         explicit StockLogThresholdInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         StockLogThresholdInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
@@ -95,16 +86,11 @@ public:
 
     //*****************************************************************************
     class StockInfos : public ADN_Ref_ABC
-                     , public ADN_DataTreeNode_ABC
     {
     public:
         StockInfos();
 
         void CopyFrom( StockInfos& src );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         void ReadArchive( xml::xistream& input, ADN_Type_Bool& stockThresholds );
         void ReadStock( xml::xistream& input, ADN_Type_Bool& stockThresholds );
         void WriteArchive( const std::string& strName, xml::xostream& output ) const;
@@ -114,13 +100,10 @@ public:
     };
 
     //*****************************************************************************
-    class PostureInfos : public ADN_DataTreeNode_ABC
+    class PostureInfos
     {
     public:
         explicit PostureInfos( const E_UnitPosture& posture );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
@@ -149,16 +132,12 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<PostureInfos>, PostureInfos_Vector )
 
     //*****************************************************************************
-    class PointInfos : public ADN_DataTreeNode_ABC
+    class PointInfos
     {
     public:
         PointInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         PointInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
@@ -169,8 +148,7 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< PointInfos >, PointInfos_Vector )
 
     //*****************************************************************************
-    class UnitInfos : public ADN_Ref_ABC
-                    , public ADN_DataTreeNode_ABC
+    class UnitInfos : public ADN_RefWithName
     {
     public:
                  UnitInfos();
@@ -178,12 +156,7 @@ public:
         virtual ~UnitInfos();
 
         void Initialize();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         UnitInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void ReadEquipment( xml::xistream& input );
         void ReadCrew( xml::xistream& input );
@@ -191,13 +164,11 @@ public:
         void ReadPointDistance( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
         void CleanupNature();
-
         bool IsValidDatabase();
 
     public:
         ADN_Type_Int                                                nId_;
         ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>            eTypeId_;
-        ADN_Type_String                                             strName_;
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos>       ptrModel_;
         ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>                eNatureLevel_;
         ADN_Type_Enum<E_NatureAtlasType, eNbrNatureAtlasType>       eNatureAtlas_;

@@ -39,7 +39,7 @@ ADN_Sensors_Environments_GUI::~ADN_Sensors_Environments_GUI()
 void ADN_Sensors_Environments_GUI::InternalEmit()
 {
     if( ADN_Sensors_Data::ModificatorEnvironmentInfos* data = static_cast< ADN_Sensors_Data::ModificatorEnvironmentInfos* >( GetSelectedData() ) )
-        emit ContentChanged( data->GetItemName(), data->rCoeff_.GetData() );
+        emit ContentChanged( ADN_Tr::ConvertFromVisionObject( data->eType_, ENT_Tr_ABC::eToTr ), data->rCoeff_.GetData() );
 }
 
 // -----------------------------------------------------------------------------

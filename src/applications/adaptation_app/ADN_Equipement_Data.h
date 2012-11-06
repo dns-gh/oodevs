@@ -11,6 +11,7 @@
 #define __ADN_Equipement_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
@@ -37,8 +38,7 @@ public:
     class ResourceInfos;
 
 // *****************************************************************************
-    class CategoryInfo : public ADN_Ref_ABC
-                       , public ADN_DataTreeNode_ABC
+    class CategoryInfo : public ADN_RefWithName
     {
 
     public:
@@ -46,11 +46,7 @@ public:
         explicit CategoryInfo( ResourceInfos& parentDotation );
                  CategoryInfo( ResourceInfos& parentDotation, unsigned int id );
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         virtual CategoryInfo* CreateCopy();
-
         virtual void ReadArchive( xml::xistream& );
         virtual void WriteArchive( xml::xostream& ) const;
         virtual void WriteContent( xml::xostream& ) const;
@@ -59,7 +55,6 @@ public:
     public:
         ADN_Type_Int    nId_;
         ResourceInfos&  parentResource_;
-        ADN_Type_String strName_;
         ADN_Type_String category_;
         ADN_Type_String strCodeEMAT6_;
         ADN_Type_String strCodeEMAT8_;
@@ -76,13 +71,9 @@ public:
 
 //*****************************************************************************
     class ModificatorPostureInfos : public ADN_Ref_ABC
-                                  , public ADN_DataTreeNode_ABC
     {
     public:
         explicit ModificatorPostureInfos(const E_UnitPosture& e );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
@@ -109,7 +100,6 @@ public:
 
 // *****************************************************************************
     class IndirectAmmoInfos : public ADN_Ref_ABC
-                            , public ADN_DataTreeNode_ABC
     {
     public:
         IndirectAmmoInfos();
@@ -196,8 +186,7 @@ public:
     typedef ADN_Type_Vector_ABC<AmmoCategoryInfo> T_AmmoCategoryInfo_Vector;
 
 // *****************************************************************************
-    class ResourceInfos : public ADN_Ref_ABC
-                        , public ADN_DataTreeNode_ABC
+    class ResourceInfos : public ADN_RefWithName
     {
 
     public:
@@ -205,9 +194,6 @@ public:
         virtual ~ResourceInfos();
 
         void Reset();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         T_CategoryInfos_Vector& GetCategories();
         CategoryInfo* FindCategory( const std::string& strName );
@@ -218,7 +204,6 @@ public:
 
     public:
         E_DotationFamily       nType_;
-        ADN_Type_String        strName_;
         T_CategoryInfos_Vector categories_;
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<ResourceInfos>, ResourceInfos_Vector );

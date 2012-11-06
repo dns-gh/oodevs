@@ -27,7 +27,7 @@ namespace bfs = boost::filesystem;
 ADN_Missions_Mission::ADN_Missions_Mission()
     : id_( ADN_Missions_Data::idManager_.GetNextId() )
 {
-    symbol_.SetParentNode( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,6 @@ ADN_Missions_Mission::ADN_Missions_Mission( unsigned int id )
     : id_( id )
 {
     ADN_Missions_Data::idManager_.Lock( id );
-    symbol_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +99,7 @@ void ADN_Missions_Mission::ReadArchive( xml::xistream& input, std::size_t contex
         >> xml::list( "parameter", boost::bind( &ADN_Missions_Mission::ReadParameter, this , _1,  boost::ref( index ), contextLength ) );
     const std::string code = symbol.empty() ? " - " : symbol;
     symbol_.SetVector( drawings.GetCategoryDrawings( "tasks" ) );
-    symbol_.SetData( drawings.GetDrawing( code ), false );
+    symbol_.SetData( drawings.GetDrawing( code ) );
     ReadMissionSheet( baseDir, missionDir );
 }
 

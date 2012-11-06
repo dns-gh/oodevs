@@ -122,8 +122,8 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT8" ), vConnectors[ eGenEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eGenEMAT6Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code LFRIL" ), vConnectors[eGenLFRILCode ] );
-    builder.AddField< ADN_ComboBox_Vector< helpers::ResourceNatureInfos > >( pInfoHolder, tr( "Nature" ), vConnectors[ eGenNature] );
-    builder.AddField< ADN_ComboBox_Vector< helpers::LogisticSupplyClass > >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Nature" ), vConnectors[ eGenNature] );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Usable within a resource network" ), vConnectors[ eGenNetworkUsable ] );
     vNetworkUsableCheckBoxs_.push_back( networkUsableCheckBox );
     connect( networkUsableCheckBox, SIGNAL( stateChanged( int ) ), SLOT( NetworkUsableActivated( int ) ) );
@@ -188,8 +188,8 @@ void ADN_Equipement_GUI::BuildAmmunition()
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eEMAT6Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code LFRIL" ), vConnectors[ eLFRILCode ] );
     builder.AddEnumField( pInfoHolder, tr( "Type" ), vConnectors[ eType ] );
-    builder.AddField< ADN_ComboBox_Vector< helpers::ResourceNatureInfos > >( pInfoHolder, tr( "Nature" ), vConnectors[ eNature ] );
-    builder.AddField< ADN_ComboBox_Vector< helpers::LogisticSupplyClass > >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Nature" ), vConnectors[ eNature ] );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Usable within a resource network" ), vConnectors[ eNetworkUsable ] );
     networkUsableCheckBox->setObjectName( strClassName_ + "AmmunitionUsable" );
     vNetworkUsableCheckBoxs_.push_back( networkUsableCheckBox );
@@ -211,9 +211,9 @@ void ADN_Equipement_GUI::BuildAmmunition()
 
     QGroupBox* pAttritionVisualisation = new QGroupBox( tr( "Simulation" ) );
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
-    pArmorCombo_ = builder.AddField< ADN_ComboBox_Vector< helpers::ArmorInfos > >( pComboGroup, tr( "Armor-Plating" ), vConnectors[ eArmor ] );
+    pArmorCombo_ = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Armor-Plating" ), vConnectors[ eArmor ] );
     connect( pArmorCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
-    pMaterialCombo_ = builder.AddField< ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos > >( pComboGroup, tr( "Urban material" ), vConnectors[ eMaterial ] );
+    pMaterialCombo_ = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Urban material" ), vConnectors[ eMaterial ] );
     connect( pMaterialCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
     pAttritionGraph_ = new ADN_Equipement_AttritionGraph( pAttritionVisualisation );
     vConnectors[ eAttritionGraph ] = &pAttritionGraph_->GetConnector();
@@ -274,7 +274,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
 
         // Effect (object) parameters
         pEffectParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect ammo parameters" ), pEffectsInfo );
-        builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data_ObjectInfos> >( pEffectParametersGroup_, tr( "Created object" ), vConnectors[ eEffectType ] );
+        builder.AddField< ADN_ComboBox_Vector >( pEffectParametersGroup_, tr( "Created object" ), vConnectors[ eEffectType ] );
         builder.AddField< ADN_TimeField >( pEffectParametersGroup_, tr( "Span" ), vConnectors[ eEffectLifetime ] );
 
         // Mine parameters

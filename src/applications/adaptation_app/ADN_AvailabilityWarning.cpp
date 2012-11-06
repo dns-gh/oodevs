@@ -30,24 +30,6 @@ ADN_AvailabilityWarning::~ADN_AvailabilityWarning()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_AvailabilityWarning::GetNodeName
-// Created: SBO 2006-08-04
-// -----------------------------------------------------------------------------
-std::string ADN_AvailabilityWarning::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_AvailabilityWarning::GetItemName
-// Created: SBO 2006-08-04
-// -----------------------------------------------------------------------------
-std::string ADN_AvailabilityWarning::GetItemName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_AvailabilityWarning::ReadArchive
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------

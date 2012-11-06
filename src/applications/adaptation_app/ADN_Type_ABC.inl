@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-#include "ADN_ChangeValueCommand_Helper.h"
 #include "ADN_Workspace.h"
 
 //-----------------------------------------------------------------------------
@@ -17,7 +16,6 @@
 template <class T>
 ADN_Type_ABC<T>::ADN_Type_ABC()
     : ADN_Connector_ABC()
-    , bUndoAvailable_( true )
 {
     // NOTHING
 }
@@ -30,7 +28,6 @@ template <class T>
 ADN_Type_ABC<T>::ADN_Type_ABC( const T& val )
     : ADN_Connector_ABC()
     , val_( val )
-    , bUndoAvailable_( true )
 {
     // NOTHING
 }
@@ -52,7 +49,7 @@ ADN_Type_ABC<T>::~ADN_Type_ABC()
 template <class T>
 ADN_Type_ABC<T>& ADN_Type_ABC<T>::operator =(const T& val)
 {
-    SetData(val,false);
+    SetData( val );
     return *this;
 }
 
@@ -91,15 +88,10 @@ void ADN_Type_ABC<T>::Initialize( ADN_Connector_ABC& dest ) const
 // Created: JDY 03-06-23
 //-----------------------------------------------------------------------------
 template <class T>
-void ADN_Type_ABC<T>::SetData(const T& data, bool bCanBeUndone )
+void ADN_Type_ABC<T>::SetData(const T& data )
 {
     if (val_!=data)
     {
-        if( bCanBeUndone && bUndoAvailable_ )
-        {
-            ADN_Workspace::GetWorkspace().AddCommand( ADN_ChangeValueCommand_Chooser< T >::CreateCommand( *this, val_, data ) );
-        }
-
         val_ = data;
         // emit signal
         emit DataChanged((void*)&val_);
@@ -124,39 +116,5 @@ const T ADN_Type_ABC<T>::GetData() const
 template <class T>
 void  ADN_Type_ABC<T>::SetDataPrivate(void *data)
 {
-    SetData(*static_cast< T* >( data ),true);
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_ABC::GetName
-/** @return
-*/
-// Created: AGN 2004-05-13
-// -----------------------------------------------------------------------------
-template <class T>
-std::string ADN_Type_ABC< T >::GetNodeName()
-{
-    return strDataName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_ABC::SetDataName
-/** @param  strName
-*/
-// Created: AGN 2004-05-13
-// -----------------------------------------------------------------------------
-template <class T>
-void ADN_Type_ABC< T >::SetDataName( const std::string& strName )
-{
-    strDataName_ = strName;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_ABC::SetUndoAvailable
-// Created: AGN 2004-06-15
-// -----------------------------------------------------------------------------
-template <class T>
-void ADN_Type_ABC< T >::SetUndoAvailable( bool b )
-{
-    bUndoAvailable_ = b;
+    SetData(*static_cast< T* >( data ));
 }

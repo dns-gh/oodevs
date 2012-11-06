@@ -34,7 +34,7 @@ public:
     virtual ~ADN_Connector_AttritionGraph()
     {}
 
-    bool AddItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
+    bool AddItemPrivate( void* pItem )
     {
         if( pItem == 0 )
             return false;
@@ -48,7 +48,7 @@ public:
         graph_->ClearAttritions();
     }
 
-    bool RemItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
+    bool RemItemPrivate( void* pItem )
     {
         graph_->RemoveAttrition( *( helpers::AttritionInfos* ) pItem );
         return true;

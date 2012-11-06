@@ -23,30 +23,11 @@
 // Created: APE 2005-03-14
 // -----------------------------------------------------------------------------
 ADN_Maintenance_Data::WorkingSchemeInfo::WorkingSchemeInfo( unsigned int nIdx )
-: ADN_Ref_ABC         ()
-, ADN_DataTreeNode_ABC()
-, nIdx_               ( nIdx )
-, nWorkTime_          ( 0 )
-, warningDelay_       ( "0s" )
+    : nIdx_               ( nIdx )
+    , nWorkTime_          ( 0 )
+    , warningDelay_       ( "0s" )
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: WorkingSchemeInfo::GetNodeName
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-std::string ADN_Maintenance_Data::WorkingSchemeInfo::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: WorkingSchemeInfo::GetItemName
-// Created: APE 2005-03-14
-// -----------------------------------------------------------------------------
-std::string ADN_Maintenance_Data::WorkingSchemeInfo::GetItemName()
-{
-    return std::string();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

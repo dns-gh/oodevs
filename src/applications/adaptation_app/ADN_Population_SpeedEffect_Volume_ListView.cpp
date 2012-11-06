@@ -22,7 +22,7 @@ class ADN_Sizes : public ADN_Connector_ListView_ABC
 
 public:
     explicit ADN_Sizes( ADN_Population_SpeedEffect_Volume_ListView& list )
-        : ADN_Connector_ListView_ABC( list, "ADN_Sizes" )
+        : ADN_Connector_ListView_ABC( list )
     {
         // NOTHING
     }

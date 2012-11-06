@@ -30,29 +30,16 @@
 // Created: AGN 2004-05-18
 // -----------------------------------------------------------------------------
 ADN_Models_Data::OrderInfos::OrderInfos()
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), 0 )
+    : fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), 0 )
 {
     this->BindExistenceTo( &fragOrder_ );
 }
 
 ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_FragOrder* fragorder, const std::string& name )
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), fragorder )
-, strName_( name )
+    : ADN_RefWithName( name )
+    , fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), fragorder )
 {
     this->BindExistenceTo( &fragOrder_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: OrderInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Models_Data::OrderInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -100,13 +87,8 @@ ADN_Models_Data::OrderInfos* ADN_Models_Data::OrderInfos::CreateCopy()
 // Created: AGN 2003-12-03
 // -----------------------------------------------------------------------------
 ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , mission_( missions, 0 )
+    : mission_( missions, 0 )
 {
-    vOrders_.SetItemTypeName( "un ordre" );
-    vOrders_.SetNodeName( "la liste des ordres" );
-    vOrders_.SetParentNode( *this );
     this->BindExistenceTo( &mission_ );
 }
 
@@ -117,25 +99,6 @@ ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_Vector
 ADN_Models_Data::MissionInfos::~MissionInfos()
 {
     vOrders_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Models_Data::MissionInfos::GetItemName()
-{
-    return strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Models_Data::MissionInfos::GetNodeName()
-{
-    std::string strResult( "de la mission " );
-    return strResult + mission_.GetNodeName();
 }
 
 // -----------------------------------------------------------------------------
@@ -212,8 +175,7 @@ namespace
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
 ADN_Models_Data::ModelInfos::ModelInfos()
-    : ADN_Ref_ABC()
-    , missions_ ( dummy )
+    : missions_ ( dummy )
     , isMasalife_( false )
 {
     // NOTHING
@@ -224,23 +186,12 @@ ADN_Models_Data::ModelInfos::ModelInfos()
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
 ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions )
-    : ADN_Ref_ABC()
-    , missions_( missions )
+    : missions_( missions )
     , strDiaType_( "T_Pion" )
     , strFile_( "DEC\\For Tests\\Empty\\Files.hal" )
     , isMasalife_( false )
 {
-    strName_.SetDataName( "le nom" );
-    strName_.SetParentNode( *this );
-    strDiaType_.SetDataName( "le type DirectIA" );
-    strDiaType_.SetParentNode( *this );
-    strFile_.SetDataName( "le fichier de script" );
-    strFile_.SetParentNode( *this );
-    isMasalife_.SetDataName( "is masalife" );
-    isMasalife_.SetParentNode( *this );
-
-    vMissions_.SetParentNode( *this );
-    vMissions_.SetItemTypeName( "une mission" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -250,16 +201,6 @@ ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& mi
 ADN_Models_Data::ModelInfos::~ModelInfos()
 {
     vMissions_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Models_Data::ModelInfos::GetNodeName()
-{
-    std::string strResult( "du modèle " );
-    return strResult + strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -284,15 +225,6 @@ void ADN_Models_Data::ModelInfos::RemoveFragOder( const std::string& order )
             vFragOrders_.RemItem( *it );
             break;
         }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Models_Data::ModelInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -393,9 +325,7 @@ void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xo
 //-----------------------------------------------------------------------------
 ADN_Models_Data::ADN_Models_Data()
 {
-    vUnitModels_.SetItemTypeName( "un modèle" );
-    vAutomataModels_.SetItemTypeName( "un modèle" );
-    vPopulationModels_.SetItemTypeName( "un modèle" );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

@@ -35,8 +35,8 @@ protected:
     virtual void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
 
     virtual typename T::T_ItemType* CreateItem(void * obj) = 0;
-    virtual bool  AddItemPrivate(void *obj,bool bCreateCommand=false);
-    virtual bool  RemItemPrivate(void *item,bool bCreateCommand=false);
+    virtual bool  AddItemPrivate( void* obj );
+    virtual bool  RemItemPrivate( void* item );
     virtual void  ClearPrivate(bool bInConnection=false);
     virtual void  SetDataPrivate(void *data);
     virtual void* SetNdxChanged(int ndx);

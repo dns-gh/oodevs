@@ -11,7 +11,7 @@
 #define __ADN_UnitSymbols_Data_h_
 
 #include "ADN_Data_ABC.h"
-#include "ADN_DataTreeNode_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Ref_ABC.h"
 #include "ADN_Types.h"
 #include "clients_kernel/Types.h"
@@ -58,8 +58,7 @@ namespace zip
 class ADN_UnitSymbols_Data : public ADN_Data_ABC
 {
 public:
-    class UnitSymbolInfo : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+    class UnitSymbolInfo : public ADN_RefWithName
     {
     public:
         //! @name Constructors/Destructor
@@ -70,8 +69,6 @@ public:
 
         //! @name Accessors
         //@{
-        virtual std::string GetNodeName();
-        std::string GetItemName();
         const QPixmap& GetPixmap() const;
         const std::string GetCode() const;
         const std::string GetGeometry() const;
@@ -96,7 +93,6 @@ public:
     public:
         //! @name Public member data
         //@{
-        ADN_Type_String strName_;
         std::string fileName_;
         //@}
     };

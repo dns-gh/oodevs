@@ -22,18 +22,14 @@ namespace
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos( const std::string& type )
-    : ADN_Ref_ABC()
-    , strType_   ( type )
+    : strType_   ( type )
     , pointSize_ ( 0. )
 {
     for( int i = 0; i < 4; ++i )
     {
-        symbols_[ i ].SetParentNode( *this );
-        geometries_[ i ].SetParentNode( *this );
         geometries_[ i ] = false;
     }
 
-    description_.SetParentNode( *this );
     InitializeCapacities();
 }
 
@@ -42,15 +38,12 @@ ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos( const std::string& t
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos()
-    : ADN_Ref_ABC()
-    , strType_   ()
+    : strType_   ()
     , pointSize_ ( 0. )
 {
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
     for( int i = 0; i < 4; ++i )
     {
-        symbols_[ i ].SetParentNode( *this );
-        geometries_[ i ].SetParentNode( *this );
         geometries_[ i ] = false;
         symbols_[ i ].SetVector( drawingsData.GetGeometryDrawings( locations[ i ], "graphics" ) );
     }
@@ -121,24 +114,6 @@ void ADN_Objects_Data_ObjectInfos::InitializeCapacities()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data_ObjectInfos::GetNodeName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Objects_Data_ObjectInfos::GetItemName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data_ObjectInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Objects_Data_ObjectInfos::GetNodeName()
-{
-    return std::string( "de l'objet " ) + strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ReadCapacityArchive
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
@@ -162,7 +137,7 @@ void ADN_Objects_Data_ObjectInfos::ReadGeometry( xml::xistream& xis )
         if( locations[ i ] == type )
         {
             ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-            symbols_[ i ].SetData( drawingsData.GetDrawing( code ), false );
+            symbols_[ i ].SetData( drawingsData.GetDrawing( code ) );
             geometries_[ i ] = true;
             return;
         }

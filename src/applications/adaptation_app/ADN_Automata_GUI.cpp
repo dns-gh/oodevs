@@ -82,7 +82,7 @@ void ADN_Automata_GUI::Build()
     builder.AddEnumField( pInfoHolder, tr( "Type" ), vInfosConnectors[eAgentType] );
     // Model
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, eEntityType_Automat );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
     // Unit
     pFilter_ = builder.AddField< UnitsFilter >( pInfoHolder, tr( "Command post" ), vInfosConnectors[eUnit] );
     // Feedback time

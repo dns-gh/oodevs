@@ -30,8 +30,7 @@ tools::IdManager ADN_Composantes_Data::idManager_;
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::AmbulanceInfos::AmbulanceInfos()
-    : ADN_DataTreeNode_ABC()
-    , transportSkills_    ()
+    : transportSkills_    ()
     , bTransportNBC_      ( false )
     , bTransportShock_    ( false )
     , rCapacity_          ( 0 )
@@ -40,24 +39,6 @@ ADN_Composantes_Data::AmbulanceInfos::AmbulanceInfos()
 {
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         transportSkills_[n] = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AmbulanceInfos::GetNodeName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::AmbulanceInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AmbulanceInfos::GetItemName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::AmbulanceInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -128,8 +109,7 @@ void ADN_Composantes_Data::AmbulanceInfos::WriteArchive( const std::string& sect
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::LogHealthInfos::LogHealthInfos()
-    : ADN_DataTreeNode_ABC  ()
-    , bIsAmbulance_         ( false )
+    : bIsAmbulance_         ( false )
     , bIsAmbulanceReleve_   ( false )
     , bIsDoctor_            ( false )
     , bIsSortingDoctor_     ( false )
@@ -139,24 +119,6 @@ ADN_Composantes_Data::LogHealthInfos::LogHealthInfos()
 {
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         doctorSkills_[n] = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogHealthInfos::GetNodeName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::LogHealthInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogHealthInfos::GetItemName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::LogHealthInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -264,32 +226,13 @@ void ADN_Composantes_Data::LogHealthInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::NTIInfos::NTIInfos( const std::string& strName )
-: ADN_DataTreeNode_ABC  ()
-, strName_              ( strName )
-, bIsPresent_           ( false )
-, bHasMaxRepairTime_    ( false )
-, maxRepairTime_        ( "0s" )
-, bCanRepairEA_         ( false )
-, bCanRepairM_          ( false )
+    : strName_              ( strName )
+    , bIsPresent_           ( false )
+    , bHasMaxRepairTime_    ( false )
+    , maxRepairTime_        ( "0s" )
+    , bCanRepairEA_         ( false )
+    , bCanRepairM_          ( false )
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: NTIInfos::GetNodeName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::NTIInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: NTIInfos::GetItemName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::NTIInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -350,8 +293,7 @@ void ADN_Composantes_Data::NTIInfos::WriteArchive( xml::xostream& output ) const
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::LogMaintenanceInfos::LogMaintenanceInfos()
-    : ADN_DataTreeNode_ABC()
-    , bIsTower_           ( false )
+    : bIsTower_           ( false )
     , rCapacity_          ( 0 )
     , loadTime_           ( "0s" )
     , unloadTime_         ( "0s" )
@@ -359,24 +301,6 @@ ADN_Composantes_Data::LogMaintenanceInfos::LogMaintenanceInfos()
     , NTI2Infos_          ( "NTI2" )
     , NTI3Infos_          ( "NTI3" )
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogMaintenanceInfos::GetNodeName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::LogMaintenanceInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogMaintenanceInfos::GetItemName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::LogMaintenanceInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -455,31 +379,12 @@ void ADN_Composantes_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& out
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
-: ADN_DataTreeNode_ABC()
-, bIsCarrier_         ( false )
-, rWeight_            ( 0 )
-, rVolume_            ( 0 )
-, ptrResourceNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
+    : bIsCarrier_         ( false )
+    , rWeight_            ( 0 )
+    , rVolume_            ( 0 )
+    , ptrResourceNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
-    ptrResourceNature_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogSupplyInfos::GetNodeName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::LogSupplyInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogSupplyInfos::GetItemName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::LogSupplyInfos::GetItemName()
-{
-    return std::string();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -538,29 +443,10 @@ void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::LogInfos::LogInfos()
-: ADN_DataTreeNode_ABC ()
-, bHasHealthInfos_     ( false )
-, bHasMaintenanceInfos_( false )
-, bHasSupplyInfos_     ( false )
+    : bHasHealthInfos_     ( false )
+    , bHasMaintenanceInfos_( false )
+    , bHasSupplyInfos_     ( false )
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogInfos::GetNodeName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::LogInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogInfos::GetItemName
-// Created: APE 2005-03-11
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::LogInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -632,29 +518,9 @@ void ADN_Composantes_Data::LogInfos::WriteArchive( xml::xostream& output ) const
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::BreakdownInfos::BreakdownInfos()
-: ADN_Ref_ABC         ()
-, ADN_DataTreeNode_ABC()
-, rPercentage_        ( 0 )
+    : rPercentage_        ( 0 )
 {
     BindExistenceTo( &ptrBreakdown_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BreakdownInfos::GetNodeName
-// Created: APE 2005-04-27
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::BreakdownInfos::GetNodeName()
-{
-    return std::string( "" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BreakdownInfos::GetItemName
-// Created: APE 2005-04-27
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::BreakdownInfos::GetItemName()
-{
-    return std::string( "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -706,6 +572,7 @@ void ADN_Composantes_Data::BreakdownInfos::WriteArchive( const std::string& orig
 ADN_Composantes_Data::BreakdownGroupInfos::BreakdownGroupInfos( const std::string& strName )
 : strName_       ( strName )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -715,24 +582,6 @@ ADN_Composantes_Data::BreakdownGroupInfos::BreakdownGroupInfos( const std::strin
 ADN_Composantes_Data::BreakdownGroupInfos::~BreakdownGroupInfos()
 {
     vBreakdowns_.Delete();
-}
-
-// -----------------------------------------------------------------------------
-// Name: BreakdownGroupInfos::GetNodeName
-// Created: APE 2005-04-27
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::BreakdownGroupInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: BreakdownGroupInfos::GetItemName
-// Created: APE 2005-04-27
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::BreakdownGroupInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -810,29 +659,7 @@ ADN_Composantes_Data::SpeedInfos::SpeedInfos( E_Location nTypeTerrain )
     , rSpeed_       (0)
     , nConstruction_( 100 )
 {
-    rSpeed_.SetDataName( "la vitesse" );
-    rSpeed_.SetParentNode( *this );
-    nConstruction_.SetDataName( "la vitesse de construction" );
-    nConstruction_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpeedInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::SpeedInfos::GetNodeName()
-{
-    std::string strResult( "sur terrain de type " );
-    return strResult + ENT_Tr::ConvertFromLocation( nTypeTerrain_, ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpeedInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::SpeedInfos::GetItemName()
-{
-    return std::string();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -869,27 +696,6 @@ ADN_Composantes_Data::SensorInfos::SensorInfos()
 ,   rHeight_(0)
 {
     BindExistenceTo(&ptrSensor_);
-    rHeight_.SetDataName( "la hauteur" );
-    rHeight_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SensorInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::SensorInfos::GetNodeName()
-{
-    std::string strResult( "du senseur " );
-    return strResult + ptrSensor_.GetData()->strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SensorInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::SensorInfos::GetItemName()
-{
-    return ptrSensor_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -936,29 +742,9 @@ void ADN_Composantes_Data::SensorInfos::WriteArchive( xml::xostream& output ) co
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::RadarInfos::RadarInfos()
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, ptrRadar_( ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.vRadars_, 0 )
+    : ptrRadar_( ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.vRadars_, 0 )
 {
     BindExistenceTo( &ptrRadar_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RadarInfos::GetNodeName
-// Created: APE 2005-05-03
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::RadarInfos::GetNodeName()
-{
-    return std::string( "" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RadarInfos::GetItemName
-// Created: APE 2005-05-03
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::RadarInfos::GetItemName()
-{
-    return std::string( "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1004,8 +790,7 @@ void ADN_Composantes_Data::RadarInfos::WriteArchive( xml::xostream& output ) con
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::WeaponInfos::WeaponInfos()
-: ADN_Ref_ABC()
-, ptrWeapon_ ( ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos(), 0 )
+    : ptrWeapon_ ( ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos(), 0 )
 {
     BindExistenceTo(&ptrWeapon_);
 }
@@ -1015,30 +800,10 @@ ADN_Composantes_Data::WeaponInfos::WeaponInfos()
 // Created: APE 2005-01-24
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::WeaponInfos::WeaponInfos( ADN_Weapons_Data::WeaponInfos& weapon )
-: ADN_Ref_ABC()
-, ptrWeapon_ ( ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos(), &weapon, "" )
-, strName_   ( weapon.strName_.GetData() )
+    : ADN_RefWithName( weapon )
+    , ptrWeapon_ ( ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponInfos(), &weapon )
 {
     BindExistenceTo(&ptrWeapon_);
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeaponInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::WeaponInfos::GetNodeName()
-{
-    std::string strResult( "de l'arme " );
-    return strResult + ptrWeapon_.GetData()->GetNodeName();
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeaponInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::WeaponInfos::GetItemName()
-{
-    return ((ADN_Weapons_Data::WeaponInfos*)ptrWeapon_.GetData())->ptrLauncher_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -1091,23 +856,6 @@ ADN_Composantes_Data::HumanProtectionInfos::HumanProtectionInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::GetNodeName
-// Created: JCR 2009-05-17
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::HumanProtectionInfos::GetNodeName()
-{
-    return "human-protection";
-}
-// -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::GetItemName
-// Created: JCR 2009-05-17
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::HumanProtectionInfos::GetItemName()
-{
-    return "nothing";
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::CopyFrom
 // Created: JCR 2009-05-17
 // -----------------------------------------------------------------------------
@@ -1140,8 +888,7 @@ void ADN_Composantes_Data::HumanProtectionInfos::WriteArchive( xml::xostream& ou
 // Created: FDS 10-02-24
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
-: ADN_Ref_ABC()
-, ptrActiveProtections_ ( ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos(), 0 )
+    : ptrActiveProtections_ ( ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos(), 0 )
 {
     BindExistenceTo(&ptrActiveProtections_);
 }
@@ -1151,30 +898,10 @@ ADN_Composantes_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::ActiveProtectionsInfos::ActiveProtectionsInfos( ADN_ActiveProtections_Data::ActiveProtectionsInfos& activeProtections )
-: ADN_Ref_ABC()
-, ptrActiveProtections_ ( ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos(), &activeProtections, "" )
-, strName_   ( activeProtections.strName_.GetData() )
+    : ADN_RefWithName( activeProtections )
+    , ptrActiveProtections_ ( ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos(), &activeProtections )
 {
     BindExistenceTo(&ptrActiveProtections_);
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActiveProtectionsInfos::GetNodeName
-// Created: FDS 2010-02-24
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ActiveProtectionsInfos::GetNodeName()
-{
-    std::string strResult( "de la protection active " );
-    return strResult + ptrActiveProtections_.GetData()->GetNodeName();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActiveProtectionsInfos::GetItemName
-// Created: FDS 2010-02-24
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ActiveProtectionsInfos::GetItemName()
-{
-    return ((ADN_ActiveProtections_Data::ActiveProtectionsInfos*)ptrActiveProtections_.GetData())->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -1220,33 +947,13 @@ void ADN_Composantes_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& 
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::CategoryInfos::CategoryInfos( ADN_Equipement_Data::ResourceInfos& parentDotation )
-: ADN_Ref_ABC( "ADN_Composantes_Data::CategoryInfos" )
-, ptrDotation_( &parentDotation, "" )
-, ptrCategory_( parentDotation.categories_, 0, "ptr cat ds ADN_Composantes_Data::CategoryInfos" )
-, rNormalizedConsumption_( 0 )
-, rLogThreshold_( 0 )
-, rNbr_         ( 0 )
-
+    : ptrDotation_( &parentDotation )
+    , ptrCategory_( parentDotation.categories_, 0 )
+    , rNormalizedConsumption_( 0 )
+    , rLogThreshold_( 0 )
+    , rNbr_         ( 0 )
 {
     BindExistenceTo( &ptrCategory_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CategoryInfos::GetNodeName
-// Created: APE 2004-12-29
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::CategoryInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CategoryInfos::GetItemName
-// Created: APE 2004-12-29
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::CategoryInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -1300,27 +1007,10 @@ void ADN_Composantes_Data::CategoryInfos::WriteArchive( xml::xostream& output ) 
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ResourceInfos::ResourceInfos()
-: ADN_Ref_ABC()
-, categories_()
+    : ADN_Ref_ABC()
+    , categories_()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ResourceInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ResourceInfos::GetItemName()
-{
-    return GetNodeName();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1420,46 +1110,6 @@ ADN_Composantes_Data::ObjectInfos::ObjectInfos()
 , bSpeedNotCirc_            ( false )
 {
     BindExistenceTo(&ptrObject_);
-
-    initialBuildTime_.SetDataName( "le temps initial de construction" );
-    initialBuildTime_.SetParentNode( *this );
-    initialDestructionTime_.SetDataName( "le temps initial de destruction" );
-    initialDestructionTime_.SetParentNode( *this );
-    coeffBuildTime_.SetDataName( "le coefficient de construction" );
-    coeffBuildTime_.SetParentNode( *this );
-    coeffDestructionTime_.SetDataName( "le coefficient de destruction" );
-    coeffDestructionTime_.SetParentNode( *this );
-    valorizationTime_.SetDataName( "le temps de valorisation" );
-    valorizationTime_.SetParentNode( *this );
-    devalorizationTime_.SetDataName( "le temps de dévalorisation" );
-    devalorizationTime_.SetParentNode( *this );
-    extinguishingTime_.SetDataName( "le temps d'extinction" );
-    extinguishingTime_.SetParentNode( *this );
-    rCoeffCirc_.SetDataName( "le temps de contournement" );
-    rCoeffCirc_.SetParentNode( *this );
-    rSpeedCirc_.SetDataName( "la vitesse d'une unité si contourné" );
-    rSpeedCirc_.SetParentNode( *this );
-    rSpeedNotCirc_.SetDataName( "la vitesse d'une unité si non-contourné" );
-    rSpeedNotCirc_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ObjectInfos::GetNodeName()
-{
-    std::string strResult( "des objets de type " );
-    return strResult + ptrObject_.GetData()->strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ObjectInfos::GetItemName()
-{
-    return ptrObject_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -1569,29 +1219,11 @@ void ADN_Composantes_Data::ObjectInfos::WriteArchive( xml::xostream& output ) co
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Equipement_Data::CategoryInfo& category )
-: nConsumptionType_    ( nConsumptionType )
-, ptrCategory_         ( category.parentResource_.categories_, &category, "" )
-, nQuantityUsedPerHour_( 0 )
+    : nConsumptionType_    ( nConsumptionType )
+    , ptrCategory_         ( category.parentResource_.categories_, &category )
+    , nQuantityUsedPerHour_( 0 )
 {
     this->BindExistenceTo( &ptrCategory_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsumptionItem::GetNodeName
-// Created: APE 2004-11-26
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ConsumptionItem::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsumptionItem::GetItemName
-// Created: APE 2004-11-26
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ConsumptionItem::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -1633,24 +1265,6 @@ void ADN_Composantes_Data::ConsumptionItem::WriteArchive( xml::xostream& output 
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::ConsumptionsInfos::ConsumptionsInfos()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsumptionsInfos::GetNodeName
-// Created: APE 2005-01-25
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ConsumptionsInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConsumptionsInfos::GetItemName
-// Created: APE 2005-01-25
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ConsumptionsInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -1741,8 +1355,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& outpu
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
-    : ADN_Ref_ABC()
-    , nId_                           ( ADN_Composantes_Data::idManager_.GetNextId() )
+    : nId_                           ( ADN_Composantes_Data::idManager_.GetNextId() )
     , equipmentCategory_             ( "Autres" )
     , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
     , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
@@ -1777,8 +1390,7 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ComposanteInfos::ComposanteInfos( unsigned int id )
-    : ADN_Ref_ABC()
-    , nId_                           ( id )
+    : nId_                           ( id )
     , equipmentCategory_             ( "Autres" )
     , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
     , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
@@ -1832,53 +1444,12 @@ void ADN_Composantes_Data::ComposanteInfos::Initialize()
     BindExistenceTo( &ptrArmor_ );
     BindExistenceTo( &ptrSize_ );
 
-    strName_.SetDataName( "le nom" );
-    strName_.SetParentNode( *this );
-
-    ptrArmor_.SetNodeName( "le niveau de blindage" );
-    ptrArmor_.SetParentNode( *this );
-    ptrSize_.SetNodeName( "le volume" );
-    ptrSize_.SetParentNode( *this );
-
-    vSpeeds_.SetParentNode( *this );
-
-    vSensors_.SetParentNode( *this );
-    vSensors_.SetItemTypeName( "un senseur" );
-
-    vWeapons_.SetParentNode( *this );
-    vWeapons_.SetItemTypeName( "un lanceur" );
-
-    vActiveProtections_.SetParentNode( *this );
-    vActiveProtections_.SetItemTypeName( "une protection active" );
-
-    vObjects_.SetParentNode( *this );
-    vObjects_.SetItemTypeName( "un objet" );
-
     // initialize speeds
     for( int iTerrain=0; iTerrain < eNbrLocation; ++iTerrain )
     {
         SpeedInfos * pNewSpeedInfos = new SpeedInfos( (E_Location)iTerrain );
         vSpeeds_.AddItem(pNewSpeedInfos);
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ComposanteInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ComposanteInfos::GetNodeName()
-{
-    std::string strResult( "de l'équipement " );
-    return strResult + strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ComposanteInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ComposanteInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -2340,7 +1911,7 @@ ADN_Composantes_Data::ADN_Composantes_Data()
     : ADN_Data_ABC ()
     , vComposantes_()
 {
-    vComposantes_.SetItemTypeName( "an equipment" );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

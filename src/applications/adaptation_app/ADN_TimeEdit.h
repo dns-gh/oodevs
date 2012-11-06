@@ -3,49 +3,52 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef _ADN_Schedule_Table_h
-#define _ADN_Schedule_Table_h
+#ifndef __ADN_TimeEdit_h_
+#define __ADN_TimeEdit_h_
 
-#include "ADN_Table.h"
+#include "ADN_Gfx_ABC.h"
 
 // =============================================================================
-/** @class  ADN_Schedule_Table
-    @brief  ADN schedule table
+/** @class  ADN_TimeEdit
+    @brief  ADN_TimeEdit
 */
 // Created: ABR 2012-11-05
 // =============================================================================
-class ADN_Schedule_Table : public ADN_Table3
+class ADN_TimeEdit : public QTimeEdit
+                   , public ADN_Gfx_ABC
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Schedule_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent );
-    virtual ~ADN_Schedule_Table();
+             ADN_TimeEdit( QWidget* parent = 0, const QString& format = "hh:mm" );
+    virtual ~ADN_TimeEdit();
     //@}
 
-protected:
     //! @name Operations
     //@{
-    virtual void AddRow( int row, void* data );
-    virtual void OnContextMenu( const QPoint& pt );
+    virtual void setEnabled( bool b );
+    virtual QString text() const;
+    virtual void setText( const QString& text );
     //@}
 
-private:
-    //! @name Helpers
+private slots:
+    //! @name Slots
     //@{
-    void AddNewElement();
-    void RemoveCurrentElement();
+    void TimeChanged( const QTime& time );
+    void UpdateEnableState();
     //@}
 
 private:
     //! @name Member data
     //@{
-    QStringList days_;
+    const QString format_;
     //@}
 };
 
-#endif // _ADN_Schedule_Table_h
+#endif // __ADN_TimeEdit_h_

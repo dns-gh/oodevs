@@ -13,6 +13,7 @@
 #define __ADN_Categories_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Enums.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
@@ -31,16 +32,12 @@ class ADN_Categories_Data : public ADN_Data_ABC
 {
 
 public:
-    class SizeInfos : public ADN_Ref_ABC
-                    , public ADN_DataTreeNode_ABC
+    class SizeInfos : public ADN_RefWithName
     {
     public:
         SizeInfos() {}
         SizeInfos* CreateCopy() { return new SizeInfos(); }
         std::string GetItemName() { return strName_.GetData(); }
-
-    public:
-        ADN_Type_String strName_;
     };
 
     typedef ADN_Type_Vector_ABC< SizeInfos >         T_SizeInfos_Vector;

@@ -8,17 +8,14 @@
 // *****************************************************************************
 
 #include "ADN_Workspace.h"
-#include "ADN_ChangeValueCommand_Pointer.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC constructor
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template <class T>
-ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const char* szName )
-    : ADN_Connector_Vector_ABC( szName )
-    , ADN_DataTreeNode_ABC()
-    , pData_(0)
+template< class T >
+ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC()
+    : pData_(0)
     , pVector_(0)
 {
     // NOTHING
@@ -28,52 +25,45 @@ ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const char* szName )
 // Name: ADN_TypePtr_InVector_ABC constructor
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template <class T>
-ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value, const char* szName )
-    : ADN_Connector_Vector_ABC( szName )
-    , ADN_DataTreeNode_ABC()
-    , pData_(0)
+template< class T >
+ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value )
+    : pData_(0)
     , pVector_(0)
 {
-    SetData(value,false);
+    SetData( value );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC constructor
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template <class T>
-ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& v, const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value, const char* szName )
-    : ADN_Connector_Vector_ABC( szName )
-    , ADN_DataTreeNode_ABC()
-    , pData_(0)
+template< class T >
+ADN_TypePtr_InVector_ABC<T>::ADN_TypePtr_InVector_ABC( typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& v, const typename ADN_TypePtr_InVector_ABC::T_TypePtr& value )
+    : pData_(0)
     , pVector_(0)
 {
     SetVector(v);
     if( value == 0 && ! v.empty() )
-        SetData( v.front(), false );
+        SetData( v.front() );
     else
-        SetData( value, false );
+        SetData( value );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC destructor
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template <class T>
+template< class T >
 ADN_TypePtr_InVector_ABC<T>::~ADN_TypePtr_InVector_ABC()
 {
-/*
-    ADN_TypePtr_InVector_ABC<T>::SetVector(*(T_TypeVector*)0);
-    ADN_TypePtr_InVector_ABC<T>::SetData((void*)0);
-*/
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC::ConnectPrivateSub
 // Created: APE 2005-02-28
 // -----------------------------------------------------------------------------
-template <class T>
+template< class T >
 void ADN_TypePtr_InVector_ABC<T>::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
 {
     ADN_Connector_ABC::ConnectPrivateSub( (ADN_Connector_ABC*)pTarget );
@@ -90,7 +80,7 @@ void ADN_TypePtr_InVector_ABC<T>::ConnectPrivateSub( ADN_Connector_Vector_ABC* p
 // Name: ADN_TypePtr_InVector_ABC::DisconnectPrivateSub
 // Created: APE 2005-02-28
 // -----------------------------------------------------------------------------
-template <class T>
+template< class T >
 void ADN_TypePtr_InVector_ABC<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
 {
     ADN_Connector_ABC::DisconnectPrivateSub( (ADN_Connector_ABC*)pTarget );
@@ -105,16 +95,11 @@ void ADN_TypePtr_InVector_ABC<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC
 // Name: ADN_TypePtr_InVector_ABC<T>::SetData
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template <class T>
-void ADN_TypePtr_InVector_ABC<T>::SetData(const T_TypePtr& value, bool bCanBeUndone)
+template< class T >
+void ADN_TypePtr_InVector_ABC<T>::SetData(const T_TypePtr& value )
 {
     if( pData_!= value)
     {
-        if( bCanBeUndone )
-        {
-            // create command
-            ADN_Workspace::GetWorkspace().AddCommand( new ADN_ChangeValueCommand_Pointer< T >( *this, pData_, value ) );
-        }
         if( pData_ )
         {
             static_cast<ADN_Ref_ABC*>(pData_)->ADN_Ref_ABC::DisconnectPrivate( static_cast<ADN_Ref_ABC*>(this) );
@@ -136,7 +121,7 @@ void ADN_TypePtr_InVector_ABC<T>::SetData(const T_TypePtr& value, bool bCanBeUnd
 // Name: ADN_TypePtr_InVector_ABC<T>::T_TypePtr
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template <class T>
+template< class T >
 typename const ADN_TypePtr_InVector_ABC<T>::T_TypePtr ADN_TypePtr_InVector_ABC<T>::GetData() const
 {
     return pData_;
@@ -146,7 +131,7 @@ typename const ADN_TypePtr_InVector_ABC<T>::T_TypePtr ADN_TypePtr_InVector_ABC<T
 // Name: ADN_TypePtr_InVector_ABC<T>::T_TypeVector
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template <class T>
+template< class T >
 typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& ADN_TypePtr_InVector_ABC<T>::GetVector()
 {
     return *pVector_;
@@ -156,7 +141,7 @@ typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& ADN_TypePtr_InVector_ABC<T>:
 // Name: ADN_TypePtr_InVector_ABC<T>::T_TypeVector
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template <class T>
+template< class T >
 void ADN_TypePtr_InVector_ABC<T>::SetVector(const typename ADN_TypePtr_InVector_ABC<T>::T_TypeVector& v)
 {
     if (pVector_!=&v)
@@ -179,10 +164,10 @@ void ADN_TypePtr_InVector_ABC<T>::SetVector(const typename ADN_TypePtr_InVector_
 // Name: ADN_TypePtr_InVector_ABC<T>::operator =
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
-template <class T>
+template< class T >
 ADN_TypePtr_InVector_ABC<T>& ADN_TypePtr_InVector_ABC<T>::operator =(const T_TypePtr& val)
 {
-    SetData(val,false);
+    SetData( val );
     return *this;
 }
 
@@ -194,8 +179,8 @@ ADN_TypePtr_InVector_ABC<T>& ADN_TypePtr_InVector_ABC<T>::operator =(const T_Typ
 */
 // Created: AGN 2004-03-22
 // -----------------------------------------------------------------------------
-template <class T>
-bool ADN_TypePtr_InVector_ABC< T >::AddItemPrivate(void *item,bool)
+template< class T >
+bool ADN_TypePtr_InVector_ABC< T >::AddItemPrivate( void* item )
 {
     return item != 0;
 }
@@ -207,8 +192,8 @@ bool ADN_TypePtr_InVector_ABC< T >::AddItemPrivate(void *item,bool)
 */
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
-template <class T>
-bool ADN_TypePtr_InVector_ABC< T >::RemItemPrivate(void *item,bool)
+template< class T >
+bool ADN_TypePtr_InVector_ABC< T >::RemItemPrivate( void* item )
 {
     if( item == 0 )
         return false;
@@ -221,7 +206,7 @@ bool ADN_TypePtr_InVector_ABC< T >::RemItemPrivate(void *item,bool)
 // Name: ADN_TypePtr_InVector_ABC<T>::operator ==
 // Created: JDY 03-08-25
 //-----------------------------------------------------------------------------
-template <class T>
+template< class T >
 bool ADN_TypePtr_InVector_ABC<T>::operator ==(const ADN_TypePtr_InVector_ABC& o) const
 {
     return pData_==o.pData_ && pVector_==o.pVector_;
@@ -231,7 +216,7 @@ bool ADN_TypePtr_InVector_ABC<T>::operator ==(const ADN_TypePtr_InVector_ABC& o)
 // Name: ADN_TypePtr_InVector_ABC<T>::operator ==
 // Created: JDY 03-08-25
 //-----------------------------------------------------------------------------
-template <class T>
+template< class T >
 bool ADN_TypePtr_InVector_ABC<T>::operator ==(const T_TypePtr& val) const
 {
     return pData_==val;
@@ -241,23 +226,23 @@ bool ADN_TypePtr_InVector_ABC<T>::operator ==(const T_TypePtr& val) const
 // Name: ADN_TypePtr_InVector_ABC<T>::SetDataPrivate
 // Created: JDY 03-07-21
 //-----------------------------------------------------------------------------
-template <class T>
-void ADN_TypePtr_InVector_ABC<T>::SetDataPrivate(void *data)
+template< class T >
+void ADN_TypePtr_InVector_ABC<T>::SetDataPrivate( void *data )
 {
-    T_TypePtr newData=(T_TypePtr)data;
-    SetData(newData,true);
+    T_TypePtr newData = static_cast< T_TypePtr >( data );
+    SetData( newData );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC<T>:: InvalidatePrivate
 // Created: JDY 03-08-25
 //-----------------------------------------------------------------------------
-template <class T>
+template< class T >
 void ADN_TypePtr_InVector_ABC<T>::InvalidatePrivate(void *ptr,bool bDel)
 {
     if( pData_ == ptr)
     {
-        ADN_TypePtr_InVector_ABC<T>::SetData((T_TypePtr)0,false);
+        ADN_TypePtr_InVector_ABC<T>::SetData((T_TypePtr)0);
         ADN_Ref_ABC::InvalidatePrivate(this);
         emit Invalidated(ptr,bDel);
     }
@@ -269,7 +254,7 @@ void ADN_TypePtr_InVector_ABC<T>::InvalidatePrivate(void *ptr,bool bDel)
 */
 // Created: AGN 2004-03-22
 // -----------------------------------------------------------------------------
-template <class T>
+template< class T >
 void ADN_TypePtr_InVector_ABC< T >::Initialize( ADN_Connector_Vector_ABC& dest ) const
 {
     if( pVector_ != 0 )
@@ -286,32 +271,8 @@ void ADN_TypePtr_InVector_ABC< T >::Initialize( ADN_Connector_Vector_ABC& dest )
 // Name: ADN_TypePtr_InVector_ABC::Initialize
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-template <class T>
+template< class T >
 void ADN_TypePtr_InVector_ABC< T >::Initialize( ADN_Connector_ABC& dest ) const
 {
     dest.SetData( pData_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC::GetNodeName
-/** @return
-*/
-// Created: AGN 2004-05-13
-// -----------------------------------------------------------------------------
-template <class T>
-std::string ADN_TypePtr_InVector_ABC< T >::GetNodeName()
-{
-    return strDataName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC::SetDataName
-/** @param  strName
-*/
-// Created: AGN 2004-05-13
-// -----------------------------------------------------------------------------
-template <class T>
-void ADN_TypePtr_InVector_ABC< T >::SetNodeName( const char* szName )
-{
-    strDataName_ = szName;
 }

@@ -26,30 +26,10 @@ tools::IdManager ADN_Breakdowns_Data::idManager_;
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
-: ADN_Ref_ABC         ()
-, ADN_DataTreeNode_ABC()
-, nNbr_               ( 0 )
-, ptrPart_            ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).categories_, 0 )
+    : nNbr_               ( 0 )
+    , ptrPart_            ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).categories_, 0 )
 {
     this->BindExistenceTo( &ptrPart_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RepairPartInfo::GetNodeName
-// Created: APE 2005-03-16
-// -----------------------------------------------------------------------------
-std::string ADN_Breakdowns_Data::RepairPartInfo::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: RepairPartInfo::GetItemName
-// Created: APE 2005-03-16
-// -----------------------------------------------------------------------------
-std::string ADN_Breakdowns_Data::RepairPartInfo::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,9 +77,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
-    : ADN_Ref_ABC          ()
-    , ADN_DataTreeNode_ABC ()
-    , nId_                 ( ADN_Breakdowns_Data::idManager_.GetNextId() )
+    : nId_                 ( ADN_Breakdowns_Data::idManager_.GetNextId() )
     , repairTime_          ( "0s" )
     , repairTimeVariance_  ( "0s" )
 {
@@ -111,11 +89,9 @@ ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo()
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo( unsigned int id )
-: ADN_Ref_ABC          ()
-, ADN_DataTreeNode_ABC ()
-, nId_                 ( id )
-, repairTime_          ( "0s" )
-, repairTimeVariance_  ( "0s" )
+    : nId_                 ( id )
+    , repairTime_          ( "0s" )
+    , repairTimeVariance_  ( "0s" )
 {
     ADN_Breakdowns_Data::idManager_.Lock( id );
 }
@@ -127,24 +103,6 @@ ADN_Breakdowns_Data::BreakdownInfo::BreakdownInfo( unsigned int id )
 ADN_Breakdowns_Data::BreakdownInfo::~BreakdownInfo()
 {
     clear_owned_ptrs( vRepairParts_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BreakdownInfo::GetNodeName
-// Created: APE 2005-03-16
-// -----------------------------------------------------------------------------
-std::string ADN_Breakdowns_Data::BreakdownInfo::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: BreakdownInfo::GetItemName
-// Created: APE 2005-03-16
-// -----------------------------------------------------------------------------
-std::string ADN_Breakdowns_Data::BreakdownInfo::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------

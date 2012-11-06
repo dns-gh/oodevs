@@ -13,6 +13,7 @@
 #define __ADN_Composantes_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_RefWithName.h"
 #include "ADN_Types.h"
 #include "ADN_Enums.h"
 #include "ADN_Categories_Data.h"
@@ -37,14 +38,11 @@ class ADN_Composantes_Data : public ADN_Data_ABC
 
 public:
     //*****************************************************************************
-    class AmbulanceInfos : public ADN_DataTreeNode_ABC
+    class AmbulanceInfos
     {
 
     public:
         AmbulanceInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void CopyFrom( AmbulanceInfos& src );
 
@@ -61,14 +59,11 @@ public:
     };
 
     //*****************************************************************************
-    class LogHealthInfos : public ADN_DataTreeNode_ABC
+    class LogHealthInfos
     {
 
     public:
         LogHealthInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void CopyFrom( LogHealthInfos& src );
 
@@ -91,14 +86,11 @@ public:
     };
 
     //*****************************************************************************
-    class NTIInfos : public ADN_DataTreeNode_ABC
+    class NTIInfos
     {
 
     public:
         NTIInfos( const std::string& strName );
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void CopyFrom( NTIInfos& src );
 
@@ -115,14 +107,11 @@ public:
     };
 
     //*****************************************************************************
-    class LogMaintenanceInfos : public ADN_DataTreeNode_ABC
+    class LogMaintenanceInfos
     {
 
     public:
         LogMaintenanceInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void CopyFrom( LogMaintenanceInfos& src );
 
@@ -143,14 +132,10 @@ public:
 
     //*****************************************************************************
     class LogSupplyInfos : public ADN_Ref_ABC
-                         , public ADN_DataTreeNode_ABC
     {
 
     public:
         LogSupplyInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void CopyFrom( LogSupplyInfos& src );
 
@@ -165,14 +150,11 @@ public:
     };
 
     //*****************************************************************************
-    class LogInfos : public ADN_DataTreeNode_ABC
+    class LogInfos
     {
 
     public:
         LogInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void CopyFrom( LogInfos& src );
 
@@ -191,16 +173,12 @@ public:
 
     //*****************************************************************************
     class BreakdownInfos : public ADN_Ref_ABC
-                         , public ADN_DataTreeNode_ABC
     {
 
     public:
         BreakdownInfos();
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         BreakdownInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( const std::string& origin, xml::xostream& output ) const;
 
@@ -214,19 +192,15 @@ public:
     typedef T_BreakdownInfos_Vector::const_iterator CIT_BreakdownInfos_Vector;
 
     //*****************************************************************************
-    class BreakdownGroupInfos : public ADN_DataTreeNode_ABC
+    class BreakdownGroupInfos
     {
 
     public:
         BreakdownGroupInfos( const std::string& strName );
         ~BreakdownGroupInfos();
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         bool Contains( ADN_Breakdowns_Data::BreakdownInfo& breakdown ) const;
-
         void CopyFrom( BreakdownGroupInfos& src );
-
         void ReadArchive( xml::xistream& input );
         void ReadBreakdown( xml::xistream& input );
         void WriteArchive( xml::xostream& output, const std::string& composante ) const;
@@ -237,13 +211,11 @@ public:
     };
 
     //*****************************************************************************
-    class SpeedInfos : public ADN_DataTreeNode_ABC
+    class SpeedInfos
     {
 
     public:
         SpeedInfos( E_Location nTypeTerrain );
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
@@ -275,14 +247,10 @@ public:
 
     //*****************************************************************************
     class SensorInfos : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
     {
 
     public:
         SensorInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         SensorInfos* CreateCopy();
 
@@ -314,15 +282,10 @@ public:
     typedef T_SensorInfos_Vector::const_iterator CIT_SensorInfos_Vector;
 
     //*****************************************************************************
-    class RadarInfos : public ADN_Ref_ABC
-                     , public ADN_DataTreeNode_ABC
+    class RadarInfos : public ADN_RefWithName
     {
-
     public:
         RadarInfos();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
 
         RadarInfos* CreateCopy();
 
@@ -331,7 +294,6 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Radars_Data::RadarInfos> ptrRadar_;
-        ADN_Type_String                                       strName_; //!< Not for editing.
     };
 
     typedef ADN_Type_Vector_ABC<RadarInfos>       T_RadarInfos_Vector;
@@ -339,41 +301,19 @@ public:
     typedef T_RadarInfos_Vector::const_iterator CIT_RadarInfos_Vector;
 
     //*****************************************************************************
-    class WeaponInfos : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
+    class WeaponInfos : public ADN_RefWithName
     {
 
     public:
         WeaponInfos();
         WeaponInfos( ADN_Weapons_Data::WeaponInfos& weapon );
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         WeaponInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Weapons_Data::WeaponInfos> ptrWeapon_;
-        ADN_Type_String                                         strName_; //!< Not for editing.
-
-    public:
-        /*
-        class Cmp : public std::unary_function< WeaponInfos* , bool >
-        {
-        public:
-        Cmp(const std::string& val) : val_(val) {}
-        ~Cmp() {}
-
-        bool operator()( WeaponInfos* tgtnfos ) const
-        { return tgtnfos->ptrLauncher_.GetData() && tgtnfos->ptrLauncher_.GetData()->strName_==val_; }
-
-        private:
-
-        std::string val_;
-        };*/
     };
 
     typedef ADN_Type_Vector_ABC<WeaponInfos>       T_WeaponInfos_Vector;
@@ -381,26 +321,20 @@ public:
     typedef T_WeaponInfos_Vector::const_iterator CIT_WeaponInfos_Vector;
 
     //*****************************************************************************
-    class ActiveProtectionsInfos : public ADN_Ref_ABC
-                                 , public ADN_DataTreeNode_ABC
+    class ActiveProtectionsInfos : public ADN_RefWithName
     {
 
     public:
         ActiveProtectionsInfos();
         ActiveProtectionsInfos( ADN_ActiveProtections_Data::ActiveProtectionsInfos& activeProtections );
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         ActiveProtectionsInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
         void ReadProtection( xml::xistream& input );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_ActiveProtections_Data::ActiveProtectionsInfos> ptrActiveProtections_;
-        ADN_Type_String                                                              strName_; //!< Not for editing.
     };
 
     typedef ADN_Type_Vector_ABC<ActiveProtectionsInfos>       T_ActiveProtectionsInfos_Vector;
@@ -409,17 +343,12 @@ public:
 
     //*****************************************************************************
     class HumanProtectionInfos : public ADN_Ref_ABC
-                               , public ADN_DataTreeNode_ABC
     {
 
     public:
         HumanProtectionInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         void CopyFrom( HumanProtectionInfos& src );
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
@@ -427,18 +356,13 @@ public:
 
     //*****************************************************************************
     class ActiveProtectionInfos : public ADN_Ref_ABC
-                                , public ADN_DataTreeNode_ABC
     {
 
     public:
         ActiveProtectionInfos();
 
-        virtual std::string GetNodeName();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
-
-    private:
         void ReadProtection( xml::xistream& input );
 
         std::vector< std::string > protections_;
@@ -446,17 +370,12 @@ public:
 
     //*****************************************************************************
     class CategoryInfos : public ADN_Ref_ABC
-                        , public ADN_DataTreeNode_ABC
     {
 
     public:
         CategoryInfos( ADN_Equipement_Data::ResourceInfos& parentDotation );
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         CategoryInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
@@ -474,19 +393,13 @@ public:
 
     //*****************************************************************************
     class ResourceInfos : public ADN_Ref_ABC
-                        , public ADN_DataTreeNode_ABC
     {
 
     public:
         ResourceInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         void CopyFrom( ResourceInfos& src );
-
         void ReadCategory( xml::xistream& input );
-
         void ReadArchive( xml::xistream& input );
         void ReadDotation( xml::xistream& input, ADN_Equipement_Data::ResourceInfos& dotation );
         void WriteArchive( xml::xostream& output ) const;
@@ -497,17 +410,12 @@ public:
 
     //*****************************************************************************
     class ObjectInfos : public ADN_Ref_ABC
-                      , public ADN_DataTreeNode_ABC
     {
 
     public:
         ObjectInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         ObjectInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
@@ -535,21 +443,6 @@ public:
         ADN_Type_Double                                             rCoeffCirc_;
         ADN_Type_Double                                             rSpeedCirc_;
         ADN_Type_Double                                             rSpeedNotCirc_;
-
-//    public:
-//        class Cmp : public std::unary_function< ObjectInfos* , bool >
-//        {
-//        public:
-//            Cmp(const E_ObjectType& val) : val_(val) {}
-//            ~Cmp() {}
-//
-//            bool operator()( ObjectInfos* tgtnfos ) const
-//            { return tgtnfos->ptrObject_.GetData() && tgtnfos->ptrObject_.GetData()->nObjectType_.GetData()==val_; }
-//
-//        private:
-//
-//            E_ObjectType val_;
-//        };
     };
 
     typedef ADN_Type_Vector_ABC<ObjectInfos>       T_ObjectInfos_Vector;
@@ -558,17 +451,12 @@ public:
 
     //*****************************************************************************
     class ConsumptionItem : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
     {
 
     public:
         ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Equipement_Data::CategoryInfo& category );
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         ConsumptionItem* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
@@ -584,17 +472,12 @@ public:
 
     //*****************************************************************************
     class ConsumptionsInfos : public ADN_Ref_ABC
-                            , public ADN_DataTreeNode_ABC
     {
 
     public:
         ConsumptionsInfos();
 
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         void CopyFrom( ConsumptionsInfos& source );
-
         void ReadArchive( xml::xistream& input );
         void ReadConsumption( xml::xistream& input );
         void ReadDotation( xml::xistream& input, const E_ConsumptionType& type );
@@ -605,8 +488,7 @@ public:
     };
 
     //*****************************************************************************
-    class ComposanteInfos : public ADN_Ref_ABC
-                          , public ADN_DataTreeNode_ABC
+    class ComposanteInfos : public ADN_RefWithName
     {
 
     public:
@@ -615,12 +497,7 @@ public:
         ~ComposanteInfos();
 
         void Initialize();
-
-        virtual std::string GetNodeName();
-        std::string GetItemName();
-
         ComposanteInfos* CreateCopy();
-
         void ReadArchive( xml::xistream& input );
         void ReadSpeed( xml::xistream& input );
         void ReadSensor( xml::xistream& input );
@@ -633,7 +510,6 @@ public:
 
     public:
         ADN_Type_Int    nId_;
-        ADN_Type_String strName_;
         ADN_Type_String strAdditionalComments_;
         ADN_Type_String strCodeEMAT6_;
         ADN_Type_String strCodeEMAT8_;

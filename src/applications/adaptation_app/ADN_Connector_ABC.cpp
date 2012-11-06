@@ -15,9 +15,8 @@
 // Name: ADN_Connector_ABC constructor
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
-ADN_Connector_ABC::ADN_Connector_ABC( const char* szName )
-    : ADN_Ref_ABC ( szName )
-    , bConnecting_( false )
+ADN_Connector_ABC::ADN_Connector_ABC()
+    : bConnecting_( false )
     , bAutoClear_ ( false )
     , bAutoHide_  ( false )
 {

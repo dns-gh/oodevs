@@ -25,7 +25,7 @@ class ADN_Ref_ABC : public QObject
     friend class ADN_Connector_Vector_ABC;
 
 public:
-    explicit ADN_Ref_ABC( const char* szName = 0 );
+             ADN_Ref_ABC();
     virtual ~ADN_Ref_ABC();
 
     //! @name Connection

@@ -41,8 +41,8 @@ protected:
     virtual void ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
     virtual void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
     virtual void SetDataPrivate( void* pData );
-    virtual bool AddItemPrivate( void* pItem, bool bCreateCommand = false );
-    virtual bool RemItemPrivate( void* pItem, bool bCreateCommand = false );
+    virtual bool AddItemPrivate( void* pItem );
+    virtual bool RemItemPrivate( void* pItem );
     virtual void ClearPrivate( bool bInConnection = false );
 
     virtual ADN_GraphValue* CreateValue( void* pObj ) = 0;

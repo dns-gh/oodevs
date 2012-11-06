@@ -1,4 +1,4 @@
-//*****************************************************************************
+Modifica//*****************************************************************************
 //
 // $Created: JDY 03-06-25 $
 // $input: /MVW_v10/Build/SDK/ADN/Src/ADN_Sensors_Data.cpp $
@@ -32,8 +32,6 @@
 // LTO
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::LimitedToSensorsInfos::LimitedToSensorsInfos()
-: ADN_Ref_ABC         ()
-, ADN_DataTreeNode_ABC()
 {
     // NOTHING
 }
@@ -48,15 +46,6 @@ ADN_Sensors_Data::LimitedToSensorsInfos::~LimitedToSensorsInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::LimitedToSensorsInfos::GetItemName
-// Created: JSR 2010-03-16
-// LTO
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::LimitedToSensorsInfos::GetItemName()
-{
-    return strName_.GetData();
-}
-// -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::LimitedToSensorsInfos::CreateCopy
 // Created: JSR 2010-03-16
 // LTO
@@ -66,16 +55,6 @@ ADN_Sensors_Data::LimitedToSensorsInfos* ADN_Sensors_Data::LimitedToSensorsInfos
     LimitedToSensorsInfos* newInfos = new LimitedToSensorsInfos();
     newInfos->strName_ = strName_.GetData();
     return newInfos;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::LimitedToSensorsInfos::GetNodeName
-// Created: JSR 2010-03-18
-// LTO
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::LimitedToSensorsInfos::GetNodeName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,33 +87,10 @@ void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& outpu
 // Created: JDY 03-08-28
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorSizeInfos::ModificatorSizeInfos(ADN_Categories_Data::SizeInfos* ptr)
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, ptrSize_(ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(),(ADN_Categories_Data::SizeInfos*)ptr)
-, rCoeff_(0.0)
+    : ptrSize_(ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(),(ADN_Categories_Data::SizeInfos*)ptr)
+    , rCoeff_(0.0)
 {
     BindExistenceTo(&ptrSize_);
-    rCoeff_.SetDataName( "le modificateur de perception dû" );
-    rCoeff_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorSizeInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorSizeInfos::GetNodeName()
-{
-    std::string strResult( "à la catégorie de volume " );
-    return strResult + ptrSize_.GetData()->strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorSizeInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorSizeInfos::GetItemName()
-{
-    return ptrSize_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -167,32 +123,10 @@ void ADN_Sensors_Data::ModificatorSizeInfos::WriteArchive( xml::xostream& output
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorIlluminationInfos::ModificatorIlluminationInfos(const E_LightingType& e)
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, eType_(e)
-, rCoeff_(0.0)
+    : eType_(e)
+    , rCoeff_(0.0)
 {
-    rCoeff_.SetDataName( "le modificateur de perception dû" );
-    rCoeff_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorIlluminationInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorIlluminationInfos::GetNodeName()
-{
-    std::string strResult( "à la luminosité " );
-    return strResult + ENT_Tr::ConvertFromLightingType( eType_, ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorIlluminationInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorIlluminationInfos::GetItemName()
-{
-    return ENT_Tr::ConvertFromLightingType( eType_, ENT_Tr_ABC::eToTr );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -225,32 +159,10 @@ void ADN_Sensors_Data::ModificatorIlluminationInfos::WriteArchive( xml::xostream
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorMeteoInfos::ModificatorMeteoInfos(const E_SensorWeatherModifiers& e)
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, eType_(e)
-, rCoeff_(0.0)
+    : eType_(e)
+    , rCoeff_(0.0)
 {
-    rCoeff_.SetDataName( "le modificateur de perception dû" );
-    rCoeff_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorMeteoInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorMeteoInfos::GetNodeName()
-{
-    std::string strResult( "à la condition météo " );
-    return strResult + ADN_Tr::ConvertFromSensorWeatherModifiers( eType_, ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorMeteoInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorMeteoInfos::GetItemName()
-{
-    return ADN_Tr::ConvertFromSensorWeatherModifiers( eType_, ENT_Tr_ABC::eToTr );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -283,32 +195,10 @@ void ADN_Sensors_Data::ModificatorMeteoInfos::WriteArchive( xml::xostream& outpu
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorEnvironmentInfos::ModificatorEnvironmentInfos(const E_VisionObject& e)
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, eType_(e)
-, rCoeff_(0.0)
+    : eType_(e)
+    , rCoeff_(0.0)
 {
-    rCoeff_.SetDataName( "le modificateur de perception dû" );
-    rCoeff_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorEnvironmentInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorEnvironmentInfos::GetNodeName()
-{
-    std::string strResult( "au type de terrain " );
-    return strResult + ADN_Tr::ConvertFromVisionObject( eType_, ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorEnvironmentInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorEnvironmentInfos::GetItemName()
-{
-    return ADN_Tr::ConvertFromVisionObject( eType_, ENT_Tr_ABC::eToTr );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -341,33 +231,10 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 // Created: SLG 2010-03-02
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanMaterialInfos* ptr )
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, ptrMaterial_(ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(),(ADN_Urban_Data::UrbanMaterialInfos*)ptr)
-, rCoeff_(0.0)
+    : ptrMaterial_(ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(),(ADN_Urban_Data::UrbanMaterialInfos*)ptr)
+    , rCoeff_(0.0)
 {
     BindExistenceTo(&ptrMaterial_);
-    rCoeff_.SetDataName( "le modificateur de perception dû" );
-    rCoeff_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorUrbanBlockInfos::GetNodeName
-// Created: SLG 2010-03-02
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetNodeName()
-{
-    std::string strResult( "au type de materiaux " );
-    return ( QString( strResult.c_str() ) + QString( ptrMaterial_.GetData()->strName_.GetData().c_str() ) ).toAscii().constData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorUrbanBlockInfos::GetItemName
-// Created: SLG 2010-03-02
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetItemName()
-{
-    return ptrMaterial_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -400,31 +267,10 @@ void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& 
 // Created: JDY 03-09-29
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ModificatorPostureInfos::ModificatorPostureInfos(const E_UnitPosture& e )
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, eType_(e)
-, rCoeff_(1.0)
+    : eType_(e)
+    , rCoeff_(1.0)
 {
-    rCoeff_.SetDataName( "le modificateur de perception dû à une posture " );
-    rCoeff_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorPostureInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorPostureInfos::GetNodeName()
-{
-    return ENT_Tr::ConvertFromUnitPosture( eType_,  ENT_Tr_ABC::eToTr );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModificatorPostureInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::ModificatorPostureInfos::GetItemName()
-{
-    return ENT_Tr::ConvertFromUnitPosture( eType_,  ENT_Tr_ABC::eToTr );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -457,17 +303,12 @@ void ADN_Sensors_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& out
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::TargetInfos::TargetInfos()
-: ADN_Ref_ABC         ()
-, ADN_DataTreeNode_ABC()
-, ptrObject_          ( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(),0)
-, rDistanceDetection_ ( 0 )
-, populationInfos_    ()
+    : ptrObject_          ( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(),0)
+    , rDistanceDetection_ ( 0 )
+    , populationInfos_    ()
 {
     // Reference connection
     BindExistenceTo(&ptrObject_);
-
-    rDistanceDetection_.SetDataName( "la distance de détection" );
-    rDistanceDetection_.SetParentNode( *this );
 
     // Initialize the posture modificator infos
     for( int i=0 ; i < eNbrUnitPosture ; ++i)
@@ -481,25 +322,6 @@ ADN_Sensors_Data::TargetInfos::TargetInfos()
 ADN_Sensors_Data::TargetInfos::~TargetInfos()
 {
     vModifStance_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TargetInfos::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::TargetInfos::GetNodeName()
-{
-    std::string strResult( "de l'objet " );
-    return strResult + ptrObject_.GetData()->strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TargetInfos::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::TargetInfos::GetItemName()
-{
-    return ptrObject_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -587,9 +409,7 @@ void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
 // Created: SBO 2005-11-21
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::PopulationInfos::PopulationInfos()
-    : ADN_Ref_ABC()
-    , strName_   ()
-    , rDensity_  ( 0. )
+    : rDensity_  ( 0. )
     , rModifier_ ( 0. )
 {
     // NOTHING
@@ -675,50 +495,6 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     , vModifTargetStance_  ( false )
     , detectionDelay_      ( "0h" )
 {
-    strName_.SetDataName( "le nom" );
-    strName_.SetParentNode( *this );
-
-    rDistDetection_.SetDataName( "la portée de détection" );
-    rDistDetection_.SetParentNode( *this );
-
-    rDistReco_.SetDataName( "la portée de reconnaissance" );
-    rDistReco_.SetParentNode( *this );
-
-    rDistIdent_.SetDataName( "la portée d'identification" );
-    rDistIdent_.SetParentNode( *this );
-
-    rAngle_.SetDataName( "l'angle d'ouverture" );
-    rAngle_.SetParentNode( *this );
-
-    bCanScan_.SetDataName( "la capacité d'effectuer un balayage à 360 degrés" );
-    bCanScan_.SetParentNode( *this );
-
-    rFirerDetectionRange_.SetDataName( "la capacité de détecter le tireur" );
-    rFirerDetectionRange_.SetParentNode( *this );
-
-    bCanDetectAgents_.SetDataName( "la capacité de détecter des unités" );
-    bCanDetectAgents_.SetParentNode( *this );
-
-    bLimitedToSensors_.SetDataName( "la capacité de détecter d'autres capteurs" ); // LTO
-    bLimitedToSensors_.SetParentNode( *this ); // LTO
-
-    bCanDetectObjects_.SetDataName( "la capacité de détecter des objets" );
-    bCanDetectObjects_.SetParentNode( *this );
-
-    vTargets_.SetParentNode( *this );
-    vTargets_.SetItemTypeName( "une cible objet" );
-
-    vLimitedToSensorsInfos_.SetParentNode( *this ); // LTO
-    vLimitedToSensorsInfos_.SetItemTypeName( "une cible capteur" ); // LTO
-
-    vModifIlluminations_.SetParentNode( *this );
-    vModifWeather_.SetParentNode( *this );
-    vModifEnvironments_.SetParentNode( *this );
-    vModifUrbanBlocks_.SetParentNode( *this );
-    vModifStance_.SetParentNode( *this );
-    vModifTargetStance_.SetParentNode( *this );
-    vModifSizes_.SetParentNode( *this );
-
     // initialize illumination modificator infos
     unsigned int i = 0;
     for( i = 0; i< eNbrLightingType; ++i )
@@ -765,25 +541,6 @@ ADN_Sensors_Data::SensorInfos::~SensorInfos()
     vModifUrbanBlocks_.Reset();
     vModifStance_.Reset();
     vModifTargetStance_.Reset();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::GetNodeName
-// Created: AGN 2004-05-14
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::SensorInfos::GetNodeName()
-{
-    const std::string strResult( "du senseur " ); // $$$$ _RC_ SLI 2011-02-02: translation?
-    return strResult + strName_.GetData();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Data::GetItemName
-// Created: AGN 2004-05-18
-// -----------------------------------------------------------------------------
-std::string ADN_Sensors_Data::SensorInfos::GetItemName()
-{
-    return strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -1262,7 +1019,7 @@ void ADN_Sensors_Data::CobraInfos::WriteArchive( xml::xostream& output )
 ADN_Sensors_Data::ADN_Sensors_Data()
     : radarData_( *new ADN_Radars_Data() )
 {
-    vSensors_.SetItemTypeName( "le senseur" ); // $$$$ _RC_ SLI 2011-02-02: translation ?
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

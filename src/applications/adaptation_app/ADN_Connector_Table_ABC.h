@@ -25,7 +25,7 @@ class ADN_Connector_Table_ABC : public ADN_Connector_Vector_ABC
 {
 
 public:
-             ADN_Connector_Table_ABC( ADN_Table& tab, bool bWithSort, const char* szName = 0 );
+             ADN_Connector_Table_ABC( ADN_Table& tab, bool bWithSort );
     virtual ~ADN_Connector_Table_ABC();
 
     virtual bool LessComparison( void* pL, void* pR ) const;
@@ -39,8 +39,8 @@ private:
     virtual void ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
     virtual void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
 
-    virtual bool AddItemPrivate(void *item, bool bCreateCommand = false );
-    virtual bool RemItemPrivate(void *item, bool bCreateCommand = false );
+    virtual bool AddItemPrivate( void* item );
+    virtual bool RemItemPrivate( void* item );
 
     void ClearPrivate(bool bInConnection=false);
     void SetDataPrivate(void *data);
@@ -73,7 +73,7 @@ class ADN_Connector_Table_ABC2 : public ADN_Connector_Vector_ABC
 {
 
 public:
-             ADN_Connector_Table_ABC2( ADN_Table3& tab, bool bWithSort, const char* szName = 0 );
+             ADN_Connector_Table_ABC2( ADN_Table3& tab, bool bWithSort );
     virtual ~ADN_Connector_Table_ABC2();
 
     virtual bool LessComparison( void* pL, void* pR ) const;
@@ -87,8 +87,8 @@ private:
     virtual void ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
     virtual void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
 
-    virtual bool AddItemPrivate(void *item, bool bCreateCommand = false );
-    virtual bool RemItemPrivate(void *item, bool bCreateCommand = false );
+    virtual bool AddItemPrivate( void* item );
+    virtual bool RemItemPrivate( void* item );
 
     void ClearPrivate(bool bInConnection=false);
     void SetDataPrivate(void *data);

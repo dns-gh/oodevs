@@ -84,10 +84,10 @@ void ADN_Composantes_GUI::Build()
     // Comments
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Comments" ), vInfosConnectors[ eComments ] );
     // Armors
-    QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector<helpers::ArmorInfos> >( pInfoHolder, tr( "Armor-Plating" ), vInfosConnectors[ eArmor ] );
+    QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Armor-Plating" ), vInfosConnectors[ eArmor ] );
     connect( pCombo, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );
     // Size
-    builder.AddField< ADN_ComboBox_Vector< ADN_Categories_Data::SizeInfos > >( pInfoHolder, tr( "Volume" ), vInfosConnectors[ eSize ]  );
+    builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Volume" ), vInfosConnectors[ eSize ]  );
     // Weight
     builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Weight" ), vInfosConnectors[ eWeight ], tr( "T" ), eGreaterZero );
     // Max slope
@@ -373,7 +373,7 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
 
     builder.AddField< ADN_EditLine_Double >( pCarrierGroup , tr( "Max weight carried"  ), vInfosConnectors[ eLogCarryWeightCapacity ], tr( "T" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pCarrierGroup , tr( "Max volume carried"  ), vInfosConnectors[ eLogCarryVolumeCapacity ], tr( "m3" ), eGreaterZero );
-    builder.AddField< ADN_ComboBox_Vector< helpers::ResourceNatureInfos > >( pCarrierGroup, tr( "Resource nature carried" ), vInfosConnectors[ eLogCarryNature ] );
+    builder.AddField< ADN_ComboBox_Vector >( pCarrierGroup, tr( "Resource nature carried" ), vInfosConnectors[ eLogCarryNature ] );
 
     return pSupplyGroup;
 }

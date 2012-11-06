@@ -25,10 +25,12 @@ tools::IdManager ADN_People_Data::idManager_;
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
 ADN_People_Data::EventInfos::EventInfos()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
+    : ptrAccommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0 )
+    , day_( eDays_Monday )
+    , from_( "00:00" )
+    , to_( "00:00" )
 {
-    // NOTHING
+    day_.SetAlphabeticalSort( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,30 +43,20 @@ ADN_People_Data::EventInfos::~EventInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EventInfos::GetNodeName
-// Created: LGY 2011-01-18
-// -----------------------------------------------------------------------------
-std::string ADN_People_Data::EventInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EventInfos::GetItemName
-// Created: LGY 2011-01-18
-// -----------------------------------------------------------------------------
-std::string ADN_People_Data::EventInfos::GetItemName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
 // Name: EventInfos::CreateCopy
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
 ADN_People_Data::EventInfos* ADN_People_Data::EventInfos::CreateCopy()
 {
-    return 0;
+    EventInfos* pCopy = new EventInfos();
+
+    pCopy->day_ = day_.GetData();
+    pCopy->from_ = from_.GetData();
+    pCopy->to_ = to_.GetData();
+    pCopy->ptrAccommodation_ = ptrAccommodation_.GetData();
+    pCopy->ptrAccommodation_.SetVector( ptrAccommodation_.GetVector() );
+
+    return pCopy;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,10 +65,17 @@ ADN_People_Data::EventInfos* ADN_People_Data::EventInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
 {
-    day_ = input.attribute< std::string >( "day" );
+    std::string day, accommodation;
+    day = input.attribute< std::string >( "day" );
+    day_ = ADN_Tr::ConvertToDays( day );
     from_ = input.attribute< std::string >( "from" );
     to_ = input.attribute< std::string >( "to" );
-    motivation_ = input.attribute< std::string >( "motivation" );
+    accommodation = input.attribute< std::string >( "motivation" );
+
+    ADN_Urban_Data::AccommodationInfos* pAccommodation = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindAccommodation( accommodation );
+    if( !pAccommodation )
+        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).toAscii().constData(), tools::translate( "People_Data", "Population - Invalid accommodation '%1'" ).arg( accommodation.c_str() ).toAscii().constData() );
+    ptrAccommodation_ = pAccommodation;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,11 +84,13 @@ void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output ) const
 {
+    std::string motivation = ptrAccommodation_.GetData()->strName_.GetData();
+    std::transform( motivation.begin(), motivation.end(), motivation.begin(), std::tolower );
     output << xml::start( "event" )
-           << xml::attribute( "day", day_ )
+           << xml::attribute( "day", day_.Convert() )
            << xml::attribute( "from", from_ )
            << xml::attribute( "to", to_ )
-           << xml::attribute( "motivation", motivation_ )
+           << xml::attribute( "motivation", motivation )
            << xml::end;
 }
 
@@ -98,9 +99,7 @@ void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output ) const
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
 ADN_People_Data::PeopleInfosConsumption::PeopleInfosConsumption()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , ptrResource_( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0 )
+    : ptrResource_( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0 )
     , consumption_( 0 )
 {
     BindExistenceTo( &ptrResource_ );
@@ -164,9 +163,7 @@ void ADN_People_Data::PeopleInfosConsumption::WriteArchive( xml::xostream& xos )
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 ADN_People_Data::PeopleInfos::PeopleInfos()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , nId_                ( ADN_People_Data::idManager_.GetNextId() )
+    : nId_                ( ADN_People_Data::idManager_.GetNextId() )
     , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
     , repartition_        ( tools::translate( "People_Data", "Population" ) )
     , securityLossOnFire_ ( 0 )
@@ -175,8 +172,6 @@ ADN_People_Data::PeopleInfos::PeopleInfos()
     , transferTime_       ( "0h" )
 {
     BindExistenceTo( &ptrModel_ );
-    consumptions_.SetParentNode( *this );
-    consumptions_.SetItemTypeName( "une consommation" );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,9 +179,7 @@ ADN_People_Data::PeopleInfos::PeopleInfos()
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 ADN_People_Data::PeopleInfos::PeopleInfos( unsigned int id )
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , nId_                ( id )
+    : nId_                ( id )
     , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
     , repartition_        ( tools::translate( "People_Data", "Population" ) )
     , securityLossOnFire_ ( 0 )
@@ -195,8 +188,6 @@ ADN_People_Data::PeopleInfos::PeopleInfos( unsigned int id )
     , transferTime_       ( "0h" )
 {
     BindExistenceTo( &ptrModel_ );
-    consumptions_.SetParentNode( *this );
-    consumptions_.SetItemTypeName( "une consommation" );
     ADN_People_Data::idManager_.Lock( id );
 }
 
@@ -207,24 +198,6 @@ ADN_People_Data::PeopleInfos::PeopleInfos( unsigned int id )
 ADN_People_Data::PeopleInfos::~PeopleInfos()
 {
     consumptions_.Delete();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PeopleInfos::GetNodeName
-// Created: SLG 2010-11-22
-// -----------------------------------------------------------------------------
-std::string ADN_People_Data::PeopleInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PeopleInfos::GetItemName
-// Created: SLG 2010-11-22
-// -----------------------------------------------------------------------------
-std::string ADN_People_Data::PeopleInfos::GetItemName()
-{
-    return std::string();
 }
 
 // -----------------------------------------------------------------------------
@@ -241,13 +214,11 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
     pCopy->securityLossOnFire_ = securityLossOnFire_.GetData();
     pCopy->securityGainPerHour_ = securityGainPerHour_.GetData();
     pCopy->healthNeed_ = healthNeed_.GetData();
-    for( IT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
+
+    for( IT_EventInfosVector it = schedule_.begin(); it != schedule_.end(); ++it )
     {
-        pCopy->schedule_[ it->first ].reset( new EventInfos() );
-        pCopy->schedule_[ it->first ]->day_ = it->second->day_.GetData();
-        pCopy->schedule_[ it->first ]->from_ = it->second->from_.GetData();
-        pCopy->schedule_[ it->first ]->to_ = it->second->to_.GetData();
-        pCopy->schedule_[ it->first ]->motivation_ = it->second->motivation_.GetData();
+        EventInfos* pNew = ( *it )->CreateCopy();
+        pCopy->schedule_.AddItem( pNew );
     }
     for( IT_PeopleInfosConsumptionVector itConsumption = consumptions_.begin(); itConsumption != consumptions_.end(); ++itConsumption )
     {
@@ -263,7 +234,6 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
 {
-    int index = 0;
     std::string strModel;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "associated-crowd", strModel )
@@ -279,7 +249,7 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
     input >> xml::end
           >> xml::start( "schedule" )
             >> xml::attribute( "transfer-time", transferTime_ )
-            >> xml::list( "event", *this, &ADN_People_Data::PeopleInfos::ReadEvent, index )
+            >> xml::list( "event", *this, &ADN_People_Data::PeopleInfos::ReadEvent )
           >> xml::end
           >> xml::start( "safety-level" )
             >> xml::attribute( "loss-on-fire", securityLossOnFire_ )
@@ -328,12 +298,13 @@ namespace
 // -----------------------------------------------------------------------------
 const std::string ADN_People_Data::PeopleInfos::CheckErrors() const
 {
-    for( CIT_Events it1 = schedule_.begin(); it1 != schedule_.end(); ++it1 )
-        for( CIT_Events it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
-            if( it1->first != it2->first && it1->second->day_.GetData() == it2->second->day_.GetData() &&
-                !CheckTime( it1->second->from_.GetData(), it1->second->to_.GetData(), it2->second->from_.GetData(), it2->second->to_.GetData() ) )
-                    return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toAscii().constData() + std::string( "\n" ) + "- " + it1->second->day_.GetData() + " : " + it1->second->from_.GetData() + " / " + it1->second->to_.GetData() + "\n" +
-                           "- " + it2->second->day_.GetData() + " : " + it2->second->from_.GetData() + " / " + it2->second->to_.GetData() + "\n";
+    for( CIT_EventInfosVector it1 = schedule_.begin(); it1 != schedule_.end(); ++it1 )
+        for( CIT_EventInfosVector it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
+            if( it1 != it2 && ( *it1 )->day_.GetData() == ( *it2 )->day_.GetData() &&
+                !CheckTime( ( *it1 )->from_.GetData(), ( *it1 )->to_.GetData(), ( *it2 )->from_.GetData(), ( *it2 )->to_.GetData() ) )
+                return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toStdString() + std::string( "\n" ) +
+                                         "- " + ( *it1 )->day_.Convert( ENT_Tr_ABC::eToTr ) + " : " + ( *it1 )->from_.GetData() + " / " + ( *it1 )->to_.GetData() + "\n" +
+                                         "- " + ( *it2 )->day_.Convert( ENT_Tr_ABC::eToTr ) + " : " + ( *it2 )->from_.GetData() + " / " + ( *it2 )->to_.GetData() + "\n";
     repartition_.CheckNoError( "ADN_People_Data", strName_.GetData().c_str() );
     return "";
 }
@@ -358,8 +329,8 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output ) const
     output  << xml::end
             << xml::start( "schedule" )
                 << xml::attribute( "transfer-time", transferTime_ );
-    for( CIT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
-        it->second->WriteArchive( output );
+    for( CIT_EventInfosVector it = schedule_.begin(); it != schedule_.end(); ++it )
+        ( *it )->WriteArchive( output );
     output  << xml::end
             << xml::start( "safety-level" )
                 << xml::attribute( "loss-on-fire", securityLossOnFire_.GetData() / 100.0 )
@@ -379,11 +350,11 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output ) const
 // Name: ADN_People_Data::ReadEvent
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfos::ReadEvent( xml::xistream& input, int& index )
+void ADN_People_Data::PeopleInfos::ReadEvent( xml::xistream& input )
 {
-    schedule_[ index ].reset( new EventInfos() );
-    schedule_[ index ]->ReadArchive( input );
-    index++;
+    std::auto_ptr< EventInfos > spNew( new EventInfos() );
+    spNew->ReadArchive( input );
+    schedule_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------

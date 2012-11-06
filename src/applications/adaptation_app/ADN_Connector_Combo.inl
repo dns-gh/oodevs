@@ -80,7 +80,7 @@ void ADN_Connector_Combo<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTa
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template< class T >
-bool ADN_Connector_Combo<T>::AddItemPrivate(void *obj,bool)
+bool ADN_Connector_Combo<T>::AddItemPrivate( void* obj )
 {
     if( obj == 0 )
         return false;
@@ -94,7 +94,7 @@ bool ADN_Connector_Combo<T>::AddItemPrivate(void *obj,bool)
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
 template< class T >
-bool ADN_Connector_Combo< T >::RemItemPrivate(void *item,bool)
+bool ADN_Connector_Combo< T >::RemItemPrivate( void* item )
 {
     if( item == 0 )
         return false;

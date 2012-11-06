@@ -10,15 +10,12 @@ using namespace helpers;
 // Created: APE 2004-11-09
 // -----------------------------------------------------------------------------
 ArmorInfos::ArmorInfos()
-: strName_      ()
-, neutralizationAverageTime_ ( "0s" )
-, neutralizationVariance_    ( "0s" )
-, rBreakdownEVA_  ( 0 )
-, rBreakdownNEVA_ ( 0 )
+    : neutralizationAverageTime_ ( "0s" )
+    , neutralizationVariance_    ( "0s" )
+    , rBreakdownEVA_  ( 0 )
+    , rBreakdownNEVA_ ( 0 )
 {
-    strName_.SetDataName( "le nom de la catégorie de blindage" );
-    strName_.SetParentNode( *this );
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

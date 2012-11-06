@@ -16,8 +16,8 @@
 // Name: ADN_Connector_ListView_ABC constructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
-ADN_Connector_ListView_ABC::ADN_Connector_ListView_ABC( ADN_ListView& list, const char* szName )
-    : ADN_Connector_Vector_ABC( szName )
+ADN_Connector_ListView_ABC::ADN_Connector_ListView_ABC( ADN_ListView& list )
+    : ADN_Connector_Vector_ABC()
     , list_(list)
     , bSwap_(false)
     , bIsConnected_(false)
@@ -79,7 +79,7 @@ void ADN_Connector_ListView_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC*
 // Name: ADN_Connector_ListView_ABC::AddItemPrivate
 // Created: AGN 2004-03-19
 // -----------------------------------------------------------------------------
-bool ADN_Connector_ListView_ABC::AddItemPrivate(void *obj,bool)
+bool ADN_Connector_ListView_ABC::AddItemPrivate( void *obj )
 {
     if( obj == 0 )
         return false;
@@ -91,7 +91,7 @@ bool ADN_Connector_ListView_ABC::AddItemPrivate(void *obj,bool)
 // Name: ADN_Connector_ListView_ABC::RemItemPrivate
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
-bool ADN_Connector_ListView_ABC::RemItemPrivate( void* item, bool )
+bool ADN_Connector_ListView_ABC::RemItemPrivate( void* item )
 {
     if( item == 0 )
         return false;
