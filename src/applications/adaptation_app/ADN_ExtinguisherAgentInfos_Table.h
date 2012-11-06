@@ -18,14 +18,19 @@
 */
 // Created: BCI 2010-12-02
 // =============================================================================
-class ADN_ExtinguisherAgentInfos_Table
-    : public ADN_Table2
+class ADN_ExtinguisherAgentInfos_Table : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_ExtinguisherAgentInfos_Table( QWidget* pParent = 0 );
+             ADN_ExtinguisherAgentInfos_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_ExtinguisherAgentInfos_Table();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void AddRow( int row, void* data );
     //@}
 };
 

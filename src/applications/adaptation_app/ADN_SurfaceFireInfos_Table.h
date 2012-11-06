@@ -18,14 +18,19 @@
 */
 // Created: JSR 2010-12-03
 // =============================================================================
-class ADN_SurfaceFireInfos_Table
-    : public ADN_Table2
+class ADN_SurfaceFireInfos_Table : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_SurfaceFireInfos_Table( QWidget* pParent = 0 );
+             ADN_SurfaceFireInfos_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_SurfaceFireInfos_Table();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void AddRow( int row, void* data );
     //@}
 };
 

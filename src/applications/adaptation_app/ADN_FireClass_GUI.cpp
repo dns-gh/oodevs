@@ -79,21 +79,15 @@ void ADN_FireClass_GUI::Build()
     new helpers::ADN_UrbanModifiersTable( strClassName_ + "Urban", vInfosConnectors[ eUrbanAttrition ], pUrbanModifiersGroup );
     // Extinguisher
     Q3GroupBox* pExtinguisherAgentsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ) );
-    ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( pExtinguisherAgentsGroup );
-    pExtinguisherAgentInfosTable->setObjectName( strClassName_ + "Extinguisher" );
+    ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( strClassName_ + "Extinguisher", vInfosConnectors[ eExtinguisherAgents ], pExtinguisherAgentsGroup );
     pExtinguisherAgentInfosTable->SetGoToOnDoubleClick( ::eEquipement );
-    vInfosConnectors[ eExtinguisherAgents ] = &pExtinguisherAgentInfosTable->GetConnector();
     // Weather fire effects
     Q3GroupBox* pWeatherFireEffectsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Weather fire effects" ) );
-    ADN_WeatherFireEffects_Table* pWeatherFireEffectsTable = new ADN_WeatherFireEffects_Table( pWeatherFireEffectsGroup );
-    pWeatherFireEffectsGroup->setObjectName( strClassName_ + "Weather" );
-    vInfosConnectors[ eWeatherFireEffects ] = &pWeatherFireEffectsTable->GetConnector();
+    new ADN_WeatherFireEffects_Table( strClassName_ + "Weather", vInfosConnectors[ eWeatherFireEffects ], pWeatherFireEffectsGroup );
     // Surface
     ADN_GroupBox* surfaceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Surface" ) );
     vInfosConnectors[ eSurface ] = &surfaceGroup->GetConnector();
-    ADN_SurfaceFireInfos_Table *pSurfaceInfosTable = new ADN_SurfaceFireInfos_Table( surfaceGroup );
-    pSurfaceInfosTable->setObjectName( strClassName_ + "Surface" );
-    vInfosConnectors[ eSurfaceEffects ] = &pSurfaceInfosTable->GetConnector();
+    new ADN_SurfaceFireInfos_Table( strClassName_ + "Surface", vInfosConnectors[ eSurfaceEffects ], surfaceGroup );
 
     // -------------------------------------------------------------------------
     // Layouts

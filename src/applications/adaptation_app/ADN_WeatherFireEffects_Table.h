@@ -18,14 +18,19 @@
 */
 // Created: BCI 2010-12-02
 // =============================================================================
-class ADN_WeatherFireEffects_Table
-    : public ADN_Table2
+class ADN_WeatherFireEffects_Table : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_WeatherFireEffects_Table( QWidget* pParent = 0 );
+             ADN_WeatherFireEffects_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_WeatherFireEffects_Table();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual void AddRow( int row, void* data );
     //@}
 };
 
