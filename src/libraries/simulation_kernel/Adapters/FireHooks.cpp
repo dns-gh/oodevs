@@ -132,10 +132,10 @@ namespace
     }
     DEFINE_HOOK( CanComponentBeFiredAt, 2, bool, ( const SWORD_Model* component, const SWORD_Model* parameters ) )
     {
-        const core::Model& comp = (*core::Convert( component ))[ "data" ];
+        const core::Model& comp = *core::Convert( component );
         if( (*core::Convert( parameters ))[ "major" ] && ! comp[ "major" ] )
             return false;
-        return comp.GetUserData< PHY_ComposantePion >().CanBeFired();
+        return comp[ "data" ].GetUserData< PHY_ComposantePion >().CanBeFired();
     }
     DEFINE_HOOK( GetWeaponReloadingDuration, 2, double, ( const SWORD_Model* firer, double rDuration ) )
     {
