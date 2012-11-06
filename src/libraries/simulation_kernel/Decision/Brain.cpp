@@ -73,22 +73,14 @@ directia::tools::binders::ScriptRef Brain::GetScriptRef()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Brain::SetProfiling
+// Name: Brain::ResetProfiling
 // Created: MCO 2012-11-05
 // -----------------------------------------------------------------------------
-void Brain::SetProfiling( bool enabled )
+void Brain::ResetProfiling( bool log )
 {
-    profiling_ = enabled;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Brain::LogProfiling
-// Created: MCO 2012-11-05
-// -----------------------------------------------------------------------------
-void Brain::LogProfiling()
-{
-    for( T_Profilers::const_iterator it = profilers_.begin(); it != profilers_.end(); ++it )
-        MT_LOG_INFO_MSG( "<profiling> " << it->first << " " << it->second.GetCount() << " " << it->second.GetTotalTime() );
+    if( log )
+        for( T_Profilers::const_iterator it = profilers_.begin(); it != profilers_.end(); ++it )
+            MT_LOG_INFO_MSG( "<profiling> " << it->first << " " << it->second.GetCount() << " " << it->second.GetTotalTime() );
     profilers_.clear();
 }
 

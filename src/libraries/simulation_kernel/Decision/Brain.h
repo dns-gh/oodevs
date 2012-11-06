@@ -54,10 +54,7 @@ public:
     template< typename Signature >
     void RegisterFunction( const char* const name, const boost::function< Signature >& function )
     {
-        if( profiling_ )
-            (*brain_)[ name ] = ProfilerProxy< Signature >( name, function );
-        else
-            (*brain_)[ name ] = function;
+        (*brain_)[ name ] = ProfilerProxy< Signature >( name, function );
     }
     template< typename Function >
     void RegisterFunction( const char* const name, const Function& function )
@@ -74,8 +71,7 @@ public:
     BOOST_PP_REPEAT(6, SWORD_BRAIN_FREE_FUNCTION, BOOST_PP_EMPTY)
 #undef SWORD_BRAIN_FREE_FUNCTION
 
-    static void SetProfiling( bool enabled );
-    static void LogProfiling();
+    static void ResetProfiling( bool log );
 
     static double GetTotalTime();
     //@}

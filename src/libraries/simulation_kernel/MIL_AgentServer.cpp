@@ -102,7 +102,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
     MT_LOG_STARTUP_MESSAGE( "---- SIM Initialized ----" );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
-    sword::Brain::SetProfiling( config_.IsProfilingEnabled() );
 }
 
 //-----------------------------------------------------------------------------
@@ -278,7 +277,7 @@ void MIL_AgentServer::MainSimLoop()
                      visitor.Count(), visitor.agents_, visitor.objects_, visitor.populations_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "%d Agents - %d Automats - %d Crowds" , pEntityManager_->GetAgentsCount(),
                             pEntityManager_->GetAutomatsCount(), pEntityManager_->GetCrowdsCount() ) );
-    sword::Brain::LogProfiling();
+    sword::Brain::ResetProfiling( config_.IsProfilingEnabled() );
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     SendMsgEndTick();
     pEntityManager_->Clean();
