@@ -134,14 +134,16 @@ void ADN_Composantes_GUI::Build()
 
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );
-    ADN_Composantes_BreakdownsTable* pAttritionBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Attrition breakdowns" ).toAscii().constData(), pBreakdownsGroup_ );
-    pAttritionBreakdowns->setObjectName( strClassName_ + "_AttritionBreakdowns" );
+    ADN_Composantes_BreakdownsTable* pAttritionBreakdowns = new ADN_Composantes_BreakdownsTable( strClassName_ + "_AttritionBreakdowns",
+                                                                                                tr( "Attrition breakdowns" ).toAscii().constData(),
+                                                                                                vInfosConnectors[ eAttritionBreakdowns ],
+                                                                                                pBreakdownsGroup_ );
     pAttritionBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
-    vInfosConnectors[ eAttritionBreakdowns ] = &pAttritionBreakdowns->GetConnector();
-    ADN_Composantes_BreakdownsTable* pRandomBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Random breakdowns" ).toAscii().constData(), pBreakdownsGroup_ );
-    pRandomBreakdowns->setObjectName( strClassName_ + "_RandomBreakdowns" );
+    ADN_Composantes_BreakdownsTable* pRandomBreakdowns = new ADN_Composantes_BreakdownsTable( strClassName_ + "_RandomBreakdowns",
+                                                                                              tr( "Random breakdowns" ).toAscii().constData(),
+                                                                                              vInfosConnectors[ eRandomBreakdowns ],
+                                                                                              pBreakdownsGroup_ );
     pRandomBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
-    vInfosConnectors[ eRandomBreakdowns ] = &pRandomBreakdowns->GetConnector();
 
     // Speeds
     Q3VGroupBox* pSpeedGroup = new Q3VGroupBox( tr( "Speeds" ) );
@@ -180,9 +182,7 @@ void ADN_Composantes_GUI::Build()
     pDotations_->SetGoToOnDoubleClick( ::eEquipement ); // $$$$ ABR 2012-03-09: TODO, GOOD TAB
     // Consumptions
     Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
-    pConsumptions_ = new ADN_Composantes_ConsumptionsTable( pConsumptionsGroup );
-    pConsumptions_->setObjectName( strClassName_ + "_Consumptions" );
-    vInfosConnectors[ eConsumptions ] = &pConsumptions_->GetConnector();
+    pConsumptions_ = new ADN_Composantes_ConsumptionsTable( strClassName_ + "_Consumptions", vInfosConnectors[ eConsumptions ], pConsumptionsGroup );
     // Objects
     Q3HGroupBox* pObjectsGroup = new Q3HGroupBox( tr( "Objects" ) );
     ADN_ListView_Composantes_Objects* pListObjects = new ADN_ListView_Composantes_Objects( pObjectsGroup );

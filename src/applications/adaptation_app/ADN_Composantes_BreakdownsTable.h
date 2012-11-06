@@ -28,19 +28,20 @@
 // Created: APE 2005-04-27
 // =============================================================================
 class ADN_Composantes_BreakdownsTable
-: public ADN_Table2
+: public ADN_Table3
 {
     Q_OBJECT
 
 public:
-    explicit ADN_Composantes_BreakdownsTable( const std::string& strName, QWidget* pParent = 0 );
+    explicit ADN_Composantes_BreakdownsTable( const QString& objectName, const QString& name, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Composantes_BreakdownsTable();
 
-public slots:
-    void OnModified();
-
 private:
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
+    virtual void AddRow( int row, void* data );
+
+protected:
+    virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
 };
 
 #endif // __ADN_Composantes_BreakdownsTable_h_

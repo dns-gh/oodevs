@@ -29,79 +29,24 @@
 typedef ADN_Composantes_Data::BreakdownInfos BreakdownInfos;
 
 //-----------------------------------------------------------------------------
-// Internal Table connector to be connected with ADN_Composantes_BreakdownsTable
-//-----------------------------------------------------------------------------
-class ADN_CT_Composantes_BreakdownsTable
-    : public ADN_Connector_Table_ABC
-{
-public:
-
-    ADN_CT_Composantes_BreakdownsTable( ADN_Composantes_BreakdownsTable& table )
-        : ADN_Connector_Table_ABC( table, false )
-        , breakdownsTable_       ( table )
-    {}
-
-    void  AddSubItems( int nRow, void* pObj )
-    {
-        assert( pObj != 0 );
-        BreakdownInfos* pBreakdown = static_cast<BreakdownInfos*>( pObj );
-
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
-        ADN_TableItem_Double* pItemOdds = new ADN_TableItem_Double( &tab_, pObj );
-
-        // add a new row & set new values
-        tab_.setItem( nRow, 0, pItemName );
-        tab_.setItem( nRow, 1, pItemOdds );
-
-        // set table item properties
-        pItemName->setEnabled( false );
-        pItemName->GetConnector().Connect( &pBreakdown->ptrBreakdown_.GetData()->strName_ );
-
-        // set table item properties
-        pItemOdds->GetValidator().setRange( 0.0, 100.0, 2 );
-        pItemOdds->GetConnector().Connect( &pBreakdown->rPercentage_ );
-
-        breakdownsTable_.OnModified();
-    }
-
-private:
-    ADN_Composantes_BreakdownsTable& breakdownsTable_;
-
-    ADN_CT_Composantes_BreakdownsTable& operator=( const ADN_CT_Composantes_BreakdownsTable& );
-};
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Composantes_BreakdownsTable constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const std::string& strName, QWidget* pParent )
-:   ADN_Table2( pParent, "ADN_Composantes_BreakdownsTable" )
+ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const QString& objectName, const QString& name, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0 */ )
+:   ADN_Table3( objectName, connector, pParent )
 {
-    // peut etre selectionne & trie
-    setSorting( true );
-    setSelectionMode( Q3Table::Single );
-    setShowGrid( false );
-
+    dataModel_.setColumnCount( 2 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << name
+                      << tr( "Odds (%)" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    verticalHeader()->setVisible( false );
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddDoubleSpinBoxOnColumn( 1, 0.0, 100.0, 0.01, 2 );
     setMinimumHeight( 150 );
     setMaximumHeight( 150 );
-
-    // hide vertical header
-    verticalHeader()->hide();
-    setLeftMargin( 0 );
-
-    // tab with 2 columns
-    setNumCols( 2 );
-    setNumRows( 0 );
-//    setColumnStretchable( 0, true );
-//    setColumnStretchable( 1, false );
-
-    horizontalHeader()->setLabel( 0, strName.c_str() );
-    horizontalHeader()->setLabel( 1, tr( "Odds (%)" ) );
-
-    // connector creation
-    pConnector_ = new ADN_CT_Composantes_BreakdownsTable(*this);
-
-    connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnModified() ) );
+    setShowGrid( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -117,7 +62,7 @@ ADN_Composantes_BreakdownsTable::~ADN_Composantes_BreakdownsTable()
 // Name: ADN_Composantes_BreakdownsTable::OnContextMenu
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const QPoint& pt )
+void ADN_Composantes_BreakdownsTable::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu menu( this );
     Q3PopupMenu addMenu( &menu );
@@ -128,7 +73,7 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
 
     menu.insertItem( tr( "New" ), &addMenu );
     menu.insertItem( tr( "Delete" ), 1 );
-    menu.setItemEnabled( 1, GetCurrentData() != 0 );
+    menu.setItemEnabled( 1, GetSelectedData() != 0 );
 
     int nMenuResult = menu.exec( pt );
 
@@ -137,7 +82,7 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
     else if( nMenuResult == 1 )
     {
         // Delete the current element.
-        BreakdownInfos* pCurrent = (BreakdownInfos*)GetCurrentData();
+        BreakdownInfos* pCurrent = static_cast< BreakdownInfos* >( GetSelectedData() );
         if( pCurrent != 0 )
             static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrent );
     }
@@ -156,18 +101,22 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_BreakdownsTable::OnModified
+// Name: ADN_Composantes_BreakdownsTable::dataChanged
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_BreakdownsTable::OnModified()
+void ADN_Composantes_BreakdownsTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
+    ADN_Table3::dataChanged( topLeft, bottomRight );
+
     double rSum = 0;
-    for( int n = 0; n < numRows(); ++n )
+    int i = 0;
+    while( dataModel_.item( i, 1 ) != 0 )
     {
         bool bOk = false;
-        double r = text( n, 1 ).toDouble( &bOk );
+        double r = dataModel_.item( i, 1 )->text().toDouble( &bOk ) ;
         if( bOk )
             rSum += r;
+        ++i;
     }
 
     if( rSum == 100.0 )
@@ -190,4 +139,17 @@ void ADN_Composantes_BreakdownsTable::OnModified()
         palette.setInactive( cg );
         this->horizontalHeader()->setPalette( palette );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_BreakdownsTable::AddRow
+// Created: MMC 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_Composantes_BreakdownsTable::AddRow( int row, void* data )
+{
+    BreakdownInfos* pBreakdown = static_cast<BreakdownInfos*>( data );
+    if( !pBreakdown )
+        return;
+    AddItem( row, 0, data, &pBreakdown->ptrBreakdown_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &pBreakdown->rPercentage_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

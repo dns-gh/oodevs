@@ -27,7 +27,7 @@ class ADN_ListView_Composantes;
 */
 // Created: APE 2005-01-25
 // =============================================================================
-class ADN_Composantes_ConsumptionsTable : public ADN_Table2
+class ADN_Composantes_ConsumptionsTable : public ADN_Table3
                                         , private boost::noncopyable
 {
     Q_OBJECT
@@ -35,14 +35,15 @@ class ADN_Composantes_ConsumptionsTable : public ADN_Table2
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Composantes_ConsumptionsTable( QWidget* pParent = 0 );
+    explicit ADN_Composantes_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Composantes_ConsumptionsTable();
     //@}
 
     //! @name Operations
     //@{
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
     void SetListView( ADN_ListView* listView );
+    virtual void AddRow( int row, void* data );
     //@}
 
 private:
