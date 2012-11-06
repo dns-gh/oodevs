@@ -5784,6 +5784,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>The provided name is either empty or already in use, please pick another one.</source>
         <translation>Le nom fourni est soit vide soit déjà utilisé, merci d&apos;un choisir un autre.</translation>
     </message>
+    <message>
+        <source>Please select one element to copy from the list.</source>
+        <translation>Veuillez choisir dans la liste à élément à copier.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Wizard_Default</name>

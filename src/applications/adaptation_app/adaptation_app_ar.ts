@@ -5757,6 +5757,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>The provided name is either empty or already in use, please pick another one.</source>
         <translation type="unfinished">هو اسم المقدمة أما فارغة أو الفعل قيد الاستخدام، يرجى اختيار واحد آخر.</translation>
     </message>
+    <message>
+        <source>Please select one element to copy from the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Wizard_Default</name>

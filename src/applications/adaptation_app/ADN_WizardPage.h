@@ -77,6 +77,7 @@ private:
         buttonGroup_->button( eCopy )->setText( qApp->translate( "ADN_Wizard", "Create a copy of:" ) );
         errorTitle_ = qApp->translate( "ADN_Wizard", "Unable to create" );
         errorMsg_ = qApp->translate( "ADN_Wizard", "The provided name is either empty or already in use, please pick another one." );
+        noSelectionMsg_ = qApp->translate( "ADN_Wizard", "Please select one element to copy from the list." );
     }
     //@}
 
@@ -99,6 +100,7 @@ protected:
 
     QString                 errorTitle_;
     QString                 errorMsg_;
+    QString                 noSelectionMsg_;
     //@}
 };
 

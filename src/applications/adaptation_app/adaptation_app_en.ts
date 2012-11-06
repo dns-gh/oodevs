@@ -5770,6 +5770,10 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>The provided name is either empty or already in use, please pick another one.</source>
         <translation>The provided name is either empty or already in use, please pick another one.</translation>
     </message>
+    <message>
+        <source>Please select one element to copy from the list.</source>
+        <translation>Please select one element to copy from the list.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Wizard_Default</name>

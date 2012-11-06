@@ -5773,6 +5773,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <source>The provided name is either empty or already in use, please pick another one.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please select one element to copy from the list.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Wizard_Default</name>

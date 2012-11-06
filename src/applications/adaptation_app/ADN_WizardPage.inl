@@ -137,7 +137,11 @@ T* ADN_WizardPage< T >::CreateObject()
     {
         QItemSelection selection = proxy_->mapSelectionToSource( view_->selectionModel()->selection() );
         QModelIndexList indexes = selection.indexes();
-        assert( indexes.size() == 1 );
+        if( indexes.size() == 0 )
+        {
+            QMessageBox::warning( this, errorTitle_, noSelectionMsg_, QMessageBox::Ok, Qt::NoButton );
+            return 0;
+        }
         const T* objectToCopy = static_cast< const T* >( indexes[ 0 ].data( Qt::UserRole ).value< kernel::VariantPointer >().ptr_ );
         assert( objectToCopy );
         element_ = const_cast< T* >( objectToCopy )->CreateCopy();
