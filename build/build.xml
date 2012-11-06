@@ -1557,7 +1557,7 @@
 
     <target name="all" depends="configure,checkproject,build,test,documentation,package" description="build and package distribution"/>
 
-    <target name="cmake.update" depends="configure">
+    <target name="cmake.update" depends="configure,generate-license">
         <update name="cmake"/>
     </target>
 
