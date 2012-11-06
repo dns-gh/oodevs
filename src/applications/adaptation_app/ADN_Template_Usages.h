@@ -19,24 +19,23 @@
 */
 // Created: LGY 2011-09-20
 // =============================================================================
-class ADN_Template_Usages : public ADN_Table2
+class ADN_Template_Usages : public ADN_Table3
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Template_Usages( QWidget* parent = 0 );
+             ADN_Template_Usages( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Template_Usages();
     //@}
 
 private:
     //! @name Slots
     //@{
-    virtual void OnContextMenu( int row, int col, const QPoint& point );
+    virtual void OnContextMenu( const QPoint& point );
     virtual bool Contains( ADN_Urban_Data::AccommodationInfos& accommodation );
-    virtual void doValueChanged( int row, int col );
-    void UpdateValidator();
+    virtual void AddRow( int row, void* data );
     //@}
 };
 

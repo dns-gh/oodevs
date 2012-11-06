@@ -210,9 +210,7 @@ void ADN_Urban_GUI::Build()
         pArchitectureBox3->setSpacing( 10 );
         builder.AddField< ADN_ComboBox_Vector >( pArchitectureBox3, tr( "Material" ), vUsageInfosConnectors[ eUrbanUsageMaterial ] );
         builder.AddField< ADN_ComboBox_Vector >( pArchitectureBox3, tr( "Roof shape" ), vUsageInfosConnectors[ eUrbanUsageRoofShape ] );
-        pUsages_ = new ADN_Template_Usages( pGroupTemplate );
-        pUsages_->setObjectName( strClassName_ + "_Usages" );
-        vUsageInfosConnectors[ eUrbanUsageRole ] = &pUsages_->GetConnector();
+        pUsages_ = new ADN_Template_Usages( strClassName_ + "_Usages", vUsageInfosConnectors[ eUrbanUsageRole ], pGroupTemplate );
     }
 
     // set auto connectors

@@ -10,61 +10,22 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Template_Usages.h"
 #include "moc_ADN_Template_Usages.cpp"
-#include "ADN_Connector_Table_ABC.h"
-
-class ADN_CT_Template_Usages : public ADN_Connector_Table_ABC
-{
-public:
-    ADN_CT_Template_Usages( ADN_Template_Usages& table )
-        : ADN_Connector_Table_ABC( table, false )
-        , table_( table )
-    {
-        // NOTHING
-    }
-
-    void  AddSubItems( int nRow, void* pObj )
-    {
-        assert( pObj != 0 );
-
-        ADN_Urban_Data::UsageTemplateInfos* pInfos = static_cast< ADN_Urban_Data::UsageTemplateInfos* >( pObj );
-
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
-        ADN_TableItem_Int* pItemValue = new ADN_TableItem_Int( &tab_, pObj );
-        pItemValue->GetValidator().setRange( 0, 100 );
-        tab_.setItem( nRow, 0, pItemName );
-        tab_.setItem( nRow, 1, pItemValue );
-        pItemName->setEnabled( false );
-        pItemName->GetConnector().Connect( &pInfos->accommodation_.GetData()->strName_ );
-        pItemValue->GetConnector().Connect( &pInfos->proportion_ );
-    }
-
-private:
-    ADN_Template_Usages& table_;
-
-    ADN_CT_Template_Usages& operator=( const ADN_CT_Template_Usages& );
-};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Template_Usages constructor
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-ADN_Template_Usages::ADN_Template_Usages( QWidget* parent )
-    : ADN_Table2( parent, "ADN_Template_Usages" )
+ADN_Template_Usages::ADN_Template_Usages( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    setSorting( true );
-    setSelectionMode( Q3Table::Single );
     setShowGrid( false );
-    setFixedHeight( 150 );
-    verticalHeader()->hide();
-    setLeftMargin( 0 );
-    setNumCols( 2 );
-    setNumRows( 0 );
-    horizontalHeader()->setLabel( 0, tr( "Usage" ) );
-    horizontalHeader()->setLabel( 1, tr( "Proportion(%)" ) );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-
-    pConnector_ = new ADN_CT_Template_Usages( *this );
+    dataModel_.setColumnCount( 2 );
+    verticalHeader()->setVisible( false );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Usage" ) << tr( "Proportion(%)" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    delegate_.AddSpinBoxOnColumn( 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,14 +34,14 @@ ADN_Template_Usages::ADN_Template_Usages( QWidget* parent )
 // -----------------------------------------------------------------------------
 ADN_Template_Usages::~ADN_Template_Usages()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Template_Usages::OnContextMenu
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Template_Usages::OnContextMenu( int /*row*/, int /*col*/, const QPoint& point )
+void ADN_Template_Usages::OnContextMenu( const QPoint& point )
 {
     Q3PopupMenu menu( this );
     Q3PopupMenu addMenu( &menu );
@@ -94,18 +55,15 @@ void ADN_Template_Usages::OnContextMenu( int /*row*/, int /*col*/, const QPoint&
     ADN_Tools::SortMenu( addMenu );
     menu.insertItem( tr( "New" ), &addMenu );
     menu.insertItem( tr( "Delete" ), 1 );
-    menu.setItemEnabled( 1, GetCurrentData() != 0 );
+    menu.setItemEnabled( 1, GetSelectedData() != 0 );
     int nMenuResult = menu.exec( point );
     if( nMenuResult == -1 )
         return;
     else if( nMenuResult == 1 )
     {
-        ADN_Urban_Data::UsageTemplateInfos* pCurrent = (ADN_Urban_Data::UsageTemplateInfos*)GetCurrentData();
+        ADN_Urban_Data::UsageTemplateInfos* pCurrent = (ADN_Urban_Data::UsageTemplateInfos*)GetSelectedData();
         if( pCurrent != 0 )
-        {
             static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrent );
-            UpdateValidator();
-        }
     }
     else
     {
@@ -115,7 +73,6 @@ void ADN_Template_Usages::OnContextMenu( int /*row*/, int /*col*/, const QPoint&
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );
-        UpdateValidator();
     }
 }
 
@@ -125,46 +82,25 @@ void ADN_Template_Usages::OnContextMenu( int /*row*/, int /*col*/, const QPoint&
 // -----------------------------------------------------------------------------
 bool ADN_Template_Usages::Contains( ADN_Urban_Data::AccommodationInfos& accommodation )
 {
-    int n = 0;
-    while( item( n, 1 ) != 0 )
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
     {
-        ADN_TableItem_ABC* pItem = static_cast< ADN_TableItem_ABC* >( item( n, 1 ) );
-        ADN_Urban_Data::UsageTemplateInfos* pInfos = static_cast< ADN_Urban_Data::UsageTemplateInfos* >( pItem->GetData() );
-        if( pInfos->accommodation_.GetData()->strName_.GetData() == accommodation.strName_.GetData() )
+        const QModelIndex index = dataModel_.index( row, 1 );
+        ADN_Urban_Data::UsageTemplateInfos* pInfos = static_cast< ADN_Urban_Data::UsageTemplateInfos* >( GetDataFromIndex( index ) );
+        if( pInfos && pInfos->accommodation_.GetData()->strName_.GetData() == accommodation.strName_.GetData() )
             return true;
-        ++n;
     }
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Template_Usages::doValueChanged
-// Created: LGY 2011-10-27
+// Name: ADN_Template_Usages::AddRow
+// Created: JSR 2012-11-06
 // -----------------------------------------------------------------------------
-void ADN_Template_Usages::doValueChanged( int row, int col )
+void ADN_Template_Usages::AddRow( int row, void* data )
 {
-    UpdateValidator();
-    ADN_Table2::doValueChanged( row, col );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Template_Usages::UpdateValidator
-// Created: LGY 2011-10-27
-// -----------------------------------------------------------------------------
-void ADN_Template_Usages::UpdateValidator()
-{
-    int count = numRows();
-    for( int i = 0; i < count; ++i )
-    {
-        int total = 0;
-        for( int j = 0; j < count; ++j )
-            if( i != j )
-            {
-                ADN_TableItem_Int* pValue = (ADN_TableItem_Int*)item( j, 1 );
-                if( pValue )
-                    total += pValue->text().toInt();
-            }
-        ADN_TableItem_Int* pValue = (ADN_TableItem_Int*)item( i, 1 );
-        pValue->GetValidator().setRange( 0, 100 - total );
-    }
+    ADN_Urban_Data::UsageTemplateInfos* pInfos = static_cast< ADN_Urban_Data::UsageTemplateInfos* >( data );
+    if( !pInfos )
+        return;
+    AddItem( row, 0, data, &pInfos->accommodation_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 1, data, &pInfos->proportion_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }
