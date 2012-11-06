@@ -23,88 +23,38 @@
 typedef ADN_Composantes_Data::CategoryInfos CategoryInfos;
 
 //-----------------------------------------------------------------------------
-// Internal Table connector to be connected with munitions
-//-----------------------------------------------------------------------------
-class ADN_CT_Composantes_Dotations : public ADN_Connector_Table_ABC
-{
-
-public:
-    explicit ADN_CT_Composantes_Dotations( ADN_Composantes_Dotations_GUI& tab )
-        : ADN_Connector_Table_ABC( tab, false )
-        , bIncludeNormalizedConsumption_( tab.bIncludeNormalizedConsumption_ )
-        , bIncludeThreshold_( tab.bIncludeThreshold_ )
-    {}
-
-    void AddSubItems( int n, void* pObj )
-    {
-        assert( pObj != 0 );
-        CategoryInfos* pCategory = static_cast<CategoryInfos*>(pObj);
-
-        // Add a new row.
-        ADN_TableItem_String*    pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
-        ADN_TableItem_Int*       pItemQty  = new ADN_TableItem_Int( &tab_, pObj );
-        ADN_TableItem_Double*    pItemLogThreshold  = new ADN_TableItem_Double( &tab_, pObj );
-        ADN_TableItem_Double*    pItemNormalizedConsumption  = new ADN_TableItem_Double( &tab_, pObj );
-
-        pItemQty->GetValidator().setRange( 1, INT_MAX );
-        pItemLogThreshold->GetValidator().setRange( 0, 100, 2 );
-        pItemNormalizedConsumption->GetValidator().setRange( 0.001, INT_MAX, 3 );
-
-        tab_.setItem( n, 0, pItemName );
-        tab_.setItem( n, 1, pItemQty );
-        if( bIncludeThreshold_ )
-            tab_.setItem( n, 2, pItemLogThreshold );
-        if( bIncludeNormalizedConsumption_ )
-            tab_.setItem( n, 3, pItemNormalizedConsumption );
-
-        // Connect the items
-        pItemName->GetConnector().Connect( &pCategory->ptrCategory_.GetData()->strName_ );
-        pItemQty->GetConnector().Connect( &pCategory->rNbr_ );
-        pItemLogThreshold->GetConnector().Connect( &pCategory->rLogThreshold_ );
-        pItemNormalizedConsumption->GetConnector().Connect( &pCategory->rNormalizedConsumption_ );
-    }
-
-private:
-    bool bIncludeNormalizedConsumption_;
-    bool bIncludeThreshold_;
-};
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Dotations_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
-    : ADN_Table2( pParent, "ADN_Composantes_Dotations_GUI" )
+ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector,
+                                                              bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
+    : ADN_Table3( objectName, connector, pParent )
     , bIncludeNormalizedConsumption_( bIncludeNormalizedConsumption )
     , bIncludeThreshold_( bIncludeThreshold )
 {
-    // Selection and sorting.
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
-    setShowGrid( false );
-
-    setMaximumHeight( 270 );
-
-    // Hide the vertical header.
-    verticalHeader()->hide();
-    setLeftMargin( 0 );
-
     // Setup the columns.
-    const int cols = 4 - ( ( bIncludeNormalizedConsumption_ ) ? 0 : 1 ) - ( ( bIncludeThreshold ) ? 0 : 1 );
-    setNumCols( cols );
-    setNumRows( 0 );
-    for( int i = 0; i < cols; ++i )
-        setColumnStretchable( i, true );
+    const int cols = 2 + static_cast< int >( bIncludeNormalizedConsumption_ ) + static_cast< int >( bIncludeThreshold );
+    dataModel_.setColumnCount( cols );
 
-    horizontalHeader()->setLabel( 0, tr( "Category" ) );
-    horizontalHeader()->setLabel( 1, tr( "Qty" ) );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Category" )
+                      << tr( "Qty" );
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddSpinBoxOnColumn( 1, 1, INT_MAX );
     if( bIncludeThreshold )
-        horizontalHeader()->setLabel( 2, tr( "Log threshold (%)" ) );
+    {
+        horizontalHeaders << tr( "Log threshold (%)" );
+        delegate_.AddDoubleSpinBoxOnColumn( 2, 0.0, 100.0, 0.01, 2 );
+    }
     if( bIncludeNormalizedConsumption )
-        horizontalHeader()->setLabel( 3, tr( "Normalized consumption" ) );
-
-    // Connector creation
-    pConnector_ = new ADN_CT_Composantes_Dotations( *this );
+    {
+        horizontalHeaders << tr( "Normalized consumption" );
+        delegate_.AddDoubleSpinBoxOnColumn( 2 + static_cast< int >( bIncludeThreshold ), 0.001, INT_MAX, 0.001, 3 );
+    }
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    verticalHeader()->setVisible( false );
+    setMaximumHeight( 270 );
 }
 
 //-----------------------------------------------------------------------------
@@ -120,7 +70,7 @@ ADN_Composantes_Dotations_GUI::~ADN_Composantes_Dotations_GUI()
 // Name: ADN_Composantes_Dotations_GUI::OnContextMenu
 // Created: AGN 03-08-04
 //-----------------------------------------------------------------------------
-void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
+void ADN_Composantes_Dotations_GUI::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu menu( this );
     Q3PopupMenu targetMenu( &menu );
@@ -152,7 +102,7 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, con
     }
 
     menu.insertItem( tr( "Add resource"), &targetMenu ,0 );
-    if( GetCurrentData() != 0 )
+    if( GetSelectedData() != 0 )
         menu.insertItem( tr( "Remove resource" ), 1 );
 
     int nMenuResult = menu.exec(pt);
@@ -169,10 +119,10 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, con
 bool ADN_Composantes_Dotations_GUI::Contains( ADN_Equipement_Data::CategoryInfo& category )
 {
     int n = 0;
-    while( item( n, 1 ) != 0 )
+    while( dataModel_.item( n, 1 ) != 0 )
     {
-        ADN_TableItem_ABC* pItem = static_cast<ADN_TableItem_ABC*>( item( n, 1 ) );
-        CategoryInfos* pCategory = static_cast<CategoryInfos*>( pItem->GetData() );
+        ADN_StandardItem* pItem = static_cast< ADN_StandardItem* >( dataModel_.item( n, 1 ) );
+        CategoryInfos* pCategory = static_cast< CategoryInfos* >( pItem->GetData() );
         if( pCategory->ptrCategory_.GetData() == &category )
             return true;
         ++n;
@@ -201,6 +151,24 @@ void ADN_Composantes_Dotations_GUI::AddNewDotation( ADN_Equipement_Data::Categor
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Dotations_GUI::RemoveCurrentDotation()
 {
-    assert( GetCurrentData() != 0 );
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( GetCurrentData() );
+    assert( GetSelectedData() != 0 );
+    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( GetSelectedData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Consumptions_Table::AddRow
+// Created: MMC 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Dotations_GUI::AddRow( int row, void* data )
+{
+    CategoryInfos* pCategory = static_cast< CategoryInfos* >( data );
+    if( !pCategory )
+        return;
+
+    AddItem( row, 0, data, &pCategory->ptrCategory_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 1, data, &pCategory->rNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    if( bIncludeThreshold_ )
+        AddItem( row, 2, data, &pCategory->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    if( bIncludeNormalizedConsumption_ )
+        AddItem( row, 2 + static_cast< int >( bIncludeThreshold_ ), data, &pCategory->rNormalizedConsumption_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

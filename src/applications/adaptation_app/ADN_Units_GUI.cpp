@@ -211,10 +211,8 @@ void ADN_Units_GUI::Build()
     ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary resources" ) );
     pDotationsGroup->setObjectName( strClassName_ + "_ComplementaryResources" );
     vInfosConnectors[ eHasTC1 ] = &pDotationsGroup->GetConnector();
-    ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, pDotationsGroup );
-    pDotations->setObjectName( strClassName_ + "_Dotations" );
+    ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( strClassName_ + "_Dotations", vInfosConnectors[ eContenancesTC1 ], false, pDotationsGroup );
     pDotations->SetGoToOnDoubleClick( ::eEquipement );
-    vInfosConnectors[ eContenancesTC1 ] = &pDotations->GetConnector();
 
     // Stock
     pStockGroup_ = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Stock" ) );

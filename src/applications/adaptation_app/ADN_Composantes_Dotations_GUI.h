@@ -22,19 +22,21 @@
 // Created: APE 2005-01-07
 // =============================================================================
 class ADN_Composantes_Dotations_GUI
-: public ADN_Table2
+: public ADN_Table3
 {
     Q_OBJECT
 
 public:
-    explicit ADN_Composantes_Dotations_GUI( bool bIncludeNormalizedConsumption, QWidget* pParent = 0, bool bIncludeThreshold = true );
+    explicit ADN_Composantes_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector,
+                                            bool bIncludeNormalizedConsumption, QWidget* pParent = 0, bool bIncludeThreshold = true );
     virtual ~ADN_Composantes_Dotations_GUI();
 
 private:
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
     void AddNewDotation( ADN_Equipement_Data::CategoryInfo& category );
     void RemoveCurrentDotation();
     bool Contains( ADN_Equipement_Data::CategoryInfo& category );
+    virtual void AddRow( int row, void* data );
 
 public:
     bool bIncludeNormalizedConsumption_;

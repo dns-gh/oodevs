@@ -170,18 +170,14 @@ void ADN_Objects_GUI::Build()
         builder.AddEnumField( constr, tr( "Model" ), vInfosConnectors[ eConstructorCapacity_UnitType ] );
         // Buildable
         ADN_GroupBox* buildable = CreateCapacityGroupBox( 3, tr( "Buildable" ), vInfosConnectors[ eBuildableCapacityPresent], constructor );
-        ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, buildable, false );
-        pDotations->setObjectName( strClassName_ +"_BuildableDotations" );
+        ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( strClassName_ +"_BuildableDotations", vInfosConnectors[ eBuildableCapacity_Dotation ], false, buildable, false );
         pDotations->SetGoToOnDoubleClick( ::eEquipement );
-        vInfosConnectors[ eBuildableCapacity_Dotation ] = &pDotations->GetConnector();
 
         // Improvable
         ADN_GroupBox* improvable = CreateCapacityGroupBox( 3, tr( "Improvable" ), vInfosConnectors[ eImprovableCapacityPresent ], constructor );
         {
-            ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, improvable, false );
+            ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( strClassName_ +"_ImprovableDotations", vInfosConnectors[ eImprovableCapacity_Dotation ], false, improvable, false );
             pDotations->SetGoToOnDoubleClick( ::eEquipement );
-            pDotations->setObjectName( strClassName_ +"_ImprovableDotations" );
-            vInfosConnectors[ eImprovableCapacity_Dotation ] = &pDotations->GetConnector();
         }
 
         // Heuristic
