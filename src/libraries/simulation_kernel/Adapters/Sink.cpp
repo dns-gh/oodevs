@@ -408,6 +408,15 @@ namespace
             object[ "can-be-perceived" ] = (*it.second)().CanBePerceived();
         }
     }
+    void UpdatePerceptions( core::Model& notifications )
+    {
+        notifications[ "agents" ].Clear();
+        notifications[ "agents-in-zone" ].Clear();
+        notifications[ "objects" ].Clear();
+        notifications[ "population-concentrations" ].Clear();
+        notifications[ "population-flows" ].Clear();
+        notifications[ "urban-blocks" ].Clear();
+    }
     void UpdateAgent( MIL_AgentPion& pion, core::Model& entity )
     {
         entity[ "is-deployed" ] = ! pion.GetRole< PHY_RoleInterface_Deployment >().IsUndeployed();
@@ -423,6 +432,7 @@ namespace
         movement[ "has-resources" ] = pion.GetRole< RoleAction_Moving >().HasResources();
         movement[ "can-move" ] = pion.GetRole< RoleAction_Moving >().CanMove();
         entity[ "knowledges" ] = pion.GetKnowledgeGroup()->GetId();
+        UpdatePerceptions( entity[ "perceptions/notifications" ] );
         core::Model& components = entity[ "components" ];
         const transport::PHY_RoleAction_Loading* loading = pion.RetrieveRole< transport::PHY_RoleAction_Loading >();
         for( std::size_t c = 0; c < components.GetSize(); ++c )
