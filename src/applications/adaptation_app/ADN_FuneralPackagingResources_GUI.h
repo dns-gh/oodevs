@@ -22,16 +22,17 @@
 // Created: APE 2005-01-07
 // =============================================================================
 class ADN_FuneralPackagingResources_GUI
-: public ADN_Table2
+: public ADN_Table3
 {
 public:
-    explicit ADN_FuneralPackagingResources_GUI( QWidget* pParent = 0 );
+    explicit ADN_FuneralPackagingResources_GUI( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent = 0 );
     virtual ~ADN_FuneralPackagingResources_GUI();
 
 private:
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
     bool Contains( ADN_Equipement_Data::CategoryInfo& category );
     void AddNewDotation( ADN_Equipement_Data::CategoryInfo& category );
+    virtual void AddRow( int row, void* data );
     void RemoveCurrentDotation();
 };
 

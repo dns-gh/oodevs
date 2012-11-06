@@ -14,7 +14,6 @@
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Workspace.h"
 #include "ADN_FuneralPackagingResource.h"
 #include "ADN_Equipement_Data.h"
@@ -24,68 +23,25 @@
 #include "ENT/Ent_Tr.h"
 
 //-----------------------------------------------------------------------------
-// Internal Table connector to be connected with
-//-----------------------------------------------------------------------------
-class ADN_FuneralPackagingResources_GUI_Connector
-:public ADN_Connector_Table_ABC
-{
-public:
-
-    ADN_FuneralPackagingResources_GUI_Connector( ADN_FuneralPackagingResources_GUI& tab )
-    : ADN_Connector_Table_ABC( tab, false )
-    {}
-
-    void  AddSubItems( int nRow, void* pObj )
-    {
-        assert( pObj != 0 );
-        ADN_FuneralPackagingResource* pInfo = static_cast< ADN_FuneralPackagingResource* >( pObj );
-
-        // Add a new row.
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
-        ADN_TableItem_TimeField* pItemProcessDuration = new ADN_TableItem_TimeField( &tab_, pObj );
-        ADN_TableItem_CheckItem* pItemTerminal = new ADN_TableItem_CheckItem( &tab_, pObj );
-
-        tab_.setItem( nRow, 0, pItemName );
-        tab_.setItem( nRow, 1, pItemProcessDuration );
-        tab_.setItem( nRow, 2, pItemTerminal );
-
-        pItemName->GetConnector().Connect( &pInfo->resource_.GetData()->strName_ );
-        pItemProcessDuration->GetConnector().Connect( &pInfo->processDuration_ );
-        pItemTerminal->GetConnector().Connect( &pInfo->terminal_ );
-    }
-
-private:
-    ADN_FuneralPackagingResources_GUI_Connector& operator=( const ADN_FuneralPackagingResources_GUI_Connector& );
-};
-
-//-----------------------------------------------------------------------------
 // Name: ADN_FuneralPackagingResources_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( QWidget* pParent )
-: ADN_Table2( pParent, "ADN_FuneralPackagingResources_GUI" )
+ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
+: ADN_Table3( objectName, vector, pParent )
 {
     setMinimumHeight( 200 );
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
-    // setShowGrid( false );
-
-    // Hide the vertical header.
-    verticalHeader()->hide();
-    setLeftMargin( 0 );
-
-    // Setup the columns.
-    setNumRows( 0 );
-    setNumCols( 3 );
-    setColumnStretchable( 0, true );
-
-    horizontalHeader()->setLabel( 0, tr( "Resource" ) );
-    horizontalHeader()->setLabel( 1, tr( "Packaging duration" ) );
-    horizontalHeader()->setLabel( 2, tr( "Is terminal" ) );
-
-    setColumnWidth( 0, 200 );
-
-    pConnector_ = new ADN_FuneralPackagingResources_GUI_Connector( *this );
+    dataModel_.setColumnCount( 3 );
+    setSortingEnabled( true );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Resource" )
+                      << tr( "Packaging duration" )
+                      << tr( "Is terminal" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
+    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.AddDelayEditOnColumn( 1 );
+    delegate_.AddCheckBoxOnColumn( 2 );
 }
 
 //-----------------------------------------------------------------------------
@@ -101,7 +57,7 @@ ADN_FuneralPackagingResources_GUI::~ADN_FuneralPackagingResources_GUI()
 // Name: ADN_FuneralPackagingResources_GUI::OnContextMenu
 // Created: AGN 03-08-04
 //-----------------------------------------------------------------------------
-void ADN_FuneralPackagingResources_GUI::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
+void ADN_FuneralPackagingResources_GUI::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu menu( this );
     Q3PopupMenu targetMenu( &menu );
@@ -133,7 +89,7 @@ void ADN_FuneralPackagingResources_GUI::OnContextMenu( int /*row*/, int /*col*/,
     }
 
     menu.insertItem( tr( "Add resource"), &targetMenu ,0 );
-    if( GetCurrentData() != 0 )
+    if( GetSelectedData() != 0 )
         menu.insertItem( tr( "Remove resource" ), 1 );
 
     int nMenuResult = menu.exec(pt);
@@ -149,14 +105,15 @@ void ADN_FuneralPackagingResources_GUI::OnContextMenu( int /*row*/, int /*col*/,
 // -----------------------------------------------------------------------------
 bool ADN_FuneralPackagingResources_GUI::Contains( ADN_Equipement_Data::CategoryInfo& category )
 {
-    int n = 0;
-    while( item( n, 1 ) != 0 )
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
     {
-        ADN_TableItem_ABC* pItem = static_cast<ADN_TableItem_ABC*>( item( n, 1 ) );
-        ADN_FuneralPackagingResource* pCategory = static_cast<ADN_FuneralPackagingResource*>( pItem->GetData() );
-        if( pCategory->resource_ == &category )
-            return true;
-        ++n;
+        ADN_StandardItem* pItem = static_cast< ADN_StandardItem*>( dataModel_.item( row, 1 ) );
+        if( pItem )
+        {
+            ADN_FuneralPackagingResource* pCategory = static_cast<ADN_FuneralPackagingResource*>( pItem->GetData() );
+            if( pCategory->resource_ == &category )
+                return true;
+        }
     }
     return false;
 }
@@ -178,11 +135,26 @@ void ADN_FuneralPackagingResources_GUI::AddNewDotation( ADN_Equipement_Data::Cat
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_FuneralPackagingResources_GUI::AddRow
+// Created: NPT 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_FuneralPackagingResources_GUI::AddRow( int row, void* data )
+{
+    ADN_FuneralPackagingResource* pInfo = static_cast< ADN_FuneralPackagingResource* >( data );
+    if( !pInfo )
+        return;
+
+    AddItem( row, 0, data, &pInfo->resource_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &pInfo->processDuration_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &pInfo->terminal_, ADN_StandardItem::eBool, Qt::ItemIsUserCheckable );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_FuneralPackagingResources_GUI::RemoveCurrentDotation
 // Created: AGN 2003-12-04
 // -----------------------------------------------------------------------------
 void ADN_FuneralPackagingResources_GUI::RemoveCurrentDotation()
 {
-    assert( GetCurrentData() != 0 );
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( GetCurrentData() );
+    assert( GetSelectedData() != 0 );
+    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( GetSelectedData() );
 }

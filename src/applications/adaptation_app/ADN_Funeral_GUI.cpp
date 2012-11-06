@@ -61,14 +61,12 @@ void ADN_Funeral_GUI::Build()
     pTransporterSpeed->GetValidator().setBottom( 1 );
     pHolder->setMaximumWidth( maxSize );
 
-    resourceTable_ = new ADN_FuneralPackagingResources_GUI();
-    resourceTable_->setObjectName( strClassName_ + "FuneralTable" );
+    resourceTable_ = new ADN_FuneralPackagingResources_GUI( strClassName_ + "FuneralTable", data_.funeralPackagingResources_ );
     resourceTable_->SetGoToOnDoubleClick( ::eEquipement );
-    resourceTable_->GetConnector().Connect( &data_.funeralPackagingResources_ );
     resourceTable_->setMaximumWidth( maxSize );
     resourceTable_->setFixedHeight( 200 );
-    resourceTable_->setSorting( false );
-    resourceTable_->setSelectionMode( Q3Table::SingleRow );
+    resourceTable_->setSortingEnabled( false );
+    resourceTable_->setSelectionMode( QTableView::SingleSelection );
 
     QPushButton* moveUpButton_ = new QPushButton();
     moveUpButton_->setIcon( MAKE_ICON( arrow_up ) );
@@ -111,7 +109,7 @@ void ADN_Funeral_GUI::SwapResource( int offsetRow )
         return;
 
     int numRows = resourceTable_->numRows();
-    int curRow = resourceTable_->currentRow();
+    int curRow = resourceTable_->currentIndex().row();
     int targetRow = curRow + offsetRow;
 
     if( curRow < 0 || curRow >= numRows )
@@ -127,7 +125,6 @@ void ADN_Funeral_GUI::SwapResource( int offsetRow )
         resourceTable_->clearSelection();
         resourceTable_->GetConnector().Disconnect( &data_.funeralPackagingResources_ );
         resourceTable_->GetConnector().Connect( &data_.funeralPackagingResources_ );
-        resourceTable_->updateContents();
         resourceTable_->selectRow( targetRow );
     }
 }
