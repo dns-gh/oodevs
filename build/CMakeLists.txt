@@ -77,7 +77,8 @@ function( add_target target group dir )
         # remove _dll suffix from output name
         if( ${target} MATCHES "_dll$" )
             string( REGEX REPLACE "(.+)_dll" "\\1" next ${target} )
-            masa_set_target_output_name( ${target} ${next}_d ${next} )
+            masa_get_library_full_name( ${next} debug release )
+            masa_set_target_output_name( ${target} ${debug} ${release} )
         endif()
     elseif( test )
         # nothing
@@ -405,6 +406,7 @@ function( add_module target )
     add_target( ${target} modules "libraries/${target}" )
     target_link_libraries( ${target} ${XERCES_LIBRARIES} )
     add_target( ${target}_dll modules "libraries/${target}_dll" OPTIONS shared )
+    masa_set_target_output_name( ${target}_dll ${target}_d ${target} )
     target_link_libraries( ${target}_dll
         ${target}
         wrapper
