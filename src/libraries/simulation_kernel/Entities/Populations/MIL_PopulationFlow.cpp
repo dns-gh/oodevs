@@ -71,6 +71,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
     , bBlocked_                   ( false )
     , pSplittingObject_           ( 0 )
     , pBlockingObject_            ( 0 )
+    , pFirstSplittingObject_      ( sourceConcentration.GetSplittingObject() )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
 {
@@ -101,6 +102,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
     , bBlocked_                   ( false )
     , pSplittingObject_           ( 0 )
     , pBlockingObject_            ( 0 )
+    , pFirstSplittingObject_      ( 0 )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
 {
@@ -131,6 +133,7 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int
     , bBlocked_                   ( false )
     , pSplittingObject_           ( 0 )
     , pBlockingObject_            ( 0 )
+    , pFirstSplittingObject_      ( 0 )
     , personsPassedThroughObject_ ( 0 )
     , armedIndividualsBeforeSplit_( 0 )
 {
@@ -261,6 +264,8 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
     object.NotifyPopulationMovingInside( *this );
     //$$$ DEUGUEU Cf. refactor gestion objets <-> population
     if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &object )
+        pFirstSplittingObject_ = &object;
+    if( pFirstSplittingObject_ )
         return;
     const PopulationAttribute* attr = object.RetrieveAttribute< PopulationAttribute >();
     if( !attr )
@@ -282,6 +287,8 @@ void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
     object.NotifyPopulationMovingOutside( *this );
     pBlockingObject_ = &object;
     pSplittingObject_ = 0;
+    if( &object == pFirstSplittingObject_ )
+        pFirstSplittingObject_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -426,7 +433,7 @@ bool MIL_PopulationFlow::ManageSplit()
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::ManageObjectSplit()
 {
-    if( pDestConcentration_ || !pSplittingObject_ )
+    if( pDestConcentration_ || !pSplittingObject_ || pFirstSplittingObject_ )
         return false;
     MoveToAlternateDestination( GetHeadPosition() );
     pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
@@ -532,7 +539,7 @@ bool MIL_PopulationFlow::Update()
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::UpdateLocation()
 {
-    location_.Reset( flowShape_ );
+    location_.Reset( TER_Localisation::eLine, flowShape_ );
     UpdatePatch();
 }
 
