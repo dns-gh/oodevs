@@ -21,7 +21,7 @@
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObject )
@@ -59,9 +59,9 @@ DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObje
     {
         boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second), pKnowledgeGroup_->shared_from_this() ) );
         if( ! objectMap_.insert( std::make_pair( it->first, knowledge ) ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Insert failed" );
         if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Insert failed" );
     }
 }
 
@@ -153,9 +153,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
     if( knowledge )
     {
         if( ! objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Insert failed" );
         if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Insert failed" );
     }
     return knowledge;
 }
@@ -172,11 +172,11 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
         if( knowledge.GetObjectKnown() )
         {
             if( objectMap_.erase( knowledge.GetObjectKnown() ) < 1 )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+                MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Erase failed" );
             knowledge.CleanObjectKnown();
         }
         if( knowledgeObjectFromIDMap_.erase( knowledge.GetID() ) < 1 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Erase failed" );
     }
 }
 
@@ -187,7 +187,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
 void DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& /*knowledge*/ )
 {
     if( objectMap_.erase( &objectKnown ) < 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------
