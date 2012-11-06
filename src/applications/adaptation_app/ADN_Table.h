@@ -44,6 +44,9 @@ public:
 
     void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
     void ActivateRatioColor() {}
+
+    QStandardItem* GetItem( int row, int col ) const;
+    QStandardItem* GetItemFromIndex( const QModelIndex& index ) const;
     //@}
 
 protected:
@@ -57,7 +60,6 @@ protected:
     template< typename T >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags = 0 );
 
-    QStandardItem* GetItemFromIndex( const QModelIndex& index ) const;
 
     virtual void OnContextMenu( const QPoint& pt );
     void* GetSelectedData();

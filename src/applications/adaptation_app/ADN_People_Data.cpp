@@ -84,13 +84,11 @@ void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output ) const
 {
-    std::string motivation = ptrAccommodation_.GetData()->strName_.GetData();
-    std::transform( motivation.begin(), motivation.end(), motivation.begin(), std::tolower );
     output << xml::start( "event" )
            << xml::attribute( "day", day_.Convert() )
            << xml::attribute( "from", from_ )
            << xml::attribute( "to", to_ )
-           << xml::attribute( "motivation", motivation )
+           << xml::attribute( "motivation", ptrAccommodation_.GetData()->strName_ )
            << xml::end;
 }
 

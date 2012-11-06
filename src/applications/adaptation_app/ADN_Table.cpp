@@ -249,6 +249,15 @@ QStandardItem* ADN_Table3::GetItemFromIndex( const QModelIndex& index ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Table::GetItem
+// Created: ABR 2012-11-06
+// -----------------------------------------------------------------------------
+QStandardItem* ADN_Table3::GetItem( int row, int col ) const
+{
+    return dataModel_.item( row, col );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Table::OnGotoRequested
 // Created: ABR 2012-10-23
 // -----------------------------------------------------------------------------

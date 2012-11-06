@@ -187,6 +187,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainWindow.cpp" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.inl">
+      <FileType>CppCode</FileType>
+    </ClInclude>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameter_GroupBox.cpp" />
@@ -1764,6 +1767,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
@@ -2959,7 +2963,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_ListView.h" />
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.h">
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
@@ -2976,7 +2980,7 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
+    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FireClass_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_WeatherFireEffects.h" />

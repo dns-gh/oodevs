@@ -1857,6 +1857,15 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_WeaponsTable.h">
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.h">
+      <Filter>Source Files\Workspace\People\People GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.inl">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2085,9 +2094,6 @@
       <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_People_GUI.h">
-      <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.h">
       <Filter>Source Files\Workspace\People\People GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_FireClass_GUI.h">

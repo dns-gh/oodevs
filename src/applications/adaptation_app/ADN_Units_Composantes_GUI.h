@@ -12,23 +12,26 @@
 #ifndef __ADN_Units_Composantes_GUI_h_
 #define __ADN_Units_Composantes_GUI_h_
 
-#include "ADN_CommonGfx.h"
+#include "ADN_Table.h"
+#include "ADN_Composantes_Data.h"
+
+class ADN_Connector_ABC;
 
 //*****************************************************************************
 // Created: JDY 03-07-28
 //*****************************************************************************
-class ADN_Units_Composantes_GUI
-: public ADN_Table2
+class ADN_Units_Composantes_GUI : public ADN_Table3
 {
     Q_OBJECT
+
 public:
-    explicit ADN_Units_Composantes_GUI(QWidget * parent = 0 );
+    explicit ADN_Units_Composantes_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Units_Composantes_GUI();
 
-    void AddNewElement( int n );
+    void AddRow( int row, void* data );
+    void AddNewElement( ADN_Composantes_Data::ComposanteInfos* info );
     void RemoveCurrentElement();
-
-    virtual void OnContextMenu(int row,int col,const QPoint& pt);
+    virtual void OnContextMenu( const QPoint& pt );
 
 private slots:
     void MenuListItemSelected();

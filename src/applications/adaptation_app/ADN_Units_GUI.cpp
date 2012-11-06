@@ -199,13 +199,10 @@ void ADN_Units_GUI::Build()
 
     // Composantes
     Q3VGroupBox* pComposantesGroup = new Q3VGroupBox( tr( "Equipments" ) );
-    ADN_Units_Composantes_GUI * pComposantes = new ADN_Units_Composantes_GUI( pComposantesGroup );
-    pComposantes->setObjectName( strClassName_ + "_Equipments" );
+    ADN_Units_Composantes_GUI * pComposantes = new ADN_Units_Composantes_GUI( strClassName_ + "_Equipments", vInfosConnectors[ eComposantes ], pComposantesGroup );
     pComposantes->SetGoToOnDoubleClick( ::eComposantes );
-    vInfosConnectors[ eComposantes ] = &pComposantes->GetConnector();
-    connect( pComposantes, SIGNAL( valueChanged ( int, int ) ), this, SLOT( OnComponentChanged() ) );
-    connect( pComposantes, SIGNAL( currentChanged ( int, int ) ), this, SLOT( OnComponentChanged() ) );
-    connect( pComposantes, SIGNAL( contextMenuRequested ( int, int, const QPoint& ) ), this, SLOT( OnComponentChanged() ) );
+    if( QAbstractProxyModel* model = static_cast< QAbstractProxyModel* >( pComposantes->model() ) )
+        connect( model->sourceModel(), SIGNAL( itemChanged( QStandardItem* ) ), this, SLOT( OnComponentChanged() ) );
 
     // Dotations
     ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary resources" ) );

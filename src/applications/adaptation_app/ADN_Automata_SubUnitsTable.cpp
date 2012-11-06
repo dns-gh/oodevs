@@ -21,11 +21,12 @@
 #include "moc_ADN_Automata_SubUnitsTable.cpp"
 #include "ADN_Automata_Data.h"
 #include "ADN_TableItem_Edit.h"
+#include "ADN_MenuListView.h"
 
-typedef ADN_Units_Data::UnitInfos UnitInfos;
+typedef ADN_Automata_Data::UnitInfos AutomatUnitInfos;
+typedef ADN_Units_Data::UnitInfos    UnitInfos;
 
 Q_DECLARE_METATYPE( UnitInfos* )
-#define UnitInfoRole ( Qt::UserRole + 1 )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_SubUnitsTable constructor
@@ -57,44 +58,6 @@ ADN_Automata_SubUnitsTable::~ADN_Automata_SubUnitsTable()
     delete pConnector_;
 }
 
-namespace
-{
-    class MenuListView : public QWidgetAction
-    {
-    public:
-        explicit MenuListView( ADN_Automata_SubUnitsTable* receiver, QObject* parent )
-            : QWidgetAction( parent )
-            , receiver_( receiver )
-            , listView_( 0 )
-        {}
-        virtual ~MenuListView() {}
-        virtual QWidget* createWidget( QWidget* parent )
-        {
-            ADN_Units_Data::T_UnitInfos_Vector& units = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos();
-            listView_ = new QListWidget( parent );
-            listView_->setMinimumSize( 200, std::min( 500, (int)units.size() * 17 ) );
-            for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it )
-            {
-                QListWidgetItem* item = new QListWidgetItem( (*it)->strName_.GetData().c_str() );
-                item->setData( UnitInfoRole, QVariant::fromValue( *it ) );
-                listView_->addItem( item );
-            }
-            connect( listView_, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ), receiver_, SLOT( MenuListItemSelected() ) );
-            connect( listView_, SIGNAL( itemEntered( QListWidgetItem* ) ), receiver_, SLOT( MenuListItemSelected() ) );
-            return listView_;
-        }
-        ADN_Units_Data::UnitInfos* SelectedValue() const
-        {
-            if( listView_ )
-                if( QListWidgetItem* item = listView_->currentItem() )
-                    return item->data( UnitInfoRole ).value< UnitInfos* >();
-            return 0;
-        }
-        ADN_Automata_SubUnitsTable* receiver_;
-        QListWidget* listView_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_SubUnitsTable::OnContextMenu
 // Created: APE 2005-01-10
@@ -105,7 +68,7 @@ void ADN_Automata_SubUnitsTable::OnContextMenu( const QPoint& pt )
     Q3PopupMenu& addMenu = *new Q3PopupMenu( &popupMenu );
 
     // Get the list of the possible units
-    MenuListView* list = new MenuListView( this, &addMenu );
+    ADN_MenuListView< UnitInfos >* list = new ADN_MenuListView< UnitInfos >( this, ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), &addMenu );
     addMenu.addAction( list );
 
     popupMenu.insertItem( tr( "Add subordinate"), &addMenu );
@@ -126,10 +89,9 @@ void ADN_Automata_SubUnitsTable::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Automata_SubUnitsTable::AddNewElement( ADN_Units_Data::UnitInfos* info )
 {
-    // Create a new element
     if ( !info )
         return;
-    ADN_Automata_Data::UnitInfos* pNewInfo = new ADN_Automata_Data::UnitInfos();
+    AutomatUnitInfos* pNewInfo = new AutomatUnitInfos();
     pNewInfo->ptrUnit_ = info;
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCTable->AddItem( pNewInfo );
@@ -142,8 +104,7 @@ void ADN_Automata_SubUnitsTable::AddNewElement( ADN_Units_Data::UnitInfos* info 
 // -----------------------------------------------------------------------------
 void ADN_Automata_SubUnitsTable::RemoveCurrentElement()
 {
-    // Delete the current element.
-    ADN_Automata_Data::UnitInfos* pCurPh = ( ADN_Automata_Data::UnitInfos* )GetSelectedData();
+    AutomatUnitInfos* pCurPh = static_cast< AutomatUnitInfos* >( GetSelectedData() );
     if( pCurPh != 0 )
     {
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurPh );
@@ -176,7 +137,7 @@ void ADN_Automata_SubUnitsTable::AddSubItems( const std::string& name )
 // -----------------------------------------------------------------------------
 void ADN_Automata_SubUnitsTable::AddRow( int row, void* data )
 {
-    ADN_Automata_Data::UnitInfos* info = static_cast< ADN_Automata_Data::UnitInfos*>( data );
+    AutomatUnitInfos* info = static_cast< AutomatUnitInfos* >( data );
     if( !info )
         return;
     AddItem( row, 0, data, &info->ptrUnit_.GetData()->strName_, ADN_StandardItem::eString, Qt::ItemIsSelectable );

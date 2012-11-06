@@ -35,8 +35,8 @@ public:
         eEnum        = 3,
         eString      = 4,
         ePtrInVector = 5,
-        eDelay       = eString,
-        eTime        = eString
+        eDelay       = 6,
+        eTime        = 7
     };
 
 public:

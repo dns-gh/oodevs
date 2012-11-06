@@ -80,7 +80,7 @@ void ADN_People_GUI::Build()
     Q3GroupBox* pScheduleGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Moving weekly schedule" ) );
     builder.AddField< ADN_TimeField >( pScheduleGroup, tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
 
-    ADN_Schedule_Table* pTable = new ADN_Schedule_Table( strClassName_ + "_ScheduleTable", vInfosConnectors[ eSchedule ], pScheduleGroup );
+    new ADN_Schedule_Table( strClassName_ + "_ScheduleTable", vInfosConnectors[ eSchedule ], pScheduleGroup );
 
     // Consumptions
     Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
@@ -106,7 +106,6 @@ void ADN_People_GUI::Build()
     ADN_SearchListView< ADN_People_ListView >* pSearchListView = new ADN_SearchListView< ADN_People_ListView >( this, data_.GetPeople(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
-    connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), pTable, SLOT( OnPeopleChanged( void* ) ) );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
