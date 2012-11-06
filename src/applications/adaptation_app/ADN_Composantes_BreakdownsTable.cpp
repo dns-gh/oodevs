@@ -55,7 +55,7 @@ ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const QString&
 //-----------------------------------------------------------------------------
 ADN_Composantes_BreakdownsTable::~ADN_Composantes_BreakdownsTable()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -63,7 +63,7 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( const QString& obj
 //-----------------------------------------------------------------------------
 ADN_Composantes_Dotations_GUI::~ADN_Composantes_Dotations_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

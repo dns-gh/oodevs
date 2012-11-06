@@ -61,7 +61,7 @@ ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable( const QStr
 // -----------------------------------------------------------------------------
 ADN_Composantes_ConsumptionsTable::~ADN_Composantes_ConsumptionsTable()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

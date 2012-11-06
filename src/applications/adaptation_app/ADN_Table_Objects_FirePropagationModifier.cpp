@@ -42,7 +42,7 @@ ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModi
 //-----------------------------------------------------------------------------
 ADN_Table_Objects_FirePropagationModifier::~ADN_Table_Objects_FirePropagationModifier()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

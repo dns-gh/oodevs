@@ -52,7 +52,7 @@ ADN_Table_Objects_LocationScore::ADN_Table_Objects_LocationScore( const QString&
 // -----------------------------------------------------------------------------
 ADN_Table_Objects_LocationScore::~ADN_Table_Objects_LocationScore()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
