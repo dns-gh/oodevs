@@ -148,11 +148,11 @@ integration.addKnowledgeInQueue = function( knowledge, onlyLoadable )
     DEC_TransportConnaissance_AjouterPion( myself, knowledge.source, onlyLoadable )
 end
 
-integration.readyForLoad = function( unit )
+integration.readyForLoad = function( unit, distanceMin )
     local unitSrc = unit.source
     local mission = DEC_GetRawMission( unitSrc )
     if mission ~= nil and ( mission:GetType() == "T_Task_Pion_SeFaireTransporter" or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" or mission:GetType() == "france.military.platoon.tasks.SeFaireTransporter" ) then
-        if DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < 300 then -- $$$$ HARD CODDED VALUE
+        if DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < 300 then -- $$$$ HARD CODDED VALUE LATER REPLACE BY distanceMin
             return true 
         end
     end
