@@ -38,7 +38,6 @@ ADN_Composantes_Sensors_GUI::ADN_Composantes_Sensors_GUI( const QString& objectN
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0, INT_MAX );
 }
 

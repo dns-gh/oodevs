@@ -34,7 +34,6 @@ ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& objectN
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0, 1, 0.01, 2 );
     setMinimumHeight( int( ( eNbrUnitPosture + 1.2 ) * 20 ) );
     setShowGrid( false );

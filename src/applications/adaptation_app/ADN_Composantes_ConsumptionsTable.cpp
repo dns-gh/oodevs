@@ -45,10 +45,10 @@ ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable( const QStr
                       << tr( "Consumed item" )
                       << tr( "Qty/hour" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
-    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddLineEditOnColumn( 0 );
-    delegate_.AddLineEditOnColumn( 1 );
     delegate_.AddDoubleSpinBoxOnColumn( 2, 0, INT_MAX );
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );

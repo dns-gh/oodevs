@@ -13,7 +13,11 @@
 #define __ADN_Units_LogThreshold_GUI_h_
 
 #include "ADN_CommonGfx.h"
-#include "ADN_Units_Data.h"
+
+namespace helpers
+{
+    class LogisticSupplyClass;
+}
 
 // =============================================================================
 /** @class  ADN_Units_LogThreshold_GUI
@@ -21,15 +25,16 @@
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Units_LogThreshold_GUI
-: public ADN_Table2
+class ADN_Units_LogThreshold_GUI : public ADN_Table3
 {
 public:
-    explicit ADN_Units_LogThreshold_GUI( QWidget* pParent = 0 );
+             ADN_Units_LogThreshold_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Units_LogThreshold_GUI();
 
+    virtual void AddRow( int row, void* data );
+
 private:
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void OnContextMenu( const QPoint& pt );
     void AddNewLogSupplyClass( helpers::LogisticSupplyClass& data );
     void RemoveCurrentLogSupplyClass();
 };

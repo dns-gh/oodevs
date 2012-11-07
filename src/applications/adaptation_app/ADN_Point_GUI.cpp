@@ -21,68 +21,23 @@
 typedef ADN_Units_Data::PointInfos PointInfos;
 
 //-----------------------------------------------------------------------------
-// Internal Table connector to be connected with ADN_Point_GUI
-//-----------------------------------------------------------------------------
-class ADN_CT_PointDistances
-:public ADN_Connector_Table_ABC
-{
-public:
-
-    ADN_CT_PointDistances(ADN_Point_GUI& tab)
-    : ADN_Connector_Table_ABC(tab,false)
-    {}
-
-    void  AddSubItems(int i,void *obj)
-    {
-
-        assert(obj);
-        ADN_TableItem_String *pItemString=0;
-        ADN_TableItem_Int    *pItemInt=0;
-
-        // add a new row & set new values
-        tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
-        tab_.setItem(i,1,pItemInt=new ADN_TableItem_Int(&tab_,obj));
-        pItemInt->GetValidator().setBottom( 0 );
-
-        // set table item properties
-        pItemString->setEnabled(false);
-        pItemString->setText(ADN_Tr::ConvertFromKeyPoint(static_cast<PointInfos*>(obj)->nTypeTerrain_, ADN_Tr::eToApp ).c_str());
-
-        // connect items & datas
-        pItemInt->GetConnector().Connect(&static_cast<PointInfos*>(obj)->nDistance_);
-    }
-
-private:
-    ADN_CT_PointDistances& operator=( const ADN_CT_PointDistances& );
-};
-
-//-----------------------------------------------------------------------------
 // Name: ADN_Point_GUI constructor
 // Created: AGN 03-07-30
 //-----------------------------------------------------------------------------
-ADN_Point_GUI::ADN_Point_GUI(QWidget* pParent )
-: ADN_Table2( pParent, "ADN_Point_GUI" )
+ADN_Point_GUI::ADN_Point_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    // Selection and sorting.
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
-    setShowGrid( false );
-    setLeftMargin( 0 );
+    setMaximumHeight( 300 );
 
-    this->setMaximumHeight( 300 );
+    dataModel_.setColumnCount( 2 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Ground Type" )
+                      << tr( "Distance (m)" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
 
-    // Hide the vertical header.
-    verticalHeader()->hide();
-
-    // Setup 2 columns.
-    setNumCols( 2 );
-    setNumRows( 0 );
-
-    horizontalHeader()->setLabel(0, tr( "Ground Type"));
-    horizontalHeader()->setLabel(1, tr( "Distance (m)"));
-
-    // Create the connector.
-    pConnector_ = new ADN_CT_PointDistances(*this);
+    delegate_.AddSpinBoxOnColumn( 1, 0, std::numeric_limits< int >::max() );
 }
 
 //-----------------------------------------------------------------------------
@@ -91,20 +46,35 @@ ADN_Point_GUI::ADN_Point_GUI(QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_Point_GUI::~ADN_Point_GUI()
 {
-    delete pConnector_;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Point_GUI::AddRow
+// Created: ABR 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_Point_GUI::AddRow( int row, void* data )
+{
+    PointInfos* point = static_cast< PointInfos* >( data );
+    if( !data )
+        return;
+
+    AddItem( row, 0, data, ADN_Tr::ConvertFromKeyPoint( point->nTypeTerrain_, ADN_Tr::eToApp ).c_str(), Qt::ItemIsSelectable );
+    AddItem( row, 1, data, &point->nDistance_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Point_GUI::OnContextMenu
 // Created: AGN 03-08-04
 //-----------------------------------------------------------------------------
-void ADN_Point_GUI::OnContextMenu( int /*nRow*/, int /*nCol*/, const QPoint& pt )
+void ADN_Point_GUI::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu menu( this );
     Q3PopupMenu subMenu( &menu );
 
     menu.insertItem( tr( "Add point" ), &subMenu );
-    menu.insertItem( tr( "Remove point" ), 100 );
+    if( GetSelectedData() != 0 )
+        menu.insertItem( tr( "Remove point" ), 100 );
 
     for( int n = 0; n < eNbrKeyPoints; ++n )
     {
@@ -140,9 +110,9 @@ void ADN_Point_GUI::AddNewElement( E_KeyPoint nKeyPoint )
 // -----------------------------------------------------------------------------
 void ADN_Point_GUI::DeleteCurrentElement()
 {
-    PointInfos* pCurComposante = (PointInfos*)GetCurrentData();
+    PointInfos* pCurComposante = static_cast< PointInfos* >( GetSelectedData() );
     if( pCurComposante )
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);
+        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurComposante );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,15 +121,11 @@ void ADN_Point_GUI::DeleteCurrentElement()
 // -----------------------------------------------------------------------------
 bool ADN_Point_GUI::Contains( E_KeyPoint nKeyPoint )
 {
-    int n = 0;
-    while( item( n, 1 ) != 0 )
+    for( int row = 0; row < dataModel_.rowCount(); ++row )
     {
-        ADN_TableItem_ABC* pItem = static_cast<ADN_TableItem_ABC*>( item( n, 1 ) );
-        PointInfos* pInfos = static_cast<PointInfos*>( pItem->GetData() );
-        if( pInfos->nTypeTerrain_ == nKeyPoint )
+        PointInfos* infos = static_cast< PointInfos* >( GetData( row, 1 ) );
+        if( infos->nTypeTerrain_ == nKeyPoint )
             return true;
-        ++n;
     }
     return false;
 }
-

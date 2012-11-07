@@ -183,7 +183,7 @@ QWidget* ADN_TableDelegate::createEditor( QWidget* parent, const QStyleOptionVie
     // $$$$ ABR 2012-10-25: TODO, Create ADN_SpinBox_Int and Double which will inherit gui::RichSpinBox, so we won't need to re-define setModelData below
     if( const SpinBoxDescription< int >* element = Find( spinBoxs_, position->id_ ) )
     {
-        std::pair< int, int > minMax = GetMinMax< int >( *element, newIndex, intRestrictions_ );
+        std::pair< int, int > minMax = GetMinMax< int >( *element, newIndex, intRestrictions_, singleIntRestrictions_ );
         //ADN_SpinBox_Int* editor = new ADN_SpinBox_Int( parent, minMax.first, minMax.second, element->gap_ );
         ADN_EditLine_Int* editor = new ADN_EditLine_Int( parent );
         editor->GetValidator().setRange( minMax.first, minMax.second );
@@ -193,7 +193,7 @@ QWidget* ADN_TableDelegate::createEditor( QWidget* parent, const QStyleOptionVie
     }
     else if( const SpinBoxDescription< double >* element = Find( doubleSpinBoxs_, position->id_ ) )
     {
-        std::pair< double, double > minMax = GetMinMax< double >( *element, newIndex, doubleRestrictions_ );
+        std::pair< double, double > minMax = GetMinMax< double >( *element, newIndex, doubleRestrictions_, singleDoubleRestrictions_ );
 
         //ADN_SpinBox_Double* editor = new ADN_SpinBox_Double( parent, minMax.first, minMax.second, element->gap_, element->precision_ );
         ADN_EditLine_Double* editor = new ADN_EditLine_Double( parent );

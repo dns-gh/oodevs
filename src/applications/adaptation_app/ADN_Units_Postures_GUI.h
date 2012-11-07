@@ -17,12 +17,13 @@
 //*****************************************************************************
 // Created: JDY 03-07-28
 //*****************************************************************************
-class ADN_Units_Postures_GUI
-: public ADN_Table2
+class ADN_Units_Postures_GUI : public ADN_Table3
 {
 public:
-    explicit ADN_Units_Postures_GUI( QWidget* pParent = 0 );
+             ADN_Units_Postures_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Units_Postures_GUI();
+
+    void AddRow( int row, void* data );
 };
 
 #endif // __ADN_Units_Postures_GUI_h_

@@ -22,7 +22,7 @@ class ADN_Equipement_Postures_GUI : public ADN_Table3
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Equipement_Postures_GUI( const QString& objectName, const QString& strColCaption, ADN_Connector_ABC*& connector,  QWidget* pParent = 0 );
+             ADN_Equipement_Postures_GUI( const QString& objectName, const QString& strColCaption, ADN_Connector_ABC*& connector,  QWidget* pParent = 0 );
     virtual ~ADN_Equipement_Postures_GUI();
     //@}
 

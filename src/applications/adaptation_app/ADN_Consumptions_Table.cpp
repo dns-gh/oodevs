@@ -25,7 +25,6 @@ ADN_Consumptions_Table::ADN_Consumptions_Table( const QString& objectName, ADN_C
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddSpinBoxOnColumn( 1 );
 }
 

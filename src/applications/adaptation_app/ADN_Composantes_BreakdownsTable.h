@@ -27,13 +27,12 @@
 */
 // Created: APE 2005-04-27
 // =============================================================================
-class ADN_Composantes_BreakdownsTable
-: public ADN_Table3
+class ADN_Composantes_BreakdownsTable : public ADN_Table3
 {
     Q_OBJECT
 
 public:
-    explicit ADN_Composantes_BreakdownsTable( const QString& objectName, const QString& name, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
+             ADN_Composantes_BreakdownsTable( const QString& objectName, const QString& name, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Composantes_BreakdownsTable();
 
 private:

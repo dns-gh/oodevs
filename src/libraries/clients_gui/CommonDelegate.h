@@ -109,9 +109,13 @@ public:
     //! @name Links
     //@{
     template< typename T >
+    void SetSingleColumnSumRestriction( int column, E_LinksType type, T sum );
+    template< typename T >
     void SetColumnsSumRestriction( std::vector< int > columns, E_LinksType type, T sum );
     void SetColumnDependency( int dependentColumn, int referenceColumn, E_LinksType dependencyType );
 
+    template< typename T >
+    void SetSingleRowSumRestriction( int row, E_LinksType type, T sum );
     template< typename T >
     void SetRowsSumRestriction( std::vector< int > rows, E_LinksType type, T sum );
     void SetRowDependency( int dependentRow, int referenceRow, E_LinksType dependencyType );
@@ -229,7 +233,7 @@ protected:
     void Populate( Enum size, QStringList& content ) const;
 
     template< typename T >
-    std::pair< T, T > GetMinMax( const SpinBoxDescription< T >& spinbox, const QModelIndex& index, const std::vector< SumRestriction< T > >& sumRestriction ) const;
+    std::pair< T, T > GetMinMax( const SpinBoxDescription< T >& spinbox, const QModelIndex& index, const std::vector< SumRestriction< T > >& sumRestriction, const std::vector< SumRestriction< T > >& singleSumRestriction ) const;
 
     unsigned int GetNewId();
     void CreatePosition( unsigned int id, int fromRow, int toRow, int fromCol, int toCol );
@@ -252,6 +256,8 @@ protected:
     T_Dependencies                                  dependencies_;
     std::vector< SumRestriction< int > >            intRestrictions_;
     std::vector< SumRestriction< double > >         doubleRestrictions_;
+    std::vector< SumRestriction< int > >            singleIntRestrictions_;
+    std::vector< SumRestriction< double > >         singleDoubleRestrictions_;
     bool                                            readOnly_;
 
     unsigned int                                    currentId_;

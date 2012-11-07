@@ -26,6 +26,7 @@ ADN_Template_Usages::ADN_Template_Usages( const QString& objectName, ADN_Connect
     horizontalHeaders << tr( "Usage" ) << tr( "Proportion(%)" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     delegate_.AddSpinBoxOnColumn( 1 );
+    delegate_.SetSingleColumnSumRestriction( 1, gui::CommonDelegate::eLTE, 100 );
 }
 
 // -----------------------------------------------------------------------------

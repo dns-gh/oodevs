@@ -21,13 +21,12 @@
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Composantes_Dotations_GUI
-: public ADN_Table3
+class ADN_Composantes_Dotations_GUI : public ADN_Table3
 {
     Q_OBJECT
 
 public:
-    explicit ADN_Composantes_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector,
+             ADN_Composantes_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector,
                                             bool bIncludeNormalizedConsumption, QWidget* pParent = 0, bool bIncludeThreshold = true );
     virtual ~ADN_Composantes_Dotations_GUI();
 

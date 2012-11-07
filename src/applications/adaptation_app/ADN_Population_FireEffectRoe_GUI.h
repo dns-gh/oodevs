@@ -22,7 +22,7 @@ class ADN_Population_FireEffectRoe_GUI : public ADN_Table3
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Population_FireEffectRoe_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
+             ADN_Population_FireEffectRoe_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Population_FireEffectRoe_GUI();
     //@}
 

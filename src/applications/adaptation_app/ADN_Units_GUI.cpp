@@ -180,9 +180,7 @@ void ADN_Units_GUI::Build()
 
     // Postures
     Q3VGroupBox* pPosturesGroup = new Q3VGroupBox( tr( "Stances" ), postureInstallationBox );
-    ADN_Units_Postures_GUI* pPostures = new ADN_Units_Postures_GUI( pPosturesGroup );
-    pPostures->setObjectName( strClassName_ + "_Postures" );
-    vInfosConnectors[ ePostures ] = &pPostures->GetConnector();
+    new ADN_Units_Postures_GUI( strClassName_ + "_Postures", vInfosConnectors[ ePostures ], pPosturesGroup );
 
     // Installation
     pInstallationGroup_ = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Deployment" ), postureInstallationBox );
@@ -193,9 +191,7 @@ void ADN_Units_GUI::Build()
 
     // Distances before point on path
     Q3GroupBox* pDistancesGroup = new Q3HGroupBox( tr( "Key terrain features range" ) );
-    ADN_Point_GUI* pSensors = new ADN_Point_GUI( pDistancesGroup );
-    pSensors->setObjectName( strClassName_ + "_TerrainFeatures" );
-    vInfosConnectors[ ePointInfos ] = &pSensors->GetConnector();
+    new ADN_Point_GUI( strClassName_ + "_TerrainFeatures", vInfosConnectors[ ePointInfos ], pDistancesGroup );
 
     // Composantes
     Q3VGroupBox* pComposantesGroup = new Q3VGroupBox( tr( "Equipments" ) );
@@ -215,9 +211,7 @@ void ADN_Units_GUI::Build()
     pStockGroup_ = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Stock" ) );
     pStockGroup_->setObjectName( strClassName_ + "_Stock" );
     vInfosConnectors[ eHasStock ] = &pStockGroup_->GetConnector();
-    pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( pStockGroup_ );
-    pStockLogThreshold_->setObjectName( strClassName_ + "_StockThreshold" );
-    vInfosConnectors[ eStock ] = &pStockLogThreshold_->GetConnector();
+    pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( strClassName_ + "_StockThreshold", vInfosConnectors[ eStock ], pStockGroup_ );
 
     // Aptitudes
     Q3GroupBox* pSkillsGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Skills" ) );
@@ -312,7 +306,7 @@ void ADN_Units_GUI::OnTypeChanged()
             return;
         if( pInfos->stocks_.vLogThresholds_.size() == 0 )
         {
-//            pStockLogThreshold_->InitializeLogThresholds();
+            //pStockLogThreshold_->InitializeLogThresholds();
             //pInfos->stocks_.InitializeLogThresholds();
         }
         pStockGroup_->setEnabled( true );

@@ -143,6 +143,26 @@ void CommonDelegate::SetSpinBoxMinMax< double >( int row, int col, double min, d
 }
 
 // -----------------------------------------------------------------------------
+// Name: CommonDelegate::SetSingleColumnSumRestriction
+// Created: ABR 2012-11-07
+// -----------------------------------------------------------------------------
+template<>
+void CommonDelegate::SetSingleColumnSumRestriction< int >( int column, E_LinksType type, int sum )
+{
+    std::vector< int > columns;
+    columns.push_back( column );
+    singleIntRestrictions_.push_back( SumRestriction< int >( columns, type, sum ) );
+}
+
+template<>
+void CommonDelegate::SetSingleColumnSumRestriction< double >( int column, E_LinksType type, double sum )
+{
+    std::vector< int > columns;
+    columns.push_back( column );
+    singleDoubleRestrictions_.push_back( SumRestriction< double >( columns, type, sum ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CommonDelegate::SetColumnsSumRestriction
 // Created: ABR 2012-10-23
 // -----------------------------------------------------------------------------
@@ -158,6 +178,26 @@ void CommonDelegate::SetColumnsSumRestriction< double >( std::vector< int > colu
 {
     if( columns.size() > 1 )
         doubleRestrictions_.push_back( SumRestriction< double >( columns, type, sum ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommonDelegate::SetSingleRowSumRestriction
+// Created: ABR 2012-11-07
+// -----------------------------------------------------------------------------
+template<>
+void CommonDelegate::SetSingleRowSumRestriction< int >( int row, E_LinksType type, int sum )
+{
+    std::vector< int > rows;
+    rows.push_back( row );
+    singleIntRestrictions_.push_back( SumRestriction< int >( rows, type, sum, true ) );
+}
+
+template<>
+void CommonDelegate::SetSingleRowSumRestriction< double >( int row, E_LinksType type, double sum )
+{
+    std::vector< int > rows;
+    rows.push_back( row );
+    singleDoubleRestrictions_.push_back( SumRestriction< double >( rows, type, sum, true ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,13 +261,13 @@ QWidget* CommonDelegate::createEditor( QWidget* parent, const QStyleOptionViewIt
 
     if( const SpinBoxDescription< int >* element = Find( spinBoxs_, position->id_ ) )
     {
-        std::pair< int, int > minMax = GetMinMax< int >( *element, newIndex, intRestrictions_ );
+        std::pair< int, int > minMax = GetMinMax< int >( *element, newIndex, intRestrictions_, singleIntRestrictions_ );
         QSpinBox* editor = new RichSpinBox( parent, minMax.first, minMax.second, element->gap_ );
         return editor;
     }
     else if( const SpinBoxDescription< double >* element = Find( doubleSpinBoxs_, position->id_ ) )
     {
-        std::pair< double, double > minMax = GetMinMax< double >( *element, newIndex, doubleRestrictions_ );
+        std::pair< double, double > minMax = GetMinMax< double >( *element, newIndex, doubleRestrictions_, singleDoubleRestrictions_ );
         QDoubleSpinBox* editor = new RichDoubleSpinBox( parent, minMax.first, minMax.second, element->gap_, element->precision_ );
         return editor;
     }

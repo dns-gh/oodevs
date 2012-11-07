@@ -65,7 +65,7 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI( const QString& objectName,
 //-----------------------------------------------------------------------------
 ADN_Units_Composantes_GUI::~ADN_Units_Composantes_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

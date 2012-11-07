@@ -10,77 +10,28 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Units_LogThreshold_GUI.h"
-
-#include "ADN_App.h"
-#include "ADN_Tools.h"
-#include "ADN_CommonGfx.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Units_Data.h"
-#include "ADN_Workspace.h"
-#include "ADN_Tr.h"
-#include "ENT/Ent_Tr.h"
-
-//-----------------------------------------------------------------------------
-// Internal Table connector to be connected with
-//-----------------------------------------------------------------------------
-class ADN_Units_LogThreshold_GUI_Connector : public ADN_Connector_Table_ABC
-{
-public:
-
-    ADN_Units_LogThreshold_GUI_Connector( ADN_Units_LogThreshold_GUI& tab )
-    : ADN_Connector_Table_ABC( tab, false )
-    {}
-
-    void  AddSubItems( int nRow, void* pObj )
-    {
-        assert( pObj != 0 );
-        ADN_Units_Data::StockLogThresholdInfos* pInfo = static_cast< ADN_Units_Data::StockLogThresholdInfos* >( pObj );
-
-        // Add a new row.
-        ADN_TableItem_String* pItemName = new ADN_TableItem_String( &tab_, pObj, Q3TableItem::Never );
-        ADN_TableItem_Double* pItemLogThreshold  = new ADN_TableItem_Double( &tab_, pObj );
-
-        pItemLogThreshold->GetValidator().setRange( 0, 100, 2 );
-
-        tab_.setItem( nRow, 0, pItemName );
-        tab_.setItem( nRow, 1, pItemLogThreshold );
-
-        // Connect the item
-        pItemLogThreshold->GetConnector().Connect( &pInfo->rLogThreshold_ );
-        pItemName->GetConnector().Connect( &pInfo->ptrLogisticSupplyClass_.GetData()->strName_ );
-    }
-
-private:
-    ADN_Units_LogThreshold_GUI_Connector& operator=( const ADN_Units_LogThreshold_GUI_Connector& );
-};
+#include "ADN_LogisticSupplyClass.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_LogThreshold_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( QWidget* pParent )
-: ADN_Table2( pParent, "ADN_Units_LogThreshold_GUI" )
+ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    // Selection and sorting.
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
-    setShowGrid( false );
+    dataModel_.setColumnCount( 2 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Logistic supply class" )
+        << tr( "Log threshold (%)" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( 0, QHeaderView::Fixed );
+    horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
 
-    // Hide the vertical header.
-    verticalHeader()->hide();
-    setLeftMargin( 0 );
-
-    // Setup the columns.
-    setNumRows( 0 );
-    setNumCols( 2 );
-    setColumnStretchable( 0, false );
-    setColumnStretchable( 1, true );
     setColumnWidth( 0, 250 );
 
-    horizontalHeader()->setLabel( 0, tr( "Logistic supply class" ) );
-    horizontalHeader()->setLabel( 1, tr( "Log threshold (%)" ) );
-
-    pConnector_ = new ADN_Units_LogThreshold_GUI_Connector( *this );
+    delegate_.AddDoubleSpinBoxOnColumn( 1, 0., 100. );
 }
 
 //-----------------------------------------------------------------------------
@@ -89,14 +40,26 @@ ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_Units_LogThreshold_GUI::~ADN_Units_LogThreshold_GUI()
 {
-    delete pConnector_;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_LogThreshold_GUI::AddRow
+// Created: ABR 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_Units_LogThreshold_GUI::AddRow( int row, void* data )
+{
+    ADN_Units_Data::StockLogThresholdInfos* pInfo = static_cast< ADN_Units_Data::StockLogThresholdInfos* >( data );
+
+    AddItem( row, 0, data, &pInfo->ptrLogisticSupplyClass_.GetData()->strName_, ADN_StandardItem::eString );
+    AddItem( row, 1, data, &pInfo->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_LogThreshold_GUI::OnContextMenu
 // Created: AGN 03-08-04
 //-----------------------------------------------------------------------------
-void ADN_Units_LogThreshold_GUI::OnContextMenu( int /*row*/, int /*col*/, const QPoint& pt )
+void ADN_Units_LogThreshold_GUI::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu menu( this );
     Q3PopupMenu targetMenu( &menu );
@@ -109,8 +72,11 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( int /*row*/, int /*col*/, const 
     {
         bool found = false;
         for( int i = 0; i < numRows() && !found; ++i )
-            if( text( i, 0 ).toAscii().constData() == (*it)->strName_.GetData() )
+        {
+            QStandardItem* item = GetItem( i, 0 );
+            if( item->text().toStdString() == (*it)->strName_.GetData() )
                 found = true;
+        }
 
         if( !found )
         {
@@ -121,7 +87,7 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( int /*row*/, int /*col*/, const 
     }
     if( targetMenu.count() > 0 )
         menu.insertItem( tr( "Add class"), &targetMenu ,0 );
-    if( GetCurrentData() != 0 )
+    if( GetSelectedData() != 0 )
         menu.insertItem( tr( "Remove class" ), 1 );
 
     int nMenuResult = menu.exec(pt);
@@ -152,6 +118,7 @@ void ADN_Units_LogThreshold_GUI::AddNewLogSupplyClass( helpers::LogisticSupplyCl
 // -----------------------------------------------------------------------------
 void ADN_Units_LogThreshold_GUI::RemoveCurrentLogSupplyClass()
 {
-    assert( GetCurrentData() != 0 );
-    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( GetCurrentData() );
+    ADN_Units_Data::StockLogThresholdInfos* param = static_cast< ADN_Units_Data::StockLogThresholdInfos* >( GetSelectedData() );
+    if( param )
+        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
 }

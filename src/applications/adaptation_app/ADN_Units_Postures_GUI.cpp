@@ -21,73 +21,30 @@
 
 typedef ADN_Units_Data::PostureInfos PostureInfos;
 
-//-----------------------------------------------------------------------------
-// Internal Table connector to be connected with ADN_Units_Postures_GUI
-//-----------------------------------------------------------------------------
-class ADN_CT_Units_Postures
-:public ADN_Connector_Table_ABC
-{
-public:
-
-    ADN_CT_Units_Postures(ADN_Units_Postures_GUI& tab)
-    : ADN_Connector_Table_ABC(tab,false)
-    {}
-
-    void AddSubItems( int n, void *pObj )
-    {
-        assert( pObj != 0 );
-        PostureInfos* pInfo = (PostureInfos*)pObj;
-
-        ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, pObj );
-        ADN_TableItem_TimeField* pItemDoubleTimeToActivate = new ADN_TableItem_TimeField( &tab_, pObj );
-
-        // Add a new row.
-        tab_.setItem( n, 0, pItemString );
-        tab_.setItem( n, 1, pItemDoubleTimeToActivate );
-
-        // Set the table item properties and connect the data.
-        pItemString->setEnabled( false );
-        pItemString->setText( ENT_Tr::ConvertFromUnitPosture( pInfo->nPosture_, ENT_Tr_ABC::eToTr ).c_str() );
-
-        if( pInfo->nPosture_ < ePostureNeedTimeStart )
-            pItemDoubleTimeToActivate->setEnabled( false );
-        else
-            pItemDoubleTimeToActivate->GetConnector().Connect( &pInfo->timeToActivate_ );
-    }
-
-private:
-    ADN_CT_Units_Postures& operator=( const ADN_CT_Units_Postures& );
-};
+// $$$$ ABR 2012-11-06: ????
+//if( pInfo->nPosture_ < ePostureNeedTimeStart )
+//    pItemDoubleTimeToActivate->setEnabled( false );
+//else
+//    pItemDoubleTimeToActivate->GetConnector().Connect( &pInfo->timeToActivate_ );
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Postures_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( QWidget* pParent )
-: ADN_Table2( pParent, "ADN_Units_Postures_GUI" )
+ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
+    : ADN_Table3( objectName, connector, pParent )
 {
-    // Selection and sorting.
-    setSorting( true );
-    setSelectionMode( Q3Table::NoSelection );
-    setShowGrid( false );
-    setLeftMargin( 0 );
-
     setFixedHeight( 110 );
 
-    // Hide the vertical header.
-    verticalHeader()->hide();
+    dataModel_.setColumnCount( 2 );
+    QStringList horizontalHeaders;
+    horizontalHeaders << tr( "Stance" )
+                      << tr( "Time to activate" );
+    dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+    horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    verticalHeader()->setVisible( false );
 
-    // Setup 2 columns.
-    setNumCols( 2 );
-    setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
-
-    horizontalHeader()->setLabel(0, tr( "Stance"));
-    horizontalHeader()->setLabel(1, tr( "Time to activate"));
-
-    // Create the connector.
-    pConnector_ = new ADN_CT_Units_Postures(*this);
+    delegate_.AddDelayEditOnColumn( 1 );
 }
 
 //-----------------------------------------------------------------------------
@@ -96,6 +53,19 @@ ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( QWidget* pParent )
 //-----------------------------------------------------------------------------
 ADN_Units_Postures_GUI::~ADN_Units_Postures_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Postures_GUI::AddRow
+// Created: ABR 2012-11-06
+// -----------------------------------------------------------------------------
+void ADN_Units_Postures_GUI::AddRow( int row, void* data )
+{
+    PostureInfos* pInfo = static_cast< PostureInfos* >( data );
+    if( !pInfo )
+        return;
+
+    AddItem( row, 0, data, ENT_Tr::ConvertFromUnitPosture( pInfo->nPosture_, ENT_Tr_ABC::eToTr ).c_str() );
+    AddItem( row, 1, data, &pInfo->timeToActivate_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+}

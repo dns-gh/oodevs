@@ -41,7 +41,6 @@ ADN_Table_Objects_LocationScore::ADN_Table_Objects_LocationScore( const QString&
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddSpinBoxOnColumn( 1 );
     setMinimumHeight( 205 );
 }

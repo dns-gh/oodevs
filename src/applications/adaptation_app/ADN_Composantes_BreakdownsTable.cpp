@@ -40,9 +40,10 @@ ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const QString&
     horizontalHeaders << name
                       << tr( "Odds (%)" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
-    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddLineEditOnColumn( 0 );
+    delegate_.SetSingleColumnSumRestriction( 1, gui::CommonDelegate::eLTE, 100. );
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0.0, 100.0, 0.01, 2 );
     setMinimumHeight( 150 );
     setMaximumHeight( 150 );

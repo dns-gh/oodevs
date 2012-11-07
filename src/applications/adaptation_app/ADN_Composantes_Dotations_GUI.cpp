@@ -39,7 +39,6 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( const QString& obj
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Category" )
                       << tr( "Qty" );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddSpinBoxOnColumn( 1, 1, INT_MAX );
     if( bIncludeThreshold )
     {
@@ -52,7 +51,7 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( const QString& obj
         delegate_.AddDoubleSpinBoxOnColumn( 2 + static_cast< int >( bIncludeThreshold ), 0.001, INT_MAX, 0.001, 3 );
     }
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
-    horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    horizontalHeader()->setResizeMode( ( dataModel_.columnCount() > 2) ? QHeaderView::ResizeToContents : QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
     setMaximumHeight( 270 );
 }

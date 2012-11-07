@@ -28,14 +28,13 @@ class ADN_ListView_Composantes;
 // Created: APE 2005-01-25
 // =============================================================================
 class ADN_Composantes_ConsumptionsTable : public ADN_Table3
-                                        , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Composantes_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
+             ADN_Composantes_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Composantes_ConsumptionsTable();
     //@}
 

@@ -19,7 +19,6 @@ ADN_Sensors_ModificatorTable_ABC::ADN_Sensors_ModificatorTable_ABC( const QStrin
     : ADN_Table3( objectName, connector, pParent)
     , lastCurrentRow_( -1 )
 {
-//     setSorting(true);
     //setSelectionBehavior( QAbstractItemView::SelectRows );
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
     setShowGrid( false );
@@ -29,7 +28,6 @@ ADN_Sensors_ModificatorTable_ABC::ADN_Sensors_ModificatorTable_ABC( const QStrin
     horizontalHeaders << firstColumnName << secondColumnName;
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0, 1, 0.001, 3 );
     connect( this, SIGNAL( pressed( const QModelIndex& ) ), SLOT( OnCurrentChanged( const QModelIndex& ) ) );
 }

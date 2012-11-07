@@ -25,7 +25,6 @@ ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, con
     , maxSpeed_( maxSpeed )
     , popupIsDisplayed_( false )
 {
-
     dataModel_.setColumnCount( 3 );
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Ground type" )
@@ -34,7 +33,6 @@ ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, con
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0, INT_MAX );
     delegate_.AddSpinBoxOnColumn( 2, 0, 100 );
     setSortingEnabled( true );

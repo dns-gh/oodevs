@@ -18,14 +18,15 @@
 //*****************************************************************************
 // Created: AGN 03-07-30
 //*****************************************************************************
-class ADN_Point_GUI
-: public ADN_Table2
+class ADN_Point_GUI : public ADN_Table3
 {
 public:
-    explicit ADN_Point_GUI( QWidget* pParent = 0 );
+             ADN_Point_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Point_GUI();
 
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+
+    virtual void AddRow( int row, void* data );
+    virtual void OnContextMenu( const QPoint& pt );
 
     void AddNewElement( E_KeyPoint nKeyPoint );
     void DeleteCurrentElement();

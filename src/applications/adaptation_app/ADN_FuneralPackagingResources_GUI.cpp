@@ -39,7 +39,6 @@ ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( const QStr
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddDelayEditOnColumn( 1 );
     delegate_.AddCheckBoxOnColumn( 2 );
 }

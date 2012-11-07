@@ -60,14 +60,15 @@ protected:
     template< typename T >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags = 0 );
     template< typename Enum, int Max >
-    QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data,  const QStringList& content, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags = 0 );
     template< typename T >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags = 0 );
 
+    void* GetData( int row, int col ) const;
+    void* GetDataFromIndex( const QModelIndex& index ) const;
 
     virtual void OnContextMenu( const QPoint& pt );
     void* GetSelectedData() const;
-    void* GetDataFromIndex( const QModelIndex& index ) const;
     //@}
 
 

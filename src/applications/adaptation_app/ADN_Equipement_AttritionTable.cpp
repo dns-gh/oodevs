@@ -27,13 +27,13 @@ ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( const QString& obj
                       << tr( "% destroyed" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+    horizontalHeader()->setResizeMode( 3, QHeaderView::ResizeToContents );
     verticalHeader()->setVisible( false );
     setFixedHeight( 180 );
 
     delegate_.AddColorOnColumn( 1, 0., 100. );
     delegate_.AddColorOnColumn( 2, 0., 100. );
     delegate_.AddColorOnColumn( 3, 0., 100. );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddDoubleSpinBoxOnColumn( 1 );
     delegate_.AddDoubleSpinBoxOnColumn( 2 );
     delegate_.AddDoubleSpinBoxOnColumn( 3 );

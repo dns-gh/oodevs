@@ -137,7 +137,7 @@ void ADN_MissionParameters_Table::AddNewElement()
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::RemoveCurrentElement()
 {
-    ADN_Missions_Parameter* param = (ADN_Missions_Parameter*)GetSelectedData();
+    ADN_Missions_Parameter* param = static_cast< ADN_Missions_Parameter* >( GetSelectedData() );
     if( param )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
     ResetCurrent();

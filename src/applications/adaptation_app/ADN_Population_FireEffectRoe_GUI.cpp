@@ -33,7 +33,6 @@ ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI( const QStrin
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
     verticalHeader()->setVisible( false );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0, INT_MAX );
     delegate_.AddDoubleSpinBoxOnColumn( 2, 0, 1 );
 }

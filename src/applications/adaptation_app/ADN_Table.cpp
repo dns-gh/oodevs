@@ -287,6 +287,20 @@ void* ADN_Table3::GetDataFromIndex( const QModelIndex& index ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Table::GetData
+// Created: ABR 2012-11-06
+// -----------------------------------------------------------------------------
+void* ADN_Table3::GetData( int row, int col ) const
+{
+    if( row < 0 || row >= dataModel_.rowCount() || col < 0 || col >= dataModel_.columnCount() )
+        return 0;
+    ADN_StandardItem* item = static_cast< ADN_StandardItem* >( GetItem( row, col ) );
+    if( !item )
+        return 0;
+    return item->GetData();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Table::GetCurrentData
 // Created: ABR 2012-10-29
 // -----------------------------------------------------------------------------

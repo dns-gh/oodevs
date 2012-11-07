@@ -36,7 +36,6 @@ ADN_Urban_AttritionTable::ADN_Urban_AttritionTable( const QString& objectName, A
     delegate_.AddColorOnColumn( 1, 0., 100. );
     delegate_.AddColorOnColumn( 2, 0., 100. );
     delegate_.AddColorOnColumn( 3, 0., 100. );
-    delegate_.AddLineEditOnColumn( 0 );
     delegate_.AddDoubleSpinBoxOnColumn( 1 );
     delegate_.AddDoubleSpinBoxOnColumn( 2 );
     delegate_.AddDoubleSpinBoxOnColumn( 3 );
