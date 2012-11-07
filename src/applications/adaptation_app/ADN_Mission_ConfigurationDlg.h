@@ -29,8 +29,7 @@
 */
 // Created: AGN 2004-04-28
 // =============================================================================
-class ADN_Mission_ConfigurationDlg
-: public QDialog
+class ADN_Mission_ConfigurationDlg : public QDialog
 {
 public:
     //! @name Constructors/Destructor
@@ -42,13 +41,6 @@ public:
     //! @name Accessors
     //@{
     Q3ListView* GetMissionList();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_Mission_ConfigurationDlg( const ADN_Mission_ConfigurationDlg& );            //!< Copy constructor
-    ADN_Mission_ConfigurationDlg& operator=( const ADN_Mission_ConfigurationDlg& ); //!< Assignment operator
     //@}
 
 private:

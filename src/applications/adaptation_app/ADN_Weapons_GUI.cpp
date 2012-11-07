@@ -26,11 +26,9 @@
 #include "ADN_Weapons_PhTable.h"
 #include "ADN_MainWindow.h"
 #include "ADN_GuiBuilder.h"
-#include "ADN_TableItem_Edit.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_Launchers_GUI.h"
 #include "ADN_Equipement_GUI.h"
-#include "ADN_TableItem_TimeField.h"
 #include "ADN_TimeField.h"
 #include "ADN_Graph.h"
 #include "ADN_GraphData.h"
@@ -162,13 +160,13 @@ private:
     uint nNbrDatas_;
 };
 
-class ADN_Weapon_Table : public ADN_Table3
+class ADN_Weapon_Table : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor
     //@{
     ADN_Weapon_Table( const QString& objectName, QWidget* pParent = 0 )
-        : ADN_Table3( objectName, pParent )
+        : ADN_Table( objectName, pParent )
     {
         dataModel_.setColumnCount( 5 );
         setSortingEnabled( true );
@@ -192,13 +190,13 @@ public:
     //@}
 };
 
-class ADN_PHs_Table : public ADN_Table3
+class ADN_PHs_Table : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor
     //@{
     ADN_PHs_Table( const QString& objectName, const std::set< int >& distancesSet, QWidget* pParent = 0 )
-        : ADN_Table3( objectName, pParent )
+        : ADN_Table( objectName, pParent )
     {
         dataModel_.setColumnCount( static_cast< int >( distancesSet.size() + 2 ) );
         setSortingEnabled( false );
@@ -386,7 +384,7 @@ void ADN_Weapons_GUI::Build()
 // Name: ADN_Weapons_GUI::CreateWeaponsTable
 // Created: APE 2005-03-29
 // -----------------------------------------------------------------------------
-ADN_Table3* ADN_Weapons_GUI::CreateWeaponsTable()
+ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
 {
     ADN_Weapon_Table* pTable = new ADN_Weapon_Table( tr( "Weapon systems" ) );
     ADN_Weapons_Data::T_WeaponInfosVector& weapons = data_.weapons_;
@@ -408,7 +406,7 @@ ADN_Table3* ADN_Weapons_GUI::CreateWeaponsTable()
 // Name: ADN_Weapons_GUI::CreatePHTable
 // Created: APE 2005-03-29
 // -----------------------------------------------------------------------------
-ADN_Table3* ADN_Weapons_GUI::CreatePHTable()
+ADN_Table* ADN_Weapons_GUI::CreatePHTable()
 {
     // Compute the existing distances
     std::set< int > distancesSet;
@@ -424,7 +422,7 @@ ADN_Table3* ADN_Weapons_GUI::CreatePHTable()
         }
     }
 
-    ADN_Table3* pTable = new ADN_PHs_Table( strClassName_ + "_Phs", distancesSet );
+    ADN_Table* pTable = new ADN_PHs_Table( strClassName_ + "_Phs", distancesSet );
     // Fill the table.
     int nRow = 0;
     for( ADN_Weapons_Data::IT_WeaponInfosVector it = weapons.begin(); it != weapons.end(); ++it )
@@ -464,8 +462,8 @@ ADN_Table3* ADN_Weapons_GUI::CreatePHTable()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Weapon systems" ), new ADN_Callback< ADN_Table3*,ADN_Weapons_GUI >( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
-    mainWindow.AddTable( tr( "PHs" ), new ADN_Callback< ADN_Table3*,ADN_Weapons_GUI >( this, &ADN_Weapons_GUI::CreatePHTable ) );
+    mainWindow.AddTable( tr( "Weapon systems" ), new ADN_Callback< ADN_Table*,ADN_Weapons_GUI >( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
+    mainWindow.AddTable( tr( "PHs" ), new ADN_Callback< ADN_Table*,ADN_Weapons_GUI >( this, &ADN_Weapons_GUI::CreatePHTable ) );
 }
 
 // -----------------------------------------------------------------------------

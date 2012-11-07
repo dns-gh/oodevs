@@ -27,7 +27,6 @@
 #include "ADN_Validator.h"
 
 class ADN_FileChooser;
-class ADN_Table;
 class ADN_Gfx_ABC;
 
 enum E_Validator
@@ -88,20 +87,6 @@ public:
     void SetEnabled( bool bEnabled );
     void SetToolTip( const char* szToolTip );
     void SetValidator( QValidator* pValidator );
-    //@}
-
-    //! @name Table Operations
-    //@{
-    ADN_Table* CreateTable( QWidget* pParent );
-
-    template< class T >
-        T* AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, ADN_Connector_ABC& itemConnector, E_Validator nValidator = eNone, Q3TableItem::EditType nEditType = Q3TableItem::OnTyping );
-
-    template< class T >
-        T* AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, int nRowSpan, int nColSpan, ADN_Connector_ABC& itemConnector, E_Validator nValidator = eNone, Q3TableItem::EditType nEditType = Q3TableItem::OnTyping );
-
-    Q3TableItem* AddTableCell( ADN_Table* pTable, int nRow, int nCol, const char* strText = 0, Q3TableItem::EditType nEditType = Q3TableItem::Never );
-    Q3TableItem* AddTableCell( ADN_Table* pTable, int nRow, int nCol, int nRowSpan, int nColSpan, const char* strText = 0, Q3TableItem::EditType nEditType = Q3TableItem::Never );
     //@}
 
 private:
@@ -305,36 +290,6 @@ ADN_ComboBox_Enum* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char* s
     this->DoFieldLayout( pParent, pNameLabel, pField, 0 );
     pField->GetConnector().Connect( &itemConnector );
     return pField;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::AddTableCell
-// Created: APE 2005-03-29
-// -----------------------------------------------------------------------------
-template< class T >
-T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, ADN_Connector_ABC& itemConnector, E_Validator nValidator, Q3TableItem::EditType nEditType )
-{
-    T* pItem = new T( pParent, pData, nEditType );
-    pParent->setItem( nRow, nCol, pItem );
-    pItem->GetConnector().Connect( & itemConnector );
-    this->SetValidator( pItem->GetValidator(), nValidator );
-    return pItem;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::AddTableCell
-// Created: APE 2005-03-29
-// -----------------------------------------------------------------------------
-template< class T >
-T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int nCol, int nRowSpan, int nColSpan, ADN_Connector_ABC& itemConnector, E_Validator nValidator, Q3TableItem::EditType nEditType )
-{
-    assert( nRowSpan > 0 );
-    T* pItem = new T( pParent, pData, nEditType );
-    pParent->setItem( nRow, nCol, pItem );
-    pItem->setSpan( nRowSpan, nColSpan );
-    pItem->GetConnector().Connect( & itemConnector );
-    this->SetValidator( pItem->GetValidator(), nValidator );
-    return pItem;
 }
 
 // -----------------------------------------------------------------------------

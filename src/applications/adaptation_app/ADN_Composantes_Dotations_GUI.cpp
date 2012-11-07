@@ -28,7 +28,7 @@ typedef ADN_Composantes_Data::CategoryInfos CategoryInfos;
 //-----------------------------------------------------------------------------
 ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector,
                                                               bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
     , bIncludeNormalizedConsumption_( bIncludeNormalizedConsumption )
     , bIncludeThreshold_( bIncludeThreshold )
 {

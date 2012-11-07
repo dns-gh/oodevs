@@ -21,7 +21,6 @@
 #include "ADN_Type_ABC.h"
 #include "ADN_FileChooser.h"
 #include "ADN_Project_Data.h"
-#include "ADN_Table.h"
 #include "ADN_Gfx_ABC.h"
 #include "ADN_GoToButton.h"
 #include "ADN_Validator.h"
@@ -199,47 +198,3 @@ void ADN_GuiBuilder::AddStretcher( QLayout* pLayout, Qt::Orientation nOrientatio
     QSpacerItem* pSpacer = new QSpacerItem( 1, 1, (nOrientation == Qt::Vertical) ? QSizePolicy::Minimum : QSizePolicy::Expanding, (nOrientation == Qt::Vertical) ? QSizePolicy::Expanding : QSizePolicy::Minimum );
     pLayout->addItem( pSpacer );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::CreateTable
-// Created: APE 2005-03-29
-// -----------------------------------------------------------------------------
-ADN_Table* ADN_GuiBuilder::CreateTable( QWidget* pParent )
-{
-    ADN_Table* pTable = new ADN_Table( pParent );
-
-    // Selection and sorting.
-    pTable->setSorting( true );
-    pTable->setSelectionMode( Q3Table::NoSelection );
-    pTable->setShowGrid( true );
-
-    // Hide the vertical header.
-    pTable->verticalHeader()->hide();
-    pTable->setLeftMargin( 0 );
-
-    return pTable;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::AddTableCell
-// Created: APE 2005-03-30
-// -----------------------------------------------------------------------------
-Q3TableItem* ADN_GuiBuilder::AddTableCell( ADN_Table* pTable, int nRow, int nCol, const char* strText, Q3TableItem::EditType nEditType )
-{
-    Q3TableItem* pItem = new Q3TableItem( pTable, nEditType, strText );
-    pTable->setItem( nRow, nCol, pItem );
-    return pItem;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::AddTableCell
-// Created: APE 2005-03-30
-// -----------------------------------------------------------------------------
-Q3TableItem* ADN_GuiBuilder::AddTableCell( ADN_Table* pTable, int nRow, int nCol, int nRowSpan, int nColSpan, const char* strText, Q3TableItem::EditType nEditType )
-{
-    Q3TableItem* pItem = new Q3TableItem( pTable, nEditType, strText );
-    pTable->setItem( nRow, nCol, pItem );
-    pItem->setSpan( nRowSpan, nColSpan );
-    return pItem;
-}
-

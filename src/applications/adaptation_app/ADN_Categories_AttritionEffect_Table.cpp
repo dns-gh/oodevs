@@ -18,7 +18,7 @@
 // Created: ABR 2012-10-18
 // -----------------------------------------------------------------------------
 ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 3 );
     QStringList horizontalHeaders;
@@ -70,7 +70,7 @@ void ADN_Categories_AttritionEffect_Table::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_Categories_AttritionEffect_Table::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-    ADN_Table3::dataChanged( topLeft, bottomRight );
+    ADN_Table::dataChanged( topLeft, bottomRight );
     if( topLeft == bottomRight )
         ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
 }

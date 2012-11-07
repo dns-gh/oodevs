@@ -17,7 +17,7 @@
 //*****************************************************************************
 // Created: JDY 03-09-29
 //*****************************************************************************
-class ADN_Equipement_Postures_GUI : public ADN_Table3
+class ADN_Equipement_Postures_GUI : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

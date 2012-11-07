@@ -20,7 +20,7 @@
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Automata_SubUnitsTable : public ADN_Table3
+class ADN_Automata_SubUnitsTable : public ADN_Table
                                  , private boost::noncopyable
 {
     Q_OBJECT

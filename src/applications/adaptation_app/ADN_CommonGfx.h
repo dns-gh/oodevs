@@ -22,6 +22,5 @@
 #include "ADN_ListView.h"
 #include "ADN_Table.h"
 #include "ADN_StandardItem.h"
-#include "ADN_TableItem_Edit.h"
 
 #endif // __ADN_CommonGfx_h_

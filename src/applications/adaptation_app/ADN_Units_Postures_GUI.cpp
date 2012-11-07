@@ -17,22 +17,15 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Units_Data.h"
 #include "ENT/ENT_Tr.h"
-#include "ADN_TableItem_TimeField.h"
 
 typedef ADN_Units_Data::PostureInfos PostureInfos;
-
-// $$$$ ABR 2012-11-06: ????
-//if( pInfo->nPosture_ < ePostureNeedTimeStart )
-//    pItemDoubleTimeToActivate->setEnabled( false );
-//else
-//    pItemDoubleTimeToActivate->GetConnector().Connect( &pInfo->timeToActivate_ );
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Postures_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     setFixedHeight( 110 );
 

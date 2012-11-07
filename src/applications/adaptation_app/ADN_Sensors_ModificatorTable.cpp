@@ -16,7 +16,7 @@
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
 ADN_Sensors_ModificatorTable_ABC::ADN_Sensors_ModificatorTable_ABC( const QString& firstColumnName, const QString& secondColumnName, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent)
+    : ADN_Table( objectName, connector, pParent)
     , lastCurrentRow_( -1 )
 {
     //setSelectionBehavior( QAbstractItemView::SelectRows );

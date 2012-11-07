@@ -49,12 +49,12 @@ protected:
     //@}
 };
 
-class ADN_PK_Table: public ADN_Table3
+class ADN_PK_Table: public ADN_Table
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_PK_Table( const QString& objectName, QWidget* pParent = 0 ) : ADN_Table3( objectName, pParent )
+    ADN_PK_Table( const QString& objectName, QWidget* pParent = 0 ) : ADN_Table( objectName, pParent )
     {
         dataModel_.setColumnCount( 5 );
         QStringList horizontalHeaders;
@@ -443,11 +443,11 @@ void ADN_Equipement_GUI::SimulationCombosActivated()
 // Name: ADN_Equipement_GUI::CreatePKTable
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-ADN_Table3* ADN_Equipement_GUI::CreatePKTable()
+ADN_Table* ADN_Equipement_GUI::CreatePKTable()
 {
     helpers::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
 
-    ADN_Table3* pTable = new ADN_PK_Table( tr( "PKs" ) );
+    ADN_Table* pTable = new ADN_PK_Table( tr( "PKs" ) );
     // Fill the table.
     ADN_Equipement_Data::ResourceInfos& ammo = data_.GetDotation( eDotationFamily_Munition );
     int nRowSize = static_cast< int >( armorInfos.size() );
@@ -480,7 +480,7 @@ ADN_Table3* ADN_Equipement_GUI::CreatePKTable()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "PKs" ), new ADN_Callback< ADN_Table3*, ADN_Equipement_GUI >( this, &ADN_Equipement_GUI::CreatePKTable ) );
+    mainWindow.AddTable( tr( "PKs" ), new ADN_Callback< ADN_Table*, ADN_Equipement_GUI >( this, &ADN_Equipement_GUI::CreatePKTable ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -43,13 +43,6 @@ public:
     void WriteArchive( xml::xostream& output, const std::string& attribute, const std::string& value );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_AvailabilityWarning( const ADN_AvailabilityWarning& );            //!< Copy constructor
-    ADN_AvailabilityWarning& operator=( const ADN_AvailabilityWarning& ); //!< Assignment operator
-    //@}
-
 public:
     //! @name Member data
     //@{

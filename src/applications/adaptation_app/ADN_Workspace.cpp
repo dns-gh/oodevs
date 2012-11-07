@@ -225,6 +225,7 @@ ADN_Workspace::~ADN_Workspace()
 //-----------------------------------------------------------------------------
 void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
 {
+    assert( pProgressIndicator_ != 0 );
     pProgressIndicator_->SetVisible( true );
     pProgressIndicator_->Reset( tr( "Loading GUI..." ) );
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );

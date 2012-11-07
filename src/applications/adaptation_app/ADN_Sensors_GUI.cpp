@@ -33,13 +33,13 @@
 #include "ENT/ENT_Tr.h"
 #include "ADN_TimeField.h"
 
-class ADN_AgentDetection_Table: public ADN_Table3
+class ADN_AgentDetection_Table: public ADN_Table
 {
 public:
     //! @name Constructors/Destructor
     //@{
     ADN_AgentDetection_Table( const QString& objectName, ADN_Categories_Data::T_SizeInfos_Vector& sizes, ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials, QWidget* pParent = 0  )
-        : ADN_Table3( objectName, pParent )
+        : ADN_Table( objectName, pParent )
     {
         int sizesSize = static_cast< int >( sizes.size() ); 
         int materialsSize = static_cast< int >( materials.size() ); 
@@ -405,31 +405,10 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AddCells
-// Local helper function.
-// Created: APE 2005-01-19
-// -----------------------------------------------------------------------------
-template< typename T >
-void AddCells( ADN_Table* pTable, void* pData, int nRow, int& nCol, T& vVector, uint nVectorSize )
-{
-    ADN_GuiBuilder builder;
-    assert( (int)vVector.size() == nVectorSize );
-    ADN_TableItem_Double* pCell = 0;
-    for( uint n = 0; n < nVectorSize; ++n )
-    {
-        pCell = builder.AddTableCell<ADN_TableItem_Double>( pTable, pData, nRow, nCol + n, vVector[n]->rCoeff_, eZeroOne );
-        pCell->SetUseColor( true );
-        pCell->SetRangeForColor( 0.0, 1.0 );
-    }
-
-    nCol += nVectorSize;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::CreateAgentDetectionTable
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-ADN_Table3* ADN_Sensors_GUI::CreateAgentDetectionTable()
+ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 {
     ADN_Categories_Data::T_SizeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
     ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos();
@@ -469,13 +448,13 @@ ADN_Table3* ADN_Sensors_GUI::CreateAgentDetectionTable()
 
 namespace
 {
-    class ADN_ObjectDetection_Table : public ADN_Table3
+    class ADN_ObjectDetection_Table : public ADN_Table
     {
     public:
         //! @name Constructors/Destructor
         //@{
         ADN_ObjectDetection_Table( const QString& objectName, void* data, QWidget* pParent = 0 )
-            : ADN_Table3( objectName, pParent )
+            : ADN_Table( objectName, pParent )
         {
             setAlternatingRowColors( false );
             setSortingEnabled( false );
@@ -503,9 +482,9 @@ namespace
 // Name: ADN_Sensors_GUI::CreateObjectDetectionTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table3* ADN_Sensors_GUI::CreateObjectDetectionTable()
+ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
 {
-    ADN_Table3* pTable = new ADN_ObjectDetection_Table( strClassName_ + "_ObjectDetection", &data_.vSensors_ );
+    ADN_Table* pTable = new ADN_ObjectDetection_Table( strClassName_ + "_ObjectDetection", &data_.vSensors_ );
     //pTable->AddBoldGridCol( 3 );
     // Fill the table
     int nRow = 2;
@@ -543,6 +522,6 @@ ADN_Table3* ADN_Sensors_GUI::CreateObjectDetectionTable()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Agent detection" ), new ADN_Callback<ADN_Table3*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateAgentDetectionTable ) );
-    mainWindow.AddTable( tr( "Object detection" ), new ADN_Callback<ADN_Table3*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateObjectDetectionTable ) );
+    mainWindow.AddTable( tr( "Agent detection" ), new ADN_Callback<ADN_Table*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateAgentDetectionTable ) );
+    mainWindow.AddTable( tr( "Object detection" ), new ADN_Callback<ADN_Table*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateObjectDetectionTable ) );
 }

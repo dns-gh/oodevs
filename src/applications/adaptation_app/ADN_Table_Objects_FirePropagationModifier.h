@@ -19,7 +19,7 @@
 // Created: BCI 2010-12-02
 // =============================================================================
 class ADN_Table_Objects_FirePropagationModifier
-    : public ADN_Table3
+    : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

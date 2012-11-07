@@ -18,7 +18,7 @@
 #include "clients_gui/Roles.h"
 #include "clients_kernel/VariantPointer.h"
 
-class ADN_Table3 : public QTableView
+class ADN_Table : public QTableView
                  , public ADN_Gfx_ABC
 {
     Q_OBJECT
@@ -26,16 +26,15 @@ class ADN_Table3 : public QTableView
 public:
     //! @name Constructors / Destructor
     //@{
-            ADN_Table3( const QString& objectName, QWidget* pParent = 0 );
-            ADN_Table3( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent = 0 );
-            ADN_Table3( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
-    virtual ~ADN_Table3();
+             ADN_Table( const QString& objectName, QWidget* pParent = 0 );
+             ADN_Table( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent = 0 );
+             ADN_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
+    virtual ~ADN_Table();
     //@}
 
 public:
     //! @name Operations
     //@{
-    // $$$$ ABR 2012-10-23: To Remove when migration finish
     int numRows() const;
     void setNumRows( int numRows );
 
@@ -54,11 +53,7 @@ public:
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
     void SaveToXls( const QString& path, const QString& sheetName ) const;
-    //@}
 
-public:
-    //! @name Helpers
-    //@{
     QStandardItem* AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     QStandardItem* AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     template< typename T >
@@ -68,25 +63,28 @@ public:
     template< typename T >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags = 0 );
     ADN_TableDelegate& GetDelegate();
+    //@}
 
 protected:
+    //! @name Helpers
+    //@{
     void* GetData( int row, int col ) const;
     void* GetDataFromIndex( const QModelIndex& index ) const;
-
     void* GetSelectedData() const;
     //@}
 
-
     //! @name QTableView overload
     //@{
-    virtual bool eventFilter( QObject* watched, QEvent* event );
     virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
+    virtual bool event( QEvent *event );
+    virtual void mousePressEvent( QMouseEvent* mouseEvent );
     //@}
 
 private:
     //! @name Helpers
     //@{
     void Initialize( const QString& objectName );
+    QString GetToolTips( int nRow, int nCol ) const;
     //@}
 
 private slots:
@@ -127,7 +125,7 @@ protected:
 // Created: ABR 2012-10-18
 // -----------------------------------------------------------------------------
 inline
-QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags /* = 0 */ )
+QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags /* = 0 */ )
 {
     if( !parentData )
         return 0;
@@ -148,7 +146,7 @@ QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, const QS
 // Created: NPT 2012-11-07
 // -----------------------------------------------------------------------------
 inline
-QStandardItem* ADN_Table3::AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* ADN_Table::AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags /*= 0*/ )
 {
     QStandardItem* item = AddItem( row, col, parentData, text, flags );
     if( item && ( rowSpan > 1 || columnSpan > 1 ) )
@@ -163,7 +161,7 @@ QStandardItem* ADN_Table3::AddItem( int row, int col, int rowSpan, int columnSpa
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags /* = 0 */ )
+QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags /* = 0 */ )
 {
     if( !data || !parentData )
         return 0;
@@ -200,7 +198,7 @@ QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_Type
 // -----------------------------------------------------------------------------
 template< typename Enum, int Max >
 inline
-QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags /*= 0*/ )
 {
     if( !data || !parentData )
         return 0;
@@ -228,7 +226,7 @@ QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_Type
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags /*= 0*/ )
+QStandardItem* ADN_Table::AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags /*= 0*/ )
 {
     if( !data || !parentData )
         return 0;
@@ -255,147 +253,9 @@ QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_Type
 // Created: NPT 2012-11-07
 // -----------------------------------------------------------------------------
 inline
-ADN_TableDelegate& ADN_Table3::GetDelegate()
+ADN_TableDelegate& ADN_Table::GetDelegate()
 {
     return delegate_;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//*****************************************************************************
-// Created: JDY 03-07-07
-//*****************************************************************************
-class ADN_Table : public Q3Table, public ADN_Gfx_ABC
-{
-    Q_OBJECT
-
-public:
-    explicit ADN_Table( QWidget* pParent = 0, const char* szName = 0 );
-    virtual ~ADN_Table();
-
-    void  EnableRefreshing( bool b );
-    void  StopEditing();
-    void* GetCurrentData();
-    void  setEnabled( bool b );
-
-    void AdjustColumns( int nMinWidth = -1 );
-    void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
-
-    int ComputeNbrPrintPages( const QSize& painterSize ) const;
-    void Print( int nPage, QPainter& painter, const QSize& painterSize );
-    void SaveToXls( const QString& path, const QString& sheetName ) const;
-
-    void AddBoldGridRow( int nIndex );
-    void AddBoldGridCol( int nIndex );
-
-    // SBO 2005-09-01 : was protected
-    virtual void sortColumn( int nCol, bool bAscending = true, bool wholerows = false );
-    virtual bool event(QEvent *event);
-
-protected:
-    virtual void drawContents ( QPainter * p, int cx, int cy, int cw, int ch );
-
-    virtual void paintCell ( QPainter * p, int row, int col, const QRect & cr, bool selected, const QColorGroup & cg );
-    virtual void paintCell ( QPainter * p, int row, int col, const QRect & cr, bool selected );
-    virtual void paintEmptyArea ( QPainter * p, int cx, int cy, int cw, int ch );
-    virtual bool eventFilter( QObject * watched, QEvent * event );
-
-    virtual QWidget* createEditor( int nRow, int nCol, bool bInitFromCell ) const;
-
-protected slots:
-    virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
-    void UpdateEnableState();
-    QString GetToolTips( int nRow, int nCol ) const;
-
-    virtual void doValueChanged( int row, int col );
-    void GoToOnDoubleClicked( int row, int col, int button, const QPoint & mousePos );
-
-signals:
-    void GoToRequested( const ADN_NavigationInfos::GoTo& goToInfo );
-
-protected:
-    typedef std::set<int>         T_IndexSet;
-    typedef T_IndexSet::iterator IT_IndexSet;
-
-    T_IndexSet                  vBoldGridRowIndexes_;
-    T_IndexSet                  vBoldGridColIndexes_;
-
-    bool                        bRefreshingEnabled_;
-    bool                        bPrinting_;
-    ADN_NavigationInfos::GoTo   goToInfo_;
-};
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Table::EnableRefreshing
-// Created: JDY 03-07-08
-//-----------------------------------------------------------------------------
-inline
-void ADN_Table::EnableRefreshing( bool b )
-{
-    bRefreshingEnabled_ = b;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::AddBoldGridRow
-// Created: APE 2005-04-04
-// -----------------------------------------------------------------------------
-inline
-void ADN_Table::AddBoldGridRow( int nIndex )
-{
-    vBoldGridRowIndexes_.insert( nIndex );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::AddBoldGridCol
-// Created: APE 2005-04-04
-// -----------------------------------------------------------------------------
-inline
-void ADN_Table::AddBoldGridCol( int nIndex )
-{
-    vBoldGridColIndexes_.insert( nIndex );
-}
-
-class ADN_Table2 : public ADN_Table
-{
-public:
-    explicit ADN_Table2( QWidget* pParent, const char* szName  ) : ADN_Table( pParent, szName ) {}
-    virtual ~ADN_Table2() {};
-
-    //! @name Qt reimplementation.
-    //@{
-    QString tr( const char* s, const char* c = 0 )
-    {
-        if( qApp )
-            return qApp->translate( this->name(), s, c, QApplication::DefaultCodec );
-        else
-            return QString::fromLatin1( s );
-    }
-    //@}
-};
 
 #endif // __ADN_Table_h_

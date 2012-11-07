@@ -18,7 +18,7 @@
 */
 // Created: LGY 2012-04-18
 // =============================================================================
-class ADN_MissionGenObjectTypes_Table : public ADN_Table3
+class ADN_MissionGenObjectTypes_Table : public ADN_Table
 {
     Q_OBJECT
 

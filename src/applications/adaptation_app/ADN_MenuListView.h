@@ -22,7 +22,7 @@ class ADN_MenuListView : public QWidgetAction
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_MenuListView( ADN_Table3* receiver, ADN_Type_Vector_ABC< T >& vector, QObject* parent );
+             ADN_MenuListView( ADN_Table* receiver, ADN_Type_Vector_ABC< T >& vector, QObject* parent );
     virtual ~ADN_MenuListView();
     //@}
 
@@ -35,7 +35,7 @@ public:
 private:
     //! @name Member data
     //@{
-    ADN_Table3* receiver_;
+    ADN_Table* receiver_;
     ADN_Type_Vector_ABC< T >& vector_;
     QListWidget* listView_;
     //@}

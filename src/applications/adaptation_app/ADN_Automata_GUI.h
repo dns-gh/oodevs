@@ -14,7 +14,7 @@
 
 class ADN_Automata_Data;
 class ADN_Automata_ListView;
-class ADN_Table3;
+class ADN_Table;
 class ADN_ListView;
 class UnitsFilter;
 
@@ -54,7 +54,7 @@ public:
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
 
-    ADN_Table3*    CreateAutomataCompositionsTable  ();
+    ADN_Table*    CreateAutomataCompositionsTable  ();
     ADN_ListView* CreateAutomataLogTable           ();
     ADN_ListView* CreateAutomataLogTablePerDotation();
     //@}

@@ -45,13 +45,6 @@ public:
     void ExchangeData( ADN_FuneralPackagingResource& packResource );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_FuneralPackagingResource( const ADN_FuneralPackagingResource& );            //!< Copy constructor
-    ADN_FuneralPackagingResource& operator=( const ADN_FuneralPackagingResource& ); //!< Assignment operator
-    //@}
-
 public:
     //! @name Member data
     //@{

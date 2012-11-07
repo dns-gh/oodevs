@@ -43,15 +43,8 @@ private:
     std::string GetToolTipFor( const QModelIndex& index );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_ListView_MissionTypes( const ADN_ListView_MissionTypes& );            //!< Copy constructor
-    ADN_ListView_MissionTypes& operator=( const ADN_ListView_MissionTypes& ); //!< Assignment operator
-    //@}
-
 signals:
-    //! @name Copy/Assignment
+    //! @name Signals
     //@{
     void NotifyMissionDeleted( std::string name, E_EntityType type );
     //@}

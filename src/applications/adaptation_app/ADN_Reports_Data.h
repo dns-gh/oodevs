@@ -113,12 +113,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_Reports_Data( const ADN_Reports_Data& );            //!< Copy constructor
-    ADN_Reports_Data& operator=( const ADN_Reports_Data& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadArchive( xml::xistream& input );

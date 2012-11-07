@@ -16,7 +16,7 @@
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
 ADN_Template_Usages::ADN_Template_Usages( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     setShowGrid( false );
     dataModel_.setColumnCount( 2 );

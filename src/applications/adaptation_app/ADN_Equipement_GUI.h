@@ -19,7 +19,7 @@ class ADN_ComboBox;
 class ADN_Equipement_AttritionTable;
 class ADN_Equipement_AttritionGraph;
 class ADN_ListView;
-class ADN_Table3;
+class ADN_Table;
 class ADN_ComboBox_Vector;
 
 namespace helpers
@@ -124,7 +124,7 @@ public:
     //@{
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
-    ADN_Table3* CreatePKTable();
+    ADN_Table* CreatePKTable();
     void ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Data::AmmoCategoryInfo& infos );
     void UpdateGraph();
     void InitializeSimulationCombos();

@@ -35,13 +35,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_Reports_GUI( const ADN_Reports_GUI& );            //!< Copy constructor
-    ADN_Reports_GUI& operator=( const ADN_Reports_GUI& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     ADN_Reports_Data& data_;

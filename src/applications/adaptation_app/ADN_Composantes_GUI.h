@@ -17,7 +17,7 @@
 #include "ADN_Connector_ABC.h"
 
 class QWidget;
-class ADN_Table3;
+class ADN_Table;
 class ADN_Composantes_Data;
 class ADN_ListView_Composantes;
 class ADN_Composantes_Speeds_GUI;
@@ -183,7 +183,7 @@ private:
 
     QWidget* BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
 
-    ADN_Table3* CreateComposanteSpeedsTable();
+    ADN_Table* CreateComposanteSpeedsTable();
     //@}
 
 private slots:

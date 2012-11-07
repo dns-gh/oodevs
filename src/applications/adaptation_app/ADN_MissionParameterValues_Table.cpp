@@ -42,7 +42,7 @@
 // Created: SBO 2006-12-05
 // -----------------------------------------------------------------------------
 ADN_MissionParameterValues_Table::ADN_MissionParameterValues_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     setShowGrid( false );
     verticalHeader()->setVisible( false );

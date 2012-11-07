@@ -16,7 +16,7 @@
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
 ADN_Consumptions_Table::ADN_Consumptions_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;

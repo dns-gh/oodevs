@@ -149,13 +149,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GQ_PlotAxis( const GQ_PlotAxis& rhs );            //!< Copy constructor
-    GQ_PlotAxis& operator=( const GQ_PlotAxis& rhs ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Display settings parameters
     //@{
     Qt::Orientation nOrientation_;

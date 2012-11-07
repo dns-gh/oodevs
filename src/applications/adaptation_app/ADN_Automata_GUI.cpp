@@ -121,13 +121,13 @@ void ADN_Automata_GUI::Build()
 
 namespace
 {
-    class ADN_CompositionTable : public ADN_Table3
+    class ADN_CompositionTable : public ADN_Table
     {
     public:
         //! @name Constructors/Destructor
         //@{
         ADN_CompositionTable( const QString& objectName, QWidget* pParent = 0 )
-            : ADN_Table3( objectName, pParent )
+            : ADN_Table( objectName, pParent )
         {
             dataModel_.setColumnCount( 3 );
             setSortingEnabled( false );
@@ -151,9 +151,9 @@ namespace
 // Name: ADN_Automata_GUI::CreateAutomataCompositionsTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table3* ADN_Automata_GUI::CreateAutomataCompositionsTable()
+ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 {
-    ADN_Table3* pTable = new ADN_CompositionTable( strClassName_ + "_AutomataCompositions" );
+    ADN_Table* pTable = new ADN_CompositionTable( strClassName_ + "_AutomataCompositions" );
     // Fill the table.
     int nRow = 0;
     std::sort( data_.vAutomata_.begin(), data_.vAutomata_.end(), ADN_Tools::NameSort< ADN_Automata_Data::AutomatonInfos >() );
@@ -278,7 +278,7 @@ ADN_ListView* ADN_Automata_GUI::CreateAutomataLogTablePerDotation()
 // -----------------------------------------------------------------------------
 void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table3*  ,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataCompositionsTable ) );
+    mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table*  ,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataCompositionsTable ) );
     mainWindow.AddListView( tr( "Logistic per automat" ) , new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTable ) );
     mainWindow.AddListView( tr( "Logistic per resource" ), new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTablePerDotation ) );
 }

@@ -19,7 +19,7 @@
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Supply_TrucksTimeTable : public ADN_Table3
+class ADN_Supply_TrucksTimeTable : public ADN_Table
                                  , private boost::noncopyable
 {
 

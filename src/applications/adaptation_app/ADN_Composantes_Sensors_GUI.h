@@ -20,7 +20,7 @@
 // Created: JDY 03-07-22
 //*****************************************************************************
 class ADN_Composantes_Sensors_GUI
-    : public ADN_Table3
+    : public ADN_Table
 {
 public:
     explicit ADN_Composantes_Sensors_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );

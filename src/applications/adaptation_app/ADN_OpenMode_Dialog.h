@@ -31,8 +31,7 @@ enum E_OpenMode;
 */
 // Created: AGN 2004-05-25
 // =============================================================================
-class ADN_OpenMode_Dialog
-: public QDialog
+class ADN_OpenMode_Dialog : public QDialog
 {
 public:
     //! @name Constructors/Destructor
@@ -45,13 +44,6 @@ public:
     //@{
     E_OpenMode GetOpenMode() const;
     QString GetPassword() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_OpenMode_Dialog( const ADN_OpenMode_Dialog& );            //!< Copy constructor
-    ADN_OpenMode_Dialog& operator=( const ADN_OpenMode_Dialog& ); //!< Assignment operator
     //@}
 
 private:

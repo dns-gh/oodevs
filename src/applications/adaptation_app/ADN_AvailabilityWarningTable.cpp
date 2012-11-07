@@ -10,14 +10,13 @@
 #include "adaptation_app_pch.h"
 #include "ADN_AvailabilityWarningTable.h"
 #include "ADN_AvailabilityWarning.h"
-#include "ADN_TableItem_Edit.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AvailabilityWarningTable constructor
 // Created: SBO 2006-08-03
 // -----------------------------------------------------------------------------
 ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, vector, pParent )
+    : ADN_Table( objectName, vector, pParent )
 {
     setFixedHeight( 300 );
     dataModel_.setColumnCount( 1 );

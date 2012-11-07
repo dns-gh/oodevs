@@ -25,7 +25,7 @@
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
 ADN_Weapons_PhTable::ADN_Weapons_PhTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     // Selection and sorting.
     //setSelectionMode( QAbstractItemView::NoSelection );
@@ -106,7 +106,7 @@ void ADN_Weapons_PhTable::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_Weapons_PhTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-    ADN_Table3::dataChanged( topLeft, bottomRight );
+    ADN_Table::dataChanged( topLeft, bottomRight );
     if( topLeft == bottomRight )
     {
         if( ADN_Weapons_Data::PhInfos* pCurPh = static_cast< ADN_Weapons_Data::PhInfos* >( GetSelectedData() ) )

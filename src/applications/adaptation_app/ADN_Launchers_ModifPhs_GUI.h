@@ -17,7 +17,7 @@
 //*****************************************************************************
 // Created: JDY 03-09-01
 //*****************************************************************************
-class ADN_Launchers_ModifPhs_GUI : public ADN_Table3
+class ADN_Launchers_ModifPhs_GUI : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

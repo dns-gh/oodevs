@@ -19,7 +19,7 @@
 */
 // Created: LGY 2011-09-20
 // =============================================================================
-class ADN_Template_Usages : public ADN_Table3
+class ADN_Template_Usages : public ADN_Table
 {
     Q_OBJECT
 

@@ -27,7 +27,7 @@
 */
 // Created: APE 2005-04-27
 // =============================================================================
-class ADN_Composantes_BreakdownsTable : public ADN_Table3
+class ADN_Composantes_BreakdownsTable : public ADN_Table
 {
     Q_OBJECT
 

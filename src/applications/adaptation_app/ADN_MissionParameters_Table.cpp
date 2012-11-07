@@ -19,7 +19,7 @@
 // Created: ABR 2012-10-25
 // -----------------------------------------------------------------------------
 ADN_MissionParameters_Table::ADN_MissionParameters_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 6 );
     QStringList horizontalHeaders;

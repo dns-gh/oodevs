@@ -19,7 +19,7 @@
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Breakdowns_PartsTable : public ADN_Table3
+class ADN_Breakdowns_PartsTable : public ADN_Table
 {
 
 public:

@@ -11,7 +11,6 @@
 #include "ADN_Table_Objects_FirePropagationModifier.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Connector_Table_ABC.h"
-#include "ADN_TableItem_Edit.h"
 
 typedef ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass ModifierByFireClass;
 
@@ -20,7 +19,7 @@ typedef ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByF
 // Created: BCI 2010-12-02
 //-----------------------------------------------------------------------------
 ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModifier( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 3 );
     QStringList horizontalHeaders;

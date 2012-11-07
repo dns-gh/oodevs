@@ -18,7 +18,7 @@
 */
 // Created: JSR 2010-12-03
 // =============================================================================
-class ADN_SurfaceFireInfos_Table : public ADN_Table3
+class ADN_SurfaceFireInfos_Table : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

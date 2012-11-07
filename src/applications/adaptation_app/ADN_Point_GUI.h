@@ -18,7 +18,7 @@
 //*****************************************************************************
 // Created: AGN 03-07-30
 //*****************************************************************************
-class ADN_Point_GUI : public ADN_Table3
+class ADN_Point_GUI : public ADN_Table
 {
 public:
              ADN_Point_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );

@@ -18,7 +18,7 @@
 */
 // Created: SBO 2006-08-03
 // =============================================================================
-class ADN_AvailabilityWarningTable : public ADN_Table3
+class ADN_AvailabilityWarningTable : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

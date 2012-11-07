@@ -18,7 +18,7 @@
 */
 // Created: ABR 2012-01-16
 // =============================================================================
-class ADN_Sensors_ModificatorTable_ABC : public ADN_Table3
+class ADN_Sensors_ModificatorTable_ABC : public ADN_Table
 {
     Q_OBJECT
 

@@ -27,7 +27,7 @@ typedef ADN_Supply_Data::ConvoyInfo< ADN_Type_Time > ConvoyInfo;
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
 ADN_Supply_TrucksTimeTable::ADN_Supply_TrucksTimeTable( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
-: ADN_Table3( objectName, vector, pParent )
+: ADN_Table( objectName, vector, pParent )
 {
     setSortingEnabled( true );
     this->setMaximumHeight( 300 );

@@ -18,7 +18,7 @@
 */
 // Created: BCI 2010-12-02
 // =============================================================================
-class ADN_ExtinguisherAgentInfos_Table : public ADN_Table3
+class ADN_ExtinguisherAgentInfos_Table : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

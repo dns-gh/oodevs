@@ -18,8 +18,6 @@
 #include "ADN_FuneralPackagingResource.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Tr.h"
-#include "ADN_TableItem_TimeField.h"
-#include "ADN_TableItem_CheckItem.h"
 #include "ENT/Ent_Tr.h"
 
 //-----------------------------------------------------------------------------
@@ -27,7 +25,7 @@
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
-: ADN_Table3( objectName, vector, pParent )
+: ADN_Table( objectName, vector, pParent )
 {
     setMinimumHeight( 200 );
     dataModel_.setColumnCount( 3 );

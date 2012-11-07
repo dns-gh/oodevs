@@ -40,13 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UnitsFilter( const UnitsFilter& );            //!< Copy constructor
-    UnitsFilter& operator=( const UnitsFilter& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member Data
     //@{
     std::set< std::string > units_;

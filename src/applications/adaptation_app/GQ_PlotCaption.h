@@ -57,12 +57,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GQ_PlotCaption( const GQ_PlotCaption& );            //!< Copy constructor
-    GQ_PlotCaption& operator=( const GQ_PlotCaption& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Update();

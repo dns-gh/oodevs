@@ -21,7 +21,7 @@ typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
     , maxSpeed_( maxSpeed )
     , popupIsDisplayed_( false )
 {

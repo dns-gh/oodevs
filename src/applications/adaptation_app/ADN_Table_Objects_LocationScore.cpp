@@ -32,7 +32,7 @@ typedef ADN_Objects_Data::ScoreLocationInfos ScoreLocationInfos;
 // Created: AGN 2004-05-24
 // -----------------------------------------------------------------------------
 ADN_Table_Objects_LocationScore::ADN_Table_Objects_LocationScore( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-: ADN_Table3( objectName, connector, pParent )
+: ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;

@@ -36,12 +36,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_ColorSelector( const ADN_ColorSelector& );            //!< Copy constructor
-    ADN_ColorSelector& operator=( const ADN_ColorSelector& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void paintEvent( QPaintEvent *e );

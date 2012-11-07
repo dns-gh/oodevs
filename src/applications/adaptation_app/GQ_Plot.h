@@ -201,13 +201,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GQ_Plot( const GQ_Plot& rhs );            //!< Copy constructor
-    GQ_Plot& operator=( const GQ_Plot& rhs ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Settings parameters
     //@{
     bool bShowPlotFrame_;

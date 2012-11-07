@@ -25,7 +25,7 @@ namespace helpers
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Units_LogThreshold_GUI : public ADN_Table3
+class ADN_Units_LogThreshold_GUI : public ADN_Table
 {
 public:
              ADN_Units_LogThreshold_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );

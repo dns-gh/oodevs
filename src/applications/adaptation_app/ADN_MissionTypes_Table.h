@@ -18,7 +18,7 @@
 */
 // Created: LDC 2010-08-19
 // =============================================================================
-class ADN_MissionTypes_Table : public ADN_Table3
+class ADN_MissionTypes_Table : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

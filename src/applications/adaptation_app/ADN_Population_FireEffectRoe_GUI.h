@@ -17,7 +17,7 @@
 //*****************************************************************************
 // Created: JDY 03-07-08
 //*****************************************************************************
-class ADN_Population_FireEffectRoe_GUI : public ADN_Table3
+class ADN_Population_FireEffectRoe_GUI : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

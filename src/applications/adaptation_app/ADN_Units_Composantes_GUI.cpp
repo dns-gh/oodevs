@@ -19,7 +19,6 @@
 #include "ADN_MenuListView.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Workspace.h"
-#include "ADN_TableItem_CheckItem.h"
 #include "MT_ValuedListViewItem.h"
 
 typedef ADN_Composantes_Data::ComposanteInfos   ComposanteInfos;
@@ -32,7 +31,7 @@ Q_DECLARE_METATYPE( ComposanteInfos* )
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
-    : ADN_Table3            ( objectName, connector, pParent )
+    : ADN_Table            ( objectName, connector, pParent )
     , bMenuListItemSelected_( false )
 {
     dataModel_.setColumnCount( 6 );

@@ -18,7 +18,7 @@
 */
 // Created: APE 2004-12-29
 // =============================================================================
-class ADN_Equipement_AttritionTable : public ADN_Table3
+class ADN_Equipement_AttritionTable : public ADN_Table
 {
 
 public:

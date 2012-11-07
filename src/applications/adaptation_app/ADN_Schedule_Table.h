@@ -18,7 +18,7 @@
 */
 // Created: ABR 2012-11-05
 // =============================================================================
-class ADN_Schedule_Table : public ADN_Table3
+class ADN_Schedule_Table : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

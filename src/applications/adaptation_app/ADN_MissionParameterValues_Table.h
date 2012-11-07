@@ -18,7 +18,7 @@
 */
 // Created: SBO 2006-12-05
 // =============================================================================
-class ADN_MissionParameterValues_Table : public ADN_Table3
+class ADN_MissionParameterValues_Table : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

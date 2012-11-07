@@ -12,7 +12,6 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Connector_Table_ABC.h"
-#include "ADN_TableItem_Edit.h"
 
 using namespace helpers;
 
@@ -21,7 +20,7 @@ using namespace helpers;
 // Created: SLG 2010-04-13
 //-----------------------------------------------------------------------------
 ADN_UrbanModifiersTable::ADN_UrbanModifiersTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );
     setShowGrid( false );

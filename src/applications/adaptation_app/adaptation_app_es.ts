@@ -4180,21 +4180,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 <context>
     <name>ADN_TableDialog</name>
     <message>
-        <source>Close</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Excel files (*.xls)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_TableDialog2</name>
-    <message>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>

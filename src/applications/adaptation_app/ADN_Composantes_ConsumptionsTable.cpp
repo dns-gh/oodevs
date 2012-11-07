@@ -24,7 +24,6 @@
 
 #include "ADN_Composantes_Data.h"
 #include "ADN_Connector_Table_ABC.h"
-#include "ADN_TableItem_Edit.h"
 #include "ADN_Validator.h"
 #include "ADN_Tr.h"
 #include "ADN_ListView_Composantes.h"
@@ -36,7 +35,7 @@ typedef ADN_Composantes_Data::ConsumptionItem ConsumptionItem;
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
 ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
     , composanteListView_( 0 )
 {
     dataModel_.setColumnCount( 3 );

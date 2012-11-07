@@ -11,8 +11,6 @@
 #include "ADN_MissionGenObjectTypes_Table.h"
 #include "moc_ADN_MissionGenObjectTypes_Table.cpp"
 #include "ADN_Connector_Table_ABC.h"
-#include "ADN_TableItem_Edit.h"
-#include "ADN_TableItem_CheckItem.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
 
 // -----------------------------------------------------------------------------
@@ -20,7 +18,7 @@
 // Created: LGY 2012-04-18
 // -----------------------------------------------------------------------------
 ADN_MissionGenObjectTypes_Table::ADN_MissionGenObjectTypes_Table( QCheckBox* all, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
     , all_( all )
     , isAdding_( false )
 {
@@ -66,7 +64,7 @@ bool ADN_MissionGenObjectTypes_Table::IsChecked() const
 // -----------------------------------------------------------------------------
 void ADN_MissionGenObjectTypes_Table::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-    ADN_Table3::dataChanged( topLeft, bottomRight );
+    ADN_Table::dataChanged( topLeft, bottomRight );
     if( !isAdding_ )
     {
         all_->blockSignals( true );

@@ -21,7 +21,7 @@ namespace helpers
 */
 // Created: SLG 2010-04-13
 // =============================================================================
-class ADN_UrbanModifiersTable : public ADN_Table3
+class ADN_UrbanModifiersTable : public ADN_Table
 {
 
 public:

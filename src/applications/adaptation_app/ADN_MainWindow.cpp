@@ -26,7 +26,6 @@
 #include "ADN_RunProcessDialog.h"
 #include "ADN_Project_Data.h"
 #include "ADN_ProgressBar.h"
-#include "ADN_SplashScreen.h"
 #include "ADN_FileLoaderObserver.h"
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/resources.h"
@@ -124,11 +123,6 @@ ADN_MainWindow::~ADN_MainWindow()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::Build()
 {
-    ADN_SplashScreen splashScreen( QPixmap( "ADN.jpg" ) );
-    if( splashScreen.IsValid() )
-        splashScreen.show();
-    workspace_.SetProgressIndicator( &splashScreen );
-
     // Main widget
     Q3VBox* pBox = new Q3VBox( this );
     setCentralWidget( pBox );
@@ -202,9 +196,6 @@ void ADN_MainWindow::Build()
     // Disable the menus.
     SetMenuEnabled( false );
 
-    // Build all children interfaces
-    workspace_.Build( *this );
-
     // Status Bar
     {
         QStatusBar* pStatus = statusBar();
@@ -212,6 +203,9 @@ void ADN_MainWindow::Build()
         pStatus->addWidget( pProgressBar );
         workspace_.SetProgressIndicator( pProgressBar );
     }
+
+    // Build all children interfaces
+    workspace_.Build( *this );
 
     connect( pCoheranceTablesMenu_, SIGNAL( activated( int ) ), this, SLOT( ShowCoheranceTable( int ) ) );
 }
@@ -227,21 +221,11 @@ void ADN_MainWindow::AddPage( E_WorkspaceElements element, QWidget& page, const 
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::AddTable
-// Created: APE 2005-03-29
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>* pCallback )
-{
-    vTableRegistrations_.insert( std::make_pair( pCoheranceTablesMenu_->count(), T_TableRegistrationItem( strTableName, pCallback ) ) );
-    pCoheranceTablesMenu_->insertItem( strTableName, pCoheranceTablesMenu_->count() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::AddTable
 // Created: JSR 2012-11-07
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table3*>*    pCallback )
+void ADN_MainWindow::AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>*    pCallback )
 {
-     vTableRegistrations2_.insert( std::make_pair( pCoheranceTablesMenu_->count(), T_TableRegistrationItem2( strTableName, pCallback ) ) );
+     vTableRegistrations_.insert( std::make_pair( pCoheranceTablesMenu_->count(), T_TableRegistrationItem( strTableName, pCallback ) ) );
      pCoheranceTablesMenu_->insertItem( strTableName, pCoheranceTablesMenu_->count() );
 }
 
@@ -634,7 +618,6 @@ bool ADN_MainWindow::SelectOpenMode()
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::ShowCoheranceTable( int nId )
 {
-    //assert( nId < (int)vTableRegistrations_.size() );
     IT_TableRegistrationMap itTable = vTableRegistrations_.find( nId );
     if( itTable != vTableRegistrations_.end() )
     {
@@ -644,20 +627,6 @@ void ADN_MainWindow::ShowCoheranceTable( int nId )
         ADN_Table* pTable = (*pCallback)();
         assert( pTable != 0 );
         ADN_TableDialog* pDialog = new ADN_TableDialog( this, item.first, *pTable );
-
-        pDialog->exec();
-        delete pDialog;
-        return;
-    }
-    IT_TableRegistrationMap2 itTable2 = vTableRegistrations2_.find( nId );
-    if( itTable2 != vTableRegistrations2_.end() )
-    {
-        T_TableRegistrationItem2& item = itTable2->second;
-        ADN_Callback_ABC<ADN_Table3*>* pCallback = item.second;
-
-        ADN_Table3* pTable = (*pCallback)();
-        assert( pTable != 0 );
-        ADN_TableDialog2* pDialog = new ADN_TableDialog2( this, item.first, *pTable );
 
         pDialog->exec();
         delete pDialog;

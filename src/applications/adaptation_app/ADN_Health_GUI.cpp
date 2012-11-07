@@ -15,19 +15,17 @@
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Table.h"
-#include "ADN_TableItem_Edit.h"
 #include "ADN_TimeField.h"
-#include "ADN_TableItem_TimeField.h"
 #include "ADN_AvailabilityWarningTable.h"
 
 namespace
 {
 
-class ADN_WoundTable : public ADN_Table3
+class ADN_WoundTable : public ADN_Table
 {
 public:
     explicit ADN_WoundTable( const QString& objectName, void* data, QWidget* pParent = 0 )
-        : ADN_Table3( objectName, pParent )
+        : ADN_Table( objectName, pParent )
     {
         setSortingEnabled( true );
         dataModel_.setColumnCount( eNbrDoctorSkills + 2 );

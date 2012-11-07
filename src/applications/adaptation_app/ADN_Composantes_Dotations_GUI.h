@@ -21,7 +21,7 @@
 */
 // Created: APE 2005-01-07
 // =============================================================================
-class ADN_Composantes_Dotations_GUI : public ADN_Table3
+class ADN_Composantes_Dotations_GUI : public ADN_Table
 {
     Q_OBJECT
 

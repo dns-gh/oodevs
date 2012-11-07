@@ -13,18 +13,16 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 #include "ADN_Table.h"
-#include "ADN_TableItem_Edit.h"
-#include "ADN_TableItem_TimeField.h"
 #include "ADN_AvailabilityWarningTable.h"
 #include "ENT/ENT_Tr.h"
 
 namespace
 {
-    class ADN_WorkingSchemeTable : public ADN_Table3
+    class ADN_WorkingSchemeTable : public ADN_Table
     {
     public:
         ADN_WorkingSchemeTable( const QString& objectName, QWidget* pParent = 0 )
-            : ADN_Table3( objectName, pParent )
+            : ADN_Table( objectName, pParent )
         {
             setSortingEnabled( false );
 

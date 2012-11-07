@@ -1006,19 +1006,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_Table_ABC.cpp">
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_BoolEditor.cpp">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Table.cpp">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_ABC.cpp">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_CheckItem.cpp">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableItem_TimeField.cpp">
       <Filter>Source Files\Common widgets\Table</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView.cpp">
@@ -1064,9 +1052,6 @@
       <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ProgressIndicator_ABC.cpp">
-      <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SplashScreen.cpp">
       <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorSelector.cpp">
@@ -1674,15 +1659,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Connector_Table_ABC.h">
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_ABC.h">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_CheckItem.h">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableItem_Edit.h">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.h">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
@@ -1901,9 +1877,6 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_Connector_String.inl">
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_TableItem_Edit.inl">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_EditLine.inl">
       <Filter>Source Files\Common widgets\Edit line</Filter>
     </None>
@@ -2120,13 +2093,7 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TimeField.h">
       <Filter>Source Files\Common widgets</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_BoolEditor.h">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Table.h">
-      <Filter>Source Files\Common widgets\Table</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TableItem_TimeField.h">
       <Filter>Source Files\Common widgets\Table</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView.h">
@@ -2154,9 +2121,6 @@
       <Filter>Source Files\Common widgets\Equipement selector</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ProgressBar.h">
-      <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SplashScreen.h">
       <Filter>Source Files\Common widgets\Progress bar &amp; splash screen</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ColorSelector.h">

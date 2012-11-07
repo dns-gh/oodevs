@@ -23,20 +23,13 @@
 class ADN_Nature_GUI : public gui::NatureEditionWidget
                      , public ADN_Gfx_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
     explicit ADN_Nature_GUI( QGridLayout* parent, int row = 0 );
     virtual ~ADN_Nature_GUI();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_Nature_GUI( const ADN_Nature_GUI& );            //!< Copy constructor
-    ADN_Nature_GUI& operator=( const ADN_Nature_GUI& ); //!< Assignment operator
     //@}
 
 private slots:

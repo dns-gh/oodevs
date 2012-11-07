@@ -442,13 +442,13 @@ QWidget* ADN_Composantes_GUI::BuildPowerIndicators( QWidget* pParent, T_Connecto
 
 namespace
 {
-    class ADN_Speeds_Table: public ADN_Table3
+    class ADN_Speeds_Table: public ADN_Table
     {
     public:
         //! @name Constructors/Destructor
         //@{
         ADN_Speeds_Table( const QString& objectName, QWidget* pParent = 0 )
-            : ADN_Table3( objectName, pParent )
+            : ADN_Table( objectName, pParent )
         {
             dataModel_.setColumnCount( eNbrLocation + 1 );
             setSortingEnabled( true );
@@ -472,9 +472,9 @@ namespace
 // Name: ADN_Composantes_GUI::CreateComposanteSpeedsTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table3* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
+ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
 {
-    ADN_Table3* pTable = new ADN_Speeds_Table( strClassName_ + "_ComposanteSpeeds" );
+    ADN_Table* pTable = new ADN_Speeds_Table( strClassName_ + "_ComposanteSpeeds" );
     pTable->setNumRows( static_cast< int >( data_.vComposantes_.size() ) );
     //pTable->AddBoldGridCol( 1 );
     //pTable->AddBoldGridRow( 1 );
@@ -497,7 +497,7 @@ ADN_Table3* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
 // -----------------------------------------------------------------------------
 void ADN_Composantes_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Equipment speeds" ), new ADN_Callback<ADN_Table3*,ADN_Composantes_GUI>( this, & ADN_Composantes_GUI::CreateComposanteSpeedsTable ) );
+    mainWindow.AddTable( tr( "Equipment speeds" ), new ADN_Callback<ADN_Table*,ADN_Composantes_GUI>( this, & ADN_Composantes_GUI::CreateComposanteSpeedsTable ) );
 }
 
 // -----------------------------------------------------------------------------

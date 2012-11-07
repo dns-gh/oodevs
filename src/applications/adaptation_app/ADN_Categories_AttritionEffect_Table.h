@@ -12,7 +12,7 @@
 
 #include "ADN_Table.h"
 
-class ADN_Categories_AttritionEffect_Table : public ADN_Table3
+class ADN_Categories_AttritionEffect_Table : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

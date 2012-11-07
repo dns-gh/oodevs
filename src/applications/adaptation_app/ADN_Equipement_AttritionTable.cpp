@@ -17,7 +17,7 @@
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 4 );
     QStringList horizontalHeaders;
@@ -75,7 +75,7 @@ void ADN_Equipement_AttritionTable::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_AttritionTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-    ADN_Table3::dataChanged( topLeft, bottomRight );
+    ADN_Table::dataChanged( topLeft, bottomRight );
     if( topLeft == bottomRight )
         ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
 }

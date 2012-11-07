@@ -16,7 +16,7 @@
 // Created: ABR 2012-11-05
 // -----------------------------------------------------------------------------
 ADN_Schedule_Table::ADN_Schedule_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 4 );
     QStringList horizontalHeaders;

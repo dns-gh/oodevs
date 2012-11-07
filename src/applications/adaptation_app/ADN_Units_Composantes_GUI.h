@@ -20,7 +20,7 @@ class ADN_Connector_ABC;
 //*****************************************************************************
 // Created: JDY 03-07-28
 //*****************************************************************************
-class ADN_Units_Composantes_GUI : public ADN_Table3
+class ADN_Units_Composantes_GUI : public ADN_Table
 {
     Q_OBJECT
 

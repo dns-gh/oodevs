@@ -37,7 +37,7 @@ namespace kernel
 class ADN_SymbolWidget : public QGLWidget
                        , public ADN_Gfx_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -58,26 +58,12 @@ public:
     //@{
     bool IsAvailable( const std::string& symbol ) const;
     //@}
-private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_SymbolWidget( const ADN_SymbolWidget& );            //!< Copy constructor
-    ADN_SymbolWidget& operator=( const ADN_SymbolWidget& ); //!< Assignment operator
-    //@}
 
+private:
     //! @name Tools
     //@{
     void DisplaySymbol() const;
     //@}
-
-private:
-    geometry::Rectangle2f viewPort_;
-
-    std::auto_ptr< gui::SvglRenderer > renderer_;
-    std::auto_ptr< gui::GLSymbols > symbols_;
-    kernel::SymbolFactory* symbolFactory_;
-
-    std::string currentSymbol_;
 
 signals:
     //! @name Signals
@@ -89,6 +75,16 @@ private slots:
     //! @name Slots
     //@{
     void OnNatureChanged( const QString& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    geometry::Rectangle2f viewPort_;
+    std::auto_ptr< gui::SvglRenderer > renderer_;
+    std::auto_ptr< gui::GLSymbols > symbols_;
+    kernel::SymbolFactory* symbolFactory_;
+    std::string currentSymbol_;
     //@}
 };
 

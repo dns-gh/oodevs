@@ -10,18 +10,17 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_Table_ABC.h"
-#include "ADN_TableItem_ABC.h"
 
-class DataComparison : public ADN_BinaryPredicate
+class DataComparison2 : public ADN_BinaryPredicate
 {
 public:
-    DataComparison( const ADN_Connector_Table_ABC& tab ) : ADN_BinaryPredicate(), tab_( tab ) {};
+    DataComparison2( const ADN_Connector_Table_ABC& tab ) : ADN_BinaryPredicate(), tab_( tab ) {};
     bool operator()( void* pL, void* pR ) const
     {
         return tab_.LessComparison( pL, pR );
     }
 
-    const DataComparison& operator=( const DataComparison& );
+    const DataComparison2& operator=( const DataComparison2& );
 
     const ADN_Connector_Table_ABC& tab_;
 };
@@ -30,7 +29,7 @@ public:
 // Name: ADN_Connector_Table_ABC constructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
-ADN_Connector_Table_ABC::ADN_Connector_Table_ABC( ADN_Table& tab, bool bWithSort )
+ADN_Connector_Table_ABC::ADN_Connector_Table_ABC(ADN_Table& tab, bool bWithSort )
     : tab_(tab)
     , bIsConnected_(false)
     , bWithSort_( bWithSort )
@@ -105,7 +104,7 @@ bool ADN_Connector_Table_ABC::AddItemPrivate( void* obj )
         tab_.setUpdatesEnabled( true );
         if( bWithSort_ )
         {
-            DataComparison comparor( *this );
+            DataComparison2 comparor( *this );
             ADN_BinaryPredicateWrapper wrapper( comparor );
             std::sort( vDatas_.begin(), vDatas_.end(), wrapper );
             emit Sorted( wrapper );
@@ -117,8 +116,6 @@ bool ADN_Connector_Table_ABC::AddItemPrivate( void* obj )
         int i=0;
         for( std::vector<void*>::iterator it=vDatas_.begin();it!=vDatas_.end();++it,++i)
             AddSubItems(i,*it);
-        tab_.EnableRefreshing(true);
-        tab_.repaintContents(false);
     }
 
     return true;
@@ -140,19 +137,8 @@ bool ADN_Connector_Table_ABC::RemItemPrivate( void* pItem )
 
     vDatas_.erase( it );
 
-    // Remove it from the table (which can be user sorted, and thus not match the order
-    // of vData_
-    int n = 0;
-    while( tab_.item( n, 0 ) != 0 )
-    {
-        ADN_TableItem_ABC* pTableItem = static_cast<ADN_TableItem_ABC*>( tab_.item( n, 0 ) );
-        if( pTableItem->GetData() == pItem )
-        {
-            tab_.removeRow( n );
-            break;
-        }
-        ++n;
-    }
+    // Remove it from the table (which can be user sorted, and thus not match the order of vData_
+    tab_.RemoveItem( pItem );
     return true;
 }
 
@@ -174,8 +160,6 @@ void ADN_Connector_Table_ABC::ClearPrivate(bool bInConnection)
 {
     if( bInConnection)
     {
-        tab_.StopEditing();
-        tab_.EnableRefreshing(false);
         vDatas_.clear();
     }
     else
@@ -191,194 +175,6 @@ void ADN_Connector_Table_ABC::ClearPrivate(bool bInConnection)
 //-----------------------------------------------------------------------------
 void  ADN_Connector_Table_ABC::SetDataPrivate( void* /*data*/ )
 {
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class DataComparison2 : public ADN_BinaryPredicate
-{
-public:
-    DataComparison2( const ADN_Connector_Table_ABC2& tab ) : ADN_BinaryPredicate(), tab_( tab ) {};
-    bool operator()( void* pL, void* pR ) const
-    {
-        return tab_.LessComparison( pL, pR );
-    }
-
-    const DataComparison2& operator=( const DataComparison2& );
-
-    const ADN_Connector_Table_ABC2& tab_;
-};
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC2 constructor
-// Created: JDY 03-07-09
-//-----------------------------------------------------------------------------
-ADN_Connector_Table_ABC2::ADN_Connector_Table_ABC2(ADN_Table3& tab, bool bWithSort )
-    : tab_(tab)
-    , bIsConnected_(false)
-    , bWithSort_( bWithSort )
-{
-    if( tab_.IsAutoEnabled())
-        tab_.setEnabled(false);
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC2 destructor
-// Created: JDY 03-07-09
-//-----------------------------------------------------------------------------
-ADN_Connector_Table_ABC2::~ADN_Connector_Table_ABC2()
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC2::ConnectPrivateSub
-// Created: APE 2005-02-28
-// -----------------------------------------------------------------------------
-void ADN_Connector_Table_ABC2::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
-{
-    ADN_Connector_ABC::ConnectPrivateSub( (ADN_Connector_ABC*)pTarget );
-
-    connect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
-    connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    connect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
-    connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
-    connect( pTarget, SIGNAL(Sorted( ADN_BinaryPredicateWrapper&)), this, SLOT(Sort(ADN_BinaryPredicateWrapper&)));
-
-    if( tab_.IsAutoEnabled() )
-        tab_.setEnabled(true);
-    bIsConnected_=true;
-
-    pTarget->Initialize( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC2::DisconnectPrivateSub
-// Created: APE 2005-02-28
-// -----------------------------------------------------------------------------
-void ADN_Connector_Table_ABC2::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget )
-{
-    ADN_Connector_ABC::DisconnectPrivateSub( (ADN_Connector_ABC*)pTarget );
-
-    disconnect( pTarget, SIGNAL(ItemAdded(void*)),     this, SLOT(AddItemNoEmit(void*)));
-    disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
-    disconnect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
-    disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
-    disconnect( pTarget, SIGNAL(Sorted( ADN_BinaryPredicateWrapper&)), this, SLOT(Sort(ADN_BinaryPredicateWrapper&)));
-
-    bIsConnected_=false;
-    if( tab_.IsAutoEnabled() )
-        tab_.setEnabled(false);
-    if( IsAutoClear() )
-        Clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC2::AddItemPrivate
-// Created: AGN 2004-03-19
-// -----------------------------------------------------------------------------
-bool ADN_Connector_Table_ABC2::AddItemPrivate( void* obj )
-{
-    if( obj)
-    {
-        // add just item
-        vDatas_.push_back(obj);
-    }
-    else
-    {
-        tab_.setUpdatesEnabled( true );
-        if( bWithSort_ )
-        {
-            DataComparison2 comparor( *this );
-            ADN_BinaryPredicateWrapper wrapper( comparor );
-            std::sort( vDatas_.begin(), vDatas_.end(), wrapper );
-            emit Sorted( wrapper );
-        }
-
-        // end of the list of items -> build tab
-        if( (size_t)tab_.numRows()!=vDatas_.size())
-            tab_.setNumRows(static_cast< int >(vDatas_.size()));
-        int i=0;
-        for( std::vector<void*>::iterator it=vDatas_.begin();it!=vDatas_.end();++it,++i)
-            AddSubItems(i,*it);
-    }
-
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC2::RemItemPrivate
-// Created: AGN 2004-05-11
-// -----------------------------------------------------------------------------
-bool ADN_Connector_Table_ABC2::RemItemPrivate( void* pItem )
-{
-    if( pItem == 0 )
-        return false;
-
-    // Remove it from the data list.
-    std::vector<void*>::iterator it = std::find( vDatas_.begin(), vDatas_.end(), pItem );
-    if( it == vDatas_.end() )
-        return false;
-
-    vDatas_.erase( it );
-
-    // Remove it from the table (which can be user sorted, and thus not match the order of vData_
-    tab_.RemoveItem( pItem );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC2::LessComparison
-// Created: AGN 2003-10-30
-// -----------------------------------------------------------------------------
-bool ADN_Connector_Table_ABC2::LessComparison( void* , void* ) const
-{
-    assert( false );
-    return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC2::ClearPrivate
-// Created: JDY 03-07-09
-//-----------------------------------------------------------------------------
-void ADN_Connector_Table_ABC2::ClearPrivate(bool bInConnection)
-{
-    if( bInConnection)
-    {
-        vDatas_.clear();
-    }
-    else
-    {
-        tab_.setNumRows(0);
-        vDatas_.clear();
-    }
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC2::SetDataPrivate
-// Created: JDY 03-07-09
-//-----------------------------------------------------------------------------
-void  ADN_Connector_Table_ABC2::SetDataPrivate( void* /*data*/ )
-{
     // NOTHING
 }
 
@@ -386,7 +182,7 @@ void  ADN_Connector_Table_ABC2::SetDataPrivate( void* /*data*/ )
 // Name: ADN_Connector_Table_ABC::AddSubItems
 // Created: ABR 2012-10-19
 // -----------------------------------------------------------------------------
-void ADN_Connector_Table_ABC2::AddSubItems( int nRow, void* pObj )
+void ADN_Connector_Table_ABC::AddSubItems( int nRow, void* pObj )
 {
     assert( pObj );
     tab_.AddRow( nRow, pObj );

@@ -15,7 +15,7 @@
 //*****************************************************************************
 // Created: JDY 03-07-15
 //*****************************************************************************
-class ADN_Composantes_Speeds_GUI : public ADN_Table3
+class ADN_Composantes_Speeds_GUI : public ADN_Table
 {
     Q_OBJECT
 

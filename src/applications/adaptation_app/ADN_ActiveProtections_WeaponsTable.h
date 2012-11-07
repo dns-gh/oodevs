@@ -18,7 +18,7 @@
 //  @brief  ADN_ActiveProtections_WeaponsTable
 // Created: FDS 2010-02-24
 // =============================================================================
-class ADN_ActiveProtections_WeaponsTable : public ADN_Table3
+class ADN_ActiveProtections_WeaponsTable : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor

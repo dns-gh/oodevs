@@ -20,7 +20,6 @@
 #include "ADN_Automata_SubUnitsTable.h"
 #include "moc_ADN_Automata_SubUnitsTable.cpp"
 #include "ADN_Automata_Data.h"
-#include "ADN_TableItem_Edit.h"
 #include "ADN_MenuListView.h"
 
 typedef ADN_Automata_Data::UnitInfos AutomatUnitInfos;
@@ -33,7 +32,7 @@ Q_DECLARE_METATYPE( UnitInfos* )
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
 ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
     , bMenuListItemSelected_( false )
 {
     dataModel_.setColumnCount( 3 );

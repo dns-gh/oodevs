@@ -19,7 +19,7 @@
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
-    :   ADN_Table3( objectName, connector, pParent )
+    :   ADN_Table( objectName, connector, pParent )
 {
     setSelectionMode( QAbstractItemView::NoSelection );
     setShowGrid( false );
@@ -71,7 +71,7 @@ void ADN_Launchers_ModifPhs_GUI::AddRow( int row, void* data )
 // -----------------------------------------------------------------------------
 void ADN_Launchers_ModifPhs_GUI::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-    ADN_Table3::dataChanged( topLeft, bottomRight );
+    ADN_Table::dataChanged( topLeft, bottomRight );
     if( topLeft == bottomRight )
         ADN_Workspace::GetWorkspace().GetWeapons().GetGui().UpdateModifiers();
 }

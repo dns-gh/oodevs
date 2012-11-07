@@ -33,7 +33,7 @@ typedef ADN_Composantes_Data::BreakdownInfos BreakdownInfos;
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const QString& objectName, const QString& name, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0 */ )
-:   ADN_Table3( objectName, connector, pParent )
+:   ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;
@@ -107,7 +107,7 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Composantes_BreakdownsTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-    ADN_Table3::dataChanged( topLeft, bottomRight );
+    ADN_Table::dataChanged( topLeft, bottomRight );
 
     double rSum = 0;
     int i = 0;

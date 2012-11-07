@@ -20,7 +20,7 @@ class ADN_Missions_Parameter;
 */
 // Created: SBO 2006-12-04
 // =============================================================================
-class ADN_MissionParameters_Table : public ADN_Table3
+class ADN_MissionParameters_Table : public ADN_Table
 {
     Q_OBJECT
 

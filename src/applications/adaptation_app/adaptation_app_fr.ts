@@ -4182,31 +4182,16 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
 <context>
     <name>ADN_TableDialog</name>
     <message>
-        <source>Close</source>
-        <translation>Fermer</translation>
-    </message>
-    <message>
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
     <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+    <message>
         <source>Excel files (*.xls)</source>
         <translation>Fichiers excel (*.xls)</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_TableDialog2</name>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished">Sauvegarder</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
-    </message>
-    <message>
-        <source>Excel files (*.xls)</source>
-        <translation type="unfinished">Fichiers excel (*.xls)</translation>
     </message>
 </context>
 <context>

@@ -12,7 +12,7 @@
 // Created: ABR 2012-11-06
 // -----------------------------------------------------------------------------
 template< typename T >
-ADN_MenuListView< T >::ADN_MenuListView( ADN_Table3* receiver, ADN_Type_Vector_ABC< T >& vector, QObject* parent )
+ADN_MenuListView< T >::ADN_MenuListView( ADN_Table* receiver, ADN_Type_Vector_ABC< T >& vector, QObject* parent )
     : QWidgetAction( parent )
     , vector_( vector )
     , receiver_( receiver )

@@ -25,7 +25,7 @@ typedef ADN_Units_Data::PointInfos PointInfos;
 // Created: AGN 03-07-30
 //-----------------------------------------------------------------------------
 ADN_Point_GUI::ADN_Point_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */ )
-    : ADN_Table3( objectName, connector, pParent )
+    : ADN_Table( objectName, connector, pParent )
 {
     setMaximumHeight( 300 );
 

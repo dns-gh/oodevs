@@ -17,7 +17,7 @@
 //*****************************************************************************
 // Created: JDY 03-07-28
 //*****************************************************************************
-class ADN_Units_Postures_GUI : public ADN_Table3
+class ADN_Units_Postures_GUI : public ADN_Table
 {
 public:
              ADN_Units_Postures_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );

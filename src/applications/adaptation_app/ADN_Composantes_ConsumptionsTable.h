@@ -27,7 +27,7 @@ class ADN_ListView_Composantes;
 */
 // Created: APE 2005-01-25
 // =============================================================================
-class ADN_Composantes_ConsumptionsTable : public ADN_Table3
+class ADN_Composantes_ConsumptionsTable : public ADN_Table
 {
     Q_OBJECT
 

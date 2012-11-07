@@ -23,6 +23,8 @@
 #   pragma interface
 #endif
 
+#include <boost/noncopyable.hpp>
+
 class GQ_Plot;
 
 // =============================================================================
@@ -35,7 +37,7 @@ class GQ_Plot;
 */
 // Created: CBX 2003-08-18
 // =============================================================================
-class GQ_PlotToolTip
+class GQ_PlotToolTip : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -48,13 +50,6 @@ protected:
     //! @name Qt overloaded methods
     //@{
     virtual void maybeTip( const QPoint& );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    GQ_PlotToolTip( const GQ_PlotToolTip& rhs );            //!< Copy constructor
-    GQ_PlotToolTip& operator=( const GQ_PlotToolTip& rhs ); //!< Assignment operator
     //@}
 
 private:

@@ -20,7 +20,7 @@
 // Created: JSR 2011-01-31
 // =============================================================================
 class ADN_Consumptions_Table
-    : public ADN_Table3
+    : public ADN_Table
 {
 public:
     //! @name Constructors/Destructor
