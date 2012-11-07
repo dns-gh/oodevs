@@ -82,6 +82,7 @@ RoleAdapter::RoleAdapter( Sink& sink, MIL_AgentPion& pion, core::Model& entity )
     entity_[ "perceptions/radars/radar/activated" ] = false;
     entity_[ "perceptions/radars/tapping/activated" ] = false;
     entity_[ "perceptions/radars/tapping-radar/activated" ] = false;
+    entity_[ "perceptions/radars/acquisitions" ];
     entity_[ "perceptions/localized-radars/radar" ];
     entity_[ "perceptions/localized-radars/tapping" ];
     entity_[ "perceptions/localized-radars/tapping-radar" ];
