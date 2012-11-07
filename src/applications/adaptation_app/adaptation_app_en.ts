@@ -3333,6 +3333,17 @@ Make sure the file exists.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_PHs_Table</name>
+    <message>
+        <source>Weapon system</source>
+        <translation>Weapon system</translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation>Target size</translation>
+    </message>
+</context>
+<context>
     <name>ADN_PK_Table</name>
     <message>
         <source>Ammunition</source>
@@ -5609,14 +5620,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Max range</source>
         <translation>Max range</translation>
-    </message>
-    <message>
-        <source>Weapon system</source>
-        <translation>Weapon system</translation>
-    </message>
-    <message>
-        <source>Target size</source>
-        <translation>Target size</translation>
     </message>
     <message>
         <source>Weapon systems</source>

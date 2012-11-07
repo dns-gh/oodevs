@@ -41,6 +41,8 @@
 #include "GQ_PlotCaption.h"
 #include "ENT/ENT_Tr.h"
 
+namespace
+{
 //-----------------------------------------------------------------------------
 // Internal Canvas connector
 //-----------------------------------------------------------------------------
@@ -188,6 +190,37 @@ public:
     virtual ~ADN_Weapon_Table() {}
     //@}
 };
+
+class ADN_PHs_Table: public ADN_Table3
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    ADN_PHs_Table( const QString& objectName, const std::set< int >& distancesSet, QWidget* pParent = 0 )
+        : ADN_Table3( objectName, pParent )
+    {
+        dataModel_.setColumnCount( static_cast< int >( distancesSet.size() + 2 ) );
+        setSortingEnabled( false );
+        setShowGrid( true );
+        horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
+        horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
+        QStringList horizontalHeaders;
+        horizontalHeaders << tr( "Weapon system" )
+            << tr( "Target size" );
+        int n = 2;
+        for( std::set< int >::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
+        {
+            horizontalHeaders.append( QString::number( *it ) );
+            horizontalHeader()->setResizeMode( n, QHeaderView::Fixed );
+            horizontalHeader()->resizeSection( n, 64 );
+        }
+        dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+        verticalHeader()->setVisible( false );
+    }
+    virtual ~ADN_PHs_Table() {}
+    //@}
+};
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI constructor
@@ -354,7 +387,6 @@ void ADN_Weapons_GUI::Build()
 // -----------------------------------------------------------------------------
 ADN_Table3* ADN_Weapons_GUI::CreateWeaponsTable()
 {
-    ADN_GuiBuilder builder;
     ADN_Weapon_Table* pTable = new ADN_Weapon_Table( tr( "Weapon systems" ) );
     ADN_Weapons_Data::T_WeaponInfosVector& weapons = data_.weapons_;
 
@@ -375,83 +407,53 @@ ADN_Table3* ADN_Weapons_GUI::CreateWeaponsTable()
 // Name: ADN_Weapons_GUI::CreatePHTable
 // Created: APE 2005-03-29
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Weapons_GUI::CreatePHTable()
+ADN_Table3* ADN_Weapons_GUI::CreatePHTable()
 {
     // Compute the existing distances
-    std::set<int> distancesSet;
+    std::set< int > distancesSet;
     ADN_Weapons_Data::T_WeaponInfosVector& weapons = data_.weapons_;
     for( ADN_Weapons_Data::IT_WeaponInfosVector it = weapons.begin(); it != weapons.end(); ++it )
     {
-        ADN_Weapons_Data::T_PhSizeInfosVector& phsSizeInfos = (*it)->phs_;
+        ADN_Weapons_Data::T_PhSizeInfosVector& phsSizeInfos = ( *it )->phs_;
         for( ADN_Weapons_Data::IT_PhSizeInfosVector it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2 )
         {
-            ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
+            ADN_Weapons_Data::T_PhInfosVector& phs = ( *it2 )->vPhs_;
             for( ADN_Weapons_Data::IT_PhInfosVector it3 = phs.begin(); it3 != phs.end(); ++it3 )
-            {
-                distancesSet.insert( (*it3)->nDistance_.GetData() );
-            }
+                distancesSet.insert( ( *it3 )->nDistance_.GetData() );
         }
     }
 
-    ADN_GuiBuilder builder;
-    ADN_Table* pTable = builder.CreateTable( 0 );
-
-    // Setup the header.
-    pTable->setNumCols( static_cast< int >( distancesSet.size() + 2 ) );
-    pTable->horizontalHeader()->setLabel( 0, tr( "Weapon system" ) );
-    pTable->horizontalHeader()->setLabel( 1, tr( "Target size" ) );
-    int n = 2;
-    for( std::set<int>::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
-        pTable->horizontalHeader()->setLabel( n, QString::number( *it ) );
-    pTable->horizontalHeader()->show();
-
-    pTable->setNumRows( 1 );
-    builder.AddTableCell( pTable, 0, 0, tr( "Weapon system" ) );
-    builder.AddTableCell( pTable, 0, 1, tr( "Target size" ) );
-    n = 2;
-    for( std::set<int>::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
-        builder.AddTableCell( pTable, 0, n, QString::number( *it ) );
-    pTable->hideRow( 0 );
-    pTable->setSorting( false );
-
+    ADN_Table3* pTable = new ADN_PHs_Table( strClassName_ + "_Phs", distancesSet );
     // Fill the table.
-    int nRow = 1;
+    int nRow = 0;
     for( ADN_Weapons_Data::IT_WeaponInfosVector it = weapons.begin(); it != weapons.end(); ++it )
     {
-        if( ! (*it)->bDirect_.GetData() )
+        if( !( *it )->bDirect_.GetData() )
             continue;
-
-        ADN_Weapons_Data::T_PhSizeInfosVector& phsSizeInfos = (*it)->phs_;
+        ADN_Weapons_Data::T_PhSizeInfosVector& phsSizeInfos = ( *it )->phs_;
         pTable->setNumRows( pTable->numRows() + static_cast< int >( phsSizeInfos.size() ) );
-        pTable->AddBoldGridRow( nRow );
-
-        builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow, 0, static_cast< int >( phsSizeInfos.size() ), 1, (*it)->strName_, eNone, Q3TableItem::Never );
+        //pTable->AddBoldGridRow( nRow );
+        pTable->AddItem( nRow, 0, static_cast< int >( phsSizeInfos.size() ), 1, *it, ( *it )->strName_.GetData().c_str() );
 
         int nSubRow = 0;
         for( ADN_Weapons_Data::IT_PhSizeInfosVector it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2, ++nSubRow )
         {
-            builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow + nSubRow, 1, (*it2)->ptrSize_.GetData()->strName_, eNone, Q3TableItem::Never );
-
-            // Make sure empty cells are non-editable.
+            pTable->AddItem( nRow + nSubRow, 1, *it, &(*it2)->ptrSize_.GetData()->strName_, ADN_StandardItem::eString );
             ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
-            for( int nn = 2; nn < 2 + (int)distancesSet.size(); ++nn )
-            {
-                Q3TableItem* pNonEditableDummy = new Q3TableItem( pTable, Q3TableItem::Never );
-                pTable->setItem( nRow + nSubRow, nn, pNonEditableDummy );
-            }
-
             for( ADN_Weapons_Data::IT_PhInfosVector it3 = phs.begin(); it3 != phs.end(); ++it3 )
             {
-                std::set<int>::iterator itFound = distancesSet.find( (*it3)->nDistance_.GetData() );
+                std::set< int >::iterator itFound = distancesSet.find( ( *it3 )->nDistance_.GetData() );
                 int nIndex = static_cast< int >( std::distance( distancesSet.begin(), itFound ) );
-                ADN_TableItem_Double* pItem = builder.AddTableCell<ADN_TableItem_Double>( pTable, *it, nRow + nSubRow, 2 + nIndex, (*it3)->rPerc_, ePercentage );
-                pItem->SetUseColor( true );
+                int row = nRow + nSubRow;
+                int col = 2 + nIndex;
+                pTable->GetDelegate().AddDoubleSpinBox( row, row, col, col, 0, 100, 1., 5 );
+                pTable->GetDelegate().AddColor( row, row, col, col, 0, 100 );
+                pTable->AddItem( row, col, *it, &(*it3)->rPerc_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
             }
         }
         nRow += static_cast< int >( phsSizeInfos.size() );
     }
 
-    pTable->AdjustColumns( 50 );
     return pTable;
 }
 
@@ -461,8 +463,8 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Weapon systems" ), new ADN_Callback<ADN_Table3*,ADN_Weapons_GUI>( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
-    mainWindow.AddTable( tr( "PHs" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, &ADN_Weapons_GUI::CreatePHTable ) );
+    mainWindow.AddTable( tr( "Weapon systems" ), new ADN_Callback< ADN_Table3*,ADN_Weapons_GUI >( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
+    mainWindow.AddTable( tr( "PHs" ), new ADN_Callback< ADN_Table3*,ADN_Weapons_GUI >( this, &ADN_Weapons_GUI::CreatePHTable ) );
 }
 
 // -----------------------------------------------------------------------------

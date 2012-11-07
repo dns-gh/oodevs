@@ -3334,6 +3334,17 @@ Asegúrese que el archivo existe.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_PHs_Table</name>
+    <message>
+        <source>Weapon system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation type="unfinished">Volumen de blanco</translation>
+    </message>
+</context>
+<context>
     <name>ADN_PK_Table</name>
     <message>
         <source>Ammunition</source>
@@ -5526,10 +5537,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
 <context>
     <name>ADN_Weapons_GUI</name>
     <message>
-        <source>Weapon system</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -5611,10 +5618,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Max range</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Target size</source>
         <translation></translation>
     </message>
     <message>

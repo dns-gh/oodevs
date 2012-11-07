@@ -3337,6 +3337,17 @@ Assurez vous que le fichier existe.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_PHs_Table</name>
+    <message>
+        <source>Weapon system</source>
+        <translation>Système d&apos;arme</translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation>Volume de la cible</translation>
+    </message>
+</context>
+<context>
     <name>ADN_PK_Table</name>
     <message>
         <source>Ammunition</source>
@@ -5537,10 +5548,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>ADN_Weapons_GUI</name>
     <message>
-        <source>Weapon system</source>
-        <translation>Système d&apos;arme</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -5623,10 +5630,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Max range</source>
         <translation>Portée max</translation>
-    </message>
-    <message>
-        <source>Target size</source>
-        <translation>Volume de la cible</translation>
     </message>
     <message>
         <source>Weapon systems</source>

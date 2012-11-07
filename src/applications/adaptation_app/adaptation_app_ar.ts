@@ -3320,6 +3320,17 @@ Make sure the file exists.</source>
     </message>
 </context>
 <context>
+    <name>ADN_PHs_Table</name>
+    <message>
+        <source>Weapon system</source>
+        <translation type="unfinished">نظام الأسلحة</translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation type="unfinished">حجم الهدف</translation>
+    </message>
+</context>
+<context>
     <name>ADN_PK_Table</name>
     <message>
         <source>Ammunition</source>
@@ -5596,14 +5607,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Max range</source>
         <translation type="unfinished">مجموعة ماكس</translation>
-    </message>
-    <message>
-        <source>Weapon system</source>
-        <translation type="unfinished">نظام الأسلحة</translation>
-    </message>
-    <message>
-        <source>Target size</source>
-        <translation type="unfinished">حجم الهدف</translation>
     </message>
     <message>
         <source>Weapon systems</source>

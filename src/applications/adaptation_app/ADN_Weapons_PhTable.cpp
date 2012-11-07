@@ -33,7 +33,7 @@ ADN_Weapons_PhTable::ADN_Weapons_PhTable( const QString& objectName, ADN_Connect
     setMaximumHeight( 300 );
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Distance" ) << tr( "Percentage (PH)" );
+    horizontalHeaders << tools::translate( "ADN_Weapons_PhTable", "Distance" ) << tools::translate( "ADN_Weapons_PhTable", "Percentage (PH)" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     verticalHeader()->setVisible( false );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
