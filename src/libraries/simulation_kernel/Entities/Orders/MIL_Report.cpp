@@ -125,13 +125,13 @@ void MIL_Report::Initialize( xml::xistream& xis )
 
     diaEvents_[ eReport_DamagesCausedToNeutralSide ] = eRC_DamagesCausedToNeutralSide;
     diaEvents_[ eReport_DamagesCausedByNeutralSide ] = eRC_DamagesCausedByNeutralSide;
-    diaEvents_[ eReport_InfrastructureDamaged      ] = eRc_InfrastructureDamaged;
-    diaEvents_[ eReport_LivingAreaDamaged          ] = eRc_LivingAreaDamaged;
-    diaEvents_[ eReport_BorderCrossed              ] = eRc_BorderCrossed;
-    diaEvents_[ eReport_TacticallyDestroyed        ] = eRc_TacticallyDestroyed;
-    diaEvents_[ eReport_CiviliansEncountered       ] = eRc_CiviliansEncountered;
-    diaEvents_[ eReport_PrisonersUnsupplied        ] = eRc_PrisonersUnsupplied;
-    diaEvents_[ eReport_PrisonersCampFull          ] = eRc_PrisonersCampFull;
+    diaEvents_[ eReport_InfrastructureDamaged      ] = eRC_InfrastructureDamaged;
+    diaEvents_[ eReport_LivingAreaDamaged          ] = eRC_LivingAreaDamaged;
+    diaEvents_[ eReport_BorderCrossed              ] = eRC_BorderCrossed;
+    diaEvents_[ eReport_TacticallyDestroyed        ] = eRC_TacticallyDestroyed;
+    diaEvents_[ eReport_CiviliansEncountered       ] = eRC_CiviliansEncountered;
+    diaEvents_[ eReport_PrisonersUnsupplied        ] = eRC_PrisonersUnsupplied;
+    diaEvents_[ eReport_PrisonersCampFull          ] = eRC_PrisonersCampFull;
 
     diaEvents_[ eReport_SectionDeployee     ] = eRC_SectionDeployee;
     diaEvents_[ eReport_StartDeploy         ] = eRC_StartDeploy;

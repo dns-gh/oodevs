@@ -50,7 +50,7 @@ def parsecppheader(ui, headerpath):
     reengstart = re.compile(r'^\s*enum\s+E_EngineReport\s*$')
     reengval = re.compile(r'^\s*(eReport_\S+|eNbrReport),?\s*(//|$)')
     redecstart = re.compile(r'^\s*enum\s+E_DecisionalReport\s*$')
-    redecval = re.compile(r'^\s*((?:eRC_|eRc_)\S+|eLast),?\s*(//|$)')
+    redecval = re.compile(r'^\s*(eRC_\S+|eLast),?\s*(//|$)')
     lines = list(file(headerpath))
     i = 0
     i, engreports = parseenum(ui, headerpath, i, lines, reengstart, reengval)
