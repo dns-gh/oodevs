@@ -40,7 +40,7 @@ end
 -- Object creation for object
 -- comments: -- $$$ MIA TODO merge with security
 -- ============================================================================
-integration.startBuildIt = function( object, type )
+integration.startBuildIt = function( object, objectType )
     local checkpoint = integration.obtenirObjetProcheDe( object:getLocalisation(), 
                         object:getType(), 10 )
     object[ myself ] = object[ myself ] or {}
@@ -54,13 +54,13 @@ integration.startBuildIt = function( object, type )
     end
     actionKnowledgeCallbacks[ object[ myself ].actionBuild ] = function( arg )
         if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
-            object.knowledge = CreateKnowledge( type, arg )
+            object.knowledge = CreateKnowledge( objectType, arg )
         end
     end
     integration.pionRC( eRC_DebutTravaux )
 end
 
-integration.startBuildItInstantaneously = function( object, type )
+integration.startBuildItInstantaneously = function( object, objectType )
     object[ myself ] = object[ myself ] or {}
     object[myself].actionBuild = DEC_StartCreateObjectInstantaneously( object.source )
     actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
@@ -68,7 +68,7 @@ integration.startBuildItInstantaneously = function( object, type )
     end
     actionKnowledgeCallbacks[ object[ myself ].actionBuild ] = function( arg )
         if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
-            object.knowledge = CreateKnowledge( type, arg )
+            object.knowledge = CreateKnowledge( objectType, arg )
         end
     end
     integration.pionRC( eRC_DebutTravaux )
@@ -475,16 +475,16 @@ integration.stopFilterCrowds = function( checkpoint ) -- A appeler une seule foi
     DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, 1 )
 end
 
-integration.hasDotationToBuildObject = function( entity, objetcType )
-    return DEC_Agent_AgentADotationPourConstruireObjet( entity, objetcType )
+integration.hasDotationToBuildObject = function( entity, objectType )
+    return DEC_Agent_AgentADotationPourConstruireObjet( entity, objectType )
 end
 
-integration.canBuildObjectWhenLoadedWithLocation = function( entity, objetcType, location )
-    return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( entity, objetcType, location )
+integration.canBuildObjectWhenLoadedWithLocation = function( entity, objectType, location )
+    return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( entity, objectType, location )
 end
 
-integration.canBuildObjectWhenLoaded = function( entity, objetcType, location )
-    return DEC_Agent_AgentPeutConstruireObjetEmbarque( entity, objetcType, location )
+integration.canBuildObjectWhenLoaded = function( entity, objectType, location )
+    return DEC_Agent_AgentPeutConstruireObjetEmbarque( entity, objectType, location )
 end
 
 integration.canDestroyObject = function( entity, obstacle )
