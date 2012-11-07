@@ -80,6 +80,7 @@ private:
     unsigned int                   nIconIndex_;
     std::auto_ptr< boost::thread > guiThread_ ;
     static bool                    bUserInterrupt_;
+    bool                           test_;
     //@}
 };
 

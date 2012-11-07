@@ -26,6 +26,18 @@ bool App::bUserInterrupt_ = false;
 static const int NUM_ICON_FOR_ANIMATION = 2;
 static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
 
+namespace
+{
+    bool HasOption( const tools::WinArguments& wargs, const std::string& name )
+    {
+        const char* const* args = wargs.Argv();
+        for( int i = 0; i < wargs.Argc(); ++i )
+            if( name == args[i] )
+                return true;
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: App constructor
 // Created: AGE 2007-04-10
@@ -33,6 +45,7 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
 App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPSTR lpCmdLine, int /* nCmdShow */, bool replayLog )
     : observer_( new tools::NullFileLoaderObserver() )
     , config_  ( new dispatcher::Config( *observer_ ) )
+    , test_    ( false )
 {
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "Sword(tm) Replayer" );
@@ -40,6 +53,7 @@ App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPSTR lpCmdLine, in
 
     // win32 argument parsing
     tools::WinArguments winArgs( lpCmdLine );
+    test_ = HasOption( winArgs, "--test" );
     config_->Parse( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
     if( replayLog )
         MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Replayer.log" ).c_str(), 1, -1, MT_Logger_ABC::eLogLevel_All, true ) );
@@ -71,6 +85,9 @@ void App::Execute()
         {
             ::Sleep( 10 );
             replayer_->Update();
+            // do one update only in test mode
+            if( test_ )
+                break;
         }
     }
     catch( std::exception& e )
