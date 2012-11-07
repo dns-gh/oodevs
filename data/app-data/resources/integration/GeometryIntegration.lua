@@ -95,3 +95,7 @@ end
 integration.computeSafetyPosition = function( agent, safetyDistance )
     return DEC_Geometrie_CalculerPositionSurete( agent, safetyDistance )
 end
+
+integration.splitAORInSections( length )
+    return DEC_Geometrie_DecoupeFuseauEnTroncons( length )
+end
