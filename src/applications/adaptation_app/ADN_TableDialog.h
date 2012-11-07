@@ -36,7 +36,6 @@ public:
 private slots:
     //! @name Helpers
     //@{
-    void OnContextMenu();
     void PrintTable();
     void SaveTable();
     //@}
@@ -63,7 +62,6 @@ public:
 private slots:
     //! @name Helpers
     //@{
-    void OnContextMenu();
     void PrintTable();
     void SaveTable();
     //@}

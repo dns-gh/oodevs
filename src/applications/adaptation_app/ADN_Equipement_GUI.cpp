@@ -54,33 +54,30 @@ class ADN_PK_Table: public ADN_Table3
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_PK_Table( const QString& objectName, QWidget* pParent = 0 )
-        : ADN_Table3( objectName, pParent )
+    ADN_PK_Table( const QString& objectName, QWidget* pParent = 0 ) : ADN_Table3( objectName, pParent )
     {
         dataModel_.setColumnCount( 5 );
         setSortingEnabled( true );
         setShowGrid( true );
         QStringList horizontalHeaders;
-        horizontalHeaders << tr( "Ammunition" )
-            << tr( "Target armor" )
-            << tr( "On site fixable" )
-            << tr( "Maintenance support needed" )
-            << tr( "Destroyed" );
+        horizontalHeaders << tools::translate( "ADN_Equipement_GUI", "Ammunition" )
+                          << tools::translate( "ADN_Equipement_GUI", "Target armor" )
+                          << tools::translate( "ADN_Equipement_GUI", "On site fixable" )
+                          << tools::translate( "ADN_Equipement_GUI", "Maintenance support needed" )
+                          << tools::translate( "ADN_Equipement_GUI", "Destroyed" );
         dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
         horizontalHeader()->setResizeMode( QHeaderView::Stretch );
         verticalHeader()->setVisible( false );
+        setAlternatingRowColors( false );
         delegate_.AddDoubleSpinBoxOnColumn( 2, 0, 100 );
         delegate_.AddDoubleSpinBoxOnColumn( 3, 0, 100 );
         delegate_.AddDoubleSpinBoxOnColumn( 4, 0, 100 );
         delegate_.AddColorOnColumn( 2, 0, 100 );
         delegate_.AddColorOnColumn( 3, 0, 100 );
         delegate_.AddColorOnColumn( 4, 0, 100 );
-        std::vector< int > columns;
-        columns.push_back( 2 );
-        columns.push_back( 3 );
-        columns.push_back( 4 );
+        int myints[] = { 2, 3, 4 };
+        std::vector< int > columns( myints, myints + sizeof( myints ) / sizeof( int ) );
         delegate_.SetColumnsSumRestriction( columns, gui::CommonDelegate::eLTE, 100. );
-
     }
     virtual ~ADN_PK_Table() {}
     //@}
@@ -461,7 +458,7 @@ ADN_Table3* ADN_Equipement_GUI::CreatePKTable()
         if( !ammoCategory.bDirect_.GetData() )
             continue;
         pTable->setNumRows( nRow + nRowSize );
-        //pTable->AddBoldGridRow( nRow ); //migration QT4 comming soon for delimitation
+        pTable->AddBoldGridRow( nRow );
         pTable->AddItem( nRow, 0, nRowSize, 1 , *it, ammoCategory.strName_.GetData().c_str() );
         int nSubRow = 0;
         for( helpers::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2, ++nSubRow )

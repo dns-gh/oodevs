@@ -69,7 +69,7 @@ public:
     void SetDeletionEnabled( bool enable, bool warning = true );
     void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
 
-    int ComputeNbrPrintPages( const QSize& painterSize ) const;
+    int ComputeNbrPrintPages( const QSize& painterSize );
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
 
     virtual std::string GetToolTipFor( const QModelIndex& index );

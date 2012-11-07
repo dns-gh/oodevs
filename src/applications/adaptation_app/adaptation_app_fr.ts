@@ -1607,6 +1607,26 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Code LFRIL</source>
         <translation>Code LFRIL</translation>
     </message>
+    <message>
+        <source>Ammunition</source>
+        <translation>Munition</translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation>Blindage de la cible</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation>Réparable sur place</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation>Réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation>Détruit</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>
@@ -2013,10 +2033,6 @@ du tireur</translation>
 </context>
 <context>
     <name>ADN_ListViewDialog</name>
-    <message>
-        <source>Print</source>
-        <translation>Imprimer</translation>
-    </message>
     <message>
         <source>Close</source>
         <translation>Fermer</translation>
@@ -3348,29 +3364,6 @@ Assurez vous que le fichier existe.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_PK_Table</name>
-    <message>
-        <source>Ammunition</source>
-        <translation>Munition</translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation>Blindage de la cible</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation>Réparable sur place</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation>Réparable avec évacuation</translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation>Détruit</translation>
-    </message>
-</context>
-<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -4203,10 +4196,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
 <context>
     <name>ADN_TableDialog</name>
     <message>
-        <source>Print</source>
-        <translation>Imprimer</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -4224,10 +4213,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Save</source>
         <translation type="unfinished">Sauvegarder</translation>
-    </message>
-    <message>
-        <source>Print</source>
-        <translation type="unfinished">Imprimer</translation>
     </message>
     <message>
         <source>Close</source>

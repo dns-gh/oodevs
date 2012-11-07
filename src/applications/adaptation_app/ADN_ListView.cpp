@@ -472,10 +472,12 @@ void ADN_ListView::keyReleaseEvent( QKeyEvent* pEvent )
 // Name: ADN_ListView::ComputeNbrPrintPages
 // Created: APE 2005-04-04
 // -----------------------------------------------------------------------------
-int ADN_ListView::ComputeNbrPrintPages( const QSize& painterSize ) const
+int ADN_ListView::ComputeNbrPrintPages( const QSize& painterSize )
 {
+    expandAll();
     int nWidthInPages = static_cast< int >( ceil( ( float ) this->contentsRect().width() / painterSize.width() ) );
     int nHeightInPages = static_cast< int >( ceil( ( float ) this->contentsRect().height() / painterSize.height() ) );
+    collapseAll();
     return nWidthInPages * nHeightInPages;
 }
 
@@ -496,7 +498,9 @@ void ADN_ListView::Print( int nPage, QPainter& painter, const QSize& painterSize
 
     painter.save();
     painter.translate( -nX * painterSize.width(), -nY * painterSize.height() );
-    QTreeView::drawTree( &painter, QRegion( nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() ) );
+    expandAll();
+    drawTree( &painter, QRegion( nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() ) );
+    collapseAll();
     painter.restore();
     bPrinting_ = false;
 }

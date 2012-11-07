@@ -36,7 +36,6 @@ private slots:
     //! @name Helpers
     //@{
     void SaveListView();
-    void OnContextMenu();
     void PrintListView();
     //@}
 

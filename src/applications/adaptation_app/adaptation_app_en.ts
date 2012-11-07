@@ -1603,6 +1603,26 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <source>Code LFRIL</source>
         <translation>Code LFRIL</translation>
     </message>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished">Ammunition</translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation type="unfinished">Target armor</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished">On site repairable</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">Maintenance support needed</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished">Destroyed</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>
@@ -2012,10 +2032,6 @@ posture</translation>
     <message>
         <source>Save</source>
         <translation>Save</translation>
-    </message>
-    <message>
-        <source>Print</source>
-        <translation>Print</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3344,29 +3360,6 @@ Make sure the file exists.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_PK_Table</name>
-    <message>
-        <source>Ammunition</source>
-        <translation type="unfinished">Ammunition</translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation type="unfinished">Target armor</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation type="unfinished">On site repairable</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation type="unfinished">Maintenance support needed</translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation type="unfinished">Destroyed</translation>
-    </message>
-</context>
-<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -4204,10 +4197,6 @@ Make sure that the file is not write-protected.</translation>
         <translation>Save</translation>
     </message>
     <message>
-        <source>Print</source>
-        <translation>Print</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation>Close</translation>
     </message>
@@ -4221,10 +4210,6 @@ Make sure that the file is not write-protected.</translation>
     <message>
         <source>Save</source>
         <translation>Save</translation>
-    </message>
-    <message>
-        <source>Print</source>
-        <translation>Print</translation>
     </message>
     <message>
         <source>Close</source>

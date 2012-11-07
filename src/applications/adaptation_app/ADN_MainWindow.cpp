@@ -154,12 +154,6 @@ void ADN_MainWindow::Build()
     QAction* pForward = new QAction( qApp->style()->standardIcon( QStyle::SP_ArrowRight ), tr( "Forward (ctrl + right)" ), Qt::CTRL + Qt::Key_Right, this, "forward" );
     connect( pForward, SIGNAL( activated() ), mainTabWidget_.get(), SLOT( OnForward() ) );
     connect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), pForward, SLOT( setEnabled( bool ) ) );
-    // Test Data
-    //QAction* pProjectTestDataAction = new QAction( MAKE_PIXMAP(testdata), tr("&Test data"), CTRL+Key_T, this, "testdata" );
-    //connect( pProjectTestDataAction, SIGNAL( activated() ), this, SLOT( TestData() ) );
-    // Undo
-    //QAction* pUndoAction = QtUndoManager::manager()->createUndoAction( this );
-    //pUndoAction->setAccel( QKeySequence( "Ctrl+Z" ) );
 
     // Project toolbar
     {
@@ -171,9 +165,6 @@ void ADN_MainWindow::Build()
         pToolBar->addSeparator();
         pBack->addTo( pToolBar );
         pForward->addTo( pToolBar );
-        //pToolBar->addSeparator();
-        //pProjectTestDataAction->addTo( pToolBar );
-        //pUndoAction->addTo( pToolBar );
         addToolBar( pToolBar );
     }
 
@@ -199,12 +190,6 @@ void ADN_MainWindow::Build()
         pCoheranceTablesMenu_ = new Q3PopupMenu( this );
         menuBar()->insertItem( tr( "Consistency &tables" ), pCoheranceTablesMenu_ );
     }
-    // Configuration menu
-    //{
-    //    pConfigurationMenu_ = new QPopupMenu( this );
-    //    menuBar()->insertItem( tr( "Confi&guration" ), pConfigurationMenu_ );
-    //    pConfigurationMenu_->insertItem( tr( "Data test..." ), this, SLOT( ConfigureDataTest() ) );
-    //}
     // Help menu
     {
         gui::HelpSystem* help = new gui::HelpSystem( this, generalConfig_->BuildResourceChildFile( "help/adaptation.xml" ) );
@@ -532,8 +517,6 @@ void ADN_MainWindow::TestData()
             if( nResult == QMessageBox::No )
                 return;
         }
-        //  else
-        //      strCommandLine += " -conffile \"" + workspace_.GetProject().GetFileInfos().GetFileNameFull() + "\"";
 
         static ADN_RunProcessDialog* pDialog = new ADN_RunProcessDialog( this, tr( "Running data check" ) );
         pDialog->RunCommand( strCommandLine );

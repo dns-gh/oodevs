@@ -35,14 +35,13 @@ ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, A
     this->setCaption( strCaption );
 
     table_.reparent( this, QPoint(0,0) );
-    connect( &table_, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), this, SLOT( OnContextMenu() ) );
 
     Q3HBox* pHBox = new Q3HBox( this );
     QPushButton* pSaveButton = new QPushButton( tr( "Save" ), pHBox );
-    QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
+    //QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
     QPushButton* pCloseButton = new QPushButton( tr( "Close" ), pHBox );
     connect( pSaveButton, SIGNAL( clicked() ), this, SLOT( SaveTable() ) );
-    connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintTable() ) );
+    //connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintTable() ) );
     connect( pCloseButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
 
     Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
@@ -61,21 +60,6 @@ ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, A
 ADN_TableDialog::~ADN_TableDialog()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TableDialog::OnContextMenu
-// Created: APE 2005-04-04
-// -----------------------------------------------------------------------------
-void ADN_TableDialog::OnContextMenu()
-{
-    Q3PopupMenu popup( this );
-    popup.insertItem( tr( "Print" ), 1 );
-
-    int nResult = popup.exec( QCursor::pos() );
-
-    if( nResult == 1 )
-        this->PrintTable();
 }
 
 // -----------------------------------------------------------------------------
@@ -200,14 +184,13 @@ ADN_TableDialog2::ADN_TableDialog2( QWidget* pParent, const QString& strCaption,
     this->setCaption( strCaption );
 
     table_.reparent( this, QPoint(0,0) );
-    connect( &table_, SIGNAL( customContextMenuRequested ( const QPoint& ) ), this, SLOT( OnContextMenu() ) );
 
     Q3HBox* pHBox = new Q3HBox( this );
     QPushButton* pSaveButton = new QPushButton( tr( "Save" ), pHBox );
-    QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
+    //QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
     QPushButton* pCloseButton = new QPushButton( tr( "Close" ), pHBox );
     connect( pSaveButton, SIGNAL( clicked() ), this, SLOT( SaveTable() ) );
-    connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintTable() ) );
+    //connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintTable() ) );
     connect( pCloseButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
 
     Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
@@ -226,21 +209,6 @@ ADN_TableDialog2::ADN_TableDialog2( QWidget* pParent, const QString& strCaption,
 ADN_TableDialog2::~ADN_TableDialog2()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_TableDialog::OnContextMenu
-// Created: APE 2005-04-04
-// -----------------------------------------------------------------------------
-void ADN_TableDialog2::OnContextMenu()
-{
-    Q3PopupMenu popup( this );
-    popup.insertItem( tr( "Print" ), 1 );
-
-    int nResult = popup.exec( QCursor::pos() );
-
-    if( nResult == 1 )
-        this->PrintTable();
 }
 
 // -----------------------------------------------------------------------------

@@ -1606,6 +1606,26 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Code LFRIL</source>
         <translation type="unfinished">Código LFRIL</translation>
     </message>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished">Munición</translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation type="unfinished">Blindaje objetivo</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished">Destruido</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>
@@ -2012,10 +2032,6 @@ tirador</translation>
 </context>
 <context>
     <name>ADN_ListViewDialog</name>
-    <message>
-        <source>Print</source>
-        <translation>Imprimir</translation>
-    </message>
     <message>
         <source>Close</source>
         <translation>Cerrar</translation>
@@ -3345,29 +3361,6 @@ Asegúrese que el archivo existe.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_PK_Table</name>
-    <message>
-        <source>Ammunition</source>
-        <translation type="unfinished">Munición</translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation type="unfinished">Blindaje objetivo</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation type="unfinished">Destruido</translation>
-    </message>
-</context>
-<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -4201,10 +4194,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 <context>
     <name>ADN_TableDialog</name>
     <message>
-        <source>Print</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation></translation>
     </message>
@@ -4222,10 +4211,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Save</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Print</source>
-        <translation type="unfinished">Imprimir</translation>
     </message>
     <message>
         <source>Close</source>

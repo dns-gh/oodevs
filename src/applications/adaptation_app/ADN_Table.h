@@ -48,6 +48,9 @@ public:
     QStandardItem* GetItem( int row, int col ) const;
     QStandardItem* GetItemFromIndex( const QModelIndex& index ) const;
 
+    void AddBoldGridRow( int nIndex );
+    void AddBoldGridCol( int nIndex );
+
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
     void SaveToXls( const QString& path, const QString& sheetName ) const;
@@ -100,6 +103,13 @@ signals:
     void GoToRequested( const ADN_NavigationInfos::GoTo& );
     //@}
 
+private:
+    //! @name Types
+    //@{
+    typedef std::set<int>         T_IndexSet;
+    typedef T_IndexSet::iterator IT_IndexSet;
+    //@}
+
 protected:
     //! @name Member data
     //@{
@@ -107,6 +117,8 @@ protected:
     ADN_TableDelegate delegate_;
     QSortFilterProxyModel proxyModel_;
     ADN_NavigationInfos::GoTo goToInfo_;
+    T_IndexSet vBoldGridRowIndexes_;
+    T_IndexSet vBoldGridColIndexes_;
     //@}
 };
 

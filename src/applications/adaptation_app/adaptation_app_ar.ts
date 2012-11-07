@@ -1591,6 +1591,26 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Code LFRIL</source>
         <translation type="unfinished">رمز لفريل</translation>
     </message>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished">الذخيرة</translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation type="unfinished">درع المستهدفة</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished">في الموقع يمكن حلها</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة اللازمة</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished">دمرت</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>
@@ -1999,10 +2019,6 @@ stance</source>
     <message>
         <source>Save</source>
         <translation type="unfinished">حفظ</translation>
-    </message>
-    <message>
-        <source>Print</source>
-        <translation type="unfinished">طباعة</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3331,29 +3347,6 @@ Make sure the file exists.</source>
     </message>
 </context>
 <context>
-    <name>ADN_PK_Table</name>
-    <message>
-        <source>Ammunition</source>
-        <translation type="unfinished">الذخيرة</translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation type="unfinished">درع المستهدفة</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation type="unfinished">في الموقع يمكن حلها</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation type="unfinished">دعم الصيانة اللازمة</translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation type="unfinished">دمرت</translation>
-    </message>
-</context>
-<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -4191,10 +4184,6 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished">حفظ</translation>
     </message>
     <message>
-        <source>Print</source>
-        <translation type="unfinished">طباعة</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation type="unfinished">قم بإغلاق</translation>
     </message>
@@ -4208,10 +4197,6 @@ Make sure that the file is not write-protected.</source>
     <message>
         <source>Save</source>
         <translation type="unfinished">حفظ</translation>
-    </message>
-    <message>
-        <source>Print</source>
-        <translation type="unfinished">طباعة</translation>
     </message>
     <message>
         <source>Close</source>
