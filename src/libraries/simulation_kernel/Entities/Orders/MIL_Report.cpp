@@ -67,7 +67,6 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_FiredByNeutralSide                          ] = eRC_TireParCampNeutre;
     diaEvents_[ eReport_FireOnCivilian                              ] = eRC_TirSurCivil;
     diaEvents_[ eReport_FiredByCivilian                             ] = eRC_TireParCivil;
-    diaEvents_[ eReport_CommandPostDestruction                      ] = eRC_DestructionPC;
     diaEvents_[ eReport_QuotaAlmostConsumed                         ] = eRC_AllocationConsentieBientotEpuisee;
     diaEvents_[ eReport_StockCapacityExceeded                       ] = eRC_DepassementCapaciteStockage;
     diaEvents_[ eReport_MissionImpossible_                          ] = eRC_MissionImpossible;

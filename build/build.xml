@@ -1522,6 +1522,13 @@
         </exec>
     </target>
 
+    <target name="checkreports" description="check simulation reports">
+        <exec executable="python" failonerror="true">
+            <arg value="${root.dir}/build/checkreports.py"/>
+            <arg value="${root.dir}"/>
+        </exec>
+    </target>
+
     <!--
     ============================================================================
     main
@@ -1580,7 +1587,7 @@
 
     <target name="build" depends="libraries,applications,modules"/>
 
-    <target name="all" depends="configure,checkproject,build,test,documentation,package" description="build and package distribution"/>
+    <target name="all" depends="configure,checkproject,checkreports,build,test,documentation,package" description="build and package distribution"/>
 
     <target name="cmake.update" depends="configure,generate-license">
         <update name="cmake"/>
