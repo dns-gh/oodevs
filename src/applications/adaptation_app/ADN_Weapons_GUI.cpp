@@ -209,7 +209,7 @@ public:
         horizontalHeaders << tools::translate( "ADN_Weapons_GUI", "Weapon system" )
                           << tools::translate( "ADN_Weapons_GUI", "Target size" );
         int n = 2;
-        for( std::set< int >::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
+        for( std::set< int >::const_iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
         {
             horizontalHeaders.append( QString::number( *it ) );
             horizontalHeader()->setResizeMode( n, QHeaderView::Fixed );
@@ -443,7 +443,7 @@ ADN_Table3* ADN_Weapons_GUI::CreatePHTable()
             ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
             for( ADN_Weapons_Data::IT_PhInfosVector it3 = phs.begin(); it3 != phs.end(); ++it3 )
             {
-                std::set< int >::iterator itFound = distancesSet.find( ( *it3 )->nDistance_.GetData() );
+                std::set< int >::const_iterator itFound = distancesSet.find( ( *it3 )->nDistance_.GetData() );
                 int nIndex = static_cast< int >( std::distance( distancesSet.begin(), itFound ) );
                 int row = nRow + nSubRow;
                 int col = 2 + nIndex;
@@ -509,9 +509,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
         {
             ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
             for( ADN_Weapons_Data::IT_PhInfosVector it3 = phs.begin(); it3 != phs.end(); ++it3 )
-            {
                 distancesSet.insert( (*it3)->nDistance_.GetData() );
-            }
         }
 
         if( weapon.bDirect_.GetData() && ! phsSizeInfos.empty() && ! distancesSet.empty() )

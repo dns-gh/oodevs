@@ -34,7 +34,8 @@ public:
         dataModel_.setRowCount( 4 );
 
         QStringList horizontalHeaders;
-        for( int n = 0; n < eNbrDoctorSkills; ++n )
+        int n = 0;
+        for( n = 0; n < eNbrDoctorSkills; ++n )
             horizontalHeaders << ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str();
         horizontalHeaders << tr( "Psyop" ) << tr( "Contamination" );
         dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
@@ -51,7 +52,6 @@ public:
         ADN_Health_Data* health = static_cast< ADN_Health_Data* >( data );
         if( !health )
             return;
-        int n = 0;
         for( n = 0 ; n < eNbrDoctorSkills; ++n )
         {
             ADN_Health_Data::WoundInfo& wound = health->wounds[n];
