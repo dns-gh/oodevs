@@ -1,4 +1,5 @@
 import os, sys, re
+import xml.etree.ElementTree as ETree
 
 class Ui(object):
     def error(self, s):
@@ -115,7 +116,8 @@ def parsecpp(ui, swordpath):
             # Should be a C++ compiled error, but this is cheap to check
             ui.error('error: %s engine report identifier is unknown\n' % r)
             result = 1
-    return result, dec
+    usedids = set(dec[k] for k in engmap.itervalues())
+    return result, dec, usedids
 
 def parseluaids(ui, path):
     """Parse report identifiers defined in Lua."""
@@ -162,12 +164,59 @@ def parseintegration(ui, intpath):
         result = 1
     return result, rids
 
-def checkluaintegration(ui, luaids, intids):
+def checkluaintegration(ui, luaids, intnames):
     """Cross check reports indentifiers integration layer and decisional"""
     result = 0
+    intids = {}
     for r in intids:
         if r not in luaids:
             ui.error('error: integration uses an unknown report: %s\n' % r)
+            result = 1
+            continue
+        intids[r] = luaids[r]
+    return result, intids
+
+class ReportParam(object):
+    def __init__(self, type, values=None):
+        self.type = type
+        self.values = sorted(values or [])
+
+class Report(object):
+    def __init__(self, id, msg, params):
+        self.id = id
+        self.msg = msg
+        self.params = params
+
+def parsephysical(ui, path):
+    result = 0
+    reports = {}
+    tree = ETree.parse(path)
+    xpath = './report'
+    for e in tree.findall(xpath):
+        id = int(e.attrib['id'])
+        msg = e.attrib['message'].encode('utf-8')
+        params = []
+        for p in e.findall('parameter'):
+            values = []
+            type = p.attrib['type']
+            for v in p.findall('value'):
+                vid = int(v.attrib['id'])
+                vname = v.attrib['name'].encode('utf-8')
+                values.append((vid, vname))
+            params.append(ReportParam(type, values))
+        r = Report(id, msg, params)
+        if r.id in reports:
+            ui.error('error: duplicate found for physical report %s\n' % r.id)
+            result = 1
+        reports[r.id] = r
+    return result, reports
+
+def checkphyids(ui, phyname, phids, othername, otherids):
+    result = 0;
+    for rid in otherids:
+        if rid not in phyids:
+            ui.error('error: cannot find %s %d in physical db %s\n'
+                    % (othername, rid, phyname))
             result = 1
     return result
 
@@ -175,7 +224,7 @@ if __name__ == '__main__':
     ui = Ui()
     swordpath = sys.argv[1]
     result = 0
-    res, cppids = parsecpp(ui, swordpath)
+    res, cppids, usedcppids = parsecpp(ui, swordpath)
     if res:
         result = 1
 
@@ -187,12 +236,30 @@ if __name__ == '__main__':
 
     intpath = os.path.join(swordpath,
             'data/app-data/resources/integration')
-    res, intids = parseintegration(ui, intpath)
+    res, intnames = parseintegration(ui, intpath)
     if res:
         result = 1
 
-    if checkluaintegration(ui, luaids, intids):
+    res, intids = checkluaintegration(ui, luaids, intnames)
+    if res:
         result = 1
+
+    # Cross-check cpp/integration ids with several physical dbs
+    phypaths = [
+        'data/data/models/ada/physical/scipio/Reports.xml',
+        'data/data/models/ada/physical/worldwide/Reports.xml',
+        ]
+    for p in phypaths:
+        phypath = os.path.join(swordpath, p)
+        phyname = os.path.split(os.path.dirname(phypath))[1]
+        res, phyids = parsephysical(ui, phypath)
+        if res:
+            result = 1
+        if checkphyids(ui, phyname, phyids, 'sim report', usedcppids):
+            result = 1
+        if checkphyids(ui, phyname, phyids, 'integration report',
+                set(intids.values())):
+            result = 1
 
     sys.exit(result)
 
