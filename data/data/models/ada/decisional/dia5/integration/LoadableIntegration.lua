@@ -66,12 +66,12 @@ end
 
 integration.isFriendOrFoeTransported = function( unit )
     if DEC_Prisonniers_EstEmbarque( unit.source ) then
-        return 100
+        return true
     end
     if DEC_Refugies_EstEmbarque( unit.source ) then
-        return 100
+        return true
     end
-    return 0
+    return false
 end
 
 -- -------------------------------------------------------------------------------- 
