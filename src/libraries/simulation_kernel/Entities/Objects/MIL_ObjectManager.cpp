@@ -173,7 +173,7 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
     if( !pObject )
         return;
     if( !objects_.insert( std::make_pair( pObject->GetID(), pObject ) ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     ++nbObjects_;
     if( pObject->IsUniversal() )
         universalObjects_.insert( pObject );

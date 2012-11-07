@@ -62,7 +62,7 @@ boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnow
 {
     boost::shared_ptr< DEC_Knowledge_UrbanPerception > knowledge ( new DEC_Knowledge_UrbanPerception( agentPerceiving, objectPerceived.GetID() ) );
     if( ! knowledgeUrbanPerceptionMap_.insert( std::make_pair( objectPerceived.GetID(), knowledge ) ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return knowledge;
 }
 
@@ -73,7 +73,7 @@ boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnow
 void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DestroyKnowledgeUrbanPerception( DEC_Knowledge_UrbanPerception& knowledge )
 {
     if( knowledgeUrbanPerceptionMap_.erase( knowledge.GetUrbanPerceivedId() ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
 }
 

@@ -78,7 +78,7 @@ DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKn
 {
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge( new DEC_Knowledge_Population( knowledgeGroup, populationPerceived ) );
     if( ! knowledgePopulationMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return *pKnowledge;
 }
 
@@ -89,7 +89,7 @@ DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKn
 void DEC_BlackBoard_CanContainKnowledgePopulation::DestroyKnowledgePopulation( DEC_Knowledge_Population& knowledge )
 {
     if( knowledgePopulationMap_.erase( &knowledge.GetPopulationKnown() ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

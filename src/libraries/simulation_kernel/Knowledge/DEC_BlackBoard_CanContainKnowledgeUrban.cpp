@@ -75,7 +75,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban
 {
     boost::shared_ptr< DEC_Knowledge_Urban > knowledge ( new DEC_Knowledge_Urban( army, object ) );
     if( !urbanMapFromConcrete_.insert( std::make_pair( object.GetID(), knowledge ) ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return knowledge;
 }
 
@@ -86,7 +86,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban
 void DEC_BlackBoard_CanContainKnowledgeUrban::DestroyKnowledgeUrban( DEC_Knowledge_Urban& knowledge )
 {
     if( urbanMapFromConcrete_.erase( knowledge.GetObjectKnownId() ) < 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

@@ -1350,7 +1350,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     if( !pMaintenanceComposanteState )
         return 0;
     if( ! maintenanceComposanteStates_.insert( pMaintenanceComposanteState ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return pMaintenanceComposanteState;
 }
 
@@ -1361,7 +1361,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
 void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState )
 {
     if( maintenanceComposanteStates_.erase( &composanteState ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

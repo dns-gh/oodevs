@@ -190,7 +190,7 @@ void PHY_DirectFireData::RemoveWeapon( const PHY_ComposantePion& firer, PHY_Weap
 void PHY_DirectFireData::RemoveFirer( const PHY_ComposantePion& firer )
 {
     if( composantesWeapons_.erase( &firer ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

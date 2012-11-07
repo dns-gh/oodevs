@@ -59,7 +59,7 @@ const TER_LimitData& MIL_TacticalLineManager::CreateLimitData( const T_PointVect
 void MIL_TacticalLineManager::DestroyLimitData( const TER_LimitData& data )
 {
     if( limitsData_.erase( data.GetPoints() ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &data;
 }
 

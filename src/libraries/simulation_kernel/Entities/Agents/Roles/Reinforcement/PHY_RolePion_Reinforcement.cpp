@@ -195,7 +195,7 @@ void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg )
 void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinforcement )
 {
     if( ! reinforcements_.insert( &reinforcement ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     bReinforcementsChanged_ = true;
 }
 
@@ -206,7 +206,7 @@ void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinfo
 void PHY_RolePion_Reinforcement::NotifyReinforcementRemoved( MIL_AgentPion& reinforcement )
 {
     if( reinforcements_.erase( &reinforcement ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     bReinforcementsChanged_ = true;
 }
 

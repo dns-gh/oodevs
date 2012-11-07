@@ -57,7 +57,7 @@ MIL_EffectManager::~MIL_EffectManager()
 void MIL_EffectManager::Register( MIL_Effect_ABC& effect )
 {
     if( ! effects_.insert( &effect ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void MIL_EffectManager::Update()
 void MIL_EffectManager::RegisterFlyingShell( const MIL_Effect_IndirectFire& effect )
 {
     if( ! flyingShells_.insert( &effect ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ void MIL_EffectManager::RegisterFlyingShell( const MIL_Effect_IndirectFire& effe
 void MIL_EffectManager::UnregisterFlyingShell( const MIL_Effect_IndirectFire& effect )
 {
     if( flyingShells_.erase( &effect ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

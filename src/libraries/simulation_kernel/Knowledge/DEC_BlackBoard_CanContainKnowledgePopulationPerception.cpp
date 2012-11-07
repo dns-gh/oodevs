@@ -76,7 +76,7 @@ DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulation
 {
     DEC_Knowledge_PopulationPerception* pKnowledge = new DEC_Knowledge_PopulationPerception( agentPerceiving, populationPerceived );//$$ RAM
     if( ! knowledgePopulationPerceptionMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return *pKnowledge;
 }
 
@@ -87,7 +87,7 @@ DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulation
 void DEC_BlackBoard_CanContainKnowledgePopulationPerception::DestroyKnowledgePopulationPerception( DEC_Knowledge_PopulationPerception& knowledge )
 {
     if( knowledgePopulationPerceptionMap_.erase( &knowledge.GetPopulationPerceived() ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
 }
 

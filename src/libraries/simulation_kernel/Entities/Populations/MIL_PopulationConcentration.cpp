@@ -227,7 +227,7 @@ bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) 
 void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow )
 {
     if( !pushingFlows_.insert( &flow ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     SetAttitude( flow.GetAttitude() );
 }
 
@@ -416,7 +416,7 @@ bool MIL_PopulationConcentration::HasChanged() const
 void MIL_PopulationConcentration::UnregisterPushingFlow( MIL_PopulationFlow& flow )
 {
     if( pushingFlows_.erase( &flow ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

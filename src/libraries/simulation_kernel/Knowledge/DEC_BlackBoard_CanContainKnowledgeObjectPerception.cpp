@@ -76,7 +76,7 @@ DEC_Knowledge_ObjectPerception& DEC_BlackBoard_CanContainKnowledgeObjectPercepti
 {
     DEC_Knowledge_ObjectPerception* pKnowledge = new DEC_Knowledge_ObjectPerception( agentPerceiving, objectPerceived );//$$ RAM
     if( ! knowledgeObjectPerceptionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     return *pKnowledge;
 }
 
@@ -87,7 +87,7 @@ DEC_Knowledge_ObjectPerception& DEC_BlackBoard_CanContainKnowledgeObjectPercepti
 void DEC_BlackBoard_CanContainKnowledgeObjectPerception::DestroyKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& knowledge )
 {
     if( knowledgeObjectPerceptionMap_.erase( &knowledge.GetObjectPerceived() ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
     delete &knowledge;
 }
 

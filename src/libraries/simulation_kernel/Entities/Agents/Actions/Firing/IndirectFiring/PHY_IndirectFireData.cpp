@@ -179,5 +179,5 @@ PHY_Weapon* PHY_IndirectFireData::sComposanteWeapons::GetUnusedWeapon() const
 void PHY_IndirectFireData::RemoveFirer( const PHY_ComposantePion& firer )
 {
     if( composantesWeapons_.erase( &firer ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }

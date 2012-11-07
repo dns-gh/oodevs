@@ -982,7 +982,7 @@ void PHY_RolePionLOG_Medical::ReserveForSorting( const PHY_MedicalCollectionAmbu
 void PHY_RolePionLOG_Medical::CancelReservationForSorting( const PHY_MedicalCollectionAmbulance& ambulance )
 {
     if( reservations_.erase( &ambulance ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

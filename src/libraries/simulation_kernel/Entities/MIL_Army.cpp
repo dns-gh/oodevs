@@ -526,7 +526,7 @@ void MIL_Army::ReadLogisticLinkSubordinate( xml::xistream& xis, AutomateFactory_
 void MIL_Army::RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup >& knowledgeGroup )
 {
     if( ! knowledgeGroups_.insert( std::make_pair( knowledgeGroup->GetId(), knowledgeGroup ) ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -536,7 +536,7 @@ void MIL_Army::RegisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGro
 void MIL_Army::UnregisterKnowledgeGroup( const boost::shared_ptr< MIL_KnowledgeGroup > & knowledgeGroup )
 {
     if( knowledgeGroups_.erase( knowledgeGroup->GetId() ) != 1 )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------
