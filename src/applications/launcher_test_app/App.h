@@ -80,6 +80,7 @@ private:
 private:
     std::string host_;
     unsigned int port_;
+    bool test_;
     boost::mutex mutex_;
     boost::condition_variable cond_;
     QApplication app;

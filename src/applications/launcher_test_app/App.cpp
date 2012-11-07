@@ -80,6 +80,7 @@ namespace launcher_test_app
 App::App( int argc, char* argv[] )
     : host_( "localhost" )
     , port_( 33000 )
+    , test_( false )
     , app( argc, argv )
     , connectionHandler_( mutex_, cond_ )
     , client_( controllers_.controller_ )
@@ -91,10 +92,12 @@ App::App( int argc, char* argv[] )
     options.add_options()
             ( "host", po::value< std::string >( &host_ ), "launcher host" )
             ( "port", po::value< unsigned int >( &port_ ), "launcher port" )
+            ( "test", "test mode" )
             ( "file", po::value< std::string >( &commandFile ), "command file" )
             ( "output", po::value< std::string >( &outputFile ), "output file" );
     po::store( po::command_line_parser( argc, argv ).options( options ).run(), values );
     po::notify( values );
+    test_ = !!values.count( "test" );
     if( outputFile.length() != 0)
     {
         outputFile_.open( outputFile.c_str() );
@@ -135,7 +138,8 @@ App::~App()
 // -----------------------------------------------------------------------------
 void App::Connect()
 {
-    client_.Connect( host_, port_, connectionHandler_);
+    if( !test_ )
+        client_.Connect( host_, port_, connectionHandler_);
     updateThread_.reset( new boost::thread( &UpdateClient, boost::ref( client_ ) ) );
     Wait();
     client_.Register( responseHandler_ );
@@ -146,7 +150,7 @@ void App::Connect()
 // -----------------------------------------------------------------------------
 void App::Wait(int messages)
 {
-    while( messages != 0 )
+    while( messages != 0 && !test_ )
     {
         std::string error;
         {
@@ -211,7 +215,7 @@ void App::ReadMessage(xml::xistream& xis)
 // -----------------------------------------------------------------------------
 void App::ProcessMessages()
 {
-    while( !messages_.empty() )
+    while( !messages_.empty() && !test_ )
     {
         boost::shared_ptr< google::protobuf::Message > msg = messages_.front();
         messages_.pop_front();
