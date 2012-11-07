@@ -126,9 +126,13 @@ target_link_libraries( ent ${QT_LIBRARIES} )
 add_target( meteo common "libraries/meteo" OPTIONS protocol )
 target_link_libraries( meteo ${XERCES_LIBRARIES} )
 
-# flood
-add_target( flood common "libraries/flood" )
-target_link_libraries( flood ${OPENGL_LIBRARIES} )
+# propagation
+add_target( propagation common "libraries/propagation" )
+target_link_libraries( propagation
+    ${GDAL_I_LIBRARIES}
+    ${GDAL_OGR_LIBRARIES}
+    ${OPENGL_LIBRARIES}
+)
 
 # 3a
 add_target( 3a common "libraries/3a" OPTIONS protocol )
@@ -142,11 +146,8 @@ add_target( clients_kernel common "libraries/clients_kernel" OPTIONS qt3 protoco
 target_link_libraries( clients_kernel
     ent
     sword_tools
-    ${GDAL_I_LIBRARIES}
-    ${GDAL_OGR_LIBRARIES}
     ${GEOCOORD_LIBRARIES}
     ${GRAPHICS_LIBRARIES}
-    ${OPENGL_LIBRARIES}
 )
 
 # actions
@@ -198,9 +199,9 @@ target_link_libraries( 3a_test 3a )
 add_target( actions_test tests "tests/actions_test" OPTIONS protocol test )
 target_link_libraries( actions_test actions )
 
-# flood_test
-add_target( flood_test tests "tests/flood_test" OPTIONS test )
-target_link_libraries( flood_test flood )
+# propagation_test
+add_target( propagation_test tests "tests/propagation_test" OPTIONS test )
+target_link_libraries( propagation_test propagation )
 
 # protocol_test
 add_target( protocol_test tests "tests/protocol_test" OPTIONS protobuf protocol test )
@@ -364,7 +365,7 @@ masa_add_target_include( simulation_kernel "${root_dir}/src/libraries/simulation
 masa_add_target_compile_flag( simulation_kernel "/bigobj" )
 target_link_libraries( simulation_kernel
     dispatcher
-    flood
+    propagation
     resource_network
     simulation_terrain
     ${CORE_LIBRARIES}
@@ -491,8 +492,8 @@ add_target( gaming clients "libraries/gaming" OPTIONS qt3 protocol )
 target_link_libraries( gaming
     actions
     clients_gui
-    flood
     indicators
+    propagation
     reports
 )
 
@@ -530,9 +531,9 @@ target_link_libraries( launcher_test_app launcher_dll )
 add_target( preparation clients "libraries/preparation" OPTIONS qt3 qt protocol )
 target_link_libraries( preparation
     clients_gui
-    flood
     geostore
     indicators
+    propagation
 )
 
 # preparation_app
