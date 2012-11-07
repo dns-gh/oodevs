@@ -16,7 +16,7 @@ struct MIL_Report
 {
     enum E_DecisionalReport
     {
-        eRC_CiviliansEncountered = 83
+        eRC_CiviliansEncountered = 388
     };
 };
 
