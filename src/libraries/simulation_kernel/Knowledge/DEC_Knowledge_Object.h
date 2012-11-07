@@ -31,6 +31,7 @@ class MIL_Agent_ABC;
 class MIL_AgentType_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
+class MIL_Entity_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
@@ -66,7 +67,7 @@ public:
     //@{
     bool CanCollideWith( const MIL_Agent_ABC& agent ) const;
     bool CanCollideWithEntity() const;
-    bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
+    bool CanInteractWith( const MIL_Entity_ABC& agent ) const;
     bool CanInteractWithEntity() const;
     //@}
 

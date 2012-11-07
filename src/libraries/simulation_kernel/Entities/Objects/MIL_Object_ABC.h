@@ -40,6 +40,7 @@ class DEC_Knowledge_Object;
 class DEC_Gen_Object;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
+class MIL_Entity_ABC;
 class MIL_KnowledgeGroup;
 class MIL_InteractiveContainer_ABC;
 class MIL_StructuralStateNotifier_ABC;
@@ -95,7 +96,7 @@ public:
 
     //! @name Interactions
     //@{
-    virtual bool CanInteractWith      ( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanInteractWith      ( const MIL_Entity_ABC& agent ) const;
     virtual bool CanInteractWithEntity() const;
     //@}
 

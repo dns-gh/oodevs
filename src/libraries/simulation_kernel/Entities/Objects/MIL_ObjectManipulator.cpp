@@ -328,7 +328,7 @@ bool MIL_ObjectManipulator::CanBeOccupiedBy( const MIL_Agent_ABC& agent ) const
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManipulator::IsTrafficable( const MIL_Agent_ABC& agent ) const
 {
-    if( !agent.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    if( !agent.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() && object_.CanInteractWith( agent ) )
     {
         BridgingCapacity* bridgingCapacity = object_.Retrieve< BridgingCapacity >();
         if( bridgingCapacity && bridgingCapacity->IsBridgeType() )
@@ -339,12 +339,8 @@ bool MIL_ObjectManipulator::IsTrafficable( const MIL_Agent_ABC& agent ) const
         }
         if( const TrafficabilityAttribute* pTrafficability = object_.RetrieveAttribute< TrafficabilityAttribute >() )
         {
-            const InteractWithSideCapacity* pSideInteraction = object_.Retrieve< InteractWithSideCapacity >();
-            if( !pSideInteraction || !object_.GetArmy() || pSideInteraction->IsPossible( *object_.GetArmy(), agent.GetArmy() ) )
-            {
-                double weight = agent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
-                return ( pTrafficability->GetMaxValue() > weight );
-            }
+            double weight = agent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+            return ( pTrafficability->GetMaxValue() > weight );
         }
     }
     return true;
@@ -420,17 +416,19 @@ bool MIL_ObjectManipulator::CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const
 double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Entity_ABC& agent ) const
 {
     double speed = std::numeric_limits< double >::max();
-    const MobilityCapacity* capacity = object_.Retrieve< MobilityCapacity >();
-    const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
-    if ( capacity )
+    const PHY_RoleAction_InterfaceFlying* flying = agent.RetrieveRole< PHY_RoleAction_InterfaceFlying >();
+    if( ( !flying || !flying->IsFlying() ) && object_.CanInteractWith( agent ) )
     {
-        const InteractWithSideCapacity* pSideInteraction = object_.Retrieve< InteractWithSideCapacity >();
-        if( !pSideInteraction || !object_.GetArmy() || pSideInteraction->IsPossible( *object_.GetArmy(), agent.GetArmy() ) )
+        const MobilityCapacity* capacity = object_.Retrieve< MobilityCapacity >();
+        if ( capacity )
+        {
+            const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
             speed = std::min( speed, capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. ) );
+        }
+        const CrowdCapacity* crowdcapacity = object_.Retrieve< CrowdCapacity >();
+        if ( crowdcapacity )
+            speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( agent ) );
     }
-    const CrowdCapacity* crowdcapacity = object_.Retrieve< CrowdCapacity >();
-    if ( crowdcapacity )
-        speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( agent ) );
     return speed;
 }
 
