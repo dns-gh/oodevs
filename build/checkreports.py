@@ -115,11 +115,84 @@ def parsecpp(ui, swordpath):
             # Should be a C++ compiled error, but this is cheap to check
             ui.error('error: %s engine report identifier is unknown\n' % r)
             result = 1
+    return result, dec
+
+def parseluaids(ui, path):
+    """Parse report identifiers defined in Lua."""
+    relua = re.compile(r'^\s*(eRC_\S+)\s*=\s*(\d+)')
+    rids = {}
+    rnames = {}
+    result = 0
+    for line in file(path):
+        m = relua.search(line)
+        if not m:
+            continue
+        rname, rid = m.group(1, 2)
+        rid = int(rid)
+        if rname in rnames:
+            ui.error('error: %s/%d collides with %s/%d\n' % (rname, rid,
+                rname, rnames[rname]))
+            result = 1
+        if rid in rids:
+            ui.error('error: %s/%d collides with %s/%d\n' % (rname, rid,
+                rids[rid], rid))
+            result = 1
+        rnames[rname] = rid
+        rids[rid] = rname
+    return result, rnames
+
+def parseintegrationfile(ui, path):
+    """Extract indentifiers looking like report identifiers from Lua files."""
+    rids = set()
+    data = file(path, 'rb').read()
+    rerc = re.compile(r'eRC_[a-zA-Z0-9_]+')
+    for m in rerc.finditer(data):
+        rids.add(m.group(0))
+    return rids
+
+def parseintegration(ui, intpath):
+    """Extract all possible report identifiers in integration subtree"""
+    rids = set()
+    for root, dirs, files in os.walk(intpath):
+        for f in files:
+            p = os.path.join(root, f)
+            rids.update(parseintegrationfile(ui, p))
+    result = 0
+    if not rids:
+        result = 1
+    return result, rids
+
+def checkluaintegration(ui, luaids, intids):
+    """Cross check reports indentifiers integration layer and decisional"""
+    result = 0
+    for r in intids:
+        if r not in luaids:
+            ui.error('error: integration uses an unknown report: %s\n' % r)
+            result = 1
     return result
 
 if __name__ == '__main__':
     ui = Ui()
     swordpath = sys.argv[1]
-    result = parsecpp(ui, swordpath)
+    result = 0
+    res, cppids = parsecpp(ui, swordpath)
+    if res:
+        result = 1
+
+    luapath = os.path.join(swordpath,
+            'data/data/models/ada/decisional/dia5/Types_CR.lua')
+    res, luaids = parseluaids(ui, luapath)
+    if res:
+        result = 1
+
+    intpath = os.path.join(swordpath,
+            'data/app-data/resources/integration')
+    res, intids = parseintegration(ui, intpath)
+    if res:
+        result = 1
+
+    if checkluaintegration(ui, luaids, intids):
+        result = 1
+
     sys.exit(result)
 
