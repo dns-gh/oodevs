@@ -36,8 +36,7 @@ def parseenum(ui, headerpath, lineno, lines, restart, reval):
                         % (line,))
                 result = 1
                 continue
-            rid = len(reports)
-            reports[m.group(1)] = rid
+            reports[m.group(1)] = int(m.group(2))
     if state != 2:
         ui.error('error: reached end of %s before seeing all expected enums'
                 % headerpath)
@@ -45,53 +44,6 @@ def parseenum(ui, headerpath, lineno, lines, restart, reval):
     if result:
         raise ParseError('failed to parse c++ header')
     return i, reports
-
-def parsecppheader(ui, headerpath):
-    """Parse the engine and decisional enumerations in MIL_Report.h."""
-    reengstart = re.compile(r'^\s*enum\s+E_EngineReport\s*$')
-    reengval = re.compile(r'^\s*(eReport_[^\s,]+|eNbrReport)\s*,?\s*(//|$)')
-    redecstart = re.compile(r'^\s*enum\s+E_DecisionalReport\s*$')
-    redecval = re.compile(r'^\s*(eRC_[^\s,]+|eLast)\s*,?\s*(//|$)')
-    lines = list(file(headerpath))
-    i = 0
-    i, engreports = parseenum(ui, headerpath, i, lines, reengstart, reengval)
-    if 'eNbrReport' in engreports:
-        del engreports['eNbrReport']
-    i, decreports = parseenum(ui, headerpath, i, lines, redecstart, redecval)
-    if 'eLast' in decreports:
-        del decreports['eLast']
-    result = 0
-    if not engreports:
-        ui.error('error: no E_EngineReport definition found\n')
-        result = 1
-    if not decreports:
-        ui.error('error: no E_DecisionReport definition found\n')
-        result = 1
-    return result, engreports, decreports
-
-def parsecppsource(ui, cpppath):
-    """Parse the engine to decisional enumeration mappings in MIL_Report.cpp"""
-    rengs = {}
-    rdecs = {}
-    result = 0
-    remap = re.compile(r'\s*diaEvents_\[\s*([^\]]+?)\s*\]\s*=\s*([^\s;]+)')
-    for line in file(cpppath):
-        m = remap.search(line)
-        if not m:
-            continue
-        reng, rdec = m.group(1, 2)
-        if reng in rengs:
-            ui.error('error: %s is mapped more than once\n' % reng)
-            result = 1
-        if rdec in rdecs:
-            ui.error('error: %s is mapped more than once\n' % rdec)
-            result = 1
-        rengs[reng] = rdec
-        rdecs[rdec] = reng
-    if not rengs:
-        ui.error('error: no engine to decisional mapping found\n')
-        result = 1
-    return result, rengs
 
 def _makeregexps(names):
     names = [re.escape(n) for n in names]
@@ -119,49 +71,21 @@ def searchenums(ui, enums, cppdir):
                     missing.discard(m.group(1))
     return missing
 
-def dumpcppmappings(engids, decids, engmap, path):
-    fp = file(path, 'wb')
-    for e in sorted(engids):
-        d = engmap[e]
-        i = decids[d]
-        fp.write('%s\t%s\t%d\n' % (e, d, i))
-    fp.close()
-
 def parsecpp(ui, swordpath):
     """Check the consistency of reports enumerations in simulation_kernel."""
     result = 0
     headerpath = os.path.join(swordpath,
         'src/libraries/simulation_kernel/Entities/Orders/MIL_Report.h')
-    res, eng, dec = parsecppheader(ui, headerpath)
-    if res:
-        result = 1
-    sourcepath = headerpath[:-1] + 'cpp'
-    res, engmap = parsecppsource(ui, sourcepath)
-    if res:
-        result = 1
-    # Cross-check definitions and mappings
-    # All engine reports must be mapped to decisional ones
-    for r in eng:
-        if r not in engmap:
-            ui.error('error: %s is not mapped to a decisional report\n' % r)
-            result = 1
-    for r in engmap:
-        if r not in eng:
-            # Should be a C++ compiled error, but this is cheap to check
-            ui.error('error: %s engine report identifier is unknown\n' % r)
-            result = 1
 
-    # Look for unused identifiers
-    cppdir = os.path.join(swordpath, 'src')
-    missing = searchenums(ui, eng, cppdir)
-    if missing:
+    redecstart = re.compile(r'^\s*enum\s+E_DecisionalReport\s*$')
+    redecval = re.compile(r'^\s*(eRC_[^\s,]+)\s*=\s*(\d+)\s*,?\s*(//|$)')
+    lines = list(file(headerpath))
+    result = 0
+    decreports = parseenum(ui, headerpath, 0, lines, redecstart, redecval)[1]
+    if not decreports:
+        ui.error('error: no E_DecisionReport definition found\n')
         result = 1
-        for m in missing:
-            ui.error('error: %s is unused in C++ code\n' % m)
-
-    #dumpcppmappings(eng, dec, engmap, 'reports.txt')
-    usedids = set(dec[k] for k in engmap.itervalues())
-    return result, dec, usedids
+    return result, decreports
 
 def parseluaids(ui, path):
     """Parse report identifiers defined in Lua."""
@@ -268,7 +192,7 @@ if __name__ == '__main__':
     ui = Ui()
     swordpath = sys.argv[1]
     result = 0
-    res, cppids, usedcppids = parsecpp(ui, swordpath)
+    res, cppids = parsecpp(ui, swordpath)
     if res:
         result = 1
 
@@ -299,7 +223,8 @@ if __name__ == '__main__':
         res, phyids = parsephysical(ui, phypath)
         if res:
             result = 1
-        if checkphyids(ui, phyname, phyids, 'sim report', usedcppids):
+        if checkphyids(ui, phyname, phyids, 'sim report',
+                set(cppids.values())):
             result = 1
         if checkphyids(ui, phyname, phyids, 'integration report',
                 set(intids.values())):

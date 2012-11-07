@@ -48,5 +48,5 @@ void ReportEventListener::Notify( const core::Model& report )
 {
     const MIL_AgentPion& pion = report[ "entity/data" ].GetUserData< MIL_AgentPion >();
     const int code = report[ "code" ];
-    MIL_Report::PostEvent( pion, static_cast< MIL_Report::E_EngineReport >( code ) );
+    MIL_Report::PostEvent( pion, static_cast< MIL_Report::E_DecisionalReport >( code ) );
 }

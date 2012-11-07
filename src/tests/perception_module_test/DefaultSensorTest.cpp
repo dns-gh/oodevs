@@ -14,9 +14,9 @@ using namespace sword::perception;
 
 struct MIL_Report
 {
-    enum E_EngineReport
+    enum E_DecisionalReport
     {
-        eReport_CiviliansEncountered = 83
+        eRC_CiviliansEncountered = 83
     };
 };
 
@@ -107,7 +107,7 @@ BOOST_FIXTURE_TEST_CASE( population_flows_in_list_are_identified_with_default_se
                                                                                            [ sword::test::MakeModel( "x", 1. )( "y", 1. ) ]
                                                                                            [ sword::test::MakeModel( "x", 2. )( "y", 0. ) ] ) ] );
     ExpectEvent( "report", sword::test::MakeModel( "entity/data", 1337 )
-                                                 ( "code", static_cast< int >( MIL_Report::eReport_CiviliansEncountered ) ) );
+                                                 ( "code", static_cast< int >( MIL_Report::eRC_CiviliansEncountered ) ) );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();
 }
@@ -128,7 +128,7 @@ BOOST_FIXTURE_TEST_CASE( population_concentrations_in_list_are_identified_with_d
                                                                                                       ( "level", 3 ) // identified
                                                                                                       ( "recorded", false ) ] );
     ExpectEvent( "report", sword::test::MakeModel( "entity/data", 1337 )
-                                                 ( "code", static_cast< int >( MIL_Report::eReport_CiviliansEncountered ) ) );
+                                                 ( "code", static_cast< int >( MIL_Report::eRC_CiviliansEncountered ) ) );
     PostCommand( "perception", core::MakeModel( "identifier", identifier ) );
     ExecuteCommands();
 }

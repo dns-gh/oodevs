@@ -224,7 +224,7 @@ BOOST_FIXTURE_TEST_CASE( movement_without_resources_sends_out_of_gas_report_and_
     ExpectEffect( entity[ "movement/path" ] );
     Advance( 1, sword::movement::PathWalker::eRunning );
     ExpectEvent( "movement report", sword::test::MakeModel( "entity/data", "data" )
-                                                          ( "code", static_cast< int >( MIL_Report::eReport_OutOfGas ) ) );
+                                                          ( "code", static_cast< int >( MIL_Report::eRC_PlusDeCarburant ) ) );
     Advance( 1, sword::movement::PathWalker::eNotEnoughFuel, false );
 }
 

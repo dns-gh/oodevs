@@ -444,7 +444,7 @@ std::ostream& operator<<( std::ostream& out, const MT_Vector2D& vect )
 
 namespace
 {
-    void SendEvent( const wrapper::View& entity, MIL_Report::E_EngineReport code )
+    void SendEvent( const wrapper::View& entity, MIL_Report::E_DecisionalReport code )
     {
         wrapper::Event event( "movement report" );
         event[ "entity/data" ] = entity[ "data" ];
@@ -477,8 +477,8 @@ void Agent_Path::Execute( TerrainPathfinder& pathfind )
     if( nPathState == Path_ABC::eImpossible )
         SendEvent( entity_,
             entity_[ "is-underground" ] // $$$$ MCO 2012-07-09: module should not be aware of the "is-underground" feature
-                ? MIL_Report::eReport_NotActivatedUndergroundNetwork
-                : MIL_Report::eReport_DifficultTerrain );
+                ? MIL_Report::eRC_NotActivatedUndergroundNetwork
+                : MIL_Report::eRC_TerrainDifficile );
 
 #ifndef NDEBUG
     for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); )
@@ -546,7 +546,7 @@ void Agent_Path::ComputePath( const boost::shared_ptr< Path_ABC >& pPath )
 {
     if( ! GET_HOOK( IsDestinationTrafficable )( entity_, nextWaypoints_.empty() ? 0 : &nextWaypoints_[0], nextWaypoints_.size() ) )
     {
-        SendEvent( entity_, MIL_Report::eReport_DifficultTerrain );
+        SendEvent( entity_, MIL_Report::eRC_TerrainDifficile );
         Cancel();
     }
     else

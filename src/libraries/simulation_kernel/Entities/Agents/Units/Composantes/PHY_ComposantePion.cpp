@@ -665,7 +665,7 @@ void PHY_ComposantePion::NotifyRepairedByMaintenance()
 {
     assert( pRole_ );
     assert( pType_ );
-    MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eReport_EquipementBackFromMaintenance, *pType_ );
+    MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eRC_MaterielRetourDeMaintenance, *pType_ );
     pRole_->NotifyComposanteRepaired();
     ReinitializeState( PHY_ComposanteState::undamaged_ );
 }
@@ -770,7 +770,7 @@ void PHY_ComposantePion::Update()
     if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ && time_.GetCurrentTick() >= nAutoRepairTimeStep_ )
     {
         assert( pType_ );
-        MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eReport_EquipementRepairedInPlace, *pType_ );
+        MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eRC_MaterielRepareSurPlace, *pType_ );
         pRole_->NotifyComposanteRepaired();
         ReinitializeState( PHY_ComposanteState::undamaged_ );
     }

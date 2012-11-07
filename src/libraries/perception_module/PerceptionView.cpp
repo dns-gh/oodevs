@@ -113,7 +113,7 @@ const PerceptionLevel& PerceptionView::ComputeAgent( const wrapper::View& model,
 
 namespace
 {
-    void PostReport( const wrapper::View& entity, MIL_Report::E_EngineReport code )
+    void PostReport( const wrapper::View& entity, MIL_Report::E_DecisionalReport code )
     {
         wrapper::Event event( "report" );
         event[ "entity/data" ] = entity[ "data" ];
@@ -149,7 +149,7 @@ void PerceptionView::ExecuteAgents( const wrapper::View& model, const wrapper::V
                 if( GET_HOOK( IsAgentNewlyPerceived )( perceiver, agent, level.GetID() ) 
                     && !civiliansEncountered && agent[ "is-civilian" ] )
                 {
-                    PostReport( perceiver, MIL_Report::eReport_CiviliansEncountered );
+                    PostReport( perceiver, MIL_Report::eRC_CiviliansEncountered );
                     civiliansEncountered = true;
                 }
             }
@@ -266,7 +266,7 @@ void PerceptionView::ExecuteFlows( const wrapper::View& perceiver, const Surface
             civiliansEncountered |= GET_HOOK( IsPopulationElementNewlyPerceived )( perceiver, flow, level->GetID() );
         }
         if( civiliansEncountered )
-            PostReport( perceiver, MIL_Report::eReport_CiviliansEncountered );
+            PostReport( perceiver, MIL_Report::eRC_CiviliansEncountered );
     }
 }
 
@@ -305,7 +305,7 @@ void PerceptionView::ExecuteConcentrations( const wrapper::View& perceiver, cons
             civiliansEncountered |= GET_HOOK( IsPopulationElementNewlyPerceived )( perceiver, concentration, level->GetID() );
         }
         if( civiliansEncountered )
-            PostReport( perceiver, MIL_Report::eReport_CiviliansEncountered );
+            PostReport( perceiver, MIL_Report::eRC_CiviliansEncountered );
     }
 }
 

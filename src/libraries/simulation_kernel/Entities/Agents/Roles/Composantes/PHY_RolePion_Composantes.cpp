@@ -687,7 +687,7 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
         MT_Vector2D newPosition;
         if( owner_->GetAutomate().GetAlivePionsBarycenter( newPosition ) )
             owner_->MagicMove( newPosition );
-        MIL_Report::PostEvent( *owner_, MIL_Report::eReport_ReAvailableAfterRepairation );
+        MIL_Report::PostEvent( *owner_, MIL_Report::eRC_ANouveauDisponibleApresReparation );
     }
 }
 
@@ -1344,7 +1344,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMaintenanceQuerySent_ + 1 ) || nTickRcMaintenanceQuerySent_ == 0 )
-        MIL_Report::PostEvent( *owner_, MIL_Report::eReport_EquipementEvacuationRequest );
+        MIL_Report::PostEvent( *owner_, MIL_Report::eRC_DemandeEvacuationMateriel );
     nTickRcMaintenanceQuerySent_ = nCurrentTick;
     PHY_MaintenanceComposanteState* pMaintenanceComposanteState = pTC2->MaintenanceHandleComposanteForTransport( *owner_, composante );
     if( !pMaintenanceComposanteState )

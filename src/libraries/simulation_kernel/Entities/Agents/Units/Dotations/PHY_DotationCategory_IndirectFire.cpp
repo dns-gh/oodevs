@@ -187,7 +187,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
             obj.ApplyIndirectFire( EllipseToPolygon( attritionSurface ), dotationCategory_, pFirer ? &pFirer->GetArmy() : static_cast< MIL_Army_ABC* >( 0 ) );
             if( obj.Retrieve< FireForbiddenCapacity >() && pFirer && !bFireInForbiddenArea && obj.GetArmy() && pFirer->GetArmy().IsAFriend( *obj.GetArmy() ) == eTristate_True )
             {
-                MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_FireInForbiddenArea );
+                MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_TirDansZoneInterdite );
                 bFireInForbiddenArea = true;
             }
             if( wrapper && pFirer )
@@ -197,12 +197,12 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 {
                     if( !bInfrastructureDamaged && wrapper->Retrieve< InfrastructureCapacity >() )
                     {
-                        MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_InfrastructureDamaged );
+                        MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_InfrastructureDamaged );
                         bInfrastructureDamaged = true;
                     }
                     if( !bLivingAreaDamaged && wrapper->GetTotalInhabitants() > 0 )
                     {
-                        MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_LivingAreaDamaged );
+                        MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_LivingAreaDamaged );
                         bLivingAreaDamaged = true;
                     }
                 }
@@ -224,15 +224,15 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
                 targetRoleComposantes.Neutralize();
                 if( dotationCategory_.IsIED() )
-                    MIL_Report::PostEvent( target, MIL_Report::eReport_UnderIEDFire );
+                    MIL_Report::PostEvent( target, MIL_Report::eRC_PrisSousTirIED );
                 else
-                    MIL_Report::PostEvent( target, MIL_Report::eReport_UnderIndirectFire );
+                    MIL_Report::PostEvent( target, MIL_Report::eRC_PrisSousTirArtillerie );
                 double ratioComposanteHit = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( attritionSurface );
                 if( ratioComposanteHit > 0 )
                     targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit * phFactor );
                 if( pFirer && !bRCSent && pFirer->GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
                 {
-                    MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_FratricideIndirectFire );
+                    MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_TirIndirectFratricide );
                     bRCSent = true;
                 }
 
@@ -255,7 +255,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                         fireResult.GetDamages( target ).Serialize( content );
                         for( T_Content::const_iterator it = content.begin(); it != content.end(); ++it )
                         {
-                            MIL_Report::PostEvent( observingPion, MIL_Report::eReport_FireObserver, target.GetID(),
+                            MIL_Report::PostEvent( observingPion, MIL_Report::eRC_FireObserver, target.GetID(),
                                                                    (*it).get< 0 >(), (*it).get< 1 >(), (*it).get< 2 >(), (*it).get< 3 > () );
                         }
                     }
@@ -286,7 +286,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
             pElement->ApplyIndirectFire( attritionCircle, fireResult );
         }
         if( pFirer && ( !concentrations.empty() || !flows.empty() ) )
-            MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_IndirectFireOnPopulation );
+            MIL_Report::PostEvent( *pFirer, MIL_Report::eRC_TirIndirectSurPopulation );
     }
 }
 
@@ -315,7 +315,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
             targetRoleComposantes.ApplyDirectFireOnMajorComposantes( dotationCategory_, fireResult );
 
             if( firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
-                MIL_Report::PostEvent( firer, MIL_Report::eReport_FratricideIndirectFire );
+                MIL_Report::PostEvent( firer, MIL_Report::eRC_TirIndirectFratricide );
         }
     }
     // Precision Fire, no Population attrition

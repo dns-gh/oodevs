@@ -129,7 +129,7 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
             else if( detectionComputer->CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
                 if( !civiliansEncountered && agent.IsCivilian() )
                 {
-                    MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eReport_CiviliansEncountered );
+                    MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eRC_CiviliansEncountered );
                     civiliansEncountered = true;
                 }
         }
@@ -264,7 +264,7 @@ void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_ConstPopulatio
             civiliansEncountered |= mustReport;
         }
         if( civiliansEncountered )
-            MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eReport_CiviliansEncountered );
+            MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eRC_CiviliansEncountered );
     }
 }
 
@@ -316,7 +316,7 @@ void PHY_PerceptionView::Execute( const TER_PopulationConcentration_ABC::T_Const
             civiliansEncountered |= mustReport;
         }
         if( civiliansEncountered )
-            MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eReport_CiviliansEncountered );
+            MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eRC_CiviliansEncountered );
     }
 }
 

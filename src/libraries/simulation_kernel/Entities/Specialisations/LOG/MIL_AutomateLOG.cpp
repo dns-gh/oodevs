@@ -357,7 +357,7 @@ PHY_RoleInterface_Medical* MIL_AutomateLOG::MedicalFindAlternativeHealingHandler
 void MIL_AutomateLOG::NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const
 {
     if( pAssociatedAutomate_ )
-        MIL_Report::PostEvent( *pAssociatedAutomate_, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
+        MIL_Report::PostEvent( *pAssociatedAutomate_, MIL_Report::eRC_AllocationConsentieBientotEpuisee, dotationCategory );
 }
 
 // =============================================================================

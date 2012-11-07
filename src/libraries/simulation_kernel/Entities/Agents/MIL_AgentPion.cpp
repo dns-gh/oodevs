@@ -479,7 +479,7 @@ void MIL_AgentPion::UpdateDecision( float duration )
         DEC_Decision_ABC* role = RetrieveRole< DEC_Decision_ABC >();
         if( role )
             role->LogError( &e );
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
+        MIL_Report::PostEvent( *this, MIL_Report::eRC_MissionImpossible );
     }
 }
 
@@ -1222,13 +1222,13 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker, bool mustReport )
     if( mustReport )
     {
         if( attacker.GetType().IsRefugee() )
-            MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByCivilian );
+            MIL_Report::PostEvent( *this, MIL_Report::eRC_TireParCivil );
         else if( GetArmy().IsNeutral( attacker.GetArmy() ) == eTristate_True )
-            MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByNeutralSide );
+            MIL_Report::PostEvent( *this, MIL_Report::eRC_TireParCampNeutre );
         else if( GetArmy().IsAFriend( attacker.GetArmy() ) == eTristate_True )
-            MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByFriendSide );
+            MIL_Report::PostEvent( *this, MIL_Report::eRC_TireParCampAmi );
         else if( GetArmy().IsAnEnemy( attacker.GetArmy() ) == eTristate_True )
-            MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByEnemySide );
+            MIL_Report::PostEvent( *this, MIL_Report::eRC_TireParCampEnnemi );
     }
     GetKnowledge().GetKsFire().NotifyAttackedBy( attacker );
     GetRole< PHY_RolePion_HumanFactors >().NotifyAttacked();
@@ -1253,13 +1253,13 @@ void MIL_AgentPion::NotifyAttacking( MIL_Agent_ABC& target, bool mustReport ) co
     if( !mustReport )
         return;
     if( target.GetType().IsRefugee() )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnCivilian );
+        MIL_Report::PostEvent( *this, MIL_Report::eRC_TirSurCivil );
     else if( GetArmy().IsNeutral( target.GetArmy() ) == eTristate_True )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnNeutralSide );
+        MIL_Report::PostEvent( *this, MIL_Report::eRC_TirSurCampNeutre );
     else if( GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnFriendSide );
+        MIL_Report::PostEvent( *this, MIL_Report::eRC_TirSurCampAmi );
     else if( GetArmy().IsAnEnemy( target.GetArmy() ) == eTristate_True )
-        MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnEnemySide );
+        MIL_Report::PostEvent( *this, MIL_Report::eRC_TirSurCampEnnemi );
 }
 
 // -----------------------------------------------------------------------------

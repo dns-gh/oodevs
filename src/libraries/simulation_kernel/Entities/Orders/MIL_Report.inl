@@ -30,11 +30,9 @@ const MIL_Report* MIL_Report::Find( unsigned int nID )
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters )
 {
-    if( diaEvents_.size() <= static_cast< unsigned int >( nReport ) )
-        return;
-    const MIL_Report* pReport = MIL_Report::Find( diaEvents_[ nReport ] );
+    const MIL_Report* pReport = MIL_Report::Find( nReport );
     if( pReport )
         pReport->Send< T >( receiver, pReport->category_, parameters );
 }
@@ -44,7 +42,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, std::vect
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     PostEvent( receiver, nReport, parameters );
@@ -55,7 +53,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport )
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY_ComposanteTypePion& parameter )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_ComposanteTypePion& parameter )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateEquipmentType( &parameter ) );
@@ -68,7 +66,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY_DotationCategory& parameter )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_DotationCategory& parameter )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateDotationType( &parameter ) );
@@ -81,7 +79,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, double nParam1, double nParam2 )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, double nParam1, double nParam2 )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::Create( static_cast< float >( nParam1 ) ) );
@@ -96,7 +94,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, double nP
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nParam )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, int nParam )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::Create( nParam ) );
@@ -109,7 +107,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nPara
 // Created: LDC 2011-05-09
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nParam1, int nParam2, int nParam3 )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, int nParam1, int nParam2, int nParam3 )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::CreateInteger( nParam1 ) );
@@ -126,7 +124,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nPara
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const MIL_Effect_IndirectFire& flyingShell )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, const MIL_Effect_IndirectFire& flyingShell )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateTir( static_cast< int >( flyingShell.GetFireID() ) ) );
@@ -139,7 +137,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const MIL
 // Created: JSR 2010-08-05
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
     boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::CreateAgentKnowledge( agentKnowledge ) );
@@ -152,7 +150,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, boost::sh
 // Created: LGY 2011-10-14
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const std::string& nParam )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, const std::string& nParam )
 {
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
     boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::Create( nParam ) );
@@ -165,7 +163,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const std
 // Created: MMC 2012-04-16
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge )
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge )
 {
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
     boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::CreatePopulationKnowledge( populationKnowledge ) );
@@ -178,7 +176,7 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, boost::sh
 // Created: LGY 2012-06-28
 // -----------------------------------------------------------------------------
 template< typename T > inline
- void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nParam1, const std::string& nParam2, int nParam3, int nParam4, int nParam5 )
+ void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, int nParam1, const std::string& nParam2, int nParam3, int nParam4, int nParam5 )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::CreateInteger( nParam1 ) );

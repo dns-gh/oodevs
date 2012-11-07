@@ -117,7 +117,7 @@ bool PHY_ActionMove::AvoidObstacles()
     assert( pObjectColliding && pObjectColliding->IsValid() );
     obstacleId_ = pObjectColliding->GetObjectKnown() ? pObjectColliding->GetObjectKnown()->GetID() : 0;
 
-    role_.SendRC( MIL_Report::eReport_DifficultMovementProgression, pObjectColliding->GetType().GetRealName() );
+    role_.SendRC( MIL_Report::eRC_DifficultMovementProgression, pObjectColliding->GetType().GetRealName() );
     return true;
 }
 

@@ -163,7 +163,7 @@ void AttritionCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Ag
     unsigned int hits = fireResult.GetHits();
     if( hits > 0 )
     {
-        MIL_Report::PostEvent( agent, MIL_Report::eReport_ExplosionSurBouchonMine, object.GetType().GetRealName() );
+        MIL_Report::PostEvent( agent, MIL_Report::eRC_ExplosionSurBouchonMine, object.GetType().GetRealName() );
         construction->Build( - static_cast< double >( hits ) / construction->GetMaxDotation() );
     }
 }

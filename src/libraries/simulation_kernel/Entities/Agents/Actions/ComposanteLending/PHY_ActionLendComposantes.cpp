@@ -33,7 +33,7 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_D
     PHY_RolePion_Composantes& roleDepart = pStart->GetPion().GetRole< PHY_RolePion_Composantes >();
     nTimer_ = roleDepart.GetLentComposantesTravelTime( target_, nNbrToLend_, predicate_ );
 
-    MIL_Report::PostEvent( pion, MIL_Report::eReport_EquipmentLoanInProgress );
+    MIL_Report::PostEvent( pion, MIL_Report::eRC_PretMaterielEnCours );
 
     Callback( false );
 }
@@ -54,7 +54,7 @@ PHY_ActionLendComposantes::~PHY_ActionLendComposantes()
 void PHY_ActionLendComposantes::StopAction()
 {
     if( !bLoanDone_ )
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EquipmentLoanCanceled );
+        MIL_Report::PostEvent( pion_, MIL_Report::eRC_PretMaterielAnnule );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,14 +68,14 @@ void PHY_ActionLendComposantes::Execute()
         const unsigned int nNbrLent = pion_.GetRole< PHY_RolePion_Composantes >().LendComposantes( target_, nNbrToLend_, predicate_ );
         
         if( nNbrLent == 0 )
-            MIL_Report::PostEvent( pion_, MIL_Report::eReport_EquipmentLoanImpossible );
+            MIL_Report::PostEvent( pion_, MIL_Report::eRC_PretMaterielImpossible );
         else
         {
-            MIL_Report::PostEvent( pion_, MIL_Report::eReport_EquipmentLent );
+            MIL_Report::PostEvent( pion_, MIL_Report::eRC_MaterielPrete );
             if( nNbrLent < nNbrToLend_ )
-                MIL_Report::PostEvent( pion_, MIL_Report::eReport_EquipmentLoanPartiallyDone );
+                MIL_Report::PostEvent( pion_, MIL_Report::eRC_PretMaterielPartiellementEffectue );
             else
-                MIL_Report::PostEvent( pion_, MIL_Report::eReport_EquipmentLoanDone );
+                MIL_Report::PostEvent( pion_, MIL_Report::eRC_PretMaterielEffectue );
         }
 
         bLoanDone_ = true;

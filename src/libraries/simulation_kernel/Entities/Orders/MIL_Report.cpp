@@ -26,7 +26,6 @@
 #include <xeumeuleu/xml.hpp>
 
 MIL_Report::T_ReportMap      MIL_Report::reports_;
-MIL_Report::T_DiaEventVector MIL_Report::diaEvents_( MIL_Report::eNbrReport );
 MIL_IDManager                MIL_Report::ids_;
 
 // -----------------------------------------------------------------------------
@@ -39,116 +38,6 @@ void MIL_Report::Initialize( xml::xistream& xis )
     xis >> xml::start( "reports" )
             >> xml::list( "report", &MIL_Report::ReadReport )
         >> xml::end;
-
-    diaEvents_[ eReport_ReAvailableAfterRepairation                 ] = eRC_ANouveauDisponibleApresReparation;
-    diaEvents_[ eReport_EquipementRepairedInPlace                   ] = eRC_MaterielRepareSurPlace;
-    diaEvents_[ eReport_EquipementBackFromMaintenance               ] = eRC_MaterielRetourDeMaintenance;
-    diaEvents_[ eReport_IndirectFireObservation                     ] = eRC_ObservationTirIndirect;
-    diaEvents_[ eReport_StockSupplyRequest                          ] = eRC_DemandeRavitaillementStocks;
-    diaEvents_[ eReport_DotationSupplyRequest                       ] = eRC_DemandeRavitaillementDotations;
-    diaEvents_[ eReport_MedicalEvacuationRequest                    ] = eRC_DemandeEvacuationSanitaire;
-    diaEvents_[ eReport_EquipementEvacuationRequest                 ] = eRC_DemandeEvacuationMateriel;
-    diaEvents_[ eReport_DotationSupplyDone                          ] = eRC_RavitaillementDotationsEffectue;
-    diaEvents_[ eReport_StockSupplyDone                             ] = eRC_RavitaillementStockEffectue;
-    diaEvents_[ eReport_DotationSupplyCanceled                      ] = eRC_RavitaillementDotationsAnnule;
-    diaEvents_[ eReport_StockSupplyCanceled                         ] = eRC_RavitaillementStockAnnule;
-    diaEvents_[ eReport_LogisticStockThresholdExceeded              ] = eRC_SeuilLogistiqueStockDepasse;
-    diaEvents_[ eReport_LogisticDotationThresholdExceeded           ] = eRC_SeuilLogistiqueDotationDepasse;
-    diaEvents_[ eReport_HumanBackFromMedical                        ] = eRC_HumainRetourDeSante;
-    diaEvents_[ eReport_WoundedManDeath                             ] = eRC_DecesBlesse;
-    diaEvents_[ eReport_WoundedManDeathDuringTransport              ] = eRC_DecesBlessePendantTransport;
-    diaEvents_[ eReport_WoundedManDeathDuringHospitalization        ] = eRC_DecesBlessePendantHospitalisation;
-    diaEvents_[ eReport_FireInForbiddenArea                         ] = eRC_TirDansZoneInterdite;
-    diaEvents_[ eReport_FratricideIndirectFire                      ] = eRC_TirIndirectFratricide;
-    diaEvents_[ eReport_IndirectFireOnPopulation                    ] = eRC_TirIndirectSurPopulation;
-    diaEvents_[ eReport_FireOnFriendSide                            ] = eRC_TirSurCampAmi;
-    diaEvents_[ eReport_FiredByFriendSide                           ] = eRC_TireParCampAmi;
-    diaEvents_[ eReport_FireOnNeutralSide                           ] = eRC_TirSurCampNeutre;
-    diaEvents_[ eReport_FiredByNeutralSide                          ] = eRC_TireParCampNeutre;
-    diaEvents_[ eReport_FireOnCivilian                              ] = eRC_TirSurCivil;
-    diaEvents_[ eReport_FiredByCivilian                             ] = eRC_TireParCivil;
-    diaEvents_[ eReport_QuotaAlmostConsumed                         ] = eRC_AllocationConsentieBientotEpuisee;
-    diaEvents_[ eReport_StockCapacityExceeded                       ] = eRC_DepassementCapaciteStockage;
-    diaEvents_[ eReport_MissionImpossible_                          ] = eRC_MissionImpossible;
-    diaEvents_[ eReport_UnitDecontaminated                          ] = eRC_UniteDecontaminee;
-    diaEvents_[ eReport_OutOfGas                                    ] = eRC_PlusDeCarburant;
-    diaEvents_[ eReport_DifficultTerrain                            ] = eRC_TerrainDifficile;
-    diaEvents_[ eReport_Surrendered                                 ] = eRC_Rendu;
-    diaEvents_[ eReport_CancelSurrender                             ] = eRC_RedditionAnnulee;
-    diaEvents_[ eReport_MaintenanceWorkRateExceeded                 ] = eRC_RegimeMaintenanceDelaiDepasse;
-    diaEvents_[ eReport_EquipmentLoanInProgress                     ] = eRC_PretMaterielEnCours;
-    diaEvents_[ eReport_EquipmentLoanCanceled                       ] = eRC_PretMaterielAnnule;
-    diaEvents_[ eReport_EquipmentLoanDone                           ] = eRC_PretMaterielEffectue;
-    diaEvents_[ eReport_EquipmentLoanPartiallyDone                  ] = eRC_PretMaterielPartiellementEffectue;
-    diaEvents_[ eReport_EquipmentLoanImpossible                     ] = eRC_PretMaterielImpossible;
-    diaEvents_[ eReport_EquipmentLoanRetrievingDone                 ] = eRC_RecuperationMaterielPreteEffectuee;
-    diaEvents_[ eReport_EquipmentLoanRetrievingPartiallyDone        ] = eRC_RecuperationMaterielPretePartiellementEffectuee;
-    diaEvents_[ eReport_EquipmentLoanRetrievingImpossible           ] = eRC_RecuperationMaterielPreteImpossible;
-    diaEvents_[ eReport_EquipmentLent                               ] = eRC_MaterielPrete;
-    diaEvents_[ eReport_EquipmentLoanGivenBack                      ] = eRC_MaterielRendu;
-    diaEvents_[ eReport_InterventionAgainstPopulationStarted        ] = eRC_DebutInterventionFaceAPopulation;
-    diaEvents_[ eReport_MineExplosionOnPopulation                   ] = eRC_PopulationVictimeExplosionMines;
-    diaEvents_[ eReport_ExplosionSurBouchonMine                     ] = eRC_ExplosionSurBouchonMine;
-    diaEvents_[ eReport_ConfrontationWithPopulation                 ] = eRC_PopulationVictimeAffrontements;
-    diaEvents_[ eReport_Blocked                                     ] = eRC_Bloquee;
-    diaEvents_[ eReport_Filtered                                    ] = eRC_Filtree;
-    diaEvents_[ eReport_TerroristAttackAgainstPopulation            ] = eRC_AttentatTerroristeDansPopulation;
-    diaEvents_[ eReport_EvacuationResourcesLevelReached             ] = eRC_AlerteDisponibiliteMoyensReleve;
-    diaEvents_[ eReport_CollectionResourcesLevelReached             ] = eRC_AlerteDisponibiliteMoyensRamassage;
-    diaEvents_[ eReport_DoctorResourcesLevelReached                 ] = eRC_AlerteDisponibiliteMedecins;
-    diaEvents_[ eReport_RepairerResourcesLevelReached               ] = eRC_AlerteDisponibiliteReparateurs;
-    diaEvents_[ eReport_HaulerResourcesLevelReached                 ] = eRC_AlerteDisponibiliteRemorqueurs;
-    diaEvents_[ eReport_ConvoyTransporterResourcesLevelReached      ] = eRC_AlerteDisponibiliteVecteurs;
-    diaEvents_[ eReport_DifficultMovementProgression                ] = eRC_DifficultMovementProgression;
-    diaEvents_[ eReport_UrbanCollisionStarted                       ] = eRC_UrbanCollisionStarted;
-    diaEvents_[ eReport_UrbanCollisionStopped                       ] = eRC_UrbanCollisionStopped;
-
-    diaEvents_[ eReport_IndirectFireOnTarget] = eRC_TirIndirectSurCible;
-    diaEvents_[ eReport_DestructionPC ]       = eRC_DestructionPC;
-    diaEvents_[ eReport_MunitionInterdite   ] = eRC_MunitionInterdite;
-    diaEvents_[ eReport_MunitionAutorise    ] = eRC_MunitionAutorise;
-
-    diaEvents_[ eReport_EmbarkmentStarted        ] = eRC_EmbarkmentStarted;
-    diaEvents_[ eReport_EmbarkmentInterrupted    ] = eRC_EmbarkmentInterrupted;
-    diaEvents_[ eReport_EmbarkmentResumed        ] = eRC_EmbarkmentResumed;
-    diaEvents_[ eReport_EmbarkmentFinished       ] = eRC_EmbarkmentFinished;
-    diaEvents_[ eReport_DisembarkmentStarted     ] = eRC_DisembarkmentStarted;
-    diaEvents_[ eReport_DisembarkmentInterrupted ] = eRC_DisembarkmentInterrupted;
-    diaEvents_[ eReport_DisembarkmentResumed     ] = eRC_DisembarkmentResumed;
-    diaEvents_[ eReport_DisembarkmentFinished    ] = eRC_DisembarkmentFinished;
-    diaEvents_[ eReport_ActiveProtectionCounter  ] = eRC_ActiveProtectionCounter;
-    diaEvents_[ eReport_ActiveProtectionHardKill ] = eRC_ActiveProtectionHardKill;
-    diaEvents_[ eReport_Poisoned                 ] = eRC_Poisoned;
-    diaEvents_[ eReport_Contaminated             ] = eRC_Contaminated;
-    diaEvents_[ eReport_FireOnEnemySide          ] = eRC_TirSurCampEnnemi;
-    diaEvents_[ eReport_FiredByEnemySide         ] = eRC_TireParCampEnnemi;
-
-    diaEvents_[ eReport_DamagesCausedToNeutralSide ] = eRC_DamagesCausedToNeutralSide;
-    diaEvents_[ eReport_DamagesCausedByNeutralSide ] = eRC_DamagesCausedByNeutralSide;
-    diaEvents_[ eReport_InfrastructureDamaged      ] = eRC_InfrastructureDamaged;
-    diaEvents_[ eReport_LivingAreaDamaged          ] = eRC_LivingAreaDamaged;
-    diaEvents_[ eReport_BorderCrossed              ] = eRC_BorderCrossed;
-    diaEvents_[ eReport_TacticallyDestroyed        ] = eRC_TacticallyDestroyed;
-    diaEvents_[ eReport_CiviliansEncountered       ] = eRC_CiviliansEncountered;
-    diaEvents_[ eReport_PrisonersUnsupplied        ] = eRC_PrisonersUnsupplied;
-    diaEvents_[ eReport_PrisonersCampFull          ] = eRC_PrisonersCampFull;
-
-    diaEvents_[ eReport_SectionDeployee     ] = eRC_SectionDeployee;
-    diaEvents_[ eReport_StartDeploy         ] = eRC_StartDeploy;
-    diaEvents_[ eReport_SectionUndeployed   ] = eRC_SectionUndeployed;
-    diaEvents_[ eReport_StartUndeploy       ] = eRC_StartUndeploy;
-    diaEvents_[ eReport_UnderIndirectFire   ] = eRC_PrisSousTirArtillerie;
-    diaEvents_[ eReport_UnderIEDFire        ] = eRC_PrisSousTirIED;
-    diaEvents_[ eReport_UnderLightingFire   ] = eRC_PrisSousTirEclairant;
-    diaEvents_[ eReport_UnderSmokeFire      ] = eRC_PrisSousTirFumigene;
-
-    diaEvents_[ eReport_SetUponByPopulation ] = eRC_PriseAPartieParPopulation;
-    diaEvents_[ eReport_Questionning ] = eRC_Questionning;
-
-    diaEvents_[ eReport_FragOrderReceived ] = eRC_FragOrderReceived;
-
-    diaEvents_[ eReport_NotActivatedUndergroundNetwork ] = eRC_NotActivatedUndergroundNetwork;
-    diaEvents_[ eReport_FireObserver ] = eRC_FireObserver;
 }
 
 // -----------------------------------------------------------------------------

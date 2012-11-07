@@ -35,7 +35,7 @@ DECLARE_HOOK( ObjectIsOnBorder, bool, ( const SWORD_Model* object, const MT_Vect
 
 namespace
 {
-    void PostReport( const wrapper::View& entity, MIL_Report::E_EngineReport code )
+    void PostReport( const wrapper::View& entity, MIL_Report::E_DecisionalReport code )
     {
         wrapper::Event event( "movement report" );
         event[ "entity/data" ] = entity[ "data" ];
@@ -43,7 +43,7 @@ namespace
         event.Post();
     }
 
-    void PostReport( const wrapper::View& entity, MIL_Report::E_EngineReport code, const std::string& name )
+    void PostReport( const wrapper::View& entity, MIL_Report::E_DecisionalReport code, const std::string& name )
     {
         wrapper::Event event( "movement report with name" );
         event[ "entity/data" ] = entity[ "data" ];
@@ -203,13 +203,13 @@ PathWalker::E_ReturnCode PathWalker::SetCurrentPath( const boost::shared_ptr< Pa
         {
             if( GET_HOOK( ObjectIsInside )( *it, lastWaypoint ) )
             {
-                PostReport( entity, MIL_Report::eReport_DifficultMovementProgression, (*it)[ "type/real-name" ] );
+                PostReport( entity, MIL_Report::eRC_DifficultMovementProgression, (*it)[ "type/real-name" ] );
                 isInsideObject = true;
                 break;
             }
         }
         if( !isInsideObject )
-            PostReport( entity, MIL_Report::eReport_DifficultTerrain );
+            PostReport( entity, MIL_Report::eRC_TerrainDifficile );
         rc = ePartialPath;
     }
     itNextPathPoint_ = itCurrentPathPoint_;
@@ -531,7 +531,7 @@ PathWalker::E_ReturnCode PathWalker::Move( const boost::shared_ptr< PathResult >
         speed_ = 0;
         if( !bFuelReportSent_ )
         {
-            PostReport( entity, MIL_Report::eReport_OutOfGas );
+            PostReport( entity, MIL_Report::eRC_PlusDeCarburant );
             bFuelReportSent_ = true;
         }
         PostMovement( entity );
