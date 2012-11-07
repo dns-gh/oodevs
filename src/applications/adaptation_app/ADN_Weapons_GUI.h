@@ -14,6 +14,7 @@
 
 class ADN_Weapons_Data;
 class ADN_Table;
+class ADN_Table3;
 class ADN_Weapons_ListView;
 
 // =============================================================================
@@ -70,7 +71,7 @@ public:
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
 
-    ADN_Table* CreateWeaponsTable();
+    ADN_Table3* CreateWeaponsTable();
     ADN_Table* CreatePHTable();
 
     void UpdateModifiers();

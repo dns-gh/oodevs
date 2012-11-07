@@ -57,7 +57,7 @@ public:
     ADN_PK_Table( const QString& objectName, QWidget* pParent = 0 )
         : ADN_Table3( objectName, pParent )
     {
-        dataModel_.setColumnCount( 2 );
+        dataModel_.setColumnCount( 5 );
         setSortingEnabled( true );
         setShowGrid( true );
         QStringList horizontalHeaders;
@@ -75,8 +75,6 @@ public:
         delegate_.AddColorOnColumn( 2, 0, 100 );
         delegate_.AddColorOnColumn( 3, 0, 100 );
         delegate_.AddColorOnColumn( 4, 0, 100 );
-//         int myints[] = { 2, 3, 4 };
-//         std::vector< int > columns( myints, myints + sizeof( myints ) / sizeof( int ) );
         std::vector< int > columns;
         columns.push_back( 2 );
         columns.push_back( 3 );

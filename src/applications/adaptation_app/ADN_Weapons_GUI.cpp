@@ -160,6 +160,35 @@ private:
     uint nNbrDatas_;
 };
 
+class ADN_Weapon_Table: public ADN_Table3
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    ADN_Weapon_Table( const QString& objectName, QWidget* pParent = 0 )
+        : ADN_Table3( objectName, pParent )
+    {
+        dataModel_.setColumnCount( 5 );
+        setSortingEnabled( true );
+        setShowGrid( true );
+        QStringList horizontalHeaders;
+        horizontalHeaders << tr( "Weapon system" )
+                          << tr( "Rnd per burst" )
+                          << tr( "Burst duration (s)" )
+                          << tr( "Rnd per reload" )
+                          << tr( "Reload duration (s)" );
+        dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+        horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+        verticalHeader()->setVisible( false );
+        delegate_.AddSpinBoxOnColumn( 1 );
+        delegate_.AddDelayEditOnColumn( 2 );
+        delegate_.AddSpinBoxOnColumn( 3 );
+        delegate_.AddDelayEditOnColumn( 4 );
+    }
+    virtual ~ADN_Weapon_Table() {}
+    //@}
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI constructor
 // Created: APE 2004-12-13
@@ -323,43 +352,22 @@ void ADN_Weapons_GUI::Build()
 // Name: ADN_Weapons_GUI::CreateWeaponsTable
 // Created: APE 2005-03-29
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
+ADN_Table3* ADN_Weapons_GUI::CreateWeaponsTable()
 {
     ADN_GuiBuilder builder;
-    ADN_Table* pTable = builder.CreateTable( 0 );
+    ADN_Weapon_Table* pTable = new ADN_Weapon_Table( tr( "Weapon systems" ) );
     ADN_Weapons_Data::T_WeaponInfosVector& weapons = data_.weapons_;
 
-    // Setup the header.
-    pTable->setNumCols( 5 );
-    pTable->horizontalHeader()->setLabel( 0, tr( "Weapon system" ) );
-    pTable->horizontalHeader()->setLabel( 1, tr( "Rnd per burst" ) );
-    pTable->horizontalHeader()->setLabel( 2, tr( "Burst duration (s)" ) );
-    pTable->horizontalHeader()->setLabel( 3, tr( "Rnd per reload" ) );
-    pTable->horizontalHeader()->setLabel( 4, tr( "Reload duration (s)" ) );
-    pTable->horizontalHeader()->show();
-
-    pTable->setNumRows( static_cast< int >( weapons.size() + 1 ) );
-    builder.AddTableCell( pTable, 0, 0, tr( "Weapon system" ) );
-    builder.AddTableCell( pTable, 0, 1, tr( "Rnd per burst" ) );
-    builder.AddTableCell( pTable, 0, 2, tr( "Burst duration (s)" ) );
-    builder.AddTableCell( pTable, 0, 3, tr( "Rnd per reload" ) );
-    builder.AddTableCell( pTable, 0, 4, tr( "Reload duration (s)" ) );
-    pTable->hideRow( 0 );
-    pTable->AddBoldGridRow( 1 );
-
-    int nRow = 1;
+    int nRow = 0;
     for( ADN_Weapons_Data::IT_WeaponInfosVector it = weapons.begin(); it != weapons.end(); ++it, ++nRow )
     {
         ADN_Weapons_Data::WeaponInfos& weapon = **it;
-
-        builder.AddTableCell<ADN_TableItem_String>( pTable, &weapon, nRow, 0, weapon.strName_, eNone, Q3TableItem::Never );
-        builder.AddTableCell<ADN_TableItem_Int>(    pTable, &weapon, nRow, 1, weapon.nRoundsPerBurst_, eGreaterEqualZero );
-        builder.AddTableCell<ADN_TableItem_TimeField>( pTable, &weapon, nRow, 2, weapon.burstDuration_ );
-        builder.AddTableCell<ADN_TableItem_Int>(    pTable, &weapon, nRow, 3, weapon.nRoundsPerReload_, eGreaterZero );
-        builder.AddTableCell<ADN_TableItem_TimeField>( pTable, &weapon, nRow, 4, weapon.reloadDuration_ );
+        pTable->AddItem( nRow, 0, &weapon, weapon.strName_.GetData().c_str() );
+        pTable->AddItem( nRow, 1, &weapon, &weapon.nRoundsPerBurst_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+        pTable->AddItem( nRow, 2, &weapon, &weapon.burstDuration_, ADN_StandardItem::eDelay, Qt::ItemIsEditable );
+        pTable->AddItem( nRow, 3, &weapon, &weapon.nRoundsPerReload_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+        pTable->AddItem( nRow, 4, &weapon, &weapon.reloadDuration_ , ADN_StandardItem::eDelay, Qt::ItemIsEditable );
     }
-
-    pTable->AdjustColumns( 20 );
     return pTable;
 }
 
@@ -453,7 +461,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Weapon systems" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
+    mainWindow.AddTable( tr( "Weapon systems" ), new ADN_Callback<ADN_Table3*,ADN_Weapons_GUI>( this, & ADN_Weapons_GUI::CreateWeaponsTable ) );
     mainWindow.AddTable( tr( "PHs" ), new ADN_Callback<ADN_Table*,ADN_Weapons_GUI>( this, &ADN_Weapons_GUI::CreatePHTable ) );
 }
 

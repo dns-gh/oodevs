@@ -5482,6 +5482,29 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Weapon_Table</name>
+    <message>
+        <source>Weapon system</source>
+        <translation type="unfinished">نظام الأسلحة</translation>
+    </message>
+    <message>
+        <source>Rnd per burst</source>
+        <translation type="unfinished">Rnd كل الاندفاع</translation>
+    </message>
+    <message>
+        <source>Burst duration (s)</source>
+        <translation type="unfinished">انفجر المدة (s)</translation>
+    </message>
+    <message>
+        <source>Rnd per reload</source>
+        <translation type="unfinished">Rnd كل تحديث</translation>
+    </message>
+    <message>
+        <source>Reload duration (s)</source>
+        <translation type="unfinished">تحديث المدة (s)</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Name</source>
@@ -5574,22 +5597,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Weapon system</source>
         <translation type="unfinished">نظام الأسلحة</translation>
-    </message>
-    <message>
-        <source>Rnd per burst</source>
-        <translation type="unfinished">Rnd كل الاندفاع</translation>
-    </message>
-    <message>
-        <source>Burst duration (s)</source>
-        <translation type="unfinished">انفجر المدة (s)</translation>
-    </message>
-    <message>
-        <source>Rnd per reload</source>
-        <translation type="unfinished">Rnd كل تحديث</translation>
-    </message>
-    <message>
-        <source>Reload duration (s)</source>
-        <translation type="unfinished">تحديث المدة (s)</translation>
     </message>
     <message>
         <source>Target size</source>

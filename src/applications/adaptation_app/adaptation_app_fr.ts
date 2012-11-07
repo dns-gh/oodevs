@@ -5509,6 +5509,29 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Weapon_Table</name>
+    <message>
+        <source>Weapon system</source>
+        <translation>Système d&apos;arme</translation>
+    </message>
+    <message>
+        <source>Rnd per burst</source>
+        <translation>Coups par rafale</translation>
+    </message>
+    <message>
+        <source>Burst duration (s)</source>
+        <translation>Durée(s) d&apos;une rafale</translation>
+    </message>
+    <message>
+        <source>Rnd per reload</source>
+        <translation>Coups par recharge</translation>
+    </message>
+    <message>
+        <source>Reload duration (s)</source>
+        <translation>Durée(s) d&apos;un rechargement</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Weapon system</source>
@@ -5597,22 +5620,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Max range</source>
         <translation>Portée max</translation>
-    </message>
-    <message>
-        <source>Rnd per burst</source>
-        <translation>Coups par rafale</translation>
-    </message>
-    <message>
-        <source>Burst duration (s)</source>
-        <translation>Durée(s) d&apos;une rafale</translation>
-    </message>
-    <message>
-        <source>Rnd per reload</source>
-        <translation>Coups par recharge</translation>
-    </message>
-    <message>
-        <source>Reload duration (s)</source>
-        <translation>Durée(s) d&apos;un rechargement</translation>
     </message>
     <message>
         <source>Target size</source>

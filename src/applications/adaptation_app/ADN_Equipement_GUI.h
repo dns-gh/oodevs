@@ -19,7 +19,6 @@ class ADN_ComboBox;
 class ADN_Equipement_AttritionTable;
 class ADN_Equipement_AttritionGraph;
 class ADN_ListView;
-class ADN_Table;
 class ADN_Table3;
 class ADN_ComboBox_Vector;
 

@@ -5498,6 +5498,29 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Weapon_Table</name>
+    <message>
+        <source>Weapon system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rnd per burst</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burst duration (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rnd per reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload duration (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Weapon system</source>
@@ -5585,22 +5608,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Max range</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Rnd per burst</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Burst duration (s)</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Rnd per reload</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Reload duration (s)</source>
         <translation></translation>
     </message>
     <message>
