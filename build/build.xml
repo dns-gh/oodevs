@@ -827,7 +827,7 @@
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,simulation_kernel_test,
                                  integration_decisionnal_test,checkpoint_test,protocol_test,positions_plugin_test,
                                  actions_test,launcher_test,propagation_test,client_proxy_test,
-                                 start_gui_test" description="run all tests"/>
+                                 app_test" description="run all tests"/>
 
     <target name="3a_test" depends="3a">
         <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt" failonwarning="${failonwarning}"/>
@@ -1225,7 +1225,7 @@
             failonwarning="${failonwarning}"/>
     </target>
 
-    <macrodef name="check-start-gui">
+    <macrodef name="check-gui">
         <attribute name="app"/>
         <element name="elements" optional="true" implicit="true"/>
         <sequential>
@@ -1239,15 +1239,44 @@
         </sequential>
     </macrodef>
 
-    <target name="start_gui_test" description="check whether gui applications start properly">
-        <check-start-gui app="adaptation_app"/>
-        <check-start-gui app="preparation_app"/>
-        <check-start-gui app="selftraining_app"/>
-        <check-start-gui app="gaming_app">
+    <macrodef name="check-app">
+        <attribute name="app"/>
+        <element name="elements" optional="true" implicit="true"/>
+        <sequential>
+            <exec taskname="@{app}" executable="${out.dir}/release/applications/@{app}/@{app}.exe"
+                  dir="${run.dir}" failonerror="true">
+                <elements/>
+            </exec>
+        </sequential>        
+    </macrodef>
+
+    <target name="app_test" description="check whether gui applications start properly">
+        <check-gui app="adaptation_app"/>
+        <check-gui app="preparation_app"/>
+        <check-gui app="selftraining_app"/>
+        <check-gui app="gaming_app">
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=worldwide/Egypt"/>
             <arg value="--session=default"/>
-        </check-start-gui>
+        </check-gui>
+        <check-app app="dispatcher_app">
+            <arg value="--root-dir=../../data"/>
+            <arg value="--exercise=worldwide/Egypt"/>
+            <arg value="--session=default"/>
+            <arg value="--dispatcher-port=${test.portnumber}"/>
+            <arg value="--test"/>
+        </check-app>
+        <check-app app="launcher_app"/>
+        <check-app app="launcher_test_app">
+            <arg value="--test"/>
+        </check-app>
+        <check-app app="replayer_app">
+            <arg value="--root-dir=../../data"/>
+            <arg value="--exercise=worldwide/Egypt"/>
+            <arg value="--session=default"/>
+            <arg value="--dispatcher-port=${test.portnumber}"/>
+            <arg value="--test"/>
+        </check-app>
     </target>
 
     <!--
