@@ -1166,7 +1166,7 @@ bool PHY_ComposantePion::CanPerceive( const transport::PHY_RoleAction_Loading* r
 bool PHY_ComposantePion::CanMove() const
 {
     assert( pState_ );
-    return pState_->IsUsable() && CanBeUsedForMove();
+    return pState_->IsUsable() && !pState_->IsDamaged() && CanBeUsedForMove();
 }
 
 // -----------------------------------------------------------------------------
