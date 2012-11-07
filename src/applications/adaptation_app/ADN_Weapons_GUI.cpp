@@ -443,7 +443,7 @@ ADN_Table3* ADN_Weapons_GUI::CreatePHTable()
             ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
             for( ADN_Weapons_Data::IT_PhInfosVector it3 = phs.begin(); it3 != phs.end(); ++it3 )
             {
-                std::set< int >::const_iterator itFound = distancesSet.find( ( *it3 )->nDistance_.GetData() );
+                std::set< int >::iterator itFound = distancesSet.find( ( *it3 )->nDistance_.GetData() );
                 int nIndex = static_cast< int >( std::distance( distancesSet.begin(), itFound ) );
                 int row = nRow + nSubRow;
                 int col = 2 + nIndex;

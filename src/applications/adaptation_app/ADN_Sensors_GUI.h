@@ -15,6 +15,7 @@
 #include "ADN_Radars_GUI.h"
 
 class ADN_Table;
+class ADN_Table3;
 
 // =============================================================================
 /** @class  ADN_Sensors_GUI
@@ -84,7 +85,7 @@ public:
     void RegisterTable( ADN_MainWindow& mainWindow );
 
     ADN_Table* CreateAgentDetectionTable();
-    ADN_Table* CreateObjectDetectionTable();
+    ADN_Table3* CreateObjectDetectionTable();
     //@}
 
 private:

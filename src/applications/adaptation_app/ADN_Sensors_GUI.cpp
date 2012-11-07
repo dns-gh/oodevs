@@ -453,57 +453,73 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     return pTable;
 }
 
+namespace
+{
+    class ADN_ObjectDetection_Table : public ADN_Table3
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        ADN_ObjectDetection_Table( const QString& objectName, void* data, QWidget* pParent = 0 )
+            : ADN_Table3( objectName, pParent )
+        {
+            setAlternatingRowColors( false );
+            setSortingEnabled( false );
+            setShowGrid( true );
+            horizontalHeader()->setVisible( false );
+            verticalHeader()->setVisible( false );
+            dataModel_.setRowCount( 2 );
+            dataModel_.setColumnCount( 3 + eNbrUnitPosture );
+            horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+            horizontalHeader()->setResizeMode( 0, QHeaderView::Stretch );
+            horizontalHeader()->setResizeMode( 1, QHeaderView::Stretch );
+            AddItem( 0, 0, 2, 1, data, tools::translate( "ADN_Sensors_GUI", "Sensor" ) );
+            AddItem( 0, 1, 2, 1, data, tools::translate( "ADN_Sensors_GUI", "Object" ) );
+            AddItem( 0, 2, 2, 1, data, tools::translate( "ADN_Sensors_GUI", "Detection distance (m)" ) );
+            AddItem( 0, 3, 1, eNbrUnitPosture, data, tools::translate( "ADN_Sensors_GUI", "Stance" ) );
+            for( unsigned int n = 0; n < eNbrUnitPosture; ++n )
+                AddItem( 1, 3 + n, data, ENT_Tr::ConvertFromUnitPosture( static_cast< E_UnitPosture >( n ), ENT_Tr::eToTr ).c_str() );
+        }
+        virtual ~ADN_ObjectDetection_Table() {}
+        //@}
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::CreateObjectDetectionTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
+ADN_Table3* ADN_Sensors_GUI::CreateObjectDetectionTable()
 {
-    ADN_GuiBuilder builder;
-    ADN_Table* pTable = builder.CreateTable( 0 );
-
-    // Create the header.
-    pTable->horizontalHeader()->hide();
-    pTable->setTopMargin( 0 );
-
-    pTable->setNumRows( 2 );
-    pTable->setNumCols( 3 + eNbrUnitPosture );
-
-    builder.AddTableCell( pTable, 0, 0, 2, 1, tr( "Sensor" ) );
-    builder.AddTableCell( pTable, 0, 1, 2, 1, tr( "Object" ) );
-    builder.AddTableCell( pTable, 0, 2, 2, 1, tr( "Dectection distance (m)" ) );
-    builder.AddTableCell( pTable, 0, 3, 1, eNbrUnitPosture, tr( "Stance" ) );
-    pTable->AddBoldGridCol( 3 );
-
-    for( uint n = 0; n < eNbrUnitPosture; ++n )
-        builder.AddTableCell( pTable, 1, 3 + n, ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)n, ENT_Tr::eToTr  ).c_str());
-
+    ADN_Table3* pTable = new ADN_ObjectDetection_Table( strClassName_ + "_ObjectDetection", &data_.vSensors_ );
+    //pTable->AddBoldGridCol( 3 );
     // Fill the table
     int nRow = 2;
     for( ADN_Sensors_Data::IT_SensorsInfos_Vector it = data_.vSensors_.begin(); it != data_.vSensors_.end(); ++it )
     {
         ADN_Sensors_Data::SensorInfos& sensor = **it;
-        if( ! sensor.bCanDetectObjects_.GetData() || sensor.vTargets_.empty() )
+        if( !sensor.bCanDetectObjects_.GetData() || sensor.vTargets_.empty() )
             continue;
 
         pTable->setNumRows( static_cast< int >( nRow + sensor.vTargets_.size() ) );
-        pTable->AddBoldGridRow( nRow );
-        builder.AddTableCell<ADN_TableItem_String>( pTable, &sensor, nRow, 0, static_cast< int >( sensor.vTargets_.size() ), 1, sensor.strName_, eNone, Q3TableItem::Never );
+        //pTable->AddBoldGridRow( nRow );
+        pTable->AddItem( nRow, 0, static_cast< int >( sensor.vTargets_.size() ), 1, &sensor, sensor.strName_.GetData().c_str() );
 
         int nSubRow = 0;
         for( ADN_Sensors_Data::IT_TargetsInfos_Vector it2 = sensor.vTargets_.begin(); it2 != sensor.vTargets_.end(); ++it2, ++nSubRow )
         {
             ADN_Sensors_Data::TargetInfos& target = **it2;
-            builder.AddTableCell<ADN_TableItem_String>( pTable, &sensor, nRow + nSubRow, 1, target.ptrObject_.GetData()->strName_, eNone, Q3TableItem::Never );
-            builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow + nSubRow, 2, target.rDistanceDetection_, eGreaterEqualZero );
-
-            int nCol = 3;
-            AddCells( pTable, &sensor, nRow + nSubRow, nCol, target.vModifStance_, eNbrUnitPosture );
+            int row = nRow + nSubRow;
+            pTable->AddItem( row, 1, &sensor, target.ptrObject_.GetData()->strName_.GetData().c_str() );
+            pTable->GetDelegate().AddSpinBox( row, row, 2, 2, 0, std::numeric_limits< int >::max() );
+            pTable->AddItem( row, 2, &sensor, &target.rDistanceDetection_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+            pTable->GetDelegate().AddDoubleSpinBox( row, row, 3, 2 + eNbrUnitPosture, 0, 1, 0.001, 3 );
+            pTable->GetDelegate().AddColor( row, row, 3, 2 + eNbrUnitPosture, 0, 1 );
+            for( unsigned int i = 0; i < eNbrUnitPosture; ++i )
+                pTable->AddItem( row, 3 + i, &sensor, &target.vModifStance_[ i ]->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
         }
-
         nRow += static_cast< int >( sensor.vTargets_.size() );
     }
-    pTable->AdjustColumns( 50 );
     return pTable;
 }
 
@@ -514,5 +530,5 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
 void ADN_Sensors_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
     mainWindow.AddTable( tr( "Agent detection" ), new ADN_Callback<ADN_Table*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateAgentDetectionTable ) );
-    mainWindow.AddTable( tr( "Object detection" ), new ADN_Callback<ADN_Table*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateObjectDetectionTable ) );
+    mainWindow.AddTable( tr( "Object detection" ), new ADN_Callback<ADN_Table3*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateObjectDetectionTable ) );
 }

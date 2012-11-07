@@ -3972,7 +3972,7 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished">كائن</translation>
     </message>
     <message>
-        <source>Dectection distance (m)</source>
+        <source>Detection distance (m)</source>
         <translation type="unfinished">ديكتيكشن المسافة (م)</translation>
     </message>
     <message>

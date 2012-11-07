@@ -3985,16 +3985,16 @@ Make sure that the file is not write-protected.</translation>
         <translation>Object</translation>
     </message>
     <message>
-        <source>Dectection distance (m)</source>
-        <translation>Dectection distance (m)</translation>
-    </message>
-    <message>
         <source>Agent detection</source>
         <translation>Agent detection</translation>
     </message>
     <message>
         <source>Object detection</source>
         <translation>Object detection</translation>
+    </message>
+    <message>
+        <source>Detection distance (m)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

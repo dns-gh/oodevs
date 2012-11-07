@@ -3974,7 +3974,7 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation>Objeto</translation>
     </message>
     <message>
-        <source>Dectection distance (m)</source>
+        <source>Detection distance (m)</source>
         <translation>Distancia de deteccion (m)</translation>
     </message>
     <message>

@@ -3904,7 +3904,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>Objet</translation>
     </message>
     <message>
-        <source>Dectection distance (m)</source>
+        <source>Detection distance (m)</source>
         <translation>Distance de détection (m)</translation>
     </message>
     <message>
