@@ -323,7 +323,8 @@ integration.isCivilian = function( pion )
     end
 end
 
-integration.getNearbyConcentration = function ( crowd, loadingPoint )
+integration.getNearbyConcentration = function ( crowd, loadingPoint, distance )
+    --$$$ hard coded 300
     return DEC_GetConcentrationLaPlusProche( myself, crowd.source, loadingPoint.source, 300 )
 end
 
