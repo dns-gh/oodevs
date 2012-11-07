@@ -242,7 +242,7 @@ namespace
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::SendCreation() const
 {
-    if( object_->HasChild() )
+    if( HasChild() )
         return;
     client::UrbanCreation message;
     message().mutable_object()->set_id( GetID() );
@@ -300,7 +300,7 @@ void UrbanObjectWrapper::SendDestruction() const
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::SendFullState() const
 {
-    if( object_->HasChild() )
+    if( HasChild() )
         return;
     client::UrbanUpdate message;
     message().mutable_object()->set_id( GetID() );
@@ -319,7 +319,7 @@ void UrbanObjectWrapper::SendFullState() const
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::UpdateState()
 {
-    if( object_->HasChild() )
+    if( HasChild() )
         return;
     client::UrbanUpdate message;
     message().mutable_object()->set_id( GetID() );
@@ -603,4 +603,158 @@ void UrbanObjectWrapper::OnReceiveSetEvacuated( const sword::MissionParameter_Va
 void UrbanObjectWrapper::AddLivingArea( MIL_LivingArea& livingArea )
 {
     livingAreas_.push_back( &livingArea );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::CanInteractWith
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+bool UrbanObjectWrapper::CanInteractWith( const MIL_Entity_ABC& agent ) const
+{
+    if( HasChild() )
+        return false;
+    return MIL_Object::CanInteractWith( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::CanInteractWithEntity
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+bool UrbanObjectWrapper::CanInteractWithEntity() const
+{
+    if( HasChild() )
+        return false;
+    return MIL_Object::CanInteractWithEntity();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ApplyIndirectFire
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation, MIL_Army_ABC* army )
+{
+    if( HasChild() )
+        return;
+    MIL_Object::ApplyIndirectFire( attritionSurface, dotation, army );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ApplyDirectFire
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ApplyDirectFire() const
+{
+    if( HasChild() )
+        return;
+    MIL_Object::ApplyDirectFire();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ApplyDestruction
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ApplyDestruction( const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition )
+{
+    if( HasChild() )
+        return;
+    MIL_Object::ApplyDestruction( attritionSurface, attrition );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::PreprocessAgent
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::PreprocessAgent( MIL_Agent_ABC& agent )
+{
+    if( HasChild() )
+        return;
+    MIL_Object::PreprocessAgent( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessAgentEntering
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessAgentEntering( MIL_Agent_ABC& agent )
+{
+    if( HasChild() )
+        return;
+    MIL_Object::ProcessAgentEntering( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessAgentExiting
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessAgentExiting( MIL_Agent_ABC& agent )
+{
+    if( HasChild() )
+        return;
+    MIL_Object::ProcessAgentExiting( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessAgentMovingInside
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
+{
+    if( HasChild() )
+        return;
+    MIL_Object::ProcessAgentMovingInside( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessAgentInside
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessAgentInside( MIL_Agent_ABC& agent )
+{
+    if( HasChild() )
+        return;
+    MIL_Object::ProcessAgentInside( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::PreprocessPopulation
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::PreprocessPopulation( MIL_PopulationElement_ABC& population )
+{
+    if( HasChild() )
+        return;
+    MIL_Object::PreprocessPopulation( population );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ProcessPopulationInside
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
+{
+    if( HasChild() )
+        return;
+    MIL_Object::ProcessPopulationInside( population );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ApplyStructuralState
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::ApplyStructuralState( float structuralState ) const
+{
+    if( HasChild() )
+        return;
+    MIL_Object::ApplyStructuralState( structuralState );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::CanCollideWithEntity
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+bool UrbanObjectWrapper::CanCollideWithEntity() const
+{
+    if( HasChild() )
+        return false;
+    return MIL_Object::CanCollideWithEntity();
 }

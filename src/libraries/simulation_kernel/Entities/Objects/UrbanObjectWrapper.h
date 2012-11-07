@@ -104,6 +104,21 @@ public:
     void AddLivingArea( MIL_LivingArea& livingArea );
     //@}
 
+    virtual bool CanInteractWith      ( const MIL_Entity_ABC& agent ) const;
+    virtual bool CanInteractWithEntity() const;
+    virtual void ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation, MIL_Army_ABC* army );
+    virtual void ApplyDirectFire() const;
+    virtual void ApplyDestruction( const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition );
+    virtual void PreprocessAgent         ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent );
+    virtual void PreprocessPopulation    ( MIL_PopulationElement_ABC& population );
+    virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population );
+    virtual void ApplyStructuralState( float structuralState ) const;
+    virtual bool CanCollideWithEntity() const;
+
 private:
     //!@name Helpers
     //@{
