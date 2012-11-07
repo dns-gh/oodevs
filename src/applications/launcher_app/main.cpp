@@ -26,6 +26,7 @@ namespace
         bpo::options_description desc( "Allowed options" );
         desc.add_options()
             ( "help,h"      , "produce help message" )
+            ( "test,t"      , "test mode" )
             ( "install,i"   , "Install service" )
             ( "start,s"     , "Start service" )
             ( "kill,k"      , "Kill service" )
@@ -63,7 +64,7 @@ namespace
             service.KillService();
         else if( vm.count( "uninstall" ) )
             service.UnInstall();
-        else
+        else if( !vm.count( "test" ) )
             service.ExecuteSubProcess();
 
         LauncherService::Terminate();
