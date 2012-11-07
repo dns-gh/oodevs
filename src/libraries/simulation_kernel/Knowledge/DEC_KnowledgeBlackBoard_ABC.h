@@ -73,7 +73,7 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Convoy_ABC::serialize
+// Name: DEC_KnowledgeBlackBoard_ABC::serialize
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >

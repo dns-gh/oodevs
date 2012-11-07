@@ -29,7 +29,6 @@
 #include "simulation_kernel/HealComputerFactory_ABC.h"
 #include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/set.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -374,8 +373,8 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& )
 {
+    // NOTHING
 }
-
 
 // =============================================================================
 // NETWORK
@@ -484,7 +483,6 @@ void PHY_RolePion_Humans::SendFullState( unsigned int context ) const
 {
     std::for_each( humansToUpdate_.begin(), humansToUpdate_.end(), boost::bind( &Human_ABC::SendFullState, _1, context ) );
 }
-
 
 // =============================================================================
 // OPERATIONS
