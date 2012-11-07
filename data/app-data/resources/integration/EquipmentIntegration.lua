@@ -419,6 +419,10 @@ integration.randomPositionInCircle = function( position, radius )
     return CreateKnowledge( world.Point, DEC_Geometrie_PositionAleatoireDansCercle( position:getPosition(), radius ) )
 end
 
+integration.randomPositionOnCircle = function( position, radius )
+    return CreateKnowledge( world.Point, DEC_Geometrie_PositionAleatoireSurCercle( position:getPosition(), radius ) )
+end
+
 -- -------------------------------------------------------------------------------- 
 -- Split area into subareas
 -- @author CMA
