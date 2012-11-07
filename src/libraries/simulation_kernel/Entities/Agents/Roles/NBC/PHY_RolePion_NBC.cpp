@@ -127,7 +127,7 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
     if( bNbcProtectionSuitWorn_ )
         return;
     if( ! intoxicated_ && ! poisoned_ )
-        MIL_Report::PostEvent( owner_, MIL_Report::eRC_Poisoned );
+        MIL_Report::PostEvent( owner_, MIL_Report::eRC_Empoisonne );
     poisoned_ = true;
     owner_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyPoisonous, contamination );
 }
@@ -144,7 +144,7 @@ void PHY_RolePion_NBC::Contaminate( const MIL_ToxicEffectManipulator& contaminat
         owner_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyContamination, contamination );
     nbcAgentTypesContaminating_.insert( &contamination.GetType() );
     if( rContaminationQuantity_ == 0 )
-        MIL_Report::PostEvent( owner_, MIL_Report::eRC_Contaminated );
+        MIL_Report::PostEvent( owner_, MIL_Report::eRC_Contamine );
     rContaminationQuantity_ += contamination.GetQuantity();
     rContaminationState_ = 1.;
     bHasChanged_ = true;

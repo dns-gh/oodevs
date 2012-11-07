@@ -188,6 +188,17 @@ def checkphyids(ui, phyname, phids, othername, otherids):
             result = 1
     return result
 
+def checkluacpp(ui, luaids, cppids):
+    result = 0
+    luanames = dict((v, k) for k,v in luaids.iteritems())
+    cppnames = dict((v, k) for k,v in cppids.iteritems())
+    for r in sorted(set(cppnames) & set(luanames)):
+        if luanames[r] != cppnames[r]:
+            ui.error('error: lua and c++ names differ: %s != %s\n' %
+                    (luanames[r], cppnames[r]))
+            result = 1
+    return result
+
 if __name__ == '__main__':
     ui = Ui()
     swordpath = sys.argv[1]
@@ -200,6 +211,9 @@ if __name__ == '__main__':
             'data/data/models/ada/decisional/dia5/Types_CR.lua')
     res, luaids = parseluaids(ui, luapath)
     if res:
+        result = 1
+
+    if checkluacpp(ui, luaids, cppids):
         result = 1
 
     intpath = os.path.join(swordpath,
