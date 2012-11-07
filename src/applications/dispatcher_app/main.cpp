@@ -19,6 +19,14 @@
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 
+namespace
+{
+bool HasOption( const std::vector< std::string >& args, const std::string& name )
+{
+    return std::find( args.begin(), args.end(), name ) != args.end();
+}
+}
+
 //-----------------------------------------------------------------------------
 // Name: Run()
 // Created: NLD 2004-02-04
@@ -29,17 +37,16 @@ int Run( LPSTR lpCmdLine )
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 
-    bool verbose = false;
     int maxConnections = 10;
     int nResult = EXIT_FAILURE;
     try
     {
         // verbose mode
         std::vector< std::string > argv = boost::program_options:: split_winmain( lpCmdLine );
-        verbose = std::find( argv.begin(), argv.end(), "--verbose" ) != argv.end();
-
+        
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
         // Check license
+        const bool verbose = HasOption( argv, "--verbose" );
         license_gui::LicenseDialog::CheckLicense( "sword-runtime", !verbose );
         license_gui::LicenseDialog::CheckLicense( "sword-dispatcher", !verbose, &maxConnections );
 #endif
@@ -48,7 +55,7 @@ int Run( LPSTR lpCmdLine )
         tools::SetCodec();
         tools::WinArguments winArgs( lpCmdLine );
         Application app( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ), maxConnections );
-        nResult = app.Execute();
+        nResult = app.Execute( HasOption( argv, "--test" ) );
     }
     catch( std::exception& e )
     {

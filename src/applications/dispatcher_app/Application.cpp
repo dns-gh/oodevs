@@ -38,14 +38,17 @@ Application::~Application()
 // Name: Application::Run
 // Created: NLD 2006-10-10
 // -----------------------------------------------------------------------------
-int Application::Execute()
+int Application::Execute( bool test )
 {
     try
     {
-        while( 1 )
+        while( true )
         {
             ::Sleep( 10 );
             dispatcher_->Update();
+            // do only one update in test mode
+            if( test )
+                break;
         }
     }
     catch( std::exception& e )
