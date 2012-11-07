@@ -1298,6 +1298,17 @@ std::string DEC_AgentFunctions::GetMilPionType( DEC_Decision_ABC* pion )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetMilPionName
+// Created: PSN 2012-08-16
+// -----------------------------------------------------------------------------
+std::string DEC_AgentFunctions::GetMilPionName( DEC_Decision_ABC* pion )
+{
+    if( !pion )
+        throw std::runtime_error( "Invalid pion in GetMilPionName" );
+    return pion->GetPion().GetType().GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetRapForLocalAgent
 // Created: DDA 2011-06-14
 // -----------------------------------------------------------------------------

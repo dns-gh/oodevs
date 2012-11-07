@@ -731,6 +731,17 @@ integration.isLogisticConvoy = function( platoon )
     end
 end
 
+integration.unitAltitude = function( entity )
+    local nomPion = DEC_Pion_GetMilPionName( entity )
+    local altitude = 1000
+    if string.find (nomPion, "SDTI") then
+        altitude = 1000
+    elseif  string.find (nomPion, "DRAC") then
+        altitude = 200
+    end
+    return altitude
+end
+
 integration.meKnowledgeIsTranported = function( self )
     return DEC_Agent_EstTransporte()
 end
