@@ -200,7 +200,7 @@ ADN_TableDialog2::ADN_TableDialog2( QWidget* pParent, const QString& strCaption,
     this->setCaption( strCaption );
 
     table_.reparent( this, QPoint(0,0) );
-    connect( &table_, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), this, SLOT( OnContextMenu() ) );
+    connect( &table_, SIGNAL( customContextMenuRequested ( const QPoint& ) ), this, SLOT( OnContextMenu() ) );
 
     Q3HBox* pHBox = new Q3HBox( this );
     QPushButton* pSaveButton = new QPushButton( tr( "Save" ), pHBox );

@@ -1573,26 +1573,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <translation>None</translation>
     </message>
     <message>
-        <source>Ammunition</source>
-        <translation>Ammunition</translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation>Target armor</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation>On site repairable</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation>Maintenance support needed</translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation>Destroyed</translation>
-    </message>
-    <message>
         <source>PKs</source>
         <translation>PKs</translation>
     </message>
@@ -3351,6 +3331,29 @@ Make sure the file exists.</translation>
     <message>
         <source>Cancel</source>
         <translation>Cancel</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_PK_Table</name>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished">Ammunition</translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation type="unfinished">Target armor</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished">On site repairable</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">Maintenance support needed</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished">Destroyed</translation>
     </message>
 </context>
 <context>

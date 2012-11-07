@@ -1493,26 +1493,7 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <translation>Aucun</translation>
     </message>
     <message>
-        <source>Ammunition</source>
-        <translation>Munition</translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation>Blindage de la cible</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation>Réparable sur place</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation>Réparable avec évacuation</translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation>Détruit</translation>
-    </message>
-    <message>
+ 
         <source>PKs</source>
         <translation>PKs</translation>
     </message>
@@ -3355,6 +3336,29 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_PK_Table</name>
+    <message>
+        <source>Ammunition</source>
+        <translation>Munition</translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation>Blindage de la cible</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation>Réparable sur place</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation>Réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation>Détruit</translation>
     </message>
 </context>
 <context>

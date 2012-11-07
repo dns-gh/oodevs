@@ -49,6 +49,45 @@ protected:
     //@}
 };
 
+class ADN_PK_Table: public ADN_Table3
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    ADN_PK_Table( const QString& objectName, QWidget* pParent = 0 )
+        : ADN_Table3( objectName, pParent )
+    {
+        dataModel_.setColumnCount( 2 );
+        setSortingEnabled( true );
+        setShowGrid( true );
+        QStringList horizontalHeaders;
+        horizontalHeaders << tr( "Ammunition" )
+            << tr( "Target armor" )
+            << tr( "On site fixable" )
+            << tr( "Maintenance support needed" )
+            << tr( "Destroyed" );
+        dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+        horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+        verticalHeader()->setVisible( false );
+        delegate_.AddDoubleSpinBoxOnColumn( 2, 0, 100 );
+        delegate_.AddDoubleSpinBoxOnColumn( 3, 0, 100 );
+        delegate_.AddDoubleSpinBoxOnColumn( 4, 0, 100 );
+        delegate_.AddColorOnColumn( 2, 0, 100 );
+        delegate_.AddColorOnColumn( 3, 0, 100 );
+        delegate_.AddColorOnColumn( 4, 0, 100 );
+//         int myints[] = { 2, 3, 4 };
+//         std::vector< int > columns( myints, myints + sizeof( myints ) / sizeof( int ) );
+        std::vector< int > columns;
+        columns.push_back( 2 );
+        columns.push_back( 3 );
+        columns.push_back( 4 );
+        delegate_.SetColumnsSumRestriction( columns, gui::CommonDelegate::eLTE, 100. );
+
+    }
+    virtual ~ADN_PK_Table() {}
+    //@}
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI constructor
 // Created: APE 2004-12-13
@@ -409,65 +448,34 @@ void ADN_Equipement_GUI::SimulationCombosActivated()
 // Name: ADN_Equipement_GUI::CreatePKTable
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Equipement_GUI::CreatePKTable()
+ADN_Table3* ADN_Equipement_GUI::CreatePKTable()
 {
     helpers::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
-    ADN_GuiBuilder builder;
-    ADN_Table* pTable = builder.CreateTable( 0 );
-    // Setup the header.
-    pTable->setNumCols( 5 );
-    pTable->horizontalHeader()->setLabel( 0, tr( "Ammunition" ) );
-    pTable->horizontalHeader()->setLabel( 1, tr( "Target armor" ) );
-    pTable->horizontalHeader()->setLabel( 2, tr( "On site fixable" ) );
-    pTable->horizontalHeader()->setLabel( 3, tr( "Maintenance support needed" ) );
-    pTable->horizontalHeader()->setLabel( 4, tr( "Destroyed" ) );
-    pTable->horizontalHeader()->show();
-    pTable->setNumRows( 1 );
-    builder.AddTableCell( pTable, 0, 0, tr( "Ammunition" ) );
-    builder.AddTableCell( pTable, 0, 1, tr( "Target armor" ) );
-    builder.AddTableCell( pTable, 0, 2, tr( "On site fixable" ) );
-    builder.AddTableCell( pTable, 0, 3, tr( "Maintenance support needed" ) );
-    builder.AddTableCell( pTable, 0, 4, tr( "Destroyed" ) );
-    pTable->hideRow( 0 );
-    pTable->AddBoldGridRow( 0 );
-    pTable->setSorting( false );
+
+    ADN_Table3* pTable = new ADN_PK_Table( tr( "PKs" ) );
     // Fill the table.
     ADN_Equipement_Data::ResourceInfos& ammo = data_.GetDotation( eDotationFamily_Munition );
     int nRowSize = static_cast< int >( armorInfos.size() );
-    int nRow = 1;
+    int nRow = 0;
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = ammo.categories_.begin(); it != ammo.categories_.end(); ++it )
     {
         ADN_Equipement_Data::AmmoCategoryInfo& ammoCategory = *static_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( *it );
         if( !ammoCategory.bDirect_.GetData() )
             continue;
         pTable->setNumRows( nRow + nRowSize );
-        pTable->AddBoldGridRow( nRow );
-        builder.AddTableCell< ADN_TableItem_String >( pTable, *it, nRow, 0, nRowSize, 1, ammoCategory.strName_, eNone, Q3TableItem::Never );
+        //pTable->AddBoldGridRow( nRow ); //migration QT4 comming soon for delimitation
+        pTable->AddItem( nRow, 0, nRowSize, 1 , *it, ammoCategory.strName_.GetData().c_str() );
         int nSubRow = 0;
         for( helpers::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2, ++nSubRow )
         {
-            helpers::AttritionInfos* pAttrition = *it2;
-
-            builder.AddTableCell< ADN_TableItem_String >( pTable, *it, nRow + nSubRow, 1, ( *it2 )->ptrArmor_.GetData()->strName_, eNone, Q3TableItem::Never );
-
-            ADN_TableItem_DoublePercentage* pItem0 = builder.AddTableCell< ADN_TableItem_DoublePercentage >( pTable, *it, nRow + nSubRow, 2, ( *it2 )->rRepairNoEvac_, ePercentage );
-            static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
-            static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
-            pItem0->SetUseColor( true );
-
-            ADN_TableItem_DoublePercentage* pItem1 = builder.AddTableCell< ADN_TableItem_DoublePercentage >( pTable, *it, nRow + nSubRow, 3, ( *it2 )->rRepairWithEvac_, ePercentage );
-            static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
-            static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
-            pItem1->SetUseColor( true );
-
-            ADN_TableItem_DoublePercentage* pItem2 = builder.AddTableCell< ADN_TableItem_DoublePercentage >( pTable, *it, nRow + nSubRow, 4, ( *it2 )->rDestroy_, ePercentage );
-            static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
-            static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
-            pItem2->SetUseColor( true );
+            pTable->AddItem( nRow + nSubRow, 1, *it, ( *it2 )->ptrArmor_.GetData()->strName_.GetData().c_str() );
+            pTable->AddItem( nRow + nSubRow, 2, *it, &( *it2 )->rRepairNoEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+            pTable->AddItem( nRow + nSubRow, 3, *it, &( *it2 )->rRepairWithEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+            pTable->AddItem( nRow + nSubRow, 4, *it, &( *it2 )->rDestroy_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
         }
         nRow += nRowSize;
     }
-    pTable->AdjustColumns( 100 );
+
     return pTable;
 }
 
@@ -477,7 +485,7 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "PKs" ), new ADN_Callback< ADN_Table*, ADN_Equipement_GUI >( this, &ADN_Equipement_GUI::CreatePKTable ) );
+    mainWindow.AddTable( tr( "PKs" ), new ADN_Callback< ADN_Table3*, ADN_Equipement_GUI >( this, &ADN_Equipement_GUI::CreatePKTable ) );
 }
 
 // -----------------------------------------------------------------------------

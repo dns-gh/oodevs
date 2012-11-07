@@ -1561,26 +1561,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished">لا شيء</translation>
     </message>
     <message>
-        <source>Ammunition</source>
-        <translation type="unfinished">الذخيرة</translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation type="unfinished">درع المستهدفة</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation type="unfinished">في الموقع يمكن حلها</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation type="unfinished">دعم الصيانة اللازمة</translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation type="unfinished">دمرت</translation>
-    </message>
-    <message>
         <source>PKs</source>
         <translation type="unfinished">تيفاتول</translation>
     </message>
@@ -3338,6 +3318,29 @@ Make sure the file exists.</source>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">إلغاء الأمر</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_PK_Table</name>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished">الذخيرة</translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation type="unfinished">درع المستهدفة</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished">في الموقع يمكن حلها</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة اللازمة</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished">دمرت</translation>
     </message>
 </context>
 <context>

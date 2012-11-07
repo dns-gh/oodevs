@@ -53,21 +53,23 @@ public:
     void SaveToXls( const QString& path, const QString& sheetName ) const;
     //@}
 
-protected:
+public:
     //! @name Helpers
     //@{
     QStandardItem* AddItem( int row, int col, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
+    QStandardItem* AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags = 0 );
     template< typename T >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_ABC< T >* data, ADN_StandardItem::E_Type type, Qt::ItemFlags flags = 0 );
     template< typename Enum, int Max >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_Type_Enum< Enum, Max >* data, const QStringList& content, Qt::ItemFlags flags = 0 );
     template< typename T >
     QStandardItem* AddItem( int row, int col, void* parentData, ADN_TypePtr_InVector_ABC< T >* data, Qt::ItemFlags flags = 0 );
+    ADN_TableDelegate& GetDelegate();
 
+protected:
     void* GetData( int row, int col ) const;
     void* GetDataFromIndex( const QModelIndex& index ) const;
 
-    virtual void OnContextMenu( const QPoint& pt );
     void* GetSelectedData() const;
     //@}
 
@@ -76,7 +78,6 @@ protected:
     //@{
     virtual bool eventFilter( QObject* watched, QEvent* event );
     virtual void dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
-    virtual void contextMenuEvent( QContextMenuEvent* event );
     //@}
 
 private:
@@ -90,6 +91,7 @@ private slots:
     //@{
     void OnGotoRequested( const QModelIndex& index );
     void OnCheckedStateChanged( const QStandardItem& item );
+    virtual void OnContextMenu( const QPoint& pt );
     //@}
 
 signals:
@@ -128,6 +130,20 @@ QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, const QS
 
     return item;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::AddItem
+// Created: NPT 2012-11-07
+// -----------------------------------------------------------------------------
+inline
+QStandardItem* ADN_Table3::AddItem( int row, int col, int rowSpan, int columnSpan, void* parentData, const QString& text, Qt::ItemFlags flags /*= 0*/ )
+{
+    QStandardItem* item = AddItem( row, col, parentData, text, flags );
+    if( item && ( rowSpan > 1 || columnSpan > 1 ) )
+        setSpan( row, col, rowSpan, columnSpan );
+    return item;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::AddItem
@@ -221,6 +237,17 @@ QStandardItem* ADN_Table3::AddItem( int row, int col, void* parentData, ADN_Type
     item->Connect( data );
     return item;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetDelegate
+// Created: NPT 2012-11-07
+// -----------------------------------------------------------------------------
+inline
+ADN_TableDelegate& ADN_Table3::GetDelegate()
+{
+    return delegate_;
+}
+
 
 
 

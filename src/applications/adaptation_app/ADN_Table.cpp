@@ -73,7 +73,7 @@ ADN_Table3::ADN_Table3( const QString& objectName, ADN_Connector_ABC*& connector
 void ADN_Table3::Initialize( const QString& objectName )
 {
     setObjectName( objectName );
-
+    setContextMenuPolicy( Qt::CustomContextMenu );
     proxyModel_.setSourceModel( &dataModel_ );
     proxyModel_.setSortRole( Qt::UserRole );
     setModel( &proxyModel_ );
@@ -91,6 +91,7 @@ void ADN_Table3::Initialize( const QString& objectName )
 
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), &delegate_, SLOT( OnItemChanged( QStandardItem* ) ) );
     connect( &delegate_, SIGNAL( CheckedStateChanged( const QStandardItem& ) ), this, SLOT( OnCheckedStateChanged( const QStandardItem& ) ) );
+    connect( this, SIGNAL( customContextMenuRequested ( const QPoint& ) ), this, SLOT( OnContextMenu( const QPoint& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,15 +147,6 @@ void ADN_Table3::RemoveItem( void* pData )
             break;
         }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Table::contextMenuEvent
-// Created: ABR 2012-10-29
-// -----------------------------------------------------------------------------
-void ADN_Table3::contextMenuEvent( QContextMenuEvent* event )
-{
-    OnContextMenu( event->globalPos() );
 }
 
 // -----------------------------------------------------------------------------

@@ -264,13 +264,13 @@ template< typename T >
 inline
 std::pair< T, T > CommonDelegate::GetMinMax( const SpinBoxDescription< T >& spinbox, const QModelIndex& index, const std::vector< SumRestriction< T > >& sumRestriction, const std::vector< SumRestriction< T > >& singleSumRestriction ) const
 {
-    QWidget* pParent = dynamic_cast< QWidget* >( parent() );
+    static QLocale locale;
     T minimum = spinbox.min_;
     T maximum = spinbox.max_;
     QModelIndex newIndex = GetIndexFromSource( index );
     const QStandardItemModel* model = static_cast< const QStandardItemModel* >( newIndex.model() );
 
-    if( model && pParent )
+    if( model )
     {
         // Look for dependencies
         for( CIT_Dependencies it = dependencies_.begin(); it != dependencies_.end(); ++it )
@@ -283,7 +283,7 @@ std::pair< T, T > CommonDelegate::GetMinMax( const SpinBoxDescription< T >& spin
                 targetColumn = it->reference_;
 
             if( targetRow != newIndex.row() || targetColumn != newIndex.column() )
-                UpdateMinMax( minimum, maximum, it->type_, GetValueFromString< T >( pParent->locale(), model->item( targetRow, targetColumn )->data( Qt::EditRole ).toString() ) );
+                UpdateMinMax( minimum, maximum, it->type_, GetValueFromString< T >( locale, model->item( targetRow, targetColumn )->data( Qt::EditRole ).toString() ) );
         }
 
         // Look for single restrictions
@@ -297,14 +297,14 @@ std::pair< T, T > CommonDelegate::GetMinMax( const SpinBoxDescription< T >& spin
             {
                 for( int col = 0; col < model->columnCount(); ++col )
                     if( col != targetColumn )
-                        sum += GetValueFromString< T >( pParent->locale(), model->item( targetRow, col )->data( Qt::EditRole ).toString() );
+                        sum += GetValueFromString< T >( locale, model->item( targetRow, col )->data( Qt::EditRole ).toString() );
                 UpdateMinMax( minimum, maximum, it->type_, it->value_ - sum );
             }
             else if( !it->isRow_ && newIndex.column() == it->targets_[ 0 ] )
             {
                 for( int row = 0; row < model->rowCount(); ++row )
                     if( row != targetRow )
-                        sum += GetValueFromString< T >( pParent->locale(), model->item( row, targetColumn )->data( Qt::EditRole ).toString() );
+                        sum += GetValueFromString< T >( locale, model->item( row, targetColumn )->data( Qt::EditRole ).toString() );
                 UpdateMinMax( minimum, maximum, it->type_, it->value_ - sum );
             }
         }
@@ -319,14 +319,14 @@ std::pair< T, T > CommonDelegate::GetMinMax( const SpinBoxDescription< T >& spin
             {
                 for( std::vector< int >::const_iterator row = it->targets_.begin(); row != it->targets_.end(); ++row )
                     if( *row != newIndex.row() )
-                        sum += GetValueFromString< T >( pParent->locale(), model->item( *row, targetColumn )->data( Qt::EditRole ).toString() );
+                        sum += GetValueFromString< T >( locale, model->item( *row, targetColumn )->data( Qt::EditRole ).toString() );
                 UpdateMinMax( minimum, maximum, it->type_, it->value_ - sum );
             }
             else if( !it->isRow_ && std::find( it->targets_.begin(), it->targets_.end(), newIndex.column() ) != it->targets_.end() )
             {
                 for( std::vector< int >::const_iterator col = it->targets_.begin(); col != it->targets_.end(); ++col )
                     if( *col != newIndex.column() )
-                        sum += GetValueFromString< T >( pParent->locale(), model->item( targetRow, *col )->data( Qt::EditRole ).toString() );
+                        sum += GetValueFromString< T >( locale, model->item( targetRow, *col )->data( Qt::EditRole ).toString() );
                 UpdateMinMax( minimum, maximum, it->type_, it->value_ - sum );
             }
         }
