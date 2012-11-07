@@ -696,10 +696,6 @@ integration.getUnitPositions = function( simPoint )
     return DEC_Geometrie_CalculerTrafficablePointPourPoint( simPoint )
 end
 
-integration.isPositionInAOR = function( position )
-    return DEC_Geometrie_EstPointDansFuseau( position:getPosition() )
-end
-
 integration.isPointInUrbanBlockTrafficableForPlatoon = function( platoon, localisation )
     return DEC_IsPointInUrbanBlockTrafficableForPlatoon( platoon, localisation)
 end
@@ -716,6 +712,10 @@ integration.creerItineraireAPartirListePoint = function( listPoint )
         listPointSource[#listPointSource + 1] = listPoint[i].source
     end
     return CreateKnowledge( world.Itinerary, DEC_CreerItineraireListe(listPointSource, eTypeItiMouvement) )
+end
+
+integration.isElementInAOR = function( self )
+    return DEC_Geometrie_EstPointDansFuseau( self:getPosition() )
 end
 
 integration.copyPoint = function( position )
