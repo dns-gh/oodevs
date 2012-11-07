@@ -4197,6 +4197,25 @@ Make sure that the file is not write-protected.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_TableDialog2</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Save</translation>
+    </message>
+    <message>
+        <source>Print</source>
+        <translation type="unfinished">Print</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Close</translation>
+    </message>
+    <message>
+        <source>Excel files (*.xls)</source>
+        <translation type="unfinished">Excel files (*.xls)</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Table_Objects_FirePropagationModifier</name>
     <message>
         <source>Fire model</source>

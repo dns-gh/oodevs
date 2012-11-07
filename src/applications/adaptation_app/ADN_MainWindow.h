@@ -31,6 +31,7 @@ class ADN_FileLoaderObserver;
 class ADN_ListView;
 class ADN_MainTabWidget;
 class ADN_Table;
+class ADN_Table3;
 class ADN_Workspace;
 
 class QWidget;
@@ -57,6 +58,7 @@ public:
     void AddPage( E_WorkspaceElements element, QWidget& page, const QString& title );
     void AddLogPage( const QString& strPageName, QWidget& page );
     void AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>*    pCallback );
+    void AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table3*>*    pCallback );
     void AddListView( const QString& strTableName, ADN_Callback_ABC<ADN_ListView*>* pCallback );
 
     void OpenProject( const std::string& filename, const bool isAdminMode = false );
@@ -107,6 +109,11 @@ private:
     typedef std::map< int, T_TableRegistrationItem >            T_TableRegistrationMap;
     typedef T_TableRegistrationMap::iterator                   IT_TableRegistrationMap;
 
+    typedef std::pair< QString, ADN_Callback_ABC<ADN_Table3*>* > T_TableRegistrationItem2;
+
+    typedef std::map< int, T_TableRegistrationItem2 >            T_TableRegistrationMap2;
+    typedef T_TableRegistrationMap2::iterator                   IT_TableRegistrationMap2;
+
     typedef std::pair< QString, ADN_Callback_ABC<ADN_ListView*>* > T_ListViewRegistrationItem;
 
     typedef std::map< int, T_ListViewRegistrationItem >            T_ListViewRegistrationMap;
@@ -134,6 +141,7 @@ private:
     int             nIdChangeOpenMode_;
     bool            bNeedSave_;
     T_TableRegistrationMap      vTableRegistrations_;
+    T_TableRegistrationMap2      vTableRegistrations2_;
     T_ListViewRegistrationMap   vListViewRegistrations_;
 };
 

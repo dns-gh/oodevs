@@ -251,6 +251,16 @@ void ADN_MainWindow::AddTable( const QString& strTableName, ADN_Callback_ABC<ADN
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::AddTable
+// Created: JSR 2012-11-07
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table3*>*    pCallback )
+{
+     vTableRegistrations2_.insert( std::make_pair( pCoheranceTablesMenu_->count(), T_TableRegistrationItem2( strTableName, pCallback ) ) );
+     pCoheranceTablesMenu_->insertItem( strTableName, pCoheranceTablesMenu_->count() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::AddListView
 // Created: SBO 2006-01-04
 // -----------------------------------------------------------------------------
@@ -654,21 +664,33 @@ void ADN_MainWindow::ShowCoheranceTable( int nId )
 
         pDialog->exec();
         delete pDialog;
+        return;
     }
-    else
+    IT_TableRegistrationMap2 itTable2 = vTableRegistrations2_.find( nId );
+    if( itTable2 != vTableRegistrations2_.end() )
     {
-        IT_ListViewRegistrationMap itListView = vListViewRegistrations_.find( nId );
-        if( itListView != vListViewRegistrations_.end() )
-        {
-            T_ListViewRegistrationItem& item = itListView->second;
-            ADN_Callback_ABC<ADN_ListView*>* pCallback = item.second;
+        T_TableRegistrationItem2& item = itTable2->second;
+        ADN_Callback_ABC<ADN_Table3*>* pCallback = item.second;
 
-            ADN_ListView* pListView = (*pCallback)();
-            ADN_ListViewDialog* pDialog = new ADN_ListViewDialog( this, item.first, pListView );
+        ADN_Table3* pTable = (*pCallback)();
+        assert( pTable != 0 );
+        ADN_TableDialog2* pDialog = new ADN_TableDialog2( this, item.first, *pTable );
 
-            pDialog->exec();
-            delete pDialog;
-        }
+        pDialog->exec();
+        delete pDialog;
+        return;
+    }
+    IT_ListViewRegistrationMap itListView = vListViewRegistrations_.find( nId );
+    if( itListView != vListViewRegistrations_.end() )
+    {
+        T_ListViewRegistrationItem& item = itListView->second;
+        ADN_Callback_ABC<ADN_ListView*>* pCallback = item.second;
+
+        ADN_ListView* pListView = (*pCallback)();
+        ADN_ListViewDialog* pDialog = new ADN_ListViewDialog( this, item.first, pListView );
+
+        pDialog->exec();
+        delete pDialog;
     }
 }
 

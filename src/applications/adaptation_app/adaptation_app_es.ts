@@ -4198,6 +4198,25 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_TableDialog2</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print</source>
+        <translation type="unfinished">Imprimir</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Cerrar</translation>
+    </message>
+    <message>
+        <source>Excel files (*.xls)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Table_Objects_FirePropagationModifier</name>
     <message>
         <source>Fire model</source>

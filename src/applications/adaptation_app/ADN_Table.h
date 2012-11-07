@@ -47,6 +47,10 @@ public:
 
     QStandardItem* GetItem( int row, int col ) const;
     QStandardItem* GetItemFromIndex( const QModelIndex& index ) const;
+
+    int ComputeNbrPrintPages( const QSize& painterSize ) const;
+    void Print( int nPage, QPainter& painter, const QSize& painterSize );
+    void SaveToXls( const QString& path, const QString& sheetName ) const;
     //@}
 
 protected:

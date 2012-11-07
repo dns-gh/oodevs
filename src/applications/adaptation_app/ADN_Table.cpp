@@ -298,6 +298,36 @@ void* ADN_Table3::GetSelectedData() const
     return 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::ComputeNbrPrintPages
+// Created: JSR 2012-11-07
+// -----------------------------------------------------------------------------
+int ADN_Table3::ComputeNbrPrintPages( const QSize& /*painterSize*/ ) const
+{
+    // TODO
+    assert( false );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::Print
+// Created: JSR 2012-11-07
+// -----------------------------------------------------------------------------
+void ADN_Table3::Print( int /*nPage*/, QPainter& /*painter*/, const QSize& /*painterSize*/ )
+{
+    // TODO
+    assert( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::SaveToXls
+// Created: JSR 2012-11-07
+// -----------------------------------------------------------------------------
+void ADN_Table3::SaveToXls( const QString& /*path*/, const QString& /*sheetName*/ ) const
+{
+    // TODO
+    assert( false );
+}
 
 
 
