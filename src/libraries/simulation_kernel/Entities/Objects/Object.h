@@ -59,7 +59,7 @@ public:
 
     //! @name Interaction
     //@{
-    virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
+    virtual bool CanInteractWith( const MIL_Entity_ABC& agent ) const;
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
     virtual void ProcessAgentInside( MIL_Agent_ABC& agent );
     //@}

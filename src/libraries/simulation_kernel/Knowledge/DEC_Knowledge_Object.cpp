@@ -765,7 +765,7 @@ bool DEC_Knowledge_Object::CanCollideWithEntity() const
 // Name: DEC_Knowledge_Object::CanInteractWith
 // Created: LDC 2011-03-30
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
+bool DEC_Knowledge_Object::CanInteractWith( const MIL_Entity_ABC& agent ) const
 {
     return !pObjectKnown_ || pObjectKnown_->CanInteractWith( agent );
 }

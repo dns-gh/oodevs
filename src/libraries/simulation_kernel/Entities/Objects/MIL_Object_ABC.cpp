@@ -207,7 +207,7 @@ bool MIL_Object_ABC::CanCollideWithEntity() const
 // Name: MIL_Object_ABC::CanInteractWith
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool MIL_Object_ABC::CanInteractWith( const MIL_Agent_ABC& agent ) const
+bool MIL_Object_ABC::CanInteractWith( const MIL_Entity_ABC& agent ) const
 {
     const InteractWithSideCapacity* pSideInteraction = Retrieve< InteractWithSideCapacity >();
     if( pSideInteraction && pArmy_ )
