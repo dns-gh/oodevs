@@ -326,18 +326,6 @@ Parked engine running</translation>
         <translation>Sub-units</translation>
     </message>
     <message>
-        <source>Automata [ officers/warrant officers/soldiers ]</source>
-        <translation>Automata [ officers/warrant officers/soldiers ]</translation>
-    </message>
-    <message>
-        <source>Unit [ officers/warrant officers/soldiers ]</source>
-        <translation>Unit [ officers/warrant officers/soldiers ]</translation>
-    </message>
-    <message>
-        <source>Equipment [ officers/warrant officers/soldiers ]</source>
-        <translation>Equipment [ officers/warrant officers/soldiers ]</translation>
-    </message>
-    <message>
         <source>(%1..%2) x %3 x %4 [ %5 ]</source>
         <translation>(%1..%2) x %3 x %4 [ %5 ]</translation>
     </message>
@@ -1168,6 +1156,21 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     <message>
         <source>Remove weapon</source>
         <translation>Remove weapon</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_CompositionTable</name>
+    <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation>Automata [ officers/warrant officers/soldiers ]</translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation>Unit [ officers/warrant officers/soldiers ]</translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation>Equipment [ officers/warrant officers/soldiers ]</translation>
     </message>
 </context>
 <context>

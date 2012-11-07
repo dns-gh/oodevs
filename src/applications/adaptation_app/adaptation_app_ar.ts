@@ -314,18 +314,6 @@ Parked engine running</source>
         <translation type="unfinished">الوحدات الفرعية</translation>
     </message>
     <message>
-        <source>Automata [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished">الباردون [ضباط ضباط/أمر/جنود]</translation>
-    </message>
-    <message>
-        <source>Unit [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished">وحدة [ضباط ضباط/أمر/جنود]</translation>
-    </message>
-    <message>
-        <source>Equipment [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished">معدات [ضباط ضباط/أمر/جنود]</translation>
-    </message>
-    <message>
         <source>(%1..%2) x %3 x %4 [ %5 ]</source>
         <translation type="unfinished">(%1... %2) × %3 x %4% [5]</translation>
     </message>
@@ -1156,6 +1144,21 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Remove weapon</source>
         <translation type="unfinished">إزالة الأسلحة</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_CompositionTable</name>
+    <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">الباردون [ضباط ضباط/أمر/جنود]</translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">وحدة [ضباط ضباط/أمر/جنود]</translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">معدات [ضباط ضباط/أمر/جنود]</translation>
     </message>
 </context>
 <context>

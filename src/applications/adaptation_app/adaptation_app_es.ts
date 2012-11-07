@@ -346,18 +346,6 @@ estacionado con motor encendido</translation>
         <translation>Modelo de doctrina</translation>
     </message>
     <message>
-        <source>Automata [ officers/warrant officers/soldiers ]</source>
-        <translation>Autómata [ oficiales/sub-oficiales/soldados ]</translation>
-    </message>
-    <message>
-        <source>Unit [ officers/warrant officers/soldiers ]</source>
-        <translation>Unidad [ oficiales/sub-oficiales/soldados ]</translation>
-    </message>
-    <message>
-        <source>Equipment [ officers/warrant officers/soldiers ]</source>
-        <translation>Equipos [ oficiales/sub-oficiales/soldados ]</translation>
-    </message>
-    <message>
         <source>(%1..%2) x %3 x %4 [ %5 ]</source>
         <translation>(%1..%2) x %3 x %4 [ %5 ]</translation>
     </message>
@@ -1171,6 +1159,21 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Weapon systems</source>
         <translation>Sistemas de arma</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_CompositionTable</name>
+    <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">Autómata [ oficiales/sub-oficiales/soldados ]</translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">Unidad [ oficiales/sub-oficiales/soldados ]</translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">Equipos [ oficiales/sub-oficiales/soldados ]</translation>
     </message>
 </context>
 <context>

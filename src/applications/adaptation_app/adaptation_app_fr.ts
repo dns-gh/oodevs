@@ -346,18 +346,6 @@ Arrêt moteur allumé</translation>
         <translation>Modèle</translation>
     </message>
     <message>
-        <source>Automata [ officers/warrant officers/soldiers ]</source>
-        <translation>Automate [ officiers/sous-officiers/soldats ]</translation>
-    </message>
-    <message>
-        <source>Unit [ officers/warrant officers/soldiers ]</source>
-        <translation>Pion [ officiers/sous-officiers/soldats ]</translation>
-    </message>
-    <message>
-        <source>Equipment [ officers/warrant officers/soldiers ]</source>
-        <translation>Equipement [ officiers/sous-officiers/soldats ]</translation>
-    </message>
-    <message>
         <source>(%1..%2) x %3 x %4 [ %5 ]</source>
         <translation>(%1..%2) x %3 x %4 [ %5 ]</translation>
     </message>
@@ -1175,6 +1163,21 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
+    <name>ADN_CompositionTable</name>
+    <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation>Automate [ officiers/sous-officiers/soldats ]</translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation>Pion [ officiers/sous-officiers/soldats ]</translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation>Equipement [ officiers/sous-officiers/soldats ]</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ConfigDialog</name>
     <message>
         <source>Configuration</source>
@@ -1493,7 +1496,6 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <translation>Aucun</translation>
     </message>
     <message>
- 
         <source>PKs</source>
         <translation>PKs</translation>
     </message>

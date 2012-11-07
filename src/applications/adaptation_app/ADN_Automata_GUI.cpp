@@ -119,93 +119,95 @@ void ADN_Automata_GUI::Build()
     pMainWidget_->setObjectName( strClassName_ );
 }
 
+namespace
+{
+    class ADN_CompositionTable : public ADN_Table3
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        ADN_CompositionTable( const QString& objectName, QWidget* pParent = 0 )
+            : ADN_Table3( objectName, pParent )
+        {
+            dataModel_.setColumnCount( 3 );
+            setSortingEnabled( false );
+            setShowGrid( true );
+            setSelectionMode( QAbstractItemView::NoSelection );
+            QStringList horizontalHeaders;
+            horizontalHeaders << tr( "Automata [ officers/warrant officers/soldiers ]" )
+                              << tr( "Unit [ officers/warrant officers/soldiers ]" )
+                              << tr( "Equipment [ officers/warrant officers/soldiers ]" );
+            dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
+            horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+            verticalHeader()->setVisible( false );
+        }
+        virtual ~ADN_CompositionTable() {}
+        //@}
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_GUI::CreateAutomataCompositionsTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
+ADN_Table3* ADN_Automata_GUI::CreateAutomataCompositionsTable()
 {
-    ADN_GuiBuilder builder;
-    ADN_Table* pTable = builder.CreateTable( 0 );
-
-    // Setup the header.
-    pTable->setNumCols( 3 );
-    pTable->horizontalHeader()->setLabel( 0, tr( "Automata [ officers/warrant officers/soldiers ]" ) );
-    pTable->horizontalHeader()->setLabel( 1, tr( "Unit [ officers/warrant officers/soldiers ]" ) );
-    pTable->horizontalHeader()->setLabel( 2, tr( "Equipment [ officers/warrant officers/soldiers ]" ) );
-    pTable->horizontalHeader()->show();
-
-    pTable->setNumRows( 1 );
-    builder.AddTableCell( pTable, 0, 0, tr( "Automata [ officers/warrant officers/soldiers ]" ) );
-    builder.AddTableCell( pTable, 0, 1, tr( "Unit [ officers/warrant officers/soldiers ]" ) );
-    builder.AddTableCell( pTable, 0, 2, tr( "Equipment [ officers/warrant officers/soldiers ]" ) );
-    pTable->hideRow( 0 );
-    pTable->AddBoldGridRow( 0 );
-    pTable->sortColumn( 0, true, true );
-    pTable->setSorting( false );
-
+    ADN_Table3* pTable = new ADN_CompositionTable( strClassName_ + "_AutomataCompositions" );
     // Fill the table.
-    int nRow = 1;
-    std::sort( data_.vAutomata_.begin(), data_.vAutomata_.end(), ADN_Tools::NameSort<ADN_Automata_Data::AutomatonInfos>() );
+    int nRow = 0;
+    std::sort( data_.vAutomata_.begin(), data_.vAutomata_.end(), ADN_Tools::NameSort< ADN_Automata_Data::AutomatonInfos >() );
     for( ADN_Automata_Data::IT_AutomatonInfosVector it = data_.vAutomata_.begin(); it != data_.vAutomata_.end(); ++it )
     {
         ADN_Automata_Data::AutomatonInfos& automaton = **it;
         pTable->setNumRows( std::max( pTable->numRows(), nRow + 1 ) );
-        pTable->AddBoldGridRow( nRow );
-        builder.AddTableCell( pTable, nRow, 1 );
-        builder.AddTableCell( pTable, nRow, 2 );
-
         int nSubRow = 0;
-
-        uint nAutoOfficer   = 0;
-        uint nAutoNCOfficer = 0;
-        int  nAutoTroops    = 0;
+        unsigned int nAutoOfficer = 0;
+        unsigned int nAutoNCOfficer = 0;
+        int  nAutoTroops = 0;
 
         for( ADN_Automata_Data::IT_UnitInfosVector it2 = automaton.vSubUnits_.begin(); nSubRow == 0 || it2 != automaton.vSubUnits_.end(); )
         {
             ADN_Automata_Data::UnitInfos* pUnitInfos = 0;
-            ADN_Units_Data::UnitInfos*    pUnit;
+            ADN_Units_Data::UnitInfos* pUnit = 0;
 
             if( nSubRow == 0 )
-            {
                 pUnit = automaton.ptrUnit_.GetData();
-            }
             else
             {
                 pUnitInfos = *it2;
                 assert( pUnitInfos->ptrUnit_.GetData() != 0 );
                 pUnit = pUnitInfos->ptrUnit_.GetData();
             }
-            ADN_Units_Data::UnitInfos&    unit      = * pUnit;
+            ADN_Units_Data::UnitInfos& unit = *pUnit;
             pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + 1 ) );
 
             int nSubSubRow = 0;
             int nTroops = 0;
             for( ADN_Units_Data::IT_ComposanteInfos_Vector it3 = unit.vComposantes_.begin(); it3 != unit.vComposantes_.end(); ++it3, ++nSubSubRow )
             {
+                ADN_Units_Data::ComposanteInfos* composantes = *it3;
                 pTable->setNumRows( std::max( pTable->numRows(), nRow + nSubRow + nSubSubRow + 1 ) );
-
                 QString strText;
                 if( pUnitInfos != 0 )
                 {
                     strText = tr( "(%1..%2) x %3 x %4 [ %5 ]" );
                     strText = strText.arg( pUnitInfos->min_.GetData() )
                                      .arg( pUnitInfos->max_.GetData() )
-                                     .arg( (*it3)->nNb_.GetData() )
-                                     .arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() )
-                                     .arg( (*it3)->nNbrHumanInCrew_.GetData() );
+                                     .arg( composantes->nNb_.GetData() )
+                                     .arg( composantes->ptrComposante_.GetData()->strName_.GetData().c_str() )
+                                     .arg( composantes->nNbrHumanInCrew_.GetData() );
                 }
                 else
                 {
                     strText = tr( "%1 x %2 [ %3 ]" );
-                    strText = strText.arg( (*it3)->nNb_.GetData() )
-                                     .arg( (*it3)->ptrComposante_.GetData()->strName_.GetData().c_str() )
-                                     .arg( (*it3)->nNbrHumanInCrew_.GetData() );
+                    strText = strText.arg( composantes->nNb_.GetData() )
+                                     .arg( composantes->ptrComposante_.GetData()->strName_.GetData().c_str() )
+                                     .arg( composantes->nNbrHumanInCrew_.GetData() );
                 }
-                builder.AddTableCell( pTable, nRow + nSubRow + nSubSubRow, 2, strText );
-                nTroops += (*it3)->nNb_.GetData() * (*it3)->nNbrHumanInCrew_.GetData();
+                pTable->AddItem( nRow + nSubRow + nSubSubRow, 2, composantes, strText );
+                nTroops += composantes->nNb_.GetData() * composantes->nNbrHumanInCrew_.GetData();
             }
-            int nRowSpan = std::max( 1, (int)unit.vComposantes_.size() );
+            int nRowSpan = std::max( 1, static_cast< int >( unit.vComposantes_.size() ) );
             QString strText;
             if( pUnitInfos != 0 )
             {
@@ -232,8 +234,7 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                 nAutoNCOfficer += pUnit->nNbNCOfficer_.GetData();
                 nAutoTroops    += nTroops - pUnit->nNbOfficer_.GetData() - pUnit->nNbNCOfficer_.GetData();
             }
-            builder.AddTableCell( pTable, nRow + nSubRow, 1, nRowSpan, 1, strText );
-
+            pTable->AddItem( nRow + nSubRow, 1, nRowSpan, 1, pUnit, strText );
             if( nSubRow > 0 )
                 ++it2;
             nSubRow += nRowSpan;
@@ -246,11 +247,9 @@ ADN_Table* ADN_Automata_GUI::CreateAutomataCompositionsTable()
                          .arg( nAutoOfficer )
                          .arg( nAutoNCOfficer )
                          .arg( nAutoTroops );
-        builder.AddTableCell( pTable, nRow, 0, nRowSpan, 1, strText );
+        pTable->AddItem( nRow, 0, nRowSpan, 1, &automaton, strText );
         nRow += nRowSpan;
     }
-
-    pTable->AdjustColumns( 50 );
     return pTable;
 }
 
@@ -278,7 +277,7 @@ ADN_ListView* ADN_Automata_GUI::CreateAutomataLogTablePerDotation()
 // -----------------------------------------------------------------------------
 void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table*   ,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataCompositionsTable ) );
+    mainWindow.AddTable   ( tr( "Automata compositions" ), new ADN_Callback<ADN_Table3*   ,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataCompositionsTable ) );
     mainWindow.AddListView( tr( "Logistic per automat" ) , new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTable ) );
     mainWindow.AddListView( tr( "Logistic per resource" ), new ADN_Callback<ADN_ListView*,ADN_Automata_GUI>( this, &ADN_Automata_GUI::CreateAutomataLogTablePerDotation ) );
 }
