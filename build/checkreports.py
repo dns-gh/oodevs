@@ -93,6 +93,32 @@ def parsecppsource(ui, cpppath):
         result = 1
     return result, rengs
 
+def _makeregexps(names):
+    names = [re.escape(n) for n in names]
+    regex = '(' + '|'.join(names) + ')'
+    regex = re.compile(regex)
+    return [regex]
+
+def searchenums(ui, enums, cppdir):
+    """Return the set of input enums not matched in c++ files in cppdir tree"""
+    regexps = _makeregexps(enums)
+    missing = set(enums)
+    for root, dirs, files in os.walk(cppdir):
+        if not missing:
+            break
+        for f in files:
+            if not missing:
+                break
+            ext = os.path.splitext(f)[-1].lower()
+            if ext not in ('.h', '.cpp', '.inl'):
+                continue
+            p = os.path.join(root, f)
+            data = file(p, 'rb').read()
+            for r in regexps:
+                for m in r.finditer(data):
+                    missing.discard(m.group(1))
+    return missing
+
 def parsecpp(ui, swordpath):
     """Check the consistency of reports enumerations in simulation_kernel."""
     result = 0
@@ -116,6 +142,15 @@ def parsecpp(ui, swordpath):
             # Should be a C++ compiled error, but this is cheap to check
             ui.error('error: %s engine report identifier is unknown\n' % r)
             result = 1
+
+    # Look for unused identifiers
+    cppdir = os.path.join(swordpath, 'src')
+    missing = searchenums(ui, eng, cppdir)
+    if missing:
+        result = 1
+        for m in missing:
+            ui.error('error: %s is unused in C++ code\n' % m)
+
     usedids = set(dec[k] for k in engmap.itervalues())
     return result, dec, usedids
 
