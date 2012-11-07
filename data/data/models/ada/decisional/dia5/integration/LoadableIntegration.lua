@@ -159,11 +159,11 @@ integration.readyForLoad = function( unit, distanceMin )
     return false
 end
     
-integration.knowledgeReadyForLoad = function( knowledge )
+integration.knowledgeReadyForLoad = function( knowledge, distanceMin )
     local knowledgeSrc = knowledge.source
     local mission = DEC_Connaissance_GetRawMission( knowledgeSrc )
     if mission ~= nil and ( mission:GetType() == "T_Task_Pion_SeFaireTransporter" or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" or mission:GetType() == "france.military.platoon.tasks.SeFaireTransporter" ) then
-        if DEC_Geometrie_Distance( meKnowledge:getPosition() , knowledge:getPosition() ) < 300 then -- $$$$ HARD CODDED VALUE
+        if DEC_Geometrie_Distance( meKnowledge:getPosition() , knowledge:getPosition() ) < 300 then -- $$$$ HARD CODDED VALUE LATER REPLACE BY distanceMin
             return true 
         end
     end
