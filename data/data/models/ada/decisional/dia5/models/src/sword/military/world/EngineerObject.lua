@@ -83,7 +83,7 @@ return
     end,
     buildIt = masalife.brain.integration.startStopAction( 
     { 
-        start = integration.startBuildIt( self, sword.military.world.Object ), 
+        start = integration.startBuildIt, 
         started = integration.updateBuildIt, 
         stop = integration.stopBuildIt
     } ),

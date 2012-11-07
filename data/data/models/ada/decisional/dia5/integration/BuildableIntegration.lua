@@ -48,7 +48,7 @@ integration.startBuildIt = function( object, typeObject )
     actionCallbacks[ object[myself].actionBuild ] = function( arg ) object[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ object[myself].actionBuild ] = function( arg )
         if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
-            object.knowledge = CreateKnowledge( typeObject, arg )
+            object.knowledge = CreateKnowledge( sword.military.world.Object, arg )
         end
     end
 end
