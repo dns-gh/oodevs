@@ -112,7 +112,7 @@ public:
         // NOTHING
     }
 
-    bool AddItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
+    bool AddItemPrivate( void* pItem )
     {
         if( pItem == 0 )
             return false;
@@ -138,7 +138,7 @@ public:
         return true;
     }
 
-    bool RemItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
+    bool RemItemPrivate( void* pItem )
     {
         GQ_PlotData* pPlotData = graph_.FindPlotData( reinterpret_cast< uint >( pItem ) );
         if( pPlotData == 0 )
