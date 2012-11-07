@@ -326,7 +326,7 @@ return
         return integration.unloadFriendOrFoe( self )
     end,
     getLoadlevel = function ( self )
-        if integration.isFriendOrFoeTranported( self ) then
+        if integration.isFriendOrFoeTransported( self ) then
             return 100
         else
             return 0
