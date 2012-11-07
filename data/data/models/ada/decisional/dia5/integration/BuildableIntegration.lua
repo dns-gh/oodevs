@@ -36,7 +36,7 @@ integration.getTypeUrbanBlock = function( urbanBlock )
     return DEC_BlocUrbain_Type( urbanBlock.source )
 end
 
-integration.startBuildIt = function( object )
+integration.startBuildIt = function( object, typeObject )
     local checkpoint = integration.obtenirObjetProcheDe( object:getLocalisation(), 
                         object:getType(), 10 )
     object[myself] = object[myself] or {}
@@ -48,7 +48,7 @@ integration.startBuildIt = function( object )
     actionCallbacks[ object[myself].actionBuild ] = function( arg ) object[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ object[myself].actionBuild ] = function( arg )
         if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
-            object.knowledge = CreateKnowledge( sword.military.world.Object, arg )
+            object.knowledge = CreateKnowledge( typeObject, arg )
         end
     end
 end
