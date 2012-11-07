@@ -1476,6 +1476,7 @@
 
      <!-- Package Application -->
     <target name="package.app" description="package des applications runtime">
+        <check-depends file="${out.dir}/terraintools_${platform}.zip"/>
         <local name="output"/>
         <property name="output" value="${out.dir}\SWORD_${platform}_${version.project.major}.exe"/>
         <nsis name="sword" script="sword.nsi" nsh="config.nsh" todir="${out.dir}">
