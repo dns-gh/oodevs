@@ -97,7 +97,7 @@
     </message>
     <message>
         <source>agressive</source>
-        <translation>agressive</translation>
+        <translation>aggressive</translation>
     </message>
     <message>
         <source>ammunition</source>

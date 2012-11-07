@@ -21,11 +21,11 @@
     </message>
     <message>
         <source>No PC defined for automat %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>No PC defined for automat %1, because of this, the simulation can&apos;t start with this database.</translation>
+        <translation>No PC defined for automaton %1, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
         <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</translation>
+        <translation>Automaton %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
         <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
@@ -181,7 +181,7 @@
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
-        <translation>Item &gt; Automat &gt; Unit &gt; Comp</translation>
+        <translation>Item &gt; Automaton &gt; Unit &gt; Comp</translation>
     </message>
     <message>
         <source>Units</source>
@@ -240,7 +240,7 @@ Parked engine running</translation>
     <name>ADN_AutomatLog_ListView</name>
     <message>
         <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
-        <translation>Automat &gt; Unit &gt; Comp &gt; Item</translation>
+        <translation>Automaton &gt; Unit &gt; Comp &gt; Item</translation>
     </message>
     <message>
         <source>Units</source>
@@ -359,7 +359,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Logistic per automat</source>
-        <translation>Logistic per automat</translation>
+        <translation>Logistic per automaton</translation>
     </message>
     <message>
         <source>Logistic per resource</source>
@@ -2141,7 +2141,7 @@ posture</translation>
     </message>
     <message>
         <source>Automate</source>
-        <translation>Automate</translation>
+        <translation>Automaton</translation>
     </message>
     <message>
         <source>Crowd</source>
@@ -2160,7 +2160,7 @@ posture</translation>
     </message>
     <message>
         <source>Automat missions</source>
-        <translation>Automat missions</translation>
+        <translation>Automaton missions</translation>
     </message>
     <message>
         <source>Crowd missions</source>
@@ -2541,7 +2541,7 @@ posture</translation>
     </message>
     <message>
         <source>Automat missions</source>
-        <translation>Automat missions</translation>
+        <translation>Automaton missions</translation>
     </message>
     <message>
         <source>Crowd missions</source>
@@ -2635,7 +2635,7 @@ posture</translation>
     </message>
     <message>
         <source>Automat missions</source>
-        <translation>Automat missions</translation>
+        <translation>Automaton missions</translation>
     </message>
     <message>
         <source>Crowd missions</source>
@@ -3831,7 +3831,7 @@ Make sure that the file is not write-protected.</translation>
     <message id="0">
         <source>Environments</source>
         <oldsource>ADN_Sensors_Environments_GUI</oldsource>
-        <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
+        <translation>Environments</translation>
     </message>
     <message>
         <source>Modifiers</source>
@@ -4042,7 +4042,7 @@ Make sure that the file is not write-protected.</translation>
     <name>ADN_Sensors_Postures_GUI</name>
     <message>
         <source>Modifiers</source>
-        <translation type="unfinished">Modifiers</translation>
+        <translation>Modifiers</translation>
     </message>
 </context>
 <context>
@@ -4200,19 +4200,19 @@ Make sure that the file is not write-protected.</translation>
     <name>ADN_TableDialog2</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Save</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Print</source>
-        <translation type="unfinished">Print</translation>
+        <translation>Print</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Close</translation>
+        <translation>Close</translation>
     </message>
     <message>
         <source>Excel files (*.xls)</source>
-        <translation type="unfinished">Excel files (*.xls)</translation>
+        <translation>Excel files (*.xls)</translation>
     </message>
 </context>
 <context>
@@ -4695,7 +4695,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Eletronic</source>
-        <translation>Eletronic</translation>
+        <translation>Electronics</translation>
     </message>
     <message>
         <source>Mobility</source>
@@ -4751,7 +4751,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Automat</source>
-        <translation>Automat</translation>
+        <translation>Automaton</translation>
     </message>
     <message>
         <source>Boolean</source>
@@ -5779,27 +5779,27 @@ Click &quot;Ok&quot; to delete it.</translation>
     <name>ADN_WoundTable</name>
     <message>
         <source>Psyop</source>
-        <translation type="unfinished">Psyop</translation>
+        <translation>Psyop</translation>
     </message>
     <message>
         <source>Contamination</source>
-        <translation type="unfinished">Contamination</translation>
+        <translation>Contamination</translation>
     </message>
     <message>
         <source>Treatment duration</source>
-        <translation type="unfinished">Treatment duration</translation>
+        <translation>Treatment duration</translation>
     </message>
     <message>
         <source>Convalescence duration</source>
-        <translation type="unfinished">Convalescence duration</translation>
+        <translation>Convalescence duration</translation>
     </message>
     <message>
         <source>Seriousness distribution (%)</source>
-        <translation type="unfinished">Severity distribution (%)</translation>
+        <translation>Severity distribution (%)</translation>
     </message>
     <message>
         <source>Life span</source>
-        <translation type="unfinished">Life span</translation>
+        <translation>Life span</translation>
     </message>
 </context>
 <context>
@@ -5863,11 +5863,11 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
     <message>
         <source>Automat - Invalid unit type &apos;%1&apos;</source>
-        <translation>Automat - Invalid unit type &apos;%1&apos;</translation>
+        <translation>Automaton - Invalid unit type &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Automat - Invalid doctrine model &apos;%1&apos;</translation>
+        <translation>Automaton - Invalid doctrine model &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
