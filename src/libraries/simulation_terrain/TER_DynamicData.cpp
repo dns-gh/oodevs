@@ -56,7 +56,7 @@ void TER_DynamicData::RegisterDynamicData( TER_PathFinderThread& thread )
     boost::mutex::scoped_lock locker( mutex_ );
 
     if( ! handles_.insert( std::make_pair( &thread, &thread.CreateLineTree( points_, terrainData_ ) ) ).second )
-        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << " : Insert failed" );
     assert( nNbrRefs_ > 0 );
     -- nNbrRefs_;
 }
