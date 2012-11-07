@@ -285,7 +285,7 @@ target_link_libraries( dispatcher
 add_target( dispatcher_app server "applications/dispatcher_app" OPTIONS win32 executable )
 masa_add_target_definition( dispatcher_app PLATFORM=${platform} )
 target_link_libraries( dispatcher_app
-    dispatcher
+    dispatcher_dll
     license_gui
 )
 
