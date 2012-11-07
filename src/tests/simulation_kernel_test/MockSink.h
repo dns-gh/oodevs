@@ -11,7 +11,7 @@
 #define MockSink_h
 
 #include "simulation_kernel/Adapters/Sink_ABC.h"
-#include "flood/FloodModel_ABC.h"
+#include "propagation/FloodModel_ABC.h"
 
 // =============================================================================
 /** @class  MockSink
