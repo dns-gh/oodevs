@@ -326,7 +326,7 @@ return
         return integration.unloadFriendOrFoe( self )
     end,
     getLoadlevel = function ( self )
-        return integration.isFriendOrFoeTranported( self )
+        return integration.isFriendOrFoeTransported( self )
     end,
     attackIt = masalife.brain.integration.startStopAction( 
     { 

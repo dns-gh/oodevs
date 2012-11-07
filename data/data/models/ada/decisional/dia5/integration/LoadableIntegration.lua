@@ -64,7 +64,7 @@ integration.unloadFriendOrFoe = function( unit )
     return false
 end
 
-integration.isFriendOrFoeTranported = function( unit )
+integration.isFriendOrFoeTransported = function( unit )
     if DEC_Prisonniers_EstEmbarque( unit.source ) then
         return 100
     end
