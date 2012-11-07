@@ -57,8 +57,6 @@ public:
     ADN_PK_Table( const QString& objectName, QWidget* pParent = 0 ) : ADN_Table3( objectName, pParent )
     {
         dataModel_.setColumnCount( 5 );
-        setSortingEnabled( true );
-        setShowGrid( true );
         QStringList horizontalHeaders;
         horizontalHeaders << tools::translate( "ADN_Equipement_GUI", "Ammunition" )
                           << tools::translate( "ADN_Equipement_GUI", "Target armor" )
@@ -69,6 +67,8 @@ public:
         horizontalHeader()->setResizeMode( QHeaderView::Stretch );
         verticalHeader()->setVisible( false );
         setAlternatingRowColors( false );
+        setSortingEnabled( false );
+        setShowGrid( true );
         delegate_.AddDoubleSpinBoxOnColumn( 2, 0, 100 );
         delegate_.AddDoubleSpinBoxOnColumn( 3, 0, 100 );
         delegate_.AddDoubleSpinBoxOnColumn( 4, 0, 100 );

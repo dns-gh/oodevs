@@ -443,7 +443,7 @@ void ADN_Table3::SaveToXls( const QString& path, const QString& sheetName ) cons
             format.set_borderlines( left, right, top, bottom, EGA_BLACK, EGA_BLACK );
 
             // If Merged, apply border and continue
-            QStandardItem* qItem = GetItem( row, col );
+            QStandardItem* qItem = GetItemFromIndex( proxyModel_.index( row, col ) );
             if( mergedCells[ row ][ col ] || !qItem )
             {
                 BasicExcelCell* cell = sheet->Cell( row + baseCellRow, col );
