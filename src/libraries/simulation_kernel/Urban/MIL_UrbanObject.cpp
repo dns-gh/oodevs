@@ -578,7 +578,7 @@ void MIL_UrbanObject::SendFullState() const
     message.Send( NET_Publisher_ABC::Publisher() );
     size_t notSendableAttributes = RetrieveAttribute< MaterialAttribute >() ? 1 : 0;
     if( CountAttributes() > notSendableAttributes )
-        MIL_Object::SendFullState();
+        MIL_UrbanObject_ABC::SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -598,7 +598,7 @@ void MIL_UrbanObject::UpdateState()
         message.Send( NET_Publisher_ABC::Publisher() );
     size_t notSendableAttributes = RetrieveAttribute< MaterialAttribute >() ? 1 : 0;
     if( CountAttributes() > notSendableAttributes )
-        MIL_Object::UpdateState();
+        MIL_UrbanObject_ABC::UpdateState();
 }
 
 // -----------------------------------------------------------------------------
@@ -698,7 +698,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_UrbanObject::OnUpdate( const google::p
             break;
         }
     }
-    return MIL_Object::OnUpdate( attributes );
+    return MIL_UrbanObject_ABC::OnUpdate( attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -750,4 +750,158 @@ void MIL_UrbanObject::OnReceiveSetEvacuated( const sword::MissionParameter_Value
 void MIL_UrbanObject::AddLivingArea( MIL_LivingArea& livingArea )
 {
     livingAreas_.push_back( &livingArea );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::CanInteractWith
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+bool MIL_UrbanObject::CanInteractWith( const MIL_Entity_ABC& agent ) const
+{
+    if( !IsBlock() )
+        return false;
+    return MIL_UrbanObject_ABC::CanInteractWith( agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::CanInteractWithEntity
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+bool MIL_UrbanObject::CanInteractWithEntity() const
+{
+    if( !IsBlock() )
+        return false;
+    return MIL_UrbanObject_ABC::CanInteractWithEntity();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ApplyIndirectFire
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation, MIL_Army_ABC* army )
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::ApplyIndirectFire( attritionSurface, dotation, army );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ApplyDirectFire
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ApplyDirectFire() const
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::ApplyDirectFire();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ApplyDestruction
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ApplyDestruction( const TER_Localisation& attritionSurface, const PHY_UrbanAttritionData& attrition )
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::ApplyDestruction( attritionSurface, attrition );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::PreprocessAgent
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::PreprocessAgent( MIL_Agent_ABC& agent )
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::PreprocessAgent( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ProcessAgentEntering
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ProcessAgentEntering( MIL_Agent_ABC& agent )
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::ProcessAgentEntering( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ProcessAgentExiting
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ProcessAgentExiting( MIL_Agent_ABC& agent )
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::ProcessAgentExiting( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ProcessAgentMovingInside
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::ProcessAgentMovingInside( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ProcessAgentInside
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ProcessAgentInside( MIL_Agent_ABC& agent )
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::ProcessAgentInside( agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::PreprocessPopulation
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::PreprocessPopulation( MIL_PopulationElement_ABC& population )
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::PreprocessPopulation( population );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ProcessPopulationInside
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::ProcessPopulationInside( population );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::ApplyStructuralState
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+void MIL_UrbanObject::ApplyStructuralState( float structuralState ) const
+{
+    if( !IsBlock() )
+        return;
+    MIL_UrbanObject_ABC::ApplyStructuralState( structuralState );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanObject::CanCollideWithEntity
+// Created: LDC 2012-11-07
+// -----------------------------------------------------------------------------
+bool MIL_UrbanObject::CanCollideWithEntity() const
+{
+    if( !IsBlock() )
+        return false;
+    return MIL_UrbanObject_ABC::CanCollideWithEntity();
 }
