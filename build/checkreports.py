@@ -119,6 +119,14 @@ def searchenums(ui, enums, cppdir):
                     missing.discard(m.group(1))
     return missing
 
+def dumpcppmappings(engids, decids, engmap, path):
+    fp = file(path, 'wb')
+    for e in sorted(engids):
+        d = engmap[e]
+        i = decids[d]
+        fp.write('%s\t%s\t%d\n' % (e, d, i))
+    fp.close()
+
 def parsecpp(ui, swordpath):
     """Check the consistency of reports enumerations in simulation_kernel."""
     result = 0
@@ -151,6 +159,7 @@ def parsecpp(ui, swordpath):
         for m in missing:
             ui.error('error: %s is unused in C++ code\n' % m)
 
+    #dumpcppmappings(eng, dec, engmap, 'reports.txt')
     usedids = set(dec[k] for k in engmap.itervalues())
     return result, dec, usedids
 
