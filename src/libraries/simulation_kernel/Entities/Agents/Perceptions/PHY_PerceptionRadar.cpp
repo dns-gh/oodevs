@@ -15,7 +15,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar constructor
@@ -67,7 +67,7 @@ int PHY_PerceptionRadar::EnableRadar( const PHY_RadarClass& radarClass, const TE
     assert( radarZones_.size() > radarClass.GetID() );
     const TER_Localisation* pZone = new TER_Localisation( zone );
     if( ! radarZones_[ radarClass.GetID() ].insert( pZone ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     int id = PHY_Perception_ABC::GetPerceptionId();
     radarId_[ id ] = pZone;
     return id;

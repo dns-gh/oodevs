@@ -23,7 +23,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Network/NET_AsnException.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -234,7 +233,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CDT_CreatePionMis
 
     boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
     if( ! preparedMissions_.insert( pPionMission ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     return pPionMission;
 }
 
@@ -259,7 +258,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
     }
     boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
     if( ! preparedMissions_.insert( pPionMission ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     return pPionMission;
 }
 
@@ -279,7 +278,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
     //GGE pCurrentMission enlevé
     boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion ) );
     if( ! preparedMissions_.insert( pPionMission ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     return pPionMission;
 }
 
@@ -291,7 +290,7 @@ void MIL_AutomateOrderManager::CDT_GivePionMission( const boost::shared_ptr< MIL
 {
     assert( automate_.IsEngaged() );
     if( preparedMissions_.erase( mission ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
     mission->GetPion().GetOrderManager().ReplaceMission( mission );
 }
 
@@ -302,7 +301,7 @@ void MIL_AutomateOrderManager::CDT_GivePionMission( const boost::shared_ptr< MIL
 void MIL_AutomateOrderManager::CDT_GivePionMissionVersPion( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     if( preparedMissions_.erase( mission ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
     mission->GetPion().GetOrderManager().ReplaceMission( mission );
 }
 
@@ -321,7 +320,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreateAutomateMis
     else
         pAutomateMission = boost::shared_ptr< MIL_Mission_ABC >( new MIL_AutomateMission( missionType, automate ) );
     if( ! preparedMissions_.insert( pAutomateMission ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     return pAutomateMission;
 }
 
@@ -332,7 +331,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreateAutomateMis
 void MIL_AutomateOrderManager::GiveAutomateMission( boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     if( preparedMissions_.erase( mission ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
     mission->GetAutomate().GetOrderManager().ReplaceMission( mission );
 }
 

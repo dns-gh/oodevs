@@ -21,7 +21,7 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 
 using namespace firing;
 
@@ -190,7 +190,7 @@ void PHY_DirectFireData::RemoveWeapon( const PHY_ComposantePion& firer, PHY_Weap
 void PHY_DirectFireData::RemoveFirer( const PHY_ComposantePion& firer )
 {
     if( composantesWeapons_.erase( &firer ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

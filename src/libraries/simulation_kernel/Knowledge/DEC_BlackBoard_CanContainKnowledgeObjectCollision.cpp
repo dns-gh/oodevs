@@ -14,7 +14,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObjectCollision )
@@ -105,7 +105,7 @@ DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision
 {
     DEC_Knowledge_ObjectCollision* pKnowledge = new DEC_Knowledge_ObjectCollision( agentPerceiving, objectPerceived );//$$ RAM
     if( ! knowledgeObjectCollisionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     return *pKnowledge;
 }
 
@@ -116,7 +116,7 @@ DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision
 void DEC_BlackBoard_CanContainKnowledgeObjectCollision::DestroyKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge )
 {
     if( knowledgeObjectCollisionMap_.erase( &knowledge.GetObject() ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
     delete &knowledge;
 }
 

@@ -59,9 +59,9 @@ DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObje
     {
         boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second), pKnowledgeGroup_->shared_from_this() ) );
         if( ! objectMap_.insert( std::make_pair( it->first, knowledge ) ).second )
-            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Insert failed" );
+            MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
         if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
-            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Insert failed" );
+            MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     }
 }
 
@@ -153,9 +153,9 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
     if( knowledge )
     {
         if( ! objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second )
-            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Insert failed" );
+            MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
         if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
-            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Insert failed" );
+            MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     }
     return knowledge;
 }
@@ -172,11 +172,11 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
         if( knowledge.GetObjectKnown() )
         {
             if( objectMap_.erase( knowledge.GetObjectKnown() ) < 1 )
-                MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Erase failed" );
+                MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
             knowledge.CleanObjectKnown();
         }
         if( knowledgeObjectFromIDMap_.erase( knowledge.GetID() ) < 1 )
-            MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Erase failed" );
+            MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
     }
 }
 
@@ -187,7 +187,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
 void DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& /*knowledge*/ )
 {
     if( objectMap_.erase( &objectKnown ) < 1 )
-        MT_LOG_ERROR_MSG( " - Context " << __FUNCTION__ << " - File " << __FILE__ << " - Line " << __LINE__ << " - Message ' : Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

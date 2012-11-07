@@ -35,7 +35,7 @@
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Medical )
 
@@ -329,7 +329,7 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
         return 0;
     PHY_MedicalEvacuationAmbulance* pAmbulance = new PHY_MedicalEvacuationAmbulance( *this, *pCompAmbulance );
     if( ! pAmbulance->RegisterHuman( consign ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Register failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << ": Register failed" );
     evacuationAmbulances_.insert( std::make_pair( &humanAutomate, pAmbulance ) );
     return pAmbulance;
 }
@@ -357,7 +357,7 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
         return 0;
     PHY_MedicalCollectionAmbulance* pAmbulance = new PHY_MedicalCollectionAmbulance( *this, *pCompAmbulance );
     if( ! pAmbulance->RegisterHuman( consign ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Register failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << ": Register failed" );
     collectionAmbulances_.push_back( pAmbulance );
     return pAmbulance;
 }
@@ -982,7 +982,7 @@ void PHY_RolePionLOG_Medical::ReserveForSorting( const PHY_MedicalCollectionAmbu
 void PHY_RolePionLOG_Medical::CancelReservationForSorting( const PHY_MedicalCollectionAmbulance& ambulance )
 {
     if( reservations_.erase( &ambulance ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

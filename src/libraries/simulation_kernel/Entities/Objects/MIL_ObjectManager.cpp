@@ -173,7 +173,7 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
     if( !pObject )
         return;
     if( !objects_.insert( std::make_pair( pObject->GetID(), pObject ) ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     ++nbObjects_;
     if( pObject->IsUniversal() )
         universalObjects_.insert( pObject );

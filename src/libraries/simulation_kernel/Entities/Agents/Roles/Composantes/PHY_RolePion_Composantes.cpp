@@ -46,7 +46,6 @@
 #include "DotationsActionsNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/set.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -1351,7 +1350,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     if( !pMaintenanceComposanteState )
         return 0;
     if( ! maintenanceComposanteStates_.insert( pMaintenanceComposanteState ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     return pMaintenanceComposanteState;
 }
 
@@ -1362,7 +1361,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
 void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState )
 {
     if( maintenanceComposanteStates_.erase( &composanteState ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

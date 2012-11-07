@@ -15,7 +15,7 @@
 #include "Checkpoints/SerializationTools.h"
 #include "KnowledgesVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgePopulation )
 BOOST_CLASS_TRACKING( DEC_BlackBoard_CanContainKnowledgePopulation, boost::serialization::track_never )
@@ -78,7 +78,7 @@ DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKn
 {
     boost::shared_ptr< DEC_Knowledge_Population > pKnowledge( new DEC_Knowledge_Population( knowledgeGroup, populationPerceived ) );
     if( ! knowledgePopulationMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     return *pKnowledge;
 }
 
@@ -89,7 +89,7 @@ DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKn
 void DEC_BlackBoard_CanContainKnowledgePopulation::DestroyKnowledgePopulation( DEC_Knowledge_Population& knowledge )
 {
     if( knowledgePopulationMap_.erase( &knowledge.GetPopulationKnown() ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

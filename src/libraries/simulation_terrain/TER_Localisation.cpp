@@ -13,6 +13,7 @@
 #include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_Droite.h"
 #include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -385,7 +386,7 @@ void TER_Localisation::Reset( const MT_Vector2D& vPos )
     pointVector_.clear();
     pointVector_.push_back( vPos );
     if( ! Initialize() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Initialization failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ << ": Initialization failed" );
 }
 
 // -----------------------------------------------------------------------------

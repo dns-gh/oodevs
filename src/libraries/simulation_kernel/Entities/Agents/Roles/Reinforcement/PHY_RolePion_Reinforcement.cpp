@@ -19,7 +19,7 @@
 #include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Reinforcement )
 
@@ -195,7 +195,7 @@ void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg )
 void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinforcement )
 {
     if( ! reinforcements_.insert( &reinforcement ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     bReinforcementsChanged_ = true;
 }
 
@@ -206,7 +206,7 @@ void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinfo
 void PHY_RolePion_Reinforcement::NotifyReinforcementRemoved( MIL_AgentPion& reinforcement )
 {
     if( reinforcements_.erase( &reinforcement ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
     bReinforcementsChanged_ = true;
 }
 

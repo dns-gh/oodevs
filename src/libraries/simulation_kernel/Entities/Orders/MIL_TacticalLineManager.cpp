@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_TacticalLineManager.h"
 #include "TER_LimitData.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 
 namespace
 {
@@ -59,7 +59,7 @@ const TER_LimitData& MIL_TacticalLineManager::CreateLimitData( const T_PointVect
 void MIL_TacticalLineManager::DestroyLimitData( const TER_LimitData& data )
 {
     if( limitsData_.erase( data.GetPoints() ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
     delete &data;
 }
 

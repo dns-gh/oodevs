@@ -14,7 +14,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_AgentPerception.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 #include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeAgentPerception )
@@ -109,7 +109,7 @@ DEC_Knowledge_AgentPerception& DEC_BlackBoard_CanContainKnowledgeAgentPerception
 {
     DEC_Knowledge_AgentPerception* pKnowledge = new DEC_Knowledge_AgentPerception( agentPerceiving, agentPerceived );//$$ RAM
     if( ! unitKnowledgePerceptionMap_.insert( std::make_pair( &agentPerceived, pKnowledge ) ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     return *pKnowledge;
 }
 
@@ -120,7 +120,7 @@ DEC_Knowledge_AgentPerception& DEC_BlackBoard_CanContainKnowledgeAgentPerception
 void DEC_BlackBoard_CanContainKnowledgeAgentPerception::DestroyKnowledgeAgentPerception( DEC_Knowledge_AgentPerception& knowledge )
 {
     if( unitKnowledgePerceptionMap_.erase( &knowledge.GetAgentPerceived() ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
     delete &knowledge;
 }
 

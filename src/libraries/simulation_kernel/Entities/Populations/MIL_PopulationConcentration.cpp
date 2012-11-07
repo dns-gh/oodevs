@@ -25,7 +25,7 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.hpp>
@@ -227,7 +227,7 @@ bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) 
 void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow )
 {
     if( !pushingFlows_.insert( &flow ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Insert failed" );
     SetAttitude( flow.GetAttitude() );
 }
 
@@ -416,7 +416,7 @@ bool MIL_PopulationConcentration::HasChanged() const
 void MIL_PopulationConcentration::UnregisterPushingFlow( MIL_PopulationFlow& flow )
 {
     if( pushingFlows_.erase( &flow ) != 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        MT_LOG_ERROR_MSG( __FUNCTION__ FILE__ << " : Erase failed" );
 }
 
 // -----------------------------------------------------------------------------
