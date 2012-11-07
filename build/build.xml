@@ -826,7 +826,8 @@
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,web_control_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,simulation_kernel_test,
                                  integration_decisionnal_test,checkpoint_test,protocol_test,positions_plugin_test,
-                                 actions_test,launcher_test,propagation_test,client_proxy_test" description="run all tests"/>
+                                 actions_test,launcher_test,propagation_test,client_proxy_test,
+                                 start_gui_test" description="run all tests"/>
 
     <target name="3a_test" depends="3a">
         <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt" failonwarning="${failonwarning}"/>
@@ -1224,6 +1225,30 @@
             failonwarning="${failonwarning}"/>
     </target>
 
+    <macrodef name="check-start-gui">
+        <attribute name="app"/>
+        <element name="elements" optional="true" implicit="true"/>
+        <sequential>
+            <exec taskname="@{app}" executable="python" failonerror="true">
+                <arg value="check_start_gui.py"/>
+                <arg value="--run_dir"/>
+                <arg value="${run.dir}"/>
+                <arg value="${out.dir}/release/applications/@{app}/@{app}.exe"/>
+                <elements/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <target name="start_gui_test" description="check whether gui applications start properly">
+        <check-start-gui app="adaptation_app"/>
+        <check-start-gui app="preparation_app"/>
+        <check-start-gui app="selftraining_app"/>
+        <check-start-gui app="gaming_app">
+            <arg value="--root-dir=../../data"/>
+            <arg value="--exercise=worldwide/Egypt"/>
+            <arg value="--session=default"/>
+        </check-start-gui>
+    </target>
 
     <!--
     ============================================================================
