@@ -631,10 +631,10 @@ MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automa
 // Name: Sink::CreateFloodModel
 // Created: LGY 2012-08-07
 // -----------------------------------------------------------------------------
-std::auto_ptr< flood::FloodModel_ABC > Sink::CreateFloodModel() const
+std::auto_ptr< propagation::FloodModel_ABC > Sink::CreateFloodModel() const
 {
     assert( facade_.get() );
-    return std::auto_ptr< flood::FloodModel_ABC >( new sword::FloodModel( *facade_ ) );
+    return std::auto_ptr< propagation::FloodModel_ABC >( new sword::FloodModel( *facade_ ) );
 }
 
 // -----------------------------------------------------------------------------

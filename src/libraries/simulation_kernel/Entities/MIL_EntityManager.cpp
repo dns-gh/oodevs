@@ -71,7 +71,7 @@
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
-#include "flood/FloodModel.h"
+#include "propagation/FloodModel.h"
 #include "Inhabitants/MIL_InhabitantType.h"
 #include "Inhabitants/MIL_Inhabitant.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"

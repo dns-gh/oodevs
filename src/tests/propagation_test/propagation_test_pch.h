@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __flood_test_pch_h_
-#define __flood_test_pch_h_
+#ifndef __propagation_test_pch_h_
+#define __propagation_test_pch_h_
 
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
@@ -21,4 +21,4 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
-#endif // __flood_test_pch_h_
+#endif // __propagation_test_pch_h_

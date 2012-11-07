@@ -13,19 +13,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\tests\flood_test\flood_test_pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\flood_test\FloodModelTest.cpp">
+    <ClCompile Include="..\..\src\tests\propagation_test\FloodModelTest.cpp">
       <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\propagation_test\propagation_test_pch.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\tests\flood_test\flood_test_pch.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\flood_test\MockElevationGetter.h">
+    <ClInclude Include="..\..\src\tests\propagation_test\MockElevationGetter.h">
       <Filter>Source Files\Mocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\propagation_test\propagation_test_pch.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

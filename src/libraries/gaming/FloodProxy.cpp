@@ -10,10 +10,10 @@
 #include "gaming_pch.h"
 #include "FloodProxy.h"
 #include "clients_kernel/DetectionMap.h"
-#include "flood/FloodDrawer.h"
-#include "flood/FloodModel.h"
+#include "propagation/FloodDrawer.h"
+#include "propagation/FloodModel.h"
 
-using namespace flood;
+using namespace propagation;
 
 // -----------------------------------------------------------------------------
 // Name: FloodProxy constructor

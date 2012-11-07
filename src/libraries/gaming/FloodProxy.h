@@ -10,10 +10,10 @@
 #ifndef __FloodProxy_h_
 #define __FloodProxy_h_
 
-#include "flood/ElevationGetter_ABC.h"
+#include "propagation/ElevationGetter_ABC.h"
 #include <boost/shared_ptr.hpp>
 
-namespace flood
+namespace propagation
 {
     class FloodDrawer;
     class FloodModel_ABC;
@@ -30,7 +30,7 @@ namespace kernel
 */
 // Created: JSR 2011-10-07
 // =============================================================================
-class FloodProxy : public flood::ElevationGetter_ABC
+class FloodProxy : public propagation::ElevationGetter_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -51,16 +51,16 @@ public:
 private:
     //! @name Types
     //@{
-    typedef boost::shared_ptr< flood::FloodDrawer > T_Flood;
-    typedef std::map< unsigned int, T_Flood >       T_Floods;
-    typedef T_Floods::const_iterator              CIT_Floods;
+    typedef boost::shared_ptr< propagation::FloodDrawer > T_Flood;
+    typedef std::map< unsigned int, T_Flood >             T_Floods;
+    typedef T_Floods::const_iterator                    CIT_Floods;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::DetectionMap& detection_;
-    std::auto_ptr< flood::FloodModel_ABC > pFloodModel_;
+    std::auto_ptr< propagation::FloodModel_ABC > pFloodModel_;
     T_Floods floods_;
     unsigned int idManager_;
     //@}

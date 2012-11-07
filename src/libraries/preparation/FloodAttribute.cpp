@@ -17,8 +17,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "flood/FloodDrawer.h"
-#include "flood/FloodModel.h"
+#include "propagation/FloodDrawer.h"
+#include "propagation/FloodModel.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -34,8 +34,8 @@ FloodAttribute::FloodAttribute( PropertiesDictionary& dictionary, const kernel::
     , controllers_( controllers )
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
-    , floodModel_ ( new flood::FloodModel( *this ) )
-    , floodDrawer_( new flood::FloodDrawer() )
+    , floodModel_ ( new propagation::FloodModel( *this ) )
+    , floodDrawer_( new propagation::FloodDrawer() )
 {
     controllers_.Register( *this );
     CreateDictionary( dictionary );
@@ -52,14 +52,14 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& 
     , controllers_( controllers )
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
-    , floodModel_ ( new flood::FloodModel( *this ) )
+    , floodModel_ ( new propagation::FloodModel( *this ) )
 {
     controllers_.Register( *this );
     xis >> xml::attribute( "depth", depth_.value_ )
         >> xml::attribute( "reference-distance", refDist_.value_ );
     CreateDictionary( dictionary );
 
-    floodDrawer_.reset( new flood::FloodDrawer( *floodModel_, positions.GetPosition(), depth_.value_, refDist_.value_ ) );
+    floodDrawer_.reset( new propagation::FloodDrawer( *floodModel_, positions.GetPosition(), depth_.value_, refDist_.value_ ) );
 }
 
 // -----------------------------------------------------------------------------

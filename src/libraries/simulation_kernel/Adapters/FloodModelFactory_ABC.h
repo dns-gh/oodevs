@@ -12,7 +12,7 @@
 
 #include <memory>
 
-namespace flood
+namespace propagation
 {
     class FloodModel_ABC;
 }
@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< flood::FloodModel_ABC > CreateFloodModel() const = 0;
+    virtual std::auto_ptr< propagation::FloodModel_ABC > CreateFloodModel() const = 0;
     //@}
 
     //! @name CheckPoints

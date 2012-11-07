@@ -14,10 +14,10 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Units.h"
-#include "flood/ElevationGetter_ABC.h"
+#include "propagation/ElevationGetter_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
-namespace flood
+namespace propagation
 {
     class FloodDrawer;
     class FloodModel_ABC;
@@ -49,7 +49,7 @@ class FloodAttribute : public kernel::FloodAttribute_ABC
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< FloodAttribute >
                      , public tools::ElementObserver_ABC< kernel::AltitudeModified >
-                     , public flood::ElevationGetter_ABC
+                     , public propagation::ElevationGetter_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -89,8 +89,8 @@ private:
     const kernel::Positions& positions_;
     kernel::UnitedValue< int > depth_;
     kernel::UnitedValue< int > refDist_;
-    std::auto_ptr< flood::FloodModel_ABC > floodModel_;
-    std::auto_ptr< flood::FloodDrawer > floodDrawer_;
+    std::auto_ptr< propagation::FloodModel_ABC > floodModel_;
+    std::auto_ptr< propagation::FloodDrawer > floodDrawer_;
     //@}
 };
 

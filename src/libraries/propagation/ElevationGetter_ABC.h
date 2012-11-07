@@ -13,7 +13,7 @@
 #include <geometry/types.h>
 #include <boost/noncopyable.hpp>
 
-namespace flood
+namespace propagation
 {
 // =============================================================================
 /** @class  ElevationGetter_ABC

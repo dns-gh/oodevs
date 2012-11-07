@@ -11,7 +11,7 @@
 #include "FloodAttribute.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Object_ABC.h"
-#include "flood/FloodModel_ABC.h"
+#include "propagation/FloodModel_ABC.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "protocol/Protocol.h"
@@ -178,7 +178,7 @@ bool FloodAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // Name: FloodAttribute::GenerateFlood
 // Created: JSR 2011-05-20
 // -----------------------------------------------------------------------------
-void FloodAttribute::GenerateFlood( const flood::FloodModel_ABC& model )
+void FloodAttribute::GenerateFlood( const propagation::FloodModel_ABC& model )
 {
     MT_Vector2D center = location_.ComputeBarycenter();
     model.GenerateFlood( Point2d( center.rX_, center.rY_ ), deepAreas_, lowAreas_, depth_, refDist_ );

@@ -13,7 +13,7 @@
 #include "FloodModel_ABC.h"
 #include <geometry/types.h>
 
-namespace flood
+namespace propagation
 {
     class ElevationGetter_ABC;
 

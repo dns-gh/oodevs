@@ -9,8 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "Sink.h"
-#include "flood/FloodModel.h"
-#include "flood/ElevationGetter_ABC.h"
+#include "propagation/FloodModel.h"
+#include "propagation/ElevationGetter_ABC.h"
 #include "RolePion_Decision.h"
 #include "NullRoleAdapter.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -28,7 +28,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( sword::legacy::Sink )
 
 namespace
 {
-    class ElevationGetter : public flood::ElevationGetter_ABC
+    class ElevationGetter : public propagation::ElevationGetter_ABC
     {
     public:
         ElevationGetter()
@@ -249,9 +249,9 @@ void Sink::Initialize( MIL_AgentPion& pion, const MT_Vector2D& vPosition )
 // Name: Sink::CreateFloodModel
 // Created: LGY 2012-08-07
 // -----------------------------------------------------------------------------
-std::auto_ptr< flood::FloodModel_ABC > Sink::CreateFloodModel() const
+std::auto_ptr< propagation::FloodModel_ABC > Sink::CreateFloodModel() const
 {
-    return std::auto_ptr< flood::FloodModel_ABC >( new flood::FloodModel( *pElevation_ ) );
+    return std::auto_ptr< propagation::FloodModel_ABC >( new propagation::FloodModel( *pElevation_ ) );
 }
 
 // -----------------------------------------------------------------------------

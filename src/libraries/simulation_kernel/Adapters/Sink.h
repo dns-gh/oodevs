@@ -72,7 +72,7 @@ public:
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
     virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name );
 
-    virtual std::auto_ptr< flood::FloodModel_ABC > CreateFloodModel() const;
+    virtual std::auto_ptr< propagation::FloodModel_ABC > CreateFloodModel() const;
     //@}
 
     //! @name CheckPoint

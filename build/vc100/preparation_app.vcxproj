@@ -1700,7 +1700,7 @@ lrelease -verbose %(FullPath)
     <ProjectReference Include="ENT.vcxproj">
       <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
     </ProjectReference>
-    <ProjectReference Include="flood.vcxproj">
+    <ProjectReference Include="propagation.vcxproj">
       <Project>{de65a391-dd7f-423c-a0b3-d86985657dec}</Project>
     </ProjectReference>
     <ProjectReference Include="frontend.vcxproj">

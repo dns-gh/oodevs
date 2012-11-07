@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#include "flood_test_pch.h"
-#include "flood/FloodModel.h"
+#include "propagation_test_pch.h"
+#include "propagation/FloodModel.h"
 #include "MockElevationGetter.h"
 
 namespace
@@ -26,7 +26,7 @@ namespace
             , deepElevation_  ( 10u )
         {}
         MockElevationGetter elevationGetter_;
-        flood::FloodModel flood_;
+        propagation::FloodModel flood_;
         geometry::Point2f center_;
         int depth_;
         int refDist_;
@@ -56,8 +56,8 @@ BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateSwimmingPool, Fixture )
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, -100.f ) ).returns( deepElevation_ );
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, -100.f ) ).returns( deepElevation_ );
 
-    flood::FloodModel_ABC::T_Polygons deepArea;
-    flood::FloodModel_ABC::T_Polygons lowArea;
+    propagation::FloodModel_ABC::T_Polygons deepArea;
+    propagation::FloodModel_ABC::T_Polygons lowArea;
 
     flood_.GenerateFlood( center_, deepArea, lowArea, depth_, refDist_ );
 
@@ -85,8 +85,8 @@ BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateStrips, Fixture )
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(    0.f, -100.f ) ).returns( deepElevation_ );
     MOCK_EXPECT( elevationGetter_.GetElevationAt ).once().with( geometry::Point2f(  100.f, -100.f ) ).returns( deepElevation_ );
 
-    flood::FloodModel_ABC::T_Polygons deepArea;
-    flood::FloodModel_ABC::T_Polygons lowArea;
+    propagation::FloodModel_ABC::T_Polygons deepArea;
+    propagation::FloodModel_ABC::T_Polygons lowArea;
 
     flood_.GenerateFlood( center_, deepArea, lowArea, depth_, refDist_ );
 

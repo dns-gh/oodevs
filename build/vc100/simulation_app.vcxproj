@@ -216,7 +216,7 @@
     <ResourceCompile Include="..\..\src\applications\simulation_app\sim.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="flood.vcxproj">
+    <ProjectReference Include="propagation.vcxproj">
       <Project>{de65a391-dd7f-423c-a0b3-d86985657dec}</Project>
     </ProjectReference>
     <ProjectReference Include="license_gui.vcxproj">

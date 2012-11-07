@@ -14,7 +14,7 @@
 #include <vector>
 #include <boost/noncopyable.hpp>
 
-namespace flood
+namespace propagation
 {
 // =============================================================================
 /** @class  FloodModel_ABC

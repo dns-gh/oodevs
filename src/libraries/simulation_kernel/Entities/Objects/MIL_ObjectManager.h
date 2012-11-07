@@ -25,7 +25,7 @@ namespace sword
     class Sink_ABC;
 }
 
-namespace flood
+namespace propagation
 {
     class FloodModel_ABC;
 }
@@ -65,7 +65,7 @@ public:
     //! @name Operations
     //@{
     void ProcessEvents();
-    void UpdateStates( const flood::FloodModel_ABC& floodModel );
+    void UpdateStates( const propagation::FloodModel_ABC& floodModel );
     unsigned long Count() const;
 
     MIL_Object_ABC& CreateObject( xml::xistream& xis, MIL_Army_ABC* army );
@@ -85,11 +85,11 @@ public:
 
     //! @name Network
     //@{
-    void FinalizeObjects( const flood::FloodModel_ABC& floodModel );
+    void FinalizeObjects( const propagation::FloodModel_ABC& floodModel );
     void SendCreation();
     void SendFullState();
     void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies,
-                                     const flood::FloodModel_ABC& floodModel );
+                                     const propagation::FloodModel_ABC& floodModel );
     void OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx );
     //@}
 
@@ -114,7 +114,7 @@ private:
     //! @name Tools
     //@{
     sword::ObjectMagicActionAck_ErrorCode CreateObject( const sword::MissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies,
-                                                        const flood::FloodModel_ABC& floodModel );
+                                                        const propagation::FloodModel_ABC& floodModel );
     //@}
 
 private:

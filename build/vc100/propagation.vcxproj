@@ -20,8 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DE65A391-DD7F-423C-A0B3-D86985657DEC}</ProjectGuid>
-    <RootNamespace>flood</RootNamespace>
+    <RootNamespace>propagation</RootNamespace>
     <Keyword>ManagedCProj</Keyword>
+    <ProjectName>propagation</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="Configuration">
@@ -94,14 +95,14 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\libraries\flood\ElevationGetter_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\flood\FloodDrawer.h" />
-    <ClInclude Include="..\..\src\libraries\flood\FloodModel.h" />
-    <ClInclude Include="..\..\src\libraries\flood\FloodModel_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\propagation\ElevationGetter_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\propagation\FloodDrawer.h" />
+    <ClInclude Include="..\..\src\libraries\propagation\FloodModel.h" />
+    <ClInclude Include="..\..\src\libraries\propagation\FloodModel_ABC.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\libraries\flood\FloodDrawer.cpp" />
-    <ClCompile Include="..\..\src\libraries\flood\FloodModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\propagation\FloodDrawer.cpp" />
+    <ClCompile Include="..\..\src\libraries\propagation\FloodModel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

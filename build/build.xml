@@ -87,7 +87,7 @@
         <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}"/>
     </target>
 
-    <target name="simulation_kernel" depends="tools,protocol,simulation_terrain,meteo,resource_network,flood" description="build simulation_kernel static library">
+    <target name="simulation_kernel" depends="tools,protocol,simulation_terrain,meteo,resource_network,propagation" description="build simulation_kernel static library">
         <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd" excludes="**/DEC_Knowledge_ObjectAttributeProxy_ABC.h" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
             <defineset>
@@ -132,13 +132,13 @@
         </build-lib>
     </target>
 
-    <target name="gaming" depends="protocol,clients_gui,actions,actions_gui,indicators,reports,meteo,flood" description="build gaming static library">
+    <target name="gaming" depends="protocol,clients_gui,actions,actions_gui,indicators,reports,meteo,propagation" description="build gaming static library">
         <build-lib name="gaming" depends="qt4" pattern="lib${ant.project.name}_gaming-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
-    <target name="preparation" depends="clients_gui,actions_gui,indicators,flood,geostore" description="build preparation static library">
+    <target name="preparation" depends="clients_gui,actions_gui,indicators,propagation,geostore" description="build preparation static library">
         <build-lib name="preparation" depends="qt4" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
@@ -305,8 +305,8 @@
         </build-lib>
     </target>
 
-    <target name="flood" description="build flood static library">
-        <build-lib name="flood" pattern="lib${ant.project.name}_flood-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
+    <target name="propagation" description="build propagation static library">
+        <build-lib name="propagation" pattern="lib${ant.project.name}_propagation-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
@@ -566,7 +566,7 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
-                  lib${ant.project.name}_flood-${platform}-mt@{suffix},
+                  lib${ant.project.name}_propagation-${platform}-mt@{suffix},
                   lib${ant.project.name}_meteo-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
                   lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix},
@@ -642,7 +642,7 @@
                          lib${ant.project.name}_reports-${platform}-mt,
                          lib${ant.project.name}_gaming-${platform}-mt,
                          lib${ant.project.name}_indicators-${platform}-mt,
-                         lib${ant.project.name}_flood-${platform}-mt,
+                         lib${ant.project.name}_propagation-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt,
                          lib${ant.project.name}_license_gui-${platform}-mt@{suffix}"
                     failonwarning="${failonwarning}">
@@ -676,7 +676,7 @@
                          lib${ant.project.name}_indicators-${platform}-mt,
                          lib${ant.project.name}_preparation-${platform}-mt,
                          lib${ant.project.name}_meteo-${platform}-mt,
-                         lib${ant.project.name}_flood-${platform}-mt,
+                         lib${ant.project.name}_propagation-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt,
                          lib${ant.project.name}_frontend-${platform}-mt,
                          lib${ant.project.name}_geostore-${platform}-mt,
@@ -826,7 +826,7 @@
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,web_control_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,simulation_kernel_test,
                                  integration_decisionnal_test,checkpoint_test,protocol_test,positions_plugin_test,
-                                 actions_test,launcher_test,flood_test,client_proxy_test" description="run all tests"/>
+                                 actions_test,launcher_test,propagation_test,client_proxy_test" description="run all tests"/>
 
     <target name="3a_test" depends="3a">
         <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt" failonwarning="${failonwarning}"/>
@@ -904,7 +904,7 @@
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_preparation-${platform}-mt,
-                  lib${ant.project.name}_flood-${platform}-mt,
+                  lib${ant.project.name}_propagation-${platform}-mt,
                   lib${ant.project.name}_meteo-${platform}-mt,
                   lib${ant.project.name}_geostore-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt"
@@ -966,8 +966,8 @@
         </build-test>
     </target>
 
-    <target name="flood_test" depends="flood">
-        <build-test name="flood" depends="boost" libs="lib${ant.project.name}_flood-${platform}-mt" failonwarning="${failonwarning}"/>
+    <target name="propagation_test" depends="propagation">
+        <build-test name="propagation" depends="boost" libs="lib${ant.project.name}_propagation-${platform}-mt" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="positions_plugin_test" depends="protocol,positions_plugin">
@@ -1134,7 +1134,7 @@
                          lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix},
                          lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
                          lib${ant.project.name}_meteo-${platform}-mt@{suffix},
-                         lib${ant.project.name}_flood-${platform}-mt@{suffix},
+                         lib${ant.project.name}_propagation-${platform}-mt@{suffix},
                          lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}"
                     depends="xerces,xalan,terrain,boost,qt4,protobuf"
                     failonwarning="${failonwarning}">

@@ -126,7 +126,7 @@ void MIL_ObjectManager::ProcessEvents()
 // Name: MIL_ObjectManager::UpdateStates
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::UpdateStates( const flood::FloodModel_ABC& floodModel )
+void MIL_ObjectManager::UpdateStates( const propagation::FloodModel_ABC& floodModel )
 {
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); )
     {
@@ -209,7 +209,7 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies,
-                                                                       const flood::FloodModel_ABC& floodModel )
+                                                                       const propagation::FloodModel_ABC& floodModel )
 {
     if( !( message.elem_size() == 4 || message.elem_size() == 5 ) ) // type, location, name, team, attributes
         return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
@@ -370,7 +370,7 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 // Name: MIL_ObjectManager::FinalizeObjects
 // Created: JSR 2011-05-20
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::FinalizeObjects( const flood::FloodModel_ABC& floodModel )
+void MIL_ObjectManager::FinalizeObjects( const propagation::FloodModel_ABC& floodModel )
 {
     // $$$$ _RC_ JSR 2011-11-04: TODO passer par une interface? (attention, respecter l'ordre, floods en derniers)
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
@@ -410,7 +410,7 @@ void MIL_ObjectManager::SendFullState()
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& msg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies,
-                                                    const flood::FloodModel_ABC& floodModel )
+                                                    const propagation::FloodModel_ABC& floodModel )
 {
     sword::ObjectMagicActionAck_ErrorCode nErrorCode = sword::ObjectMagicActionAck::no_error;
 

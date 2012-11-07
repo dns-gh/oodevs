@@ -11,7 +11,7 @@
 #include "ElevationGetter_ABC.h"
 #include <queue>
 
-using namespace flood;
+using namespace propagation;
 using namespace geometry;
 
 const int FloodModel::cellWidth_ = 100;

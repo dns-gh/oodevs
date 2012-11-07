@@ -13,7 +13,7 @@
 #include <vector>
 #include <geometry/types.h>
 
-namespace flood
+namespace propagation
 {
     class FloodModel_ABC;
 // =============================================================================
@@ -28,14 +28,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              FloodDrawer();
-             FloodDrawer( const flood::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist );
+             FloodDrawer( const propagation::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist );
     virtual ~FloodDrawer();
     //@}
 
     //! @name Operations
     //@{
     void Draw() const;
-    void Reset( const flood::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist );
+    void Reset( const propagation::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist );
     //@}
 
     //! @name Accessors

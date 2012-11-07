@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{328f989a-47a6-4cda-9f0c-93c68224d9cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\propagation">
+      <UniqueIdentifier>{c3be17db-cc14-400b-8984-cea22afbebe8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\propagation\ElevationGetter_ABC.h">
+      <Filter>Source Files\propagation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\propagation\FloodDrawer.h">
+      <Filter>Source Files\propagation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\propagation\FloodModel.h">
+      <Filter>Source Files\propagation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\propagation\FloodModel_ABC.h">
+      <Filter>Source Files\propagation</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\propagation\FloodDrawer.cpp">
+      <Filter>Source Files\propagation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\propagation\FloodModel.cpp">
+      <Filter>Source Files\propagation</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

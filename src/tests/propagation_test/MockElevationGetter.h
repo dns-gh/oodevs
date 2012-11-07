@@ -10,7 +10,7 @@
 #ifndef __MockElevationGetter_h_
 #define __MockElevationGetter_h_
 
-#include "flood/ElevationGetter_ABC.h"
+#include "propagation/ElevationGetter_ABC.h"
 
 // =============================================================================
 /** @class  MockElevationGetter
@@ -18,7 +18,7 @@
 */
 // Created: ABR 2011-01-10
 // =============================================================================
-MOCK_BASE_CLASS( MockElevationGetter, flood::ElevationGetter_ABC )
+MOCK_BASE_CLASS( MockElevationGetter, propagation::ElevationGetter_ABC )
 {
     MOCK_METHOD( GetElevationAt, 1 );
 };

@@ -12,7 +12,7 @@
 #include <windows.h>
 #include <gl/gl.h>
 
-using namespace flood;
+using namespace propagation;
 using namespace geometry;
 
 // -----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ FloodDrawer::FloodDrawer()
 // Name: FloodDrawer constructor
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-FloodDrawer::FloodDrawer( const flood::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist )
+FloodDrawer::FloodDrawer( const propagation::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist )
     : callListId_( 0 )
     , point_     ( point )
     , depth_     ( depth )
@@ -68,7 +68,7 @@ void FloodDrawer::Draw() const
 // Name: FloodDrawer::RenderTexture
 // Created: LGY 2012-06-29
 // -----------------------------------------------------------------------------
-void FloodDrawer::Reset( const flood::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist )
+void FloodDrawer::Reset( const propagation::FloodModel_ABC& model, const geometry::Point2f& point, int depth, int refDist )
 {
     ResetTexture();
     model.GenerateFlood( point, deepAreas_, lowAreas_, depth, refDist );

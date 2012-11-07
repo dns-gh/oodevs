@@ -134,13 +134,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client_proxy", "client_prox
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client_proxy_test", "client_proxy_test.vcxproj", "{A3B8517D-CD7C-4381-B3C2-3F66DA2AC372}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flood", "flood.vcxproj", "{DE65A391-DD7F-423C-A0B3-D86985657DEC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "propagation", "propagation.vcxproj", "{DE65A391-DD7F-423C-A0B3-D86985657DEC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "launcher_test", "launcher_test.vcxproj", "{21BBAC69-79AE-46F5-82CF-1280D5FE92EB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rpr", "rpr.vcxproj", "{70A0412C-1716-4034-BF76-39F8DD7D817F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flood_test", "flood_test.vcxproj", "{E3C336C7-2094-484F-AD39-4CE5D4E3FB41}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "propagation_test", "propagation_test.vcxproj", "{E3C336C7-2094-484F-AD39-4CE5D4E3FB41}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hla_plugin_dll", "hla_plugin_dll.vcxproj", "{6FD84D8C-4298-473B-AD29-EE85932D42EB}"
 EndProject
