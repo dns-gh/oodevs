@@ -23,8 +23,9 @@ namespace
 namespace kernel
 {
     class CoordinateConverter_ABC;
-    class ASCExtractor;
 }
+
+class ASCExtractor;
 
 // =============================================================================
 /** @class  Propagation
@@ -52,7 +53,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    std::auto_ptr< kernel::ASCExtractor > pExtractor_;
+    std::auto_ptr< ASCExtractor > pExtractor_;
     std::auto_ptr< RGBATextureFactory > pFactory_;
     std::auto_ptr< TextureTree > pTree_;
     //@}

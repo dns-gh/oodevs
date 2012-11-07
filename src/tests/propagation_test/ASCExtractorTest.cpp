@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "clients_test_pch.h"
-#include "clients_kernel/ASCExtractor.h"
+#include "propagation_test_pch.h"
+#include "propagation/ASCExtractor.h"
 
 namespace
 {
-    void CheckData( const kernel::ASCExtractor& extractor )
+    void CheckData( const ASCExtractor& extractor )
     {
         BOOST_CHECK_EQUAL( extractor.GetNoValueData(), -9999 );
         BOOST_CHECK_EQUAL( extractor.GetMaximumValue(), 100 );
@@ -26,7 +26,7 @@ namespace
         BOOST_CHECK_EQUAL( pixelSire.X(), 50 );
         BOOST_CHECK_EQUAL( pixelSire.Y(), -50 );
 
-        const kernel::ASCExtractor::T_Values& values = extractor.GetValues();
+        const ASCExtractor::T_Values& values = extractor.GetValues();
         BOOST_CHECK_EQUAL( values.size(), 24u );
     }
 }
@@ -37,7 +37,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( extract_ascii_grid )
 {
-    CheckData( kernel::ASCExtractor( BOOST_RESOLVE( "ascii_test.asc" ) ) );
+    CheckData( ASCExtractor( BOOST_RESOLVE( "ascii_test.asc" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,5 +46,5 @@ BOOST_AUTO_TEST_CASE( extract_ascii_grid )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( extract_ascii_grid_with_external_prj )
 {
-    CheckData( kernel::ASCExtractor( BOOST_RESOLVE( "ascii_test.asc" ), BOOST_RESOLVE( "ascii_test.prj" ) ) );
+    CheckData( ASCExtractor( BOOST_RESOLVE( "ascii_test.asc" ), BOOST_RESOLVE( "ascii_test.prj" ) ) );
 }

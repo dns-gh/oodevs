@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef kernel_ASCExtractor_h
-#define kernel_ASCExtractor_h
+#ifndef ASCExtractor_h
+#define ASCExtractor_h
 
 #pragma warning( push, 0 )
 #include <gdal/gdal_priv.h>
@@ -18,8 +18,7 @@
 #include <geometry/Types.h>
 #include <vector>
 
-namespace kernel
-{
+
 // =============================================================================
 /** @class  ASCExtractor
     @brief  ASC extractor
@@ -75,7 +74,5 @@ private:
     T_Values values_;
     //@}
 };
-
-}
 
 #endif // ASCExtractor_h

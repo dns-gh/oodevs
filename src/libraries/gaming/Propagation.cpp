@@ -10,14 +10,10 @@
 #include "gaming_pch.h"
 #include "Propagation.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/ASCExtractor.h"
+#include "propagation/ASCExtractor.h"
 #include <graphics/Visitor2d.h>
 #include <graphics/TextureVisitor_ABC.h>
 
-namespace
-{
-
-}
 
 // -----------------------------------------------------------------------------
 // Name: Propagation constructor
@@ -27,9 +23,9 @@ Propagation::Propagation( const std::string& file, const std::string& projection
                           const kernel::CoordinateConverter_ABC& converter,
                           const std::map< double, QColor >& colors )
     : converter_ ( converter )
-    , pExtractor_( new kernel::ASCExtractor( file, projection ) )
+    , pExtractor_( new ASCExtractor( file, projection ) )
 {
-    const kernel::ASCExtractor::T_Values& values = pExtractor_->GetValues();
+    const ASCExtractor::T_Values& values = pExtractor_->GetValues();
     std::vector< unsigned char > rgba( values.size() * 4 );
     for( unsigned int i = 0; i < values.size(); ++i )
     {
@@ -59,7 +55,7 @@ namespace
     struct VisitorProxy : public TextureVisitor_ABC
                         , private boost::noncopyable
     {
-        VisitorProxy( kernel::ASCExtractor& extractor, const kernel::CoordinateConverter_ABC& converter )
+        VisitorProxy( ASCExtractor& extractor, const kernel::CoordinateConverter_ABC& converter )
             : extractor_( extractor )
             , converter_( converter )
         {};
@@ -82,7 +78,7 @@ namespace
             glEnd();
         }
     private:
-        kernel::ASCExtractor& extractor_;
+        ASCExtractor& extractor_;
         const kernel::CoordinateConverter_ABC& converter_;
     };
 }

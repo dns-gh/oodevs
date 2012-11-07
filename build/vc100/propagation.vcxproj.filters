@@ -21,12 +21,18 @@
     <ClInclude Include="..\..\src\libraries\propagation\FloodModel_ABC.h">
       <Filter>Source Files\propagation</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\propagation\ASCExtractor.h">
+      <Filter>Source Files\propagation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\propagation\FloodDrawer.cpp">
       <Filter>Source Files\propagation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\propagation\FloodModel.cpp">
+      <Filter>Source Files\propagation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\propagation\ASCExtractor.cpp">
       <Filter>Source Files\propagation</Filter>
     </ClCompile>
   </ItemGroup>

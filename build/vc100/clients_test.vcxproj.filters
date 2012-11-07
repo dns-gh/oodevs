@@ -25,9 +25,6 @@
     <ClCompile Include="..\..\src\tests\clients_test\KnowledgeGroupTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\clients_test\ASCExtractorTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\clients_test\clients_test_pch.h">
@@ -39,8 +36,5 @@
     <ClInclude Include="..\..\src\tests\clients_test\XmlChecks.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram11.cd" />
   </ItemGroup>
 </Project>

@@ -7,15 +7,13 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
 #include "ASCExtractor.h"
 
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
-#include <numeric>
-namespace bfs = boost::filesystem;
+#include <fstream>
 
-using namespace kernel;
+namespace bfs = boost::filesystem;
 
 namespace
 {
