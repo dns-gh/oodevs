@@ -36,7 +36,7 @@ def parseenum(ui, headerpath, lineno, lines, restart, reval):
                 result = 1
                 continue
             rid = len(reports)
-            reports[rid] = m.group(1)
+            reports[m.group(1)] = rid
     if state != 2:
         ui.error('error: reached end of %s before seeing all expected enums'
                 % headerpath)
@@ -48,13 +48,17 @@ def parseenum(ui, headerpath, lineno, lines, restart, reval):
 def parsecppheader(ui, headerpath):
     """Parse the engine and decisional enumerations in MIL_Report.h."""
     reengstart = re.compile(r'^\s*enum\s+E_EngineReport\s*$')
-    reengval = re.compile(r'^\s*(eReport_\S+|eNbrReport),?\s*(//|$)')
+    reengval = re.compile(r'^\s*(eReport_[^\s,]+|eNbrReport)\s*,?\s*(//|$)')
     redecstart = re.compile(r'^\s*enum\s+E_DecisionalReport\s*$')
-    redecval = re.compile(r'^\s*(eRC_\S+|eLast),?\s*(//|$)')
+    redecval = re.compile(r'^\s*(eRC_[^\s,]+|eLast)\s*,?\s*(//|$)')
     lines = list(file(headerpath))
     i = 0
     i, engreports = parseenum(ui, headerpath, i, lines, reengstart, reengval)
+    if 'eNbrReport' in engreports:
+        del engreports['eNbrReport']
     i, decreports = parseenum(ui, headerpath, i, lines, redecstart, redecval)
+    if 'eLast' in decreports:
+        del decreports['eLast']
     result = 0
     if not engreports:
         ui.error('error: no E_EngineReport definition found\n')
@@ -100,6 +104,17 @@ def parsecpp(ui, swordpath):
     res, engmap = parsecppsource(ui, sourcepath)
     if res:
         result = 1
+    # Cross-check definitions and mappings
+    # All engine reports must be mapped to decisional ones
+    for r in eng:
+        if r not in engmap:
+            ui.error('error: %s is not mapped to a decisional report\n' % r)
+            result = 1
+    for r in engmap:
+        if r not in eng:
+            # Should be a C++ compiled error, but this is cheap to check
+            ui.error('error: %s engine report identifier is unknown\n' % r)
+            result = 1
     return result
 
 if __name__ == '__main__':
