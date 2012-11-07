@@ -3940,6 +3940,22 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
     </message>
     <message>
+        <source>Sensor</source>
+        <translation type="unfinished">أجهزة الاستشعار</translation>
+    </message>
+    <message>
+        <source>Object</source>
+        <translation type="unfinished">كائن</translation>
+    </message>
+    <message>
+        <source>Agent detection</source>
+        <translation type="unfinished">كشف وكيل</translation>
+    </message>
+    <message>
+        <source>Object detection</source>
+        <translation type="unfinished">الكشف عن الكائن</translation>
+    </message>
+    <message>
         <source>Target size</source>
         <translation type="unfinished">حجم الهدف</translation>
     </message>
@@ -3964,24 +3980,8 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished">المعدلات المستهدفة موقف</translation>
     </message>
     <message>
-        <source>Sensor</source>
-        <translation type="unfinished">أجهزة الاستشعار</translation>
-    </message>
-    <message>
-        <source>Object</source>
-        <translation type="unfinished">كائن</translation>
-    </message>
-    <message>
         <source>Detection distance (m)</source>
         <translation type="unfinished">ديكتيكشن المسافة (م)</translation>
-    </message>
-    <message>
-        <source>Agent detection</source>
-        <translation type="unfinished">كشف وكيل</translation>
-    </message>
-    <message>
-        <source>Object detection</source>
-        <translation type="unfinished">الكشف عن الكائن</translation>
     </message>
 </context>
 <context>

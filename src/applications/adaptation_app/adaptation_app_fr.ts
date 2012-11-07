@@ -3876,28 +3876,8 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <source>Target size</source>
-        <translation>Volume de la cible</translation>
-    </message>
-    <message>
-        <source>Weather modifiers</source>
-        <translation>Modificateurs dus aux précipitations</translation>
-    </message>
-    <message>
-        <source>Illumination modifiers</source>
-        <translation>Modificateurs dus à l&apos;éclairement</translation>
-    </message>
-    <message>
-        <source>Environment modifiers</source>
-        <translation>Modificateurs dus au terrain</translation>
-    </message>
-    <message>
         <source>Stance modifiers</source>
         <translation>Modificateurs dus à la posture</translation>
-    </message>
-    <message>
-        <source>Target stance modifiers</source>
-        <translation>Modificateurs dus à la posture cible</translation>
     </message>
     <message>
         <source>Object</source>
@@ -3992,12 +3972,32 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>Modificateurs de foule</translation>
     </message>
     <message>
+        <source>Survey durations for army aviation</source>
+        <translation>Durée de reconnaissance pour la surveillance aérienne</translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation>Volume de la cible</translation>
+    </message>
+    <message>
+        <source>Weather modifiers</source>
+        <translation>Modificateurs dus aux précipitations</translation>
+    </message>
+    <message>
+        <source>Illumination modifiers</source>
+        <translation>Modificateurs dus à l&apos;éclairement</translation>
+    </message>
+    <message>
+        <source>Environment modifiers</source>
+        <translation>Modificateurs dus au terrain</translation>
+    </message>
+    <message>
         <source>UrbanBlock material modifiers</source>
         <translation>Modificateurs des matériaux de bloc urbain</translation>
     </message>
     <message>
-        <source>Survey durations for army aviation</source>
-        <translation>Durée de reconnaissance pour la surveillance aérienne</translation>
+        <source>Target stance modifiers</source>
+        <translation>Modificateurs dus à la posture cible</translation>
     </message>
 </context>
 <context>

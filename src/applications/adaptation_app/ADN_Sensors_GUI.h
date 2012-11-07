@@ -14,7 +14,6 @@
 #include "ADN_Sensors_Data.h"
 #include "ADN_Radars_GUI.h"
 
-class ADN_Table;
 class ADN_Table3;
 
 // =============================================================================
@@ -84,7 +83,7 @@ public:
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
 
-    ADN_Table* CreateAgentDetectionTable();
+    ADN_Table3* CreateAgentDetectionTable();
     ADN_Table3* CreateObjectDetectionTable();
     //@}
 
@@ -93,7 +92,6 @@ private:
     //@{
     void BuildSensorListGui( QTabWidget* pParent );
     void BuildSpecificParamsGui( QTabWidget* pParent );
-    void AddHeaders( ADN_Table* pTable, int& nCol, const char* szName, const ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials );
     //@}
 
 private:

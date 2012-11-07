@@ -33,6 +33,91 @@
 #include "ENT/ENT_Tr.h"
 #include "ADN_TimeField.h"
 
+class ADN_AgentDetection_Table: public ADN_Table3
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    ADN_AgentDetection_Table( const QString& objectName, ADN_Categories_Data::T_SizeInfos_Vector& sizes, ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials, QWidget* pParent = 0  )
+        : ADN_Table3( objectName, pParent )
+    {
+        int sizesSize = static_cast< int >( sizes.size() ); 
+        int materialsSize = static_cast< int >( materials.size() ); 
+
+        setNumRows( 2 );
+        int totalTableSize = static_cast< int >( 6 + sizesSize + materialsSize + eNbrSensorWeatherModifiers + eNbrLightingType + eNbrVisionObjects + eNbrUnitPosture * 2 );
+        dataModel_.setColumnCount( totalTableSize );
+        setSortingEnabled( true );
+        setShowGrid( true );
+        horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+        verticalHeader()->setVisible( false );
+        horizontalHeader()->setVisible( false );
+
+        AddItem( 1 , 1, this, tools::translate( "ADN_Sensors_GUI", "Angle" ) );
+        AddItem( 1 , 2, this, tools::translate( "ADN_Sensors_GUI", "Detection range" ) );
+        AddItem( 1 , 3, this, tools::translate( "ADN_Sensors_GUI", "Recognition range" ) );
+        AddItem( 1 , 4, this, tools::translate( "ADN_Sensors_GUI", "Identification range" ) );
+        AddItem( 1 , 5, this, tools::translate( "ADN_Sensors_GUI", "Proximity range" ) );
+
+        for( int col = 1; col < 6; ++col )
+            delegate_.AddDoubleSpinBoxOnColumn( col, 0, INT_MAX );
+
+        for( int col = 6; col < totalTableSize; ++col )
+        {
+            delegate_.AddDoubleSpinBoxOnColumn( col, 0, 1, 0.001, 3 );
+            delegate_.AddColorOnColumn( col, 0, 1 );
+        }
+        //pTable->AddBoldGridCol( 1 );//migration QT4 comming soon for delimitation
+        //pTable->AddBoldGridCol( 6 );//migration QT4 comming soon for delimitation
+        //pTable->AddBoldGridRow( 2 );//migration QT4 comming soon for delimitation
+
+        int nCol = 6;
+        AddItem( 0 , nCol, 1, sizesSize, this, tools::translate( "ADN_Sensors_GUI", "Target size" ) );
+        for( int n = 0; n < sizesSize; ++n )
+            AddItem( 1, nCol + n, this, sizes[n]->strName_.GetData().c_str() );
+        nCol += sizesSize;
+
+        AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
+        AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Illumination modifiers" ), ENT_Tr::ConvertFromLightingType, eNbrLightingType );
+        AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Environment modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
+        AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "UrbanBlock material modifiers" ), materials );
+        AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
+        AddHeaders( nCol, tools::translate( "ADN_Sensors_GUI", "Target stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
+    }
+    virtual ~ADN_AgentDetection_Table() {}
+    //@}
+
+    template< typename T >
+    void AddHeaders( int& nCol, const char* szName, const std::string& (*pConverter)(T, ENT_Tr_ABC::E_Conversion), uint nVectorSize )
+    {
+        //AddBoldGridCol( nCol );//migration QT4 comming soon for delimitation
+        AddItem( 0, nCol, 1, nVectorSize, this, szName );
+        for( unsigned int n = 0; n < nVectorSize; ++n )
+            AddItem( 1, nCol + n, this, (*pConverter)( static_cast< T >( n ), ENT_Tr_ABC::eToTr ).c_str() );
+        nCol += nVectorSize;
+    }
+
+    void AddHeaders( int& nCol, const char* szName, const ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials )
+    {
+        //AddBoldGridCol( nCol );
+        AddItem( 0, nCol, 1, static_cast< int >( materials.size() ), this, szName );
+        unsigned int n = 0;
+        for( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = materials.begin(); it != materials.end(); ++it, ++n )
+            AddItem( 1, nCol + n, this, (*it)->strName_.GetData().c_str() );
+        nCol += static_cast< int >( materials.size() );
+    }
+
+    template< typename T >
+    void AddCells( void* pData, int nRow, int& nCol, T& vVector, uint nVectorSize )
+    {
+        assert( static_cast<int>( vVector.size() ) == nVectorSize );
+        for( unsigned int n = 0; n < nVectorSize; ++n )
+            AddItem( nRow, nCol + n, pData, &vVector[n]->rCoeff_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+
+        nCol += nVectorSize;
+    }
+};
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI constructor
 // Created: JDY 03-06-30
@@ -320,41 +405,6 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AddHeaders
-// Local helper function.
-// Created: APE 2005-01-19
-// -----------------------------------------------------------------------------
-template< typename T >
-void AddHeaders( ADN_Table* pTable, int& nCol, const char* szName, const std::string& (*pConverter)(T, ENT_Tr_ABC::E_Conversion), uint nVectorSize )
-{
-    ADN_GuiBuilder builder;
-    pTable->AddBoldGridCol( nCol );
-    builder.AddTableCell( pTable, 0, nCol, 1, nVectorSize, szName );
-    for( uint n = 0; n < nVectorSize; ++n )
-        builder.AddTableCell( pTable, 1, nCol + n, (*pConverter)( (T)n, ENT_Tr_ABC::eToTr ).c_str() );
-
-    nCol += nVectorSize;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AddHeaders
-// Created: LGY 2011-06-20
-// -----------------------------------------------------------------------------
-void ADN_Sensors_GUI::AddHeaders( ADN_Table* pTable, int& nCol, const char* szName, const ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials )
-{
-    ADN_GuiBuilder builder;
-    pTable->AddBoldGridCol( nCol );
-    builder.AddTableCell( pTable, 0, nCol, 1, static_cast< int >( materials.size() ), szName );
-    unsigned int n = 0;
-    for( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = materials.begin(); it != materials.end(); ++it )
-    {
-        builder.AddTableCell( pTable, 1, nCol + n, (*it)->strName_.GetData().c_str() );
-        ++n;
-    }
-    nCol += static_cast< int >( materials.size() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AddCells
 // Local helper function.
 // Created: APE 2005-01-19
@@ -379,46 +429,11 @@ void AddCells( ADN_Table* pTable, void* pData, int nRow, int& nCol, T& vVector, 
 // Name: ADN_Sensors_GUI::CreateAgentDetectionTable
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
+ADN_Table3* ADN_Sensors_GUI::CreateAgentDetectionTable()
 {
     ADN_Categories_Data::T_SizeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
     ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos();
-
-    ADN_GuiBuilder builder;
-    ADN_Table* pTable = builder.CreateTable( 0 );
-
-    // Create the header.
-    pTable->horizontalHeader()->hide();
-    pTable->setTopMargin( 0 );
-
-    pTable->setNumRows( 2 );
-    pTable->setNumCols( static_cast< int >( 6 + sizes.size() + materials.size() + eNbrSensorWeatherModifiers + eNbrLightingType + eNbrVisionObjects + eNbrUnitPosture * 2 ) );
-    for( int n = 0; n < pTable->numCols(); ++n )
-        pTable->horizontalHeader()->setLabel( n, "" );
-
-    builder.AddTableCell( pTable, 0, 0 );
-    builder.AddTableCell( pTable, 1, 0 );
-    builder.AddTableCell( pTable, 1, 1, tr( "Angle" ) );
-    builder.AddTableCell( pTable, 1, 2, tr( "Detection range" ) );
-    builder.AddTableCell( pTable, 1, 3, tr( "Recognition range" ) );
-    builder.AddTableCell( pTable, 1, 4, tr( "Identification range" ) );
-    builder.AddTableCell( pTable, 1, 5, tr( "Proximity range" ) );
-    pTable->AddBoldGridCol( 1 );
-    pTable->AddBoldGridCol( 6 );
-    pTable->AddBoldGridRow( 2 );
-
-    int nCol = 6;
-    builder.AddTableCell( pTable, 0, nCol, 1, static_cast< int >( sizes.size() ), tr( "Target size" ) );
-    for( uint n = 0; n < sizes.size(); ++n )
-        builder.AddTableCell( pTable, 1, nCol + n, sizes[n]->strName_.GetData().c_str() );
-    nCol += static_cast< int >( sizes.size() );
-
-    ::AddHeaders( pTable, nCol, tr( "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
-    ::AddHeaders( pTable, nCol, tr( "Illumination modifiers" ), ENT_Tr::ConvertFromLightingType, eNbrLightingType );
-    ::AddHeaders( pTable, nCol, tr( "Environment modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
-    AddHeaders( pTable, nCol, tr( "UrbanBlock material modifiers" ), materials );
-    ::AddHeaders( pTable, nCol, tr( "Stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
-    ::AddHeaders( pTable, nCol, tr( "Target stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
+    ADN_AgentDetection_Table* pTable = new ADN_AgentDetection_Table( tr( "Agent detection" ), sizes, materials );
 
     // Fill the table.
     int nRow = 2;
@@ -431,25 +446,24 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
             continue;
 
         pTable->setNumRows( nRow + 1 );
-        builder.AddTableCell<ADN_TableItem_String>( pTable, &sensor, nRow, 0, sensor.strName_, eNone, Q3TableItem::Never );
-        builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 1, sensor.rAngle_, eDegrees );
-        builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 2, sensor.rDistDetection_, eGreaterEqualZero );
-        builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 3, sensor.rDistReco_, eGreaterEqualZero );
-        builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 4, sensor.rDistIdent_, eGreaterEqualZero );
-        builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 5, sensor.rDistProximity_, eGreaterEqualZero );
+        pTable->AddItem( nRow, 0, &sensor, sensor.strName_.GetData().c_str() );
+        pTable->AddItem( nRow, 1, &sensor, &sensor.rAngle_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+        pTable->AddItem( nRow, 2, &sensor, &sensor.rDistDetection_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+        pTable->AddItem( nRow, 3, &sensor, &sensor.rDistReco_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+        pTable->AddItem( nRow, 4, &sensor, &sensor.rDistIdent_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+        pTable->AddItem( nRow, 5, &sensor, &sensor.rDistProximity_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 
         int nCol = 6;
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifSizes_, static_cast< int >( sizes.size() ) );
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifWeather_, eNbrSensorWeatherModifiers );
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifIlluminations_, eNbrLightingType );
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifEnvironments_, eNbrVisionObjects );
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifUrbanBlocks_, static_cast< int >( materials.size() ) );
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifStance_, eNbrUnitPosture );
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifTargetStance_, eNbrUnitPosture );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifSizes_, static_cast< int >( sizes.size() ) );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifWeather_, eNbrSensorWeatherModifiers );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifIlluminations_, eNbrLightingType );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifEnvironments_, eNbrVisionObjects );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifUrbanBlocks_, static_cast< int >( materials.size() ) );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifStance_, eNbrUnitPosture );
+        pTable->AddCells( &sensor, nRow, nCol, sensor.vModifTargetStance_, eNbrUnitPosture );
 
         ++nRow;
     }
-    pTable->AdjustColumns( 50 );
     return pTable;
 }
 
@@ -529,6 +543,6 @@ ADN_Table3* ADN_Sensors_GUI::CreateObjectDetectionTable()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Agent detection" ), new ADN_Callback<ADN_Table*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateAgentDetectionTable ) );
+    mainWindow.AddTable( tr( "Agent detection" ), new ADN_Callback<ADN_Table3*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateAgentDetectionTable ) );
     mainWindow.AddTable( tr( "Object detection" ), new ADN_Callback<ADN_Table3*,ADN_Sensors_GUI>( this, & ADN_Sensors_GUI::CreateObjectDetectionTable ) );
 }

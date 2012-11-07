@@ -3950,26 +3950,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation>Rango</translation>
     </message>
     <message>
-        <source>Target size</source>
-        <translation>Volumen de blanco</translation>
-    </message>
-    <message>
-        <source>Weather modifiers</source>
-        <translation>Modificadores de clima</translation>
-    </message>
-    <message>
-        <source>Illumination modifiers</source>
-        <translation>Modificadores de iluminación</translation>
-    </message>
-    <message>
-        <source>Environment modifiers</source>
-        <translation>Modificadores de entorno</translation>
-    </message>
-    <message>
-        <source>Target stance modifiers</source>
-        <translation>Modificadores de postura de blanco</translation>
-    </message>
-    <message>
         <source>Object</source>
         <translation>Objeto</translation>
     </message>
@@ -3990,12 +3970,32 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Survey durations for army aviation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation type="unfinished">Volumen de blanco</translation>
+    </message>
+    <message>
+        <source>Weather modifiers</source>
+        <translation type="unfinished">Modificadores de clima</translation>
+    </message>
+    <message>
+        <source>Illumination modifiers</source>
+        <translation type="unfinished">Modificadores de iluminación</translation>
+    </message>
+    <message>
+        <source>Environment modifiers</source>
+        <translation type="unfinished">Modificadores de entorno</translation>
+    </message>
+    <message>
         <source>UrbanBlock material modifiers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Survey durations for army aviation</source>
-        <translation type="unfinished"></translation>
+        <source>Target stance modifiers</source>
+        <translation type="unfinished">Modificadores de postura de blanco</translation>
     </message>
 </context>
 <context>

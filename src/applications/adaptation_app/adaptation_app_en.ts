@@ -3953,6 +3953,22 @@ Make sure that the file is not write-protected.</translation>
         <translation>Special sensors</translation>
     </message>
     <message>
+        <source>Sensor</source>
+        <translation>Sensor</translation>
+    </message>
+    <message>
+        <source>Object</source>
+        <translation>Object</translation>
+    </message>
+    <message>
+        <source>Agent detection</source>
+        <translation>Agent detection</translation>
+    </message>
+    <message>
+        <source>Object detection</source>
+        <translation>Object detection</translation>
+    </message>
+    <message>
         <source>Target size</source>
         <translation>Target size</translation>
     </message>
@@ -3975,22 +3991,6 @@ Make sure that the file is not write-protected.</translation>
     <message>
         <source>Target stance modifiers</source>
         <translation>Target posture modifiers</translation>
-    </message>
-    <message>
-        <source>Sensor</source>
-        <translation>Sensor</translation>
-    </message>
-    <message>
-        <source>Object</source>
-        <translation>Object</translation>
-    </message>
-    <message>
-        <source>Agent detection</source>
-        <translation>Agent detection</translation>
-    </message>
-    <message>
-        <source>Object detection</source>
-        <translation>Object detection</translation>
     </message>
     <message>
         <source>Detection distance (m)</source>
