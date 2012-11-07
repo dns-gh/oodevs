@@ -46,7 +46,8 @@ def parseenum(ui, headerpath, lineno, lines, restart, reval):
     return i, reports
 
 def _makeregexps(names):
-    names = [re.escape(n) for n in names]
+    # Sort from longest to shortest to match longest first.
+    names = [re.escape(n) for n in sorted(names, reverse=True)]
     regex = '(' + '|'.join(names) + ')'
     regex = re.compile(regex)
     return [regex]
@@ -61,6 +62,8 @@ def searchenums(ui, enums, cppdir):
         for f in files:
             if not missing:
                 break
+            if f.lower() == 'mil_report.h':
+                continue
             ext = os.path.splitext(f)[-1].lower()
             if ext not in ('.h', '.cpp', '.inl'):
                 continue
@@ -85,6 +88,17 @@ def parsecpp(ui, swordpath):
     if not decreports:
         ui.error('error: no E_DecisionReport definition found\n')
         result = 1
+
+    if False:
+        # Disable this by default, this is not really an error but saves
+        # time when you have to manually edit reports.
+        cppdir = os.path.join(swordpath, 'src')
+        missing = searchenums(ui, decreports, cppdir)
+        if missing:
+            result = 1
+            for m in missing:
+                ui.error('error: %s is unused in C++ code\n' % m)
+
     return result, decreports
 
 def parseluaids(ui, path):
