@@ -968,10 +968,6 @@ Parked engine running</source>
         <translation type="unfinished">هندسة</translation>
     </message>
     <message>
-        <source>Equipment</source>
-        <translation type="unfinished">المعدات</translation>
-    </message>
-    <message>
         <source>Equipment speeds</source>
         <translation type="unfinished">المعدات بسرعة</translation>
     </message>
@@ -4065,6 +4061,13 @@ Make sure that the file is not write-protected.</source>
     <message>
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Speeds_Table</name>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished">المعدات</translation>
     </message>
 </context>
 <context>

@@ -980,10 +980,6 @@ Parked engine running</translation>
         <translation>Engineering</translation>
     </message>
     <message>
-        <source>Equipment</source>
-        <translation>Equipment</translation>
-    </message>
-    <message>
         <source>Equipment speeds</source>
         <translation>Equipment speeds</translation>
     </message>
@@ -4078,6 +4074,13 @@ Make sure that the file is not write-protected.</translation>
     <message>
         <source>Modifiers</source>
         <translation>Modifiers</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Speeds_Table</name>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipment</translation>
     </message>
 </context>
 <context>

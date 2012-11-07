@@ -856,10 +856,6 @@ Arrêt moteur allumé</translation>
         <translation>NBC</translation>
     </message>
     <message>
-        <source>Equipment</source>
-        <translation>Equipement</translation>
-    </message>
-    <message>
         <source>Weapon systems</source>
         <translation>Systèmes d&apos;armes</translation>
     </message>
@@ -4081,6 +4077,13 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Modifiers</source>
         <translation>Modificateurs</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Speeds_Table</name>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipement</translation>
     </message>
 </context>
 <context>

@@ -856,10 +856,6 @@ estacionado con motor encendido</translation>
         <translation>NBC</translation>
     </message>
     <message>
-        <source>Equipment</source>
-        <translation>Equipo</translation>
-    </message>
-    <message>
         <source>Weapon systems</source>
         <translation>Sistema de armas</translation>
     </message>
@@ -4079,6 +4075,13 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Modifiers</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Speeds_Table</name>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished">Equipo</translation>
     </message>
 </context>
 <context>
