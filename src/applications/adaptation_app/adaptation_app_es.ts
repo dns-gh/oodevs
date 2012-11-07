@@ -353,6 +353,18 @@ estacionado con motor encendido</translation>
         <source>(%1..%2) x %3 [ %4/%5/%6 ]</source>
         <translation>(%1..%2) x %3 [ %4/%5/%6 ]</translation>
     </message>
+    <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">Autómata [ oficiales/sub-oficiales/soldados ]</translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">Unidad [ oficiales/sub-oficiales/soldados ]</translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">Equipos [ oficiales/sub-oficiales/soldados ]</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Automata_SubUnitsTable</name>
@@ -1155,21 +1167,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Weapon systems</source>
         <translation>Sistemas de arma</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_CompositionTable</name>
-    <message>
-        <source>Automata [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished">Autómata [ oficiales/sub-oficiales/soldados ]</translation>
-    </message>
-    <message>
-        <source>Unit [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished">Unidad [ oficiales/sub-oficiales/soldados ]</translation>
-    </message>
-    <message>
-        <source>Equipment [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished">Equipos [ oficiales/sub-oficiales/soldados ]</translation>
     </message>
 </context>
 <context>
@@ -3350,17 +3347,6 @@ Asegúrese que el archivo existe.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_PHs_Table</name>
-    <message>
-        <source>Weapon system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Target size</source>
-        <translation type="unfinished">Volumen de blanco</translation>
-    </message>
-</context>
-<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -5497,29 +5483,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Weapon_Table</name>
-    <message>
-        <source>Weapon system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rnd per burst</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Burst duration (s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rnd per reload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reload duration (s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Name</source>
@@ -5628,6 +5591,30 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Stress</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rnd per burst</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burst duration (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rnd per reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload duration (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation type="unfinished">Volumen de blanco</translation>
     </message>
 </context>
 <context>

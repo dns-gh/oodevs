@@ -341,6 +341,18 @@ Parked engine running</source>
         <source>Logistic per resource</source>
         <translation type="unfinished">السوقي كل مورد</translation>
     </message>
+    <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">الباردون [ضباط ضباط/أمر/جنود]</translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">وحدة [ضباط ضباط/أمر/جنود]</translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished">معدات [ضباط ضباط/أمر/جنود]</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Automata_SubUnitsTable</name>
@@ -1140,21 +1152,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Remove weapon</source>
         <translation type="unfinished">إزالة الأسلحة</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_CompositionTable</name>
-    <message>
-        <source>Automata [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished">الباردون [ضباط ضباط/أمر/جنود]</translation>
-    </message>
-    <message>
-        <source>Unit [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished">وحدة [ضباط ضباط/أمر/جنود]</translation>
-    </message>
-    <message>
-        <source>Equipment [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished">معدات [ضباط ضباط/أمر/جنود]</translation>
     </message>
 </context>
 <context>
@@ -3336,17 +3333,6 @@ Make sure the file exists.</source>
     </message>
 </context>
 <context>
-    <name>ADN_PHs_Table</name>
-    <message>
-        <source>Weapon system</source>
-        <translation type="unfinished">نظام الأسلحة</translation>
-    </message>
-    <message>
-        <source>Target size</source>
-        <translation type="unfinished">حجم الهدف</translation>
-    </message>
-</context>
-<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -5481,29 +5467,6 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Weapon_Table</name>
-    <message>
-        <source>Weapon system</source>
-        <translation type="unfinished">نظام الأسلحة</translation>
-    </message>
-    <message>
-        <source>Rnd per burst</source>
-        <translation type="unfinished">Rnd كل الاندفاع</translation>
-    </message>
-    <message>
-        <source>Burst duration (s)</source>
-        <translation type="unfinished">انفجر المدة (s)</translation>
-    </message>
-    <message>
-        <source>Rnd per reload</source>
-        <translation type="unfinished">Rnd كل تحديث</translation>
-    </message>
-    <message>
-        <source>Reload duration (s)</source>
-        <translation type="unfinished">تحديث المدة (s)</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Name</source>
@@ -5612,6 +5575,30 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>WeaponSystem_%1.htm</source>
         <translation type="unfinished">WeaponSystem_%1.htm</translation>
+    </message>
+    <message>
+        <source>Weapon system</source>
+        <translation type="unfinished">نظام الأسلحة</translation>
+    </message>
+    <message>
+        <source>Rnd per burst</source>
+        <translation type="unfinished">Rnd كل الاندفاع</translation>
+    </message>
+    <message>
+        <source>Burst duration (s)</source>
+        <translation type="unfinished">انفجر المدة (s)</translation>
+    </message>
+    <message>
+        <source>Rnd per reload</source>
+        <translation type="unfinished">Rnd كل تحديث</translation>
+    </message>
+    <message>
+        <source>Reload duration (s)</source>
+        <translation type="unfinished">تحديث المدة (s)</translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation type="unfinished">حجم الهدف</translation>
     </message>
 </context>
 <context>

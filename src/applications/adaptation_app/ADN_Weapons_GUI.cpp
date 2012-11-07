@@ -162,7 +162,7 @@ private:
     uint nNbrDatas_;
 };
 
-class ADN_Weapon_Table: public ADN_Table3
+class ADN_Weapon_Table : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
@@ -174,13 +174,14 @@ public:
         setSortingEnabled( true );
         setShowGrid( true );
         QStringList horizontalHeaders;
-        horizontalHeaders << tr( "Weapon system" )
-                          << tr( "Rnd per burst" )
-                          << tr( "Burst duration (s)" )
-                          << tr( "Rnd per reload" )
-                          << tr( "Reload duration (s)" );
+        horizontalHeaders << tools::translate( "ADN_Weapons_GUI", "Weapon system" )
+                          << tools::translate( "ADN_Weapons_GUI", "Rnd per burst" )
+                          << tools::translate( "ADN_Weapons_GUI", "Burst duration (s)" )
+                          << tools::translate( "ADN_Weapons_GUI", "Rnd per reload" )
+                          << tools::translate( "ADN_Weapons_GUI", "Reload duration (s)" );
         dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
         horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+        horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
         verticalHeader()->setVisible( false );
         delegate_.AddSpinBoxOnColumn( 1 );
         delegate_.AddDelayEditOnColumn( 2 );
@@ -191,7 +192,7 @@ public:
     //@}
 };
 
-class ADN_PHs_Table: public ADN_Table3
+class ADN_PHs_Table : public ADN_Table3
 {
 public:
     //! @name Constructors/Destructor
@@ -205,8 +206,8 @@ public:
         horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
         horizontalHeader()->setResizeMode( 1, QHeaderView::ResizeToContents );
         QStringList horizontalHeaders;
-        horizontalHeaders << tr( "Weapon system" )
-            << tr( "Target size" );
+        horizontalHeaders << tools::translate( "ADN_Weapons_GUI", "Weapon system" )
+                          << tools::translate( "ADN_Weapons_GUI", "Target size" );
         int n = 2;
         for( std::set< int >::iterator it = distancesSet.begin(); it != distancesSet.end(); ++it, ++n )
         {

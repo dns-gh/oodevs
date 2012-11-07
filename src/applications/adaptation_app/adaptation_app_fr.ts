@@ -353,6 +353,18 @@ Arrêt moteur allumé</translation>
         <source>(%1..%2) x %3 [ %4/%5/%6 ]</source>
         <translation>(%1..%2) x %3 [ %4/%5/%6 ]</translation>
     </message>
+    <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation>Automate [ officiers/sous-officiers/soldats ]</translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation>Pion [ officiers/sous-officiers/soldats ]</translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation>Equipement [ officiers/sous-officiers/soldats ]</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Automata_SubUnitsTable</name>
@@ -1156,21 +1168,6 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     <message>
         <source>Weapon systems</source>
         <translation>Systèmes d&apos;armes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_CompositionTable</name>
-    <message>
-        <source>Automata [ officers/warrant officers/soldiers ]</source>
-        <translation>Automate [ officiers/sous-officiers/soldats ]</translation>
-    </message>
-    <message>
-        <source>Unit [ officers/warrant officers/soldiers ]</source>
-        <translation>Pion [ officiers/sous-officiers/soldats ]</translation>
-    </message>
-    <message>
-        <source>Equipment [ officers/warrant officers/soldiers ]</source>
-        <translation>Equipement [ officiers/sous-officiers/soldats ]</translation>
     </message>
 </context>
 <context>
@@ -3353,17 +3350,6 @@ Assurez vous que le fichier existe.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_PHs_Table</name>
-    <message>
-        <source>Weapon system</source>
-        <translation>Système d&apos;arme</translation>
-    </message>
-    <message>
-        <source>Target size</source>
-        <translation>Volume de la cible</translation>
-    </message>
-</context>
-<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -5508,29 +5494,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Weapon_Table</name>
-    <message>
-        <source>Weapon system</source>
-        <translation>Système d&apos;arme</translation>
-    </message>
-    <message>
-        <source>Rnd per burst</source>
-        <translation>Coups par rafale</translation>
-    </message>
-    <message>
-        <source>Burst duration (s)</source>
-        <translation>Durée(s) d&apos;une rafale</translation>
-    </message>
-    <message>
-        <source>Rnd per reload</source>
-        <translation>Coups par recharge</translation>
-    </message>
-    <message>
-        <source>Reload duration (s)</source>
-        <translation>Durée(s) d&apos;un rechargement</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Name</source>
@@ -5639,6 +5602,30 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Stress</source>
         <translation>Stress</translation>
+    </message>
+    <message>
+        <source>Weapon system</source>
+        <translation>Système d&apos;arme</translation>
+    </message>
+    <message>
+        <source>Rnd per burst</source>
+        <translation>Coups par rafale</translation>
+    </message>
+    <message>
+        <source>Burst duration (s)</source>
+        <translation>Durée(s) d&apos;une rafale</translation>
+    </message>
+    <message>
+        <source>Rnd per reload</source>
+        <translation>Coups par recharge</translation>
+    </message>
+    <message>
+        <source>Reload duration (s)</source>
+        <translation>Durée(s) d&apos;un rechargement</translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation>Volume de la cible</translation>
     </message>
 </context>
 <context>

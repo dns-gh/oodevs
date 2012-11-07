@@ -134,11 +134,12 @@ namespace
             setShowGrid( true );
             setSelectionMode( QAbstractItemView::NoSelection );
             QStringList horizontalHeaders;
-            horizontalHeaders << tr( "Automata [ officers/warrant officers/soldiers ]" )
-                              << tr( "Unit [ officers/warrant officers/soldiers ]" )
-                              << tr( "Equipment [ officers/warrant officers/soldiers ]" );
+            horizontalHeaders << tools::translate( "ADN_Automata_GUI", "Automata [ officers/warrant officers/soldiers ]" )
+                              << tools::translate( "ADN_Automata_GUI", "Unit [ officers/warrant officers/soldiers ]" )
+                              << tools::translate( "ADN_Automata_GUI", "Equipment [ officers/warrant officers/soldiers ]" );
             dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
             horizontalHeader()->setResizeMode( QHeaderView::Stretch );
+            horizontalHeader()->setResizeMode( 0, QHeaderView::ResizeToContents );
             verticalHeader()->setVisible( false );
         }
         virtual ~ADN_CompositionTable() {}

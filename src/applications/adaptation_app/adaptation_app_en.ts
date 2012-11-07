@@ -353,6 +353,18 @@ Parked engine running</translation>
         <source>Logistic per resource</source>
         <translation>Logistic per resource</translation>
     </message>
+    <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation>Automata [ officers/warrant officers/soldiers ]</translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation>Unit [ officers/warrant officers/soldiers ]</translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation>Equipment [ officers/warrant officers/soldiers ]</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Automata_SubUnitsTable</name>
@@ -1152,21 +1164,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     <message>
         <source>Remove weapon</source>
         <translation>Remove weapon</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_CompositionTable</name>
-    <message>
-        <source>Automata [ officers/warrant officers/soldiers ]</source>
-        <translation>Automata [ officers/warrant officers/soldiers ]</translation>
-    </message>
-    <message>
-        <source>Unit [ officers/warrant officers/soldiers ]</source>
-        <translation>Unit [ officers/warrant officers/soldiers ]</translation>
-    </message>
-    <message>
-        <source>Equipment [ officers/warrant officers/soldiers ]</source>
-        <translation>Equipment [ officers/warrant officers/soldiers ]</translation>
     </message>
 </context>
 <context>
@@ -3349,17 +3346,6 @@ Make sure the file exists.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_PHs_Table</name>
-    <message>
-        <source>Weapon system</source>
-        <translation>Weapon system</translation>
-    </message>
-    <message>
-        <source>Target size</source>
-        <translation>Target size</translation>
-    </message>
-</context>
-<context>
     <name>ADN_People_GUI</name>
     <message>
         <source>Name</source>
@@ -5494,29 +5480,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Weapon_Table</name>
-    <message>
-        <source>Weapon system</source>
-        <translation type="unfinished">Weapon system</translation>
-    </message>
-    <message>
-        <source>Rnd per burst</source>
-        <translation type="unfinished">Rnd per burst</translation>
-    </message>
-    <message>
-        <source>Burst duration (s)</source>
-        <translation type="unfinished">Burst duration (s)</translation>
-    </message>
-    <message>
-        <source>Rnd per reload</source>
-        <translation type="unfinished">Rnd per reload</translation>
-    </message>
-    <message>
-        <source>Reload duration (s)</source>
-        <translation type="unfinished">Reload duration (s)</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Weapons_GUI</name>
     <message>
         <source>Name</source>
@@ -5625,6 +5588,30 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>WeaponSystem_%1.htm</source>
         <translation>WeaponSystem_%1.htm</translation>
+    </message>
+    <message>
+        <source>Weapon system</source>
+        <translation>Weapon system</translation>
+    </message>
+    <message>
+        <source>Rnd per burst</source>
+        <translation>Rnd per burst</translation>
+    </message>
+    <message>
+        <source>Burst duration (s)</source>
+        <translation>Burst duration (s)</translation>
+    </message>
+    <message>
+        <source>Rnd per reload</source>
+        <translation>Rnd per reload</translation>
+    </message>
+    <message>
+        <source>Reload duration (s)</source>
+        <translation>Reload duration (s)</translation>
+    </message>
+    <message>
+        <source>Target size</source>
+        <translation>Target size</translation>
     </message>
 </context>
 <context>
