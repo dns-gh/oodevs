@@ -61,7 +61,7 @@ namespace
     const sword::fire::Knowledge_RapForLocal& GetCache( T& cache, const wrapper::View& model, const wrapper::View& entity )
     {
         boost::shared_ptr< Knowledge_RapForLocal >& rapfor = cache[ entity[ "identifier" ] ];
-        if( !rapfor.get() )
+        if( !rapfor )
             rapfor.reset( new Knowledge_RapForLocal() );
         rapfor->Update( model, entity );
         return *rapfor;
