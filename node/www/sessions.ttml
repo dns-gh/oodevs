@@ -299,7 +299,7 @@
 [[ end ]]
 <!-- session_download_btn -->
 [[ define "session_download_btn" ]]
-{{#is_option status stopped=""}}
+{{#is_option status stopped="" waiting=""}}
 <a title="Download" class="btn download"><i class="icon-download-alt"></i></a>
 {{/is_option}}
 [[ end ]]

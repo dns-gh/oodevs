@@ -864,6 +864,8 @@ bool Session::Download( web::Chunker_ABC& dst ) const
     io::Writer_ABC& sink = dst.OpenWriter();
     FileSystem_ABC::T_Packer packer = deps_.fs.Pack( sink, runtime::ARCHIVE_FMT_ZIP );
     packer->Pack( paths_.root, runtime::Packer_ABC::T_Predicate() );
+    if( IsReplay() )
+        return true;
     const Path output = GetOutput();
     if( deps_.fs.IsDirectory( output ) )
         packer->Pack( output, runtime::Packer_ABC::T_Predicate() );
