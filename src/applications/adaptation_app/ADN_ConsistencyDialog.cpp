@@ -59,6 +59,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingEmat    ] = tr( "%1 has no EMAT8 code defined." );
 
     errorDescriptions_[ eMissionTypeUniqueness ] = tr( "Duplicate type for missions %1." );
+    errorDescriptions_[ eMissingPart ]           = tr( "The breakdown '%1' has no replacement part." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
@@ -124,8 +125,10 @@ void ADN_ConsistencyDialog::UpdateDataModel()
             assert( text.contains( "%1" ) );
             if( error.items_.front()->targetTab_ == eComposantes )
                 text = text.arg( tr( "The equipement '" ) + error.items_.front()->targetName_ + "'" );
-            else
+            else if ( error.items_.front()->targetTab_ == eEquipement )
                 text = text.arg( tr( "The resource '" ) + error.items_.front()->targetName_ + "'" );
+            else
+                text = text.arg( error.items_.front()->targetName_ );
             AddIcon( error.items_, error.type_, items );
             AddItem( text, text, error.items_, error.type_, items );
         }

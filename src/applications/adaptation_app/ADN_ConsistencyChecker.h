@@ -59,8 +59,9 @@ private: // NNO Consistency
     //@{
     void CheckNNOConsistency();
     void CheckMissionsTypes();
+    void CheckBreakdownsBackup();
     void CheckMissionTypes( const ADN_Missions_Data::T_Mission_Vector& missions, int subTab );
-    ADN_NavigationInfos::GoTo* CreateGotoInfoFromNNOElement( const std::string& name, int tab, int subTab );
+    ADN_NavigationInfos::GoTo* CreateGotoInfo( const std::string& name, int tab, int subTab = -1 );
     bool IsAlreadyRegistered( const std::string& code, E_ConsistencyCheck type ) const;
     void AddError( E_ConsistencyCheck type, const NNOElement& element );
     void AddError( E_ConsistencyCheck type, const T_NNOElements& elements );

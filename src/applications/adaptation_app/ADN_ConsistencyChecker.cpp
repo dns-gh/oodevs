@@ -12,6 +12,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Equipement_Data.h"
+#include "ADN_Breakdowns_Data.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ConsistencyChecker constructor
@@ -40,6 +41,7 @@ bool ADN_ConsistencyChecker::CheckConsistency()
     ClearErrors();
     CheckNNOConsistency();
     CheckMissionsTypes();
+    CheckBreakdownsBackup();
     return !errors_.empty();
 }
 
@@ -59,7 +61,7 @@ bool ADN_ConsistencyChecker::IsAlreadyRegistered( const std::string& code, E_Con
 // Name: ADN_ConsistencyChecker::CreateGotoInfoFromNNOElement
 // Created: ABR 2012-06-08
 // -----------------------------------------------------------------------------
-ADN_NavigationInfos::GoTo* ADN_ConsistencyChecker::CreateGotoInfoFromNNOElement( const std::string& name, int tab, int subTab )
+ADN_NavigationInfos::GoTo* ADN_ConsistencyChecker::CreateGotoInfo( const std::string& name, int tab, int subTab /* = -1 */ )
 {
     ADN_NavigationInfos::GoTo* result = new ADN_NavigationInfos::GoTo();
     result->targetName_ = name.c_str();
@@ -78,7 +80,7 @@ void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const NNOElement
 {
     assert( ( type & eMissingMask ) != 0 );
     ConsistencyError error( type );
-    error.items_.push_back( CreateGotoInfoFromNNOElement( element.name_, element.tab_, element.subTab_ ) );
+    error.items_.push_back( CreateGotoInfo( element.name_, element.tab_, element.subTab_ ) );
     errors_.push_back( error );
 }
 
@@ -94,7 +96,7 @@ void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const T_NNOEleme
     for( CIT_NNOElements it = elements.begin(); it != elements.end(); ++it )
     {
         const NNOElement& element = *it;
-        error.items_.push_back( CreateGotoInfoFromNNOElement( element.name_, element.tab_, element.subTab_ ) );
+        error.items_.push_back( CreateGotoInfo( element.name_, element.tab_, element.subTab_ ) );
     }
     error.optional_ = ( type == eNNoUniqueness ) ? elements.front().codeNNO_ : elements.front().codeEMAT8_;
     errors_.push_back( error );
@@ -195,7 +197,23 @@ void ADN_ConsistencyChecker::CheckMissionTypes( const ADN_Missions_Data::T_Missi
 void ADN_ConsistencyChecker::AddError( E_ConsistencyCheck type, const ADN_Missions_Data::Mission& rhs, const ADN_Missions_Data::Mission& lhs, int subTab )
 {
     ConsistencyError error( type );
-    error.items_.push_back( CreateGotoInfoFromNNOElement( rhs.strName_.GetData(), eMissions, subTab ) );
-    error.items_.push_back( CreateGotoInfoFromNNOElement( lhs.strName_.GetData(), eMissions, subTab ) );
+    error.items_.push_back( CreateGotoInfo( rhs.strName_.GetData(), eMissions, subTab ) );
+    error.items_.push_back( CreateGotoInfo( lhs.strName_.GetData(), eMissions, subTab ) );
     errors_.push_back( error );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::CheckBreakdownsBackup
+// Created: ABR 2012-11-08
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::CheckBreakdownsBackup()
+{
+    ADN_Breakdowns_Data::T_BreakdownInfoVector& breakdowns = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().GetBreakdowns();
+    for( ADN_Breakdowns_Data::CIT_BreakdownInfoVector it = breakdowns.begin(); it != breakdowns.end(); ++it )
+        if( ( *it )->vRepairParts_.size() == 0 )
+        {
+            ConsistencyError error( eMissingPart );
+            error.items_.push_back( CreateGotoInfo( ( *it )->strName_.GetData(), eBreakdowns ) );
+            errors_.push_back( error );
+        }
 }

@@ -1250,6 +1250,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Duplicate type for missions %1.</source>
         <translation>Les missions %1 possèdent le même type.</translation>
     </message>
+    <message>
+        <source>The breakdown &apos;%1&apos; has no replacement part.</source>
+        <translation>La panne &apos;%1&apos; n&apos;a pas de pièce de rechange.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

@@ -1234,19 +1234,23 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The equipement &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The resource &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> and &apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Duplicate type for missions %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The breakdown &apos;%1&apos; has no replacement part.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The equipement &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The resource &apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
