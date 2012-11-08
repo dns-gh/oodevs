@@ -77,7 +77,6 @@ public:
         eReport_FiredByNeutralSide,
         eReport_FireOnCivilian,
         eReport_FiredByCivilian,
-        eReport_CommandPostDestruction,
         eReport_QuotaAlmostConsumed,
         eReport_StockCapacityExceeded,
         eReport_MissionImpossible_,
@@ -90,8 +89,8 @@ public:
         eReport_EquipmentLoanInProgress,
         eReport_EquipmentLoanCanceled,
         eReport_EquipmentLoanDone,
-        eReport_EquipmentLoanPartiallyDone, // 40
-        eReport_EquipmentLoanImpossible,
+        eReport_EquipmentLoanPartiallyDone,
+        eReport_EquipmentLoanImpossible, // 40
         eReport_EquipmentLoanRetrievingDone,
         eReport_EquipmentLoanRetrievingPartiallyDone,
         eReport_EquipmentLoanRetrievingImpossible,
@@ -110,8 +109,8 @@ public:
         eReport_HaulerResourcesLevelReached,
         eReport_ConvoyTransporterResourcesLevelReached,
         eReport_EmbarkmentStarted,
-        eReport_EmbarkmentInterrupted, // 60
-        eReport_EmbarkmentResumed,
+        eReport_EmbarkmentInterrupted,
+        eReport_EmbarkmentResumed, // 60
         eReport_EmbarkmentFinished,
         eReport_DisembarkmentStarted,
         eReport_DisembarkmentInterrupted,
@@ -131,8 +130,8 @@ public:
         eReport_DamagesCausedByNeutralSide,
         eReport_InfrastructureDamaged,
         eReport_LivingAreaDamaged,
-        eReport_BorderCrossed, // 80
-        eReport_TacticallyDestroyed,
+        eReport_BorderCrossed,
+        eReport_TacticallyDestroyed, // 80
         eReport_CiviliansEncountered,
         eReport_PrisonersUnsupplied,
         eReport_PrisonersCampFull,
