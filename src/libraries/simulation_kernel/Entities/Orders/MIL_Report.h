@@ -144,7 +144,7 @@ public:
         eRC_SectionUndeployed = 404,
         eRC_StartUndeploy = 405,
         eRC_DifficultMovementProgression = 433,
-        eRC_PrisSousTirMunition = 457,
+        eRC_PrisSousTirIED = 457,
         eRC_UrbanCollisionStarted = 458,
         eRC_UrbanCollisionStopped = 459,
         eRC_Questionning = 464,
