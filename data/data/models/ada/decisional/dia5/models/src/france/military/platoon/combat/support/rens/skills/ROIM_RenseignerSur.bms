@@ -28,10 +28,6 @@ rootnode
             Activate( skill.nodes.CR, 1, { RC = eRC_DroneDoitEtreMisEnOeuvre } )
             return
         end
-        if meKnowledge.source:GetbEnExploitation_() then
-            Activate( skill.nodes.CR, 1, { RC = eRC_DroneEnExploitation } )
-            return
-        end
         if integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_RejoindrePointLancement" ) then
           self.fragOrderReceived = true
         end
@@ -52,11 +48,6 @@ rootnode
             Activate( skill.links.moveAndTakePosition, 1, { entity = self.itinerary } )
         end
     end,
-    
-    destroy = function( self )
-        meKnowledge.source:SetbEnExploitation_ ( false )
-    end,
-    
 }
 
 -- **************************************************************************** 

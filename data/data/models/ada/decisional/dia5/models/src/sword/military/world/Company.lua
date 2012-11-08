@@ -71,6 +71,10 @@ masalife.brain.communication.setMessageTreatment( "noDisponibleDrone",
     function( content, sender )
     meKnowledge:RC( eRC_PasDeDroneDisponible )  
     end )
+masalife.brain.communication.setMessageTreatment( "disponibleDrone",
+    function( content, sender )
+    meKnowledge.availableDrone = content 
+    end )
     
 -- -------------------------------------------------------------------------------- 
 -- Predicates

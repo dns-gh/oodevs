@@ -427,6 +427,9 @@ return
     sendNoDisponibleDrone = function( self, receiver )
        integration.SendMessage( "noDisponibleDrone", receiver, {}, { type = "dynamic" } )
     end,
+    sendDisponibleDrone = function( self, receiver, value )
+       integration.SendMessage( "disponibleDrone", receiver, value, { type = "dynamic" } )
+    end,
     getObstaclesOnAllyPath = function( self )
         return myself.engineerObjectsOnPath
     end,

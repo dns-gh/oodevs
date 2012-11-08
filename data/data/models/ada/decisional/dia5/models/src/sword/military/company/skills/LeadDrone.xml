@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.skills.LeadDrone" source-version="1.0.0">
+	<parameters>
+		<parameter name="companyTask">
+			<description>La tâche de l'automate à résoudre</description>
+			<type>
+				<simple name="string"/>
+			</type>
+		</parameter>
+		<parameter name="droneTasks">
+			<description>Les mission que va recevoir le premier échelon.</description>
+			<type>
+				<simple name="string"/>
+			</type>
+		</parameter>
+		<parameter name="pcTasks" nullable="true">
+			<description>Les missions que l'on donne spécifiquement au pion PC.</description>
+			<type>
+				<simple name="string"/>
+			</type>
+			<default>
+				<nil/>
+			</default>
+		</parameter>
+		<parameter name="withPC">
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>true</boolean>
+			</default>
+		</parameter>
+	</parameters>
+	<modifiers/>
+	<links>
+		<link name="synchronizeRC" skill="sword.military.company.skills.SynchronizeRC">
+			<description>Chargé d'envoyer un CR lorsque tous les pions en paramètres sont arrivés sur une lima (LC ou LD)</description>
+		</link>
+	</links>
+	<resources/>
+</skill>

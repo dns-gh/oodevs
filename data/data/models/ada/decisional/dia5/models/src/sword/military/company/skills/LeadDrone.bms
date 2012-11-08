@@ -1,0 +1,98 @@
+-- set echelon for elements in bestUnits
+-- @params bestUnits : list of element
+-- @params echelon
+-- @author LMT
+-- @release 2011-01-13
+local function setEchelon ( bestUnits, echelon )
+    local nBestUnits = #bestUnits
+    for i = 1, nBestUnits do
+        local elem = bestUnits[i]
+        F_Pion_SeteEtatEchelon( elem.entity.source, echelon )
+    end
+end
+
+-- Find which unit will do the task
+-- @params self
+-- @params tasks : a list of platoon taks*
+-- @params nbrFront : how many platoon can take this task
+-- @params echelon : echelon number
+-- @author LMT
+-- @release 2011-01-13
+local function issueMission ( self, tasks, nbrFront, echelon, entities )
+    local tasks = explode( ";", tasks )
+    entities = entities or self.entitiesWithoutMission
+    local bestUnits = findBests( entities, tasks, self.companyTask, self.parameters, nbrFront ) --Save the nbrFront best couple unit/task
+    self.entitiesWithoutMission = removeFromListForLead( bestUnits, self.entitiesWithoutMission )
+    setEchelon( bestUnits, echelon )
+    local nBestUnits = #bestUnits
+    for i = 1, nBestUnits do
+        local elem = bestUnits[i]
+        DEC_Trace("elem.taskName "..tostring(elem.taskName))
+        DEC_Trace("elem.params "..tostringr(elem.params))
+        DEC_Trace("elem.entity "..tostringr(elem.entity))
+        DEC_Trace("meKnowledge "..tostringr(meKnowledge))
+        meKnowledge:sendTaskToPion( elem.entity, elem.taskName, elem.params, echelon ) -- Send the task to the unit
+    end
+    return bestUnits
+end
+
+rootnode {
+
+connections = { skill.links.synchronizeRC, skill.nodes.RC },
+
+done = function( self ) end,
+
+create = function( self )
+        myself.newTask = false
+        self.parameters = myself.taskParams
+        self.parameters.commandingEntities = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", self.params.withPC )
+        self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
+
+        -- Init
+        local Activate = Activate
+        myself.leadData = {}
+        myself.leadData.taskError = false
+        self.entitiesWithoutMission = copyTable( self.parameters.commandingEntities )
+        myself.feedback = false
+        self.companyTask = integration.RetrieveAutomateTask( meKnowledge, self.params.companyTask )
+        self.companyTask:init( self.params, self.parameters )
+        
+        if myself.leadData.taskError then -- Impossible for automat to give tasks because one mandatory parameter for units cannot be given 
+           Feedback( self.feedbacks.done )
+           return
+        end
+
+        if self.params.allInFront and self.params.allInFront ~= NIL then
+            self.nbrFront = #self.parameters.commandingEntities -- All platoons in front
+        else
+            self.nbrFront = self.companyTask:getNbrFront() -- Ask how many platoon will be in the front group. Number giving by the user or by default.
+        end
+        self.progressionInAOR = {}
+
+        if self.params.pcTasks and self.params.pcTasks ~= NIL then
+            issueMission ( self, self.params.pcTasks, 1, eEtatEchelon_Reserve, { integration.query.getPCUnit() } )
+        end
+end,
+
+activate = function( self )
+    local Activate = Activate
+    local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
+    local pionsPE =  echelons[1]
+    local pionsSE =  echelons[2]
+    local pionsEE =  echelons[3]
+
+    if meKnowledge.availableDrone then
+        local drones = {meKnowledge.availableDrone}
+        -- Le premier echelon recoit les missions principales ("mainTasks")
+        local bestUnits = issueMission ( self, self.params.droneTasks, 1, eEtatEchelon_First, drones)
+        meKnowledge.availableDrone = nil
+    end
+end,
+}
+
+node "RC"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
+    end,
+}

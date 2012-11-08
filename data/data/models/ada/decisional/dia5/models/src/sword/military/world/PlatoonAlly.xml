@@ -1304,6 +1304,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </argument>
         </method>
+        <method name="sendDisponibleDrone">
+            <description>The unit sends the available drone.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
         <method name="isCaught">
             <description>Retourne vrai si capturé (pour un terroriste), retourne faux sinon</description>
             <return>

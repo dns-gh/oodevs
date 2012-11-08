@@ -1,82 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur" source-version="1.0.0" knowledge-class="france.military.company.combat.support.rens.tasks.knowledges.ROIM_RenseignerSurEffect">
-    <parameters>
-        <parameter name="ficelleDeVol">
-            <description>Ficelle de vol.</description>
-            <type>
-                <list>
-                    <class name="sword.military.world.Point"/>
-                </list>
-            </type>
-        </parameter>
-    </parameters>
-    <stages>
-        <stage label="Renseignement sur la zone">
-            <skills>
-                <skill name="sword.military.company.skills.Lead" main="true">
-                    <parameter name="companyTask">
-                        <value>
-                            <string>france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur</string>
-                        </value>
-                    </parameter>
-                    <parameter name="mainTasks">
-                        <value>
-                            <string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
-                        </value>
-                    </parameter>
-                    <parameter name="supportTasks">
-                        <value>
-                            <string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
-                        </value>
-                    </parameter>
-                    <parameter name="defaultTask">
-                        <value>
-                            <string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
-                        </value>
-                    </parameter>
-                    <parameter name="taskForSupporting">
-                        <value>
-                            <string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
-                        </value>
-                    </parameter>
-                    <parameter name="disableWhenDone">
-                        <value>
-                            <boolean>true</boolean>
-                        </value>
-                    </parameter>
-                </skill>
-            </skills>
-        </stage>
-        <stage label="Renseignement sur la zone" disable-when-done="true">
-            <skills>
-                <skill name="sword.military.company.skills.Lead" main="true">
-                    <parameter name="companyTask">
-                        <value>
-                            <string>france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur</string>
-                        </value>
-                    </parameter>
-                    <parameter name="mainTasks">
-                        <value>
-                            <string>france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
-                        </value>
-                    </parameter>
-                    <parameter name="supportTasks">
-                        <value>
-                            <string>france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
-                        </value>
-                    </parameter>
-                    <parameter name="defaultTask">
-                        <value>
-                            <string>france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
-                        </value>
-                    </parameter>
-                    <parameter name="taskForSupporting">
-                        <value>
-                            <string>france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
-                        </value>
-                    </parameter>
-                </skill>
-            </skills>
-        </stage>
-    </stages>
+	<parameters>
+		<parameter name="ficelleDeVol">
+			<description>Ficelle de vol.</description>
+			<type>
+				<list>
+					<class name="sword.military.world.Point"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<stages>
+		<stage label="Renseignement sur la zone">
+			<skills>
+				<skill name="sword.military.company.skills.LeadDrone" main="true">
+					<parameter name="companyTask">
+						<value>
+							<string>france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur</string>
+						</value>
+					</parameter>
+					<parameter name="droneTasks">
+						<value>
+							<string>france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
+						</value>
+					</parameter>
+					<parameter name="pcTasks">
+						<value>
+							<string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
+						</value>
+					</parameter>
+					<parameter name="withPC">
+						<value>
+							<boolean>true</boolean>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
 </task>
