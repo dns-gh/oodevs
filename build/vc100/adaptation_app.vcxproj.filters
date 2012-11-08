@@ -1009,9 +1009,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.cpp">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\MT_ListViewItem.cpp">
-      <Filter>Source Files\Common widgets\List view</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox.cpp">
       <Filter>Source Files\Common widgets\Combo box</Filter>
     </ClCompile>
@@ -1651,12 +1648,6 @@
       <Filter>Source Files\Common widgets\Standard Connectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.h">
-      <Filter>Source Files\Common widgets\List view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\MT_ListViewItem.h">
-      <Filter>Source Files\Common widgets\List view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\MT_ValuedListViewItem.h">
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Enum.h">

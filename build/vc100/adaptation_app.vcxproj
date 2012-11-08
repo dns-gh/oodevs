@@ -1298,7 +1298,6 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\MT_ListViewItem.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -3137,8 +3136,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Rich_ListViewItem.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\MT_ListViewItem.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\MT_ValuedListViewItem.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ComboBox.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>

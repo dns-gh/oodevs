@@ -224,38 +224,6 @@ void ADN_HtmlBuilder::CreateTableFrom( ADN_ListView& listView )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::CreateTableFrom
-// Created: APE 2005-04-20
-// -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::CreateTableFrom( Q3Table& table )
-{
-    strOutput_ << "<table border = 1>\n";
-
-    if( ! table.horizontalHeader()->isHidden() )
-    {
-        strOutput_ << "<tr>\n";
-        if( ! table.verticalHeader()->isHidden() )
-            strOutput_ << "<th></th>";
-        for( int n = 0; n < table.horizontalHeader()->count(); ++n )
-            strOutput_ << "<th>" << table.horizontalHeader()->label( n ).toAscii().constData() << "</th>";
-        strOutput_ << "</tr>\n";
-    }
-
-    for( int nR = 0; nR < table.numRows(); ++nR )
-    {
-        strOutput_ << "<tr>";
-        if( ! table.verticalHeader()->isHidden() )
-            strOutput_ << "<th>" << table.verticalHeader()->label( nR ).toAscii().constData() << "</th>";
-        for( int nC = 0; nC < table.numCols(); ++nC )
-        {
-            strOutput_ << "<td>" << table.text( nR, nC ).toAscii().constData() << "</td>";
-        }
-        strOutput_ << "</tr>\n";
-    }
-    strOutput_ << "</table>\n";
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_HtmlBuilder::CreateTableFrom
 // Created: JSR 2012-10-31
 // -----------------------------------------------------------------------------
 void ADN_HtmlBuilder::CreateTableFrom( QTableView& table )

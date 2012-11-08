@@ -19,7 +19,6 @@
 #include "ADN_MenuListView.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Workspace.h"
-#include "MT_ValuedListViewItem.h"
 
 typedef ADN_Composantes_Data::ComposanteInfos   ComposanteInfos;
 typedef ADN_Units_Data::ComposanteInfos         UnitComposanteInfos;
