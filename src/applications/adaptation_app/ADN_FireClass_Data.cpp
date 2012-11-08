@@ -18,8 +18,8 @@
 // Name: ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos
 // Created: JSR 2010-12-02
 // -----------------------------------------------------------------------------
-ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos( const std::string& nodeName )
-    : nodeName_      ( nodeName )
+ADN_FireClass_Data::FireInjuryInfos::FireInjuryInfos()
+    : parentName_    ()
     , nNbHurtHumans1_( 0 )
     , nNbHurtHumans2_( 0 )
     , nNbHurtHumans3_( 0 )
@@ -75,7 +75,7 @@ void ADN_FireClass_Data::FireInjuryInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::list( "injury", *this, &ADN_FireClass_Data::FireInjuryInfos::ReadInjury );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toAscii().constData(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( "" ).toAscii().constData() ); // $$$$ ABR 2012-11-05: TODO NODE: Give parent name
+        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toAscii().constData(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toAscii().constData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ void ADN_FireClass_Data::FireInjuryInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "injuries" );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toAscii().constData(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( "" ).toAscii().constData() ); // $$$$ ABR 2012-11-05: TODO NODE: Give parent name
+        throw ADN_DataException( tools::translate( "ADN_FireClass_Data", "Invalid data" ).toAscii().constData(), tools::translate( "ADN_FireClass_Data", "Fire '%1' - Injuries data sum > 100" ).arg( parentName_.c_str() ).toAscii().constData() );
     output  << xml::start( "injury" )
                 << xml::attribute( "type", "u1" )
                 << xml::attribute( "percentage", nNbHurtHumans1_.GetData() / 100. )
@@ -175,7 +175,7 @@ ADN_FireClass_Data::FireClassInfos::FireClassInfos()
     , maxHeat_         ( 0 )
     , increaseRate_    ( 0 )
     , decreaseRate_    ( 0 )
-    , injuryInfos_     ( "injuries" )
+    , injuryInfos_     ()
     , modifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
     , isSurface_       ( false )
     , surfaceInfos_    ( "surfaces" )
@@ -244,6 +244,7 @@ void ADN_FireClass_Data::FireClassInfos::ReadArchive( xml::xistream& input )
               >> xml::list( "weather-effect", *this, &ADN_FireClass_Data::FireClassInfos::ReadWeatherEffect )
           >> xml::end
           >> xml::start( "injuries" );
+    injuryInfos_.parentName_ = strName_.GetData();
     injuryInfos_.ReadArchive( input );
     input >> xml::end
           >> xml::start( "urban-modifiers" )

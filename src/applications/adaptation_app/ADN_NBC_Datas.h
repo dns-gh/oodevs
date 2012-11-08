@@ -30,7 +30,7 @@ public:
     class NbcIntoxInfos : public ADN_Ref_ABC
     {
     public:
-        explicit NbcIntoxInfos( const std::string& nodeName );
+        explicit NbcIntoxInfos();
         virtual ~NbcIntoxInfos() {}
 
         void CopyFrom( NbcIntoxInfos& infos );
@@ -40,7 +40,7 @@ public:
         void WriteContent( xml::xostream& output );
 
     public:
-        std::string nodeName_;
+        std::string parentName_;
         ADN_Type_Bool bIntoxPresent_;
         ADN_Type_Double rNbAlivedHumans_;
         ADN_Type_Double rNbHurtedHumans1_;

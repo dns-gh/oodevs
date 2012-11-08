@@ -23,8 +23,8 @@ tools::IdManager ADN_NBC_Datas::idManager_;
 // Name: ADN_NBC_Datas::NbcIntoxInfos
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-ADN_NBC_Datas::NbcIntoxInfos::NbcIntoxInfos( const std::string& nodeName )
-    : nodeName_             ( nodeName )
+ADN_NBC_Datas::NbcIntoxInfos::NbcIntoxInfos()
+    : parentName_           ()
     , bIntoxPresent_        ( false )
     , rNbAlivedHumans_      ( 100.0 )
     , rNbHurtedHumans1_     ( 0.0 )
@@ -90,7 +90,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::ReadArchive( xml::xistream& input )
     {
         input >> xml::list( "effect", *this, &ADN_NBC_Datas::NbcIntoxInfos::ReadEffect );
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw ADN_DataException( tools::translate( "NBC_Data", "Invalid data" ).toAscii().constData(), tools::translate( "NBC_Data","NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( "" ).toAscii().constData() ); // $$$$ ABR 2012-11-05: TODO NODE: Give parent name
+            throw ADN_DataException( tools::translate( "NBC_Data", "Invalid data" ).toAscii().constData(), tools::translate( "NBC_Data","NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( parentName_.c_str() ).toAscii().constData() );
     }
     input >> xml::optional >> xml::attribute( "contamination", bContaminationPresent_ );
 }
@@ -117,7 +117,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
     if( bIntoxPresent_.GetData() )
     {
         if( rNbAlivedHumans_.GetData() + rNbHurtedHumans1_.GetData() + rNbHurtedHumans2_.GetData() + rNbHurtedHumans3_.GetData() + rNbHurtedHumansE_.GetData() + rNbDeadHumans_.GetData() != 100.0 )
-            throw ADN_DataException( tools::translate( "NBC_Data","Invalid data" ).toAscii().constData(), tools::translate( "NBC_Data", "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( "" ).toAscii().constData() ); // $$$$ ABR 2012-11-05: TODO NODE: Give parent name
+            throw ADN_DataException( tools::translate( "NBC_Data","Invalid data" ).toAscii().constData(), tools::translate( "NBC_Data", "NBC - Agent '%1' - Poisoning effect data sum < 100" ).arg( parentName_.c_str() ).toAscii().constData() );
         output << xml::attribute( "affliction", "true" )
                << xml::start( "effect" )
                 << xml::attribute( "wound", "healthy" )
@@ -153,7 +153,7 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::NbcGazInfos::NbcGazInfos()
-    : intoxInfos_  ( "gaz" )
+    : intoxInfos_  ()
     , lifeTime_    ( "1s" )
     , rSpreadAngle_( 20 )
 {
@@ -203,7 +203,7 @@ void ADN_NBC_Datas::NbcGazInfos::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
     : nId_( ADN_NBC_Datas::idManager_.GetNextId() )
-    , liquidInfos_( "liquide" )
+    , liquidInfos_()
     , category_( "chemical" )
     , bGazPresent_( false )
     , bLiquidPresent_( false )
@@ -218,7 +218,7 @@ ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos()
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::NbcAgentInfos::NbcAgentInfos( unsigned int id )
     : nId_( id )
-    , liquidInfos_( "liquide" )
+    , liquidInfos_()
     , category_( "chemical" )
     , bGazPresent_( false )
     , bLiquidPresent_( false )
@@ -267,8 +267,9 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadEffect( xml::xistream& input )
 void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ )
-          >> xml::optional >> xml::attribute( "category", category_ )
-          >> xml::list( "effects", *this, &ADN_NBC_Datas::NbcAgentInfos::ReadEffect );
+          >> xml::optional >> xml::attribute( "category", category_ );
+    liquidInfos_.parentName_ = strName_.GetData();
+    input >> xml::list( "effects", *this, &ADN_NBC_Datas::NbcAgentInfos::ReadEffect );
     if( category_ == "" )
         category_ = "chemical";
 }

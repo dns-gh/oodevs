@@ -33,7 +33,7 @@ public:
     {
 
     public:
-        explicit FireInjuryInfos( const std::string& nodeName );
+        explicit FireInjuryInfos();
         virtual ~FireInjuryInfos() {}
 
         void CopyFrom( FireInjuryInfos& infos );
@@ -43,7 +43,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        std::string nodeName_;
+        std::string parentName_;
         ADN_Type_Int nNbHurtHumans1_;
         ADN_Type_Int nNbHurtHumans2_;
         ADN_Type_Int nNbHurtHumans3_;
