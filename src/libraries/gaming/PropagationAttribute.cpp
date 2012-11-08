@@ -57,7 +57,7 @@ namespace
     {
         if( lhs.size() != rhs.size() )
             return false;
-        for( int i = 0; i < rhs.size(); ++i )
+        for( std::size_t i = 0; i < rhs.size(); ++i )
             if( lhs[ i ] != rhs[ i ] )
                 return false;
         return true;
