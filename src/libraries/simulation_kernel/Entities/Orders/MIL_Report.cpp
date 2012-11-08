@@ -125,13 +125,13 @@ void MIL_Report::Initialize( xml::xistream& xis )
 
     diaEvents_[ eReport_DamagesCausedToNeutralSide ] = eRC_DamagesCausedToNeutralSide;
     diaEvents_[ eReport_DamagesCausedByNeutralSide ] = eRC_DamagesCausedByNeutralSide;
-    diaEvents_[ eReport_InfrastructureDamaged      ] = eRc_InfrastructureDamaged;
-    diaEvents_[ eReport_LivingAreaDamaged          ] = eRc_LivingAreaDamaged;
-    diaEvents_[ eReport_BorderCrossed              ] = eRc_BorderCrossed;
-    diaEvents_[ eReport_TacticallyDestroyed        ] = eRc_TacticallyDestroyed;
-    diaEvents_[ eReport_CiviliansEncountered       ] = eRc_CiviliansEncountered;
-    diaEvents_[ eReport_PrisonersUnsupplied        ] = eRc_PrisonersUnsupplied;
-    diaEvents_[ eReport_PrisonersCampFull          ] = eRc_PrisonersCampFull;
+    diaEvents_[ eReport_InfrastructureDamaged      ] = eRC_InfrastructureDamaged;
+    diaEvents_[ eReport_LivingAreaDamaged          ] = eRC_LivingAreaDamaged;
+    diaEvents_[ eReport_BorderCrossed              ] = eRC_BorderCrossed;
+    diaEvents_[ eReport_TacticallyDestroyed        ] = eRC_TacticallyDestroyed;
+    diaEvents_[ eReport_CiviliansEncountered       ] = eRC_CiviliansEncountered;
+    diaEvents_[ eReport_PrisonersUnsupplied        ] = eRC_PrisonersUnsupplied;
+    diaEvents_[ eReport_PrisonersCampFull          ] = eRC_PrisonersCampFull;
 
     diaEvents_[ eReport_SectionDeployee     ] = eRC_SectionDeployee;
     diaEvents_[ eReport_StartDeploy         ] = eRC_StartDeploy;
@@ -150,13 +150,13 @@ void MIL_Report::Initialize( xml::xistream& xis )
     diaEvents_[ eReport_NotActivatedUndergroundNetwork ] = eRC_NotActivatedUndergroundNetwork;
     diaEvents_[ eReport_FireObserver ] = eRC_FireObserver;
 
-    diaEvents_[ eReport_DetectedUnit ] = eRc_DetectedUnit;
-    diaEvents_[ eReport_FriendUnitRecognized ] = eRc_FriendUnitRecognized;
-    diaEvents_[ eReport_FriendUnitIdentified ] = eRc_FriendUnitIdentified;
-    diaEvents_[ eReport_EnemyUnitRecognized ] = eRc_EnemyUnitRecognized;
-    diaEvents_[ eReport_EnemyUnitIdentified ] = eRc_EnemyUnitIdentified;
-    diaEvents_[ eReport_NeutralUnitRecognized ] = eRc_NeutralUnitRecognized;
-    diaEvents_[ eReport_NeutralUnitIdentified ] = eRc_NeutralUnitIdentified;
+    diaEvents_[ eReport_DetectedUnit ] = eRC_DetectedUnit;
+    diaEvents_[ eReport_FriendUnitRecognized ] = eRC_FriendUnitRecognized;
+    diaEvents_[ eReport_FriendUnitIdentified ] = eRC_FriendUnitIdentified;
+    diaEvents_[ eReport_EnemyUnitRecognized ] = eRC_EnemyUnitRecognized;
+    diaEvents_[ eReport_EnemyUnitIdentified ] = eRC_EnemyUnitIdentified;
+    diaEvents_[ eReport_NeutralUnitRecognized ] = eRC_NeutralUnitRecognized;
+    diaEvents_[ eReport_NeutralUnitIdentified ] = eRC_NeutralUnitIdentified;
     diaEvents_[ eReport_DetectedObject ] = eRC_DetectedObject;
 }
 
