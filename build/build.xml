@@ -968,7 +968,7 @@
     </target>
 
     <target name="propagation_test" depends="propagation">
-        <build-test name="propagation" depends="boost" libs="gdal_i,lib${ant.project.name}_propagation-${platform}-mt" failonwarning="${failonwarning}"/>
+        <build-test name="propagation" depends="boost" libs="gdal_i,xerces,lib${ant.project.name}_propagation-${platform}-mt" failonwarning="${failonwarning}"/>
     </target>
 
     <target name="positions_plugin_test" depends="protocol,positions_plugin">
