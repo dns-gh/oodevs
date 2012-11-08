@@ -11,6 +11,7 @@
 #include "Propagation.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "propagation/ASCExtractor.h"
+#include "propagation/PropagationManager.h"
 #include <graphics/Visitor2d.h>
 #include <graphics/TextureVisitor_ABC.h>
 
@@ -19,18 +20,17 @@
 // Name: Propagation constructor
 // Created: LGY 2012-10-26
 // -----------------------------------------------------------------------------
-Propagation::Propagation( const std::string& file, const std::string& projection,
-                          const kernel::CoordinateConverter_ABC& converter,
-                          const std::map< double, QColor >& colors )
+Propagation::Propagation( const std::string& file, const PropagationManager& manager,
+                          const kernel::CoordinateConverter_ABC& converter )
     : converter_ ( converter )
-    , pExtractor_( new ASCExtractor( file, projection ) )
+    , pExtractor_( new ASCExtractor( file, manager.GetProjectionFile() ) )
 {
     const ASCExtractor::T_Values& values = pExtractor_->GetValues();
     std::vector< unsigned char > rgba( values.size() * 4 );
     for( unsigned int i = 0; i < values.size(); ++i )
     {
         float value = values[ i ];
-        QColor color = colors.empty() ? Qt::green : colors.lower_bound( value )->second;
+        QColor color = QColor( manager.GetColor( value ).c_str() );
         rgba[ 4 * i ] = static_cast< char >( color.red() );
         rgba[ 4 * i + 1] = static_cast< char >(  color.green() );
         rgba[ 4 * i + 2 ] = static_cast< char >( color.blue() );

@@ -100,11 +100,13 @@
     <ClInclude Include="..\..\src\libraries\propagation\FloodDrawer.h" />
     <ClInclude Include="..\..\src\libraries\propagation\FloodModel.h" />
     <ClInclude Include="..\..\src\libraries\propagation\FloodModel_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\propagation\PropagationManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\propagation\ASCExtractor.cpp" />
     <ClCompile Include="..\..\src\libraries\propagation\FloodDrawer.cpp" />
     <ClCompile Include="..\..\src\libraries\propagation\FloodModel.cpp" />
+    <ClCompile Include="..\..\src\libraries\propagation\PropagationManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

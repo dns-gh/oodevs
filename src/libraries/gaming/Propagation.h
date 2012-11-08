@@ -13,7 +13,6 @@
 #include <boost/noncopyable.hpp>
 #include <graphics/RGBATextureFactory.h>
 #include <graphics/TextureTree.h>
-#include <map>
 
 namespace
 {
@@ -26,6 +25,7 @@ namespace kernel
 }
 
 class ASCExtractor;
+class PropagationManager;
 
 // =============================================================================
 /** @class  Propagation
@@ -38,9 +38,8 @@ class Propagation : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Propagation( const std::string& file, const std::string& projection,
-                          const kernel::CoordinateConverter_ABC& converter,
-                          const std::map< double, QColor >& colors );
+             Propagation( const std::string& file, const PropagationManager& manager,
+                          const kernel::CoordinateConverter_ABC& converter );
     virtual ~Propagation();
     //@}
 

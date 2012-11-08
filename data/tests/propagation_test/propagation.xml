@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+  <projection>projection.prj</projection>
+   <colors>
+    <color threshold="5">#00FF00</color>
+    <color threshold="100">#FF8040</color>
+    <color threshold="500">#FF0000</color>
+  </colors>
+  <files>
+    <file time="2010-09-01T12:21:00">fileA</file>
+    <file time="2010-09-01T12:30:00">fileB</file>
+    <file time="2010-09-01T12:50:00">fileC</file>
+    <file time="2010-09-01T12:50:00">fileD</file>
+  </files>
+</config>

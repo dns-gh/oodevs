@@ -22,6 +22,9 @@
     <ClCompile Include="..\..\src\tests\propagation_test\ASCExtractorTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\propagation_test\PropagationManagerTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\propagation_test\MockElevationGetter.h">

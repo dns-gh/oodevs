@@ -12,6 +12,7 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "propagation/PropagationManager.h"
 #include "tools/ElementObserver_ABC.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_array.hpp>
@@ -66,20 +67,11 @@ private:
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void DoUpdate( const sword::ObjectUpdate& message );
-    void ReadFile( xml::xistream& xis, const boost::filesystem::path& path );
-    void ReadColor( xml::xistream& xis );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< std::string >           T_Files;
-    typedef std::map< QDateTime, T_Files >       T_PropagationFiles;
-    typedef T_PropagationFiles::const_iterator CIT_PropagationFiles;
-
-    typedef std::map< double, QColor > T_Colors;
-    typedef T_Colors::const_iterator CIT_Colors;
-
     typedef boost::shared_ptr< Propagation > T_Propagation;
     typedef std::vector< T_Propagation >     T_Propagations;
     typedef T_Propagations::const_iterator CIT_Propagations;
@@ -90,11 +82,9 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
-    std::string projection_;
-    T_PropagationFiles propagationFiles_;
-    T_Colors colors_;
+    std::auto_ptr< PropagationManager > pManager_;
     T_Propagations propagations_;
-    QDateTime last_;
+    PropagationManager::T_Files currentFiles_;
     //@}
 };
 
