@@ -11,6 +11,7 @@
 #include "ObjectKnowledgeOrder.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -55,7 +56,17 @@ unsigned long ObjectKnowledgeOrder::RetrieveId() const
     {
         const kernel::ObjectKnowledge_ABC* pKnowledge = converter_.Find( *pObject_, owner_ );
         if( pKnowledge )
-            return pKnowledge->GetEntity()->GetId();
+            return pKnowledge->GetEntityId();
+        else
+        {
+            const kernel::Hierarchies* hierarchies = owner_.Retrieve< kernel::TacticalHierarchies >();
+            if( hierarchies )
+            {
+                pKnowledge = converter_.Find( *pObject_, hierarchies->GetTop() );
+                if( pKnowledge )
+                    return pKnowledge->GetEntityId();
+            }
+        }
     }
     return 0;
 }
@@ -103,7 +114,7 @@ bool ObjectKnowledgeOrder::CheckKnowledgeValidity() const
 {
     if( pObject_ == 0 )
         return true;
-    return converter_.Find( *pObject_, owner_ ) != 0;
+    return IsSet();
 }
 
 // -----------------------------------------------------------------------------
