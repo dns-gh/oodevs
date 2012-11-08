@@ -103,13 +103,17 @@ def parsecpp(ui, swordpath):
 
 def parseluaids(ui, path):
     """Parse report identifiers defined in Lua."""
-    relua = re.compile(r'^\s*(eRC_\S+)\s*=\s*(\d+)')
+    relua = re.compile(r'^\s*(eRC_\S+|eNbr)\s*=\s*(\d+)')
     rids = {}
     rnames = {}
     result = 0
     for line in file(path):
+        line = line.strip()
         m = relua.search(line)
         if not m:
+            if line and not line.startswith('--'):
+                ui.error('error: unknown lua line:\n    %s\n' % line)
+                result = 1
             continue
         rname, rid = m.group(1, 2)
         rid = int(rid)
@@ -121,6 +125,8 @@ def parseluaids(ui, path):
             ui.error('error: %s/%d collides with %s/%d\n' % (rname, rid,
                 rids[rid], rid))
             result = 1
+        if rname == 'eNbr':
+            continue
         rnames[rname] = rid
         rids[rid] = rname
     return result, rnames
