@@ -1232,7 +1232,7 @@
         <element name="elements" optional="true" implicit="true"/>
         <sequential>
             <exec taskname="@{app}" executable="python" failonerror="true">
-                <arg value="check_start_gui.py"/>
+                <arg value="checkgui.py"/>
                 <arg value="--run_dir"/>
                 <arg value="${run.dir}"/>
                 <arg value="${out.dir}/release/applications/@{app}/@{app}.exe"/>
