@@ -201,7 +201,10 @@ target_link_libraries( actions_test actions )
 
 # propagation_test
 add_target( propagation_test tests "tests/propagation_test" OPTIONS test )
-target_link_libraries( propagation_test propagation )
+target_link_libraries( propagation_test
+    propagation
+    ${XERCES_LIBRARIES}
+)
 
 # protocol_test
 add_target( protocol_test tests "tests/protocol_test" OPTIONS protobuf protocol test )
