@@ -248,6 +248,10 @@ integration.affinityLevel = function( crowd )
     return (DEC_GetAdhesionPopulation( crowd.source ) + 1 ) *50
 end
 
+integration.crowdHasFlow = function( crowd )
+    return DEC_ConnaissancePopulation_HasFlow( crowd.source )
+end
+
 -- -------------------------------------------------------------------------------- 
 -- Crowd Demonstrates
 -- @author EVH
