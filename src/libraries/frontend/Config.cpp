@@ -56,6 +56,7 @@ Config::Config()
     desc.add_options()
         ( "install"      , po::value( &package_      ), "specify the package to install" )
         ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server port number" )
+        ( "test", "enable test mode" )
     ;
     AddOptions( desc );
 }
@@ -85,4 +86,9 @@ std::string Config::GetPackageFile() const
 unsigned short Config::GetLauncherPort() const
 {
     return launcherPort_;
+}
+
+bool Config::IsTestMode() const
+{
+    return IsSet( "test" );
 }

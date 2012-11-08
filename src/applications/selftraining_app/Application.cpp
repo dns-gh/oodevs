@@ -104,25 +104,28 @@ int Application::Run()
     QCoreApplication::sendEvent( mainWindow_, new QEvent( QEvent::LanguageChange ) );
     timer_->start( 10 );
 
-    // check for previous instances running
-    frontend::ProcessList processes;
-    if( processes.Contains( "selftraining_app.exe" ) )
+    if( !config_->IsTestMode() )
     {
-        MessageDialog message( mainWindow_, tools::translate( "Application", "Already running" ), tools::translate( "Application", "The FrontEnd is already running. Start anyway ?" ), QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() == QMessageBox::No )
-            return EXIT_SUCCESS;
-    }
-    if( processes.Contains( "simulation_app.exe" ) )
-    {
-        MessageDialog message( mainWindow_, tools::translate( "Application", "Close Simulations" ), tools::translate( "Application", "Running Simulation(s) detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() == QMessageBox::Yes )
-            processes.KillAll( "simulation_app.exe" );
-    }
-    if( processes.Contains( "gaming_app.exe" ) )
-    {
-        MessageDialog message( mainWindow_, tools::translate( "Application", "Close GUI" ), tools::translate( "Application", "Running GUI(s) detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() == QMessageBox::Yes )
-            processes.KillAll( "gaming_app.exe" );
+        // check for previous instances running
+        frontend::ProcessList processes;
+        if( processes.Contains( "selftraining_app.exe" ) )
+        {
+            MessageDialog message( mainWindow_, tools::translate( "Application", "Already running" ), tools::translate( "Application", "The FrontEnd is already running. Start anyway ?" ), QMessageBox::Yes, QMessageBox::No );
+            if( message.exec() == QMessageBox::No )
+                return EXIT_SUCCESS;
+        }
+        if( processes.Contains( "simulation_app.exe" ) )
+        {
+            MessageDialog message( mainWindow_, tools::translate( "Application", "Close Simulations" ), tools::translate( "Application", "Running Simulation(s) detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
+            if( message.exec() == QMessageBox::Yes )
+                processes.KillAll( "simulation_app.exe" );
+        }
+        if( processes.Contains( "gaming_app.exe" ) )
+        {
+            MessageDialog message( mainWindow_, tools::translate( "Application", "Close GUI" ), tools::translate( "Application", "Running GUI(s) detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
+            if( message.exec() == QMessageBox::Yes )
+                processes.KillAll( "gaming_app.exe" );
+        }
     }
 
     return app_.exec();

@@ -14,7 +14,6 @@
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  Config
     @brief  Config
@@ -34,6 +33,7 @@ public:
     //@{
     std::string GetPackageFile() const;
     unsigned short GetLauncherPort() const;
+    bool IsTestMode() const;
     //@}
 
 private:
@@ -50,7 +50,6 @@ private:
     unsigned short launcherPort_;
     //@}
 };
-
 }
 
 #endif // __frontend_Config_h_

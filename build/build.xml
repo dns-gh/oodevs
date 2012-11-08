@@ -33,6 +33,14 @@
     <!-- local extensions -->
     <import file="protobuf.xml" />
 
+    <!-- generate random ports -->
+    <math result="test.portnumber2">
+        <op op="+" datatype="int">
+            <num value="${test.portnumber}"/>
+            <num value="1"/>
+        </op>
+    </math>
+
     <!--
     ============================================================================
       libraries
@@ -982,12 +990,6 @@
         <attribute name="session" default="default"/>
         <element name="args" implicit="true" optional="true"/>
         <sequential>
-            <math result="test.portnumber2">
-                <op op="+" datatype="int">
-                    <num value="${test.portnumber}"/>
-                    <num value="1"/>
-                </op>
-            </math>
             <exec taskname="sim" executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
                 <arg value="--root-dir=../../data"/>
                 <arg value="--exercise=@{exercise}"/>
@@ -1253,9 +1255,11 @@
     <target name="app_test" description="check whether gui applications start properly">
         <check-gui app="adaptation_app"/>
         <check-gui app="preparation_app"/>
-        <!--
-        <check-gui app="selftraining_app"/>
-        -->
+        <check-gui app="selftraining_app">
+            <arg value="--launcher-port=${test.portnumber}"/>
+            <arg value="--dispatcher-port=${test.portnumber2}"/>
+            <arg value="--test"/>
+        </check-gui>
         <check-gui app="gaming_app">
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=worldwide/Egypt"/>
@@ -1268,12 +1272,12 @@
             <arg value="--dispatcher-port=${test.portnumber}"/>
             <arg value="--test"/>
         </check-app>
-        <!--
-        <check-app app="launcher_app"/>
-        <check-app app="launcher_test_app">
-            <arg value="-test"/>
+        <check-app app="launcher_app">
+            <arg value="--test"/>
         </check-app>
-        -->
+        <check-app app="launcher_test_app">
+            <arg value="--test"/>
+        </check-app>
         <check-app app="replayer_app">
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=worldwide/Egypt"/>
