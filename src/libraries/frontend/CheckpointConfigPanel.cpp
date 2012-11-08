@@ -18,7 +18,6 @@
 #include <Qt3Support/q3datetimeedit.h>
 #include <Qt3Support/q3groupbox.h>
 #include <QtGui/qlabel.h>
-#include <Qt3Support/q3listbox.h>
 #include <QtGui/qspinbox.h>
 #include <Qt3Support/q3vbox.h>
 

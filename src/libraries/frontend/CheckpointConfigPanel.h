@@ -13,7 +13,6 @@
 #include "PluginConfig_ABC.h"
 
 class Q3GroupBox;
-class Q3ListBox;
 class QSpinBox;
 class Q3TimeEdit;
 class QLabel;

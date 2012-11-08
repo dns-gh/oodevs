@@ -174,7 +174,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\InternalLinks.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichItemFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichLabel.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\RichListItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinTableItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TacticalTreeView.cpp" />
@@ -909,7 +908,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichAction.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichDockWidget.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\RichListItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichMenu.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichSpinBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\RichToolBar.h" />
