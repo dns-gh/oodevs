@@ -63,7 +63,7 @@ void ModeController< EnumType >::ChangeMode( int newMode )
 template< typename EnumType >
 void ModeController< EnumType >::LoadGeometry()
 {
-    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/" + registeryEntry_ );
     if( !settings.contains( "mainWindowState" ) )
         return;
@@ -79,7 +79,7 @@ void ModeController< EnumType >::LoadGeometry()
 template< typename EnumType >
 void ModeController< EnumType >::SaveGeometry()
 {
-    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/" + registeryEntry_ );
     assert( parent_ );
     settings.setValue( "mainWindowState", parent_->saveState() );

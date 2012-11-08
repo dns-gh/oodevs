@@ -25,12 +25,12 @@ namespace
 {
     bool ReadLegacy()
     {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", "SWORD" );
         return settings.readBoolEntry( "/sword/IsLegacy", false );
     }
     void WriteLegacy( bool isLegacy )
     {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", "SWORD" );
         settings.writeEntry( "/sword/IsLegacy", isLegacy );
     }
 }

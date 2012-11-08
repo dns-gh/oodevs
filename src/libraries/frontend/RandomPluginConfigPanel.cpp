@@ -31,34 +31,34 @@ namespace
 {
     void ReadGaussian( bool* distributions )
     {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", "SWORD" );
         for( int i = 0; i < RandomPluginConfigPanel::eContextsNbr; ++i )
             distributions[ i ] = settings.readBoolEntry( QString( "/sword/RandomDistribution" ) + QString::number( i ), false );
     }
 
     void ReadDeviation( double* deviations )
     {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", "SWORD" );
         for( int i = 0; i < RandomPluginConfigPanel::eContextsNbr; ++i )
             deviations[ i ] = settings.readDoubleEntry( QString( "/sword/RandomDeviation" ) + QString::number( i ), 0.5 );
     }
 
     void ReadMean( double* means )
     {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", "SWORD" );
         for( int i = 0; i < RandomPluginConfigPanel::eContextsNbr; ++i )
             means[ i ] = settings.readDoubleEntry( QString( "/sword/RandomMean" ) + QString::number( i ), 0.5 );
     }
 
     bool ReadHasSeed()
     {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", "SWORD" );
         return settings.readBoolEntry( "/sword/RandomHasSeed", false );
     }
 
     int ReadSeed()
     {
-        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", "SWORD" );
         return settings.readNumEntry( "/sword/RandomSeed", 1 );
     }
 
@@ -307,7 +307,7 @@ void RandomPluginConfigPanel::OnSeedToggled()
 // -----------------------------------------------------------------------------
 void RandomPluginConfigPanel::OnDefaultClicked()
 {
-    QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", "SWORD" );
     for( int i = 0; i < eContextsNbr; ++i )
     {
         settings.writeEntry( QString( "/sword/RandomDistribution" ) + QString::number( i ), bDistributions_[ i ] );

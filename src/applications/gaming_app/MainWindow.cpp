@@ -154,7 +154,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , pProfile_        ( new ProfileFilter( controllers, p ) )
 {
     controllers_.modes_->SetMainWindow( this );
-    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/Gaming" );
     restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
 
@@ -597,7 +597,7 @@ void MainWindow::Close()
 // -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
-    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/Gaming" );
     settings.setValue("mainWindowGeometry", saveGeometry());
     settings.setValue("mainWindowState", saveState());
@@ -614,7 +614,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 // -----------------------------------------------------------------------------
 void MainWindow::WriteOptions()
 {
-    gui::Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    gui::Settings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/Gaming/Options" );
     controllers_.options_.Save( settings );
     settings.endGroup();
@@ -626,7 +626,7 @@ void MainWindow::WriteOptions()
 // -----------------------------------------------------------------------------
 void MainWindow::ReadOptions()
 {
-    gui::Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    gui::Settings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/Gaming/Options" );
     controllers_.options_.Load( settings );
     settings.endGroup();

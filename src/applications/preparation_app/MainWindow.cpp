@@ -213,7 +213,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 
     // Read settings
     ReadOptions();
-    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() );
     restoreGeometry( settings.value( "mainWindowGeometry").toByteArray() );
 
@@ -625,7 +625,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
     }
     assert( controllers_.modes_ );
     controllers_.ChangeMode( ePreparationMode_Default );
-    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() );
     settings.setValue( "mainWindowGeometry", saveGeometry() );
 
@@ -660,7 +660,7 @@ void MainWindow::ClearLoadingErrors()
 // -----------------------------------------------------------------------------
 void MainWindow::WriteOptions()
 {
-    gui::Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    gui::Settings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() + "/Options" );
     controllers_.options_.Save( settings );
     settings.endGroup();
@@ -672,7 +672,7 @@ void MainWindow::WriteOptions()
 // -----------------------------------------------------------------------------
 void MainWindow::ReadOptions()
 {
-    gui::Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    gui::Settings settings( "MASA Group", "SWORD" );
     settings.beginGroup( "/" + controllers_.modes_->GetRegisteryEntry() + "/Options" );
     controllers_.options_.Load( settings );
     settings.endGroup();

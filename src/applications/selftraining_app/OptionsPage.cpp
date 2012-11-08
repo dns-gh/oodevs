@@ -404,7 +404,7 @@ void OptionsPage::ApplyAction()
 // -----------------------------------------------------------------------------
 void OptionsPage::Commit()
 {
-    QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", "SWORD" );
     settings.setValue( "/Common/Language", selectedLanguage_.c_str() );
     settings.setValue( "/Common/DataDirectory", selectedDataDir_.c_str() );
 
