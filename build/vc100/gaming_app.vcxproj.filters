@@ -178,9 +178,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\gaming_app_pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\LoggerProxy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -763,14 +760,8 @@
     <ClCompile Include="..\..\src\applications\gaming_app\InhabitantPanel.cpp">
       <Filter>Source Files\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\PlanificationModePanel.cpp">
       <Filter>Source Files\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\BypassPrototype.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\ObjectStateDialog.cpp">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
@@ -802,15 +793,21 @@
     <ClCompile Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.cpp">
       <Filter>Source Files\Panels\Logistic\consigns</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp">
+      <Filter>Source Files\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LoggerProxy.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\BypassPrototype.cpp">
+      <Filter>Source Files\Creation\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\gaming_app_pch.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\LoggerProxy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\BriefingDialog.h">
@@ -1128,9 +1125,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\PlanificationModePanel.h">
       <Filter>Source Files\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\BypassPrototype.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticTreeView.h">
       <Filter>Source Files\TreeView</Filter>
     </ClInclude>
@@ -1139,6 +1133,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticConsignsWidget.h">
       <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\LoggerProxy.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\BypassPrototype.h">
+      <Filter>Source Files\Creation\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1438,7 +1438,6 @@
     <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantPanel.h">
       <Filter>Source Files\Panels</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\ProfilesPanel.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\CriticalIntelligenceDialog.h">
       <Filter>Source Files\Dialogs\Magic actions</Filter>
     </CustomBuild>
@@ -1471,6 +1470,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\LogisticConsignsWidget_ABC.h">
       <Filter>Source Files\Panels\Logistic\consigns</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\ProfilesPanel.h">
+      <Filter>Source Files\Panels</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
