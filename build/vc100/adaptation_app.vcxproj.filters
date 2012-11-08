@@ -317,9 +317,6 @@
     <Filter Include="Resources\xml">
       <UniqueIdentifier>{7deb3dae-0cb3-485e-8e44-374d0a54d6ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\xpm">
-      <UniqueIdentifier>{6f849d77-354f-47c9-954c-8f3f2ef63ddb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Translations">
       <UniqueIdentifier>{4787fa5a-706d-4875-b7c4-a6ffccc001e8}</UniqueIdentifier>
     </Filter>
@@ -1836,6 +1833,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.inl">
       <Filter>Source Files\Common widgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -1879,12 +1879,6 @@
     </None>
     <None Include="..\..\src\applications\adaptation_app\ADN_EditLine.inl">
       <Filter>Source Files\Common widgets\Edit line</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\res\checked_box.xpm">
-      <Filter>Resources\xpm</Filter>
-    </None>
-    <None Include="..\..\src\applications\adaptation_app\res\empty_box.xpm">
-      <Filter>Resources\xpm</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_es.ts">
       <Filter>Translations</Filter>
@@ -2161,9 +2155,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.h">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
-      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionParameter_GroupBox.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>

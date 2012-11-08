@@ -2689,7 +2689,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
@@ -2702,7 +2702,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-    </CustomBuild>
+    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Breakdowns_ListView.h" />
@@ -3353,8 +3353,6 @@
       <FileType>Document</FileType>
     </ClCompile>
     <None Include="..\..\src\applications\adaptation_app\ADN_EditLine.inl" />
-    <None Include="..\..\src\applications\adaptation_app\res\checked_box.xpm" />
-    <None Include="..\..\src\applications\adaptation_app\res\empty_box.xpm" />
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_es.ts" />
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_fr.ts">
       <SubType>Designer</SubType>
