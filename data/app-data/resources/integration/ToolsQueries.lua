@@ -508,6 +508,12 @@ integration.query.getPositionsToSupport = function( retrogradeWay, friendToSuppo
     return positions
 end
 
+integration.query.getNearestPositionInAOR = function( objective )
+    local target = objective:getPosition()
+    local simPos = DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( DEC_Geometrie_ConvertirPointEnLocalisation( target ) )
+    return CreateKnowledge( world.Point, simPos )
+end
+
 -- -------------------------------------------------------------------------------- 
 -- Param ally commander
 -- Param old supported platoons ally list
