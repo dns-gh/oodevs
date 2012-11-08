@@ -680,14 +680,14 @@ void HtmlEditor::InsertImage()
     QString file = QFileDialog::getOpenFileName( this
                                                , tr( "Select an image" )
                                                , "."
-                                               , tr( "Bitmap Files (*.bmp)\n"
+                                               , tr( "All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)\n"
+                                                     "Bitmap Files (*.bmp)\n"
                                                     "JPEG (*.jpg *jpeg)\n"
                                                     "GIF (*.gif)\n"
                                                     "PNG (*.png)\n" )
                                                 );
     QUrl Uri( QString ( "%1" ).arg ( file ) );
     QImage image = QImageReader( file ).read();
-
     QTextDocument* textDocument = textEdit_->document();
     textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant( image ) );
     QTextCursor cursor = textEdit_->textCursor();

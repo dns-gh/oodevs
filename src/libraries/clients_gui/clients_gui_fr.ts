@@ -823,24 +823,26 @@ Voulez-vous sauvegarder vos changemnts?</translation>
         <translation>Selectionner l&apos;image</translation>
     </message>
     <message>
-        <source>Bitmap Files (*.bmp)
-JPEG (*.jpg *jpeg)
-GIF (*.gif)
-PNG (*.png)
-</source>
-        <translation>Fichiers Bitmap (*.bmp)
-JPEG (*.jpg *jpeg)
-GIF (*.gif)
-PNG (*.png)
-</translation>
-    </message>
-    <message>
         <source>Text color...</source>
         <translation>Couleur du texte...</translation>
     </message>
     <message>
         <source>Select color</source>
         <translation>Sélectionnez la couleur</translation>
+    </message>
+    <message>
+        <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
+Bitmap Files (*.bmp)
+JPEG (*.jpg *jpeg)
+GIF (*.gif)
+PNG (*.png)
+</source>
+        <translation>Tous les formats supportés (*.bmp *.jpg *.jpeg *.gif *.png)
+Bitmap Files (*.bmp)
+JPEG (*.jpg *jpeg)
+GIF (*.gif)
+PNG (*.png)
+</translation>
     </message>
 </context>
 <context>

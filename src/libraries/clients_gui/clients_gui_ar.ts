@@ -767,14 +767,6 @@ Do you want to save your changes?</source>
         <translation type="unfinished">حدد صورة</translation>
     </message>
     <message>
-        <source>Bitmap Files (*.bmp)
-JPEG (*.jpg *jpeg)
-GIF (*.gif)
-PNG (*.png)
-</source>
-        <translation type="unfinished">ملفات (*.bmp) JPEG للصور النقطية (*.jpg * jpeg) GIF (*.gif) بابوا غينيا الجديدة (*.png)</translation>
-    </message>
-    <message>
         <source>Cut</source>
         <translation type="unfinished">قص</translation>
     </message>
@@ -837,6 +829,15 @@ PNG (*.png)
     <message>
         <source>Select color</source>
         <translation type="unfinished">حدد اللون</translation>
+    </message>
+    <message>
+        <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
+Bitmap Files (*.bmp)
+JPEG (*.jpg *jpeg)
+GIF (*.gif)
+PNG (*.png)
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

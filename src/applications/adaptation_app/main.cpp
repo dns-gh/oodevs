@@ -52,6 +52,11 @@ namespace
 int main( int argc, char** argv )
 {
     gui::ApplicationMonitor monitor( argc, argv );
+    
+#ifdef _DEBUG
+    // Set library path for Qt plugins
+    monitor.setLibraryPaths( monitor.libraryPaths() << QDir::currentPath() );
+#endif
     SetConsoleTitle( szADN_Version.c_str() );
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );

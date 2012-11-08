@@ -767,14 +767,6 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bitmap Files (*.bmp)
-JPEG (*.jpg *jpeg)
-GIF (*.gif)
-PNG (*.png)
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
@@ -836,6 +828,15 @@ PNG (*.png)
     </message>
     <message>
         <source>Select color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All supported formats (*.bmp *.jpg *.jpeg *.gif *.png)
+Bitmap Files (*.bmp)
+JPEG (*.jpg *jpeg)
+GIF (*.gif)
+PNG (*.png)
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
