@@ -123,10 +123,10 @@ bool PHY_MaintenanceRepairConsign::DoWaitingForRepairer()
     {
         // Find alternative repair unit
         MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
-        if( pLogisticManager )
+        if( pLogisticManager && pComposanteState_ )
         {
             PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeRepairHandler( *pComposanteState_ );
-            if( newPion != &GetPionMaintenance() && newPion->HandleComposanteForRepair( *pComposanteState_ ) )
+            if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForRepair( *pComposanteState_ ) )
             {
                 EnterStateFinished();
                 pComposanteState_ = 0; // Crade
