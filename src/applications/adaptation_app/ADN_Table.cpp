@@ -88,7 +88,7 @@ void ADN_Table::Initialize( const QString& objectName )
 
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), &delegate_, SLOT( OnItemChanged( QStandardItem* ) ) );
     connect( &delegate_, SIGNAL( CheckedStateChanged( const QStandardItem& ) ), this, SLOT( OnCheckedStateChanged( const QStandardItem& ) ) );
-    connect( this, SIGNAL( customContextMenuRequested ( const QPoint& ) ), this, SLOT( OnContextMenu( const QPoint& ) ) );
+    connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ), this, SLOT( PrivateOnContextMenu( const QPoint& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,6 +144,15 @@ void ADN_Table::RemoveItem( void* pData )
             break;
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::PrivateOnContextMenu
+// Created: ABR 2012-11-08
+// -----------------------------------------------------------------------------
+void ADN_Table::PrivateOnContextMenu( const QPoint& pt )
+{
+    OnContextMenu( viewport()->mapToGlobal( pt ) );
 }
 
 // -----------------------------------------------------------------------------

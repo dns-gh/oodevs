@@ -71,6 +71,7 @@ protected:
     void* GetData( int row, int col ) const;
     void* GetDataFromIndex( const QModelIndex& index ) const;
     void* GetSelectedData() const;
+    virtual void OnContextMenu( const QPoint& pt );
     //@}
 
     //! @name QTableView overload
@@ -92,7 +93,7 @@ private slots:
     //@{
     void OnGotoRequested( const QModelIndex& index );
     void OnCheckedStateChanged( const QStandardItem& item );
-    virtual void OnContextMenu( const QPoint& pt );
+    void PrivateOnContextMenu( const QPoint& pt );
     //@}
 
 signals:
