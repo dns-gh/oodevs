@@ -25,12 +25,17 @@
 #include "ADN_Workspace.h"
 #include "ADN_ListView_Models.h"
 #include "ADN_Mission_ConfigurationDlg.h"
-#include "ADN_Mission_CheckItem.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
 #include "ADN_enums.h"
 
 typedef ADN_Models_Data::MissionInfos MissionInfos;
+
+Q_DECLARE_METATYPE( ADN_Missions_Mission* )
+Q_DECLARE_METATYPE( MissionInfos* )
+
+#define MissionTypeRole ( Qt::UserRole )
+#define MissionModelRole ( Qt::UserRole + 1 )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Missions constructor
@@ -42,7 +47,7 @@ ADN_ListView_Missions::ADN_ListView_Missions( E_EntityType eEntityType, QWidget*
     , currentMissions_( 0 )
 {
     // connector creation
-    pConnector_=new ADN_Connector_ListView< MissionInfos >(*this);
+    pConnector_ = new ADN_Connector_ListView< MissionInfos >(*this);
 
     this->SetDeletionEnabled( true );
 }
@@ -64,10 +69,8 @@ void ADN_ListView_Missions::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
-
-    MissionInfos* pInfos = (MissionInfos*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Models_GUI::eNbrMissionGuiElements );
-
+    MissionInfos* pInfos = static_cast< MissionInfos* >( pCurData_ );
     vItemConnectors_[ADN_Models_GUI::eOrders]->Connect( &pInfos->vOrders_, bConnect );
 }
 
@@ -88,27 +91,30 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 
     ADN_Mission_ConfigurationDlg cfgDlg( this );
 
-    Q3ListView* pMissionList = cfgDlg.GetMissionList();
-    Q3CheckListItem* pParent = 0;
+    QTreeWidget* pMissionList = cfgDlg.GetMissionList();
+    QTreeWidgetItem* item = new QTreeWidgetItem( pMissionList );
+    item->setFlags( item->flags() |  Qt::ItemIsTristate );
 
     if( eEntityType_ == eEntityType_Pawn )
     {
-        pParent = new Q3CheckListItem( pMissionList, tools::translate( "ADN_ListView_Missions", "Unit" ), Q3CheckListItem::CheckBoxController );
-        FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions() );
+        item->setText( 0, tools::translate( "ADN_ListView_Missions", "Unit" ) );
+        FillList( item, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions() );
     }
     else if( eEntityType_ == eEntityType_Automat )
     {
-        pParent = new Q3CheckListItem( pMissionList, tools::translate( "ADN_ListView_Missions", "Automate" ), Q3CheckListItem::CheckBoxController );
-        FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions() );
+        item->setText( 0, tools::translate( "ADN_ListView_Missions", "Automate" ) );
+        FillList( item, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions() );
     }
     else
     {
-        pParent = new Q3CheckListItem( pMissionList, tools::translate( "ADN_ListView_Missions", "Crowd" ), Q3CheckListItem::CheckBoxController );
-        FillList( pParent, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions() );
+        item->setText( 0, tools::translate( "ADN_ListView_Missions", "Crowd" ) );
+        FillList( item, ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions() );
     }
+    pMissionList->expandAll();
+    pMissionList->sortItems( 0, Qt::AscendingOrder );
     if( cfgDlg.exec() != QDialog::Accepted )
         return;
-    ApplyModifications( pParent );
+    ApplyModifications( item );
     currentMissions_ = 0;
 }
 
@@ -116,16 +122,27 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Missions::FillList
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
-void ADN_ListView_Missions::FillList( Q3CheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions )
+void ADN_ListView_Missions::FillList( QTreeWidgetItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions )
 {
     currentMissions_ = &missions;
-    pParent->setOpen( true );
-    unsigned int n = 0;
-    for( ADN_Missions_Data::IT_Mission_Vector it = missions.begin(); it != missions.end(); ++it, ++n )
-        if( ADN_ListViewItem* pMission = FindItem( (*it)->strName_.GetData().c_str() ) )
-            new ADN_Mission_CheckItem( pParent, **it, static_cast< MissionInfos* >( pMission->GetData() ) );
+    for( ADN_Missions_Data::IT_Mission_Vector it = missions.begin(); it != missions.end(); ++it )
+    {
+        ADN_Missions_Mission* mission = *it;
+        QTreeWidgetItem* item = new QTreeWidgetItem( pParent );
+        item->setFlags( item->flags() | Qt::ItemIsUserCheckable );
+        item->setText( 0, mission->strName_.GetData().c_str() );
+        item->setData( 0, MissionTypeRole, QVariant::fromValue( mission ) );
+        if( ADN_ListViewItem* pMission = FindItem( mission->strName_.GetData().c_str() ) )
+        {
+            item->setCheckState( 0, Qt::Checked );
+            item->setData( 0, MissionModelRole, QVariant::fromValue( static_cast< MissionInfos* >( pMission->GetData() ) ) );
+        }
         else
-            new ADN_Mission_CheckItem( pParent, **it );
+        {
+            item->setCheckState( 0, Qt::Unchecked );
+            item->setData( 0, MissionModelRole, QVariant::fromValue( static_cast< MissionInfos* >( 0 ) ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -148,39 +165,32 @@ ADN_StandardItem* ADN_ListView_Missions::FindItem( const std::string& strMission
 // Name: ADN_ListView_Missions::ApplyModifications
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
-void ADN_ListView_Missions::ApplyModifications( Q3CheckListItem* pStart )
+void ADN_ListView_Missions::ApplyModifications( QTreeWidgetItem* pStart )
 {
     if( !currentMissions_ )
         return;
-    Q3ListViewItem* pItem = pStart->firstChild();
-    while( pItem != 0 )
+    for( int i = 0; i < pStart->childCount(); ++i )
     {
-        if( pItem->rtti() == 1 && static_cast< Q3CheckListItem* >( pItem )->type() == Q3CheckListItem::CheckBox )
+        QTreeWidgetItem* item = pStart->child( i );
+        MissionInfos* infos = item->data( 0, MissionModelRole ).value< MissionInfos* >();
+        if( item->checkState( 0 ) == Qt::Checked )
         {
-            ADN_Mission_CheckItem* pMissionItem = static_cast< ADN_Mission_CheckItem* >( pItem );
-            if( pMissionItem->isOn() )
+            if( infos == 0 )
             {
-                if( pMissionItem->GetMissionPtr() == 0 )
-                {
-                    // create a new mission
-                    MissionInfos* pNewInfo = new MissionInfos( *currentMissions_ );
-                    pNewInfo->mission_ = &pMissionItem->GetMission();
-                    pNewInfo->strName_ = pNewInfo->mission_.GetData()->strName_.GetData();
-
-                    ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-                    pCList->AddItem( pNewInfo );
-                }
-            }
-            else
-            {
-                if( pMissionItem->GetMissionPtr() != 0 )
-                {
-                    // delete the mission
-                    static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pMissionItem->GetMissionPtr() );
-                }
+                // create a new mission
+                MissionInfos* pNewInfo = new MissionInfos( *currentMissions_ );
+                pNewInfo->mission_ = item->data( 0, MissionTypeRole ).value< ADN_Missions_Mission* >();
+                pNewInfo->strName_ = pNewInfo->mission_.GetData()->strName_.GetData();
+                static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->AddItem( pNewInfo );
             }
         }
-
-        pItem = pItem->nextSibling();
+        else
+        {
+            if( infos != 0 )
+            {
+                // delete the mission
+                static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( infos );
+            }
+        }
     }
 }

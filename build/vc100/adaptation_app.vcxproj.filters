@@ -682,9 +682,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Orders.cpp">
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Mission_CheckItem.cpp">
-      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Mission_ConfigurationDlg.cpp">
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClCompile>
@@ -1384,9 +1381,6 @@
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Orders.h">
-      <Filter>Source Files\Workspace\Models\Models GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_CheckItem.h">
       <Filter>Source Files\Workspace\Models\Models GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Mission_ConfigurationDlg.h">

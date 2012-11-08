@@ -27,21 +27,23 @@
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
 ADN_Mission_ConfigurationDlg::ADN_Mission_ConfigurationDlg( QWidget* pParent )
-: QDialog( pParent, 0, true, Qt::WType_Dialog | Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_Title | Qt::WStyle_SysMenu | Qt::WType_Dialog )
-, pListView_( 0 )
+    : QDialog( pParent )
+    , pListView_( 0 )
 {
+    setModal( true );
     setCaption( tr( "Mission configuration" ) );
     Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
     pLayout->setMargin( 5 );
+    setMinimumHeight( 400 );
 
-    pListView_ = new Q3ListView( this );
-    pListView_->addColumn( "missions" );
-    pListView_->header()->hide();
+    pListView_ = new QTreeWidget( this );
+    pListView_->setSortingEnabled( true );
+    pListView_->header()->setVisible( false );
     pLayout->addWidget( pListView_ );
 
     Q3HBox* pButtonBox = new Q3HBox( this );
     pButtonBox->setSpacing( 20 );
-    pButtonBox->setMargin( 20 );
+    pButtonBox->setMargin( 5 );
 
     QPushButton* pBtnOk = new QPushButton( tr( "OK" ), pButtonBox );
     QPushButton* pBtnCancel = new QPushButton( tr( "Cancel" ), pButtonBox );
@@ -58,5 +60,5 @@ ADN_Mission_ConfigurationDlg::ADN_Mission_ConfigurationDlg( QWidget* pParent )
 // -----------------------------------------------------------------------------
 ADN_Mission_ConfigurationDlg::~ADN_Mission_ConfigurationDlg()
 {
-
+    // NOTHING
 }

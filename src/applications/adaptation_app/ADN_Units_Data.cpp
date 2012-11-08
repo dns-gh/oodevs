@@ -422,8 +422,8 @@ void ADN_Units_Data::UnitInfos::Initialize()
     BindExistenceTo(&ptrModel_);
 
     // postures initialization
-    for( int i = ePostureNeedTimeStart; i < eNbrUnitPosture; ++i )
-        vPostures_.AddItem( new PostureInfos((E_UnitPosture)i) );
+    for( int i = eUnitPosture_PosturePosteReflexe; i < eNbrUnitPosture; ++i )
+        vPostures_.AddItem( new PostureInfos( static_cast< E_UnitPosture >( i )) );
 
     ADN_UnitSymbols_Data& unitSymbolsData = ADN_Workspace::GetWorkspace().GetUnitSymbols().GetData();
     natureSymbol_.SetVector( unitSymbolsData.GetSymbols() );

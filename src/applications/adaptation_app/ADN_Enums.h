@@ -172,11 +172,6 @@ enum E_NatureAtlasType
     eNbrNatureAtlasType
 };
 
-enum
-{
-    ePostureNeedTimeStart = 3 // $$$$ ABR 2012-10-29: OMG
-};
-
 enum E_SpeedImpact
 {
     eSpeedImpact_AuPlusLent,

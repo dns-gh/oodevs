@@ -37,9 +37,9 @@ private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
 
-    void FillList( Q3CheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions );
+    void FillList( QTreeWidgetItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions );
     ADN_StandardItem* FindItem( const std::string& strMissionName );
-    void ApplyModifications( Q3CheckListItem* pStart );
+    void ApplyModifications( QTreeWidgetItem* pStart );
 
 private:
     E_EntityType eEntityType_;

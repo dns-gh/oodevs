@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-04-28 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Mission_ConfigurationDlg.h $
-// $Author: Ape $
-// $Modtime: 8/02/05 16:49 $
-// $Revision: 2 $
-// $Workfile: ADN_Mission_ConfigurationDlg.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Mission_ConfigurationDlg_h_
 #define __ADN_Mission_ConfigurationDlg_h_
@@ -22,10 +13,6 @@
 // =============================================================================
 /** @class  ADN_Mission_ConfigurationDlg
     @brief  ADN_Mission_ConfigurationDlg
-    @par    Using example
-    @code
-    ADN_Mission_ConfigurationDlg;
-    @endcode
 */
 // Created: AGN 2004-04-28
 // =============================================================================
@@ -40,13 +27,13 @@ public:
 
     //! @name Accessors
     //@{
-    Q3ListView* GetMissionList();
+    QTreeWidget* GetMissionList();
     //@}
 
 private:
     //! @name Member data
     //@{
-    Q3ListView* pListView_;
+    QTreeWidget* pListView_;
     //@}
 };
 
@@ -55,7 +42,7 @@ private:
 // Created: AGN 2004-04-28
 // -----------------------------------------------------------------------------
 inline
-Q3ListView* ADN_Mission_ConfigurationDlg::GetMissionList()
+QTreeWidget* ADN_Mission_ConfigurationDlg::GetMissionList()
 {
     return pListView_;
 }
