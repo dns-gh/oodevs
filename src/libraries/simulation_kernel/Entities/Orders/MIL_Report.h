@@ -143,15 +143,15 @@ public:
         eRC_PrisonersCampFull = 390,
         eRC_SectionUndeployed = 404,
         eRC_StartUndeploy = 405,
-        eRC_DifficultMovementProgression = 433,
+        eRC_DifficultMovementProgression = 406,
         eRC_PrisSousTirIED = 457,
-        eRC_UrbanCollisionStarted = 458,
-        eRC_UrbanCollisionStopped = 459,
-        eRC_Questionning = 464,
-        eRC_FragOrderReceived = 467,
-        eRC_FireObserver = 471,
-        eRC_PrisSousTirEclairant = 481,
-        eRC_PrisSousTirFumigene = 482,
+        eRC_UrbanCollisionStarted = 408,
+        eRC_UrbanCollisionStopped = 409,
+        eRC_Questionning = 420,
+        eRC_FragOrderReceived = 423,
+        eRC_FireObserver = 427,
+        eRC_PrisSousTirEclairant = 444,
+        eRC_PrisSousTirFumigene = 445,
     };
 
     //@}
