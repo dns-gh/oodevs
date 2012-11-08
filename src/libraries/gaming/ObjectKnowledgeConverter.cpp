@@ -92,7 +92,10 @@ const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const Object_ABC& bas
 // -----------------------------------------------------------------------------
 const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const kernel::Object_ABC& base, const kernel::Entity_ABC& owner ) const
 {
-    return Find( base, static_cast< const kernel::Team_ABC& >( owner.Get< kernel::CommunicationHierarchies >().GetTop() ) );
+    const kernel::Hierarchies* hierarchies = owner.Retrieve< kernel::CommunicationHierarchies >();
+    if( hierarchies )
+        return Find( base, static_cast< const kernel::Team_ABC& >( hierarchies->GetTop() ) );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

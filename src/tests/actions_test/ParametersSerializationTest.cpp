@@ -573,18 +573,16 @@ BOOST_FIXTURE_TEST_CASE( ParametersSerialization_PopulationKnowledge, KnowledgeF
 BOOST_FIXTURE_TEST_CASE( ParametersSerialization_ObjectKnowledge, KnowledgeFixture )
 {
     const std::string input( "<parameter name='test' type='objectknowledge' value='42'/>" );
-
+    
     MockObject object;
     MOCK_EXPECT( resolver.FindObject ).once().in( s ).with( 42u ).returns( &object );
     MockTeam owner;
     MockObjectKnowledgeConverter converter;
     MockObjectKnowledge knowledge;
     MOCK_EXPECT( converter.FindObjectKnowledgeFromObjectWithEntity ).in( s ).once().with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &object );
-    MOCK_EXPECT( object.GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( knowledge.GetEntityId ).once().in( s ).returns( 42u );
     MOCK_EXPECT( converter.FindObjectKnowledgeFromObjectWithEntity ).in( s ).once().with( mock::same( object ), mock::same( owner ) ).returns( &knowledge );
-    MOCK_EXPECT( knowledge.GetEntity ).once().in( s ).returns( &object );
-    MOCK_EXPECT( object.GetId ).once().in( s ).returns( 42u );
+    MOCK_EXPECT( knowledge.GetEntityId ).once().in( s ).returns( 42u );
 
     std::auto_ptr< sword::MissionParameter > message( Serialize( "objectknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledgeOrder >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );

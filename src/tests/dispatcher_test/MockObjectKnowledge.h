@@ -29,6 +29,7 @@ MOCK_BASE_CLASS( MockObjectKnowledge, dispatcher::ObjectKnowledge_ABC )
     MOCK_METHOD( Select, 1 );
     MOCK_METHOD( ContextMenu, 2 );
     MOCK_METHOD( Activate, 1 );
+    MOCK_METHOD( GetEntityId, 0 );
 
     // dispatcher::Sendable< kernel::ObjectKnowledge_ABC >
     MOCK_METHOD( SendCreation, 1 );
