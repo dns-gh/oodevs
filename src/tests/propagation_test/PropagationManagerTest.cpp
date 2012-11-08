@@ -22,7 +22,7 @@ namespace
     void CheckVector( const std::vector< std::string >& lhs, const std::vector< std::string >& rhs )
     {
         BOOST_CHECK_EQUAL( lhs.size(), rhs.size() );
-        for( int i = 0; i < rhs.size(); ++i )
+        for( std::size_t i = 0; i < rhs.size(); ++i )
             CheckPath( lhs[ i ], rhs[ i ] );
     }
 }
