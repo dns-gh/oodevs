@@ -160,6 +160,7 @@ private:
 
     //! @name Timer
     //@{
+    void Wait();
     void WaitForNextStep();
     void OnTimer();
     //@}
@@ -185,6 +186,8 @@ private:
     long lastStep_;
     unsigned int nextPause_;
     double rWaitTime_;
+    unsigned int waitTicks_;
+    unsigned int waitLatency_;
     std::string localTime_;
     MT_Profiler profiler_;
     MIL_EffectManager* pEffectManager_;

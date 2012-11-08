@@ -242,6 +242,16 @@ unsigned int MIL_Config::GetEndTick() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::GetTickLatency
+// Created: MCO 2012-11-08
+// -----------------------------------------------------------------------------
+inline
+unsigned int MIL_Config::GetTickLatency() const
+{
+    return tickLatency_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetPausedAtStartup
 // Created: JSR 2010-07-20
 // -----------------------------------------------------------------------------

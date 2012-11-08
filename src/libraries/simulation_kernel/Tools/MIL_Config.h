@@ -72,6 +72,7 @@ public:
     unsigned int       GetTimeStep               () const;
     unsigned int       GetTimeFactor             () const;
     unsigned int       GetEndTick                () const;
+    unsigned int       GetTickLatency            () const;
     bool               GetPausedAtStartup        () const;
     unsigned int       GetPathFinderThreads      () const;
     const std::string& GetCheckpointNameTestMode () const;
@@ -132,6 +133,7 @@ private:
     unsigned int   timeStep_;
     unsigned int   timeFactor_;
     unsigned int   endTick_;
+    unsigned int   tickLatency_;
     unsigned int   pathFinderThreads_;
     unsigned short diaDebuggerPort_;
     unsigned short networkLoggerPort_;
