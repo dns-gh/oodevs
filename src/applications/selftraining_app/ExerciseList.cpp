@@ -43,7 +43,6 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     exerciseLabel_ = new QLabel();
 
     profileLabel_ = new QLabel();
-    profileLabel_->setShown( showProfile );
 
     QWidget* leftBox = new QWidget();
     QVBoxLayout* leftBoxLayout = new QVBoxLayout();
@@ -71,6 +70,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         connect( properties_, SIGNAL( ExercisePropertiesChanged() ), this, SLOT( OnExercisePropertiesChanged() ) );
     }
     mainBoxLayout->addWidget( properties_ );
+    profileLabel_->setShown( showProfile );
 
     controllers_.Register( *this );
 }
