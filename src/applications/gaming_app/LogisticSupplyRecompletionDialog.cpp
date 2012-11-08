@@ -21,8 +21,6 @@
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "gaming/Troops.h"
-#include "clients_gui/ExclusiveComboTableItem.h"
-#include "clients_gui/SpinTableItem.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"

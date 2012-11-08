@@ -262,13 +262,6 @@
     </message>
 </context>
 <context>
-    <name>gui::ComboTableItem</name>
-    <message>
-        <source>Unavailable</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::ConsistencyDialog_ABC</name>
     <message>
         <source>Consistency analysis</source>

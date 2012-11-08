@@ -13,7 +13,6 @@
 #include "ResourceLinksDialog_ABC.h"
 #include "moc_ResourceLinksDialog_ABC.cpp"
 #include "RichSpinBox.h"
-#include "SpinTableItem.h"
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"

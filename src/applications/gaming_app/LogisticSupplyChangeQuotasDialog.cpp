@@ -38,8 +38,6 @@
 #include "tools/Iterator.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_gui/ExclusiveComboTableItem.h"
-#include "clients_gui/SpinTableItem.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/noncopyable.hpp>
 #include <boost/function.hpp>

@@ -120,7 +120,6 @@ private:
     const kernel::Profile_ABC& profile_;
 
     gui::ValuedComboBox< const kernel::Entity_ABC* >* targetCombo_;
-    // Q3Table* table_;
     LogisticSupplyValuesTableWidget* table_;
     SelectedHolder selected_;
     QStringList dotationTypes_;

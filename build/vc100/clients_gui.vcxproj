@@ -117,7 +117,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ColorController.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\ComboTableItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CommonDelegate.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CriticalIntelligenceDialog.cpp" />
@@ -175,7 +174,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\RichItemFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichLabel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\SpinTableItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TacticalTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateDialog.cpp" />
@@ -549,20 +547,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\ComboTableItem.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\CommonDelegate.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -838,7 +822,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\DisplayBuilder.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ElevationExtrema.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ElevationPainter.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\ExclusiveComboTableItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\InternalLinks.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\MiscLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Painter_ABC.h" />
@@ -958,7 +941,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\SpinTableItem.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\StandardModel.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -2096,7 +2078,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\TerrainPreference.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\ToolListButton.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\CoordinateSystemsPanel.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>

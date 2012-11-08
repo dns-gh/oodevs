@@ -199,9 +199,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SimplerRichText.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\SpinTableItem.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\BaseDisplayer.cpp">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClCompile>
@@ -718,9 +715,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\TerrainProfilerLayer.cpp">
       <Filter>Source Files\GIS\Terrain Profiler</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\ComboTableItem.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateDialog.cpp">
       <Filter>Source Files\Dialogs\Unit state</Filter>
     </ClCompile>
@@ -918,9 +912,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ElevationPainter.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ExclusiveComboTableItem.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\InternalLinks.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
@@ -931,9 +922,6 @@
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\SimplerRichText.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\SpinTableItem.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\Tools.h">
@@ -1267,9 +1255,6 @@
       <Filter>Source Files\Preferences</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\TerrainPreference.h">
-      <Filter>Source Files\Preferences</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ToolListButton.h">
       <Filter>Source Files\Preferences</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\PreferencePanel_ABC.h">
@@ -1731,9 +1716,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\UnitStateTableResource.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\ComboTableItem.h">
-      <Filter>Source Files\Tools</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_en.ts">
       <Filter>Translations</Filter>

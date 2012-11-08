@@ -43,11 +43,9 @@
 #include <Qt3Support/q3grid.h>
 #include <Qt3Support/q3groupbox.h>
 #include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3header.h>
 #include <Qt3Support/q3hgroupbox.h>
 #include <Qt3Support/q3iconview.h>
 #include <Qt3Support/q3listbox.h>
-#include <Qt3Support/q3listview.h>
 #include <Qt3Support/q3frame.h>
 #include <Qt3Support/q3pointarray.h>
 #include <Qt3Support/q3popupmenu.h>
@@ -58,8 +56,6 @@
 #include <Qt3Support/q3buttongroup.h>
 #include <Qt3Support/q3canvas.h>
 #include <Qt3Support/q3datetimeedit.h>
-#include <Qt3Support/q3dragobject.h>
-#include <Qt3Support/q3toolbar.h>
 #include <Qt3Support/q3valuelist.h>
 #include <Qt3Support/q3vbox.h>
 #include <Qt3Support/q3vgroupbox.h>
@@ -67,10 +63,8 @@
 #include <Qt3Support/q3boxlayout.h>
 #include <Qt3Support/q3textstream.h>
 #include <Qt3Support/q3button.h>
-#include <Qt3Support/q3datetimeedit.h>
 #include <Qt3Support/q3gridlayout.h>
 #include <Qt3Support/q3textbrowser.h>
-#include <Qt3Support/q3table.h>
 
 #pragma warning( pop )
 

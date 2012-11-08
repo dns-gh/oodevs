@@ -11,7 +11,6 @@
 #include "RichLabel.h"
 #include "moc_RichLabel.cpp"
 #include "SimplerRichText.h"
-#include <Qt3Support/q3process.h>
 
 using namespace gui;
 

@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#pragma warning( push, 0 )
-#include <Qt3Support/q3table.h>
-#pragma warning( pop )
-
 namespace gui
 {
 
@@ -23,8 +19,7 @@ ValuedComboBox<T>::ValuedComboBox( QWidget* parent, const char* name )
     : QComboBox( false, parent, name )
     , sorting_( false )
 {
-    if( parent && parent->inherits( "Q3Table" ) ) // $$$$ SBO 2006-10-30: emulate QComboTableItem
-        QObject::connect( this, SIGNAL( activated( int ) ), (Q3Table*)parent, SLOT( doValueChanged() ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

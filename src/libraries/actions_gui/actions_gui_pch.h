@@ -31,8 +31,7 @@
 
 #include <Qt3Support/q3groupbox.h>
 #include <Qt3Support/q3hbox.h>
-#include <Qt3Support/q3header.h>
-#include <Qt3Support/q3listview.h>
+#include <Qt3Support/q3scrollview.h>
 #include <Qt3Support/q3popupmenu.h>
 #include <Qt3Support/q3vbox.h>
 

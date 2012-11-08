@@ -68,13 +68,10 @@
 #include <Qt3Support/q3progressbar.h>
 #include <Qt3Support/q3gridlayout.h>
 #include <Qt3Support/q3boxlayout.h>
-#include <Qt3Support/q3header.h>
-#include <Qt3Support/q3listview.h>
 #include <Qt3Support/q3textedit.h>
 #include <Qt3Support/q3vbox.h>
 #include <Qt3Support/q3widgetstack.h>
 #include <Qt3Support/q3popupmenu.h>
-#include <Qt3Support/q3url.h>
 #include <Qt3Support/q3filedialog.h>
 #include <Qt3Support/q3mainwindow.h>
 #include <Qt3Support/q3groupbox.h>

@@ -39,11 +39,9 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/resources.h"
-#include "clients_gui/SpinTableItem.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
