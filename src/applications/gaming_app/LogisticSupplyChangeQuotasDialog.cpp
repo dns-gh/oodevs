@@ -303,7 +303,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
             continue;
         ParameterList& dotationList = dotations->AddList( CreateName( "Dotation", ++index ) );
         dotationList.AddIdentifier( "Type", supplies_[ text ].type_->GetId() );
-        dotationList.AddQuantity( "Number", table_->text( i, 1 ).toInt() );
+        dotationList.AddQuantity( "Number", locale().toInt( table_->text( i, 1 ) ) );
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( target, false ) );
