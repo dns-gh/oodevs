@@ -1486,6 +1486,18 @@
 
     <!--
     ============================================================================
+    various project/source checks
+    ============================================================================
+    -->
+    <target name="checkreports" description="check simulation reports">
+        <exec executable="python" failonerror="true">
+            <arg value="${root.dir}/build/checkreports.py"/>
+            <arg value="${root.dir}"/>
+        </exec>
+    </target>
+
+    <!--
+    ============================================================================
     main
     ============================================================================
     -->
@@ -1538,6 +1550,6 @@
 
     <target name="build" depends="libraries,applications"/>
 
-    <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
+    <target name="all" depends="configure,checkreports,build,test,documentation,package" description="build and package distribution"/>
 
 </project>
