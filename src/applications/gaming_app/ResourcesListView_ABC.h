@@ -13,7 +13,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "clients_gui/ListDisplayer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include <QtGui/qtreeview.h>
@@ -23,11 +22,6 @@ namespace kernel
     class Entity_ABC;
     class Controllers;
     class Displayer_ABC;
-}
-
-namespace gui
-{
-    class ItemFactory_ABC;
 }
 
 // =============================================================================

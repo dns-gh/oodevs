@@ -12,7 +12,6 @@
 #include "moc_ExportWidget.cpp"
 #include "ExerciseListView.h"
 #include "clients_gui/tools.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/commands.h"
 #include "frontend/ListViewHelper.h"

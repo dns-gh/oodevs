@@ -12,7 +12,6 @@
 #include "moc_ObjectKnowledgePanel.cpp"
 
 #include "clients_gui/DisplayBuilder.h"
-#include "clients_gui/ListDisplayer.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"

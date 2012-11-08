@@ -190,9 +190,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\InternalLinks.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\ListItemToolTip.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\RichItemFactory.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -208,9 +205,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinTableItem.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\ValuedListItem.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\BaseDisplayer.cpp">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClCompile>
@@ -223,16 +217,10 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\LabelDisplayer.cpp">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\ListItemDisplayer.cpp">
-      <Filter>Source Files\Tools\Displayers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\NoLinkDisplayer.cpp">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinBoxDisplayer.cpp">
-      <Filter>Source Files\Tools\Displayers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\SubItemDisplayer.cpp">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\EditorFactory.cpp">
@@ -790,9 +778,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ClearButton.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\ListView.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ColorController.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -942,9 +927,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\InternalLinks.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ListItemToolTip.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\MiscLayer.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
@@ -966,9 +948,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\Types.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ValuedListItem.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\BaseDisplayer.h">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClInclude>
@@ -981,19 +960,10 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\LabelDisplayer.h">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ListDisplayer.h">
-      <Filter>Source Files\Tools\Displayers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ListItemDisplayer.h">
-      <Filter>Source Files\Tools\Displayers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\NoLinkDisplayer.h">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\SpinBoxDisplayer.h">
-      <Filter>Source Files\Tools\Displayers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\SubItemDisplayer.h">
       <Filter>Source Files\Tools\Displayers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\GQ_PlotDataBBox.h">
@@ -1794,9 +1764,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ClearButton.h">
       <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\ListView.h">
-      <Filter>Source Files\Tools</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ConsistencyDialog_ABC.h">
       <Filter>Source Files\Dialogs\Consistency</Filter>

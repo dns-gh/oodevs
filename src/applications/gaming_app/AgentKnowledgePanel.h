@@ -26,7 +26,6 @@ namespace kernel
 
 namespace gui
 {
-    template< typename T > class ListDisplayer;
     class DisplayBuilder;
     class ItemFactory_ABC;
 }

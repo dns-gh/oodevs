@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "RichItemFactory.h"
 #include "moc_RichItemFactory.cpp"
-#include "ValuedListItem.h"
 #include "RichLabel.h"
 
 using namespace gui;
@@ -35,53 +34,6 @@ RichItemFactory::~RichItemFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: RichItemFactory::CreateItem
-// Created: AGE 2006-05-10
-// -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( Q3ListView * parent, ValuedListItem::Comparator comparator /*= 0*/ )
-{
-    return Connect( new ValuedListItem( parent, comparator ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichItemFactory::CreateItem
-// Created: AGE 2006-05-10
-// -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( Q3ListViewItem * parent, ValuedListItem::Comparator comparator /*= 0*/ )
-{
-    return Connect( new ValuedListItem( parent, comparator ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichItemFactory::CreateItem
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( Q3ListViewItem * parent, Q3ListViewItem * after, ValuedListItem::Comparator comparator /*= 0*/ )
-{
-    return Connect( new ValuedListItem( parent, after, comparator ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichItemFactory::CreateItem
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( Q3ListView* parent, Q3ListViewItem * after, ValuedListItem::Comparator comparator /*= 0*/ )
-{
-    return Connect( new ValuedListItem( parent, after, comparator ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichItemFactory::Connect
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::Connect( ValuedListItem* item )
-{
-    if( connections_.insert( item->listView() ).second )
-        connect( item->listView(), SIGNAL( clicked( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnClicked( Q3ListViewItem*, const QPoint&, int ) ) );
-    return item;
-}
-
-// -----------------------------------------------------------------------------
 // Name: RichItemFactory::Connect
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
@@ -89,21 +41,6 @@ RichLabel* RichItemFactory::Connect( RichLabel* item )
 {
     connect( item, SIGNAL( LinkClicked( const QString& ) ), this, SLOT( DealWithLink( const QString& ) ) );
     return item;
-}
-
-// -----------------------------------------------------------------------------
-// Name: RichItemFactory::OnClicked
-// Created: AGE 2006-05-11
-// -----------------------------------------------------------------------------
-void RichItemFactory::OnClicked( Q3ListViewItem* i, const QPoint& point, int column )
-{
-    ValuedListItem* item = ( i && i->rtti() >= 999 ) ? (ValuedListItem*)( i ) : 0;
-    if( item )
-    {
-        const QString anchor = item->GetAnchorAt( point, column );
-        if( ! anchor.isEmpty() )
-            DealWithLink( anchor );
-    }
 }
 
 // -----------------------------------------------------------------------------

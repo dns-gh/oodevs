@@ -10,7 +10,6 @@
 #ifndef __ItemFactory_ABC_h_
 #define __ItemFactory_ABC_h_
 
-#include "ValuedListItem.h"
 #include <boost/noncopyable.hpp>
 
 namespace gui
@@ -34,11 +33,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual ValuedListItem* CreateItem( Q3ListView * parent, ValuedListItem::Comparator comparator = 0 ) = 0;
-    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, ValuedListItem::Comparator comparator = 0 ) = 0;
-    virtual ValuedListItem* CreateItem( Q3ListView * parent, Q3ListViewItem * after, ValuedListItem::Comparator comparator = 0 ) = 0;
-    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, Q3ListViewItem * after, ValuedListItem::Comparator comparator = 0 ) = 0;
-
     virtual RichLabel*      CreateLabel( QWidget* parent = 0, const char* name = 0 ) = 0;
     virtual RichLabel*      CreateLabel( const QString& text, QWidget* parent = 0, const char* name = 0 ) = 0;
     virtual RichLabel*      CreateLabel( const QString& text, bool required, QWidget* parent = 0, const char* name = 0 ) = 0;

@@ -22,7 +22,6 @@ namespace gui
     class AutomatsLayer;
     class FormationLayer;
     class EntitySymbols;
-    class ItemFactory_ABC;
     class SearchTreeView_ABC;
     class SymbolIcons;
 }

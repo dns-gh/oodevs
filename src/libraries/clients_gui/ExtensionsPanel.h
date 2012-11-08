@@ -33,7 +33,6 @@ namespace gui
 {
     class DiffusionListDialog;
     class EntitySymbols;
-    class ItemFactory_ABC;
 
 // =============================================================================
 /** @class  ExtensionsPanel

@@ -20,7 +20,6 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
     class EntitySymbols;
 }
 

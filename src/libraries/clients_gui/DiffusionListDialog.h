@@ -32,7 +32,6 @@ namespace gui
 {
     class DiffusionListHierarchy;
     class EntitySymbols;
-    class ItemFactory_ABC;
     class DiffusionListEditor;
 
 // =============================================================================

@@ -11,7 +11,6 @@
 #include "LongNameHelper.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
-#include "clients_gui/ValuedListItem.h"
 #pragma warning( push, 0 )
 #include <QtGui/qstandarditemmodel.h>
 #pragma warning( pop )
@@ -28,18 +27,6 @@ std::string GetEntityLongName( const kernel::Entity_ABC& entity )
     if( dico && dico->IsEnabled() )
         return dico->GetValue( "NomLong" );
     return std::string();
-}
-
-bool SetItemLongName( const kernel::Entity_ABC& entity, gui::ValuedListItem& item )
-{
-    std::string longName = longname::GetEntityLongName( entity );
-    if( longName.empty() )
-    {
-        item.setText( 0, entity.GetName() );
-        return false;
-    }
-    item.setText( 0, longName.c_str() );
-    return true;
 }
 
 bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item )

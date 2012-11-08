@@ -19,7 +19,6 @@
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_gui/DisplayBuilder.h"
-#include "clients_gui/ListDisplayer.h"
 #include "gaming/UrbanKnowledges.h"
 #include "gaming/UrbanPerceptions.h"
 

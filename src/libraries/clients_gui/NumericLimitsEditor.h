@@ -13,7 +13,6 @@
 #include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
 #include "RichSpinBox.h"
-#include "ValuedListItem.h"
 
 namespace kernel
 {
@@ -22,7 +21,6 @@ namespace kernel
 
 namespace gui
 {
-    class ValuedListItem;
     class StandardModel;
 
 // =============================================================================
@@ -45,7 +43,6 @@ public:
 
     //! @name Abstract operations
     //@{
-    virtual bool ApplyFilter( ValuedListItem* item ) const = 0;
     virtual bool ApplyFilter( QStandardItem& item, StandardModel& model ) const = 0;
     virtual void Clear() = 0;
     //@}
@@ -105,7 +102,6 @@ public:
 
     //! @name NumericLimitsEditor_ABC operations
     //@{
-    virtual bool ApplyFilter( ValuedListItem* item ) const;
     virtual bool ApplyFilter( QStandardItem& item, StandardModel& model ) const;
     virtual void Clear();
     virtual void OnMinValueChanged( NumericType value );

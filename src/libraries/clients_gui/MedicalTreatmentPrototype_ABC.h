@@ -13,7 +13,6 @@
 #include "ObjectAttributePrototype_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "LoadableSpinBox.h"
-#include "ValuedListItem.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <geometry/Types.h>
 

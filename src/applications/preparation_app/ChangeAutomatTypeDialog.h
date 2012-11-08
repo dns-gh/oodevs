@@ -12,7 +12,6 @@
 
 namespace gui
 {
-    class ItemFactory_ABC;
     class ModelObserver_ABC;
     class UnitTreeView;
 }

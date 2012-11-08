@@ -16,7 +16,6 @@
 #include "clients_kernel/VariantPointer.h"
 #include "preparation/NBCAttribute.h"
 #include "clients_gui/RichLabel.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_gui/LoadableSpinBox.h"
 
 using namespace kernel;

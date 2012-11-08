@@ -21,7 +21,6 @@
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_gui/LabelDisplayer.h"
-#include "clients_gui/ListDisplayer.h"
 
 using namespace kernel;
 using namespace gui;

@@ -25,7 +25,6 @@ namespace gui
     class CheckBox;
     class GlSelector;
     class Layer_ABC;
-    class ValuedListItem;
 
 // =============================================================================
 /** @class  LayersPanel

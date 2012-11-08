@@ -22,14 +22,10 @@ class Entity_ABC;
 namespace gui
 {
 
-class ValuedListItem;
-
 namespace longname
 {
 
 std::string GetEntityLongName( const kernel::Entity_ABC& entity );
-
-bool SetItemLongName( const kernel::Entity_ABC& entity, gui::ValuedListItem& item );
 
 bool SetItemLongName( const kernel::Entity_ABC& entity, QStandardItem& item );
 

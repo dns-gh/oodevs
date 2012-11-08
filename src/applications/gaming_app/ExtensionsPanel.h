@@ -28,7 +28,6 @@ namespace kernel
 namespace gui
 {
     class EntitySymbols;
-    class ItemFactory_ABC;
 }
 
 class Model;

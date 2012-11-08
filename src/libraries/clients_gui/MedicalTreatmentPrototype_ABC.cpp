@@ -13,7 +13,6 @@
 #include "MedicalTreatmentPrototype_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "tools/Iterator.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_gui/LoadableLineEdit.h"
 #include "Tools.h"
 

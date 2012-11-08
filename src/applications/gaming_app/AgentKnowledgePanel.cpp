@@ -18,7 +18,6 @@
 #include "gaming/AgentKnowledges.h"
 #include "gaming/PerceptionMap.h"
 #include "clients_gui/DisplayBuilder.h"
-#include "clients_gui/ListDisplayer.h"
 #include "clients_gui/InternalLinks.h"
 
 Q_DECLARE_METATYPE( const kernel::Automat_ABC* )

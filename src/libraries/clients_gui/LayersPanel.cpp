@@ -19,7 +19,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/OptionVariant.h"
-#include "ValuedListItem.h"
 #include "resources.h"
 
 using namespace gui;

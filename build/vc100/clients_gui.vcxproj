@@ -132,7 +132,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\KeyModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkItemDelegate.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\ListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticTreeView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LongNameHelper.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
@@ -173,7 +172,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ElevationExtrema.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ElevationPainter.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\InternalLinks.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\ListItemToolTip.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichItemFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichLabel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichListItem.cpp" />
@@ -187,15 +185,12 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTableResource.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\UnitTreeView.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\ValuedListItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\BaseDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\GroupDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LabelDisplayer.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\ListItemDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NoLinkDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\SpinBoxDisplayer.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\SubItemDisplayer.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\EditorFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PropertiesPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\GQ_Plot.cpp" />
@@ -846,21 +841,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ElevationPainter.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ExclusiveComboTableItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\InternalLinks.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\ListItemToolTip.h" />
-    <CustomBuild Include="..\..\src\libraries\clients_gui\ListView.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\MiscLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Painter_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\RichItemFactory.h">
@@ -1076,16 +1056,12 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitTreeView.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\ValuedListItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\BaseDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\CheckBoxDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\GroupDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LabelDisplayer.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\ListDisplayer.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\ListItemDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\NoLinkDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SpinBoxDisplayer.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\SubItemDisplayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\EditorFactory.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>

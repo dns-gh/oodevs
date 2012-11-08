@@ -97,28 +97,6 @@ void NumericLimitsEditor< NumericType, SpinBox >::Clear()
 
 // -----------------------------------------------------------------------------
 // Name: NumericLimitsEditor::ApplyFilter
-// Created: ABR 2012-06-20
-// -----------------------------------------------------------------------------
-template< typename NumericType, typename SpinBox >
-bool NumericLimitsEditor< NumericType, SpinBox >::ApplyFilter( ValuedListItem* item ) const
-{
-    if( item->IsA< kernel::Entity_ABC >() )
-    {
-        kernel::Entity_ABC* entity = static_cast< kernel::Entity_ABC* >( item->GetValue< kernel::Entity_ABC >() );
-        if( entity )
-        {
-            bool valid = true;
-            NumericType extractedValue = extractor_( *entity, valid );
-            if( !valid )
-                return false;
-            return extractedValue >= minSpin_->value() && extractedValue <=  maxSpin_->value();
-        }
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NumericLimitsEditor::ApplyFilter
 // Created: JSR 2012-09-17
 // -----------------------------------------------------------------------------
 template< typename NumericType, typename SpinBox >
