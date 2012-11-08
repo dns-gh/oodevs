@@ -1017,7 +1017,7 @@
         </sequential>
     </macrodef>
 
-    <target name="checkpoint_test" depends="simulation_app,modules" description="save and load a checkpoint">
+    <target name="checkpoint_test" description="save and load a checkpoint">
         <run-one-simulation exercise="scipio/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
             <arg value="--legacy"/>
