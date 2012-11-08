@@ -392,7 +392,7 @@ const std::string& UrbanObjectWrapper::GetName() const
 // -----------------------------------------------------------------------------
 bool UrbanObjectWrapper::HasChild() const
 {
-    return object_->HasChild();
+    return object_ && object_->HasChild();
 }
 
 // -----------------------------------------------------------------------------
