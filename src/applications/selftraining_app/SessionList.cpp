@@ -123,7 +123,7 @@ void SessionList::ReadComments( const QString& session )
                 *xis >> date;
             *xis >> xml::end;
         }
-        comments_->setShown( !name.empty() || !comment.empty() );
+        comments_->setVisible( !name.empty() || !comment.empty() );
         comments_->setText( QString( "<b>%1</b><br><i>%2</i><br>%3" ).arg( name.c_str() ).arg( date.c_str() ).arg( comment.c_str() ) );
     }
     catch( ... )

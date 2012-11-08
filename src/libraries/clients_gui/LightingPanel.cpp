@@ -107,7 +107,7 @@ void LightingPanel::Reset()
 // -----------------------------------------------------------------------------
 void LightingPanel::OnLightingType( int type )
 {
-    fixedLightBox_->setShown( type == 0 || type == 1 );
+    fixedLightBox_->setVisible( type == 0 || type == 1 );
     if( type == 0 )
         lighting_.SwitchToFixed();
     else if( type == 1 )

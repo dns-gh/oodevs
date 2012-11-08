@@ -199,5 +199,5 @@ void UserProfileWidget::OnSupervisorChanged( bool supervisor )
 // -----------------------------------------------------------------------------
 void UserProfileWidget::SetEnabled( bool enabled )
 {
-    setShown( enabled );
+    setVisible( enabled );
 }

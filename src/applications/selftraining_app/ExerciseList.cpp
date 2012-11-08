@@ -50,7 +50,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         exercises_ = new ExerciseListView( leftBox, config, fileLoader );
         connect( exercises_, SIGNAL( clicked( const QModelIndex& ) ), this, SLOT( SelectExercise( const QModelIndex& ) ) );
         profiles_ = new ProfileList( leftBox, config, fileLoader );
-        profiles_->setShown( showProfile );
+        profiles_->setVisible( showProfile );
         connect( profiles_ , SIGNAL( Select( const frontend::Profile& ) ), this, SLOT( SelectProfile( const frontend::Profile& ) ) );
     }
     leftBoxLayout->addWidget( exerciseLabel_ );
@@ -70,7 +70,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         connect( properties_, SIGNAL( ExercisePropertiesChanged() ), this, SLOT( OnExercisePropertiesChanged() ) );
     }
     mainBoxLayout->addWidget( properties_ );
-    profileLabel_->setShown( showProfile );
+    profileLabel_->setVisible( showProfile );
 
     controllers_.Register( *this );
 }

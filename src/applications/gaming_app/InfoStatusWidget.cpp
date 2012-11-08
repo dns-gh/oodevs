@@ -356,7 +356,7 @@ void InfoStatusWidget::SetExperience( const HumanFactors& humans )
 void InfoStatusWidget::SetMorale( const HumanFactors& humans )
 {
     const E_UnitMorale morale = humans.GetMorale();
-    morale_->setShown( morale != eUnitMorale_Bon );
+    morale_->setVisible( morale != eUnitMorale_Bon );
     if( morale == eUnitMorale_Fanatique )
         morale_->setPixmap( QPixmap::fromImage( boost_ ) );
     else if( morale == eUnitMorale_Moyen )
@@ -373,7 +373,7 @@ void InfoStatusWidget::SetMorale( const HumanFactors& humans )
 void InfoStatusWidget::SetTiredness( const HumanFactors& humans )
 {
     const E_UnitTiredness tiredness = humans.GetTiredness();
-    tiredness_->setShown( tiredness != eUnitTiredness_Normal );
+    tiredness_->setVisible( tiredness != eUnitTiredness_Normal );
     if( tiredness == eUnitTiredness_Fatigue )
         tiredness_->setPixmap( QPixmap::fromImage( warning_ ) );
     else if( tiredness == eUnitTiredness_Epuise )
@@ -387,10 +387,10 @@ void InfoStatusWidget::SetTiredness( const HumanFactors& humans )
 // -----------------------------------------------------------------------------
 void InfoStatusWidget::SetReinforcements( const Reinforcements& reinforcements )
 {
-    reinforcing_->setShown( reinforcements.reinforced_ != 0 );
+    reinforcing_->setVisible( reinforcements.reinforced_ != 0 );
     if( reinforcements.reinforced_ )
         QToolTip::add( reinforcing_, tr( "Reinforcing unit '%1'." ).arg( reinforcements.reinforced_->GetName() ) );
-    reinforced_->setShown( !reinforcements.reinforcements_.empty() );
+    reinforced_->setVisible( !reinforcements.reinforcements_.empty() );
     if( !reinforcements.reinforcements_.empty() )
     {
         QString tip = tr( "Reinforced by: " );

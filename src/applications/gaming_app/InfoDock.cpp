@@ -44,5 +44,5 @@ InfoDock::~InfoDock()
 // -----------------------------------------------------------------------------
 void InfoDock::NotifySelected( const kernel::Entity_ABC* /*entity*/ )
 {
-//    setShown( entity ); // $$$$ SBO 2007-02-08: à voir
+//    setVisible( entity ); // $$$$ SBO 2007-02-08: à voir
 }

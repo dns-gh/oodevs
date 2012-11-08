@@ -50,7 +50,7 @@ void ActionProperties::NotifySelected( const actions::Action_ABC* action )
     if( selected_ != action )
     {
         selected_ = action;
-        setShown( selected_ != 0 );
+        setVisible( selected_ != 0 );
         if( selected_ )
             selected_->Interface().Apply( &kernel::Displayable_ABC::DisplayInSummary, *display_ );
     }

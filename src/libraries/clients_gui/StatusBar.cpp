@@ -156,7 +156,7 @@ void StatusBar::ParameterSelected( int index )
     if( field )
     {
         pMenu_->setItemChecked( index, field->isHidden() );
-        field->setShown( field->isHidden() );
+        field->setVisible( field->isHidden() );
     }
 }
 

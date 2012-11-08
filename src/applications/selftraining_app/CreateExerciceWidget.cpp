@@ -79,7 +79,7 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
             sessionList_ = new QListWidget();
             sessionList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
             connect( sessionList_, SIGNAL( 	currentTextChanged( const QString& ) ), SLOT( OnSessionSelected( const QString& ) ) );
-               
+
             QVBoxLayout* sessionLayout = new QVBoxLayout();
             sessionLayout->setSpacing( 5 );
             sessionLayout->addWidget( sessionLabel_ );
@@ -88,7 +88,7 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
             //checkpoint panel
             checkpointList_ = new frontend::CheckpointList( config );
             connect( checkpointList_, SIGNAL( Select( const QString& ) ), SLOT( OnCheckpointSelected( const QString& ) ) );
-            
+
             //checkpoint general selection panel
             checkpointCopyPanel_ = new QWidget();
             QHBoxLayout* checkpointCopyPanelLayout = new QHBoxLayout( checkpointCopyPanel_ );
@@ -112,7 +112,6 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
         saveAslayout->addWidget( copyLabel_ );
         saveAslayout->addWidget( exerciseList_ );
         saveAslayout->addWidget( copyTab_ );
-
     }
     //global layout
     QVBoxLayout* layout = new QVBoxLayout( this );
@@ -191,7 +190,7 @@ void CreateExerciceWidget::UpdateExercises()
     }
     if( editModelList_->count() == 2 )
         editModelList_->setCurrentIndex( 1 );
-    editModelList_->setShown( editModelList_->count() > 2 );
+    editModelList_->setVisible( editModelList_->count() > 2 );
 
     exerciseList_->clear();
     exerciseList_->addItems( frontend::commands::ListExercises( config_ ) );
@@ -250,7 +249,7 @@ bool CreateExerciceWidget::EnableEditButton()
 {
     return editTerrainList_->currentIndex() > 0 && editModelList_->currentIndex() > 0
         && !editName_->text().isEmpty() && !page_.ExerciceExists( editName_->text() )
-        && ( !saveAsGroupBox_->isChecked() 
+        && ( !saveAsGroupBox_->isChecked()
             || ( exerciseList_->currentItem() != 0 && contentList_->isVisible()
             || ( checkpointCopyPanel_->isVisible() && !checkpoint_.empty() ) ) );
 }

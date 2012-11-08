@@ -90,7 +90,7 @@ void ReconnectLoginDialog::OnSelectItem()
 {
     if( UserItem* user = static_cast< UserItem* >(  users_->currentItem() ) )
     {
-        widget_->setShown( user->RequiresPassword() );
+        widget_->setVisible( user->RequiresPassword() );
         password_->clear();
     }
 }

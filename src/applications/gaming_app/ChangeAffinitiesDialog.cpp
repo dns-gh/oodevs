@@ -35,7 +35,7 @@ ChangeAffinitiesDialog::ChangeAffinitiesDialog( QWidget* pParent, kernel::Contro
     checkBox_ = new QCheckBox( tools::translate( "AffinitiesDialog", "Activate" ), this );
     connect( checkBox_, SIGNAL( toggled( bool ) ), this, SLOT( Activated( bool ) ) );
     checkBox_->setChecked( false );
-    checkBox_->setShown( optional );
+    checkBox_->setVisible( optional );
     mainLayout_->addWidget( checkBox_ );
     buttonLayout_ = new Q3HBox( this );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), buttonLayout_ );

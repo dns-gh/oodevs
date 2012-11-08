@@ -74,7 +74,7 @@ void InfoDialog_Base::OnToggle( bool state )
     if( !disconnected_ )
     {
         disconnected_ = true;
-        setShown( state );
+        setVisible( state );
     }
     disconnected_ = false;
 }

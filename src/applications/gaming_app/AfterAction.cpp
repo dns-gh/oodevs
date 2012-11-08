@@ -90,7 +90,7 @@ void AfterAction::NotifyUpdated( const Services& services )
         aar_ = aarDock_->isShown();
     firstUpdate_ = false;
     const bool isAar = services.HasService< aar::Service >() && services.HasService< replay::Service >();
-    aarDock_->setShown( aar_ && isAar );
+    aarDock_->setVisible( aar_ && isAar );
     if( isAar )
         setProperty( "notAppropriate", QVariant() );
     else

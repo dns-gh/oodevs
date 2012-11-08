@@ -56,10 +56,10 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         activityLabel->hide();
         activityTime_->hide();
 
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activationLabel, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activationTime_, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activityLabel, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activityTime_, SLOT( setShown( bool ) ) );
+        connect( this, SIGNAL( ToggleActivable( bool ) ), activationLabel, SLOT( setVisible( bool ) ) );
+        connect( this, SIGNAL( ToggleActivable( bool ) ), activationTime_, SLOT( setVisible( bool ) ) );
+        connect( this, SIGNAL( ToggleActivable( bool ) ), activityLabel, SLOT( setVisible( bool ) ) );
+        connect( this, SIGNAL( ToggleActivable( bool ) ), activityTime_, SLOT( setVisible( bool ) ) );
     }
     connect( types_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
 }

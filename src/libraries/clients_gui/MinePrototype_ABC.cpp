@@ -58,8 +58,8 @@ bool MinePrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 // -----------------------------------------------------------------------------
 void MinePrototype_ABC::SetMineField( bool minefield )
 {
-    densityLabel_->setShown( minefield );
-    density_->setShown( minefield );
+    densityLabel_->setVisible( minefield );
+    density_->setVisible( minefield );
 }
 
 // -----------------------------------------------------------------------------

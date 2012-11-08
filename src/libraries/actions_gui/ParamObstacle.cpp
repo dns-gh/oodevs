@@ -147,8 +147,8 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
         obstacleTypeCombo_ = new ::gui::ValuedComboBox< unsigned int >( parent );
         for( unsigned int i = 0; i < eNbrDemolitionTargetType ; ++i )
             obstacleTypeCombo_->AddItem( tools::ToString( ( E_DemolitionTargetType)i ), i );
-        connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setShown( bool ) ) );
-        connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypeCombo_, SLOT( setShown( bool ) ) );
+        connect( this, SIGNAL( ToggleReservable( bool ) ), label, SLOT( setVisible( bool ) ) );
+        connect( this, SIGNAL( ToggleReservable( bool ) ), obstacleTypeCombo_, SLOT( setVisible( bool ) ) );
         layout->addWidget( label );
         layout->addWidget( obstacleTypeCombo_ );
     }
@@ -193,7 +193,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
         QGroupBox* activationTimeBox = static_cast< QGroupBox* >( activationTime_->BuildInterface( parent ) );
         activationTimeBox->layout()->setMargin( 0 );
         activationTimeBox->layout()->setSpacing( 0 );
-        layout->addWidget( activationTimeBox );        
+        layout->addWidget( activationTimeBox );
     }
 
     // Altitude modifier

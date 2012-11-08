@@ -121,7 +121,7 @@ void SuccessFactorActionItem::OnTypeChanged()
             AddParameter( parameter.GetName(), parameter.GetDefault() );
         }
     }
-    parameters_->setShown( !editors_.empty() );
+    parameters_->setVisible( !editors_.empty() );
 }
 
 // -----------------------------------------------------------------------------

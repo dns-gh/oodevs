@@ -65,7 +65,7 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, QWidget* granParent, co
             connect( modelList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
         }
     }
-    setShown( briefing || models );
+    setVisible( briefing || models );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ void ExerciseProperties::Update()
         }
         if( modelList_->count() == 2 )
             modelList_->setCurrentItem( 1 );
-        modelList_->setShown( modelList_->count() > 1 );
+        modelList_->setVisible( modelList_->count() > 1 );
     }
 }
 
@@ -207,7 +207,7 @@ void ExerciseProperties::ModelChanged()
 // -----------------------------------------------------------------------------
 bool ExerciseProperties::Commit( const frontend::Exercise_ABC& exercise )
 {
-    // Be sure to commit if mismatched terrain or data, even if no changes has occured 
+    // Be sure to commit if mismatched terrain or data, even if no changes has occured
     if( terrainList_ && terrainList_->currentItem() > 0 && terrainList_->currentText().toAscii().constData() != currentTerrain_ )
     {
         MessageDialog message( parent_, tools::translate( "ExerciseProperties", "Warning" ), tools::translate( "ExerciseProperties", "The selected terrain is not the one referenced by the selected exercise.\nDo really you want to replace it ?" ), QMessageBox::Yes, QMessageBox::No );

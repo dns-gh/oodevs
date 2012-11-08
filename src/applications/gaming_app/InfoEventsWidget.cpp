@@ -131,7 +131,7 @@ QLabel* InfoEventsWidget::CreateEvent( QWidget* parent, const QPixmap& pixmap, c
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::ToggleEvent( const std::string& event, bool toggle )
 {
-    events_[event]->setShown( toggle );
+    events_[event]->setVisible( toggle );
 }
 
 // -----------------------------------------------------------------------------
