@@ -813,16 +813,15 @@ void ADN_ListView::FillSheetFromItem( QStandardItem* qItem, BasicExcelWorksheet&
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ListView::eventFilter
-// Created: ABR 2012-03-09
+// Name: ADN_Table::mousePressEvent
+// Created: ABR 2012-11-07
 // -----------------------------------------------------------------------------
-bool ADN_ListView::eventFilter( QObject * watched, QEvent * event )
+void ADN_ListView::mousePressEvent( QMouseEvent* event )
 {
-    // ???
-    if( QMouseEvent* mouseEvent = dynamic_cast< QMouseEvent* >( event ) )
-        if( mouseEvent && ( mouseEvent->button() == Qt::XButton1 || mouseEvent->button() == Qt::XButton2 ) )
-            return false;
-    return RichTreeView::eventFilter( watched, event );
+    if( event && ( event->button() == Qt::XButton1 || event->button() == Qt::XButton2 ) )
+        event->ignore();
+    else
+        gui::RichTreeView::mousePressEvent( event );
 }
 
 // -----------------------------------------------------------------------------

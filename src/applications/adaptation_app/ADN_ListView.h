@@ -85,7 +85,7 @@ protected:
     virtual void ConnectItem( bool /*bConnect*/ ){}// = 0;
 
     void keyReleaseEvent( QKeyEvent* pEvent );
-    virtual bool eventFilter( QObject* watched, QEvent* event );
+    virtual void mousePressEvent( QMouseEvent* event );
     virtual void contextMenuEvent( QContextMenuEvent* event );
 
     virtual void OnContextMenu( const QPoint& pt );
