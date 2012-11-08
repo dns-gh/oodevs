@@ -37,10 +37,10 @@ BOOST_AUTO_TEST_CASE( extract_information )
     manager.Initialize( BOOST_RESOLVE( "propagation.xml" ) );
     CheckPath( manager.GetProjectionFile(), BOOST_RESOLVE( "projection.prj" ) );
 
-    BOOST_CHECK( manager.GetCurrentFiles( "20100901T121500" ).empty() );
+    BOOST_CHECK( manager.GetFiles( "20100901T121500" ).empty() );
 
-    CheckVector( manager.GetCurrentFiles( "20100901T122100" ), boost::assign::list_of( BOOST_RESOLVE( "fileA" ) ) );
-    CheckVector( manager.GetCurrentFiles( "20100901T122900" ), boost::assign::list_of( BOOST_RESOLVE( "fileA" ) ) );
-    CheckVector( manager.GetCurrentFiles( "20100901T123000" ), boost::assign::list_of( BOOST_RESOLVE( "fileB" ) ) );
-    CheckVector( manager.GetCurrentFiles( "20100901T125100" ), boost::assign::list_of( BOOST_RESOLVE( "fileC" ) )( BOOST_RESOLVE( "fileD" ) ) );
+    CheckVector( manager.GetFiles( "20100901T122100" ), boost::assign::list_of( BOOST_RESOLVE( "fileA" ) ) );
+    BOOST_CHECK( manager.GetFiles( "20100901T122900" ).empty() );
+    CheckVector( manager.GetFiles( "20100901T123000" ), boost::assign::list_of( BOOST_RESOLVE( "fileB" ) ) );
+    CheckVector( manager.GetFiles( "20100901T125100" ), boost::assign::list_of( BOOST_RESOLVE( "fileC" ) )( BOOST_RESOLVE( "fileD" ) ) );
 }
