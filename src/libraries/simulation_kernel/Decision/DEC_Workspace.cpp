@@ -166,7 +166,7 @@ void DEC_Workspace::LoadDIA( MIL_Config& config, xml::xistream& xis )
 {
     std::string decisionalVersion;
     xis >> xml::start( "decisional" )
-        >> xml::attribute( "model-version", decisionalVersion );
+        >> xml::optional >> xml::attribute( "model-version", decisionalVersion );
 
     const std::string runtimeVersion = tools::AppProjectVersion();
     if( !tools::CheckVersion( decisionalVersion, runtimeVersion ) )
