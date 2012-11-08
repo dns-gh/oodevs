@@ -48,7 +48,7 @@ public:
     //! @name Operations
     //@{
     void Initialize( const std::string& config );
-    T_Files GetCurrentFiles( const std::string& time ) const;
+    T_Files GetFiles( const std::string& time );
     const std::string& GetProjectionFile() const;
     std::string GetColor( float value ) const;
     //@}
@@ -66,6 +66,7 @@ private:
     std::string projection_;
     T_Colors colors_;
     T_Schedule schedule_;
+    T_Files currentFiles_;
     //@}
 };
 

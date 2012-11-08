@@ -13,6 +13,7 @@
 #include "Propagation.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
+#include "propagation/PropagationManager.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -51,34 +52,19 @@ void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
         pManager_->Initialize( message.attributes().propagation().model() );
 }
 
-namespace
-{
-    bool Compare( const std::vector< std::string >& lhs, const std::vector< std::string >& rhs )
-    {
-        if( lhs.size() != rhs.size() )
-            return false;
-        for( std::size_t i = 0; i < rhs.size(); ++i )
-            if( lhs[ i ] != rhs[ i ] )
-                return false;
-        return true;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PropagationAttribute::NotifyUpdated
 // Created: LGY 2012-10-16
 // -----------------------------------------------------------------------------
 void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
 {
-    PropagationManager::T_Files files = pManager_->GetCurrentFiles( simulation.GetDateTime()
+    PropagationManager::T_Files files = pManager_->GetFiles( simulation.GetDateTime()
                                                             .toString(  "yyyyMMdd'T'HHmmss" ).toStdString() );
-
-    if( ! Compare( files, currentFiles_ ) )
+    if( ! files.empty() )
     {
         propagations_.clear();
         for( std::size_t i = 0; i < files.size(); ++i )
             propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( files[ i ], *pManager_, converter_ ) ) );
-        currentFiles_ = files;
     }
 }
 

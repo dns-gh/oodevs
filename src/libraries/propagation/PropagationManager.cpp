@@ -91,18 +91,36 @@ const std::string& PropagationManager::GetProjectionFile() const
     return projection_;
 }
 
+namespace
+{
+    bool Compare( const std::vector< std::string >& lhs, const std::vector< std::string >& rhs )
+    {
+        if( lhs.size() != rhs.size() )
+            return false;
+        for( std::size_t i = 0; i < rhs.size(); ++i )
+            if( lhs[ i ] != rhs[ i ] )
+                return false;
+        return true;
+    }
+}
+
 // -----------------------------------------------------------------------------
-// Name: PropagationManager::GetCurrentFiles
+// Name: PropagationManager::GetFiles
 // Created: LGY 2012-11-07
 // -----------------------------------------------------------------------------
-PropagationManager::T_Files PropagationManager::GetCurrentFiles( const std::string& time ) const
+PropagationManager::T_Files PropagationManager::GetFiles( const std::string& time )
 {
     const boost::posix_time::ptime ptime( boost::posix_time::from_iso_string( time ) );
     T_Files files;
     for( CIT_Schedule it = schedule_.begin(); it != schedule_.end(); ++it )
         if( ptime >= it->first )
             files = it->second;
-    return files;
+    if( ! Compare( files, currentFiles_ ) )
+    {
+        currentFiles_ = files;
+        return files;
+    }
+    return T_Files();
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,6 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "propagation/PropagationManager.h"
 #include "tools/ElementObserver_ABC.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_array.hpp>
@@ -32,6 +31,7 @@ namespace kernel
 
 class Simulation;
 class Propagation;
+class PropagationManager;
 
 // =============================================================================
 /** @class  PropagationAttribute
@@ -84,7 +84,6 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     std::auto_ptr< PropagationManager > pManager_;
     T_Propagations propagations_;
-    PropagationManager::T_Files currentFiles_;
     //@}
 };
 
