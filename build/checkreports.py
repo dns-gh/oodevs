@@ -103,13 +103,17 @@ def parsecpp(ui, swordpath):
 
 def parseluaids(ui, path):
     """Parse report identifiers defined in Lua."""
-    relua = re.compile(r'^\s*(eRC_\S+)\s*=\s*(\d+)')
+    relua = re.compile(r'^\s*(eRC_\S+|eNbr)\s*=\s*(\d+)')
     rids = {}
     rnames = {}
     result = 0
     for line in file(path):
+        line = line.strip()
         m = relua.search(line)
         if not m:
+            if line and not line.startswith('--'):
+                ui.error('error: unknown lua line:\n    %s\n' % line)
+                result = 1
             continue
         rname, rid = m.group(1, 2)
         rid = int(rid)
@@ -121,6 +125,8 @@ def parseluaids(ui, path):
             ui.error('error: %s/%d collides with %s/%d\n' % (rname, rid,
                 rids[rid], rid))
             result = 1
+        if rname == 'eNbr':
+            continue
         rnames[rname] = rid
         rids[rid] = rname
     return result, rnames
@@ -143,6 +149,7 @@ def parseintegration(ui, intpath):
             rids.update(parseintegrationfile(ui, p))
     result = 0
     if not rids:
+        ui.error('error: no report identifier found in integration layer\n')
         result = 1
     return result, rids
 
@@ -213,6 +220,15 @@ def checkluacpp(ui, luaids, cppids):
             result = 1
     return result
 
+def dumpusedreports(ui, intids, cppids, path):
+    reports = dict(intids)
+    reports.update(cppids)
+    reports = [(v,k) for k,v in reports.iteritems()]
+    fp = file(path, 'wb')
+    for i, n in sorted(reports):
+        fp.write('%d\t%s\n' % (i, n))
+    fp.close()
+
 if __name__ == '__main__':
     ui = Ui()
     swordpath = sys.argv[1]
@@ -258,5 +274,6 @@ if __name__ == '__main__':
                 set(intids.values())):
             result = 1
 
+    dumpusedreports(ui, intids, cppids, 'usedreports.txt')
     sys.exit(result)
 
