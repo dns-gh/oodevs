@@ -1643,9 +1643,18 @@
         <cmake_build target="all"/>
     </target>
 
-    <target name="cmake.test">
+    <target name="cmake.unit_tests">
         <cmake_test/>
     </target>
+
+    <target name="cmake.test" depends="cmake.unit_tests
+        ,adaptation_test
+        ,app_test
+        ,checkpoint_test
+        ,data_migrations_test
+        ,exercises_test
+        ,scripts_test
+        "/>
 
     <target name="cmake.all" depends="cmake.update,cmake.configure,cmake.build,cmake.test"/>
 
