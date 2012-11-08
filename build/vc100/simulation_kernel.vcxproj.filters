@@ -2649,6 +2649,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\Brain.cpp">
       <Filter>Source Files\Decision</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Humans\PHY_HumanState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
