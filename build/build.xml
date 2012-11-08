@@ -1253,7 +1253,9 @@
     <target name="app_test" description="check whether gui applications start properly">
         <check-gui app="adaptation_app"/>
         <check-gui app="preparation_app"/>
+        <!--
         <check-gui app="selftraining_app"/>
+        -->
         <check-gui app="gaming_app">
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=worldwide/Egypt"/>
@@ -1266,10 +1268,12 @@
             <arg value="--dispatcher-port=${test.portnumber}"/>
             <arg value="--test"/>
         </check-app>
+        <!--
         <check-app app="launcher_app"/>
         <check-app app="launcher_test_app">
-            <arg value="--test"/>
+            <arg value="-test"/>
         </check-app>
+        -->
         <check-app app="replayer_app">
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=worldwide/Egypt"/>
