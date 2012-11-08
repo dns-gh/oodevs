@@ -2955,12 +2955,12 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">Iluminación de día:</translation>
     </message>
     <message>
-        <source>Night lighting:</source>
-        <translation type="unfinished">Iluminación nocturna:</translation>
-    </message>
-    <message>
         <source>Weather parameters</source>
         <translation type="unfinished">Parámetros de clima</translation>
+    </message>
+    <message>
+        <source>Moon:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

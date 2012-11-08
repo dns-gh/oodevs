@@ -44,11 +44,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
         sunrise_ = new QTimeEdit( group );
         new QLabel( tr( "Sunset:" ), group );
         sunset_ = new QTimeEdit( group );
-        new QLabel( tr( "Day lighting:" ), group );
-        dayLighting_ = new gui::ValuedComboBox< E_DayLightingType >( group );
-        for( int i = 0; i < static_cast< int >( eNbrDayLightingType ); ++i )
-            dayLighting_->AddItem( tools::ToDisplayedString( static_cast< E_DayLightingType>( i ) ), static_cast< E_DayLightingType>( i ) );
-        new QLabel( tr( "Night lighting:" ), group );
+        new QLabel( tr( "Moon:" ), group );
         nightLighting_ = new gui::ValuedComboBox< E_NightLightingType >( group );
         for( int i = 0; i < static_cast< int >( eNbrNightLightingType ); ++i )
             nightLighting_->AddItem( tools::ToDisplayedString( static_cast< E_NightLightingType>( i ) ), static_cast< E_NightLightingType>( i ) );
@@ -56,6 +52,11 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
 
     // Global Weather
     globalWidget_ = new gui::WeatherWidget( globalLayout_, tr( "Weather parameters" ) );
+    new QLabel( tr( "Day lighting:" ), globalWidget_ );
+    dayLighting_ = new gui::ValuedComboBox< E_DayLightingType >( globalWidget_ );
+    for( int i = 0; i < static_cast< int >( eNbrDayLightingType ); ++i )
+        dayLighting_->AddItem( tools::ToDisplayedString( static_cast< E_DayLightingType>( i ) ), static_cast< E_DayLightingType>( i ) );
+
     // Local Weather
     localWidget_ = new gui::WeatherWidget( localLayout_, tr( "Weather parameters" ) );
     CreateLocalParameters();

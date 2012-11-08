@@ -2960,12 +2960,12 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Eclairage de jour:</translation>
     </message>
     <message>
-        <source>Night lighting:</source>
-        <translation>Eclairage de nuit:</translation>
-    </message>
-    <message>
         <source>Weather parameters</source>
         <translation>Paramètres météo</translation>
+    </message>
+    <message>
+        <source>Moon:</source>
+        <translation>Lune:</translation>
     </message>
 </context>
 <context>
