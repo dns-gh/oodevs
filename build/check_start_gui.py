@@ -12,7 +12,7 @@ from ctypes.wintypes import *
 _WNDENUMPROC = ctypes.WINFUNCTYPE(BOOL, HANDLE, LPARAM)
 _WM_CLOSE = 0x0010
 
-TIMEOUT_S = 30
+TIMEOUT_S = 60
 TIMESTEP_MS = 100
 
 parser = optparse.OptionParser(
