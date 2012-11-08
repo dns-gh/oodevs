@@ -31,7 +31,7 @@ def writecolors( config ):
     writecolor( colors, '500', '#FF0000')
     config.append( colors )
 
-def writeprojection( confign, projectionfile):
+def writeprojection( config, projectionfile):
     if projectionfile:
         projection = xml.Element('projection')
         projection.text = projectionfile
