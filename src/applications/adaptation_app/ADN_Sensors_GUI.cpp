@@ -67,9 +67,9 @@ public:
             delegate_.AddDoubleSpinBoxOnColumn( col, 0, 1, 0.001, 3 );
             delegate_.AddColorOnColumn( col, 0, 1 );
         }
-        //pTable->AddBoldGridCol( 1 );//migration QT4 comming soon for delimitation
-        //pTable->AddBoldGridCol( 6 );//migration QT4 comming soon for delimitation
-        //pTable->AddBoldGridRow( 2 );//migration QT4 comming soon for delimitation
+        AddBoldGridCol( 1 );
+        AddBoldGridCol( 6 );
+        AddBoldGridRow( 2 );
 
         int nCol = 6;
         AddItem( 0 , nCol, 1, sizesSize, this, tools::translate( "ADN_Sensors_GUI", "Target size" ) );
@@ -90,7 +90,7 @@ public:
     template< typename T >
     void AddHeaders( int& nCol, const char* szName, const std::string& (*pConverter)(T, ENT_Tr_ABC::E_Conversion), uint nVectorSize )
     {
-        //AddBoldGridCol( nCol );//migration QT4 comming soon for delimitation
+        AddBoldGridCol( nCol );
         AddItem( 0, nCol, 1, nVectorSize, this, szName );
         for( unsigned int n = 0; n < nVectorSize; ++n )
             AddItem( 1, nCol + n, this, (*pConverter)( static_cast< T >( n ), ENT_Tr_ABC::eToTr ).c_str() );
@@ -99,7 +99,7 @@ public:
 
     void AddHeaders( int& nCol, const char* szName, const ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials )
     {
-        //AddBoldGridCol( nCol );
+        AddBoldGridCol( nCol );
         AddItem( 0, nCol, 1, static_cast< int >( materials.size() ), this, szName );
         unsigned int n = 0;
         for( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = materials.begin(); it != materials.end(); ++it, ++n )
@@ -472,6 +472,7 @@ namespace
             AddItem( 0, 3, 1, eNbrUnitPosture, data, tools::translate( "ADN_Sensors_GUI", "Stance" ) );
             for( unsigned int n = 0; n < eNbrUnitPosture; ++n )
                 AddItem( 1, 3 + n, data, ENT_Tr::ConvertFromUnitPosture( static_cast< E_UnitPosture >( n ), ENT_Tr::eToTr ).c_str() );
+            AddBoldGridCol( 3 );
         }
         virtual ~ADN_ObjectDetection_Table() {}
         //@}
@@ -485,7 +486,6 @@ namespace
 ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
 {
     ADN_Table* pTable = new ADN_ObjectDetection_Table( strClassName_ + "_ObjectDetection", &data_.vSensors_ );
-    //pTable->AddBoldGridCol( 3 );
     // Fill the table
     int nRow = 2;
     for( ADN_Sensors_Data::IT_SensorsInfos_Vector it = data_.vSensors_.begin(); it != data_.vSensors_.end(); ++it )
@@ -495,7 +495,7 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
             continue;
 
         pTable->setNumRows( static_cast< int >( nRow + sensor.vTargets_.size() ) );
-        //pTable->AddBoldGridRow( nRow );
+        pTable->AddBoldGridRow( nRow );
         pTable->AddItem( nRow, 0, static_cast< int >( sensor.vTargets_.size() ), 1, &sensor, sensor.strName_.GetData().c_str() );
 
         int nSubRow = 0;

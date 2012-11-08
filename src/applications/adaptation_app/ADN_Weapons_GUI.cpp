@@ -431,7 +431,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
             continue;
         ADN_Weapons_Data::T_PhSizeInfosVector& phsSizeInfos = ( *it )->phs_;
         pTable->setNumRows( pTable->numRows() + static_cast< int >( phsSizeInfos.size() ) );
-        //pTable->AddBoldGridRow( nRow );
+        pTable->AddBoldGridRow( nRow );
         pTable->AddItem( nRow, 0, static_cast< int >( phsSizeInfos.size() ), 1, *it, ( *it )->strName_.GetData().c_str() );
 
         int nSubRow = 0;

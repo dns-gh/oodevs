@@ -476,8 +476,8 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
 {
     ADN_Table* pTable = new ADN_Speeds_Table( strClassName_ + "_ComposanteSpeeds" );
     pTable->setNumRows( static_cast< int >( data_.vComposantes_.size() ) );
-    //pTable->AddBoldGridCol( 1 );
-    //pTable->AddBoldGridRow( 1 );
+    pTable->AddBoldGridCol( 1 );
+    pTable->AddBoldGridRow( 1 );
 
     // Fill the table.
     int nRow = 0;

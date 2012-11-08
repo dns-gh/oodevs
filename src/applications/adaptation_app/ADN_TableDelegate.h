@@ -24,7 +24,7 @@ class ADN_TableDelegate : public gui::CommonDelegate
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_TableDelegate( QObject* parent = 0 );
+             ADN_TableDelegate( QTableView* parent = 0 );
     virtual ~ADN_TableDelegate();
     //@}
 
@@ -64,12 +64,22 @@ public:
     unsigned int AddComboPtrInVector( int fromRow, int toRow, int fromCol, int toCol );
     //@}
 
+    //! @name boldIndexes
+    //@{
+    void AddBoldRowIndex( int row );
+    void AddBoldColumnIndex( int column );
+    std::set<int> GetBoldRowIndexes() const;
+    std::set<int> GetBoldColumnIndexes() const;
+    void SetGridPen( QPen gridPen );
+    //@}
+
 protected:
     //! @name Operations
     //@{
     virtual QWidget *createEditor( QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
     virtual void setEditorData( QWidget* editor, const QModelIndex& index ) const;
     virtual void setModelData( QWidget* editor, QAbstractItemModel* model, const QModelIndex& index ) const;
+    virtual void paint( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const;
     //@}
 
 private:
@@ -80,6 +90,9 @@ private:
     T_SimpleWidget delayEdits_;
     T_SimpleWidget timeEdits_;
     T_SimpleWidget comboPtrInVectors_;
+    QPen gridPen_;
+    std::set<int> boldGridRowIndexes_;
+    std::set<int> boldGridColIndexes_;
     //@}
 };
 

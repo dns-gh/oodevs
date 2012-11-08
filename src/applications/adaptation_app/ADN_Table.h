@@ -102,13 +102,6 @@ signals:
     void GoToRequested( const ADN_NavigationInfos::GoTo& );
     //@}
 
-private:
-    //! @name Types
-    //@{
-    typedef std::set<int>         T_IndexSet;
-    typedef T_IndexSet::iterator IT_IndexSet;
-    //@}
-
 protected:
     //! @name Member data
     //@{
@@ -116,8 +109,6 @@ protected:
     ADN_TableDelegate delegate_;
     QSortFilterProxyModel proxyModel_;
     ADN_NavigationInfos::GoTo goToInfo_;
-    T_IndexSet vBoldGridRowIndexes_;
-    T_IndexSet vBoldGridColIndexes_;
     //@}
 };
 

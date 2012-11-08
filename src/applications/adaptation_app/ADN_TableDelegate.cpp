@@ -23,10 +23,10 @@
 // Name: ADN_TableDelegate constructor
 // Created: ABR 2012-10-22
 // -----------------------------------------------------------------------------
-ADN_TableDelegate::ADN_TableDelegate( QObject* parent /*= 0*/ )
+ADN_TableDelegate::ADN_TableDelegate( QTableView* parent /*= 0*/ )
     : gui::CommonDelegate( parent )
 {
-    // NOTHING
+    gridPen_ = QPen( Qt::black, 2, Qt::SolidLine, Qt::RoundCap );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,6 +166,50 @@ unsigned int ADN_TableDelegate::AddComboPtrInVector( int fromRow, int toRow, int
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddNewRowIndex
+// Created: NPT 2012-11-08
+// -----------------------------------------------------------------------------
+void ADN_TableDelegate::AddBoldRowIndex( int row )
+{
+    boldGridRowIndexes_.insert( row );
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddNewColumnIndex
+// Created: NPT 2012-11-08
+// -----------------------------------------------------------------------------
+void ADN_TableDelegate::AddBoldColumnIndex( int column )
+{
+    boldGridColIndexes_.insert(  column );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::set<int> ADN_TableDelegate::GetRowIndexes
+// Created: NPT 2012-11-08
+// -----------------------------------------------------------------------------
+std::set<int> ADN_TableDelegate::GetBoldRowIndexes() const
+{
+    return boldGridRowIndexes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::set<int> ADN_TableDelegate::GetColumnIndexes
+// Created: NPT 2012-11-08
+// -----------------------------------------------------------------------------
+std::set<int> ADN_TableDelegate::GetBoldColumnIndexes() const
+{
+    return boldGridColIndexes_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::SetGridPen
+// Created: NPT 2012-11-08
+// -----------------------------------------------------------------------------
+void ADN_TableDelegate::SetGridPen( QPen gridPen )
+{
+    gridPen_ = gridPen;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_TableDelegate::createEditor
 // Created: ABR 2011-10-03
 // -----------------------------------------------------------------------------
@@ -279,4 +323,16 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnetor = &static_cast< ADN_TimeEdit* >( editor )->GetConnector();
     if( guiConnetor )
         guiConnetor->Disconnect( data );
+}
+
+void ADN_TableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    QItemDelegate::paint( painter, option, index );
+    QPen oldPen = painter->pen();
+    painter->setPen( gridPen_ );
+    if( boldGridRowIndexes_.find( index.row() ) != boldGridRowIndexes_.end() )
+        painter->drawLine( option.rect.topRight(), option.rect.topLeft() );
+    if( boldGridColIndexes_.find( index.column() )!= boldGridColIndexes_.end() )
+        painter->drawLine( option.rect.topLeft(), option.rect.bottomLeft () );
+    painter->setPen( oldPen );
 }

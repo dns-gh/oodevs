@@ -28,7 +28,7 @@ using namespace ExcelFormat;
 ADN_Table::ADN_Table( const QString& objectName, QWidget* pParent /*= 0*/ )
     : QTableView( pParent )
     , dataModel_( pParent )
-    , delegate_ ( pParent )
+    , delegate_ ( this )
 {
     Initialize( objectName );
 }
@@ -40,7 +40,7 @@ ADN_Table::ADN_Table( const QString& objectName, QWidget* pParent /*= 0*/ )
 ADN_Table::ADN_Table( const QString& objectName, ADN_Ref_ABC& vector, QWidget* pParent /*= 0*/ )
     : QTableView( pParent )
     , dataModel_( pParent )
-    , delegate_ ( pParent )
+    , delegate_ ( this )
 {
     Initialize( objectName );
 
@@ -55,7 +55,7 @@ ADN_Table::ADN_Table( const QString& objectName, ADN_Ref_ABC& vector, QWidget* p
 ADN_Table::ADN_Table( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
     : QTableView( pParent )
     , dataModel_( pParent )
-    , delegate_ ( pParent )
+    , delegate_ ( this )
 {
     Initialize( objectName );
 
@@ -305,7 +305,7 @@ void* ADN_Table::GetSelectedData() const
 // -----------------------------------------------------------------------------
 void ADN_Table::AddBoldGridRow( int nIndex )
 {
-    vBoldGridRowIndexes_.insert( nIndex );
+    delegate_.AddBoldRowIndex( nIndex );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,7 +314,7 @@ void ADN_Table::AddBoldGridRow( int nIndex )
 // -----------------------------------------------------------------------------
 void ADN_Table::AddBoldGridCol( int nIndex )
 {
-    vBoldGridColIndexes_.insert( nIndex );
+    delegate_.AddBoldColumnIndex( nIndex );
 }
 
 // -----------------------------------------------------------------------------
@@ -431,9 +431,9 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
                 right = EXCEL_LS_MEDIUM;
             if( row == dataModel_.rowCount() - 1 )
                 bottom = EXCEL_LS_MEDIUM;
-            if( vBoldGridRowIndexes_.find( row ) != vBoldGridRowIndexes_.end() )
+            if( delegate_.GetBoldRowIndexes().find( row ) != delegate_.GetBoldRowIndexes().end() )
                 top = EXCEL_LS_MEDIUM;
-            if( vBoldGridColIndexes_.find( col ) != vBoldGridColIndexes_.end() || col == 0 )
+            if( delegate_.GetBoldColumnIndexes().find( col ) != delegate_.GetBoldColumnIndexes().end() || col == 0 )
                 left = EXCEL_LS_MEDIUM;
             format.set_borderlines( left, right, top, bottom, EGA_BLACK, EGA_BLACK );
 
