@@ -163,7 +163,7 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
     // Pas de RC si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 )
-        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyRequest );
+        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_DemandeRavitaillementStocks );
     nTickRcStockSupplyQuerySent_ = nCurrentTick;
 }
 
@@ -204,7 +204,7 @@ void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logisti
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyCanceled );
+    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementStockAnnule );
     bStockSupplyNeeded_ = true; //$$ ..
     scheduledSupplies_.erase( supplyConsign );
 }
@@ -215,7 +215,7 @@ void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::OnSupplyDone( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyDone );
+    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementStockEffectue );
     scheduledSupplies_.erase( supplyConsign );
 }
 

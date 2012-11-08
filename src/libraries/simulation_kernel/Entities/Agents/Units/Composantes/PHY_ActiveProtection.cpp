@@ -134,7 +134,7 @@ bool PHY_ActiveProtection::CounterIndirectFire( const PHY_DotationCategory& cate
 {
     bool result = HasAmmo( pion ) ? ( !hardKill_ && MIL_Random::rand_oi( MIL_Random::eFire ) > GetCoefficient( category ) ) : false;
     if( result )
-        MIL_Report::PostEvent( pion, MIL_Report::eReport_ActiveProtectionCounter );
+        MIL_Report::PostEvent( pion, MIL_Report::eRC_ActiveProtectionCounter );
     return result;
 }
 
@@ -146,7 +146,7 @@ bool PHY_ActiveProtection::DestroyIndirectFire( const PHY_DotationCategory& cate
 {
     bool result = HasAmmo( pion ) ? ( hardKill_ && MIL_Random::rand_oi( MIL_Random::eFire ) > GetCoefficient( category ) ) : false;
     if( result )
-        MIL_Report::PostEvent( pion, MIL_Report::eReport_ActiveProtectionHardKill );
+        MIL_Report::PostEvent( pion, MIL_Report::eRC_ActiveProtectionHardKill );
     return result;
 }
 

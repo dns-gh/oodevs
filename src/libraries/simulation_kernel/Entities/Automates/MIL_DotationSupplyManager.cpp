@@ -138,7 +138,7 @@ void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCa
     // Pas de RC si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
-        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_DotationSupplyRequest );
+        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_DemandeRavitaillementDotations );
     nTickRcDotationSupplyQuerySent_ = nCurrentTick;
 }
 
@@ -201,7 +201,7 @@ void MIL_DotationSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logi
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_DotationSupplyCanceled );
+    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementDotationsAnnule );
     bDotationSupplyNeeded_ = true;
     scheduledSupplies_.erase( supplyConsign );
 }
@@ -212,7 +212,7 @@ void MIL_DotationSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logis
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::OnSupplyDone( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
-    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_DotationSupplyDone );
+    MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_RavitaillementDotationsEffectue );
     scheduledSupplies_.erase( supplyConsign );
 }
 

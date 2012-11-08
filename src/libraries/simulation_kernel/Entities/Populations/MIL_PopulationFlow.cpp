@@ -245,7 +245,7 @@ void MIL_PopulationFlow::Move( const MT_Vector2D& destination )
             if( pBlockingObject_ )
             {
                 const std::string name = MIL_ObjectLoader::GetLoader().GetType( pBlockingObject_->GetType().GetName() ).GetRealName();
-                SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
+                SendRC( MIL_Report::eRC_DifficultMovementProgression, name );
             }
         }
         bBlocked_ = true;
@@ -446,7 +446,7 @@ bool MIL_PopulationFlow::ManageObjectSplit()
     if( animatorAttribute )
     {
         for( AnimatorAttribute::CIT_AgentSet it = animatorAttribute->GetAnimators().begin(); it != animatorAttribute->GetAnimators().end(); ++it )
-            MIL_Report::PostEvent( **it, MIL_Report::eReport_InterventionAgainstPopulationStarted, GetAttitude().GetID() );
+            MIL_Report::PostEvent( **it, MIL_Report::eRC_DebutInterventionFaceAPopulation, GetAttitude().GetID() );
     }
     return true;
 }
@@ -567,7 +567,7 @@ double MIL_PopulationFlow::GetMaxSpeed() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendRC( int nReportID ) const
 {
-    MIL_Report::PostEvent( GetPopulation(), static_cast< MIL_Report::E_EngineReport >( nReportID ) ); //$$$
+    MIL_Report::PostEvent( GetPopulation(), static_cast< MIL_Report::E_DecisionalReport >( nReportID ) ); //$$$
 }
 
 // -----------------------------------------------------------------------------
@@ -576,7 +576,7 @@ void MIL_PopulationFlow::SendRC( int nReportID ) const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendRC( int nReportID, const std::string& name ) const
 {
-    MIL_Report::PostEvent( GetPopulation(), static_cast< MIL_Report::E_EngineReport >( nReportID ), name );
+    MIL_Report::PostEvent( GetPopulation(), static_cast< MIL_Report::E_DecisionalReport >( nReportID ), name );
 }
 
 // -----------------------------------------------------------------------------

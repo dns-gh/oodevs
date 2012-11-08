@@ -1143,7 +1143,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const UrbanObjectWrapper& object ) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
 {
-    MIL_Report::PostEvent( pion_, MIL_Report::eReport_IndirectFireObservation, flyingShell );
+    MIL_Report::PostEvent( pion_, MIL_Report::eRC_ObservationTirIndirect, flyingShell );
 }
 
 // -----------------------------------------------------------------------------

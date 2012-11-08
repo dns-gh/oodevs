@@ -596,9 +596,9 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
     {
         const PHY_RoleAction_MovingUnderground* roleUnderground = queryMaker_.RetrieveRole< PHY_RoleAction_MovingUnderground >();
         if( roleUnderground && roleUnderground->IsUnderground() )
-            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_NotActivatedUndergroundNetwork );
+            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eRC_NotActivatedUndergroundNetwork );
         else
-            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
+            queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eRC_TerrainDifficile );
     }
 
 #ifndef NDEBUG
@@ -680,7 +680,7 @@ void DEC_Agent_Path::ComputePath( boost::shared_ptr< DEC_Path_ABC > pPath )
 {
     if( !IsDestinationTrafficable() )
     {
-        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
+        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eRC_TerrainDifficile );
         Cancel();
     }
     else

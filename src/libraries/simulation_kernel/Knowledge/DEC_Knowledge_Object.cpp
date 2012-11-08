@@ -410,7 +410,7 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
         {
             boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateObjectKnowledge( shared_this ) );
             parameters.push_back( pParameter );
-            MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_DetectedObject, parameters );
+            MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_DetectedObject, parameters );
         }
     }
     // NB - Quand nPerceptionLevel vaut eNotPerceived => l'agent associé vient juste d'être perdu de vue

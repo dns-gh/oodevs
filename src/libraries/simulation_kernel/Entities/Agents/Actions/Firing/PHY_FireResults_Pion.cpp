@@ -84,10 +84,10 @@ void PHY_FireResults_Pion::DoSendReport( const T& entity, bool& rcSent ) const
 {
     if( entity.GetArmy().IsNeutral( firer_.GetArmy() ) == eTristate_True )
     {
-        MIL_Report::PostEvent( entity, MIL_Report::eReport_DamagesCausedByNeutralSide );
+        MIL_Report::PostEvent( entity, MIL_Report::eRC_DamagesCausedByNeutralSide );
         if( !rcSent )
         {
-            MIL_Report::PostEvent( firer_, MIL_Report::eReport_DamagesCausedToNeutralSide );
+            MIL_Report::PostEvent( firer_, MIL_Report::eRC_DamagesCausedToNeutralSide );
             rcSent = true;
         }
     }
@@ -136,8 +136,8 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
         unsigned int dead = damages.GetNbrKilledHumans();
         unsigned int wounded = damages.GetNbrWoundedHumans();
         unsigned int scattered = damages.GetNbrScatteredHumans();
-        MIL_Report::PostEvent( population, MIL_Report::eReport_ConfrontationWithPopulation, dead, wounded, scattered );
-        MIL_Report::PostEvent( firer_    , MIL_Report::eReport_ConfrontationWithPopulation, dead, wounded, scattered );
+        MIL_Report::PostEvent( population, MIL_Report::eRC_PopulationVictimeAffrontements, dead, wounded, scattered );
+        MIL_Report::PostEvent( firer_    , MIL_Report::eRC_PopulationVictimeAffrontements, dead, wounded, scattered );
     }
 }
 

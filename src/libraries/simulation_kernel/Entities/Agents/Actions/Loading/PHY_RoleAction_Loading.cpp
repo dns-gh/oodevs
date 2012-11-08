@@ -146,7 +146,7 @@ int PHY_RoleAction_Loading::Load()
 
     if( nState_ == eUnloading )
     {
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentInterrupted );
+        MIL_Report::PostEvent( pion_, MIL_Report::eRC_DisembarkmentInterrupted );
         nState_ = eNothing;
     }
     if( bIsLoaded_ )
@@ -161,7 +161,7 @@ int PHY_RoleAction_Loading::Load()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rLoadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eLoading;
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentStarted );
+        MIL_Report::PostEvent( pion_, MIL_Report::eRC_EmbarkmentStarted );
     }
 
     if( nState_ == eLoading )
@@ -169,7 +169,7 @@ int PHY_RoleAction_Loading::Load()
         if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentFinished );
+            MIL_Report::PostEvent( pion_, MIL_Report::eRC_EmbarkmentFinished );
             SetLoadedState();
             return eEnd;
         }
@@ -188,7 +188,7 @@ int PHY_RoleAction_Loading::Unload()
 
     if( nState_ == eLoading )
     {
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentInterrupted );
+        MIL_Report::PostEvent( pion_, MIL_Report::eRC_EmbarkmentInterrupted );
         nState_ = eNothing;
     }
     if( !bIsLoaded_ )
@@ -203,7 +203,7 @@ int PHY_RoleAction_Loading::Unload()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rUnloadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eUnloading;
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentStarted );
+        MIL_Report::PostEvent( pion_, MIL_Report::eRC_DisembarkmentStarted );
     }
 
     if( nState_ == eUnloading )
@@ -211,7 +211,7 @@ int PHY_RoleAction_Loading::Unload()
         if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
         {
             nState_      = eNothing;
-            MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentFinished );            SetUnloadedState();
+            MIL_Report::PostEvent( pion_, MIL_Report::eRC_DisembarkmentFinished );            SetUnloadedState();
             return eEnd;
         }
         return eRunning;

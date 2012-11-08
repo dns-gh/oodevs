@@ -1519,5 +1519,5 @@ void MIL_Automate::Serialize( sword::ParentEntity& message ) const
 // -----------------------------------------------------------------------------
 void MIL_Automate::NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const
 {
-    MIL_Report::PostEvent( *this, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
+    MIL_Report::PostEvent( *this, MIL_Report::eRC_AllocationConsentieBientotEpuisee, dotationCategory );
 }

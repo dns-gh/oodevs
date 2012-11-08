@@ -558,7 +558,7 @@ DEC_Decision_ABC* MIL_FragOrder::GetAgent() const
 // -----------------------------------------------------------------------------
 void MIL_FragOrder::Send( MIL_AgentPion& pion ) const
 {
-    MIL_Report::PostEvent( pion, MIL_Report::eReport_FragOrderReceived, type_.GetName() );
+    MIL_Report::PostEvent( pion, MIL_Report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_unit()->set_id( pion.GetID() );
     Send( message );
@@ -570,7 +570,7 @@ void MIL_FragOrder::Send( MIL_AgentPion& pion ) const
 // -----------------------------------------------------------------------------
 void MIL_FragOrder::Send( MIL_Automate& automat ) const
 {
-    MIL_Report::PostEvent( automat, MIL_Report::eReport_FragOrderReceived, type_.GetName() );
+    MIL_Report::PostEvent( automat, MIL_Report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_automat()->set_id( automat.GetID() );
     Send( message );
@@ -582,7 +582,7 @@ void MIL_FragOrder::Send( MIL_Automate& automat ) const
 // -----------------------------------------------------------------------------
 void MIL_FragOrder::Send( MIL_Population& population ) const
 {
-    MIL_Report::PostEvent( population, MIL_Report::eReport_FragOrderReceived, type_.GetName() );
+    MIL_Report::PostEvent( population, MIL_Report::eRC_FragOrderReceived, type_.GetName() );
     client::FragOrder message;
     message().mutable_tasker()->mutable_crowd()->set_id( population.GetID() );
     Send( message );

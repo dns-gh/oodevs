@@ -655,14 +655,14 @@ void DEC_LogisticFunctions::UndoLendComposantes( MIL_Agent_ABC& callerAgent, con
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion(), nNbrToGetBack, funcPredicate );
     if( nNbrGotBack == 0 )
-        MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingImpossible );
+        MIL_Report::PostEvent( callerAgent, MIL_Report::eRC_RecuperationMaterielPreteImpossible );
     else
     {
-        MIL_Report::PostEvent( pTarget->GetPion(), MIL_Report::eReport_EquipmentLoanGivenBack );
+        MIL_Report::PostEvent( pTarget->GetPion(), MIL_Report::eRC_MaterielRendu );
         if( nNbrGotBack < nNbrToGetBack )
-            MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingPartiallyDone );
+            MIL_Report::PostEvent( callerAgent, MIL_Report::eRC_RecuperationMaterielPretePartiellementEffectuee );
         else
-            MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingDone );
+            MIL_Report::PostEvent( callerAgent, MIL_Report::eRC_RecuperationMaterielPreteEffectuee );
     }
 }
 

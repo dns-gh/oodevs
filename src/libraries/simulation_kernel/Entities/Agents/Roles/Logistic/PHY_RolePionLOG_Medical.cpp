@@ -827,11 +827,11 @@ void PHY_RolePionLOG_Medical::StartUsingForLogistic( PHY_ComposantePion& composa
     bHasChanged_ = true;
     composante.StartUsingForLogistic();
     if( PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached( rEvacuationRatio, GetAvailabilityRatio( evacuationUsePred ) ) )
-        MIL_Report::PostEvent<MIL_Agent_ABC>( pion_, MIL_Report::eReport_EvacuationResourcesLevelReached );
+        MIL_Report::PostEvent<MIL_Agent_ABC>( pion_, MIL_Report::eRC_AlerteDisponibiliteMoyensReleve );
     if( PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached( rCollectionRatio, GetAvailabilityRatio( collectionUsePred ) ) )
-        MIL_Report::PostEvent<MIL_Agent_ABC>( pion_, MIL_Report::eReport_CollectionResourcesLevelReached );
+        MIL_Report::PostEvent<MIL_Agent_ABC>( pion_, MIL_Report::eRC_AlerteDisponibiliteMoyensRamassage );
     if( PHY_MedicalResourcesAlarms::IsDoctorResourcesLevelReached( rDoctorsRatio, GetAvailabilityRatio( doctorUsePred ) ) )
-        MIL_Report::PostEvent<MIL_Agent_ABC>( pion_, MIL_Report::eReport_DoctorResourcesLevelReached );
+        MIL_Report::PostEvent<MIL_Agent_ABC>( pion_, MIL_Report::eRC_AlerteDisponibiliteMedecins );
 }
 
 // -----------------------------------------------------------------------------

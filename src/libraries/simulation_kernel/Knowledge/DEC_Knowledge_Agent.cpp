@@ -329,29 +329,29 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     if( bMaxPerceptionLevelUpdated_ && !IsDead() && &perception.GetAgentPerceiving() != &perception.GetAgentPerceived() )
     {
         if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ )
-            MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_DetectedUnit );
+            MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_DetectedUnit );
         else if( const MIL_Army_ABC* army = GetArmy() )
         {
             if( pArmyKnowing_->IsAFriend( *army ) == eTristate_True )
             {
                 if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
-                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_FriendUnitRecognized );
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_FriendUnitRecognized );
                 else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_FriendUnitIdentified );
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_FriendUnitIdentified );
             }
             else if( pArmyKnowing_->IsAnEnemy( *army ) == eTristate_True )
             {
                 if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
-                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_EnemyUnitRecognized );
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_EnemyUnitRecognized );
                 else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_EnemyUnitIdentified );
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_EnemyUnitIdentified );
             }
             else if( pArmyKnowing_->IsNeutral( *army ) == eTristate_True )
             {
                 if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
-                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_NeutralUnitRecognized );
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_NeutralUnitRecognized );
                 else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eReport_NeutralUnitIdentified );
+                    MIL_Report::PostEvent( perception.GetAgentPerceiving(), MIL_Report::eRC_NeutralUnitIdentified );
             }
         }
     }

@@ -178,8 +178,8 @@ void LodgingAttribute::ManageResident( MIL_AgentPion& pion, MIL_AgentPion& trans
 
     if ( capacity_ <= nbrResidents )
     {
-        MIL_Report::PostEvent( pion, MIL_Report::eReport_PrisonersCampFull );
-        MIL_Report::PostEvent( transporter, MIL_Report::eReport_PrisonersCampFull );
+        MIL_Report::PostEvent( pion, MIL_Report::eRC_PrisonersCampFull );
+        MIL_Report::PostEvent( transporter, MIL_Report::eRC_PrisonersCampFull );
         return;
     }
 
@@ -206,8 +206,8 @@ void LodgingAttribute::ManageResident( MIL_AgentPion& pion, MIL_AgentPion& trans
             pRefugeeRole->UpdateLodging( nbrFreeLodging );
         if ( pSurrenderRole )
             pSurrenderRole->UpdateLodging( nbrFreeLodging );
-        MIL_Report::PostEvent( pion, MIL_Report::eReport_PrisonersCampFull );
-        MIL_Report::PostEvent( transporter, MIL_Report::eReport_PrisonersCampFull );
+        MIL_Report::PostEvent( pion, MIL_Report::eRC_PrisonersCampFull );
+        MIL_Report::PostEvent( transporter, MIL_Report::eRC_PrisonersCampFull );
     }
 }
 
