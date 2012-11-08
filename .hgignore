@@ -1,0 +1,14 @@
+^(bin|dist|include|out|run|lib)/
+\.(bmo|bmk|bmq|bmt|bmsk|bmr)$
+^data/data/models/ada/decisional/dia5/TaskKnowledge.lua$
+^data/data/models/ada/decisional/dia5/models/directia.core/directia.core.bml$
+syntax: glob
+*.ipch
+*.ncb
+*.opensdf
+*.qm
+*.rej
+*.sdf
+*.suo
+*.user
+*.vcxproj.user
