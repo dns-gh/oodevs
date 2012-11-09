@@ -101,7 +101,7 @@ void Page_ABC::OnLanguageChanged()
     if( backButton_ )
         backButton_->setText(   tools::translate( "Page_ABC", "Back" ) );
     if( adminButton_ )
-        adminButton_->setText(  tools::translate( "Page_ABC", "Administration" ) );
+        adminButton_->setText(  tools::translate( "Page_ABC", "Admin" ) );
     if( quitButton_ )
         quitButton_->setText(   tools::translate( "Page_ABC", "Quit" ) );
     if( startButton_ )

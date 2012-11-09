@@ -481,7 +481,7 @@ Do really you want to replace it ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Administration</source>
+        <source>Admin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

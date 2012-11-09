@@ -485,8 +485,8 @@ Voulez-vous vraiment le remplacer ?</translation>
         <translation>Importer</translation>
     </message>
     <message>
-        <source>Administration</source>
-        <translation>Administration</translation>
+        <source>Admin</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

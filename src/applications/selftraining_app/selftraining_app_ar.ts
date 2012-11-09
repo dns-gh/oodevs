@@ -483,8 +483,8 @@ Do really you want to replace it ?</source>
         <translation type="unfinished">استيراد</translation>
     </message>
     <message>
-        <source>Administration</source>
-        <translation type="unfinished">الإدارة</translation>
+        <source>Admin</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
