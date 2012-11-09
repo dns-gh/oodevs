@@ -192,3 +192,22 @@ end
 integration.getMaxRangeToBeFiriedByAgent = function( agent, pH )
     return DEC_Tir_PorteeMaxPourEtreTireParUnite( agent, pH )
 end
+     
+integration.canBeDestroyedWithMissiles = function( targetUnit, ph, speed )
+    targetUnit[ myself ] = targetUnit[ myself ] or {}
+    targetUnit[ myself ].distanceCouverte = targetUnit[ myself ].distanceCouverte or integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
+    targetUnit[ myself ].pointInterception = CreateKnowledge( world.Point, integration.positionInterception( targetUnit, speed ) )
+    targetUnit[ myself ].distancePointInterception = targetUnit[ myself ].distancePointInterception or integration.distance( meKnowledge, targetUnit[ myself ].pointInterception )
+    targetUnit[ myself ].tempsInterception =  targetUnit[ myself ].tempsInterception or targetUnit[ myself ].distancePointInterception / ( speed * 60 )
+
+    if( targetUnit[ myself ].distancePointInterception <= targetUnit[ myself ].distanceCouverte ) then
+        if targetUnit:isValid() then
+            if waitInMin( meKnowledge, targetUnit[ myself ].tempsInterception ) then
+                if( integration.niTropPresNiTropLoin( targetUnit, ph ) ) then
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
