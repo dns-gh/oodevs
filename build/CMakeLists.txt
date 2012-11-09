@@ -57,6 +57,12 @@ macro( grab_item output name items )
     endif()
 endmacro()
 
+function( set_output_directory target dir )
+    # force on both configurations else msvc adds ${IntDir} suffix
+    set_target_properties( ${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${dir} )
+    set_target_properties( ${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${dir} )
+endfunction()
+
 function( add_target target group dir )
     message( "-- ${target}" )
     masa_extract_options( options ${ARGN} )
@@ -70,10 +76,11 @@ function( add_target target group dir )
         set_target_properties( ${target} PROPERTIES
             RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO
             "${root_dir}/out/${platform}/release/${dir}" )
+        if( MSVC AND CMAKE_CONFIGURATION_TYPES )
+            set_output_directory( ${target} "${root_dir}/run/${platform}" )
+        endif()
     elseif( shared )
-        set_target_properties( ${target} PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY
-            "${root_dir}/run/${platform}" )
+        set_output_directory( ${target} "${root_dir}/run/${platform}" )
         # remove _dll suffix from output name
         if( ${target} MATCHES "_dll$" )
             string( REGEX REPLACE "(.+)_dll" "\\1" next ${target} )
@@ -92,10 +99,8 @@ function( add_target target group dir )
         target_link_libraries( ${target} protocol )
     endif()
     if( is_plugin )
-        string( REGEX REPLACE "(.+)_plugin_dll" "\\1" next ${target} )    
-        set_target_properties( ${target} PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY
-            "${root_dir}/run/${platform}/plugins/${next}" )        
+        string( REGEX REPLACE "(.+)_plugin_dll" "\\1" next ${target} )
+        set_output_directory( ${target} "${root_dir}/run/${platform}/plugins/${next}" )
     endif()
 endfunction()
 
