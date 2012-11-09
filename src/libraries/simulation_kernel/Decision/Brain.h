@@ -150,10 +150,10 @@ public:
     }
 
 #define SWORD_BRAIN_FREE_FUNCTION(z, n, d) \
-    template< typename R BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename T) > \
-    void RegisterFunction( const char* const name, R(*function)( BOOST_PP_ENUM_PARAMS(n, T) ) ) \
+    template< typename R BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename P) > \
+    void RegisterFunction( const char* const name, R(*function)( BOOST_PP_ENUM_PARAMS(n, P) ) ) \
     { \
-        RegisterFunction( name, boost::function< R( BOOST_PP_ENUM_PARAMS(n, T) ) >( function ) ); \
+        RegisterFunction( name, boost::function< R( BOOST_PP_ENUM_PARAMS(n, P) ) >( function ) ); \
     }
     BOOST_PP_REPEAT(6, SWORD_BRAIN_FREE_FUNCTION, BOOST_PP_EMPTY)
 #undef SWORD_BRAIN_FREE_FUNCTION
@@ -184,16 +184,16 @@ private:
     struct ProfilerProxy;
 
 #define SWORD_BRAIN_PROFILER_PROXY(z, n, d ) \
-    template< typename R BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename T) > \
-    struct ProfilerProxy< R( BOOST_PP_ENUM_PARAMS(n,T) ) > \
+    template< typename R BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename P) > \
+    struct ProfilerProxy< R( BOOST_PP_ENUM_PARAMS(n,P) ) > \
     { \
-        typedef typename boost::function< R( BOOST_PP_ENUM_PARAMS(n,T) ) > function_type; \
+        typedef typename boost::function< R( BOOST_PP_ENUM_PARAMS(n,P) ) > function_type; \
         typedef typename function_type::result_type result_type; \
         ProfilerProxy( const std::string& name, const function_type& f ) \
             : name_( name ) \
             , f_   ( f ) \
         {} \
-        R operator()( BOOST_PP_ENUM_BINARY_PARAMS(n, T, t) ) const \
+        R operator()( BOOST_PP_ENUM_BINARY_PARAMS(n, P, t) ) const \
         { \
             ProfilerGuard guard( name_ ); \
             return f_( BOOST_PP_ENUM_PARAMS(n, t) ); \
