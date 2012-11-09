@@ -160,12 +160,12 @@ integration.RC_AgentKnowledge = function( myself, typeMessage, id, list )
     DEC_RC_AgentKnowledge( myself, typeMessage, id, list )
 end
 
-integration.RC_Pion_Automate = function( myself, typeMessage, id, list )
-    DEC_RC_Pion_Automate( myself, typeMessage, id, list )
+integration.RC_Pion_Automate = function( myself, typeMessage, id, firstList, secondList )
+    DEC_RC_Pion_Automate( myself, typeMessage, id, firstList, secondList )
 end
 
-integration.RC_Pion_Pion = function( myself, typeMessage, id, list )
-    DEC_RC_Pion_Pion( myself, typeMessage, id, list )
+integration.RC_Pion_Pion = function( myself, typeMessage, id, firstList, secondList )
+    DEC_RC_Pion_Pion( myself, typeMessage, id, firstList, secondList )
 end
 
 integration.RC_Id = function( myself, typeMessage, id, list )
