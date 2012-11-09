@@ -160,23 +160,6 @@ namespace dnd
         drag->exec();
         return drag;
     }
-
-    // tmp (memory leak, to be deleted once qt4 port is completed)
-    template< typename T >
-    QDrag* CreateSafeDragObject( T* value, QWidget* parent, kernel::Controllers& controllers )
-    {
-        QDrag* drag = new QDrag( parent );
-        QMimeData* mimeData = new QMimeData();
-        QByteArray encodedData;
-        QDataStream stream( &encodedData, QIODevice::WriteOnly );
-        kernel::SafePointer< T >* safe = new kernel::SafePointer< T >( controllers, value );
-        stream << reinterpret_cast< unsigned int >( safe );
-        mimeData->setData( QString( typeid( T ).name() ), encodedData );
-        drag->setMimeData( mimeData );
-        drag->exec();
-        return drag;
-    }
-
 } // end namespace dnd
 
 #endif // __DragAndDropHelpers_h_

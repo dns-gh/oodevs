@@ -160,8 +160,8 @@ void IndicatorReportDialog::OnAccept()
 // -----------------------------------------------------------------------------
 void IndicatorReportDialog::CreateReport() const
 {
-    std::ifstream input( templateFile_->text().toStdString() );
-    std::ofstream output( outputFile_->text().toStdString() );
+    std::ifstream input( templateFile_->text().toStdString().c_str() );
+    std::ofstream output( outputFile_->text().toStdString().c_str() );
     std::string line;
     while( input.good() )
     {

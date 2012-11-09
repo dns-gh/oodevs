@@ -109,7 +109,7 @@ void IndicatorExportDialog::OnAccept()
 {
     try
     {
-        std::ofstream file( file_->text().toStdString() );
+        std::ofstream file( file_->text().toStdString().c_str() );
         if( !file )
             throw std::exception(tools::translate( "IndicatorExportDialog", "Impossible to create file in specified directory" ) );
         const std::string sep = separator_->text().toStdString();
