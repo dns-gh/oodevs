@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "MT_Tools/MT_Profiler.h"
 #pragma warning( push, 0 )
 #include <google/protobuf/message.h>
 #pragma warning( pop )
@@ -55,3 +56,13 @@ struct ProtobufConfig
 };
 
 BOOST_GLOBAL_FIXTURE( ProtobufConfig );
+
+struct Profiling
+{
+    Profiling()
+    {
+        MT_Profiler::Initialize();
+    }
+};
+
+BOOST_GLOBAL_FIXTURE( Profiling );
