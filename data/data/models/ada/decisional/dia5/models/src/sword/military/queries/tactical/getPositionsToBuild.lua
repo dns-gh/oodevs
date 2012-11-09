@@ -8,7 +8,7 @@ queryImplementation "getPositionsToBuild"
         for _, element in pairs ( params.elementsToBuild ) do     
           scaledObject = DEC_Geometrie_AgrandirLocalisation(  element:getLocalisation() , 50 )
           if myself.taskParams.meetingPoint and myself.taskParams.meetingPoint ~= NIL then
-              positionNextTo = myself.taskParams.meetingPoint.source
+              positionNextTo = myself.taskParams.meetingPoint:getPosition()
           else
               positionNextTo = meKnowledge:getPosition()
           end
