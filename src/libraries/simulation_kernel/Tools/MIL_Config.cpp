@@ -63,6 +63,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , randomSeed_( 0 )
     , setpause_( 0 )
     , setstepmul_( 0 )
+    , integrationDir_( "resources" )
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
@@ -72,6 +73,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
         ( "savecheckpoint" , po::value( &strCheckPointNameTestMode_ ), "specify checkpoint to save"                )
         ( "deletecheckpoint"                                         , "delete checkpoint folder"                  )
         ( "legacy"                                                   , "activate legacy mode"                      )
+        ( "integration-dir", po::value( &integrationDir_ )           , "set integration directory" )
         ( "simulation-port", po::value( &networkPort_ )              , "specify the simulation server port number" );
     AddOptions( desc );
 }
@@ -304,4 +306,13 @@ std::string MIL_Config::GetPopulationDir() const
     if( IsPopulationEnabled() )
         return BuildChildPath( GetPopulationFile(), "." );
     return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetIntegrationDir
+// Created: BAX 2012-11-09
+// -----------------------------------------------------------------------------
+const std::string& MIL_Config::GetIntegrationDir() const
+{
+    return integrationDir_;
 }

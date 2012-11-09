@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis >> xml::start( "main" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false );
+    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
     MockArmy army;
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type, army );
@@ -81,7 +81,7 @@ public:
     }
     void SetModel( const DEC_Model_ABC& model )
     {
-        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubPopulation", false, false );
+        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubPopulation", false, false, model.GetIntegrationDir() );
     }
     void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
     {
@@ -129,7 +129,7 @@ namespace
     public:
         Pion()
             : xis       ( "<main dia-type='PionTest' file='PionTest.bms'/>" )
-            , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false )
+            , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) )
             , type      ( model )
             , population( type, army )
             , decision  ( population, 0 )
@@ -202,7 +202,7 @@ namespace
     public:
         Mission()
             : xis       ( "<main dia-type='PionTest' file='MissionParamTestBrain.bms'/>" )
-            , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false )
+            , model     ( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) )
             , type      ( model )
             , population( type, army )
             , decision  ( population, 0 )

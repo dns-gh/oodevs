@@ -45,7 +45,10 @@ namespace DEC_DecisionImpl
 {
     void RegisterCommonUserFunctions( sword::Brain& brain , bool isMasalife );
     void RegisterMissionParameters( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
-    bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type, bool reload );
+    bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain,
+                      boost::shared_ptr< sword::Brain >& pBrain, const std::string& includePath,
+                      const std::string& brainFile, bool isMasalife, const std::string& type,
+                      bool reload, const std::string& integrationDir );
 }
 
 namespace directia
@@ -59,7 +62,9 @@ namespace directia
 // Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName, bool isMasalife, bool reload )
+void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::string& type,
+                                   const std::string& includePath,const std::string& groupName,
+                                   bool isMasalife, bool reload, const std::string& integrationDir )
 {
     std::string realIncludePath = includePath;
     isMasalife_ = isMasalife;
@@ -74,7 +79,7 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
     pRefs_.reset( 0 );//Must delete ScriptRef before call Brain destructor and destroy vm
     boost::shared_ptr< sword::Brain > pArchetypeBrain;
 
-    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload );
+    bool newBrain = DEC_DecisionImpl::CreateBrain( pArchetypeBrain, pBrain_, realIncludePath, brainFile, isMasalife_, type, reload, integrationDir );
 
     if( newBrain )
     {
@@ -112,7 +117,8 @@ template< class T >
 void DEC_Decision< T >::SetModel( const DEC_Model_ABC& model )
 {
     model_ = &model;
-    InitBrain( model.GetScriptFile(), model.GetDIAType(), model.GetIncludePath(), GetAutomate().GetName(), model.IsMasalife(), false );
+    InitBrain( model.GetScriptFile(), model.GetDIAType(), model.GetIncludePath(),
+               GetAutomate().GetName(), model.IsMasalife(), false, model.GetIntegrationDir() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1088,7 +1094,7 @@ bool DEC_Decision< T >::IsDead() const
 template< class T >
 void DEC_Decision< T >::Reload()
 {
-    InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), true );
+    InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), true, model_->GetIntegrationDir() );
     StartDefaultBehavior();
 }
 

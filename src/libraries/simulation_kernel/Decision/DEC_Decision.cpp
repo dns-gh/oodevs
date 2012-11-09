@@ -1563,14 +1563,15 @@ namespace
 {
     std::map< std::string, boost::shared_ptr< sword::Brain > > brainTable;
 
-    void LoadResourcesFile( const std::string& file, sword::Brain& brain )
+    void LoadResourcesFile( const std::string& file, const bfs::path& dir, sword::Brain& brain )
     {
-        brain.GetScriptRef( "include" )( bfs::path( bfs::path( "./resources" ) / file ).string() );
+        brain.GetScriptRef( "include" )( ( dir / file ).string() );
     }
 }
 
 bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain,
-                  const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type, bool reload )
+                  const std::string& includePath, const std::string& brainFile, bool isMasalife,
+                  const std::string& type, bool reload, const std::string& integrationDir )
 {
     const std::string& idx = isMasalife ? type : brainFile;
     pArchetypeBrain = brainTable[idx];
@@ -1597,7 +1598,7 @@ bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::sha
             + PLUGIN46( "errorhandler" )
             + "} cwd='" + includePath + "'" ) );
     pArchetypeBrain->RegisterFunction( "LoadResourcesFile", boost::function< void( const std::string& ) >(
-        boost::bind( &LoadResourcesFile, _1, boost::ref( *pArchetypeBrain ) ) ) );
+        boost::bind( &LoadResourcesFile, _1, integrationDir, boost::ref( *pArchetypeBrain ) ) ) );
     pArchetypeBrain->GetScriptRef( "include" )( brainFile, includePath, type );
     if( !reload )
         brainTable[idx] = pArchetypeBrain;

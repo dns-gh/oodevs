@@ -229,7 +229,8 @@ void DEC_Workspace::LoadMissions( xml::xistream& xisMission )
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths )
 {
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "models", boost::bind( &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ) ) );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "models", boost::bind(
+        &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ), config.GetIntegrationDir() ) );
     config.AddFileToCRC( fileLoaded );
 
 }
@@ -238,26 +239,30 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::s
 // Name: DEC_Workspace::LoadModels
 // Created: LDC 2010-12-02
 // -----------------------------------------------------------------------------
-void DEC_Workspace::LoadModels( xml::xistream& xisModels, const std::map< std::string, std::string >& strSourcePaths )
+void DEC_Workspace::LoadModels( xml::xistream& xisModels, const std::map< std::string, std::string >& strSourcePaths,
+                                const std::string& integrationDir )
 {
     xisModels >> xml::start( "models" );
 
     // Pions
     MT_LOG_INFO_MSG( "Initializing unit DIA models" );
     xisModels >> xml::start( "units" )
-                >> xml::list( "unit", *this, &DEC_Workspace::ReadModel, strSourcePaths, strUnits, MIL_PionMissionType::MissionNames() )
+                >> xml::list( "unit", *this, &DEC_Workspace::ReadModel, strSourcePaths, strUnits,
+                              MIL_PionMissionType::MissionNames(), integrationDir )
               >> xml::end;
 
     // Automates
     MT_LOG_INFO_MSG( "Initializing automat DIA models" );
     xisModels >> xml::start( "automats" )
-                  >> xml::list( "automat", *this, &DEC_Workspace::ReadModel, strSourcePaths, strAutomats, MIL_AutomateMissionType::MissionNames() )
+                  >> xml::list( "automat", *this, &DEC_Workspace::ReadModel, strSourcePaths, strAutomats,
+                                MIL_AutomateMissionType::MissionNames(), integrationDir )
               >> xml::end;
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
     xisModels >> xml::start( "crowd" )
-                  >> xml::list( "crowd", *this, &DEC_Workspace::ReadModel, strSourcePaths, strPopulation, MIL_PopulationMissionType::MissionNames() )
+                  >> xml::list( "crowd", *this, &DEC_Workspace::ReadModel, strSourcePaths, strPopulation,
+                                MIL_PopulationMissionType::MissionNames(), integrationDir )
               >> xml::end;
 
     xisModels >> xml::end; // models
@@ -267,7 +272,9 @@ void DEC_Workspace::LoadModels( xml::xistream& xisModels, const std::map< std::s
 // Name: DEC_Workspace::ReadModel
 // Created: RDS 2008-05-21
 // -----------------------------------------------------------------------------
-void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes )
+void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths,
+                               const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes,
+                               const std::string& integrationDir )
 {
     std::string strName;
     xis >> xml::attribute( "name", strName );
@@ -288,7 +295,7 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, 
     if( itFind == strSourcePaths.end() )
         xis.error( "Model corresponds to an unknown namespace" );
 
-    pModel = new DEC_Model( strName, xis, itFind->second, missionTypes, isMasalife );
+    pModel = new DEC_Model( strName, xis, itFind->second, missionTypes, isMasalife, integrationDir );
 }
 
 //-----------------------------------------------------------------------------

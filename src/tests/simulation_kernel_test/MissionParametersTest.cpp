@@ -140,7 +140,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_AgentKnowledgeParameter, KnowledgeFixture )
     in.set_id( 35 );
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-    DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false );
+    DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
     StubMIL_AgentTypePion type( model );
     AlgorithmsFactories algorithmsFactories;
     MIL_AgentPion pion( type, algorithmsFactories );
@@ -189,7 +189,7 @@ BOOST_FIXTURE_TEST_CASE( TestMIL_PopulationKnowledgeParameter, KnowledgeFixture 
     in.set_id( 0 );
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
-    DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false );
+    DEC_Model model( "test", xis >> xml::start( "main" ), BOOST_RESOLVE( "." ), missionTypes, false, BOOST_RESOLVE( "resources" ) );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type, army );
     MOCK_EXPECT( manager.FindPopulation ).once().returns( &population );

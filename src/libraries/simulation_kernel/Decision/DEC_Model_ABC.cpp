@@ -20,10 +20,14 @@
 // Name: DEC_Model_ABC constructor
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
-DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes, bool isMasalife )
+DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis,
+                              const std::string& strSourcePath,
+                              const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes,
+                              bool isMasalife, const std::string& integrationDir )
     : strModel_      ( strModel )
     , isMasalife_    ( isMasalife )
     , strIncludePath_( strSourcePath )
+    , integrationDir_( integrationDir )
 {
     xis >> xml::attribute( "dia-type", strDIAType_ )
         >> xml::attribute( "file", strScript_ );
@@ -202,6 +206,15 @@ const std::string& DEC_Model_ABC::GetIncludePath() const
 const std::string& DEC_Model_ABC::GetDIAType() const
 {
     return strDIAType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Model_ABC::GetIntegrationDir
+// Created: BAX 2012-11-09
+// -----------------------------------------------------------------------------
+const std::string& DEC_Model_ABC::GetIntegrationDir() const
+{
+    return integrationDir_;
 }
 
 // -----------------------------------------------------------------------------

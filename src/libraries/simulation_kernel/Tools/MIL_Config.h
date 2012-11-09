@@ -76,6 +76,7 @@ public:
     bool               GetPausedAtStartup        () const;
     unsigned int       GetPathFinderThreads      () const;
     const std::string& GetCheckpointNameTestMode () const;
+    const std::string& GetIntegrationDir         () const;
 
     int                GetRandomSeed             () const;
     const bool*        GetRandomGaussian         () const;
@@ -164,6 +165,7 @@ private:
     double         randomMean_[ MIL_Random::eContextsNbr ];
     unsigned int   setpause_;
     unsigned int   setstepmul_;
+    std::string    integrationDir_;
     //@}
 };
 

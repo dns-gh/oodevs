@@ -36,6 +36,7 @@ public:
     const std::string& GetScriptFile() const;
     const std::string& GetIncludePath() const;
     const std::string& GetDIAType() const;
+    const std::string& GetIntegrationDir() const;
     const bool IsMasalife() const;
     //@}
 
@@ -54,7 +55,10 @@ public:
 protected:
     //! @name Constructors
     //@{
-    DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes, bool isMasalife );
+    DEC_Model_ABC( const std::string& strModel, xml::xistream& xis,
+                   const std::string& strSourcePath,
+                   const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes,
+                   bool isMasalife, const std::string& integrationDir );
     //@}
 
 private:
@@ -93,6 +97,7 @@ private:
     std::string strDIAType_;
     std::string strScript_;
     std::string strIncludePath_;
+    std::string integrationDir_;
     T_MissionSet availableMissions_;
     T_FragOrderSet availableFragOrders_;
     T_FragOrderPerMissionMap availableFragOrdersPerMission_;
