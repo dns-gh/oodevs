@@ -1572,49 +1572,40 @@ namespace
 bool CreateBrain( boost::shared_ptr< sword::Brain >& pArchetypeBrain, boost::shared_ptr< sword::Brain >& pBrain,
                   const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type, bool reload )
 {
-    pArchetypeBrain = isMasalife ? brainTable[type] : brainTable[brainFile];
+    const std::string& idx = isMasalife ? type : brainFile;
+    pArchetypeBrain = brainTable[idx];
     if( reload )
         pArchetypeBrain.reset();
-    if( !pArchetypeBrain )
+    if( pArchetypeBrain )
     {
-        if( isMasalife )
-        {
-            pArchetypeBrain.reset( new sword::Brain(
-                "plugins={"
-                + PLUGIN( "masalife_brain" )
-                + PLUGIN( "knowledge" )
-                + PLUGIN( "communication" )
-                + PLUGIN46( "errorhandler" )
-                + "} cwd='" + includePath + "'" ) );
-            pArchetypeBrain->RegisterFunction( "LoadResourcesFile",
-                boost::function< void( const std::string& ) >( boost::bind( &LoadResourcesFile, _1, boost::ref( *pArchetypeBrain ) ) ) );
-            pArchetypeBrain->GetScriptRef( "include" )( brainFile ,includePath, type );
-            if( !reload )
-                brainTable[type] = pArchetypeBrain;
-        }
-        else
-        {
-            pArchetypeBrain.reset( new sword::Brain(
-                "plugins={"
-                + PLUGIN46( "eventmanager" )
-                + PLUGIN46( "motivation" )
-                + PLUGIN46( "errorhandler" )
-                + "} cwd='" + includePath + "'" ) );
-            pArchetypeBrain->RegisterFunction( "LoadResourcesFile",
-                boost::function< void( const std::string& ) >( boost::bind( &LoadResourcesFile, _1, boost::ref( *pArchetypeBrain ) ) ) );
-            pArchetypeBrain->GetScriptRef( "include" )( brainFile ,includePath, type );
-            if( !reload )
-                brainTable[brainFile] = pArchetypeBrain;
-        }
-        if( reload )
-            pBrain = pArchetypeBrain;
-        else
-            pBrain.reset( new sword::Brain( *pArchetypeBrain ) );
-        return true;
+        pBrain.reset( new sword::Brain( *pArchetypeBrain ) );
+        return false;
     }
+    if( isMasalife )
+        pArchetypeBrain.reset( new sword::Brain(
+            "plugins={"
+            + PLUGIN( "masalife_brain" )
+            + PLUGIN( "knowledge" )
+            + PLUGIN( "communication" )
+            + PLUGIN46( "errorhandler" )
+            + "} cwd='" + includePath + "'" ) );
+    else
+        pArchetypeBrain.reset( new sword::Brain(
+            "plugins={"
+            + PLUGIN46( "eventmanager" )
+            + PLUGIN46( "motivation" )
+            + PLUGIN46( "errorhandler" )
+            + "} cwd='" + includePath + "'" ) );
+    pArchetypeBrain->RegisterFunction( "LoadResourcesFile", boost::function< void( const std::string& ) >(
+        boost::bind( &LoadResourcesFile, _1, boost::ref( *pArchetypeBrain ) ) ) );
+    pArchetypeBrain->GetScriptRef( "include" )( brainFile, includePath, type );
+    if( !reload )
+        brainTable[idx] = pArchetypeBrain;
+    if( reload )
+        pBrain = pArchetypeBrain;
     else
         pBrain.reset( new sword::Brain( *pArchetypeBrain ) );
-    return false;
+    return true;
 }
 
 }
