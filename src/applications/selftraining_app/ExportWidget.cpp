@@ -324,17 +324,11 @@ void ExportWidget::UpdateExerciseData( Q3ListViewItem* item /*= 0*/ )
 
 namespace
 {
-    struct Progress
+    void AddProgress( Q3ProgressBar* progress, int value )
     {
-        Progress( Q3ProgressBar* progress ) : progress_( progress ), count_( 0 ) {}
-        void operator()()
-        {
-            progress_->setProgress( ++count_ );
-            qApp->processEvents();
-        }
-        Q3ProgressBar* progress_;
-        unsigned count_;
-    };
+        progress->setProgress( std::min( 98, progress->progress() + value ) );
+        qApp->processEvents();
+    }
 
     void Copy( std::istream& file, std::ostream& output )
     {
@@ -344,7 +338,7 @@ namespace
         std::copy( it, end, out );
     }
 
-    void CopyFile( const bfs::path& root, const std::string& name, zip::ozipfile& zos )
+    void CopyFile( const bfs::path& root, const std::string& name, zip::ozipfile& zos, Q3ProgressBar* progress )
     {
         std::string filename( root.file_string() );
         std::ifstream file( filename.c_str(), std::ifstream::in | std::ifstream::binary );
@@ -352,10 +346,11 @@ namespace
         {
             zip::ozipstream stream( zos, name.c_str(), std::ios_base::out | std::ios_base::binary );
             Copy( file, stream );
+            AddProgress( progress, 10 );
         }
     }
 
-    void BrowseDirectory( const bfs::path& root, const std::string& name, zip::ozipfile& zos, bool recursive )
+    void BrowseDirectory( const bfs::path& root, const std::string& name, zip::ozipfile& zos, bool recursive, Q3ProgressBar* progress )
     {
         bfs::directory_iterator end;
         for( bfs::directory_iterator it( root ); it != end; ++it )
@@ -364,38 +359,39 @@ namespace
             if( bfs::is_regular_file( child ) )
             {
                 const std::string& file( child.filename() );
-                CopyFile( ( root / file.c_str() ), name + "/" + file, zos );
+                CopyFile( ( root / file.c_str() ), name + "/" + file, zos, progress );
             }
             else if( recursive && bfs::is_directory( child ) && child.leaf() != ".svn" )
             {
-                BrowseDirectory( child, name + "/" + child.filename(), zos, recursive );
+                BrowseDirectory( child, name + "/" + child.filename(), zos, recursive, progress );
             }
+            AddProgress( progress, 2 );
         }
     }
 
-    void Serialize( const std::string& base, const std::string& name, zip::ozipfile& zos, bool recursive, const std::string& exportName = "" )
+    void Serialize( const std::string& base, const std::string& name, zip::ozipfile& zos, bool recursive, Q3ProgressBar* progress, const std::string& exportName = "" )
     {
         const bfs::path root = bfs::path( base, bfs::native ) / name;
         if( ! bfs::exists( root ) )
             return;
         if( ! bfs::is_directory( root ) )
-            CopyFile( root, name, zos );
+            CopyFile( root, name, zos, progress );
         else
-            BrowseDirectory( root, exportName != "" ? exportName : name, zos, recursive );
+            BrowseDirectory( root, exportName != "" ? exportName : name, zos, recursive, progress );
     }
 
-    void BrowseChildren( const std::string& base, Q3ListViewItem* item, zip::ozipfile& zos, boost::function0<void> callback, bool recursive )
+    void BrowseChildren( const std::string& base, Q3ListViewItem* item, zip::ozipfile& zos, Q3ProgressBar* progress, bool recursive )
     {
         while ( item != 0 && ! dynamic_cast< frontend::CheckListItem* >( item ) )
         {
             std::string file( item->text( 0 ).toAscii().constData() );
-            Serialize( base, file, zos, recursive );
-            callback();
+            Serialize( base, file, zos, recursive, progress );
+            AddProgress( progress, 2 );
             item = item->nextSibling();
         }
     }
 
-    void BrowseFiles( const std::string& base, Q3ListViewItemIterator iterator, zip::ozipfile& zos, boost::function0<void> callback )
+    void BrowseFiles( const std::string& base, Q3ListViewItemIterator iterator, zip::ozipfile& zos, Q3ProgressBar* progress )
     {
         while ( iterator.current() )
         {
@@ -403,11 +399,11 @@ namespace
             if( item && item->isOn() )
             {
                 std::string file( iterator.current()->text( 0 ).toAscii().constData() );
-                Serialize( base, file, zos, item->IsRecursive() );
+                Serialize( base, file, zos, item->IsRecursive(), progress );
                 if( item->childCount() > 0 )
-                    BrowseChildren( base, item->firstChild(), zos, callback, item->IsRecursive() );
+                    BrowseChildren( base, item->firstChild(), zos, progress, item->IsRecursive() );
             }
-            callback();
+            AddProgress( progress, 2 );
             ++iterator;
         }
     }
@@ -506,15 +502,15 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
     {
     case eTabs_Exercise:
         progress_->setProgress( 0, ListViewSize( Q3ListViewItemIterator( exerciseContent_ ) ) );
-        BrowseFiles( config_.GetRootDir(), Q3ListViewItemIterator( exerciseContent_ ), archive, Progress( progress_ ) );
+        BrowseFiles( config_.GetRootDir(), Q3ListViewItemIterator( exerciseContent_ ), archive, progress_ );
         break;
     case eTabs_Terrain:
         {
             assert( terrainList_->selectedItem() );
-            progress_->setProgress( 0, 1 );
+            progress_->setProgress( 0, 100 );
             bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->selectedItem()->text().toAscii().constData() ) );
-            Serialize( config_.GetRootDir(), diffPath.string(), archive, true );
-            progress_->setProgress( 1 );
+            Serialize( config_.GetRootDir(), diffPath.string(), archive, true, progress_ );
+            progress_->setProgress( 100 );
         }
         break;
     case eTabs_Models:
@@ -527,20 +523,20 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
 
             if( decisionalCheckBox_->isChecked() )
             {
-                progress_->setProgress( 0, 2 );
-                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true,
+                progress_->setProgress( 0, 100 );
+                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true, progress_,
                                                  bfs::path( exportPath / "physical" / content.second ).string() );
-                progress_->setProgress( 1 );
-                Serialize( config_.GetRootDir(), bfs::path( diffPath / "decisional" ).string(), archive, true,
+                progress_->setProgress( 50 );
+                Serialize( config_.GetRootDir(), bfs::path( diffPath / "decisional" ).string(), archive, true, progress_,
                                                  bfs::path( exportPath / "decisional" ).string() );
-                progress_->setProgress( 2 );
+                progress_->setProgress( 100 );
             }
             else
             {
-                progress_->setProgress( 0, 1 );
-                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true,
+                progress_->setProgress( 0, 100 );
+                Serialize( config_.GetRootDir(), bfs::path( diffPath / "physical" / content.second ).string(), archive, true, progress_,
                                                  bfs::path( exportPath / "physical" / content.second ).string() );
-                progress_->setProgress( 1 );
+                progress_->setProgress( 100 );
             }
             break;
         }
