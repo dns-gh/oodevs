@@ -325,8 +325,6 @@ void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, Locatio
 {
     assert( localisation.GetType() != TER_Localisation::eNone );
     asnLocalisation.set_type( (Location_Geometry)localisation.GetType() );
-    if( localisation.GetPoints().empty() )
-        return;
     for( CIT_PointVector itPoint = localisation.GetPoints().begin(); itPoint != localisation.GetPoints().end(); ++itPoint )
         WritePoint( *itPoint, *asnLocalisation.mutable_coordinates()->add_elem() );
 }
