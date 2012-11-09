@@ -62,6 +62,8 @@ MIL_Object::MIL_Object()
 // -----------------------------------------------------------------------------
 MIL_Object::~MIL_Object()
 {
+    for( T_Capacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+        (*it)->Terminate( *this );
     MIL_Object_ABC::Unregister();
 }
 

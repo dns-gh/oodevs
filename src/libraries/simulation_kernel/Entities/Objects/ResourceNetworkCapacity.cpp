@@ -159,6 +159,15 @@ void ResourceNetworkCapacity::Instanciate( MIL_Object_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::Terminate
+// Created: MCO 2012-11-09
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::Terminate( MIL_Object_ABC& object ) const
+{
+    MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().UnregisterNode( object.GetID() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::RegisterNode
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
