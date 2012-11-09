@@ -9,8 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_CommunicationFunctions.h"
-#include "Decision/DEC_Decision_ABC.h"
-#include "Decision/Brain.h"
+#include "DEC_Decision_ABC.h"
+#include "Brain.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 

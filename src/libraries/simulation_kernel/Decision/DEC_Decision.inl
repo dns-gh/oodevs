@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "DEC_Model_ABC.h"
-#include "Decision/Brain.h"
-#include "Decision/DEC_PathFunctions.h"
-#include "Decision/DEC_DIAFunctions.h"
+#include "Brain.h"
+#include "DEC_PathFunctions.h"
+#include "DEC_DIAFunctions.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
