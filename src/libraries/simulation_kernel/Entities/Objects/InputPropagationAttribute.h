@@ -13,6 +13,9 @@
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "MIL.h"
+#include <boost/shared_ptr.hpp>
+#include <vector>
+#include <memory>
 
 namespace xml
 {
@@ -21,6 +24,8 @@ namespace xml
 
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
+class PropagationManager;
+class ASCExtractor;
 
 // =============================================================================
 /** @class  InputPropagationAttribute
@@ -41,19 +46,31 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive >
-    void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
     //@{
     void SendFullState( sword::ObjectAttributes& asn ) const;
+    void UpdateLocalisation( MIL_Object_ABC& object, unsigned int time );
+
+    InputPropagationAttribute& operator=( const InputPropagationAttribute& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef boost::shared_ptr< ASCExtractor > T_Extractor;
     //@}
 
 private:
     //! @name Member data
     //@{
     std::string model_;
+    std::auto_ptr< PropagationManager > pManager_;
+    std::vector< T_Extractor > values_;
     //@}
 };
 

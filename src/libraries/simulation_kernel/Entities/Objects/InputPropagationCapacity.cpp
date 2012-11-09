@@ -12,6 +12,7 @@
 #include "Object.h"
 #include "ToxicAttribute_ABC.h"
 #include "InputToxicCloudAttribute.h"
+#include "InputPropagationAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
@@ -99,4 +100,7 @@ void InputPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time
         if( pInput && pInput->Update( time, polygon ) )
             object.UpdateLocalisation( TER_Localisation( polygon ) );
     }
+    InputPropagationAttribute* propagation = object.RetrieveAttribute< InputPropagationAttribute >();
+    if( propagation )
+        propagation->UpdateLocalisation( object, time );
 }

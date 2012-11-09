@@ -143,7 +143,7 @@ void ASCExtractor::ExtractData()
 // Name: ASCExtractor::GenerateExtent
 // Created: LGY 2012-10-10
 // -----------------------------------------------------------------------------
-geometry::Rectangle2d ASCExtractor::GenerateExtent( double left, double bottom, double right, double top )
+geometry::Rectangle2d ASCExtractor::GenerateExtent( double left, double bottom, double right, double top ) const
 {
     geometry::Rectangle2d extent( left, bottom, right, top );
     double lx,ly,rx,ry;
@@ -156,7 +156,7 @@ geometry::Rectangle2d ASCExtractor::GenerateExtent( double left, double bottom, 
 // Name: ASCExtractor::Project
 // Created: LGY 2012-10-10
 // -----------------------------------------------------------------------------
-void ASCExtractor::Project( const geometry::Point2d& point, double& rLatitudeInDegrees, double& rLongitudeInDegrees )
+void ASCExtractor::Project( const geometry::Point2d& point, double& rLatitudeInDegrees, double& rLongitudeInDegrees ) const
 {
     rLongitudeInDegrees = point.X();
     rLatitudeInDegrees = point.Y();
@@ -233,4 +233,26 @@ double ASCExtractor::GetMaximumValue() const
 const ASCExtractor::T_Values& ASCExtractor::GetValues() const
 {
     return values_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ASCExtractor::Fill
+// Created: LGY 2012-11-08
+// -----------------------------------------------------------------------------
+void ASCExtractor::Fill( std::vector< geometry::Point2d >& convexHull ) const
+{
+    for( int i = 0; i < nrows_; ++i )
+        for( int j = 0; j < ncols_; ++j )
+        {
+            float value = values_[ ncols_ * i + j ];
+            if( value > 0.f )
+            {
+                double heighttop = i * pixelSize_.Y();
+                double heightbottom = ( i + 1 ) * pixelSize_.Y();
+                double widthmin = j * pixelSize_.X();
+                double widthmax = ( j + 1 ) * pixelSize_.X();
+
+                convexHull.push_back( GenerateExtent( origin_.X() + widthmin, origin_.Y() + heightbottom, origin_.X() + widthmax, origin_.Y() + heighttop ).Center() );
+            }
+        }
 }

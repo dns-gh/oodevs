@@ -48,13 +48,14 @@ public:
     const geometry::Point2d& GetPixelSize() const;
     const geometry::Rectangle2d& GetExtent() const;
     const T_Values& GetValues() const;
-    geometry::Rectangle2d GenerateExtent( double left, double bottom, double right, double top );
+    geometry::Rectangle2d GenerateExtent( double left, double bottom, double right, double top ) const;
+    void Fill( std::vector< geometry::Point2d >& convexHull ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void Project( const geometry::Point2d& point, double& rLatitudeInDegrees, double& rLongitudeInDegrees );
+    void Project( const geometry::Point2d& point, double& rLatitudeInDegrees, double& rLongitudeInDegrees ) const;
     void ExtractData();
     //@}
 
