@@ -153,6 +153,17 @@
     </message>
 </context>
 <context>
+    <name>DataWidget</name>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ExerciseList</name>
     <message>
         <source>Exercise:</source>

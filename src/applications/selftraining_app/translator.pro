@@ -4,7 +4,7 @@ SOURCES = Application.cpp \
 AuthoringPage.cpp \
 CreateExerciceWidget.cpp \
 CreateTerrainPage.cpp \
-DataPage.cpp \
+DataWidget.cpp \
 ExerciseList.cpp \
 ExerciseProperties.cpp \
 ExportWidget.cpp \
