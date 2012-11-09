@@ -34,7 +34,7 @@ namespace transport
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion )
-    : owner_           ( pion )
+    : owner_          ( pion )
     , nState_         ( eNothing )
     , nEndTimeStep_   ( 0 )
     , bIsLoaded_      ( false )

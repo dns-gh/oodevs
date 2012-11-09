@@ -57,7 +57,6 @@
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RolePion_Deployment.h"
 
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_Flying.h"
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
@@ -365,7 +364,6 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion ) const
     pion.RegisterRole( *new surrender::PHY_RolePion_Surrender( pion ) );
     pion.RegisterRole( *new refugee::PHY_RolePion_Refugee( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Population( pion ) );
-    pion.RegisterRole( *new transport::PHY_RoleAction_Loading( pion ) );
     pion.RegisterRole( *new transport::PHY_RoleAction_Transport( pion ) );
     pion.RegisterRole( *new crowdtransport::PHY_RoleAction_CrowdTransport( pion ) );
     pion.RegisterRole( *new PHY_RoleAction_Objects( pion ) );

@@ -18,6 +18,7 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "Tools/MIL_Tools.h"
@@ -191,6 +192,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
     pion.RegisterRole( *new PHY_RolePion_Location( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Perceiver( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Composantes( pion ) );
+    pion.RegisterRole( *new transport::PHY_RoleAction_Loading( pion ) ); // $$$$ _RC_ SLI 2012-11-09: must be created after RolePion_Composantes
     tools::Resolver< MIL_AgentPion >::Register( pion.GetID(), pion );
     return pion;
 }
@@ -202,7 +204,7 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
 MIL_AgentPion* Sink::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
     MIL_AgentPion& pion = Configure( *factory_.Create( type, automate, xis ) );
-    {
+    { 
         std::string strPosition;
         xis >> xml::attribute( "position", strPosition );
         MT_Vector2D vPosTmp;
