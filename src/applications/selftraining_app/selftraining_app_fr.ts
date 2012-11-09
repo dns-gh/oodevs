@@ -536,10 +536,6 @@ Voulez-vous vraiment le remplacer ?</translation>
 <context>
     <name>ScenarioEditPage</name>
     <message>
-        <source>Scenario</source>
-        <translation>Scénario</translation>
-    </message>
-    <message>
         <source>Editing exercise</source>
         <translation></translation>
     </message>
@@ -550,6 +546,10 @@ Voulez-vous vraiment le remplacer ?</translation>
     <message>
         <source>Create</source>
         <translation>Créer</translation>
+    </message>
+    <message>
+        <source>Prepare</source>
+        <translation>Préparation</translation>
     </message>
 </context>
 <context>
@@ -574,10 +574,6 @@ Voulez-vous vraiment le remplacer ?</translation>
 <context>
     <name>ScenarioLauncherPage</name>
     <message>
-        <source>Scenario</source>
-        <translation>Scénario</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Général</translation>
     </message>
@@ -588,6 +584,10 @@ Voulez-vous vraiment le remplacer ?</translation>
     <message>
         <source>Starting %1</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation>Démarrer</translation>
     </message>
 </context>
 <context>

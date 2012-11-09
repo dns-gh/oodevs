@@ -532,10 +532,6 @@ Do really you want to replace it ?</source>
 <context>
     <name>ScenarioEditPage</name>
     <message>
-        <source>Scenario</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Editing exercise</source>
         <translation type="unfinished"></translation>
     </message>
@@ -545,6 +541,10 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prepare</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -582,7 +582,7 @@ Do really you want to replace it ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scenario</source>
+        <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

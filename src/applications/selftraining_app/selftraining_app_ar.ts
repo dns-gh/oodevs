@@ -534,10 +534,6 @@ Do really you want to replace it ?</source>
 <context>
     <name>ScenarioEditPage</name>
     <message>
-        <source>Scenario</source>
-        <translation type="unfinished">السيناريو</translation>
-    </message>
-    <message>
         <source>Editing exercise</source>
         <translation type="unfinished">تحرير ممارسة</translation>
     </message>
@@ -548,6 +544,10 @@ Do really you want to replace it ?</source>
     <message>
         <source>Create</source>
         <translation type="unfinished">إنشاء</translation>
+    </message>
+    <message>
+        <source>Prepare</source>
+        <translation type="unfinished">إعداد</translation>
     </message>
 </context>
 <context>
@@ -584,8 +584,8 @@ Do really you want to replace it ?</source>
         <translation type="unfinished">إعدادات</translation>
     </message>
     <message>
-        <source>Scenario</source>
-        <translation type="unfinished">السيناريو</translation>
+        <source>Start</source>
+        <translation type="unfinished">بدء تشغيل</translation>
     </message>
 </context>
 <context>

@@ -73,7 +73,7 @@ ScenarioEditPage::~ScenarioEditPage()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::OnLanguageChanged()
 {
-    SetTitle( tools::translate( "ScenarioEditPage", "Scenario" ) );
+    SetTitle( tools::translate( "ScenarioEditPage", "Prepare" ) );
     progressPage_->SetTitle(  tools::translate( "ScenarioEditPage", "Editing exercise" ) );
     mainTabs_->setTabText( eTabs_Edit, tools::translate( "ScenarioEditPage", "Edit" ) );
     mainTabs_->setTabText( eTabs_Create, tools::translate( "ScenarioEditPage", "Create" ) );
