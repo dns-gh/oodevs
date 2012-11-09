@@ -56,6 +56,6 @@ integration.stopBypassIt = function( object )
     return true
 end
 
-integration.canBuildBypassingObject = function( entity, objetcType )
-    return DEC_Agent_AgentPeutConstruireContournementObjet( entity, objetcType )
+integration.canBuildBypassingObject = function( entity, objectType )
+    return DEC_Agent_AgentPeutConstruireContournementObjet( entity, objectType )
 end
