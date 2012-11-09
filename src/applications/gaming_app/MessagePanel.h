@@ -11,7 +11,7 @@
 #define __MessagePanel_h_
 
 #include "gaming/CommandHandler_ABC.h"
-#include <QtGui/QDockWidget.h>
+#include "clients_gui/RichToolBar.h"
 
 namespace kernel
 {
@@ -21,6 +21,7 @@ namespace kernel
 namespace gui
 {
     class RichLabel;
+    class RichToolBar;
     class ItemFactory_ABC;
 }
 
@@ -34,7 +35,7 @@ class Publisher_ABC;
 */
 // Created: SBO 2009-03-04
 // =============================================================================
-class MessagePanel : public QDockWidget
+class MessagePanel : public gui::RichToolBar
                    , public CommandHandler_ABC
 {
     Q_OBJECT;
@@ -81,7 +82,7 @@ private:
     gui::ItemFactory_ABC& factory_;
     std::auto_ptr< CommandPublisher > publisher_;
     gui::RichLabel* text_;
-    Q3ButtonGroup* buttons_;
+    QWidget* buttons_;
     std::string activePrompt_;
     //@}
 };

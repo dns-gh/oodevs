@@ -362,9 +362,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     }
     // Message panel
     {
-        QDockWidget* messageDock = new MessagePanel( this, controllers_, publisher, network.GetCommands(), *factory );
-        messageDock->setProperty( "notAppropriate", QVariant( true ) );
-        addDockWidget( Qt::TopDockWidgetArea, messageDock );
+        QToolBar* messagePanel = new MessagePanel( this, controllers_, publisher, network.GetCommands(), *factory );
+        addToolBar( messagePanel );
     }
     // ResourceNetwork panel
     {
