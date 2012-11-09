@@ -346,7 +346,7 @@ void FilterCommand::NotifyError( const std::string& error, std::string /*command
 void FilterCommand::OnValueChanged()
 {
     for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
-        arguments_[ it->first ].value_ = it->second->GetText().toAscii().constData();
+        arguments_[ it->first ].value_ = it->second->GetText().toStdString();
     ComputeArgument();
 }
 

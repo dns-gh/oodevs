@@ -102,7 +102,7 @@ QString Primitive::BuildParameterList() const
 {
     std::vector< std::string > list;
     BOOST_FOREACH( const T_Parameters::value_type& parameter, parameters_ )
-        list.push_back( parameter->GetName().toAscii().constData() ); // $$$$ ABR 2012-08-14: Do NOT use .toAscii().constData() here or it will crash
+        list.push_back( parameter->GetName().toStdString() ); // $$$$ ABR 2012-08-14: Do NOT use .toStdString() here or it will crash
     return list.empty() ? "" : ( " " + boost::join( list, ", " ) + " " ).c_str();
 }
 

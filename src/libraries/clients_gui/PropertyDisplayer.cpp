@@ -69,7 +69,7 @@ void PropertyDisplayer::DisplayFormatted( const QString& formatted )
     // $$$$ ABR 2012-06-04: Should be improve, without changing color every time for every item.
     if( formatted.startsWith( "<color" ) )
     {
-        xml::xistringstream xis( formatted.toAscii().constData() );
+        xml::xistringstream xis( formatted.toStdString() );
         int red = 0;
         int green = 0;
         int blue = 0;

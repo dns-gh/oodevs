@@ -246,7 +246,7 @@ void AgentController::NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agen
     unsigned long identifier = --identifier_factory;  // FIXME AHC
     std::vector< char > uniqueId;
     GenerateUniqueId( uniqueId, netnVersion_ );
-    const std::string name( std::string( parent.GetName().toAscii().constData() ) + "_" + typeName + " " + boost::lexical_cast< std::string >( childIndex ) );
+    const std::string name( std::string( parent.GetName().toStdString() ) + "_" + typeName + " " + boost::lexical_cast< std::string >( childIndex ) );
 
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
         (*it)->PlatformCreated( agent, identifier, name, forceIdentifier, entityType, symbol, uniqueId );

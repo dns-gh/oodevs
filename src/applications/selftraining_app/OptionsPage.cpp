@@ -215,7 +215,7 @@ void OptionsPage::OnChangeDataDirectory()
     const QString directory = QDir::convertSeparators( QFileDialog::getExistingDirectory( this , "", dataDirectory_->text() ) );
     if( directory.isEmpty() )
         return;
-    selectedDataDir_ = directory.toAscii().constData();
+    selectedDataDir_ = directory.toStdString();
     dataDirectory_->setText( directory );
     hasChanged_ = true;
     UpdateButton();
@@ -227,7 +227,7 @@ void OptionsPage::OnChangeDataDirectory()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnEditDataDirectory( const QString& text )
 {
-    selectedDataDir_ = text.toAscii().constData();
+    selectedDataDir_ = text.toStdString();
     hasChanged_ = true;
     UpdateButton();
 }
@@ -314,7 +314,7 @@ void OptionsPage::Reconnect()
 // -----------------------------------------------------------------------------
 void OptionsPage::CreateDataDirectory()
 {
-    const std::string directory = dataDirectory_->text().toAscii().constData();
+    const std::string directory = dataDirectory_->text().toStdString();
     if( bfs::exists( directory ) )
         return;
 

@@ -129,7 +129,7 @@ std::string ReportFactory::FormatReport( const sword::Report& message ) const
 {
     ReportTemplate* report = Find( message.type().id() );
     if( report )
-        return report->RenderMessage( message ).toAscii().constData();
+        return report->RenderMessage( message ).toStdString();
     return std::string();
 }
 
@@ -172,5 +172,5 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
         return QString::number( value.indirectfire().id() );
     if( value.has_acharstr() )
         return QString( value.acharstr().c_str() );
-    throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).toAscii().constData() );
+    throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).toStdString() );
 }

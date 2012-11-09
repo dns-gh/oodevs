@@ -88,5 +88,5 @@ void ADN_Type_Repartition::CheckNoError( const std::string& filename, const QStr
                                                              " Males/Females/Children repartition must be 100%."
                                                              " Current value for \'%2\': %3%." ).arg( parentGuiName_ )
                                                                                                 .arg( dataName )
-                                                                                                .arg( total ).toAscii().constData() );
+                                                                                                .arg( total ).toStdString() );
 }

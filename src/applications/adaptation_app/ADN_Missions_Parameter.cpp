@@ -185,7 +185,7 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
 {
     std::string diaName = diaName_.GetData();
     if( diaName.empty() )
-        diaName = GetFussedDiaName( strName_.GetData().c_str() ).toAscii().constData();
+        diaName = GetFussedDiaName( strName_.GetData().c_str() ).toStdString();
 
     output << xml::start( "parameter" )
             << xml::attribute( "name", strName_ )
@@ -208,9 +208,9 @@ void ADN_Missions_Parameter::WriteArchive( xml::xostream& output )
         values_[i]->WriteArchive( output, i );
     Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
     if( type_.GetData() == eMissionParameterTypeGenObject && !HasGenObjects() )
-        throw ADN_DataException( tools::translate( "ADN_Missions_Parameter",  "Invalid mission" ).toAscii().constData(),
+        throw ADN_DataException( tools::translate( "ADN_Missions_Parameter",  "Invalid mission" ).toStdString(),
             tools::translate( "ADN_Missions_Parameter", "'%1' parameter should have at least one object." )
-                .arg( strName_.GetData().c_str() ).toAscii().constData() );
+                .arg( strName_.GetData().c_str() ).toStdString() );
     Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
     output << xml::end;
 }

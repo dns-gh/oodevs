@@ -60,7 +60,7 @@ void UserProfilesModel::CreateProfile( const sword::ProfileCreation& message )
 void UserProfilesModel::DeleteProfile( const sword::ProfileDestruction& message )
 {
     for( T_UserProfiles::iterator it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( message.login() == (*it)->GetLogin().toAscii().constData() )
+        if( message.login() == (*it)->GetLogin().toStdString() )
         {
             const UserProfile* element = *it;
             userProfiles_.erase( it );
@@ -90,5 +90,5 @@ UserProfile& UserProfilesModel::Get( const QString& login )
     for( T_UserProfiles::const_iterator it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( login == (*it)->GetLogin() )
             return **it;
-    throw std::runtime_error( tools::translate( "UserProfilesModel", "Profile '%1' does not exist." ).arg( login ).toAscii().constData() );
+    throw std::runtime_error( tools::translate( "UserProfilesModel", "Profile '%1' does not exist." ).arg( login ).toStdString() );
 }

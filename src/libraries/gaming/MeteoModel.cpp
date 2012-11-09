@@ -96,7 +96,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
     if( meteo )
         static_cast< weather::MeteoLocal* >( meteo )->Update( msg );
     else
-        AddMeteo( *new weather::MeteoLocal( msg, converter_, simulation_.GetTickDuration(), tools::translate( "MeteoModel", "Local weather " ).toAscii().constData() ) );
+        AddMeteo( *new weather::MeteoLocal( msg, converter_, simulation_.GetTickDuration(), tools::translate( "MeteoModel", "Local weather " ).toStdString() ) );
     controller_.Update( *this );
 }
 

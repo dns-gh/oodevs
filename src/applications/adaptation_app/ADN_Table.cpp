@@ -405,7 +405,7 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
             format.set_background( palette.GetColor( 0 ) );
 
             BasicExcelCell* cell = sheet->Cell( 0, col );
-            cell->Set( content.toAscii().constData() );
+            cell->Set( content.toStdString().c_str() );
 
             // Column size
             if( columnMaxContentSize[ col ] < content.size() )

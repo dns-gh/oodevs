@@ -104,8 +104,8 @@ void GhostsPanel::Load()
 // -----------------------------------------------------------------------------
 void GhostsPanel::IconDragged()
 {
-    protoType_.name_ = nameLineEdit_->text().toAscii().constData();
-    protoType_.type_ = typeLineEdit_->text().toAscii().constData();
+    protoType_.name_ = nameLineEdit_->text().toStdString();
+    protoType_.type_ = typeLineEdit_->text().toStdString();
     protoType_.ghostType_ = symbolEditor_->GetGhostType();
     protoType_.symbol_ = symbolEditor_->GetSymbol();
     protoType_.nature_ = symbolEditor_->GetNature();

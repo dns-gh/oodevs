@@ -192,7 +192,7 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
         {
             if( handler_ )
                 handler_->OnConnectionFailed( tools::translate( "LauncherClient", "Failed to contact launcher service: %1." )
-                                                .arg( MessageString( message.message().connection_response().error_code() ) ).toAscii().constData() );
+                                                .arg( MessageString( message.message().connection_response().error_code() ) ).toStdString() );
             ResetConnection();
         }
         else if( handler_ )
@@ -209,21 +209,21 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
     {
         if( message.message().session_start_response().error_code() != sword::SessionStartResponse::success )
             handler_->OnError( tools::translate( "LauncherClient", "Failed to start session: %1." )
-                                .arg( MessageString( message.message().session_start_response().error_code() ) ).toAscii().constData() );
+                                .arg( MessageString( message.message().session_start_response().error_code() ) ).toStdString() );
         responseHandler_->Handle( message.message().session_start_response() );
     }
     else if( message.message().has_session_stop_response() )
     {
         if( message.message().session_stop_response().error_code() != sword::SessionStopResponse::success )
             handler_->OnError( tools::translate( "LauncherClient", "Failed to stop exercise: %1." )
-                                .arg( MessageString( message.message().session_stop_response().error_code() ) ).toAscii().constData() );
+                                .arg( MessageString( message.message().session_stop_response().error_code() ) ).toStdString() );
         responseHandler_->Handle( message.message().session_stop_response() );
     }
     else if( message.message().has_session_command_execution_response() )
     {
         if( message.message().session_stop_response().error_code() != sword::SessionCommandExecutionResponse::success )
             handler_->OnError( tools::translate( "LauncherClient", "Failed to execute command on exercise: %1." )
-                                .arg( MessageString( message.message().session_command_execution_response().error_code() ) ).toAscii().constData() );
+                                .arg( MessageString( message.message().session_command_execution_response().error_code() ) ).toStdString() );
         responseHandler_->Handle( message.message().session_command_execution_response() );
     }
     else if( message.message().has_session_notification() )

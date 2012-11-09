@@ -65,7 +65,7 @@ bool ParamStringField::InternalCheckValidity() const
 void ParamStringField::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     if( IsChecked() && !pEdit_->text().isEmpty() )
-        action.AddParameter( *new actions::parameters::String( parameter_, pEdit_->text().toAscii().constData() ) );
+        action.AddParameter( *new actions::parameters::String( parameter_, pEdit_->text().toStdString() ) );
     else
         action.AddParameter( *new actions::parameters::String( parameter_ ) );
 }

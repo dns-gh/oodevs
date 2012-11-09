@@ -51,7 +51,7 @@ ADN_SaveFile_Exception::~ADN_SaveFile_Exception()
 // -----------------------------------------------------------------------------
 std::string ADN_SaveFile_Exception::GetExceptionTitle() const
 {
-    return qApp->translate( "ADN_SaveFile_Exception", "File error" ).toAscii().constData();
+    return qApp->translate( "ADN_SaveFile_Exception", "File error" ).toStdString();
 }
 
 // -----------------------------------------------------------------------------
@@ -60,6 +60,6 @@ std::string ADN_SaveFile_Exception::GetExceptionTitle() const
 // -----------------------------------------------------------------------------
 std::string ADN_SaveFile_Exception::GetExceptionMessage() const
 {
-    return qApp->translate( "ADN_SaveFile_Exception", "Could not save file '%1'.\nMake sure that the file is not write-protected." ).arg( strFileName_.c_str() ).toAscii().constData();
+    return qApp->translate( "ADN_SaveFile_Exception", "Could not save file '%1'.\nMake sure that the file is not write-protected." ).arg( strFileName_.c_str() ).toStdString();
 }
 

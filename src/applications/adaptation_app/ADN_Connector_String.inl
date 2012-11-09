@@ -53,7 +53,7 @@ void ADN_Connector_String<T>::SetDataPrivate(void *data)
 template <class T>
 void  ADN_Connector_String<T>::SetDataChanged(const QString& string)
 {
-    std::string newval=string.toAscii().constData();
+    std::string newval=string.toStdString();
     emit DataChanged((void*)&newval);
 }
 

@@ -238,7 +238,7 @@ namespace
         attribute.GetDictionaryValues( dictionary, kind, language );
         DictionaryType* dico = resolver.Find( dictionary );
         if( dico )
-            return dico->GetKey( label.toAscii().constData(), kind, language );
+            return dico->GetKey( label.toStdString(), kind, language );
         return "";
     }
 }
@@ -420,7 +420,7 @@ void ExtensionsPanel::Commit()
                     int pos = 0;
                     if( !edit->validator() || edit->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
-                        ext->SetValue( edit->name(), enabled ? text.toAscii().constData() : "" );
+                        ext->SetValue( edit->name(), enabled ? text.toStdString() : "" );
                         edit->setPaletteBackgroundColor( Qt::white );
                     }
                     else
@@ -444,7 +444,7 @@ void ExtensionsPanel::Commit()
                     int pos = 0;
                     if( !combo->validator() || combo->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
-                        ext->SetValue( ( *it )->name(), enabled ? text.toAscii().constData() : "" );
+                        ext->SetValue( ( *it )->name(), enabled ? text.toStdString() : "" );
                         combo->setPaletteBackgroundColor( Qt::white );
                     }
                     else
@@ -499,7 +499,7 @@ void ExtensionsPanel::UpdateDisplay()
             case AttributeType::ETypeDictionary:
                 {
                     QComboBox* combo = static_cast< QComboBox* >( *it );
-                    const std::string& selected = GetDictionaryString( value.toAscii().constData(), *attribute, extensions_ );
+                    const std::string& selected = GetDictionaryString( value.toStdString(), *attribute, extensions_ );
                     if( !selected.empty() )
                         combo->setCurrentText( selected.c_str() );
                 }

@@ -101,7 +101,7 @@ namespace
                     name.replace( indexBadCaracter, 1, "-" );
                     indexBadCaracter = regExp.lastIndexIn( name );
                 }
-                mission->strName_ = name.toAscii().constData();
+                mission->strName_ = name.toStdString();
             }
         }
     }

@@ -149,7 +149,7 @@ void ProfilesPanel::NotifyUpdated( const Profile& profile )
     for( int i = 0; i < dataModel_->rowCount(); ++i )
         if( QStandardItem* item = dataModel_->item( i, 1 ) )
         {
-            unsigned int count = profile.GetProfileCount( item->text().toAscii().constData() );
+            unsigned int count = profile.GetProfileCount( item->text().toStdString() );
             if( QStandardItem* connected = dataModel_->item( i, 4 ) )
                 connected->setIcon( count ? green_ : red_ );
             if( QStandardItem* number = dataModel_->item( i, 5 ) )
@@ -189,7 +189,7 @@ void ProfilesPanel::Reconnect()
     if( index.row() != -1 )
         if( const UserProfile* profile = profiles_.at( index.row() ) )
         {
-            const std::string& login = profile->GetLogin().toAscii().constData();
+            const std::string& login = profile->GetLogin().toStdString();
             if( profile->IsPasswordProtected() )
             {
                 ReconnectLoginDialog* pLoginDialog = new ReconnectLoginDialog( this, *profile, network_ );

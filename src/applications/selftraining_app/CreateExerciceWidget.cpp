@@ -155,7 +155,7 @@ void CreateExerciceWidget::Update()
     QListWidgetItem* item = exerciseList_->currentItem();
     if( item )
     {
-        std::string exercise( item->text().toAscii().constData() );
+        std::string exercise( item->text().toStdString() );
         contentListModel_.clear();
         frontend::BuildExerciseFeatures( exercise, config_, contentListModel_ );
         contentList_->expandAll();
@@ -184,7 +184,7 @@ void CreateExerciceWidget::UpdateExercises()
     QStringList decisionalModels = frontend::commands::ListModels( config_ );
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
+        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
         for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
             editModelList_->addItem( QString( "%1/%2" ).arg( *it ).arg( *itP ) );
     }
@@ -208,7 +208,7 @@ void CreateExerciceWidget::CreateExercise()
         if( name.isEmpty() || page_.ExerciceExists( name ) )
             return;
 
-        const std::string terrain = editTerrainList_->currentText().toAscii().constData();
+        const std::string terrain = editTerrainList_->currentText().toStdString();
         const QStringList model = editModelList_->currentText().split( "/" );
 
         if( saveAsGroupBox_->isChecked() )
@@ -217,11 +217,11 @@ void CreateExerciceWidget::CreateExercise()
             if( item == 0 )
                 return;
             frontend::ExerciseCopyParameters params;
-            params.to_ = name.toAscii().constData();
+            params.to_ = name.toStdString();
             params.terrain_ = terrain;
-            params.model_ = model.front().toAscii().constData();
-            params.physical_ = model.back().toAscii().constData();
-            params.from_ = item->text().toAscii().constData();
+            params.model_ = model.front().toStdString();
+            params.physical_ = model.back().toStdString();
+            params.from_ = item->text().toStdString();
             if( contentList_->isVisible() )
             {
                 params.itemModel_ = &contentListModel_;
@@ -229,13 +229,13 @@ void CreateExerciceWidget::CreateExercise()
             }
             else if( checkpointCopyPanel_->isVisible() && !checkpoint_.empty() )
             {
-                bfs::path checkpointPath( config_.GetCheckpointsDir( item->text().toAscii().constData(), session_ ) );
+                bfs::path checkpointPath( config_.GetCheckpointsDir( item->text().toStdString(), session_ ) );
                 params.checkpoint_ = ( checkpointPath / checkpoint_ ).string();
                 frontend::CreateExerciseAsCopyOfCheckpoint( config_, params );
             }
         }
         else
-            frontend::CreateExercise( config_, name.toAscii().constData(), terrain, model.front().toAscii().constData(), model.back().toAscii().constData() );
+            frontend::CreateExercise( config_, name.toStdString(), terrain, model.front().toStdString(), model.back().toStdString() );
 
         page_.Edit( name );
     }
@@ -262,7 +262,7 @@ void CreateExerciceWidget::OnSelectionChanged( QListWidgetItem* item )
 {
     if( !item )
         return;
-    std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( item->text().toAscii().constData() ) );
+    std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( item->text().toStdString() ) );
     std::string terrain, physical, dataSet;
     *xis >> xml::start( "exercise" )
             >> xml::start( "terrain" )
@@ -280,8 +280,8 @@ void CreateExerciceWidget::OnSelectionChanged( QListWidgetItem* item )
     int indexModel = 0;
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
-        if( std::strcmp( (*it).toAscii().constData(), dataSet.c_str() ) == 0 )
+        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
+        if( std::strcmp( (*it).toStdString().c_str(), dataSet.c_str() ) == 0 )
         {
             int index = physicalModels.indexOf( QString( physical.c_str() ) );
             if( index != -1 )
@@ -301,7 +301,7 @@ void CreateExerciceWidget::OnSessionSelected( const QString& session )
 {
     if( QListWidgetItem* item = exerciseList_->currentItem() )
     {
-        session_ = session.toAscii().constData();
+        session_ = session.toStdString();
         checkpointList_->Update( item->text(), session );
         page_.UpdateEditButton();
     }
@@ -313,7 +313,7 @@ void CreateExerciceWidget::OnSessionSelected( const QString& session )
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::OnCheckpointSelected( const QString& checkpoint )
 {
-    checkpoint_ = frontend::commands::CheckpointExists( config_, exerciseList_->currentItem()->text().toAscii().constData(), session_, checkpoint.toAscii().constData() ) ? checkpoint.toStdString() : "";
+    checkpoint_ = frontend::commands::CheckpointExists( config_, exerciseList_->currentItem()->text().toStdString(), session_, checkpoint.toStdString() ) ? checkpoint.toStdString() : "";
     page_.UpdateEditButton();
 }
 

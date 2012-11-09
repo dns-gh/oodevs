@@ -66,7 +66,7 @@ void ChatRoom::OnTextChanged( const QString& text )
 // -----------------------------------------------------------------------------
 void ChatRoom::OnSend()
 {
-    Send( filter_.toAscii().constData() );
+    Send( filter_.toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void ChatRoom::Send( const std::string& target )
 {
     if( !text_->text().isEmpty() )
     {
-        const std::string baseMessage = text_->text().toAscii().constData();
+        const std::string baseMessage = text_->text().toStdString();
         const std::string message = *baseMessage.begin() == '/' ? baseMessage : "/text " + baseMessage;
         publisher_.Send( target, message );
         text_->clear();

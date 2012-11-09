@@ -141,7 +141,7 @@ void AgentTemplateElement::Serialize( xml::xostream& output )
     if( color_ )
     {
         kernel::Color_ABC::T_Color color = *color_;
-        std::string strColor = QColor( color.get< 0 >(), color.get< 1 >(), color.get< 2 >() ).name().toAscii().constData();
+        std::string strColor = QColor( color.get< 0 >(), color.get< 1 >(), color.get< 2 >() ).name().toStdString();
         boost::replace_all( strColor, "#", "0x" );
         output << xml::attribute( "color", strColor );
     }

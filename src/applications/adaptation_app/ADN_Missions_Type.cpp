@@ -18,7 +18,7 @@ ADN_Missions_Type::ADN_Missions_Type()
 
 ADN_Missions_Type::ADN_Missions_Type( const std::string& name )
         : name_( name )
-        , displayName_( qApp->translate( "ADN_Tr", name.c_str() ).toAscii().constData() )
+        , displayName_( qApp->translate( "ADN_Tr", name.c_str() ).toStdString() )
         , isAllowed_( false )
 {
     // NOTHING

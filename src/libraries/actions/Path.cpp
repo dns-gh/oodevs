@@ -127,7 +127,7 @@ void Path::AddPoint( const geometry::Point2f& p, std::size_t i, std::size_t coun
         label = tools::translate( "Parameter", "Destination" );
     else
         label = tools::translate( "Parameter", "Way point %1" ).arg( i + 1 );
-    AddParameter( *new PathPoint( OrderParameter( label.toAscii().constData(), "pathpoint", false ), converter_, pt ) );
+    AddParameter( *new PathPoint( OrderParameter( label.toStdString(), "pathpoint", false ), converter_, pt ) );
 }
 
 // -----------------------------------------------------------------------------

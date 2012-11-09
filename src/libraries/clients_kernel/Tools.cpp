@@ -46,7 +46,7 @@ QDateTime tools::BoostTimeToQTime( const boost::posix_time::ptime& btime )
 // -----------------------------------------------------------------------------
 boost::posix_time::ptime tools::QTimeToBoostTime( const QDateTime& qtime )
 {
-    return boost::posix_time::from_iso_string( qtime.toString( "yyyyMMddThhmmss" ).toAscii().constData() );
+    return boost::posix_time::from_iso_string( qtime.toString( "yyyyMMddThhmmss" ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ QLocale tools::readLocale()
 // -----------------------------------------------------------------------------
 std::string tools::readLang()
 {
-    return tools::readLocale().name().left( 2 ).toAscii().constData();
+    return tools::readLocale().name().left( 2 ).toStdString();
 }
 
 // -----------------------------------------------------------------------------

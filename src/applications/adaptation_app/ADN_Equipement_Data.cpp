@@ -130,11 +130,11 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "network-usable", bNetworkUsable_ );
     helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( dotationNature );
     if( !pNature )
-        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( dotationNature.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).toStdString(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( dotationNature.c_str() ).toStdString() );
     ptrResourceNature_ = pNature;
     helpers::LogisticSupplyClass* pClass = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindLogisticSupplyClass( logisticSupplyClass );
     if( !pClass )
-        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Equipment_Data", "Equipment - Invalid resource logistic supply class '%1'" ).arg( logisticSupplyClass.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).toStdString(), tools::translate( "Equipment_Data", "Equipment - Invalid resource logistic supply class '%1'" ).arg( logisticSupplyClass.c_str() ).toStdString() );
     ptrLogisticSupplyClass_ = pClass;
 }
 
@@ -287,7 +287,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadPh( xml::xistream& input )
             vModifStance_[i]->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Equipment - Invalid stance '%1'" ).arg( posture.c_str() ).toAscii().constData() );
+    throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Equipment - Invalid stance '%1'" ).arg( posture.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -312,7 +312,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadIndirectFire( xml::xistream& in
     input >> xml::attribute( "type", type );
     E_TypeMunitionTirIndirect indirect = ADN_Tr::ConvertToTypeMunitionTirIndirect( type );
     if( indirect == (E_TypeMunitionTirIndirect)-1 )
-        throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Equipment - Invalid indirect fire ammo type '%1'" ).arg( type.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Equipment - Invalid indirect fire ammo type '%1'" ).arg( type.c_str() ).toStdString() );
 
     switch( indirect )
     {
@@ -514,7 +514,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input 
     std::string protection = input.attribute< std::string >( "protection" );
     helpers::IT_AttritionInfos_Vector itAttrition = std::find_if( attritions_.begin(), attritions_.end(), helpers::AttritionInfos::Cmp( protection ));
     if( itAttrition == attritions_.end() )
-        throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toStdString() );
     (*itAttrition)->ReadArchive( input );
 }
 
@@ -527,7 +527,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer( xml::xistream& inp
     std::string material = input.attribute< std::string >( "material-type" );
     helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
-        throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Equipment - Invalid urban Material type '%1'" ).arg( material.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Equipment - Invalid urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
     (*it)->ReadArchive( input );
 }
 
@@ -546,7 +546,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
     {
         nType_ = ENT_Tr::ConvertToAmmunitionType( type );
         if( nType_ == E_AmmunitionType( -1 ) )
-            throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).toAscii().constData() );
+            throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).toStdString() );
     }
 
     if( input.has_child( "illuminating" ) )
@@ -785,7 +785,7 @@ void ADN_Equipement_Data::ReadResource( xml::xistream& input )
     input >> xml::attribute( "category", category );
     E_DotationFamily nResourceType = ENT_Tr::ConvertToDotationFamily( category );
     if( nResourceType == -1 )
-        throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Equipment - Invalid resource type '%1'" ).arg( category.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Equipment - Invalid resource type '%1'" ).arg( category.c_str() ).toStdString() );
     resources_.at( nResourceType )->ReadArchive( input );
 }
 

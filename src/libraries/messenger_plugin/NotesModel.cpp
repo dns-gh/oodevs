@@ -233,15 +233,15 @@ void NotesModel::CreateHeader( std::ostream& os )
                 >> xml::attribute( "physical", physicalBase );
 
     // $$$$ JSR 2011-08-05: Code commenté et remplacé par le bloc en dessous à cause d'un crash en 64 bits
-    /*os << tools::translate( "NoteModel", "Exercise" ).toAscii().constData() + ":;" + path.parent_path().filename() << std::endl;
-    os << tools::translate( "NoteModel", "Physical base" ).toAscii().constData() + ":;" + physicalBase << std::endl;
-    os << tools::translate( "NoteModel", "Decisional base" ).toAscii().constData() + ":;" + decisionalBase << std::endl;
-    os << tools::translate( "NoteModel", "Terrain" ).toAscii().constData() + ":;" + terrain << std::endl;
+    /*os << tools::translate( "NoteModel", "Exercise" ).toStdString() + ":;" + path.parent_path().filename() << std::endl;
+    os << tools::translate( "NoteModel", "Physical base" ).toStdString() + ":;" + physicalBase << std::endl;
+    os << tools::translate( "NoteModel", "Decisional base" ).toStdString() + ":;" + decisionalBase << std::endl;
+    os << tools::translate( "NoteModel", "Terrain" ).toStdString() + ":;" + terrain << std::endl;
 
-    os << tools::translate( "NoteModel", "Note name" ).toAscii().constData() + ";";
-    os << tools::translate( "NoteModel", "Parent" ).toAscii().constData() + ";";
-    os << tools::translate( "NoteModel", "Value" ).toAscii().constData() + ";";
-    os << tools::translate( "NoteModel", "Comments" ).toAscii().constData() << std::endl;*/
+    os << tools::translate( "NoteModel", "Note name" ).toStdString() + ";";
+    os << tools::translate( "NoteModel", "Parent" ).toStdString() + ";";
+    os << tools::translate( "NoteModel", "Value" ).toStdString() + ";";
+    os << tools::translate( "NoteModel", "Comments" ).toStdString() << std::endl;*/
 
     os << "Exercise" << ":;" << path.parent_path().filename() << std::endl;
     os << "Physical base" << ":;" << physicalBase << std::endl;

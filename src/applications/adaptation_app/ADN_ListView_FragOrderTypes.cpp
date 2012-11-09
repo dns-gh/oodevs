@@ -163,7 +163,7 @@ std::string ADN_ListView_FragOrderTypes::GetToolTipFor( const QModelIndex& index
     FillMultiUsersList( tr( "Crowds models" ), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_Population, *pCastData ), result );
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).toAscii().constData();
+        result = tr( "<b>Unused</b>" ).toStdString();
     return result;
 }
 

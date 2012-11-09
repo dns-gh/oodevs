@@ -53,8 +53,8 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
         nameResolver.GetRankName( msg.rank(), rank_ );
     if( msg.has_wound() )
         nameResolver.GetWoundName( msg.wound(), wound_ );
-    std::string strYes = tools::translate( "logistic", "yes" ).toAscii().constData();
-    std::string strNo = tools::translate( "logistic", "no" ).toAscii().constData();
+    std::string strYes = tools::translate( "logistic", "yes" ).toStdString();
+    std::string strNo = tools::translate( "logistic", "no" ).toStdString();
     if( msg.has_mental_wound() )
         mental_ = msg.mental_wound() ? strYes : strNo;
     if( msg.has_nbc_contaminated() )
@@ -92,8 +92,8 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
         nameResolver.GetMedicalName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
-    std::string strYes = tools::translate( "logistic", "yes" ).toAscii().constData();
-    std::string strNo = tools::translate( "logistic", "no" ).toAscii().constData();
+    std::string strYes = tools::translate( "logistic", "yes" ).toStdString();
+    std::string strNo = tools::translate( "logistic", "no" ).toStdString();
     if( msg.has_wound() )
         nameResolver.GetWoundName( msg.wound(), wound_ );
     if( msg.has_mental_wound() )
@@ -163,21 +163,21 @@ void MedicalResolver::ManageMessage( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void MedicalResolver::InitHeader()
 {
-    MedicalConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData() );
-    consign.tick_           = tools::translate( "logistic", "tick" ).toAscii().constData();
-    consign.creationTick_   = tools::translate( "logistic", "creation tick" ).toAscii().constData();
-    consign.stateEndTick_   = tools::translate( "logistic", "state end tick" ).toAscii().constData();
-    consign.simTime_        = tools::translate( "logistic", "GDH" ).toAscii().constData();
-    consign.unitId_         = tools::translate( "logistic", "unit id" ).toAscii().constData();
-    consign.providerId_     = tools::translate( "logistic", "provider id" ).toAscii().constData();
-    consign.stateId_        = tools::translate( "logistic", "state id" ).toAscii().constData();
-    consign.rank_           = tools::translate( "logistic", "rank" ).toAscii().constData();
-    consign.wound_          = tools::translate( "logistic", "wound" ).toAscii().constData();
-    consign.nbc_            = tools::translate( "logistic", "nbc" ).toAscii().constData();
-    consign.mental_         = tools::translate( "logistic", "mental" ).toAscii().constData();
-    consign.unit_           = tools::translate( "logistic", "unit" ).toAscii().constData();
-    consign.provider_       = tools::translate( "logistic", "provider" ).toAscii().constData();
-    consign.state_          = tools::translate( "logistic", "state" ).toAscii().constData();
+    MedicalConsignData consign( tools::translate( "logistic", "request id" ).toStdString() );
+    consign.tick_           = tools::translate( "logistic", "tick" ).toStdString();
+    consign.creationTick_   = tools::translate( "logistic", "creation tick" ).toStdString();
+    consign.stateEndTick_   = tools::translate( "logistic", "state end tick" ).toStdString();
+    consign.simTime_        = tools::translate( "logistic", "GDH" ).toStdString();
+    consign.unitId_         = tools::translate( "logistic", "unit id" ).toStdString();
+    consign.providerId_     = tools::translate( "logistic", "provider id" ).toStdString();
+    consign.stateId_        = tools::translate( "logistic", "state id" ).toStdString();
+    consign.rank_           = tools::translate( "logistic", "rank" ).toStdString();
+    consign.wound_          = tools::translate( "logistic", "wound" ).toStdString();
+    consign.nbc_            = tools::translate( "logistic", "nbc" ).toStdString();
+    consign.mental_         = tools::translate( "logistic", "mental" ).toStdString();
+    consign.unit_           = tools::translate( "logistic", "unit" ).toStdString();
+    consign.provider_       = tools::translate( "logistic", "provider" ).toStdString();
+    consign.state_          = tools::translate( "logistic", "state" ).toStdString();
     SetHeader( consign );
 }
 

@@ -170,7 +170,7 @@ void SvgLocationDrawer::DrawShape( const T& shape )
 
         const geometry::BoundingBox box( viewport_.Left(), viewport_.Bottom(), viewport_.Right(), viewport_.Top() );
         context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04:
-        svg::Color svgColor( color_.name().toAscii().constData() );
+        svg::Color svgColor( color_.name().toStdString() );
         svg::Opacity opacity( static_cast< float >( color_.alphaF() ) );
         context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
         context_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );

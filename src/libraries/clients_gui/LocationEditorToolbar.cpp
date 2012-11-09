@@ -113,7 +113,7 @@ void LocationEditorToolbar::CreateBookmark()
         if( !ok || name.isEmpty() )
             return;
         bookmarksMenu_->clear();
-        bookmarks_.push_back( Bookmark( name.toAscii().constData(), utm ) );
+        bookmarks_.push_back( Bookmark( name.toStdString(), utm ) );
         layer_.AddLocation( menuPoint_ );
         unsigned int i = 0;
         for( CIT_Bookmarks it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )

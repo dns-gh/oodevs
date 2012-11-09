@@ -73,7 +73,7 @@ void SessionList::Update( const QString& exercise )
         exercise_ = exercise;
         comments_->clear();
         list_->clear();
-        list_->addItems( frontend::commands::ListSessions( config_, exercise.toAscii().constData() ) );
+        list_->addItems( frontend::commands::ListSessions( config_, exercise.toStdString() ) );
         list_->setCurrentRow( 0 );
     }
 }
@@ -98,7 +98,7 @@ void SessionList::ReadComments( const QString& session )
     try
     {
         std::string date, name, comment;
-        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( (bfs::path( config_.BuildSessionDir( exercise_.toAscii().constData(), session.toAscii().constData() ) ) / "session.xml" ).string() );
+        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( (bfs::path( config_.BuildSessionDir( exercise_.toStdString(), session.toStdString() ) ) / "session.xml" ).string() );
         *xis >> xml::start( "session" )
                 >> xml::start( "meta" );
         if( xis->has_child( "name" ) )

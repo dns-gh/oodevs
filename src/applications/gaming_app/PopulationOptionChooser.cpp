@@ -106,7 +106,7 @@ void PopulationOptionChooser::OnOccupationChanged( QListWidgetItem* item )
 {
     if( item )
     {
-        kernel::ChangePopulationDisplay display( item->text().toAscii().constData(), item->checkState() == Qt::Checked );
+        kernel::ChangePopulationDisplay display( item->text().toStdString(), item->checkState() == Qt::Checked );
         controllers_.controller_.Update( display );
     }
 }

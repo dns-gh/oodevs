@@ -135,7 +135,7 @@ void Parameter_ABC::DrawToolTip( const Viewport_ABC& viewport, const GlTools_ABC
 // -----------------------------------------------------------------------------
 void Parameter_ABC::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "name", name_.toAscii().constData() );
+    xos << xml::attribute( "name", name_.toStdString() );
     std::string id = GetKeyName();
     if( !id.empty() )
         xos << xml::attribute( "identifier", id.c_str() );

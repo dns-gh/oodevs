@@ -262,7 +262,7 @@ void UrbanMenuManager::OnDeleteInfrastructures()
 // -----------------------------------------------------------------------------
 void UrbanMenuManager::OnCreateInfrastructure( const QString& name )
 {
-    kernel::InfrastructureType* type = staticModel_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::Find( name.toAscii().constData() );
+    kernel::InfrastructureType* type = staticModel_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::Find( name.toStdString() );
     if( !type )
         return;
     if( element_ )
@@ -295,7 +295,7 @@ void UrbanMenuManager::DoApplyInfrastructure( kernel::Entity_ABC& object, kernel
 // -----------------------------------------------------------------------------
 void UrbanMenuManager::OnApplyTemplate( const QString& name )
 {
-    const kernel::UrbanObject_ABC::UrbanTemplateTypePtr type = staticModel_.objectTypes_.tools::StringResolver< kernel::UrbanTemplateType >::Find( name.toAscii().constData() );
+    const kernel::UrbanObject_ABC::UrbanTemplateTypePtr type = staticModel_.objectTypes_.tools::StringResolver< kernel::UrbanTemplateType >::Find( name.toStdString() );
     if( !type )
         return;
     if( element_ )

@@ -82,7 +82,7 @@ void ADN_Radars_Data::DetectTimes::ReadAcquisitionTime( xml::xistream& input, bo
         detectTime_ = time;
     }
     else
-        throw ADN_DataException( "Invalid data", tools::translate( "Radars_Data", "Sensors - Invalid level '%1'" ).arg( level.c_str() ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Radars_Data", "Sensors - Invalid level '%1'" ).arg( level.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +181,7 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToRadarType( type );
     if( nType_ == E_RadarType(-1 ) )
-        throw ADN_DataException( tools::translate( "Radars_Data", "Invalid data").toAscii().constData(), tools::translate( "Radars_Data", "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Radars_Data", "Invalid data").toStdString(), tools::translate( "Radars_Data", "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).toStdString() );
 
     input >> xml::attribute( "action-range", rRange_ )
           >> xml::optional >> xml::attribute( "min-height", rMinHeight_ )
@@ -216,7 +216,7 @@ void ADN_Radars_Data::RadarInfos::ReadDetectableActivity( xml::xistream& input )
           >> xml::attribute( "value", value );
     unsigned n = (unsigned)ADN_Tr::ConvertToConsumptionType( consumption );
     if( n == unsigned( -1 ) )
-        throw ADN_DataException( tools::translate( "Radars_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Radars_Data", "Sensors - Invalid activity '%1'" ).arg( consumption.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Radars_Data", "Invalid data" ).toStdString(), tools::translate( "Radars_Data", "Sensors - Invalid activity '%1'" ).arg( consumption.c_str() ).toStdString() );
     detectableActivities_[n ] = value;
     bHasDetectableActivities_ = bHasDetectableActivities_.GetData() || value;
 }

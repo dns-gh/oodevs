@@ -72,7 +72,7 @@ FilterOrbatReIndexer::~FilterOrbatReIndexer()
 // -----------------------------------------------------------------------------
 const std::string FilterOrbatReIndexer::GetName() const
 {
-    return tools::translate( "FilterOrbatReIndexer", "Import an order of battle" ).toAscii().constData();
+    return tools::translate( "FilterOrbatReIndexer", "Import an order of battle" ).toStdString();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ const std::string FilterOrbatReIndexer::GetName() const
 // -----------------------------------------------------------------------------
 const std::string FilterOrbatReIndexer::GetDescription() const
 {
-    return tools::translate( "FilterOrbatReIndexer", "Import an order of battle into current exercise.<br>May import the populations and the objects if relative checkbox are checked." ).toAscii().constData();
+    return tools::translate( "FilterOrbatReIndexer", "Import an order of battle into current exercise.<br>May import the populations and the objects if relative checkbox are checked." ).toStdString();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ const std::string FilterOrbatReIndexer::GetDescription() const
 // -----------------------------------------------------------------------------
 bool FilterOrbatReIndexer::IsValid() const
 {
-    return filename_ && !filename_->text().isEmpty() && boost::filesystem::exists( filename_->text().toAscii().constData() );
+    return filename_ && !filename_->text().isEmpty() && boost::filesystem::exists( filename_->text().toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ void FilterOrbatReIndexer::OnBrowse()
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
     filename_->setText( filename );
-    emit( statusChanged( IsValid() && partiesListView_->ParseOrbatFile( filename_->text().toAscii().constData() ) ) );
+    emit( statusChanged( IsValid() && partiesListView_->ParseOrbatFile( filename_->text().toStdString() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ void FilterOrbatReIndexer::Execute()
 {
     // Create new order of battle
     shift_ = model_.GetIdManager().GetNextId();
-    xml::xifstream xis( filename_->text().toAscii().constData() );
+    xml::xifstream xis( filename_->text().toStdString() );
     xml::xostringstream xos;
     xos << xml::start( "orbat" );
     xis >> xml::start( "orbat" )

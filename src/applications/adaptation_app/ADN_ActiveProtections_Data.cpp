@@ -130,7 +130,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml
         >> xml::attribute( "coefficient", coefficient_ );
     ADN_Equipement_Data::CategoryInfo* pWeapon = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pWeapon )
-        throw ADN_DataException( tools::translate( "ActiveProtections_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "ActiveProtections_Data",  "Equipment - Invalid amunition '%1/%2'" ).arg( strAmmunition.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "ActiveProtections_Data",  "Invalid data" ).toStdString(), tools::translate( "ActiveProtections_Data",  "Equipment - Invalid amunition '%1/%2'" ).arg( strAmmunition.c_str() ).toStdString() );
     ptrWeapon_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pWeapon;
     strName_ = pWeapon->strName_.GetData();
 }
@@ -220,7 +220,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistr
         >> xml::list( "weapon", *this, &ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon );
     ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
     if( !pAmmo )
-        throw ADN_DataException( tools::translate( "ActiveProtections_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "ActiveProtections_Data",  "Active protection '%1' - Invalid ammunition type '%2'" ).arg( strName_.GetData().c_str() ,strAmmunition.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "ActiveProtections_Data",  "Invalid data" ).toStdString(), tools::translate( "ActiveProtections_Data",  "Active protection '%1' - Invalid ammunition type '%2'" ).arg( strName_.GetData().c_str() ,strAmmunition.c_str() ).toStdString() );
     ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
 }
 

@@ -36,8 +36,8 @@ namespace
 // -----------------------------------------------------------------------------
 StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool legacy, bool launchDispatchedIfNotEmbedded /* = true*/, std::string commanderEndpoint /* = ""*/, std::string processJobName /* = ""*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
-    , exercise_ ( exercise.toAscii().constData() )
-    , session_ ( session.toAscii().constData() )
+    , exercise_ ( exercise.toStdString() )
+    , session_ ( session.toStdString() )
     , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
     , percentage_( 0 )
 {

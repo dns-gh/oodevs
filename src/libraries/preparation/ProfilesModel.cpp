@@ -188,7 +188,7 @@ bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity ) const
 bool ProfilesModel::IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( (*it)->GetLogin().toAscii().constData() == profile && (*it)->IsReadable( entity ) )
+        if( (*it)->GetLogin().toStdString() == profile && (*it)->IsReadable( entity ) )
                 return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
     return superior ? IsReadable( *superior, profile ) : false;
@@ -201,7 +201,7 @@ bool ProfilesModel::IsReadable( const kernel::Entity_ABC& entity, const std::str
 bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity, const std::string& profile ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( (*it)->GetLogin().toAscii().constData() == profile && (*it)->IsWriteable( entity ) )
+        if( (*it)->GetLogin().toStdString() == profile && (*it)->IsWriteable( entity ) )
             return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
     return superior ? IsWriteable( *superior, profile ) : false;
@@ -292,7 +292,7 @@ void ProfilesModel::Visit( T_Units& units ) const
         std::vector< unsigned long > ids;
         (*it)->Visit( ids );
         BOOST_FOREACH( unsigned long id, ids )
-            units[ id ].insert( (*it)->GetLogin().toAscii().constData() );
+            units[ id ].insert( (*it)->GetLogin().toStdString() );
     }
 }
 
@@ -303,7 +303,7 @@ void ProfilesModel::Visit( T_Units& units ) const
 void ProfilesModel::Visit( T_Profiles& profiles ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        profiles.insert( (*it)->GetLogin().toAscii().constData() );
+        profiles.insert( (*it)->GetLogin().toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -324,7 +324,7 @@ std::vector< std::string > ProfilesModel::GetProfilesWhoCanRead( const kernel::E
     std::vector< std::string > result;
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( ( *it )->IsReadable( entity ) )
-            result.push_back( ( *it )->GetLogin().toAscii().constData() );
+            result.push_back( ( *it )->GetLogin().toStdString() );
     return result;
 }
 
@@ -337,6 +337,6 @@ std::vector< std::string > ProfilesModel::GetProfilesWhoCanWrite( const kernel::
     std::vector< std::string > result;
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( ( *it )->IsWriteable( entity ) )
-            result.push_back( ( *it )->GetLogin().toAscii().constData() );
+            result.push_back( ( *it )->GetLogin().toStdString() );
     return result;
 }

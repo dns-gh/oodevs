@@ -80,7 +80,7 @@ QWidget* ParamResourceNetworkNode::BuildInterface( QWidget* parent )
 void ParamResourceNetworkNode::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
     if( IsChecked() && selected_ )
-        parameter.AddParameter( *new actions::parameters::ResourceNetworkNode( parameter_, *selected_, resourceName_->text().toAscii().constData(), controller_ ) );
+        parameter.AddParameter( *new actions::parameters::ResourceNetworkNode( parameter_, *selected_, resourceName_->text().toStdString(), controller_ ) );
     else
         parameter.AddParameter( *new actions::parameters::ResourceNetworkNode( parameter_, controller_ ) );
 }

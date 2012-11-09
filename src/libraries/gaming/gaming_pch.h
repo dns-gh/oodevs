@@ -50,12 +50,12 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 
 inline std::ostream& operator<<( std::ostream& os, const QString& s )
 {
-    return os << s.toAscii().constData();
+    return os << s.toStdString();
 }
 
 inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
 {
-    return xos << s.toAscii().constData();
+    return xos << s.toStdString();
 }
 
 #endif // __gaming_pch_h_

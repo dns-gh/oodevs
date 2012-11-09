@@ -163,7 +163,7 @@ void MessagePanel::OnButtonPressed()
     QAbstractButton* button = dynamic_cast< QAbstractButton* >( QObject::sender() );
     if( button )
     {
-        const std::string message = "/choose " + activePrompt_ + " \"" + button->text().toAscii().constData() + "\"";
+        const std::string message = "/choose " + activePrompt_ + " \"" + button->text().toStdString() + "\"";
         publisher_->Send( "", message );
     }
 }

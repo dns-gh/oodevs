@@ -108,7 +108,7 @@ template< typename I >
 void EntityImplementation< I >::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", static_cast< long >( id_ ) )
-        << xml::attribute( "name", name_.toAscii().constData() );
+        << xml::attribute( "name", name_.toStdString() );
 }
 
 }

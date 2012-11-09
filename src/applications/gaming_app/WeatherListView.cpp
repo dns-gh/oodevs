@@ -71,7 +71,7 @@ void WeatherListView::Update( const MeteoModel& model )
 // -----------------------------------------------------------------------------
 void WeatherListView::CreateItem()
 {
-    boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).toAscii().constData() ) );
+    boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).toStdString() ) );
     weather->SetCreated( true );
     weather->SetPeriod( tools::QTimeToBoostTime( simulation_.GetDateTime() ), tools::QTimeToBoostTime( simulation_.GetDateTime() ) );
 
@@ -90,7 +90,7 @@ void WeatherListView::DeleteItem()
     {
         const QString text = item->text();
         for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
-            if( (*it)->GetName() == text.toAscii().constData() )
+            if( (*it)->GetName() == text.toStdString() )
             {
                 trashedWeather_.push( ( *it )->GetId() );
                 break;

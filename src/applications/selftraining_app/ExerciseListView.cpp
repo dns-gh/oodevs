@@ -153,10 +153,10 @@ QStandardItem* ExerciseListView::FindExerciseItem( const QString& path, QStandar
 // -----------------------------------------------------------------------------
 QString ExerciseListView::GetExerciseDisplayName( const QString& exercise ) const
 {
-    std::string displayName( exercise.toAscii().constData() );
+    std::string displayName( exercise.toStdString() );
     try
     {
-        const std::string file = config_.GetExerciseFile( exercise.toAscii().constData() );
+        const std::string file = config_.GetExerciseFile( exercise.toStdString() );
         if( boost::filesystem::exists( file ) )
         {
             std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );

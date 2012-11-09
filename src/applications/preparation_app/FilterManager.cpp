@@ -74,7 +74,7 @@ void FilterManager::ReadFilter( xml::xistream& xis, QListWidget& list, Q3WidgetS
     else
     {
         if( !xis.has_attribute( "target" ) || !xis.has_attribute( "xsl" ) || !xis.has_attribute( "output" ) )
-            throw std::runtime_error( tools::translate( "FilterManager", "Bad filter attribute, either 'command' attribute or 'target', 'xsl' and 'output' attributes." ).toAscii().constData() );
+            throw std::runtime_error( tools::translate( "FilterManager", "Bad filter attribute, either 'command' attribute or 'target', 'xsl' and 'output' attributes." ).toStdString() );
         filter = new FilterXsl( xis, config_ );
     }
     AddFilter( *filter, list, stack );

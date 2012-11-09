@@ -75,7 +75,7 @@ Position PopulationKnowledgeManipulator::GetPosition() const
 // -----------------------------------------------------------------------------
 std::string PopulationKnowledgeManipulator::GetOwnerTeam() const
 {
-    return std::string( knowledge_.GetOwner().GetName().toAscii().constData() );
+    return std::string( knowledge_.GetOwner().GetName().toStdString() );
     // return knowledge_.model_.knowledgeGroups().Get( knowledge_.knowledgeGroup_.GetId() ).team_.name_;
 }
 

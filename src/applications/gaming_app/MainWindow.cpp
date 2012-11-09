@@ -810,7 +810,7 @@ void MainWindow::OnAddRaster()
         {
             QStringList parameters;
             parameters << ( std::string( "--config=" ) + bfs::system_complete( config_.BuildTerrainChildFile( "config.xml" ) ).string() ).c_str();
-            parameters << ( std::string( "--raster=" ) + addRasterDialog_->GetFiles().toAscii().constData() ).c_str();
+            parameters << ( std::string( "--raster=" ) + addRasterDialog_->GetFiles().toStdString() ).c_str();
             parameters << ( std::string( "--pixelsize=" ) + boost::lexical_cast< std::string >( addRasterDialog_->GetPixelSize() ) ).c_str();
             bfs::path filename = bfs::system_complete( bfs::path( config_.GetGraphicsDirectory() ) / "~~tmp.texture.bin" );
             parameters << ( std::string( "--file=" ) + filename.string() ).c_str();

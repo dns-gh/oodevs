@@ -86,7 +86,7 @@ UserProfile::~UserProfile()
 void UserProfile::RequestCreation()
 {
     authentication::ProfileCreationRequest message;
-    message().mutable_profile()->set_login( login_.toAscii().constData() );
+    message().mutable_profile()->set_login( login_.toStdString() );
     message().mutable_profile()->set_supervisor( supervision_ );
     message.Send( publisher_ );
 }
@@ -98,7 +98,7 @@ void UserProfile::RequestCreation()
 void UserProfile::RequestDeletion()
 {
     authentication::ProfileDestructionRequest message;
-    message().set_login( login_.toAscii().constData() );
+    message().set_login( login_.toStdString() );
     message.Send( publisher_ );
 }
 
@@ -119,10 +119,10 @@ namespace
 void UserProfile::RequestUpdate( const QString& newLogin )
 {
     authentication::ProfileUpdateRequest message;
-    message().set_login( login_.toAscii().constData() );
+    message().set_login( login_.toStdString() );
     sword::Profile& profile = *message().mutable_profile();
-    profile.set_login( newLogin.toAscii().constData() );
-    profile.set_password( password_.toAscii().constData() );
+    profile.set_login( newLogin.toStdString() );
+    profile.set_password( password_.toStdString() );
     profile.set_supervisor( supervision_ );
     CopyList( rights_.GetReadSides(), *profile.mutable_read_only_parties() );
     CopyList( rights_.GetWriteSides(), *profile.mutable_read_write_parties() );

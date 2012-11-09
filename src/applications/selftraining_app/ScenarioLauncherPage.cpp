@@ -47,7 +47,7 @@ namespace
     {
         const QFileInfo info( file.c_str() );
         const QString protocol = info.extension( false ) == "exe" ? "cmd" : "file";
-        return QString( "%1://%2" ).arg( protocol ).arg( info.absFilePath() ).toAscii().constData();
+        return QString( "%1://%2" ).arg( protocol ).arg( info.absFilePath() ).toStdString();
     }
 
     bool IsValid( const std::string& fileName, const tools::Loader_ABC& fileLoader )
@@ -247,7 +247,7 @@ void ScenarioLauncherPage::OnStart()
         return;
     const QString exerciseName = exercise_->GetName().c_str();
 
-    const std::string target = ReadTargetApplication( config_.GetExerciseFile( exerciseName.toAscii().constData() ), fileLoader_ );
+    const std::string target = ReadTargetApplication( config_.GetExerciseFile( exerciseName.toStdString() ), fileLoader_ );
     if( target == "gaming" )
     {
         const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
@@ -289,11 +289,11 @@ void ScenarioLauncherPage::OnStart()
     }
     if( target != "gaming" )
     {
-        const QStringList resources = GetResources( config_.GetExerciseFile( exerciseName.toAscii().constData() ), fileLoader_ );
+        const QStringList resources = GetResources( config_.GetExerciseFile( exerciseName.toStdString() ), fileLoader_ );
         if( ! resources.empty() )
         {
             std::string file = *resources.begin();
-            file = ( bfs::path( config_.GetExerciseDir( exerciseName.toAscii().constData() ) ) / file ).string();
+            file = ( bfs::path( config_.GetExerciseDir( exerciseName.toStdString() ) ) / file ).string();
             interpreter_.Interprete( MakeLink( file ).c_str() );
         }
     }
@@ -306,13 +306,13 @@ void ScenarioLauncherPage::OnStart()
 void ScenarioLauncherPage::CreateSession( const QString& exercise, const QString& session )
 {
     {
-        frontend::CreateSession action( config_, exercise.toAscii().constData(), session.toAscii().constData() );
+        frontend::CreateSession action( config_, exercise.toStdString(), session.toStdString() );
         action.SetDefaultValues();
         action.Commit();
     }
     {
         BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )
-            plugin->Commit( exercise.toAscii().constData(), session.toAscii().constData() );
+            plugin->Commit( exercise.toStdString(), session.toStdString() );
     }
 }
 

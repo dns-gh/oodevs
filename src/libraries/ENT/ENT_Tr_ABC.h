@@ -105,7 +105,7 @@ public:
     template < typename T > static void InitTr( converter<T> conv[], const char* szContext = "ENT" )
     {
         for ( unsigned int i = 0; !conv[i].simname_.empty(); ++i )
-            conv[i].trname_ = qApp->translate( szContext, conv[i].appname_.c_str() ).toAscii().constData();
+            conv[i].trname_ = qApp->translate( szContext, conv[i].appname_.c_str() ).toStdString();
     }
 };
 

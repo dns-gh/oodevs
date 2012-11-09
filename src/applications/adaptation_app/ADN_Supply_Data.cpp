@@ -132,20 +132,20 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
 
     dotationSupplyConvoyType_ = ADN_Tr::ConvertToSupplyConvoyType( dotationSupplyConvoyType );
     if( dotationSupplyConvoyType_ == E_SupplyConvoyType( -1 ) )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( dotationSupplyConvoyType.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toStdString(), tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( dotationSupplyConvoyType.c_str() ).toStdString() );
     stockSupplyConvoyType_ = ADN_Tr::ConvertToSupplyConvoyType( stockSupplyConvoyType );
     if( stockSupplyConvoyType_ == E_SupplyConvoyType( -1 ) )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( stockSupplyConvoyType.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toStdString(), tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( stockSupplyConvoyType.c_str() ).toStdString() );
 
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
     if( pUnit == 0 )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).toStdString(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).toStdString() );
     ptrUnit_ = pUnit;
 
     ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
     ADN_Missions_Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
     if( mission == 0 )
-        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).toStdString(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).toStdString() );
     ptrSupplyMission_ = mission;
 
     input >> xml::start( "resource-availability-alerts" )
@@ -233,7 +233,7 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
     if( ptrUnit_.GetData() == 0 )
         return;
     if( ptrUnit_.GetData()->eTypeId_.GetData() != eAgentTypePionLOGConvoi )
-        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit type for convoy units" ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).toStdString(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit type for convoy units" ).toStdString() );
 
     output << xml::start( "supply" );
     ADN_Tools::AddSchema( output, "Supply" );

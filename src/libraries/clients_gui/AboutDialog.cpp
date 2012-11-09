@@ -79,5 +79,5 @@ QString AboutDialog::GetSplashScreen() const
     const QString filename = tools::translate( "Application", "images/gui/splash_swordot.png" );
     if( filename.isNull() || filename.isEmpty() )
         return tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.png" ).c_str();
-    return tools::GeneralConfig::BuildResourceChildFile( filename.toAscii().constData() ).c_str();
+    return tools::GeneralConfig::BuildResourceChildFile( filename.toStdString() ).c_str();
 }

@@ -59,7 +59,7 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
     : Parameter< std::string >( parameter )
     , type_( &types.Get( message.type() ) )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).toAscii().constData(), "location", false ), converter, message.position() ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).toStdString(), "location", false ), converter, message.position() ) );
     SetValue( type_->GetName() );
     SetParameters( message, entities, controller );
 }
@@ -72,48 +72,48 @@ void EngineerConstruction::SetParameters( const sword::PlannedWork& message, con
 {
     if( message.combat_train().id() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle tc2" ).toAscii().constData(), "tc2", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle tc2" ).toStdString(), "tc2", false );
         AddParameter( *new Automat( param, message.combat_train().id(), entities, controller ) );
     }
     if( message.density() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Density" ).toAscii().constData(), "float", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Density" ).toStdString(), "float", false );
         AddParameter( *new Numeric( param, message.density() ) );
     }
     if( message.has_name() && !message.name().empty() )
     {
-        AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toAscii().constData(), "string", true ), message.name() ) );
+        AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toStdString(), "string", true ), message.name() ) );
     }
     if( message.has_activation_time() )
     {
-        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true ), message.activation_time() );
+        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true ), message.activation_time() );
         numeric->SetKeyName( "ActivationTime" );
         AddParameter( *numeric );
     }
     if( message.has_activity_time() )
     {
-        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toAscii().constData(), "integer", true ), message.activity_time() );
+        Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true ), message.activity_time() );
         numeric->SetKeyName( "ActivityTime" );
         AddParameter( *numeric );
     }
     if( message.altitude_modifier() != 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Altitude modifier" ).toAscii().constData(), "integer", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Altitude modifier" ).toStdString(), "integer", false );
         AddParameter( *new Quantity( param, message.altitude_modifier() ) );
     }
     if( message.mining() != false )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle mining" ).toAscii().constData(), "boolean", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Obstacle mining" ).toStdString(), "boolean", false );
         AddParameter( *new Bool( param, message.mining() ) );
     }
     if( message.time_limit() > 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Time limit" ).toAscii().constData(), "integer", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Time limit" ).toStdString(), "integer", false );
         AddParameter( *new Numeric( param, message.time_limit() ) );
     }
     if( message.lodging() > 0 )
     {
-        const OrderParameter param( tools::translate( "ActionParameter", "Lodging" ).toAscii().constData(), "integer", false );
+        const OrderParameter param( tools::translate( "ActionParameter", "Lodging" ).toStdString(), "integer", false );
         AddParameter( *new Quantity( param, message.lodging() ) );
     }
 }
@@ -167,17 +167,17 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
     else if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
-        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).toAscii().constData(), "location", false ), converter, xis ) );
+        AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Construction location" ).toStdString(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
         AddParameter( *new Automat( xis, entities, controller ) );
     else if( type == "string" )
-        AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toAscii().constData(), "string", true ), xis ) );
+        AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toStdString(), "string", true ), xis ) );
     else if(type=="quantity")
     {
         std::string identifier = xis.attribute( "identifier", std::string() );
         if( identifier == "altitude_modifier" )
         {
-            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "EngineerConstruction", "Altitude modifier" ).toAscii().constData(), "integer", true ), xis );
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "EngineerConstruction", "Altitude modifier" ).toStdString(), "integer", true ), xis );
             numeric->SetKeyName( identifier );
             AddParameter( *numeric );
         }
@@ -187,19 +187,19 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
         std::string identifier = xis.attribute( "identifier", std::string() );
         if( identifier == "ActivityTime" )
         {
-            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toAscii().constData(), "integer", true ), xis );
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true ), xis );
             numeric->SetKeyName( identifier );
             AddParameter( *numeric );
         }
         else if( identifier == "ActivationTime" )
         {
-            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true ), xis );
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true ), xis );
             numeric->SetKeyName( identifier );
             AddParameter( *numeric );
         }
         else if( identifier == "density" )
         {
-            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "EngineerConstruction", "Density" ).toAscii().constData(), "integer", true ), xis );
+            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "EngineerConstruction", "Density" ).toStdString(), "integer", true ), xis );
             numeric->SetKeyName( identifier );
             AddParameter( *numeric );
         }

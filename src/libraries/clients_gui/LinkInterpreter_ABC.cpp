@@ -87,7 +87,7 @@ bool LinkInterpreter_ABC::InterpreteId( const Q3Url& url )
     bool ok = false;
     const unsigned long id = strId.toULong( &ok );
 
-    const Entity_ABC* entity = entites_[ classId.toAscii().constData() ][ id ];
+    const Entity_ABC* entity = entites_[ classId.toStdString() ][ id ];
     return entity != 0 && InterpreteEntity( *entity, ref );
 }
 

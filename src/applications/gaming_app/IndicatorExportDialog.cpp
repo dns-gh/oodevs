@@ -109,10 +109,10 @@ void IndicatorExportDialog::OnAccept()
 {
     try
     {
-        std::ofstream file( file_->text().toAscii().constData() );
+        std::ofstream file( file_->text().toStdString() );
         if( !file )
             throw std::exception(tools::translate( "IndicatorExportDialog", "Impossible to create file in specified directory" ) );
-        const std::string sep = separator_->text().toAscii().constData();
+        const std::string sep = separator_->text().toStdString();
         if( header_->isChecked() )
         {
             file << tools::translate( "Indicators", "Time" );

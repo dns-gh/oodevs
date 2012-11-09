@@ -157,7 +157,7 @@ namespace
 {
     void Update( kernel::Gradient* gradient, std::vector< std::string >& presets )
     {
-        presets.push_back( gradient->GetName().toAscii().constData() );
+        presets.push_back( gradient->GetName().toStdString() );
     }
 }
 
@@ -188,7 +188,7 @@ void GradientWidget::OnPresetDeleted()
     if( kernel::Gradient* current = CurrentPreset() )
     {
         presetCombo_->removeItem( presetCombo_->currentItem() );
-        options_.Remove( std::string( "Gradients/" ) + current->GetName().toAscii().constData() );
+        options_.Remove( std::string( "Gradients/" ) + current->GetName().toStdString() );
         presets_.erase( std::find( presets_.begin(), presets_.end(), current ) );
         preferences_.Commit( presets_ );
         delete current;

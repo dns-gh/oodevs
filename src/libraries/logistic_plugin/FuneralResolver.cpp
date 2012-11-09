@@ -163,22 +163,22 @@ void FuneralResolver::ManageMessage( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void FuneralResolver::InitHeader()
 {
-    FuneralConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData()  );
-    consign.tick_                   = tools::translate( "logistic", "tick" ).toAscii().constData();
-    consign.creationTick_           = tools::translate( "logistic", "creation tick" ).toAscii().constData();
-    consign.stateEndTick_           = tools::translate( "logistic", "state end tick" ).toAscii().constData();
-    consign.simTime_                = tools::translate( "logistic", "GDH" ).toAscii().constData();
-    consign.unitId_                 = tools::translate( "logistic", "unit id" ).toAscii().constData();
-    consign.handlingUnitId_         = tools::translate( "logistic", "handling unit id" ).toAscii().constData();
-    consign.conveyingUnitId_        = tools::translate( "logistic", "conveying unit id" ).toAscii().constData();
-    consign.packagingResourceId_    = tools::translate( "logistic", "packaging resource id" ).toAscii().constData();
-    consign.stateId_                = tools::translate( "logistic", "state id" ).toAscii().constData();
-    consign.unit_                   = tools::translate( "logistic", "unit" ).toAscii().constData();
-    consign.handlingUnit_           = tools::translate( "logistic", "handling unit" ).toAscii().constData();
-    consign.conveyingUnit_          = tools::translate( "logistic", "conveying unit" ).toAscii().constData();
-    consign.rank_                   = tools::translate( "logistic", "rank" ).toAscii().constData();
-    consign.packagingResource_      = tools::translate( "logistic", "packaging resource" ).toAscii().constData();
-    consign.state_                  = tools::translate( "logistic", "state" ).toAscii().constData();
+    FuneralConsignData consign( tools::translate( "logistic", "request id" ).toStdString()  );
+    consign.tick_                   = tools::translate( "logistic", "tick" ).toStdString();
+    consign.creationTick_           = tools::translate( "logistic", "creation tick" ).toStdString();
+    consign.stateEndTick_           = tools::translate( "logistic", "state end tick" ).toStdString();
+    consign.simTime_                = tools::translate( "logistic", "GDH" ).toStdString();
+    consign.unitId_                 = tools::translate( "logistic", "unit id" ).toStdString();
+    consign.handlingUnitId_         = tools::translate( "logistic", "handling unit id" ).toStdString();
+    consign.conveyingUnitId_        = tools::translate( "logistic", "conveying unit id" ).toStdString();
+    consign.packagingResourceId_    = tools::translate( "logistic", "packaging resource id" ).toStdString();
+    consign.stateId_                = tools::translate( "logistic", "state id" ).toStdString();
+    consign.unit_                   = tools::translate( "logistic", "unit" ).toStdString();
+    consign.handlingUnit_           = tools::translate( "logistic", "handling unit" ).toStdString();
+    consign.conveyingUnit_          = tools::translate( "logistic", "conveying unit" ).toStdString();
+    consign.rank_                   = tools::translate( "logistic", "rank" ).toStdString();
+    consign.packagingResource_      = tools::translate( "logistic", "packaging resource" ).toStdString();
+    consign.state_                  = tools::translate( "logistic", "state" ).toStdString();
     SetHeader( consign );
 }
 

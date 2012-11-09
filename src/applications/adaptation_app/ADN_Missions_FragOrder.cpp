@@ -89,7 +89,7 @@ namespace
 void ADN_Missions_FragOrder::WriteArchive( xml::xostream& output )
 {
     if( diaType_.GetData().empty() )
-        diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).toAscii().constData();
+        diaType_ = BuildDiaFragOrderType( strName_.GetData().c_str() ).toStdString();
 
     output << xml::start( "fragorder" )
             << xml::attribute( "name", strName_ )

@@ -47,7 +47,7 @@ void ADN_Maintenance_Data::WorkingSchemeInfo::ReadArchive( xml::xistream& input 
 void ADN_Maintenance_Data::WorkingSchemeInfo::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "working-scheme" )
-        << xml::attribute( "type", QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).toAscii().constData() )
+        << xml::attribute( "type", QString( "Regime" ).append( QString::number( nIdx_.GetData() ) ).toStdString() )
         << xml::attribute( "working-time", nWorkTime_ );
     if( ! warningDelay_.GetData().empty()
         && warningDelay_ != "0s"

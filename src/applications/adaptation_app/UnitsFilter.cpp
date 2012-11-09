@@ -36,7 +36,7 @@ UnitsFilter::~UnitsFilter()
 // -----------------------------------------------------------------------------
 void UnitsFilter::insertItem( ADN_ComboBoxItem* item, int index /*= -1*/ )
 {
-    if( units_.find( item->text().toAscii().constData() ) != units_.end() && findText( item->text() ) == -1 )
+    if( units_.find( item->text().toStdString() ) != units_.end() && findText( item->text() ) == -1 )
         ADN_ComboBox_Vector::insertItem( item, index );
 }
 

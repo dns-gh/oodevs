@@ -261,7 +261,7 @@ void ObjectPrototype::DoCommit( const kernel::Team_ABC& team )
 
         action->AddParameter( *new String( it.NextElement(), objectTypes_->GetValue()->GetType() ) );
         action->AddParameter( *new Location( it.NextElement(), static_.coordinateConverter_, GetCurrentLocation() ) );
-        action->AddParameter( *new String( it.NextElement(), name_->text().isEmpty() ? "" : name_->text().toAscii().constData() ) );
+        action->AddParameter( *new String( it.NextElement(), name_->text().isEmpty() ? "" : name_->text().toStdString() ) );
         action->AddParameter( *new Army( it.NextElement(), team, controllers_.controller_ ) );
 
         attributesList_ = new ParameterList( it.NextElement() );

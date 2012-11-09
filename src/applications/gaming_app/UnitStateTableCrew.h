@@ -95,7 +95,7 @@ void UnitStateTableCrew::PopulateEnumOrderParameters( const std::string& name, c
     assert( orderParameterMap_.find( column ) == orderParameterMap_.end() );
     orderParameterMap_[ column ] = new kernel::OrderParameter( name, type, false );
     for( unsigned int i = 0; i < unsigned int( size ); ++i )
-        orderParameterMap_[ column ]->AddValue( i, tools::ToString( static_cast< Enum >( i ), ENT_Tr_ABC::eToSim ).toAscii().constData() );
+        orderParameterMap_[ column ]->AddValue( i, tools::ToString( static_cast< Enum >( i ), ENT_Tr_ABC::eToSim ).toStdString() );
 }
 
 #endif // __UnitStateTableCrew_h_

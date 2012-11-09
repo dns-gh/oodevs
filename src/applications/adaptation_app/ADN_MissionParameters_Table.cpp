@@ -124,7 +124,7 @@ void ADN_MissionParameters_Table::OnContextMenu( const QPoint& pt )
 void ADN_MissionParameters_Table::AddNewElement()
 {
     ADN_Missions_Parameter* newElement = new ADN_Missions_Parameter();
-    newElement->strName_ = tr( "New parameter" ).toAscii().constData();
+    newElement->strName_ = tr( "New parameter" ).toStdString();
 
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     connector->AddItem( newElement );

@@ -108,11 +108,11 @@ void WeatherModel::Serialize( const std::string& filename, const tools::SchemaWr
     xos << xml::start( "weather" );
     schemaWriter.WriteExerciseSchema( xos, "weather" );
     xos     << xml::start( "exercise-date" )
-                << xml::attribute( "value", time_.toString( "yyyyMMddThhmmss" ).toAscii().constData() )
+                << xml::attribute( "value", time_.toString( "yyyyMMddThhmmss" ).toStdString() )
             << xml::end
             << xml::start( "ephemerides" )
-                << xml::attribute( "sunrise", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).toAscii().constData() )
-                << xml::attribute( "sunset", QString( "%1h%2m%3s" ).arg( sunset_.hour() ).arg( sunset_.minute() ).arg( sunset_.second() ).toAscii().constData() )
+                << xml::attribute( "sunrise", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).toStdString() )
+                << xml::attribute( "sunset", QString( "%1h%2m%3s" ).arg( sunset_.hour() ).arg( sunset_.minute() ).arg( sunset_.second() ).toStdString() )
                 << xml::attribute( "day-lighting", ENT_Tr::ConvertFromLightingType( dayLighting_ ) )
                 << xml::attribute( "night-lighting", ENT_Tr::ConvertFromLightingType( nightLighting_ ) )
             << xml::end
@@ -195,6 +195,6 @@ void WeatherModel::ReadGlobalWeather( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void WeatherModel::ReadLocalWeather( xml::xistream& xis )
 {
-    weather::MeteoLocal* local = new weather::MeteoLocal( xis, converter_, tools::translate( "WeatherModel", "Local weather " ).toAscii().constData() );
+    weather::MeteoLocal* local = new weather::MeteoLocal( xis, converter_, tools::translate( "WeatherModel", "Local weather " ).toStdString() );
     Register( local->GetId(), *local );
 }

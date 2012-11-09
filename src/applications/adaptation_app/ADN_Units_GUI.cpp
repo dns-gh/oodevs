@@ -388,14 +388,14 @@ void ADN_Units_GUI::UpdateValidators()
 void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
 {
     QString strLocalPath = strPath + tr( "Units/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.toAscii().constData() );
+    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Units" ) );
 
     ADN_Units_Data::T_UnitInfos_Vector& units = data_.GetUnitsInfos();
     indexBuilder.BeginTable( static_cast< int >( units.size()+1 ), 2 );
-    indexBuilder.TableItem( 0, 0, tr( "Name" ).toAscii().constData(), true );
-    indexBuilder.TableItem( 0, 1, tr( "Type" ).toAscii().constData(), true );
+    indexBuilder.TableItem( 0, 0, tr( "Name" ).toStdString().c_str(), true );
+    indexBuilder.TableItem( 0, 1, tr( "Type" ).toStdString().c_str(), true );
     int n = 1;
     for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it, ++n )
     {

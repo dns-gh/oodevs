@@ -49,7 +49,7 @@ void ArmorInfos::ReadArchive( xml::xistream& input )
         >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToProtectionType( type );
     if( nType_ == E_ProtectionType( -1 ) )
-        throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Categories - Invalid armor type '%1'" ).arg( type.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Categories - Invalid armor type '%1'" ).arg( type.c_str() ).toStdString() );
 
     input >> xml::start( "neutralization" )
         >> xml::attribute( "average-time", neutralizationAverageTime_ )
@@ -86,7 +86,7 @@ void ArmorInfos::ReadAttrition( xml::xistream& input )
 void ArmorInfos::WriteArchive( xml::xostream& output )
 {
     if( strName_.GetData().empty() )
-        throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Categories - Duplicated armor type name" ).toAscii().constData() );
+        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Categories - Duplicated armor type name" ).toStdString() );
 
     if( nType_ == eProtectionType_Human )
     {

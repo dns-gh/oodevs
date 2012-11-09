@@ -357,7 +357,7 @@ void ADN_Sensors_Data::TargetInfos::ReadPosture( xml::xistream& input )
             vModifStance_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toAscii().constData() );
+    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toStdString(), tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -370,7 +370,7 @@ void ADN_Sensors_Data::TargetInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "type", strType );
     ADN_Objects_Data_ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strType );
     if( !pObject )
-        throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toAscii().constData(),tools::translate( "Sensor_Data", "Sensors - Invalid object '%1'" ).arg( strType.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toStdString(),tools::translate( "Sensor_Data", "Sensors - Invalid object '%1'" ).arg( strType.c_str() ).toStdString() );
     ptrObject_ = pObject;
     strName_ = ptrObject_.GetData()->strName_.GetData();
 
@@ -644,7 +644,7 @@ void ADN_Sensors_Data::SensorInfos::ReadSize( xml::xistream& input )
     const std::string type = input.attribute< std::string >( "type" );
     IT_ModificatorSizeInfos_Vector it = std::find_if( vModifSizes_.begin(), vModifSizes_.end(), ModificatorSizeInfos::Cmp( type ) );
     if( it == vModifSizes_.end() )
-        throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toStdString(), tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).toStdString() );
     (*it)->ReadArchive( input );
 }
 
@@ -661,7 +661,7 @@ void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
             vModifWeather_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toAscii().constData(),tools::translate( "Sensor_Data", "Sensors - Invalid weather '%1'" ).arg( type.c_str() ).toAscii().constData() );
+    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toStdString(),tools::translate( "Sensor_Data", "Sensors - Invalid weather '%1'" ).arg( type.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -688,7 +688,7 @@ void ADN_Sensors_Data::SensorInfos::ReadSourcePosture( xml::xistream& input )
             vModifStance_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toAscii().constData() );
+    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toStdString(), tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -704,7 +704,7 @@ void ADN_Sensors_Data::SensorInfos::ReadTargetPosture( xml::xistream& input )
             vModifTargetStance_.at( i )->ReadArchive( input );
             return;
         }
-    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toAscii().constData() );
+    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toStdString(), tools::translate( "Sensor_Data", "Sensors - Invalid stance '%1'" ).arg( type.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -727,7 +727,7 @@ void ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial( xml::xistream& input
     const std::string type = input.attribute< std::string >( "type" );
     IT_ModificatorUrbanBlockInfos_Vector it = std::find_if( vModifUrbanBlocks_.begin(), vModifUrbanBlocks_.end(), ModificatorUrbanBlockInfos::Cmp( type ) );
     if( it == vModifUrbanBlocks_.end() )
-        throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).toStdString(), tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).toStdString() );
     (*it)->ReadArchive( input );
 }
 

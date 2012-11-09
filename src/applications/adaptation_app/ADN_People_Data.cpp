@@ -74,7 +74,7 @@ void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
 
     ADN_Urban_Data::AccommodationInfos* pAccommodation = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindAccommodation( accommodation );
     if( !pAccommodation )
-        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).toAscii().constData(), tools::translate( "People_Data", "Population - Invalid accommodation '%1'" ).arg( accommodation.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).toStdString(), tools::translate( "People_Data", "Population - Invalid accommodation '%1'" ).arg( accommodation.c_str() ).toStdString() );
     ptrAccommodation_ = pAccommodation;
 }
 
@@ -136,7 +136,7 @@ void ADN_People_Data::PeopleInfosConsumption::ReadArchive( xml::xistream& xis )
         >> xml::attribute( "need", consumption_ );
     ADN_ResourceNetworks_Data::ResourceNetworkInfos* pResource = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().FindResourceNetwork( strResource );
     if( !pResource )
-        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).toAscii().constData(), tools::translate( "People_Data", "Population - Invalid resource '%1/%2'" ).arg( strResource.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).toStdString(), tools::translate( "People_Data", "Population - Invalid resource '%1/%2'" ).arg( strResource.c_str() ).toStdString() );
     ptrResource_ = pResource;
 }
 
@@ -239,7 +239,7 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
 
     ADN_Population_Data::PopulationInfos* pModel = ADN_Workspace::GetWorkspace().GetPopulation().GetData().FindPopulation( strModel );
     if( !pModel )
-        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Population types - Invalid Population type '%1'" ).arg( strModel.c_str() ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Population types - Invalid Population type '%1'" ).arg( strModel.c_str() ).toStdString() );
     ptrModel_ = pModel;
 
     input >> xml::start( "repartition" );
@@ -315,7 +315,7 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output ) const
 {
     const std::string error = CheckErrors();
     if( error != "" )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toAscii().constData(), error );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).toStdString(), error );
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", nId_ )

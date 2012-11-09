@@ -244,7 +244,7 @@ void UrbanObject::UpdateHumans( const std::string& inhabitant, const sword::Popu
             motivations_[ it->first ].first += it->second.first;
     for( IT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++ it )
     {
-        double nominalCapacity = GetNominalCapacity( it->first.toAscii().constData() );
+        double nominalCapacity = GetNominalCapacity( it->first.toStdString() );
         it->second.second = nominalCapacity ?  static_cast< unsigned int >( 100 * it->second.first / nominalCapacity ) : 0;
         const QString keyOccupation = tools::translate( "Block", "Occupations/" ) + it->first + "/";
         RegisterValue( *this, keyOccupation + tools::translate( "Block", "Resident" ), it->second.first );

@@ -258,7 +258,7 @@ void LongNameEditor::SetExtension( Entity_ABC& entity, const QString& name, cons
             attribute.GetMinMaxLength( min, max );
             if( max != -1 )
                 longName = longName.left( max );
-            ext->SetValue( "NomLong", longName.toAscii().constData() );
+            ext->SetValue( "NomLong", longName.toStdString() );
             controllers_.controller_.Update( *ext );
             controllers_.controller_.Update( entity );
         }

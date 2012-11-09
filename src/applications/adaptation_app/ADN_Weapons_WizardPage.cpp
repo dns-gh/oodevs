@@ -66,7 +66,7 @@ QWidget* ADN_Weapons_WizardPage::CreateNameField()
 // -----------------------------------------------------------------------------
 std::string ADN_Weapons_WizardPage::GetName()
 {
-    return QString( "%1 & %2").arg( pComboLauncher_->currentText() ).arg( pComboAmmo_->currentText() ).toAscii().constData();
+    return QString( "%1 & %2").arg( pComboLauncher_->currentText() ).arg( pComboAmmo_->currentText() ).toStdString();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +75,8 @@ std::string ADN_Weapons_WizardPage::GetName()
 // -----------------------------------------------------------------------------
 bool ADN_Weapons_WizardPage::validatePage()
 {
-    std::string strLauncher = pComboLauncher_->currentText().toAscii().constData();
-    std::string strAmmo = pComboAmmo_->currentText().toAscii().constData();
+    std::string strLauncher = pComboLauncher_->currentText().toStdString();
+    std::string strAmmo = pComboAmmo_->currentText().toStdString();
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
     assert( pLauncher != 0 );
@@ -104,11 +104,11 @@ void ADN_Weapons_WizardPage::ApplyOptions()
 {
     if( element_ )
     {
-        std::string strLauncher = pComboLauncher_->currentText().toAscii().constData();
+        std::string strLauncher = pComboLauncher_->currentText().toStdString();
         ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
         element_->ptrLauncher_ = pLauncher;
 
-        std::string strAmmo = pComboAmmo_->currentText().toAscii().constData();
+        std::string strAmmo = pComboAmmo_->currentText().toStdString();
         ADN_Equipement_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
         ADN_Equipement_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
         ADN_Equipement_Data::AmmoCategoryInfo* ammo = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( pAmmo );

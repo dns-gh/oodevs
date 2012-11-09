@@ -83,11 +83,11 @@ void NoteDialog::OnAccept()
     if (update_)
     {
         plugins::messenger::MarkerUpdateRequest message;
-        message().set_name( textName_->text().toAscii().constData() );
+        message().set_name( textName_->text().toStdString() );
         message().mutable_marker()->set_id( noteId_ );
-        message().set_number( textId_->text().toAscii().constData() );
+        message().set_number( textId_->text().toStdString() );
         QString text = textDesc_->text();
-        message().set_description( text.toAscii().constData() );
+        message().set_description( text.toStdString() );
         if( parentId_ )
             message().mutable_parent()->set_id( parentId_ );
         message.Send( publisher_ );
@@ -95,10 +95,10 @@ void NoteDialog::OnAccept()
     else
     {
         plugins::messenger::MarkerCreationRequest message;
-        message().mutable_marker()->set_name( textName_->text().toAscii().constData() );
-        message().mutable_marker()->set_number( textId_->text().toAscii().constData() );
+        message().mutable_marker()->set_name( textName_->text().toStdString() );
+        message().mutable_marker()->set_number( textId_->text().toStdString() );
         QString text = textDesc_->text();
-        message().mutable_marker()->set_description( text.toAscii().constData() );
+        message().mutable_marker()->set_description( text.toStdString() );
         if( parentId_ )
             message().mutable_marker()->mutable_parent()->set_id( parentId_ );
         message.Send( publisher_ );

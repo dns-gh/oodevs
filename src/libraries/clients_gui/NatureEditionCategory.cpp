@@ -122,7 +122,7 @@ void NatureEditionCategory::AddChoice( SymbolRule* rule, const std::string& name
         QString translatedName = tools::findTranslation( "models::app6", name.c_str() );
         internalNames_[ translatedName ] = name;
     }
-    else if( rule && name == current_.toAscii().constData() && deep_ != 0 )
+    else if( rule && name == current_.toStdString() && deep_ != 0 )
     {
         next_ = new NatureEditionCategory( parentLayout_, row_ + 1, ( deep_ < 0 ) ? -1 : deep_ - 1 );
         next_->SetRootSymbolRule( *rule );

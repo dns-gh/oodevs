@@ -51,7 +51,7 @@ void ParamAgent::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::C
     if( IsInList() && parentList_->IsPotential( this ) )
     {
         superior_ = &entity;
-        kernel::ContextMenu* listMenu = menu.SubMenu( paramInterface_.Title().toAscii().constData(), parentList_->GetName(), true, paramInterface_.GetIndex( parentList_ ) );
+        kernel::ContextMenu* listMenu = menu.SubMenu( paramInterface_.Title().toStdString(), parentList_->GetName(), true, paramInterface_.GetIndex( parentList_ ) );
         listMenu->insertItem( tools::translate( "Param_ABC", "Add automat's agents" ), this, SLOT( AddHierarchy() ), 0, -1, 0 );
     }
 }
@@ -65,7 +65,7 @@ void ParamAgent::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel:
     if( IsInList() && parentList_->IsPotential( this ) )
     {
         superior_ = &entity;
-        kernel::ContextMenu* listMenu = menu.SubMenu( paramInterface_.Title().toAscii().constData(), parentList_->GetName(), true, paramInterface_.GetIndex( parentList_ ) );
+        kernel::ContextMenu* listMenu = menu.SubMenu( paramInterface_.Title().toStdString(), parentList_->GetName(), true, paramInterface_.GetIndex( parentList_ ) );
         listMenu->insertItem( tools::translate( "Param_ABC", "Add formation's agents" ), this, SLOT( AddHierarchy() ), 0, -1, 0 );
     }
 }

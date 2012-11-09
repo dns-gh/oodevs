@@ -185,6 +185,6 @@ std::string ADN_Equipement_AmmoListView::GetToolTipFor( const QModelIndex& index
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), result );
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).toAscii().constData();
+        result = tr( "<b>Unused</b>" ).toStdString();
     return result;
 }

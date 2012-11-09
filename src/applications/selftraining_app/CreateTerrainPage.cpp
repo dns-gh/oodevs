@@ -114,7 +114,7 @@ void CreateTerrainPage::EditNameChanged( const QString& name )
         if( exists )
             errorLabel_->setText( tools::translate( "CreateTerrainPage", "A terrain with this name already exists." ) );
         else
-            errorLabel_->setText( tools::translate( "CreateTerrainPage", "The new terrain will be created in:\n%1" ).arg( config_.GetTerrainDir( name.toAscii().constData() ).c_str() ) );
+            errorLabel_->setText( tools::translate( "CreateTerrainPage", "The new terrain will be created in:\n%1" ).arg( config_.GetTerrainDir( name.toStdString() ).c_str() ) );
     }
 }
 

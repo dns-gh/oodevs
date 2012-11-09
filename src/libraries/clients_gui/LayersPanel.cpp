@@ -203,10 +203,10 @@ void LayersPanel::Commit()
     {
         if( std::find( dynamicLayers_.begin(), dynamicLayers_.end(), layers_[ i ] ) != dynamicLayers_.end() )
             continue;
-        options_.Change( std::string( "Layers/" ) + names_[ i ].toAscii().constData() + "/Alpha", current_[ i ] );
+        options_.Change( std::string( "Layers/" ) + names_[ i ].toStdString() + "/Alpha", current_[ i ] );
         T_Layers::const_iterator it = std::find( currentLayers_.begin(), currentLayers_.end(), layers_[i] );
         if( it != currentLayers_.end() )
-            options_.Change( std::string( "Layers/" ) + names_[ i ].toAscii().constData() + "/Position", static_cast< int >( it - currentLayers_.begin() ) );
+            options_.Change( std::string( "Layers/" ) + names_[ i ].toStdString() + "/Position", static_cast< int >( it - currentLayers_.begin() ) );
     }
 }
 

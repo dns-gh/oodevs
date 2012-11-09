@@ -135,12 +135,12 @@ void ADN_Composantes_GUI::Build()
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );
     ADN_Composantes_BreakdownsTable* pAttritionBreakdowns = new ADN_Composantes_BreakdownsTable( strClassName_ + "_AttritionBreakdowns",
-                                                                                                tr( "Attrition breakdowns" ).toAscii().constData(),
+                                                                                                tr( "Attrition breakdowns" ),
                                                                                                 vInfosConnectors[ eAttritionBreakdowns ],
                                                                                                 pBreakdownsGroup_ );
     pAttritionBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
     ADN_Composantes_BreakdownsTable* pRandomBreakdowns = new ADN_Composantes_BreakdownsTable( strClassName_ + "_RandomBreakdowns",
-                                                                                              tr( "Random breakdowns" ).toAscii().constData(),
+                                                                                              tr( "Random breakdowns" ),
                                                                                               vInfosConnectors[ eRandomBreakdowns ],
                                                                                               pBreakdownsGroup_ );
     pRandomBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
@@ -507,7 +507,7 @@ void ADN_Composantes_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
 {
     QString strLocalPath = strPath + tr( "Equipments/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.toAscii().constData() );
+    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Equipments" ) );
     indexBuilder.BeginList();

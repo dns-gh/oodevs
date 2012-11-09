@@ -118,14 +118,14 @@ void FileLoaderObserver::GetErrors( std::vector< std::string >& errors ) const
     {
         QString invalidSignatureDisplay( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ) + "\n" );
         for( CIT_Error it = invalidSignatureFiles_.begin(); it != invalidSignatureFiles_.end(); ++it )
-            errors.push_back( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ).append( it->c_str() ).toAscii().constData() );
+            errors.push_back( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ).append( it->c_str() ).toStdString() );
         for( CIT_Error it = missingSignatureFiles_.begin(); it != missingSignatureFiles_.end(); ++it )
-            errors.push_back( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ).append( it->c_str() ).toAscii().constData() );
+            errors.push_back( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ).append( it->c_str() ).toStdString() );
     }
 
     if( !malformedFiles_.empty() )
         for( CIT_Error it = malformedFiles_.begin(); it != malformedFiles_.end(); ++it )
-            errors.push_back( tools::translate( "Application", "The following files do not match their xsd : " ).append( it->c_str() ).toAscii().constData() );
+            errors.push_back( tools::translate( "Application", "The following files do not match their xsd : " ).append( it->c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

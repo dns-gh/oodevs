@@ -104,7 +104,7 @@ void SpawnCommand::Start()
                          &internal_->pid_) )                    // lpProcessInformation
     {
         DWORD errCode = GetLastError();
-        throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).toAscii().constData() );
+        throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).toStdString().c_str() );
     }
 
     if ( HANDLE jobObject = OpenJobObject( JOB_OBJECT_ALL_ACCESS, TRUE, jobName_.c_str() ) )
@@ -268,7 +268,7 @@ std::string SpawnCommand::GetSession() const
 // -----------------------------------------------------------------------------
 void SpawnCommand::SetWorkingDirectory( const QString& directory )
 {
-    workingDirectory_ = directory.toAscii().constData();
+    workingDirectory_ = directory.toStdString();
 }
 
 // -----------------------------------------------------------------------------

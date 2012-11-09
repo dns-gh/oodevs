@@ -330,7 +330,7 @@ void ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition( xml::xistream& input )
     std::string protection = input.attribute< std::string >( "protection" );
     helpers::IT_AttritionInfos_Vector itAttrition = std::find_if( vAttritionInfos_.begin(), vAttritionInfos_.end(), helpers::AttritionInfos::Cmp( protection ) );
     if( itAttrition == vAttritionInfos_.end() )
-        throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toStdString() );
     ( *itAttrition )->ReadArchive( input );
 }
 
@@ -354,7 +354,7 @@ void ADN_Urban_Data::ReadFacade( xml::xistream& input )
     const std::string strName = xml::attribute< std::string >( input, "name" );
     T_UrbanInfos_Vector::const_iterator it = std::find_if( vFacades_.begin(), vFacades_.end(), ADN_String_Cmp( strName ) );
     if( it != vFacades_.end() )
-        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Urban_Data", "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toStdString(), tools::translate( "Urban_Data", "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).toStdString() );
 
     UrbanInfos* pNewFacade = new UrbanInfos();
     pNewFacade->strName_ = strName;
@@ -369,13 +369,13 @@ void ADN_Urban_Data::WriteFacades( xml::xostream& output ) const
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vFacades_, StringExtractor() ) )
-        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Urban_Data", "Material - Duplicated volume type names" ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toStdString(), tools::translate( "Urban_Data", "Material - Duplicated volume type names" ).toStdString() );
 
     output << xml::start( "facade-types" );
     for( T_UrbanInfos_Vector::const_iterator itFacade = vFacades_.begin(); itFacade != vFacades_.end(); ++itFacade )
     {
         if( ( *itFacade )->strName_.GetData().empty() )
-            throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Urban_Data", "Facade - Invalid volume type name" ).toAscii().constData() );
+            throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toStdString(), tools::translate( "Urban_Data", "Facade - Invalid volume type name" ).toStdString() );
 
         std::string strData = ( *itFacade )->strName_.GetData();
         output << xml::start( "facade-type" )
@@ -731,15 +731,15 @@ ADN_Urban_Data::UrbanTemplateInfos::UrbanTemplateInfos( xml::xistream& input )
           >> xml::end;
     QColor color( red, green, blue );
     color.setAlphaF( alpha );
-    color_ = color.name().toAscii().constData();
+    color_ = color.name().toStdString();
     alpha_ = color.alpha();
     ADN_Urban_Data::UrbanMaterialInfos* pMaterial = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindMaterial( material );
     if( !pMaterial )
-        throw ADN_DataException( "Invalid data", tools::translate( "ADN_Urban_Data", "Urban data - Invalid material type '%1'" ).arg( material.c_str() ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "ADN_Urban_Data", "Urban data - Invalid material type '%1'" ).arg( material.c_str() ).toStdString() );
     ptrMaterial_ = pMaterial;
     ADN_Urban_Data::RoofShapeInfos* pRoofShape = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindRoofShape( roofShape );
     if( !pRoofShape )
-        throw ADN_DataException( "Invalid data", tools::translate( "ADN_Urban_Data", "Urban data - Invalid roof-shape type '%1'" ).arg( roofShape.c_str() ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "ADN_Urban_Data", "Urban data - Invalid roof-shape type '%1'" ).arg( roofShape.c_str() ).toStdString() );
     ptrRoofShape_ = pRoofShape;
 }
 
@@ -769,9 +769,9 @@ void ADN_Urban_Data::UrbanTemplateInfos::ReadUsage( xml::xistream& xis )
 void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output )
 {
     if( !ptrMaterial_.GetData() )
-        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Urban_Data", "Material attribute is empty for '%1' template." ).arg( strName_.GetData().c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toStdString(), tools::translate( "Urban_Data", "Material attribute is empty for '%1' template." ).arg( strName_.GetData().c_str() ).toStdString() );
     if( !ptrRoofShape_.GetData() )
-        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Urban_Data", "RoofShape attribute is empty for '%1' template." ).arg( strName_.GetData().c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toStdString(), tools::translate( "Urban_Data", "RoofShape attribute is empty for '%1' template." ).arg( strName_.GetData().c_str() ).toStdString() );
     output << xml::start( "template" )
                << xml::attribute( "name", strName_ )
                << xml::start( "architecture" )
@@ -857,7 +857,7 @@ ADN_Urban_Data::RoofShapeInfos::~RoofShapeInfos()
 void ADN_Urban_Data::RoofShapeInfos::WriteRoofShape( xml::xostream& output )
 {
     if( strName_.GetData().empty() )
-        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Urban_Data", "RoofShape - Invalid roofShape type name" ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toStdString(), tools::translate( "Urban_Data", "RoofShape - Invalid roofShape type name" ).toStdString() );
     std::string strData = strName_.GetData();
     output << xml::start( "roof-shape-type" )
                << xml::attribute( "name", trim( strData ) )
@@ -886,7 +886,7 @@ ADN_Urban_Data::UsageTemplateInfos::UsageTemplateInfos( xml::xistream& input )
     std::string type = input.attribute< std::string >( "type" );
     ADN_Urban_Data::AccommodationInfos* accomodation = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindAccommodation( type );
     if( !accomodation )
-        throw ADN_DataException( "Invalid data", tools::translate( "ADN_Urban_Data", "Urban data - Invalid accomodation type '%1'" ).arg( type.c_str() ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "ADN_Urban_Data", "Urban data - Invalid accomodation type '%1'" ).arg( type.c_str() ).toStdString() );
     accommodation_ = accomodation;
 }
 

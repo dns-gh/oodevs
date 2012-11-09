@@ -79,7 +79,7 @@ void UndergroundPrototype_ABC::NotifyUpdated( const kernel::UndergroundAttribute
         const std::string& network = attribute.GetNetwork();
         for( int i = 0; i < combo->count(); ++i )
         {
-            if( network == combo->text( i ).toAscii().constData() )
+            if( network == combo->text( i ).toStdString() )
                 return;
         }
         combo->insertItem( network.c_str() );

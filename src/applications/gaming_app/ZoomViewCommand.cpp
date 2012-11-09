@@ -55,7 +55,7 @@ void ZoomViewCommand::Receive( const Command& command )
     {
         const Q3Url url( command.Argument( 1 ).c_str() );
         if( url.protocol() == "loc" )
-            Center( url.toString( false, false ).mid( 6 ).toAscii().constData() ); // $$$$ SBO 2008-10-21: strlen( "loc://" )
+            Center( url.toString( false, false ).mid( 6 ).toStdString() ); // $$$$ SBO 2008-10-21: strlen( "loc://" )
     }
 }
 

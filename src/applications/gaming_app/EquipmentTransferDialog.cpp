@@ -232,7 +232,7 @@ void EquipmentTransferDialog::FillEquipments( actions::parameters::ParameterList
         if( quantity == 0 )
             continue;
         unsigned int id = equipmentIdMap_[ equipmentTable_->item( nRow, 0 )->text() ];
-        actions::parameters::ParameterList& personalList = list.AddList( QString( "Equipment %L1" ).arg( index++ ).toAscii().constData() );
+        actions::parameters::ParameterList& personalList = list.AddList( QString( "Equipment %L1" ).arg( index++ ).toStdString() );
         personalList.AddIdentifier( "Equipment", id );
         personalList.AddQuantity( "Quantity", quantity );
     }

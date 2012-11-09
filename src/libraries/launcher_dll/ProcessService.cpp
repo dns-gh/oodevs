@@ -82,7 +82,7 @@ void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 {
     const QStringList exercises = frontend::commands::ListExercises( config_ );
     for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
-        message.add_exercise( ( *it ).toAscii().constData() );
+        message.add_exercise( ( *it ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,8 +132,8 @@ namespace
         {
             if( !found_ && profile.IsSupervision() )
             {
-                supervisorProfile_ = profile.GetLogin().toAscii().constData();
-                supervisorPassword_ = profile.GetPassword().toAscii().constData();
+                supervisorProfile_ = profile.GetLogin().toStdString();
+                supervisorPassword_ = profile.GetPassword().toStdString();
                 found_ = true;
             }
         }
@@ -311,7 +311,7 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
         message.set_error_code( sword::CheckpointListResponse::success );
         const QStringList checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
         for( QStringList::const_iterator it = checkpoints.begin(); it != checkpoints.end(); ++it )
-            message.add_checkpoint( ( *it ).toAscii().constData() );
+            message.add_checkpoint( ( *it ).toStdString() );
     }
 }
 

@@ -205,7 +205,7 @@ namespace
 {
     std::pair< std::string, std::string > Extract( const QString& text )
     {
-        std::string selectedText = text.toAscii().constData();
+        std::string selectedText = text.toStdString();
         size_t separator = selectedText.find_first_of( '/' );
         std::string base = selectedText.substr( 0, separator );
         std::string physical = selectedText.substr( separator, std::string::npos );
@@ -299,7 +299,7 @@ void ExportWidget::Update( QListWidgetItem* item /*= 0*/ )
         QStringList decisionalModels = frontend::commands::ListModels( config_ );
         for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
         {
-            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
             for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
                 physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
         }
@@ -396,7 +396,7 @@ namespace
                     frontend::CheckListItem* item = dynamic_cast< frontend::CheckListItem* >( treeNode->child( row2 ) );
                     if( item && item->checkState() == Qt::Checked )
                     {
-                        std::string file( item->text().toAscii().constData() );
+                        std::string file( item->text().toStdString() );
                         Serialize( base, file, zos, item->IsRecursive(), progress );
                         if( item->hasChildren() )
                             BrowseChildren( base, item, zos, progress, item->IsRecursive() );
@@ -455,7 +455,7 @@ bool ExportWidget::BrowseClicked()
     const QString filename = QFileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tools::translate( "ExportWidget", "Select a package" ) );
     if( filename.isEmpty() )
         return false;
-    const bfs::path file = bfs::path( std::string( filename.toAscii().constData() ) );
+    const bfs::path file = bfs::path( std::string( filename.toStdString() ) );
     package_.first = file.parent_path().string();
     package_.second = file.filename().string();
     if( bfs::exists( file ) )
@@ -475,13 +475,13 @@ void ExportWidget::WriteContent( zip::ozipfile& archive ) const
     QString text = GetCurrentSelection();
     if( !text.isEmpty() )
     {
-        std::string description = GetCurrentDescription()->text().toAscii().constData();
+        std::string description = GetCurrentDescription()->text().toStdString();
         QString package = GetCurrentPackage();
 
         if( description.empty() )
-            description = "Packaged scenario of " + std::string( package.toAscii().constData() ) + ".";
+            description = "Packaged scenario of " + std::string( package.toStdString() ) + ".";
         xos << xml::start( "content" )
-            << xml::content( "name", package.toAscii().constData() )
+            << xml::content( "name", package.toStdString() )
             << xml::content( "description", description )
             << xml::content( "version", tools::AppProjectVersion() )
             << xml::end;
@@ -514,7 +514,7 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
             assert( terrainList_->currentItem() );
             progress_->setValue( 0 );
             progress_->setMaximum( 100 );
-            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->currentItem()->text().toAscii().constData() ) );
+            bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetTerrainDir( terrainList_->currentItem()->text().toStdString() ) );
             Serialize( config_.GetRootDir(), diffPath.string(), archive, true, progress_ );
             progress_->setValue( 100 );
         }
@@ -525,7 +525,7 @@ void ExportWidget::InternalExportPackage( zip::ozipfile& archive )
             std::pair< std::string, std::string > content( Extract( physicalList_->currentItem()->text() ) );
 
             bfs::path diffPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / content.first;
-            bfs::path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / modelName_->text().toAscii().constData();
+            bfs::path exportPath = GetDiffPath( config_.GetRootDir(), config_.GetModelsDir() ) / modelName_->text().toStdString();
 
             if( decisionalCheckBox_->isChecked() )
             {

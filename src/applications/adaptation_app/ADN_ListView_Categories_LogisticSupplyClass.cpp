@@ -94,6 +94,6 @@ std::string ADN_ListView_Categories_LogisticSupplyClass::GetToolTipFor( const QM
                         ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ), result );
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).toAscii().constData();
+        result = tr( "<b>Unused</b>" ).toStdString();
     return result;
 }

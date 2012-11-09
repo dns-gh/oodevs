@@ -284,7 +284,7 @@ void PerformanceIndicator::KGGetInfoFunctor::operator()( const kernel::Knowledge
         TeamData& teamData = values_.teamsDatas_[ pTeam->GetId() ];
         teamData.name_ = pTeam->GetName();
         teamData.knowledgeGroups_++;
-        KnowledgeGroupData& dataKG = teamData.datasKG_[ kg.GetName().toAscii().constData() ];
+        KnowledgeGroupData& dataKG = teamData.datasKG_[ kg.GetName().toStdString() ];
         dataKG.automats_    += automatCount;
         dataKG.units_       += unitCount;
     }

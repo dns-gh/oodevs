@@ -75,7 +75,7 @@ void DataWidget::Update()
     QStringList decisionalModels = frontend::commands::ListModels( config_ );
     for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toAscii().constData() );
+        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).toStdString() );
         for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP )
             physicalBase << QString( "%1/%2" ).arg( *it ).arg( *itP );
     }
@@ -130,11 +130,11 @@ void DataWidget::OnDelete()
     std::string path;
     if( mainTabs_->currentWidget()->isAncestorOf( terrains_ ) )
     {
-        path = config_.GetTerrainDir( item->text().toAscii().constData() );
+        path = config_.GetTerrainDir( item->text().toStdString() );
     }
     else
     {
-        std::pair< std::string, std::string > info( Extract( item->text().toAscii().constData() ) );
+        std::pair< std::string, std::string > info( Extract( item->text().toStdString() ) );
         path = config_.GetPhysicalsDir( info.first, info.second );
     }
     MessageDialog message( parent_, tools::translate( "DataWidget", "Delete" ), tools::translate( "DataWidget", "Are you sure you want to delete?" ), QMessageBox::Yes, QMessageBox::No );

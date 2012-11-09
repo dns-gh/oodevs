@@ -172,7 +172,7 @@ void FormulaParser::Impl::Parse( const std::string& text )
 {
     bs::tree_parse_info<> info = bs::ast_parse( text.c_str(), *this, bs::space_p );
     if( !info.full )
-        throw std::exception( tools::translate( "Indicators", "Syntax error: %1." ).arg( info.stop ).toAscii().constData() );
+        throw std::exception( tools::translate( "Indicators", "Syntax error: %1." ).arg( info.stop ).toStdString().c_str() );
     Evaluate( info.trees.begin() );
 }
 

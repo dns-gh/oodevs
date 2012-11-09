@@ -95,7 +95,7 @@ void InitialState::ReadEquipment( xml::xistream& xis )
         }
     if( !found )
     {
-        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( equipment.name_.toAscii().constData() );
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver2< kernel::EquipmentType >::Get( equipment.name_.toStdString() );
         tools::Iterator< const kernel::BreakdownOriginType& > breakdownIterator = equipmentType.CreateBreakdownsIterator();
         QStringList breakdowns;
         while( breakdownIterator.HasMoreElements() )
@@ -282,7 +282,7 @@ void InitialState::FillResources( tools::Iterator< const kernel::DotationCapacit
 // -----------------------------------------------------------------------------
 const QString InitialState::RetrieveResourceCategory( const QString& resourceName ) const
 {
-    const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( resourceName.toAscii().constData() );
+    const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( resourceName.toStdString() );
     return category.GetCategoryName().c_str();
 }
 
@@ -303,7 +303,7 @@ double InitialState::RetrieveNormalizedConsumption( const QString& resourceName 
         while( dotationIterator.HasMoreElements() )
         {
             const kernel::DotationCapacityType& type = dotationIterator.NextElement();
-            if( type.GetName() == resourceName.toAscii().constData() )
+            if( type.GetName() == resourceName.toStdString() )
             {
                 normalizedConsumption += agentComposition.GetCount() * type.GetNormalizedConsumption();
                 break;

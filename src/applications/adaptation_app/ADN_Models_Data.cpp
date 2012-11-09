@@ -51,7 +51,7 @@ void ADN_Models_Data::OrderInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strName_ );
     ADN_Missions_FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( strName_.GetData() );
     if( !fragOrder )
-        throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Models_Data", "Doctrine models - Invalid frag order '%1'" ).arg( strName_.GetData().c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).toStdString(), tools::translate( "Models_Data", "Doctrine models - Invalid frag order '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
     fragOrder_ = fragOrder;
 }
 
@@ -142,7 +142,7 @@ void ADN_Models_Data::MissionInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strName_ );
     ADN_Missions_Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( mission_.GetVector(), strName_.GetData() );
     if( !mission )
-        throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).toAscii().constData(), tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toAscii().constData() );
+        throw ADN_DataException( tools::translate( "Models_Data", "Invalid data" ).toStdString(), tools::translate( "Models_Data", "Doctrine models - Invalid mission '%1'" ).arg( strName_.GetData().c_str() ).toStdString() );
     mission_ = mission;
     mission_.GetData()->strName_.Connect( &strName_ );
     input >> xml::list( "fragorder", *this, &ADN_Models_Data::MissionInfos::ReadFragOrder );

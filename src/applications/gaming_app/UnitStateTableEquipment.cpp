@@ -107,7 +107,7 @@ unsigned int UnitStateTableEquipment::BreakdownComboIndexToId( const QStringList
     assert( index >= 0 && static_cast< int >( index ) < breakdowns.size() );
     if( index == 0 ) // $$$$ ABR 2011-08-09: random
         return 0;
-    const kernel::BreakdownType& type = staticModel_.objectTypes_.Resolver2< kernel::BreakdownType >::Get( breakdowns[ index ].toAscii().constData() );
+    const kernel::BreakdownType& type = staticModel_.objectTypes_.Resolver2< kernel::BreakdownType >::Get( breakdowns[ index ].toStdString() );
     return type.GetId();
 }
 
@@ -219,7 +219,7 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
             if( GetEnumData< E_EquipmentState >( row, eState ) == eEquipmentState_RepairableWithEvacuation )
             {
                 assert( breakdowns );
-                breakdownList.AddIdentifier( QString( "Breakdown %L1" ).arg( ++i ).toAscii().constData(), BreakdownComboIndexToId( *breakdowns, GetEnumData< unsigned int >( row, eBreakdown ) ) );
+                breakdownList.AddIdentifier( QString( "Breakdown %L1" ).arg( ++i ).toStdString(), BreakdownComboIndexToId( *breakdowns, GetEnumData< unsigned int >( row, eBreakdown ) ) );
             }
     }
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );

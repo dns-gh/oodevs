@@ -87,7 +87,7 @@ void WeatherListView::Update( const WeatherModel& model )
 // -----------------------------------------------------------------------------
 void WeatherListView::CreateItem()
 {
-    boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).toAscii().constData() ) );
+    boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).toStdString() ) );
     weather->SetCreated( true );
     weather->SetPeriod( tools::QTimeToBoostTime( exerciceTime_ ), tools::QTimeToBoostTime( exerciceTime_.addDays( 1 ) ) );
     Create( weather->GetName(), *model_ );

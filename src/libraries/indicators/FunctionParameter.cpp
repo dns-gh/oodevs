@@ -18,7 +18,7 @@ using namespace indicators;
 // Created: SBO 2009-05-11
 // -----------------------------------------------------------------------------
 FunctionParameter::FunctionParameter( const QString& name, const std::string& attribute, boost::shared_ptr< DataType_ABC > type )
-    : Element_ABC( name.toAscii().constData() )
+    : Element_ABC( name.toStdString() )
     , name_( name )
     , attribute_( attribute )
     , type_( type )
@@ -68,5 +68,5 @@ void FunctionParameter::AddParameter( boost::shared_ptr< Element_ABC > element )
 // -----------------------------------------------------------------------------
 void FunctionParameter::Serialize( xml::xostream& /*xos*/, ElementDeclarator_ABC& /*declarator*/ ) const
 {
-    throw std::exception( tools::translate( "Indicators", "Missing parameter: %1." ).arg( name_ ).toAscii().constData() );
+    throw std::exception( tools::translate( "Indicators", "Missing parameter: %1." ).arg( name_ ).toStdString().c_str() );
 }

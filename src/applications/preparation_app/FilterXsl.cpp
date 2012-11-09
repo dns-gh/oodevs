@@ -130,7 +130,7 @@ void FilterXsl::OnTextChanged()
 // -----------------------------------------------------------------------------
 bool FilterXsl::IsValid() const
 {
-    return output_ && !output_->text().isEmpty() && bfs::exists( output_->text().toAscii().constData() );
+    return output_ && !output_->text().isEmpty() && bfs::exists( output_->text().toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,6 +155,6 @@ QWidget* FilterXsl::CreateParametersWidget( QWidget* parent )
 void FilterXsl::Execute()
 {
     assert( output_ && !output_->text().isEmpty() && !inputFile_.empty() );
-    xsl::xftransform xft( xslFile_, MakeOutputFile( output_->text().toAscii().constData(), inputFile_, outputExtension_ ) );
+    xsl::xftransform xft( xslFile_, MakeOutputFile( output_->text().toStdString(), inputFile_, outputExtension_ ) );
     xft << xml::xifstream( inputFile_ );
 }

@@ -108,7 +108,7 @@ void Options::Load( Settings_ABC& settings, const std::string& path /* = "" */)
     QStringList list = settings.EntryList( root.c_str() );
     for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
     {
-        const std::string typedName = (*it).toAscii().constData();
+        const std::string typedName = (*it).toStdString();
         if( ! typedName.empty() )
         {
             char type = typedName[0];
@@ -119,7 +119,7 @@ void Options::Load( Settings_ABC& settings, const std::string& path /* = "" */)
     }
     list = settings.SubEntriesList( root.c_str() );
     for( QStringList::const_iterator it = list.begin(); it != list.end(); ++it )
-        Load( settings, ( root + (*it).toAscii().constData() ).c_str() );
+        Load( settings, ( root + (*it).toStdString() ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

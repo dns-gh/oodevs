@@ -87,12 +87,12 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 
 inline std::ostream& operator<<( std::ostream& os, const QString& s )
 {
-    return os << s.toAscii().constData();
+    return os << s.toStdString();
 }
 
 inline xml::xostream& operator<<( xml::xostream& os, const QString& value )
 {
-    return os << value.toAscii().constData();
+    return os << value.toStdString();
 }
 
 #endif // __clients_gui_pch_h_

@@ -35,9 +35,9 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
 , coordinateConverter_( coordinateConverter )
 {
     OGRRegisterAll();
-    dataSource_.reset( OGRSFDriverRegistrar::Open( filename.toAscii().constData(), FALSE ), OGRDataSource::DestroyDataSource );
+    dataSource_.reset( OGRSFDriverRegistrar::Open( filename.toStdString().c_str(), FALSE ), OGRDataSource::DestroyDataSource );
     if( dataSource_ == NULL )
-        throw std::runtime_error( parent->tr( "Cannot load shapefile %1" ).arg( filename ).toAscii().constData() );
+        throw std::runtime_error( parent->tr( "Cannot load shapefile %1" ).arg( filename ).toStdString() );
 
     QStringList loadableLayerNames;
     QString unloadableLayerExplanations;
@@ -52,7 +52,7 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
     }
 
     if( loadableLayerNames.empty() )
-        throw std::runtime_error(  tools::translate( "gui::ObjectPrototypeShapeFileLoader", "No layer to load.\n%1" ).arg( unloadableLayerExplanations ).toAscii().constData() );
+        throw std::runtime_error(  tools::translate( "gui::ObjectPrototypeShapeFileLoader", "No layer to load.\n%1" ).arg( unloadableLayerExplanations ).toStdString() );
 
     QString layerName;
     if( loadableLayerNames.size() == 1 )
@@ -65,9 +65,9 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
             throw LoadCancelledException();
     }
 
-    currentLayer_ = dataSource_->GetLayerByName( layerName.toAscii().constData() );
+    currentLayer_ = dataSource_->GetLayerByName( layerName.toStdString().c_str() );
     if( !currentLayer_ )
-        throw std::runtime_error( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot read layer %1" ).arg( layerName ).toAscii().constData() );
+        throw std::runtime_error( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot read layer %1" ).arg( layerName ).toStdString() );
 
     for( int i=0, count=currentLayer_->GetLayerDefn()->GetFieldCount(); i<count; ++i )
         fields_.push_back( currentLayer_->GetLayerDefn()->GetFieldDefn( i )->GetNameRef() );
@@ -117,7 +117,7 @@ QStringList ObjectPrototypeShapeFileLoader::GetFields() const
 // -----------------------------------------------------------------------------
 QString ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsString( const QString& fieldName ) const
 {
-    return currentFeature_->GetFieldAsString( fieldName.toAscii().constData() );
+    return currentFeature_->GetFieldAsString( fieldName.toStdString().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +126,7 @@ QString ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsString( const QStr
 // -----------------------------------------------------------------------------
 int ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsInt( const QString& fieldName ) const
 {
-    return currentFeature_->GetFieldAsInteger( fieldName.toAscii().constData() );
+    return currentFeature_->GetFieldAsInteger( fieldName.toStdString().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +135,7 @@ int ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsInt( const QString& fi
 // -----------------------------------------------------------------------------
 bool ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsBool( const QString& fieldName ) const
 {
-    return currentFeature_->GetFieldAsInteger( fieldName.toAscii().constData() ) != 0;
+    return currentFeature_->GetFieldAsInteger( fieldName.toStdString().c_str() ) != 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -314,7 +314,7 @@ std::string ADN_ListView::FormatUsersList( const QString& category, const QStrin
 {
     std::string result = "";
     if( usersList.isEmpty() )
-        result = tr( "<b>Unused</b>" ).toAscii().constData();
+        result = tr( "<b>Unused</b>" ).toStdString();
     else
         FillMultiUsersList( category, usersList, result );
     return result;
@@ -330,9 +330,9 @@ void ADN_ListView::FillMultiUsersList( const QString& category, const QStringLis
     {
         if( !result.empty() )
             result += "<br>";
-        result += tr( "<nobr><b>Used by the following '%1':</b></nobr>" ).arg( category.toLower() ).toAscii().constData();
+        result += tr( "<nobr><b>Used by the following '%1':</b></nobr>" ).arg( category.toLower() ).toStdString();
         for( QStringList::const_iterator constIterator = usersList.constBegin(); constIterator != usersList.constEnd(); ++constIterator )
-            result += "<br><nobr>" + std::string( (*constIterator).toAscii().constData() ) + "</nobr>";
+            result += "<br><nobr>" + std::string( (*constIterator).toStdString() ) + "</nobr>";
     }
 }
 
@@ -623,7 +623,7 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
     if( nbRow < numeric_limits< USHORT >::max() )
     {
         xls.New( 1 );
-        SaveToSheet( xls, sheetName.toAscii().constData(), 0, dataModel_.item( 0 ), maxDepth, nbRow );
+        SaveToSheet( xls, sheetName.toStdString().c_str(), 0, dataModel_.item( 0 ), maxDepth, nbRow );
     }
     else
     {
@@ -631,10 +631,10 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
         int sheet = 0;
         for( int i = 0; i < nbRow; ++i )
             if( dataModel_.item( i )->rowCount() > 0 )
-                SaveToSheet( xls, dataModel_.item( i )->text().toAscii().constData(), sheet, dataModel_.item( i )->child( 0 ), maxDepth - 1, nbRow );
+                SaveToSheet( xls, dataModel_.item( i )->text().toStdString().c_str(), sheet, dataModel_.item( i )->child( 0 ), maxDepth - 1, nbRow );
     }
 
-    xls.SaveAs( path.toAscii().constData() );
+    xls.SaveAs( path.toStdString().c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -670,7 +670,7 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
             if( !cell )
                 return;
             QString content = dataModel_.headerData( col, Qt::Horizontal ).toString();
-            cell->Set( content.toAscii().constData() );
+            cell->Set( content.toStdString().c_str() );
             cell->SetFormat( format );
             if( col == 0 )
             {
@@ -774,7 +774,7 @@ void ADN_ListView::FillSheetFromItem( QStandardItem* qItem, BasicExcelWorksheet&
             if( ok )
                 cell->Set( content.toDouble() );
             else
-                cell->Set( content.toAscii().constData() );
+                cell->Set( content.toStdString().c_str() );
         }
 
         // Column size

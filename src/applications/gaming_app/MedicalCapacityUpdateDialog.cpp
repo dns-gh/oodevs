@@ -265,7 +265,7 @@ void MedicalCapacityUpdateDialog::Send( actions::parameters::ParameterList& attr
 void MedicalCapacityUpdateDialog::FillAttributes( actions::parameters::ParameterList& attribute ) const
 {
     attribute.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_medical_treatment );
-    attribute.AddString( "ExternalReferenceId", referenceID_->text().toAscii().constData() );
+    attribute.AddString( "ExternalReferenceId", referenceID_->text().toStdString() );
     attribute.AddQuantity( "Doctors", doctors_->value() );
     attribute.AddIdentifier( "Status", 0 ); // JCR TODO : Check status available ?
 

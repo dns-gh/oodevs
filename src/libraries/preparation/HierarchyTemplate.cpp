@@ -93,7 +93,7 @@ void HierarchyTemplate::Serialize( xml::xostream& output ) const
         output << xml::start( "element" )
                << xml::attribute( "x", referencePosition_.X() )
                << xml::attribute( "y", referencePosition_.Y() )
-               << xml::attribute( "name", name_.toAscii().constData() );
+               << xml::attribute( "name", name_.toStdString() );
         element_->Serialize( output );
         output << xml::end;
     }

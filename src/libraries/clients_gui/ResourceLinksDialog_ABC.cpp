@@ -179,7 +179,7 @@ void ResourceLinksDialog_ABC::Update()
         return;
     }
     selectedItem_ = item;
-    std::string resource = item->text().toAscii().constData();
+    std::string resource = item->text().toStdString();
     ResourceNetwork_ABC::ResourceNode& node = resourceNodes_[ resource ];
     groupBox_->setChecked( node.isEnabled_ );
     production_->setValue( node.production_ );

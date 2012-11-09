@@ -207,8 +207,8 @@ void Ghost::SerializeAttributes( xml::xostream& xos ) const
     kernel::EntityImplementation< kernel::Ghost_ABC >::SerializeAttributes( xos );
     assert( ghostType_ != eGhostType_Invalid );
     xos << xml::attribute( "ghost-type", ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToSim ) )
-        << xml::attribute( "type", type_.toAscii().constData() )
-        << xml::attribute( "name", name_.toAscii().constData() );
+        << xml::attribute( "type", type_.toStdString() )
+        << xml::attribute( "name", name_.toStdString() );
     std::string nature = nature_;
     if ( nature.find( "symbols/" ) != std::string::npos )
         nature = nature.substr( 8, nature.length() - 8 );

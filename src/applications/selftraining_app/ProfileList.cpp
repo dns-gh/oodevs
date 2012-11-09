@@ -51,7 +51,7 @@ void ProfileList::Update( const QString& exercise )
     try
     {
         if( !exercise.isEmpty() )
-            ReadProfiles( exercise.toAscii().constData() );
+            ReadProfiles( exercise.toStdString() );
         emit currentRowChanged( 0 );
     }
     catch( ... )

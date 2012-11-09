@@ -473,7 +473,7 @@ void ADN_Weapons_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
 {
     QString strLocalPath = strPath + tr( "WeaponSystems/" );
-    ADN_Tools::CreatePathToFile( strLocalPath.toAscii().constData() );
+    ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
     ADN_HtmlBuilder indexBuilder;
     indexBuilder.BeginHtml( tr( "Weapon Systems" ) );
     indexBuilder.BeginList();
@@ -525,7 +525,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
                     std::set<int>::iterator itFound = distancesSet.find( (*it3)->nDistance_.GetData() );
                     int nIndex = static_cast< int >( std::distance( distancesSet.begin(), itFound ) );
                     builder.TableItem( nRow, nIndex + 1, (*it3)->rPerc_.GetData() );
-                    builder.TableItem( 0, nIndex + 1, QString( "%1m").arg( (*it3)->nDistance_.GetData() ).toAscii().constData() );
+                    builder.TableItem( 0, nIndex + 1, QString( "%1m").arg( (*it3)->nDistance_.GetData() ).toStdString().c_str() );
                 }
             }
             builder.EndTable();

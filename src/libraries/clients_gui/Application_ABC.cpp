@@ -98,9 +98,9 @@ void Application_ABC::CheckLicense( const std::string& licenseName )
 // -----------------------------------------------------------------------------
 void Application_ABC::InitializeBugTrap()
 {
-    BugTrap::Setup( tools::translate( "Application", "SWORD" ).toAscii().constData() )
-            .SetEmail( tools::translate( "Application", "sword@masagroup.net" ).toAscii().constData() )
-            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).toAscii().constData() );
+    BugTrap::Setup( tools::translate( "Application", "SWORD" ).toStdString() )
+            .SetEmail( tools::translate( "Application", "sword@masagroup.net" ).toStdString() )
+            .SetVersion( QString( "%1 - " __TIMESTAMP__ ).arg( tools::AppVersion() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------

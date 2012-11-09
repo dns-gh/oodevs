@@ -203,7 +203,7 @@ void LocationBase::Serialize( xml::xostream& xos ) const
     if( IsValid() )
     {
         xos << xml::start( "location" )
-            << xml::attribute( "type", tools::ToString( type_ ).toAscii().constData() );
+            << xml::attribute( "type", tools::ToString( type_ ).toStdString() );
         for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
             xos << xml::start( "point" ) << xml::attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << xml::end;
         xos << xml::end;

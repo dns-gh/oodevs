@@ -43,6 +43,6 @@ void UndergroundPrototype::Commit( const kernel::Team_ABC& team )
     {
         actions::parameters::ParameterList& list = attributesList_->AddList( "Underground" );
         list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::underground );
-        list.AddString( "Network", network_->currentText().toAscii().constData() );
+        list.AddString( "Network", network_->currentText().toStdString() );
     }
 }

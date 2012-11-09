@@ -129,7 +129,7 @@ const QPixmap& ADN_Drawings_Data::DrawingInfo::GetPixmap() const
 // -----------------------------------------------------------------------------
 const std::string ADN_Drawings_Data::DrawingInfo::GetCode() const
 {
-    return template_->GetCode().toAscii().constData();
+    return template_->GetCode().toStdString();
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +138,7 @@ const std::string ADN_Drawings_Data::DrawingInfo::GetCode() const
 // -----------------------------------------------------------------------------
 const std::string ADN_Drawings_Data::DrawingInfo::GetGeometry() const
 {
-    return template_->GetType().toAscii().constData();
+    return template_->GetType().toStdString();
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +212,7 @@ void ADN_Drawings_Data::DrawingInfo::Draw()
     glEnd();
 
     // $$$$ ABR 2011-04-21: scale and translate if meter unit
-    const std::string geometry = template_->GetType().toAscii().constData();
+    const std::string geometry = template_->GetType().toStdString();
     if( template_->GetUnit() == gui::DrawingTemplate::eMeter && geometry != "polygon" )
     {
         glScalef( SYMBOL_SCALE_RATIO_FOR_METER, SYMBOL_SCALE_RATIO_FOR_METER, 0.f );

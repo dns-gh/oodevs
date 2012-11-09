@@ -86,7 +86,7 @@ const std::string XmlDescription::GetDescription() const
         if( it != descriptions_.end() )
             return it->second.second;
     }
-    return tools::translate( "XmlDescription", "No description available" ).toAscii().constData();
+    return tools::translate( "XmlDescription", "No description available" ).toStdString();
 }
 
 // -----------------------------------------------------------------------------

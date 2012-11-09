@@ -102,7 +102,7 @@ void FileList::GetFiles(FileVec_T& filesToFill) const
     filesToFill.reserve(listWidget_->count());
     for (int i = 0; i < listWidget_->count(); ++i)
     {
-        filesToFill.push_back(listWidget_->item(i)->text().toAscii().constData());
+        filesToFill.push_back(listWidget_->item(i)->text().toStdString());
     }
 }
 

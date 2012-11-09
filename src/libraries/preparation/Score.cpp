@@ -154,8 +154,8 @@ const ProfileSelection& Score::GetProfiles() const
 void Score::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "score")
-            << xml::attribute( "name", name_.toAscii().constData() )
-            << xml::start( "formula" ) << xml::cdata( !formula_.isEmpty() ? formula_.toAscii().constData() : "" ) << xml::end;
+            << xml::attribute( "name", name_.toStdString() )
+            << xml::start( "formula" ) << xml::cdata( !formula_.isEmpty() ? formula_.toStdString() : "" ) << xml::end;
     xos << xml::start( "gauge" );
     GetGauge().Serialize( xos );
     xos << xml::end;
@@ -186,7 +186,7 @@ void Score::SerializeIndicator( xml::xostream& xos, const QString& formula ) con
     indicators::ElementFactory factory( indicators_, *variables_ );
     indicators::Serializer serializer( factory );
     indicators::FormulaParser parser( serializer );
-    parser.Parse( formula.toAscii().constData() );
+    parser.Parse( formula.toStdString() );
     serializer.Serialize( xos );
 }
 

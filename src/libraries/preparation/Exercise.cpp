@@ -150,7 +150,7 @@ void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tool
     xos << xml::attribute( "valid", isValid_ );
     xos << xml::start( "meta" );
     if( ! name_.isEmpty() )
-        xos << xml::start( "name" ) << xml::cdata( name_.toAscii().constData() ) << xml::end;
+        xos << xml::start( "name" ) << xml::cdata( name_.toStdString() ) << xml::end;
     SerializeBriefings( xos );
     SerializeResources( xos );
     SerializeOrderFiles( xos );
@@ -175,8 +175,8 @@ void Exercise::SerializeBriefings( xml::xostream& xos ) const
     for( T_Resources::const_iterator it = briefings_.begin(); it != briefings_.end(); ++it )
         if( !it->second.isEmpty() )
             xos << xml::start( "text" )
-                    << xml::attribute( "lang", it->first.toAscii().constData() )
-                    << xml::cdata( it->second.toAscii().constData() )
+                    << xml::attribute( "lang", it->first.toStdString() )
+                    << xml::cdata( it->second.toStdString() )
                 << xml::end;
     xos << xml::end;
 }
@@ -190,8 +190,8 @@ void Exercise::SerializeResources( xml::xostream& xos ) const
     xos << xml::start( "resources" );
     for( T_Resources::const_iterator it = resources_.begin(); it != resources_.end(); ++it )
         xos << xml::start( "resource" )
-                << xml::attribute( "name", it->first.toAscii().constData() )
-                << xml::attribute( "file", it->second.toAscii().constData() )
+                << xml::attribute( "name", it->first.toStdString() )
+                << xml::attribute( "file", it->second.toStdString() )
             << xml::end;
     xos << xml::end;
 }

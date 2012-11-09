@@ -51,5 +51,5 @@ E_LocationType tools::LocationFromString( const QString& type )
 // -----------------------------------------------------------------------------
 E_DotationFamily tools::DotationFamilyFromString( const QString& type )
 {
-    return type.isNull() ? (E_DotationFamily)-1 : DotationFamilyFromString( std::string( type.toAscii().constData() ) );
+    return type.isNull() ? (E_DotationFamily)-1 : DotationFamilyFromString( std::string( type.toStdString() ) );
 }

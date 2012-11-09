@@ -169,7 +169,7 @@ void CheckpointConfigPanel::Commit( const std::string& exercise, const std::stri
     if( checkpointsGroup_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
-        action.SetOption( "session/config/simulation/checkpoint/@frequency", QString( "%1s" ).arg( QTime().secsTo( frequency_->time() ) ).toAscii().constData() );
+        action.SetOption( "session/config/simulation/checkpoint/@frequency", QString( "%1s" ).arg( QTime().secsTo( frequency_->time() ) ).toStdString() );
         action.SetOption( "session/config/simulation/checkpoint/@keep", keep_->value() );
         action.SetOption( "session/config/simulation/checkpoint/@usecrc", true );
         action.Commit();

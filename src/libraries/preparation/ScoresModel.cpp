@@ -284,7 +284,7 @@ void ScoresModel::IterateParties( const std::string& content, const std::string&
         if( !unitList.empty() )
         {
             std::string newContent = content;
-            std::string newName = name + " (" + entity.GetName().toAscii().constData() + ")";
+            std::string newName = name + " (" + entity.GetName().toStdString() + ")";
             boost::algorithm::replace_all( newContent, name, newName);
             boost::algorithm::replace_all( newContent, toReplace, unitList );
             CreateScoreFromString( newContent );

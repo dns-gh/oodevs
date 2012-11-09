@@ -73,8 +73,8 @@ DateTime::DateTime( const kernel::OrderParameter& parameter, const QDateTime& da
     }
     else
     {
-        std::string dateStr  = date.date().toString( Qt::ISODate ).toAscii().constData();
-        std::string timeStr  = date.time().toString( Qt::ISODate ).toAscii().constData();
+        std::string dateStr  = date.date().toString( Qt::ISODate ).toStdString();
+        std::string timeStr  = date.time().toString( Qt::ISODate ).toStdString();
         bpt::ptime time( bpt::time_from_string( dateStr + " " + timeStr )  );
         time_ = bpt::to_iso_string( time );
         SetValue( bpt::to_simple_string( time ).c_str() );

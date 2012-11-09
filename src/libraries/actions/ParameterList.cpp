@@ -46,7 +46,7 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::g
     int i = 0;
     for( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it, ++i )
     {
-        Parameter_ABC* param = factory.CreateParameter( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).toAscii().constData(), "location", false ), *it, entity );
+        Parameter_ABC* param = factory.CreateParameter( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).toStdString(), "location", false ), *it, entity );
         if( param )
             AddParameter( *param );
         else

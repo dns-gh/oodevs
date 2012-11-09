@@ -186,7 +186,7 @@ template< typename T >
 std::string ADN_WizardPage< T >::GetName()
 {
     if( nameEdit_ != 0 )
-        return nameEdit_->text().toAscii().constData();
+        return nameEdit_->text().toStdString();
     return "";
 }
 

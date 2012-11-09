@@ -164,7 +164,7 @@ void SymbolEditor::OnChangeSymbol( QAction* action )
         if( action->data().isNull() )
             selected_.ConstCast()->Get< kernel::SymbolHierarchy_ABC >().Reset();
         else
-            selected_.ConstCast()->Get< kernel::SymbolHierarchy_ABC >().OverrideValue( action->data().toString().toAscii().constData() );
+            selected_.ConstCast()->Get< kernel::SymbolHierarchy_ABC >().OverrideValue( action->data().toString().toStdString() );
         UpdateHierarchies();
     }
     menu_ = 0;

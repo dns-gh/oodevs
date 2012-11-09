@@ -115,7 +115,7 @@ void MedicalPriorities::Serialize( xml::xostream& xos ) const
     for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
         value += ( !value.isEmpty() ? ";" : "" ) + QString::number( *it );
     if( !value.isEmpty() )
-        xos << xml::attribute( "value", value.toAscii().constData() );
+        xos << xml::attribute( "value", value.toStdString() );
 }
 
 // -----------------------------------------------------------------------------

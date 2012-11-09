@@ -60,7 +60,7 @@ void CommandPublisher::Send( const std::string& target, const std::string& messa
     if( messenger_ && profile_ && !profile_->GetLogin().isNull() )
     {
         plugins::messenger::TextMessage textMessage;
-        const std::string source = profile_->GetLogin().toAscii().constData();
+        const std::string source = profile_->GetLogin().toStdString();
         textMessage().mutable_source()->set_profile( source );
         textMessage().mutable_target()->set_profile( target );
         textMessage().set_message( message );

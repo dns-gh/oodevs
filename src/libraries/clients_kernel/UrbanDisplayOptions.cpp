@@ -137,8 +137,8 @@ bool UrbanDisplayOptions::SetColor( UrbanColor_ABC& color, float livingSpace, co
             SetUrbanColor( unoccupiedAccommodation_, color );
         else
         {
-            float proportion = static_cast< float >( usages.Find( accommodationDisplayed_.toAscii().constData() ) ) / 100.f;
-            const AccommodationType* accommodationType = accommodationTypes_.Find( accommodationDisplayed_.toAscii().constData() );
+            float proportion = static_cast< float >( usages.Find( accommodationDisplayed_.toStdString() ) ) / 100.f;
+            const AccommodationType* accommodationType = accommodationTypes_.Find( accommodationDisplayed_.toStdString() );
             float nominalCapacity = accommodationType ? accommodationType->GetNominalCapacity() : 0.f;
             float density;
             if( livingSpace == 0.f || proportion == 0.f || nominalCapacity == 0.f )

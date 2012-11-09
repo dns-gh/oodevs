@@ -47,23 +47,23 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , typeCombo_  ( 0 )
     , obstacleTypeCombo_( 0 )
 {
-    location_ = static_cast< ParamLocation* >( AddElement( "location", tr( "Construction location" ).toAscii().constData() ) );
-    density_ = static_cast< ParamFloat* >( AddElement( "float", tr( "Density per 100 square meter" ).toAscii().constData() ) );
-    tc2_ = static_cast< ParamAutomat* >( AddElement( "automat", tr( "TC2" ).toAscii().constData() ) );
-    kernel::OrderParameter activityTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toAscii().constData(), "integer", true );
+    location_ = static_cast< ParamLocation* >( AddElement( "location", tr( "Construction location" ).toStdString() ) );
+    density_ = static_cast< ParamFloat* >( AddElement( "float", tr( "Density per 100 square meter" ).toStdString() ) );
+    tc2_ = static_cast< ParamAutomat* >( AddElement( "automat", tr( "TC2" ).toStdString() ) );
+    kernel::OrderParameter activityTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true );
     activityTimeParameter.SetKeyName( "ActivityTime" );
     activityTime_ = static_cast< ParamNumericField< int >* >( &builder.BuildOne( activityTimeParameter, false ) );
-    kernel::OrderParameter activationTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toAscii().constData(), "integer", true );
+    kernel::OrderParameter activationTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ).toStdString(), "integer", true );
     activationTimeParameter.SetKeyName( "ActivationTime" );
     activationTime_ = static_cast< ParamNumericField< int >* >( &builder.BuildOne( activationTimeParameter, false ) );
     activityTime_->SetSuffix( kernel::Units::meters.AsString() );
     activationTime_->SetSuffix( kernel::Units::meters.AsString() );
 
-    name_ = static_cast< ParamStringField* >( &builder.BuildOne( kernel::OrderParameter( tr( "Name" ).toAscii().constData(), "string", true ), false ) );
-    timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).toAscii().constData() ) );
-    mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).toAscii().constData() ) );
-    altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).toAscii().constData() ) );
-    lodging_            = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).toAscii().constData() ) );
+    name_ = static_cast< ParamStringField* >( &builder.BuildOne( kernel::OrderParameter( tr( "Name" ).toStdString(), "string", true ), false ) );
+    timeLimit_          = static_cast< ParamTime* >     ( AddElement( "time",       tr( "Time limit" ).toStdString() ) );
+    mining_             = static_cast< ParamBool* >     ( AddElement( "boolean",    tr( "Obstacle mining" ).toStdString() ) );
+    altitudeModifier_   = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Altitude modifier" ).toStdString() ) );
+    lodging_            = static_cast< ParamQuantity* > ( AddElement( "quantity",   tr( "Lodging" ).toStdString() ) );
 
     density_            ->SetKeyName( "density" );
     altitudeModifier_   ->SetKeyName( "altitude_modifier" );
@@ -274,7 +274,7 @@ void ParamObstacle::CommitTo( actions::ParameterContainer_ABC& action ) const
             tc2_->CommitTo( *param );
         if( type->CanBeReservedObstacle() )
         {
-            param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Obstacle type" ).toAscii().constData(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
+            param->AddParameter( *new actions::parameters::ObstacleType( kernel::OrderParameter( tr( "Obstacle type" ).toStdString(), "obstacletype", false ), obstacleTypeCombo_->GetValue() ) );
             activityTime_->CommitTo( *param );
             activationTime_->CommitTo( *param );
         }

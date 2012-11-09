@@ -426,7 +426,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::ReadArchive( xml::xis
             std::string material( xis.attribute< std::string >( "material-type" ) );
             helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( urbanData.begin(), urbanData.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
             if( it == urbanData.end() )
-                throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Object - Invalid Urban Material type '%1'" ).arg( material.c_str() ).toAscii().constData() );
+                throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Object - Invalid Urban Material type '%1'" ).arg( material.c_str() ).toStdString() );
             (*it)->ReadArchive( xis );
         }
     };
@@ -485,7 +485,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadArchive( xml::xistream& xis 
     xis >> xml::optional >> xml::start( "injuries" )
             >> xml::list( "injury", *this, &ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadInjury );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Injuries data sum > 100" ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Injuries data sum > 100" ).toStdString() );
     xis >> xml::end;
 }
 
@@ -508,10 +508,10 @@ void ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadInjury( xml::xistream& xis )
     {
         *pWound = static_cast< int >( xis.attribute< double >( "percentage" ) * 100. );
         if( pWound->GetData() < 0 || pWound->GetData() > 100 )
-            throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).toAscii().constData() );
+            throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).toStdString() );
     }
     else
-        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Invalid wound type '%1'" ).arg( wound.c_str() ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Invalid wound type '%1'" ).arg( wound.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -522,7 +522,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Flood::WriteArchive( xml::xostream& xos
 {
     xos << xml::start( "injuries" );
     if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
-        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Injuries data sum > 100" ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Injuries data sum > 100" ).toStdString() );
     xos  << xml::start( "injury" )
                 << xml::attribute( "type", "u1" )
                 << xml::attribute( "percentage", nNbHurtHumans1_.GetData() / 100. )
@@ -875,7 +875,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xi
         detectTime_ = time;
     }
     else
-        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Objects - Invalid level '%1'" ).arg( level.c_str() ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Objects - Invalid level '%1'" ).arg( level.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1018,7 +1018,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ReadArchive( xml::xis
     std::string strAttitude = input.attribute< std::string >( "attitude" );
     attitude_ = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
     if( attitude_ == static_cast< E_PopulationAttitude >( -1 ) )
-        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toAscii().constData() );
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1128,7 +1128,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier( 
     std::string fireClass = xis.attribute< std::string >( "fire-class" );
     IT_ModifierByFireClass_Vector itModifier = std::find_if( modifiers_.begin(), modifiers_.end(), ModifierByFireClass::Cmp( fireClass ) );
     if( itModifier == modifiers_.end() )
-        throw ADN_DataException( tr( "Invalid data" ).toAscii().constData(), tr( "Fire propagation modifier - Invalid fire class '%1'" ).arg( fireClass.c_str() ).toAscii().constData() );
+        throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Fire propagation modifier - Invalid fire class '%1'" ).arg( fireClass.c_str() ).toStdString() );
     ( *itModifier )->ReadArchive( xis );
 }
 

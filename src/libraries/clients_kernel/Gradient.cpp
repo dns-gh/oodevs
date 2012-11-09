@@ -268,7 +268,7 @@ void Gradient::LoadValues( const QString& values )
         const QStringList item = QStringList::split( ",", *it );
         if( item.size() == 2 )
         {
-            const float ratio = boost::lexical_cast< float >( item[0].toAscii().constData() );
+            const float ratio = boost::lexical_cast< float >( item[0].toStdString() );
             const QColor color( item[1] );
             result.push_back( T_Color( ratio, color ) );
         }
@@ -324,7 +324,7 @@ void Gradient::Save( kernel::Options& options, const std::string& group ) const
     QStringList colors;
     for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
         colors.append( QString::number( it->first ) + "," + it->second.name() );
-    options.Change( group + name_.toAscii().constData(), colors.join( ";" ) );
+    options.Change( group + name_.toStdString(), colors.join( ";" ) );
 }
 
 // -----------------------------------------------------------------------------

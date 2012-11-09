@@ -155,7 +155,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
         CIT_UrbanObjectVector it = livingUrbanObject_.find( occupation.object().id() );
         if( it != livingUrbanObject_.end() )
-            static_cast< kernel::UrbanObject* >( it->second )->UpdateHumans( name_.toAscii().constData(), occupation );
+            static_cast< kernel::UrbanObject* >( it->second )->UpdateHumans( name_.toStdString(), occupation );
     }
     if( msg.has_motivation() )
         motivation_ = msg.motivation();

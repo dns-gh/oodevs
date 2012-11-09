@@ -112,7 +112,7 @@ kernel::UrbanObject_ABC* UrbanFactory::Create( kernel::Entity_ABC* parent ) cons
 kernel::UrbanObject_ABC* UrbanFactory::Create( const geometry::Polygon2f& location, kernel::Entity_ABC* parent ) const
 {
     assert( parent != 0 );
-    UrbanObject* pTerrainObject = new UrbanObject( controllers_, idManager_, tools::translate( "UrbanFactory", "Urban block" ).toAscii().constData(), staticModel_.objectTypes_.StringResolver< kernel::ObjectType >::Get( "urban block" ), staticModel_.accommodationTypes_, options_ );
+    UrbanObject* pTerrainObject = new UrbanObject( controllers_, idManager_, tools::translate( "UrbanFactory", "Urban block" ).toStdString(), staticModel_.objectTypes_.StringResolver< kernel::ObjectType >::Get( "urban block" ), staticModel_.accommodationTypes_, options_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     UrbanHierarchies* hierarchies = new UrbanHierarchies( controllers_.controller_, *pTerrainObject, parent );
     assert( hierarchies->GetLevel() == eUrbanLevelBlock );

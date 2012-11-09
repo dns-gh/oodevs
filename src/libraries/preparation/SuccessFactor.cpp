@@ -107,7 +107,7 @@ void SuccessFactor::SetName( const QString& name )
 void SuccessFactor::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "factor" )
-            << xml::attribute( "name", name_.toAscii().constData() );
+            << xml::attribute( "name", name_.toStdString() );
     profiles_->Serialize( xos );
     conditions_->Serialize( xos );
     actions_->Serialize( xos );

@@ -46,7 +46,7 @@ GroupDisplayer& GroupDisplayer::AddLabel( const QString& name, bool bold )
 {
     Displayer_ABC*& item = items_[ name ];
     if( item )
-        throw std::runtime_error( "Item '" + std::string( name.toAscii().constData() ) + "' already added" );
+        throw std::runtime_error( "Item '" + std::string( name.toStdString() ) + "' already added" );
     item = new LabelDisplayer( layout_, name, bold, factory_ );
     return *this;
 }
@@ -60,7 +60,7 @@ GroupDisplayer& GroupDisplayer::AddSpinBox( const QString& name, int min, int ma
 {
     Displayer_ABC*& item = items_[ name ];
     if( item )
-        throw std::runtime_error( "Item '" + std::string( name.toAscii().constData() ) + "' already added" );
+        throw std::runtime_error( "Item '" + std::string( name.toStdString() ) + "' already added" );
     item = new SpinBoxDisplayer( layout_, name, min, max, step );
     return *this;
 }
@@ -73,7 +73,7 @@ GroupDisplayer& GroupDisplayer::AddCheckBox( const QString& name )
 {
     Displayer_ABC*& item = items_[ name ];
     if( item )
-        throw std::runtime_error( "Item '" + std::string( name.toAscii().constData() ) + "' already added" );
+        throw std::runtime_error( "Item '" + std::string( name.toStdString() ) + "' already added" );
     item = new CheckBoxDisplayer( layout_, name );
     return *this;
 }
@@ -86,7 +86,7 @@ Displayer_ABC& GroupDisplayer::SubItem( const QString& name )
 {
     Displayer_ABC* item = items_[ name ];
     if( ! item )
-        throw std::runtime_error( "Item '" + std::string( name.toAscii().constData() ) + "' does not exist" );
+        throw std::runtime_error( "Item '" + std::string( name.toStdString() ) + "' does not exist" );
     show();
     return *item;
 }

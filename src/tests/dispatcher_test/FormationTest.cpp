@@ -17,7 +17,7 @@
 
 inline std::ostream& operator<<( std::ostream& os, const QString& s )
 {
-    return os << s.toAscii().constData();
+    return os << s.toStdString();
 }
 
 // -----------------------------------------------------------------------------

@@ -31,7 +31,7 @@ namespace
 
     std::string GetExecutable()
     {
-        std::string directory = GetDirectory().toAscii().constData();
+        std::string directory = GetDirectory().toStdString();
         if( directory == "noValue" )
             directory = ( bfs::current_path().branch_path() / "Terrain" / "applications" ).string();
         return bfs::path( bfs::path( directory ) / "generation_app.exe" ).string();
@@ -45,12 +45,12 @@ namespace
 CreateTerrain::CreateTerrain( const tools::GeneralConfig& config, const QString& name, bool attach )
     : SpawnCommand( config, GetExecutable().c_str(), attach, "" )
 {
-    const std::string directory = config.GetTerrainDir( name.toAscii().constData() );
+    const std::string directory = config.GetTerrainDir( name.toStdString() );
     bfs::create_directories( directory );
 
     AddArgument( QString( "--out=\"%1\"" ).arg( directory.c_str() ) );
     QString qdirectory = GetDirectory();
-    std::string rundirectory = qdirectory.toAscii().constData();
+    std::string rundirectory = qdirectory.toStdString();
     if( rundirectory != "noValue" )
         SetWorkingDirectory( qdirectory );
 }

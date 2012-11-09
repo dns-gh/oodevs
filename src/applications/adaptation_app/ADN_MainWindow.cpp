@@ -55,7 +55,7 @@ namespace
     {
         const QString regDir = ReadDataDirectory();
         if( !regDir.isEmpty() )
-            return regDir.toAscii().constData();
+            return regDir.toStdString();
         char myDocuments[ MAX_PATH ];
         SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
         return ( bfs::path( myDocuments ) / appName ).string();
@@ -83,7 +83,7 @@ namespace
 //-----------------------------------------------------------------------------
 ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     : QMainWindow ()
-    , generalConfig_( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toAscii().constData() ) ) )
+    , generalConfig_( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).toStdString() ) ) )
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
     , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , strAdminPassword_( ReadPassword() )
@@ -312,7 +312,7 @@ void ADN_MainWindow::SaveAsProject()
     if( strDirectoryName.isEmpty() )
         return;
 
-    std::string res = strDirectoryName.toAscii().constData();
+    std::string res = strDirectoryName.toStdString();
     std::replace( res.begin(), res.end(), '\\', '/' );
     res += "/physical.xml";
 
@@ -391,7 +391,7 @@ void ADN_MainWindow::OpenProject()
         return;
     try
     {
-        OpenProject( qfilename.toAscii().constData() );
+        OpenProject( qfilename.toStdString() );
     }
     catch( ADN_Exception_ABC& exception )
     {
@@ -463,7 +463,7 @@ void ADN_MainWindow::ExportHtml()
     if( strPath.at( strPath.length() - 1 ) != '/' )
         strPath += '/';
 
-    workspace_.ExportHtml( strPath.toAscii().constData() );
+    workspace_.ExportHtml( strPath.toStdString() );
 }
 
 //-----------------------------------------------------------------------------

@@ -66,7 +66,7 @@ void CriticalIntelligence::SerializeAttributes( xml::xostream& xos ) const
 {
     if( value_() != "" )
         xos << xml::start( "critical-intelligence" )
-                << xml::attribute( "content", value_().toAscii().constData() )
+                << xml::attribute( "content", value_().toStdString() )
             << xml::end;
 }
 

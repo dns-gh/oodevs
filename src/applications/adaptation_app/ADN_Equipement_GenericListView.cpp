@@ -134,6 +134,6 @@ std::string ADN_Equipement_GenericListView::GetToolTipFor( const QModelIndex& in
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eResourceNetworks ).c_str(), ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksThatUse( *pCastData ), result );
 
     if( result.empty() )
-        result = tr( "<b>Unused</b>" ).toAscii().constData();
+        result = tr( "<b>Unused</b>" ).toStdString();
     return result;
 }
