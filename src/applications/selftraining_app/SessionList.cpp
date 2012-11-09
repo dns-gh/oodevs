@@ -84,7 +84,9 @@ void SessionList::Update( const QString& exercise )
 // -----------------------------------------------------------------------------
 void SessionList::SelectSession( int index )
 {
-    const QString session = index < int( list_->count() ) ? list_->item( index )->text() : "";
+    if( index < 0 || index >= list_->count() )
+        return;
+    const QString session = list_->item( index )->text();
     ReadComments( session );
     emit Select( session );
 }
