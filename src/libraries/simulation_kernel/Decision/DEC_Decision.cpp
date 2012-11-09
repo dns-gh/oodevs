@@ -598,7 +598,6 @@ void RegisterTelepathyFunctions( sword::Brain& brain )
     brain.RegisterMethod( "SetporteeAction_", &DEC_Decision_ABC::SetPorteeAction );
     brain.RegisterMethod( "GetrNiveauAlerteRavitaillement_", &DEC_Decision_ABC::GetNiveauAlerteRavitaillement );
     brain.RegisterMethod( "Getpoint_", &DEC_PathPoint::GetPos );
-    // brain.RegisterMethod( "Getmunitions_", &DEC_Decision_ABC::GetMunition );
     brain.RegisterMethod( "Setmunitions_", &DEC_Decision_ABC::SetMunition );
     brain.RegisterMethod( "Getmunitions_", &DEC_Decision_ABC::GetMunition );
     brain.RegisterMethod( "SetnbIT_", &DEC_Decision_ABC::SetNbIt );
