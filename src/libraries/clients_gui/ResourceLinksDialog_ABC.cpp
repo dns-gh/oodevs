@@ -175,7 +175,10 @@ void ResourceLinksDialog_ABC::Update()
     QListWidgetItem* item = dotationList_->currentItem();
     if( !item )
     {
-        dotationList_->setCurrentItem( selectedItem_, QItemSelectionModel::ClearAndSelect );
+        if( dotationList_->count() > 0 )
+            dotationList_->setCurrentItem( selectedItem_, QItemSelectionModel::ClearAndSelect );
+        else
+            selectedItem_ = 0;
         return;
     }
     selectedItem_ = item;
