@@ -78,7 +78,7 @@ void ReportTemplate::ReadParameter( xml::xistream& xis )
 {
     std::string type;
     xis >> xml::attribute( "type", type );
-    if( QString( type.c_str() ).lower() == "enumeration" )
+    if( QString::fromStdString( type ).toLower() == "enumeration" )
     {
         enumerations_.push_back( T_EnumerationValues() );
         xis >> xml::list( "value", *this, &ReportTemplate::ReadEnumeration );

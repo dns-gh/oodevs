@@ -160,7 +160,7 @@ add_target( actions common "libraries/actions" OPTIONS qt3 protocol )
 target_link_libraries( actions clients_kernel )
 
 # reports
-add_target( reports common "libraries/reports" OPTIONS qt3 protocol )
+add_target( reports common "libraries/reports" OPTIONS protocol )
 target_link_libraries( reports clients_kernel )
 
 # indicators
