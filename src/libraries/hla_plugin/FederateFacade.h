@@ -56,6 +56,7 @@ namespace hla
     class CommentMissionSender;
     class EntityIdentifierResolver_ABC;
     class FOM_Serializer_ABC;
+    class FomBuilder;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -148,6 +149,7 @@ private:
     std::auto_ptr< Federate_ABC > federate_;
     std::auto_ptr< FederationDestructor > destructor_;
     std::auto_ptr< HlaObjectNameFactory_ABC > nameFactory_;
+    std::auto_ptr< FomBuilder > fomBuilder_;
     std::auto_ptr< HlaClass > aggregateClass_;
     std::auto_ptr< HlaClass > surfaceVesselClass_;
     std::auto_ptr< HlaClass > aircraftClass_;

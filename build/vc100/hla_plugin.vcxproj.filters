@@ -328,6 +328,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\Netn2TransferSender.cpp">
       <Filter>Source Files\Interactions\Ownership</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FederateFactory.cpp">
+      <Filter>Source Files\Hla</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\FomBuilder.cpp">
+      <Filter>Source Files\Hla</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -788,6 +794,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\Netn2TransferSender.h">
       <Filter>Source Files\Interactions\Ownership</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FederateFactory.h">
+      <Filter>Source Files\Hla</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\FomBuilder.h">
+      <Filter>Source Files\Hla</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
