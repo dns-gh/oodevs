@@ -829,6 +829,7 @@ void MIL_EntityManager::UpdateDecisions()
 void MIL_EntityManager::UpdateActions()
 {
     profiler_.Start();
+    sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
     sink_->ExecuteCommands();
     formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateActions, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
