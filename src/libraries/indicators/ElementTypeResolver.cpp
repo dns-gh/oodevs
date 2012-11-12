@@ -67,7 +67,8 @@ namespace
 void ElementTypeResolver::AddElement( const DataType_ABC& definition, const DataType_ABC& instance )
 {
     if( definition != instance )
-        throw std::exception( tools::translate( "Indicators", "Expected '%1' got '%2'." ).arg( definition.ToString().c_str() ).arg( instance.ToString().c_str() ) );
+        throw std::runtime_error( tools::translate( "Indicators", "Expected '%1' got '%2'." )
+                                  .arg( definition.ToString().c_str() ).arg( instance.ToString().c_str() ).toStdString() );
     const std::string def = definition.ToString();
     if( IsAbstract( def ) )
     {
@@ -143,7 +144,7 @@ std::string ElementTypeResolver::Resolve( const std::string& type ) const
         if( ! it->second.empty() )
             boost::replace_all( result, it->first, it->second );
     if( IsAbstract( result ) )
-        throw std::exception( tools::translate( "Indicators", "Unresolved type parameter: %1." ).arg( result.c_str() ) );
+        throw std::runtime_error( tools::translate( "Indicators", "Unresolved type parameter: %1." ).arg( result.c_str() ).toStdString() );
     return ReplaceBaseElementTypes( result );
 }
 

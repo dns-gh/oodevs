@@ -164,7 +164,7 @@ add_target( reports common "libraries/reports" OPTIONS protocol )
 target_link_libraries( reports clients_kernel )
 
 # indicators
-add_target( indicators common "libraries/indicators" OPTIONS qt3 )
+add_target( indicators common "libraries/indicators" )
 target_link_libraries( indicators clients_kernel )
 
 # license_gui
