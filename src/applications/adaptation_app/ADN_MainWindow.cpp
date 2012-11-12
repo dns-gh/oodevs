@@ -337,7 +337,10 @@ void ADN_MainWindow::SaveAsProject()
 
     QApplication::restoreOverrideCursor();    // restore original cursor
     if( hasSaved )
+    {
+        setCaption( tr( "Sword Adaptation Tool - " ) + res.c_str() + "[*]" );
         setWindowModified( false );
+    }
 }
 
 //-----------------------------------------------------------------------------
