@@ -237,6 +237,10 @@ QSize HierarchyListView_ABC::sizeHint() const
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
 {
+    blockSignals( true );
+    selectAll( false );
+    blockSignals( false );
+
     ValuedListItem* item = element ? FindItem( element, firstChild() ) : 0;
     if( item )
     {
