@@ -109,7 +109,8 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_builder_registers_attributes, Fixture )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
-                                       ( "Spatial" );
+                                       ( "Spatial" )
+                                       ( "IsPartOf" );
     Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", true, true );
 }
 
@@ -122,6 +123,7 @@ BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixtu
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
                                        ( "Spatial" )
+                                       ( "IsPartOf" )
                                        // NETN
                                        ( "UniqueID" )
                                        ( "Callsign" )
@@ -137,7 +139,8 @@ BOOST_FIXTURE_TEST_CASE( aircraft_builder_registers_attributes, Fixture )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
-                                       ( "Spatial" );
+                                       ( "Spatial" )
+                                       ( "IsPartOf" );
     Check( builder, "BaseEntity.PhysicalEntity.Platform.Aircraft", true, true );
 }
 
@@ -150,6 +153,7 @@ BOOST_FIXTURE_TEST_CASE( netn_aircraft_builder_registers_attributes, Fixture )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
                                        ( "Spatial" )
+                                       ( "IsPartOf" )
                                        // NETN
                                        ( "UniqueID" )
                                        ( "Callsign" )
@@ -164,7 +168,8 @@ BOOST_FIXTURE_TEST_CASE( groundvehicle_builder_registers_attributes, Fixture )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
-                                       ( "Spatial" );
+                                       ( "Spatial" )
+                                       ( "IsPartOf" );
     Check( builder, "BaseEntity.PhysicalEntity.Platform.GroundVehicle", true, false );
 }
 
@@ -176,6 +181,7 @@ BOOST_FIXTURE_TEST_CASE( netn_groundvehicle_builder_registers_attributes, Fixtur
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
                                        ( "Spatial" )
+                                       ( "IsPartOf" )
                                        // NETN
                                        ( "UniqueID" )
                                        ( "Callsign" )
@@ -190,7 +196,8 @@ BOOST_FIXTURE_TEST_CASE( human_builder_registers_attributes, Fixture )
                                        ( "EntityIdentifier" )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
-                                       ( "Spatial" );
+                                       ( "Spatial" )
+                                       ( "IsPartOf" );
     Check( builder, "BaseEntity.PhysicalEntity.Lifeform.Human", true, false );
 }
 
@@ -202,6 +209,7 @@ BOOST_FIXTURE_TEST_CASE( netn_human_builder_registers_attributes, Fixture )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
                                        ( "Spatial" )
+                                       ( "IsPartOf" )
                                        // NETN
                                        ( "UniqueID" )
                                        ( "Callsign" );

@@ -34,6 +34,7 @@ MOCK_BASE_CLASS( MockFOM_Serialization, FOM_Serializer_ABC )
     MOCK_METHOD( ReadNothing, 3 )
     MOCK_METHOD( ReadUnsignedChar, 4 )
     MOCK_METHOD( ReadMarking, 4 )
+    MOCK_METHOD( ReadIsPartOf, 4 )
 
     MOCK_METHOD( ReadCallsign, 4 )
     MOCK_METHOD( ReadUniqueId, 4 )

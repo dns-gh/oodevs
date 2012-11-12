@@ -170,6 +170,7 @@ void Aircraft::RegisterAttributes( )
     attributesUpdater_->Register( "ForceIdentifier", boost::bind( &FOM_Serializer_ABC::ReadForceIdentifier, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( force_ ) ), Wrapper< int8 >( static_cast< int8 >( force_ ) ) );
     attributesUpdater_->Register( "Marking", boost::bind( &FOM_Serializer_ABC::ReadMarking, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( marking_ ) ), marking_ );
     attributesUpdater_->Register( "Spatial", boost::bind( &FOM_Serializer_ABC::ReadSpatial, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( spatial_ ) ), spatial_ );
+    attributesUpdater_->Register( "IsPartOf", boost::bind( &FOM_Serializer_ABC::ReadIsPartOf, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( isPartOf_ ) ), isPartOf_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +225,8 @@ void Aircraft::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& /*childr
 // Name: Aircraft::ChildrenChanged
 // Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-void Aircraft::ParentChanged( const std::string& /*parentId*/ )
+void Aircraft::ParentChanged( const std::string& parentId )
 {
-    // NOTHING
+    isPartOf_.rtiId_ = Omt13String( parentId );
+    attributesUpdater_->Update( "IsPartOf", isPartOf_ );
 }

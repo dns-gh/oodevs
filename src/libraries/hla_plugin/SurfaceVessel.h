@@ -14,6 +14,7 @@
 #include "EventListener_ABC.h"
 #include "AggregateMarking.h"
 #include "Spatial.h"
+#include "IsPartOfStruct.h"
 #include "rpr/ForceIdentifier.h"
 #include "rpr/EntityType.h"
 #include "rpr/EntityIdentifier.h"
@@ -106,6 +107,7 @@ private:
     Marking marking_;
     rpr::EntityIdentifier entityIdentifier_;
     Spatial spatial_;
+    IsPartOfStruct isPartOf_;
     //@}
 };
 

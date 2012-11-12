@@ -39,6 +39,7 @@ class Spatial;
 class EntityIdentifierResolver_ABC;
 class UnicodeString;
 struct uniqueIdSerializer;
+class IsPartOfStruct;
 
 // =============================================================================
 /** @class  FOM_Serializer_ABC
@@ -63,6 +64,7 @@ public:
     virtual void ReadNothing( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener ) = 0;
     virtual void ReadUnsignedChar( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, unsigned char& value) = 0;
     virtual void ReadMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, Marking& marking ) = 0;
+    virtual void ReadIsPartOf( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, IsPartOfStruct& isPartOf ) = 0;
 
     virtual void ReadCallsign( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, UnicodeString& callsign ) = 0;
     virtual void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< char >& uniqueId ) = 0;

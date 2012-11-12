@@ -42,6 +42,7 @@ GroundVehicle::GroundVehicle( Agent_ABC& agent, const std::string& name,
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
     attributes_->Register( "Marking", markingFactory.CreateMarking( name, simId ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
+    attributes_->Register( "IsPartOf", isPartOf_ );
     agent_.Register( *this );
 }
 
@@ -175,7 +176,8 @@ void GroundVehicle::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& /*c
 // Name: GroundVehicle::ChildrenChanged
 // Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-void GroundVehicle::ParentChanged( const std::string& /*parentId*/ )
+void GroundVehicle::ParentChanged( const std::string& parentId )
 {
-    // NOTHING
+    isPartOf_.rtiId_ = Omt13String( parentId );
+    attributes_->Update( "IsPartOf", isPartOf_ );
 }

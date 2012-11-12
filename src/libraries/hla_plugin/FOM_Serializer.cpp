@@ -13,6 +13,7 @@
 #include "ObjectListener_ABC.h"
 #include "UnicodeString.h"
 #include "SilentEntity.h"
+#include "IsPartOfStruct.h"
 #include "EntityIdentifierResolver_ABC.h"
 #include "SerializationTools.h"
 
@@ -253,4 +254,14 @@ void FOM_Serializer::ReadMarking( ::hla::Deserializer_ABC& deserializer, const s
 const UniqueIdSerializer& FOM_Serializer::GetUniqueIdSerializer()
 {
     return *uniqueIdSerializer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FOM_Serializer::ReadIsPartOf
+// Created: AHC 2012-11-12
+// -----------------------------------------------------------------------------
+void FOM_Serializer::ReadIsPartOf( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, IsPartOfStruct& isPartOf )
+{
+    isPartOf.Deserialize( deserializer );
+    listener.ParentChanged( identifier, isPartOf.rtiId_.str() ) ;
 }

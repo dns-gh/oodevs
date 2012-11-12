@@ -175,7 +175,8 @@ void Human::ChildrenChanged( const EventListener_ABC::T_ChildrenIds& /*children*
 // Name: Human::ChildrenChanged
 // Created: AHC 2012-11-12
 // -----------------------------------------------------------------------------
-void Human::ParentChanged( const std::string& /*parentId*/ )
+void Human::ParentChanged( const std::string& parentId )
 {
-    // NOTHING
+    isPartOf_.rtiId_ = Omt13String( parentId );
+    attributes_->Update( "IsPartOf", isPartOf_ );
 }

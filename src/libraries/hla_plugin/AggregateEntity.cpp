@@ -42,11 +42,6 @@ namespace
         }
         (listener.*callback)( identifier, s );
     }
-    void ReadIsPartOf( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, IsPartOfStruct& var )
-    {
-        var.Deserialize( deserializer );
-        listener.ParentChanged( identifier, var.rtiId_.str() ) ;
-    }
 }
 
 
@@ -218,7 +213,7 @@ void AggregateEntity::RegisterAttributes( )
     attributesUpdater_->Register( "SubAggregateIdentifiers", boost::bind( &ReadSubIdentifiers, _1, _2, _3, &ObjectListener_ABC::SubAgregatesChanged, boost::ref( subAggregates_ ) ), subAggregates_ ); // no sub aggregates identifiers
     attributesUpdater_->Register( "EntityIdentifiers", boost::bind( &ReadSubIdentifiers, _1, _2, _3, &ObjectListener_ABC::SubEntitiesChanged, boost::ref( entities_ ) ), entities_ ); // no entity identifiers
     attributesUpdater_->Register( "NumberOfVariableDatums", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ), Wrapper< uint32 >( 0 ) ); // no variable datums
-    attributesUpdater_->Register( "IsPartOf", boost::bind( &ReadIsPartOf, _1, _2, _3, boost::ref( isPartOf_ ) ), isPartOf_ ); 
+    attributesUpdater_->Register( "IsPartOf", boost::bind( &FOM_Serializer_ABC::ReadIsPartOf, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( isPartOf_ ) ), isPartOf_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,6 +12,7 @@
 
 #include "HlaObject_ABC.h"
 #include "EventListener_ABC.h"
+#include "IsPartOfStruct.h"
 #include "rpr/ForceIdentifier.h"
 #include "rpr/EntityType.h"
 
@@ -90,6 +91,7 @@ private:
     std::auto_ptr< ObjectListenerComposite > listeners_;
     Agent_ABC& agent_;
     std::auto_ptr< AttributesSerializer > attributes_;
+    IsPartOfStruct isPartOf_;
     //@}
 };
 

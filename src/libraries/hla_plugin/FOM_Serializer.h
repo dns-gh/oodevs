@@ -42,6 +42,7 @@ public:
     virtual void ReadNothing( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener );
     virtual void ReadUnsignedChar( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, unsigned char& value);
     virtual void ReadMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, Marking& marking );
+    virtual void ReadIsPartOf( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, IsPartOfStruct& isPartOf );
 
     virtual void ReadCallsign( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, UnicodeString& callsign );
     virtual void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, ObjectListener_ABC& listener, std::vector< char >& uniqueId );
