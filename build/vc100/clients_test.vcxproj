@@ -60,6 +60,7 @@
     <Import Project="Property sheets\link_svgl.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
     <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\qt3_support.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -83,6 +84,7 @@
     <Import Project="Property sheets\link_svgl.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
     <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\qt3_support.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -106,6 +108,7 @@
     <Import Project="Property sheets\link_svgl.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
     <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\qt3_support.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -129,6 +132,7 @@
     <Import Project="Property sheets\link_svgl.props" />
     <Import Project="Property sheets\link_spatialcontainer.props" />
     <Import Project="Property sheets\link_gdal.props" />
+    <Import Project="Property sheets\qt3_support.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
