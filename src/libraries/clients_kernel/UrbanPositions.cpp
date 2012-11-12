@@ -28,6 +28,7 @@ UrbanPositions::UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object
     , object_           ( object )
     , selected_         ( false )
     , hasInfrastructure_( false )
+    , area_             ( 0.f )
 {
     // NOTHING
 }
@@ -41,6 +42,7 @@ UrbanPositions::UrbanPositions( EUrbanLevel level, const UrbanObject_ABC& object
     , object_           ( object )
     , selected_         ( false )
     , hasInfrastructure_( false )
+    , area_             ( 0.f )
 {
     ComputeCachedValues( positions );
 }
