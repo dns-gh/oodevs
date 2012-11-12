@@ -41,8 +41,8 @@ FiresModel::~FiresModel()
 // -----------------------------------------------------------------------------
 void FiresModel::Purge()
 {
-    Clear();
-    targets_.Clear();
+    firers_.clear();
+    targets_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,8 +51,8 @@ void FiresModel::Purge()
 // -----------------------------------------------------------------------------
 void FiresModel::AddFire( const sword::StartUnitFire& message )
 {
-    if( !Find( message.fire().id() ) )
-        Register( message.fire().id(), agents_.Get( message.firing_unit().id() ) );
+    if( firers_.find( message.fire().id() ) == firers_.end() )
+        firers_[ message.fire().id() ] = message.firing_unit().id();
     AddTarget( message );
 }
 
@@ -62,8 +62,8 @@ void FiresModel::AddFire( const sword::StartUnitFire& message )
 // -----------------------------------------------------------------------------
 void FiresModel::AddFire( const sword::StartCrowdFire& message )
 {
-    if( !Find( message.fire().id() ) )
-        Register( message.fire().id(), populations_.Get( message.firing_crowd().id() ) );
+    if( firers_.find( message.fire().id() ) == firers_.end() )
+        firers_[ message.fire().id() ] = message.firing_crowd().id();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,11 +72,23 @@ void FiresModel::AddFire( const sword::StartCrowdFire& message )
 // -----------------------------------------------------------------------------
 void FiresModel::AddTarget( const sword::StartUnitFire& message )
 {
-    if( !targets_.Find( message.fire().id() ) && !message.target().has_position() )
+    if( firers_.find( message.fire().id() ) == firers_.end() && !message.target().has_position() )
     {
         if( message.target().has_unit() )
-            targets_.Register( message.fire().id(), agents_.Get( message.target().unit().id() ) );
+            targets_[ message.fire().id() ] = message.target().unit().id();
         else if( message.target().has_crowd() )
-            targets_.Register( message.fire().id(), populations_.Get( message.target().crowd().id() ) );
+            targets_[ message.fire().id() ] = message.target().crowd().id();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FiresModel::FindEntity
+// Created: ABR 2012-11-09
+// -----------------------------------------------------------------------------
+kernel::Entity_ABC* FiresModel::FindEntity( unsigned long id )
+{
+    kernel::Entity_ABC* entity = agents_.Find( id );
+    if( entity )
+        return entity;
+    return populations_.Find( id );
 }

@@ -44,6 +44,7 @@ public:
     virtual void MultipleSelect( ActionController& controller, const std::vector< const kernel::Selectable_ABC* >& elements ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
+    virtual geometry::Point2f GetNearestPosition( const geometry::Point2f& position ) const;
     //@}
 
 private:

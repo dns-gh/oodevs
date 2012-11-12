@@ -84,3 +84,12 @@ void PopulationFlow_ABC::Activate( ActionController& controller ) const
 {
     controller.Activate( *this, *static_cast< const Entity_ABC* >( this ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow_ABC::GetNearestPosition
+// Created: ABR 2012-11-12
+// -----------------------------------------------------------------------------
+geometry::Point2f PopulationFlow_ABC::GetNearestPosition( const geometry::Point2f& ) const
+{
+    return geometry::Point2f();
+}

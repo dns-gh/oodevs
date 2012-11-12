@@ -63,6 +63,7 @@ public:
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
+    geometry::Point2f GetNearestPosition( const geometry::Point2f& position ) const;
     //@}
 
 private:

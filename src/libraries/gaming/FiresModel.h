@@ -10,6 +10,7 @@
 #ifndef __FiresModel_h_
 #define __FiresModel_h_
 
+#include <boost/noncopyable.hpp>
 #include "tools/Resolver.h"
 
 namespace sword
@@ -31,7 +32,7 @@ namespace kernel
 */
 // Created: AGE 2006-03-13
 // =============================================================================
-class FiresModel : public tools::Resolver< kernel::Entity_ABC >
+class FiresModel : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -54,21 +55,23 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FiresModel( const FiresModel& );            //!< Copy constructor
-    FiresModel& operator=( const FiresModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void AddTarget( const sword::StartUnitFire& message );
+    kernel::Entity_ABC* FindEntity( unsigned long id );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, unsigned long >    T_IDs;
+    typedef T_IDs::const_iterator                     CIT_IDs;
     //@}
 
 private:
     //! @name Member data
     //@{
-    tools::Resolver< kernel::Entity_ABC > targets_;
+    T_IDs firers_;
+    T_IDs targets_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
     const tools::Resolver_ABC< kernel::PopulationPart_ABC >& populations_;
     //@}
@@ -81,7 +84,10 @@ private:
 template< typename T >
 kernel::Entity_ABC* FiresModel::FindFirer( const T& message )
 {
-    return Find( message.fire().id() );
+    CIT_IDs it = firers_.find( message.fire().id() );
+    if( it == firers_.end() )
+        return 0;
+    return FindEntity( it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +97,10 @@ kernel::Entity_ABC* FiresModel::FindFirer( const T& message )
 template< typename T >
 kernel::Entity_ABC* FiresModel::FindTarget( const T& message )
 {
-    return targets_.Find( message.fire().id() );
+    CIT_IDs it = targets_.find( message.fire().id() );
+    if( it == targets_.end() )
+        return 0;
+    return FindEntity( it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,8 +110,8 @@ kernel::Entity_ABC* FiresModel::FindTarget( const T& message )
 template< typename T >
 void FiresModel::RemoveFire( const T& message )
 {
-    Remove( message.fire().id() );
-    targets_.Remove( message.fire().id() );
+    firers_.erase( message.fire().id() );
+    targets_.erase( message.fire().id() );
 }
 
 #endif // __FiresModel_h_

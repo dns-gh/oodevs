@@ -53,7 +53,7 @@ public:
     //! @name Member data
     //@{
     unsigned int id_;
-    const kernel::Positions* position_;
+    geometry::Point2f position_;
     bool isTarget_;
     //@}
 };
