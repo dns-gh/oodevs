@@ -31,7 +31,7 @@ public:
     const QString& AsString() const
     {
         if( qApp && translated_.isEmpty() )
-            translated_ = qApp->translate( "Units", symbol_ );
+            translated_ = qApp->translate( "Units", symbol_.toUtf8().constData() );
         return translated_;
     }
     const double GetMinValue() const { return minValue_; }
