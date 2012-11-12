@@ -148,7 +148,8 @@ void CheckpointConfigPanel::SessionSelected( const QString& session )
 // -----------------------------------------------------------------------------
 void CheckpointConfigPanel::OnCheckpointSelected( const QString& checkpoint )
 {
-    emit CheckpointSelected( checkpoint.isEmpty() ? "" : sessions_->currentItem()->text(), checkpoint );
+    QListWidgetItem* current = checkpoint.isEmpty() ? 0 : sessions_->currentItem();
+    emit CheckpointSelected( current ? current->text() : QString(), checkpoint );
 }
 
 // -----------------------------------------------------------------------------
