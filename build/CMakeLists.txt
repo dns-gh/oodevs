@@ -232,7 +232,7 @@ endfunction()
 # plugins
 add_plugin( aar_plugin )
 add_plugin( dis_plugin )
-add_plugin( hla_plugin OPTIONS qt3 )
+add_plugin( hla_plugin )
 add_plugin( logger_plugin )
 add_plugin( logistic_plugin )
 add_plugin( messenger_plugin )

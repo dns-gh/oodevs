@@ -192,7 +192,7 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
     rpr::EntityType entityType = ComputeEntityType( agent, logger_, aggregatesResolver_, typeName );
     const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( agent.GetSuperior().GetTeam().GetId() );
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->AggregateCreated( *proxy, agent.GetId(), std::string( agent.GetName().ascii() ), forceIdentifier, entityType, agentType.GetSymbol(), !isRemote, uniqueId );
+        (*it)->AggregateCreated( *proxy, agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType, agentType.GetSymbol(), !isRemote, uniqueId );
     if( !isRemote && doDisaggregation_ )
             adapters_.push_back( T_AgentAdapter( new AgentAdapter( factory_, converter_, agent,
                     AgentAdapter::T_NotificationCallback( boost::bind( &AgentController::NotifyPlatformCreation, boost::ref( *this ), _1, _2, _3, _4 ) ) ) ) );
