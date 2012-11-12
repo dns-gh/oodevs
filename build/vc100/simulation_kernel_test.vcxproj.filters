@@ -318,5 +318,8 @@
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SingletonTerminator.cpp">
       <Filter>Source Files\stub</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\MT_InterpolatedFunctionTest.cpp">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
