@@ -19,7 +19,7 @@ return
     end,
     
     getFirePositions = function( self, params )
-        if not myself.leadData.firePositions then
+        if not next( myself.leadData.firePositions ) then
             if not params.angle or params.angle == NIL then
                 self.angle = 180
             else
