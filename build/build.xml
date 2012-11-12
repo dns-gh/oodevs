@@ -406,7 +406,7 @@
     </target>
 
     <target name="movement_module" description="build movement module">
-        <build-lib name="movement_module" failonwarning="${failonwarning}">
+        <build-lib name="movement_module" pattern="libmovement_module-${platform}-mt@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
@@ -424,7 +424,7 @@
     </target>
 
     <target name="perception_module" description="build perception module">
-        <build-lib name="perception_module" failonwarning="${failonwarning}">
+        <build-lib name="perception_module" pattern="libperception_module-${platform}-mt@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
@@ -442,7 +442,7 @@
     </target>
 
     <target name="fire_module" description="build fire module">
-        <build-lib name="fire_module" failonwarning="${failonwarning}">
+        <build-lib name="fire_module" pattern="libfire_module-${platform}-mt@{suffix}" suffix="-gd" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
@@ -460,7 +460,7 @@
     </target>
 
     <target name="propagation_module" description="build propagation module">
-        <build-lib name="propagation_module" failonwarning="${failonwarning}">
+        <build-lib name="propagation_module" pattern="libpropagation_module-${platform}-mt@{suffix}" failonwarning="${failonwarning}">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-lib>
     </target>
