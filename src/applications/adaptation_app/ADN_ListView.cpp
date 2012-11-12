@@ -330,7 +330,7 @@ void ADN_ListView::FinishCreation( ADN_Ref_ABC* ref )
     setCurrentItem( FindItem( ref ) );
 
     pObjectCreator_ = 0;
-    static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
+    static_cast< ADN_MainWindow* >( topLevelWidget() )->setWindowModified( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -354,7 +354,7 @@ void ADN_ListView::ContextMenuDelete()
         return;
     // Remove the item from the list.
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
-    static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
+    static_cast< ADN_MainWindow* >( topLevelWidget() )->setWindowModified( true );
     delete pCurrentData;
 }
 

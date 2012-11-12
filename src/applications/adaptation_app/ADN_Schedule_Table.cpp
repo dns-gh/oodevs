@@ -12,6 +12,8 @@
 #include "moc_ADN_Schedule_Table.cpp"
 #include "ADN_Urban_Data.h"
 #include "ADN_People_Data.h"
+#include "ADN_App.h"
+#include "ADN_MainWindow.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
@@ -34,6 +36,7 @@ ADN_Schedule_Table::ADN_Schedule_Table( QWidget* pParent )
     horizontalHeader()->setLabel( 2, qApp->translate( "ADN_Schedule_Table", "To" ) );
     horizontalHeader()->setLabel( 3, qApp->translate( "ADN_Schedule_Table", "Activity" ) );
     setEnabled( false );
+    setSelectionMode( Q3Table::SingleRow );
     connect( this, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), this, SLOT( OnContextMenu( int, int, const QPoint& ) ) );
     connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
 }
@@ -196,6 +199,7 @@ void ADN_Schedule_Table::OnValueChanged( int row, int /*col*/ )
         Q3ComboTableItem* pDay = static_cast< Q3ComboTableItem* >( item( row, 0 ) );
         AddEvent( row, pDay->currentItem(), fromTime.toString( "hh:mm" ).toAscii().constData(),
                   toTime.toString( "hh:mm" ).toAscii().constData(), item( row, 3 )->text().toAscii().constData() );
+         static_cast< ADN_App* >( qApp )->GetMainWindow()->setWindowModified( true ); 
     }
 }
 
@@ -249,8 +253,12 @@ void ADN_Schedule_Table::AddRow( int rows, unsigned int day, const std::string& 
 // -----------------------------------------------------------------------------
 void ADN_Schedule_Table::OnTimeChanged( const QTime& /*time*/ )
 {
-    for( int i = numRows() - 1; i >= 0; --i )
-        OnValueChanged( i, 0 );
+    Q3TimeEdit* edit = static_cast< Q3TimeEdit* >( sender() );
+    if( edit )
+    {
+        setCurrentCell( rowAt( childY( edit ) ), columnAt( childX( edit ) ) );
+        OnValueChanged( rowAt( childY( edit ) ), 0 );
+    }
 }
 
 // -----------------------------------------------------------------------------

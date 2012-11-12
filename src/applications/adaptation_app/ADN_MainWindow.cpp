@@ -100,7 +100,6 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     , pActionSaveAs_( 0 )
     , rIdSaveAs_( 0 )
     , nIdChangeOpenMode_( 0 )
-    , bNeedSave_( false )
 {
     generalConfig_->Parse( argc, argv );
     setMinimumSize( 640, 480 );
@@ -287,9 +286,6 @@ void ADN_MainWindow::SaveProjectAs( const std::string& filename )
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::SaveProject()
 {
-//    if( ! bNeedSave_ )
-//    return;
-
     QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
 
     bool bNoReadOnlyFiles = true;
@@ -309,9 +305,7 @@ void ADN_MainWindow::SaveProject()
 
     if( ! bNoReadOnlyFiles )
         return; // we were not able to save all the datas
-
-    std::string szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + workspace_.GetProject().GetFileInfos().GetFileName().GetData();
-    setCaption( tr( "Sword Adaptation Tool - " ) + szProject.c_str() );
+    setWindowModified( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -343,7 +337,7 @@ void ADN_MainWindow::SaveAsProject()
 
     QApplication::restoreOverrideCursor();    // restore original cursor
     if( hasSaved )
-        setCaption( tr( "Sword Adaptation Tool - " ) + res.c_str() );
+        setWindowModified( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -371,8 +365,7 @@ void ADN_MainWindow::NewProject()
 
     SetMenuEnabled(true);
     mainTabWidget_->show();
-    QString strCaption = tr( "Sword Adaptation Tool - " ) + qfilename;
-    setCaption( strCaption );
+    setCaption( tr( "Sword Adaptation Tool - " ) + qfilename + "[*]" );
 }
 
 //-----------------------------------------------------------------------------
@@ -429,7 +422,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
     else
         workspace_.Load( szFilename, *fileLoader_ );
     QApplication::restoreOverrideCursor();    // restore original cursor
-    setCaption( tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() ) );
+    setCaption( tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() ) + "[*]" );
     SetMenuEnabled( true );
     mainTabWidget_->show();
     if( !isAdminMode && !fileLoaderObserver_->GetInvalidSignedFiles().empty() )
@@ -475,7 +468,7 @@ void ADN_MainWindow::CloseProject()
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::TestData()
 {
-    if( bNeedSave_ )
+    if( isWindowModified() )
     {
         int nResult = QMessageBox::question( this, tr( "Data test" ), tr( "Project will be saved in order to execute data test." ), QMessageBox::Ok, QMessageBox::Cancel );
         if( nResult == QMessageBox::Cancel )
@@ -541,20 +534,7 @@ void ADN_MainWindow::closeEvent( QCloseEvent * e )
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::ChangeSaveState( bool bNoCommand )
 {
-    bNeedSave_ = ! bNoCommand;
-    if( bNeedSave_ )
-        setCaption( caption() + "*" );
-    else
-    {
-        std::string szProject = workspace_.GetProject().GetFileInfos().GetFileName().GetData();
-        if( szProject == ADN_Project_Data::FileInfos::szUntitled_ )
-            setCaption( tr( "Sword Adaptation Tool - No Project" ) );
-        else
-        {
-            szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + szProject;
-            setCaption( tr( "Sword Adaptation Tool - " ) + szProject.c_str() );
-        }
-    }
+    setWindowModified( ! bNoCommand );
 }
 
 // -----------------------------------------------------------------------------
@@ -644,7 +624,7 @@ void ADN_MainWindow::ShowCoheranceTable( int nId )
 // -----------------------------------------------------------------------------
 bool ADN_MainWindow::OfferToSave()
 {
-    if( ! bNeedSave_ )
+    if( !isWindowModified() )
         return true;
 
     QString strMessage = tr( "Save changes to project %1?" ).arg( workspace_.GetProject().GetFileInfos().GetFileNameFull().c_str() );

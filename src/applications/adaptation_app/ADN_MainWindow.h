@@ -71,15 +71,10 @@ signals:
     void OpenModeToggled();
     void ChangeTab( E_WorkspaceElements );
 
-public slots:
-    //! @name Slots
-    //@{
-    void ChangeSaveState( bool bNoCommand );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
+    void ChangeSaveState( bool bNoCommand );
     void NewProject();
     void OpenProject();
     void SaveProject();
@@ -131,7 +126,6 @@ private:
     int             nIdSaveTable_;
     int             nIdPrint_;
     int             nIdChangeOpenMode_;
-    bool            bNeedSave_;
     T_TableRegistrationMap      vTableRegistrations_;
     T_ListViewRegistrationMap   vListViewRegistrations_;
 };
