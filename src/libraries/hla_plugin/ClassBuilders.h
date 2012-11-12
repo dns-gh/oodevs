@@ -210,6 +210,29 @@ namespace hla
         {}
     };
 
+    class HumanBuilder : public ClassBuilder
+    {
+    public:
+        HumanBuilder()
+            : ClassBuilder( "BaseEntity.PhysicalEntity.Lifeform.Human", true, false
+            , boost::assign::list_of( "EntityType" )
+                                    ( "EntityIdentifier" )
+                                    ( "ForceIdentifier" )
+                                    ( "Marking" )
+                                    ( "Spatial" ) )
+        {}
+    };
+    class NetnHumanBuilder : public NetnClassBuilder
+    {
+    public:
+        NetnHumanBuilder()
+            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Lifeform.Human.NETN_Human", true, false
+            , boost::assign::list_of( "UniqueID" )
+                                    ( "Callsign" )
+            , std::auto_ptr< ClassBuilder_ABC >( new HumanBuilder() ) )
+        {}
+    };
+
     // Objects
     class CulturalFeaturedBuilder : public ClassBuilder
     {

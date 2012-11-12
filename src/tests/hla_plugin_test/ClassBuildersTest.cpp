@@ -183,6 +183,31 @@ BOOST_FIXTURE_TEST_CASE( netn_groundvehicle_builder_registers_attributes, Fixtur
     Check( builder, "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", true, false );
 }
 
+BOOST_FIXTURE_TEST_CASE( human_builder_registers_attributes, Fixture )
+{
+    HumanBuilder builder;
+    attributes = boost::assign::list_of( "EntityType" )
+                                       ( "EntityIdentifier" )
+                                       ( "ForceIdentifier" )
+                                       ( "Marking" )
+                                       ( "Spatial" );
+    Check( builder, "BaseEntity.PhysicalEntity.Lifeform.Human", true, false );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_human_builder_registers_attributes, Fixture )
+{
+    NetnHumanBuilder builder;
+    attributes = boost::assign::list_of( "EntityType" )
+                                       ( "EntityIdentifier" )
+                                       ( "ForceIdentifier" )
+                                       ( "Marking" )
+                                       ( "Spatial" )
+                                       // NETN
+                                       ( "UniqueID" )
+                                       ( "Callsign" );
+    Check( builder, "BaseEntity.PhysicalEntity.Lifeform.Human.NETN_Human", true, false );
+}
+
 BOOST_FIXTURE_TEST_CASE( minefield_builder_registers_attributes, Fixture )
 {
     MinefieldBuilder builder;

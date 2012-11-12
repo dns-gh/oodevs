@@ -334,6 +334,12 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\FomBuilder.cpp">
       <Filter>Source Files\Hla</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\NetnHuman.cpp">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\Human.cpp">
+      <Filter>Source Files\Classes\rpr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\hla_plugin\hla_plugin_pch.h">
@@ -800,6 +806,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\FomBuilder.h">
       <Filter>Source Files\Hla</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\NetnHuman.h">
+      <Filter>Source Files\Classes\netn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\Human.h">
+      <Filter>Source Files\Classes\rpr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

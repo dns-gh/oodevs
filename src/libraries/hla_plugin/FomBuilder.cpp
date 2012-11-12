@@ -20,6 +20,8 @@
 #include "NetnAircraft.h"
 #include "GroundVehicle.h"
 #include "NetnGroundVehicle.h"
+#include "Human.h"
+#include "NetnHuman.h"
 #include "Minefield.h"
 
 #include "Federate_ABC.h"
@@ -201,3 +203,14 @@ std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateMinefieldClass()
                                         CreateClassBuilder< MinefieldBuilder, MinefieldBuilder >( false) ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: FomBuilder::CreateSurfaceVesselClass
+// Created: AHC 2011-11-12
+// -----------------------------------------------------------------------------
+std::auto_ptr< HlaClass > FomBuilder::CreateHumanClass()
+{
+    return std::auto_ptr< HlaClass >( new HlaClass( federate_, resolver_, nameFactory_,
+                                         CreateFactory< Human, NetnHuman >( xis_.attribute< bool >( "netn", true ), callsignResolver_, markingFactory_, entityIdentifierResolver_, fomSerializer_ ),
+                                         std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NullRemoteFactory ),
+                                         CreateClassBuilder< HumanBuilder, NetnHumanBuilder >( xis_.attribute< bool >( "netn", true ) ), ownershipStrategy_ ) );
+}

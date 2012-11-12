@@ -63,6 +63,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.GroundVehicle.NETN_GroundVehicle", mock::any, true, false );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Lifeform.Human.NETN_Human", mock::any, true, false );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, true, true );
@@ -91,6 +92,7 @@ BOOST_FIXTURE_TEST_CASE( netn_use_can_be_desactivated, Fixture )
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().with( "BaseEntity.PhysicalEntity.Platform.Aircraft", mock::any, true, true );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Platform.GroundVehicle", mock::any, true, false );
+    MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "BaseEntity.PhysicalEntity.Lifeform.Human", mock::any, true, false );
     MOCK_EXPECT( federate->RegisterClass ).once().in( s ).with( "Minefield", mock::any, true, true );
     MOCK_EXPECT( subject.Register ).once();
     MOCK_EXPECT( tacticalObjectSubject.Register ).once();

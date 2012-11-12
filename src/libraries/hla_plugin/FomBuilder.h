@@ -53,6 +53,7 @@ public:
     std::auto_ptr< HlaClass > CreateSurfaceVesselClass();
     std::auto_ptr< HlaClass > CreateAircraftClass();
     std::auto_ptr< HlaClass > CreateGroundVehicleClass();
+    std::auto_ptr< HlaClass > CreateHumanClass();
     std::auto_ptr< HlaClass > CreateRprAggregateClass();
     std::auto_ptr< HlaClass > CreateRprSurfaceVesselClass();
     std::auto_ptr< HlaClass > CreateRprAircraftClass();

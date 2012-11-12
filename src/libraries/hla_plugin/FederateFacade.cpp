@@ -86,6 +86,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , surfaceVesselClass_( fomBuilder_->CreateSurfaceVesselClass() )
     , aircraftClass_     ( fomBuilder_->CreateAircraftClass() )
     , groundVehicleClass_( xis.attribute< bool >( "disaggregate", false ) ? fomBuilder_->CreateGroundVehicleClass() : std::auto_ptr< HlaClass >( 0 ) )
+    , humanClass_        ( xis.attribute< bool >( "disaggregate", false ) ? fomBuilder_->CreateHumanClass() : std::auto_ptr< HlaClass >( 0 ) )
     , rprAggregateClass_ ( xis.attribute< bool >( "netn", true ) ? fomBuilder_->CreateRprAggregateClass() : std::auto_ptr< HlaClass >( 0 ) )
     , rprSurfaceVesselClass_ ( xis.attribute< bool >( "netn", true ) ? fomBuilder_->CreateRprSurfaceVesselClass() : std::auto_ptr< HlaClass >( 0 ) )
     , rprAircraftClass_ ( xis.attribute< bool >( "netn", true ) ? fomBuilder_->CreateRprAircraftClass() : std::auto_ptr< HlaClass >( 0 ) )
@@ -132,6 +133,8 @@ void FederateFacade::Register( ClassListener_ABC& listener )
     aircraftClass_->Register( listener );
 	if( groundVehicleClass_.get() )
 		groundVehicleClass_->Register( listener );
+	if( humanClass_.get() )
+		humanClass_->Register( listener );
     if( rprAggregateClass_.get() )
         rprAggregateClass_->Register( listener );
     if( rprSurfaceVesselClass_.get() )
@@ -151,6 +154,8 @@ void FederateFacade::Unregister( ClassListener_ABC& listener )
     aggregateClass_->Unregister( listener );
 	if( groundVehicleClass_.get() )
 		groundVehicleClass_->Unregister( listener );
+	if( humanClass_.get() )
+		humanClass_->Unregister( listener );
     if( rprAggregateClass_.get() )
         rprAggregateClass_->Unregister( listener );
     if( rprSurfaceVesselClass_.get() )
@@ -322,18 +327,25 @@ void FederateFacade::UnconditionalAcquisition( const ::hla::ObjectIdentifier& ob
 void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force,
         const rpr::EntityType& type, const std::string& symbol, const std::vector< char >& uniqueId )
 {
-    switch( type.Domain() )
+    if( humanClass_.get() && type.Kind() == static_cast< char >( rpr::EntityType::LIFEFORM ) )
+    {    
+	    humanClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+    }
+    else
     {
-    case rpr::EntityType::LAND:
-		if( groundVehicleClass_.get() )
-			groundVehicleClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
-        break;
-    case rpr::EntityType::AIR:
-        aircraftClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
-        break;
-    case rpr::EntityType::SURFACE:
-        surfaceVesselClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
-        break;
+        switch( type.Domain() )
+        {
+        case rpr::EntityType::LAND:
+		    if( groundVehicleClass_.get() )
+			    groundVehicleClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+            break;
+        case rpr::EntityType::AIR:
+            aircraftClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+            break;
+        case rpr::EntityType::SURFACE:
+            surfaceVesselClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
+            break;
+        }
     }
 }
 
