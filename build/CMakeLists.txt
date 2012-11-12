@@ -513,7 +513,7 @@ target_link_libraries( gaming_app
 )
 
 # launcher_dll
-add_target( launcher_dll clients "libraries/launcher_dll" OPTIONS qt3 protocol shared )
+add_target( launcher_dll clients "libraries/launcher_dll" OPTIONS protocol shared )
 masa_add_target_definition( launcher_dll LAUNCHER_DLL_EXPORTS )
 target_link_libraries( launcher_dll
     client_proxy
