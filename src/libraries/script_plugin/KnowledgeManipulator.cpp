@@ -76,7 +76,6 @@ Position KnowledgeManipulator::GetPosition() const
 std::string KnowledgeManipulator::GetOwnerTeam() const
 {
     // $$$$ _RC_ SBO 2010-06-03: refactor !
-    return std::string( static_cast< const dispatcher::KnowledgeGroup_ABC& >( knowledge_.GetOwner() ).GetTeam().GetName() );
+    return static_cast< const dispatcher::KnowledgeGroup_ABC& >( knowledge_.GetOwner() ).GetTeam().GetName().toStdString();
 }
-
 

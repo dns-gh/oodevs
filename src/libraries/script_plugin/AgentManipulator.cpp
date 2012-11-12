@@ -85,7 +85,7 @@ std::string AgentManipulator::GetName() const
 // -----------------------------------------------------------------------------
 std::string AgentManipulator::GetTeam() const
 {
-    return std::string( agent_.GetSuperior().GetTeam().GetName() );
+    return agent_.GetSuperior().GetTeam().GetName().toStdString();
 }
 
 // -----------------------------------------------------------------------------
