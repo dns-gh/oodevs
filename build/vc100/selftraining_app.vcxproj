@@ -51,7 +51,8 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\include_out_directory.props" />
-    <Import Project="Property sheets\qt3_support.props" />
+    <Import Project="Property sheets\link_qt3.props" />
+    <Import Project="Property sheets\include_qt3.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -66,7 +67,8 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\include_out_directory.props" />
-    <Import Project="Property sheets\qt3_support.props" />
+    <Import Project="Property sheets\link_qt3.props" />
+    <Import Project="Property sheets\include_qt3.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -81,7 +83,8 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\include_out_directory.props" />
-    <Import Project="Property sheets\qt3_support.props" />
+    <Import Project="Property sheets\link_qt3.props" />
+    <Import Project="Property sheets\include_qt3.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -96,7 +99,8 @@
     <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
     <Import Project="Property sheets\include_out_directory.props" />
-    <Import Project="Property sheets\qt3_support.props" />
+    <Import Project="Property sheets\link_qt3.props" />
+    <Import Project="Property sheets\include_qt3.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -105,7 +109,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>$(libQT);htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -114,7 +118,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>$(libQT);htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -122,7 +126,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <Link>
-      <AdditionalDependencies>$(libQT);htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -130,7 +134,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <Link>
-      <AdditionalDependencies>$(libQT);htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
