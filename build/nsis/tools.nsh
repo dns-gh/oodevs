@@ -392,7 +392,6 @@
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File "${OUTDIR}\terraintools_${PLATFORM}.zip"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-        WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
         nsisunz::Unzip "$INSTDIR\installation files\terraintools_${PLATFORM}.zip" "$INSTDIR\${ComponentName}"
         SetOutPath "$INSTDIR\Terrain\applications"
         CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_GEN).lnk" "$INSTDIR\Terrain\applications\generation_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
