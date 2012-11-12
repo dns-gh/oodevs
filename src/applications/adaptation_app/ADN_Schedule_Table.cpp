@@ -199,7 +199,7 @@ void ADN_Schedule_Table::OnValueChanged( int row, int /*col*/ )
         Q3ComboTableItem* pDay = static_cast< Q3ComboTableItem* >( item( row, 0 ) );
         AddEvent( row, pDay->currentItem(), fromTime.toString( "hh:mm" ).toAscii().constData(),
                   toTime.toString( "hh:mm" ).toAscii().constData(), item( row, 3 )->text().toAscii().constData() );
-         topLevelWidget()->setWindowModified( true ); 
+        topLevelWidget()->setWindowModified( true );
     }
 }
 
