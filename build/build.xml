@@ -774,7 +774,7 @@
     ============================================================================
     -->
     <target name="generate-symbols" description="generate symbols">
-        <zip destfile="${run.dir}/resources/symbols.pak">
+        <zip destfile="${run.dir}/resources/symbols.pak" duplicate="fail">
             <fileset dir="${libraries.dir}/clients_gui/svg"/>
         </zip>
     </target>
@@ -1426,7 +1426,7 @@
     <target name="package.debug" description="create a zip with all PDB files">
         <local name="output"/>
         <property name="output" value="${out.dir}/SWORD_debug_${platform}_${version.project}.zip"/>
-        <zip destfile="${output}">
+        <zip destfile="${output}" duplicate="fail">
             <mappedresources>
                 <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
                 <flattenmapper/>
@@ -1451,7 +1451,7 @@
     <target name="package.binaries" description="create a zip with all binaries">
         <local name="output"/>
         <property name="output" value="${out.dir}/SWORD_binaries_${platform}_${version.project}.zip"/>
-        <zip destfile="${output}">
+        <zip destfile="${output}" duplicate="fail">
             <mappedresources>
                 <fileset dir="${out.dir}/release/applications" includes="**/*.exe"/>
                 <flattenmapper/>
@@ -1465,7 +1465,7 @@
     <target name="package.gaming_app" description="create a zip with a standalone gaming_app binary">
         <local name="output"/>
         <property name="output" value="${out.dir}/SWORD_gaming_${platform}_${version.project}.zip"/>
-        <zip destfile="${output}">
+        <zip destfile="${output}" duplicate="fail">
             <fileset dir="${out.dir}/release/applications/gaming_app" includes="gaming_app.exe"/>
             <fileset dir="${run.dir}"
                      includes="*.qm,
@@ -1502,7 +1502,7 @@
     <target name="package.ts" description="create a zip with all ts files">
         <local name="output"/>
         <property name="output" value="${out.dir}/SWORD_ts_${version.project}.zip"/>
-        <zip destfile="${output}">
+        <zip destfile="${output}" duplicate="fail">
            <mappedresources>
                <fileset dir="${src.dir}" includes="**/*.ts"/>
                <flattenmapper/>
