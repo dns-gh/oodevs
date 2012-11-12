@@ -7,7 +7,7 @@
     <libProtobuf>libprotobuf.lib</libProtobuf>
     <libGeocoord>geocoord.lib</libGeocoord>
     <libOpengl>opengl32.lib;QtOpenGL4.lib</libOpengl>
-    <libQT>QtCore4.lib;QtGui4.lib</libQT3>
+    <libQT>QtCore4.lib;QtGui4.lib</libQT>
     <libQT3>Qt3Support4.lib</libQT3>
     <libTools>tools.lib</libTools>
     <libZip>zipstream.lib;zlib1.lib</libZip>
