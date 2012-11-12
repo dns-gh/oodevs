@@ -23,6 +23,20 @@ namespace rpr
 class EntityType
 {
 public:
+    enum RPRKind
+    {
+        KIND_OTHER = 0,
+        PLATFORM = 1,
+        AMMUNITION = 2,
+        LIFEFORM = 3,
+        ENVIRONMENTAL = 4,
+        CULTURAL_FEATURE = 5,
+        SUPPLY = 6,
+        RADIO = 7,
+        EXPENDABLE = 8,
+        SENSOR_EMITTER = 9,
+        VRF_AGGREGATE = 11 // VRForces specific
+    };
     enum RPRDomain
     {
         OTHER = 0,
@@ -56,6 +70,7 @@ public:
     
     std::string str() const;
     unsigned char Domain() const { return domain_; }
+    unsigned char Kind() const { return entityKind_; }
     //@}
 
     //! @name Operators
