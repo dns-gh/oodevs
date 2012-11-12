@@ -143,10 +143,10 @@
   </function>
 
   <!-- AJOUTS FPO TESTES -->
-  <function name="Dead humans">
+  <function name="Humans killed">
   <descriptions>
-      <description name="Dead humans" lang="en">
-        <![CDATA[Dead humans for a unit list.]]>
+      <description name="Humans killed" lang="en">
+        <![CDATA[Humans killed in a unit list.]]>
       </description>
         <description name="Personnel décédé" lang="fr">
           <![CDATA[Personnel décédé pour une liste d'unités.]]>
@@ -183,10 +183,10 @@
     </indicator>
     </function>
 
-  <function name="Wounded humans">
+  <function name="Injured humans">
   <descriptions>
-    <description name="Wounded humans" lang="en">
-      <![CDATA[Wounded humans for a unit list.]]>
+    <description name="Injured humans" lang="en">
+      <![CDATA[Injured humans for a unit list.]]>
     </description>
       <description name="Personnel blessé" lang="fr">
         <![CDATA[Personnel blessé pour une liste d'unités.]]>
@@ -203,10 +203,10 @@
     </indicator>
   </function>
 
-  <function name="Available equipments for units">
+  <function name="Available equipment for units">
     <descriptions>
-      <description name="Available equipments for units" lang="en">
-        <![CDATA[Number of equipments with available state for the selected units.]]>
+      <description name="Available equipment for units" lang="en">
+        <![CDATA[Amount of available equipment for the selected units.]]>
       </description>
       <description name="Equipements disponibles par unités" lang="fr">
         <![CDATA[Quantité d'équipements en état disponible pour une liste d'unités.]]>
@@ -214,20 +214,20 @@
     </descriptions>
     <parameters>
       <parameter name='Units' type='unit list'/>
-      <parameter name='Equipments' type='equipment list'/>
+      <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-        <extract function='equipments' states='available' id='1' equipments='${Equipments}'/>
+        <extract function='equipments' states='available' id='1' equipments='${Equipment}'/>
         <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
         <reduce type='int' function='sum' input='2' id='3'/>
         <result function='plot' input='3' type='int'/>
     </indicator>
   </function>
 
-  <function name="Destroyed equipments for units">
+  <function name="Destroyed equipment for units">
     <descriptions>
-      <description name="Destroyed equipments for units" lang="en">
-        <![CDATA[Number of destroyed equipments for the unit list.]]>
+      <description name="Destroyed equipment for units" lang="en">
+        <![CDATA[Number of destroyed equipment for the unit list.]]>
       </description>
       <description name="Equipements détruits par unités" lang="fr">
         <![CDATA[Quantité d'équipements détruits pour une liste d'unités.]]>
@@ -235,10 +235,10 @@
     </descriptions>
     <parameters>
       <parameter name='Units' type='unit list'/>
-      <parameter name='Equipments' type='equipment list'/>
+      <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-        <extract function='equipments' states='unavailable' id='1' equipments='${Equipments}'/>
+        <extract function='equipments' states='unavailable' id='1' equipments='${Equipment}'/>
         <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
         <reduce type='int' function='sum' input='2' id='3'/>
         <result function='plot' input='3' type='int'/>
@@ -333,10 +333,10 @@
     </indicator>
   </function> 
   
-  <function name="Available equipments in zone">
+  <function name="Available equipment in zone">
     <descriptions>
-      <description name="Available equipments in zone" lang="en">
-        <![CDATA[Total number of equipments with available state located within the selected zone.]]>
+      <description name="Available equipment in zone" lang="en">
+        <![CDATA[Amount of available equipment located within the selected zone.]]>
       </description>
       <description name="Equipements disponibles dans zone" lang="fr">
         <![CDATA[Quantité d'équipements en état disponible dans la zone spécifiée.]]>
@@ -344,10 +344,10 @@
     </descriptions>
     <parameters>
       <parameter name='Zone' type='zone'/>
-      <parameter name='Equipments' type='equipment list'/>
+      <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-        <extract function='equipments' states='available' id='equipments' equipments='${Equipments}'/>
+        <extract function='equipments' states='available' id='equipments' equipments='${Equipment}'/>
         <extract function='position' id='positions'/>
         <constant type='zone' value='${Zone}' id='inputzone'/>
         <transform function='contains' input='inputzone,positions' id='selected-units'/>
@@ -357,10 +357,10 @@
     </indicator>
     </function>
 
-  <function name="Unavailable equipments in zone">
+  <function name="Unavailable equipment in zone">
     <descriptions>
-      <description name="Unavailable equipments in zone" lang="en">
-        <![CDATA[Total number of equipments with unavailable, repairable, repairing or captured states located within the selected zone.]]>
+      <description name="Unavailable equipment in zone" lang="en">
+        <![CDATA[Amount of unavailable, repairable, repairing or captured equipment located within the selected zone.]]>
       </description>
       <description name="Equipements non disponibles dans zone" lang="fr">
         <![CDATA[Quantité d'équipements en état non disponible, réparable, en réparation ou capturé dans la zone spécifiée.]]>
@@ -368,10 +368,10 @@
     </descriptions>
     <parameters>
       <parameter name='Zone' type='zone'/>
-      <parameter name='Equipments' type='equipment list'/>
+      <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-        <extract function='equipments' states='unavailable,repairable,repairing,captured' id='equipments' equipments='${Equipments}'/>
+        <extract function='equipments' states='unavailable,repairable,repairing,captured' id='equipments' equipments='${Equipment}'/>
         <extract function='position' id='positions'/>
         <constant type='zone' value='${Zone}' id='inputzone'/>
         <transform function='contains' input='inputzone,positions' id='selected-units'/>
@@ -404,10 +404,10 @@
     </indicator>
   </function>
   
-  <function name="Dead humans from direct fires">
+  <function name="Humans killed by direct fires">
     <descriptions>
-      <description name="Dead humans from direct fires" lang="en">
-        <![CDATA[Dead humans from direct fires.]]>
+      <description name="Humans killed by direct fires" lang="en">
+        <![CDATA[Humans killed by direct fires.]]>
       </description>
       <description name="Pertes humaines par tirs directs" lang="fr">
         <![CDATA[Pertes humaines par tirs directs.]]>
@@ -424,10 +424,10 @@
     </indicator>
   </function>
 
-  <function name="Dead humans from direct fires in zone">
+  <function name="Humans killed by direct fires in zone">
     <descriptions>
-      <description name="Dead humans from direct fires in zone" lang="en">
-        <![CDATA[Dead humans from direct fires in selected zone.]]>
+      <description name="Humans killed by direct fires in zone" lang="en">
+        <![CDATA[Humans killed by direct fires in selected zone.]]>
       </description>
       <description name="Pertes humaines par tirs directs dans zone" lang="fr">
         <![CDATA[Pertes humaines par tirs directs dans la zone spécifiée.]]>
@@ -447,10 +447,10 @@
     </indicator>
   </function>
 
-  <function name="Dead humans from direct friendly fires">
+  <function name="Humans killed by direct friendly fires">
     <descriptions>
-      <description name="Dead humans from direct friendly fires" lang="en">
-        <![CDATA[Dead humans from direct friendly fires.]]>
+      <description name="Humans killed by direct friendly fires" lang="en">
+        <![CDATA[Humans killed by direct friendly fires.]]>
       </description>
       <description name="Pertes humaines par tirs directs fratricides" lang="fr">
         <![CDATA[Pertes humaines par tirs directs fratricides.]]>
@@ -467,10 +467,10 @@
     </indicator>
   </function>  
   
-  <function name="Unavailable equipments for units">
+  <function name="Unavailable equipment for units">
     <descriptions>
-      <description name="Unavailable equipments for units" lang="en">
-        <![CDATA[Number of equipments with unavailable, repairable, repairing or captured state for the selected units.]]>
+      <description name="Unavailable equipment for units" lang="en">
+        <![CDATA[Amount of unavailable, repairable, repairing or captured equipment for the selected units.]]>
       </description>
       <description name="Equipements indisponibles par unités" lang="fr">
         <![CDATA[Nombre d'équipements en état non disponible, réparable, en réparation ou capturé pour une liste d'unités.]]>
@@ -478,20 +478,20 @@
     </descriptions>
     <parameters>
       <parameter name='Units' type='unit list'/>
-      <parameter name='Equipments' type='equipment list'/>
+      <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-      <extract function='equipments' states='unavailable,repairable,repairing,captured' id='1' equipments='${Equipments}'/>
+      <extract function='equipments' states='unavailable,repairable,repairing,captured' id='1' equipments='${Equipment}'/>
       <transform function='domain' type='int' select='${Units}' input='1' id='2'/>
       <reduce type='int' function='sum' input='2' id='3'/>
       <result function='plot' input='3' type='int'/>
     </indicator>
   </function>
 
-  <function name="Available evacuation ambulances">
+  <function name="Available evacuation ambulance">
     <descriptions>
-      <description name="Available evacuation ambulances" lang="en">
-        <![CDATA[Number of available evacuation ambulances.]]>
+      <description name="Available evacuation ambulance" lang="en">
+        <![CDATA[Number of available evacuation ambulance.]]>
       </description>
       <description name="Ambulances d'évacuation disponibles" lang="fr">
         <![CDATA[Nombre d'ambulances d'évacuation disponibles.]]>
@@ -508,10 +508,10 @@
     </indicator>
   </function>
 
- <function name="Available haulers and repairers">
+ <function name="Available haulers and mechanics">
     <descriptions>
-      <description name="Available haulers and repairers" lang="en">
-        <![CDATA[Number of available haulers and repairers.]]>
+      <description name="Available haulers and mechanics" lang="en">
+        <![CDATA[Number of available haulers and mechanics.]]>
       </description>
       <description name="Remorqueurs et véhicules de réparation disponibles" lang="fr">
         <![CDATA[Nombre de remorqueurs et véhicules de réparation disponibles.]]>
@@ -528,10 +528,10 @@
     </indicator>
   </function>
   
-  <function name="Available repairers">
+  <function name="Available mechanics">
     <descriptions>
-      <description name="Available repairers" lang="en">
-        <![CDATA[Number of available repairers.]]>
+      <description name="Available mechanics" lang="en">
+        <![CDATA[Number of available mechanics.]]>
       </description>
       <description name="Véhicules de réparation disponibles" lang="fr">
         <![CDATA[Nombre de véhicules de réparation disponibles.]]>
@@ -632,9 +632,9 @@
     </indicator>
   </function>  
  
-  <function name="Dead persons in crowd">
+  <function name="Dead people in crowd">
     <descriptions>
-      <description name="Dead persons in crowd list" lang="en">
+      <description name="Dead people in crowd list" lang="en">
         <![CDATA[Number of dead people in crowd list.]]>
       </description>
       <description name="Personnes décédées parmi une liste de foules" lang="fr">
@@ -652,9 +652,9 @@
     </indicator>
   </function>   
  
-  <function name="Dead persons in population">
+  <function name="Dead people in population">
     <descriptions>
-      <description name="Dead persons in population" lang="en">
+      <description name="Dead people in population" lang="en">
         <![CDATA[Number of dead people in population.]]>
       </description>
       <description name="Personnes décédées parmi la population" lang="fr">
@@ -662,20 +662,20 @@
       </description>
     </descriptions>
     <parameters>
-      <parameter name='Populations' type='population list'/>
+      <parameter name='Population' type='population list'/>
     </parameters>
     <indicator>
       <extract function='population-states' states='dead' id='populations'/>
-	  <transform function='domain' type='int' select='${Populations}' input='populations' id='domained-populations'/>
+	  <transform function='domain' type='int' select='${Population}' input='populations' id='domained-populations'/>
       <reduce type='int' function='sum' input='domained-populations' id='sum'/>
       <result function='plot' input='sum' type='int'/>
     </indicator>
   </function>   
   
-  <function name="Populations health satisfaction">
+  <function name="Population health satisfaction">
     <descriptions>
-      <description name="Populations health satisfaction" lang="en">
-        <![CDATA[Satisfaction values of populations.]]>
+      <description name="Population health satisfaction" lang="en">
+        <![CDATA[Satisfaction values of population.]]>
       </description>
       <description name="Indice de satisfaction de santé des populations" lang="fr">
         <![CDATA[Indices de satisfaction de santé pour les populations couvrantes.]]>
@@ -689,10 +689,10 @@
     </indicator>
   </function> 
  
-  <function name="Population quantity in urban blocks">
+  <function name="Number of people in urban blocks">
     <descriptions>
-      <description name="Population quantity in urban blocks" lang="en">
-        <![CDATA[Population quantity in a specified list of urban blocks.]]>
+      <description name="Number of people in urban blocks" lang="en">
+        <![CDATA[Number of people in a specified list of urban blocks.]]>
       </description>
       <description name="Nombre d'occupants dans des blocs urbains" lang="fr">
         <![CDATA[Nombre d'occupants dans une liste de blocs urbains.]]>
@@ -728,10 +728,10 @@
     </indicator>
   </function>  
  
- <function name="Functional states of infrastructures">
+ <function name="Functional state of infrastructures">
     <descriptions>
-      <description name="Functional states of infrastructures" lang="en">
-        <![CDATA[Functional states of infrastructures in urban blocks specified in input.]]>
+      <description name="Functional state of infrastructures" lang="en">
+        <![CDATA[Functional state of infrastructures in urban blocks specified in input.]]>
       </description>
       <description name="Etats fonctionnels infrastructures " lang="fr">
         <![CDATA[Etats fonctionnels des infrastructures des blocs urbains spécifiés en entrée.]]>
@@ -748,10 +748,10 @@
     </indicator>
   </function> 
  
-  <function name="Components loss">
+  <function name="Equipment lost">
     <descriptions>
-      <description name="Quantity of component loss by direct fire on unit list" lang="en">
-        <![CDATA[Quantity of components loss by direct fires on unit list.]]>
+      <description name="Equipment destroyed by direct fire on unit list" lang="en">
+        <![CDATA[Amount of equipment destroyed by direct fires on unit list.]]>
       </description>
       <description name="Nombre de composants détruits sur liste d'unités" lang="fr">
         <![CDATA[Nombre de composants détruits par tir direct sur une liste d'unités.]]>
@@ -759,20 +759,20 @@
     </descriptions>
     <parameters>
       <parameter name='Units' type='unit list'/>	
-      <parameter name='Components' type='equipment list'/>
+      <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-      <extract function='fire-component-loss' components='${Components}' id='damages' fire-types='direct' states='unavailable'/>
+      <extract function='fire-component-loss' components='${Equipment}' id='damages' fire-types='direct' states='unavailable'/>
       <transform function='domain' type='int' select='${Units}' input='damages' id='domained-damages'/>
       <reduce type='float' function='sum' input='domained-damages' id='sum'/>
       <result function='plot' input='sum' type='float'/>
     </indicator>
   </function>   
 
-  <function name="Components loss in zone">
+  <function name="Equipment lost in zone">
     <descriptions>
-      <description name="Quantity of component loss by direct fire in zone" lang="en">
-        <![CDATA[Quantity of components loss by direct fires in specified zone.]]>
+      <description name="Equipment destroyed by direct fire in zone" lang="en">
+        <![CDATA[Amount of equipment destroyed by direct fires in specified zone.]]>
       </description>
       <description name="Nombre de composants détruits dans la zone" lang="fr">
         <![CDATA[Nombre de composants détruits par tir direct dans la zone spécifiée.]]>
@@ -780,10 +780,10 @@
     </descriptions>
     <parameters>
       <parameter name='Zone' type='zone'/>	
-      <parameter name='Components' type='equipment list'/>
+      <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-      <extract function='fire-component-loss' components='${Components}' id='damages' fire-types='direct' states='unavailable'/>
+      <extract function='fire-component-loss' components='${Equipment}' id='damages' fire-types='direct' states='unavailable'/>
       <extract function='position' id='positions'/>
       <constant type='zone' value='${Zone}' id='circle'/>
       <transform function='contains' input='circle,positions' id='selected-units'/>
@@ -793,10 +793,10 @@
     </indicator>
   </function>   
   
-  <function name="Dead humans by crowd fire">
+  <function name="Humans killed by crowd fire">
     <descriptions>
-      <description name="Dead humans by crowd fire" lang="en">
-        <![CDATA[Number of human dead by crowd fires on unit list.]]>
+      <description name="Humans killed by crowd fire" lang="en">
+        <![CDATA[Number of human killed by crowd fires on unit list.]]>
       </description>
       <description name="Pertes humaines par tirs de foule" lang="fr">
         <![CDATA[Nombre d'humains tués par tirs de foule sur la liste d'unités.]]>
@@ -813,10 +813,10 @@
     </indicator>
   </function>    
   
-  <function name="Dead humans by crowd fire in zone">
+  <function name="Humans killed by crowd fire in zone">
     <descriptions>
-      <description name="Dead humans by crowd fire in zone" lang="en">
-        <![CDATA[Number of human dead by crowd fires in specified zone.]]>
+      <description name="Humans killed by crowd fire in zone" lang="en">
+        <![CDATA[Number of human killed by crowd fires in specified zone.]]>
       </description>
       <description name="Pertes humaines par tir de foule dans une zone" lang="fr">
         <![CDATA[Nombre d'humains tués par tir de foule dans la zone spécifiée.]]>
@@ -836,10 +836,10 @@
     </indicator>
   </function> 
   
- <function name="Functional states of resource-networks">
+ <function name="Functional state of resource-networks">
     <descriptions>
-      <description name="Functional states of resource-networks" lang="en">
-        <![CDATA[Functional states of infrastructures in urban blocks specified in input.]]>
+      <description name="Functional state of resource-networks" lang="en">
+        <![CDATA[Functional state of infrastructures in urban blocks specified in input.]]>
       </description>
       <description name="Etats fonctionnels des réseaux de ressources " lang="fr">
         <![CDATA[Etats fonctionnels des réseaux de ressources des blocs urbains spécifiés en entrée.]]>
@@ -900,10 +900,10 @@
     </indicator>
   </function>
   
-    <function name="Components total loss from indirect fires in zone">
+    <function name="Equipment incapacitated by indirect fires in zone">
     <descriptions>
-      <description name="Quantity of component unavailable by indirect fire in zone (loss)" lang="en">
-        <![CDATA[Quantity of components unavailable by indirect fires on unit list.]]>
+      <description name="Equipment incapacitated by indirect fire in zone (loss)" lang="en">
+        <![CDATA[Amount of equipment incapacitated by indirect fires on unit list.]]>
       </description>
       <description name="Nombre de composants indisponibles dans zone (pertes)" lang="fr">
         <![CDATA[Nombre de composants indisponibles par tirs indirects sur une liste d'unités.]]>
@@ -911,10 +911,10 @@
     </descriptions>
     <parameters>
       <parameter name='Zone' type='zone'/>
-      <parameter name='Components' type='equipment list'/>
+      <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-      <extract function='fire-component-loss' components='${Components}' id='damages' fire-types='indirect' states='unavailable,repairable'/>
+      <extract function='fire-component-loss' components='${Equipment}' id='damages' fire-types='indirect' states='unavailable,repairable'/>
       <extract function='position' id='positions'/>
       <constant type='zone' value='${Zone}' id='circle'/>
       <transform function='contains' input='circle,positions' id='selected-units'/>
@@ -924,10 +924,10 @@
     </indicator>
   </function>   
   
-  <function name="Components total destroyed by indirect fires in zone">
+  <function name="Equipment damaged by indirect fires in zone">
     <descriptions>
-      <description name="Quantity of component unavailable by indirect fires in zone (damages)" lang="en">
-        <![CDATA[Quantity of components unavailable by indirect fires on unit list.]]>
+      <description name="Equipment incapacitated by indirect fires in zone (damages)" lang="en">
+        <![CDATA[Amount of equipment incapacitated by indirect fires on unit list.]]>
       </description>
       <description name="Nombre de composants indisponibles par tirs indirects dans zone (dégâts)" lang="fr">
         <![CDATA[Nombre de composants indisponibles par tirs indirects sur une liste d'unités.]]>
@@ -935,10 +935,10 @@
     </descriptions>
     <parameters>
       <parameter name='Zone' type='zone'/>
-      <parameter name='Components' type='equipment list'/>
+      <parameter name='Equipment' type='equipment list'/>
     </parameters>
     <indicator>
-      <extract function='fire-component-damages' components='${Components}' id='damages' fire-types='indirect' states='unavailable,repairable'/>
+      <extract function='fire-component-damages' components='${Equipment}' id='damages' fire-types='indirect' states='unavailable,repairable'/>
       <extract function='position' id='positions'/>
       <constant type='zone' value='${Zone}' id='circle'/>
       <transform function='contains' input='circle,positions' id='selected-units'/>
@@ -948,10 +948,10 @@
     </indicator>
   </function>   
   
-    <function name="Unavailable humans from indirect fires in zone">
+    <function name="Humans incapacitated by indirect fires in zone">
     <descriptions>
-      <description name="Unavailable humans from indirect fires in zone (loss)" lang="en">
-        <![CDATA[Dead humans from direct fires in zone.]]>
+      <description name="Humans incapacitated by indirect fires in zone (loss)" lang="en">
+        <![CDATA[Humans incapacitated by indirect fires in zone.]]>
       </description>
       <description name="Nombre d'humains invalides par tirs indirects dans zone (pertes)" lang="fr">
         <![CDATA[Pertes humaines par tirs directs dans zone.]]>
@@ -971,10 +971,10 @@
     </indicator>
   </function>
   
-  <function name="Unavailable humans done by crowd fires in zone">
+  <function name="Humans incapacitated by crowd fires in zone">
     <descriptions>
-      <description name="Unavailable humans done by crowd fires in zone (loss)" lang="en">
-        <![CDATA[Unavailable humans done by crowd fires in zone.]]>
+      <description name="Humans incapacitated by crowd fires in zone (loss)" lang="en">
+        <![CDATA[Humans incapacitated by crowd fires in zone.]]>
       </description>
       <description name="Nombre d'humains invalides par tirs de foule dans la zone spécifiée (pertes)" lang="fr">
         <![CDATA[Nombre d'humains invalides par tirs de foule dans la zone spécifiée.]]>
