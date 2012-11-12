@@ -782,3 +782,28 @@ end
 integration.getAgentsWithHQ = function()
     return DEC_Pion_PionsAvecPC()
 end
+
+-- -------------------------------------------------------------------------------- 
+-- Activate special sensors on area
+-- --------------------------------------------------------------------------------  
+integration.activateSpecialSensors = function ( area, eType )
+    area[ myself ] = area[ myself ] or {}
+
+    area[ myself ].actionRadar = DEC_Perception_ActiverRadarSurLocalisation( eType, area.source )
+    actionCallbacks[ area[myself].actionRadar ] = function( arg ) 
+        area[myself].actionRadar = arg 
+    end
+
+    meKnowledge:RC( eRC_DebutSurveillance )
+    return true
+end
+
+-- -------------------------------------------------------------------------------- 
+-- deactivate special sensors on area
+-- -------------------------------------------------------------------------------- 
+integration.deactivateSpecialSensors = function ( area, eType )
+    if area[ myself ].actionRadar then
+        area[ myself ].actionRadar = DEC_Perception_DesactiverRadarSurLocalisation( eType, area[ myself ].actionRadar )
+        meKnowledge:RC( eRC_FinSurveillance )
+    end
+end
