@@ -268,7 +268,7 @@ target_link_libraries( plugins_test
 )
 
 # dispatcher
-add_target( dispatcher server "libraries/dispatcher" OPTIONS qt3 protocol )
+add_target( dispatcher server "libraries/dispatcher" OPTIONS protocol )
 target_link_libraries( dispatcher
     3a
     aar_plugin

@@ -280,7 +280,7 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
     client::AutomatCreation asn;
     asn().mutable_automat()->set_id( GetId() );
     asn().mutable_type()->set_id( type_.GetId() );
-    asn().set_name( GetName() );
+    asn().set_name( GetName().toStdString() );
     asn().mutable_party()->set_id( team_.GetId() );
     asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
     asn().set_app6symbol( app6symbol_ );
