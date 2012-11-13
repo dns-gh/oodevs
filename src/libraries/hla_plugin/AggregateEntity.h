@@ -88,6 +88,7 @@ private:
     virtual void PlatformAdded( const std::string& name, unsigned int id );
     virtual void ChildrenChanged( const T_ChildrenIds& children );
     virtual void ParentChanged( const std::string& parentId );
+    virtual void StateChanged( rpr::DamageState32 state );
     //@}
 
     //! @name Operations

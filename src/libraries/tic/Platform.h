@@ -58,6 +58,7 @@ public:
     virtual float GetSpeed() const;
     virtual float GetHeading() const;
     virtual E_State GetState() const;
+    virtual bool IsMounted() const;
     //@}
 
 private:
@@ -85,6 +86,7 @@ private:
     float altitude_;
     geometry::Point2f previous_;
     geometry::Point2f position_;
+    bool isMounted_;
     //@}
 };
 }

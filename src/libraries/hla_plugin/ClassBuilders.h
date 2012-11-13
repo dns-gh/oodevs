@@ -148,7 +148,9 @@ namespace hla
                                     ( "ForceIdentifier" )
                                     ( "Marking" )
                                     ( "Spatial" )
-                                    ( "IsPartOf" ) )
+                                    ( "IsPartOf" )
+                                    ( "DamageState" )
+                                    ( "IsConcealed" ) )
         {}
     };
     class NetnSurfaceVesselBuilder : public NetnClassBuilder
@@ -173,7 +175,9 @@ namespace hla
                                     ( "ForceIdentifier" )
                                     ( "Marking" )
                                     ( "Spatial" )
-                                    ( "IsPartOf" ) )
+                                    ( "IsPartOf" )
+                                    ( "DamageState" )
+                                    ( "IsConcealed" ) )
         {}
     };
     class NetnAircraftBuilder : public NetnClassBuilder
@@ -198,7 +202,9 @@ namespace hla
                                     ( "ForceIdentifier" )
                                     ( "Marking" )
                                     ( "Spatial" )
-                                    ( "IsPartOf" ) )
+                                    ( "IsPartOf" )
+                                    ( "DamageState" )
+                                    ( "IsConcealed" ) )
         {}
     };
     class NetnGroundVehicleBuilder : public NetnClassBuilder
@@ -223,7 +229,9 @@ namespace hla
                                     ( "ForceIdentifier" )
                                     ( "Marking" )
                                     ( "Spatial" )
-                                    ( "IsPartOf" ) )
+                                    ( "IsPartOf" )
+                                    ( "DamageState" )
+                                    ( "IsConcealed" ) )
         {}
     };
     class NetnHumanBuilder : public NetnClassBuilder

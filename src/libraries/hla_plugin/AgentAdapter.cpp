@@ -16,6 +16,7 @@
 #include "tic/PlatformDelegateFactory_ABC.h"
 #include "tic/PlatformVisitor_ABC.h"
 #include "tic/Platform_ABC.h"
+#include "rpr/Enums.h"
 
 #include "dispatcher/Observer.h"
 #include "dispatcher/Agent_ABC.h"
@@ -63,4 +64,17 @@ void AgentAdapter::AddPlatform( const tic::Platform_ABC& platform )
     PlatformProxy& proxy( *it->second );
     const geometry::Point2d geocoord = converter_.ConvertToGeo( platform.GetPosition() );
     proxy.SpatialChanged( geocoord.Y(), geocoord.X(), platform.GetAltitude(), platform.GetSpeed(), platform.GetHeading() );
+    switch( platform.GetState() )
+    {
+    case tic::Platform_ABC::okay:
+        proxy.StateChanged( rpr::NoDamage );
+        break;
+    case tic::Platform_ABC::broken:
+        proxy.StateChanged( rpr::ModerateDamage );
+        break;
+    case tic::Platform_ABC::destroyed:
+        proxy.StateChanged( rpr::Destroyed );
+        break;
+    }
+    proxy.MountedChanged( platform.IsMounted() );
 }

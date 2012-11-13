@@ -218,3 +218,12 @@ void NetnAggregate::ParentChanged( const std::string& /*parentId*/ )
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: NetnAggregate::StateChanged
+// Created: AHC 2012-11-12
+// -----------------------------------------------------------------------------
+void NetnAggregate::StateChanged( rpr::DamageState32 /*state*/ )
+{
+    // NOTHING
+}

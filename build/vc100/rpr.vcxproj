@@ -101,6 +101,7 @@
     <ClInclude Include="..\..\src\libraries\rpr\EntityType.h" />
     <ClInclude Include="..\..\src\libraries\rpr\EntityTypeResolver.h" />
     <ClInclude Include="..\..\src\libraries\rpr\EntityTypeResolver_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\rpr\Enums.h" />
     <ClInclude Include="..\..\src\libraries\rpr\ForceIdentifier.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

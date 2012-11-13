@@ -119,3 +119,13 @@ void EventListenerComposite::ParentChanged( const std::string& parentId )
     BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
         listener->ParentChanged( parentId );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EventListenerComposite::StateChanged
+// Created: AHC 2012-11-12
+// -----------------------------------------------------------------------------
+void EventListenerComposite::StateChanged( rpr::DamageState32 state )
+{
+    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
+        listener->StateChanged( state );
+}

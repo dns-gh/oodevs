@@ -39,12 +39,16 @@ public:
     virtual void AddSubordinate( unsigned int id, Agent_ABC& agent );
     virtual void RemoveSubordinate( unsigned int id );
     void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
+    void StateChanged( rpr::DamageState32 state );
+    void MountedChanged( bool isMounted );
     //@}
 
 private:
     //! @name Attributes
     //@{
     EventListenerComposite listeners_;
+    rpr::DamageState32 state_;
+    bool isMounted_;
     //@}
 };
 

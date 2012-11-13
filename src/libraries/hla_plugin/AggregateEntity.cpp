@@ -280,3 +280,12 @@ void AggregateEntity::ParentChanged( const std::string& parentId )
     isPartOf_.rtiId_ = Omt13String( parentId );
     attributesUpdater_->Update( "IsPartOf", isPartOf_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::StateChanged
+// Created: AHC 2012-11-12
+// -----------------------------------------------------------------------------
+void AggregateEntity::StateChanged( rpr::DamageState32 /*state*/ )
+{
+    // NOTHING
+}

@@ -41,5 +41,8 @@
     <ClInclude Include="..\..\src\libraries\rpr\ForceIdentifier.h">
       <Filter>Source Files\enum</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\rpr\Enums.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

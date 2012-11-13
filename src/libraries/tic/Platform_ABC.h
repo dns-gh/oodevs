@@ -54,6 +54,7 @@ public:
     virtual float GetSpeed() const = 0;
     virtual float GetHeading() const = 0;
     virtual E_State GetState() const = 0;
+    virtual bool IsMounted() const = 0;
     //@}
 };
 }

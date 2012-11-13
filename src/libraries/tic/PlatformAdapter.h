@@ -48,6 +48,7 @@ public:
     virtual float GetSpeed() const;
     virtual float GetHeading() const;
     virtual E_State GetState() const;
+    virtual bool IsMounted() const;
     //@}
 
 private:

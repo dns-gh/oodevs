@@ -94,3 +94,12 @@ void ChildListener::PlatformAdded( const std::string& /*name*/, unsigned int /*i
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: ChildListener::StateChanged
+// Created: AHC 2012-11-12
+// -----------------------------------------------------------------------------
+void ChildListener::StateChanged( rpr::DamageState32 /*state*/ )
+{
+    // NOTHING
+}

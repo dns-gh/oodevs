@@ -80,6 +80,7 @@ struct ChildListener : public EventListener_ABC
     virtual void ChildrenChanged( const EventListener_ABC::T_ChildrenIds& children );
     virtual void ParentChanged( const std::string& parentId );
     virtual void PlatformAdded( const std::string& name, unsigned int id );
+    virtual void StateChanged( rpr::DamageState32 state );
     //@}
 private:
     boost::function< void() > locationCallback_;

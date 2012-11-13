@@ -42,6 +42,8 @@ Human::Human( Agent_ABC& agent, const std::string& name,
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
     attributes_->Register( "Marking", markingFactory.CreateMarking( name, simId ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
+    attributes_->Register( "DamageState", Wrapper< uint32 >( static_cast< uint32 >( rpr::NoDamage ) ) );
+    attributes_->Register( "IsConcealed", Wrapper< bool >( static_cast< char >( 0 ) ) );
     agent_.Register( *this );
 }
 
@@ -103,9 +105,9 @@ void Human::EquipmentChanged( unsigned int /*type*/, const rpr::EntityType& /*en
 // Name: Human::EmbarkmentChanged
 // Created: AHC 2012-11-12
 // -----------------------------------------------------------------------------
-void Human::EmbarkmentChanged( bool /*mounted*/ )
+void Human::EmbarkmentChanged( bool mounted )
 {
-    // NOTHING
+    attributes_->Update( "IsConcealed", Wrapper< char >( mounted ? 1 : 0 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,4 +181,14 @@ void Human::ParentChanged( const std::string& parentId )
 {
     isPartOf_.rtiId_ = Omt13String( parentId );
     attributes_->Update( "IsPartOf", isPartOf_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Human::StateChanged
+// Created: AHC 2012-11-12
+// -----------------------------------------------------------------------------
+void Human::StateChanged( rpr::DamageState32 state )
+{
+    attributes_->Update( "DamageState", Wrapper< uint32 >( static_cast< uint32 >( state ) ) );
+
 }

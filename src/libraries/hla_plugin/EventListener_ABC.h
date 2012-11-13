@@ -10,6 +10,7 @@
 #ifndef plugins_hla_EventListener_ABC_h
 #define plugins_hla_EventListener_ABC_h
 
+#include "rpr/Enums.h"
 #include <boost/noncopyable.hpp>
 #include <set>
 
@@ -51,6 +52,7 @@ public:
     virtual void PlatformAdded( const std::string& name, unsigned int id ) = 0;
     virtual void ChildrenChanged( const T_ChildrenIds& children ) = 0;
     virtual void ParentChanged( const std::string& parentId ) = 0;
+    virtual void StateChanged( rpr::DamageState32 state ) = 0;
 
     //@}
 };

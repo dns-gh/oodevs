@@ -17,6 +17,7 @@ using namespace plugins::hla;
 // Created: AHC 2012-07-27
 // -----------------------------------------------------------------------------
 PlatformProxy::PlatformProxy()
+    : state_( rpr::NoDamage )
 {
     // NOTHING
 }
@@ -63,4 +64,30 @@ void PlatformProxy::AddSubordinate( unsigned int /*id*/, Agent_ABC& /*agent*/ )
 // -----------------------------------------------------------------------------
 void PlatformProxy::RemoveSubordinate( unsigned int /*id*/ )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: PlatformProxy::StateChanged
+// Created: AHC 2012-11-12
+// -----------------------------------------------------------------------------
+void PlatformProxy::StateChanged( rpr::DamageState32 state )
+{
+    if( state != state_ )
+    {
+        state_ = state;
+        listeners_.StateChanged( state_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PlatformProxy::MountedChanged
+// Created: AHC 2012-11-13
+// -----------------------------------------------------------------------------
+void PlatformProxy::MountedChanged( bool isMounted )
+{
+    if( isMounted_ != isMounted )
+    {
+        isMounted_ = isMounted;
+        listeners_.EmbarkmentChanged( isMounted_ );
+    }
 }

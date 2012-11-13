@@ -14,6 +14,7 @@
 #include <hla/HLA_Types.h>
 
 #include "rpr/ForceIdentifier.h"
+#include "rpr/Enums.h"
 #include "UniqueId.h"
 #include "AggregateMarking.h"
 

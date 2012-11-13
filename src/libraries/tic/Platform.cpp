@@ -25,6 +25,7 @@ Platform::Platform( const kernel::ComponentType& type, float timeStep )
     , speed_   ( 0 )
     , heading_ ( 0 )
     , altitude_( 0 )
+    , isMounted_( false )
 {
     // NOTHING
 }
@@ -46,6 +47,8 @@ void Platform::Update( const sword::UnitAttributes& asnMsg )
 {
     if( asnMsg.has_altitude() )
         altitude_ = float( asnMsg.altitude() );
+    if( asnMsg.has_embarked() )
+        isMounted_ = asnMsg.embarked();
 }
 
 // -----------------------------------------------------------------------------
@@ -244,4 +247,13 @@ float Platform::GetHeading() const
 Platform::E_State Platform::GetState() const
 {
     return state_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Platform::GetState
+// Created: AGE 2008-04-04
+// -----------------------------------------------------------------------------
+bool Platform::IsMounted() const
+{
+    return isMounted_;
 }

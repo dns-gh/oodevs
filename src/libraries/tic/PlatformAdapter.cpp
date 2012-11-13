@@ -108,3 +108,12 @@ Platform_ABC::E_State PlatformAdapter::GetState() const
         return broken;
     return okay;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PlatformAdapter::IsMounted
+// Created: AHC 2012-11-13
+// -----------------------------------------------------------------------------
+bool PlatformAdapter::IsMounted() const
+{
+    return agent_.IsMounted();
+}

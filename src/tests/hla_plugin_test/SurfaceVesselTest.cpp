@@ -75,7 +75,9 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_serializes_all_its_attributes, Registere
                                                                         ( "ForceIdentifier" )
                                                                         ( "Marking" )
                                                                         ( "Spatial" )
-                                                                        ( "IsPartOf" );
+                                                                        ( "IsPartOf" )
+                                                                        ( "IsConcealed" )
+                                                                        ( "DamageState" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
