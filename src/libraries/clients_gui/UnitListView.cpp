@@ -365,14 +365,14 @@ void UnitListView::AfterSelection()
     if( !followSelection_ )
         return;
     if( selectedAgent_ && !sorting_.empty() )
-        SearchAndSelect( selectedAgent_->GetType().GetName().c_str() );
+        FindAndSelect( selectedAgent_->GetType().GetName().c_str() );
     else if( selectedAutomat_ && sorting_.empty() )
-        SearchAndSelect( selectedAutomat_->GetType().GetName().c_str() );
+        FindAndSelect( selectedAutomat_->GetType().GetName().c_str() );
     else if( selectedAgent_ && sorting_.empty() )
     {
         const kernel::TacticalHierarchies* hierarchy = selectedAgent_->Retrieve< kernel::TacticalHierarchies >();
         const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( hierarchy->GetSuperior() );
         if( automat )
-            SearchAndSelect( automat->GetType().GetName().c_str() );
+            FindAndSelect( automat->GetType().GetName().c_str() );
     }
 }

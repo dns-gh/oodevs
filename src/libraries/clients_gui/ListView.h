@@ -116,6 +116,25 @@ public slots:
             SearchAndSelectNext();
     }
 
+    void FindAndSelect( const QString& searchedText )
+    {
+        searchedText_ = searchedText;
+        if( searchedText_.isEmpty() )
+            return;
+
+        for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
+        {
+            Q3ListViewItem* current = it.current();
+            if( MatchExactItem( current ) && current->isSelectable() && current->isEnabled() )
+            {
+                setSelected( current, true );
+                setCurrentItem( current );
+                ensureItemVisible( current );
+                break;
+            }
+        }
+    }
+
     void SearchAndSelectNext()
     {
         if( searchedText_.isEmpty() )
@@ -182,10 +201,21 @@ private:
         ValuedListItem* valuedItem = dynamic_cast< ValuedListItem* >( item );
         if( valuedItem && valuedItem->IsA< kernel::Entity_ABC >() )
             if( kernel::Entity_ABC* entity = valuedItem->GetValueNoCheck< kernel::Entity_ABC >() )
-            {
                 text += " " + QString::number( static_cast< unsigned int >( entity->GetId() ) );
-            }
         return text.contains( searchedText_, Qt::CaseInsensitive ) != 0;
+    }
+
+    bool MatchExactItem( Q3ListViewItem* item )
+    {
+        if( !item )
+            return false;
+
+        QString text = item->text( 0 );
+        ValuedListItem* valuedItem = dynamic_cast< ValuedListItem* >( item );
+        if( valuedItem && valuedItem->IsA< kernel::Entity_ABC >() )
+            if( kernel::Entity_ABC* entity = valuedItem->GetValueNoCheck< kernel::Entity_ABC >() )
+                text += " " + QString::number( static_cast< unsigned int >( entity->GetId() ) );
+        return text.compare( searchedText_, Qt::CaseSensitive ) == 0;
     }
 
 public:
