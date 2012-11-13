@@ -14,7 +14,7 @@
 using namespace plugins::logistic;
 
 // -----------------------------------------------------------------------------
-// Name: MedicalConsignData::Write
+// Name: MedicalConsignData::operator>>
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
 void MedicalConsignData::operator>>( std::stringstream& output ) const
@@ -33,7 +33,7 @@ void MedicalConsignData::operator>>( std::stringstream& output ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalConsignData::Write
+// Name: MedicalConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingCreation& msg, ConsignResolver_ABC& resolver )
@@ -61,7 +61,7 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalConsignData::Write
+// Name: MedicalConsignData::ManageMessage
 // Created: MMC 2012-08-21
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg, ConsignResolver_ABC& resolver )
@@ -97,6 +97,23 @@ const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedi
         mental_ = msg.mental_wound() ? strYes : strNo;
     if( msg.has_nbc_contaminated() )
         nbc_ = msg.nbc_contaminated() ? strYes : strNo;
+    resolver.AddToLineIndex( 1 );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalConsignData::ManageMessage
+// Created: MMC 2012-08-21
+// -----------------------------------------------------------------------------
+const ConsignData_ABC& MedicalConsignData::ManageMessage( const ::sword::LogMedicalHandlingDestruction& msg, ConsignResolver_ABC& resolver )
+{
+    resolver.GetSimTime( simTime_, tick_ );
+    if( msg.has_unit() )
+    {
+        unitId_ = boost::lexical_cast< std::string >( msg.unit().id() );
+        resolver.GetAgentName( msg.unit().id(), unit_ );
+    }
+    state_ = tools::translate( "logistic", "consign finished" ).toAscii().constData();
     resolver.AddToLineIndex( 1 );
     return *this;
 }
@@ -142,7 +159,10 @@ void MedicalResolver::ManageMessage( const sword::SimToClient& message )
     if( message.message().has_log_medical_handling_update() )
         TraceConsign< ::sword::LogMedicalHandlingUpdate, MedicalConsignData >( message.message().log_medical_handling_update(), output_ );
     if( message.message().has_log_medical_handling_destruction() && message.message().log_medical_handling_destruction().has_request() )
+    {
+        TraceConsign< ::sword::LogMedicalHandlingDestruction, MedicalConsignData >( message.message().log_medical_handling_destruction(), output_ );
         DestroyConsignData( message.message().log_medical_handling_destruction().request().id() );
+    }
 }
 
 // -----------------------------------------------------------------------------

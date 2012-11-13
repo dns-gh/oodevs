@@ -38,6 +38,7 @@ public:
     virtual void operator>>( std::stringstream& output ) const;
     virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingCreation& msg, ConsignResolver_ABC& resolver );
     virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingUpdate& msg, ConsignResolver_ABC& resolver );
+    virtual const ConsignData_ABC& ManageMessage( const ::sword::LogMedicalHandlingDestruction& msg, ConsignResolver_ABC& resolver );
     //@}
 
 public:
