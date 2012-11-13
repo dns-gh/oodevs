@@ -788,12 +788,7 @@ end
 -- --------------------------------------------------------------------------------  
 integration.activateSpecialSensors = function ( area, eType )
     area[ myself ] = area[ myself ] or {}
-
     area[ myself ].actionRadar = DEC_Perception_ActiverRadarSurLocalisation( eType, area.source )
-    actionCallbacks[ area[myself].actionRadar ] = function( arg ) 
-        area[myself].actionRadar = arg 
-    end
-
     meKnowledge:RC( eRC_DebutSurveillance )
     return true
 end
