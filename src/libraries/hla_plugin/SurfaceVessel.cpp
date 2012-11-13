@@ -171,7 +171,7 @@ void SurfaceVessel::RegisterAttributes( )
     attributesUpdater_->Register( "Spatial", boost::bind( &FOM_Serializer_ABC::ReadSpatial, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( spatial_ ) ), spatial_ );
     attributesUpdater_->Register( "IsPartOf", boost::bind( &FOM_Serializer_ABC::ReadIsPartOf, boost::ref( fomSerializer_ ), _1, _2, _3, boost::ref( isPartOf_ ) ), isPartOf_ );
     attributesUpdater_->Register( "IsConcealed", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ),  Wrapper< char >( 0 ) );
-    attributesUpdater_->Register( "DamageState", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ),  Wrapper< uint32 >( rpr::NoDamage ) );
+    attributesUpdater_->Register( "DamageState", boost::bind( &FOM_Serializer_ABC::ReadNothing, boost::ref( fomSerializer_ ), _1, _2, _3 ),  Wrapper< uint32 >( rpr::damageState_NoDamage ) );
 }
 
 // -----------------------------------------------------------------------------

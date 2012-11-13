@@ -15,39 +15,39 @@ namespace rpr
 
 enum DamageState32
 {
-    NoDamage        = 0,
-    SlightDamage    = 1,
-    ModerateDamage  = 2,
-    Destroyed       = 3
+    damageState_NoDamage        = 0,
+    damageState_SlightDamage    = 1,
+    damageState_ModerateDamage  = 2,
+    damageState_Destroyed       = 3
 };
 
 enum CamouflageEnum32
 {
-    UniformPaintScheme  = 0,
-    DesertCamouflage    = 1,
-    WinterCamouflage    = 2,
-    ForestCamouflage    = 3,
-    GenericCamouflage   = 4
+    camouflage_UniformPaintScheme  = 0,
+    camouflage_DesertCamouflage    = 1,
+    camouflage_WinterCamouflage    = 2,
+    camouflage_ForestCamouflage    = 3,
+    camouflage_GenericCamouflage   = 4
 };
 
 enum StanceCodeEnum32
 {
-    NotApplicable   = 0,
-    UprightStandingStill    = 1,
-    UprightWalking  = 2,
-    UprightRunning  = 3,
-    Kneeling    = 4,
-    Prone   = 5,
-    Crawling    = 6,
-    Swimming    = 7,
-    Parachuting     = 8,
-    Jumping     = 9,
-    Sitting     = 10,
-    Squatting   = 11,
-    Crouching   = 12,
-    Wading  = 13,
-    Surrender   = 14,
-    Detained    = 15
+    stance_NotApplicable   = 0,
+    stance_UprightStandingStill    = 1,
+    stance_UprightWalking  = 2,
+    stance_UprightRunning  = 3,
+    stance_Kneeling    = 4,
+    stance_Prone   = 5,
+    stance_Crawling    = 6,
+    stance_Swimming    = 7,
+    stance_Parachuting     = 8,
+    stance_Jumping     = 9,
+    stance_Sitting     = 10,
+    stance_Squatting   = 11,
+    stance_Crouching   = 12,
+    stance_Wading  = 13,
+    stance_Surrender   = 14,
+    stance_Detained    = 15
 };
 
 };

@@ -17,7 +17,7 @@ using namespace plugins::hla;
 // Created: AHC 2012-07-27
 // -----------------------------------------------------------------------------
 PlatformProxy::PlatformProxy()
-    : state_( rpr::NoDamage )
+    : state_( rpr::damageState_NoDamage )
 {
     // NOTHING
 }

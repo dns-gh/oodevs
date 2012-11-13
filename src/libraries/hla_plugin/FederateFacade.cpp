@@ -327,7 +327,7 @@ void FederateFacade::UnconditionalAcquisition( const ::hla::ObjectIdentifier& ob
 void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force,
         const rpr::EntityType& type, const std::string& symbol, const std::vector< char >& uniqueId )
 {
-    if( humanClass_.get() && type.Kind() == static_cast< char >( rpr::EntityType::LIFEFORM ) )
+    if( humanClass_.get() && type.Kind() == static_cast< char >( rpr::EntityType::kind_LIFEFORM ) )
     {    
 	    humanClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
     }
@@ -335,14 +335,14 @@ void FederateFacade::PlatformCreated( Agent_ABC& agent, unsigned int identifier,
     {
         switch( type.Domain() )
         {
-        case rpr::EntityType::LAND:
+        case rpr::EntityType::domain_LAND:
 		    if( groundVehicleClass_.get() )
 			    groundVehicleClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
             break;
-        case rpr::EntityType::AIR:
+        case rpr::EntityType::domain_AIR:
             aircraftClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
             break;
-        case rpr::EntityType::SURFACE:
+        case rpr::EntityType::domain_SURFACE:
             surfaceVesselClass_->Created( agent, identifier, name, force, type, symbol, uniqueId );
             break;
         }

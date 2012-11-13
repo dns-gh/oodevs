@@ -25,26 +25,26 @@ class EntityType
 public:
     enum RPRKind
     {
-        KIND_OTHER = 0,
-        PLATFORM = 1,
-        AMMUNITION = 2,
-        LIFEFORM = 3,
-        ENVIRONMENTAL = 4,
-        CULTURAL_FEATURE = 5,
-        SUPPLY = 6,
-        RADIO = 7,
-        EXPENDABLE = 8,
-        SENSOR_EMITTER = 9,
-        VRF_AGGREGATE = 11 // VRForces specific
+        kind_OTHER = 0,
+        kind_PLATFORM = 1,
+        kind_AMMUNITION = 2,
+        kind_LIFEFORM = 3,
+        kind_ENVIRONMENTAL = 4,
+        kind_CULTURAL_FEATURE = 5,
+        kind_SUPPLY = 6,
+        kind_RADIO = 7,
+        kind_EXPENDABLE = 8,
+        kind_SENSOR_EMITTER = 9,
+        kind_VRF_AGGREGATE = 11 // VRForces specific
     };
     enum RPRDomain
     {
-        OTHER = 0,
-        LAND = 1,
-        AIR = 2,
-        SURFACE = 3,
-        SUBSURFACE = 4,
-        SPACE = 5
+        domain_OTHER = 0,
+        domain_LAND = 1,
+        domain_AIR = 2,
+        domain_SURFACE = 3,
+        domain_SUBSURFACE = 4,
+        domain_SPACE = 5
     };
     //! @name Constructors/Destructor
     //@{

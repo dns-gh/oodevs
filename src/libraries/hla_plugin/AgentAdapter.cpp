@@ -67,13 +67,13 @@ void AgentAdapter::AddPlatform( const tic::Platform_ABC& platform )
     switch( platform.GetState() )
     {
     case tic::Platform_ABC::okay:
-        proxy.StateChanged( rpr::NoDamage );
+        proxy.StateChanged( rpr::damageState_NoDamage );
         break;
     case tic::Platform_ABC::broken:
-        proxy.StateChanged( rpr::ModerateDamage );
+        proxy.StateChanged( rpr::damageState_ModerateDamage );
         break;
     case tic::Platform_ABC::destroyed:
-        proxy.StateChanged( rpr::Destroyed );
+        proxy.StateChanged( rpr::damageState_Destroyed );
         break;
     }
     proxy.MountedChanged( platform.IsMounted() );

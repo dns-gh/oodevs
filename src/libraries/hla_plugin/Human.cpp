@@ -42,7 +42,7 @@ Human::Human( Agent_ABC& agent, const std::string& name,
     attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
     attributes_->Register( "Marking", markingFactory.CreateMarking( name, simId ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
-    attributes_->Register( "DamageState", Wrapper< uint32 >( static_cast< uint32 >( rpr::NoDamage ) ) );
+    attributes_->Register( "DamageState", Wrapper< uint32 >( static_cast< uint32 >( rpr::damageState_NoDamage ) ) );
     attributes_->Register( "IsConcealed", Wrapper< bool >( static_cast< char >( 0 ) ) );
     agent_.Register( *this );
 }
