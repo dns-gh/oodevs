@@ -48,3 +48,18 @@ BOOST_AUTO_TEST_CASE( extract_ascii_grid_with_external_prj )
 {
     CheckData( ASCExtractor( BOOST_RESOLVE( "ascii_test.asc" ), BOOST_RESOLVE( "ascii_test.prj" ) ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: extract_raster_values
+// Created: LGY 2012-03-10
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( extract_raster_values )
+{
+    ASCExtractor extractor( BOOST_RESOLVE( "ascii_test.asc" ) );
+    const geometry::Point2d bottomLeft = extractor.GetExtent().BottomLeft();
+    BOOST_CHECK_EQUAL( extractor.GetValue( bottomLeft.X(), bottomLeft.Y() ), 13. );
+    const geometry::Point2d topRight = extractor.GetExtent().TopRight();
+    BOOST_CHECK_EQUAL( extractor.GetValue( topRight.X(), topRight.Y() ), 6. );
+
+    BOOST_CHECK_EQUAL( extractor.GetValue( 200., 60. ), 6. );
+}

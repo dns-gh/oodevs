@@ -256,3 +256,21 @@ void ASCExtractor::Fill( std::vector< geometry::Point2d >& convexHull ) const
             }
         }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ASCExtractor::GetValue
+// Created: LGY 2012-11-12
+// -----------------------------------------------------------------------------
+float ASCExtractor::GetValue( double latitude, double longitude ) const
+{
+    int x = static_cast< int >( ( ( latitude - extent_.Left() ) * ncols_ ) / extent_.Width() );
+    int y = nrows_ - static_cast< int >( ( ( longitude - extent_.Bottom() ) * nrows_ ) / extent_.Height() );
+
+    if( x > ncols_ || y > nrows_ )
+        return 0;
+
+    int col = std::max( 0, x - 1 );
+    int row = std::max( 0, y - 1 );
+
+    return values_[ row * ncols_ + col ];
+}

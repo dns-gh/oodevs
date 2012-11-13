@@ -50,6 +50,7 @@ public:
     const T_Values& GetValues() const;
     geometry::Rectangle2d GenerateExtent( double left, double bottom, double right, double top ) const;
     void Fill( std::vector< geometry::Point2d >& convexHull ) const;
+    float GetValue( double latitude, double longitude ) const;
     //@}
 
 private:
