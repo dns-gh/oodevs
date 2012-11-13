@@ -61,5 +61,5 @@ BOOST_AUTO_TEST_CASE( extract_raster_values )
     const geometry::Point2d topRight = extractor.GetExtent().TopRight();
     BOOST_CHECK_EQUAL( extractor.GetValue( topRight.X(), topRight.Y() ), 6. );
 
-    BOOST_CHECK_EQUAL( extractor.GetValue( 200., 60. ), 6. );
+    BOOST_CHECK_EQUAL( extractor.GetValue( 61., 201. ), 8. );
 }

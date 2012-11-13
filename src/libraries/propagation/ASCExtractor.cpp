@@ -261,16 +261,14 @@ void ASCExtractor::Fill( std::vector< geometry::Point2d >& convexHull ) const
 // Name: ASCExtractor::GetValue
 // Created: LGY 2012-11-12
 // -----------------------------------------------------------------------------
-float ASCExtractor::GetValue( double latitude, double longitude ) const
+float ASCExtractor::GetValue( double longitude, double latitude ) const
 {
-    int x = static_cast< int >( ( ( latitude - extent_.Left() ) * ncols_ ) / extent_.Width() );
-    int y = nrows_ - static_cast< int >( ( ( longitude - extent_.Bottom() ) * nrows_ ) / extent_.Height() );
-
-    if( x > ncols_ || y > nrows_ )
+    const double dlng = longitude - extent_.Left();
+    const double dlat = latitude - extent_.Bottom();
+    if( dlng < 0 || dlng > extent_.Width() || dlat < 0 || dlat > extent_.Height() )
         return 0;
-
-    int col = std::max( 0, x - 1 );
-    int row = std::max( 0, y - 1 );
-
-    return values_[ row * ncols_ + col ];
+    // We want the boundary points to belong to the shape
+    const int x = std::min( static_cast< int >( ( dlng / extent_.Width() )*ncols_ ), ncols_ - 1 );
+    const int y = nrows_ - 1 - std::min( static_cast< int >( ( dlat / extent_.Height() )*nrows_ ), nrows_ - 1);
+    return values_[ y * ncols_ + x ];
 }
