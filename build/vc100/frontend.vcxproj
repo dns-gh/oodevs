@@ -105,7 +105,7 @@
     <ClCompile />
     <Lib />
     <ClCompile>
-      <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform};%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PLATFORM=$(CurrentPlatform);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
