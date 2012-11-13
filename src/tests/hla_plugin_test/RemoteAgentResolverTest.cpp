@@ -58,6 +58,69 @@ BOOST_FIXTURE_TEST_CASE( resolver_only_resolves_created_remote_agent, Fixture )
     remoteAgentListener->RemoteCreated( "remote", hlaClass, object );
     unitCreationObserver->Notify( MakeCreationMessage( 17 ), "remote" );
     BOOST_CHECK_EQUAL( "remote", resolver.Resolve( 17 ) );
+    BOOST_CHECK_EQUAL( 17u, resolver.Resolve( "remote" ) );
     remoteAgentListener->RemoteDestroyed( "remote" );
     BOOST_CHECK_EQUAL( "", resolver.Resolve( 17 ) );
 }
+
+namespace
+{
+    class ResolverFixture : public Fixture
+    {
+    public:
+        ResolverFixture()
+            : resolver( remoteAgentSubject, unitCreation )
+            , objectListener( 0 )
+        {
+            BOOST_REQUIRE( remoteAgentListener );
+            BOOST_REQUIRE( unitCreationObserver );
+        }
+        MockHlaClass hlaClass;
+        MockHlaObject object;
+        RemoteAgentResolver resolver;
+        ObjectListener_ABC* objectListener;
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( resolver_uses_parent, ResolverFixture )
+{
+    MOCK_EXPECT( object.Register ).once().with( mock::retrieve( objectListener ) );
+    remoteAgentListener->RemoteCreated( "remote", hlaClass, object );
+    BOOST_REQUIRE( objectListener );
+    objectListener->ParentChanged( "child", "remote" );
+    unitCreationObserver->Notify( MakeCreationMessage( 17 ), "remote" );
+    BOOST_CHECK_EQUAL( "remote", resolver.Resolve( 17 ) );
+    BOOST_CHECK_EQUAL( 17u, resolver.Resolve( "remote" ) );
+    BOOST_CHECK_EQUAL( 17u, resolver.Resolve( "child" ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( resolver_uses_subentities, ResolverFixture )
+{
+    std::set< std::string > children; children.insert( "child1" ); children.insert( "child2" );
+    MOCK_EXPECT( object.Register ).once().with( mock::retrieve( objectListener ) );
+    remoteAgentListener->RemoteCreated( "remote", hlaClass, object );
+    BOOST_REQUIRE( objectListener );
+    objectListener->SubEntitiesChanged( "remote", children );
+    unitCreationObserver->Notify( MakeCreationMessage( 17 ), "remote" );
+    BOOST_CHECK_EQUAL( "remote", resolver.Resolve( 17 ) );
+    BOOST_CHECK_EQUAL( 17u, resolver.Resolve( "remote" ) );
+    BOOST_CHECK_EQUAL( 17u, resolver.Resolve( "child1" ) );
+    BOOST_CHECK_EQUAL( 17u, resolver.Resolve( "child2" ) );
+    BOOST_CHECK_EQUAL( 0u, resolver.Resolve( "child3" ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( resolver_uses_subaggregates, ResolverFixture )
+{
+    std::set< std::string > children; children.insert( "child1" ); children.insert( "child2" );
+    MOCK_EXPECT( object.Register ).once().with( mock::retrieve( objectListener ) );
+    remoteAgentListener->RemoteCreated( "remote", hlaClass, object );
+    BOOST_REQUIRE( objectListener );
+    objectListener->SubAgregatesChanged( "remote", children );
+    unitCreationObserver->Notify( MakeCreationMessage( 17 ), "remote" );
+    BOOST_CHECK_EQUAL( "remote", resolver.Resolve( 17 ) );
+    BOOST_CHECK_EQUAL( 17u, resolver.Resolve( "remote" ) );
+    BOOST_CHECK_EQUAL( 17u, resolver.Resolve( "child1" ) );
+    BOOST_CHECK_EQUAL( 17u, resolver.Resolve( "child2" ) );
+    BOOST_CHECK_EQUAL( 0u, resolver.Resolve( "child3" ) );
+}
+

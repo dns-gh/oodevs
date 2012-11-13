@@ -88,6 +88,7 @@ private:
     //@{
     typedef std::set< std::string > T_Pendings;
     typedef boost::bimap< unsigned int, std::string > T_Identifiers;
+    typedef std::map< std::string, std::string > T_Children; // childId -> parentId
     //@}
 
 private:
@@ -97,6 +98,7 @@ private:
     ContextHandler_ABC< sword::UnitCreation >& unitCreation_;
     T_Pendings pendings_;
     T_Identifiers identifiers_;
+    T_Children children_;
     //@}
 };
 

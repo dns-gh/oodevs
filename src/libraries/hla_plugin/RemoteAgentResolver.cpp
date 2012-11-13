@@ -13,6 +13,7 @@
 #include "ContextHandler_ABC.h"
 #include "HlaObject_ABC.h"
 #include "protocol/Simulation.h"
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -60,10 +61,19 @@ const std::string& RemoteAgentResolver::Resolve( unsigned int identifier ) const
 // -----------------------------------------------------------------------------
 unsigned int RemoteAgentResolver::Resolve( const std::string& identifier ) const
 {
+    unsigned int retval = 0;
     T_Identifiers::right_const_iterator it = identifiers_.right.find( identifier );
-    if( it == identifiers_.right.end() )
-        return 0;
-    return it->second;
+    if( it == identifiers_.right.end() ) // look in children
+    {
+        T_Children::const_iterator itCh( children_.find( identifier ) );
+        if( itCh != children_.end() )
+        {
+            it = identifiers_.right.find( itCh->second );
+        }
+    }
+    if( it != identifiers_.right.end() )
+        retval = it->second;
+    return retval;
 }
 
 // -----------------------------------------------------------------------------
@@ -218,25 +228,27 @@ void RemoteAgentResolver::PerimeterChanged( const std::string& /*identifier*/, c
 // Name: RemoteAgentResolver::ParentChanged
 // Created: AHC 2012-10-03
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::ParentChanged( const std::string& /*rtiIdentifier*/, const std::string& /*parentRtiId*/ )
+void RemoteAgentResolver::ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId )
 {
-    //  NOTHING
+    children_[ rtiIdentifier ] = parentRtiId;
 }
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentResolver::SubAgregatesChanged
 // Created: AHC 2012-10-03
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+void RemoteAgentResolver::SubAgregatesChanged( const std::string& rtiIdentifier, const std::set< std::string >& children )
 {
-    // NOTHING
+    BOOST_FOREACH( const std::string& v, children )
+        children_[ v ] = rtiIdentifier;
 }
 
 // -----------------------------------------------------------------------------
 // Name: RemoteAgentResolver::SubEntitiesChanged
 // Created: AHC 2012-10-04
 // -----------------------------------------------------------------------------
-void RemoteAgentResolver::SubEntitiesChanged(const std::string& /*rtiIdentifier*/, const std::set< std::string >& /*children*/ )
+void RemoteAgentResolver::SubEntitiesChanged(const std::string& rtiIdentifier, const std::set< std::string >& children )
 {
-    // NOTHING
+    BOOST_FOREACH( const std::string& v, children )
+        children_[ v ] = rtiIdentifier;
 }
