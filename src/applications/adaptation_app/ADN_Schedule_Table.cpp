@@ -20,10 +20,10 @@ ADN_Schedule_Table::ADN_Schedule_Table( const QString& objectName, ADN_Connector
 {
     dataModel_.setColumnCount( 4 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Day" )
-                      << tr( "From" )
-                      << tr( "To" )
-                      << tr( "Activity" );
+    horizontalHeaders << tools::translate( "ADN_Schedule_Table", "Day" )
+                      << tools::translate( "ADN_Schedule_Table", "From" )
+                      << tools::translate( "ADN_Schedule_Table", "To" )
+                      << tools::translate( "ADN_Schedule_Table", "Activity" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
@@ -70,9 +70,9 @@ void ADN_Schedule_Table::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popup( this );
 
-    popup.insertItem( tr( "Add"), 0 );
+    popup.insertItem( tools::translate( "ADN_Schedule_Table", "Add"), 0 );
     if( GetSelectedData() != 0 )
-        popup.insertItem( tr( "Remove"), 1 );
+        popup.insertItem( tools::translate( "ADN_Schedule_Table", "Remove"), 1 );
 
     int result = popup.exec( pt );
     if( result == 1 )

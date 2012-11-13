@@ -20,6 +20,7 @@
 #define __ADN_GUI_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include "ADN_NavigationInfos.h"
 
 class ADN_MainWindow;
 class ADN_HtmlBuilder;

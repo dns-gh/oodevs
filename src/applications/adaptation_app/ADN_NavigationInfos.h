@@ -11,6 +11,7 @@
 #define __ADN_NavigationInfos_h_
 
 #include <boost/noncopyable.hpp>
+#include "ADN_Enums.h"
 
 // =============================================================================
 /** @class  ADN_NavigationInfos

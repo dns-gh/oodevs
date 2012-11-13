@@ -12,6 +12,7 @@
 #include "moc_ADN_TimeEdit.cpp"
 #include "ADN_Connector_String.h"
 #include "ADN_App.h"
+#include "ADN_Workspace.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TimeEdit constructor

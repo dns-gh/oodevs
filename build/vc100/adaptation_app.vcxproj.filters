@@ -1821,6 +1821,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.h">
+      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2035,9 +2038,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.h">
       <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.h">
-      <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_People_GUI.h">
       <Filter>Source Files\Workspace\People\People GUI</Filter>

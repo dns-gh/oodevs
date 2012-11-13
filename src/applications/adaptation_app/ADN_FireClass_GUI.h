@@ -12,6 +12,8 @@
 
 #include "ADN_GUI_ABC.h"
 
+class ADN_FireClass_Data;
+
 // =============================================================================
 /** @class  ADN_FireClass_GUI
     @brief  ADN_FireClass_GUI

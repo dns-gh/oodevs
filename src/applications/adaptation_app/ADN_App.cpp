@@ -15,6 +15,7 @@
 #include "ENT/ENT_Tr.h"
 #include "ADN_Exception_ABC.h"
 #include "ADN_Config.h"
+#include "ADN_Workspace.h"
 #pragma warning( push, 1 )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/algorithm/string.hpp>

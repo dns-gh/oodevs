@@ -12,6 +12,8 @@
 
 #include <boost/noncopyable.hpp>
 
+class ADN_ListView;
+
 // =============================================================================
 /** @class  ADN_HtmlBuilder
     @brief  ADN_HtmlBuilder

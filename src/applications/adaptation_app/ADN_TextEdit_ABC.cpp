@@ -12,7 +12,7 @@
 #include "moc_ADN_TextEdit_ABC.cpp"
 #include "ADN_App.h"
 #include "ADN_Enums.h"
-#include "ADN_MainWindow.h"
+#include "ADN_Workspace.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TextEdit_ABC constructor

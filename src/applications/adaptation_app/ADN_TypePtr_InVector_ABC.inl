@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_Workspace.h"
+#include "ADN_App.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC constructor
@@ -231,6 +231,7 @@ void ADN_TypePtr_InVector_ABC<T>::SetDataPrivate( void *data )
 {
     T_TypePtr newData = static_cast< T_TypePtr >( data );
     SetData( newData );
+    ADN_App::GetMainWindow()->setWindowModified( true );
 }
 
 //-----------------------------------------------------------------------------

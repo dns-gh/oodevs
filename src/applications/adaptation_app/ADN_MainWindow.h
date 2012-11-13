@@ -68,12 +68,6 @@ signals:
     void OpenModeToggled();
     void ChangeTab( E_WorkspaceElements );
 
-public slots:
-    //! @name Slots
-    //@{
-    void ChangeSaveState( bool bNoCommand );
-    //@}
-
 private slots:
     //! @name Slots
     //@{
@@ -85,11 +79,8 @@ private slots:
     void CloseProject();
     void TestData();
     void ConfigureDataTest();
-
     bool SelectOpenMode();
-
     void About();
-
     void ShowCoheranceTable( int nId );
     //@}
 
@@ -129,7 +120,6 @@ private:
     int             nIdSaveTable_;
     int             nIdPrint_;
     int             nIdChangeOpenMode_;
-    bool            bNeedSave_;
     T_TableRegistrationMap      vTableRegistrations_;
     T_ListViewRegistrationMap   vListViewRegistrations_;
 };

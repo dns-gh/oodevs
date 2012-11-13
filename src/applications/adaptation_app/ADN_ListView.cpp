@@ -383,7 +383,7 @@ void ADN_ListView::FinishCreation( ADN_Ref_ABC* ref )
     selectionModel()->setCurrentIndex( dataModel_.indexFromItem( FindItem( ref ) ), QItemSelectionModel::ClearAndSelect );
 
     pObjectCreator_ = 0;
-    static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
+    ADN_App::GetMainWindow()->setWindowModified( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -406,7 +406,7 @@ bool ADN_ListView::ContextMenuDelete()
         return false;
     // Remove the item from the list.
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );
-    static_cast< ADN_MainWindow* >( topLevelWidget() )->ChangeSaveState( false );
+    ADN_App::GetMainWindow()->setWindowModified( true );
     delete pCurrentData;
     return true;
 }

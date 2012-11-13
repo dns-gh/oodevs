@@ -13,7 +13,7 @@
 #include "ADN_App.h"
 #include "ADN_Connector_String.h"
 #include "ADN_Enums.h"
-#include "ADN_MainWindow.h"
+#include "ADN_Workspace.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ColorNameSelector constructor

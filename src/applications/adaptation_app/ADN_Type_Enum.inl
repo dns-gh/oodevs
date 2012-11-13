@@ -7,8 +7,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_Workspace.h"
-#include "MT_Tools/MT_FormatString.h"
+#include "ADN_App.h"
 
 template< class T, int nb >
 typename ADN_Type_Enum< T, nb >::T_Converter ADN_Type_Enum< T, nb >::converter_ = 0;
@@ -150,6 +149,7 @@ template< class T, int nb >
 void ADN_Type_Enum< T, nb >::SetDataPrivate(void *data)
 {
     SetDataPrivate( *(T*)data );
+    ADN_App::GetMainWindow()->setWindowModified( true );
 }
 
 //-----------------------------------------------------------------------------

@@ -100,12 +100,11 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config, int argc, char** argv )
     , nIdSaveTable_( 0 )
     , nIdPrint_( 0 )
     , nIdChangeOpenMode_( 0 )
-    , bNeedSave_( false )
 {
     generalConfig_->Parse( argc, argv );
     setMinimumSize( 640, 480 );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
-    setCaption( tr( "Sword Adaptation Tool - No Project" ) );
+    setCaption( tr( "Sword Adaptation Tool - No Project" ) + "[*]" );
 }
 
 //-----------------------------------------------------------------------------
@@ -294,12 +293,7 @@ void ADN_MainWindow::DoSaveProject()
     }
 
     QApplication::restoreOverrideCursor();    // restore original cursor
-
-    if( ! bNoReadOnlyFiles )
-        return; // we were not able to save all the datas
-
-    std::string szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + workspace_.GetProject().GetFileInfos().GetFileName().GetData();
-    setCaption( tr( "Sword Adaptation Tool - " ) + szProject.c_str() );
+    setWindowModified( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -347,7 +341,13 @@ void ADN_MainWindow::SaveAsProject()
 
     QApplication::restoreOverrideCursor();    // restore original cursor
     if( hasSaved )
-        setCaption( tr( "Sword Adaptation Tool - " ) + res.c_str() );
+    {
+        QString title = tr( "Sword Adaptation Tool - " ) + res.c_str();
+        if( workspace_.GetProject().GetDataInfos().IsReadOnly() )
+            title += tr( " [ Read Only ]" );
+        setCaption( title + "[*]" );
+        setWindowModified( false );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -375,8 +375,7 @@ void ADN_MainWindow::NewProject()
 
     SetMenuEnabled(true);
     mainTabWidget_->show();
-    QString strCaption = tr( "Sword Adaptation Tool - " ) + qfilename;
-    setCaption( strCaption );
+    setCaption( tr( "Sword Adaptation Tool - " ) + qfilename + "[*]" );
     pProjectLoadAction_->setVisible( false );
 }
 
@@ -436,8 +435,8 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
     QApplication::restoreOverrideCursor();    // restore original cursor
     QString title = tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() );
     if( workspace_.GetProject().GetDataInfos().IsReadOnly() )
-        title += tr( " [ Read Only ]");
-    setCaption( title );
+        title += tr( " [ Read Only ]" );
+    setCaption( title + "[*]" );
     SetMenuEnabled( true );
     mainTabWidget_->show();
     if( !isAdminMode && !fileLoaderObserver_->GetInvalidSignedFiles().empty() )
@@ -448,6 +447,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
                     , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + fileLoaderObserver_->GetInvalidSignedFiles().c_str() );
     }
     pProjectLoadAction_->setVisible( false );
+    setWindowModified( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -484,7 +484,7 @@ void ADN_MainWindow::CloseProject()
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::TestData()
 {
-    if( bNeedSave_ )
+    if( isWindowModified() )
     {
         int nResult = QMessageBox::question( this, tr( "Data test" ), tr( "Project will be saved in order to execute data test." ), QMessageBox::Ok, QMessageBox::Cancel );
         if( nResult == QMessageBox::Cancel )
@@ -540,32 +540,6 @@ void ADN_MainWindow::closeEvent( QCloseEvent * e )
         e->accept();
     else
         e->ignore();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::ChangeSaveState
-// Created: AGN 2004-05-13
-// -----------------------------------------------------------------------------
-void ADN_MainWindow::ChangeSaveState( bool bNoCommand )
-{
-    bNeedSave_ = ! bNoCommand;
-    if( bNeedSave_ )
-        setCaption( caption() + "*" );
-    else
-    {
-        std::string szProject = workspace_.GetProject().GetFileInfos().GetFileName().GetData();
-        if( szProject == ADN_Project_Data::FileInfos::szUntitled_ )
-            setCaption( tr( "Sword Adaptation Tool - No Project" ) );
-        else
-        {
-            szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + szProject;
-
-            QString title = tr( "Sword Adaptation Tool - " ) + szProject.c_str();
-            if( workspace_.GetProject().GetDataInfos().IsReadOnly() )
-                title += tr( " [ Read Only ]");
-            setCaption( title );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -652,7 +626,7 @@ void ADN_MainWindow::ShowCoheranceTable( int nId )
 // -----------------------------------------------------------------------------
 bool ADN_MainWindow::OfferToSave()
 {
-    if( ! bNeedSave_ )
+    if( !isWindowModified() )
         return true;
 
     QString strMessage = tr( "Save changes to project %1?" ).arg( workspace_.GetProject().GetFileInfos().GetFileNameFull().c_str() );

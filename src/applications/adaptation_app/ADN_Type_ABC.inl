@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "ADN_Workspace.h"
+#include "ADN_App.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_ABC constructor
@@ -116,5 +116,6 @@ const T ADN_Type_ABC<T>::GetData() const
 template <class T>
 void  ADN_Type_ABC<T>::SetDataPrivate(void *data)
 {
-    SetData(*static_cast< T* >( data ));
+    SetData( *static_cast< T* >( data ) );
+    ADN_App::GetMainWindow()->setWindowModified( true );
 }
