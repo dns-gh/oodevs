@@ -22,15 +22,6 @@ class ADN_Supply_Data;
 // =============================================================================
 class ADN_Supply_GUI : public ADN_GUI_ABC
 {
-public:
-    enum E_GuiElements
-    {
-        eName,
-        eCategory,
-        eProduction,
-        eColor,
-        eNbrGuiElements
-    };
 
 public:
     //! @name Constructors/Destructor
