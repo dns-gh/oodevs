@@ -122,10 +122,6 @@
       <FixedBaseAddress>false</FixedBaseAddress>
     </Link>
     <PostBuildEvent />
-    <PostBuildEvent>
-      <Command>cd $(RunDir)
-$(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_directory=../../data/tests/$(ProjectName) --run_test=extract_ascii_grid</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile>
