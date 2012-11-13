@@ -88,8 +88,10 @@ void LicenseDialog::CheckLicense( const std::string& licenseFeature, bool silent
         }
         catch( FlexLmLicense::LicenseError& error )
         {
+            if( silentMode )
+                throw;
             if( !license_gui::LicenseDialog::Run( licenseFeature, error.hostid_ ) )
-                throw error;
+                throw;
         }
     }
 }
