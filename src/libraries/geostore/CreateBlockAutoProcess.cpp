@@ -237,28 +237,40 @@ void CreateBlockAutoProcess::UpdateBuildingTable( gaiaGeomCollPtr buildings )
     //TODO: Update and Export building.bin
     if( !geometryFactory_->CheckValidity( buildings ) )
         return;
+
     gaiaGeomCollPtr temp;
     gaiaPolygonPtr block = blocks_->FirstPolygon;
+    gaiaPolygonPtr prev = 0;
+
     while( block )
     {
         temp = geometryFactory_->InitGeometryCollection();
-        gaiaPolygonPtr cloneBlock = gaiaAddPolygonToGeomColl( temp, block->Exterior->Points, block->NumInteriors );
-        cloneBlock = gaiaClonePolygon( block );
+        gaiaAddPolygonToGeomColl( temp, block->Exterior->Points, block->NumInteriors );
         gaiaMbrGeometry( temp );
         if( gaiaGeomCollIntersects( temp, buildings ) == 1 ) //don't keep blocks
         {
-            gaiaFreePolygon( cloneBlock );
+            if( block == blocks_->FirstPolygon )
+            {
+                blocks_->FirstPolygon = block->Next;
+            }
+            else if( block == blocks_->LastPolygon )
+            {
+                blocks_->LastPolygon = prev;
+                prev->Next = block->Next;
+            }
+            else
+            {
+                prev->Next = block->Next;
+            }
+            gaiaPolygonPtr next = block->Next;
             gaiaFreePolygon( block );
+            block = next;
         }
-        block = block->Next;
-        gaiaFreeGeomColl( temp );       
+        else
+        {
+            prev = block;
+            block = block->Next;
+        }
+        gaiaFreeGeomColl( temp );
     }
-    gaiaPolygonPtr building = buildings->FirstPolygon;
-    while( building )
-    {
-        gaiaPolygonPtr poly = gaiaAddPolygonToGeomColl( blocks_, block->Exterior->Points, block->NumInteriors );
-        poly = gaiaClonePolygon( building );
-        building = building->Next;
-    }
-    gaiaFreeGeomColl( buildings );
 }
