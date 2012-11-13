@@ -21,7 +21,8 @@ QuitPage::QuitPage( Q3WidgetStack* pages, Page_ABC& previous )
     : MenuPage( pages, *this, 0 )
 {
     setName( "QuitPage" );
-    yesButton_ = AddLink( *this, SLOT( OnQuit() ) );
+    yesButton_ = AddLink( *this, false );
+    connect( yesButton_, SIGNAL( clicked() ), this, SLOT( OnQuit() ) );
     noButton_ = AddLink( previous );
 }
 
@@ -41,8 +42,8 @@ QuitPage::~QuitPage()
 void QuitPage::OnLanguageChanged()
 {
     SetCenterTitle( tools::translate( "QuitPage", "Please confirm" ) );
-    SetTextAndSubtitle( yesButton_, tools::translate( "QuitPage", "Yes" ) );
-    SetTextAndSubtitle( noButton_, tools::translate( "QuitPage", "No" ) );
+    SetTextAndSubtitle( yesButton_, tools::translate( "QuitPage", "Yes" ), QString(), false );
+    SetTextAndSubtitle( noButton_, tools::translate( "QuitPage", "No" ), QString(), false );
     MenuPage::OnLanguageChanged();
 }
 

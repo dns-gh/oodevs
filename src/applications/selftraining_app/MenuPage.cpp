@@ -79,10 +79,11 @@ MenuPage::~MenuPage()
 // Name: MenuPage::AddLink
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MenuButton* MenuPage::AddLink( Page_ABC& page, const char* slot /* = 0*/ )
+MenuButton* MenuPage::AddLink( Page_ABC& page, bool showOnClick )
 {
     MenuButton* button = new MenuButton( container_ );
-    connect( button, SIGNAL( clicked() ), &page, slot ? slot : SLOT( show() ) );
+    if( showOnClick )
+        connect( button, SIGNAL( clicked() ), &page, SLOT( show() ) );
     connect( button, SIGNAL( Selected( MenuButton* ) ), this, SLOT( OnSelectedItem( MenuButton* ) ) );
     connect( button, SIGNAL( UnSelected( MenuButton* ) ), this, SLOT( OnUnSelectedItem( MenuButton* ) ) );
     return button;
@@ -92,10 +93,10 @@ MenuButton* MenuPage::AddLink( Page_ABC& page, const char* slot /* = 0*/ )
 // Name: MenuPage::SetTextAndSubtitle
 // Created: ABR 2011-11-09
 // -----------------------------------------------------------------------------
-void MenuPage::SetTextAndSubtitle( QPushButton* button, const QString& text, const QString& subTitle /*= ""*/ )
+void MenuPage::SetTextAndSubtitle( QPushButton* button, const QString& text, const QString& subTitle, bool isError )
 {
     button->setText( text );
-    subTitles_[ button ] = subTitle;
+    subTitles_[ button ] = Subtitle( subTitle, isError );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +105,11 @@ void MenuPage::SetTextAndSubtitle( QPushButton* button, const QString& text, con
 // -----------------------------------------------------------------------------
 void MenuPage::OnSelectedItem( MenuButton* button )
 {
-    subTitle_->setText( subTitles_[ button ] ) ;
+    Subtitle& sub = subTitles_[ button ];
+    subTitle_->setText( sub.title );
+    QPalette palette;
+    palette.setColor( QPalette::WindowText, sub.error ? Qt::red : Qt::white );
+    subTitle_->setPalette( palette );
 }
 
 // -----------------------------------------------------------------------------

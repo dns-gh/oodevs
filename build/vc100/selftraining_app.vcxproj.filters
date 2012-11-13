@@ -159,12 +159,6 @@
     <ClInclude Include="..\..\src\applications\selftraining_app\ContentPage.h">
       <Filter>Source Files\Pages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\selftraining_app\HomePage.h">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\selftraining_app\SelfTrainingPage.h">
-      <Filter>Source Files\Pages\Implementations</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\selftraining_app\ProcessDialogs.h">
       <Filter>Source Files\Widgets</Filter>
     </ClInclude>
@@ -273,6 +267,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\DataWidget.h">
       <Filter>Source Files\Widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\HomePage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\SelfTrainingPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

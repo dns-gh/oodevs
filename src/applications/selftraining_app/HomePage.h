@@ -38,6 +38,7 @@ class MenuButton;
 class OptionsPage;
 class ScenarioEditPage;
 class QuitPage;
+class ReplayPage;
 
 // =============================================================================
 /** @class  HomePage
@@ -47,6 +48,7 @@ class QuitPage;
 // =============================================================================
 class HomePage : public MenuPage
 {
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
@@ -68,8 +70,11 @@ private:
     //@{
     virtual void OnLanguageChanged();
     virtual void OnOptions();
-    virtual void Update();
     //@}
+
+private slots:
+    void OnPrepare();
+    void OnReplay();
 
 private:
     //! @name Member data
@@ -77,6 +82,7 @@ private:
     Config& config_;
     OptionsPage* optionsPage_;
     ScenarioEditPage* editPage_;
+    ReplayPage* replayPage_;
     MenuButton* adapt_;
     MenuButton* prepare_;
     MenuButton* play_;

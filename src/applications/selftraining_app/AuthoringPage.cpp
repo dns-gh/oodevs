@@ -24,8 +24,9 @@
 // Name: AuthoringPage constructor
 // Created: JSR 2010-06-04
 // -----------------------------------------------------------------------------
-AuthoringPage::AuthoringPage( Application& app, QWidget* /*parent*/, Q3WidgetStack* pages,
-                              Page_ABC& previous, const Config& config, kernel::Controllers& controllers )
+AuthoringPage::AuthoringPage( Application& app, QWidget* /*parent*/,
+                              Q3WidgetStack* pages, Page_ABC& previous,
+                              const Config& config, kernel::Controllers& controllers )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_     ( config )
     , controllers_( controllers )
@@ -33,8 +34,12 @@ AuthoringPage::AuthoringPage( Application& app, QWidget* /*parent*/, Q3WidgetSta
     setName( "AuthoringPage" );
     progressPage_ = new ProgressPage( app, pages, *this );
 
-    authoring_       = AddLink( *this, SLOT( OnAuthoring() ) );
-    terrainGen_      = AddLink( *new CreateTerrainPage( app, pages, *this, controllers, config ) );
+    authoring_ = AddLink( *this, false );
+    connect( authoring_, SIGNAL( clicked() ), this, SLOT( OnAuthoring() ) );
+
+    create_ = new CreateTerrainPage( app, pages, *this, controllers, config );
+    terrainGen_ = AddLink( *create_, false );
+    connect( terrainGen_, SIGNAL( clicked() ), this, SLOT( OnCreate() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,26 +57,20 @@ AuthoringPage::~AuthoringPage()
 // -----------------------------------------------------------------------------
 void AuthoringPage::OnLanguageChanged()
 {
+    const bool authoring = config_.HasFeature( FEATURE_AUTHORING );
+    const bool generation = config_.HasFeature( FEATURE_TERRAIN_GENERATION );
     progressPage_->SetTitle( tools::translate( "AuthoringPage", "Starting Application" ) );
     SetTextAndSubtitle( authoring_, tools::translate( "AuthoringPage", "Authoring" ),
-        config_.hasAuthoring_
+        authoring
         ? tools::translate( "AuthoringPage", "Launch Authoring application" )
-        : tools::translate( "AuthoringPage", "Missing Sword-Authoring license" ) );
+        : tools::translate( "AuthoringPage", "Missing Sword-Authoring license" ),
+        !authoring );
     SetTextAndSubtitle( terrainGen_, tools::translate( "AuthoringPage", "Terrain Gen" ),
-        config_.hasTerrainGeneration_
+        generation
         ? tools::translate( "AuthoringPage", "Launch Terrain Generation application" )
-        : tools::translate( "AuthoringPage", "Missing Sword-Terrain-Generation license" ) );
+        : tools::translate( "AuthoringPage", "Missing Sword-Terrain-Generation license" ),
+        !generation );
     MenuPage::OnLanguageChanged();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AuthoringPage::Update
-// Created: JSR 2010-07-12
-// -----------------------------------------------------------------------------
-void AuthoringPage::Update()
-{
-    authoring_->setEnabled( config_.hasAuthoring_ );
-    terrainGen_->setEnabled( config_.hasTerrainGeneration_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,9 +79,31 @@ void AuthoringPage::Update()
 // -----------------------------------------------------------------------------
 void AuthoringPage::OnAuthoring()
 {
+    if( !config_.HasFeature( FEATURE_AUTHORING ) )
+    {
+        config_.CheckFeature( FEATURE_AUTHORING );
+        OnLanguageChanged();
+        return;
+    }
+
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::StartAuthoring( config_, true ) );
     boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AuthoringPage::OnCreate
+// Created: BAX 2012-11-13
+// -----------------------------------------------------------------------------
+void AuthoringPage::OnCreate()
+{
+    if( !config_.HasFeature( FEATURE_TERRAIN_GENERATION ) )
+    {
+        config_.CheckFeature( FEATURE_TERRAIN_GENERATION );
+        OnLanguageChanged();
+        return;
+    }
+    create_->show();
 }

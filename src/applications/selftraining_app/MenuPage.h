@@ -15,6 +15,28 @@
 
 class MenuButton;
 
+// -----------------------------------------------------------------------------
+// Name: Subtitle
+// Created: BAX 2012-11-13
+// -----------------------------------------------------------------------------
+struct Subtitle
+{
+    Subtitle()
+        : title()
+        , error( false )
+    {
+        // NOTHING
+    }
+    Subtitle( const QString& title, bool error )
+        : title( title )
+        , error( error )
+    {
+        // NOTHING
+    }
+    QString title;
+    bool error;
+};
+
 // =============================================================================
 /** @class  MenuPage
     @brief  MenuPage
@@ -35,8 +57,8 @@ public:
 protected:
     //! @name Operations
     //@{
-    MenuButton* AddLink( Page_ABC& page, const char* slot = 0 );
-    void SetTextAndSubtitle( QPushButton* button, const QString& text, const QString& subTitle = "" );
+    MenuButton* AddLink( Page_ABC& page, bool showOnClick = true );
+    void SetTextAndSubtitle( QPushButton* button, const QString& text, const QString& subTitle, bool isError );
     void SetCenterTitle( const QString& title );
     //@}
 
@@ -54,7 +76,7 @@ private:
     QLabel* title_ ;
     Q3HBox* container_;
     QLabel* subTitle_ ;
-    std::map< QWidget*, QString > subTitles_ ;
+    std::map< QWidget*, Subtitle > subTitles_ ;
     //@}
 };
 

@@ -12,6 +12,15 @@
 
 #include "frontend/Config.h"
 
+enum Feature
+{
+    FEATURE_AUTHORING,
+    FEATURE_TERRAIN_GENERATION,
+    FEATURE_PREPARATION,
+    FEATURE_RUNTIME,
+    FEATURE_REPLAYER,
+};
+
 // =============================================================================
 /** @class  Config
     @brief  Config
@@ -27,21 +36,17 @@ public:
     virtual ~Config();
     //@}
 
+    //! @name Public Methods
+    //@{
+    bool CheckFeature( Feature feature ) const;
+    bool HasFeature( Feature feature ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
     Config( const Config& );            //!< Copy constructor
     Config& operator=( const Config& ); //!< Assignment operator
-    //@}
-
-public:
-    //! @name Member data
-    //@{
-    const bool hasAuthoring_;
-    const bool hasTerrainGeneration_;
-    const bool hasPreparation_;
-    const bool hasRuntime_;
-    const bool hasReplayer_;
     //@}
 };
 

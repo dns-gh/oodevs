@@ -14,17 +14,25 @@
 #include "MenuButton.h"
 #include "ScenarioLauncherPage.h"
 #include "clients_gui/Tools.h"
+#include "moc_SelfTrainingPage.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: SelfTrainingPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-SelfTrainingPage::SelfTrainingPage( Application& app, Q3WidgetStack* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
+SelfTrainingPage::SelfTrainingPage( Application& app, Q3WidgetStack* pages,
+                                    Page_ABC& previous, const Config& config,
+                                    const tools::Loader_ABC& fileLoader,
+                                    kernel::Controllers& controllers,
+                                    frontend::LauncherClient& launcher,
+                                    gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
     , config_( config )
 {
     setName( "SelfTrainingPage" );
-    startButton_ = AddLink( *new ScenarioLauncherPage( app, pages, *this, controllers, config, fileLoader, launcher, interpreter ) );
+    launcher_ = new ScenarioLauncherPage( app, pages, *this, controllers, config, fileLoader, launcher, interpreter );
+    startButton_ = AddLink( *launcher_, false );
+    connect( startButton_, SIGNAL( clicked() ), this, SLOT( OnStart() ) );
     joinButton_ = AddLink( *new ScenarioJoinPage( app, pages, *this, controllers, config, fileLoader, launcher ) );
 }
 
@@ -43,20 +51,28 @@ SelfTrainingPage::~SelfTrainingPage()
 // -----------------------------------------------------------------------------
 void SelfTrainingPage::OnLanguageChanged()
 {
+    const bool runtime = config_.HasFeature( FEATURE_RUNTIME );
     SetTextAndSubtitle( startButton_, tools::translate( "SelfTrainingPage", "Start" ),
-        config_.hasRuntime_
+        runtime
         ? tools::translate( "SelfTrainingPage", "Start a training session" )
-        : tools::translate( "SelfTrainingPage", "Missing Sword-Runtime license" ) );
+        : tools::translate( "SelfTrainingPage", "Missing Sword-Runtime license" ),
+        !runtime );
     SetTextAndSubtitle( joinButton_, tools::translate( "SelfTrainingPage", "Join" ),
-        tools::translate( "SelfTrainingPage", "Join a remote training session" ) );
+        tools::translate( "SelfTrainingPage", "Join a remote training session" ), false );
     MenuPage::OnLanguageChanged();
 }
 
 // -----------------------------------------------------------------------------
-// Name: SelfTrainingPage::Update
-// Created: JSR 2010-07-12
+// Name: SelfTrainingPage::OnStart
+// Created: BAX 2012-11-13
 // -----------------------------------------------------------------------------
-void SelfTrainingPage::Update()
+void SelfTrainingPage::OnStart()
 {
-    startButton_->setEnabled( config_.hasRuntime_ );
+    if( !config_.HasFeature( FEATURE_RUNTIME ) )
+    {
+        config_.CheckFeature( FEATURE_RUNTIME );
+        OnLanguageChanged();
+        return;
+    }
+    launcher_->show();
 }

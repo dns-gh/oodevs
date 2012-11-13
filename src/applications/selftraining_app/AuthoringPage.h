@@ -21,6 +21,7 @@ class Application;
 class Config;
 class MenuButton;
 class ProgressPage;
+class CreateTerrainPage;
 
 // =============================================================================
 /** @class  AuthoringPage
@@ -35,8 +36,9 @@ class AuthoringPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             AuthoringPage( Application& app, QWidget* parent, Q3WidgetStack* pages,
-                            Page_ABC& previous, const Config& config, kernel::Controllers& controllers );
+             AuthoringPage( Application& app, QWidget* parent,
+                            Q3WidgetStack* pages, Page_ABC& previous,
+                            const Config& config, kernel::Controllers& controllers );
     virtual ~AuthoringPage();
     //@}
 
@@ -44,13 +46,13 @@ private:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();
-    virtual void Update();
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnAuthoring();
+    void OnCreate();
     //@}
 
 private:
@@ -59,8 +61,9 @@ private:
     const Config& config_;
     kernel::Controllers& controllers_;
     ProgressPage* progressPage_;
-    QPushButton* authoring_;
-    QPushButton* terrainGen_;
+    CreateTerrainPage* create_;
+    MenuButton* authoring_;
+    MenuButton* terrainGen_;
     //@}
 };
 

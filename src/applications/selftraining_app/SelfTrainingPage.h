@@ -34,6 +34,7 @@ namespace tools
 
 class Application;
 class Config;
+class ScenarioLauncherPage;
 
 // =============================================================================
 /** @class  SelfTrainingPage
@@ -43,6 +44,7 @@ class Config;
 // =============================================================================
 class SelfTrainingPage : public MenuPage
 {
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
@@ -59,15 +61,21 @@ private:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();
-    virtual void Update();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnStart();
     //@}
 
 private:
     //! @name Data Member
     //@{
-    QPushButton* startButton_;
-    QPushButton* joinButton_;
     const Config& config_;
+    ScenarioLauncherPage* launcher_;
+    MenuButton* startButton_;
+    MenuButton* joinButton_;
     //@}
 };
 

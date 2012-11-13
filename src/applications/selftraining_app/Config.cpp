@@ -10,26 +10,35 @@
 #include "selftraining_app_pch.h"
 #include "Config.h"
 #include "license_gui/LicenseDialog.h"
+#include <boost/foreach.hpp>
 
 namespace
 {
-// -----------------------------------------------------------------------------
-// Name: CheckLicenseFeature
-// Created: BAX 2012-10-22
-// -----------------------------------------------------------------------------
-bool CheckLicenseFeature( const std::string& feature )
+bool CheckSingleFeature( const std::string& feature, bool silent )
 {
+    bool rpy = true;
+#if !defined( NO_LICENSE_CHECK )
+    QSet< QWidget* > set;
     try
     {
-#if !defined( NO_LICENSE_CHECK )
-        license_gui::LicenseDialog::CheckLicense( feature, true, 0, 0 );
-#endif
-        return true;
+        if( !silent )
+            BOOST_FOREACH( QWidget* w, QApplication::topLevelWidgets() )
+            {
+                if( !w->isVisible() )
+                    continue;
+                set.insert( w );
+                w->hide();
+            }
+        license_gui::LicenseDialog::CheckLicense( feature, silent, 0, 0 );
     }
     catch( std::exception& /*e*/ )
     {
-        return false;
+        rpy = false;
     }
+    BOOST_FOREACH( QWidget* w, set )
+        w->show();
+#endif
+    return rpy;
 }
 }
 
@@ -38,11 +47,6 @@ bool CheckLicenseFeature( const std::string& feature )
 // Created: LDC 2008-10-27
 // -----------------------------------------------------------------------------
 Config::Config()
-    : hasAuthoring_( CheckLicenseFeature( "sword-authoring" ) )
-    , hasTerrainGeneration_( CheckLicenseFeature( "sword-terrain-generation" ) )
-    , hasPreparation_( CheckLicenseFeature( "sword-preparation" ) )
-    , hasRuntime_( CheckLicenseFeature( "sword-runtime" ) )
-    , hasReplayer_( CheckLicenseFeature( "sword-replayer" ) )
 {
     // NOTHING
 }
@@ -54,4 +58,38 @@ Config::Config()
 Config::~Config()
 {
     // NOTHING
+}
+
+namespace
+{
+    std::string GetFeature( Feature feature )
+    {
+        switch( feature )
+        {
+            case FEATURE_AUTHORING:          return "sword-authoring";
+            case FEATURE_TERRAIN_GENERATION: return "sword-terrain-generation";
+            case FEATURE_PREPARATION:        return "sword-preparation";
+            case FEATURE_RUNTIME:            return "sword-runtime";
+            case FEATURE_REPLAYER:           return "sword-replayer";
+        }
+        return "unknown";
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::CheckFeature
+// Created: BAX 2012-11-13
+// -----------------------------------------------------------------------------
+bool Config::CheckFeature( Feature feature ) const
+{
+    return CheckSingleFeature( GetFeature( feature ), false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::HasFeature
+// Created: BAX 2012-11-13
+// -----------------------------------------------------------------------------
+bool Config::HasFeature( Feature feature ) const
+{
+    return CheckSingleFeature( GetFeature( feature ), true );
 }

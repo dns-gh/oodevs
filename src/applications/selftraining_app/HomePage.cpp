@@ -17,14 +17,17 @@
 #include "ScenarioEditPage.h"
 #include "SelfTrainingPage.h"
 #include "clients_gui/Tools.h"
+#include "moc_HomePage.cpp"
 
 // -----------------------------------------------------------------------------
 // Name: HomePage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-HomePage::HomePage( Application& app, QWidget* parent, Q3WidgetStack* pages, Config& config,
-                    const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers,
-                    frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
+HomePage::HomePage( Application& app, QWidget* parent, Q3WidgetStack* pages,
+                    Config& config, const tools::Loader_ABC& fileLoader,
+                    kernel::Controllers& controllers,
+                    frontend::LauncherClient& launcher,
+                    gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, *this, eButtonAdmin | eButtonQuit )
     , config_( config )
     , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader, controllers, launcher ) )
@@ -32,9 +35,12 @@ HomePage::HomePage( Application& app, QWidget* parent, Q3WidgetStack* pages, Con
     setName( "HomePage" );
     adapt_ =   AddLink( *new AuthoringPage( app, parent, pages, *this, config, controllers ) );
     editPage_ = new ScenarioEditPage( app, parent, pages, *this, config, fileLoader, controllers, launcher );
-    prepare_ = AddLink( *editPage_ );
+    prepare_ = AddLink( *editPage_, false );
+    connect( prepare_, SIGNAL( clicked() ), this, SLOT( OnPrepare() ) );
     play_ =    AddLink( *new SelfTrainingPage( app, pages, *this, config, fileLoader, controllers, launcher, interpreter ) );
-    replay_ =  AddLink( *new ReplayPage( app, pages, *this , config, fileLoader, controllers, launcher ) );
+    replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader, controllers, launcher );
+    replay_ =  AddLink( *replayPage_, false );
+    connect( replay_,  SIGNAL( clicked() ), this, SLOT( OnReplay() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,31 +58,23 @@ HomePage::~HomePage()
 // -----------------------------------------------------------------------------
 void HomePage::OnLanguageChanged()
 {
+    const bool preparation = config_.HasFeature( FEATURE_PREPARATION );
+    const bool replayer = config_.HasFeature( FEATURE_REPLAYER );
     SetTextAndSubtitle( adapt_, tools::translate( "HomePage", "Adapt" ),
-        tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" ) );
+        tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" ), false );
     SetTextAndSubtitle( prepare_, tools::translate( "HomePage", "Prepare" ),
-        config_.hasPreparation_
+        preparation
         ? tools::translate( "HomePage", "Edit scenario" )
-        : tools::translate( "HomePage", "Missing Sword-Preparation license" ) );
+        : tools::translate( "HomePage", "Missing Sword-Preparation license" ),
+        !preparation );
     SetTextAndSubtitle( play_, tools::translate( "HomePage", "Play" ),
-        tools::translate( "HomePage", "Start single player or multiplayer training session" ) );
+        tools::translate( "HomePage", "Start single player or multiplayer training session" ), false );
     SetTextAndSubtitle( replay_,  tools::translate( "HomePage", "Replay" ),
-        config_.hasReplayer_
+        replayer
         ? tools::translate( "HomePage", "Replay scenario" )
-        : tools::translate( "HomePage", "Missing Sword-Replayer license" ) );
+        : tools::translate( "HomePage", "Missing Sword-Replayer license" ),
+        !replayer );
     MenuPage::OnLanguageChanged();
-}
-
-// -----------------------------------------------------------------------------
-// Name: HomePage::Update
-// Created: ABR 2011-11-08
-// -----------------------------------------------------------------------------
-void HomePage::Update()
-{
-    adapt_->setEnabled( true );
-    prepare_->setEnabled( config_.hasPreparation_ );
-    play_->setEnabled( true );
-    replay_->setEnabled( config_.hasReplayer_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,4 +93,34 @@ void HomePage::OnOptions()
 void HomePage::InstallPackage( const QString& package )
 {
     optionsPage_->ShowPackageInstallation( package );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HomePage::OnPrepare
+// Created: BAX 2012-11-13
+// -----------------------------------------------------------------------------
+void HomePage::OnPrepare()
+{
+    if( !config_.HasFeature( FEATURE_PREPARATION ) )
+    {
+        config_.CheckFeature( FEATURE_PREPARATION );
+        OnLanguageChanged();
+        return;
+    }
+    editPage_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: HomePage::OnReplay
+// Created: BAX 2012-11-13
+// -----------------------------------------------------------------------------
+void HomePage::OnReplay()
+{
+    if( !config_.HasFeature( FEATURE_REPLAYER ) )
+    {
+        config_.CheckFeature( FEATURE_REPLAYER );
+        OnLanguageChanged();
+        return;
+    }
+    replayPage_->show();
 }
