@@ -514,6 +514,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticPlugin )
         T_Lines expectedLines;
         expectedLines.push_back( "request id ; tick ; GDH ; unit ; provider ; rank ; wound ; nbc ; mental ; state ; state end tick" );
         expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; rank_0 ; wound_0 ; yes ; no ; medical_2 ; 50" );
+        expectedLines.push_back( "7 ; 300 ; GDH2 ; agent_8 ; agent_12 ; rank_0 ; wound_0 ; yes ; no ; consign finished ; 50" );
         expecteds.push_back( LogFile( "^.*/medical\\.20020127\\.0\\.csv$", expectedLines ) );
     }
 

@@ -155,5 +155,9 @@
         <source>no</source>
         <translation>non</translation>
     </message>
+    <message>
+        <source>consign finished</source>
+        <translation>consigne terminée</translation>
+    </message>
 </context>
 </TS>
