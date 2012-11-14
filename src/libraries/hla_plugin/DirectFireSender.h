@@ -36,6 +36,7 @@ namespace hla
     class LocalAgentResolver_ABC;
     class RemoteAgentSubject_ABC;
     template< typename Interaction > class InteractionSender_ABC;
+    class DotationTypeResolver_ABC;
 
 namespace interactions
 {
@@ -57,7 +58,8 @@ public:
     //@{
              DirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
                                const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
-                               RemoteAgentSubject_ABC& remoteAgentSubject, tools::MessageController_ABC< sword::SimToClient_Content >& controller, const std::string& federateName );
+                               RemoteAgentSubject_ABC& remoteAgentSubject, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
+                               const std::string& federateName, const DotationTypeResolver_ABC& munitionTypeResolver );
     virtual ~DirectFireSender();
     //@}
 
@@ -106,6 +108,7 @@ private:
     const LocalAgentResolver_ABC& localResolver_;
     RemoteAgentSubject_ABC& remoteAgentSubject_;
     const std::string federateName_;
+    const DotationTypeResolver_ABC& munitionTypeResolver_;
     T_Fires fires_;
     T_Positions positions_;
     //@}

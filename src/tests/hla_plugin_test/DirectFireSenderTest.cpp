@@ -15,6 +15,7 @@
 #include "MockLocalAgentResolver.h"
 #include "MockRemoteAgentSubject.h"
 #include "MockRemoteAgentResolver.h"
+#include "MockDotationTypeResolver.h"
 #include "MockInteractionSender.h"
 #include "MockHlaObject.h"
 #include "MockHlaClass.h"
@@ -41,13 +42,14 @@ namespace
         tools::MessageController< sword::SimToClient_Content > controller;
         MockRemoteAgentSubject remoteAgentSubject;
         MockInteractionSender< interactions::MunitionDetonation > interactionSender;
+        MockDotationTypeResolver dotationResolver;
         ClassListener_ABC* remoteClassListener;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : sender              ( interactionSender, remoteAgentResolver, localAgentResolver, remoteAgentSubject, controller, "federate" )
+            : sender              ( interactionSender, remoteAgentResolver, localAgentResolver, remoteAgentSubject, controller, "federate", dotationResolver )
             , fireIdentifier      ( 42 )
             , firingUnitIdentifier( 1338 )
         {
@@ -86,6 +88,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_does_not_resend_an_already_sent_mess
     startMessage.mutable_start_unit_fire()->mutable_fire()->set_id( fireIdentifier );
     startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
     controller.Dispatch( startMessage );
+    MOCK_EXPECT( dotationResolver.ResolveIdentifier ).once().returns( rpr::EntityType("1") );
     MOCK_EXPECT( remoteAgentResolver.ResolveIdentifier ).returns( "distant" );
     MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).returns( "local" );
     MOCK_EXPECT( interactionSender.Send ).once();
@@ -122,6 +125,7 @@ namespace
             startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
             startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( targetIdentifier );
             stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
+            MOCK_EXPECT( dotationResolver.ResolveIdentifier ).once().returns( rpr::EntityType( "2 8 71 2 10 0 0" ) );
             MOCK_EXPECT( remoteAgentResolver.ResolveIdentifier ).once().with( targetIdentifier ).returns( "distant" );
             MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
             controller.Dispatch( startMessage );
@@ -182,7 +186,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_empty_munition_object_identifie
     BOOST_CHECK_EQUAL( parameters.munitionObjectIdentifier.str(), "" );
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_constant_7_62mm_munition_type, ConfiguredFixture )
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_resolves_munition_type, ConfiguredFixture )
 {
     BOOST_CHECK_EQUAL( parameters.munitionType.str(), "2 8 71 2 10 0 0" );
 }

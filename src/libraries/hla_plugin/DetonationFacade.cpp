@@ -31,7 +31,7 @@ DetonationFacade::DetonationFacade( dispatcher::SimulationPublisher_ABC& publish
     : pMunitionDetonation_  ( new InteractionSender< interactions::MunitionDetonation >( *this, builder ) )
     , pDirectFireReceiver_  ( new DirectFireReceiver( publisher, remoteResolver, localResolver, contextFactory ) )
     , pIndirectFireReceiver_( new IndirectFireReceiver( publisher, contextFactory, munitionTypeResolver ) )
-    , pDirectFireSender_    ( new DirectFireSender( *pMunitionDetonation_, remoteResolver, localResolver, remoteAgentSubject, controller, federateName ) )
+    , pDirectFireSender_    ( new DirectFireSender( *pMunitionDetonation_, remoteResolver, localResolver, remoteAgentSubject, controller, federateName, munitionTypeResolver ) )
     , pIndirectFireSender_  ( new IndirectFireSender( *pMunitionDetonation_, controller, federateName, munitionTypeResolver, localResolver ) )
 {
     // NOTHING

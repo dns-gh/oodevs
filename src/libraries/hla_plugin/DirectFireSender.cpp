@@ -16,6 +16,7 @@
 #include "RemoteAgentResolver_ABC.h"
 #include "RemoteAgentSubject_ABC.h"
 #include "LocalAgentResolver_ABC.h"
+#include "DotationTypeResolver_ABC.h"
 #include "protocol/Simulation.h"
 #include <boost/lexical_cast.hpp>
 
@@ -28,12 +29,13 @@ using namespace plugins::hla;
 DirectFireSender::DirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
                                     const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                     RemoteAgentSubject_ABC& remoteAgentSubject, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                    const std::string& federateName )
+                                    const std::string& federateName, const DotationTypeResolver_ABC& munitionTypeResolver )
     : interactionSender_ ( interactionSender )
     , remoteResolver_    ( remoteResolver )
     , localResolver_     ( localResolver )
     , remoteAgentSubject_( remoteAgentSubject )
     , federateName_      ( federateName )
+    , munitionTypeResolver_( munitionTypeResolver )
 {
     CONNECT( controller, *this, start_unit_fire );
     CONNECT( controller, *this, stop_unit_fire );
@@ -82,7 +84,7 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     parameters.finalVelocityVector = rpr::VelocityVector( 0., 0., 700. ); // $$$$ _RC_ SLI 2011-09-23: Hardcoded
     parameters.fuseType = 0; // Other
     parameters.munitionObjectIdentifier = Omt13String();
-    parameters.munitionType = rpr::EntityType( "2 8 71 2 10" ); // 12.7mm, Hardcoded
+    parameters.munitionType = munitionTypeResolver_.Resolve( startMessage.ammunition().id() ); // rpr::EntityType( "2 8 71 2 10" ); // 12.7mm, Hardcoded
     parameters.quantityFired = 10; // Hardcoded
     parameters.rateOfFire = 40; // Hardcoded
     parameters.relativeDetonationLocation = rpr::VelocityVector(); // Entity location
