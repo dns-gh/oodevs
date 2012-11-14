@@ -32,17 +32,13 @@
         <translation>Le modèle décisionnel de l&apos;unité %1 n&apos;est pas défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
-        <source>No parameter type specified for parameter %1.</source>
-        <translation>Aucun type de paramètre spécifié pour le paramètre %1.</translation>
-    </message>
-    <message>
         <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
         <translation>&gt;Au moins un type de blindage doit être défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
         <source>Bad &apos;Attrition&apos; capacity for object &apos;%1&apos;. &apos;Attrition&apos; capacity should use at least one of the following: ammunition, mine or explosive.
 Because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Capacité &apos;Attrition&apos; invalide pour l'objet &apos;%1&apos;. La capacité &apos;Attrition&apos; doit activer au moins un des éléments suivants: munition, mine ou explosif.
+        <translation>Capacité &apos;Attrition&apos; invalide pour l&apos;objet &apos;%1&apos;. La capacité &apos;Attrition&apos; doit activer au moins un des éléments suivants: munition, mine ou explosif.
 En conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
 </context>
@@ -1264,6 +1260,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     <message>
         <source>The breakdown &apos;%1&apos; has no replacement part.</source>
         <translation>La panne &apos;%1&apos; n&apos;a pas de pièce de rechange.</translation>
+    </message>
+    <message>
+        <source>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</source>
+        <translation>La mission &apos;%1&apos; n&apos;as pas de type définit pour un paramètre de type localisation composite.</translation>
     </message>
 </context>
 <context>

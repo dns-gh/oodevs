@@ -40,7 +40,6 @@ public:
     static bool MissingGeometry( const std::string& name );
     static bool MissingPCOnAutomat( const std::string& name );
     static bool BadAutomatComposition( const std::string& name );
-    static bool MissingParameterChoices( const std::string& name );
     static bool MissingArmor();
     static bool BadObjectAttrition( const std::string& name );
 };

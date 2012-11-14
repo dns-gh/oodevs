@@ -42,6 +42,7 @@ bool ADN_ConsistencyChecker::CheckConsistency()
     CheckNNOConsistency();
     CheckMissionsTypes();
     CheckBreakdownsBackup();
+    CheckMissionParameters();
     return !errors_.empty();
 }
 
@@ -217,3 +218,43 @@ void ADN_ConsistencyChecker::CheckBreakdownsBackup()
             errors_.push_back( error );
         }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::CheckMissionParameter
+// Created: ABR 2012-11-14
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::CheckMissionParameters()
+{
+    ADN_Missions_Data& data = ADN_Workspace::GetWorkspace().GetMissions().GetData();
+
+    for( ADN_Missions_Data::CIT_Mission_Vector it = data.unitMissions_.begin(); it != data.unitMissions_.end(); ++it )
+        CheckParameters( ( *it )->parameters_, ( *it )->strName_.GetData(), 0 );
+    for( ADN_Missions_Data::CIT_Mission_Vector it = data.automatMissions_.begin(); it != data.automatMissions_.end(); ++it )
+        CheckParameters( ( *it )->parameters_, ( *it )->strName_.GetData(), 1 );
+    for( ADN_Missions_Data::CIT_Mission_Vector it = data.populationMissions_.begin(); it != data.populationMissions_.end(); ++it )
+        CheckParameters( ( *it )->parameters_, ( *it )->strName_.GetData(), 2 );
+    for( ADN_Missions_Data::CIT_FragOrder_Vector it = data.fragOrders_.begin(); it != data.fragOrders_.end(); ++it )
+        CheckParameters( ( *it )->parameters_, ( *it )->strName_.GetData(), 3 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ConsistencyChecker::CheckParameters
+// Created: ABR 2012-11-14
+// -----------------------------------------------------------------------------
+void ADN_ConsistencyChecker::CheckParameters( const ADN_Missions_Data::T_MissionParameter_Vector& parameters, const std::string& missionName, int subTab )
+{
+    for( ADN_Missions_Data::CIT_MissionParameter_Vector it = parameters.begin(); it != parameters.end(); ++it )
+        if( ( *it )->type_.GetData() == eMissionParameterTypeLocationComposite )
+        {
+            bool hasChoice = false;
+            for( std::size_t i = 0; i < ( *it )->choices_.size() && !hasChoice; ++i )
+                hasChoice = ( *it )->choices_[ i ]->isAllowed_.GetData();
+            if( !hasChoice )
+            {
+                ConsistencyError error( eMissingChoiceComposite );
+                error.items_.push_back( CreateGotoInfo( missionName, eMissions, subTab ) );
+                errors_.push_back( error );
+            }
+        }
+}
+

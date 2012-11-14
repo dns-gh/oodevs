@@ -39,16 +39,23 @@ class ADN_Missions_Data : public ADN_Data_ABC
 // =============================================================================
 public:
     typedef ADN_Type_Vector_ABC<ADN_Missions_ParameterValue>  T_MissionParameterValue_Vector;
-    typedef T_MissionParameterValue_Vector::iterator          IT_MissionParameterValue_Vector;
+    typedef T_MissionParameterValue_Vector::iterator         IT_MissionParameterValue_Vector;
+
     typedef ADN_Type_Vector_ABC<ADN_Missions_Type>            T_Choice_Vector;
-    typedef T_Choice_Vector::iterator                         IT_Choice_Vector;
+    typedef T_Choice_Vector::iterator                        IT_Choice_Vector;
+    typedef T_Choice_Vector::const_iterator                 CIT_Choice_Vector;
+
     typedef ADN_Type_Vector_ABC<ADN_Missions_Parameter>       T_MissionParameter_Vector;
-    typedef T_MissionParameter_Vector::iterator               IT_MissionParameter_Vector;
+    typedef T_MissionParameter_Vector::iterator              IT_MissionParameter_Vector;
+    typedef T_MissionParameter_Vector::const_iterator       CIT_MissionParameter_Vector;
+
     typedef ADN_Type_Vector_ABC<ADN_Missions_Mission>         T_Mission_Vector;
-    typedef T_Mission_Vector::iterator                        IT_Mission_Vector;
-    typedef T_Mission_Vector::const_iterator                  CIT_Mission_Vector;
+    typedef T_Mission_Vector::iterator                       IT_Mission_Vector;
+    typedef T_Mission_Vector::const_iterator                CIT_Mission_Vector;
+
     typedef ADN_Type_Vector_ABC<ADN_Missions_FragOrder>       T_FragOrder_Vector;
-    typedef T_FragOrder_Vector::iterator                      IT_FragOrder_Vector;
+    typedef T_FragOrder_Vector::iterator                     IT_FragOrder_Vector;
+    typedef T_FragOrder_Vector::const_iterator                    CIT_FragOrder_Vector;
 
 // =============================================================================
 // Main data
@@ -72,7 +79,6 @@ public:
     ADN_Missions_FragOrder* FindFragOrder( const std::string& strName );
     ADN_Missions_Mission* FindMission( T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
-    virtual bool IsValidDatabase();
     virtual void Initialize();
 
     QStringList         GetAllMissionsThatUse( ADN_Objects_Data_ObjectInfos& object ); // $$$$ ABR 2012-08-03: Warning, return not only the name, but concatenation of tab name and mission name

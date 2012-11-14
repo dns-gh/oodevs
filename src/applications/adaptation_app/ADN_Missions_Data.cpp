@@ -367,26 +367,6 @@ ADN_Missions_Mission* ADN_Missions_Data::FindMission( ADN_Missions_Data::T_Missi
     return *it;
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Missions_Data::IsValidDatabase
-// Created: LDC 2012-10-24
-// -----------------------------------------------------------------------------
-bool ADN_Missions_Data::IsValidDatabase()
-{
-    for( IT_Mission_Vector it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
-        if( !(*it)->IsValidDatabase() )
-            return false;
-    for( IT_Mission_Vector it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
-        if( !(*it)->IsValidDatabase() )
-            return false;
-    for( IT_Mission_Vector it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
-        if( !(*it)->IsValidDatabase() )
-            return false;
-    for( IT_FragOrder_Vector it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
-        if( !(*it)->IsValidDatabase() )
-            return false;
-    return true;
-}
 namespace
 {
     template< typename T >

@@ -32,10 +32,6 @@
         <translation>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
-        <source>No parameter type specified for parameter %1.</source>
-        <translation>No parameter type specified for parameter %1.</translation>
-    </message>
-    <message>
         <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
         <translation>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</translation>
     </message>
@@ -1259,6 +1255,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     <message>
         <source>The resource &apos;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</source>
+        <translation>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</translation>
     </message>
 </context>
 <context>

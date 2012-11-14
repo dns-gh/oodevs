@@ -32,10 +32,6 @@
         <translation type="unfinished">لا يوجد نموذج مفترض المعرفة من أجل الوحدة 1%، لهذا السبب، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
     <message>
-        <source>No parameter type specified for parameter %1.</source>
-        <translation type="unfinished">لا يوجد نوع المعلمة المحدد للمعلمة %1.</translation>
-    </message>
-    <message>
         <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished">يجب تحديد واحد على الأقل من الدروع، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
@@ -1246,6 +1242,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
     <message>
         <source>The resource &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

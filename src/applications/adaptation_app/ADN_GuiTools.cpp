@@ -161,20 +161,6 @@ bool ADN_GuiTools::MissingDecisionalModel( const std::string& unit )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_GuiTools::MissingParameterChoices
-// Created: LDC 2012-10-24
-// -----------------------------------------------------------------------------
-bool ADN_GuiTools::MissingParameterChoices( const std::string& name )
-{
-    QApplication::restoreOverrideCursor();
-    QMessageBox::warning( 0,
-        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "No parameter type specified for parameter %1." ).arg( name.c_str() ),
-        QMessageBox::Ok | QMessageBox::Default );
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_GuiTools::MissingArmor
 // Created: LDC 2012-10-24
 // -----------------------------------------------------------------------------
