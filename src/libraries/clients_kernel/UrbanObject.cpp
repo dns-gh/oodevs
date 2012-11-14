@@ -296,8 +296,9 @@ float UrbanObject::GetLivingSpace( unsigned int floorNumber, unsigned int occupa
 // Name: UrbanObject::GetLivingSpace
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-float UrbanObject::GetLivingSpace() const
+float UrbanObject::GetLivingSpace( bool forceUpdate /* = false */ ) const
 {
+    livingSpace_ = forceUpdate ? 0 : livingSpace_;
     if( livingSpace_ == 0 )
     {
         const Architecture_ABC& architecture = Get< PhysicalAttribute_ABC >().GetArchitecture();

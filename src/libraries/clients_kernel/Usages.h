@@ -43,6 +43,7 @@ public:
     virtual const T_Usages& GetUsages() const { return usages_; }
     virtual const T_Occupations& GetOccupations() const { return occupations_; }
     virtual void ClearAll();
+    virtual void UpdateMotivations( float livingSpace );
     //@}
 
 private:

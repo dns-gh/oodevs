@@ -100,6 +100,31 @@ void Usages::UpdateDefault()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Usages::UpdateMotivations
+// Created: NPT 2012-11-14
+// -----------------------------------------------------------------------------
+void Usages::UpdateMotivations( float livingSpace )
+{
+    livingSpace_ = livingSpace;
+    for( CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
+    {
+        const std::string usageName = it->first.c_str() != defaultStr_ ? it->first : tools::translate( "Block", "Default" ).toStdString();
+        const QString motivationString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + usageName.c_str();
+        float occupation = livingSpace_ * it->second * 0.01f;
+        AccommodationType* accommodation = accommodationTypes_.Find( usageName );
+        occupations_[ usageName ].first = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetNominalCapacity() : 1 ) );
+        occupations_[ usageName ].second = static_cast< unsigned int >( occupation * ( accommodation ? accommodation->GetMaxCapacity() : 1 ) );
+        if( occupations_[ usageName ].first != 0 )
+        {
+            CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Percentage" ), usages_[ usageName ] );
+            CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Nominal capacity" ), occupations_[ usageName ].first );
+            CreateProperties( owner_, controller_, dictionary_, motivationString + tools::translate( "Block", "/Maximal capacity" ), occupations_[ usageName ].second );
+        }
+    }
+    UpdateDefault();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Usages::Add
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------

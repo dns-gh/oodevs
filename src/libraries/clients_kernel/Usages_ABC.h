@@ -55,6 +55,7 @@ public:
     virtual const T_Occupations& GetOccupations() const = 0;
     virtual const T_Usages& GetUsages() const = 0;
     virtual void ClearAll() = 0;
+    virtual void UpdateMotivations( float livingSpace ) = 0;
     //@}
 };
 

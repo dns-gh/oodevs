@@ -12,9 +12,11 @@
 #include "PropertiesDictionary.h"
 #include "Tools.h"
 #include "ObjectTypes.h"
-#include "UrbanObject_ABC.h"
+#include "UrbanObject.h"
 #include "MaterialCompositionType.h"
 #include "RoofShapeType.h"
+#include "PhysicalAttribute_ABC.h"
+#include "Usages.h"
 
 using namespace kernel;
 
@@ -101,6 +103,8 @@ struct Setter
     {
         *data = value;
         object_.UpdateTemplate( objectTypes_ );
+        if( PhysicalAttribute_ABC* pPhysical = object_.Retrieve< PhysicalAttribute_ABC >() )
+            pPhysical->GetUsages().UpdateMotivations( static_cast< UrbanObject* >( &object_ )->GetLivingSpace( true ) );
     }
     Setter& operator=( const Setter& rhs ) { object_ = rhs.object_; objectTypes_ = rhs.objectTypes_; return *this; }
 
