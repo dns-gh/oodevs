@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>state end tick</source>
-        <translation>tick de fin de l'état</translation>
+        <translation>tick de fin de l&apos;état</translation>
     </message>
     <message>
         <source>GDH</source>

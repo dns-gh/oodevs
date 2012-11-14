@@ -130,20 +130,12 @@
     <ClInclude Include="..\..\src\libraries\logistic_plugin\SupplyResolver.h" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\logistic_plugin\logistic_plugin_es.ts">
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_es.ts">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\logistic_plugin\logistic_plugin_fr.ts">
+    </None>
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_fr.ts">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
-    </CustomBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

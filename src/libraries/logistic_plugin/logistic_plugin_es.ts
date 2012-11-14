@@ -116,14 +116,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>recipient automat id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>recipient automat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>transport provider id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -148,7 +140,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>finished</source>
+        <source>creation tick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>state end tick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>consign finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recipient id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recipient</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

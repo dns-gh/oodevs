@@ -62,11 +62,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\logistic_plugin\logistic_plugin_fr.ts">
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_es.ts">
       <Filter>Translations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\logistic_plugin\logistic_plugin_es.ts">
+    </None>
+    <None Include="..\..\src\libraries\logistic_plugin\logistic_plugin_fr.ts">
       <Filter>Translations</Filter>
-    </CustomBuild>
+    </None>
   </ItemGroup>
 </Project>
