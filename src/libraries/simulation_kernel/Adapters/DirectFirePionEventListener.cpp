@@ -80,13 +80,13 @@ void DirectFirePionEventListener::Notify( const core::Model& event )
 
 namespace
 {
-    void UrbanObjectApplyDirectFire( const MIL_Agent_ABC& target, const PHY_DotationCategory& category, bool missed )
+    void UrbanObjectApplyDirectFire( const MIL_Agent_ABC& target, const PHY_DotationCategory& category, bool hit )
     {
         const MIL_UrbanObject_ABC* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
         if( urbanObject )
         {
             urbanObject->ApplyDirectFire();
-            if( missed )
+            if( !hit )
             {
                 StructuralCapacity* capacity = const_cast< StructuralCapacity* >( urbanObject->Retrieve< StructuralCapacity >() );
                 if( capacity )
@@ -136,7 +136,7 @@ void DirectFirePionEventListener::Update( const core::Model& event )
         MT_LOG_ERROR_MSG( "Unknown dotation category in DirectFirePionEventListener : " << dotation );
         return;
     }
-    if( ! event[ "missed" ] )
+    if( event[ "hit" ] )
     {
         PHY_ComposantePion& component = event[ "component/data" ].GetUserData< PHY_ComposantePion >();
         PHY_FireResults_Pion*& results = results_[ event[ "entity/identifier" ] ]; // $$$$ MCO 2012-04-26: use command id instead ? can a unit have several direct fire running in parallel ?
@@ -151,7 +151,7 @@ void DirectFirePionEventListener::Update( const core::Model& event )
     if( event[ "use-ph" ] )
     {
         target.GetRole< PHY_RoleInterface_ActiveProtection >().UseAmmunition( *category );
-        UrbanObjectApplyDirectFire( target, *category, event[ "missed" ] ); // $$$$ MCO 2012-09-10: move to a separate listener
+        UrbanObjectApplyDirectFire( target, *category, event[ "hit" ] ); // $$$$ MCO 2012-09-10: move to a separate listener
     }
 }
 

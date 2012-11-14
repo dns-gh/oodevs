@@ -224,7 +224,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_fir
                               ( "entity/data", "data" )
                               ( "running", true )
                               ( "use-ph", true )
-                              ( "missed", true ) );
+                              ( "hit", false ) );
     ExecuteCommands();
 }
 
@@ -249,7 +249,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing
                               ( "entity/data", "data" )
                               ( "running", true )
                               ( "use-ph", true )
-                              ( "missed", false ) );
+                              ( "hit", true ) );
     ExecuteCommands();
 }
 
@@ -274,7 +274,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
                               ( "entity/data", "data" )
                               ( "running", true )
                               ( "use-ph", true )
-                              ( "missed", false ) );
+                              ( "hit", true ) );
     ExpectCallback( sword::fire::RoleAction_DirectFiring::eRunning );
     const std::size_t command = StartCommand( "direct fire",
                                               core::MakeModel( "action", 117 )
