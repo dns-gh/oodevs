@@ -111,24 +111,6 @@
     <None Include="..\..\src\libraries\ENT\ENT_en.ts" />
     <None Include="..\..\src\libraries\Ent\ENT_es.ts" />
     <None Include="..\..\src\libraries\Ent\ENT_fr.ts" />
-    <CustomBuild Include="..\..\src\libraries\Ent\translator.pro">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose %(FullPath)
-lrelease -verbose %(FullPath)
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lupdate -noobsolete -verbose %(FullPath)
-lrelease -verbose %(FullPath)
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./translator;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lupdate -noobsolete -verbose %(FullPath)
-lrelease -verbose %(FullPath)
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -noobsolete -verbose %(FullPath)
-lrelease -verbose %(FullPath)
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
-    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -308,4 +308,15 @@
         <translation>Simulation started</translation>
     </message>
 </context>
+<context>
+    <name>frontend::FileList</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

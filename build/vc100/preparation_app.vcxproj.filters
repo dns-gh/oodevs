@@ -877,9 +877,6 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\FilterXsl.h">
       <Filter>Source Files\Dialogs\Filter</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\SymbolEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </CustomBuild>

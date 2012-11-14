@@ -259,9 +259,6 @@
     <CustomBuild Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.h">
       <Filter>Source Files\Interface</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamLocationComposite.h">
       <Filter>Source Files\Parameters\Locations</Filter>
     </CustomBuild>

@@ -1626,6 +1626,13 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Equipement_GenericListView</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipement_Postures_GUI</name>
     <message>
         <source>PH factor</source>
@@ -1773,6 +1780,36 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     <message>
         <source>Add for all Crowds</source>
         <translation>Add for all Crowds</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FuneralPackagingResources_GUI</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">Resource</translation>
+    </message>
+    <message>
+        <source>Packaging duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">Add resource</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">Remove resource</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Funeral_GUI</name>
+    <message>
+        <source>Fake transporter speed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6007,6 +6044,17 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
         <translation>Object type - Invalid object &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Funeral_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Invalid data</translation>
+    </message>
+    <message>
+        <source>Invalid resource &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

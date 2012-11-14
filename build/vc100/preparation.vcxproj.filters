@@ -1063,9 +1063,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\preparation\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\preparation\UrbanMenuManager.h">
       <Filter>Source Files\Model\Urban</Filter>
     </CustomBuild>

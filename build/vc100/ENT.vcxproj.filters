@@ -41,9 +41,4 @@
       <Filter>Translations</Filter>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\Ent\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-  </ItemGroup>
 </Project>

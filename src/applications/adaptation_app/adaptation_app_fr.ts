@@ -1630,6 +1630,13 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
+    <name>ADN_Equipement_GenericListView</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipement_Postures_GUI</name>
     <message>
         <source>PH factor</source>
@@ -1777,6 +1784,36 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     <message>
         <source>Add for all Crowds</source>
         <translation>Ajouter à chaque foule</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FuneralPackagingResources_GUI</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">Dotation</translation>
+    </message>
+    <message>
+        <source>Packaging duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Funeral_GUI</name>
+    <message>
+        <source>Fake transporter speed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6021,6 +6058,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
         <translation>Type d&apos;object - Object invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Funeral_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Invalid resource &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

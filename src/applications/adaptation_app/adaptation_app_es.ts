@@ -1629,6 +1629,13 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Equipement_GenericListView</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipement_Postures_GUI</name>
     <message>
         <source>PH factor</source>
@@ -1775,6 +1782,36 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
     <message>
         <source>Add for all Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FuneralPackagingResources_GUI</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">Dotación</translation>
+    </message>
+    <message>
+        <source>Packaging duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">Agregar dotación</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">Remover dotación</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Funeral_GUI</name>
+    <message>
+        <source>Fake transporter speed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6009,6 +6046,17 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Funeral_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Invalid resource &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

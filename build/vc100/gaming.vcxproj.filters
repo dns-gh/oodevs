@@ -1560,9 +1560,4 @@
       <Filter>Translations</Filter>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\gaming\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-  </ItemGroup>
 </Project>

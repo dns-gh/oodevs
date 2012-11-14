@@ -121,6 +121,10 @@
         <source>Male\Female\Children/Children</source>
         <translation>Répartition H\F\E/Enfant</translation>
     </message>
+    <message>
+        <source>Info/Position</source>
+        <translation type="unfinished">Info/Position</translation>
+    </message>
 </context>
 <context>
     <name>DelayAttribute</name>

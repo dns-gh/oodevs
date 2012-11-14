@@ -1204,6 +1204,42 @@ Do you want to remove it?</source>
     </message>
 </context>
 <context>
+    <name>gui::ObjectPrototypeShapeFileLoader</name>
+    <message>
+        <source>Cannot load shapefile %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load layer %1 : %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No layer to load.
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read layer %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no spatial reference</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spatial reference must be WGS84</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load SHP feature %1 : %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ObjectPrototype_ABC</name>
     <message>
         <source>Information</source>
@@ -1503,6 +1539,17 @@ Do you want to remove it?</source>
     <message>
         <source>Search</source>
         <translation type="unfinished">البحث</translation>
+    </message>
+</context>
+<context>
+    <name>gui::SearchTreeView_ABC</name>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">واضحة</translation>
+    </message>
+    <message>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

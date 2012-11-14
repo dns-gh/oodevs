@@ -1396,6 +1396,17 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>LogisticConsignsWidget_ABC</name>
+    <message>
+        <source>Logistic requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Processing consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -2099,6 +2110,13 @@ This data can&apos;t be projected.</source>
     </message>
     <message>
         <source>&amp;Windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessagePanel</name>
+    <message>
+        <source>Message Panel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2811,6 +2829,13 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Last tick speed factor/Mean speed factor</source>
         <translation type="unfinished">Último factor de velocidad de ticks/ factor de velocidad</translation>
+    </message>
+</context>
+<context>
+    <name>SupplyQuotasWidget</name>
+    <message>
+        <source>Logistic superior</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

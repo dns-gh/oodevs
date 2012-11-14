@@ -2417,19 +2417,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\TerrainProfilerLayer.h" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_en.ts">
-      <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./clients_gui_app6;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./clients_gui_app6;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./clients_gui_app6;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./clients_gui_app6;%(Outputs)</Outputs>
-      <SubType>Designer</SubType>
-    </CustomBuild>
-    <None Include="..\..\src\libraries\clients_gui\clients_gui_app6_ar.ts" />
     <None Include="..\..\src\libraries\clients_gui\clients_gui_ar.ts" />
     <None Include="..\..\src\libraries\clients_gui\clients_gui_en.ts" />
     <None Include="..\..\src\libraries\clients_gui\CommonDelegate.inl" />
@@ -2437,40 +2424,11 @@
     <None Include="..\..\src\libraries\clients_gui\EntityTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\HierarchyTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl" />
-    <None Include="..\..\src\libraries\clients_gui\resources_gradients_ar.ts" />
     <None Include="..\..\src\libraries\clients_gui\SearchTreeView.inl" />
     <None Include="..\..\src\libraries\clients_gui\StandardModel.inl" />
     <None Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.inl" />
     <None Include="..\..\src\libraries\clients_gui\ValuedComboBox.inl" />
     <None Include="..\..\src\libraries\clients_gui\EntityLayer.inl" />
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_es.ts">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./clients_gui_app6;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./clients_gui_app6;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./clients_gui_app6;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./clients_gui_app6;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_fr.ts">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./clients_gui_app6_fr.qm;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./clients_gui_app6_fr.qm;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./clients_gui_app6_fr.qm;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./clients_gui_app6_fr.qm;%(Outputs)</Outputs>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_es.ts">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"
 </Command>
@@ -2495,52 +2453,6 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"
 </Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\resources_gradients_es.ts">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./resources_gradients_es.qm;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./resources_gradients_es.qm;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./resources_gradients_es.qm;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./resources_gradients_es.qm;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\resources_gradients_fr.ts">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./resources_gradients_fr.qm;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./resources_gradients_fr.qm;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./resources_gradients_fr.qm;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./resources_gradients_fr.qm;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\translator.pro">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose %(FullPath)
-lrelease -verbose %(FullPath)
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lupdate -noobsolete -verbose %(FullPath)
-lrelease -verbose %(FullPath)
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./translator;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./translator;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lupdate -noobsolete -verbose %(FullPath)
-lrelease -verbose %(FullPath)
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -noobsolete -verbose %(FullPath)
-lrelease -verbose %(FullPath)
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./translator;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>

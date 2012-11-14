@@ -1399,9 +1399,6 @@
     <CustomBuild Include="..\..\src\applications\gaming_app\WeatherWidget.h">
       <Filter>Source Files\Creation\Weather</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\gaming_app\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\TimeTableRequestDialog.h">
       <Filter>Source Files\Dialogs</Filter>
     </CustomBuild>

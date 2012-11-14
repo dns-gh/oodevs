@@ -1433,13 +1433,7 @@
     <None Include="..\..\src\libraries\clients_gui\NumericLimitsEditor.inl">
       <Filter>Source Files\Tools</Filter>
     </None>
-    <None Include="..\..\src\libraries\clients_gui\resources_gradients_ar.ts">
-      <Filter>Translations</Filter>
-    </None>
     <None Include="..\..\src\libraries\clients_gui\clients_gui_ar.ts">
-      <Filter>Translations</Filter>
-    </None>
-    <None Include="..\..\src\libraries\clients_gui\clients_gui_app6_ar.ts">
       <Filter>Translations</Filter>
     </None>
     <None Include="..\..\src\libraries\clients_gui\HierarchyTreeView.inl">
@@ -1684,25 +1678,10 @@
     <CustomBuild Include="..\..\src\libraries\clients_gui\TerrainProfiler.h">
       <Filter>Source Files\GIS\Terrain Profiler</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_es.ts">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_fr.ts">
-      <Filter>Translations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_es.ts">
       <Filter>Translations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_fr.ts">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\resources_gradients_es.ts">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\resources_gradients_fr.ts">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\translator.pro">
       <Filter>Translations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\UnitStateDialog.h">
@@ -1716,9 +1695,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\UnitStateTableResource.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_app6_en.ts">
-      <Filter>Translations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\CommonDelegate.h">
       <Filter>Source Files\Tools</Filter>

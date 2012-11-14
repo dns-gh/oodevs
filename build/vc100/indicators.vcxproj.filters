@@ -188,11 +188,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\indicators\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\src\libraries\indicators\indicators_ar.ts">
       <Filter>Translations</Filter>
     </None>

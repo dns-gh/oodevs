@@ -330,9 +330,6 @@
     <CustomBuild Include="..\..\src\libraries\frontend\PluginSetting.h">
       <Filter>Source Files\Panels\Optional plugins</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\frontend\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\frontend\AdvancedConfigPanel.h">
       <Filter>Source Files\Panels\Plugins config</Filter>
     </CustomBuild>

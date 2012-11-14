@@ -259,9 +259,6 @@
     <CustomBuild Include="..\..\src\applications\selftraining_app\TrayMenu.h">
       <Filter>Source Files\Systray</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\selftraining_app\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\ScenarioJoinPage.h">
       <Filter>Source Files\Pages\Implementations</Filter>
     </CustomBuild>

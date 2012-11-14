@@ -1395,6 +1395,17 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>LogisticConsignsWidget_ABC</name>
+    <message>
+        <source>Logistic requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Processing consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -2102,6 +2113,13 @@ This data can&apos;t be projected.</source>
     </message>
 </context>
 <context>
+    <name>MessagePanel</name>
+    <message>
+        <source>Message Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MissionPanel</name>
     <message>
         <source>Mission</source>
@@ -2806,6 +2824,13 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Saving checkpoint...</source>
         <translation>Saving checkpoint...</translation>
+    </message>
+</context>
+<context>
+    <name>SupplyQuotasWidget</name>
+    <message>
+        <source>Logistic superior</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1398,6 +1398,17 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>LogisticConsignsWidget_ABC</name>
+    <message>
+        <source>Logistic requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Processing consigns</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -2103,6 +2114,13 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>&amp;Windows</source>
         <translation>&amp;Fenêtres</translation>
+    </message>
+</context>
+<context>
+    <name>MessagePanel</name>
+    <message>
+        <source>Message Panel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2814,6 +2832,13 @@ Ces données ne peuvent pas être projetées.</translation>
     <message>
         <source>Last tick speed factor/Mean speed factor</source>
         <translation>Facteur d&apos;accélération dernier tick/moyen</translation>
+    </message>
+</context>
+<context>
+    <name>SupplyQuotasWidget</name>
+    <message>
+        <source>Logistic superior</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

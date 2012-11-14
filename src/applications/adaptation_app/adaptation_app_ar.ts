@@ -1614,6 +1614,13 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Equipement_GenericListView</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipement_Postures_GUI</name>
     <message>
         <source>PH factor</source>
@@ -1761,6 +1768,36 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Add for all Crowds</source>
         <translation type="unfinished">إضافة لكل الحشود</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FuneralPackagingResources_GUI</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">الموارد</translation>
+    </message>
+    <message>
+        <source>Packaging duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">إضافة مورد</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">إزالة مورد</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Funeral_GUI</name>
+    <message>
+        <source>Fake transporter speed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5994,6 +6031,17 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
         <translation type="unfinished">نوع الكائن-كائن غير صالح &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Funeral_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
+    </message>
+    <message>
+        <source>Invalid resource &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

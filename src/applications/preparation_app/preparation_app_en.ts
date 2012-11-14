@@ -223,6 +223,13 @@
     </message>
 </context>
 <context>
+    <name>DialogContainer</name>
+    <message>
+        <source>Orbat</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DockContainer</name>
     <message>
         <source>ORBAT</source>
@@ -851,6 +858,13 @@
     <message>
         <source>Edit Quotas</source>
         <translation>Edit Quotas</translation>
+    </message>
+</context>
+<context>
+    <name>LogisticSuperiorEditor</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">None</translation>
     </message>
 </context>
 <context>
@@ -1805,6 +1819,18 @@ This data can&apos;t be projected.</translation>
     </message>
 </context>
 <context>
+    <name>ResourceNetworkDialog</name>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Warning</translation>
+    </message>
+    <message>
+        <source>A cycle has been detected in the resource network for the block %1.
+ The network automatic generation cannot be computed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScoreDef</name>
     <message>
         <source>Evacuation</source>
@@ -2103,6 +2129,21 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Insert</source>
         <translation>Insert</translation>
+    </message>
+</context>
+<context>
+    <name>ScoreProfilesPage</name>
+    <message>
+        <source>Access rights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected profiles will have access to the score during the exercise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile</source>
+        <translation type="unfinished">Profile</translation>
     </message>
 </context>
 <context>

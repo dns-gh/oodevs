@@ -1253,9 +1253,4 @@
       <Filter>Source Files\kernel</Filter>
     </CustomBuildStep>
   </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="..\..\src\libraries\clients_kernel\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-  </ItemGroup>
 </Project>

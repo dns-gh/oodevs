@@ -121,6 +121,10 @@
         <source>Male\Female\Children/Children</source>
         <translation type="unfinished">Male\Female\Children/الأطفال</translation>
     </message>
+    <message>
+        <source>Info/Position</source>
+        <translation type="unfinished">معلومات/موقف</translation>
+    </message>
 </context>
 <context>
     <name>DelayAttribute</name>

@@ -2105,9 +2105,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ColorSelector.h">
       <Filter>Source Files\Common widgets\Color selector</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\translator.pro">
-      <Filter>Translations</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ColorNameSelector.h">
       <Filter>Source Files\Common widgets\Color selector</Filter>
     </CustomBuild>

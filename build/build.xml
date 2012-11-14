@@ -797,6 +797,11 @@
         <copy todir="${run.dir}/resources/scripts">
             <fileset dir="${libraries.dir}/script_plugin" includes="**/*.lua"/>
         </copy>
+        <generate input="${data.dir}/app-data/resources/locales" excludes="license_*" extension="ts" target="${run.dir}/@{basename}.qm">
+            <lrelease>
+                <arg line='-verbose -qm "@{target}" "@{file}"'/>
+            </lrelease>
+        </generate>
     </target>
 
     <!--
