@@ -21,9 +21,9 @@
 setlocal enabledelayedexpansion
 set LIST=
 for %%x in ( "$(SrcDir)\*.ts" ) do set LIST=!LIST! "%%x"
-if "%LIST%"=="" goto :eof
-lupdate -silent -noobsolete "$(SrcDir)" -ts %LIST%
-for %%x in ( %LIST% ) do lrelease %%x -qm "$(RunDir)\%%~nx.qm"
+if "!LIST!"=="" goto :eof
+lupdate -silent -noobsolete "$(SrcDir)" -ts !LIST!
+for %%x in ( !LIST! ) do lrelease %%x -qm "$(RunDir)\%%~nx.qm"
         </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
