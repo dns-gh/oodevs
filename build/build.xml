@@ -1249,7 +1249,7 @@
                   dir="${run.dir}" failonerror="true">
                 <elements/>
             </exec>
-        </sequential>        
+        </sequential>
     </macrodef>
 
     <target name="app_test" description="check whether gui applications start properly">
