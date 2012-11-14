@@ -33,11 +33,17 @@ HomePage::HomePage( Application& app, QWidget* parent, Q3WidgetStack* pages,
     , optionsPage_( new OptionsPage( app, parent, pages, *this, config, fileLoader, controllers, launcher ) )
 {
     setName( "HomePage" );
-    adapt_ =   AddLink( *new AuthoringPage( app, parent, pages, *this, config, controllers ) );
+
+    adaptPage_ = new AuthoringPage( app, parent, pages, *this, config, controllers );
+    adapt_ =   AddLink( *adaptPage_ );
+
     editPage_ = new ScenarioEditPage( app, parent, pages, *this, config, fileLoader, controllers, launcher );
     prepare_ = AddLink( *editPage_, false );
     connect( prepare_, SIGNAL( clicked() ), this, SLOT( OnPrepare() ) );
-    play_ =    AddLink( *new SelfTrainingPage( app, pages, *this, config, fileLoader, controllers, launcher, interpreter ) );
+
+    playPage_ = new SelfTrainingPage( app, pages, *this, config, fileLoader, controllers, launcher, interpreter );
+    play_ =    AddLink( *playPage_ );
+
     replayPage_ = new ReplayPage( app, pages, *this , config, fileLoader, controllers, launcher );
     replay_ =  AddLink( *replayPage_, false );
     connect( replay_,  SIGNAL( clicked() ), this, SLOT( OnReplay() ) );
@@ -99,12 +105,23 @@ void HomePage::InstallPackage( const QString& package )
 // Name: HomePage::OnPrepare
 // Created: BAX 2012-11-13
 // -----------------------------------------------------------------------------
+void HomePage::Update()
+{
+    OnLanguageChanged();
+    adaptPage_->OnLanguageChanged();
+    playPage_->OnLanguageChanged();
+}
+
+// -----------------------------------------------------------------------------
+// Name: HomePage::OnPrepare
+// Created: BAX 2012-11-13
+// -----------------------------------------------------------------------------
 void HomePage::OnPrepare()
 {
     if( !config_.HasFeature( FEATURE_PREPARATION ) )
     {
         config_.CheckFeature( FEATURE_PREPARATION );
-        OnLanguageChanged();
+        Update();
         return;
     }
     editPage_->show();
@@ -119,7 +136,7 @@ void HomePage::OnReplay()
     if( !config_.HasFeature( FEATURE_REPLAYER ) )
     {
         config_.CheckFeature( FEATURE_REPLAYER );
-        OnLanguageChanged();
+        Update();
         return;
     }
     replayPage_->show();

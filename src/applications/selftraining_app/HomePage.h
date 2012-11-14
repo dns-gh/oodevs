@@ -35,9 +35,11 @@ namespace tools
 class Application;
 class Config;
 class MenuButton;
+class AuthoringPage;
 class OptionsPage;
 class ScenarioEditPage;
 class QuitPage;
+class SelfTrainingPage;
 class ReplayPage;
 
 // =============================================================================
@@ -70,6 +72,7 @@ private:
     //@{
     virtual void OnLanguageChanged();
     virtual void OnOptions();
+    void Update();
     //@}
 
 private slots:
@@ -80,8 +83,10 @@ private:
     //! @name Member data
     //@{
     Config& config_;
+    AuthoringPage* adaptPage_;
     OptionsPage* optionsPage_;
     ScenarioEditPage* editPage_;
+    SelfTrainingPage* playPage_;
     ReplayPage* replayPage_;
     MenuButton* adapt_;
     MenuButton* prepare_;

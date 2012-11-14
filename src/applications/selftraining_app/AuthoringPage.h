@@ -42,7 +42,7 @@ public:
     virtual ~AuthoringPage();
     //@}
 
-private:
+public:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();

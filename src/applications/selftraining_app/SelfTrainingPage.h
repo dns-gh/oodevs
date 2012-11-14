@@ -57,7 +57,7 @@ public:
     virtual ~SelfTrainingPage();
     //@}
 
-private:
+public:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();
