@@ -16,7 +16,7 @@
     <property name="version.project" value="${version.project.major}"/>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
-    <property name="version.major" value="trunk"/>
+    <property name="version.major" value="5.1.0"/>
     <property name="svn.revision" value="0"/>
     <property name="version.minor" value="${version.major}.${svn.revision}"/>
     <property name="version.version" value="0.0.0.${svn.revision}"/><!-- required for version extension -->
