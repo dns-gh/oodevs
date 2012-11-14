@@ -193,7 +193,7 @@ void RichTreeView::LockDragAndDrop( bool lock )
 // Name: RichTreeView::SearchAndSelect
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------
-void RichTreeView::SearchAndSelect( const QString& searchedText )
+void RichTreeView::SearchAndSelect( const QString& searchedText, Qt::MatchFlags compareFlag /* = Qt::MatchContains */, Qt::ItemDataRole searchRole /* = Qt::ToolTipRole */ )
 {
     // $$$$ ABR 2012-08-14: TODO, may be that should be on standard model
     searchedText_ = searchedText;
@@ -206,12 +206,12 @@ void RichTreeView::SearchAndSelect( const QString& searchedText )
         if( selectedIndex.isValid() )
         {
             QVariant v( searchedText_ );
-            QModelIndexList list = proxyModel_->match( selectedIndex, Qt::ToolTipRole, v, 1, Qt::MatchContains );
+            QModelIndexList list = proxyModel_->match( selectedIndex, searchRole, v, 1, compareFlag );
             if( list.size() > 0 && list.front() == selectedIndex )
                 return;
         }
     }
-    SearchAndSelectNext();
+    SearchAndSelectNext( compareFlag, searchRole );
 }
 
 namespace
@@ -250,13 +250,13 @@ namespace
 // Name: RichTreeView::SearchAndSelectNext
 // Created: ABR 2012-08-14
 // -----------------------------------------------------------------------------
-void RichTreeView::SearchAndSelectNext()
+void RichTreeView::SearchAndSelectNext( Qt::MatchFlags compareFlag /* = Qt::MatchContains */, Qt::ItemDataRole searchRole /* = Qt::ToolTipRole */ )
 {
     // $$$$ ABR 2012-08-14: TODO, may be that should be on standard model
     if( searchedText_.isEmpty() || proxyModel_->rowCount() == 0 )
         return;
     QVariant v( searchedText_ );
-    QModelIndexList list = proxyModel_->match( proxyModel_->index( 0, 0 ), Qt::ToolTipRole, v, -1, Qt::MatchContains | Qt::MatchWrap | Qt::MatchRecursive );
+    QModelIndexList list = proxyModel_->match( proxyModel_->index( 0, 0 ), searchRole, v, -1, compareFlag | Qt::MatchWrap | Qt::MatchRecursive );
     int size = list.size();
     QModelIndexList selecteds = selectedIndexes();
     if( !selecteds.empty() )
@@ -269,6 +269,7 @@ void RichTreeView::SearchAndSelectNext()
                 if( proxyModel_->flags( modelIndex ) & ( Qt::ItemIsSelectable | Qt::ItemIsEnabled ) && CompareIndices( modelIndex, selected ) > 0 )
                 {
                     selectionModel()->select( modelIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
+                    scrollTo( modelIndex );
                     return;
                 }
             }
@@ -279,6 +280,7 @@ void RichTreeView::SearchAndSelectNext()
         if( proxyModel_->flags( modelIndex ) & ( Qt::ItemIsSelectable | Qt::ItemIsEnabled ) )
         {
             selectionModel()->select( modelIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows );
+            scrollTo( modelIndex );
             return;
         }
     }

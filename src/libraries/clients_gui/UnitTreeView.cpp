@@ -16,6 +16,8 @@
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ComponentType.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "resources.h"
 
 using namespace gui;
@@ -243,4 +245,22 @@ bool UnitTreeView::LessThan( const QModelIndex& left, const QModelIndex& right, 
         return false;
     valid = true;
     return leftItem->text().localeAwareCompare( rightItem->text() ) > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTreeView::Select
+// Created: NPT 2012-11-13
+// -----------------------------------------------------------------------------
+void UnitTreeView::Select( const kernel::Automat_ABC& element )
+{
+    SearchAndSelect( element.GetType().GetName().c_str(), Qt::MatchExactly, Qt::DisplayRole );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitTreeView::Select
+// Created: NPT 2012-11-13
+// -----------------------------------------------------------------------------
+void UnitTreeView::Select( const kernel::Agent_ABC& element )
+{
+    SearchAndSelect( element.GetType().GetName().c_str(), Qt::MatchExactly, Qt::DisplayRole );
 }

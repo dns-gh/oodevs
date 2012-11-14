@@ -12,6 +12,7 @@
 
 #include "RichTreeView.h"
 #include "tools/ElementObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -21,6 +22,8 @@ namespace kernel
     class AutomatType;
     class ModelLoaded;
     class ModelUnLoaded;
+    class Agent_ABC;
+    class Automat_ABC;
 }
 
 namespace gui
@@ -36,6 +39,9 @@ class UnitTreeView : public gui::RichTreeView
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                    , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
+                   , public tools::SelectionObserver_ABC
+                   , public tools::SelectionObserver_Base< kernel::Agent_ABC >
+                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -64,6 +70,11 @@ private:
     void FillAutomatComposition( QStandardItem& parent, const kernel::AutomatType& type );
     void FillAgentComposition( QStandardItem& parent, const kernel::AgentType& type );
     virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
+
+    virtual void BeforeSelection() {}
+    virtual void AfterSelection() {}
+    virtual void Select( const kernel::Automat_ABC& element );
+    virtual void Select( const kernel::Agent_ABC& element );
     //@}
 
 private:

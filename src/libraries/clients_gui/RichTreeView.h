@@ -71,8 +71,8 @@ public slots:
     //! @name Search
     //@{
     void LockDragAndDrop( bool lock );
-    void SearchAndSelect( const QString& searchedText );
-    void SearchAndSelectNext();
+    void SearchAndSelect( const QString& searchedText, Qt::MatchFlags compareFlag = Qt::MatchContains, Qt::ItemDataRole searchRole = Qt::ToolTipRole );
+    void SearchAndSelectNext( Qt::MatchFlags compareFlag = Qt::MatchContains, Qt::ItemDataRole searchRole = Qt::ToolTipRole  );
     //@}
 
 protected:
