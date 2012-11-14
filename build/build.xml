@@ -1566,6 +1566,10 @@
             <!-- These should be fixed -->
             <arg value="--exclude=actions"/>
             <arg value="--exclude=hla_plugin"/>
+            <!-- cmake targets are not used by "all" -->
+            <arg value="--optional-target=*cmake*"/>
+            <arg value="--optional-target=generate-signatures"/>
+            <arg value="--optional-target=client_sample_app"/>
         </exec>
     </target>
 
