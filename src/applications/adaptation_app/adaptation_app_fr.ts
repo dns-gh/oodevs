@@ -1254,6 +1254,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>The breakdown &apos;%1&apos; has no replacement part.</source>
         <translation>La panne &apos;%1&apos; n&apos;a pas de pièce de rechange.</translation>
     </message>
+    <message>
+        <source>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</source>
+        <translation>La mission &apos;%1&apos; n'as pas de type définit pour un paramètre de type localisation composite.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

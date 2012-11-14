@@ -87,7 +87,6 @@ public:
         void ReadValue   ( xml::xistream& input );
         void ReadChoice  ( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
-        bool IsValidDatabase();
 
     private:
         void FillChoices();
@@ -107,8 +106,9 @@ public:
         ADN_Type_String                                                   diaName_;
     };
 
-    typedef ADN_Type_Vector_ABC<MissionParameter>  T_MissionParameter_Vector;
-    typedef T_MissionParameter_Vector::iterator   IT_MissionParameter_Vector;
+    typedef ADN_Type_Vector_ABC<MissionParameter>        T_MissionParameter_Vector;
+    typedef T_MissionParameter_Vector::iterator         IT_MissionParameter_Vector;
+    typedef T_MissionParameter_Vector::const_iterator  CIT_MissionParameter_Vector;
 
 // =============================================================================
 // Missions
@@ -128,7 +128,6 @@ public:
         void ReadArchive ( xml::xistream& input, std::size_t contextLength );
         void ReadParameter( xml::xistream& input, std::size_t& index, std::size_t contextLength );
         void WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context );
-        virtual bool IsValidDatabase();
 
     public:
         ADN_Type_Int id_;
@@ -166,7 +165,6 @@ public:
         void ReadArchive ( xml::xistream& input );
         void ReadParameter( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
-        virtual bool IsValidDatabase();
 
     public:
         ADN_Type_Int              id_;
@@ -203,7 +201,6 @@ public:
     FragOrder*          FindFragOrder( const std::string& strName );
     Mission*            FindMission( T_Mission_Vector& missions, const std::string& strName );
     virtual void Load( const tools::Loader_ABC& fileLoader );
-    virtual bool IsValidDatabase();
     //@}
 
 private:

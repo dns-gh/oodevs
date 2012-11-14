@@ -58,8 +58,9 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingNNo     ] = tr( "%1 has no NNO code defined." );
     errorDescriptions_[ eMissingEmat    ] = tr( "%1 has no EMAT8 code defined." );
 
-    errorDescriptions_[ eMissionTypeUniqueness ] = tr( "Duplicate type for missions %1." );
-    errorDescriptions_[ eMissingPart ]           = tr( "The breakdown '%1' has no replacement part." );
+    errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1." );
+    errorDescriptions_[ eMissingPart ]            = tr( "The breakdown '%1' has no replacement part." );
+    errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission '%1' has no type defined for a localisation composite parameter." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
