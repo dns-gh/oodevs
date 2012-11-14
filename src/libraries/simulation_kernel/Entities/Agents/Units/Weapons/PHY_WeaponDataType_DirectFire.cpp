@@ -294,7 +294,7 @@ double PHY_WeaponDataType_DirectFire::GetDangerosity( const PHY_ComposanteType_A
     const PHY_Protection& targetProtection  = targetComposanteType.GetProtection();
 
     double rDangerosity  = GetPH( targetVolume, rDistBtwFirerAndTarget );
-             rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
+           rDangerosity *= weaponType_.GetDotationCategory().GetAttritionScore( targetProtection );
     return rDangerosity;
 }
 
