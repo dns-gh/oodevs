@@ -23,16 +23,16 @@ ENT_Tr::T_ConverterLocationType ENT_Tr::LocationTypeConverter_[] =
 
 ENT_Tr::T_ConverterDotationFamily ENT_Tr::DotationFamilyConverter_[] =
 {
-    T_ConverterDotationFamily( "munition", QT_TRANSLATE_NOOP( "ENT_Tr", "ammunition" ), eDotationFamily_Munition ),
-    T_ConverterDotationFamily( "carburant", QT_TRANSLATE_NOOP( "ENT_Tr", "fuel" ), eDotationFamily_Carburant ),
-    T_ConverterDotationFamily( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "explosive" ), eDotationFamily_Explosif ),
-    T_ConverterDotationFamily( "mine", QT_TRANSLATE_NOOP( "ENT_Tr", "mine" ), eDotationFamily_Mine ),
-    T_ConverterDotationFamily( "barbele", QT_TRANSLATE_NOOP( "ENT_Tr", "barbed wire" ), eDotationFamily_Barbele ),
-    T_ConverterDotationFamily( "piece", QT_TRANSLATE_NOOP( "ENT_Tr", "parts" ), eDotationFamily_Piece ),
-    T_ConverterDotationFamily( "ration", QT_TRANSLATE_NOOP( "ENT_Tr", "food/water" ), eDotationFamily_Ration ),
-    T_ConverterDotationFamily( "agent extincteur", QT_TRANSLATE_NOOP( "ENT_Tr", "extinguisher agent" ), eDotationFamily_AgentExtincteur ),
-    T_ConverterDotationFamily( "energie", QT_TRANSLATE_NOOP( "ENT_Tr", "energy" ), eDotationFamily_Energy ),
-    T_ConverterDotationFamily( "funeraire", QT_TRANSLATE_NOOP( "ENT_Tr", "funeral" ), eDotationFamily_Funeraire ),
+    T_ConverterDotationFamily( "munition", QT_TRANSLATE_NOOP( "ENT_Tr", "Ammunition" ), eDotationFamily_Munition ),
+    T_ConverterDotationFamily( "carburant", QT_TRANSLATE_NOOP( "ENT_Tr", "Fuel" ), eDotationFamily_Carburant ),
+    T_ConverterDotationFamily( "explosif", QT_TRANSLATE_NOOP( "ENT_Tr", "Explosive" ), eDotationFamily_Explosif ),
+    T_ConverterDotationFamily( "mine", QT_TRANSLATE_NOOP( "ENT_Tr", "Mine" ), eDotationFamily_Mine ),
+    T_ConverterDotationFamily( "barbele", QT_TRANSLATE_NOOP( "ENT_Tr", "Barbed wire" ), eDotationFamily_Barbele ),
+    T_ConverterDotationFamily( "piece", QT_TRANSLATE_NOOP( "ENT_Tr", "Parts" ), eDotationFamily_Piece ),
+    T_ConverterDotationFamily( "ration", QT_TRANSLATE_NOOP( "ENT_Tr", "Food/water" ), eDotationFamily_Ration ),
+    T_ConverterDotationFamily( "agent extincteur", QT_TRANSLATE_NOOP( "ENT_Tr", "Extinguisher agent" ), eDotationFamily_AgentExtincteur ),
+    T_ConverterDotationFamily( "energie", QT_TRANSLATE_NOOP( "ENT_Tr", "Energy" ), eDotationFamily_Energy ),
+    T_ConverterDotationFamily( "funeraire", QT_TRANSLATE_NOOP( "ENT_Tr", "Funeral" ), eDotationFamily_Funeraire ),
     T_ConverterDotationFamily( "", "", (E_DotationFamily)-1 )
 };
 

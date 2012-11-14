@@ -28,8 +28,8 @@
         <translation>secteur</translation>
     </message>
     <message>
-        <source>mine</source>
-        <translation>mine</translation>
+        <source>Mine</source>
+        <translation>Mine</translation>
     </message>
     <message>
         <source>none</source>
@@ -100,28 +100,28 @@
         <translation>agressive</translation>
     </message>
     <message>
-        <source>ammunition</source>
-        <translation>munition</translation>
+        <source>Ammunition</source>
+        <translation>Munition</translation>
     </message>
     <message>
-        <source>fuel</source>
-        <translation>carburant</translation>
+        <source>Fuel</source>
+        <translation>Carburant</translation>
     </message>
     <message>
-        <source>explosive</source>
-        <translation>explosif</translation>
+        <source>Explosive</source>
+        <translation>Explosif</translation>
     </message>
     <message>
-        <source>barbed wire</source>
-        <translation>barbelé</translation>
+        <source>Barbed wire</source>
+        <translation>Barbelé</translation>
     </message>
     <message>
-        <source>parts</source>
-        <translation>pièces</translation>
+        <source>Parts</source>
+        <translation>Pièces</translation>
     </message>
     <message>
-        <source>food/water</source>
-        <translation>nourriture/eau</translation>
+        <source>Food/water</source>
+        <translation>Nourriture/eau</translation>
     </message>
     <message>
         <source>unwounded</source>
@@ -532,7 +532,7 @@
         <translation>Eclairant</translation>
     </message>
     <message>
-        <source>extinguisher agent</source>
+        <source>Extinguisher agent</source>
         <translation>Agent extincteur</translation>
     </message>
     <message>
@@ -540,8 +540,8 @@
         <translation>recherche d&apos;un secteur de triage</translation>
     </message>
     <message>
-        <source>energy</source>
-        <translation>énergie</translation>
+        <source>Energy</source>
+        <translation>Energie</translation>
     </message>
     <message>
         <source>forest</source>
@@ -816,8 +816,8 @@
         <translation>Gazeux</translation>
     </message>
     <message>
-        <source>funeral</source>
-        <translation>funéraire</translation>
+        <source>Funeral</source>
+        <translation>Funéraire</translation>
     </message>
     <message>
         <source>None</source>

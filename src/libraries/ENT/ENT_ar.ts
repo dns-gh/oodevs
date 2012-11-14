@@ -32,43 +32,43 @@
         <translation type="unfinished">القطاع</translation>
     </message>
     <message>
-        <source>ammunition</source>
+        <source>Ammunition</source>
         <translation type="unfinished">الذخيرة</translation>
     </message>
     <message>
-        <source>fuel</source>
+        <source>Fuel</source>
         <translation type="unfinished">الوقود</translation>
     </message>
     <message>
-        <source>explosive</source>
+        <source>Explosive</source>
         <translation type="unfinished">المتفجرة</translation>
     </message>
     <message>
-        <source>mine</source>
+        <source>Mine</source>
         <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
     </message>
     <message>
-        <source>barbed wire</source>
+        <source>Barbed wire</source>
         <translation type="unfinished">أسلاك شائكة</translation>
     </message>
     <message>
-        <source>parts</source>
+        <source>Parts</source>
         <translation type="unfinished">أجزاء</translation>
     </message>
     <message>
-        <source>food/water</source>
+        <source>Food/water</source>
         <translation type="unfinished">المواد الغذائية والمياه</translation>
     </message>
     <message>
-        <source>extinguisher agent</source>
+        <source>Extinguisher agent</source>
         <translation type="unfinished">عامل مطفأة</translation>
     </message>
     <message>
-        <source>energy</source>
+        <source>Energy</source>
         <translation type="unfinished">الطاقة</translation>
     </message>
     <message>
-        <source>funeral</source>
+        <source>Funeral</source>
         <translation type="unfinished">جنازة</translation>
     </message>
     <message>

@@ -28,8 +28,8 @@
         <translation>sector</translation>
     </message>
     <message>
-        <source>mine</source>
-        <translation>mina</translation>
+        <source>Mine</source>
+        <translation>Mina</translation>
     </message>
     <message>
         <source>none</source>
@@ -100,28 +100,28 @@
         <translation>agresivo</translation>
     </message>
     <message>
-        <source>ammunition</source>
-        <translation>munición</translation>
+        <source>Ammunition</source>
+        <translation>Munición</translation>
     </message>
     <message>
-        <source>fuel</source>
-        <translation>combustible</translation>
+        <source>Fuel</source>
+        <translation>Combustible</translation>
     </message>
     <message>
-        <source>explosive</source>
-        <translation>explosivo</translation>
+        <source>Explosive</source>
+        <translation>Explosivo</translation>
     </message>
     <message>
-        <source>barbed wire</source>
-        <translation>alambrada</translation>
+        <source>Barbed wire</source>
+        <translation>Alambrada</translation>
     </message>
     <message>
-        <source>parts</source>
-        <translation>partes</translation>
+        <source>Parts</source>
+        <translation>Partes</translation>
     </message>
     <message>
-        <source>food/water</source>
-        <translation>comida/agua</translation>
+        <source>Food/water</source>
+        <translation>Comida/agua</translation>
     </message>
     <message>
         <source>unwounded</source>
@@ -532,7 +532,7 @@
         <translation>proyectil de iluminación</translation>
     </message>
     <message>
-        <source>extinguisher agent</source>
+        <source>Extinguisher agent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -540,7 +540,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>energy</source>
+        <source>Energy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -816,7 +816,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>funeral</source>
+        <source>Funeral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
