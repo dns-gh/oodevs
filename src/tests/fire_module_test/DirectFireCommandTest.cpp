@@ -11,13 +11,33 @@
 #include "module_tester/MakeModel.h"
 #include <boost/bind/apply.hpp>
 
+namespace sword
+{
+namespace fire
+{
+struct RoleAction_DirectFiring // $$$$ _RC_ SLI 2012-11-14: CcCv from fire_module/RoleAction_DirectFiring.h
+{
+    enum E_ReturnCode
+    {
+        eImpossible,
+        eEnemyDestroyed,    // -> le tir est terminé parceque le pion adverse est détruit
+        eNoCapacity,        // -> le tir est terminé car il ne reste aucune composante ayant la capacité de tirer
+        eNoAmmo,            // -> le tir est terminé parque qu'il reste des composante capables de tirer mais qu'il ne reste plus de munition adéquates
+        eRunning,           // -> le tir est en cours d'exécution
+        eFinished,          // Stop tir
+        eTemporarilyBlocked // -> Le tir ne peut pas etre effectue tout de suite pour cause d'encombrement en zone urbaine
+    };
+};
+}
+}
+
 namespace
 {
     struct FireFixture : sword::fire::ModuleFixture
     {
         FireFixture()
         {
-            ExpectCallback( 4 );
+            ExpectCallback( sword::fire::RoleAction_DirectFiring::eRunning );
             command = StartCommand( "direct fire",
                                     core::MakeModel( "action", 117 )
                                                    ( "identifier", 42 )
@@ -31,16 +51,16 @@ namespace
         }
         virtual ~FireFixture()
         {
-            ExpectCallback( 5 );
+            ExpectCallback( sword::fire::RoleAction_DirectFiring::eFinished );
             ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity/identifier", 42 )
                                                                    ( "running", false ) );
             StopCommand( command );
         }
-        void ExpectCallback( int code ) // $$$$ MCO 2012-04-27: use RoleAction_DirectFiring::E_ReturnCode ?
+        void ExpectCallback( sword::fire::RoleAction_DirectFiring::E_ReturnCode code )
         {
             ExpectEvent( "direct fire pion callback", sword::test::MakeModel( "entity", 42 )
                                                                             ( "action", 117 )
-                                                                            ( "code", code ) );
+                                                                            ( "code", static_cast< int >( code ) ) );
         }
         std::size_t command;
     };
@@ -49,7 +69,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_impossible_if_target_knowledge_is_invalid, FireFixture )
 {
     MOCK_EXPECT( IsAgentKnowledgeValid ).once().with( enemy ).returns( false );
-    ExpectCallback( 0 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eImpossible );
     ExecuteCommands();
 }
 
@@ -67,14 +87,14 @@ namespace
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_if_target_is_dead, ValidFireFixture )
 {
     target[ "dead" ] = true;
-    ExpectCallback( 1 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eEnemyDestroyed );
     ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_blocked_with_default_coefficient, ValidFireFixture )
 {
     MOCK_EXPECT( IsTemporarilyBlocked ).once().with( firer, 100u ).returns( true );
-    ExpectCallback( 6 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eTemporarilyBlocked );
     ExecuteCommands();
 }
 
@@ -85,14 +105,14 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_temporary_blocked_when_bloc
                           "  <force-ratio default-feedback-time='600s'/>"
                           "</decisional>", 10 );
     MOCK_EXPECT( IsTemporarilyBlocked ).once().with( firer, 42u ).returns( true );
-    ExpectCallback( 6 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eTemporarilyBlocked );
     ExecuteCommands();
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_target_has_no_component, ValidFireFixture )
 {
     MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
-    ExpectCallback( 2 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eNoCapacity );
     ExecuteCommands();
 }
 
@@ -100,7 +120,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_has_no
 {
     entity[ "components" ].AddElement()[ "weapons" ];
     MOCK_EXPECT( IsTemporarilyBlocked ).once().returns( false );
-    ExpectCallback( 2 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eNoCapacity );
     ExecuteCommands();
 }
 
@@ -124,7 +144,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_capacity_if_firer_cannot_fire, WeaponFixture )
 {
     MOCK_EXPECT( CanFire ).returns( false );
-    ExpectCallback( 2 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eNoCapacity );
     ExecuteCommands();
 }
 
@@ -132,7 +152,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_no_ammunition_when_out_of_d
 {
     MOCK_EXPECT( CanFire ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( false );
-    ExpectCallback( 3 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eNoAmmo );
     ExecuteCommands();
 }
 
@@ -150,7 +170,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_enemy_has_no_visible_component, FiringFixture )
 {
-    ExpectCallback( 1 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eEnemyDestroyed );
     ExecuteCommands();
 }
 
@@ -158,7 +178,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_enemy_destroyed_when_no_com
 {
     core::Model& component_2 = model[ "entities" ][ 43 ][ "components" ].AddElement();
     MOCK_EXPECT( CanComponentBeFiredAt ).once().with( core::Convert( &component_2 ), mock::any ).returns( false );
-    ExpectCallback( 1 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eEnemyDestroyed );
     ExecuteCommands();
 }
 
@@ -190,7 +210,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_fir
     MOCK_EXPECT( GetPhModificator ).at_least( 1 ).with( firer, enemy, "launcher_1" ).returns( 1 );
     MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3u ).returns( 2u );
     MOCK_EXPECT( GetFireRandomNumber ).once().returns( 0 );
-    ExpectCallback( 4 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eRunning );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity/data", "data" )
                               ( "enemy/data", "data" )
@@ -215,7 +235,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_hit_when_firing
     MOCK_EXPECT( GetPhModificator ).at_least( 1 ).with( firer, enemy, "launcher_1" ).returns( 1 );
     MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3u ).returns( 2u );
     MOCK_EXPECT( GetFireRandomNumber ).once().returns( 1 );
-    ExpectCallback( 4 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eRunning );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity/data", "data" )
                               ( "enemy/data", "data" )
@@ -240,7 +260,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
     MOCK_EXPECT( GetPhModificator ).returns( 1 );
     MOCK_EXPECT( ReserveAmmunition ).once().with( firer, ammo_1, 3u ).returns( 2u );
     MOCK_EXPECT( GetFireRandomNumber ).returns( 1 );
-    ExpectCallback( 4 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eRunning );
     ExpectEvent( "direct fire pion attack",
         sword::test::MakeModel( "entity/data", "data" )
                               ( "enemy/data", "data" )
@@ -255,7 +275,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
                               ( "running", true )
                               ( "use-ph", true )
                               ( "missed", false ) );
-    ExpectCallback( 4 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eRunning );
     const std::size_t command = StartCommand( "direct fire",
                                               core::MakeModel( "action", 117 )
                                                               ( "identifier", 42 )
@@ -265,9 +285,9 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_command_reports_running_and_no_hit_when_wea
                                                               ( "type", 0 )
                                                               ( "major", false )
                                                               ( "dotation", 0 ) );
-    ExpectCallback( 4 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eRunning );
     ExecuteCommands();
-    ExpectCallback( 5 );
+    ExpectCallback( sword::fire::RoleAction_DirectFiring::eFinished );
     ExpectEvent( "direct fire pion", sword::test::MakeModel( "entity/identifier", 42 )( "running", false ) );
     StopCommand( command );
 }
