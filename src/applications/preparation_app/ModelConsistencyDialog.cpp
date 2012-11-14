@@ -27,6 +27,7 @@ namespace
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
             || type == eProfileNoRole || type == eNoOrbat
+            || type == eBadLogisticSubordinate || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
             || type == eDiffusionList || type == eMelmil || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks;
     }
 
@@ -188,7 +189,6 @@ void ModelConsistencyDialog::UpdateDataModel()
                 AddItem( "---", "---", entity, error.type_, items );
                 AddItem( "---", "---", entity, error.type_, items );
             }
-
             QString text = errorDescriptions_[ error.type_ ];
             if( text.contains( "%1" ) )
                 text = text.arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() );
