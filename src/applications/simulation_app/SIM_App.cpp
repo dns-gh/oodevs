@@ -126,7 +126,6 @@ int SIM_App::Initialize()
         MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
         dispatcherThread_.reset( new boost::thread( boost::bind( &SIM_App::RunDispatcher, this ) ) );
     }
-    MT_Profiler::Initialize();
     MIL_Random::Initialize( startupConfig_->GetRandomSeed(), startupConfig_->GetRandomGaussian(), startupConfig_->GetRandomDeviation(), startupConfig_->GetRandomMean() );
     try
     {

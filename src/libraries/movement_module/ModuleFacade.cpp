@@ -192,7 +192,6 @@ namespace
 ModuleFacade::ModuleFacade()
 {
     facade = this; // $$$$ MCO : TOUNDO
-    MT_Profiler::Initialize();
     PathType::Initialize();
     wrapper::RegisterCommand< MoveCommand >( "move", *this );
     wrapper::RegisterCommand< MagicMoveCommand >( "magic move" );

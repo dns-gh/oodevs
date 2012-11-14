@@ -56,13 +56,3 @@ struct ProtobufConfig
 };
 
 BOOST_GLOBAL_FIXTURE( ProtobufConfig );
-
-struct Profiling
-{
-    Profiling()
-    {
-        MT_Profiler::Initialize();
-    }
-};
-
-BOOST_GLOBAL_FIXTURE( Profiling );

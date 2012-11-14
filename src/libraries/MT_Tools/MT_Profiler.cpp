@@ -11,16 +11,18 @@
 #include "MT_Assert.h"
 #include <windows.h>
 
-long long int MT_Profiler::nFrequency_ = 0;
-
-//-----------------------------------------------------------------------------
-// Name: MT_Profiler::Initialize
-// Created: NLD 2002-10-14
-//-----------------------------------------------------------------------------
-void MT_Profiler::Initialize()
+namespace
 {
-    QueryPerformanceFrequency( (LARGE_INTEGER*)&nFrequency_ );
-    nFrequency_ /= 1000; // For ms instead of s
+    static long long int frequency = 0;
+
+    static struct MT_ProfilerInitializer
+    {
+        MT_ProfilerInitializer()
+        {
+            QueryPerformanceFrequency( (LARGE_INTEGER*)&frequency );
+            frequency /= 1000; // For ms instead of s
+        }
+    } initializer;
 }
 
 //-----------------------------------------------------------------------------
@@ -33,7 +35,7 @@ MT_Profiler::MT_Profiler()
     , rTotalTime_       ( 0. )
     , nNbrCount_        ( 0 )
 {
-    assert( nFrequency_ != 0 ); // Call Initialize before instanciation
+    assert( frequency != 0 ); // Call Initialize before instanciation
 }
 
 //-----------------------------------------------------------------------------
@@ -63,11 +65,11 @@ void MT_Profiler::Start()
 //-----------------------------------------------------------------------------
 double MT_Profiler::Stop()
 {
-    if( nFrequency_ == 0 )
+    if( frequency == 0 )
         return 0.;
     long long int nCounterStop;
     QueryPerformanceCounter( (LARGE_INTEGER*)&nCounterStop );
-    double rTime = ( nCounterStop - nCounterStart_ ) / (double)nFrequency_;
+    double rTime = ( nCounterStop - nCounterStart_ ) / (double)frequency;
     rLastTime_   = rTime;
     rTotalTime_ += rTime;
     ++nNbrCount_;

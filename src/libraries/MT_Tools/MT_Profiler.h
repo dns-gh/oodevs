@@ -44,9 +44,6 @@ public:
     //@}
 
 private:
-    static long long int nFrequency_;
-
-private:
     long long int nCounterStart_; // Start time
     double rLastTime_;            // Last measured value (in ms)
     double rTotalTime_;           // Sum of all start/stop elapsing (in ms)
