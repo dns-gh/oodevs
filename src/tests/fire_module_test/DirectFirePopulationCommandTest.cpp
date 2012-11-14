@@ -145,7 +145,6 @@ namespace
         {
             MOCK_EXPECT( CanFire ).returns( true );
             MOCK_EXPECT( HasDotation ).returns( true );
-            model[ "tick" ] = 0;
             element[ "data" ].SetUserData( &data );
         }
         int data;

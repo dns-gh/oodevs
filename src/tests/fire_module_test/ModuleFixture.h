@@ -66,6 +66,11 @@ namespace fire
 {
     struct ModuleFixture : core::HookFixture
     {
+        static std::size_t Tick()
+        {
+            static std::size_t tick = 0;
+            return tick++;
+        }
         ModuleFixture()
             : HookFixture( "fire_module", boost::assign::list_of( "direct fire" )( "direct fire population" ) )
             , entity   ( model[ "entities" ][ 42 ] )
@@ -78,6 +83,7 @@ namespace fire
             , ammo_1   ( "ammo_1" )
             , ammo_2   ( "ammo_2" )
         {
+            model[ "tick" ] = Tick();
             entity[ "components" ];
             entity[ "knowledges" ] = 1242;
             entity[ "identifier" ] = 42;
