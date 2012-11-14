@@ -74,8 +74,8 @@ namespace
                 if( ! filter( knowledgeFriend, userData ) )
                     continue;
                 double rTotalDangerosity = 0.;
-                for( Knowledge_RapForLocal::CIT_KnowledgeAgents itAgentEnemy = dangerousEnemies.begin(); itAgentEnemy != dangerousEnemies.end(); ++itAgentEnemy )
-                    rTotalDangerosity += GET_HOOK( EvaluateDangerosity2 )( knowledgeFriend, *itAgentEnemy );
+                for( Knowledge_RapForLocal::CIT_KnowledgeAgents it = dangerousEnemies.begin(); it != dangerousEnemies.end(); ++it )
+                    rTotalDangerosity += GET_HOOK( EvaluateDangerosity2 )( knowledgeFriend, *it );
                 rTotalFightScoreFriend += ( rTotalDangerosity / enemiesSize );
             }
         }
