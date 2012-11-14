@@ -17,6 +17,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( compute_force_ratio_returns_one_when_no_enemy, sword::fire::ModuleFixture )
 {
     model[ "enemies" ][ 1242 ];
+    model[ "friends" ][ 1242 ];
     BOOST_CHECK_EQUAL( 1, ComputeForceRatio( core::Convert( &model ), firer, callback, 0 ) );
 }
 

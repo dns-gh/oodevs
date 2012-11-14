@@ -19,6 +19,7 @@ BOOST_FIXTURE_TEST_CASE( get_force_ratio_returns_default_max_ratio_when_no_enemy
 {
     model[ "tick" ] = 1;
     model[ "enemies" ][ 1242 ];
+    model[ "friends" ][ 1242 ];
     entity[ "fire/force-ratio/feedback-time" ] = 0.1;
     entity[ "knowledges" ] = 1242;
     BOOST_CHECK_EQUAL( 5, GetForceRatio( core::Convert( &model ), firer ) );

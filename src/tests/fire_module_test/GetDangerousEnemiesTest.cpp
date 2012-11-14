@@ -43,6 +43,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( get_dangerous_enemies_retrieves_nothing_when_entity_has_no_enemies, Fixture )
 {
     model[ "enemies" ][ 1242 ];
+    model[ "friends" ][ 1242 ];
     int userData;
     GetDangerousEnemies( core::Convert( &model ), firer, callback, &userData );
 }
