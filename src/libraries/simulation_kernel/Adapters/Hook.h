@@ -12,14 +12,14 @@
 
 #include "MT_Tools/MT_Logger.h"
 #include <core/Facade.h>
-#include <algorithm>
-#include <vector>
 #include <boost/bind.hpp>
 #include <boost/preprocessor.hpp>
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/function_types/result_type.hpp>
 #include <boost/function_types/function_arity.hpp>
 #include <boost/mpl/at.hpp>
+#include <algorithm>
+#include <vector>
 
 namespace sword // $$$$ _RC_ SLI 2012-10-22: DRY with wrapper/Hook.h
 {
