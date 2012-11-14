@@ -39,7 +39,6 @@ public:
     static bool MissingDecisionalModel( const std::string& unit );
     static bool MissingPCOnAutomat( const std::string& name );
     static bool BadAutomatComposition( const std::string& name );
-    static bool MissingParameterChoices( const std::string& name );
     static bool MissingArmor();
 };
 

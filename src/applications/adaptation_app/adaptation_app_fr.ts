@@ -28,10 +28,6 @@
         <translation>La mission Convoi n&apos;est pas définie dans Log/Ravitaillement, la base ne peut pas être sauvée.</translation>
     </message>
     <message>
-        <source>No parameter type specified for parameter %1, database cannot be saved.</source>
-        <translation>Aucun type de paramètre spécifié pour le paramètre %1, la base ne peut pas être sauvée.</translation>
-    </message>
-    <message>
         <source>At least one armor must be defined , database cannot be saved.</source>
         <translation>Au moins un type de blindage doit être défini, la base ne peut pas être sauvée.</translation>
     </message>
@@ -1256,7 +1252,7 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
     <message>
         <source>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</source>
-        <translation>La mission &apos;%1&apos; n'as pas de type définit pour un paramètre de type localisation composite.</translation>
+        <translation>La mission &apos;%1&apos; n&apos;as pas de type définit pour un paramètre de type localisation composite.</translation>
     </message>
 </context>
 <context>
