@@ -18,7 +18,7 @@
 #include <boost/tokenizer.hpp>
 
 #ifndef APP_MAJOR_VERSION
-#   define APP_MAJOR_VERSION 5.1.0
+#   define APP_MAJOR_VERSION trunk
 #endif
 
 #ifndef APP_PROJECT_VERSION
