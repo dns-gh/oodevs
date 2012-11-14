@@ -11,15 +11,15 @@
 #define WRAPPER_HOOK_H
 
 #include <module_api/Hook.h>
-#include <functional>
-#include <algorithm>
-#include <vector>
-#include <string>
 #include <boost/preprocessor.hpp>
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/function_types/result_type.hpp>
 #include <boost/function_types/function_arity.hpp>
 #include <boost/mpl/at.hpp>
+#include <functional>
+#include <algorithm>
+#include <vector>
+#include <string>
 
 namespace sword
 {
