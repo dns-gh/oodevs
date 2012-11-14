@@ -59,7 +59,7 @@ public:
 private:
     //! @name Operations
     //@{
-    void ApplyValue( double rTotalFightScoreFriend, double rTotalFightScoreEnemy, double rFeedbackTime );
+    void ApplyValue( double rNewRapForValue, double rFeedbackTime );
     //@}
 
 private:

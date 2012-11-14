@@ -73,7 +73,7 @@ namespace
     };
     HookCache cache;
 
-    std::pair< double, double > GetRapForLocal( const wrapper::View& model, const wrapper::View& entity, Knowledge_RapForLocal::T_KnowledgeAgents& dangerousEnemies, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData )
+    double GetRapForLocal( const wrapper::View& model, const wrapper::View& entity, Knowledge_RapForLocal::T_KnowledgeAgents& dangerousEnemies, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData, double defaultValue )
     {
         cache.Clear( model[ "tick" ] );
         const unsigned int id = entity[ "knowledges" ];
@@ -102,20 +102,16 @@ namespace
                 }
             }
         }
-        if( dangerousEnemies.empty() )
-            return std::make_pair( 0, 0 );
-        return std::make_pair( rTotalFightScoreFriend / dangerousEnemies.size(), rTotalFightScoreEnemy );
+        if( rTotalFightScoreEnemy == 0 )
+            return defaultValue;
+        return rTotalFightScoreFriend / rTotalFightScoreEnemy / dangerousEnemies.size();
     }
 
     DEFINE_HOOK( ComputeForceRatio, 4, double, ( const SWORD_Model* model, const SWORD_Model* entity,
                                               bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData ) )
     {
         std::vector< const SWORD_Model* > agents;
-        std::pair< double, double > scores = GetRapForLocal( model, entity, agents, filter, userData );
-        double rRapForValue = 1;
-        if( scores.second != 0 )
-            rRapForValue = scores.first / scores.second;
-        return rRapForValue;
+        return GetRapForLocal( model, entity, agents, filter, userData, 1 );
     }
 }
 
@@ -154,12 +150,9 @@ namespace
 // Name: Knowledge_RapForLocal::ApplyValue
 // Created: NLD 2004-04-08
 // -----------------------------------------------------------------------------
-void Knowledge_RapForLocal::ApplyValue( double rTotalFightScoreFriend, double rTotalFightScoreEnemy, double rFeedbackTime )
+void Knowledge_RapForLocal::ApplyValue( double rNewRapForValue, double rFeedbackTime )
 {
     // New value calculation
-    double rNewRapForValue = std::numeric_limits< double >::max();
-    if( rTotalFightScoreEnemy != 0. )
-        rNewRapForValue = rTotalFightScoreFriend / rTotalFightScoreEnemy;
     // Bound the value between 0.2 and 5.0
     static double rRapForMidValue_ = ( rRapForBoundMax - rRapForBoundMin ) / 2;
     if( rNewRapForValue < 1. )
@@ -182,8 +175,8 @@ void Knowledge_RapForLocal::Update( const wrapper::View& model, const wrapper::V
         return;
     nLastCacheUpdateTick_ = model[ "tick" ];
     dangerousEnemies_.clear();
-    std::pair< double, double > result = GetRapForLocal( model, entity, dangerousEnemies_, FilterNothing, 0 );
-    ApplyValue( result.first, result.second, entity[ "fire/force-ratio/feedback-time" ] );
+    const double ratio = GetRapForLocal( model, entity, dangerousEnemies_, FilterNothing, 0, std::numeric_limits< double >::max() );
+    ApplyValue( ratio, entity[ "fire/force-ratio/feedback-time" ] );
 }
 
 // -----------------------------------------------------------------------------
