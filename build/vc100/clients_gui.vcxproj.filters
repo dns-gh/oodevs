@@ -1451,6 +1451,12 @@
     <None Include="..\..\src\libraries\clients_gui\clients_gui_en.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\clients_gui\clients_gui_es.ts">
+      <Filter>Translations</Filter>
+    </None>
+    <None Include="..\..\src\libraries\clients_gui\clients_gui_fr.ts">
+      <Filter>Translations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HelpSystem.h">
@@ -1677,12 +1683,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\TerrainProfiler.h">
       <Filter>Source Files\GIS\Terrain Profiler</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_es.ts">
-      <Filter>Translations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\clients_gui_fr.ts">
-      <Filter>Translations</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\UnitStateDialog.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>
