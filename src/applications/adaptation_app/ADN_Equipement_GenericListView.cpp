@@ -67,7 +67,8 @@ void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    CategoryInfo* pInfos = (CategoryInfo*)pCurData_;
+
+    CategoryInfo* pInfos = static_cast< CategoryInfo* >( pCurData_ );
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Equipement_GUI::eNbrGenericGuiElements );
 
     vItemConnectors_[ADN_Equipement_GUI::eName]->Connect( &pInfos->strName_, bConnect );
@@ -81,6 +82,22 @@ void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eGenNature]->Connect( &pInfos->ptrResourceNature_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenLogisticSupplyClass]->Connect( &pInfos->ptrLogisticSupplyClass_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenNetworkUsable]->Connect( &pInfos->bNetworkUsable_, bConnect );
+
+    if( ADN_Equipement_Data::IsMineOrExplosive( nType_ ) )
+    {
+        ADN_Equipement_Data::AmmoCategoryInfo* pAmmoInfos = static_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( pCurData_ );
+
+        vItemConnectors_[ADN_Equipement_GUI::eGenType]->Connect( &pAmmoInfos->nType_, bConnect );
+
+        vItemConnectors_[ADN_Equipement_GUI::eGenAttritions]->Connect( &pAmmoInfos->attritions_, bConnect );
+        vItemConnectors_[ADN_Equipement_GUI::eGenUrbanAttritions]->Connect( &pAmmoInfos->modifUrbanBlocks_, bConnect );
+        vItemConnectors_[ADN_Equipement_GUI::eGenArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), bConnect );
+        vItemConnectors_[ADN_Equipement_GUI::eGenMaterial]->Connect( &pAmmoInfos->modifUrbanBlocks_, bConnect );
+        vItemConnectors_[ADN_Equipement_GUI::eGenAttritionGraph]->Connect( &pAmmoInfos->attritions_, bConnect );
+
+        if( bConnect )
+            ADN_Workspace::GetWorkspace().GetEquipements().GetGui().InitializeSimulationCombos();
+    }
 }
 
 // -----------------------------------------------------------------------------

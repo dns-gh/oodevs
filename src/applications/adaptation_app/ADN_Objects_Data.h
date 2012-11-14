@@ -118,10 +118,15 @@ public:
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
+        bool IsValidDatabase() const;
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > category_;
-        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::AmmoCategoryInfo > ammoCategory_;
-        ADN_Type_Bool useAmmo_;  // $$$$ LDC: Hack: No time to write a single category_ checkbox with all ammos available. Actually, the mines and explosives categories should vanish but no time to change the sim...
+        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > ammoCategory_;
+        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > mineCategory_;
+        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > explosiveCategory_;
+        ADN_Type_Bool useAmmo_;
+        ADN_Type_Bool useMine_;
+        ADN_Type_Bool useExplo_;
+        // $$$$ LDC: Hack: No time to write a single category_ checkbox with all ammos available. Actually, the mines and explosives categories should vanish but no time to change the sim...
         ADN_Type_Double attritionSurface_;
         ADN_Type_Double ph_;
     };

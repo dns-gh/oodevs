@@ -110,6 +110,12 @@ public:
         eGenNature,
         eGenLogisticSupplyClass,
         eGenNetworkUsable,
+        eGenType,
+        eGenAttritions,
+        eGenUrbanAttritions,
+        eGenArmor,
+        eGenMaterial,
+        eGenAttritionGraph,
         eNbrGenericGuiElements
     };
 
@@ -145,6 +151,7 @@ private slots:
     void IndirectTypeChanged();
     void SimulationCombosActivated();
     void NetworkUsableActivated( int state );
+    void OnCurrentTabChanged( int tab );
     //@}
 
 private:
@@ -152,10 +159,11 @@ private:
     //@{
     ADN_Equipement_Data&            data_;
     std::vector< ADN_CheckBox* >    vNetworkUsableCheckBoxs_;
-    ADN_Equipement_AttritionTable*  pAttritionTable_;
-    ADN_Equipement_AttritionGraph*  pAttritionGraph_;
-    ADN_ComboBox_Vector*            pArmorCombo_;
-    ADN_ComboBox_Vector*            pMaterialCombo_;
+    E_DotationFamily                currentTab_;
+    std::map< E_DotationFamily, ADN_Equipement_AttritionTable* > pAttritionTables_;
+    std::map< E_DotationFamily, ADN_Equipement_AttritionGraph* > pAttritionGraphs_;
+    std::map< E_DotationFamily, ADN_ComboBox_Vector* >           pArmorCombos_;
+    std::map< E_DotationFamily, ADN_ComboBox_Vector* >           pMaterialCombos_;
     QButtonGroup*                   buttonGroup_;
     Q3GroupBox*                     pExplosiveParametersGroup_;
     Q3GroupBox*                     pFlareParametersGroup_;

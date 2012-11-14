@@ -39,6 +39,11 @@
         <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished">يجب تحديد واحد على الأقل من الدروع، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
     </message>
+    <message>
+        <source>Bad &apos;Attrition&apos; capacity for object &apos;%1&apos;. &apos;Attrition&apos; capacity should use at least one of the following: ammunition, mine or explosive.
+Because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtections_GUI</name>
@@ -3331,6 +3336,22 @@ The spawn capacity will be disabled.</source>
     <message>
         <source>Disaster</source>
         <translation type="unfinished">الكوارث</translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation type="unfinished">المتفجرة</translation>
+    </message>
+    <message>
+        <source>Use mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use explosive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

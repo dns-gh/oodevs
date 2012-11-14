@@ -187,3 +187,17 @@ bool ADN_GuiTools::MissingArmor()
         QMessageBox::Ok | QMessageBox::Default );
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiTools::BadObjectAttrition
+// Created: ABR 2012-11-13
+// -----------------------------------------------------------------------------
+bool ADN_GuiTools::BadObjectAttrition( const std::string& name )
+{
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning( 0,
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
+        qApp->translate( "ADNDatabaseWarnings", "Bad 'Attrition' capacity for object '%1'. 'Attrition' capacity should use at least one of the following: ammunition, mine or explosive.\nBecause of this, the simulation can't start with this database." ).arg( name.c_str() ),
+        QMessageBox::Ok | QMessageBox::Default );
+    return false;
+}

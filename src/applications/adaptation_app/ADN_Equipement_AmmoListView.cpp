@@ -76,7 +76,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    AmmoCategoryInfo* pInfos = (AmmoCategoryInfo*)pCurData_;
+    AmmoCategoryInfo* pInfos = static_cast< AmmoCategoryInfo* >( pCurData_ );
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Equipement_GUI::eNbrAmmoGuiElements );
 
     vItemConnectors_[ADN_Equipement_GUI::eAmmoName]->Connect( &pInfos->strName_, bConnect );

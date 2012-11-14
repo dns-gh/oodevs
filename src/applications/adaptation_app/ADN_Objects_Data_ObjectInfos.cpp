@@ -212,6 +212,10 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
 // -----------------------------------------------------------------------------
 bool ADN_Objects_Data_ObjectInfos::IsValidDatabase()
 {
+    ADN_Objects_Data::ADN_CapacityInfos_Attrition* attrition = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Attrition* >( capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Attrition::TAG ].get() );
+    if( attrition && attrition->bPresent_.GetData() && !attrition->IsValidDatabase() )
+        return ADN_GuiTools::BadObjectAttrition( strName_.GetData() );
+
     for( int i = 0; i < 4; ++i )
         if( geometries_[ i ].GetData() )
             return true;

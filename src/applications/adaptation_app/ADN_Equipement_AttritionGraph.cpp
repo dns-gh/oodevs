@@ -298,7 +298,7 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
     painter.setBrush( Qt::white );
     painter.drawRect( 0, 0, width(), height() );
 
-    if( !isEnabled() )
+    if( !isEnabled() || columns_.empty() )
         return;
 
     painter.setFont( QFont( "helvetica", 8, QFont::DemiBold ) );
@@ -399,4 +399,13 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
             }
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_AttritionGraph::setEnabled
+// Created: ABR 2012-11-14
+// -----------------------------------------------------------------------------
+void ADN_Equipement_AttritionGraph::setEnabled( bool enabled )
+{
+    setEnabled( enabled );
 }

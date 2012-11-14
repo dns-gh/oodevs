@@ -216,6 +216,10 @@ void ADN_Objects_GUI::Build()
         ADN_GroupBox* attrition = CreateCapacityGroupBox( 1, tr( "Attrition" ), vInfosConnectors[ eAttritionCapacityPresent ] );
         ADN_GroupBox* dotation = CreateCapacityGroupBox( 2, tr( "Use ammunition" ), vInfosConnectors[ eAttritionCapacity_UseDotation ], attrition );
         builder.AddField< ADN_ComboBox_Vector >( dotation, tr( "Resource" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
+        ADN_GroupBox* mine = CreateCapacityGroupBox( 2, tr( "Use mine" ), vInfosConnectors[ eAttritionCapacity_UseMine ], attrition );
+        builder.AddField< ADN_ComboBox_Vector >( mine, tr( "Mine" ), vInfosConnectors[ eAttritionCapacity_Mine ] );
+        ADN_GroupBox* explo = CreateCapacityGroupBox( 2, tr( "Use explosive" ), vInfosConnectors[ eAttritionCapacity_UseExplosive ], attrition );
+        builder.AddField< ADN_ComboBox_Vector >( explo, tr( "Explosive" ), vInfosConnectors[ eAttritionCapacity_Explosive ] );
         Q3GroupBox* attritionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd attrition" ), attrition );
         builder.AddField< ADN_EditLine_Double >( attritionBox, tr( "Attrition surface" ), vInfosConnectors[ eAttritionCapacity_Surface ], tr( "m²" ), eGreaterEqualZero );
         builder.AddField< ADN_EditLine_Double >( attritionBox, tr( "PH" ), vInfosConnectors[ eAttritionCapacity_Ph ], 0, eZeroOne );

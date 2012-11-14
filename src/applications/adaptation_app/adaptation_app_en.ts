@@ -39,6 +39,11 @@
         <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
         <translation>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</translation>
     </message>
+    <message>
+        <source>Bad &apos;Attrition&apos; capacity for object &apos;%1&apos;. &apos;Attrition&apos; capacity should use at least one of the following: ammunition, mine or explosive.
+Because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtections_GUI</name>
@@ -3344,6 +3349,22 @@ The spawn capacity will be disabled.</translation>
     <message>
         <source>Disaster</source>
         <translation>Disaster</translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation type="unfinished">Mine</translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation type="unfinished">Explosive</translation>
+    </message>
+    <message>
+        <source>Use mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use explosive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

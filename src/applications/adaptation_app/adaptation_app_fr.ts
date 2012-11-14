@@ -39,6 +39,12 @@
         <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
         <translation>&gt;Au moins un type de blindage doit être défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
+    <message>
+        <source>Bad &apos;Attrition&apos; capacity for object &apos;%1&apos;. &apos;Attrition&apos; capacity should use at least one of the following: ammunition, mine or explosive.
+Because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Capacité &apos;Attrition&apos; invalide pour l'objet &apos;%1&apos;. La capacité &apos;Attrition&apos; doit activer au moins un des éléments suivants: munition, mine ou explosif.
+En conséquence, la simulation ne peut démarrer avec cette base.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtections_GUI</name>
@@ -3348,6 +3354,22 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
     <message>
         <source>Disaster</source>
         <translation>Désastre</translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation>Mine</translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation>Explosif</translation>
+    </message>
+    <message>
+        <source>Use mine</source>
+        <translation>Utilise une mine</translation>
+    </message>
+    <message>
+        <source>Use explosive</source>
+        <translation>Utilise un explosif</translation>
     </message>
 </context>
 <context>

@@ -231,6 +231,8 @@ public:
     QStringList GetEquipmentsThatUse( helpers::LogisticSupplyClass& object );
     QStringList GetEquipmentsWithDirectFire();
 
+    static bool IsMineOrExplosive( E_DotationFamily type );
+
 private:
     void ReadArchive( xml::xistream& );
     void ReadResource( xml::xistream& );

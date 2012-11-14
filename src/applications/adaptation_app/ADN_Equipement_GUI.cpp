@@ -90,10 +90,6 @@ public:
 ADN_Equipement_GUI::ADN_Equipement_GUI( ADN_Equipement_Data& data )
     : ADN_Tabbed_GUI_ABC( "ADN_Equipement_GUI" )
     , data_           ( data )
-    , pAttritionTable_( 0 )
-    , pAttritionGraph_( 0 )
-    , pArmorCombo_( 0 )
-    , pMaterialCombo_( 0 )
     , buttonGroup_( 0 )
     , pExplosiveParametersGroup_( 0 )
     , pFlareParametersGroup_( 0 )
@@ -134,6 +130,8 @@ void ADN_Equipement_GUI::Build()
     pMainLayout->setMargin( 10 );
     pMainLayout->addWidget( pTabWidget_ );
     pMainWidget_->setObjectName( strClassName_ );
+
+    connect( pTabWidget_, SIGNAL( currentChanged( int ) ), this, SLOT( OnCurrentTabChanged( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +153,9 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code NNO" ), vConnectors[ eGenNNOCode ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT8" ), vConnectors[ eGenEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eGenEMAT6Code ] );
-    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code LFRIL" ), vConnectors[eGenLFRILCode ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code LFRIL" ), vConnectors[ eGenLFRILCode ] );
+    if( ADN_Equipement_Data::IsMineOrExplosive( nType ) )
+        builder.AddEnumField( pInfoHolder, tr( "Type" ), vConnectors[ eGenType ] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Nature" ), vConnectors[ eGenNature] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
     ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Usable within a resource network" ), vConnectors[ eGenNetworkUsable ] );
@@ -168,6 +168,35 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package weight" ), vConnectors[ ePackageWeight ], tr( "T" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package volume" ), vConnectors[ ePackageVolume ], tr( "m3" ), eGreaterZero );
 
+    // Attritions
+    Q3GroupBox* pDirectGroup = 0;
+    if( ADN_Equipement_Data::IsMineOrExplosive( nType ) )
+    {
+        pDirectGroup = new Q3GroupBox( tr( "Attritions" ) );
+        pAttritionTables_[ nType ] = new ADN_Equipement_AttritionTable( strClassName_ + "MunitionsAttritionsTable", vConnectors[ eGenAttritions ], pDirectGroup );
+        ADN_Equipement_UrbanModifiersTable* pUrbanTable = new ADN_Equipement_UrbanModifiersTable( strClassName_ + "MunitionsUrbanTable", vConnectors[ eGenUrbanAttritions ], pDirectGroup );
+
+        QGroupBox* pAttritionVisualisation = new QGroupBox( tr( "Simulation" ) );
+        QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
+        pArmorCombos_[ nType ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Armor-Plating" ), vConnectors[ eGenArmor ] );
+        connect( pArmorCombos_[ nType ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
+        pMaterialCombos_[ nType ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Urban material" ), vConnectors[ eGenMaterial ] );
+        connect( pMaterialCombos_[ nType ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
+        pAttritionGraphs_[ nType ] = new ADN_Equipement_AttritionGraph( pAttritionVisualisation );
+        vConnectors[ eGenAttritionGraph ] = &pAttritionGraphs_[ nType ]->GetConnector();
+
+        QVBoxLayout* pAttritionVisualisationLayout = new QVBoxLayout();
+        pAttritionVisualisationLayout->addWidget( pComboGroup );
+        pAttritionVisualisationLayout->addWidget( pAttritionGraphs_[ nType ], 1 );
+        pAttritionVisualisation->setLayout( pAttritionVisualisationLayout );
+
+        QGridLayout* pDirectGroupLayout = new QGridLayout();
+        pDirectGroupLayout->addWidget( pAttritionTables_[ nType ], 0, 0 );
+        pDirectGroupLayout->addWidget( pUrbanTable, 1, 0 );
+        pDirectGroupLayout->addWidget( pAttritionVisualisation, 0, 1, 2, 1 );
+        pDirectGroup->setLayout( pDirectGroupLayout );
+    }
+
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
@@ -179,6 +208,8 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     pContentLayout->setAlignment( Qt::AlignTop );
     pContentLayout->addWidget( pInfoHolder );
     pContentLayout->addWidget( pPackagingGroup );
+    if( ADN_Equipement_Data::IsMineOrExplosive( nType ) )
+        pContentLayout->addWidget( pDirectGroup );
 
     // List view
     ADN_SearchListView< ADN_Equipement_GenericListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_GenericListView >( this, nType, data_.GetDotation( nType ).categories_, vConnectors, nType );
@@ -240,25 +271,25 @@ void ADN_Equipement_GUI::BuildAmmunition()
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( tr( "Attritions" ) );
     pDirectGroup->setObjectName( strClassName_ + "MunitionsAttritions" );
     vConnectors[ eDirect ] = &pDirectGroup->GetConnector();
-    pAttritionTable_ = new ADN_Equipement_AttritionTable( strClassName_ + "MunitionsAttritionsTable", vConnectors[ eAttritions ], pDirectGroup );
+    pAttritionTables_[ eDotationFamily_Munition ] = new ADN_Equipement_AttritionTable( strClassName_ + "MunitionsAttritionsTable", vConnectors[ eAttritions ], pDirectGroup );
     ADN_Equipement_UrbanModifiersTable* pUrbanTable = new ADN_Equipement_UrbanModifiersTable( strClassName_ + "MunitionsUrbanTable", vConnectors[ eUrbanAttritions ], pDirectGroup );
 
     QGroupBox* pAttritionVisualisation = new QGroupBox( tr( "Simulation" ) );
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
-    pArmorCombo_ = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Armor-Plating" ), vConnectors[ eArmor ] );
-    connect( pArmorCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
-    pMaterialCombo_ = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Urban material" ), vConnectors[ eMaterial ] );
-    connect( pMaterialCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
-    pAttritionGraph_ = new ADN_Equipement_AttritionGraph( pAttritionVisualisation );
-    vConnectors[ eAttritionGraph ] = &pAttritionGraph_->GetConnector();
+    pArmorCombos_[ eDotationFamily_Munition ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Armor-Plating" ), vConnectors[ eArmor ] );
+    connect( pArmorCombos_[ eDotationFamily_Munition ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
+    pMaterialCombos_[ eDotationFamily_Munition ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Urban material" ), vConnectors[ eMaterial ] );
+    connect( pMaterialCombos_[ eDotationFamily_Munition ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
+    pAttritionGraphs_[ eDotationFamily_Munition ] = new ADN_Equipement_AttritionGraph( pAttritionVisualisation );
+    vConnectors[ eAttritionGraph ] = &pAttritionGraphs_[ eDotationFamily_Munition ]->GetConnector();
 
     QVBoxLayout* pAttritionVisualisationLayout = new QVBoxLayout();
     pAttritionVisualisationLayout->addWidget( pComboGroup );
-    pAttritionVisualisationLayout->addWidget( pAttritionGraph_ );
+    pAttritionVisualisationLayout->addWidget( pAttritionGraphs_[ eDotationFamily_Munition ], 1 );
     pAttritionVisualisation->setLayout( pAttritionVisualisationLayout );
 
     QGridLayout* pDirectGroupLayout = new QGridLayout();
-    pDirectGroupLayout->addWidget( pAttritionTable_, 0, 0 );
+    pDirectGroupLayout->addWidget( pAttritionTables_[ eDotationFamily_Munition ], 0, 0 );
     pDirectGroupLayout->addWidget( pUrbanTable, 1, 0 );
     pDirectGroupLayout->addWidget( pAttritionVisualisation, 0, 1, 2, 1 );
     pDirectGroup->setLayout( pDirectGroupLayout );
@@ -368,8 +399,8 @@ void ADN_Equipement_GUI::BuildAmmunition()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_GUI::UpdateGraph()
 {
-    if( pAttritionGraph_ )
-        pAttritionGraph_->Update();
+    if( pAttritionGraphs_[ currentTab_ ] )
+        pAttritionGraphs_[ currentTab_ ]->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -378,21 +409,21 @@ void ADN_Equipement_GUI::UpdateGraph()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_GUI::InitializeSimulationCombos()
 {
-    if( pArmorCombo_ )
+    if( pArmorCombos_[ currentTab_ ] )
     {
-        for( int i = pArmorCombo_->count() - 1; i >= 0; --i )
-            if( static_cast< helpers::ArmorInfos* >( pArmorCombo_->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
-                pArmorCombo_->removeItem( i );
-        if( pArmorCombo_->GetItem( 0 ) )
-            pArmorCombo_->setCurrentItem( 0 );
+        for( int i = pArmorCombos_[ currentTab_ ]->count() - 1; i >= 0; --i )
+            if( static_cast< helpers::ArmorInfos* >( pArmorCombos_[ currentTab_ ]->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
+                pArmorCombos_[ currentTab_ ]->removeItem( i );
+        if( pArmorCombos_[ currentTab_ ]->GetItem( 0 ) )
+            pArmorCombos_[ currentTab_ ]->setCurrentItem( 0 );
     }
 
-    if( pMaterialCombo_ )
+    if( pMaterialCombos_[ currentTab_ ] )
     {
-        ADN_ComboBoxItem* noneItem = new ADN_ComboBoxItem( *pMaterialCombo_, 0 );
+        ADN_ComboBoxItem* noneItem = new ADN_ComboBoxItem( *pMaterialCombos_[ currentTab_ ], 0 );
         noneItem->setText( tr( "None" ) );
-        pMaterialCombo_->insertItem( noneItem, 0 );
-        pMaterialCombo_->setCurrentItem( 0 );
+        pMaterialCombos_[ currentTab_ ]->insertItem( noneItem, 0 );
+        pMaterialCombos_[ currentTab_ ]->setCurrentItem( 0 );
     }
 
     IndirectTypeChanged();
@@ -404,7 +435,7 @@ void ADN_Equipement_GUI::InitializeSimulationCombos()
 // -----------------------------------------------------------------------------
 helpers::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
 {
-    return static_cast< helpers::ArmorInfos* >( pArmorCombo_->GetCurrentData() );
+    return static_cast< helpers::ArmorInfos* >( pArmorCombos_.at( currentTab_ )->GetCurrentData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -413,7 +444,7 @@ helpers::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
 // -----------------------------------------------------------------------------
 helpers::ADN_UrbanAttritionInfos* ADN_Equipement_GUI::GetSelectedMaterial() const
 {
-    return static_cast< helpers::ADN_UrbanAttritionInfos* >( pMaterialCombo_->GetCurrentData() );
+    return static_cast< helpers::ADN_UrbanAttritionInfos* >( pMaterialCombos_.at( currentTab_ )->GetCurrentData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -494,8 +525,8 @@ void ADN_Equipement_GUI::ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Dat
     assert( vListViews_[ eDotationFamily_Munition ] != 0 );
     vListViews_[ eDotationFamily_Munition ]->SetCurrentItem( &infos );
     builder.Section( tr( "PKs" ) );
-    if( pAttritionTable_ )
-        builder.CreateTableFrom( *pAttritionTable_ );
+    if( pAttritionTables_[ eDotationFamily_Munition ] )
+        builder.CreateTableFrom( *pAttritionTables_[ eDotationFamily_Munition ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -549,4 +580,13 @@ void ADN_Equipement_GUI::NetworkUsableActivated( int state )
         }
         networkUsableVector.RemItem( current );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_GUI::OnCurrentTabChanged
+// Created: ABR 2012-11-14
+// -----------------------------------------------------------------------------
+void ADN_Equipement_GUI::OnCurrentTabChanged( int tab )
+{
+    currentTab_ = static_cast< E_DotationFamily >( tab );
 }

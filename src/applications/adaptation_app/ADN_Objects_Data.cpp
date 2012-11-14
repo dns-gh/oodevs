@@ -367,10 +367,14 @@ void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::WriteArchive( xml::xost
 //@{
 
 ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
-    : ammoCategory_    ( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
-    , useAmmo_         ( false )
-    , attritionSurface_( 0 )
-    , ph_              ( 0 )
+    : ammoCategory_     ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
+    , mineCategory_     ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Mine ).categories_, 0 )
+    , explosiveCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Explosif ).categories_, 0 )
+    , useAmmo_          ( false )
+    , useMine_          ( false )
+    , useExplo_         ( false )
+    , attritionSurface_ ( 0 )
+    , ph_               ( 0 )
 {
     // NOTHING
 }
@@ -379,17 +383,26 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     std::string dotation( xis.attribute< std::string >( "category" ) );
-    if( dotation == "" )
-        useAmmo_ = false;
-    else
+    if( dotation != "" )
     {
         ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
         if( pCategory == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
-        category_ = pCategory;
-        ADN_Equipement_Data::AmmoCategoryInfo* ptrAmmo = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( pCategory );
-        ammoCategory_ = ptrAmmo;
-        useAmmo_ = ( pCategory->strName_.GetData() == "munition" );
+        if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToSim ) )
+        {
+            ammoCategory_ = pCategory;
+            useAmmo_ = true;
+        }
+        if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Mine, ENT_Tr_ABC::eToSim ) )
+        {
+            mineCategory_ = pCategory;
+            useMine_ = true;
+        }
+        if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Explosif, ENT_Tr_ABC::eToSim ) )
+        {
+            explosiveCategory_ = pCategory;
+            useExplo_ = true;
+        }
     }
     attritionSurface_ = xis.attribute< double >( "attrition-surface", 0 );
     ph_ = xis.attribute< double >( "ph", 0 );
@@ -397,15 +410,26 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream& xos )
 {
-    if( useAmmo_.GetData() == true )
+    if( useAmmo_.GetData() )
         xos << xml::attribute( "category", ammoCategory_.GetData()->strName_ );
-    else if( category_.GetData() )
-        xos << xml::attribute( "category", category_.GetData()->strName_ );
+    else if( useMine_.GetData() )
+        xos << xml::attribute( "category", mineCategory_.GetData()->strName_ );
+    else if( useExplo_.GetData() )
+        xos << xml::attribute( "category", explosiveCategory_.GetData()->strName_ );
     else
         xos << xml::attribute( "category", "" );
+
     xos << xml::attribute( "attrition-surface", attritionSurface_.GetData() )
         << xml::attribute( "ph", ph_ );
 }
+
+bool ADN_Objects_Data::ADN_CapacityInfos_Attrition::IsValidDatabase() const
+{
+    return ( ( useAmmo_.GetData() && ammoCategory_.GetData() != 0 ) ||
+             ( useMine_.GetData() && mineCategory_.GetData() != 0 ) ||
+             ( useExplo_.GetData() && explosiveCategory_.GetData() != 0 ) );
+}
+
 //@}
 
 //! @name ADN_CapacityInfos_UrbanDestruction
@@ -1425,7 +1449,8 @@ QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Equipement_Data::CategoryIn
         ADN_CapacityInfos_Attrition* attrition = static_cast< ADN_CapacityInfos_Attrition* >( ( *itObject )->capacities_[ ADN_CapacityInfos_Attrition::TAG ].get() );
         if( !added && attrition && attrition->bPresent_.GetData() &&
             ( ( attrition->useAmmo_.GetData() && attrition->ammoCategory_.GetData()->strName_ == object.strName_.GetData() ) ||
-              ( !attrition->useAmmo_.GetData() && attrition->category_.GetData()->strName_ == object.strName_.GetData() ) ) )
+              ( attrition->useMine_.GetData() && attrition->mineCategory_.GetData()->strName_ == object.strName_.GetData() ) ||
+              ( !attrition->useExplo_.GetData() && attrition->explosiveCategory_.GetData()->strName_ == object.strName_.GetData() ) ) )
             {
                 added = true;
                 result << ( *itObject )->strName_.GetData().c_str();

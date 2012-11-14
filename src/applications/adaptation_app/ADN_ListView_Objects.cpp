@@ -194,7 +194,11 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     BUILDER_HELPER( Attrition );
     CONNECT_HELPER( Attrition, Dotation, ammoCategory_ );
+    CONNECT_HELPER( Attrition, Mine, mineCategory_ );
+    CONNECT_HELPER( Attrition, Explosive, explosiveCategory_ );
     CONNECT_HELPER( Attrition, UseDotation, useAmmo_ );
+    CONNECT_HELPER( Attrition, UseMine, useMine_ );
+    CONNECT_HELPER( Attrition, UseExplosive, useExplo_ );
     CONNECT_HELPER( Attrition, Surface, attritionSurface_ );
     CONNECT_HELPER( Attrition, Ph, ph_ );
 

@@ -956,3 +956,12 @@ QStringList ADN_Equipement_Data::GetEquipmentsThatUse( helpers::ResourceNatureIn
                     result << ( *it )->strName_.GetData().c_str();
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::IsMineOrExplosive
+// Created: ABR 2012-11-14
+// -----------------------------------------------------------------------------
+bool ADN_Equipement_Data::IsMineOrExplosive( E_DotationFamily type )
+{
+    return type == eDotationFamily_Mine || type == eDotationFamily_Explosif;
+}
