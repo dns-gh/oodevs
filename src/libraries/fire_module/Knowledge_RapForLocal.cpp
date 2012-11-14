@@ -43,8 +43,39 @@ namespace
             return rRapForBoundMax - rRapForBoundMin;
         return ( rRapForBoundMax - rRapForBoundMin ) / rBaseTimeValue;
     }
+
+    class HookCache // $$$$ MCO 2012-11-13: generalize to use with any hook !
+    {
+    public:
+        HookCache()
+            : tick_( 0 )
+        {}
+        void Clear( unsigned int tick )
+        {
+            if( tick_ != tick )
+            {
+                tick_ = tick;
+                data.clear();
+            }
+        }
+        double Get( const SWORD_Model* m1, const SWORD_Model* m2 )
+        {
+            boost::optional< double >& result = data[ std::make_pair( m1, m2 ) ];
+            if( ! result )
+                result = GET_HOOK( EvaluateDangerosity2 )( m1, m2 );
+            return *result;
+        }
+    private:
+        typedef std::pair< const SWORD_Model*, const SWORD_Model* > T_Key;
+    private:
+        unsigned int tick_;
+        std::map< T_Key, boost::optional< double > > data;
+    };
+    HookCache cache;
+
     std::pair< double, double > GetRapForLocal( const wrapper::View& model, const wrapper::View& entity, Knowledge_RapForLocal::T_KnowledgeAgents& dangerousEnemies, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData )
     {
+        cache.Clear( model[ "tick" ] );
         const unsigned int id = entity[ "knowledges" ];
         const wrapper::View& knowledges = model[ "knowledges" ][ id ];
         double rTotalFightScoreEnemy  = 0;
@@ -67,7 +98,7 @@ namespace
                 {
                     const SWORD_Model* knowledgeFriend = knowledges[ static_cast< unsigned int >( friends.GetElement( j ) ) ];
                     if( filter( knowledgeFriend, userData ) )
-                        rTotalFightScoreFriend += GET_HOOK( EvaluateDangerosity2 )( knowledgeFriend, knowledgeEnemy );
+                        rTotalFightScoreFriend += cache.Get( knowledgeFriend, knowledgeEnemy );
                 }
             }
         }
