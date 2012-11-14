@@ -19,6 +19,7 @@
 #include "MockInteractionSender.h"
 #include "MockHlaObject.h"
 #include "MockHlaClass.h"
+#include "MockAgentSubject.h"
 #include "rpr/Coordinates.h"
 #include "protocol/Simulation.h"
 #include "tools/MessageController.h"
@@ -35,7 +36,9 @@ namespace
             : remoteClassListener( 0 )
         {
             MOCK_EXPECT( remoteAgentSubject.Register ).once().with( mock::retrieve( remoteClassListener ) );
+            MOCK_EXPECT( localAgentSubject.Register );
             MOCK_EXPECT( remoteAgentSubject.Unregister );
+            MOCK_EXPECT( localAgentSubject.Unregister );
         }
         MockRemoteAgentResolver remoteAgentResolver;
         MockLocalAgentResolver localAgentResolver;
@@ -44,12 +47,13 @@ namespace
         MockInteractionSender< interactions::MunitionDetonation > interactionSender;
         MockDotationTypeResolver dotationResolver;
         ClassListener_ABC* remoteClassListener;
+        MockAgentSubject localAgentSubject;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : sender              ( interactionSender, remoteAgentResolver, localAgentResolver, remoteAgentSubject, controller, "federate", dotationResolver )
+            : sender              ( interactionSender, remoteAgentResolver, localAgentResolver, remoteAgentSubject, controller, "federate", dotationResolver, localAgentSubject )
             , fireIdentifier      ( 42 )
             , firingUnitIdentifier( 1338 )
         {
@@ -57,6 +61,7 @@ namespace
             MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
             remoteClassListener->RemoteCreated( "id", hlaClass, object );
             startMessage.mutable_start_unit_fire()->mutable_firing_unit()->set_id( firingUnitIdentifier );
+            startMessage.mutable_start_unit_fire()->mutable_ammunition()->set_id( 42 );
             stopMessage.mutable_stop_unit_fire();
         }
         DirectFireSender sender;
@@ -98,14 +103,32 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_does_not_resend_an_already_sent_mess
     controller.Dispatch( stopMessage );
 }
 
-BOOST_FIXTURE_TEST_CASE( direct_fire_sender_does_not_send_if_target_is_not_distant, RegisteredFixture )
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_does_not_send_if_unknown_unit, RegisteredFixture )
 {
     startMessage.mutable_start_unit_fire()->mutable_fire()->set_id( fireIdentifier );
     stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
     startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
     startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( 1337 );
     controller.Dispatch( startMessage );
-    MOCK_EXPECT( remoteAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "" );
+    MOCK_EXPECT( remoteAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "" );   
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "" );
+    controller.Dispatch( stopMessage );
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_local_fire, RegisteredFixture )
+{
+    interactions::MunitionDetonation parameters;
+
+    startMessage.mutable_start_unit_fire()->mutable_fire()->set_id( fireIdentifier );
+    stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
+    startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
+    startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( 1337 );
+    controller.Dispatch( startMessage );
+    MOCK_EXPECT( remoteAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "" );   
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "local_target" );
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
+    MOCK_EXPECT( dotationResolver.ResolveIdentifier ).once().returns( rpr::EntityType( "2 8 71 2 10 0 0" ) );
+    MOCK_EXPECT( interactionSender.Send ).once().with( mock::retrieve( parameters ) );
     controller.Dispatch( stopMessage );
 }
 

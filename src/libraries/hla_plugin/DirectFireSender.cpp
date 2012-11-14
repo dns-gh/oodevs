@@ -17,8 +17,12 @@
 #include "RemoteAgentSubject_ABC.h"
 #include "LocalAgentResolver_ABC.h"
 #include "DotationTypeResolver_ABC.h"
+#include "AgentSubject_ABC.h"
+#include "ChildListener.h"
+#include "Agent_ABC.h"
 #include "protocol/Simulation.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/bind.hpp>
 
 using namespace plugins::hla;
 
@@ -29,17 +33,19 @@ using namespace plugins::hla;
 DirectFireSender::DirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
                                     const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                     RemoteAgentSubject_ABC& remoteAgentSubject, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                                    const std::string& federateName, const DotationTypeResolver_ABC& munitionTypeResolver )
+                                    const std::string& federateName, const DotationTypeResolver_ABC& munitionTypeResolver, AgentSubject_ABC& agentSubject )
     : interactionSender_ ( interactionSender )
     , remoteResolver_    ( remoteResolver )
     , localResolver_     ( localResolver )
     , remoteAgentSubject_( remoteAgentSubject )
     , federateName_      ( federateName )
     , munitionTypeResolver_( munitionTypeResolver )
+    , localAgentSubject_ ( agentSubject )
 {
     CONNECT( controller, *this, start_unit_fire );
     CONNECT( controller, *this, stop_unit_fire );
     remoteAgentSubject_.Register( *this );
+    localAgentSubject_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +54,7 @@ DirectFireSender::DirectFireSender( InteractionSender_ABC< interactions::Munitio
 // -----------------------------------------------------------------------------
 DirectFireSender::~DirectFireSender()
 {
+    localAgentSubject_.Unregister( *this );
     remoteAgentSubject_.Unregister( *this );
 }
 
@@ -71,12 +78,16 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     if( fires_.find( fireIdentifier ) == fires_.end() )
         return;
     const sword::StartUnitFire& startMessage = fires_[ fireIdentifier ];
-    const std::string targetTdentifier = remoteResolver_.Resolve( startMessage.target().unit().id() );
-    if( targetTdentifier.empty() )
-        return;
+    std::string targetIdentifier = remoteResolver_.Resolve( startMessage.target().unit().id() );
+    if( targetIdentifier.empty() )
+    {
+        targetIdentifier = localResolver_.Resolve( startMessage.target().unit().id() );
+        if( targetIdentifier.empty() )
+            return;
+    }
     interactions::MunitionDetonation parameters;
     parameters.articulatedPartData.clear();  // empty array
-    parameters.detonationLocation = positions_[ targetTdentifier ];
+    parameters.detonationLocation = positions_[ targetIdentifier ];
     parameters.detonationResultCode = 1; // EntityImpact
     parameters.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );
     parameters.eventIdentifier.issuingObjectIdentifier = Omt13String( federateName_ );
@@ -84,11 +95,13 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     parameters.finalVelocityVector = rpr::VelocityVector( 0., 0., 700. ); // $$$$ _RC_ SLI 2011-09-23: Hardcoded
     parameters.fuseType = 0; // Other
     parameters.munitionObjectIdentifier = Omt13String();
-    parameters.munitionType = munitionTypeResolver_.Resolve( startMessage.ammunition().id() ); // rpr::EntityType( "2 8 71 2 10" ); // 12.7mm, Hardcoded
+    parameters.munitionType = startMessage.has_ammunition() ? 
+                                munitionTypeResolver_.Resolve( startMessage.ammunition().id() ) : 
+                                rpr::EntityType( "2 8 71 2 10" ); // 12.7mm, Hardcoded
     parameters.quantityFired = 10; // Hardcoded
     parameters.rateOfFire = 40; // Hardcoded
     parameters.relativeDetonationLocation = rpr::VelocityVector(); // Entity location
-    parameters.targetObjectIdentifier = Omt13String( targetTdentifier );
+    parameters.targetObjectIdentifier = Omt13String( targetIdentifier );
     parameters.warheadType = 0; // Other
     fires_.erase( fireIdentifier );
     interactionSender_.Send( parameters );
@@ -230,7 +243,7 @@ void DirectFireSender::PerimeterChanged( const std::string& /*identifier*/, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireSender::PerimeterChanged
+// Name: DirectFireSender::ParentChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
 void DirectFireSender::ParentChanged( const std::string& /*rtiIdentifier*/, const std::string& /*parentRtiId*/ )
@@ -239,7 +252,7 @@ void DirectFireSender::ParentChanged( const std::string& /*rtiIdentifier*/, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireSender::PerimeterChanged
+// Name: DirectFireSender::SubAgregatesChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
 void DirectFireSender::SubAgregatesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
@@ -248,10 +261,41 @@ void DirectFireSender::SubAgregatesChanged( const std::string& /*rtiIdentifier*/
 }
 
 // -----------------------------------------------------------------------------
-// Name: DirectFireSender::PerimeterChanged
+// Name: DirectFireSender::SubEntitiesChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
 void DirectFireSender::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
+{
+    // NOTHING
+}
+
+namespace
+{
+    void UpdateLocation( std::map< std::string, rpr::WorldLocation >& positions, unsigned long id, const LocalAgentResolver_ABC& localResolver, const ChildListener& child )
+    {
+        const ChildListener::LocationStruct& loc = child.GetLocation();
+        std::string name = localResolver.Resolve( id );
+        if( !name.empty() )
+            positions[ name ]  = rpr::WorldLocation( loc.latitude, loc.longitude, loc.altitude );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::PlatformCreated
+// Created: AHC 2012-11-14
+// -----------------------------------------------------------------------------
+void DirectFireSender::AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, bool /*isLocal*/, const std::vector< char >& /*uniqueId*/ )
+{
+    boost::shared_ptr< ChildListener > child( new ChildListener( boost::bind( &UpdateLocation, boost::ref( positions_ ), identifier, boost::cref( localResolver_ ), _1 ) ) );
+    listeners_[ identifier ] = child;
+    agent.Register( *child );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::PlatformCreated
+// Created: AHC 2012-11-14
+// -----------------------------------------------------------------------------
+void DirectFireSender::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::vector< char >& /*uniqueId*/ )
 {
     // NOTHING
 }

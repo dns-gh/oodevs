@@ -74,7 +74,7 @@ void AutomatProxy::Unregister( EventListener_ABC& listener )
 void AutomatProxy::AddSubordinate( unsigned int id, Agent_ABC& agent )
 {
     subordinates_.insert( T_Subordinates::value_type( id, &agent ) );
-    boost::shared_ptr< ChildListener > childListener( new ChildListener( boost::bind( &AutomatProxy::UpdateLocationCallback, this ) ) );
+    boost::shared_ptr< ChildListener > childListener( new ChildListener( boost::bind( &AutomatProxy::UpdateLocationCallback, this, _1 ) ) );
     childrenListeners_.insert( T_ChildrenListeners::value_type( id, childListener ) );
     agent.Register( *childListener );
     NotifyChildren();
@@ -128,7 +128,7 @@ namespace
 // Name: AutomatProxy::UpdateLocationCallback
 // Created: AHC 2012-10-03
 // -----------------------------------------------------------------------------
-void AutomatProxy::UpdateLocationCallback()
+void AutomatProxy::UpdateLocationCallback( const ChildListener& )
 {
     ChildListener::LocationStruct loc = std::accumulate( childrenListeners_.begin(), childrenListeners_.end(), ChildListener::LocationStruct() , &addLocation );
     loc = loc/childrenListeners_.size();

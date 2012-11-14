@@ -12,6 +12,7 @@
 
 #include "ClassListener_ABC.h"
 #include "ObjectListener_ABC.h"
+#include "AgentListener_ABC.h"
 #include "tools/MessageObserver.h"
 #include "rpr/Coordinates.h"
 #include <map>
@@ -37,6 +38,8 @@ namespace hla
     class RemoteAgentSubject_ABC;
     template< typename Interaction > class InteractionSender_ABC;
     class DotationTypeResolver_ABC;
+    class AgentSubject_ABC;
+    struct ChildListener;
 
 namespace interactions
 {
@@ -52,6 +55,7 @@ class DirectFireSender : private tools::MessageObserver< sword::StartUnitFire >
                        , private tools::MessageObserver< sword::StopUnitFire >
                        , private ClassListener_ABC
                        , private ObjectListener_ABC
+                       , private AgentListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -59,7 +63,7 @@ public:
              DirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
                                const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
-                               const std::string& federateName, const DotationTypeResolver_ABC& munitionTypeResolver );
+                               const std::string& federateName, const DotationTypeResolver_ABC& munitionTypeResolver, AgentSubject_ABC& agentSubject );
     virtual ~DirectFireSender();
     //@}
 
@@ -84,6 +88,9 @@ private:
     virtual void ParentChanged( const std::string& rtiIdentifier, const std::string& parentRtiId );
     virtual void SubAgregatesChanged( const std::string& rtiIdentifier, const ObjectListener_ABC::T_EntityIDs& children );
     virtual void SubEntitiesChanged( const std::string& rtiIdentifier, const ObjectListener_ABC::T_EntityIDs& children );
+    // AgentListener_ABC
+    virtual void AggregateCreated( Agent_ABC& agent, unsigned long identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, bool isLocal, const std::vector< char >& uniqueId );
+    virtual void PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol, const std::vector< char >& uniqueId );
     //@}
 
 private:
@@ -98,6 +105,7 @@ private:
     //@{
     typedef std::map< std::string, rpr::WorldLocation > T_Positions;
     typedef std::map< unsigned int, sword::StartUnitFire > T_Fires;
+    typedef std::map< unsigned long, boost::shared_ptr< ChildListener > > T_LocalListeners;
     //@}
 
 private:
@@ -109,8 +117,10 @@ private:
     RemoteAgentSubject_ABC& remoteAgentSubject_;
     const std::string federateName_;
     const DotationTypeResolver_ABC& munitionTypeResolver_;
+    AgentSubject_ABC& localAgentSubject_;
     T_Fires fires_;
     T_Positions positions_;
+    T_LocalListeners listeners_;
     //@}
 };
 

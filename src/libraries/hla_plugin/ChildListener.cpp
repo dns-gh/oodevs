@@ -16,7 +16,7 @@ using namespace plugins::hla;
 // Name: ChildListener Constructor
 // Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-ChildListener::ChildListener( boost::function< void() > callback ) 
+ChildListener::ChildListener( T_Callback callback )
     : locationCallback_( callback ) 
 {
     // NOTHING
@@ -29,7 +29,7 @@ ChildListener::ChildListener( boost::function< void() > callback )
 void ChildListener::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
     location_ = LocationStruct( latitude, longitude, altitude, speed, direction );
-    locationCallback_();
+    locationCallback_( *this );
 }
 
 // -----------------------------------------------------------------------------

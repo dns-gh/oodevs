@@ -27,8 +27,9 @@ namespace hla
 // =============================================================================
 struct ChildListener : public EventListener_ABC
 {
-    //! @name Tyoes
+    //! @name Types
     //@{
+    typedef boost::function< void( const ChildListener& ) > T_Callback;
     struct LocationStruct
     {
         LocationStruct( double lat, double lon, float alt, float spd, float dir )
@@ -65,7 +66,7 @@ struct ChildListener : public EventListener_ABC
     //@}
     //! @name Contructor
     //@{
-    ChildListener( boost::function< void() > callback );
+    ChildListener( T_Callback callback );
     //@}
     //! @name Accessors
     //@{
@@ -83,7 +84,7 @@ struct ChildListener : public EventListener_ABC
     virtual void StateChanged( rpr::DamageState32 state );
     //@}
 private:
-    boost::function< void() > locationCallback_;
+    T_Callback locationCallback_;
     LocationStruct location_;
 };
 

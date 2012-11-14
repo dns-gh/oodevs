@@ -59,7 +59,7 @@ private:
     //! @name Helpers
     //@{
     void NotifyChildren();
-    void UpdateLocationCallback();
+    void UpdateLocationCallback( const ChildListener& );
     //@}
 
 private:
