@@ -11,6 +11,7 @@
 #include "HumansListView.h"
 #include "moc_HumansListView.cpp"
 #include "clients_kernel/Types.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: HumansListView constructor
@@ -48,7 +49,7 @@ void HumansListView::NotifyUpdated( const TroopsCompatibilityVersion& a )
         ResizeModelOnNewContent( count );
         for( int i = 0; i < count; ++i )
         {
-            model_.item( i, 0 )->setText( QString::number( a.humans_[ i ].state_ ) );
+            model_.item( i, 0 )->setText( tools::ToString( a.humans_[ i ].state_ ) );
             model_.item( i, 1 )->setText( QString::number( a.humans_[ i ].officers_ ) );
             model_.item( i, 2 )->setText( QString::number( a.humans_[ i ].subOfficers_ ) );
             model_.item( i, 3 )->setText( QString::number( a.humans_[ i ].troopers_ ) );
