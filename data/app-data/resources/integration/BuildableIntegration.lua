@@ -332,19 +332,22 @@ integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appe
         localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
     end
     local object = object
-	object = integration.obtenirObjetProcheDe( localisation, typeObject, 10 )
+    object = integration.obtenirObjetProcheDe( localisation, typeObject, 10 )
     if object ~= nil then -- rebuild the already existing object
         DEC_DetruireObjetSansDelais( object )
-	end
-		position.id = DEC_CreerObjetSansDelais( typeObject, localisation )
+    end
+    myself.constructedInstantlyObject = myself.constructedInstantlyObject or {}
+    myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
+    myself.constructedInstantlyObject[ typeObject ].id = DEC_CreerObjetSansDelais( typeObject, localisation )
 end
 -- -------------------------------------------------------------------------------- 
 -- Destroy object on position
 -- --------------------------------------------------------------------------------
 integration.destroyInstantlyObjectOn = function( typeObject, position )
-	if position.id ~= nil then
-		DEC_DetruireObjetIdSansDelais( position.id ) -- destroy it
-	end
+    myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
+    if myself.constructedInstantlyObject[ typeObject ].id ~= nil then
+        DEC_DetruireObjetIdSansDelais( myself.constructedInstantlyObject[ typeObject ].id ) -- destroy it
+    end
 end
 
 -- -------------------------------------------------------------------------------- 
