@@ -184,6 +184,8 @@ void ADN_ConsistencyChecker::CheckMissionsTypes()
 // -----------------------------------------------------------------------------
 void ADN_ConsistencyChecker::CheckMissionTypes( const ADN_Missions_Data::T_Mission_Vector& missions, int subTab )
 {
+    if( missions.empty() )
+        return;
     for( ADN_Missions_Data::CIT_Mission_Vector rhs = missions.begin(); rhs != missions.end() - 1; ++rhs )
         for( ADN_Missions_Data::CIT_Mission_Vector lhs = rhs + 1; lhs != missions.end(); ++lhs )
             if( (*lhs)->strName_.GetData() != (*rhs)->strName_.GetData() &&
