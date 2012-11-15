@@ -266,6 +266,7 @@ void MIL_AgentServer::MainSimLoop()
     pMeteoDataManager_->Update( nRealTime_ );
     pResourceNetworkModel_->Update();
     pPathFindManager_->UpdateInSimulationThread();
+    SendMsgEndTick();
     pProcessMonitor_->MonitorProcess();
     MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f DEC:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms %d ticks - PathFind : %d short %d long %d done - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
         nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(),
@@ -281,7 +282,6 @@ void MIL_AgentServer::MainSimLoop()
                             pEntityManager_->GetAutomatsCount(), pEntityManager_->GetCrowdsCount() ) );
     sword::Brain::ResetProfiling( config_.IsProfilingEnabled() );
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
-    SendMsgEndTick();
     pEntityManager_->Clean();
     pCheckPointManager_->Update();
     Wait();
