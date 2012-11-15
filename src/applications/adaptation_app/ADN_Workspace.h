@@ -75,6 +75,8 @@ class ADN_Urban_Data;
 class ADN_Urban_GUI;
 class ADN_Weapons_Data;
 class ADN_Weapons_GUI;
+class ADN_Disasters_Data;
+class ADN_Disasters_GUI;
 class QtCommand;
 class QtUndoStack;
 enum E_OpenMode;
@@ -143,6 +145,7 @@ public:
     ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& GetSymbols() const;
     ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& GetUnitSymbols() const;
     ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& GetLogistic();
+    ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >& GetDisasters();
 
     T_UsingElements GetElementThatWillBeDeleted( ADN_Ref_ABC* data );
     T_UsingElements GetElementThatUse( ADN_Ref_ABC* data );
@@ -469,6 +472,17 @@ inline
 ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& ADN_Workspace::GetUnitSymbols() const
 {
     return static_cast< ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& >( *elements_[ eUnitSymbols ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >& ADN_Workspace::GetDisasters
+// Created: LGY 2012-11-15
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >& ADN_Workspace::GetDisasters()
+{
+    return static_cast< ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >& >( *elements_[ eDisasters ] );
+
 }
 
 // -----------------------------------------------------------------------------

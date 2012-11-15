@@ -1275,6 +1275,13 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Disasters_GUI</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
+</context>
+<context>
     <name>ADN_EquipementSelector</name>
     <message>
         <source>Click here to select</source>
@@ -5040,6 +5047,10 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
     <message>
         <source>Sunday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disasters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

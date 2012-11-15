@@ -77,6 +77,8 @@
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
 #include "ADN_WorkspaceElement.h"
+#include "ADN_Disasters_Data.h"
+#include "ADN_Disasters_GUI.h"
 #include "ENT/ENT_Tr.h"
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
@@ -166,6 +168,7 @@ void ADN_Workspace::Initialize()
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >                    ( eReports );
     elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >                ( eFireClasses );
     elements_[eLogistic]          = new ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >                  ( eLogistic );
+    elements_[eDisasters]         = new ADN_WorkspaceElement< ADN_Disasters_Data, ADN_Disasters_GUI >                ( eDisasters );
 }
 
 #define INITIALIZE_ADN_ENUMTYPE( TypeName ) \
@@ -261,6 +264,8 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
     AddPage( mainwindow, eKnowledgeGroups );
     AddPage( mainwindow, eHumanFactors );
     AddPage( mainwindow, eAiEngine );
+    AddPage( mainwindow, eDisasters );
+
     //AddPage( mainwindow, eReports ); // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
 
     pProgressIndicator_->Reset( tr( "GUI loaded" ) );

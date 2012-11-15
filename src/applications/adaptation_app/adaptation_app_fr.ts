@@ -1291,6 +1291,13 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
+    <name>ADN_Disasters_GUI</name>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+</context>
+<context>
     <name>ADN_EquipementSelector</name>
     <message>
         <source>Click here to select</source>
@@ -5061,6 +5068,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Sunday</source>
         <translation>Dimanche</translation>
+    </message>
+    <message>
+        <source>Disasters</source>
+        <translation>Désastre</translation>
     </message>
 </context>
 <context>

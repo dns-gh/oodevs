@@ -380,6 +380,15 @@
     <Filter Include="Source Files\Tools\Consistency">
       <UniqueIdentifier>{095a10bc-af39-4fff-a3af-28c38df1c342}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Disasters">
+      <UniqueIdentifier>{ebac47e9-c3e3-45bd-b620-cf49bc1f1900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Disasters\Disasters GUI">
+      <UniqueIdentifier>{71049f83-dd65-419b-9d48-705118915b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Disasters\Disasters Data">
+      <UniqueIdentifier>{1d41e2a0-53c7-42c2-9c92-e99c8e7cff93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -1183,6 +1192,15 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.cpp">
       <Filter>Source Files\Common widgets\Combo box</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Disasters_GUI.cpp">
+      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Disasters.cpp">
+      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.cpp">
+      <Filter>Source Files\Workspace\Disasters\Disasters Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1818,6 +1836,12 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.h">
       <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Disasters_GUI.h">
+      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.h">
+      <Filter>Source Files\Workspace\Disasters\Disasters Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2152,6 +2176,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TimeEdit.h">
       <Filter>Source Files\Common widgets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Disasters.h">
+      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

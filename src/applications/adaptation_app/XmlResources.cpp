@@ -55,6 +55,7 @@ static const char* physicalXml =
 "  <filters file=\"Filters/Filters.xml\"/>\n"
 "  <urban-templates file=\"UrbanTemplates.xml\"/>\n"
 "  <funeral file=\"funeral.xml\"/>\n"
+"  <disasters file=\"disasters.xml\"/>"
 "  <units-mission-sheets-directory path=\"Mission sheets/units\"/>"
 "  <automata-mission-sheets-directory path=\"Mission sheets/automata\"/>"
 "  <crowds-mission-sheets-directory path=\"Mission sheets/crowds\"/>"

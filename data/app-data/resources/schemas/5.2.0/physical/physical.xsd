@@ -56,6 +56,7 @@
         <xs:element name="urban-templates" type="FileReference"/>
         <xs:element name="logistic-supply-classes" type="FileReference"/>
         <xs:element name="funeral" type="FileReference"/>
+        <xs:element name="disasters" type="FileReference"/>
 ........<xs:element name="units-mission-sheets-directory" type="PathReference"/>
 ........<xs:element name="automata-mission-sheets-directory" type="PathReference"/>
 ........<xs:element name="crowds-mission-sheets-directory" type="PathReference"/>
