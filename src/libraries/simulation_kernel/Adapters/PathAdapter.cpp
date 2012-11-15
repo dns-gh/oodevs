@@ -21,6 +21,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -144,6 +145,9 @@ PathAdapter::PathAdapter( const core::Model& entity, const boost::shared_ptr< mo
     MIL_AgentPion& pion = entity[ "data" ].GetUserData< MIL_AgentPion >();
     fuseau_= pion.GetOrderManager().GetFuseau();
     automateFuseau_ = pion.GetAutomate().GetOrderManager().GetFuseau();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet itPion = reinforcements.begin(); itPion != reinforcements.end(); ++itPion )
+        weight_ = std::max( weight_, ( *itPion )->GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
     InitializePathKnowledges( entity, pion );
 }
 

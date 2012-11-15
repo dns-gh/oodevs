@@ -166,16 +166,13 @@ namespace
                 if( pPhysical )
                 {
                     if( weight_ > pPhysical->GetTrafficability() )
-                        tempCost = -1.f;
+                    {
+                        cost_ = -1.f;
+                        return false;
+                    }
                     tempCost =  pPhysical->GetOccupation();
                 }
-                if( tempCost == -1. )
-                {
-                    cost_ = tempCost;
-                    return false;
-                }
-                else
-                    cost_ = std::max( cost_, tempCost );
+                cost_ = std::max( cost_, tempCost );
                 return wrapper_.DoContinue();
             }
             return true;

@@ -27,6 +27,7 @@
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
@@ -214,7 +215,11 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 double DEC_Agent_Path::GetUnitMajorWeight() const
 {
-    return queryMaker_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+    double weight = queryMaker_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = queryMaker_.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet itPion = reinforcements.begin(); itPion != reinforcements.end(); ++itPion )
+        weight = std::max( weight, ( *itPion )->GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
+    return weight;
 }
 
 // -----------------------------------------------------------------------------
