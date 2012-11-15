@@ -89,7 +89,7 @@ void ProgressPage::NotifyStopped()
 {
     timer_->stop();
     process_.reset();
-    qApp->mainWidget()->show();
+    QTimer::singleShot( 0, qApp->mainWidget(), SLOT( show() ) );
     qApp->mainWidget()->setActiveWindow();
     Previous();
 }
