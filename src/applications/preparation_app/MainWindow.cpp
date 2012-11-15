@@ -210,6 +210,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Progress dialog
     progressDialog_.reset( new QProgressDialog( "", "", 0, 100, this, Qt::SplashScreen ) );
     progressDialog_->setAutoClose( true );
+    progressDialog_->setModal( true );
     progressDialog_->setContentsMargins( 5, 5, 5, 5 );
     progressDialog_->setCancelButton( 0 );
 
