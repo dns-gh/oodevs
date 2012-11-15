@@ -61,6 +61,23 @@ struct MunitionDetonation
     int16 warheadType;
 };
 
+struct WeaponFire
+{
+    EventIdentifierStruct eventIdentifier;
+    float fireControlSolutionRange;
+    uint32 fireMissionIndex;
+    rpr::WorldLocation firingLocation;
+    Omt13String firingObjectIdentifier;
+    int16 fuseType;
+    rpr::VelocityVector initialVelocityVector;
+    Omt13String munitionObjectIdentifier;
+    rpr::EntityType munitionType;
+    uint16 quantityFired;
+    uint16 rateOfFire;
+    Omt13String targetObjectIdentifier;
+    int16 warheadType;
+};
+
 struct Acknowledge
 {
     enum AcknowledgeFlagEnum16

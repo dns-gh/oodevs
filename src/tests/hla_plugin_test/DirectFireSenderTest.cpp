@@ -11,6 +11,7 @@
 #include "hla_plugin/DirectFireSender.h"
 #include "hla_plugin/Omt13String.h"
 #include "hla_plugin/Interactions.h"
+#include "hla_plugin/EventListener_ABC.h"
 #include "MockMessageController.h"
 #include "MockLocalAgentResolver.h"
 #include "MockRemoteAgentSubject.h"
@@ -19,6 +20,7 @@
 #include "MockInteractionSender.h"
 #include "MockHlaObject.h"
 #include "MockHlaClass.h"
+#include "MockAgent.h"
 #include "MockAgentSubject.h"
 #include "rpr/Coordinates.h"
 #include "protocol/Simulation.h"
@@ -34,9 +36,10 @@ namespace
     public:
         Fixture()
             : remoteClassListener( 0 )
+            , localListener( 0 )
         {
             MOCK_EXPECT( remoteAgentSubject.Register ).once().with( mock::retrieve( remoteClassListener ) );
-            MOCK_EXPECT( localAgentSubject.Register );
+            MOCK_EXPECT( localAgentSubject.Register ).once().with( mock::retrieve( localListener ) ) ;
             MOCK_EXPECT( remoteAgentSubject.Unregister );
             MOCK_EXPECT( localAgentSubject.Unregister );
         }
@@ -45,19 +48,22 @@ namespace
         tools::MessageController< sword::SimToClient_Content > controller;
         MockRemoteAgentSubject remoteAgentSubject;
         MockInteractionSender< interactions::MunitionDetonation > interactionSender;
+        MockInteractionSender< interactions::WeaponFire > weaponFireSender;
         MockDotationTypeResolver dotationResolver;
         ClassListener_ABC* remoteClassListener;
+        AgentListener_ABC* localListener;
         MockAgentSubject localAgentSubject;
     };
     class RegisteredFixture : public Fixture
     {
     public:
         RegisteredFixture()
-            : sender              ( interactionSender, remoteAgentResolver, localAgentResolver, remoteAgentSubject, controller, "federate", dotationResolver, localAgentSubject )
+            : sender              ( interactionSender, weaponFireSender, remoteAgentResolver, localAgentResolver, remoteAgentSubject, controller, "federate", dotationResolver, localAgentSubject )
             , fireIdentifier      ( 42 )
             , firingUnitIdentifier( 1338 )
         {
             BOOST_REQUIRE( remoteClassListener );
+            BOOST_REQUIRE( localListener );
             MOCK_EXPECT( object.Register ).once().with( mock::retrieve( remoteAgentListener ) );
             remoteClassListener->RemoteCreated( "id", hlaClass, object );
             startMessage.mutable_start_unit_fire()->mutable_firing_unit()->set_id( firingUnitIdentifier );
@@ -117,8 +123,6 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_does_not_send_if_unknown_unit, Regis
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_local_fire, RegisteredFixture )
 {
-    interactions::MunitionDetonation parameters;
-
     startMessage.mutable_start_unit_fire()->mutable_fire()->set_id( fireIdentifier );
     stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
     startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
@@ -128,7 +132,40 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_local_fire, RegisteredFixture )
     MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "local_target" );
     MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
     MOCK_EXPECT( dotationResolver.ResolveIdentifier ).once().returns( rpr::EntityType( "2 8 71 2 10 0 0" ) );
-    MOCK_EXPECT( interactionSender.Send ).once().with( mock::retrieve( parameters ) );
+    MOCK_EXPECT( interactionSender.Send ).once();
+    controller.Dispatch( stopMessage );
+}
+
+BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_platform_fires, RegisteredFixture )
+{
+    MockAgent localAgent;
+    EventListener_ABC* localAgentListener = 0;
+    const unsigned int platformId1 = firingUnitIdentifier * 100 + 1;
+    const unsigned int platformId2 = firingUnitIdentifier * 100 + 2;
+
+    MOCK_EXPECT( localAgent.Register ).once().with( mock::retrieve( localAgentListener ) );
+    localListener->AggregateCreated( localAgent, firingUnitIdentifier, "localName", rpr::Friendly, 
+        rpr::EntityType( "1 1 71 12 13 14 0" ), "symbol", true, std::vector< char >() );
+    BOOST_REQUIRE( localAgentListener );
+    localAgentListener->PlatformAdded( "paltform_name_1", platformId1 );
+    localAgentListener->PlatformAdded( "paltform_name_2", platformId2 );
+
+    startMessage.mutable_start_unit_fire()->mutable_fire()->set_id( fireIdentifier );
+    stopMessage.mutable_stop_unit_fire()->mutable_fire()->set_id( fireIdentifier );
+    startMessage.mutable_start_unit_fire()->set_type( sword::StartUnitFire::direct );
+    startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( 1337 );
+    
+    controller.Dispatch( startMessage );
+    MOCK_EXPECT( remoteAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "" );   
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "local_target" );
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
+    MOCK_EXPECT( dotationResolver.ResolveIdentifier ).once().returns( rpr::EntityType( "2 8 71 2 10 0 0" ) );
+    // platforms
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( platformId1 ).returns( "local_platform_1_rtiId" );
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( platformId2 ).returns( "local_platform_2_rtiId" );
+
+    MOCK_EXPECT( interactionSender.Send ).exactly( 3 );
+    MOCK_EXPECT( weaponFireSender.Send ).exactly( 2 );
     controller.Dispatch( stopMessage );
 }
 
@@ -183,7 +220,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_entity_impact, ConfiguredFixtu
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_uses_fire_identifier_for_event_identifier, ConfiguredFixture )
 {
     BOOST_CHECK_EQUAL( parameters.eventIdentifier.eventCount, fireIdentifier );
-    BOOST_CHECK_EQUAL( parameters.eventIdentifier.issuingObjectIdentifier.str(), "federate" );
+    BOOST_CHECK_EQUAL( parameters.eventIdentifier.issuingObjectIdentifier.str(), "local" );
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_uses_simulation_identifier_for_firing_object_identifier, ConfiguredFixture )

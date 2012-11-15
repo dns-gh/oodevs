@@ -12,6 +12,7 @@
 
 #include "EventListener_ABC.h"
 #include <boost/function.hpp>
+#include <set>
 
 namespace plugins
 {
@@ -71,6 +72,7 @@ struct ChildListener : public EventListener_ABC
     //! @name Accessors
     //@{
     const LocationStruct& GetLocation() const;
+    const std::set< unsigned int >& GetPlatforms() const;
     //@}
     //! @name Operations
     //@{
@@ -86,6 +88,7 @@ struct ChildListener : public EventListener_ABC
 private:
     T_Callback locationCallback_;
     LocationStruct location_;
+    std::set< unsigned int > childPlatforms_;
 };
 
 }

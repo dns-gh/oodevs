@@ -37,6 +37,7 @@ namespace interactions
     struct ResupplyReceived;
     struct TransferControl;
     struct Comment;
+    struct WeaponFire;
     struct NetnRequestConvoy;
     struct NetnOfferConvoy;
     struct NetnAcceptOffer;
@@ -83,6 +84,7 @@ public:
     bool Build( ::hla::Interaction< interactions::ResupplyReceived >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::TransferControl >& interaction ) const;
     bool Build( ::hla::Interaction< interactions::Comment >& interaction ) const;
+    bool Build( ::hla::Interaction< interactions::WeaponFire >& interaction ) const;
 
     //@}
     //! @name NETN

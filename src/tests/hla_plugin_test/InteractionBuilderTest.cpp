@@ -468,4 +468,22 @@ BOOST_FIXTURE_TEST_CASE( build_request_transfer_modelling_responibility, Fixture
     CheckBuild< interactions::TMR_RequestTransferModellingResponsibility >( name, parameters );
 }
 
-
+BOOST_FIXTURE_TEST_CASE( interaction_builder_registers_name_and_attributes_for_weapon_fire, Fixture )
+{
+    const std::string name = "WeaponFire";
+    const std::vector< std::string > parameters = boost::assign::list_of( "EventIdentifier" )
+                                                                        ( "FireControlSolutionRange" )
+                                                                        ( "FireMissionIndex" )
+                                                                        ( "FiringLocation" )
+                                                                        ( "FiringObjectIdentifier" )
+                                                                        ( "FuseType" )
+                                                                        ( "InitialVelocityVector" )
+                                                                        ( "MunitionObjectIdentifier" )
+                                                                        ( "MunitionType" )
+                                                                        ( "QuantityFired" )
+                                                                        ( "RateOfFire" )
+                                                                        ( "TargetObjectIdentifier" )
+                                                                        ( "WarheadType" );
+    CheckBuild< interactions::WeaponFire >( name, parameters );
+    CheckBuildFailure< interactions::WeaponFire >( name );
+}

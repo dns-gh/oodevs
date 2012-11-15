@@ -90,9 +90,9 @@ const  ChildListener::LocationStruct&  ChildListener::GetLocation() const
 // Name: ChildListener::ParentChanged
 // Created: AHC 2012-10-02
 // -----------------------------------------------------------------------------
-void ChildListener::PlatformAdded( const std::string& /*name*/, unsigned int /*id*/ )
+void ChildListener::PlatformAdded( const std::string& /*name*/, unsigned int id )
 {
-    // NOTHING
+    childPlatforms_.insert( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,4 +102,13 @@ void ChildListener::PlatformAdded( const std::string& /*name*/, unsigned int /*i
 void ChildListener::StateChanged( rpr::DamageState32 /*state*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChildListener::GetPlatforms
+// Created: AHC 2012-11-14
+// -----------------------------------------------------------------------------
+const std::set< unsigned int >& ChildListener::GetPlatforms() const
+{
+    return childPlatforms_;
 }

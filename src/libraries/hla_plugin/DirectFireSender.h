@@ -44,6 +44,7 @@ namespace hla
 namespace interactions
 {
     struct MunitionDetonation;
+    struct WeaponFire;
 }
 // =============================================================================
 /** @class  DirectFireSender
@@ -61,6 +62,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
+                               InteractionSender_ABC< interactions::WeaponFire >& weaponFireSender,
                                const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                RemoteAgentSubject_ABC& remoteAgentSubject, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                const std::string& federateName, const DotationTypeResolver_ABC& munitionTypeResolver, AgentSubject_ABC& agentSubject );
@@ -112,6 +114,7 @@ private:
     //! @name Member data
     //@{
     InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender_;
+    InteractionSender_ABC< interactions::WeaponFire >& weaponFireSender_;
     const RemoteAgentResolver_ABC& remoteResolver_;
     const LocalAgentResolver_ABC& localResolver_;
     RemoteAgentSubject_ABC& remoteAgentSubject_;

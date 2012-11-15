@@ -47,6 +47,7 @@ namespace hla
 namespace interactions
 {
     struct MunitionDetonation;
+    struct WeaponFire;
 }
 
 // =============================================================================
@@ -56,6 +57,7 @@ namespace interactions
 // Created: SLI 2011-09-27
 // =============================================================================
 class DetonationFacade : private ::hla::InteractionNotification_ABC< interactions::MunitionDetonation >
+                       , private ::hla::InteractionNotification_ABC< interactions::WeaponFire >
 {
 public:
     //! @name Constructors/Destructor
@@ -72,19 +74,22 @@ private:
     //! @name Operations
     //@{
     virtual void Receive( interactions::MunitionDetonation& interaction );
+    virtual void Receive( interactions::WeaponFire& interaction );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef InteractionSender_ABC< interactions::MunitionDetonation > T_Sender;
+    typedef InteractionSender_ABC< interactions::MunitionDetonation > T_MunitionDetonationSender;
+    typedef InteractionSender_ABC< interactions::WeaponFire > T_WeaponFireSender;
     typedef ::hla::InteractionNotification_ABC< interactions::MunitionDetonation > T_Notification;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< T_Sender > pMunitionDetonation_;
+    std::auto_ptr< T_MunitionDetonationSender > pMunitionDetonation_;
+    std::auto_ptr< T_WeaponFireSender > pWeaponFire_;
     std::auto_ptr< T_Notification > pDirectFireReceiver_;
     std::auto_ptr< T_Notification > pIndirectFireReceiver_;
     std::auto_ptr< DirectFireSender > pDirectFireSender_;

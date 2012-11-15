@@ -325,3 +325,26 @@ bool InteractionBuilder::Build( ::hla::Interaction< interactions::TMR_RequestTra
 {
     return netnBuilder_.Build( interaction );
 }
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-11-15
+// ----------------------------------------------------------------------------
+bool InteractionBuilder::Build( ::hla::Interaction< interactions::WeaponFire >& interaction ) const
+{
+    const std::string name = "WeaponFire";
+    REGISTER( "EventIdentifier"       , &interactions::WeaponFire::eventIdentifier );
+    REGISTER( "FireControlSolutionRange"       , &interactions::WeaponFire::fireControlSolutionRange );
+    REGISTER( "FireMissionIndex"       , &interactions::WeaponFire::fireMissionIndex );
+    REGISTER( "FiringLocation"       , &interactions::WeaponFire::firingLocation );
+    REGISTER( "FiringObjectIdentifier"       , &interactions::WeaponFire::firingObjectIdentifier );
+    REGISTER( "FuseType"       , &interactions::WeaponFire::fuseType );
+    REGISTER( "InitialVelocityVector"       , &interactions::WeaponFire::initialVelocityVector );
+    REGISTER( "MunitionObjectIdentifier"       , &interactions::WeaponFire::munitionObjectIdentifier );
+    REGISTER( "MunitionType"       , &interactions::WeaponFire::munitionType );
+    REGISTER( "QuantityFired"       , &interactions::WeaponFire::quantityFired );
+    REGISTER( "RateOfFire"       , &interactions::WeaponFire::rateOfFire );
+    REGISTER( "TargetObjectIdentifier"       , &interactions::WeaponFire::targetObjectIdentifier );
+    REGISTER( "WarheadType"       , &interactions::WeaponFire::warheadType );
+    return DoRegister( name, interaction, true, true );
+}

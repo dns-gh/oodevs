@@ -30,9 +30,10 @@ DetonationFacade::DetonationFacade( dispatcher::SimulationPublisher_ABC& publish
                                     RemoteAgentSubject_ABC& remoteAgentSubject, const std::string& federateName, const InteractionBuilder& builder,
                                     AgentSubject_ABC& agentSubject )
     : pMunitionDetonation_  ( new InteractionSender< interactions::MunitionDetonation >( *this, builder ) )
+    , pWeaponFire_          ( new InteractionSender< interactions::WeaponFire >( *this, builder ) )
     , pDirectFireReceiver_  ( new DirectFireReceiver( publisher, remoteResolver, localResolver, contextFactory ) )
     , pIndirectFireReceiver_( new IndirectFireReceiver( publisher, contextFactory, munitionTypeResolver ) )
-    , pDirectFireSender_    ( new DirectFireSender( *pMunitionDetonation_, remoteResolver, localResolver, remoteAgentSubject, controller, federateName, munitionTypeResolver, agentSubject ) )
+    , pDirectFireSender_    ( new DirectFireSender( *pMunitionDetonation_, *pWeaponFire_, remoteResolver, localResolver, remoteAgentSubject, controller, federateName, munitionTypeResolver, agentSubject ) )
     , pIndirectFireSender_  ( new IndirectFireSender( *pMunitionDetonation_, controller, federateName, munitionTypeResolver, localResolver ) )
 {
     // NOTHING
@@ -55,4 +56,13 @@ void DetonationFacade::Receive( interactions::MunitionDetonation& interaction )
 {
     pDirectFireReceiver_->Receive( interaction );
     pIndirectFireReceiver_->Receive( interaction );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetonationFacade::Receive
+// Created: AHC 2012-11-15
+// -----------------------------------------------------------------------------
+void DetonationFacade::Receive( interactions::WeaponFire&  )
+{
+    // NOTHING
 }

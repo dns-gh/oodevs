@@ -31,10 +31,12 @@ using namespace plugins::hla;
 // Created: SLI 2011-09-23
 // -----------------------------------------------------------------------------
 DirectFireSender::DirectFireSender( InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender,
+                                    InteractionSender_ABC< interactions::WeaponFire >& weaponFireSender,
                                     const RemoteAgentResolver_ABC& remoteResolver, const LocalAgentResolver_ABC& localResolver,
                                     RemoteAgentSubject_ABC& remoteAgentSubject, tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                     const std::string& federateName, const DotationTypeResolver_ABC& munitionTypeResolver, AgentSubject_ABC& agentSubject )
     : interactionSender_ ( interactionSender )
+    , weaponFireSender_  ( weaponFireSender )
     , remoteResolver_    ( remoteResolver )
     , localResolver_     ( localResolver )
     , remoteAgentSubject_( remoteAgentSubject )
@@ -85,13 +87,14 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
         if( targetIdentifier.empty() )
             return;
     }
+    std::string firingRtiId( localResolver_.Resolve( startMessage.firing_unit().id() ) );
     interactions::MunitionDetonation parameters;
     parameters.articulatedPartData.clear();  // empty array
     parameters.detonationLocation = positions_[ targetIdentifier ];
     parameters.detonationResultCode = 1; // EntityImpact
     parameters.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );
-    parameters.eventIdentifier.issuingObjectIdentifier = Omt13String( federateName_ );
-    parameters.firingObjectIdentifier = Omt13String( localResolver_.Resolve( startMessage.firing_unit().id() ) );
+    parameters.eventIdentifier.issuingObjectIdentifier = Omt13String( firingRtiId );
+    parameters.firingObjectIdentifier = Omt13String( firingRtiId );
     parameters.finalVelocityVector = rpr::VelocityVector( 0., 0., 700. ); // $$$$ _RC_ SLI 2011-09-23: Hardcoded
     parameters.fuseType = 0; // Other
     parameters.munitionObjectIdentifier = Omt13String();
@@ -103,8 +106,44 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     parameters.relativeDetonationLocation = rpr::VelocityVector(); // Entity location
     parameters.targetObjectIdentifier = Omt13String( targetIdentifier );
     parameters.warheadType = 0; // Other
-    fires_.erase( fireIdentifier );
     interactionSender_.Send( parameters );
+    // process platforms
+    T_LocalListeners::const_iterator itL( listeners_.find( startMessage.firing_unit().id() ) );
+    if( itL != listeners_.end() && !itL->second->GetPlatforms().empty() )
+    {
+        interactions::WeaponFire fire;
+        fire.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );
+        fire.fireControlSolutionRange = 0.f;
+        fire.fireMissionIndex = fireIdentifier;
+        fire.firingLocation = positions_[ firingRtiId ];
+        fire.fuseType = 0; // Other
+        fire.initialVelocityVector = rpr::VelocityVector( 0., 0., 700. ); // $$$$ _RC_ SLI 2011-09-23: Hardcoded
+        fire.munitionObjectIdentifier = Omt13String();
+        fire.munitionType = parameters.munitionType;
+        fire.quantityFired = 10; // Hardcoded
+        fire.rateOfFire = 40; // Hardcoded
+        fire.targetObjectIdentifier = Omt13String( targetIdentifier );
+        fire.warheadType = 0; // Other
+        
+        BOOST_FOREACH( unsigned int chId, itL->second->GetPlatforms() )
+        {
+            std::string chRtiId( localResolver_.Resolve( chId ) );
+            if( !chRtiId.empty() )
+            {
+                // WeaponFire
+                fire.firingObjectIdentifier = Omt13String( chRtiId );
+                fire.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
+                fire.targetObjectIdentifier = Omt13String( targetIdentifier );
+                weaponFireSender_.Send( fire );
+                // Munition Detonation
+                parameters.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
+                parameters.firingObjectIdentifier = Omt13String( chRtiId );
+                parameters.targetObjectIdentifier = Omt13String( targetIdentifier );
+                interactionSender_.Send( parameters );
+            }
+        }
+    }
+    fires_.erase( fireIdentifier );
 }
 
 // -----------------------------------------------------------------------------
