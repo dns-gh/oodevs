@@ -85,7 +85,11 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     {
         targetIdentifier = localResolver_.Resolve( startMessage.target().unit().id() );
         if( targetIdentifier.empty() )
+        {
+            fires_.erase( fireIdentifier );
             return;
+        }
+        ComputeChildrenRtiIds( startMessage.target().unit().id() );
     }
     std::string firingRtiId( localResolver_.Resolve( startMessage.firing_unit().id() ) );
     interactions::MunitionDetonation parameters;
@@ -108,41 +112,8 @@ void DirectFireSender::Notify( const sword::StopUnitFire& message, int /*context
     parameters.warheadType = 0; // Other
     interactionSender_.Send( parameters );
     // process platforms
-    T_LocalListeners::const_iterator itL( listeners_.find( startMessage.firing_unit().id() ) );
-    if( itL != listeners_.end() && !itL->second->GetPlatforms().empty() )
-    {
-        interactions::WeaponFire fire;
-        fire.eventIdentifier.eventCount = static_cast< uint16 >( fireIdentifier );
-        fire.fireControlSolutionRange = 0.f;
-        fire.fireMissionIndex = fireIdentifier;
-        fire.firingLocation = positions_[ firingRtiId ];
-        fire.fuseType = 0; // Other
-        fire.initialVelocityVector = rpr::VelocityVector( 0., 0., 700. ); // $$$$ _RC_ SLI 2011-09-23: Hardcoded
-        fire.munitionObjectIdentifier = Omt13String();
-        fire.munitionType = parameters.munitionType;
-        fire.quantityFired = 10; // Hardcoded
-        fire.rateOfFire = 40; // Hardcoded
-        fire.targetObjectIdentifier = Omt13String( targetIdentifier );
-        fire.warheadType = 0; // Other
-        
-        BOOST_FOREACH( unsigned int chId, itL->second->GetPlatforms() )
-        {
-            std::string chRtiId( localResolver_.Resolve( chId ) );
-            if( !chRtiId.empty() )
-            {
-                // WeaponFire
-                fire.firingObjectIdentifier = Omt13String( chRtiId );
-                fire.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
-                fire.targetObjectIdentifier = Omt13String( targetIdentifier );
-                weaponFireSender_.Send( fire );
-                // Munition Detonation
-                parameters.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
-                parameters.firingObjectIdentifier = Omt13String( chRtiId );
-                parameters.targetObjectIdentifier = Omt13String( targetIdentifier );
-                interactionSender_.Send( parameters );
-            }
-        }
-    }
+    DoPlatformsFire( fireIdentifier, firingRtiId, startMessage.firing_unit().id(), targetIdentifier, parameters );
+    // tidy up
     fires_.erase( fireIdentifier );
 }
 
@@ -303,9 +274,9 @@ void DirectFireSender::SubAgregatesChanged( const std::string& /*rtiIdentifier*/
 // Name: DirectFireSender::SubEntitiesChanged
 // Created: AHC 2010-09-07
 // -----------------------------------------------------------------------------
-void DirectFireSender::SubEntitiesChanged( const std::string& /*rtiIdentifier*/, const ObjectListener_ABC::T_EntityIDs& /*children*/ )
+void DirectFireSender::SubEntitiesChanged( const std::string& rtiIdentifier, const ObjectListener_ABC::T_EntityIDs& children )
 {
-    // NOTHING
+    childrenRtiIds_[ rtiIdentifier ] = children;
 }
 
 namespace
@@ -334,7 +305,115 @@ void DirectFireSender::AggregateCreated( Agent_ABC& agent, unsigned long identif
 // Name: DirectFireSender::PlatformCreated
 // Created: AHC 2012-11-14
 // -----------------------------------------------------------------------------
-void DirectFireSender::PlatformCreated( Agent_ABC& /*agent*/, unsigned int /*identifier*/, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::vector< char >& /*uniqueId*/ )
+void DirectFireSender::PlatformCreated( Agent_ABC& agent, unsigned int identifier, const std::string& /*name*/, rpr::ForceIdentifier /*force*/, const rpr::EntityType& /*type*/, const std::string& /*symbol*/, const std::vector< char >& /*uniqueId*/ )
 {
-    // NOTHING
+    boost::shared_ptr< ChildListener > child( new ChildListener( boost::bind( &UpdateLocation, boost::ref( positions_ ), identifier, boost::cref( localResolver_ ), _1 ) ) );
+    listeners_[ identifier ] = child;
+    agent.Register( *child );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::ComputeChildrenRtiId
+// Created: AHC 2012-11-15
+// -----------------------------------------------------------------------------
+void DirectFireSender::ComputeChildrenRtiIds( unsigned int parentSimId )
+{
+    std::string parentRtiId = localResolver_.Resolve( parentSimId );
+    T_LocalListeners::const_iterator itTargetListener( listeners_.find( parentSimId ) );
+    if( itTargetListener != listeners_.end() && 
+        itTargetListener->second.get() != 0 && itTargetListener->second->GetPlatforms().size() !=0 )
+    {
+        std::set< std::string > rtiIDs;
+        BOOST_FOREACH( unsigned int id, itTargetListener->second->GetPlatforms() )
+        {
+            std::string rtiId = localResolver_.Resolve( id );
+            if( !rtiId.empty() )
+                rtiIDs.insert( rtiId );
+        }
+        childrenRtiIds_[ parentRtiId ] = rtiIDs;
+    }
+}
+
+namespace
+{
+    struct ChildrenDistributor
+    {
+        ChildrenDistributor( const std::set< std::string >& children )
+            : children_( children )
+            , it_( children_.begin() )
+        {
+            assert( !children_.empty() );
+        }
+        ChildrenDistributor( const ChildrenDistributor& rhs )
+            : children_( rhs.children_ )
+            , it_( children_.begin() )
+        {}
+        const ChildrenDistributor& operator =( const ChildrenDistributor& rhs ); // not implemented
+        Omt13String operator()()
+        {
+            Omt13String retval( *it_ );
+            ++it_;
+            if( it_ == children_.end() )
+                it_ = children_.begin();
+            return retval;
+        }
+        const std::set< std::string >& children_;
+        std::set< std::string >::const_iterator it_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectFireSender::ComputeChildrenRtiId
+// Created: AHC 2012-11-15
+// -----------------------------------------------------------------------------
+void DirectFireSender::DoPlatformsFire( unsigned long fireIdentifier, const std::string& firingRtiId, unsigned long firingSimId, 
+        const std::string& targetIdentifier, const interactions::MunitionDetonation& parentDeto )
+{
+    interactions::MunitionDetonation childDeto = parentDeto;
+    
+    T_LocalListeners::const_iterator itFiringListener( listeners_.find( firingSimId ) );
+    if( itFiringListener == listeners_.end() || itFiringListener->second->GetPlatforms().empty() )
+        return;
+
+    interactions::WeaponFire fire;
+    fire.eventIdentifier.eventCount = childDeto.eventIdentifier.eventCount;
+    fire.fireControlSolutionRange = 0.f;
+    fire.fireMissionIndex = fireIdentifier;
+    fire.fuseType = childDeto.fuseType;
+    fire.initialVelocityVector = rpr::VelocityVector( 0., 0., 700. ); // $$$$ _RC_ SLI 2011-09-23: Hardcoded
+    fire.munitionObjectIdentifier = childDeto.munitionObjectIdentifier;
+    fire.munitionType = childDeto.munitionType;
+    fire.quantityFired = childDeto.quantityFired;
+    fire.rateOfFire = childDeto.rateOfFire;
+    fire.warheadType = childDeto.warheadType;
+
+    // distribute targets
+    T_ChildrenRtiIds::const_iterator itTargetChildren( childrenRtiIds_.find( targetIdentifier ) );
+    std::vector< Omt13String > targetIdentifiers( itFiringListener->second->GetPlatforms().size(), Omt13String( targetIdentifier ) );
+    if( itTargetChildren != childrenRtiIds_.end() && itTargetChildren->second.size() != 0 )
+        std::generate( targetIdentifiers.begin(), targetIdentifiers.end(), ChildrenDistributor( itTargetChildren->second ) );
+        
+    std::size_t targetIndex = 0;
+    BOOST_FOREACH( unsigned int chId, itFiringListener->second->GetPlatforms() )
+    {
+        const Omt13String& childTgtIdentifier = targetIdentifiers[ targetIndex ];
+        std::string chRtiId( localResolver_.Resolve( chId ) );
+        if( !chRtiId.empty() )
+        {
+            // WeaponFire
+            fire.firingObjectIdentifier = Omt13String( chRtiId );
+            fire.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
+            fire.targetObjectIdentifier = childTgtIdentifier;
+            fire.firingLocation = positions_.find( chRtiId ) != positions_.end() ? positions_[ chRtiId ] : positions_[ firingRtiId ];
+            weaponFireSender_.Send( fire );
+            // Munition Detonation
+            childDeto.eventIdentifier.issuingObjectIdentifier = Omt13String( chRtiId );
+            childDeto.firingObjectIdentifier = Omt13String( chRtiId );
+            childDeto.targetObjectIdentifier = childTgtIdentifier;
+            childDeto.detonationLocation = positions_.find( childTgtIdentifier.str() )  != positions_.end() ? 
+                                            positions_[ childTgtIdentifier.str() ] : parentDeto.detonationLocation;
+            interactionSender_.Send( childDeto );
+        }
+        ++targetIndex;
+    }
 }

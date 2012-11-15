@@ -108,9 +108,17 @@ private:
     typedef std::map< std::string, rpr::WorldLocation > T_Positions;
     typedef std::map< unsigned int, sword::StartUnitFire > T_Fires;
     typedef std::map< unsigned long, boost::shared_ptr< ChildListener > > T_LocalListeners;
+    typedef std::map< std::string, std::set< std::string > > T_ChildrenRtiIds;
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ComputeChildrenRtiIds( unsigned int parentId );
+    void DoPlatformsFire( unsigned long fireIdentifier, const std::string& firingRtiId, unsigned long firingSimId, 
+        const std::string& targetIdentifier, const interactions::MunitionDetonation& parentDeto );
+    //@}
+
     //! @name Member data
     //@{
     InteractionSender_ABC< interactions::MunitionDetonation >& interactionSender_;
@@ -124,6 +132,7 @@ private:
     T_Fires fires_;
     T_Positions positions_;
     T_LocalListeners listeners_;
+    T_ChildrenRtiIds childrenRtiIds_;
     //@}
 };
 

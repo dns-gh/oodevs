@@ -129,7 +129,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_local_fire, RegisteredFixture )
     startMessage.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( 1337 );
     controller.Dispatch( startMessage );
     MOCK_EXPECT( remoteAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "" );   
-    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "local_target" );
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).exactly( 2 ).with( 1337u ).returns( "local_target" );
     MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
     MOCK_EXPECT( dotationResolver.ResolveIdentifier ).once().returns( rpr::EntityType( "2 8 71 2 10 0 0" ) );
     MOCK_EXPECT( interactionSender.Send ).once();
@@ -157,7 +157,7 @@ BOOST_FIXTURE_TEST_CASE( direct_fire_sender_send_platform_fires, RegisteredFixtu
     
     controller.Dispatch( startMessage );
     MOCK_EXPECT( remoteAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "" );   
-    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( 1337u ).returns( "local_target" );
+    MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).exactly( 2 ).with( 1337u ).returns( "local_target" );
     MOCK_EXPECT( localAgentResolver.ResolveIdentifier ).once().with( firingUnitIdentifier ).returns( "local" );
     MOCK_EXPECT( dotationResolver.ResolveIdentifier ).once().returns( rpr::EntityType( "2 8 71 2 10 0 0" ) );
     // platforms
