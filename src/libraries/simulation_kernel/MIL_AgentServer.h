@@ -191,6 +191,7 @@ private:
     int waitLatency_;
     std::string localTime_;
     MT_Profiler profiler_;
+    MT_Profiler loopTimer_;
     MIL_EffectManager* pEffectManager_;
     MIL_EntityManager* pEntityManager_;
     DEC_Workspace* pWorkspaceDIA_;

@@ -76,6 +76,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pProcessMonitor_      ( new ProcessMonitor() )
     , pObjectFactory_       ( new MIL_ObjectFactory( config.IsLegacy() ) )
 {
+    loopTimer_.Start();
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
     config_.AddFileToCRC( config_.GetExerciseFile() );
@@ -259,29 +260,35 @@ namespace
 //-----------------------------------------------------------------------------
 void MIL_AgentServer::MainSimLoop()
 {
+    const double lastTime = loopTimer_.Stop();
+    loopTimer_.Reset();
+    loopTimer_.Start();
     pProfilerMgr_->NotifyTickBegin( GetCurrentTimeStep() );
     SendMsgBeginTick();
     GetUrbanCache().Clear();
     pEntityManager_->Update();
     pMeteoDataManager_->Update( nRealTime_ );
     pResourceNetworkModel_->Update();
+    MT_Profiler pathfind;
+    pathfind.Start();
     pPathFindManager_->UpdateInSimulationThread();
+    pathfind.Stop();
     SendMsgEndTick();
     pProcessMonitor_->MonitorProcess();
-    MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f DEC:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms %d ticks - PathFind : %d short %d long %d done - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
-        nCurrentTimeStep_, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(),
-        pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), pEntityManager_->GetPopulationsDecisionTime(), sword::Brain::GetTotalTime(),
-        pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(),
-        rWaitTime_, waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(),
-        pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     KnowledgesVisitor visitor;
     pEntityManager_->Accept( visitor );
+    pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
+    MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d %.2fms - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f DEC:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms %d ticks - PathFind : %d short %d long %d done %.2fms - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
+        nCurrentTimeStep_, lastTime, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(),
+        pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), pEntityManager_->GetPopulationsDecisionTime(), sword::Brain::GetTotalTime(),
+        pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(),
+        rWaitTime_, waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfind.GetLastTime(),
+        pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     MT_LOG_INFO_MSG( MT_FormatString( "%d Objects - %d Knowledges ( %d Knowledge agents, %d Knowledge objects, %d Knowledge populations )" , pEntityManager_->GetObjectsCount(),
                      visitor.Count(), visitor.agents_, visitor.objects_, visitor.populations_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "%d Agents - %d Automats - %d Crowds" , pEntityManager_->GetAgentsCount(),
                             pEntityManager_->GetAutomatsCount(), pEntityManager_->GetCrowdsCount() ) );
     sword::Brain::ResetProfiling( config_.IsProfilingEnabled() );
-    pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     pEntityManager_->Clean();
     pCheckPointManager_->Update();
     Wait();
