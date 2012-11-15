@@ -40,7 +40,7 @@ protected:
 signals:
     //! @name Signals
     //@{
-    virtual void Error( const QString& );
+    void Error( const QString& );
     //@}
 };
 }
