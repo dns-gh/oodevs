@@ -37,6 +37,7 @@ PlatformDelegate::PlatformDelegate( dispatcher::Agent_ABC& holder, const kernel:
     , holder_                                           ( holder )
     , converter_                                        ( converter )
     , onRoad_                                           ( false )
+    , position_                                         ( converter_.ConvertFromGeo( geometry::Point2d( holder.GetPosition().Y(), holder.GetPosition().X() ) ) )
 {
     CreatePlatforms( timeStep );
 }
@@ -115,7 +116,7 @@ void PlatformDelegate::CreatePlatforms( float timeStep )
         unsigned count = component.GetCount();
         while( count-- )
         {
-            platforms_.push_back( new Platform( component.GetType(), timeStep ) );
+            platforms_.push_back( new Platform( component.GetType(), timeStep, position_ ) );
             sorted_.push_back( &platforms_.back() );
         }
     }

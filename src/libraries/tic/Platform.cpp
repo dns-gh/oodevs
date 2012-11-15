@@ -17,7 +17,7 @@ using namespace tic;
 // Name: Platform constructor
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-Platform::Platform( const kernel::ComponentType& type, float timeStep )
+Platform::Platform( const kernel::ComponentType& type, float timeStep, const geometry::Point2f& position )
     : dispatcher::SimpleEntity< >( 0 )
     , type_    ( type )
     , timeStep_( timeStep )
@@ -25,6 +25,8 @@ Platform::Platform( const kernel::ComponentType& type, float timeStep )
     , speed_   ( 0 )
     , heading_ ( 0 )
     , altitude_( 0 )
+    , previous_( position )
+    , position_( position )
     , isMounted_( false )
 {
     // NOTHING

@@ -37,7 +37,7 @@ class Platform : public dispatcher::SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             Platform( const kernel::ComponentType& type, float timeStep );
+             Platform( const kernel::ComponentType& type, float timeStep, const geometry::Point2f& position );
     virtual ~Platform();
     //@}
 
