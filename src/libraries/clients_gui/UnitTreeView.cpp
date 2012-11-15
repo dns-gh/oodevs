@@ -88,7 +88,9 @@ void UnitTreeView::NotifyUpdated( const kernel::ModelLoaded& )
 // -----------------------------------------------------------------------------
 void UnitTreeView::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
+    blockSignals( true );
     Purge();
+    blockSignals( false );
 }
 
 // -----------------------------------------------------------------------------
