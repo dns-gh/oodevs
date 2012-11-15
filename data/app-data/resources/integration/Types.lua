@@ -309,3 +309,8 @@ eObus_Fumigenes = 3
 eObus_Eclairant = 4
 eObus_Mine = 5
 eObus_effect = 6
+
+-- Random style
+eRandomCurious = 0
+eRandomFlee = 1
+eRandomStay = 2
