@@ -435,7 +435,10 @@ void ADN_Equipement_GUI::InitializeSimulationCombos()
 // -----------------------------------------------------------------------------
 helpers::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
 {
-    return static_cast< helpers::ArmorInfos* >( pArmorCombos_.at( currentTab_ )->GetCurrentData() );
+    std::map< E_DotationFamily, ADN_ComboBox_Vector* >::const_iterator it = pArmorCombos_.find( currentTab_ );
+    if( it == pArmorCombos_.end() )
+        throw std::out_of_range( "cannot find armor element" );
+    return static_cast< helpers::ArmorInfos* >( it->second->GetCurrentData() );
 }
 
 // -----------------------------------------------------------------------------
@@ -444,7 +447,10 @@ helpers::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
 // -----------------------------------------------------------------------------
 helpers::ADN_UrbanAttritionInfos* ADN_Equipement_GUI::GetSelectedMaterial() const
 {
-    return static_cast< helpers::ADN_UrbanAttritionInfos* >( pMaterialCombos_.at( currentTab_ )->GetCurrentData() );
+    std::map< E_DotationFamily, ADN_ComboBox_Vector* >::const_iterator it = pMaterialCombos_.find( currentTab_ );
+    if( it == pMaterialCombos_.end() )
+        throw std::out_of_range( "cannot find material element" );
+    return static_cast< helpers::ADN_UrbanAttritionInfos* >( it->second->GetCurrentData() );
 }
 
 // -----------------------------------------------------------------------------
