@@ -26,7 +26,11 @@ bool ActionScheduler::sTimingComparator::operator()( const actions::Action_ABC* 
     const actions::ActionTiming* rTiming = rhs->Retrieve< actions::ActionTiming >();
     if( !lTiming || !rTiming )
         return false;
-    return lTiming->GetTime() < rTiming->GetTime();
+    const QDateTime ltime = lTiming->GetTime();
+    const QDateTime rtime = rTiming->GetTime();
+    if( ltime == rtime )
+        return lhs->GetId() < rhs->GetId();
+    return ltime < rtime;
 }
 
 // -----------------------------------------------------------------------------
