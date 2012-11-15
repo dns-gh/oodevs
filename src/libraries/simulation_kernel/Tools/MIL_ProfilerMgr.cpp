@@ -44,6 +44,33 @@ MIL_ProfilerMgr::~MIL_ProfilerMgr()
 }
 
 //-----------------------------------------------------------------------------
+// Name: MIL_ProfilerMgr::NotifyTickBegin
+// Created: AML 03-05-21
+//-----------------------------------------------------------------------------
+void MIL_ProfilerMgr::NotifyTickBegin( unsigned int /*nTick*/ )
+{
+    tickDurationProfiler_.Start();
+}
+
+//-----------------------------------------------------------------------------
+// Name: MIL_ProfilerMgr::GetLastTickDuration
+// Created: AML 03-05-21
+//-----------------------------------------------------------------------------
+double MIL_ProfilerMgr::GetLastTickDuration()
+{
+    return tickDurationProfiler_.GetLastTime();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ProfilerMgr::IsProfilingEnabled
+// Created: NLD 2005-03-15
+// -----------------------------------------------------------------------------
+bool MIL_ProfilerMgr::IsProfilingEnabled() const
+{
+    return bEnabled_;
+}
+
+//-----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::NotifyTickEnd
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------

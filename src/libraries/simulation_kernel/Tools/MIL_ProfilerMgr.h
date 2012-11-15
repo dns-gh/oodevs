@@ -56,6 +56,4 @@ private:
     //@}
 };
 
-#include "MIL_ProfilerMgr.inl"
-
 #endif // __MIL_ProfilerMgr_h_
