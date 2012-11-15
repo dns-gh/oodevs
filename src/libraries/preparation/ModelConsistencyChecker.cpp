@@ -526,7 +526,7 @@ void ModelConsistencyChecker::CheckProfileNumberOfElements()
         const UserProfile* profile = model_.profiles_.Find( *it );
         if( profile )
         {
-            if( profile->GetAutomatAndPopulationsProfilesCount() > 12 )
+            if( profile->GetAutomatAndPopulationsProfilesCount() > 12 && profile->IsLowLevel() )
                 AddError( eProfileNumberTooHigh, 0, *it );
             if( profile->GetUserRole().empty() )
                 AddError( eProfileNoRole, 0, *it );

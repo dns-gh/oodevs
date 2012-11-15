@@ -61,6 +61,7 @@ enum E_ConsistencyCheck
     eMelmil,
     eDeletedPopulationUrbanBlocks,
     eDiffusionListCleaned,
+    eSignature,
     eOthers,
     eOthersMask,
 };

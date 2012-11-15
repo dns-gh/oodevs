@@ -26,7 +26,7 @@ namespace
     {
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
-            || type == eProfileNoRole || type == eNoOrbat
+            || type == eProfileNoRole || type == eNoOrbat || type == eSignature
             || type == eBadLogisticSubordinate || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
             || type == eDiffusionList || type == eMelmil || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks;
     }
@@ -125,6 +125,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eMelmil ] = tools::translate( "ModelConsistencyDialog", "Melmil file is missing.");
     errorDescriptions_[ eDeletedPopulationUrbanBlocks ] = "%1";
     errorDescriptions_[ eDiffusionListCleaned ] = tools::translate( "ModelConsistencyDialog", "Invalid unit removed from diffusion list." );
+    errorDescriptions_[ eSignature ] = "%1";
     errorDescriptions_[ eOthers ] = "%1";
 }
 
