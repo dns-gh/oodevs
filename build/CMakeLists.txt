@@ -156,7 +156,7 @@ target_link_libraries( clients_kernel
 )
 
 # actions
-add_target( actions common "libraries/actions" OPTIONS qt3 protocol )
+add_target( actions common "libraries/actions" OPTIONS qt3 protocol warnings )
 target_link_libraries( actions clients_kernel )
 
 # reports
@@ -201,7 +201,7 @@ add_target( 3a_test tests "tests/3a_test" OPTIONS protocol test )
 target_link_libraries( 3a_test 3a )
 
 # actions_test
-add_target( actions_test tests "tests/actions_test" OPTIONS protocol test )
+add_target( actions_test tests "tests/actions_test" OPTIONS protocol test warnings )
 target_link_libraries( actions_test actions )
 
 # propagation_test
