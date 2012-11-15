@@ -69,12 +69,26 @@ void ConfigurationManipulator::Commit()
 {
     if( document_.get() )
     {
+        bool ok = false;
+        unsigned int nbError = 0;
+        while( !ok )
         {
-            xml::xofstream xos( outputPath_ );
-            //tools::SchemaWriter().WriteExerciseSchema( xos, "session" );
-            document_->Serialize( xos );
+            try
+            {
+                {
+                    xml::xofstream xos( outputPath_ );
+                    //tools::SchemaWriter().WriteExerciseSchema( xos, "session" );
+                    document_->Serialize( xos );
+                }
+                tools::WriteXmlCrc32Signature( outputPath_ );
+                ok = true;
+            }
+            catch( std::exception& e )
+            {
+                if( ++nbError == 42 )   // avoid endless loop
+                    throw e;
+            }
         }
-        tools::WriteXmlCrc32Signature( outputPath_ );
     }
 }
 
