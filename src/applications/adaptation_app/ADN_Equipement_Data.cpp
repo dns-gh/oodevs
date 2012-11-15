@@ -11,8 +11,6 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Project_Data.h"
-#include "ADN_OpenFile_Exception.h"
-#include "ADN_SaveFile_Exception.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_DataException.h"

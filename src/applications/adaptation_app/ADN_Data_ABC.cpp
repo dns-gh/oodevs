@@ -10,8 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Data_ABC.h"
 #include "ADN_Project_Data.h"
-#include "ADN_OpenFile_Exception.h"
-#include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
 #include "tools/Loader_ABC.h"

@@ -18,8 +18,6 @@
 #include "ADN_SymbolWidget.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "ADN_DataException.h"
-#include "ADN_OpenFile_Exception.h"
-#include "ADN_SaveFile_Exception.h"
 #include "ADN_UnitSymbols_Data.h"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"

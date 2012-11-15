@@ -27,8 +27,7 @@
 */
 // Created: AGN 2003-12-09
 // =============================================================================
-class ADN_DataException
-: public ADN_Exception_ABC
+class ADN_DataException : public ADN_Exception_ABC
 {
 public:
     //! @name Constructors/Destructor

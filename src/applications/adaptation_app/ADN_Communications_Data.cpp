@@ -22,8 +22,6 @@
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
-#include "ADN_OpenFile_Exception.h"
-#include "ADN_SaveFile_Exception.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_Data::ADN_Communications_Data

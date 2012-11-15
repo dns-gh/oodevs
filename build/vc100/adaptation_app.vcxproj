@@ -325,7 +325,6 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_OpenFile_Exception.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Data_ABC.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FileLoaderObserver.cpp" />
@@ -1864,7 +1863,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ObjectCreator_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DataException.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_OpenFile_Exception.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Data_ABC.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>

@@ -451,9 +451,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.cpp">
       <Filter>Source Files\Tools\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_OpenFile_Exception.cpp">
-      <Filter>Source Files\Tools\Exceptions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.cpp">
       <Filter>Source Files\Tools\Exceptions</Filter>
     </ClCompile>
@@ -1264,9 +1261,6 @@
       <Filter>Source Files\Tools\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Exception_ABC.h">
-      <Filter>Source Files\Tools\Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_OpenFile_Exception.h">
       <Filter>Source Files\Tools\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SaveFile_Exception.h">

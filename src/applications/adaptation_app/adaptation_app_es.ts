@@ -3368,19 +3368,6 @@ The spawn capacity will be disabled.</source>
     </message>
 </context>
 <context>
-    <name>ADN_OpenFile_Exception</name>
-    <message>
-        <source>File error</source>
-        <translation>Error de archivo</translation>
-    </message>
-    <message>
-        <source>Could not open file &apos;%1&apos;.
-Make sure the file exists.</source>
-        <translation>No se puede abrir el archivo &apos;%1&apos;.
-Asegúrese que el archivo existe.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_OpenMode_Dialog</name>
     <message>
         <source>Open mode configuration</source>
