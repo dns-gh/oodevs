@@ -1896,7 +1896,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Tiredness</source>
-        <translation>Tiredness</translation>
+        <translation>Fatigue</translation>
     </message>
     <message>
         <source>Thresholds</source>
