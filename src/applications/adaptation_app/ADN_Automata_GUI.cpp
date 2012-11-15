@@ -46,7 +46,6 @@
 ADN_Automata_GUI::ADN_Automata_GUI( ADN_Automata_Data& data )
     : ADN_GUI_ABC( "ADN_Automata_GUI" )
     , data_         ( data )
-    , pAutomataList_( 0 )
     , pFilter_      ( 0 )
 {
     // NOTHING
@@ -111,8 +110,8 @@ void ADN_Automata_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_Automata_ListView >* pSearchListView = new ADN_SearchListView< ADN_Automata_ListView >( this, data_.GetAutomata(), vInfosConnectors );
-    pAutomataList_ = pSearchListView->GetListView();
-    pAutomataList_->setObjectName( strClassName_ + "_List" );
+    pListView_ = pSearchListView->GetListView();
+    pListView_->setObjectName( strClassName_ + "_List" );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
@@ -290,7 +289,7 @@ void ADN_Automata_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 void ADN_Automata_GUI::OnItemAdded( const std::string& name )
 {
     pFilter_->Add( name );
-    pAutomataList_->Update();
+    static_cast< ADN_Automata_ListView* >( pListView_ )->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -300,5 +299,5 @@ void ADN_Automata_GUI::OnItemAdded( const std::string& name )
 void ADN_Automata_GUI::OnItemRemoved( const std::string& name )
 {
     pFilter_->Remove( name );
-    pAutomataList_->Update();
+    static_cast< ADN_Automata_ListView* >( pListView_ )->Update();
 }

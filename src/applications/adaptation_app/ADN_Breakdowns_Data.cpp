@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_Data.h"
 
+#include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Project_Data.h"
@@ -302,4 +303,15 @@ QStringList ADN_Breakdowns_Data::GetBreakdownsThatUse( ADN_Equipement_Data::Cate
             if( ( *itPart )->ptrPart_.GetData()->strName_ == part.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Breakdowns_Data::CheckDatabaseValidity
+// Created: ABR 2012-11-15
+// -----------------------------------------------------------------------------
+void ADN_Breakdowns_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( ADN_Breakdowns_Data::CIT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+        if( ( *it )->vRepairParts_.size() == 0 )
+            checker.AddError( eMissingPart, ( *it )->strName_.GetData(), eBreakdowns );
 }

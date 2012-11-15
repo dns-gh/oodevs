@@ -14,7 +14,6 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
 #include "ADN_Composantes_Data.h"
-#include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 

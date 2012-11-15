@@ -10,18 +10,27 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ConsistencyDialog.h"
 #include "moc_ADN_ConsistencyDialog.cpp"
+#include "ADN_Workspace.h"
 #include "clients_gui/FilterProxyModel.h"
 #include "clients_kernel/VariantPointer.h"
 #include <boost/assign/list_of.hpp>
 
 namespace
 {
-    bool IsError( E_ConsistencyCheck /* type */ )
+    bool IsError( E_ConsistencyCheck type )
     {
-        return false; // $$$$ ABR 2012-06-07: No error yet, only warning, to be continued
+        return type == eMissingPart ||
+               type == eMissingBreakdown ||
+               type == eMissingConvoy ||
+               type == eMissingConvoyMission ||
+               type == eMissingGeometry ||
+               type == eMissingDecisionalModel ||
+               type == eMissingUnitOnAutomat ||
+               type == eMissingPCOnAutomat ||
+               type == eMissingArmor;
     }
 
-#define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
+#define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
 
     E_ConsistencyCheck Convert( E_ConsistencyCheck type )
     {
@@ -45,22 +54,28 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     horizontalHeaders_ << "" << tr( "Description" );
 
     // Type checkbox
-    CreateCheckbox( boost::assign::map_list_of( eMissingMask,    tr( "Initialization" ) )
+    CreateCheckbox( boost::assign::map_list_of( eMissingMask, tr( "Initialization" ) )
                                               ( eUniquenessMask, tr( "Unicity" ) )
-                                              ( eOthersMask,     tr( "Others" ) ) );
-
-    ShowLevelFilter( false );
+                                              ( eOthersMask, tr( "Others" ) ) );
 
     // Fill errors text
-    errorDescriptions_[ eNNoUniqueness  ] = tr( "Duplicate NNO code for %1." );
-    errorDescriptions_[ eEmatUniqueness ] = tr( "Duplicate EMAT8 code for %1." );
-
-    errorDescriptions_[ eMissingNNo     ] = tr( "%1 has no NNO code defined." );
-    errorDescriptions_[ eMissingEmat    ] = tr( "%1 has no EMAT8 code defined." );
-
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1." );
-    errorDescriptions_[ eMissingPart ]            = tr( "The breakdown '%1' has no replacement part." );
-    errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission '%1' has no type defined for a localisation composite parameter." );
+    errorDescriptions_[ eNNoUniqueness  ]         = tr( "Duplicate NNO code for %1." );
+    errorDescriptions_[ eEmatUniqueness ]         = tr( "Duplicate EMAT8 code for %1." );
+
+    errorDescriptions_[ eMissingNNo     ]         = tr( "%1 has no NNO code defined." );
+    errorDescriptions_[ eMissingEmat    ]         = tr( "%1 has no EMAT8 code defined." );
+    errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission %1 has no type defined for a localisation composite parameter." );
+
+    errorDescriptions_[ eMissingPart ]            = tr( "The breakdown %1 has no replacement part, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingBreakdown ]       = tr( "Equipment %1 requires at least one breakdown, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingConvoy ]          = tr( "Convoy unit type not defined in Log/Supply, because of this, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingConvoyMission ]   = tr( "Convoy mission not defined in Log/Supply, because of this, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingGeometry ]        = tr( "No geometry defined for object %1, because of this, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingDecisionalModel ] = tr( "No decisional model defined for unit %1, because of this, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingUnitOnAutomat ]   = tr( "Automat %1 requires at least one sub unit, because of this, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingPCOnAutomat ]     = tr( "Automat %1 requires at least one PC, because of this, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingArmor ]           = tr( "At least one armor must be defined, because of this, the simulation can't start with this database." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
@@ -119,36 +134,32 @@ void ADN_ConsistencyDialog::UpdateDataModel()
         const ADN_ConsistencyChecker::ConsistencyError& error = *it;
         QList< QStandardItem* > items;
 
-        if( ( error.type_ & eMissingMask ) != 0 )
+        QString text = errorDescriptions_[ error.type_ ];
+        if( text.contains( "%1" ) )
         {
-            assert( error.optional_.empty() && error.items_.size() == 1 );
-            QString text = errorDescriptions_[ error.type_ ];
-            assert( text.contains( "%1" ) );
-            if( error.items_.front()->targetTab_ == eComposantes )
-                text = text.arg( tr( "The equipement '" ) + error.items_.front()->targetName_ + "'" );
-            else if ( error.items_.front()->targetTab_ == eEquipement )
-                text = text.arg( tr( "The resource '" ) + error.items_.front()->targetName_ + "'" );
-            else
-                text = text.arg( error.items_.front()->targetName_ );
-            AddIcon( error.items_, error.type_, items );
-            AddItem( text, text, error.items_, error.type_, items );
+            if( error.type_ == eMissingNNo || error.type_ == eMissingEmat ) // exception
+            {
+                if( error.items_.front()->targetTab_ == eComposantes )
+                    text = text.arg( tr( "The equipement '" ) + error.items_.front()->targetName_ + "'" );
+                else if ( error.items_.front()->targetTab_ == eEquipement )
+                    text = text.arg( tr( "The resource '" ) + error.items_.front()->targetName_ + "'" );
+                else
+                {
+                    assert( false );
+                }
+            }
+            else // standard
+            {
+                QString itemList;
+                for( ADN_ConsistencyChecker::CIT_Items it = error.items_.begin(); it != error.items_.end(); ++it )
+                    itemList += ( ( itemList.isEmpty() ) ? "'" : ( it + 1 == error.items_.end() ) ? tr( " and '" ) : ", '" ) + ( *it )->targetName_ + "'";
+                text = text.arg( itemList );
+            }
         }
-        else if( ( error.type_ & eUniquenessMask ) != 0 )
-        {
-            QString text = errorDescriptions_[ error.type_ ];
-            assert( text.contains( "%1" ) );
-            QString itemList;
-            for( ADN_ConsistencyChecker::CIT_Items it = error.items_.begin(); it != error.items_.end(); ++it )
-                itemList += ( ( itemList.isEmpty() ) ? "'" : ( it + 1 == error.items_.end() ) ? tr( " and '" ) : ", '" ) + ( *it )->targetName_ + "'";
-            text = text.arg( itemList );
-            AddIcon( error.items_, error.type_, items );
-            AddItem( text, text, error.items_, error.type_, items );
-        }
-        else
-        {
-            assert( false );
-        }
-        assert( !items.empty() );
+        AddIcon( error.items_, error.type_, items );
+        AddItem( text, text, error.items_, error.type_, items );
+
+        assert( items.size() == 2 );
         dataModel_->appendRow( items );
     }
 }

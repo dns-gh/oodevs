@@ -14,7 +14,6 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
-#include "ADN_GuiTools.h"
 #include "tools/Loader_ABC.h"
 #include <tools/XmlCrc32Signature.h>
 #include <boost/bind.hpp>
@@ -101,10 +100,10 @@ void ADN_Data_ABC::WriteArchive( xml::xostream& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Data_ABC::IsValidDatabase
+// Name: ADN_Data_ABC::CheckDatabaseValidity
 // Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
-bool ADN_Data_ABC::IsValidDatabase()
+void ADN_Data_ABC::CheckDatabaseValidity( ADN_ConsistencyChecker& ) const
 {
-    return true;
+    // NOTHING
 }

@@ -70,7 +70,6 @@ private:
     //! @name Member data
     //@{
     ADN_Automata_Data& data_;
-    ADN_Automata_ListView* pAutomataList_;
     UnitsFilter* pFilter_;
     //@}
 };

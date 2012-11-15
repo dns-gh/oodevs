@@ -24,6 +24,8 @@ namespace tools
     class Loader_ABC;
 }
 
+class ADN_ConsistencyChecker;
+
 typedef std::list<std::string>         T_StringList;
 typedef T_StringList::iterator        IT_StringList;
 typedef T_StringList::const_iterator CIT_StringList;
@@ -51,7 +53,7 @@ public:
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
     virtual void Save();
-    virtual bool IsValidDatabase();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output );
     //@}

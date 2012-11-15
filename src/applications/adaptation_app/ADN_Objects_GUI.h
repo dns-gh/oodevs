@@ -15,6 +15,7 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_EditLine.h"
 
+class Q3GroupBox;
 class ADN_Objects;
 class ADN_Objects_Data;
 
@@ -163,12 +164,13 @@ public:
     void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
     //@}
 
-    private slots:
+private slots:
     //! @name slots
     //@{
     void OnSpeedImpactComboChanged();
     void OnGeometryChanged( bool );
     void OnSelectionChanged();
+    void OnAttritionToggled( QWidget* widget );
     //@}
 
 private:
@@ -183,6 +185,10 @@ private:
     ADN_EditLine_IntPercentage* floodHurtHuman3_;
     ADN_EditLine_IntPercentage* floodHurtHumanE_;
     ADN_EditLine_IntPercentage* floodDeadHuman_;
+    Q3GroupBox* attrition_;
+    Q3GroupBox* attritionDotation_;
+    Q3GroupBox* attritionMine_;
+    Q3GroupBox* attritionExplosive_;
     QWidget* pContent_;
     QWidget* pCapacities_;
     //@}

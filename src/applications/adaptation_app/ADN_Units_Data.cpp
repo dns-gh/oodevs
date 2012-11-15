@@ -21,7 +21,7 @@
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_UnitSymbols_Data.h"
-#include "ADN_GuiTools.h"
+#include "ADN_ConsistencyChecker.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
@@ -786,14 +786,13 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Units_Data::IsValidDatabase
+// Name: ADN_Units_Data::CheckDatabaseValidity
 // Created: LGY 2012-09-21
 // -----------------------------------------------------------------------------
-bool ADN_Units_Data::UnitInfos::IsValidDatabase()
+void ADN_Units_Data::UnitInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     if( ptrModel_.GetData() == 0 )
-        return ADN_GuiTools::MissingDecisionalModel( strName_.GetData() );
-    return true;
+        checker.AddError( eMissingDecisionalModel, strName_.GetData(), eUnits );
 }
 
 // -----------------------------------------------------------------------------
@@ -945,13 +944,11 @@ QStringList ADN_Units_Data::GetUnitsThatUse( helpers::LogisticSupplyClass& suppl
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Units_Data::IsValidDatabase
+// Name: ADN_Units_Data::CheckDatabaseValidity
 // Created: LGY 2012-09-21
 // -----------------------------------------------------------------------------
-bool ADN_Units_Data::IsValidDatabase()
+void ADN_Units_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
-        if( !(*it)->IsValidDatabase() )
-            return false;
-    return true;
+    for( CIT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+        (*it)->CheckDatabaseValidity( checker );
 }

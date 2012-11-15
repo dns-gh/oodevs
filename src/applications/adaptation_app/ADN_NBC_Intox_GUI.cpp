@@ -16,6 +16,7 @@
 #include "ADN_NBC_Datas.h"
 #include "ADN_GroupBox.h"
 #include "ADN_MultiPercentage.h"
+#include "ADN_Tools.h"
 
 typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
 

@@ -89,6 +89,7 @@ public:
     //@{
     void FilesNeeded( T_StringList& vFiles ) const;
     void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     T_BreakdownInfoVector& GetBreakdowns();
     ADN_Breakdowns_Data::BreakdownInfo* FindBreakdown( const std::string& strName );

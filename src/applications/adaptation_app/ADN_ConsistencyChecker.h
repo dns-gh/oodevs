@@ -12,7 +12,7 @@
 
 #include "clients_kernel/ConsistencyChecker_ABC.h"
 #include "ADN_ConsistencyErrorTypes.h"
-#include "ADN_Missions_Data.h"
+#include "ADN_NavigationInfos.h"
 
 // =============================================================================
 /** @class  ADN_ConsistencyChecker
@@ -34,6 +34,9 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckConsistency();
+    void AddError( ConsistencyError error );
+    void AddError( E_ConsistencyCheck type, const std::string& name, int tab, int subTab = -1 );
+    ADN_NavigationInfos::GoTo* CreateGotoInfo( const std::string& name, int tab, int subTab = -1 );
     //@}
 
 private: // NNO Consistency
@@ -57,17 +60,11 @@ private: // NNO Consistency
 
     //! @name Helpers
     //@{
+    void CheckValidDatabase();
+
     void CheckNNOConsistency();
-    void CheckMissionsTypes();
-    void CheckBreakdownsBackup();
-    void CheckMissionTypes( const ADN_Missions_Data::T_Mission_Vector& missions, int subTab );
-    void CheckParameters( const ADN_Missions_Data::T_MissionParameter_Vector& parameters, const std::string& missionName, int subTab );
-    void CheckMissionParameters();
-    ADN_NavigationInfos::GoTo* CreateGotoInfo( const std::string& name, int tab, int subTab = -1 );
     bool IsAlreadyRegistered( const std::string& code, E_ConsistencyCheck type ) const;
-    void AddError( E_ConsistencyCheck type, const NNOElement& element );
-    void AddError( E_ConsistencyCheck type, const T_NNOElements& elements );
-    void AddError( E_ConsistencyCheck type, const ADN_Missions_Mission& rhs, const ADN_Missions_Mission& lhs, int subTab );
+    void AddNNOError( E_ConsistencyCheck type, const T_NNOElements& elements );
     //@}
 };
 

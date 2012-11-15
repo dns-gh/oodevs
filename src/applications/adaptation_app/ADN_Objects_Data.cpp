@@ -403,6 +403,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
             explosiveCategory_ = pCategory;
             useExplo_ = true;
         }
+        if( !useAmmo_.GetData() && !useMine_.GetData() && !useExplo_.GetData() )
+            throw ADN_DataException( "Donnée invalide", "Capacité attrition invalide" );
     }
     attritionSurface_ = xis.attribute< double >( "attrition-surface", 0 );
     ph_ = xis.attribute< double >( "ph", 0 );
@@ -422,14 +424,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream&
     xos << xml::attribute( "attrition-surface", attritionSurface_.GetData() )
         << xml::attribute( "ph", ph_ );
 }
-
-bool ADN_Objects_Data::ADN_CapacityInfos_Attrition::IsValidDatabase() const
-{
-    return ( ( useAmmo_.GetData() && ammoCategory_.GetData() != 0 ) ||
-             ( useMine_.GetData() && mineCategory_.GetData() != 0 ) ||
-             ( useExplo_.GetData() && explosiveCategory_.GetData() != 0 ) );
-}
-
 //@}
 
 //! @name ADN_CapacityInfos_UrbanDestruction
@@ -1325,15 +1319,13 @@ ADN_Objects_Data::~ADN_Objects_Data()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::IsValidDatabase
+// Name: ADN_Objects_Data::CheckDatabaseValidity
 // Created: JSR 2012-02-16
 // -----------------------------------------------------------------------------
-bool ADN_Objects_Data::IsValidDatabase()
+void ADN_Objects_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
-        if( !( *it )->IsValidDatabase() )
-            return false;
-    return true;
+    for( CIT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+        ( *it )->CheckDatabaseValidity( checker );
 }
 
 //-----------------------------------------------------------------------------

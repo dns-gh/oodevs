@@ -80,15 +80,13 @@ void ADN_Data_Container::Save()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Data_Container::IsValidDatabase
+// Name: ADN_Data_Container::CheckDatabaseValidity
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
-bool ADN_Data_Container::IsValidDatabase()
+void ADN_Data_Container::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    bool result = true;
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        result = result && it->second->IsValidDatabase();
-    return result;
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->CheckDatabaseValidity( checker );
 }
 
 // -----------------------------------------------------------------------------

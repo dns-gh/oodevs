@@ -14,7 +14,6 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Urban_GUI.h"
-#include "ADN_GuiTools.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 

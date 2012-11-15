@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_Data.h"
 
+#include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
@@ -437,4 +438,60 @@ QStringList ADN_Missions_Data::GetAllMissionsThatUse( ADN_Objects_Data_ObjectInf
     FillUsingMission( object.strName_.GetData(), populationMissions_, result, tools::translate( "ADN_Missions_data", "Crowd missions" ) );
     FillUsingMission( object.strName_.GetData(), fragOrders_, result, tools::translate( "ADN_Missions_data", "Fragmentary orders" ) );
     return result;
+}
+
+namespace
+{
+    void CheckMissionTypeUniqueness( ADN_ConsistencyChecker& checker, const ADN_Missions_Data::CIT_Mission_Vector& rhs, const ADN_Missions_Data::T_Mission_Vector& missions, int subTab )
+    {
+        for( ADN_Missions_Data::CIT_Mission_Vector lhs = rhs + 1; lhs != missions.end(); ++lhs )
+            if( (*lhs)->strName_.GetData() != (*rhs)->strName_.GetData() &&
+                (*lhs)->diaType_.GetData() == (*rhs)->diaType_.GetData() )
+            {
+                ADN_ConsistencyChecker::ConsistencyError error( eMissionTypeUniqueness );
+                error.items_.push_back( checker.CreateGotoInfo( (*rhs)->strName_.GetData(), eMissions, subTab ) );
+                error.items_.push_back( checker.CreateGotoInfo( (*lhs)->strName_.GetData(), eMissions, subTab ) );
+                checker.AddError( error );
+            }
+    }
+
+    void CheckParameters( ADN_ConsistencyChecker& checker, const ADN_Missions_Data::T_MissionParameter_Vector& parameters, const std::string& missionName, int subTab )
+    {
+        for( ADN_Missions_Data::CIT_MissionParameter_Vector it = parameters.begin(); it != parameters.end(); ++it )
+            if( ( *it )->type_.GetData() == eMissionParameterTypeLocationComposite )
+            {
+                bool hasChoice = false;
+                for( std::size_t i = 0; i < ( *it )->choices_.size() && !hasChoice; ++i )
+                    hasChoice = ( *it )->choices_[ i ]->isAllowed_.GetData();
+                if( !hasChoice )
+                    checker.AddError( eMissingChoiceComposite, missionName, eMissions, subTab );
+            }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::CheckDatabaseValidity
+// Created: ABR 2012-11-15
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
+{
+    for( ADN_Missions_Data::CIT_Mission_Vector it = unitMissions_.begin(); it != unitMissions_.end(); ++it )
+    {
+        CheckMissionTypeUniqueness( checker, it, unitMissions_, 0 );
+        CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 0 );
+    }
+    for( ADN_Missions_Data::CIT_Mission_Vector it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
+    {
+        CheckMissionTypeUniqueness( checker, it, automatMissions_, 1 );
+        CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 1 );
+    }
+    for( ADN_Missions_Data::CIT_Mission_Vector it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
+    {
+        CheckMissionTypeUniqueness( checker, it, populationMissions_, 2 );
+        CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 2 );
+    }
+    for( ADN_Missions_Data::CIT_FragOrder_Vector it = fragOrders_.begin(); it != fragOrders_.end(); ++it )
+    {
+        CheckParameters( checker, ( *it )->parameters_, ( *it )->strName_.GetData(), 3 );
+    }
 }

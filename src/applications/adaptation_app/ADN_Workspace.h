@@ -29,6 +29,7 @@ class ADN_Categories_Data;
 class ADN_Categories_GUI;
 class ADN_Composantes_Data;
 class ADN_Composantes_GUI;
+class ADN_ConsistencyChecker;
 class ADN_Drawings_Data;
 class ADN_Drawings_GUI;
 class ADN_Equipement_Data;
@@ -109,11 +110,12 @@ public:
     bool Save( const tools::Loader_ABC& fileLoader );
     bool SaveAs( const std::string& filename, const tools::Loader_ABC& fileLoader );
     void ExportHtml( const std::string& strPath );
-    bool ShowInvalidDatabaseWarning();
     void SetOptions( bool symbols, bool noreadonly );
     bool ShowSymbols() const;
 
     ADN_Project_Data& GetProject();
+    ADN_WorkspaceElement_ABC& GetWorkspaceElement( E_WorkspaceElements workspaceElement );
+
     ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& GetNbc();
     ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >& GetLaunchers();
     ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& GetCategories();
@@ -175,6 +177,17 @@ private:
     bool symbols_;
     static ADN_Workspace* pWorkspace_;
 };
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetWorkspaceElement
+// Created: ABR 2012-11-15
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement_ABC& ADN_Workspace::GetWorkspaceElement( E_WorkspaceElements workspaceElement )
+{
+    assert( elements_[ workspaceElement ] != 0 );
+    return *elements_[ workspaceElement ];
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetNbc

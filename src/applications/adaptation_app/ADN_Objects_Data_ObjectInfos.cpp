@@ -10,7 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Objects_Data.h"
-#include "ADN_GuiTools.h"
+#include "ADN_ConsistencyChecker.h"
 
 namespace
 {
@@ -207,19 +207,15 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data_ObjectInfos::IsValidDatabase
+// Name: ADN_Objects_Data_ObjectInfos::CheckDatabaseValidity
 // Created: JSR 2012-02-16
 // -----------------------------------------------------------------------------
-bool ADN_Objects_Data_ObjectInfos::IsValidDatabase()
+void ADN_Objects_Data_ObjectInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    ADN_Objects_Data::ADN_CapacityInfos_Attrition* attrition = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Attrition* >( capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Attrition::TAG ].get() );
-    if( attrition && attrition->bPresent_.GetData() && !attrition->IsValidDatabase() )
-        return ADN_GuiTools::BadObjectAttrition( strName_.GetData() );
-
     for( int i = 0; i < 4; ++i )
         if( geometries_[ i ].GetData() )
-            return true;
-    return ADN_GuiTools::MissingGeometry( strName_.GetData() );
+            return;
+    checker.AddError( eMissingGeometry, strName_.GetData(), eObjects );
 }
 
 // -----------------------------------------------------------------------------

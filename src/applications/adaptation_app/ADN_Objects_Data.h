@@ -118,7 +118,6 @@ public:
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
-        bool IsValidDatabase() const;
     public:
         ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > ammoCategory_;
         ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > mineCategory_;
@@ -636,13 +635,14 @@ public:
 
     typedef ADN_Type_Vector_ABC< ADN_Objects_Data_ObjectInfos > T_ObjectsInfos_Vector;
     typedef T_ObjectsInfos_Vector::iterator                    IT_ObjectsInfos_Vector;
+    typedef T_ObjectsInfos_Vector::const_iterator             CIT_ObjectsInfos_Vector;
 
 //*****************************************************************************
 public:
              ADN_Objects_Data();
     virtual ~ADN_Objects_Data();
 
-    virtual bool IsValidDatabase();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     void FilesNeeded( T_StringList& l ) const;
     void Reset();
     void SaveAttritionInfos( xml::xostream& output );

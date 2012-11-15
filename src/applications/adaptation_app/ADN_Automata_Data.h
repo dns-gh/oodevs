@@ -60,7 +60,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadUnit( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
-        bool IsValidDatabase() const;
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
 
     public:
         ADN_Type_Int                                          nId_;
@@ -81,7 +81,7 @@ public:
 
     void FilesNeeded(T_StringList& l) const;
     void Reset();
-    bool IsValidDatabase();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& ) const;
 
     T_AutomatonInfosVector&  GetAutomata();
     AutomatonInfos*          FindAutomaton( const std::string& strName );

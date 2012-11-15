@@ -213,14 +213,26 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( workable, tr( "Max Animator: " ), vInfosConnectors[ eWorkableCapacity_Size ], tr( "agents" ), eGreaterEqualZero );
 
         // Attrition
-        ADN_GroupBox* attrition = CreateCapacityGroupBox( 1, tr( "Attrition" ), vInfosConnectors[ eAttritionCapacityPresent ] );
-        ADN_GroupBox* dotation = CreateCapacityGroupBox( 2, tr( "Use ammunition" ), vInfosConnectors[ eAttritionCapacity_UseDotation ], attrition );
-        builder.AddField< ADN_ComboBox_Vector >( dotation, tr( "Resource" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
-        ADN_GroupBox* mine = CreateCapacityGroupBox( 2, tr( "Use mine" ), vInfosConnectors[ eAttritionCapacity_UseMine ], attrition );
-        builder.AddField< ADN_ComboBox_Vector >( mine, tr( "Mine" ), vInfosConnectors[ eAttritionCapacity_Mine ] );
-        ADN_GroupBox* explo = CreateCapacityGroupBox( 2, tr( "Use explosive" ), vInfosConnectors[ eAttritionCapacity_UseExplosive ], attrition );
-        builder.AddField< ADN_ComboBox_Vector >( explo, tr( "Explosive" ), vInfosConnectors[ eAttritionCapacity_Explosive ] );
-        Q3GroupBox* attritionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd attrition" ), attrition );
+        attrition_ = CreateCapacityGroupBox( 1, tr( "Attrition" ), vInfosConnectors[ eAttritionCapacityPresent ] );
+        attritionDotation_ = CreateCapacityGroupBox( 2, tr( "Use ammunition" ), vInfosConnectors[ eAttritionCapacity_UseDotation ], attrition_ );
+        builder.AddField< ADN_ComboBox_Vector >( attritionDotation_, tr( "Resource" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
+        attritionMine_ = CreateCapacityGroupBox( 2, tr( "Use mine" ), vInfosConnectors[ eAttritionCapacity_UseMine ], attrition_ );
+        builder.AddField< ADN_ComboBox_Vector >( attritionMine_, tr( "Mine" ), vInfosConnectors[ eAttritionCapacity_Mine ] );
+        attritionExplosive_ = CreateCapacityGroupBox( 2, tr( "Use explosive" ), vInfosConnectors[ eAttritionCapacity_UseExplosive ], attrition_ );
+        builder.AddField< ADN_ComboBox_Vector >( attritionExplosive_, tr( "Explosive" ), vInfosConnectors[ eAttritionCapacity_Explosive ] );
+
+        QSignalMapper* mapper = new QSignalMapper( this );
+        connect( attrition_, SIGNAL( toggled( bool ) ), mapper, SLOT( map() ) );
+        mapper->setMapping( attrition_, attrition_ );
+        connect( attritionDotation_, SIGNAL( toggled( bool ) ), mapper, SLOT( map() ) );
+        mapper->setMapping( attritionDotation_, attritionDotation_ );
+        connect( attritionMine_, SIGNAL( toggled( bool ) ), mapper, SLOT( map() ) );
+        mapper->setMapping( attritionMine_, attritionMine_ );
+        connect( attritionExplosive_, SIGNAL( toggled( bool ) ), mapper, SLOT( map() ) );
+        mapper->setMapping( attritionExplosive_, attritionExplosive_ );
+        connect( mapper, SIGNAL( mapped( QWidget* ) ), this, SLOT( OnAttritionToggled( QWidget* ) ) );
+
+        Q3GroupBox* attritionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd attrition" ), attrition_ );
         builder.AddField< ADN_EditLine_Double >( attritionBox, tr( "Attrition surface" ), vInfosConnectors[ eAttritionCapacity_Surface ], tr( "m²" ), eGreaterEqualZero );
         builder.AddField< ADN_EditLine_Double >( attritionBox, tr( "PH" ), vInfosConnectors[ eAttritionCapacity_Ph ], 0, eZeroOne );
 
@@ -306,7 +318,7 @@ void ADN_Objects_GUI::Build()
         grid->addWidget( trafficability, 3, 1 );
         grid->addWidget( mobility, 4, 0 );
         grid->addWidget( gNBC, 4, 1 );
-        grid->addWidget( attrition, 5, 0 );
+        grid->addWidget( attrition_, 5, 0 );
         grid->addWidget( urbanDestruction, 5, 1 );
         grid->addWidget( workable, 6, 0 );
         grid->addWidget( populationFilter, 6, 1 );
@@ -469,4 +481,45 @@ void ADN_Objects_GUI::OnSelectionChanged()
     LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman3_->GetValidator() ), flood->nNbHurtHumans1_, flood->nNbHurtHumans2_, flood->nNbHurtHumansE_, flood->nNbDeadHumans_ );
     LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHumanE_->GetValidator() ), flood->nNbHurtHumans1_, flood->nNbHurtHumans2_, flood->nNbHurtHumans3_, flood->nNbDeadHumans_ );
     LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodDeadHuman_->GetValidator() ) , flood->nNbHurtHumans1_, flood->nNbHurtHumans2_, flood->nNbHurtHumans3_, flood->nNbHurtHumansE_ );
+}
+
+namespace
+{
+    void UpdateCheckedState( Q3GroupBox* current, Q3GroupBox* first, Q3GroupBox* second )
+    {
+        if( current->isChecked() )
+        {
+            first->setChecked( false );
+            second->setChecked( false );
+        }
+        else if( !first->isChecked() && !second->isChecked() )
+        {
+            current->setChecked( true );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_GUI::OnAttritionToggled
+// Created: ABR 2012-11-15
+// -----------------------------------------------------------------------------
+void ADN_Objects_GUI::OnAttritionToggled( QWidget* widget )
+{
+    if( !widget )
+        return;
+
+    if( widget == attrition_ )
+    {
+        if( attrition_->isChecked() && !attritionDotation_->isChecked() && !attritionMine_->isChecked() && !attritionExplosive_->isChecked() )
+            attritionDotation_->setChecked( true );
+    }
+    else if( widget == attritionDotation_ )
+        UpdateCheckedState( attritionDotation_, attritionMine_, attritionExplosive_ );
+    else if( widget == attritionMine_ )
+        UpdateCheckedState( attritionMine_, attritionDotation_, attritionExplosive_ );
+    else
+    {
+        assert( widget == attritionExplosive_ );
+        UpdateCheckedState( attritionExplosive_, attritionDotation_, attritionMine_ );
+    }
 }

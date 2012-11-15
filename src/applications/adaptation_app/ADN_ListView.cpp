@@ -17,8 +17,7 @@
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
-#include "ADN_Tools.h"
-#include "ADN_GuiTools.h"
+#include "ADN_MultiRefWarningDialog.h"
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_MainWindow.h"
 #include "ADN_ListViewToolTip.h"
@@ -26,6 +25,39 @@
 #include <excel/ExcelFormat.h>
 
 using namespace ExcelFormat;
+
+namespace
+{
+    bool MultiRefWarning( ADN_Ref_ABC* data /* = 0 */ )
+    {
+        ADN_Workspace::T_UsingElements elementsToDelete;
+        ADN_Workspace::T_UsingElements usingElements;
+        if( data )
+        {
+            elementsToDelete = ADN_Workspace::GetWorkspace().GetElementThatWillBeDeleted( data );
+            usingElements = ADN_Workspace::GetWorkspace().GetElementThatUse( data );
+        }
+        if( elementsToDelete.empty() && usingElements.empty() )
+            return QMessageBox::Ok == QMessageBox::warning( 0,
+            qApp->translate( "ADN_Tools", "Multi references" ),
+            qApp->translate( "ADN_Tools", "This item is referenced by at least one other item.\nClick \"Ok\" to destroy it and all its references." ),
+            QMessageBox::Ok     | QMessageBox::Default,
+            QMessageBox::Cancel | QMessageBox::Escape );
+
+        return ADN_MultiRefWarningDialog( 0, elementsToDelete, usingElements ).exec() == QMessageBox::Ok;
+    }
+
+    bool DeletionWarning()
+    {
+        int nResult = QMessageBox::warning( 0,
+            qApp->translate( "ADN_Tools", "Delete?" ),
+            qApp->translate( "ADN_Tools", "Really delete this item?\nClick \"Ok\" to delete it." ),
+            QMessageBox::Ok     | QMessageBox::Default,
+            QMessageBox::Cancel | QMessageBox::Escape );
+
+        return nResult == QMessageBox::Ok;
+    }
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView constructor
@@ -399,10 +431,10 @@ bool ADN_ListView::ContextMenuDelete()
     // Check if the item is multi-referenced, and warn the user if it's the case.
     if( pCurrentData->IsMultiRef() )
     {
-        if( !ADN_GuiTools::MultiRefWarning( pCurrentData ) )
+        if( !MultiRefWarning( pCurrentData ) )
             return false;
     }
-    else if( !ADN_GuiTools::DeletionWarning() )
+    else if( !DeletionWarning() )
         return false;
     // Remove the item from the list.
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurrentData );

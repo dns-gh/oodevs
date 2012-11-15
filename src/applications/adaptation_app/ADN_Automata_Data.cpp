@@ -14,7 +14,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_DataException.h"
-#include "ADN_GuiTools.h"
+#include "ADN_ConsistencyChecker.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
 
@@ -193,13 +193,13 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatonInfos::IsValidDatabase
+// Name: AutomatonInfos::CheckDatabaseValidity
 // Created: ABR 2012-07-04
 // -----------------------------------------------------------------------------
-bool ADN_Automata_Data::AutomatonInfos::IsValidDatabase() const
+void ADN_Automata_Data::AutomatonInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     if( vSubUnits_.empty() )
-        return ADN_GuiTools::MissingPCOnAutomat( strName_.GetData() );
+        checker.AddError( eMissingUnitOnAutomat, strName_.GetData(), eAutomata );
 
     const ADN_Units_Data::UnitInfos& pc = *ptrUnit_.GetData();
     for( CIT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
@@ -208,9 +208,8 @@ bool ADN_Automata_Data::AutomatonInfos::IsValidDatabase() const
         assert( unit.ptrUnit_.GetData() != 0 );
         const ADN_Units_Data::UnitInfos& agent = *unit.ptrUnit_.GetData();
         if( unit.min_.GetData() == 0 && pc.strName_.GetData() == agent.strName_.GetData() )
-            return ADN_GuiTools::BadAutomatComposition( strName_.GetData() );
+            checker.AddError( eMissingPCOnAutomat, strName_.GetData(), eAutomata );
     }
-    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -349,13 +348,11 @@ QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Automata_Data::IsValidDatabase
+// Name: ADN_Automata_Data::CheckDatabaseValidity
 // Created: ABR 2012-07-04
 // -----------------------------------------------------------------------------
-bool ADN_Automata_Data::IsValidDatabase()
+void ADN_Automata_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    bool result = true;
-    for( CIT_AutomatonInfosVector it = vAutomata_.begin(); result && it != vAutomata_.end(); ++it )
-        result = result && ( *it )->IsValidDatabase();
-    return result;
+    for( CIT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+        ( *it )->CheckDatabaseValidity( checker );
 }

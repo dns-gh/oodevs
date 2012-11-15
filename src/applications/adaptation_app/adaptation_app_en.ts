@@ -2,46 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="en" sourcelanguage="en">
 <context>
-    <name>ADNDatabaseWarnings</name>
-    <message>
-        <source>Database Work in progress</source>
-        <translation>Database Work in progress</translation>
-    </message>
-    <message>
-        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>No PC defined for automat %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>No PC defined for automaton %1, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Automaton %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
-        <translation>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>Bad &apos;Attrition&apos; capacity for object &apos;%1&apos;. &apos;Attrition&apos; capacity should use at least one of the following: ammunition, mine or explosive.
-Because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_ActiveProtections_GUI</name>
     <message>
         <source>Properties</source>
@@ -1245,20 +1205,52 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <translation>Duplicate type for missions %1.</translation>
     </message>
     <message>
-        <source>The breakdown &apos;%1&apos; has no replacement part.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The equipement &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>The equipement &apos;</translation>
     </message>
     <message>
         <source>The resource &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>The resource &apos;</translation>
     </message>
     <message>
-        <source>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</source>
-        <translation>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</translation>
+        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</translation>
+    </message>
+    <message>
+        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</translation>
+    </message>
+    <message>
+        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</translation>
+    </message>
+    <message>
+        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one sub unit, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Automat %1 requires at least one sub unit, because of this, the simulation can&apos;t start with this database.</translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Automaton %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</translation>
+    </message>
+    <message>
+        <source>At least one armor must be defined, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>At least one armor must be defined, because of this, the simulation can&apos;t start with this database.</translation>
+    </message>
+    <message>
+        <source>The mission %1 has no type defined for a localisation composite parameter.</source>
+        <translation>The mission %1 has no type defined for a localisation composite parameter.</translation>
+    </message>
+    <message>
+        <source>Equipment %1 requires at least one breakdown, the simulation can&apos;t start with this database.</source>
+        <translation>Equipment %1 requires at least one breakdown, the simulation can&apos;t start with this database.</translation>
+    </message>
+    <message>
+        <source>The breakdown %1 has no replacement part, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6024,18 +6016,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Equipment - Invalid armor and/or volume</source>
         <translation>Equipment - Invalid armor and/or volume</translation>
     </message>
-    <message>
-        <source>Missing breakdown</source>
-        <translation>Missing breakdown</translation>
-    </message>
-    <message>
-        <source>Equipment - Shall contain at least one breakdown for </source>
-        <translation>Equipment - Shall contain at least one breakdown for </translation>
-    </message>
-    <message>
-        <source>Do you want to save anyway ?</source>
-        <translation>Do you want to save anyway ?</translation>
-    </message>
 </context>
 <context>
     <name>Composantes_Data</name>
@@ -6270,10 +6250,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
         <translation>Logistic supply system - Invalid mission &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Logistic supply system - Invalid unit type for convoy units</source>
-        <translation>Logistic supply system - Invalid unit type for convoy units</translation>
     </message>
 </context>
 <context>

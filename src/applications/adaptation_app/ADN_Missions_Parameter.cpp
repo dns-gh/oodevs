@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Missions_Parameter.h"
 
-#include "ADN_GuiTools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Tr.h"
 #include "ADN_Objects_Data.h"

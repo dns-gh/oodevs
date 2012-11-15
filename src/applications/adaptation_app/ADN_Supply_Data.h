@@ -56,7 +56,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
-        bool IsValidDatabase();
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
         void Reset();
 
     private:
@@ -91,7 +91,7 @@ public:
     //@{
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Reset();
-    virtual bool IsValidDatabase();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     //@}
 
 private:

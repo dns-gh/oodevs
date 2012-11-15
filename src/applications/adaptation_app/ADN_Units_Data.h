@@ -164,7 +164,7 @@ public:
         void ReadPointDistance( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
         void CleanupNature();
-        bool IsValidDatabase();
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     public:
         ADN_Type_Int                                                nId_;
@@ -234,7 +234,7 @@ public:
     QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
     QStringList GetUnitsThatUse( helpers::LogisticSupplyClass& supply );
 
-    virtual bool IsValidDatabase();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
 private:
     void ReadArchive( xml::xistream& input );

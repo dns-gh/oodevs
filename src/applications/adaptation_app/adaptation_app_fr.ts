@@ -2,47 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr" sourcelanguage="en">
 <context>
-    <name>ADNDatabaseWarnings</name>
-    <message>
-        <source>Database Work in progress</source>
-        <translation>Enregistrement en cours.</translation>
-    </message>
-    <message>
-        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Le type de pion Convoi n&apos;est pas défini dans Log/Ravitaillement, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
-    </message>
-    <message>
-        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>La mission Convoi n&apos;est pas définei dans Log/Ravitaillement, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
-    </message>
-    <message>
-        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Pas de géométrie définie pour l&apos;objet %1, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
-    </message>
-    <message>
-        <source>No PC defined for automat %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>L&apos;automate %1 n&apos;a pas de PC, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>L&apos;automate %1 requiert au moins un PC, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
-    </message>
-    <message>
-        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Le modèle décisionnel de l&apos;unité %1 n&apos;est pas défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
-    </message>
-    <message>
-        <source>At least one armor must be defined , because of this, the simulation can&apos;t start with this database.</source>
-        <translation>&gt;Au moins un type de blindage doit être défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
-    </message>
-    <message>
-        <source>Bad &apos;Attrition&apos; capacity for object &apos;%1&apos;. &apos;Attrition&apos; capacity should use at least one of the following: ammunition, mine or explosive.
-Because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Capacité &apos;Attrition&apos; invalide pour l&apos;objet &apos;%1&apos;. La capacité &apos;Attrition&apos; doit activer au moins un des éléments suivants: munition, mine ou explosif.
-En conséquence, la simulation ne peut démarrer avec cette base.</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ActiveProtections_GUI</name>
     <message>
         <source>Properties</source>
@@ -1258,12 +1217,44 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <translation>Les missions %1 possèdent le même type.</translation>
     </message>
     <message>
-        <source>The breakdown &apos;%1&apos; has no replacement part.</source>
-        <translation>La panne &apos;%1&apos; n&apos;a pas de pièce de rechange.</translation>
+        <source>The breakdown %1 has no replacement part, the simulation can&apos;t start with this database.</source>
+        <translation>La panne %1 n&apos;a pas de pièce de rechange, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
-        <source>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</source>
-        <translation>La mission &apos;%1&apos; n&apos;as pas de type définit pour un paramètre de type localisation composite.</translation>
+        <source>The mission %1 has no type defined for a localisation composite parameter.</source>
+        <translation>La mission %1 n&apos;as pas de type définit pour un paramètre de type localisation composite.</translation>
+    </message>
+    <message>
+        <source>Equipment %1 requires at least one breakdown, the simulation can&apos;t start with this database.</source>
+        <translation>L&apos;equipement %1 requiert au moins une panne, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+    </message>
+    <message>
+        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Le type de pion Convoi n&apos;est pas défini dans Log/Ravitaillement, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+    </message>
+    <message>
+        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>La mission Convoi n&apos;est pas définei dans Log/Ravitaillement, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+    </message>
+    <message>
+        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Pas de géométrie définie pour l&apos;objet %1, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+    </message>
+    <message>
+        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Le modèle décisionnel de l&apos;unité %1 n&apos;est pas défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one sub unit, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>L&apos;automate %1 requiert au moins un pion, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>L&apos;automate %1 requiert au moins un PC, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+    </message>
+    <message>
+        <source>At least one armor must be defined, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Au moins un type de blindage doit être défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
 </context>
 <context>
@@ -5992,14 +5983,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
 <context>
     <name>Composante_Data</name>
     <message>
-        <source>Missing breakdown</source>
-        <translation>Panne non définie</translation>
-    </message>
-    <message>
-        <source>Equipment - Shall contain at least one breakdown for </source>
-        <translation>Equipement - Aucune panne définie pour </translation>
-    </message>
-    <message>
         <source>Invalid data</source>
         <translation>Donnée invalide</translation>
     </message>
@@ -6042,10 +6025,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
         <translation>Equipement - Type de capteur invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Do you want to save anyway ?</source>
-        <translation>Voulez-vous sauver quand même?</translation>
     </message>
     <message>
         <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
@@ -6277,10 +6256,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Invalid data</source>
         <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Logistic supply system - Invalid unit type for convoy units</source>
-        <translation>Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>

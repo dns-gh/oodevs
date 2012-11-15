@@ -506,7 +506,7 @@ public:
         void ReadActiveProtection( xml::xistream& input );
         void ReadObject( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
-        bool IsValidDatabase() const;
+        void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     public:
         ADN_Type_Int    nId_;
@@ -580,7 +580,7 @@ public:
 
     void FilesNeeded(T_StringList& l) const;
     void Reset();
-    virtual bool IsValidDatabase() const;
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     T_ComposanteInfos_Vector& GetComposantes();
     ComposanteInfos* FindComposante( const std::string& strName );
 

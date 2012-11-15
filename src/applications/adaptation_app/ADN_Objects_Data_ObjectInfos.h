@@ -37,7 +37,7 @@ public:
     ADN_Objects_Data_ObjectInfos* CreateCopy();
     void ReadArchive( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
-    bool IsValidDatabase();
+    void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     std::string GetAllGeometries() const;
     //@}
 

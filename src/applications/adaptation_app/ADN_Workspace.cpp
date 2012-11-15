@@ -35,7 +35,6 @@
 #include "ADN_FireClass_Data.h"
 #include "ADN_FireClass_GUI.h"
 #include "ADN_GuiBuilder.h"
-#include "ADN_GuiTools.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_HumanFactors_GUI.h"
@@ -354,18 +353,6 @@ inline bool isWritable(const std::string& filename)
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::ShowInvalidDatabaseWarning
-// Created: PHC 2011-01-19
-// -----------------------------------------------------------------------------
-bool ADN_Workspace::ShowInvalidDatabaseWarning()
-{
-    BOOST_FOREACH( ADN_WorkspaceElement_ABC* element, elements_ )
-        if( !element->GetDataABC().IsValidDatabase() )
-            return false;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Workspace::SetOptions
 // Created: LDC 2011-09-21
 // -----------------------------------------------------------------------------
@@ -414,8 +401,6 @@ namespace
 //-----------------------------------------------------------------------------
 bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC& fileLoader )
 {
-    ShowInvalidDatabaseWarning();
-
     ADN_Project_Data::WorkDirInfos& dirInfos = ADN_Project_Data::GetWorkDirInfos();
 
     // Set a temporary working directory

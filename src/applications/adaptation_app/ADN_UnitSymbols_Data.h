@@ -119,7 +119,6 @@ public:
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Save();
-    virtual bool IsValidDatabase();
     //@}
 
 protected:

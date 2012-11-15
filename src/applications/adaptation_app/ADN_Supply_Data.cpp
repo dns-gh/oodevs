@@ -10,7 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Supply_Data.h"
 
-#include "ADN_GuiTools.h"
+#include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
 #include "ADN_Supply_Gui.h"
 #include "ADN_Logistic_GUI.h"
@@ -212,16 +212,15 @@ void ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::SupplyDataInfos::IsValidDatabase
+// Name: ADN_Supply_Data::SupplyDataInfos::CheckDatabaseValidity
 // Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
-bool ADN_Supply_Data::SupplyDataInfos::IsValidDatabase()
+void ADN_Supply_Data::SupplyDataInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    if( ptrUnit_.GetData() == 0 )
-        return ADN_GuiTools::MissingConvoyWarning();
+    if( ptrUnit_.GetData() == 0 || ptrUnit_.GetData()->eTypeId_.GetData() != eAgentTypePionLOGConvoi )
+        checker.AddError( eMissingConvoy, "", eLogistic, 1 );
     if( ptrSupplyMission_.GetData() == 0 )
-        return ADN_GuiTools::MissingConvoyMissionWarning();
-    return true;
+        checker.AddError( eMissingConvoyMission, "", eLogistic, 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,10 +229,8 @@ bool ADN_Supply_Data::SupplyDataInfos::IsValidDatabase()
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
 {
-    if( ptrUnit_.GetData() == 0 )
+    if( ptrUnit_.GetData() == 0 || ptrUnit_.GetData()->eTypeId_.GetData() != eAgentTypePionLOGConvoi )
         return;
-    if( ptrUnit_.GetData()->eTypeId_.GetData() != eAgentTypePionLOGConvoi )
-        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).toStdString(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit type for convoy units" ).toStdString() );
 
     output << xml::start( "supply" );
     ADN_Tools::AddSchema( output, "Supply" );
@@ -340,10 +337,10 @@ void ADN_Supply_Data::WriteArchive( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Supply_Data::IsValidDatabase
+// Name: ADN_Supply_Data::CheckDatabaseValidity
 // Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
-bool ADN_Supply_Data::IsValidDatabase()
+void ADN_Supply_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    return infos_.IsValidDatabase();
+    infos_.CheckDatabaseValidity( checker );
 }

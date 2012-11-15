@@ -44,7 +44,7 @@ public:
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Initialize();
     virtual void Save();
-    virtual bool IsValidDatabase();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
     //@}
 
 protected:

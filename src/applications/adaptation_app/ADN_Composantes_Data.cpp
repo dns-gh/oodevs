@@ -10,7 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_Data.h"
-#include "ADN_GuiTools.h"
+#include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Objects_Data.h"
@@ -1749,27 +1749,24 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::IsValidDatabase
+// Name: ADN_Composantes_Data::CheckDatabaseValidity
 // Created: PHC 2011-01-20
 // -----------------------------------------------------------------------------
-bool ADN_Composantes_Data::ComposanteInfos::IsValidDatabase() const
+void ADN_Composantes_Data::ComposanteInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     if( attritionBreakdowns_.vBreakdowns_.empty() || randomBreakdowns_.vBreakdowns_.empty() )
         if( ptrArmor_.GetData()->nType_.GetData() == eProtectionType_Material )
-            return ADN_GuiTools::MissingBreakdownWarning( strName_.GetData() );
-    return true;
+            checker.AddError( eMissingBreakdown, strName_.GetData(), eComposantes );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::IsValidDatabase
+// Name: ADN_Composantes_Data::CheckDatabaseValidity
 // Created: PHC 2011-01-20
 // -----------------------------------------------------------------------------
-bool ADN_Composantes_Data::IsValidDatabase() const
+void ADN_Composantes_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     for( CIT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
-        if( !(*it)->IsValidDatabase() )
-            return false;
-    return true;
+        (*it)->CheckDatabaseValidity( checker );
 }
 
 // -----------------------------------------------------------------------------
@@ -1874,8 +1871,6 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         attritionBreakdowns_.WriteArchive( output, strName_.GetData() );
         output << xml::end;
     }
-    else if( !IsValidDatabase() )
-        throw ADN_DataException( tools::translate( "Composante_Data", "Missing breakdown" ).toStdString(), tools::translate( "Composante_Data", "Equipment - Shall contain at least one breakdown for " ).toStdString() + strName_.GetData() );
     if( bMaxSlope_.GetData() )
         output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
 

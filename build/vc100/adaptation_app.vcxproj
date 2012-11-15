@@ -268,7 +268,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Type_Repartition.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DialogLog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GuiBuilder.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GuiTools.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_HtmlBuilder.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiPercentage.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RunProcessDialog.cpp" />
@@ -1801,7 +1800,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Callback.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_DialogLog.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GuiBuilder.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GuiTools.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_HtmlBuilder.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MultiPercentage.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>

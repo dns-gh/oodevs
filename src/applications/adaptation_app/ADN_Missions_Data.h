@@ -71,6 +71,7 @@ public:
     //@{
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Reset();
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
 
     T_FragOrder_Vector&     GetFragOrders();
     T_Mission_Vector&       GetUnitMissions();
