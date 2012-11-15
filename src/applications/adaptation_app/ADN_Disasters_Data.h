@@ -12,6 +12,7 @@
 #define __ADN_Disasters_Data_h_
 
 #include "ADN_Data_ABC.h"
+#include "ADN_Tools.h"
 #include "ADN_RefWithName.h"
 
 namespace xml
