@@ -59,7 +59,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , nextPause_            ( config_.GetPausedAtStartup() ? 1 : 0 )
     , rWaitTime_            ( 0. )
     , waitTicks_            ( 0 )
-    , waitLatency_          ( config_.GetTickLatency() )
+    , waitLatency_          ( 0 )
     , pEffectManager_       ( new MIL_EffectManager() )
     , pEntityManager_       ( 0 )
     , pWorkspaceDIA_        ( 0 )
@@ -87,7 +87,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     {
         MIL_CheckPointManager::LoadCheckPoint( config_, *pObjectFactory_ );
         pEntityManager_->Synchronize();
-        SendControlInformation();
+        ++waitTicks_;
     }
     else
     {
@@ -441,7 +441,6 @@ void MIL_AgentServer::SendControlInformation() const
     if( localTime_ != "" )
         message().mutable_checkpoint_real_time()->set_data( localTime_ );
     message.Send( NET_Publisher_ABC::Publisher() );
-    const_cast< MIL_AgentServer* >( this )->Continue();
 }
 
 // -----------------------------------------------------------------------------
@@ -503,15 +502,27 @@ void MIL_AgentServer::Resume( unsigned int ticks )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::Start
+// Created: MCO 2012-11-14
+// -----------------------------------------------------------------------------
+void MIL_AgentServer::Start()
+{
+    SendControlInformation();
+    Continue();
+    waitLatency_ = config_.GetTickLatency();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::Wait
 // Created: MCO 2012-11-08
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::Wait()
 {
     ++waitTicks_;
+    MT_LOG_INFO_MSG( "Simulation is " << waitTicks_ << " ticks ahead of dispatcher" );
     if( waitTicks_ > waitLatency_ )
     {
-        MT_LOG_INFO_MSG( "Simulation starts waiting for dispatcher (" << waitTicks_ << " ticks ahead)" );
+        MT_LOG_INFO_MSG( "Simulation starts waiting for dispatcher" );
         nSimState_ = eSimWait;
         MT_Timer_ABC::Wait();
         profiler_.Start();
@@ -525,6 +536,7 @@ void MIL_AgentServer::Wait()
 void MIL_AgentServer::Continue()
 {
     --waitTicks_;
+    MT_LOG_INFO_MSG( "Simulation is " << waitTicks_ << " ticks ahead of dispatcher" );
     if( waitTicks_ == waitLatency_ )
     {
         rWaitTime_ = profiler_.Stop();

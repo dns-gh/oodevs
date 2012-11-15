@@ -27,7 +27,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SendControlInformation() const = 0;
+    virtual void Start() = 0;
     virtual void Stop() = 0;
     virtual void Pause() = 0;
     virtual void Continue() = 0;

@@ -155,7 +155,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveCtrlClientAnnouncement( const std::string&
     // should allow only one connection so ...
     agentServer_.DenyConnections();
     clients_.insert( from );
-    simulation_.SendControlInformation();
+    simulation_.Start();
     client::ControlSendCurrentStateBegin().Send( NET_Publisher_ABC::Publisher() );
     MIL_AgentServer::GetWorkspace().SendStateToNewClient();
     client::ControlSendCurrentStateEnd().Send( NET_Publisher_ABC::Publisher() );

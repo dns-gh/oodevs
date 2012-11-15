@@ -90,7 +90,7 @@ public:
 
     //! @name Simulation management
     //@{
-    virtual void SendControlInformation() const;
+    virtual void Start();
     virtual void Stop();
     virtual void Pause();
     virtual void Continue();
@@ -167,6 +167,7 @@ private:
 
     //! @name Tools
     //@{
+    void SendControlInformation() const;
     void SendMsgBeginTick() const;
     void SendMsgEndTick() const;
     //@}
@@ -186,8 +187,8 @@ private:
     long lastStep_;
     unsigned int nextPause_;
     double rWaitTime_;
-    unsigned int waitTicks_;
-    unsigned int waitLatency_;
+    int waitTicks_;
+    int waitLatency_;
     std::string localTime_;
     MT_Profiler profiler_;
     MIL_EffectManager* pEffectManager_;
