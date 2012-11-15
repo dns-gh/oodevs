@@ -580,12 +580,12 @@ Do really you want to replace it ?</source>
         <translation>Configuración</translation>
     </message>
     <message>
-        <source>Starting %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start</source>
         <translation type="unfinished">Iniciar</translation>
+    </message>
+    <message>
+        <source>Starting scenario</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

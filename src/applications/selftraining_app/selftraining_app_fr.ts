@@ -582,12 +582,12 @@ Voulez-vous vraiment le remplacer ?</translation>
         <translation>Configuration</translation>
     </message>
     <message>
-        <source>Starting %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start</source>
         <translation>Démarrer</translation>
+    </message>
+    <message>
+        <source>Starting scenario</source>
+        <translation>Chargement du scénario</translation>
     </message>
 </context>
 <context>

@@ -570,10 +570,6 @@ Do really you want to replace it ?</source>
 <context>
     <name>ScenarioLauncherPage</name>
     <message>
-        <source>Starting %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
@@ -583,6 +579,10 @@ Do really you want to replace it ?</source>
     </message>
     <message>
         <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting scenario</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
