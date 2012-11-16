@@ -12,3 +12,4 @@ syntax: glob
 *.suo
 *.user
 *.vcxproj.user
+build/build.local.properties
