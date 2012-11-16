@@ -4,11 +4,14 @@ return
         local entities = {}
         self.entitiesToFollow = {}
         if masalife.brain.core.class.isOfType( parameters.objective, sword.military.world.Company) then
-             entities = DEC_Automate_PionsDeAutomateAvecPC(parameters.objective.source)
-             for _, element in pairs (entities) do
-                self.entitiesToFollow[ #self.entitiesToFollow + 1 ] = CreateKnowledge( sword.military.world.PlatoonAlly, element )
+             --entities = DEC_Automate_PionsDeAutomateAvecPC(parameters.objective.source)
+             self.entitiesToFollow = integration.getEntitiesFromAutomat(parameters.objective, "none", true)
+             for _, element in pairs (self.entitiesToFollow) do
+                --self.entitiesToFollow[ #self.entitiesToFollow + 1 ] = CreateKnowledge( sword.military.world.PlatoonAlly, element )
+                DEC_Trace("unité à escorter: "..tostring(DEC_GetSzName(element.source)))
              end
         else
+        DEC_Trace("Si on escorte une compagnie ON NE DEVRAIT PAS ETRE LA")
             self.entitiesToFollow = { parameters.objective }
         end
     end,
