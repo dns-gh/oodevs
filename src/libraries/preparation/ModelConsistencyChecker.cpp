@@ -799,7 +799,7 @@ void ModelConsistencyChecker::CheckFiles()
     fileLoaderObserver_.GetSignatureErrors( filesSignatureErrors );
     for( int i = 0; i < filesSignatureErrors.size(); ++i )
         AddError( eSignature, 0, filesSignatureErrors[ i ] );
-    if( filesSignatureErrors.size() > 0 )
+    if( !filesSignatureErrors.empty() )
         const_cast< Model& >( model_).SetConsistencyErrorsOnLoad();
 
     std::vector< std::string > filesXsdErrors;
