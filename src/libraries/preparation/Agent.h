@@ -92,6 +92,7 @@ private:
     mutable std::string      levelPath_;
     std::string              nature_;
     bool                     overridenSymbol_;
+    const float              weight_;
     //@}
 };
 

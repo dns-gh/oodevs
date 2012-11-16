@@ -10,11 +10,13 @@
 #include "gaming_pch.h"
 #include "Agent.h"
 #include "Diplomacies.h"
+#include "equipments.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Styles.h"
@@ -30,7 +32,9 @@ using namespace kernel;
 Agent::Agent( const sword::UnitCreation& message, Controller& controller, const tools::Resolver_ABC< AgentType >& resolver )
     : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ), true )
     , type_       ( resolver.Get( message.type().id() ) )
+    , controller_( controller )
     , initialized_( false )
+    , weight_( 0 )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
@@ -40,6 +44,7 @@ Agent::Agent( const sword::UnitCreation& message, Controller& controller, const 
 
     RegisterSelf( *this );
     CreateDictionary();
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +54,7 @@ Agent::Agent( const sword::UnitCreation& message, Controller& controller, const 
 Agent::~Agent()
 {
     Destroy();
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,4 +105,18 @@ void Agent::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Weight" ), weight_, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::NotifyUpdated
+// Created: NPT 2012-11-16
+// -----------------------------------------------------------------------------
+void Agent::NotifyUpdated( const Equipments& equipments )
+{
+    if( Retrieve< Equipments >() == &equipments )
+    {
+        weight_ = equipments.GetTotalWeight();
+        controller_.Update( DictionaryUpdated( *( Entity_ABC* )this, tools::translate( "Agent", "Info" ) ) );
+    }
 }

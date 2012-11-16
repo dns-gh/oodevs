@@ -186,7 +186,7 @@ bool GhostPositions::IsAggregated() const
 void GhostPositions::Move( const geometry::Point2f& position )
 {
     position_ = position;
-    controller_.Update( kernel::DictionaryUpdated( ghost_, tools::translate( "GhostPositions", "Info/Position" ) ) );
+    controller_.Update( kernel::DictionaryUpdated( ghost_, tools::translate( "GhostPositions", "Info" ) ) );
 }
 
 // -----------------------------------------------------------------------------

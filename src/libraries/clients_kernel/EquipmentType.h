@@ -60,6 +60,7 @@ public:
     const std::string& GetName() const;
     const std::string& GetProtection() const;
     unsigned long GetId() const;
+    float GetWeight() const;
     tools::Iterator< const BreakdownOriginType& > CreateBreakdownsIterator() const;
     tools::Iterator< const DotationCapacityType& > CreateResourcesIterator() const;
     const CarryingSupplyFunction* GetLogSupplyFunctionCarrying() const;
@@ -92,6 +93,7 @@ private:
     T_Breakdowns breakdowns_;
     T_Resources resources_;
     std::auto_ptr< CarryingSupplyFunction > carryingSupplyFunction_;
+    float weight_;
     //@}
 };
 

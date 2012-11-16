@@ -41,6 +41,7 @@ Agent::Agent( const AgentType& type, Controller& controller, tools::IdManager& i
     , level_               ( ENT_Tr::ConvertToNatureLevel( type.GetNature().GetLevel() ) )
     , overridenSymbol_     ( false )
     , nature_              ( type.GetNature().GetNature() )
+    , weight_              ( type.GetComposantesWeight() )
 {
     RegisterSelf( *this );
     CreateDictionary();
@@ -66,6 +67,7 @@ Agent::Agent( xml::xistream& xis, Controller& controller, tools::IdManager& idMa
     , symbolPath_     ( type_.GetSymbol() )
     , overridenSymbol_( xis.attribute< bool >( "overridden-symbol", false ) )
     , nature_         ( type.GetNature().GetNature() )
+    , weight_         ( type.GetComposantesWeight() )
 {
     std::string level = "";
     xis >> xml::optional
@@ -143,6 +145,7 @@ void Agent::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), type_, true );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Weight" ), weight_ );
 }
 
 // -----------------------------------------------------------------------------

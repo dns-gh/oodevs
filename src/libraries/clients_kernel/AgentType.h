@@ -61,6 +61,7 @@ public:
     const std::string& GetLevelSymbol() const;
     const std::string& GetHQSymbol() const;
     const std::string& GetTypeName() const;
+    const float GetComposantesWeight() const;
 
     unsigned int GetNbrOfficers() const;
     unsigned int GetNbrWarrantOfficers() const;

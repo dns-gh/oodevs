@@ -24,6 +24,7 @@ EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< Wea
 {
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "id", id_ )
+        >> xml::attribute( "weight", weight_ )
         >> xml::attribute( "protection", protection_ )
         >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &EquipmentType::ReadWeaponSystem, weapons )
@@ -78,6 +79,15 @@ const std::string& EquipmentType::GetProtection() const
 unsigned long EquipmentType::GetId() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentType::GetWeight
+// Created: NPT 2012-11-16
+// -----------------------------------------------------------------------------
+float EquipmentType::GetWeight() const
+{
+    return weight_;
 }
 
 // -----------------------------------------------------------------------------

@@ -48,6 +48,22 @@ Equipments::~Equipments()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Equipments::GetTotalWeight
+// Created: NPT 2012-11-16
+// -----------------------------------------------------------------------------
+float Equipments::GetTotalWeight() const
+{
+    float weight = 0;
+    tools::Iterator< const Equipment& > it = CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Equipment& equipment = it.NextElement();
+        weight += equipment.Total() * equipment.type_.GetWeight();
+    }
+    return weight;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Equipments::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------

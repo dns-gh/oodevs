@@ -14,6 +14,14 @@
         <source>Info/Type</source>
         <translation>Info/Type</translation>
     </message>
+    <message>
+        <source>Info/Weight</source>
+        <translation>Info/Poids</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Info</translation>
+    </message>
 </context>
 <context>
     <name>AgentKnowledge</name>

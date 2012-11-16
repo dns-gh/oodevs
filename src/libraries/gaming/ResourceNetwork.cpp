@@ -198,14 +198,6 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
 {
     std::string resource( msg.resource().name() );
     ResourceNode& node = resourceNodes_[ resource ];
-    unsigned int oldMaxStock = node.maxStock_;
-    unsigned int oldProduction = node.production_;
-    unsigned int oldConsumption = node.consumption_;
-    unsigned int oldNeeds = node.needs_;
-    float oldSatisfaction = node.satisfaction_;
-    bool oldCritical = node.critical_;
-    unsigned int oldStock = node.stock_;
-    unsigned int oldFlow = node.totalFlow_;
     node.resource_ = resource;
     node.isEnabled_ = msg.enabled();
     node.production_ = msg.has_production() ? msg.production() : 0;
@@ -230,10 +222,8 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
     }
     if( entity )
     {
-        if( ( node.totalFlow_ != oldFlow && node.links_.size() ) ||  node.stock_ != oldStock || node.maxStock_ != oldMaxStock ||
-            node.production_ != oldProduction || node.consumption_ != oldConsumption || node.critical_ != oldCritical ||
-            node.needs_ != oldNeeds || node.satisfaction_ != oldSatisfaction )
-                controllers_.controller_.Update( DictionaryUpdated( *entity, tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + resource.c_str() ) );
+        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + resource.c_str() + "/";
+        controllers_.controller_.Update( DictionaryUpdated( *entity, baseName ) );
     }
 }
 
