@@ -311,7 +311,7 @@ namespace core
         template< typename T >
         static void RegisterHookHelper( core::Hooks& hooks, SWORD_Hook* destination, SWORD_Hook* previous, const SWORD_Hook hook, const char* key, const char* signature )
         {
-            hooks.RegisterHook( reinterpret_cast< T* >( destination ), reinterpret_cast< T* >( previous ), reinterpret_cast< T  >( hook ), key, signature );
+            hooks.RegisterHook( reinterpret_cast< T* >( destination ), reinterpret_cast< T* >( previous ), reinterpret_cast< T >( hook ), key, signature );
         }
         template< typename T >
         static void UseHookHelper( core::Hooks& hooks, SWORD_Hook* destination, const char* key, const char* signature )
@@ -322,7 +322,9 @@ namespace core
         ApiFixture( const std::string& name )
             : LoadFixture( name )
             , commands( model )
-        {}
+        {
+            model[ "profiling" ] = false;
+        }
         virtual ~ApiFixture()
         {
             if( ! std::uncaught_exception() )
@@ -355,7 +357,6 @@ namespace core
         {
             commands.Execute( "default" );
         }
-
         core::Model model;
         core::Commands commands;
         core::Hooks hooks;
@@ -370,7 +371,7 @@ namespace core
 #define MOCK_HOOK( hook, arity, result, parameters ) \
     typedef result ( *hook##Hook ) parameters; \
     hook##Hook hook##_; \
-    MOCK_STATIC_METHOD( hook, arity, result parameters, hook );
+    MOCK_STATIC_METHOD( hook, arity, result parameters, hook )
 
 #define EXPECT_REGISTER_HOOK( hook, arity, result, parameters ) \
     MOCK_EXPECT( RegisterHook ).at_least( 1 ).with( mock::any, mock::any, mock::any, #hook, #result#parameters ).calls( boost::bind( &RegisterHookHelper< hook##Hook >, boost::ref( hooks ), _1, _2, _3, _4, _5 ) );
@@ -402,7 +403,7 @@ struct HookFixture : core::ApiFixture \
         REGISTERED_AND_USED_HOOKS( EXPECT_USE_HOOK ) \
         BOOST_FOREACH( const std::string& name, commands ) \
             ExpectRegisterCommand( name ); \
-        module.Initialize(); \
+        module.Initialize( model ); \
         mock::verify(); \
         mock::reset(); \
         APPLY_HOOKS( REGISTER_HOOK ) \

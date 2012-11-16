@@ -48,7 +48,8 @@ DEFINE_HOOK( GetAmmunitionForIndirectFire, 4, const char*, ( const SWORD_Model* 
 // Name: ModuleFacade constructor
 // Created: MCO 2012-03-19
 // -----------------------------------------------------------------------------
-ModuleFacade::ModuleFacade()
+ModuleFacade::ModuleFacade( const wrapper::View& model )
+    : Hooks( model )
 {
     module = this;
     wrapper::RegisterCommand< DirectFireCommand >( "direct fire", *this );

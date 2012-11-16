@@ -81,7 +81,8 @@ namespace
 // Name: ModuleFacade constructor
 // Created: SLI 2011-12-13
 // -----------------------------------------------------------------------------
-ModuleFacade::ModuleFacade()
+ModuleFacade::ModuleFacade( const wrapper::View& model )
+    : Hooks( model )
 {
     wrapper::RegisterCommand< PerceptionCommand >               ( "perception" );
     wrapper::RegisterCommand< TogglePerceptionCommand >         ( "toggle perception" );

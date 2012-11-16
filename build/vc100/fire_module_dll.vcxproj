@@ -22,6 +22,9 @@
     <ProjectReference Include="fire_module.vcxproj">
       <Project>{e4be1860-4538-07ce-0412-04a278ab0978}</Project>
     </ProjectReference>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+    </ProjectReference>
     <ProjectReference Include="wrapper.vcxproj">
       <Project>{f1da0bc2-b36e-4fae-a762-5f7edb2a95b9}</Project>
     </ProjectReference>

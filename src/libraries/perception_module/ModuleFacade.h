@@ -15,6 +15,10 @@
 
 namespace sword
 {
+namespace wrapper
+{
+    class View;
+}
 namespace perception
 {
 // =============================================================================
@@ -28,8 +32,8 @@ class ModuleFacade : private sword::wrapper::Hooks, private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     ModuleFacade();
-    ~ModuleFacade();
+    explicit ModuleFacade( const wrapper::View& model );
+            ~ModuleFacade();
     //@}
 };
 

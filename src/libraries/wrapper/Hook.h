@@ -10,12 +10,18 @@
 #ifndef WRAPPER_HOOK_H
 #define WRAPPER_HOOK_H
 
+#include "View.h"
+#include "MT_Tools/MT_ProfilerGuard.h"
 #include <module_api/Hook.h>
+#pragma warning( push, 0 )
 #include <boost/preprocessor.hpp>
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/function_types/result_type.hpp>
 #include <boost/function_types/function_arity.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/mpl/at.hpp>
+#pragma warning( pop )
+#include <boost/bind.hpp>
 #include <functional>
 #include <algorithm>
 #include <vector>
@@ -28,7 +34,9 @@ namespace wrapper
     class Hook_ABC
     {
     public:
-        virtual void Apply() = 0;
+        virtual void Apply( bool profiling ) = 0;
+        virtual void Log()
+        {}
     protected:
         virtual ~Hook_ABC()
         {}
@@ -46,10 +54,13 @@ namespace wrapper
             GetRegistrations().push_back( hook );
         }
     protected:
-        Hooks()
+        Hooks( const View& model )
         {
-            std::for_each( GetUses().begin(), GetUses().end(), std::mem_fun( &Hook_ABC::Apply ) );
-            std::for_each( GetRegistrations().begin(), GetRegistrations().end(), std::mem_fun( &Hook_ABC::Apply ) );
+            const bool profiling = model[ "profiling" ];
+            std::for_each( GetUses().begin(), GetUses().end(), boost::bind( &Hook_ABC::Apply, _1, profiling ) );
+            std::for_each( GetRegistrations().begin(), GetRegistrations().end(), boost::bind( &Hook_ABC::Apply, _1, profiling ) );
+            if( profiling )
+                SWORD_RegisterHook( 0, &GetPrevious(), &LogProfiling, "LogProfiling", "void()" );
         }
     private:
         static std::vector< Hook_ABC* >& GetUses()
@@ -61,6 +72,17 @@ namespace wrapper
         {
             static std::vector< Hook_ABC* > hooks;
             return hooks;
+        }
+        static SWORD_Hook& GetPrevious()
+        {
+            static SWORD_Hook previous;
+            return previous;
+        }
+        static void LogProfiling()
+        {
+            std::for_each( GetRegistrations().begin(), GetRegistrations().end(), std::mem_fun( &Hook_ABC::Log ) );
+            if( GetPrevious() )
+                GetPrevious()();
         }
     };
 }
@@ -81,7 +103,7 @@ namespace wrapper
         } \
         Function current_; \
     private: \
-        virtual void Apply() \
+        virtual void Apply( bool /*profiling*/ ) \
         { \
             SWORD_UseHook( reinterpret_cast< SWORD_Hook* >( &current_ ), \
                            #Hook, #result #parameters ); \
@@ -131,6 +153,11 @@ namespace detail
         Function current_; \
         Function Previous; \
         static result Implement parameters; \
+        static result SafeProfiledImplement HOOK_DECL( arity, result parameters ) \
+        { \
+            MT_ProfilerGuard guard( GetProfiler() ); \
+            return SafeImplement( BOOST_PP_REPEAT( arity, HOOK_PARAM_CALL, p ) ); \
+        } \
         static result SafeImplement HOOK_DECL( arity, result parameters ) \
         { \
             try\
@@ -148,12 +175,27 @@ namespace detail
             return boost::function_types::result_type< result parameters >::type();\
         }\
     private: \
-        virtual void Apply() \
+        virtual void Apply( bool profiling ) \
         { \
             SWORD_RegisterHook( reinterpret_cast< SWORD_Hook* >( &current_ ), \
                                 reinterpret_cast< SWORD_Hook* >( &Previous ), \
-                                reinterpret_cast< SWORD_Hook >( &SafeImplement ), \
+                                reinterpret_cast< SWORD_Hook >( profiling ? &SafeProfiledImplement : &SafeProfiledImplement ), \
                                 #Hook, #result #parameters ); \
+        } \
+        virtual void Log() \
+        { \
+            MT_Profiler& profiler = GetProfiler(); \
+            if( profiler.IsStarted() || profiler.GetCount() == 0 ) \
+                return; \
+            ::SWORD_Log( SWORD_LOG_LEVEL_INFO, ( "<profiling> hook " #Hook " " \
+                + boost::lexical_cast< std::string >( profiler.GetCount() ) + " calls " \
+                + boost::lexical_cast< std::string >( profiler.GetTotalTime() ) + " ms" ).c_str() ); \
+            profiler.Reset(); \
+        } \
+        static MT_Profiler& GetProfiler() \
+        { \
+            static MT_Profiler profiler; \
+            return profiler; \
         } \
     } Hook; \
     result Hook ## Wrapper::Implement parameters

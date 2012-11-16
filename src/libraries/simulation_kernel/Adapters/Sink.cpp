@@ -178,6 +178,11 @@ namespace
                                       "    <phase name='actions'/>"
                                       "  </phases>"
                                       "</core>";
+    core::Model& LoadConfig( core::Model& model )
+    {
+        model[ "profiling" ] = MIL_AgentServer::GetWorkspace().GetConfig().IsProfilingEnabled();
+        return model;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +199,7 @@ Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
     , modules_          ( configuration )
     , logger_           ( new CoreLogger() )
     , model_            ( new core::Model() )
-    , facade_           ( new core::Facade( modules_, *logger_, *model_ ) )
+    , facade_           ( new core::Facade( modules_, *logger_, LoadConfig( *model_ ) ) )
 {
     Initialize();
 }
@@ -213,7 +218,7 @@ Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
     , modules_         ( configuration )
     , logger_          ( new CoreLogger() )
     , model_           ( model )
-    , facade_          ( new core::Facade( modules_, *logger_, *model_ ) )
+    , facade_          ( new core::Facade( modules_, *logger_, LoadConfig( *model_ ) ) )
 {
     Initialize();
 }
@@ -496,6 +501,8 @@ void Sink::UpdateUrbanModel( const MIL_UrbanCache& cache )
         (*model_)[ "urban-objects" ][ object->GetID() ][ "data" ].SetUserData( object );
 }
 
+DECLARE_HOOK( LogProfiling, void, () )
+
 // -----------------------------------------------------------------------------
 // Name: Sink::LogProfiling
 // Created: MCO 2012-11-12
@@ -503,6 +510,7 @@ void Sink::UpdateUrbanModel( const MIL_UrbanCache& cache )
 void Sink::LogProfiling()
 {
     Hooks::LogProfiling();
+    GET_HOOK( LogProfiling )();
 }
 
 // -----------------------------------------------------------------------------

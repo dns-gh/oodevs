@@ -9,13 +9,14 @@
 
 #include "propagation_module/ModuleFacade.h"
 #include <module_api/Module.c>
+#include <wrapper/View.h>
 #include <string>
 
-int SWORD_InitializeModule( void** userData )
+int SWORD_InitializeModule( void** userData, const SWORD_Model* model )
 {
     try
     {
-        *userData = new sword::propagation::ModuleFacade();
+        *userData = new sword::propagation::ModuleFacade( model );
         return 0;
     }
     catch( std::exception& e )

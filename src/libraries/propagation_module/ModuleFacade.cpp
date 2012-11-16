@@ -19,7 +19,8 @@ using namespace sword::propagation;
 // Name: ModuleFacade constructor
 // Created: LGY 2012-06-12
 // -----------------------------------------------------------------------------
-ModuleFacade::ModuleFacade()
+ModuleFacade::ModuleFacade( const wrapper::View& model )
+    : Hooks( model )
 {
     sword::wrapper::RegisterCommand< FloodCommand >( "flood command" );
     sword::wrapper::RegisterCommand< PropagationCommand >( "propagation command" );

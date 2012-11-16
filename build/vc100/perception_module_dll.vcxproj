@@ -22,6 +22,9 @@
     <ClCompile Include="..\..\src\libraries\perception_module_dll\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+    </ProjectReference>
     <ProjectReference Include="perception_module.vcxproj">
       <Project>{12e20d9e-7c48-892c-599b-fdc37eb08b48}</Project>
     </ProjectReference>
