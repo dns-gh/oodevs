@@ -797,14 +797,14 @@ void ModelConsistencyChecker::CheckFiles()
 {
     std::vector< std::string > filesSignatureErrors;
     fileLoaderObserver_.GetSignatureErrors( filesSignatureErrors );
-    for( int i = 0; i < filesSignatureErrors.size(); ++i )
+    for( unsigned int i = 0; i < filesSignatureErrors.size(); ++i )
         AddError( eSignature, 0, filesSignatureErrors[ i ] );
     if( !filesSignatureErrors.empty() )
         const_cast< Model& >( model_).SetConsistencyErrorsOnLoad();
 
     std::vector< std::string > filesXsdErrors;
     fileLoaderObserver_.GetXsdErrors( filesXsdErrors );
-    for( int i = 0; i < filesXsdErrors.size(); ++i )
+    for( unsigned int i = 0; i < filesXsdErrors.size(); ++i )
         AddError( eOthers, 0, filesXsdErrors[ i ] );
     fileLoaderObserver_.Purge();
 }
