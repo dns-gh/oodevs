@@ -252,11 +252,15 @@ bool ADN_ListView::SetCurrentItem( void* pData )
     if( pData == 0 )
         SetAutoClear( vItemConnectors_, true );
 
+    bool wasModified = topLevelWidget()->isWindowModified(); // $$$$ ABR 2012-11-16: Hack to avoid window modifier to appear when connecting an item (because of weapon graph and unit icon)
+
     ConnectItem( false );
 
     pCurData_ = pData;
 
     ConnectItem( true );
+
+    topLevelWidget()->setWindowModified( wasModified );
 
     if( pData == 0 )
         SetAutoClear( vItemConnectors_, false );
