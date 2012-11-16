@@ -501,7 +501,11 @@ void Sink::UpdateUrbanModel( const MIL_UrbanCache& cache )
         (*model_)[ "urban-objects" ][ object->GetID() ][ "data" ].SetUserData( object );
 }
 
-DECLARE_HOOK( LogProfiling, void, () )
+DEFINE_HOOK( LogProfiling, 0, void, () )
+{
+    if( GET_PREVIOUS_HOOK( LogProfiling ) )
+        GET_PREVIOUS_HOOK( LogProfiling )();
+}
 
 // -----------------------------------------------------------------------------
 // Name: Sink::LogProfiling
