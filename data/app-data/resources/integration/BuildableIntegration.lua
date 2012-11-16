@@ -316,7 +316,7 @@ integration.destroyInstantlyCheckpointOn = function( position )
             DEC_ConnaissanceObjet_ResetDensitePopulationSortante( position.constructedObject )
             DEC_DetruireObjetSansDelais( position.constructedObject ) -- destroy it
             position.constructedObject = nil
-    myself.changeDensity = false
+            myself.changeDensity = false
         end
     end
 end
@@ -347,6 +347,7 @@ integration.destroyInstantlyObjectOn = function( typeObject, position )
     myself.constructedInstantlyObject[ typeObject ] = myself.constructedInstantlyObject[ typeObject ] or {}
     if myself.constructedInstantlyObject[ typeObject ].id ~= nil then
         DEC_DetruireObjetIdSansDelais( myself.constructedInstantlyObject[ typeObject ].id ) -- destroy it
+        myself.constructedInstantlyObject[ typeObject ].id = nil
     end
 end
 
