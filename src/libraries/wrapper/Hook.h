@@ -156,20 +156,20 @@ namespace detail
         } \
         static result SafeImplement HOOK_DECL( arity, result parameters ) \
         { \
-            try\
-            {\
+            try \
+            { \
                 return Implement( BOOST_PP_REPEAT( arity, HOOK_PARAM_CALL, p ) ); \
-            }\
-            catch( std::exception& e )\
-            {\
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, ( "Exception in " #Hook " hook: " + std::string( e.what() ) ).c_str() );\
-            }\
-            catch( ... )\
-            {\
-                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in " #Hook " hook" );\
-            }\
-            return boost::function_types::result_type< result parameters >::type();\
-        }\
+            } \
+            catch( std::exception& e ) \
+            { \
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, ( "Exception in " #Hook " hook: " + std::string( e.what() ) ).c_str() ); \
+            } \
+            catch( ... ) \
+            { \
+                ::SWORD_Log( SWORD_LOG_LEVEL_ERROR, "Unknown exception in " #Hook " hook" ); \
+            } \
+            return boost::function_types::result_type< result parameters >::type(); \
+        } \
     private: \
         virtual void Apply( bool profiling ) \
         { \
