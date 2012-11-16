@@ -1071,18 +1071,6 @@
         <test-scripts dataset="ada" physical="worldwide"/>
     </target>
 
-    <macrodef name="echo-files">
-        <attribute name="files"/>
-        <attribute name="prefix" default=""/>
-        <sequential>
-            <for list="@{files}" param="file" delimiter=";">
-                <sequential>
-                    <echo>@{prefix}@{file}</echo>
-                </sequential>
-            </for>
-        </sequential>
-    </macrodef>
-
     <macrodef name="run-adaptation">
         <attribute name="input"/>
         <attribute name="output"/>
