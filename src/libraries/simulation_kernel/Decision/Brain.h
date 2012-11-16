@@ -130,7 +130,7 @@ public:
                 sizeof( ScriptMemberFunction##n< T, R BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, P) > ) ) ) \
             ScriptMemberFunction##n< T, R BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, P) >( \
                     brain_->vm_, name, \
-                        ProfilerProxy< R( T& BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, P) ) >( name, \
+                        ProfilerProxy< R( T& BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, P) ) >( profilers_[ name ], \
                             boost::bind( method, BOOST_PP_ENUM_SHIFTED_PARAMS(BOOST_PP_INC(BOOST_PP_INC(n)), _) ) ) ); \
     }
     BOOST_PP_REPEAT(SWORD_SCRIPT_MEMBER_MAX_ARITY, SWORD_BRAIN_MEMBER_FUNCTION,)
@@ -141,7 +141,7 @@ public:
     template< typename Signature >
     void RegisterFunction( const char* const name, const boost::function< Signature >& function )
     {
-        (*brain_)[ name ] = ProfilerProxy< Signature >( name, function );
+        (*brain_)[ name ] = ProfilerProxy< Signature >( profilers_[ name ], function );
     }
     template< typename Function >
     void RegisterFunction( const char* const name, const Function& function )
@@ -175,16 +175,16 @@ private:
     { \
         typedef typename boost::function< R( BOOST_PP_ENUM_PARAMS(n,P) ) > function_type; \
         typedef typename function_type::result_type result_type; \
-        ProfilerProxy( const std::string& name, const function_type& f ) \
-            : name_( name ) \
-            , f_   ( f ) \
+        ProfilerProxy( MT_Profiler& profiler, const function_type& f ) \
+            : profiler_( &profiler ) \
+            , f_       ( f ) \
         {} \
         R operator()( BOOST_PP_ENUM_BINARY_PARAMS(n, P, t) ) const \
         { \
-            MT_ProfilerGuard guard( profilers_[ name ] ); \
+            MT_ProfilerGuard guard( *profiler_ ); \
             return f_( BOOST_PP_ENUM_PARAMS(n, t) ); \
         } \
-        std::string name_; \
+        MT_Profiler* profiler_; \
         function_type f_; \
     }; \
 
