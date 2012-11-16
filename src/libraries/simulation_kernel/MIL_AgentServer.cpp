@@ -239,8 +239,7 @@ void MIL_AgentServer::MainSimLoop()
     pathfind.Stop();
     SendMsgEndTick();
     pProcessMonitor_->MonitorProcess();
-    KnowledgesVisitor visitor;
-    pEntityManager_->Accept( visitor );
+    pEntityManager_->LogInfo( config_.IsProfilingEnabled() );
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d %.2fms - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f DEC:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms %d ticks - PathFind : %d short %d long %d done %.2fms - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
         nCurrentTimeStep_, lastTime, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(),
@@ -249,7 +248,6 @@ void MIL_AgentServer::MainSimLoop()
         rWaitTime_, waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfind.GetLastTime(),
         pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     sword::Brain::ResetProfiling( config_.IsProfilingEnabled() );
-    pEntityManager_->LogInfo( config_.IsProfilingEnabled() );
     pEntityManager_->Clean();
     pCheckPointManager_->Update();
     Wait();
