@@ -256,7 +256,7 @@ void Sink::Initialize()
     FireHooks::Initialize();
     PerceptionHooks::Initialize();
     MovementHooks::Initialize();
-    Hooks::Initialize( *facade_, *model_ );
+    Hooks::Initialize( *facade_, (*model_)[ "profiling" ] );
     facade_->Resolve();
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &::InitializePathfinder, _1, boost::cref( dangerousObjects_ ) ) );
     MIL_AgentServer::GetWorkspace().GetConfig().GetLoader().LoadPhysicalFile( "sensors", boost::bind( &::InitializePerception, _1 ) );
