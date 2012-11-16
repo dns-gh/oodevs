@@ -1,7 +1,7 @@
 queryImplementation "getEntitiesToIntercept" { ["execute"] = function ( params )
      local entities = {}
      local enemies = integration.getDestroyableInObjective ( params.objective )
-     local porteeMax = DEC_Tir_PorteeMaxPourTirer( params.probabilityToHit )
+     local porteeMax = DEC_Tir_PorteeMaxPourTirer( 0.5 ) --$$$ HARD CODED
      local realEnemies = {}
      if myself.taskParams.entities and #myself.taskParams.entities ~= 0 then
         for i, enemyKnowledge in pairs( myself.taskParams.entities ) do
