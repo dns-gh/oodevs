@@ -29,6 +29,7 @@ MOCK_BASE_CLASS( MockSink, sword::Sink_ABC )
     MOCK_METHOD( UpdateModel, 4 );
     MOCK_METHOD( UpdateKnowledges, 0 );
     MOCK_METHOD( UpdateUrbanModel, 1 );
+    MOCK_METHOD( LogProfiling, 0 );
     MOCK_METHOD( GetModelCount, 0 );
 
     MOCK_METHOD_EXT( Create, 3, MIL_AgentPion*( const MIL_AgentTypePion&, MIL_Automate&, xml::xistream& ), CreateFromXml );

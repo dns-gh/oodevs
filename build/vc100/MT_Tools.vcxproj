@@ -95,6 +95,7 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Converter.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_FormatString.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Profiler.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ProfilerGuard.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Scipio_enum.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Sector.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Shared.h" />

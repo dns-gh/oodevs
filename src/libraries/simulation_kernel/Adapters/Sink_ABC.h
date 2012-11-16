@@ -51,6 +51,7 @@ public:
     virtual void UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects, const MIL_EffectManager& effects ) = 0;
     virtual void UpdateKnowledges() = 0;
     virtual void UpdateUrbanModel( const MIL_UrbanCache& cache ) = 0;
+    virtual void LogProfiling() = 0;
     //@}
 
     //! @name Commands

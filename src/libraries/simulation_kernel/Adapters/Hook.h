@@ -11,6 +11,7 @@
 #define SWORD_HOOK_TOOLS_H
 
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_ProfilerGuard.h"
 #include <core/Facade.h>
 #include <boost/bind.hpp>
 #include <boost/preprocessor.hpp>
@@ -26,7 +27,9 @@ namespace sword // $$$$ _RC_ SLI 2012-10-22: DRY with wrapper/Hook.h
     class Hook_ABC
     {
     public:
-        virtual void Apply( core::Facade& facade ) = 0;
+        virtual void Apply( core::Facade& facade, bool profiling ) = 0;
+        virtual void Log()
+        {}
     protected:
         virtual ~Hook_ABC()
         {}
@@ -43,10 +46,14 @@ namespace sword // $$$$ _RC_ SLI 2012-10-22: DRY with wrapper/Hook.h
         {
             GetRegistrations().push_back( hook );
         }
-        static void Initialize( core::Facade& facade )
+        static void Initialize( core::Facade& facade, bool profiling )
         {
-            std::for_each( GetUses().begin(), GetUses().end(), boost::bind( &Hook_ABC::Apply, _1, boost::ref( facade ) ) );
-            std::for_each( GetRegistrations().begin(), GetRegistrations().end(), boost::bind( &Hook_ABC::Apply, _1, boost::ref( facade ) ) );
+            std::for_each( GetUses().begin(), GetUses().end(), boost::bind( &Hook_ABC::Apply, _1, boost::ref( facade ), profiling ) );
+            std::for_each( GetRegistrations().begin(), GetRegistrations().end(), boost::bind( &Hook_ABC::Apply, _1, boost::ref( facade ), profiling ) );
+        }
+        static void LogProfiling()
+        {
+            std::for_each( GetRegistrations().begin(), GetRegistrations().end(), std::mem_fun( &Hook_ABC::Log ) );
         }
     private:
         static std::vector< Hook_ABC* >& GetUses()
@@ -77,11 +84,11 @@ namespace sword // $$$$ _RC_ SLI 2012-10-22: DRY with wrapper/Hook.h
         } \
         Function current_; \
     private: \
-        virtual void Apply( core::Facade& facade ) \
+        virtual void Apply( core::Facade& facade, bool /*profiling*/ ) \
         { \
             facade.UseHook( &current_, #Hook, #result #parameters ); \
         } \
-} Hook##_;
+    } Hook##_;
 
 namespace sword
 {
@@ -127,6 +134,11 @@ namespace detail
         Function current_; \
         Function Previous; \
         static result Implement parameters; \
+        static result SafeProfiledImplement HOOK_DECL( arity, result parameters ) \
+        { \
+            MT_ProfilerGuard guard( GetProfiler() ); \
+            return SafeImplement( BOOST_PP_REPEAT( arity, HOOK_PARAM_CALL, p ) ); \
+        } \
         static result SafeImplement HOOK_DECL( arity, result parameters ) \
         { \
             try\
@@ -144,9 +156,24 @@ namespace detail
             return boost::function_types::result_type< result parameters >::type();\
         }\
     private: \
-        virtual void Apply( core::Facade& facade ) \
+        virtual void Apply( core::Facade& facade, bool profiling ) \
         { \
-            facade.RegisterHook( &current_, &Previous, SafeImplement, #Hook, #result #parameters ); \
+            facade.RegisterHook( &current_, &Previous, profiling ? &SafeProfiledImplement : &SafeImplement, #Hook, #result #parameters ); \
+        } \
+        virtual void Log() \
+        { \
+            MT_Profiler& profiler = GetProfiler(); \
+            if( profiler.GetCount() == 0 ) \
+                return; \
+            MT_LOG_INFO_MSG( "<profiling> hook " << #Hook << " " \
+                << profiler.GetCount() << " calls " \
+                << profiler.GetTotalTime() << " ms" ); \
+            profiler.Reset(); \
+        } \
+        static MT_Profiler& GetProfiler() \
+        { \
+            static MT_Profiler profiler; \
+            return profiler; \
         } \
     } Hook##_; \
     result Hook ## Wrapper::Implement parameters

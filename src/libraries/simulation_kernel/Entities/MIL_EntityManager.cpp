@@ -21,6 +21,7 @@
 #include "MissionController.h"
 #include "PopulationFactory.h"
 #include "InhabitantFactory.h"
+#include "KnowledgesVisitor_ABC.h"
 #include "Agents/MIL_AgentTypePion.h"
 #include "Agents/MIL_AgentPion.h"
 #include "Actions/PHY_FireResults_Default.h"
@@ -601,6 +602,57 @@ void MIL_EntityManager::Synchronize()
     sink_->UpdateUrbanModel( MIL_AgentServer::GetWorkspace().GetUrbanCache() );
     sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
     sink_->NotifyEffects();
+}
+
+namespace
+{
+    class KnowledgesVisitor : public KnowledgesVisitor_ABC
+    {
+    public:
+        explicit KnowledgesVisitor()
+            : agents_     ( 0 )
+            , objects_    ( 0 )
+            , populations_( 0 )
+        {
+            // NOTHING
+        }
+        virtual void VisitKnowledgesAgent( std::size_t knowledges )
+        {
+            agents_ += knowledges;
+        }
+        virtual void VisitKnowledgesObject( std::size_t knowledges )
+        {
+            objects_ += knowledges;
+        }
+        virtual void VisitKnowledgesPopulation( std::size_t knowledges )
+        {
+            populations_ += knowledges;
+        }
+        std::size_t Count()
+        {
+            return agents_ + objects_ + populations_;
+        }
+    public:
+        std::size_t agents_;
+        std::size_t objects_;
+        std::size_t populations_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::LogInfo
+// Created: MCO 2012-11-12
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::LogInfo( bool profiling )
+{
+    KnowledgesVisitor visitor;
+    Accept( visitor );
+    MT_LOG_INFO_MSG( MT_FormatString( "%d Objects - %d Knowledges ( %d Knowledge agents, %d Knowledge objects, %d Knowledge populations )" ,
+        pObjectManager_->Count(), visitor.Count(), visitor.agents_, visitor.objects_, visitor.populations_ ) );
+    MT_LOG_INFO_MSG( MT_FormatString( "%d Agents - %d Automats - %d Crowds" ,
+        sink_->Count(), automateFactory_->Count(), populationFactory_->Count() ) );
+    if( profiling )
+        sink_->LogProfiling();
 }
 
 // -----------------------------------------------------------------------------
@@ -2415,42 +2467,6 @@ double MIL_EntityManager::GetEffectsTime() const
 double MIL_EntityManager::GetStatesTime() const
 {
     return rStatesTime_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetObjectsCount
-// Created: LGY 2011-08-29
-// -----------------------------------------------------------------------------
-unsigned long MIL_EntityManager::GetObjectsCount() const
-{
-    return pObjectManager_->Count();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetAutomatsCount
-// Created: JSR 2011-10-25
-// -----------------------------------------------------------------------------
-unsigned long MIL_EntityManager::GetAutomatsCount() const
-{
-    return automateFactory_->Count();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetAgentsCount
-// Created: JSR 2011-10-25
-// -----------------------------------------------------------------------------
-unsigned long MIL_EntityManager::GetAgentsCount() const
-{
-    return sink_->Count();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetCrowdsCount
-// Created: JSR 2011-10-25
-// -----------------------------------------------------------------------------
-unsigned long MIL_EntityManager::GetCrowdsCount() const
-{
-    return populationFactory_->Count();
 }
 
 // -----------------------------------------------------------------------------

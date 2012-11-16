@@ -55,6 +55,7 @@ public:
     virtual void UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager& objects, const MIL_EffectManager& effects );
     virtual void UpdateKnowledges();
     virtual void UpdateUrbanModel( const MIL_UrbanCache& cache );
+    virtual void LogProfiling();
 
     void PostCommand( const std::string& type, const core::Model& parameters );
     virtual std::size_t StartCommand( const std::string& type, const core::Model& parameters );

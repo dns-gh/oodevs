@@ -149,10 +149,6 @@ public:
     double GetActionsTime            () const;
     double GetEffectsTime            () const;
     double GetStatesTime             () const;
-    unsigned long GetObjectsCount    () const;
-    unsigned long GetAutomatsCount   () const;
-    unsigned long GetAgentsCount     () const;
-    unsigned long GetCrowdsCount     () const;
     unsigned long GetModelCount      () const;
     //@}
 
@@ -165,6 +161,7 @@ public:
     void Clean();
     void Finalize();
     void Synchronize();
+    void LogInfo( bool profiling );
     //@}
 
     //! @external helper

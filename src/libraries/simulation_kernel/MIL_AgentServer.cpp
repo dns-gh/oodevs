@@ -25,7 +25,6 @@
 #include "Tools/MIL_Config.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
-#include "KnowledgesVisitor_ABC.h"
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
 #include "Urban/MIL_UrbanCache.h"
@@ -218,41 +217,6 @@ void MIL_AgentServer::OnTimer()
         Pause();
 }
 
-namespace
-{
-    class KnowledgesVisitor : public KnowledgesVisitor_ABC
-    {
-    public:
-        explicit KnowledgesVisitor()
-            : agents_     ( 0 )
-            , objects_    ( 0 )
-            , populations_( 0 )
-        {
-            // NOTHING
-        }
-        virtual void VisitKnowledgesAgent( std::size_t knowledges )
-        {
-            agents_ += knowledges;
-        }
-        virtual void VisitKnowledgesObject( std::size_t knowledges )
-        {
-            objects_ += knowledges;
-        }
-        virtual void VisitKnowledgesPopulation( std::size_t knowledges )
-        {
-            populations_ += knowledges;
-        }
-        std::size_t Count()
-        {
-            return agents_ + objects_ + populations_;
-        }
-    public:
-        std::size_t agents_;
-        std::size_t objects_;
-        std::size_t populations_;
-    };
-}
-
 //-----------------------------------------------------------------------------
 // Name:  MIL_AgentServer::mainSimLoop
 // Created: JVT 02-06-21
@@ -284,11 +248,8 @@ void MIL_AgentServer::MainSimLoop()
         pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(),
         rWaitTime_, waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfind.GetLastTime(),
         pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
-    MT_LOG_INFO_MSG( MT_FormatString( "%d Objects - %d Knowledges ( %d Knowledge agents, %d Knowledge objects, %d Knowledge populations )" , pEntityManager_->GetObjectsCount(),
-                     visitor.Count(), visitor.agents_, visitor.objects_, visitor.populations_ ) );
-    MT_LOG_INFO_MSG( MT_FormatString( "%d Agents - %d Automats - %d Crowds" , pEntityManager_->GetAgentsCount(),
-                            pEntityManager_->GetAutomatsCount(), pEntityManager_->GetCrowdsCount() ) );
     sword::Brain::ResetProfiling( config_.IsProfilingEnabled() );
+    pEntityManager_->LogInfo( config_.IsProfilingEnabled() );
     pEntityManager_->Clean();
     pCheckPointManager_->Update();
     Wait();
