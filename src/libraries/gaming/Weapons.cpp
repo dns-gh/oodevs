@@ -84,7 +84,7 @@ void Weapons::OptionChanged( const std::string& name, const kernel::OptionVarian
 // -----------------------------------------------------------------------------
 void Weapons::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_equipment_dotations()  != 1 )
+    if( !message.has_equipment_dotations() )
         return;
     minRange_ = std::numeric_limits< unsigned int >::max();
     maxRange_ = 0;

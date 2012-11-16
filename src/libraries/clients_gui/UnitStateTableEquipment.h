@@ -34,7 +34,7 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual bool IsReadOnlyForType( const const std::string& typeName ) const;
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const;
     //@}
 
 protected:

@@ -203,14 +203,6 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
 {
     std::string resource( msg.resource().name() );
     ResourceNode& node = resourceNodes_[ resource ];
-    unsigned int oldMaxStock = node.maxStock_;
-    unsigned int oldProduction = node.production_;
-    unsigned int oldConsumption = node.consumption_;
-    unsigned int oldNeeds = node.needs_;
-    float oldSatisfaction = node.satisfaction_;
-    bool oldCritical = node.critical_;
-    unsigned int oldStock = node.stock_;
-    unsigned int oldFlow = node.totalFlow_;
     node.resource_ = resource;
     node.isEnabled_ = msg.enabled();
     node.production_ = msg.has_production() ? msg.production() : 0;
@@ -236,22 +228,7 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
     if( entity )
     {
         const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + resource.c_str() + "/";
-        if( node.totalFlow_ != oldFlow && node.links_.size() )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Total flow" ) ) );
-        if( node.stock_ != oldStock )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
-        if( node.maxStock_ != oldMaxStock )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ) ) );
-        if( node.production_ != oldProduction )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Production" ) ) );
-        if( node.consumption_ != oldConsumption )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Consumption" ) ) );
-        if( node.critical_ != oldCritical )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ) ) );
-        if( node.needs_ != oldNeeds )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Needs" ) ) );
-        if( node.satisfaction_ != oldSatisfaction )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Satisfaction" ) ) );
+        controllers_.controller_.Update( DictionaryUpdated( *entity, baseName ) );
     }
 }
 
