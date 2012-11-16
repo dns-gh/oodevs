@@ -22,7 +22,6 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Profiler.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Version.h"

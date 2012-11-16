@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-#include "MT_Tools/MT_Profiler.h"
 #pragma warning( push, 0 )
 #include <google/protobuf/message.h>
 #pragma warning( pop )
