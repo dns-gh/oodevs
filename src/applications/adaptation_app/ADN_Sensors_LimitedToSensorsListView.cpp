@@ -47,6 +47,8 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
     Q3PopupMenu addSensorMenu( &popupMenu );
     Q3PopupMenu addRadarMenu( &popupMenu );
 
+    std::vector< const ADN_RefWithName* > menuItems;
+
     // Add the available sensors to the 'add sensor' submenu.
     ADN_Sensors_Data::T_SensorsInfos_Vector& vSensors = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos();
 
@@ -56,7 +58,8 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
         // Don't add a sensor to the menu if it already is present in the list.
         if( Contains( pSensor ) )
             continue;
-        addSensorMenu.insertItem( pSensor->strName_.GetData().c_str(), (int)pSensor );
+        menuItems.push_back( pSensor );
+        addSensorMenu.insertItem( pSensor->strName_.GetData().c_str(), static_cast< int >( 2 + menuItems.size() ) );
     }
 
     ADN_Tools::SortMenu( addSensorMenu );
@@ -69,7 +72,8 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
         // Don't add a radar to the menu if it already is present in the list.
         if( Contains( pRadar ) )
             continue;
-        addRadarMenu.insertItem( pRadar->strName_.GetData().c_str(), (int)pRadar );
+        menuItems.push_back( pRadar );
+        addRadarMenu.insertItem( pRadar->strName_.GetData().c_str(), static_cast< int >( 2 + menuItems.size() ) );
     }
 
     ADN_Tools::SortMenu( addRadarMenu );
@@ -86,11 +90,11 @@ void ADN_Sensors_LimitedToSensorsListView::OnContextMenu( const QPoint& pt)
         // Remove the sensor from the list.
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurData_ );
     }
-    else if( nMenuResult > 1 )
+    else if( nMenuResult > 2 )
     {
         // Add the sensor to the list.
         ADN_Sensors_Data::LimitedToSensorsInfos* pNewInfo = new ADN_Sensors_Data::LimitedToSensorsInfos();
-        pNewInfo->strName_ = reinterpret_cast< ADN_Sensors_Data::LimitedToSensorsInfos* >( nMenuResult )->strName_.GetData();
+        pNewInfo->strName_ = menuItems[ nMenuResult - 3 ]->strName_.GetData();
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         if( ADN_ListViewItem* item = FindItem( pNewInfo ) )

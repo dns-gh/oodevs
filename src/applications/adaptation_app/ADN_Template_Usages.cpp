@@ -51,7 +51,7 @@ void ADN_Template_Usages::OnContextMenu( const QPoint& point )
     {
         if( Contains( **it ) )
             continue;
-        addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
+        addMenu.insertItem( (*it)->strName_.GetData().c_str(), 2 + static_cast< int >( std::distance( accommodations.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( addMenu );
     menu.insertItem( tr( "New" ), &addMenu );
@@ -68,7 +68,7 @@ void ADN_Template_Usages::OnContextMenu( const QPoint& point )
     }
     else
     {
-        ADN_Urban_Data::AccommodationInfos* pResult = (ADN_Urban_Data::AccommodationInfos*)nMenuResult;
+        ADN_Urban_Data::AccommodationInfos* pResult = accommodations[ nMenuResult - 2 ];
         ADN_Urban_Data::UsageTemplateInfos* pNewInfo = new ADN_Urban_Data::UsageTemplateInfos( *pResult, 0 );
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );

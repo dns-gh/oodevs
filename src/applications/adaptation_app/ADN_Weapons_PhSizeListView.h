@@ -28,7 +28,7 @@ class ADN_Weapons_PhSizeListView : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Weapons_PhSizeListView( GQ_Plot& plot );
+    explicit ADN_Weapons_PhSizeListView( GQ_Plot& plot, const std::map< void*, unsigned int >& userIds );
     virtual ~ADN_Weapons_PhSizeListView();
     //@}
 

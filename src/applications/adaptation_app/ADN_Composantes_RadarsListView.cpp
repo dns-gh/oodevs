@@ -72,7 +72,7 @@ void ADN_Composantes_RadarsListView::OnContextMenu( const QPoint& pt )
         // Don't add a radar to the menu if it already is present in the list.
         if( Contains( pRadar ) )
             continue;
-        addMenu.insertItem( pRadar->strName_.GetData().c_str(), (int)pRadar );
+        addMenu.insertItem( pRadar->strName_.GetData().c_str(), 2 + static_cast< int >( std::distance( vRadars.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( addMenu );
 
@@ -84,15 +84,16 @@ void ADN_Composantes_RadarsListView::OnContextMenu( const QPoint& pt )
     if( nMenuResult == 1 )
     {
         // Remove the radar from the list.
-        RadarInfos* pCurrent = (RadarInfos*)pCurData_;
+        RadarInfos* pCurrent = static_cast< RadarInfos* >( pCurData_ );
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurrent);
     }
     else if( nMenuResult > 1 )
     {
         // Add the weapon to the list.
         RadarInfos* pNewInfo = new RadarInfos();
-        pNewInfo->ptrRadar_ = (ADN_Radars_Data::RadarInfos*)nMenuResult;
-        pNewInfo->strName_ = ((ADN_Radars_Data::RadarInfos*)nMenuResult)->strName_.GetData();
+        ADN_Radars_Data::RadarInfos* radarsInfos = vRadars[ nMenuResult - 2 ];
+        pNewInfo->ptrRadar_ = radarsInfos;
+        pNewInfo->strName_ = radarsInfos->strName_.GetData();
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );

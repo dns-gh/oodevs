@@ -64,7 +64,7 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( const QPoint& pt )
     {
         if( Contains( **it ) )
             continue;
-        addMenu.insertItem( ( *it )->strName_.GetData().c_str(), reinterpret_cast< int >( *it ) );
+        addMenu.insertItem( ( *it )->strName_.GetData().c_str(), 2 + static_cast< int >( std::distance( pWeapon.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( addMenu );
 
@@ -87,7 +87,7 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( const QPoint& pt )
     {
         // Create a new element
         ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons* pNewInfo = new ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons();
-        pNewInfo->ptrWeapon_ = reinterpret_cast< ADN_Equipement_Data::CategoryInfo* >( nMenuResult );
+        pNewInfo->ptrWeapon_ = pWeapon[ nMenuResult - 2 ];
         pNewInfo->coefficient_ = 0;
         pNewInfo->strName_  = pNewInfo->ptrWeapon_.GetData()->strName_.GetData();
 

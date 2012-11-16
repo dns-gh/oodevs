@@ -99,10 +99,10 @@ private:
 
 class ADN_GC_PhSize : public ADN_Connector_Graph_ABC
 {
-
 public:
     explicit ADN_GC_PhSize( ADN_Graph& graph )
         : ADN_Connector_Graph_ABC( graph )
+        , userId_( 0 )
     {
         // NOTHING
     }
@@ -117,9 +117,9 @@ public:
         if( pItem == 0 )
             return false;
 
-        ADN_Weapons_Data::PhSizeInfos* pPhSizeInfos = static_cast< ADN_Weapons_Data::PhSizeInfos* >(pItem);
-
-        ADN_GraphData* pNewData = new ADN_GraphData( reinterpret_cast< uint >( pItem ), graph_ );
+        ADN_Weapons_Data::PhSizeInfos* pPhSizeInfos = static_cast< ADN_Weapons_Data::PhSizeInfos* >( pItem );
+        userIds_[ pItem ] = ++userId_;
+        ADN_GraphData* pNewData = new ADN_GraphData( userIds_[ pItem ], graph_ );
         QColor color;
         color.setHsv( nNbrDatas_ * 100, 255, 255 );
         GQ_PlotData::E_PointShapeType nPointShape = static_cast< GQ_PlotData::E_PointShapeType >( nNbrDatas_ % ( GQ_PlotData::eUserShape - 1 ) + 1 );
@@ -140,7 +140,14 @@ public:
 
     bool RemItemPrivate( void* pItem )
     {
-        GQ_PlotData* pPlotData = graph_.FindPlotData( reinterpret_cast< uint >( pItem ) );
+        std::map< void*, unsigned int >::const_iterator itId = userIds_.find( pItem );
+        if( itId == userIds_.end() )
+        {
+            assert( false );
+            return false;
+        }
+        GQ_PlotData* pPlotData = graph_.FindPlotData( itId->second );
+        userIds_.erase( itId );
         if( pPlotData == 0 )
             return false;
         // Unregister and destroy it.
@@ -150,14 +157,22 @@ public:
 
     void ClearPrivate( bool /*bInConnection*/ = false )
     {
+        userIds_.clear();
         graph_.UnregisterAllPlotData( true );
         nNbrDatas_ = 0;
     }
 
     virtual ADN_GraphValue* CreateValue( void* /*pObj*/ ) { return 0; }
 
+    const std::map< void*, unsigned int >& GetUserIds() const
+    {
+        return userIds_;
+    }
+
 private:
     uint nNbrDatas_;
+    unsigned int userId_;
+    std::map< void*, unsigned int > userIds_;
 };
 
 class ADN_Weapon_Table : public ADN_Table
@@ -303,7 +318,7 @@ void ADN_Weapons_GUI::Build()
     pGraphConnector->setObjectName( strClassName_ + "_PHGraph" );
     vInfosConnectors[ ePhsGraph ] = pGraphConnector;
 
-    ADN_Weapons_PhSizeListView* pPhSizeListView = new ADN_Weapons_PhSizeListView( *pGraph/*, pDirectGroup*/ );
+    ADN_Weapons_PhSizeListView* pPhSizeListView = new ADN_Weapons_PhSizeListView( *pGraph, pGraphConnector->GetUserIds() );
     pPhSizeListView->setObjectName( strClassName_ + "_PHSize" );
     vInfosConnectors[ ePhs ] = &pPhSizeListView->GetConnector();
     T_ConnectorVector vPhConnectors( eNbrPhSizeGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );

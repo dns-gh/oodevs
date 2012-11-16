@@ -70,7 +70,7 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( const QPoint& pt )
 
     ADN_Breakdowns_Data& breakdownsData = ADN_Workspace::GetWorkspace().GetBreakdowns().GetData();
     for( ADN_Breakdowns_Data::IT_BreakdownInfoVector it = breakdownsData.vBreakdowns_.begin(); it != breakdownsData.vBreakdowns_.end(); ++it )
-        addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
+        addMenu.insertItem( (*it)->strName_.GetData().c_str(), 2 + static_cast< int >( std::distance( breakdownsData.vBreakdowns_.begin(), it ) ) );
 
     menu.insertItem( tr( "New" ), &addMenu );
     menu.insertItem( tr( "Delete" ), 1 );
@@ -90,7 +90,7 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( const QPoint& pt )
     else
     {
         // Create a new element
-        ADN_Breakdowns_Data::BreakdownInfo* pCast = (ADN_Breakdowns_Data::BreakdownInfo*)nMenuResult;
+        ADN_Breakdowns_Data::BreakdownInfo* pCast = breakdownsData.vBreakdowns_[ nMenuResult - 2 ];
         BreakdownInfos* pNewInfo = new BreakdownInfos();
         pNewInfo->ptrBreakdown_ = pCast;
         pNewInfo->ptrBreakdown_.SetVector( ADN_Workspace::GetWorkspace().GetBreakdowns().GetData().vBreakdowns_ );

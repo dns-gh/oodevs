@@ -750,6 +750,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     {
         result[ eSensors ];
         result[ ePopulation ];
+        result[ eWeapons ];
         return result;
     }
     // All objects use fire

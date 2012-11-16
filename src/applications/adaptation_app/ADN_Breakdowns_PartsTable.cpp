@@ -74,7 +74,7 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( const QPoint& pt )
     {
         if( Contains( **it ) )
             continue;
-        subMenu.insertItem( ( *it )->strName_.GetData().c_str(), reinterpret_cast< int >( *it ) );
+        subMenu.insertItem( ( *it )->strName_.GetData().c_str(), 1 + static_cast< int >( std::distance( parts.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( subMenu );
 
@@ -97,7 +97,7 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( const QPoint& pt )
     {
         // Create a new element
         ADN_Breakdowns_Data::RepairPartInfo* pNewInfo = new ADN_Breakdowns_Data::RepairPartInfo();
-        pNewInfo->ptrPart_ = reinterpret_cast< ADN_Equipement_Data::CategoryInfo* >( nMenuResult );
+        pNewInfo->ptrPart_ = parts[ nMenuResult - 1 ];
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );

@@ -82,7 +82,7 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
         // Don't add a object to the menu if it already is present in the list.
         if( Contains( pObject ) )
             continue;
-        addMenu.insertItem( pObject->strName_.GetData().c_str(), (int)pObject );
+        addMenu.insertItem( pObject->strName_.GetData().c_str(), 2 + static_cast< int >( std::distance( vObjects.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( addMenu );
 
@@ -102,7 +102,7 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
     {
         // Add the weapon to the list.
         TargetInfos* pNewInfo = new TargetInfos();
-        pNewInfo->ptrObject_ = (ADN_Objects_Data_ObjectInfos*)nMenuResult;
+        pNewInfo->ptrObject_ = vObjects[ nMenuResult - 2 ];
         pNewInfo->strName_ = pNewInfo->ptrObject_.GetData()->strName_.GetData();
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
