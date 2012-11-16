@@ -140,7 +140,7 @@ public:
 
     bool RemItemPrivate( void* pItem )
     {
-        std::map< void*, unsigned int >::const_iterator itId = userIds_.find( pItem );
+        std::map< void*, unsigned int >::iterator itId = userIds_.find( pItem );
         if( itId == userIds_.end() )
         {
             assert( false );
