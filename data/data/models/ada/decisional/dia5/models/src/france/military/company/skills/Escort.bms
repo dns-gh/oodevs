@@ -5,14 +5,11 @@ rootnode
     done = function( self ) end,
 
     create = function( self )
-        if masalife.brain.core.class.isOfType( self.params.objective, sword.military.world.Company ) then
-            DEC_Trace("je suis une compagnie = automate est : "..tostring(DEC_GetSzName(self.params.objective.source)))
+        if masalife.brain.core.class.isOfType(  self.params.objective, sword.military.world.Company) then
             self.escortableUnits = integration.getEntitiesFromAutomatCommunication( self.params.objective, "none", true)
-        elseif masalife.brain.core.class.isOfType( self.params.objective, sword.military.world.Platoon ) then
-            DEC_Trace("je suis une unité qu'il faut escorter")
+        elseif masalife.brain.core.class.isOfType( self.params.objective, sword.military.world.Platoon) then
             self.escortableUnits = { integration.getAgentFromAutomatKnowledge( self.params.objective ) }
         else
-            DEC_Trace("Je suis autre chose qu'il faut escorter")
             self.escortableUnits = { self.params.objective }
             self.activate = function( self )
                  Activate( skill.links.lead , 1, { companyTask = self.params.companyTask,
@@ -20,43 +17,33 @@ rootnode
                                      defaultTask = self.params.defaultTask, taskForSupporting = self.params.taskForSupporting, noCoordination = true } )
             end
         end
-    for i = 1, #self.escortableUnits do
-        local pion = self.escortableUnits[i]
-        DEC_Trace("pion est : "..tostring(DEC_GetSzName(pion.source)))
-    end
+
     end,
 
     activate = function( self )
          local Activate = Activate
-            -- AJOUT GGE
-                 Activate( skill.links.lead , 1, { companyTask = self.params.companyTask,
-                                     mainTasks = self.params.escortTask, supportTasks = self.params.supportTask,
-                                     defaultTask = self.params.defaultTask, taskForSupporting = self.params.taskForSupporting, noCoordination = true } )
-   -- FIN AJOUT GGE
- --        local distance = meKnowledge:getProximity( self.params.objective )
-   --      DEC_Trace("distance : "..tostring(distance))
+         local distance = meKnowledge:getProximity( self.params.objective )
          -- Si l'automate escorteur est proche (95%) de l'automate escorté
-     --    if distance > 95 then
+         if distance > 95 then
             -- Si on passe une fois dans le if, on ne veut plus jamais passer dans le else
-       --     DEC_Trace("je suis proche")
-     --       self.activate = self.beginEscort
-     --    else
+            self.activate = self.beginEscort
+         else
             -- Il faut que l'automate escorteur se rapproche de l'automate a escorter
-     --       if not self.fragOrderSent then
-      --          local platoonInMeKnowledge = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", true)
-       --         local sizePlatoonInMeKnowledge = #platoonInMeKnowledge
-        --        local objectivePosition = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CopiePoint( self.params.objective:getPosition() ) )
-      --          for i = 1, sizePlatoonInMeKnowledge do
-       --             local element = platoonInMeKnowledge[i]
-        --            element:sendTaskToPion( element, "france.military.platoon.tasks.FaireMouvement", { objectives = { objectivePosition },
-          --                 dangerDirection_ = self.params.automateParameters.dangerDirection_}, eEtatEchelon_First )
-           --     end
-          --      self.fragOrderSent = true
-         --    end
-         --     local fragOrder = CreateFragOrder("Rep_OrderConduite_AttendreSePoster")
-         --     local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )
-          --    Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = self.escortableUnits } )
-   --      end
+            if not self.fragOrderSent then
+                local platoonInMeKnowledge = integration.getEntitiesFromAutomatCommunication( meKnowledge, "none", true)
+                local sizePlatoonInMeKnowledge = #platoonInMeKnowledge
+                local objectivePosition = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CopiePoint( self.params.objective:getPosition() ) )
+                for i = 1, sizePlatoonInMeKnowledge do
+                    local element = platoonInMeKnowledge[i]
+                    element:sendTaskToPion( element, "france.military.platoon.tasks.FaireMouvement", { objectives = { objectivePosition },
+                           dangerDirection_ = self.params.automateParameters.dangerDirection_}, eEtatEchelon_First )
+                end
+                self.fragOrderSent = true
+             end
+              local fragOrder = CreateFragOrder("Rep_OrderConduite_AttendreSePoster")
+              local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )       
+              Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = self.escortableUnits } )
+         end
     end,
 
     beginEscort = function( self )
@@ -65,20 +52,16 @@ rootnode
        -- Le fragorder Poursuivre fait un "stopTask" du fragOrder "Se Poster" qui s'executera au tic suivant
        -- On veut être sur que le pion ait eu le temps de lancer un pathfind, quelque soit l'ordre d'evaluation des pions
        if not self.waitFollowFragOrder then
-       --    DEC_Trace("beginEscort self.waitFollowFragOrder false")
-           self.waitFollowFragOrder = 1
-       --    local fragOrder = CreateFragOrder("Rep_OrderConduite_Poursuivre")
-       --    local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )
-       --    DEC_Trace("frago poursuivre")
-       --    Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = self.escortableUnits } )
+            self.waitFollowFragOrder = 1
+            local fragOrder = CreateFragOrder("Rep_OrderConduite_Poursuivre")
+            local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )
+            Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = self.escortableUnits } )
        elseif self.waitFollowFragOrder == 1 then
-       --    DEC_Trace("beginEscort self.waitFollowFragOrder 1")
            self.waitFollowFragOrder = 2
        else
-        --   DEC_Trace("beginEscort begin !!!!!!!!!!")
-        --   Activate( skill.links.lead , 1, { companyTask = self.params.companyTask,
-        --                             mainTasks = self.params.escortTask, supportTasks = self.params.supportTask,
-        --                             defaultTask = self.params.defaultTask, taskForSupporting = self.params.taskForSupporting, noCoordination = true } )
+           Activate( skill.links.lead , 1, { companyTask = self.params.companyTask,
+                                     mainTasks = self.params.escortTask, supportTasks = self.params.supportTask,
+                                     defaultTask = self.params.defaultTask, taskForSupporting = self.params.taskForSupporting, noCoordination = true } )
         end
     end,
 }

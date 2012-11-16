@@ -72,7 +72,6 @@ rootnode
                     end
                     self.route = F_Pion_GetitMvt( self.escortableUnit.source )
                      if self.route then
-                        -- PEUT ETRE TESTER LA DISTANCE ICI DANS LE CAS OU L UNITE ESCORTEE S EST ARRETEE
                          meKnowledge:sendNeedRoute( self.escortableUnit, false )
                          local itinerary = CreateKnowledge( france.military.ontologie.classe.Itinerary, self.route )
                          Activate( skill.links.moveAndTakePosition, 1, { entity  = itinerary } ) -- itinerary is reachable element and a reaching element.
