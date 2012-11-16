@@ -22,6 +22,7 @@ DEC_Model::DEC_Model( const std::string& strName, xml::xistream& xis,
 {
     // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Model destructor
 // Created: LDC 2009-02-24
