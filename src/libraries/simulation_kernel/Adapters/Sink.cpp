@@ -191,15 +191,15 @@ namespace
 // -----------------------------------------------------------------------------
 Sink::Sink( AgentFactory_ABC& agents, const PopulationFactory_ABC& populations,
             unsigned int gcPause, unsigned int gcMult, const std::vector< unsigned int >& dangerousObjects )
-    : agents_           ( agents )
-    , populations_      ( populations )
-    , gcPause_          ( gcPause )
-    , gcMult_           ( gcMult )
-    , dangerousObjects_ ( dangerousObjects )
-    , modules_          ( configuration )
-    , logger_           ( new CoreLogger() )
-    , model_            ( new core::Model() )
-    , facade_           ( new core::Facade( modules_, *logger_, LoadConfig( *model_ ) ) )
+    : agents_          ( agents )
+    , populations_     ( populations )
+    , gcPause_         ( gcPause )
+    , gcMult_          ( gcMult )
+    , dangerousObjects_( dangerousObjects )
+    , modules_         ( configuration )
+    , logger_          ( new CoreLogger() )
+    , model_           ( new core::Model() )
+    , facade_          ( new core::Facade( modules_, *logger_, LoadConfig( *model_ ) ) )
 {
     Initialize();
 }
