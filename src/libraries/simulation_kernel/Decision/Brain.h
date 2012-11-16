@@ -10,7 +10,7 @@
 #ifndef SWORD_BRAIN_H
 #define SWORD_BRAIN_H
 
-#include "MT_Tools/MT_Profiler.h"
+#include "MT_Tools/MT_ProfilerGuard.h"
 #include <directia/tools/binders/ScriptRef.h>
 #define private public
 #include <directia/brain/Brain.h>
@@ -166,20 +166,6 @@ public:
 private:
     //! @name Types
     //@{
-    struct ProfilerGuard : boost::noncopyable
-    {
-        explicit ProfilerGuard( const std::string& name )
-            : profiler_( profilers_[ name ] )
-        {
-            profiler_.Start();
-        }
-        ~ProfilerGuard()
-        {
-            profiler_.Stop();
-        }
-        MT_Profiler& profiler_;
-    };
-
     template< typename Signature >
     struct ProfilerProxy;
 
@@ -195,7 +181,7 @@ private:
         {} \
         R operator()( BOOST_PP_ENUM_BINARY_PARAMS(n, P, t) ) const \
         { \
-            ProfilerGuard guard( name_ ); \
+            MT_ProfilerGuard guard( profilers_[ name ] ); \
             return f_( BOOST_PP_ENUM_PARAMS(n, t) ); \
         } \
         std::string name_; \
