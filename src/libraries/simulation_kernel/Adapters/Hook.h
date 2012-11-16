@@ -137,20 +137,20 @@ namespace detail
         } \
         static result SafeImplement HOOK_DECL( arity, result parameters ) \
         { \
-            try\
-            {\
+            try \
+            { \
                 return Implement( BOOST_PP_REPEAT( arity, HOOK_PARAM_CALL, p ) ); \
-            }\
-            catch( std::exception& e )\
-            {\
+            } \
+            catch( std::exception& e ) \
+            { \
                 MT_LOG_ERROR_MSG( "Exception in hook " #Hook << e.what() ); \
-            }\
-            catch( ... )\
-            {\
-                MT_LOG_ERROR_MSG( "Unknown exception in " #Hook " hook" );\
-            }\
-            return boost::function_types::result_type< result parameters >::type();\
-        }\
+            } \
+            catch( ... ) \
+            { \
+                MT_LOG_ERROR_MSG( "Unknown exception in " #Hook " hook" ); \
+            } \
+            return boost::function_types::result_type< result parameters >::type(); \
+        } \
     private: \
         virtual void Apply( core::Facade& facade, bool profiling ) \
         { \
