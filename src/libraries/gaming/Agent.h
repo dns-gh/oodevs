@@ -29,6 +29,8 @@ namespace kernel
     class AgentType;
 }
 
+class Equipments; 
+
 // =============================================================================
 /** @class  Agent
     @brief  Agent
@@ -39,6 +41,8 @@ class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
             , public kernel::Drawable_ABC
             , public kernel::Displayable_ABC
+            , public tools::Observer_ABC
+            , public tools::ElementObserver_ABC< Equipments >
 {
 public:
     //! @name Constructors/Destructor
@@ -56,29 +60,26 @@ public:
     
     virtual QString GetShortName() const;
     virtual QString GetName() const;
+
+    virtual void NotifyUpdated( const Equipments& equipments );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     void CreateDictionary( kernel::Controller& controller );
-    //void InitializeSymbol() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::AgentType& type_;
+    kernel::Controller& controller_;
     mutable std::string symbol_;
     std::string level_;
     mutable bool initialized_;
+    float weight_;
     //@}
 };
 

@@ -34,6 +34,10 @@
         <source>Info/Command post</source>
         <translation>Info/Poste de commande</translation>
     </message>
+    <message>
+        <source>Info/Weight</source>
+        <translation>Info/Poids</translation>
+    </message>
 </context>
 <context>
     <name>AgentPositions</name>
@@ -241,6 +245,10 @@
     <message>
         <source>Info/Position</source>
         <translation>Info/Position</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Info</translation>
     </message>
 </context>
 <context>

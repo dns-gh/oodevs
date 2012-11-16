@@ -12,6 +12,7 @@
 #include "AgentComposition.h"
 #include "AgentNature.h"
 #include "DotationCapacityType.h"
+#include "ComponentType.h"
 #include "SymbolFactory.h"
 #include <xeumeuleu/xml.hpp>
 #include "ENT/ENT_Tr.h"
@@ -238,6 +239,18 @@ unsigned int AgentType::GetNbrOfficers() const
 unsigned int AgentType::GetNbrWarrantOfficers() const
 {
     return nbrWarrantOfficers_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetComposantesWeight
+// Created: NPT 2012-11-16
+// -----------------------------------------------------------------------------
+const float AgentType::GetComposantesWeight() const
+{
+    float weight = 0;
+    for( CIT_Components it = equipments_.begin(); it != equipments_.end(); ++it )
+        weight += ( *it )->GetType().GetWeight() * ( *it )->GetCount();
+    return weight;
 }
 
 // -----------------------------------------------------------------------------

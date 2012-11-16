@@ -34,6 +34,10 @@
         <source>Info/Command post</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info/Weight</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentPositions</name>
@@ -241,6 +245,10 @@
     <message>
         <source>Info/Position</source>
         <translation type="unfinished">Info/Posición</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

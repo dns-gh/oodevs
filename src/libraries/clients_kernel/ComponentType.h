@@ -34,6 +34,7 @@ public:
     //@{
     unsigned long GetId() const;
     std::string GetName() const;
+    float GetWeight() const;
     //@}
 
 private:
@@ -53,6 +54,7 @@ private:
     //@{
     std::string name_;
     unsigned long id_;
+    float weight_;
 
     bool hasMaintenance_;
     bool hasMedical_;

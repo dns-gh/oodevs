@@ -96,6 +96,7 @@ private:
     std::string                     nature_;
     bool                            overridenSymbol_;
     kernel::CriticalIntelligence    criticalIntelligence_;
+    const float                     weight_;
     //@}
 };
 

@@ -21,9 +21,11 @@ ComponentType::ComponentType( xml::xistream& xis )
     : hasMaintenance_( false )
     , hasMedical_( false )
     , hasSupply_( false )
+    , weight_( 0 )
 {
     xis >> xml::attribute( "name", name_ )
-        >> xml::attribute( "id", id_ );
+        >> xml::attribute( "id", id_ )
+        >> xml::attribute( "weight", weight_ );
 
     xis >> xml::optional
         >> xml::start( "logistic-functions" )
@@ -66,4 +68,13 @@ std::string ComponentType::GetName() const
 unsigned long ComponentType::GetId() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ComponentType::GetWeight
+// Created: NPT 2012-11-16
+// -----------------------------------------------------------------------------
+float ComponentType::GetWeight() const
+{
+    return weight_;
 }

@@ -13,6 +13,7 @@
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -40,6 +41,7 @@ class Equipments : public kernel::Extension_ABC
                  , public HierarchicExtension_ABC
                  , public kernel::Updatable_ABC< sword::UnitAttributes >
                  , public tools::Resolver< Equipment >
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -49,13 +51,12 @@ public:
     virtual ~Equipments();
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Operations
     //@{
-    Equipments( const Equipments& );            //!< Copy constructor
-    Equipments& operator=( const Equipments& ); //!< Assignment operator
+    float GetTotalWeight() const;
     //@}
 
+private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::UnitAttributes& message );
