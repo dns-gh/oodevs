@@ -55,6 +55,7 @@ enum E_ConsistencyCheck
     eNoOrbat,
     eDeletedUrbanBlocks,
     eDeletedPopulationUrbanBlocks,
+    eSignature,
     eOthers,
     eOthersMask,
 };

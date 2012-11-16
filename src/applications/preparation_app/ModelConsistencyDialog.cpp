@@ -27,7 +27,7 @@ namespace
         return type == eNoLogisticBase || type ==  eNoCommandPost || type ==  eSeveralCommandPost
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
             || type == eBadLogisticSubordinate || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
-            || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks;
+            || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks || type == eSignature;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
@@ -119,6 +119,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eDeletedUrbanBlocks ]              = tools::translate( "ModelConsistencyDialog", "Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.");
     errorDescriptions_[ eDeletedPopulationUrbanBlocks ] = "%1";
     errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found" );
+    errorDescriptions_[ eSignature ] = "%1";
     errorDescriptions_[ eOthers ]                          = "%1";
 }
 

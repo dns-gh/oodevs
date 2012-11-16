@@ -795,10 +795,17 @@ void ModelConsistencyChecker::CheckUrban()
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::CheckFiles()
 {
-    std::vector< std::string > filesErrors;
-    fileLoaderObserver_.GetErrors( filesErrors );
-    for( std::size_t i = 0; i < filesErrors.size(); ++i )
-        AddError( eOthers, 0, filesErrors[ i ] );
+    std::vector< std::string > filesSignatureErrors;
+    fileLoaderObserver_.GetSignatureErrors( filesSignatureErrors );
+    for( int i = 0; i < filesSignatureErrors.size(); ++i )
+        AddError( eSignature, 0, filesSignatureErrors[ i ] );
+    if( filesSignatureErrors.size() > 0 )
+        const_cast< Model& >( model_).SetConsistencyErrorsOnLoad();
+
+    std::vector< std::string > filesXsdErrors;
+    fileLoaderObserver_.GetXsdErrors( filesXsdErrors );
+    for( int i = 0; i < filesXsdErrors.size(); ++i )
+        AddError( eOthers, 0, filesXsdErrors[ i ] );
     fileLoaderObserver_.Purge();
 }
 

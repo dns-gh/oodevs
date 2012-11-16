@@ -109,10 +109,21 @@ void FileLoaderObserver::DisplayErrors() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FileLoaderObserver::GetErrors
+// Name: FileLoaderObserver::GetXsdErrors
 // Created: MMC 2012-06-01
 // -----------------------------------------------------------------------------
-void FileLoaderObserver::GetErrors( std::vector< std::string >& errors ) const
+void FileLoaderObserver::GetXsdErrors( std::vector< std::string >& errors ) const
+{
+    if( !malformedFiles_.empty() )
+        for( CIT_Error it = malformedFiles_.begin(); it != malformedFiles_.end(); ++it )
+            errors.push_back( tools::translate( "Application", "The following files do not match their xsd : " ).append( it->c_str() ).toAscii().constData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileLoaderObserver::GetSignatureErrors
+// Created: MMC 2012-06-01
+// -----------------------------------------------------------------------------
+void FileLoaderObserver::GetSignatureErrors( std::vector< std::string >& errors ) const
 {
     if( !invalidSignatureFiles_.empty() || !missingSignatureFiles_.empty() )
     {
@@ -122,10 +133,6 @@ void FileLoaderObserver::GetErrors( std::vector< std::string >& errors ) const
         for( CIT_Error it = missingSignatureFiles_.begin(); it != missingSignatureFiles_.end(); ++it )
             errors.push_back( tools::translate( "Application", "The signatures for the following files do not exist or are invalid : " ).append( it->c_str() ).toStdString() );
     }
-
-    if( !malformedFiles_.empty() )
-        for( CIT_Error it = malformedFiles_.begin(); it != malformedFiles_.end(); ++it )
-            errors.push_back( tools::translate( "Application", "The following files do not match their xsd : " ).append( it->c_str() ).toStdString() );
 }
 
 // -----------------------------------------------------------------------------
