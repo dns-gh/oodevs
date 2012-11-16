@@ -157,6 +157,7 @@ public:
         eRC_PrisSousTirEclairant = 444,
         eRC_PrisSousTirFumigene = 445,
         eRC_DetectedObject = 446,
+        eRC_RepairEvacuationNoMeans = 449,
     };
     //@}
 public:

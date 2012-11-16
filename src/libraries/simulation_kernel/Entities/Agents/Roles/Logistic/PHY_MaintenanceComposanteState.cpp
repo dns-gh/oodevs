@@ -270,6 +270,15 @@ void PHY_MaintenanceComposanteState::SetConsign( PHY_MaintenanceConsign_ABC* pCo
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceComposanteState::GetConsign
+// Created: MMC 2012-11-15
+// -----------------------------------------------------------------------------
+const PHY_MaintenanceConsign_ABC* PHY_MaintenanceComposanteState::GetConsign() const
+{
+    return pConsign_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceComposanteState::SetComposantePosition
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------

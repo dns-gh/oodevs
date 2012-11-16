@@ -29,6 +29,7 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MaintenanceTransportConsign.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
@@ -65,6 +66,7 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
     , pMaintenanceState_( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_( 0 )
+    , bRepairEvacuationNoMeansChecked_( false )
 {
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
@@ -93,6 +95,7 @@ PHY_ComposantePion::PHY_ComposantePion()
     , pMaintenanceState_( 0 )
     , nRandomBreakdownNextTimeStep_( 0 )
     , pRandomBreakdownState_( 0 )
+    , bRepairEvacuationNoMeansChecked_( false )
 {
     // NOTHING
 }
@@ -142,6 +145,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
          >> nAutoRepairTimeStep_
          >> const_cast< PHY_Breakdown*& >( pBreakdown_ )
          >> pMaintenanceState_
+         >> bRepairEvacuationNoMeansChecked_
          >> nRandomBreakdownNextTimeStep_;
     if( nRandomBreakdownNextTimeStep_ )
     {
@@ -172,6 +176,7 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned in
          << nAutoRepairTimeStep_
          << pBreakdown_
          << pMaintenanceState_
+         << bRepairEvacuationNoMeansChecked_
          << nRandomBreakdownNextTimeStep_;
     if( nRandomBreakdownNextTimeStep_ )
     {
@@ -198,6 +203,7 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
         pMaintenanceState_->Cancel();
         delete pMaintenanceState_;
         pMaintenanceState_ = 0;
+        bRepairEvacuationNoMeansChecked_ = false;
     }
     pHumans_->NotifyComposanteTransfered( *pRole_, newRole );
     std::map< const PHY_DotationCategory*, double > dotationsRemoved = pRole_->NotifyComposanteRemoved( *this );
@@ -218,6 +224,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, co
         pNewState = &PHY_ComposanteState::undamaged_;
     if( *pState_ == *pNewState )
         return;
+    bRepairEvacuationNoMeansChecked_ = false;
     const PHY_ComposanteState* pOldState = pState_;
     pState_ = pNewState;
     if( breakdownType )
@@ -787,6 +794,25 @@ void PHY_ComposantePion::Update()
         assert( pBreakdown_ );
         assert( pRole_ );
         pMaintenanceState_ = pRole_->NotifyComposanteWaitingForMaintenance( *this );
+    }
+
+    if( !bRepairEvacuationNoMeansChecked_ && ( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ || !pState_->IsUsable() ) )
+    {
+        assert( pType_ );
+        bool bRepairEvacuationNoMeans = false;
+        if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pMaintenanceState_ )
+            bRepairEvacuationNoMeans = true;
+        else if( pMaintenanceState_ && pMaintenanceState_->GetConsign() )
+        {
+            const PHY_MaintenanceTransportConsign* pConsign = dynamic_cast< const PHY_MaintenanceTransportConsign* >( pMaintenanceState_->GetConsign() );
+            if( pConsign && pConsign->SearchForUpperLevelNotFound() )
+                bRepairEvacuationNoMeans = true;
+        }
+        if( bRepairEvacuationNoMeans )
+        {
+            bRepairEvacuationNoMeansChecked_ = true;
+            MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eRC_RepairEvacuationNoMeans, *pType_ );
+        }
     }
 }
 

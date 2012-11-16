@@ -460,4 +460,5 @@ eRC_PrisSousTirFumigene = 445
 eRC_DetectedObject = 446
 eRC_OfficersKilled = 447
 eRC_UnitNotCaptured = 448
-eNbr = 449
+eRC_RepairEvacuationNoMeans = 449
+eNbr = 450

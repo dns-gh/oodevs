@@ -315,6 +315,7 @@ private:
     // Random breakdowns
     unsigned int nRandomBreakdownNextTimeStep_;
     const PHY_ComposanteState* pRandomBreakdownState_;
+    bool bRepairEvacuationNoMeansChecked_;
     //@}
 
 public:

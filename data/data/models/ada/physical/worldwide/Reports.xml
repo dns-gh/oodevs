@@ -625,7 +625,7 @@
   <report category="operational" id="426" message="Obstacle %1 cannot be activated">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="427" message="Atillery fire on unit %1, equipment %2 ( %3 fixable with evacuation, %4 fixable without evacuation, %5 destroyed )">
+  <report category="operational" id="427" message="Artillery fire on unit %1, equipment %2 ( %3 fixable with evacuation, %4 fixable without evacuation, %5 destroyed )">
     <parameter type="Integer"/>
     <parameter type="String"/>
     <parameter type="Integer"/>
@@ -659,5 +659,8 @@
   </report>
   <report category="operational" id="447" message="The unit officers suffered an attack"/>
   <report category="operational" id="448" message="The unit is not surrendered"/>
+  <report category="operational" id="449" message="Broken-down vehicle but no necessary means">
+      <parameter type="EquipmentType"/>
+   </report> 
 </reports>
-<!-- signature="1872351784" -->
+<!-- signature="0414832644" -->
