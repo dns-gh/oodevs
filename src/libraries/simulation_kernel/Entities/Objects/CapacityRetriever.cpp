@@ -34,6 +34,8 @@
 #include "InteractIfHeightCapacity.h"
 #include "InterferenceCapacity.h"
 #include "IntoxicationCapacity.h"
+#include "LodgingCapacity.h"
+#include "LogisticCapacity.h"
 #include "MedicalCapacity.h"
 #include "MedicalCapacity.h"
 #include "MobilityCapacity.h"
@@ -90,6 +92,8 @@ const ObjectCapacity_ABC* CapacityRetriever::RetrieveCapacity( const MIL_ObjectT
     RETRIEVE( "interaction-height", InteractIfHeightCapacity );
     RETRIEVE( "interference", InterferenceCapacity );
     RETRIEVE( "intoxication", IntoxicationCapacity );
+    RETRIEVE( "lodging", LodgingCapacity );
+    RETRIEVE( "logistic", LogisticCapacity );
     RETRIEVE( "medical", MedicalCapacity );
     RETRIEVE( "medical-treatment", MedicalCapacity );
     RETRIEVE( "mobility", MobilityCapacity );

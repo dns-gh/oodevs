@@ -38,6 +38,8 @@
 #include "InteractWithSideCapacity.h"
 #include "InterferenceCapacity.h"
 #include "IntoxicationCapacity.h"
+#include "LodgingCapacity.h"
+#include "LogisticCapacity.h"
 #include "MedicalCapacity.h"
 #include "MobilityCapacity.h"
 #include "PerceptionCapacity.h"
@@ -164,7 +166,8 @@ CapacityFactory::CapacityFactory()
     DoRegister( "interaction-height", boost::bind( &AddBuilder< InteractIfHeightCapacity >::Add, _1, _2 ) );
     DoRegister( "interference", boost::bind( &AddBuilder< InterferenceCapacity >::Add, _1, _2 ) );
     DoRegister( "intoxication", boost::bind( &AddBuilder< IntoxicationCapacity >::Add, _1, _2 ) );
-    // logistic is not needed except during prepa
+    DoRegister( "lodging", boost::bind( &AddBuilder< LodgingCapacity >::Add, _1, _2 ) );
+    DoRegister( "logistic", boost::bind( &AddBuilder< LogisticCapacity >::Add, _1, _2 ) );
     DoRegister( "medical", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ) );
     DoRegister( "medical-treatment", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< MedicalCapacity >::Update, _1, _2 ) );
     DoRegister( "mobility", boost::bind( &AddBuilder< MobilityCapacity >::Add, _1, _2 ) );
