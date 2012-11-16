@@ -217,6 +217,17 @@ void MIL_AgentServer::OnTimer()
         Pause();
 }
 
+namespace
+{
+    double UpdatePathfind( DEC_PathFind_Manager& manager )
+    {
+        MT_Profiler profiler;
+        profiler.Start();
+        manager.UpdateInSimulationThread();
+        return profiler.Stop();
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name:  MIL_AgentServer::mainSimLoop
 // Created: JVT 02-06-21
@@ -224,28 +235,24 @@ void MIL_AgentServer::OnTimer()
 //-----------------------------------------------------------------------------
 void MIL_AgentServer::MainSimLoop()
 {
-    const double lastTime = loopTimer_.Stop();
-    loopTimer_.Reset();
-    loopTimer_.Start();
     pProfilerMgr_->NotifyTickBegin( GetCurrentTimeStep() );
     SendMsgBeginTick();
     GetUrbanCache().Clear();
     pEntityManager_->Update();
     pMeteoDataManager_->Update( nRealTime_ );
     pResourceNetworkModel_->Update();
-    MT_Profiler pathfind;
-    pathfind.Start();
-    pPathFindManager_->UpdateInSimulationThread();
-    pathfind.Stop();
+    const double pathfindTime = UpdatePathfind( *pPathFindManager_ );
     SendMsgEndTick();
     pProcessMonitor_->MonitorProcess();
     pEntityManager_->LogInfo( config_.IsProfilingEnabled() );
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
+    const double lastTime = loopTimer_.Stop();
+    loopTimer_.Start();
     MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d %.2fms - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f DEC:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms %d ticks - PathFind : %d short %d long %d done %.2fms - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
         nCurrentTimeStep_, lastTime, pEntityManager_->GetKnowledgesTime(), pEntityManager_->GetDecisionsTime(),
         pEntityManager_->GetAutomatesDecisionTime(), pEntityManager_->GetPionsDecisionTime(), pEntityManager_->GetPopulationsDecisionTime(), sword::Brain::GetTotalTime(),
         pEntityManager_->GetActionsTime(), pEntityManager_->GetEffectsTime(), pEntityManager_->GetStatesTime(),
-        rWaitTime_, waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfind.GetLastTime(),
+        rWaitTime_, waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfindTime,
         pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     sword::Brain::ResetProfiling( config_.IsProfilingEnabled() );
     pEntityManager_->Clean();
