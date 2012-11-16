@@ -78,10 +78,6 @@ namespace sword // $$$$ _RC_ SLI 2012-10-22: DRY with wrapper/Hook.h
             sword::Hooks::Use( this ); \
         } \
         typedef result (*Function) parameters; \
-        operator Function const() \
-        { \
-            return current_; \
-        } \
         Function current_; \
     private: \
         virtual void Apply( core::Facade& facade, bool /*profiling*/ ) \
@@ -132,7 +128,7 @@ namespace detail
             return current_; \
         } \
         Function current_; \
-        Function Previous; \
+        Function previous_; \
         static result Implement parameters; \
         static result SafeProfiledImplement HOOK_DECL( arity, result parameters ) \
         { \
@@ -158,7 +154,7 @@ namespace detail
     private: \
         virtual void Apply( core::Facade& facade, bool profiling ) \
         { \
-            facade.RegisterHook( &current_, &Previous, profiling ? &SafeProfiledImplement : &SafeImplement, #Hook, #result #parameters ); \
+            facade.RegisterHook( &current_, &previous_, profiling ? &SafeProfiledImplement : &SafeImplement, #Hook, #result #parameters ); \
         } \
         virtual void Log() \
         { \
@@ -178,10 +174,8 @@ namespace detail
     } Hook##_; \
     result Hook ## Wrapper::Implement parameters
 
-// $$$$ MCO : or Hook.current_ if we want to keep the macro
-#define GET_HOOK( Hook ) Hook##_
+#define GET_HOOK( Hook ) Hook##_.current_
 
-// $$$$ MCO : simply Previous should be possible, Previous has to be static in the wrapper though
-#define GET_PREVIOUS_HOOK( Hook ) Hook##_.Previous
+#define GET_PREVIOUS_HOOK( Hook ) Hook##_.previous_
 
 #endif // SWORD_HOOK_TOOLS_H

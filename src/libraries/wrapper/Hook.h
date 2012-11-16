@@ -97,10 +97,6 @@ namespace wrapper
             sword::wrapper::Hooks::Use( this ); \
         } \
         typedef result (*Function) parameters; \
-        operator Function const() \
-        { \
-            return current_; \
-        } \
         Function current_; \
     private: \
         virtual void Apply( bool /*profiling*/ ) \
@@ -151,7 +147,7 @@ namespace detail
         } \
         typedef result (*Function) parameters; \
         Function current_; \
-        Function Previous; \
+        Function previous_; \
         static result Implement parameters; \
         static result SafeProfiledImplement HOOK_DECL( arity, result parameters ) \
         { \
@@ -178,7 +174,7 @@ namespace detail
         virtual void Apply( bool profiling ) \
         { \
             SWORD_RegisterHook( reinterpret_cast< SWORD_Hook* >( &current_ ), \
-                                reinterpret_cast< SWORD_Hook* >( &Previous ), \
+                                reinterpret_cast< SWORD_Hook* >( &previous_ ), \
                                 reinterpret_cast< SWORD_Hook >( profiling ? &SafeProfiledImplement : &SafeProfiledImplement ), \
                                 #Hook, #result #parameters ); \
         } \
@@ -200,10 +196,8 @@ namespace detail
     } Hook; \
     result Hook ## Wrapper::Implement parameters
 
-// $$$$ MCO : or Hook.current_ if we want to keep the macro
-#define GET_HOOK( Hook ) Hook
+#define GET_HOOK( Hook ) Hook.current_
 
-// $$$$ MCO : simply Previous should be possible, Previous has to be static in the wrapper though
-#define GET_PREVIOUS_HOOK( Hook ) Hook.Previous
+#define GET_PREVIOUS_HOOK( Hook ) Hook.previous_
 
 #endif // WRAPPER_HOOK_H
