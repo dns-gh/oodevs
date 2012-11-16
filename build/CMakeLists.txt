@@ -429,6 +429,7 @@ endfunction()
 
 # fire_module
 add_module( fire_module )
+target_link_libraries( fire_module mt_tools )
 
 # movement_module
 add_module( movement_module )
@@ -442,6 +443,7 @@ masa_add_target_include( movement_module_test "${root_dir}/src/libraries/simulat
 # perception_module
 add_module( perception_module )
 masa_add_target_include( perception_module "${root_dir}/src/libraries/simulation_kernel" )
+target_link_libraries( perception_module mt_tools )
 
 # propagation_module
 add_module( propagation_module )
