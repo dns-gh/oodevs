@@ -466,8 +466,8 @@ void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager
     (*model_)[ "step" ] = duration;
     core::Model& entities = (*model_)[ "entities" ];
     UpdatePopulations( (*model_)[ "populations" ], populations_ );
-    UpdateObjects( (*model_ )[ "objects" ], objects.GetObjects() );
-    UpdateFlyingShells( (*model_ )[ "flying-shells" ], effects.GetFlyingShells() );
+    UpdateObjects( (*model_)[ "objects" ], objects.GetObjects() );
+    UpdateFlyingShells( (*model_)[ "flying-shells" ], effects.GetFlyingShells() );
     for( tools::Iterator< const MIL_AgentPion& > it = agents_.CreateIterator(); it.HasMoreElements(); )
     {
         MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( it.NextElement() );
@@ -491,9 +491,9 @@ void Sink::UpdateKnowledges()
 void Sink::UpdateUrbanModel( const MIL_UrbanCache& cache )
 {
     BOOST_FOREACH( const MIL_UrbanObject_ABC* object, cache.GetCities() )
-        (*model_ )[ "urban-objects" ][ object->GetID() ][ "data" ].SetUserData( object );
+        (*model_)[ "urban-objects" ][ object->GetID() ][ "data" ].SetUserData( object );
     BOOST_FOREACH( const MIL_UrbanObject_ABC* object, cache.GetUrbanBlocks() )
-        (*model_ )[ "urban-objects" ][ object->GetID() ][ "data" ].SetUserData( object );
+        (*model_)[ "urban-objects" ][ object->GetID() ][ "data" ].SetUserData( object );
 }
 
 // -----------------------------------------------------------------------------
