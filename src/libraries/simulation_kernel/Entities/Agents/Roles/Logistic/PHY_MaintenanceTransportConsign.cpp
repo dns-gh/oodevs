@@ -31,6 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceTransportConsign )
 PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC& maintenanceAgent, PHY_MaintenanceComposanteState& composanteState )
     : PHY_MaintenanceConsign_ABC( maintenanceAgent, composanteState )
     , pCarrier_                 ( 0 )
+    , searchForUpperLevelDone_  ( false )
 {
     const PHY_Breakdown& breakdown = composanteState.GetComposanteBreakdown();
 
@@ -47,6 +48,7 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign( MIL_Agent_ABC&
 PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
     : PHY_MaintenanceConsign_ABC()
     , pCarrier_                 ( 0 )
+    , searchForUpperLevelDone_  ( false )
 {
     // NOTHING
 }
@@ -129,6 +131,7 @@ bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
     assert( pComposanteState_ );
     assert( !pCarrier_ );
 
+    searchForUpperLevelDone_ = true;
     ResetTimer( 0 );
     MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( !pLogisticManager )
@@ -296,4 +299,13 @@ bool PHY_MaintenanceTransportConsign::Update()
             assert( false );
     }
     return GetState() == eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceTransportConsign::SearchForUpperLevelNotFound
+// Created: MMC 2012-11-15
+// -----------------------------------------------------------------------------
+bool PHY_MaintenanceTransportConsign::SearchForUpperLevelNotFound() const
+{
+    return GetState() == eSearchingForUpperLevel && searchForUpperLevelDone_;
 }

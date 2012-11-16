@@ -152,6 +152,7 @@ public:
         eRC_FireObserver = 427,
         eRC_PrisSousTirEclairant = 444,
         eRC_PrisSousTirFumigene = 445,
+        eRC_RepairEvacuationNoMeans = 449,
     };
 
     //@}

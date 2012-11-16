@@ -36,6 +36,8 @@ public:
     //@{
     virtual void Cancel();
     virtual bool Update();
+
+    bool SearchForUpperLevelNotFound() const;
     //@}
 
 private:
@@ -56,6 +58,7 @@ private:
 
 private:
     PHY_ComposantePion* pCarrier_;
+    bool searchForUpperLevelDone_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_MaintenanceTransportConsign )
