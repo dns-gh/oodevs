@@ -256,8 +256,12 @@ integration.isTransported = function( enemy )
     return DEC_ConnaissanceAgent_EstTransporte( enemy.source )
 end
 
-integration.allowCarriers = function( )
-    DEC_LaisserTransporteursSansDelai( )
+integration.allowCarriers = function()
+    DEC_LaisserTransporteursSansDelai()
+end
+
+integration.retrieveCarriers = function()
+    DEC_RecupererTransporteursSansDelai()
 end
 
 integration.isFriendSurrendered = function( friend )
