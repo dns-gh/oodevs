@@ -1201,47 +1201,51 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished">قافلة الوحدة نوع غير معرف في سجل/العرض، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
-    </message>
-    <message>
-        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished">قافلة البعثة غير معرف في سجل/العرض، وبسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
-    </message>
-    <message>
-        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished">هندسة ليست تعريف للكائن %1، لهذا السبب، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
-    </message>
-    <message>
-        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished">لا يوجد نموذج مفترض المعرفة من أجل الوحدة 1%، لهذا السبب، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one sub unit, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished">[اوتومت] %1 يتطلب جهاز كمبيوتر واحد على الأقل، بسبب هذا، لا يمكن بدء تشغيل المحاكاة مع قاعدة البيانات هذه.</translation>
-    </message>
-    <message>
         <source>The mission %1 has no type defined for a localisation composite parameter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The breakdown %1 has no replacement part, the simulation can&apos;t start with this database.</source>
+        <source>, because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Equipment %1 requires at least one breakdown, the simulation can&apos;t start with this database.</source>
+        <source>The breakdown %1 has no replacement part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>At least one armor must be defined, because of this, the simulation can&apos;t start with this database.</source>
+        <source>Equipment %1 requires at least one breakdown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No disaster model for object %1, because of this, the simulation can&apos;t start with this database.</source>
+        <source>Convoy unit type not defined in Log/Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy mission not defined in Log/Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No geometry defined for object %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No decisional model defined for unit %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one sub unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least one armor must be defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No disaster model for object %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

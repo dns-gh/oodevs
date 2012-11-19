@@ -1213,47 +1213,51 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <translation>The resource &apos;</translation>
     </message>
     <message>
-        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one sub unit, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Automat %1 requires at least one sub unit, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Automaton %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>At least one armor must be defined, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>At least one armor must be defined, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
         <source>The mission %1 has no type defined for a localisation composite parameter.</source>
         <translation>The mission %1 has no type defined for a localisation composite parameter.</translation>
     </message>
     <message>
-        <source>Equipment %1 requires at least one breakdown, the simulation can&apos;t start with this database.</source>
-        <translation>Equipment %1 requires at least one breakdown, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>The breakdown %1 has no replacement part, the simulation can&apos;t start with this database.</source>
+        <source>, because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No disaster model for object %1, because of this, the simulation can&apos;t start with this database.</source>
+        <source>The breakdown %1 has no replacement part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment %1 requires at least one breakdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy unit type not defined in Log/Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy mission not defined in Log/Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No geometry defined for object %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No decisional model defined for unit %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one sub unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least one armor must be defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No disaster model for object %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

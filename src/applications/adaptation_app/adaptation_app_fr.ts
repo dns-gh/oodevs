@@ -1217,48 +1217,52 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <translation>Les missions %1 possèdent le même type.</translation>
     </message>
     <message>
-        <source>The breakdown %1 has no replacement part, the simulation can&apos;t start with this database.</source>
-        <translation>La panne %1 n&apos;a pas de pièce de rechange, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
-    </message>
-    <message>
         <source>The mission %1 has no type defined for a localisation composite parameter.</source>
         <translation>La mission %1 n&apos;as pas de type définit pour un paramètre de type localisation composite.</translation>
     </message>
     <message>
-        <source>Equipment %1 requires at least one breakdown, the simulation can&apos;t start with this database.</source>
-        <translation>L&apos;equipement %1 requiert au moins une panne, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+        <source>, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
     <message>
-        <source>Convoy unit type not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Le type de pion Convoi n&apos;est pas défini dans Log/Ravitaillement, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+        <source>The breakdown %1 has no replacement part</source>
+        <translation>La panne %1 n&apos;a pas de pièce de rechange</translation>
     </message>
     <message>
-        <source>Convoy mission not defined in Log/Supply, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>La mission Convoi n&apos;est pas définei dans Log/Ravitaillement, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+        <source>Equipment %1 requires at least one breakdown</source>
+        <translation>L&apos;equipement %1 requiert au moins une panne</translation>
     </message>
     <message>
-        <source>No geometry defined for object %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Pas de géométrie définie pour l&apos;objet %1, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+        <source>Convoy unit type not defined in Log/Supply</source>
+        <translation>Le type de pion Convoi n&apos;est pas défini dans Log/Ravitaillement</translation>
     </message>
     <message>
-        <source>No decisional model defined for unit %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Le modèle décisionnel de l&apos;unité %1 n&apos;est pas défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+        <source>Convoy mission not defined in Log/Supply</source>
+        <translation>La mission Convoi n&apos;est pas définei dans Log/Ravitaillement</translation>
     </message>
     <message>
-        <source>Automat %1 requires at least one sub unit, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>L&apos;automate %1 requiert au moins un pion, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+        <source>No geometry defined for object %1</source>
+        <translation>Pas de géométrie définie pour l&apos;objet %1</translation>
     </message>
     <message>
-        <source>Automat %1 requires at least one PC, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>L&apos;automate %1 requiert au moins un PC, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+        <source>No decisional model defined for unit %1</source>
+        <translation>Le modèle décisionnel de l&apos;unité %1 n&apos;est pas défini</translation>
     </message>
     <message>
-        <source>At least one armor must be defined, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Au moins un type de blindage doit être défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+        <source>Automat %1 requires at least one sub unit</source>
+        <translation>L&apos;automate %1 requiert au moins un pion</translation>
     </message>
     <message>
-        <source>No disaster model for object %1, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>Pas de modèle de désastre pour l&apos;objet %1, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+        <source>Automat %1 requires at least one PC</source>
+        <translation>L&apos;automate %1 requiert au moins un PC</translation>
+    </message>
+    <message>
+        <source>At least one armor must be defined</source>
+        <translation>Au moins un type de blindage doit être défini</translation>
+    </message>
+    <message>
+        <source>No disaster model for object %1</source>
+        <translation>Pas de modèle de désastre pour l&apos;objet %1</translation>
     </message>
 </context>
 <context>

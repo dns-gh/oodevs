@@ -58,6 +58,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     CreateCheckbox( boost::assign::map_list_of( eMissingMask, tr( "Initialization" ) )
                                               ( eUniquenessMask, tr( "Unicity" ) )
                                               ( eOthersMask, tr( "Others" ) ) );
+    QString error = tr( ", because of this, the simulation can't start with this database." );
 
     // Fill errors text
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1." );
@@ -68,16 +69,16 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingEmat    ]         = tr( "%1 has no EMAT8 code defined." );
     errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission %1 has no type defined for a localisation composite parameter." );
 
-    errorDescriptions_[ eMissingPart ]            = tr( "The breakdown %1 has no replacement part, the simulation can't start with this database." );
-    errorDescriptions_[ eMissingBreakdown ]       = tr( "Equipment %1 requires at least one breakdown, the simulation can't start with this database." );
-    errorDescriptions_[ eMissingConvoy ]          = tr( "Convoy unit type not defined in Log/Supply, because of this, the simulation can't start with this database." );
-    errorDescriptions_[ eMissingConvoyMission ]   = tr( "Convoy mission not defined in Log/Supply, because of this, the simulation can't start with this database." );
-    errorDescriptions_[ eMissingGeometry ]        = tr( "No geometry defined for object %1, because of this, the simulation can't start with this database." );
-    errorDescriptions_[ eMissingDecisionalModel ] = tr( "No decisional model defined for unit %1, because of this, the simulation can't start with this database." );
-    errorDescriptions_[ eMissingUnitOnAutomat ]   = tr( "Automat %1 requires at least one sub unit, because of this, the simulation can't start with this database." );
-    errorDescriptions_[ eMissingPCOnAutomat ]     = tr( "Automat %1 requires at least one PC, because of this, the simulation can't start with this database." );
-    errorDescriptions_[ eMissingArmor ]           = tr( "At least one armor must be defined, because of this, the simulation can't start with this database." );
-    errorDescriptions_[ eMissingDisaster ]        = tr( "No disaster model for object %1, because of this, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingPart ]            = tr( "The breakdown %1 has no replacement part" ) + error;
+    errorDescriptions_[ eMissingBreakdown ]       = tr( "Equipment %1 requires at least one breakdown" ) + error;
+    errorDescriptions_[ eMissingConvoy ]          = tr( "Convoy unit type not defined in Log/Supply" ) + error;
+    errorDescriptions_[ eMissingConvoyMission ]   = tr( "Convoy mission not defined in Log/Supply" ) + error;
+    errorDescriptions_[ eMissingGeometry ]        = tr( "No geometry defined for object %1" ) + error;
+    errorDescriptions_[ eMissingDecisionalModel ] = tr( "No decisional model defined for unit %1" ) + error;
+    errorDescriptions_[ eMissingUnitOnAutomat ]   = tr( "Automat %1 requires at least one sub unit" ) + error;
+    errorDescriptions_[ eMissingPCOnAutomat ]     = tr( "Automat %1 requires at least one PC" ) + error;
+    errorDescriptions_[ eMissingArmor ]           = tr( "At least one armor must be defined" ) + error;
+    errorDescriptions_[ eMissingDisaster ]        = tr( "No disaster model for object %1" ) + error;
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
