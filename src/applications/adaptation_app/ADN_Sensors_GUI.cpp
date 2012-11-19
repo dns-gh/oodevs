@@ -501,6 +501,8 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
         int nSubRow = 0;
         for( ADN_Sensors_Data::IT_TargetsInfos_Vector it2 = sensor.vTargets_.begin(); it2 != sensor.vTargets_.end(); ++it2, ++nSubRow )
         {
+            if( nSubRow > 0 )
+                pTable->AddItem( nRow + nSubRow, 0, &sensor, sensor.strName_.GetData().c_str() );
             ADN_Sensors_Data::TargetInfos& target = **it2;
             int row = nRow + nSubRow;
             pTable->AddItem( row, 1, &sensor, target.ptrObject_.GetData()->strName_.GetData().c_str() );
@@ -513,6 +515,7 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
         }
         nRow += static_cast< int >( sensor.vTargets_.size() );
     }
+    pTable->Sort( 0, Qt::AscendingOrder );
     return pTable;
 }
 
