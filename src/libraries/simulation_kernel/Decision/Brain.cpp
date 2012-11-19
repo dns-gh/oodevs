@@ -81,7 +81,7 @@ void Brain::ResetProfiling( bool log )
     if( log )
         for( T_Profilers::const_iterator it = profilers_.begin(); it != profilers_.end(); ++it )
             if( it->second.GetCount() != 0 )
-                MT_LOG_INFO_MSG( "<profiling> " << it->first << " " << it->second.GetCount() << " " << it->second.GetTotalTime() << " ms" );
+                MT_LOG_INFO_MSG( "<profiling> DEC " << it->first << " " << it->second.GetCount() << " " << it->second.GetTotalTime() << " ms" );
     for( T_Profilers::iterator it = profilers_.begin(); it != profilers_.end(); ++it )
         it->second.Reset();
 }
