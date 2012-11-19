@@ -70,11 +70,6 @@ void ADN_Population_FireEffect_Protection_ListView::ConnectItem( bool bConnect )
         return;
 
     FireEffectProtectionInfos* pInfos = (FireEffectProtectionInfos*)pCurData_;
-
-    ADN_Workspace::GetWorkspace().GetPopulation().GetGui().UpdatePopulationFireEffectValidator(
-        pInfos->rUnarmedDestruction_, pInfos->rUnarmedFixableWithEvacuation_, pInfos->rUnarmedFixableWithoutEvacuation_,
-        pInfos->rArmedDestruction_, pInfos->rArmedFixableWithEvacuation_, pInfos->rArmedFixableWithoutEvacuation_ );
-
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Population_GUI::eNbrGuiElements );
 
     vItemConnectors_[ADN_Population_GUI::eFireEffectUnarmedDestruction]->Connect( &pInfos->rUnarmedDestruction_, bConnect );

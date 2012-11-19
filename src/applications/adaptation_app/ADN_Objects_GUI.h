@@ -169,7 +169,6 @@ private slots:
     //@{
     void OnSpeedImpactComboChanged();
     void OnGeometryChanged( bool );
-    void OnSelectionChanged();
     void OnAttritionToggled( QWidget* widget );
     //@}
 
@@ -180,11 +179,6 @@ private:
     QComboBox* pSpeedImpactCombo_;
     QWidget* pMaxAgentSpeed_;
     ADN_EditLine_Double* pPointDistance_;
-    ADN_EditLine_IntPercentage* floodHurtHuman1_;
-    ADN_EditLine_IntPercentage* floodHurtHuman2_;
-    ADN_EditLine_IntPercentage* floodHurtHuman3_;
-    ADN_EditLine_IntPercentage* floodHurtHumanE_;
-    ADN_EditLine_IntPercentage* floodDeadHuman_;
     Q3GroupBox* attrition_;
     Q3GroupBox* attritionDotation_;
     Q3GroupBox* attritionMine_;

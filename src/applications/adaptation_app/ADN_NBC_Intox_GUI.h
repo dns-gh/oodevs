@@ -40,7 +40,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_NBC_Intox_GUI( QWidget* pParent );
+    explicit ADN_NBC_Intox_GUI( QWidget* pParent, const QString& objectName );
     virtual ~ADN_NBC_Intox_GUI();
     //@}
 

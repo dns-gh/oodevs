@@ -1746,10 +1746,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation>Herido gravedad nivel 1</translation>
     </message>
     <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
         <source>Wounded seriousness level 2</source>
         <translation>Herido gravedad nivel 2</translation>
     </message>

@@ -509,15 +509,4 @@ void ADN_GuiBuilder::DoValidator< ADN_PH_EditLine_Double >( ADN_PH_EditLine_Doub
     SetValidator( pWidget->GetValidator(), nValidator );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_GuiBuilder::DoValidator
-// Created: ABR 2012-09-08
-// -----------------------------------------------------------------------------
-template<>
-inline
-void ADN_GuiBuilder::DoValidator< ADN_EditLine_IntPercentage >( ADN_EditLine_IntPercentage* pWidget, E_Validator nValidator )
-{
-    SetValidator( pWidget->GetValidator(), nValidator );
-}
-
 #endif // __ADN_GuiBuilder_h_

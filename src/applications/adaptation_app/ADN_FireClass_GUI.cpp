@@ -16,6 +16,7 @@
 #include "ADN_FireClass_Data.h"
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_MultiPercentage.h"
 #include "ADN_SearchListView.h"
 #include "ADN_SurfaceFireInfos_Table.h"
 #include "ADN_UrbanModifiersTable.h"
@@ -67,13 +68,15 @@ void ADN_FireClass_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Increase rate" ), vInfosConnectors[ eIncreaseRate ] );
     builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Decrease rate" ), vInfosConnectors[ eDecreaseRate ] );
     // Injuries
-    Q3GroupBox* pInjuriesGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Injuries" ) );
-    QWidget* pInjuriesHolder = builder.AddFieldHolder( pInjuriesGroup );
-    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eNbrHurtU1 ], tr( "%" ), ePercentage  );
-    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 2" ), vInfosConnectors[ eNbrHurtU2 ], tr( "%" ), ePercentage  );
-    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 3" ), vInfosConnectors[ eNbrHurtU3 ], tr( "%" ), ePercentage  );
-    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eNbrHurtUE ], tr( "%" ), ePercentage  );
-    builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eNbrDead ], tr( "%" ), ePercentage  );
+    Q3GroupBox* pInjuriesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Injuries" ) );
+    ADN_MultiPercentage_Int* pMultiPercentage = new ADN_MultiPercentage_Int( pInjuriesGroup, builder, strClassName_ + "_Distribution" );
+    pMultiPercentage->AddLine( tr( "Wounded seriousness level 1" ), vInfosConnectors[ eNbrHurtU1 ] );
+    pMultiPercentage->AddLine( tr( "Wounded seriousness level 2" ), vInfosConnectors[ eNbrHurtU2 ] );
+    pMultiPercentage->AddLine( tr( "Wounded seriousness level 3" ), vInfosConnectors[ eNbrHurtU3 ] );
+    pMultiPercentage->AddLine( tr( "Wounded extreme seriousness" ), vInfosConnectors[ eNbrHurtUE ] );
+    pMultiPercentage->AddLine( tr( "Killed" ), vInfosConnectors[ eNbrDead ] );
+    pMultiPercentage->AddWarning();
+
     // Urban
     Q3GroupBox* pUrbanModifiersGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Urban attrition" ) );
     new helpers::ADN_UrbanModifiersTable( strClassName_ + "Urban", vInfosConnectors[ eUrbanAttrition ], pUrbanModifiersGroup );

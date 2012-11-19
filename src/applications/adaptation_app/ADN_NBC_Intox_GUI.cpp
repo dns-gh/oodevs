@@ -63,17 +63,18 @@ namespace
 // Name: ADN_NBC_Intox_GUI constructor
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent )
+ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent, const QString& objectName )
     : ADN_Gfx_ABC()
     , Q3VBox( pParent )
     , vInfosConnectors_( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) )
 {
+    setObjectName( objectName );
     ADN_GuiBuilder builder;
 
     ADN_GroupBox* pIntoxGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Poisoning effect" ), this );
     vInfosConnectors_[eIntoxPresent] = &pIntoxGroup->GetConnector();
 
-    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pIntoxGroup, builder );
+    ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pIntoxGroup, builder, objectName + "_PoisoningEffect" );
     pMultiPercentage->AddLine( tr( "Unwounded" ),                   vInfosConnectors_[ eNbrOk ] );
     pMultiPercentage->AddLine( tr( "Wounded seriousness level 1" ), vInfosConnectors_[ eNbrHurt1 ] );
     pMultiPercentage->AddLine( tr( "Wounded seriousness level 2" ), vInfosConnectors_[ eNbrHurt2 ] );

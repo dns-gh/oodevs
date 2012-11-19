@@ -39,6 +39,10 @@ public:
 
 protected:
     void focusOutEvent( QFocusEvent* pEvent );
+    void focusInEvent( QFocusEvent* pEvent );
+
+signals:
+    void StartEditing();
 
 protected slots:
     virtual void TextChanged( const QString& string )=0;

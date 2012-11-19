@@ -17,6 +17,7 @@
 #include "ADN_HtmlBuilder.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_ListView_Objects.h"
+#include "ADN_MultiPercentage.h"
 #include "ADN_Table_Objects_LocationScore.h"
 #include "ADN_Table_Objects_FirePropagationModifier.h"
 #include "ADN_TextEdit.h"
@@ -38,11 +39,6 @@ ADN_Objects_GUI::ADN_Objects_GUI( ADN_Objects_Data& data )
     , pSpeedImpactCombo_( 0 )
     , pMaxAgentSpeed_( 0 )
     , pPointDistance_( 0 )
-    , floodHurtHuman1_( 0 )
-    , floodHurtHuman2_( 0 )
-    , floodHurtHuman3_( 0 )
-    , floodHurtHumanE_( 0 )
-    , floodDeadHuman_( 0 )
     , pContent_( 0 )
     , pCapacities_( 0 )
 {
@@ -301,12 +297,12 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( structural, tr( "Initial value"), vInfosConnectors[ eStructuralCapacity_Value ], tr( "%" ), ePercentage );
 
         ADN_GroupBox* flood = CreateCapacityGroupBox( 3, tr( "Flood" ), vInfosConnectors[ eFloodCapacityPresent ] );
-        QWidget* pInjuriesHolder = builder.AddFieldHolder( flood );
-        floodHurtHuman1_  = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eFloodCapacity_HurtHumans1 ], tr( "%" ), ePercentage );
-        floodHurtHuman2_ = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Wounded seriousness level 2" ), vInfosConnectors[ eFloodCapacity_HurtHumans2 ], tr( "%" ), ePercentage );
-        floodHurtHuman3_ = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Wounded seriousness level 3" ), vInfosConnectors[ eFloodCapacity_HurtHumans3 ], tr( "%" ), ePercentage );
-        floodHurtHumanE_ = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eFloodCapacity_HurtHumansE ], tr( "%" ), ePercentage );
-        floodDeadHuman_ = builder.AddField< ADN_EditLine_IntPercentage >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eFloodCapacity_DeadHumans ], tr( "%" ), ePercentage  );
+        ADN_MultiPercentage_Int* pMultiPercentage = new ADN_MultiPercentage_Int( flood, builder, strClassName_ + "_FloodCapacity" );
+        pMultiPercentage->AddLine( tr( "Wounded seriousness level 1" ), vInfosConnectors[ eFloodCapacity_HurtHumans1 ] );
+        pMultiPercentage->AddLine( tr( "Wounded seriousness level 2" ), vInfosConnectors[ eFloodCapacity_HurtHumans2 ] );
+        pMultiPercentage->AddLine( tr( "Wounded seriousness level 3" ), vInfosConnectors[ eFloodCapacity_HurtHumans3 ] );
+        pMultiPercentage->AddLine( tr( "Wounded extreme seriousness" ), vInfosConnectors[ eFloodCapacity_HurtHumansE ] );
+        pMultiPercentage->AddLine( tr( "Killed" ),                      vInfosConnectors[ eFloodCapacity_DeadHumans ] );
 
         ADN_GroupBox* firePropagationModifier = CreateCapacityGroupBox( 3, tr( "Fire propagation modifier" ), vInfosConnectors[ eFirePropagationModifierCapacityPresent ] );
         new ADN_Table_Objects_FirePropagationModifier( strClassName_ + "_FirePropagationTable", vInfosConnectors[ eFirePropagationModifierCapacity_Modifiers ], firePropagationModifier );
@@ -362,7 +358,6 @@ void ADN_Objects_GUI::Build()
     ADN_SearchListView< ADN_ListView_Objects >* pSearchListView = new ADN_SearchListView< ADN_ListView_Objects >( this, data_.GetObjectInfos(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
-    connect( pListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnSelectionChanged() ) );
 
     // Tab widget
     QTabWidget* pTabWidget = new QTabWidget();
@@ -444,43 +439,6 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
 
     QString strText = "<a href=\"" + tr( "Objects/" ) + "index.htm\">" + tr( "Objects" ) + "</a>";
     mainIndexBuilder.ListItem( strText );
-}
-
-namespace
-{
-    void LinkValues( ADN_IntPercentageValidator* validator, ADN_Type_ABC< int >& value1, ADN_Type_ABC< int >& value2, ADN_Type_ABC< int >& value3, ADN_Type_ABC< int >& value4 )
-    {
-        validator->AddLinkedValue( value1 );
-        validator->AddLinkedValue( value2 );
-        validator->AddLinkedValue( value3 );
-        validator->AddLinkedValue( value4 );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_GUI::OnSelectionChanged
-// Created: ABR 2012-08-09
-// -----------------------------------------------------------------------------
-void ADN_Objects_GUI::OnSelectionChanged()
-{
-    static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman1_->GetValidator() )->ClearLinkedValues();
-    static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman2_->GetValidator() )->ClearLinkedValues();
-    static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman3_->GetValidator() )->ClearLinkedValues();
-    static_cast< ADN_IntPercentageValidator* >( &floodHurtHumanE_->GetValidator() )->ClearLinkedValues();
-    static_cast< ADN_IntPercentageValidator* >( &floodDeadHuman_->GetValidator() )->ClearLinkedValues();
-
-    ADN_Objects_Data_ObjectInfos* pInfos = reinterpret_cast< ADN_Objects_Data_ObjectInfos* >( pListView_->GetCurrentData() );
-    if( !pInfos )
-        return;
-    ADN_Objects_Data::ADN_CapacityInfos_Flood* flood = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Flood* >( pInfos->capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Flood::TAG ].get() );
-    if( !flood )
-        return;
-
-    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman1_->GetValidator() ), flood->nNbHurtHumans2_, flood->nNbHurtHumans3_, flood->nNbHurtHumansE_, flood->nNbDeadHumans_ );
-    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman2_->GetValidator() ), flood->nNbHurtHumans1_, flood->nNbHurtHumans3_, flood->nNbHurtHumansE_, flood->nNbDeadHumans_ );
-    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHuman3_->GetValidator() ), flood->nNbHurtHumans1_, flood->nNbHurtHumans2_, flood->nNbHurtHumansE_, flood->nNbDeadHumans_ );
-    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodHurtHumanE_->GetValidator() ), flood->nNbHurtHumans1_, flood->nNbHurtHumans2_, flood->nNbHurtHumans3_, flood->nNbDeadHumans_ );
-    LinkValues( static_cast< ADN_IntPercentageValidator* >( &floodDeadHuman_->GetValidator() ) , flood->nNbHurtHumans1_, flood->nNbHurtHumans2_, flood->nNbHurtHumans3_, flood->nNbHurtHumansE_ );
 }
 
 namespace

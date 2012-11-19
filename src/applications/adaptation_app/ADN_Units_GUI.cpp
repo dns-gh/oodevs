@@ -236,13 +236,11 @@ void ADN_Units_GUI::Build()
     ADN_GroupBox* pCivilianGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Civilian" ) );
     pCivilianGroup->setObjectName( strClassName_ + "_IsCivilian" );
     vInfosConnectors[ eIsCivilian ] = &pCivilianGroup->GetConnector();
-    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pCivilianGroup, builder );
-    pMultiPercentage->setObjectName( strClassName_ + "_CivilianRepartition" );
+    ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pCivilianGroup, builder, strClassName_ + "_CivilianRepartition" );
     pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMalesPercent ] );
     pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemalesPercent ] );
     pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildrenPercent ] );
     pMultiPercentage->AddWarning();
-    connect( pCivilianGroup, SIGNAL( toggled( bool ) ), pMultiPercentage, SLOT( PercentageChanged() ) );
 
     // -------------------------------------------------------------------------
     // Layouts

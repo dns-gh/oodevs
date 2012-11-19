@@ -1743,10 +1743,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <translation>Injury severity level 1</translation>
     </message>
     <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
         <source>Wounded seriousness level 2</source>
         <translation>Injury severity level 2</translation>
     </message>

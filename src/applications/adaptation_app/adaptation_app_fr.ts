@@ -1302,7 +1302,7 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
     <message>
         <source>Attrition thresholds</source>
-        <translation>Seuils d'attrition</translation>
+        <translation>Seuils d&apos;attrition</translation>
     </message>
 </context>
 <context>
@@ -1733,10 +1733,6 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     <message>
         <source>Wounded seriousness level 1</source>
         <translation>Blessure gravité niveau 1</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
     </message>
     <message>
         <source>Wounded seriousness level 2</source>

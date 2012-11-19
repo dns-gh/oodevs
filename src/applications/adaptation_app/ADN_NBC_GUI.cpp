@@ -75,16 +75,14 @@ void ADN_NBC_GUI::Build()
     // Liquid
     ADN_GroupBox* liquidGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Liquid" ), effectGroup );
     liquidGroup->setObjectName( strClassName_ + "_Liquid" );
-    ADN_NBC_Intox_GUI* liquid = new ADN_NBC_Intox_GUI( liquidGroup );
-    liquid->setObjectName( strClassName_ + "_LiquidIntox" );
+    ADN_NBC_Intox_GUI* liquid = new ADN_NBC_Intox_GUI( liquidGroup, strClassName_ + "_LiquidIntox" );
     vInfosConnectors[ eLiquidGroup ] = &liquid->GetConnector();
     vInfosConnectors[ eLiquidGroupPresent ] = &liquidGroup->GetConnector();
     // Gasous
     ADN_GroupBox* gazGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Gaseous" ), effectGroup );
     gazGroup->setObjectName( strClassName_ + "_Gaz" );
     vInfosConnectors[ eGazGroupPresent ] = &gazGroup->GetConnector();
-    ADN_NBC_Intox_GUI* gaz = new ADN_NBC_Intox_GUI( gazGroup );
-    gaz->setObjectName( strClassName_ + "_GazIntox" );
+    ADN_NBC_Intox_GUI* gaz = new ADN_NBC_Intox_GUI( gazGroup, strClassName_ + "_GazIntox" );
     vInfosConnectors[ eGazGroup ] = &gaz->GetConnector();
     QWidget* pHolder = builder.AddFieldHolder( gazGroup );
     // Span

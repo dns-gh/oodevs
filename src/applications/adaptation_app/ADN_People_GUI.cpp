@@ -60,8 +60,7 @@ void ADN_People_GUI::Build()
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Angry crowd mission" ), vInfosConnectors[ eAngryCrowdMission ] );
     // repartition
     Q3GroupBox* pRepartition = new Q3GroupBox( 3, Qt::Horizontal, tr( "Distribution" ) );
-    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pRepartition, builder );
-    pMultiPercentage->setObjectName( strClassName_ + "_Distribution" );
+    ADN_MultiPercentage_Double* pMultiPercentage = new ADN_MultiPercentage_Double( pRepartition, builder, strClassName_ + "_Distribution" );
     pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );
     pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ] );
     pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );

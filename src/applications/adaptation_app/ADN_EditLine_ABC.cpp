@@ -138,3 +138,13 @@ void ADN_EditLine_ABC::focusOutEvent( QFocusEvent* pEvent )
 {
     QLineEdit::focusOutEvent( pEvent );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_EditLine_ABC::focusInEvent
+// Created: ABR 2012-11-19
+// -----------------------------------------------------------------------------
+void ADN_EditLine_ABC::focusInEvent( QFocusEvent* pEvent )
+{
+    emit StartEditing();
+    QLineEdit::focusInEvent( pEvent );
+}

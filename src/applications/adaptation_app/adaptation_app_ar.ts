@@ -1731,10 +1731,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished">مستوى خطورة إصابة 1</translation>
     </message>
     <message>
-        <source>%</source>
-        <translation type="unfinished">%</translation>
-    </message>
-    <message>
         <source>Wounded seriousness level 2</source>
         <translation type="unfinished">مستوى خطورة إصابة 2</translation>
     </message>
@@ -2725,7 +2721,7 @@ stance</source>
     </message>
     <message>
         <source>Warning: total of percentages must equal 100%.</source>
-        <translation type="unfinished">تحذير: يجب أن يساوي مجموع النسب المئوية 100%.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
