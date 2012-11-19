@@ -21,6 +21,7 @@
 #include "ADN_FireClass_Data.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
+#include "ADN_Disasters_Data.h"
 #include <boost/tuple/tuple.hpp>
 
 namespace xml
@@ -108,7 +109,21 @@ public:
     typedef helpers::ADN_CapacityInfos_Default< helpers::eUndergroundNetworkCapacity >      ADN_CapacityInfos_UndergroundNetwork;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eFireForbiddenCapacity >           ADN_CapacityInfos_FireForbidden;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eBorderCapacity >                  ADN_CapacityInfos_Border;
-    typedef helpers::ADN_CapacityInfos_Default< helpers::eDisasterCapacity >                ADN_CapacityInfos_Disaster;
+
+    class ADN_CapacityInfos_Disaster : public helpers::ADN_CapacityInfos_Default< helpers::eDisasterCapacity >
+    {
+    public:
+                 ADN_CapacityInfos_Disaster();
+        virtual ~ADN_CapacityInfos_Disaster();
+
+        void ReadArchive( xml::xistream& xis );
+        void WriteArchive( xml::xostream& xos );
+
+        virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker, const ADN_Type_String& objectName ) const;
+
+    public:
+        ADN_TypePtr_InVector_ABC< ADN_Disasters_Data::DisasterInfos > disaster_;
+    };
 
     class ADN_CapacityInfos_Attrition
         : public helpers::ADN_CapacityInfos_Default< helpers::eAttritionCapacity >
@@ -652,6 +667,7 @@ public:
 
     QStringList GetObjectsThatUse( ADN_Objects_Data_ObjectInfos& object );
     QStringList GetObjectsThatUse( ADN_Equipement_Data::CategoryInfo& object );
+    QStringList GetObjectsThatUse( ADN_Disasters_Data::DisasterInfos& disaster );
     QStringList GetObjectsWithCapacity( const std::string& tag );
 
 private:

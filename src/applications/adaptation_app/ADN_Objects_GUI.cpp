@@ -56,11 +56,10 @@ ADN_Objects_GUI::~ADN_Objects_GUI()
 
 namespace
 {
-    void CreateCapacityCheckBox( const QString& name, ADN_Connector_ABC*& connector, Q3GroupBox* groupBox, bool isVisible = true )
+    void CreateCapacityCheckBox( const QString& name, ADN_Connector_ABC*& connector, Q3GroupBox* groupBox )
     {
         ADN_CheckBox* checkBox = new ADN_CheckBox( name, groupBox );
         checkBox->setObjectName( "ADN_Objects_GUI_Capacity" + name );
-        checkBox->setVisible( isVisible );
         connector = &checkBox->GetConnector();
     }
 
@@ -146,7 +145,6 @@ void ADN_Objects_GUI::Build()
         CreateCapacityCheckBox( tr( "Underground network exit" ), vInfosConnectors[ eUndergroundNetworkCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Fire forbidden" ), vInfosConnectors[ eFireForbiddenCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Border" ), vInfosConnectors[ eBorderCapacityPresent ], capacitiesGroup );
-        CreateCapacityCheckBox( tr( "Disaster" ), vInfosConnectors[ eDisasterCapacityPresent ], capacitiesGroup, false );
     }
 
     QGridLayout* grid = new QGridLayout();
@@ -283,6 +281,9 @@ void ADN_Objects_GUI::Build()
         ADN_GroupBox* propagation = CreateCapacityGroupBox( 3, tr( "Propagation" ), vInfosConnectors[ ePropagationCapacityPresent ] );
         builder.AddEnumField( propagation, tr( "Model" ), vInfosConnectors[ ePropagationCapacity_ModelType ] );
 
+        ADN_GroupBox* disaster = CreateCapacityGroupBox( 3, tr( "Disaster" ), vInfosConnectors[ eDisasterCapacityPresent ] );
+        builder.AddField< ADN_ComboBox_Vector >( disaster, tr( "Model" ), vInfosConnectors[ eDisasterCapacity_DisasterType ] );
+
         ADN_GroupBox* attitudeModifier = CreateCapacityGroupBox( 3, tr( "AttitudeModifier" ), vInfosConnectors[ eAttitudeModifierCapacityPresent ] );
         builder.AddEnumField( attitudeModifier, tr( "Attitude" ), vInfosConnectors[ eAttitudeModifierCapacity_Attitude ] );
 
@@ -332,6 +333,8 @@ void ADN_Objects_GUI::Build()
         grid->addWidget( flood, 12, 1, 2, 1 );
         grid->addWidget( firePropagationModifier, 13, 0 );
         grid->addWidget( interactWithSide, 14, 0 );
+        grid->addWidget( disaster, 14, 1 );
+
     }
 
     // -------------------------------------------------------------------------

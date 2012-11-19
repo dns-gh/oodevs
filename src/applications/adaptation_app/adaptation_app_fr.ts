@@ -1256,6 +1256,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>At least one armor must be defined, because of this, the simulation can&apos;t start with this database.</source>
         <translation>Au moins un type de blindage doit être défini, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
     </message>
+    <message>
+        <source>No disaster model for object %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>Pas de modèle de désastre pour l&apos;objet %1, en conséquence, la simulation ne peut démarrer avec cette base.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2145,6 +2149,13 @@ du tireur</translation>
     <message>
         <source>Remove object</source>
         <translation>Enlever cet objet</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_Disasters</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;Inutilisé&lt;/b&gt;</translation>
     </message>
 </context>
 <context>

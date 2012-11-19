@@ -46,6 +46,7 @@ public:
         eDescription,
         eActivableCapacityPresent,
         eDisasterCapacityPresent,
+        eDisasterCapacity_DisasterType,
         eAttitudeModifierCapacityPresent,
         eAttitudeModifierCapacity_Attitude,
         eAltitudeModifierCapacityPresent,

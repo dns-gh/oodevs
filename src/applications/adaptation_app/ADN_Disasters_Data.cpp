@@ -100,8 +100,8 @@ void ADN_Disasters_Data::AttritionThresholdInfos::WriteArchive( xml::xostream& o
                << xml::attribute( "ue", SaveWound( ue_.GetData() ) )
                << xml::attribute( "dead", SaveWound( dead_.GetData() ) );
     if( !name_.GetData().empty() )
-    output     << xml::attribute( "name", name_ )
-           << xml::end;
+    output     << xml::attribute( "name", name_ );
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ void ADN_Disasters_Data::ConcentrationThresholdInfos::WriteArchive( xml::xostrea
                << xml::attribute( "value", threshold_ )
                << xml::attribute( "color", color_ );
     if( !name_.GetData().empty() )
-    output     << xml::attribute( "name", name_ );
+        output     << xml::attribute( "name", name_ );
     output << xml::end;
 }
 
@@ -250,7 +250,7 @@ void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output )
     for( IT_AttritionThresholdInfosVector it = attritionThresholds_.begin(); it != attritionThresholds_.end(); ++it )
         (*it)->WriteArchive( output );
     output        << xml::end
-           << xml::end;
+         << xml::end;
 }
 
 //-----------------------------------------------------------------------------

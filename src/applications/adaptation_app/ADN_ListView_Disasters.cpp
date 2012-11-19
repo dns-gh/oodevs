@@ -13,6 +13,7 @@
 #include "ADN_Tr.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Disasters_Data.h"
+#include "ADN_Objects_Data.h"
 #include "ADN_Disasters_GUI.h"
 #include "ADN_Wizard.h"
 
@@ -69,7 +70,19 @@ void ADN_ListView_Disasters::OnContextMenu( const QPoint& point )
 // Name: ADN_ListView_Disasters::GetToolTipFor
 // Created: LGY 2012-11-13
 // -----------------------------------------------------------------------------
-std::string ADN_ListView_Disasters::GetToolTipFor( const QModelIndex& )
+std::string ADN_ListView_Disasters::GetToolTipFor( const QModelIndex& index )
 {
-    return "";
+    if( !index.isValid() )
+        return "";
+    void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
+    ADN_Disasters_Data::DisasterInfos* pCastData = (ADN_Disasters_Data::DisasterInfos*)pData;
+    assert( pCastData != 0 );
+
+    std::string result;
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+        ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
+
+    if( result.empty() )
+        result = tr( "<b>Unused</b>" ).toStdString();
+    return result;
 }

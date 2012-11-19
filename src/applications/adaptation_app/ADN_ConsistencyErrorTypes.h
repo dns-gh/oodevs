@@ -30,7 +30,7 @@ enum E_ConsistencyCheck
     eMissingUnitOnAutomat,
     eMissingPCOnAutomat,
     eMissingArmor,
-
+    eMissingDisaster,
     eMissingMask,
 
     eOthersMask

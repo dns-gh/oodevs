@@ -641,9 +641,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
 
     // RN to delete when ammunition deleted
     if( ADN_Equipement_Data::CategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::CategoryInfo* >( data ) )
-    {
         return FillUsingElements( eResourceNetworks, *infos, GetResourceNetworks().GetData(), &ADN_ResourceNetworks_Data::GetResourceNetworksThatUse, result );
-    }
 
     return result;
 }
@@ -759,6 +757,9 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         result[ eObjects ] = GetObjects().GetData().GetObjectsWithCapacity( ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::TAG );
         return result;
     }
+
+    if( ADN_Disasters_Data::DisasterInfos* infos = dynamic_cast< ADN_Disasters_Data::DisasterInfos* >( data ) )
+        FillUsingElements( eObjects, *infos, GetObjects().GetData(), &ADN_Objects_Data::GetObjectsThatUse, result );
 
     return result;
 }

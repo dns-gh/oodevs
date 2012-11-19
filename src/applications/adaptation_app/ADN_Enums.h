@@ -25,6 +25,7 @@ enum E_WorkspaceElements
     eEquipement,
     eFireClasses,
     eDrawings, // Must be before eObjects
+    eDisasters, // Must be before eObjects
     eObjects,
     eWeapons,
     eActiveProtections,
@@ -44,7 +45,6 @@ enum E_WorkspaceElements
     ePeople,
     eReports,
     eLogistic, // Gather eMaintenance, eSupply, eHealth and eFuneral in a container
-    eDisasters,
     eNbrWorkspaceElements
 };
 

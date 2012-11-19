@@ -18,6 +18,7 @@
 #include "ADN_DataException.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include "ADN_ConsistencyChecker.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -362,6 +363,62 @@ void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::WriteArchive( xml::xost
     if( limited_.GetData() )
         xos << xml::attribute( "max-weight", maxWeight_.GetData() );
 }
+
+//! @name ADN_CapacityInfos_Disaster
+//@{
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Disaster
+// Created: LGY 2012-11-19
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_Disaster::ADN_CapacityInfos_Disaster()
+    : disaster_( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::~ADN_CapacityInfos_Disaster
+// Created: LGY 2012-11-19
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_Disaster::~ADN_CapacityInfos_Disaster()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ReadArchive
+// Created: LGY 2012-11-19
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Disaster::ReadArchive( xml::xistream& xis )
+{
+    std::string model;
+    xis >> xml::attribute( "model", model );
+    disaster_ = ADN_Workspace::GetWorkspace().GetDisasters().GetData().FindDisaster( model );
+    if( disaster_.GetData() )
+        bPresent_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::WriteArchive
+// Created: LGY 2012-11-19
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Disaster::WriteArchive( xml::xostream& xos )
+{
+    std::string model = disaster_.GetData() ? disaster_.GetData()->strName_.GetData() : "";
+    xos << xml::attribute( "model", model );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::CheckDatabaseValidity
+// Created: LGY 2012-11-19
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Disaster::CheckDatabaseValidity( ADN_ConsistencyChecker& checker,
+                                                                          const ADN_Type_String& objectName ) const
+{
+    if( !disaster_.GetData() && bPresent_.GetData() )
+        checker.AddError( eMissingDisaster, objectName.GetData(), eObjects );
+}
+//@}
 
 //! @name ADN_CapacityInfos_Attrition
 //@{
@@ -1463,6 +1520,26 @@ QStringList ADN_Objects_Data::GetObjectsWithCapacity( const std::string& tag )
         helpers::ADN_TypeCapacity_Infos* capacity = ( *it )->capacities_[ tag ].get();
         if( capacity->bPresent_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::GetObjectsThatUse
+// Created: LGY 2012-11-19
+// -----------------------------------------------------------------------------
+QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Disasters_Data::DisasterInfos& disaster )
+{
+    QStringList result;
+    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    {
+        ADN_CapacityInfos_Disaster* disasterCapacity = static_cast< ADN_CapacityInfos_Disaster* >( ( *it )->capacities_[ ADN_CapacityInfos_Disaster::TAG ].get() );
+        if( disasterCapacity && disasterCapacity->bPresent_.GetData() )
+        {
+            ADN_Disasters_Data::DisasterInfos* disasterInfos = disasterCapacity->disaster_.GetData();
+            if( disasterInfos && disasterInfos->strName_.GetData() == disaster.strName_.GetData() )
+                result << ( *it )->strName_.GetData().c_str();
+        }
     }
     return result;
 }

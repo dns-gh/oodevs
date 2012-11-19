@@ -212,6 +212,9 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data_ObjectInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
+    for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
+        it->second->CheckDatabaseValidity( checker, strName_ );
+
     for( int i = 0; i < 4; ++i )
         if( geometries_[ i ].GetData() )
             return;

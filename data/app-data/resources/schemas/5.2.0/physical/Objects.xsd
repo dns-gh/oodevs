@@ -154,7 +154,11 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="activable" minOccurs="0"/>
-			<xs:element name="disaster" minOccurs="0"/>
+			<xs:element name="disaster" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="model" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="attrition" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="attrition-surface" type="T_NonNegativeDouble"/>

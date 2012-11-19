@@ -176,7 +176,9 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     CONNECT_HELPER( Trafficability, MaxWeight, maxWeight_ );
 
     BUILDER_HELPER( Activable );
-//    BUILDER_HELPER( Disaster );
+
+    BUILDER_HELPER( Disaster );
+    CONNECT_HELPER( Disaster, DisasterType, disaster_ );
 
     BUILDER_HELPER( Logistic );
 

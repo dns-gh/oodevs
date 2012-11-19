@@ -1252,6 +1252,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <source>The breakdown %1 has no replacement part, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No disaster model for object %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2141,6 +2145,13 @@ posture</translation>
     <message>
         <source>Remove object</source>
         <translation>Remove object</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_Disasters</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>

@@ -27,7 +27,8 @@ namespace
                type == eMissingDecisionalModel ||
                type == eMissingUnitOnAutomat ||
                type == eMissingPCOnAutomat ||
-               type == eMissingArmor;
+               type == eMissingArmor ||
+               type == eMissingDisaster;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
@@ -76,6 +77,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingUnitOnAutomat ]   = tr( "Automat %1 requires at least one sub unit, because of this, the simulation can't start with this database." );
     errorDescriptions_[ eMissingPCOnAutomat ]     = tr( "Automat %1 requires at least one PC, because of this, the simulation can't start with this database." );
     errorDescriptions_[ eMissingArmor ]           = tr( "At least one armor must be defined, because of this, the simulation can't start with this database." );
+    errorDescriptions_[ eMissingDisaster ]        = tr( "No disaster model for object %1, because of this, the simulation can't start with this database." );
 
     // Connection
     connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );

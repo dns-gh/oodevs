@@ -1240,6 +1240,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>At least one armor must be defined, because of this, the simulation can&apos;t start with this database.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No disaster model for object %1, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
@@ -2128,6 +2132,13 @@ stance</source>
     <message>
         <source>Remove object</source>
         <translation type="unfinished">قم بإزالة الكائن</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_Disasters</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
 </context>
 <context>

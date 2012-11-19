@@ -12,6 +12,8 @@
 
 #include "ADN_Types.h"
 
+class ADN_ConsistencyChecker;
+
 namespace helpers
 {
 
@@ -26,6 +28,10 @@ public:
     virtual void ReadArchive( xml::xistream& )
     {
         bPresent_ = true;
+    }
+    virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& /*checker*/, const ADN_Type_String& /*objectName*/ ) const
+    {
+        // NOTHING
     }
     virtual void WriteArchive( xml::xostream& ) {}
 public:

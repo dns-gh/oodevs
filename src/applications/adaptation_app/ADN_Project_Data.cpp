@@ -131,10 +131,10 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "human-protections", szHumanProtections_ );
     ReadFile( input, "resource-natures", szDotationNatures_ );
     ReadFile( input, "logistic-supply-classes", szLogisticSupplyClasses_ );
+    ReadFile( input, "disasters", szDisasters_ );
     ReadFile( input, "objects", szObjects_ );
     ReadFile( input, "resources", szEquipements_ );
     ReadFile( input, "launchers", szLaunchers_ );
-    ReadFile( input, "disasters", szDisasters_ );
     ReadFile( input, "weapon-systems", szWeapons_ );
     ReadFile( input, "sensors", szSensors_ );
     ReadFile( input, "components", szComponents_ );
@@ -191,10 +191,10 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "human-protections", szHumanProtections_ );
     WriteFile( output, "resource-natures", szDotationNatures_ );
     WriteFile( output, "logistic-supply-classes", szLogisticSupplyClasses_ );
+    WriteFile( output, "disasters", szDisasters_ );
     WriteFile( output, "objects", szObjects_ );
     WriteFile( output, "resources", szEquipements_ );
     WriteFile( output, "launchers", szLaunchers_ );
-    WriteFile( output, "disasters", szDisasters_ );
     WriteFile( output, "weapon-systems", szWeapons_ );
     WriteFile( output, "sensors", szSensors_ );
     WriteFile( output, "components", szComponents_ );
