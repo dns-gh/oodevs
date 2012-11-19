@@ -298,7 +298,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Clock
     ActionsScheduler* scheduler = new ActionsScheduler( this, controllers_, simulation, model_.actions_, publisher );
     QDockWidget* clockWnd = new ClockDock( this, controllers_, simulation, *scheduler );
-    addDockWidget( Qt::RightDockWidgetArea, clockWnd );
+    addDockWidget( Qt::LeftDockWidgetArea, clockWnd );
 
     // Profiler
     QDockWidget* pProfilerDockWnd_ = new QDockWidget( "profiler", this );
@@ -359,6 +359,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     {
         NotesPanel* notePanel = new NotesPanel( this, controllers_.controller_, model_.notes_, publisher );
         addDockWidget( Qt::RightDockWidgetArea, notePanel );
+        notePanel->hide();
     }
     // Message panel
     {
@@ -394,7 +395,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
 
-//    ReadSettings();
     ReadOptions();
 
     pMissionPanel_->hide();
