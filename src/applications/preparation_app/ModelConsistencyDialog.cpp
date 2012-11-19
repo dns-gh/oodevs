@@ -99,8 +99,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eProfileUnwritable ]               = tools::translate( "ModelConsistencyDialog", "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
 
     // Ghost
-    errorDescriptions_[ eGhostExistence ]                  = tools::translate( "ModelConsistencyDialog", "A phantom unit is present." );
-    errorDescriptions_[ eGhostConverted ]                  = tools::translate( "ModelConsistencyDialog", "Unknown type '%1', a phantom unit has been created instead." );
+    errorDescriptions_[ eGhostExistence ]                  = tools::translate( "ModelConsistencyDialog", "A ghost unit is present." );
+    errorDescriptions_[ eGhostConverted ]                  = tools::translate( "ModelConsistencyDialog", "Unknown type '%1', a ghost unit has been created instead." );
 
     // Command Post
     errorDescriptions_[ eNoCommandPost ]                  = tools::translate( "ModelConsistencyDialog", "Automat has no command post." );

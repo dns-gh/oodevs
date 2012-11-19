@@ -313,7 +313,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     AddLayer( *glProxy_, preferences, inhabitantLayer,          "main",                         tr( "Populations" ) );
     AddLayer( *glProxy_, preferences, objectsLayer,             "main",                         tr( "Objects" ) );
     AddLayer( *glProxy_, preferences, populations,              "main",                         tr( "Crowd" ) );
-    AddLayer( *glProxy_, preferences, ghosts,                   "main",                         tr( "Phantom" ) );
+    AddLayer( *glProxy_, preferences, ghosts,                   "main",                         tr( "Ghost" ) );
     AddLayer( *glProxy_, preferences, agents,                   "main",                         tr( "Units" ) );
     AddLayer( *glProxy_, preferences, automats,                 "main",                         tr( "Automats" ) );
     AddLayer( *glProxy_, preferences, formation,                "main",                         tr( "Formations" ) );

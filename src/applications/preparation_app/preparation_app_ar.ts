@@ -686,24 +686,12 @@
 <context>
     <name>GhostsPanel</name>
     <message>
-        <source>Phantom</source>
-        <translation type="unfinished">فانتوم</translation>
-    </message>
-    <message>
         <source>Name:</source>
         <translation type="unfinished">الاسم:</translation>
     </message>
     <message>
         <source>Type:</source>
         <translation type="unfinished">النوع:</translation>
-    </message>
-    <message>
-        <source>Enter phantom name here</source>
-        <translation type="unfinished">أدخل اسم وهمي هنا</translation>
-    </message>
-    <message>
-        <source>Enter phantom type here</source>
-        <translation type="unfinished">أدخل نوع فانتوم هنا</translation>
     </message>
     <message>
         <source>- Name not set.&lt;br&gt;</source>
@@ -722,8 +710,20 @@
         <translation type="unfinished">خطأ، معلومات مفقودة:&lt;br&gt;</translation>
     </message>
     <message>
-        <source>Drag and drop symbol to map to create a new phantom.</source>
-        <translation type="unfinished">سحب وإسقاط رمز خريطة لإنشاء فانتوم جديدة.</translation>
+        <source>Ghost</source>
+        <translation type="unfinished">شبح</translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new ghost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter ghost name here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter ghost type here</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -914,10 +914,6 @@
         <translation type="unfinished">الحشد</translation>
     </message>
     <message>
-        <source>Phantom</source>
-        <translation type="unfinished">فانتوم</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation type="unfinished">وحدات</translation>
     </message>
@@ -1018,6 +1014,10 @@ This data can&apos;t be projected.</source>
     <message>
         <source>Error while loading Raster source.</source>
         <translation type="unfinished">حدث خطأ أثناء تحميل النقطية المصدر.</translation>
+    </message>
+    <message>
+        <source>Ghost</source>
+        <translation type="unfinished">شبح</translation>
     </message>
 </context>
 <context>
@@ -1353,14 +1353,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">للا &apos;الكتابة&apos; لأي ملف تعريف المستخدم. لا يمكنك إعطاء أوامر لأنه في اللعبة.</translation>
     </message>
     <message>
-        <source>A phantom unit is present.</source>
-        <translation type="unfinished">وحدة وهمية موجودة.</translation>
-    </message>
-    <message>
-        <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
-        <translation type="unfinished">نوع غير معروف &apos;%1&apos;، وقد تم إنشاء وحدة وهمية بدلاً من ذلك.</translation>
-    </message>
-    <message>
         <source>Automat has no command post.</source>
         <translation type="unfinished">وقد [اوتومت] أي وظيفة الأمر.</translation>
     </message>
@@ -1420,6 +1412,14 @@ This data can&apos;t be projected.</source>
         <source>No orbat.xml found</source>
         <translation type="unfinished">Orbat.xml لم يتم العثور على</translation>
     </message>
+    <message>
+        <source>A ghost unit is present.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown type &apos;%1&apos;, a ghost unit has been created instead.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
@@ -1458,8 +1458,8 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">الطبعة</translation>
     </message>
     <message>
-        <source>Phantom:</source>
-        <translation type="unfinished">الوهمية:</translation>
+        <source>Ghost:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

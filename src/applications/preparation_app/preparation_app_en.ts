@@ -689,24 +689,12 @@
 <context>
     <name>GhostsPanel</name>
     <message>
-        <source>Phantom</source>
-        <translation>Phantom</translation>
-    </message>
-    <message>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
     <message>
         <source>Type:</source>
         <translation>Type:</translation>
-    </message>
-    <message>
-        <source>Enter phantom name here</source>
-        <translation>Enter phantom name here</translation>
-    </message>
-    <message>
-        <source>Enter phantom type here</source>
-        <translation>Enter phantom type here</translation>
     </message>
     <message>
         <source>- Name not set.&lt;br&gt;</source>
@@ -725,8 +713,20 @@
         <translation>Error, missing informations:&lt;br&gt;</translation>
     </message>
     <message>
-        <source>Drag and drop symbol to map to create a new phantom.</source>
-        <translation>Drag and drop symbol to map to create a new phantom.</translation>
+        <source>Ghost</source>
+        <translation type="unfinished">Ghost</translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new ghost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter ghost name here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter ghost type here</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -917,10 +917,6 @@
         <translation>Crowd</translation>
     </message>
     <message>
-        <source>Phantom</source>
-        <translation>Phantom</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Units</translation>
     </message>
@@ -1021,6 +1017,10 @@ This data can&apos;t be projected.</translation>
     <message>
         <source>Error while loading Raster source.</source>
         <translation>Error while loading Raster source.</translation>
+    </message>
+    <message>
+        <source>Ghost</source>
+        <translation type="unfinished">Ghost</translation>
     </message>
 </context>
 <context>
@@ -1356,14 +1356,6 @@ This data can&apos;t be projected.</translation>
         <translation>Not &apos;writable&apos; to any user profile. You will not be able to give orders to it on the game.</translation>
     </message>
     <message>
-        <source>A phantom unit is present.</source>
-        <translation>A phantom unit is present.</translation>
-    </message>
-    <message>
-        <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
-        <translation>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</translation>
-    </message>
-    <message>
         <source>Automat has no command post.</source>
         <translation>Automat has no command post.</translation>
     </message>
@@ -1423,6 +1415,14 @@ This data can&apos;t be projected.</translation>
         <source>No orbat.xml found</source>
         <translation>No orbat.xml found</translation>
     </message>
+    <message>
+        <source>A ghost unit is present.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown type &apos;%1&apos;, a ghost unit has been created instead.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
@@ -1461,8 +1461,8 @@ This data can&apos;t be projected.</translation>
         <translation>Edition</translation>
     </message>
     <message>
-        <source>Phantom:</source>
-        <translation>Phantom:</translation>
+        <source>Ghost:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

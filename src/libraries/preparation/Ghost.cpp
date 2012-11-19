@@ -181,7 +181,7 @@ void Ghost::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 void Ghost::CreateDictionary()
 {
     PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Phantom type" ), ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToTr ) );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Ghost type" ), ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToTr ) );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Type" ), type_ );
 }
 

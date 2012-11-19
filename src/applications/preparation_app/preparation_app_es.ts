@@ -686,10 +686,6 @@
 <context>
     <name>GhostsPanel</name>
     <message>
-        <source>Phantom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Name:</source>
         <translation type="unfinished">Nombre:</translation>
     </message>
@@ -706,14 +702,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter phantom name here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter phantom type here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error, missing informations:&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -722,7 +710,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Drag and drop symbol to map to create a new phantom.</source>
+        <source>Ghost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new ghost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter ghost name here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter ghost type here</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -974,10 +974,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Phantom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading graphical interface ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1016,6 +1012,10 @@
     <message>
         <source>The following raster you add is missing spatial reference information.
 This data can&apos;t be projected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ghost</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1308,14 +1308,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A phantom unit is present.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Long name size limit exceeded : %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1419,6 +1411,14 @@ This data can&apos;t be projected.</source>
         <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will be deleted at next save.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>A ghost unit is present.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown type &apos;%1&apos;, a ghost unit has been created instead.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
@@ -1453,11 +1453,11 @@ This data can&apos;t be projected.</source>
 <context>
     <name>OrbatPanel</name>
     <message>
-        <source>Phantom:</source>
+        <source>Edition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edition</source>
+        <source>Ghost:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

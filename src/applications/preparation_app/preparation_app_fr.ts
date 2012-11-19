@@ -686,24 +686,12 @@
 <context>
     <name>GhostsPanel</name>
     <message>
-        <source>Phantom</source>
-        <translation>Fantôme</translation>
-    </message>
-    <message>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
         <source>Type:</source>
         <translation>Type:</translation>
-    </message>
-    <message>
-        <source>Enter phantom name here</source>
-        <translation>Entrer le nom du fantôme ici</translation>
-    </message>
-    <message>
-        <source>Enter phantom type here</source>
-        <translation>Entrer le type du fantôme ici</translation>
     </message>
     <message>
         <source>- Name not set.&lt;br&gt;</source>
@@ -722,8 +710,20 @@
         <translation>Erreur, informations manquantes :&lt;br&gt;</translation>
     </message>
     <message>
-        <source>Drag and drop symbol to map to create a new phantom.</source>
+        <source>Ghost</source>
+        <translation>Fantôme</translation>
+    </message>
+    <message>
+        <source>Drag and drop symbol to map to create a new ghost.</source>
         <translation>Glissez/déposez le symbole sur la carte pour créer un nouveau fantôme.</translation>
+    </message>
+    <message>
+        <source>Enter ghost name here</source>
+        <translation>Entrer le nom du fantôme ici</translation>
+    </message>
+    <message>
+        <source>Enter ghost type here</source>
+        <translation>Entrer le type du fantôme ici</translation>
     </message>
 </context>
 <context>
@@ -974,10 +974,6 @@
         <translation>Initialisation des données ...</translation>
     </message>
     <message>
-        <source>Phantom</source>
-        <translation>Fantôme</translation>
-    </message>
-    <message>
         <source>Loading graphical interface ...</source>
         <translation>Chargement de l&apos;interface graphique ...</translation>
     </message>
@@ -1018,6 +1014,10 @@
 This data can&apos;t be projected.</source>
         <translation>L&apos;image que vous rajoutez manque d&apos;information de référence spatiale.
 Ces données ne peuvent pas être projetées.</translation>
+    </message>
+    <message>
+        <source>Ghost</source>
+        <translation>Fantôme</translation>
     </message>
 </context>
 <context>
@@ -1309,14 +1309,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Indisponible en &apos;écriture&apos; pour tous les profils utilisateurs. Vous ne pourrez pas lui donner des ordres en phase de conduite.</translation>
     </message>
     <message>
-        <source>A phantom unit is present.</source>
-        <translation>Une unité fantôme est présente.</translation>
-    </message>
-    <message>
-        <source>Unknown type &apos;%1&apos;, a phantom unit has been created instead.</source>
-        <translation>Type inconnu &apos;%1&apos;, un fantôme a été créé à la place.</translation>
-    </message>
-    <message>
         <source>Long name size limit exceeded : %1.</source>
         <translation>Limite de taille du nom long dépassée : %1.</translation>
     </message>
@@ -1420,6 +1412,14 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Invalid logistic subordinate for &apos;%1&apos; in orbat.xml. The link will be deleted at next save.</source>
         <translation>&quot;%1&quot; a un subordonné logistique invalide dans orbat.xml. Le lien sera supprimé à la prochaine sauvegarde.</translation>
     </message>
+    <message>
+        <source>A ghost unit is present.</source>
+        <translation>Une unité fantôme est présente.</translation>
+    </message>
+    <message>
+        <source>Unknown type &apos;%1&apos;, a ghost unit has been created instead.</source>
+        <translation>Type inconnu &apos;%1&apos;, un fantôme a été créé à la place.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
@@ -1454,12 +1454,12 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>OrbatPanel</name>
     <message>
-        <source>Phantom:</source>
-        <translation>Fantôme:</translation>
-    </message>
-    <message>
         <source>Edition</source>
         <translation>Edition</translation>
+    </message>
+    <message>
+        <source>Ghost:</source>
+        <translation>Fantôme:</translation>
     </message>
 </context>
 <context>

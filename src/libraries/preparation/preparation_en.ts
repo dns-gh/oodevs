@@ -169,12 +169,12 @@
 <context>
     <name>Ghost</name>
     <message>
-        <source>Info/Phantom type</source>
-        <translation>Info/Phantom type</translation>
-    </message>
-    <message>
         <source>Info/Type</source>
         <translation>Info/Type</translation>
+    </message>
+    <message>
+        <source>Info/Ghost type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
