@@ -65,6 +65,7 @@ private:
     virtual void NotifyUpdated( const MissionParameters& extension );
     bool ShouldUpdate( const MissionParameters& extension ) const;
     virtual void showEvent( QShowEvent* event );
+    void AdaptListViewToContentMaxSize();
     //@}
 
 private:

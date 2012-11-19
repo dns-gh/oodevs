@@ -35,7 +35,8 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
     AddColumn( tools::findTranslation( "Action", "Parameter" ) );
     AddColumn( tools::findTranslation( "Action", "Value" ) );
     AddColumn( tools::findTranslation( "ActionTiming", "Time" ) );
-    setResizeMode( Q3ListView::AllColumns );
+    setColumnWidthMode( 0, Q3ListView::Manual );
+    setColumnWidth( 2, 150 );
     setColumnAlignment( 2, Qt::AlignRight );
     setSorting( 2, false );
     header()->hide();
@@ -111,7 +112,10 @@ void InfoMissionsTab::NotifySelected( const kernel::Entity_ABC* entity )
 void InfoMissionsTab::NotifyUpdated( const MissionParameters& extension )
 {
     if( ShouldUpdate( extension ) )
+    {   
         DeleteTail( DisplayList( extension.CreateIterator() ) );
+        AdaptListViewToContentMaxSize();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -133,4 +137,16 @@ void InfoMissionsTab::showEvent( QShowEvent* event )
     selected_ = 0;
     NotifySelected( selected );
     gui::ListDisplayer< InfoMissionsTab >::showEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoMissionsTab::AdaptListViewToContentMaxSize
+// Created: SBO 2007-04-18
+// -----------------------------------------------------------------------------
+void InfoMissionsTab::AdaptListViewToContentMaxSize()
+{
+    int maxWidth = 0;
+    for( Q3ListViewItem* item = firstChild(); item != 0; item = item->nextSibling() )
+        maxWidth = item->text( 0 ).size() *5 > maxWidth? item->text( 0 ).size() * 10 : maxWidth;
+    setColumnWidth( 0, maxWidth );
 }
