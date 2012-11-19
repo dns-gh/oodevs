@@ -190,6 +190,8 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LodgingCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PropagationCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityCapacity.cpp" />
@@ -982,6 +984,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FireForbiddenCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LodgingCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ObjectTypeResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\PropagationCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.h" />

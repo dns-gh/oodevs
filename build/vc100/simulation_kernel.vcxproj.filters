@@ -2652,6 +2652,12 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Humans\PHY_HumanState.cpp">
       <Filter>Source Files\Entities\Agents\Roles\Humans</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LodgingCapacity.cpp">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticCapacity.cpp">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5428,6 +5434,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\Brain.h">
       <Filter>Source Files\Decision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LodgingCapacity.h">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticCapacity.h">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
