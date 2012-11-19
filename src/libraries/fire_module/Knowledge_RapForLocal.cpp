@@ -152,7 +152,6 @@ namespace
 // -----------------------------------------------------------------------------
 void Knowledge_RapForLocal::ApplyValue( double rNewRapForValue, double rFeedbackTime )
 {
-    // New value calculation
     // Bound the value between 0.2 and 5.0
     static double rRapForMidValue_ = ( rRapForBoundMax - rRapForBoundMin ) / 2;
     if( rNewRapForValue < 1. )
