@@ -831,9 +831,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticAvailabilitiesListView_ABC.h">
       <Filter>Source Files\Panels\Logistic\lists</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.h">
-      <Filter>Source Files\Panels\Logistic\lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\MaintenanceHaulersListView.h">
       <Filter>Source Files\Panels\Logistic\lists\maintenance</Filter>
     </ClInclude>
@@ -1130,6 +1127,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\BypassPrototype.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\SupplyConsignsWidget.h">
+      <Filter>Source Files\Panels\Logistic\consigns</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
