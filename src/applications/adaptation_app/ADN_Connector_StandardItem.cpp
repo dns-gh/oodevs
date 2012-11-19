@@ -58,6 +58,15 @@ void ADN_Connector_StandardItem::SetDataPrivate( void* data )
             item_.setData( *value, gui::Roles::DataRole );
             break;
         }
+    case ADN_StandardItem::eColor:
+        {
+           QString text = static_cast< std::string* >( data )->c_str();
+            QColor color( "#" + text.right( 6 ) );
+            if( color.isValid() )
+                item_.setBackground( QBrush( color ) );
+            item_.setData( text, gui::Roles::DataRole );
+            break;
+        }
     case ADN_StandardItem::eTime:
     case ADN_StandardItem::eDelay:
     case ADN_StandardItem::eString:
@@ -112,6 +121,7 @@ void ADN_Connector_StandardItem::SetDataChanged( const QString& text )
         }
     case ADN_StandardItem::eTime:
     case ADN_StandardItem::eDelay:
+    case ADN_StandardItem::eColor:
     case ADN_StandardItem::eString:
         {
             std::string newval = text.toStdString();

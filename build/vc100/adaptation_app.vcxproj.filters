@@ -1198,6 +1198,12 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.cpp">
       <Filter>Source Files\Workspace\Disasters\Disasters Data</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ThresholdAttritionsTable.cpp">
+      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ThresholdConcentrationsTable.cpp">
+      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1835,6 +1841,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.h">
       <Filter>Source Files\Workspace\Disasters\Disasters Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ThresholdAttritionsTable.h">
+      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ThresholdConcentrationsTable.h">
+      <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

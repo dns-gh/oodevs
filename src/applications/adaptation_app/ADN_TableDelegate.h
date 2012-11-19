@@ -43,6 +43,13 @@ public:
     const std::pair< double, double >* GetColorType( int row, int col ) const;
     //@}
 
+    //! @name Colors editor
+    //@{
+    unsigned int AddColorEditOnRow( int row );
+    unsigned int AddColorEditOnColumn( int column );
+    unsigned int AddColorEdit( int fromRow, int toRow, int fromCol, int toCol );
+    //@}
+
     //! @name Delay
     //@{
     unsigned int AddDelayEditOnRow( int row );
@@ -90,6 +97,7 @@ private:
     T_SimpleWidget delayEdits_;
     T_SimpleWidget timeEdits_;
     T_SimpleWidget comboPtrInVectors_;
+    T_SimpleWidget colorEdits_;
     QPen gridPen_;
     std::set<int> boldGridRowIndexes_;
     std::set<int> boldGridColIndexes_;

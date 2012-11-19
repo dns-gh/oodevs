@@ -283,6 +283,8 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ThresholdAttritionsTable.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ThresholdConcentrationsTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TimeEdit.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Type_Repartition.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_DialogLog.cpp" />
@@ -1807,6 +1809,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ThresholdAttritionsTable.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ThresholdConcentrationsTable.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Enum.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Repartition.h" />

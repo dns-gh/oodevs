@@ -6,6 +6,38 @@
 			<xs:sequence>
 				<xs:element name="disaster" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="contamination">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="threshold" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="color" type="T_ColorRGB" use="required"/>
+												<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+												<xs:attribute name="name" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="attrition">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="threshold" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+												<xs:attribute name="name" type="xs:string" use="optional"/>
+												<xs:attribute name="u1" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="u2" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="u3" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="ue" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="dead" type="T_ZeroToOneDouble" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+							    </xs:complexType>
+							</xs:element>
+						</xs:sequence>
 						<xs:attribute name="name" type="xs:string" use="required"/>
 					</xs:complexType>
 				</xs:element>

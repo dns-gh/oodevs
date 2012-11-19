@@ -36,7 +36,8 @@ public:
         eString      = 4,
         ePtrInVector = 5,
         eDelay       = 6,
-        eTime        = 7
+        eTime        = 7,
+        eColor       = 8
     };
 
 public:

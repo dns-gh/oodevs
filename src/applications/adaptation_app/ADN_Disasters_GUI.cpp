@@ -14,6 +14,8 @@
 #include "ADN_SearchListView.h"
 #include "ADN_ListView_Disasters.h"
 #include "ADN_Disasters_Data.h"
+#include "ADN_ThresholdConcentrationsTable.h"
+#include "ADN_ThresholdAttritionsTable.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Disasters_GUI constructor
@@ -55,15 +57,23 @@ void ADN_Disasters_GUI::Build()
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
+    Q3GroupBox* pConcentrationThresholds = new Q3VGroupBox( tr( "Concentration thresholds" ) );
+    ADN_ThresholdConcentrationsTable* pThresholdConcentrationsTable = new ADN_ThresholdConcentrationsTable( strClassName_ + "ConcentrationThresholds", vConnectors[ eConcentrationThresholds ], pConcentrationThresholds );
+    pThresholdConcentrationsTable->setFixedHeight( 180 );
+
+    Q3GroupBox* pAttritionThresholds = new Q3VGroupBox( tr( "Attrition thresholds" ) );
+    ADN_ThresholdAttritionsTable* pThresholdAttritionsTable = new ADN_ThresholdAttritionsTable( strClassName_ + "AttritionThresholds", vConnectors[ eAttritionThresholds ], pAttritionThresholds );
+    pThresholdAttritionsTable->setFixedHeight( 180 );
 
     // Content layout
     QWidget* pContent = new QWidget();
-    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    QGridLayout* pContentLayout = new QGridLayout( pContent, 1, 2 );
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
-    pContentLayout->addWidget( pInfoHolder );
-    pContentLayout->addStretch( 1 );
+    pContentLayout->addWidget( pInfoHolder, 0, 0, 1, 2 );
+    pContentLayout->addWidget( pConcentrationThresholds, 1, 0 );
+    pContentLayout->addWidget( pAttritionThresholds, 1, 1 );
 
     // ListView
     ADN_SearchListView< ADN_ListView_Disasters >* pSearchListView = new ADN_SearchListView< ADN_ListView_Disasters >( this, data_.GetDisastersInfos(), vConnectors );

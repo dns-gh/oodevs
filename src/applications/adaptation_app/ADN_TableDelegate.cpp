@@ -16,6 +16,7 @@
 #include "ADN_StandardItem.h"
 #include "ADN_TimeEdit.h"
 #include "ADN_TimeField.h"
+#include "ADN_ColorSelector.h"
 #include "clients_gui/Roles.h"
 #include "clients_kernel/VariantPointer.h"
 
@@ -66,6 +67,33 @@ unsigned int ADN_TableDelegate::AddColorOnRow( int row, double min, double max )
 unsigned int ADN_TableDelegate::AddColorOnColumn( int col, double min, double max )
 {
     return AddColor( -1, -1, col, col, min, max );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddColorEditOnRow
+// Created: LGY 2012-11-16
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddColorEditOnRow( int row )
+{
+    return AddColorEdit( row, row, -1, -1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddColorEditOnColumn
+// Created: LGY 2012-11-16
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddColorEditOnColumn( int column )
+{
+    return AddColorEdit( -1, -1, column, column );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::AddColorEdit
+// Created: LGY 2012-11-16
+// -----------------------------------------------------------------------------
+unsigned int ADN_TableDelegate::AddColorEdit( int fromRow, int toRow, int fromCol, int toCol )
+{
+    return AddSimpleWidget( fromRow, toRow, fromCol, toCol, colorEdits_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -282,6 +310,12 @@ QWidget* ADN_TableDelegate::createEditor( QWidget* parent, const QStyleOptionVie
         editor->GetConnector().Connect( data );
         return editor;
     }
+    else if( std::find( colorEdits_.begin(), colorEdits_.end(), position->id_ ) != colorEdits_.end() )
+    {
+        ADN_ColorSelector* editor = new ADN_ColorSelector( parent, false );
+        editor->GetConnector().Connect( data );
+        return editor;
+    }
     assert( false );
     return 0;
 }
@@ -321,6 +355,8 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnetor = &static_cast< ADN_TimeField* >( editor )->GetConnector();
     else if( std::find( timeEdits_.begin(), timeEdits_.end(), position->id_ ) != timeEdits_.end() )
         guiConnetor = &static_cast< ADN_TimeEdit* >( editor )->GetConnector();
+    else if( std::find( colorEdits_.begin(), colorEdits_.end(), position->id_ ) != colorEdits_.end() )
+        guiConnetor = &static_cast< ADN_ColorSelector* >( editor )->GetConnector();
     if( guiConnetor )
         guiConnetor->Disconnect( data );
 }

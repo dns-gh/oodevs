@@ -1296,6 +1296,14 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Name</source>
         <translation>Nom</translation>
     </message>
+    <message>
+        <source>Concentration thresholds</source>
+        <translation>Seuils de concentration</translation>
+    </message>
+    <message>
+        <source>Attrition thresholds</source>
+        <translation>Seuils d'attrition</translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>
@@ -4293,6 +4301,68 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ThresholdAttritionsTable</name>
+    <message>
+        <source>Threshold</source>
+        <translation>Seuil</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>U1 (%)</source>
+        <translation>U1 (%)</translation>
+    </message>
+    <message>
+        <source>U2 (%)</source>
+        <translation>U2 (%)</translation>
+    </message>
+    <message>
+        <source>U3 (%)</source>
+        <translation>U3 (%)</translation>
+    </message>
+    <message>
+        <source>U4 (%)</source>
+        <translation>U4 (%)</translation>
+    </message>
+    <message>
+        <source>Dead (%)</source>
+        <translation>Mort (%)</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ThresholdConcentrationsTable</name>
+    <message>
+        <source>Threshold</source>
+        <translation>Seuil</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation>Couleur</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
     </message>
 </context>
 <context>

@@ -1295,6 +1295,14 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Concentration thresholds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attrition thresholds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>
@@ -4290,6 +4298,68 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
     <message>
         <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ThresholdAttritionsTable</name>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U1 (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U2 (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U3 (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U4 (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ThresholdConcentrationsTable</name>
+    <message>
+        <source>Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

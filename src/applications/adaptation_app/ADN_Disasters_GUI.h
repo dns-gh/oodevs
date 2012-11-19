@@ -26,6 +26,8 @@ public:
     enum E_GuiElements
     {
         eName,
+        eConcentrationThresholds,
+        eAttritionThresholds,
         eNbrGuiElements
     };
 

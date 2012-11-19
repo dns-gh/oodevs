@@ -25,7 +25,7 @@ class ADN_ColorSelector : public QPushButton
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_ColorSelector( QWidget* parent );
+    explicit ADN_ColorSelector( QWidget* parent, bool fixedSize = true );
     virtual ~ADN_ColorSelector();
     //@}
 

@@ -19,11 +19,14 @@
 // Name: ADN_ColorSelector constructor
 // Created: JSR 2010-09-14
 // -----------------------------------------------------------------------------
-ADN_ColorSelector::ADN_ColorSelector( QWidget* parent )
+ADN_ColorSelector::ADN_ColorSelector( QWidget* parent, bool fixedSize )
     : QPushButton( parent )
 {
-    setMinimumSize( 25, 25 );
-    setMaximumWidth( 3 * height() );
+    if( fixedSize )
+    {
+        setMinimumSize( 25, 25 );
+        setMaximumWidth( 3 * height() );
+    }
     connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
     connect( ADN_App::GetMainWindow(), SIGNAL( OpenModeToggled() ), this, SLOT( UpdateEnableState() ) );
     pConnector_ = new ADN_Connector_String< ADN_ColorSelector >( this );

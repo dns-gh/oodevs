@@ -30,6 +30,67 @@ class ADN_Disasters_Data : public ADN_Data_ABC
 {
 public:
 //*****************************************************************************
+    class AttritionThresholdInfos : public ADN_Ref_ABC
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+                 AttritionThresholdInfos();
+        virtual ~AttritionThresholdInfos();
+        //@}
+
+    public:
+        //! @name Operations
+        //@{
+        AttritionThresholdInfos* CreateCopy();
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output ) const;
+        //@}
+
+    public:
+        //! @name Member Data
+        //@{
+        ADN_Type_String name_;
+        ADN_Type_Double threshold_;
+        ADN_Type_Int u1_;
+        ADN_Type_Int u2_;
+        ADN_Type_Int u3_;
+        ADN_Type_Int ue_;
+        ADN_Type_Int dead_;
+        //@}
+    };
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< AttritionThresholdInfos >, AttritionThresholdInfosVector )
+
+public:
+//*****************************************************************************
+    class ConcentrationThresholdInfos : public ADN_Ref_ABC
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+                 ConcentrationThresholdInfos();
+        virtual ~ConcentrationThresholdInfos();
+        //@}
+
+        //! @name Operations
+        //@{
+        ConcentrationThresholdInfos* CreateCopy();
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output ) const;
+        //@}
+
+    public:
+        //! @name Member Data
+        //@{
+        ADN_Type_String color_;
+        ADN_Type_String name_;
+        ADN_Type_Double threshold_;
+        //@}
+    };
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< ConcentrationThresholdInfos >, ConcentrationThresholdInfosVector )
+
+public:
+//*****************************************************************************
     class DisasterInfos : public ADN_RefWithName
     {
     public:
@@ -39,11 +100,21 @@ public:
         virtual ~DisasterInfos();
         //@}
 
+    public:
         //! @name Operations
         //@{
         DisasterInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
+        void ReadContamination( xml::xistream& input );
+        void ReadAttrition( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
+        //@}
+
+    public:
+        //! @name Member Data
+        //@{
+        T_ConcentrationThresholdInfosVector concentrationThresholds_;
+        T_AttritionThresholdInfosVector attritionThresholds_;
         //@}
     };
 public:
