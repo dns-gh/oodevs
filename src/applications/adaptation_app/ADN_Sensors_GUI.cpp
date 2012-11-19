@@ -443,6 +443,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 
         ++nRow;
     }
+    pTable->Sort( 0, Qt::AscendingOrder );
     return pTable;
 }
 
