@@ -488,6 +488,7 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
         for( unsigned int n = 0; n < eNbrLocation; ++n )
             pTable->AddItem( nRow, n + 1, &composante, &composante.vSpeeds_[ n ]->rSpeed_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     }
+    pTable->Sort( 0, Qt::AscendingOrder );
     return pTable;
 }
 
