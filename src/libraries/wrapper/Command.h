@@ -33,9 +33,10 @@ namespace wrapper
 {
 namespace detail
 {
-    template< typename T, typename C = void >
+    template< typename T >
     struct Command
     {
+        template< typename C >
         static void Create( void** command,
             const SWORD_Model* parameters, const SWORD_Model* model, void* context )
         {
@@ -43,36 +44,6 @@ namespace detail
                 *command = new T( *static_cast< C* >( context ), parameters, model );
             WRAPPER_CATCH( "creating" )
         }
-        static void Destroy( void* command,
-            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
-        {
-            WRAPPER_TRY
-                if( command )
-                    static_cast< const T* >( command )->Destroy( parameters, model );
-            WRAPPER_CATCH( "destroying" )
-            delete static_cast< T* >( command );
-        }
-        static void Execute( const void* command,
-            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
-        {
-            WRAPPER_TRY
-                if( command )
-                    static_cast< const T* >( command )->Execute( parameters, model );
-            WRAPPER_CATCH( "executing" )
-        }
-        static void ExecutePaused( const void* command,
-            const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
-        {
-            WRAPPER_TRY
-                if( command )
-                    static_cast< const T* >( command )->ExecutePaused( parameters, model );
-            WRAPPER_CATCH( "executing" )
-        }
-    };
-
-    template< typename T >
-    struct Command< T, void >
-    {
         static void Create( void** command,
             const SWORD_Model* parameters, const SWORD_Model* model, void* /*context*/ )
         {
@@ -112,16 +83,16 @@ namespace detail
 #undef WRAPPER_CATCH
 
 template< typename T >
-void RegisterCommand( const std::string& name )
+void RegisterCommand( const char* name )
 {
-    ::SWORD_RegisterCommand( name.c_str(), &detail::Command< T >::Create, &detail::Command< T >::Execute,
+    ::SWORD_RegisterCommand( name, &detail::Command< T >::Create, &detail::Command< T >::Execute,
         &detail::Command< T >::ExecutePaused, &detail::Command< T >::Destroy, 0 );
 }
 template< typename T, typename C >
-void RegisterCommand( const std::string& name, C& context )
+void RegisterCommand( const char* name, C& context )
 {
-    ::SWORD_RegisterCommand( name.c_str(), &detail::Command< T, C >::Create, &detail::Command< T, C >::Execute,
-        &detail::Command< T, C >::ExecutePaused, &detail::Command< T, C >::Destroy, &context );
+    ::SWORD_RegisterCommand( name, &detail::Command< T >::Create< C >, &detail::Command< T >::Execute,
+        &detail::Command< T >::ExecutePaused, &detail::Command< T >::Destroy, &context );
 }
 
 }
