@@ -1189,10 +1189,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <translation type="unfinished">و &apos;</translation>
     </message>
     <message>
-        <source>Duplicate type for missions %1.</source>
-        <translation type="unfinished">نوع مكرر للبعثات %1.</translation>
-    </message>
-    <message>
         <source>The equipement &apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1246,6 +1242,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
     <message>
         <source>No disaster model for object %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate type for missions %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

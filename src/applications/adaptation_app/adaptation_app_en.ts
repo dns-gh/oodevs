@@ -1201,10 +1201,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
         <translation> and &apos;</translation>
     </message>
     <message>
-        <source>Duplicate type for missions %1.</source>
-        <translation>Duplicate type for missions %1.</translation>
-    </message>
-    <message>
         <source>The equipement &apos;</source>
         <translation>The equipement &apos;</translation>
     </message>
@@ -1218,47 +1214,51 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
+        <translation>, because of this, the simulation can&apos;t start with this database.</translation>
     </message>
     <message>
         <source>The breakdown %1 has no replacement part</source>
-        <translation type="unfinished"></translation>
+        <translation>The breakdown %1 has no replacement part</translation>
     </message>
     <message>
         <source>Equipment %1 requires at least one breakdown</source>
-        <translation type="unfinished"></translation>
+        <translation>Equipment %1 requires at least one breakdown</translation>
     </message>
     <message>
         <source>Convoy unit type not defined in Log/Supply</source>
-        <translation type="unfinished"></translation>
+        <translation>Convoy unit type not defined in Log/Supply</translation>
     </message>
     <message>
         <source>Convoy mission not defined in Log/Supply</source>
-        <translation type="unfinished"></translation>
+        <translation>Convoy mission not defined in Log/Supply</translation>
     </message>
     <message>
         <source>No geometry defined for object %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No geometry defined for object %1</translation>
     </message>
     <message>
         <source>No decisional model defined for unit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No decisional model defined for unit %1</translation>
     </message>
     <message>
         <source>Automat %1 requires at least one sub unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat %1 requires at least one sub unit</translation>
     </message>
     <message>
         <source>Automat %1 requires at least one PC</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat %1 requires at least one PC</translation>
     </message>
     <message>
         <source>At least one armor must be defined</source>
-        <translation type="unfinished"></translation>
+        <translation>At least one armor must be defined</translation>
     </message>
     <message>
         <source>No disaster model for object %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No disaster model for object %1</translation>
+    </message>
+    <message>
+        <source>Duplicate type for missions %1</source>
+        <translation>Duplicate type for missions %1</translation>
     </message>
 </context>
 <context>

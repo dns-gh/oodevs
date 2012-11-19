@@ -28,7 +28,8 @@ namespace
                type == eMissingUnitOnAutomat ||
                type == eMissingPCOnAutomat ||
                type == eMissingArmor ||
-               type == eMissingDisaster;
+               type == eMissingDisaster ||
+               type == eMissionTypeUniqueness;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
@@ -61,13 +62,14 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     QString error = tr( ", because of this, the simulation can't start with this database." );
 
     // Fill errors text
-    errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1." );
     errorDescriptions_[ eNNoUniqueness  ]         = tr( "Duplicate NNO code for %1." );
     errorDescriptions_[ eEmatUniqueness ]         = tr( "Duplicate EMAT8 code for %1." );
 
     errorDescriptions_[ eMissingNNo     ]         = tr( "%1 has no NNO code defined." );
     errorDescriptions_[ eMissingEmat    ]         = tr( "%1 has no EMAT8 code defined." );
     errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission %1 has no type defined for a localisation composite parameter." );
+
+    errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1" ) + error;
 
     errorDescriptions_[ eMissingPart ]            = tr( "The breakdown %1 has no replacement part" ) + error;
     errorDescriptions_[ eMissingBreakdown ]       = tr( "Equipment %1 requires at least one breakdown" ) + error;

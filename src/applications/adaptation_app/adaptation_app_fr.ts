@@ -1213,10 +1213,6 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <translation> et &apos;</translation>
     </message>
     <message>
-        <source>Duplicate type for missions %1.</source>
-        <translation>Les missions %1 possèdent le même type.</translation>
-    </message>
-    <message>
         <source>The mission %1 has no type defined for a localisation composite parameter.</source>
         <translation>La mission %1 n&apos;as pas de type définit pour un paramètre de type localisation composite.</translation>
     </message>
@@ -1263,6 +1259,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     <message>
         <source>No disaster model for object %1</source>
         <translation>Pas de modèle de désastre pour l&apos;objet %1</translation>
+    </message>
+    <message>
+        <source>Duplicate type for missions %1</source>
+        <translation>&gt;Les missions %1 possèdent le même type</translation>
     </message>
 </context>
 <context>
