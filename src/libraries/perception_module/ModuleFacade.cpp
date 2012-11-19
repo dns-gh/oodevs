@@ -26,7 +26,6 @@
 #include "RadarClass.h"
 #include "RadarType.h"
 #include "PerceptionFlyingShell.h"
-#include "wrapper/Command.h"
 #include <boost/lambda/lambda.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -82,7 +81,7 @@ namespace
 // Created: SLI 2011-12-13
 // -----------------------------------------------------------------------------
 ModuleFacade::ModuleFacade( const wrapper::View& model )
-    : Hooks( model )
+    : Module( model )
 {
     wrapper::RegisterCommand< PerceptionCommand >               ( "perception" );
     wrapper::RegisterCommand< TogglePerceptionCommand >         ( "toggle perception" );

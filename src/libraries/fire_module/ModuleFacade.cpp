@@ -12,8 +12,6 @@
 #include "DirectFireCommandPopulation.h"
 #include "Knowledge_RapForLocal.h"
 #include "RoleAction_IndirectFiring.h"
-#include <wrapper/Command.h>
-#include <module_api/Log.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -49,7 +47,7 @@ DEFINE_HOOK( GetAmmunitionForIndirectFire, 4, const char*, ( const SWORD_Model* 
 // Created: MCO 2012-03-19
 // -----------------------------------------------------------------------------
 ModuleFacade::ModuleFacade( const wrapper::View& model )
-    : Hooks( model )
+    : Module( model )
 {
     module = this;
     wrapper::RegisterCommand< DirectFireCommand >( "direct fire", *this );

@@ -10,9 +10,8 @@
 #ifndef movement_module_ModuleFacade_h
 #define movement_module_ModuleFacade_h
 
-#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-#include <wrapper/Hook.h>
+#include <wrapper/Module.h>
 #include <vector>
 #include <map>
 
@@ -22,10 +21,6 @@ class MT_Vector2D;
 
 namespace sword
 {
-namespace wrapper
-{
-    class View;
-}
 namespace movement
 {
     class PathWalker;
@@ -38,7 +33,7 @@ namespace movement
 */
 // Created: SLI 2011-12-13
 // =============================================================================
-class ModuleFacade : private sword::wrapper::Hooks, private boost::noncopyable
+class ModuleFacade : private sword::wrapper::Module
 {
 public:
     //! @name Constructors/Destructor

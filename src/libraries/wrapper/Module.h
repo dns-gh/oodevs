@@ -3,37 +3,44 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef perception_module_ModuleFacade_h
-#define perception_module_ModuleFacade_h
+#ifndef WRAPPER_MODULE_H
+#define WRAPPER_MODULE_H
 
-#include <wrapper/Module.h>
+#include "Hook.h"
+#include "Command.h"
 #include <boost/noncopyable.hpp>
 
 namespace sword
 {
-namespace perception
+namespace wrapper
 {
+    class View;
+
 // =============================================================================
-/** @class  ModuleFacade
-    @brief  Module facade
+/** @class  Node
+    @brief  Node
 */
-// Created: SLI 2012-03-16
+// Created: SLI 2011-12-07
 // =============================================================================
-class ModuleFacade : private sword::wrapper::Module
+class Module : private Hooks, private detail::Commands, private boost::noncopyable
 {
-public:
+protected:
     //! @name Constructors/Destructor
     //@{
-    explicit ModuleFacade( const wrapper::View& model );
-            ~ModuleFacade();
+    Module( const View& model )
+        : Hooks   ( model )
+        , Commands( model )
+    {
+        // NOTHING
+    }
     //@}
 };
 
 }
 }
 
-#endif // perception_module_ModuleFacade_h
+#endif // WRAPPER_MODULE_H

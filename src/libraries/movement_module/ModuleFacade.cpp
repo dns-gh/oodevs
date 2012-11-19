@@ -18,9 +18,6 @@
 #include "FollowCommand.h"
 #include "Rep_PathPoint_Front.h"
 #include "simulation_kernel/Decision/DEC_Path_ABC.h" // $$$$ MCO : for enums
-#include "wrapper/Command.h"
-#include "wrapper/Hook.h"
-#include "wrapper/View.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <algorithm>
@@ -190,7 +187,7 @@ namespace
 // Created: SLI 2011-12-13
 // -----------------------------------------------------------------------------
 ModuleFacade::ModuleFacade( const wrapper::View& model )
-    : Hooks( model )
+    : Module( model )
 {
     facade = this; // $$$$ MCO : TOUNDO
     PathType::Initialize();

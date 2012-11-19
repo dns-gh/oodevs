@@ -10,8 +10,7 @@
 #ifndef fire_module_ModuleFacade_h
 #define fire_module_ModuleFacade_h
 
-#include <wrapper/Hook.h>
-#include <wrapper/View.h>
+#include <wrapper/Module.h>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
@@ -28,7 +27,7 @@ namespace fire
 */
 // Created: MCO 2012-03-19
 // =============================================================================
-class ModuleFacade : private sword::wrapper::Hooks, private boost::noncopyable
+class ModuleFacade : private sword::wrapper::Module
 {
 public:
     //! @name Constructors/Destructor

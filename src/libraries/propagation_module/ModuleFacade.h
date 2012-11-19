@@ -12,14 +12,10 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-#include <wrapper/Hook.h>
+#include <wrapper/Module.h>
 
 namespace sword
 {
-namespace wrapper
-{
-    class View;
-}
 namespace propagation
 {
 // =============================================================================
@@ -28,7 +24,7 @@ namespace propagation
 */
 // Created: LGY 2012-06-12
 // =============================================================================
-class ModuleFacade : private sword::wrapper::Hooks, private boost::noncopyable
+class ModuleFacade : private sword::wrapper::Module
 {
 public:
     //! @name Constructors/Destructor

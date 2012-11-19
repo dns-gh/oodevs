@@ -126,6 +126,7 @@
     <ClInclude Include="..\..\src\libraries\wrapper\Effect.h" />
     <ClInclude Include="..\..\src\libraries\wrapper\Event.h" />
     <ClInclude Include="..\..\src\libraries\wrapper\Hook.h" />
+    <ClInclude Include="..\..\src\libraries\wrapper\Module.h" />
     <ClInclude Include="..\..\src\libraries\wrapper\Node.h" />
     <ClInclude Include="..\..\src\libraries\wrapper\Remove.h" />
     <ClInclude Include="..\..\src\libraries\wrapper\View.h" />

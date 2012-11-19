@@ -10,7 +10,6 @@
 #include "ModuleFacade.h"
 #include "FloodCommand.h"
 #include "PropagationCommand.h"
-#include "wrapper/Command.h"
 
 using namespace sword;
 using namespace sword::propagation;
@@ -20,7 +19,7 @@ using namespace sword::propagation;
 // Created: LGY 2012-06-12
 // -----------------------------------------------------------------------------
 ModuleFacade::ModuleFacade( const wrapper::View& model )
-    : Hooks( model )
+    : Module( model )
 {
     sword::wrapper::RegisterCommand< FloodCommand >( "flood command" );
     sword::wrapper::RegisterCommand< PropagationCommand >( "propagation command" );

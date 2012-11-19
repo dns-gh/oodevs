@@ -48,5 +48,8 @@
     <ClInclude Include="..\..\src\libraries\wrapper\Remove.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\wrapper\Module.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
