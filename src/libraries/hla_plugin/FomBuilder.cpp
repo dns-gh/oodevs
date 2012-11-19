@@ -35,6 +35,10 @@ using namespace plugins::hla;
 
 namespace
 {
+    bool isHla13( xml::xisubstream xis )
+    {
+        return xis.attribute< std::string >( "protocol", "hla-1516e" ) == "hla-13";
+    }
     struct NullFactory : public HlaObjectFactory_ABC
     {
         virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC&, const std::string&, unsigned long, rpr::ForceIdentifier, const rpr::EntityType&, const std::string&, const std::string&, const std::vector< char >& ) const
@@ -69,11 +73,11 @@ namespace
         return result;
     }
     template< typename Rpr, typename Netn >
-    std::auto_ptr< ClassBuilder_ABC > CreateClassBuilder( bool isNetn )
+    std::auto_ptr< ClassBuilder_ABC > CreateClassBuilder( bool isNetn, bool isHla13 )
     {
         if( isNetn )
             return std::auto_ptr< ClassBuilder_ABC >( new Netn() );
-        return std::auto_ptr< ClassBuilder_ABC >( new Rpr() );
+        return std::auto_ptr< ClassBuilder_ABC >( new Rpr( isHla13 ) );
     }
 }
 
@@ -115,7 +119,7 @@ std::auto_ptr< HlaClass > FomBuilder::CreateAggregateClass()
     return std::auto_ptr< HlaClass >( new HlaClass( federate_, resolver_, nameFactory_,
             CreateFactory< AggregateEntity, NetnAggregate >( xis_.attribute< bool >( "netn", true ), callsignResolver_, markingFactory_, entityIdentifierResolver_, fomSerializer_ ),
             CreateRemoteFactory< AggregateEntity, NetnAggregate >( xis_.attribute< bool >( "netn", true ), entityIdentifierResolver_, fomSerializer_ ),
-            CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis_.attribute< bool >( "netn", true ) ), ownershipStrategy_ ) );
+            CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( xis_.attribute< bool >( "netn", true ), isHla13( xis_ ) ), ownershipStrategy_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +131,7 @@ std::auto_ptr< HlaClass > FomBuilder::CreateSurfaceVesselClass()
     return std::auto_ptr< HlaClass >( new HlaClass( federate_, resolver_, nameFactory_,
             CreateFactory< SurfaceVessel, NetnSurfaceVessel >( xis_.attribute< bool >( "netn", true ), callsignResolver_, markingFactory_, entityIdentifierResolver_, fomSerializer_ ),
             CreateRemoteFactory< SurfaceVessel, NetnSurfaceVessel >( xis_.attribute< bool >( "netn", true ), entityIdentifierResolver_, fomSerializer_ ),
-            CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis_.attribute< bool >( "netn", true ) ), ownershipStrategy_ ) );
+            CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( xis_.attribute< bool >( "netn", true ), isHla13( xis_ )  ), ownershipStrategy_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +143,7 @@ std::auto_ptr< HlaClass > FomBuilder::CreateAircraftClass()
     return std::auto_ptr< HlaClass >( new HlaClass( federate_, resolver_, nameFactory_,
             CreateFactory< Aircraft, NetnAircraft >( xis_.attribute< bool >( "netn", true ), callsignResolver_, markingFactory_, entityIdentifierResolver_, fomSerializer_ ),
             CreateRemoteFactory< Aircraft, NetnAircraft >( xis_.attribute< bool >( "netn", true ), entityIdentifierResolver_, fomSerializer_ ),
-            CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis_.attribute< bool >( "netn", true ) ), ownershipStrategy_ ) );
+            CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( xis_.attribute< bool >( "netn", true ), isHla13( xis_ )  ), ownershipStrategy_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +155,7 @@ std::auto_ptr< HlaClass > FomBuilder::CreateGroundVehicleClass()
     return std::auto_ptr< HlaClass >( new HlaClass( federate_, resolver_, nameFactory_,
                                          CreateFactory< GroundVehicle, NetnGroundVehicle >( xis_.attribute< bool >( "netn", true ), callsignResolver_, markingFactory_, entityIdentifierResolver_, fomSerializer_ ),
                                          std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NullRemoteFactory ),
-                                         CreateClassBuilder< GroundVehicleBuilder, NetnGroundVehicleBuilder >( xis_.attribute< bool >( "netn", true ) ), ownershipStrategy_ ) );
+                                         CreateClassBuilder< GroundVehicleBuilder, NetnGroundVehicleBuilder >( xis_.attribute< bool >( "netn", true ), isHla13( xis_ )  ), ownershipStrategy_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +167,7 @@ std::auto_ptr< HlaClass > FomBuilder::CreateRprAggregateClass()
     return std::auto_ptr< HlaClass >( new HlaClass( federate_, resolver_, nameFactory_,
             CreateFactory< AggregateEntity, NetnAggregate >( false, callsignResolver_, markingFactory_, entityIdentifierResolver_, fomSerializer_ ),
             CreateRemoteFactory< AggregateEntity, NetnAggregate >( false, entityIdentifierResolver_, fomSerializer_ ),
-            CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( false ), ownershipStrategy_ ) );
+            CreateClassBuilder< AggregateEntityBuilder, NetnAggregateEntityBuilder >( false, isHla13( xis_ )  ), ownershipStrategy_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +179,7 @@ std::auto_ptr< HlaClass > FomBuilder::CreateRprSurfaceVesselClass()
     return std::auto_ptr< HlaClass >( new HlaClass( federate_, resolver_, nameFactory_,
             CreateFactory< SurfaceVessel, NetnSurfaceVessel >( false, callsignResolver_, markingFactory_, entityIdentifierResolver_, fomSerializer_ ),
             CreateRemoteFactory< SurfaceVessel, NetnSurfaceVessel >( false, entityIdentifierResolver_, fomSerializer_ ),
-            CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( false ), ownershipStrategy_ ) );
+            CreateClassBuilder< SurfaceVesselBuilder, NetnSurfaceVesselBuilder >( false, isHla13( xis_ )  ), ownershipStrategy_ ) );
 
 }
 
@@ -188,7 +192,7 @@ std::auto_ptr< HlaClass > FomBuilder::CreateRprAircraftClass()
     return std::auto_ptr< HlaClass >( new HlaClass( federate_, resolver_, nameFactory_,
             CreateFactory< Aircraft, NetnAircraft >( false, callsignResolver_, markingFactory_, entityIdentifierResolver_, fomSerializer_ ),
             CreateRemoteFactory< Aircraft, NetnAircraft >( false, entityIdentifierResolver_, fomSerializer_ ),
-            CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( false ), ownershipStrategy_ ) );
+            CreateClassBuilder< AircraftBuilder, NetnAircraftBuilder >( false, isHla13( xis_ )  ), ownershipStrategy_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,7 +204,7 @@ std::auto_ptr< HlaTacticalObjectClass > FomBuilder::CreateMinefieldClass()
     return std::auto_ptr< HlaTacticalObjectClass >( new HlaTacticalObjectClass( federate_, nameFactory_,
                                         std::auto_ptr< HlaTacticalObjectFactory_ABC > ( new TacticalObjectFactory< Minefield >( entityIdentifierResolver_ ) ) ,
                                         std::auto_ptr< RemoteHlaObjectFactory_ABC > ( new RemoteHlaObjectFactory< Minefield >( entityIdentifierResolver_, fomSerializer_ ) ),
-                                        CreateClassBuilder< MinefieldBuilder, MinefieldBuilder >( false) ) );
+                                        CreateClassBuilder< MinefieldBuilder, MinefieldBuilder >( false, isHla13( xis_ ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,5 +216,5 @@ std::auto_ptr< HlaClass > FomBuilder::CreateHumanClass()
     return std::auto_ptr< HlaClass >( new HlaClass( federate_, resolver_, nameFactory_,
                                          CreateFactory< Human, NetnHuman >( xis_.attribute< bool >( "netn", true ), callsignResolver_, markingFactory_, entityIdentifierResolver_, fomSerializer_ ),
                                          std::auto_ptr< RemoteHlaObjectFactory_ABC >( new NullRemoteFactory ),
-                                         CreateClassBuilder< HumanBuilder, NetnHumanBuilder >( xis_.attribute< bool >( "netn", true ) ), ownershipStrategy_ ) );
+                                         CreateClassBuilder< HumanBuilder, NetnHumanBuilder >( xis_.attribute< bool >( "netn", true ), isHla13( xis_ )  ), ownershipStrategy_ ) );
 }
