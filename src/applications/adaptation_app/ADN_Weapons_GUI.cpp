@@ -452,6 +452,8 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
         int nSubRow = 0;
         for( ADN_Weapons_Data::IT_PhSizeInfosVector it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2, ++nSubRow )
         {
+            if( nSubRow > 0 )
+                pTable->AddItem( nRow + nSubRow, 0, *it, ( *it )->strName_.GetData().c_str() );
             pTable->AddItem( nRow + nSubRow, 1, *it, &(*it2)->ptrSize_.GetData()->strName_, ADN_StandardItem::eString );
             ADN_Weapons_Data::T_PhInfosVector& phs = (*it2)->vPhs_;
             for( ADN_Weapons_Data::IT_PhInfosVector it3 = phs.begin(); it3 != phs.end(); ++it3 )
@@ -467,7 +469,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
         }
         nRow += static_cast< int >( phsSizeInfos.size() );
     }
-
+    pTable->Sort( 0, Qt::AscendingOrder );
     return pTable;
 }
 
