@@ -28,7 +28,6 @@ ADN_Weapons_PhTable::ADN_Weapons_PhTable( const QString& objectName, ADN_Connect
     : ADN_Table( objectName, connector, pParent )
 {
     // Selection and sorting.
-    //setSelectionMode( QAbstractItemView::NoSelection );
     setShowGrid( false );
     setMaximumHeight( 300 );
     dataModel_.setColumnCount( 2 );
@@ -41,7 +40,8 @@ ADN_Weapons_PhTable::ADN_Weapons_PhTable( const QString& objectName, ADN_Connect
     delegate_.AddSpinBoxOnColumn( 0, 0, std::numeric_limits< int >::max() );
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0, 100, 1, 5 );
     proxyModel_.setDynamicSortFilter( true );
-    horizontalHeader()->setSortIndicator( 1, Qt::DescendingOrder );
+    proxyModel_.sort( 0, Qt::AscendingOrder );
+    setSortingEnabled( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,6 @@ void ADN_Weapons_PhTable::AddRow( int row, void* data )
     QStandardItem* item = AddItem( row, 0, data, &infos->nDistance_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     item->setData( infos->nDistance_.GetData(), Qt::UserRole ); // sort
     AddItem( row, 1, data, &infos->rPerc_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-    proxyModel_.sort( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +112,6 @@ void ADN_Weapons_PhTable::dataChanged( const QModelIndex& topLeft, const QModelI
         {
             const QModelIndex index = topLeft.model()->index( topLeft.row(), 0 );
             const_cast< QAbstractItemModel* >( topLeft.model() )->setData( index, pCurPh->nDistance_.GetData(), Qt::UserRole ); // sort
-            proxyModel_.sort( 0 );
             pCurPh->ApplyPhModifiers();
         }
     }
