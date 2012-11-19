@@ -44,6 +44,7 @@ ADN_AutomatLog_ListView::ADN_AutomatLog_ListView( ADN_Automata_Data& data, QWidg
     for( int i = 0; i < header()->count(); ++i )
         resizeColumnToContents( i );
     collapseAll();
+    proxyModel_->sort( 0, Qt::DescendingOrder );
 }
 
 // -----------------------------------------------------------------------------
