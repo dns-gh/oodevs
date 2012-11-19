@@ -33,6 +33,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
+        local distance = meKnowledge:getProximity( self.escortableUnit )
         myself.speedModulation.escort = 1
         -- si l'unité que l'on escorte a fait un itinéraire, bouger vers cet itinéraire, sinon, bouger vers l'unité
        if self.arrived then
@@ -47,7 +48,6 @@ rootnode
        end
        if self.route then
             meKnowledge:sendNeedRoute( self.escortableUnit, false )
-            local distance = meKnowledge:getProximity( self.escortableUnit )
             if distance < 50 then
                 myself.speedModulation.escort =  0 -- l'unité qui escorte s'arrete
             elseif distance < 90 then
@@ -84,6 +84,9 @@ rootnode
                     Activate( skill.links.moveToward, 1, { entities  = { self.escortableUnit } } )
                 end
             end
+        end
+        if distance > 200 then
+           myself.speedModulation.escort =  0 -- l'unité qui escorte s'arrete
         end
     end,
 
