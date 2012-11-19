@@ -181,7 +181,7 @@ namespace detail
         virtual void Log() \
         { \
             MT_Profiler& profiler = GetProfiler(); \
-            if( profiler.IsStarted() || profiler.GetCount() == 0 ) \
+            if( profiler.GetCount() == 0 ) \
                 return; \
             ::SWORD_Log( SWORD_LOG_LEVEL_INFO, ( "<profiling> hook " #Hook " " \
                 + boost::lexical_cast< std::string >( profiler.GetCount() ) + " calls " \
