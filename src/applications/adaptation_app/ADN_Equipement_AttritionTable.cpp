@@ -64,9 +64,9 @@ void ADN_Equipement_AttritionTable::AddRow( int row, void* data )
         return;
 
     AddItem( row, 0, data, &pAttrition->ptrArmor_.GetData()->strName_, ADN_StandardItem::eString );
-    AddItem( row, 1, data, &pAttrition->rDestroy_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 1, data, &pAttrition->rRepairNoEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
     AddItem( row, 2, data, &pAttrition->rRepairWithEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-    AddItem( row, 3, data, &pAttrition->rRepairNoEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 3, data, &pAttrition->rDestroy_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }
 
 // -----------------------------------------------------------------------------
