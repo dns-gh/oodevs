@@ -2264,7 +2264,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Reconnaitre" dia-type="france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="france.military.company.tasks.Reconnaitre" name="AUTOMATE MELEE Reconnaitre" package="intelligence" symbol="IdReconnaitre_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3515,4 +3515,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="3609184235" -->
+<!-- signature="1970403478" -->

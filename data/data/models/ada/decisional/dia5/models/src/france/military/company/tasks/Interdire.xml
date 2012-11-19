@@ -25,14 +25,11 @@
                 <nil/>
             </default>
         </parameter>
-        <parameter name="meetingPoint" nullable="true">
+        <parameter name="meetingPoint">
             <type>
                 <class name="sword.military.knowledge.decisional.Approachable"/>
                 <class name="sword.military.knowledge.decisional.Positionable"/>
             </type>
-            <default>
-                <nil/>
-            </default>
         </parameter>
         <parameter name="threats">
             <description>Elements fâce auxquels interdire, pouvant faire objet d'une menance.</description>
