@@ -29,7 +29,7 @@ using namespace kernel;
 // Created: ABR 2011-10-12
 // -----------------------------------------------------------------------------
 GhostsPanel::GhostsPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controllers& controllers, SymbolFactory& symbolsFactory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy )
-    : InfoPanel_ABC( parent, panel, tr( "Phantom" ), "GhostsPanel" )
+    : InfoPanel_ABC( parent, panel, tr( "Ghost" ), "GhostsPanel" )
     , controllers_        ( controllers )
     , symbolsFactory_     ( symbolsFactory )
 {
@@ -52,7 +52,7 @@ GhostsPanel::GhostsPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controlle
     layout->addWidget( typeLineEdit_, 1, 1 );
 
     // Symbol Editor
-    symbolEditor_ = new EntitySymbolEditor( layout, 2, controllers_, symbolsFactory_, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new phantom." ) );
+    symbolEditor_ = new EntitySymbolEditor( layout, 2, controllers_, symbolsFactory_, icons, colorStrategy, tr( "Drag and drop symbol to map to create a new ghost." ) );
     symbolEditor_->SetDeep( 2 );
     connect( symbolEditor_, SIGNAL( LevelChanged() ), SLOT( UpdateWarning() ) );
     connect( symbolEditor_, SIGNAL( StartDrag() ), SLOT( IconDragged() ) );
@@ -84,8 +84,8 @@ void GhostsPanel::NotifyUpdated( const ModelLoaded& )
 {
     nameLineEdit_->clear();
     typeLineEdit_->clear();
-    nameLineEdit_->setPlaceholderText( tr( "Enter phantom name here" ) );
-    typeLineEdit_->setPlaceholderText( tr( "Enter phantom type here" ) );
+    nameLineEdit_->setPlaceholderText( tr( "Enter ghost name here" ) );
+    typeLineEdit_->setPlaceholderText( tr( "Enter ghost type here" ) );
     Show();
 }
 

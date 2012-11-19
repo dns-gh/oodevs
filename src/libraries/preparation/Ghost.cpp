@@ -185,7 +185,7 @@ void Ghost::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     const Ghost& constSelf = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Identifier" ), constSelf.id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Phantom type" ), ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToTr ) );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Ghost type" ), ENT_Tr::ConvertFromGhostType( ghostType_, ENT_Tr::eToTr ) );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Name" ), name_, *this, &Ghost::Rename );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Ghost", "Info/Type" ), type_ );
 }

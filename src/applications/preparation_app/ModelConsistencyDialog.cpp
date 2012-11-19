@@ -101,8 +101,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eProfileNoRole ] = tools::translate( "ModelConsistencyDialog", "No user role defined for profile \"%1\"." );
 
     // Ghost
-    errorDescriptions_[ eGhostExistence ] = tools::translate( "ModelConsistencyDialog", "A phantom unit is present." );
-    errorDescriptions_[ eGhostConverted ] = tools::translate( "ModelConsistencyDialog", "Unknown type '%1', a phantom unit has been created instead." );
+    errorDescriptions_[ eGhostExistence ] = tools::translate( "ModelConsistencyDialog", "A ghost unit is present." );
+    errorDescriptions_[ eGhostConverted ] = tools::translate( "ModelConsistencyDialog", "Unknown type '%1', a ghost unit has been created instead." );
 
     // Command Post
     errorDescriptions_[ eNoCommandPost ] = tools::translate( "ModelConsistencyDialog", "Automat has no command post." );

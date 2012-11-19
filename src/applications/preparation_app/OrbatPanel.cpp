@@ -30,9 +30,9 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     layout->setAlignment( Qt::AlignTop );
     layout->addWidget( box );
     QVBoxLayout* mainLayout = new QVBoxLayout( box );
-    // Phantom
+    // Ghost
     QHBoxLayout* ghostLayout = new QHBoxLayout();
-    ghostLayout->addWidget( new QLabel( tr( "Phantom:" ) ) );
+    ghostLayout->addWidget( new QLabel( tr( "Ghost:" ) ) );
     pGhostColor_ = new gui::ColorButton( main, "", QColor( 60, 180, 90 ) );
     ghostLayout->addWidget( pGhostColor_ );
     mainLayout->addLayout( ghostLayout );

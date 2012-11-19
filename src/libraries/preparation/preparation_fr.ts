@@ -228,16 +228,16 @@
         <translation>Info/Identifiant</translation>
     </message>
     <message>
-        <source>Info/Phantom type</source>
-        <translation>Info/Type de fantôme</translation>
-    </message>
-    <message>
         <source>Info/Name</source>
         <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
         <translation>Info/Type</translation>
+    </message>
+    <message>
+        <source>Info/Ghost type</source>
+        <translation>Info/Type de fantôme</translation>
     </message>
 </context>
 <context>
