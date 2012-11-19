@@ -1,6 +1,6 @@
 rootnode {
 
-    connections = { skill.links.moveTo, skill.links.dismount, skill.links.orienterCapteur, skill.nodes.RC },
+    connections = { skill.links.moveTo, skill.links.dismount, skill.links.orienterCapteur, skill.nodes.allowCarriers, skill.nodes.RC },
     
     done = function(self) -- frome moveTo
         if not self.arrivedDebarquement and self.params.positionDebarquement ~= NIL and not meKnowledge:isDismounted() and meKnowledge:canDismount() then -- on a atteint la position de débarquement
@@ -13,9 +13,7 @@ rootnode {
     create = function(self)
         self.arrivedDebarquement = false
         self.arrived = false
-        if meKnowledge:isDismounted() then
-            self.arrivedDebarquement = true
-        end
+        self.allowCarriers = false
     end,
 
     activate = function (self )
@@ -24,18 +22,18 @@ rootnode {
               Activate( skill.links.moveTo, 1, { entities = {self.params.positionDebarquement} })
         else
             if self.arrived then
-                if not meKnowledge:isDismounted() and meKnowledge:canDismount() then
-                    Activate( skill.links.dismount, 1 )
-                else
-                    Activate( skill.links.orienterCapteur, 1, { zone = self.params.zone } )
-                    if meKnowledge:isPosted() then
-                        meKnowledge:becomeStealthy( true )
-                        Activate( skill.nodes.RC, 1, { RC = eRC_FurtifModeOn } )
-                    end
+                if not self.allowCarriers then
+                    Activate( skill.nodes.allowCarriers, 1 )
+                end
+                Activate( skill.links.orienterCapteur, 1, { zone = self.params.zone } )
+                if meKnowledge:isPosted() then
+                    meKnowledge:becomeStealthy( true )
+                    Activate( skill.nodes.RC, 1, { RC = eRC_FurtifModeOn } )
                 end
             else
-                if self.arrivedDebarquement then -- si on a atteint la position de débarquement alors on veut rester débarqué
-                    Activate( skill.links.dismount, 1 )
+                if self.arrivedDebarquement then -- si on a atteint la position de débarquement alors on veut rester sans transporteur
+                    Activate( skill.nodes.allowCarriers, 1 )
+                    self.allowCarriers = true
                 end
                 Activate( skill.links.moveTo, 1, { entities = {self.params.position}, infiltrationMode = true } )
             end
@@ -44,8 +42,15 @@ rootnode {
     
     destroy = function(self)
         meKnowledge:becomeStealthy( false )
-        Activate( skill.nodes.RC, 1, { RC = eRC_FurtifModeOff } )
+        meKnowledge:RC( eRC_FurtifModeOff )
     end,
+}
+
+node "allowCarriers"
+{
+    create = function( self )
+        meKnowledge:allowCarriers()
+    end
 }
 
 node "RC"

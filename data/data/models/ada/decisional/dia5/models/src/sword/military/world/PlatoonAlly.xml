@@ -1464,7 +1464,10 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
             <description>Envoie des fumigènes pour se protéger d'une ou plusieurs entités dangereuses.</description>
         </method>
         <method name="allowCarriers">
-            <description>Laisser les transporteurs sans délai.</description>
+            <description>Allow carriers without delay.</description>
+        </method>
+        <method name="retrieveCarriers">
+            <description>Retrieve carriers without delay.</description>
         </method>
         <method name="isMoving" abstract="false">
             <description>Returns 'true' if this element is moving, 'false' otherwise.</description>

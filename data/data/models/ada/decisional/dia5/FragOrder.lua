@@ -393,7 +393,7 @@ integration.startFragOrderTask = function( self )
         return
     end
   elseif orderType == "Rep_OrderConduite_RecupererTransporteurs" then
-    integration.retrieveTransporter()
+    integration.retrieveCarriers()
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_ROEM_ArreterSilenceRadar" then

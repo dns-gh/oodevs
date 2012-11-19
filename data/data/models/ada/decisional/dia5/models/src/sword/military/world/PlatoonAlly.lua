@@ -965,6 +965,9 @@ return
     allowCarriers = function( self )
         integration.allowCarriers()
     end,
+    retrieveCarriers = function( self )
+        integration.retrieveCarriers()
+    end,
     getName = function( self )
         return integration.getName( self )
     end

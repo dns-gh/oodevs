@@ -86,10 +86,6 @@ integration.getCrowdROEForAgent = function()
     return DEC_Agent_RoePopulation()
 end
 
-integration.retrieveTransporter = function()
-    DEC_RecupererTransporteursSansDelai()
-end
-
 integration.setOrderConduiteChangerAmbiance = function( fragOrder, value )
     fragOrder:SetorderConduiteChangerAmbiance_( value )
 end

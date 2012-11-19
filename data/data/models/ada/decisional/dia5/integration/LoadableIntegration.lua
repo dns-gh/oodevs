@@ -219,7 +219,7 @@ integration.startUnloadCrowd = function( crowd, position )
     return false
 end
 
-integration.startedUnloadCrowd = function( crowd)
+integration.startedUnloadCrowd = function( crowd )
     if myself.eEtatTransportUnloadCrowd == eActionTransport_Finished then
         return true
     elseif myself.eEtatTransportUnloadCrowd == eActionTransport_Impossible then
@@ -241,12 +241,16 @@ integration.isTransported = function( enemy )
     return DEC_ConnaissanceAgent_EstTransporte( enemy.source )
 end
 
-integration.isSurrendered = function( )
+integration.isSurrendered = function()
     return DEC_Agent_EstRendu( myself )
 end
 
-integration.allowCarriers = function( )
-    DEC_LaisserTransporteursSansDelai( )
+integration.allowCarriers = function()
+    DEC_LaisserTransporteursSansDelai()
+end
+
+integration.retrieveCarriers = function()
+    DEC_RecupererTransporteursSansDelai()
 end
 
 integration.isFriendOrFoeSurrendered = function( platoon )
