@@ -500,6 +500,8 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
         int nSubRow = 0;
         for( helpers::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2, ++nSubRow )
         {
+            if( nSubRow > 0 )
+                pTable->AddItem( nRow + nSubRow, 0, *it, ammoCategory.strName_.GetData().c_str() );
             pTable->AddItem( nRow + nSubRow, 1, *it, ( *it2 )->ptrArmor_.GetData()->strName_.GetData().c_str() );
             pTable->AddItem( nRow + nSubRow, 2, *it, &( *it2 )->rRepairNoEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
             pTable->AddItem( nRow + nSubRow, 3, *it, &( *it2 )->rRepairWithEvac_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
@@ -507,7 +509,7 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
         }
         nRow += nRowSize;
     }
-
+    pTable->Sort( 0, Qt::AscendingOrder );
     return pTable;
 }
 
