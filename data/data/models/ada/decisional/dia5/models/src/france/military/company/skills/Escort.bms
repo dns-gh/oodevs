@@ -40,9 +40,9 @@ rootnode
                 end
                 self.fragOrderSent = true
              end
-              local fragOrder = CreateFragOrder("Rep_OrderConduite_AttendreSePoster")
-              local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )       
-              Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = self.escortableUnits } )
+             local fragOrder = CreateFragOrder("Rep_OrderConduite_SArreter")
+             local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )       
+             Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = self.escortableUnits } )
          end
     end,
 
