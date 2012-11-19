@@ -72,7 +72,7 @@ void ADN_Table::Initialize( const QString& objectName )
     setObjectName( objectName );
     setContextMenuPolicy( Qt::CustomContextMenu );
     proxyModel_.setSourceModel( &dataModel_ );
-    proxyModel_.setSortRole( Qt::UserRole );
+    proxyModel_.setSortRole( gui::Roles::DataRole );
     setModel( &proxyModel_ );
     setItemDelegate( &delegate_ );
     setEditTriggers( AllEditTriggers );
@@ -600,4 +600,13 @@ QString ADN_Table::GetToolTips( int nRow, int nCol ) const
         return item->text();
     else
         return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::Sort
+// Created: ABR 2012-11-16
+// -----------------------------------------------------------------------------
+void ADN_Table::Sort( int column, Qt::SortOrder order )
+{
+    proxyModel_.sort( column, order );
 }
