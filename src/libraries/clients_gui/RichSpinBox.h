@@ -134,7 +134,7 @@ public:
         int decimalPointIndex = input.find( locale().decimalPoint() );
         int trailingChars = ( decimalPointIndex == -1 ) ? d + 1 : d;
 
-        QRegExp empty( QString( " *-?" ) + locale().decimalPoint() + "? *" );
+        QRegExp empty( QString( "\\s*-?\\" ) + locale().decimalPoint() + "?\\s*" );
         if( minimum() >= 0 && input.stripWhiteSpace().startsWith( '-' ) )
             result = QValidator::Invalid;
         else if( input.stripWhiteSpace() == locale().decimalPoint() )

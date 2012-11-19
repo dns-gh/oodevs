@@ -132,7 +132,7 @@ namespace
 // Created: ABR 2011-03-17
 // -----------------------------------------------------------------------------
 ADN_DoubleValidator::ADN_DoubleValidator( QObject* parent )
-    : QDoubleValidator( 0, std::numeric_limits< double >::max(), 10, parent )
+    : QDoubleValidator( 0, std::numeric_limits< double >::max(), 2, parent )
 {
     // NOTHING
 }
@@ -207,7 +207,7 @@ QValidator::State ADN_DoubleValidator::InternalValidate( double top, double bott
     int decimalPointIndex = input.find( locale.decimalPoint() );
     int trailingChars = ( decimalPointIndex == -1 ) ? d + 1 : d;
 
-    QRegExp empty( QString( " *-?" ) + locale.decimalPoint() + "? *" );
+    QRegExp empty( QString( "\\s*-?\\" ) + locale.decimalPoint() + "?\\s*" );
     if( bottom >= 0 && input.stripWhiteSpace().startsWith( '-' ) )
         result = Invalid;
     else if( input.stripWhiteSpace() == locale.decimalPoint() )
@@ -252,7 +252,10 @@ QValidator::State ADN_DoubleValidator::InternalValidate( double top, double bott
     {
         double value = input.toDouble();
         input = locale.toString( value, 'f', d );
-        input.truncate( input.size() - trailingChars );
+        if( value == top )
+            input = removeTrailingZero( input, locale.decimalPoint() );
+        else
+            input.truncate( input.size() - trailingChars );
         int sizeAfter = input.size();
         nPos += ( sizeAfter - sizeBefore );
         nPos = ( nPos > input.length() ) ? input.length() : ( nPos < 0 ) ? 0 : nPos;
