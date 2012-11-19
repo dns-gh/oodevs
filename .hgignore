@@ -2,6 +2,7 @@
 \.(bmo|bmk|bmq|bmt|bmsk|bmr)$
 ^data/data/models/ada/decisional/dia5/TaskKnowledge.lua$
 ^data/data/models/ada/decisional/dia5/models/directia.core/directia.core.bml$
+^data/exercises/.*/sessions/
 syntax: glob
 *.ipch
 *.ncb
