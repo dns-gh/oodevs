@@ -10,7 +10,7 @@ integration.EnterInUndergroundNetwork = function( network )
     return true
 end
 integration.ExitFromUndergroundNetwork = function()
-    local returnError = DEC_Agent_SortirDuReseauSouterrain( myself )
+    local returnError = DEC_Agent_SortirDuReseauSouterrain( myself ) -- /!\ after first tick, if agent has exit, it returns "eUndergroundNetworkInvalid" 
     if returnError == eUndergroundNetworkInvalid then
         if not myself.alreadySend then
             meKnowledge:RC( eRC_NotActivatedUndergroundNetwork )
