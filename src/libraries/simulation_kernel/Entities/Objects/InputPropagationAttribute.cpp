@@ -105,14 +105,14 @@ namespace
 {
     T_PointVector Convert( const std::vector< geometry::Point2d >& points )
     {
-        T_PointVector convexhull;
+        T_PointVector result;
         for( std::vector< geometry::Point2d >::const_iterator it = points.begin(); it != points.end(); ++it )
         {
             MT_Vector2D position;
             TER_World::GetWorld().MosToSimMgrsCoord( it->Y(), it->X(), position );
-            convexhull.push_back( position );
+            result.push_back( position );
         }
-        return convexhull;
+        return result;
     }
 }
 

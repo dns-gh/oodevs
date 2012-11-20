@@ -239,7 +239,7 @@ const ASCExtractor::T_Values& ASCExtractor::GetValues() const
 // Name: ASCExtractor::Fill
 // Created: LGY 2012-11-08
 // -----------------------------------------------------------------------------
-void ASCExtractor::Fill( std::vector< geometry::Point2d >& convexHull ) const
+void ASCExtractor::Fill( std::vector< geometry::Point2d >& points ) const
 {
     for( int i = 0; i < nrows_; ++i )
         for( int j = 0; j < ncols_; ++j )
@@ -252,7 +252,7 @@ void ASCExtractor::Fill( std::vector< geometry::Point2d >& convexHull ) const
                 double widthmin = j * pixelSize_.X();
                 double widthmax = ( j + 1 ) * pixelSize_.X();
 
-                convexHull.push_back( GenerateExtent( origin_.X() + widthmin, origin_.Y() + heightbottom, origin_.X() + widthmax, origin_.Y() + heighttop ).Center() );
+                points.push_back( GenerateExtent( origin_.X() + widthmin, origin_.Y() + heightbottom, origin_.X() + widthmax, origin_.Y() + heighttop ).Center() );
             }
         }
 }
