@@ -91,19 +91,6 @@ const std::string& PropagationManager::GetProjectionFile() const
     return projection_;
 }
 
-namespace
-{
-    bool Compare( const std::vector< std::string >& lhs, const std::vector< std::string >& rhs )
-    {
-        if( lhs.size() != rhs.size() )
-            return false;
-        for( std::size_t i = 0; i < rhs.size(); ++i )
-            if( lhs[ i ] != rhs[ i ] )
-                return false;
-        return true;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PropagationManager::GetFiles
 // Created: LGY 2012-11-07
@@ -115,7 +102,7 @@ PropagationManager::T_Files PropagationManager::GetFiles( const std::string& tim
     for( CIT_Schedule it = schedule_.begin(); it != schedule_.end(); ++it )
         if( ptime >= it->first )
             files = it->second;
-    if( ! Compare( files, currentFiles_ ) )
+    if( files != currentFiles_ )
     {
         currentFiles_ = files;
         return files;
