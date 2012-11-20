@@ -43,8 +43,8 @@ ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( const QString& objectNam
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
-    delegate_.AddSpinBoxOnColumn( 1 );
-    delegate_.AddSpinBoxOnColumn( 2 );
+    delegate_.AddSpinBoxOnColumn( 1, 0, std::numeric_limits< int >::max() );
+    delegate_.AddSpinBoxOnColumn( 2, -1, std::numeric_limits< int >::max() );
 }
 
 // -----------------------------------------------------------------------------
