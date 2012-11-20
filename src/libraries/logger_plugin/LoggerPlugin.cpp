@@ -235,6 +235,8 @@ void LoggerPlugin::Receive( const sword::SimToClient& message )
         if( message.message().stop_crowd_fire().has_units_damages() )
             LogUnitsFireDamages( message.message().stop_crowd_fire().units_damages() );
     }
+    else if( message.message().has_control_checkpoint_save_end() )
+        actions_->Commit();
 }
 
 // -----------------------------------------------------------------------------

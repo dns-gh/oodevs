@@ -76,6 +76,7 @@ public:
     void Log( const sword::AutomatOrder& message );
     void Log( const sword::CrowdOrder& message );
     void Log( const sword::FragOrder& message );
+    void Commit() const;
     //@}
 
 private:
@@ -89,7 +90,6 @@ private:
     //@{
     template< typename T >
     void LogAction( const T& message );
-    void Commit() const;
     void LoadOrdersIfCheckpoint();
     //@}
 

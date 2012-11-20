@@ -84,7 +84,6 @@ void ActionsLogger::LogAction( const T& message )
     LoadOrdersIfCheckpoint();
     actions::Action_ABC* action = factory_->CreateAction( message );
     actions_->Register( action->GetId(), *action );
-    Commit();
 }
 
 // -----------------------------------------------------------------------------
