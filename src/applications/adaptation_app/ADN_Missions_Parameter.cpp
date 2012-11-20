@@ -55,17 +55,18 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
         ADN_Missions_ParameterValue* newParamValue = (*it)->CreateCopy();
         newParam->values_.AddItem( newParamValue );
     }
-    newParam->choices_.reserve( choices_.size() );
-    for( IT_Choice_Vector it = choices_.begin(); it != choices_.end(); ++it )
+    assert( choices_.size() == newParam->choices_.size() );
+    for( int i = 0; i < choices_.size(); ++i )
     {
-        ADN_Missions_Type* newType = (*it)->CreateCopy();
-        newParam->choices_.AddItem( newType );
+        assert( choices_[ i ]->name_ == newParam->choices_[ i ]->name_ );
+        newParam->choices_[ i ]->isAllowed_ = choices_[ i ]->isAllowed_.GetData();
     }
-    newParam->genObjects_.reserve( genObjects_.size() );
-    for( helpers::IT_MissionGenObjectTypes_Infos_Vector it = genObjects_.begin(); it != genObjects_.end(); ++it )
+    assert( genObjects_.size() == newParam->genObjects_.size() );
+    for( int i = 0; i < genObjects_.size(); ++i )
     {
-        helpers::ADN_MissionGenObjectTypes_Infos* newType = (*it)->CreateCopy();
-        newParam->genObjects_.AddItem( newType );
+        assert( genObjects_[ i ]->name_.GetData() == newParam->genObjects_[ i ]->name_.GetData() &&
+                genObjects_[ i ]->ptrObject_.GetData() == newParam->genObjects_[ i ]->ptrObject_.GetData() );
+        newParam->genObjects_[ i ]->isAllowed_ = genObjects_[ i ]->isAllowed_.GetData();
     }
     return newParam;
 }
