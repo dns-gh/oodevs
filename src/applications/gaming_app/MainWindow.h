@@ -50,6 +50,7 @@ namespace gui
     class TerrainPicker;
 }
 
+class AfterAction;
 class Config;
 class Services;
 class StatusBar;
@@ -162,6 +163,7 @@ private:
     std::auto_ptr< ProfileFilter > pProfile_;
     QString savedState_;
     gui::HelpSystem* help_;
+    AfterAction* aar_;
     //@}
 };
 

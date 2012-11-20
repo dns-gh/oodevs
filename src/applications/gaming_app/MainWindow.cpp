@@ -329,7 +329,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addToolBar( replayerToolbar );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
     IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher, *indicatorExportDialog, simulation );
-    AfterAction* aar = new AfterAction( this, controllers_, model.aar_, *plotFactory, *interfaceBuilder_ );
+    aar_ = new AfterAction( this, controllers_, model.aar_, *plotFactory, *interfaceBuilder_ );
 
     // Actions panel
     {
@@ -399,7 +399,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     pMissionPanel_->hide();
     replayerToolbar->hide();
-    aar->SetStartup();
+    aar_->SetStartup();
 
     restoreState( settings.value( "mainWindowState" ).toByteArray() );
 
@@ -418,6 +418,7 @@ MainWindow::~MainWindow()
 {
     process_->kill();
     controllers_.Unregister( *this );
+    delete aar_;
     delete pMissionPanel_;
     delete parameters_;
     delete selector_;

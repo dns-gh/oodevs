@@ -42,7 +42,7 @@ AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, AfterAc
 // -----------------------------------------------------------------------------
 AfterAction::~AfterAction()
 {
-    // NOTHING
+    delete aarDock_;
 }
 
 // -----------------------------------------------------------------------------
