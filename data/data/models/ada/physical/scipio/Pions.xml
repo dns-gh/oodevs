@@ -12189,7 +12189,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="411" name="CIRCU . PC sur P4" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.PC" id="411" name="CIRCU . PC sur P4" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/traffic control"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VTC P4 Circu"/>
@@ -12213,7 +12213,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="412" name="CIRCU . PC sur VAB" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.PC" id="412" name="CIRCU . PC sur VAB" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/traffic control"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VTC P4 Circu CDT"/>
@@ -12753,7 +12753,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="432" name="CIRCU . PC sur PVP" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.PC" id="432" name="CIRCU . PC sur PVP" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/traffic control"/>
     <equipments>
       <equipment count="1" crew="2" type="TRM 2000 PC"/>
@@ -18068,4 +18068,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3416999137" -->
+<!-- signature="3228569730" -->

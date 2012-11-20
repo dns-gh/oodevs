@@ -4802,6 +4802,49 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.CIRCU.PC">
+      <missions>
+        <mission name="PION COMMUNES Decrocher"/>
+        <mission name="PION COMMUNES Faire Mouvement"/>
+        <mission name="PION COMMUNES Franchir"/>
+        <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="PION COMMUNES Renforcer"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
+        <mission name="PION COMMUNES Stationner"/>
+        <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION LOGISTIQUE Transporter Unites"/>
+        <mission name="PION LOGISTIQUE Transporter Foule"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Passer En NBC4"/>
+        <fragorder name="Passer En NBC1"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Desactiver Radar"/>
+        <fragorder name="Activer Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="S'arreter"/>
+        <fragorder name="Interdire Munition"/>
+        <fragorder name="Autoriser Munition"/>
+        <fragorder name="Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
   </units>
   <automats>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.SGTIA.INF">
@@ -7504,4 +7547,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0140288283" -->
+<!-- signature="0628509824" -->
