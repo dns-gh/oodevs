@@ -38,9 +38,9 @@ DisasterPrototype_ABC::DisasterPrototype_ABC( QWidget* parent, const tools::Gene
     checkbox_ = new QCheckBox( tools::translate( "gui::DisasterPrototype_ABC", "Time:" ) );
     connect( checkbox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnStateChanged( int ) ) );
     layout->addWidget( checkbox_ );
-    time_ = new LoadableTimeEdit( this );
-    time_->setEnabled( false );
-    layout->addWidget( time_ );
+    date_ = new QDateTimeEdit();
+    date_->setEnabled( false );
+    layout->addWidget( date_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,5 +118,5 @@ bool DisasterPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 // -----------------------------------------------------------------------------
 void DisasterPrototype_ABC::OnStateChanged( int state )
 {
-    time_->setEnabled( state == Qt::Checked );
+    date_->setEnabled( state == Qt::Checked );
 }

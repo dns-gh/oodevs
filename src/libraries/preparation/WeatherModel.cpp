@@ -76,6 +76,15 @@ void WeatherModel::Load( const tools::Loader_ABC& fileLoader, const std::string&
 }
 
 // -----------------------------------------------------------------------------
+// Name: WeatherModel::GetDate
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+const QDateTime& WeatherModel::GetDate() const
+{
+    return time_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: WeatherModel::Read
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------

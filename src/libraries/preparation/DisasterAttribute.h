@@ -35,7 +35,7 @@ class DisasterAttribute : public kernel::DisasterAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DisasterAttribute( kernel::PropertiesDictionary& dictionary, const QString& source, const QTime& time );
+             DisasterAttribute( kernel::PropertiesDictionary& dictionary, const QString& source, const QDateTime& date );
              DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
     virtual ~DisasterAttribute();
     //@}
@@ -55,7 +55,7 @@ private:
     //! @name Member data
     //@{
     QString source_;
-    QTime time_;
+    QDateTime date_;
     //@}
 };
 

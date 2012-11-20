@@ -11,11 +11,15 @@
 #define __DisasterPrototype_h_
 
 #include "clients_gui/DisasterPrototype_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
     class Object_ABC;
+    class Controllers;
 }
+
+class WeatherModel;
 
 // =============================================================================
 /** @class  DisasterPrototype
@@ -24,11 +28,14 @@ namespace kernel
 // Created: LGY 2012-11-20
 // =============================================================================
 class DisasterPrototype : public gui::DisasterPrototype_ABC
+                        , public tools::Observer_ABC
+                        , public tools::ElementObserver_ABC< WeatherModel >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DisasterPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation );
+             DisasterPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation,
+                                kernel::Controllers& controllers );
     virtual ~DisasterPrototype();
     //@}
 
@@ -38,8 +45,15 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const WeatherModel& model );
+    //@}
+
+private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     kernel::Object_ABC*& creation_;
     //@}
 };

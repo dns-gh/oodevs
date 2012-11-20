@@ -10,8 +10,10 @@
 #include "preparation_app_pch.h"
 #include "DisasterPrototype.h"
 #include "preparation/DisasterAttribute.h"
+#include "preparation/WeatherModel.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_gui/LoadableTimeEdit.h"
 
 using namespace kernel;
@@ -20,11 +22,13 @@ using namespace kernel;
 // Name: DisasterPrototype constructor
 // Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
-DisasterPrototype::DisasterPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation )
+DisasterPrototype::DisasterPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation,
+                                      Controllers& controllers )
     : DisasterPrototype_ABC( parent, config )
-    , creation_( creation )
+    , controllers_( controllers )
+    , creation_   ( creation )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +37,16 @@ DisasterPrototype::DisasterPrototype( QWidget* parent, const tools::GeneralConfi
 // -----------------------------------------------------------------------------
 DisasterPrototype::~DisasterPrototype()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterPrototype::NotifyUpdated
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+void DisasterPrototype::NotifyUpdated( const WeatherModel& model )
+{
+    date_->setDateTime( model.GetDate() );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,9 +58,9 @@ void DisasterPrototype::Commit( const kernel::Team_ABC& )
     if( creation_ )
     {
         PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-        QTime time;
+        QDateTime date;
         if( checkbox_->isChecked() )
-            time = time_->time();
-        creation_->Attach( *new DisasterAttribute( dictionary, propagationFiles_->currentText(), time ) );
+            date = date_->dateTime();
+        creation_->Attach( *new DisasterAttribute( dictionary, propagationFiles_->currentText(), date ) );
     }
 }

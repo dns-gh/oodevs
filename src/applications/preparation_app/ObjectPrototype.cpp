@@ -64,9 +64,9 @@ namespace
     }
 
     void DisasterAttribute( T_AttributeContainer& container, QWidget* parent,
-                            const tools::GeneralConfig& config, Object_ABC*& object )
+                            const tools::GeneralConfig& config, Controllers& controllers, Object_ABC*& object )
     {
-        container.push_back( new DisasterPrototype( parent, config, object ) );
+        container.push_back( new DisasterPrototype( parent, config, object, controllers ) );
     }
 
     void UndergroundAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, Object_ABC*& object )
@@ -212,7 +212,7 @@ namespace
         factory->Register( "bypassable"                , boost::bind( &::BypassableAttribute, _2, _3, boost::ref( object ) ) );
 
         factory->Register( "delay"                     , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( object ) ) );
-        factory->Register( "disaster"                  , boost::bind( &::DisasterAttribute, _2, _3, boost::ref( config ), boost::ref( object ) ) );
+        factory->Register( "disaster"                  , boost::bind( &::DisasterAttribute, _2, _3, boost::ref( config ), boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "lodging"                   , boost::bind( &Capacity< LodgingPrototype >::Build, _2, _3, boost::ref( object ) ) );
 

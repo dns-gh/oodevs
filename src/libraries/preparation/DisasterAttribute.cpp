@@ -17,9 +17,9 @@
 // Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, const QString& source, const QTime& time )
+DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, const QString& source, const QDateTime& date )
     : source_( source )
-    , time_  ( time )
+    , date_  ( date )
 {
     CreateDictionary( dictionary );
 }
@@ -31,12 +31,13 @@ DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, 
 DisasterAttribute::DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
 {
     std::string source;
-    unsigned int time;
+    unsigned int time = 0u;
     xis >> xml::attribute( "source", source )
         >> xml::optional
-        >> xml::attribute( "time", time );
+        >> xml::attribute( "date", time );
 
-    time_ = time_.addSecs( time );
+    if( time != 0u )
+        date_.setTime_t( time );
 
     source_ = source.c_str();
     CreateDictionary( dictionary );
@@ -58,16 +59,8 @@ DisasterAttribute::~DisasterAttribute()
 void DisasterAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
     dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Data source" ), source_, true );
-    if( !time_.isNull() )
-        dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Start time" ), time_ );
-}
-
-namespace
-{
-    unsigned int Convert( const QTime& time )
-    {
-        return  time.hour() * 3600 + time.minute() * 60 + time.second();;
-    }
+    if( !date_.isNull() )
+        dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Start date" ), date_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +71,7 @@ void DisasterAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "disaster" )
            << xml::attribute( "source", source_ );
-    if( !time_.isNull() )
-        xos << xml::attribute( "time", Convert( time_ ) );
+    if( !date_.isNull() )
+        xos << xml::attribute( "date", date_.toTime_t() );
     xos << xml::end;
 }

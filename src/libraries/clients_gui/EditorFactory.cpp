@@ -137,6 +137,45 @@ void EditorFactory::Call( QTime* const& value )
 }
 
 // =============================================================================
+// QDateTime
+// =============================================================================
+namespace
+{
+    class QDateTimeEditor : public QDateTimeEdit
+                          , public ValueEditor< QDateTime >
+    {
+    public:
+        explicit QDateTimeEditor( QWidget* parent )
+            : QDateTimeEdit( parent )
+        {
+            // NOTHING
+        }
+
+        virtual ~QDateTimeEditor()
+        {
+            // NOTHING
+        }
+
+        virtual QDateTime GetValue()
+        {
+            return dateTime();
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( QDateTime* const& value )
+{
+    QDateTimeEditor* editor = new QDateTimeEditor( parent_ );
+    editor->setDisplayFormat( "dd/MM/yy HH:mm" );
+    editor->setDateTime( *value );
+    result_ = editor;
+}
+
+// =============================================================================
 // Numbers
 // =============================================================================
 namespace

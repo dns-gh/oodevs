@@ -144,7 +144,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Start time</source>
+        <source>Info/Start date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

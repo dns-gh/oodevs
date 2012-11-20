@@ -144,8 +144,8 @@
         <translation>Info/Source des données</translation>
     </message>
     <message>
-        <source>Info/Start time</source>
-        <translation>Info/Heure de début</translation>
+        <source>Info/Start date</source>
+        <translation>Info/Date de début</translation>
     </message>
 </context>
 <context>

@@ -63,7 +63,7 @@ protected:
     gui::RichLabel* sourceLabel_;
     ValuedComboBox< std::string >* propagationFiles_;
     QCheckBox* checkbox_;
-    LoadableTimeEdit* time_;
+    QDateTimeEdit* date_;
     //@}
 };
 
