@@ -37,6 +37,9 @@ namespace kernel
 class AgentDetections : public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< sword::UnitDetection >
                       , public kernel::Drawable_ABC
+                      , public tools::Observer_ABC
+                      , public tools::ElementObserver_ABC< kernel::Agent_ABC >
+                      , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -48,19 +51,15 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentDetections( const AgentDetections& );            //!< Copy constructor
-    AgentDetections& operator=( const AgentDetections& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< const kernel::Agent_ABC*, sword::UnitVisibility::Level > T_AgentDetections;
-    typedef T_AgentDetections::const_iterator                              CIT_AgentDetections;
+    typedef T_AgentDetections::iterator                                       IT_AgentDetections;
+    typedef T_AgentDetections::const_iterator                                CIT_AgentDetections;
     //@}
 
     //! @name Helpers
