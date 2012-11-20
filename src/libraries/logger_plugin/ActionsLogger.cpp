@@ -88,7 +88,6 @@ void ActionsLogger::LogAction( const T& message )
     LoadOrdersIfCheckpoint();
     actions::Action_ABC* action = factory_->CreateAction( message );
     actions_->Register( action->GetId(), *action );
-    Commit();
 }
 
 // -----------------------------------------------------------------------------
@@ -183,4 +182,5 @@ void ActionsLogger::SaveCheckpointActiveMissions( std::string name )
 {
     CheckPointFilter filter;
     actions_->Save( config_.BuildOnLocalCheckpointChildFile( name, "current.ord" ), &filter );
+    Commit();
 }
