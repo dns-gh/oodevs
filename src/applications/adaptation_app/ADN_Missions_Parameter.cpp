@@ -56,13 +56,13 @@ ADN_Missions_Parameter* ADN_Missions_Parameter::CreateCopy()
         newParam->values_.AddItem( newParamValue );
     }
     assert( choices_.size() == newParam->choices_.size() );
-    for( int i = 0; i < choices_.size(); ++i )
+    for( unsigned int i = 0; i < choices_.size(); ++i )
     {
         assert( choices_[ i ]->name_ == newParam->choices_[ i ]->name_ );
         newParam->choices_[ i ]->isAllowed_ = choices_[ i ]->isAllowed_.GetData();
     }
     assert( genObjects_.size() == newParam->genObjects_.size() );
-    for( int i = 0; i < genObjects_.size(); ++i )
+    for( unsigned int i = 0; i < genObjects_.size(); ++i )
     {
         assert( genObjects_[ i ]->name_.GetData() == newParam->genObjects_[ i ]->name_.GetData() &&
                 genObjects_[ i ]->ptrObject_.GetData() == newParam->genObjects_[ i ]->ptrObject_.GetData() );
