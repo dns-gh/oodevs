@@ -145,7 +145,7 @@
     </message>
     <message>
         <source>Info/Start time</source>
-        <translation>Heure de début</translation>
+        <translation>Info/Heure de début</translation>
     </message>
 </context>
 <context>
