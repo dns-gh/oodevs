@@ -141,10 +141,6 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
 
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( builderName + "MissionParams", vInfosConnectors[ eParameters ] );
 
-    //ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
-    //paramList->setObjectName( builderName + "MissionParams" );
-    //vInfosConnectors[ eParameters ] = &paramList->GetConnector();
-
     ADN_MissionParameter_GroupBox* pEnum = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), eMissionParameterTypeEnumeration );
     new ADN_MissionParameterValues_Table( strClassName_ + "MissionsValue", vInfosConnectors[ eParameterValues ], pEnum );
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pEnum, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
@@ -214,6 +210,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     ADN_SearchListView< ADN_ListView_MissionTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_MissionTypes >( this, eEntityType, missions, missions, vInfosConnectors, eEntityType );
     pSearchListView->GetListView()->setObjectName( builderName + "_List" );
     connect( pSearchListView->GetListView(), SIGNAL( NotifyMissionDeleted( std::string, E_EntityType ) ), this, SLOT( OnNotifyElementDeleted( std::string, E_EntityType ) ) );
+    connect( pSearchListView->GetListView(), SIGNAL( SelectionChanged() ), paramList, SLOT( OnMissionSelectionChanged() ) );
     vListViews_.push_back( pSearchListView->GetListView() );
 
     // Main page
@@ -275,10 +272,6 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
 
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( strClassName_ + "_FragordersParams", vInfosConnectors[ eParameters ] );
-
-    //ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
-    //paramList->setObjectName( strClassName_ + "_FragordersParams" );
-    //vInfosConnectors[ eParameters ] = &paramList->GetConnector();
 
     ADN_MissionParameter_GroupBox* pEnum = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), eMissionParameterTypeEnumeration );
     new ADN_MissionParameterValues_Table( strClassName_ + "FragOrderValue", vInfosConnectors[ eParameterValues ], pEnum );

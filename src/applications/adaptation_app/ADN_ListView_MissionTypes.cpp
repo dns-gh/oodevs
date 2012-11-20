@@ -51,7 +51,7 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
     Mission* pInfos = static_cast< Mission* >( pCurData_ );
-    //ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Missions_GUI::eNbrGuiElements );
+
     vItemConnectors_[ADN_Missions_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eMissionSheetDescription]->Connect( &pInfos->missionSheetContent_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eParameters]->Connect( &pInfos->parameters_, bConnect );
@@ -64,6 +64,8 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
         vItemConnectors_[ADN_Missions_GUI::eCDTBehavior]->Connect( &pInfos->cdtDiaBehavior_, bConnect );
     }
     vItemConnectors_[ ADN_Missions_GUI::eSymbol ]->Connect( &pInfos->symbol_, bConnect );
+
+    emit SelectionChanged();
 }
 
 // -----------------------------------------------------------------------------

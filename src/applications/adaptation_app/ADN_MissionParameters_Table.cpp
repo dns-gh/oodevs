@@ -221,3 +221,13 @@ void ADN_MissionParameters_Table::Disconnect( ADN_Missions_Parameter* param )
         itemConnectors_[ ADN_Missions_GUI::eGenObjects ]->Disconnect( &param->genObjects_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MissionParameters_Table::OnMissionSelectionChanged
+// Created: ABR 2012-11-20
+// -----------------------------------------------------------------------------
+void ADN_MissionParameters_Table::OnMissionSelectionChanged()
+{
+    selectionModel()->clearSelection();
+    emit TypeChanged( eNbrMissionParameterType );
+}

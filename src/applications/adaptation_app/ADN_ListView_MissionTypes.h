@@ -46,6 +46,7 @@ private:
 signals:
     //! @name Signals
     //@{
+    void SelectionChanged();
     void NotifyMissionDeleted( std::string name, E_EntityType type );
     //@}
 
