@@ -72,7 +72,7 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
     loader.LoadPhysicalFile( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ) );
     loader.LoadPhysicalFile( "resource-networks", boost::bind( &ObjectTypes::ReadResourceNetworks, this, _1 ) );
     loader.LoadPhysicalFile( "urban", boost::bind( &ObjectTypes::ReadUrbanTypes, this, _1 ) );;
-    loader.LoadOptionalPhysicalFile( "urban-templates", boost::bind( &ObjectTypes::ReadUrbanTemplateTypes, this, _1 ) );;
+    loader.LoadOptionalPhysicalFile( "urban-templates", boost::bind( &ObjectTypes::ReadUrbanTemplateTypes, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

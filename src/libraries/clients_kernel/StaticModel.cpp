@@ -18,6 +18,7 @@
 #include "DetectionMap.h"
 #include "ExtensionTypes.h"
 #include "ObjectTypes.h"
+#include "DisasterTypes.h"
 
 using namespace kernel;
 
@@ -29,6 +30,7 @@ StaticModel::StaticModel()
     : coordinateSystems_  ( *new CoordinateSystems() )
     , coordinateConverter_( *new CoordinateConverter( coordinateSystems_ ) )
     , types_              ( *new AgentTypes() )
+    , disasterTypes_      ( *new DisasterTypes() )
     , objectTypes_        ( *new ObjectTypes() )
     , extensions_         ( *new ExtensionTypes() )
     , atlasNatures_       ( *new AtlasNatures() )
@@ -48,6 +50,7 @@ StaticModel::~StaticModel()
     delete &accommodationTypes_;
     delete &atlasNatures_;
     delete &extensions_;
+    delete &disasterTypes_;
     delete &objectTypes_;
     delete &types_;
     delete &coordinateConverter_;
@@ -63,6 +66,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     Purge();
     coordinateConverter_.Load( config );
     types_.Load( config );
+    disasterTypes_.Load( config );
     objectTypes_.Load( config );
     extensions_.Load( config );
     accommodationTypes_.Load( config );
@@ -76,6 +80,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 void StaticModel::Purge()
 {
     types_.Purge();
+    disasterTypes_.Purge();
     objectTypes_.Purge();
     extensions_.Purge();
     accommodationTypes_.Purge();

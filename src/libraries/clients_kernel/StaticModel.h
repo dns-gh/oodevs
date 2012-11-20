@@ -28,6 +28,7 @@ namespace kernel
     class DetectionMap;
     class ExtensionTypes;
     class ObjectTypes;
+    class DisasterTypes;
 
 // =============================================================================
 /** @class  StaticModel
@@ -40,7 +41,7 @@ class StaticModel : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StaticModel();
+             StaticModel();
     virtual ~StaticModel();
     //@}
 
@@ -56,6 +57,7 @@ public:
     CoordinateSystems&       coordinateSystems_;
     CoordinateConverter_ABC& coordinateConverter_;
     AgentTypes&              types_;
+    DisasterTypes&           disasterTypes_;
     ObjectTypes&             objectTypes_;
     ExtensionTypes&          extensions_;
     AtlasNatures&            atlasNatures_;
