@@ -40,6 +40,9 @@
     <ClCompile Include="..\..\src\tests\tools_test\LoggerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\tools_test\MT_InterpolatedFunctionTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\tools_test\MockRealFileLoaderObserver.h">
