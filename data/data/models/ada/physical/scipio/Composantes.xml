@@ -4553,7 +4553,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="788030" codeEMAT8="788030k1" codeLFRIL="" codeNNO="5411145037018" comment="" id="44" max-slope="0.6" name="PL PC" protection="VehiculeNonProtege" size="Moyen" weight="8">
+  <equipment codeEMAT6="788030" codeEMAT8="788030K1" codeLFRIL="" codeNNO="5411145037018" comment="" id="44" max-slope="0.6" name="PL PC" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
       <speed terrain="unknown" value="24"/>
       <speed terrain="forest" value="6"/>
@@ -8560,7 +8560,7 @@
     </breakdowns>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="659711" codeEMAT8="659711k1" codeLFRIL="" codeNNO="5820145241037" comment="" id="79" max-slope="0.6" name="Station CHF" protection="VehiculeNonProtege" size="Gros" weight="6">
+  <equipment codeEMAT6="659711" codeEMAT8="659711K1" codeLFRIL="" codeNNO="5820145241037" comment="" id="79" max-slope="0.6" name="Station CHF" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -15725,7 +15725,7 @@
     </breakdowns>
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
-  <equipment codeEMAT6="648640" codeEMAT8="648640k1" codeLFRIL="" codeNNO="5820145437547" comment="" id="148" max-slope="0.6" name="ST CHF DE BASE G4 1" protection="VehiculeNonProtege" size="Gros" weight="6">
+  <equipment codeEMAT6="648640" codeEMAT8="648640K1" codeLFRIL="" codeNNO="5820145437547" comment="" id="148" max-slope="0.6" name="ST CHF DE BASE G4 1" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -35743,4 +35743,4 @@
     <equipment-category>VTT</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="4055597607" -->
+<!-- signature="2787080838" -->
