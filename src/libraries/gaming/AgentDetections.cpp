@@ -27,7 +27,7 @@ AgentDetections::AgentDetections( Controller& controller, const tools::Resolver_
     , resolver_  ( resolver )
     , holder_    ( holder )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ AgentDetections::AgentDetections( Controller& controller, const tools::Resolver_
 // -----------------------------------------------------------------------------
 AgentDetections::~AgentDetections()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +47,17 @@ void AgentDetections::DoUpdate( const sword::UnitDetection& message )
 {
     detections_[ & resolver_.Get( message.detected_unit().id() ) ] = message.current_visibility();
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentDetections::NotifyDeleted
+// Created: JSR 2012-11-20
+// -----------------------------------------------------------------------------
+void AgentDetections::NotifyDeleted( const kernel::Agent_ABC& agent )
+{
+    IT_AgentDetections it = detections_.find( &agent );
+    if( it != detections_.end() )
+        detections_.erase( it );
 }
 
 // -----------------------------------------------------------------------------
