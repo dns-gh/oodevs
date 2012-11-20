@@ -130,8 +130,8 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
     if( attributes.has_toxic_cloud() && entity.Retrieve< kernel::ToxicCloudAttribute_ABC >() == 0 )
         entity.Attach< kernel::ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
 
-    if( attributes.has_propagation() && entity.Retrieve< kernel::InputPropagationAttribute_ABC >() == 0 )
-        entity.Attach< kernel::InputPropagationAttribute_ABC >( *new PropagationAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
+    if( attributes.has_propagation() && entity.Retrieve< kernel::DisasterAttribute_ABC >() == 0 )
+        entity.Attach< kernel::DisasterAttribute_ABC >( *new PropagationAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
 
     if( attributes.has_underground() && entity.Retrieve< kernel::UndergroundAttribute_ABC >() == 0 )
         entity.Attach< kernel::UndergroundAttribute_ABC >( *new UndergroundAttribute( controllers_.controller_ ) );

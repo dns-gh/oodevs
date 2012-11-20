@@ -30,6 +30,7 @@
 #include "SupplyRoutePrototype.h"
 #include "TrafficabilityPrototype.h"
 #include "UndergroundPrototype.h"
+#include "DisasterPrototype.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/StaticModel.h"
@@ -62,6 +63,12 @@ namespace
         container.push_back( new LogisticPrototype( parent, controllers, object ) );
     }
 
+    void DisasterAttribute( T_AttributeContainer& container, QWidget* parent,
+                            const tools::GeneralConfig& config, Object_ABC*& object )
+    {
+        container.push_back( new DisasterPrototype( parent, config, object ) );
+    }
+
     void UndergroundAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, Object_ABC*& object )
     {
         container.push_back( new UndergroundPrototype( parent, controllers.controller_, object ) );
@@ -81,7 +88,7 @@ namespace
         container.push_back( new FloodPrototype( parent, object, controllers, detection ) );
     }
 
-    void StockAttribute( xml::xistream& /*xis*/, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, const tools::GeneralConfig& /*config*/, Object_ABC*& object )
+    void StockAttribute( xml::xistream& /*xis*/, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, Object_ABC*& object )
     {
         container.push_back( new StockPrototype( parent, resolver, object ) );
     }
@@ -101,14 +108,6 @@ namespace
     void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType, std::string >& resolver, Object_ABC*& object )
     {
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, object ) );
-    }
-
-    void InterferenceAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
-    {
-    }
-
-    void InteractWithSideAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
-    {
     }
 
     void ResourceNetworkAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, const UrbanModel& urbanModel, const ObjectsModel& objectsModel, const tools::StringResolver< ResourceNetworkType >& resources, Object_ABC*& object )
@@ -147,8 +146,8 @@ namespace
         void AddPropagation( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const tools::GeneralConfig& config, Object_ABC*& object )
         {
             std::string model( xis.attribute< std::string >( "model" ) );
-            if( model == "shapefile-input" || model == "ascii-grid-input" )
-                container.push_back( new InputPropagationPrototype( parent, config, object, model ) );
+            if( model == "shapefile-input" )
+                container.push_back( new InputPropagationPrototype( parent, config, object ) );
             else if( model == "fire" )
                 bHasFirePropagation_ = true;
         }
@@ -213,6 +212,7 @@ namespace
         factory->Register( "bypassable"                , boost::bind( &::BypassableAttribute, _2, _3, boost::ref( object ) ) );
 
         factory->Register( "delay"                     , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( object ) ) );
+        factory->Register( "disaster"                  , boost::bind( &::DisasterAttribute, _2, _3, boost::ref( config ), boost::ref( object ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "lodging"                   , boost::bind( &Capacity< LodgingPrototype >::Build, _2, _3, boost::ref( object ) ) );
 
@@ -220,12 +220,10 @@ namespace
         factory->Register( "logistic"                  , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "trafficability"            , boost::bind( &::TrafficabilityAttribute, _1, _2, _3, boost::ref( object ) ) );
         factory->Register( "underground-network"       , boost::bind( &::UndergroundAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
-        factory->Register( "interact-with-enemy"       , boost::bind( &::InteractWithSideAttribute, _2, _3, boost::ref( object ) ) );
-        factory->Register( "interference"              , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "altitude-modifier"         , boost::bind( &::AltitudeModifierAttribute, _2, _3, boost::ref( controllers ), boost::ref( detection ), boost::ref( object ) ) );
 
         factory->Register( "medical"                   , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
-        factory->Register( "stock"                     , boost::bind( &::StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
+        factory->Register( "stock"                     , boost::bind( &::StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
 
         boost::shared_ptr< NBCBuilder > pNBCBuilder( new NBCBuilder() );
         factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilder, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );

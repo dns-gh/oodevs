@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef InputPropagationAttribute_h
-#define InputPropagationAttribute_h
+#ifndef DisasterAttribute_h
+#define DisasterAttribute_h
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
@@ -24,20 +24,20 @@ namespace xml
 }
 
 // =============================================================================
-/** @class  InputPropagationAttribute
-    @brief  Input propagation attribute
+/** @class  DisasterAttribute
+    @brief  Disaster attribute
 */
 // Created: LGY 2012-10-05
 // =============================================================================
-class InputPropagationAttribute : public kernel::InputPropagationAttribute_ABC
-                                , public kernel::Serializable_ABC
+class DisasterAttribute : public kernel::DisasterAttribute_ABC
+                        , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InputPropagationAttribute( kernel::PropertiesDictionary& dictionary, const QString& source );
-             InputPropagationAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
-    virtual ~InputPropagationAttribute();
+             DisasterAttribute( kernel::PropertiesDictionary& dictionary, const QString& source, const QTime& time );
+             DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary );
+    virtual ~DisasterAttribute();
     //@}
 
     //! @name Operations
@@ -55,7 +55,8 @@ private:
     //! @name Member data
     //@{
     QString source_;
+    QTime time_;
     //@}
 };
 
-#endif // InputPropagationAttribute_h
+#endif // DisasterAttribute_h

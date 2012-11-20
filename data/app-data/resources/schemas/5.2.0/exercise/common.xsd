@@ -254,9 +254,10 @@
 					<xs:attribute name="export"/>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="input-propagation" minOccurs="0">
+			<xs:element name="disaster" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="source" type="xs:string" use="required"/>
+					<xs:attribute name="time" type="xs:nonNegativeInteger" use="optional"/>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="stock" minOccurs="0">

@@ -8,59 +8,77 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "InputPropagationAttribute.h"
+#include "DisasterAttribute.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute constructor
+// Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-InputPropagationAttribute::InputPropagationAttribute( kernel::PropertiesDictionary& dictionary, const QString& source )
+DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, const QString& source, const QTime& time )
     : source_( source )
+    , time_  ( time )
 {
     CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute constructor
+// Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-InputPropagationAttribute::InputPropagationAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+DisasterAttribute::DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
 {
     std::string source;
-    xis >> xml::attribute( "source", source );
+    unsigned int time;
+    xis >> xml::attribute( "source", source )
+        >> xml::optional
+        >> xml::attribute( "time", time );
+
+    time_ = time_.addSecs( time );
 
     source_ = source.c_str();
     CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute destructor
+// Name: DisasterAttribute destructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-InputPropagationAttribute::~InputPropagationAttribute()
+DisasterAttribute::~DisasterAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute::CreateDictionary
+// Name: DisasterAttribute::CreateDictionary
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-void InputPropagationAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+void DisasterAttribute::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dictionary.Register( *this, tools::translate( "InputPropagationAttribute", "Info/Data source" ), source_, true );
+    dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Data source" ), source_, true );
+    if( !time_.isNull() )
+        dictionary.Register( *this, tools::translate( "DisasterAttribute", "Info/Start time" ), time_ );
+}
+
+namespace
+{
+    unsigned int Convert( const QTime& time )
+    {
+        return  time.hour() * 3600 + time.minute() * 60 + time.second();;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute::SerializeObjectAttributes
+// Name: DisasterAttribute::SerializeObjectAttributes
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-void InputPropagationAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
+void DisasterAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "input-propagation" )
-           << xml::attribute( "source", source_ )
-        << xml::end;
+    xos << xml::start( "disaster" )
+           << xml::attribute( "source", source_ );
+    if( !time_.isNull() )
+        xos << xml::attribute( "time", Convert( time_ ) );
+    xos << xml::end;
 }

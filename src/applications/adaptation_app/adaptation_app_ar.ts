@@ -5074,10 +5074,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">سجل</translation>
     </message>
     <message>
-        <source>ASCII grid input</source>
-        <translation type="unfinished">إدخال شبكة ASCII</translation>
-    </message>
-    <message>
         <source>Shapefile input</source>
         <translation type="unfinished">إدخال مدخلات</translation>
     </message>

@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __InputPropagationPrototype_ABC_h_
-#define __InputPropagationPrototype_ABC_h_
+#ifndef __DisasterPrototype_ABC_h_
+#define __DisasterPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
 #include "ValuedComboBox.h"
@@ -21,20 +21,23 @@ namespace tools
 namespace gui
 {
     class RichLabel;
+    class LoadableTimeEdit;
 
 // =============================================================================
-/** @class  PropagationPrototype_ABC
-    @brief  PropagationPrototype_ABC
+/** @class  DisasterPrototype_ABC
+    @brief  Disaster prototype declaration
 */
-// Created: JCR 2008-06-30
+// Created: LGY 2012-11-20
 // =============================================================================
-class InputPropagationPrototype_ABC : public ObjectAttributePrototype_ABC
+class DisasterPrototype_ABC : public ObjectAttributePrototype_ABC
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config );
-    virtual ~InputPropagationPrototype_ABC();
+             DisasterPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config );
+    virtual ~DisasterPrototype_ABC();
     //@}
 
     //! @name Operations
@@ -42,23 +45,28 @@ public:
     virtual bool CheckValidity( const kernel::Team_ABC& ) const;
     //@}
 
-private:
-    //! @name
+private slots:
+    //! @name 
     //@{
-    void FillInPaths();
+    void OnStateChanged( int state );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void FillInPaths( const std::string& root );
     //@}
 
 protected:
     //! @name Member data
     //@{
     gui::RichLabel* sourceLabel_;
-    const std::string root_;
     ValuedComboBox< std::string >* propagationFiles_;
-    ValuedComboBox< std::string >* dataField_;
-    QCheckBox* exportData_;
+    QCheckBox* checkbox_;
+    LoadableTimeEdit* time_;
     //@}
 };
 
 }
 
-#endif // __InputPropagationPrototype_ABC_h_
+#endif // __DisasterPrototype_ABC_h_

@@ -271,7 +271,6 @@ ADN_Tr::T_ConverterConstructorType ADN_Tr::constructorTypeConverter_[] =
 ADN_Tr::T_ConverterPropagationModel ADN_Tr::propagationModelConverter_[] =
 {
     T_ConverterPropagationModel( "shapefile-input", QT_TRANSLATE_NOOP("ADN_Tr", "Shapefile input" ), eInputShap ),
-    T_ConverterPropagationModel( "ascii-grid-input", QT_TRANSLATE_NOOP("ADN_Tr", "ASCII grid input" ), eInputAsc ),
     T_ConverterPropagationModel( "fire",  QT_TRANSLATE_NOOP("ADN_Tr", "Fire" ), eFire ),
     T_ConverterPropagationModel( "cloud", QT_TRANSLATE_NOOP("ADN_Tr", "Cloud" ), eCloud ),
 

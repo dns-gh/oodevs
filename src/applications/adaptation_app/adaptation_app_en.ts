@@ -5087,10 +5087,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Log</translation>
     </message>
     <message>
-        <source>ASCII grid input</source>
-        <translation>ASCII grid input</translation>
-    </message>
-    <message>
         <source>Shapefile input</source>
         <translation>Shapefile input</translation>
     </message>

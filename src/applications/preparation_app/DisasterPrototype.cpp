@@ -8,40 +8,46 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "InputPropagationPrototype.h"
+#include "DisasterPrototype.h"
+#include "preparation/DisasterAttribute.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "preparation/InputToxicCloudAttribute.h"
+#include "clients_gui/LoadableTimeEdit.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationPrototype constructor
-// Created: SBO 2006-04-20
+// Name: DisasterPrototype constructor
+// Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
-InputPropagationPrototype::InputPropagationPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation )
-    : InputPropagationPrototype_ABC( parent, config )
+DisasterPrototype::DisasterPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation )
+    : DisasterPrototype_ABC( parent, config )
     , creation_( creation )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationPrototype destructor
-// Created: SBO 2006-04-20
+// Name: DisasterPrototype destructor
+// Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
-InputPropagationPrototype::~InputPropagationPrototype()
+DisasterPrototype::~DisasterPrototype()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationPrototype::Commit
-// Created: SBO 2006-04-20
+// Name: DisasterPrototype::Commit
+// Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
-void InputPropagationPrototype::Commit( const kernel::Team_ABC& )
+void DisasterPrototype::Commit( const kernel::Team_ABC& )
 {
-    PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
-    creation_->Attach( *new InputToxicCloudAttribute( dictionary, propagationFiles_->currentText(),
-                        dataField_->GetValue().c_str(), exportData_->isChecked() ) );
+    if( creation_ )
+    {
+        PropertiesDictionary& dictionary = creation_->Get< PropertiesDictionary >();
+        QTime time;
+        if( checkbox_->isChecked() )
+            time = time_->time();
+        creation_->Attach( *new DisasterAttribute( dictionary, propagationFiles_->currentText(), time ) );
+    }
 }

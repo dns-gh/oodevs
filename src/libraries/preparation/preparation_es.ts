@@ -138,6 +138,17 @@
     </message>
 </context>
 <context>
+    <name>DisasterAttribute</name>
+    <message>
+        <source>Info/Data source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Start time</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FireAttribute</name>
     <message>
         <source>Info/Fire attributes/Fire class</source>
@@ -216,13 +227,6 @@
     </message>
     <message>
         <source>Info/Infrastructure</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>InputPropagationAttribute</name>
-    <message>
-        <source>Info/Data source</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

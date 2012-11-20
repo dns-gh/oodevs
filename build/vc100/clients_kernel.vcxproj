@@ -117,6 +117,8 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Color.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterType.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterTypes.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Drawing_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityHelpers.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
@@ -262,6 +264,8 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Color.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\CriticalIntelligence.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterType.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterTypes.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayExtractor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityHelpers.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\EntityType.h" />

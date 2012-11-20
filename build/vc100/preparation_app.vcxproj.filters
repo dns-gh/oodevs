@@ -169,9 +169,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\FloodPrototype.cpp">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\InputPropagationPrototype.cpp">
-      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LodgingPrototype.cpp">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClCompile>
@@ -526,6 +523,12 @@
     <ClCompile Include="..\..\src\applications\preparation_app\InhabitantTreeView.cpp">
       <Filter>Source Files\TreeView</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\DisasterPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InputPropagationPrototype.cpp">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h">
@@ -565,9 +568,6 @@
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\FloodPrototype.h">
-      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\preparation_app\InputPropagationPrototype.h">
       <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\LodgingPrototype.h">
@@ -731,6 +731,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\preparation_app\InhabitantTreeView.h">
       <Filter>Source Files\TreeView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\DisasterPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\InputPropagationPrototype.h">
+      <Filter>Source Files\Panels\Creation\Object prototypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -880,6 +880,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ApplicationMonitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DisasterPrototype_ABC.cpp">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -1776,6 +1779,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\ApplicationMonitor.h">
       <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DisasterPrototype_ABC.h">
+      <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

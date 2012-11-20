@@ -508,6 +508,12 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\EntityHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterTypes.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\DisasterType.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h">
@@ -1208,6 +1214,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\DisplayExtractor_ABC.h">
       <Filter>Source Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterTypes.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\DisasterType.h">
+      <Filter>Source Files\XML model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

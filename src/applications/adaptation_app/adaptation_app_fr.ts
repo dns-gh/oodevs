@@ -5094,10 +5094,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Log</translation>
     </message>
     <message>
-        <source>ASCII grid input</source>
-        <translation>Données ASCII grid</translation>
-    </message>
-    <message>
         <source>Shapefile input</source>
         <translation>Données Shapefile</translation>
     </message>

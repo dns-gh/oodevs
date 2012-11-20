@@ -5090,10 +5090,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation type="unfinished">Logística</translation>
     </message>
     <message>
-        <source>ASCII grid input</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Shapefile input</source>
         <translation type="unfinished"></translation>
     </message>

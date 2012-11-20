@@ -59,7 +59,7 @@ namespace kernel
     class DelayAttribute_ABC : public ObjectExtension {};
     class FloodAttribute_ABC : public ObjectExtension {};
     class AltitudeModifierAttribute_ABC : public ObjectExtension {};
-    class InputPropagationAttribute_ABC : public ObjectExtension {};
+    class DisasterAttribute_ABC : public ObjectExtension {};
     class UndergroundAttribute_ABC : public ObjectExtension
     {
     public:

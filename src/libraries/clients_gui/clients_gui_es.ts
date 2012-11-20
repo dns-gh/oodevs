@@ -429,6 +429,21 @@
     </message>
 </context>
 <context>
+    <name>gui::DisasterPrototype_ABC</name>
+    <message>
+        <source>Propagation</source>
+        <translation type="unfinished">Propagation</translation>
+    </message>
+    <message>
+        <source>Propagation Model:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::DisplayToolbar</name>
     <message>
         <source>Display toolbar</source>

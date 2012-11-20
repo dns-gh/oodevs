@@ -3,19 +3,20 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-/* TRANSLATOR gui::InputPropagationPrototype_ABC */
+/* TRANSLATOR gui::DisasterPrototype_ABC */
 
 #include "clients_gui_pch.h"
-#include "InputPropagationPrototype_ABC.h"
+#include "DisasterPrototype_ABC.h"
+#include "moc_DisasterPrototype_ABC.cpp"
 #include "Tools.h"
+#include "LoadableTimeEdit.h"
 #include "tools/GeneralConfig.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/convenience.hpp>
 
 namespace bfs = boost::filesystem;
 
@@ -23,42 +24,36 @@ using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationPrototype_ABC constructor
-// Created: JCR 2008-06-30
+// Name: DisasterPrototype_ABC constructor
+// Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
-InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation" ) )
-    , root_ ( config.GetRootDir() )
+DisasterPrototype_ABC::DisasterPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::DisasterPrototype_ABC", "Propagation" ) )
 {
-    QGridLayout* layout = new QGridLayout( this, 0, 2, 6, 10 );
-    layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation Model:" ) ) );
+    QGridLayout* layout = new QGridLayout( this, 0, 2, 7, 10 );
+    layout->addWidget( new QLabel( tools::translate( "gui::DisasterPrototype_ABC", "Propagation Model:" ) ) );
     propagationFiles_ = new ValuedComboBox< std::string >( 0 );
     layout->addWidget( propagationFiles_ );
-    FillInPaths();
-
-    layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Lookup data:" ) ) );
-    dataField_ = new ValuedComboBox< std::string >( this );
-    dataField_->AddItem( tools::translate( "gui::InputPropagationPrototype_ABC", "Mesure C" ), std::string( "nom_var_shp_mesure_C" ) );
-    dataField_->AddItem( tools::translate( "gui::InputPropagationPrototype_ABC", "Mesure Ct" ), std::string( "nom_var_shp_mesure_Ct" ) );
-    layout->addWidget( dataField_ );
-
-    layout->addWidget( new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Send data:" ) ) );
-    exportData_ = new QCheckBox();
-    layout->addWidget( exportData_ );
+    FillInPaths( config.GetRootDir() );
+    checkbox_ = new QCheckBox( tools::translate( "gui::DisasterPrototype_ABC", "Time:" ) );
+    connect( checkbox_, SIGNAL( stateChanged( int ) ), this, SLOT( OnStateChanged( int ) ) );
+    layout->addWidget( checkbox_ );
+    time_ = new LoadableTimeEdit( this );
+    time_->setEnabled( false );
+    layout->addWidget( time_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationPrototype_ABC destructor
-// Created: JCR 2008-06-30
+// Name: DisasterPrototype_ABC destructor
+// Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
-InputPropagationPrototype_ABC::~InputPropagationPrototype_ABC()
+DisasterPrototype_ABC::~DisasterPrototype_ABC()
 {
     // NOTHING
 }
 
 namespace
 {
-    // Copied from fronted library
 
     template< typename Validator >
     QStringList ListDirectories( const std::string& base, Validator v )
@@ -91,22 +86,17 @@ namespace
     bool IsPropagationDir( const bfs::path& dir )
     {
         return bfs::is_directory( dir )
-               && bfs::exists( dir / "propagation.xml" );
-    }
-
-    std::string BuildPropagationDir( const std::string& root, const std::string& path )
-    {
-        return ( bfs::path( root ) / path ).string();
+            && bfs::exists( dir / "propagation.xml" );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationPrototype_ABC::FillInPaths
-// Created: JCR 2010-05-12
+// Name: DisasterPrototype_ABC::FillInPaths
+// Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
-void InputPropagationPrototype_ABC::FillInPaths()
+void DisasterPrototype_ABC::FillInPaths( const std::string& root )
 {
-    std::string path( BuildPropagationDir( root_, "data/propagations" ) );
+    std::string path( ( bfs::path( root ) / "data/propagations" ).string() );
     QStringList result( ListDirectories( path, &IsPropagationDir ) );
 
     for( QStringList::const_iterator it = result.constBegin(); it != result.constEnd(); ++it )
@@ -114,10 +104,19 @@ void InputPropagationPrototype_ABC::FillInPaths()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationPrototype_ABC::CheckValidity
-// Created: JCR 2008-06-30
+// Name: DisasterPrototype_ABC::CheckValidity
+// Created: LGY 2012-11-20
 // -----------------------------------------------------------------------------
-bool InputPropagationPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
+bool DisasterPrototype_ABC::CheckValidity( const kernel::Team_ABC& ) const
 {
     return !propagationFiles_->GetValue().empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterPrototype_ABC::OnStateChanged
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+void DisasterPrototype_ABC::OnStateChanged( int state )
+{
+    time_->setEnabled( state == Qt::Checked );
 }

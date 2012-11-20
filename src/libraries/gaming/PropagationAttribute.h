@@ -39,7 +39,7 @@ class PropagationManager;
 */
 // Created: LGY 2012-10-12
 // =============================================================================
-class PropagationAttribute : public kernel::InputPropagationAttribute_ABC
+class PropagationAttribute : public kernel::DisasterAttribute_ABC
                            , public kernel::Drawable_ABC
                            , public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< Simulation >

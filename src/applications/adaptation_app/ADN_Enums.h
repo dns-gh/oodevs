@@ -408,7 +408,6 @@ enum E_ConstructorType
 enum E_PropagationModel
 {
     eInputShap,
-    eInputAsc,
     eFire,
     eCloud,
     eNbrPropagationModel

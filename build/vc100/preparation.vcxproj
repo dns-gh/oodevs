@@ -108,13 +108,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\preparation\CircleFormation.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\DisasterAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\Ghost.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\GhostCommandPostAttributes.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\GhostFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\GhostHierarchies.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\GhostModel.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\GhostPositions.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\InputPropagationAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\LinkGenerator.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ModelConsistencyChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\MoveableProxy.cpp" />
@@ -261,6 +261,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\CircleFormation.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ConsistencyErrorTypes.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\DisasterAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Ghost.h" />
     <ClInclude Include="..\..\src\libraries\preparation\GhostCommandPostAttributes.h" />
     <ClInclude Include="..\..\src\libraries\preparation\GhostFactory.h" />
@@ -269,7 +270,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\GhostModel.h" />
     <ClInclude Include="..\..\src\libraries\preparation\GhostPositions.h" />
     <ClInclude Include="..\..\src\libraries\preparation\InhabitantPositions_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\InputPropagationAttribute.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LinkGenerator.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ModeController.h" />

@@ -3,14 +3,14 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __InputPropagationPrototype_h_
-#define __InputPropagationPrototype_h_
+#ifndef __DisasterPrototype_h_
+#define __DisasterPrototype_h_
 
-#include "clients_gui/InputPropagationPrototype_ABC.h"
+#include "clients_gui/DisasterPrototype_ABC.h"
 
 namespace kernel
 {
@@ -18,18 +18,18 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  InputPropagationPrototype
-    @brief  InputPropagationPrototype
+/** @class  DisasterPrototype
+    @brief  Disaster prototype
 */
-// Created: SBO 2006-04-20
+// Created: LGY 2012-11-20
 // =============================================================================
-class InputPropagationPrototype : public gui::InputPropagationPrototype_ABC
+class DisasterPrototype : public gui::DisasterPrototype_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InputPropagationPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation );
-    virtual ~InputPropagationPrototype();
+             DisasterPrototype( QWidget* parent, const tools::GeneralConfig& config, kernel::Object_ABC*& creation );
+    virtual ~DisasterPrototype();
     //@}
 
     //! @name Operations
@@ -44,4 +44,4 @@ private:
     //@}
 };
 
-#endif // __InputPropagationPrototype_h_
+#endif // __DisasterPrototype_h_

@@ -188,6 +188,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\CsvExport.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\DialogContainer.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\DisasterPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\DockContainer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\EntitySymbolEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterCsv.cpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\GhostsPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\InhabitantLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\InhabitantTreeView.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\InputPropagationPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LocationEditorToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticLinksEditor.cpp" />
@@ -239,7 +241,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\FirePropagationModifierPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FirePrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FloodPrototype.cpp" />
-    <ClCompile Include="..\..\src\applications\preparation_app\InputPropagationPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LodgingPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticPrototype.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\MedicalTreatmentPrototype.cpp" />
@@ -360,6 +361,7 @@
     <ClInclude Include="..\..\src\applications\preparation_app\Config.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\CsvExport.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\DialogContainer.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\DisasterPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\DockContainer.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\EntitySymbolEditor.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -522,6 +524,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\InhabitantTreeView.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\InputPropagationPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LivingAreaEditor_ABC.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LocationEditorToolbar.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticTreeView.h" />
@@ -681,7 +684,6 @@
     <ClInclude Include="..\..\src\applications\preparation_app\FirePropagationModifierPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\FirePrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\FloodPrototype.h" />
-    <ClInclude Include="..\..\src\applications\preparation_app\InputPropagationPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LodgingPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticPrototype.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\MedicalTreatmentPrototype.h" />
