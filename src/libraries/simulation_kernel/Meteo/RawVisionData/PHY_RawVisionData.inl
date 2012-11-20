@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "MT_Tools/MT_LinearInterpolation.h"
+#include "MT_Tools/MT_InterpolatedFunction.h"
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::operator ()
@@ -73,16 +73,16 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY ) const
 
     double rScaledX = rX / rCellSize_;
 
-    return MT_LinearInterpolation< double >() (
+    return Interpolate(
                  nRow,
-                 MT_LinearInterpolation< double >()(
+                 Interpolate(
                     nCol,
                     operator()( nCol, nRow ).GetAltitude(),
                     nCol + 1,
                     operator()( nCol + 1, nRow ).GetAltitude(),
                     rScaledX ),
                  nRow + 1,
-                 MT_LinearInterpolation< double >()(
+                 Interpolate(
                     nCol,
                     operator()( nCol, nRow + 1 ).GetAltitude(),
                     nCol + 1,
