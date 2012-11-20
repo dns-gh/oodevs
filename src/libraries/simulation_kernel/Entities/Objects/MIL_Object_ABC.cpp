@@ -124,9 +124,12 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::Initialize( const DEC_Gen_Object& genObject )
 {
-    ObstacleAttribute& attribute = GetAttribute< ObstacleAttribute >();
-    attribute.SetActivationTime( genObject.GetActivationTime() );
-    attribute.SetActivityTime( genObject.GetMinesActivityTime() );
+    ObstacleAttribute* attribute = RetrieveAttribute< ObstacleAttribute >();
+    if( attribute )
+    {
+        attribute->SetActivationTime( genObject.GetActivationTime() );
+        attribute->SetActivityTime( genObject.GetMinesActivityTime() );
+    }
     const MIL_Automate* tc2 = genObject.GetTC2();
     if( tc2 )
     {
