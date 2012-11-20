@@ -32,6 +32,7 @@
 #include "gaming/Dotation.h"
 #include "gaming/Dotations.h"
 #include "gaming/StaticModel.h"
+#include "clients_gui/Tools.h"
 #include <assert.h>
 
 #define EPSYLON 0.01
@@ -265,7 +266,7 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
 // Name: UnitStateTableResource::RecursiveMagicAction
 // Created: JSR 2012-03-22
 // -----------------------------------------------------------------------------
-void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, const QString& name, double percentage, unsigned int& quantity, kernel::Entity_ABC*& last ) const
+void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, const QString& name, double percentage, unsigned int& quantity ) const
 {
     if( quantity == 0 )
         return;
@@ -277,12 +278,12 @@ void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, c
             const Dotation& dotation = dotationIterator.NextElement();
             if( dotation.type_ && dotation.type_->GetName().c_str() == name )
             {
-                last = &entity;
-
                 kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( static_cast< kernel::Agent_ABC& >( entity ).GetType().GetId() );
                 std::pair< unsigned int, double > capacityAndConsumption = GetCapacityAndConsumption( name.toAscii().constData(), agent.CreateResourcesIterator(), agent.CreateIterator() );
 
-                unsigned int newQuantity = std::min( quantity, static_cast< unsigned int >( capacityAndConsumption.first * percentage ) );
+                unsigned int newQuantity = static_cast< unsigned int >( capacityAndConsumption.first * percentage );
+                newQuantity += capacityAndConsumption.first * percentage - newQuantity > 0.5? 1 : 0;
+                newQuantity = std::min( quantity, newQuantity );
                 quantity -= newQuantity;
 
                 kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
@@ -309,7 +310,7 @@ void UnitStateTableResource::RecursiveMagicAction( kernel::Entity_ABC& entity, c
         while( it.HasMoreElements() )
         {
             const kernel::Entity_ABC& subEntity = it.NextElement();
-            RecursiveMagicAction( const_cast< kernel::Entity_ABC& >( subEntity ), name, percentage, quantity, last );
+            RecursiveMagicAction( const_cast< kernel::Entity_ABC& >( subEntity ), name, percentage, quantity );
         }
     }
 }
@@ -346,7 +347,7 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
     }
     else
     {
-        int nResult = QMessageBox::information( const_cast< UnitStateTableResource* >( this ), "Sword", tr( "Your modifications will be applied to all sub-units of this entity, do you want to validate ?" ), QMessageBox::Yes, QMessageBox::No );
+        int nResult = QMessageBox::information( const_cast< UnitStateTableResource* >( this ), "Sword", tools::translate( "UnitStateTableResource", "Your modifications will be applied to all sub-units of this entity, do you want to validate ?" ), QMessageBox::Yes, QMessageBox::No );
         if( nResult == QMessageBox::No )
             return;
         for( int i = 0; i < rowsChanged_.size(); ++i )
@@ -355,33 +356,7 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
             const QString name = GetDisplayData( row, eName );
             double percentage = GetUserData( row, ePercentage ).toDouble() * 0.01;
             unsigned int quantity = GetUserData( row, eQuantity ).toUInt();
-            kernel::Entity_ABC* last = 0;
-            RecursiveMagicAction( selected, name, percentage, quantity, last );
-            if( quantity > 0 && last )
-            {
-                tools::Iterator< const Dotation& > dotationIterator = static_cast< const Dotations& >( last->Get< kernel::Dotations_ABC >() ).CreateIterator();
-                while( dotationIterator.HasMoreElements() )
-                {
-                    const Dotation& dotation = dotationIterator.NextElement();
-                    if( dotation.type_ && dotation.type_->GetName().c_str() == name )
-                    {
-                        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_dotation" );
-                        actions::UnitMagicAction* action = new actions::UnitMagicAction( *last, actionType, controllers_.controller_, tools::translate( "UnitStateTableResource", "Change dotations" ), true );
-
-                        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-                        actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
-                        action->AddParameter( *parameterList );
-                        actions::parameters::ParameterList& list = parameterList->AddList( "Dotation" );
-                        list.AddIdentifier( "ID", dotation.type_->GetId() );
-                        list.AddQuantity( "Quantity", dotation.quantity_ + quantity );
-                        list.AddNumeric( "Threshold",dotation.thresholdPercentage_ );
-                        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-                        action->Attach( *new actions::ActionTasker( last, false ) );
-                        action->RegisterAndPublish( actionsModel_ );
-                        break;
-                    }
-                }
-            }
+            RecursiveMagicAction( selected, name, percentage, quantity );
         }
         rowsChanged_.clear();
     }

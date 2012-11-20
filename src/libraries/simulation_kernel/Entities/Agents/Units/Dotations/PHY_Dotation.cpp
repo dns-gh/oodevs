@@ -338,7 +338,8 @@ void PHY_Dotation::Resupply( double rFactor /* = 1. */ )
 // -----------------------------------------------------------------------------
 void PHY_Dotation::ChangeDotation( unsigned int number, float thresholdPercentage )
 {
-    assert( number <= rCapacity_ );
+    if( number > rCapacity_ )
+        throw std::exception( "Dotation number greater than dotation capacity" );
     SetValue( number );
     rConsumptionReservation_ = 0.;
     rFireReservation_        = 0.;
