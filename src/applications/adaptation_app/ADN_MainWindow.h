@@ -63,6 +63,7 @@ public:
 protected:
     void closeEvent( QCloseEvent* e );
     virtual void mousePressEvent( QMouseEvent * event );
+    virtual QMenu* createPopupMenu() { return 0; }
 
 signals:
     void OpenModeToggled();
