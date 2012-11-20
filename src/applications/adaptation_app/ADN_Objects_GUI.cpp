@@ -249,7 +249,7 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Double >( populationFilter, tr( "Density: " ), vInfosConnectors[ ePopulationCapacity_Density ], 0, eGreaterEqualZero );
 
         // Detection
-        ADN_GroupBox* detection = CreateCapacityGroupBox( 3, tr( ADN_Objects_Data::ADN_CapacityInfos_Detection::DISPLAY_NAME.c_str() ), vInfosConnectors[ eDetectionCapacityPresent ] );
+        ADN_GroupBox* detection = CreateCapacityGroupBox( 3, tr( "Detection" ), vInfosConnectors[ eDetectionCapacityPresent ] );
         // LTO begin
         builder.AddOptionnalField< ADN_TimeField >( detection, tr( "Detection duration" ), vInfosConnectors[ eDetectionCapacity_HasDetectionTime ], vInfosConnectors[ eDetectionCapacity_DetectionTime ] );
         builder.AddOptionnalField< ADN_TimeField >( detection, tr( "Recognition duration" ), vInfosConnectors[ eDetectionCapacity_HasRecoTime ], vInfosConnectors[ eDetectionCapacity_RecoTime ] );

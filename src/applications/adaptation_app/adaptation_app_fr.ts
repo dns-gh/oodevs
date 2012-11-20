@@ -3388,6 +3388,10 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
         <source>Use explosive</source>
         <translation>Utilise un explosif</translation>
     </message>
+    <message>
+        <source>Detection</source>
+        <translation>Détection</translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenMode_Dialog</name>

@@ -377,15 +377,6 @@ ADN_Objects_Data::ADN_CapacityInfos_Disaster::ADN_CapacityInfos_Disaster()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::~ADN_CapacityInfos_Disaster
-// Created: LGY 2012-11-19
-// -----------------------------------------------------------------------------
-ADN_Objects_Data::ADN_CapacityInfos_Disaster::~ADN_CapacityInfos_Disaster()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ReadArchive
 // Created: LGY 2012-11-19
 // -----------------------------------------------------------------------------
@@ -661,24 +652,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::WriteArchive( xml::xostre
 }
 //@}
 
-//! @name ADN_CapacityInfos_Decontamination
-//@{
-ADN_Objects_Data::ADN_CapacityInfos_Decontamination::ADN_CapacityInfos_Decontamination()
-{
-    // NOTHING
-}
-
-void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::ReadArchive( xml::xistream& xis )
-{
-    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-}
-
-void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::WriteArchive( xml::xostream& /* xos */ )
-{
-    // NOTHING
-}
-//@}
-
 //! @name ADN_CapacityInfos_Population
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_Population::ADN_CapacityInfos_Population()
@@ -810,24 +783,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Medical::WriteArchive( xml::xostream& x
 }
 //@}
 
-//! @name ADN_CapacityInfos_Occupable
-//@{
-ADN_Objects_Data::ADN_CapacityInfos_Occupable::ADN_CapacityInfos_Occupable()
-{
-    // NOTHING
-}
-
-void ADN_Objects_Data::ADN_CapacityInfos_Occupable::ReadArchive( xml::xistream& /*xis*/ )
-{
-    // NOTHING
-}
-
-void ADN_Objects_Data::ADN_CapacityInfos_Occupable::WriteArchive( xml::xostream& /*xos*/ )
-{
-    // NOTHING
-}
-//@}
-
 //! @name ADN_CapacityInfos_TerrainHeuristic
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ADN_CapacityInfos_TerrainHeuristic()
@@ -852,24 +807,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::WriteArchive( xml::xo
 {
     for( T_ScoreLocationInfosVector::iterator itScore = scores_.begin(); itScore != scores_.end(); ++itScore )
         ( *itScore )->WriteArchive( xos );
-}
-//@}
-
-//! @name ADN_CapacityInfos_SupplyRoute
-//@{
-ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::ADN_CapacityInfos_SupplyRoute()
-{
-    // NOTHING
-}
-
-void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::ReadArchive( xml::xistream& xis )
-{
-    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-}
-
-void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostream& /*xos*/ )
-{
-    // NOTHING
 }
 //@}
 
@@ -1298,61 +1235,59 @@ std::string ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::Modifie
     return std::string();
 }
 
-#define INIT_DATA( CLASS, NAME, TAG_NAME ) \
-    const std::string ADN_Objects_Data::##CLASS##::TAG( TAG_NAME ); \
-    const std::string ADN_Objects_Data::##CLASS##::DISPLAY_NAME( NAME )
+#define INIT_DATA( CLASS, TAG_NAME ) const std::string ADN_Objects_Data::##CLASS##::TAG( TAG_NAME );
 
 #pragma warning( push )
 #pragma warning( disable : 4356 )
 
-INIT_DATA( ADN_CapacityInfos_Activable,               "Activable",               "activable" );
-INIT_DATA( ADN_CapacityInfos_Attrition,               "Attrition",               "attrition" );
-INIT_DATA( ADN_CapacityInfos_Avoidable,               "Avoidable",               "avoidable" );
-INIT_DATA( ADN_CapacityInfos_Bridging,                "Bridging",                "bridging" );
-INIT_DATA( ADN_CapacityInfos_Buildable,               "Buildable",               "buildable" );
-INIT_DATA( ADN_CapacityInfos_Bypassable,              "Bypassable",              "bypassable" );
-INIT_DATA( ADN_CapacityInfos_Constructor,             "Constructor",             "constructor" );
-INIT_DATA( ADN_CapacityInfos_Contamination,           "Contamination",           "contamination" );
-INIT_DATA( ADN_CapacityInfos_Decontamination,         "Decontamination",         "decontamination" );
-INIT_DATA( ADN_CapacityInfos_Delay,                   "Delay",                   "delay" );
-INIT_DATA( ADN_CapacityInfos_Detection,               "Detection",               "detection" ); // LTO
-INIT_DATA( ADN_CapacityInfos_Extinguishable,          "Extinguishable",          "extinguishable" );
-INIT_DATA( ADN_CapacityInfos_Medical,                 "Medical",                 "medical" );
-INIT_DATA( ADN_CapacityInfos_InteractionHeight,       "InteractionHeight",       "interaction-height" );
-INIT_DATA( ADN_CapacityInfos_InteractWithSide,        "InteractWithSide",        "interact-with-enemy" );
-INIT_DATA( ADN_CapacityInfos_Interference,            "Interference",            "interference" );
-INIT_DATA( ADN_CapacityInfos_Improvable,              "Improvable",              "improvable" );
-INIT_DATA( ADN_CapacityInfos_Intoxication,            "Intoxication",            "intoxication" );
-INIT_DATA( ADN_CapacityInfos_Logistic,                "Logistic",                "logistic" );
-INIT_DATA( ADN_CapacityInfos_Mobility,                "Mobility",                "mobility" );
-INIT_DATA( ADN_CapacityInfos_Trafficability,          "Trafficability",          "trafficability" );
-INIT_DATA( ADN_CapacityInfos_Occupable,               "Occupable",               "occupable" );
-INIT_DATA( ADN_CapacityInfos_Population,              "Population",              "population-filter" );
-INIT_DATA( ADN_CapacityInfos_Propagation,             "Propagation",             "propagation" );
-INIT_DATA( ADN_CapacityInfos_Protection,              "Protection",              "protection" );
-INIT_DATA( ADN_CapacityInfos_Supply,                  "Supply",                  "supply" );
-INIT_DATA( ADN_CapacityInfos_SupplyRoute,             "Supply-Route",            "supply-route" );
-INIT_DATA( ADN_CapacityInfos_TerrainHeuristic,        "Terrain Heuristic",       "heuristic" );
-INIT_DATA( ADN_CapacityInfos_TimeLimited,             "TimeLimited",             "time-limited" );
-INIT_DATA( ADN_CapacityInfos_Workable,                "Workable",                "workable" );
-INIT_DATA( ADN_CapacityInfos_Spawn,                   "Spawn",                   "spawn" );
-INIT_DATA( ADN_CapacityInfos_Structural,              "Structural",              "structural" );
-INIT_DATA( ADN_CapacityInfos_AttitudeModifier,        "AttitudeModifier",        "attitude-modifier" );
-INIT_DATA( ADN_CapacityInfos_Perception,              "Perception",              "perception" );
-INIT_DATA( ADN_CapacityInfos_Scattering,              "Scattering",              "scattering" );
-INIT_DATA( ADN_CapacityInfos_FirePropagationModifier, "FirePropagationModifier", "fire-propagation-modifier" );
-INIT_DATA( ADN_CapacityInfos_Burn,                    "Burn",                    "burn" );
-INIT_DATA( ADN_CapacityInfos_Flood,                   "Flood",                   "flood" );
-INIT_DATA( ADN_CapacityInfos_Universal,               "Universal",               "universal" );
-INIT_DATA( ADN_CapacityInfos_Stock,                   "Stock",                   "stock" );
-INIT_DATA( ADN_CapacityInfos_ResourceNetwork,         "ResourceNetwork",         "resources" );
-INIT_DATA( ADN_CapacityInfos_Lodging,                 "Lodging",                 "lodging" );
-INIT_DATA( ADN_CapacityInfos_AltitudeModifier,        "AltitudeModifier",        "altitude-modifier" );
-INIT_DATA( ADN_CapacityInfos_UndergroundNetwork,      "UndergroundNetwork",      "underground-network" );
-INIT_DATA( ADN_CapacityInfos_UrbanDestruction,        "UrbanDestruction",        "urban-destruction" );
-INIT_DATA( ADN_CapacityInfos_FireForbidden,           "FireForbidden",           "fire-forbidden" );
-INIT_DATA( ADN_CapacityInfos_Border,                  "Border",                  "border" );
-INIT_DATA( ADN_CapacityInfos_Disaster,                "Disaster",                "disaster" );
+INIT_DATA( ADN_CapacityInfos_Activable,               "activable" );
+INIT_DATA( ADN_CapacityInfos_Attrition,               "attrition" );
+INIT_DATA( ADN_CapacityInfos_Avoidable,               "avoidable" );
+INIT_DATA( ADN_CapacityInfos_Bridging,                "bridging" );
+INIT_DATA( ADN_CapacityInfos_Buildable,               "buildable" );
+INIT_DATA( ADN_CapacityInfos_Bypassable,              "bypassable" );
+INIT_DATA( ADN_CapacityInfos_Constructor,             "constructor" );
+INIT_DATA( ADN_CapacityInfos_Contamination,           "contamination" );
+INIT_DATA( ADN_CapacityInfos_Decontamination,         "decontamination" );
+INIT_DATA( ADN_CapacityInfos_Delay,                   "delay" );
+INIT_DATA( ADN_CapacityInfos_Detection,               "detection" ); // LTO
+INIT_DATA( ADN_CapacityInfos_Extinguishable,          "extinguishable" );
+INIT_DATA( ADN_CapacityInfos_Medical,                 "medical" );
+INIT_DATA( ADN_CapacityInfos_InteractionHeight,       "interaction-height" );
+INIT_DATA( ADN_CapacityInfos_InteractWithSide,        "interact-with-enemy" );
+INIT_DATA( ADN_CapacityInfos_Interference,            "interference" );
+INIT_DATA( ADN_CapacityInfos_Improvable,              "improvable" );
+INIT_DATA( ADN_CapacityInfos_Intoxication,            "intoxication" );
+INIT_DATA( ADN_CapacityInfos_Logistic,                "logistic" );
+INIT_DATA( ADN_CapacityInfos_Mobility,                "mobility" );
+INIT_DATA( ADN_CapacityInfos_Trafficability,          "trafficability" );
+INIT_DATA( ADN_CapacityInfos_Occupable,               "occupable" );
+INIT_DATA( ADN_CapacityInfos_Population,              "population-filter" );
+INIT_DATA( ADN_CapacityInfos_Propagation,             "propagation" );
+INIT_DATA( ADN_CapacityInfos_Protection,              "protection" );
+INIT_DATA( ADN_CapacityInfos_Supply,                  "supply" );
+INIT_DATA( ADN_CapacityInfos_SupplyRoute,             "supply-route" );
+INIT_DATA( ADN_CapacityInfos_TerrainHeuristic,        "heuristic" );
+INIT_DATA( ADN_CapacityInfos_TimeLimited,             "time-limited" );
+INIT_DATA( ADN_CapacityInfos_Workable,                "workable" );
+INIT_DATA( ADN_CapacityInfos_Spawn,                   "spawn" );
+INIT_DATA( ADN_CapacityInfos_Structural,              "structural" );
+INIT_DATA( ADN_CapacityInfos_AttitudeModifier,        "attitude-modifier" );
+INIT_DATA( ADN_CapacityInfos_Perception,              "perception" );
+INIT_DATA( ADN_CapacityInfos_Scattering,              "scattering" );
+INIT_DATA( ADN_CapacityInfos_FirePropagationModifier, "fire-propagation-modifier" );
+INIT_DATA( ADN_CapacityInfos_Burn,                    "burn" );
+INIT_DATA( ADN_CapacityInfos_Flood,                   "flood" );
+INIT_DATA( ADN_CapacityInfos_Universal,               "universal" );
+INIT_DATA( ADN_CapacityInfos_Stock,                   "stock" );
+INIT_DATA( ADN_CapacityInfos_ResourceNetwork,         "resources" );
+INIT_DATA( ADN_CapacityInfos_Lodging,                 "lodging" );
+INIT_DATA( ADN_CapacityInfos_AltitudeModifier,        "altitude-modifier" );
+INIT_DATA( ADN_CapacityInfos_UndergroundNetwork,      "underground-network" );
+INIT_DATA( ADN_CapacityInfos_UrbanDestruction,        "urban-destruction" );
+INIT_DATA( ADN_CapacityInfos_FireForbidden,           "fire-forbidden" );
+INIT_DATA( ADN_CapacityInfos_Border,                  "border" );
+INIT_DATA( ADN_CapacityInfos_Disaster,                "disaster" );
 
 #pragma warning( pop )
 

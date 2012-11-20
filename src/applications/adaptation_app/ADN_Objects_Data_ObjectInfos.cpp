@@ -142,7 +142,6 @@ void ADN_Objects_Data_ObjectInfos::ReadGeometry( xml::xistream& xis )
             return;
         }
     }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -252,5 +251,10 @@ ADN_Objects_Data_ObjectInfos* ADN_Objects_Data_ObjectInfos::CreateCopy()
     xml::xistringstream xis( xos.str() );
     xis >> xml::start( "object" );
     pCopy->ReadArchive( xis );
+
+    // Load spawn capacity
+    ADN_Objects_Data::ADN_CapacityInfos_Spawn* spawn = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Spawn* >( pCopy->capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Spawn::TAG ].get() );
+    spawn->Load( pCopy->strName_.GetData() );
+
     return pCopy;
 }

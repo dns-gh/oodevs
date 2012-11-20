@@ -1162,7 +1162,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AttritionEffectOnHuman.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AttritionInfos.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_CapacityInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNatureInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UrbanAttritionInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_UrbanModifiersTable.cpp" />

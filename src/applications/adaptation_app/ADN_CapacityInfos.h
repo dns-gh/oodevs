@@ -33,7 +33,10 @@ public:
     {
         // NOTHING
     }
-    virtual void WriteArchive( xml::xostream& ) {}
+    virtual void WriteArchive( xml::xostream& )
+    {
+        // NOTHING
+    }
 public:
     ADN_Type_Bool   bPresent_;
 };
@@ -68,6 +71,7 @@ enum E_Capacities
     eMobilityCapacity,
     eOccupableCapacity,
     ePerceptionCapacity,
+    ePopulationCapacity,
     ePropagationCapacity,
     eProtectionCapacity,
     eResourceNetworkCapacity,
@@ -90,20 +94,12 @@ enum E_Capacities
 };
 
 template< E_Capacities T, typename DefaultFieldsHolderType = NullType >
-class ADN_CapacityInfos_Default
-    : public ADN_TypeCapacity_Infos
+class ADN_CapacityInfos_Default : public ADN_TypeCapacity_Infos
 {
 public:
-    static const std::string DISPLAY_NAME;
     static const std::string TAG;
 
     ADN_CapacityInfos_Default() {}
-
-    virtual void ReadArchive( xml::xistream& xis )
-    {
-        ADN_TypeCapacity_Infos::ReadArchive( xis );
-    }
-    virtual void WriteArchive( xml::xostream& /*xos*/ ) {}
 };
 
 }

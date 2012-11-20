@@ -109,12 +109,14 @@ public:
     typedef helpers::ADN_CapacityInfos_Default< helpers::eUndergroundNetworkCapacity >      ADN_CapacityInfos_UndergroundNetwork;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eFireForbiddenCapacity >           ADN_CapacityInfos_FireForbidden;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eBorderCapacity >                  ADN_CapacityInfos_Border;
+    typedef helpers::ADN_CapacityInfos_Default< helpers::eOccupableCapacity >               ADN_CapacityInfos_Occupable;
+    typedef helpers::ADN_CapacityInfos_Default< helpers::eDecontaminationCapacity >         ADN_CapacityInfos_Decontamination;
+    typedef helpers::ADN_CapacityInfos_Default< helpers::eSupplyRouteCapacity >             ADN_CapacityInfos_SupplyRoute;
 
     class ADN_CapacityInfos_Disaster : public helpers::ADN_CapacityInfos_Default< helpers::eDisasterCapacity >
     {
     public:
-                 ADN_CapacityInfos_Disaster();
-        virtual ~ADN_CapacityInfos_Disaster();
+        ADN_CapacityInfos_Disaster();
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
@@ -125,8 +127,7 @@ public:
         ADN_TypePtr_InVector_ABC< ADN_Disasters_Data::DisasterInfos > disaster_;
     };
 
-    class ADN_CapacityInfos_Attrition
-        : public helpers::ADN_CapacityInfos_Default< helpers::eAttritionCapacity >
+    class ADN_CapacityInfos_Attrition : public helpers::ADN_CapacityInfos_Default< helpers::eAttritionCapacity >
     {
     public:
         ADN_CapacityInfos_Attrition();
@@ -140,26 +141,22 @@ public:
         ADN_Type_Bool useAmmo_;
         ADN_Type_Bool useMine_;
         ADN_Type_Bool useExplo_;
-        // $$$$ LDC: Hack: No time to write a single category_ checkbox with all ammos available. Actually, the mines and explosives categories should vanish but no time to change the sim...
         ADN_Type_Double attritionSurface_;
         ADN_Type_Double ph_;
     };
 
-    class ADN_CapacityInfos_UrbanDestruction
-        : public helpers::ADN_CapacityInfos_Default< helpers::eUrbanDestructionCapacity >
+    class ADN_CapacityInfos_UrbanDestruction : public helpers::ADN_CapacityInfos_Default< helpers::eUrbanDestructionCapacity >
     {
     public:
         ADN_CapacityInfos_UrbanDestruction();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
+
     public:
         helpers::T_UrbanAttritionInfos_Vector modifUrbanBlocks_;
     };
 
-    class ADN_CapacityInfos_Avoidable
-        : public helpers::ADN_CapacityInfos_Default< helpers::eAvoidableCapacity,
-                            boost::tuples::tuple< NamedField< ADN_Type_Double > > >
+    class ADN_CapacityInfos_Avoidable : public helpers::ADN_CapacityInfos_Default< helpers::eAvoidableCapacity, boost::tuples::tuple< NamedField< ADN_Type_Double > > >
     {
     public:
         ADN_CapacityInfos_Avoidable();
@@ -170,12 +167,10 @@ public:
         ADN_Type_Double  rDistance_;
     };
 
-    class ADN_CapacityInfos_Bridging
-        : public helpers::ADN_CapacityInfos_Default< helpers::eBridgingCapacity >
+    class ADN_CapacityInfos_Bridging : public helpers::ADN_CapacityInfos_Default< helpers::eBridgingCapacity >
     {
     public:
         ADN_CapacityInfos_Bridging();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
@@ -183,15 +178,12 @@ public:
         ADN_Type_Enum< E_CrossingType, eNbrCrossingType > type_;
     };
 
-    class ADN_CapacityInfos_Buildable
-        : public helpers::ADN_CapacityInfos_Default< helpers::eBuildableCapacity >
+    class ADN_CapacityInfos_Buildable : public helpers::ADN_CapacityInfos_Default< helpers::eBuildableCapacity >
     {
     public:
         ADN_CapacityInfos_Buildable();
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
-
-    private:
         void ReadDotation( xml::xistream& xis );
 
     public:
@@ -201,9 +193,7 @@ public:
         ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > categories_;
     };
 
-    class ADN_CapacityInfos_Bypassable
-        : public helpers::ADN_CapacityInfos_Default< helpers::eBypassableCapacity,
-                                            boost::tuples::tuple< NamedField< ADN_Type_Double > > >
+    class ADN_CapacityInfos_Bypassable : public helpers::ADN_CapacityInfos_Default< helpers::eBypassableCapacity, boost::tuples::tuple< NamedField< ADN_Type_Double > > >
     {
     public:
         ADN_CapacityInfos_Bypassable();
@@ -214,12 +204,10 @@ public:
         ADN_Type_Double  rSpeed_;
     };
 
-    class ADN_CapacityInfos_Contamination
-        : public helpers::ADN_CapacityInfos_Default< helpers::eContaminationCapacity >
+    class ADN_CapacityInfos_Contamination : public helpers::ADN_CapacityInfos_Default< helpers::eContaminationCapacity >
     {
     public:
         ADN_CapacityInfos_Contamination();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
@@ -228,25 +216,10 @@ public:
         ADN_Type_Int max_toxic_;
     };
 
-    class ADN_CapacityInfos_Decontamination
-        : public helpers::ADN_TypeCapacity_Infos
-    {
-    public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
-
-        ADN_CapacityInfos_Decontamination();
-
-        void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
-    };
-
-    class ADN_CapacityInfos_Flood
-        : public helpers::ADN_CapacityInfos_Default< helpers::eFloodCapacity >
+    class ADN_CapacityInfos_Flood : public helpers::ADN_CapacityInfos_Default< helpers::eFloodCapacity >
     {
     public:
         ADN_CapacityInfos_Flood();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
@@ -261,12 +234,10 @@ public:
         ADN_Type_Int nNbDeadHumans_;
     };
 
-    class ADN_CapacityInfos_Medical
-        : public helpers::ADN_CapacityInfos_Default< helpers::eMedicalCapacity >
+    class ADN_CapacityInfos_Medical : public helpers::ADN_CapacityInfos_Default< helpers::eMedicalCapacity >
     {
     public:
         ADN_CapacityInfos_Medical();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
@@ -276,12 +247,10 @@ public:
         ADN_Type_Int nightDoctorsRate_;
     };
 
-    class ADN_CapacityInfos_Improvable
-        : public helpers::ADN_CapacityInfos_Default< helpers::eImprovableCapacity >
+    class ADN_CapacityInfos_Improvable : public helpers::ADN_CapacityInfos_Default< helpers::eImprovableCapacity >
     {
     public:
         ADN_CapacityInfos_Improvable();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
@@ -295,12 +264,10 @@ public:
         ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > categories_;
     };
 
-    class ADN_CapacityInfos_InteractionHeight
-        : public helpers::ADN_CapacityInfos_Default< helpers::eInteractionHeightCapacity >
+    class ADN_CapacityInfos_InteractionHeight : public helpers::ADN_CapacityInfos_Default< helpers::eInteractionHeightCapacity >
     {
     public:
         ADN_CapacityInfos_InteractionHeight();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
@@ -308,12 +275,10 @@ public:
         ADN_Type_Double height_;
     };
 
-    class ADN_CapacityInfos_Intoxication
-        : public helpers::ADN_CapacityInfos_Default< helpers::eIntoxicationCapacity >
+    class ADN_CapacityInfos_Intoxication : public helpers::ADN_CapacityInfos_Default< helpers::eIntoxicationCapacity >
     {
     public:
         ADN_CapacityInfos_Intoxication();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
@@ -322,8 +287,7 @@ public:
         ADN_Type_Int max_toxic_;
     };
 
-    class ADN_CapacityInfos_Mobility
-        : public helpers::ADN_CapacityInfos_Default< helpers::eMobilityCapacity >
+    class ADN_CapacityInfos_Mobility : public helpers::ADN_CapacityInfos_Default< helpers::eMobilityCapacity >
     {
     public:
         ADN_CapacityInfos_Mobility();
@@ -336,8 +300,7 @@ public:
         ADN_Type_Double rMaxAgentSpeed_; // percentage
     };
 
-    class ADN_CapacityInfos_Trafficability
-        : public helpers::ADN_CapacityInfos_Default< helpers::eTrafficabilityCapacity >
+    class ADN_CapacityInfos_Trafficability : public helpers::ADN_CapacityInfos_Default< helpers::eTrafficabilityCapacity >
     {
     public:
         ADN_CapacityInfos_Trafficability();
@@ -349,57 +312,30 @@ public:
         ADN_Type_Double maxWeight_;
     };
 
-    class ADN_CapacityInfos_Occupable
-        : public helpers::ADN_TypeCapacity_Infos
+    class ADN_CapacityInfos_Population : public helpers::ADN_CapacityInfos_Default< helpers::ePopulationCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
-
-        ADN_CapacityInfos_Occupable();
-
-        void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
-    };
-
-    class ADN_CapacityInfos_Population
-        : public helpers::ADN_TypeCapacity_Infos
-    {
-    public:
-
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
-
         ADN_CapacityInfos_Population();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
+
     public:
         ADN_Type_Double density_;
     };
 
-    class ADN_CapacityInfos_Propagation
-        : public helpers::ADN_TypeCapacity_Infos
+    class ADN_CapacityInfos_Propagation : public helpers::ADN_CapacityInfos_Default< helpers::ePropagationCapacity >
     {
     public:
-
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
-
         ADN_CapacityInfos_Propagation();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
+
     public:
         ADN_Type_Enum< E_PropagationModel, eNbrPropagationModel > nModel_;
     };
 
-    class ADN_CapacityInfos_Protection
-        : public helpers::ADN_TypeCapacity_Infos
+    class ADN_CapacityInfos_Protection : public helpers::ADN_CapacityInfos_Default< helpers::eProtectionCapacity >
     {
-    public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
     public:
         ADN_CapacityInfos_Protection();
         void ReadArchive( xml::xistream& xis );
@@ -410,40 +346,19 @@ public:
         ADN_Type_Bool geniePrepared_;
     };
 
-    class ADN_CapacityInfos_SupplyRoute
-        : public helpers::ADN_TypeCapacity_Infos
+    class ADN_CapacityInfos_TerrainHeuristic : public helpers::ADN_CapacityInfos_Default< helpers::eTerrainHeuristicCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
-
-        ADN_CapacityInfos_SupplyRoute();
-
-        void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
-    };
-
-    class ADN_CapacityInfos_TerrainHeuristic
-        : public helpers::ADN_TypeCapacity_Infos
-    {
-    public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
-
         ADN_CapacityInfos_TerrainHeuristic();
-
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
-
-    public:
         void ReadTerrain( xml::xistream& xis );
 
     public:
         T_ScoreLocationInfosVector scores_;
     };
 
-    class ADN_CapacityInfos_Workable
-        : public helpers::ADN_CapacityInfos_Default< helpers::eWorkableCapacity >
+    class ADN_CapacityInfos_Workable : public helpers::ADN_CapacityInfos_Default< helpers::eWorkableCapacity >
     {
     public:
         ADN_CapacityInfos_Workable();
@@ -454,8 +369,7 @@ public:
         ADN_Type_Int worker_;
     };
 
-    class ADN_CapacityInfos_Constructor
-        : public helpers::ADN_CapacityInfos_Default< helpers::eConstructorCapacity >
+    class ADN_CapacityInfos_Constructor : public helpers::ADN_CapacityInfos_Default< helpers::eConstructorCapacity >
     {
     public:
         ADN_CapacityInfos_Constructor();
@@ -469,14 +383,10 @@ public:
         std::auto_ptr< ADN_CapacityInfos_Improvable > ptrImprovable_;
     };
 
-    class ADN_CapacityInfos_Detection
-        : public helpers::ADN_CapacityInfos_Default< helpers::eDetectionCapacity >
+    class ADN_CapacityInfos_Detection : public helpers::ADN_CapacityInfos_Default< helpers::eDetectionCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_Detection();
-
         void ReadArchive( xml::xistream& input ); // LTO
         void ReadAcquisitionTime( xml::xistream& input ); // LTO
         void WriteArchive( xml::xostream& output ); // LTO
@@ -489,15 +399,12 @@ public:
         ADN_Type_Bool bRecoTime_; // LTO
         ADN_Type_Time identTime_; // LTO
     };
+
     class ADN_CapacityInfos_Spawn : public helpers::ADN_CapacityInfos_Default< helpers::eSpawnCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_Spawn();
-
         void Load( const std::string& parentName );
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
@@ -511,10 +418,7 @@ public:
     class ADN_CapacityInfos_Structural : public helpers::ADN_CapacityInfos_Default< helpers::eStructuralCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_Structural();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
@@ -525,10 +429,7 @@ public:
     class ADN_CapacityInfos_AttitudeModifier : public helpers::ADN_CapacityInfos_Default< helpers::eAttitudeModifierCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_AttitudeModifier();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
@@ -539,10 +440,7 @@ public:
     class ADN_CapacityInfos_Perception : public helpers::ADN_CapacityInfos_Default< helpers::ePerceptionCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_Perception();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
@@ -550,14 +448,10 @@ public:
         ADN_Type_Bool blinded_;
     };
 
-    class ADN_CapacityInfos_Scattering
-        : public helpers::ADN_CapacityInfos_Default< helpers::eScatteringCapacity >
+    class ADN_CapacityInfos_Scattering : public helpers::ADN_CapacityInfos_Default< helpers::eScatteringCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_Scattering();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
@@ -571,8 +465,8 @@ public:
         ADN_CapacityInfos_FirePropagationModifier();
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
-    public:
 
+    public:
         class ModifierByFireClass : public ADN_Ref_ABC
         {
         public:
@@ -628,14 +522,10 @@ public:
         void ReadModifier( xml::xistream& xis );
     };
 
-    class ADN_CapacityInfos_InteractWithSide
-        : public helpers::ADN_CapacityInfos_Default< helpers::eInteractWithSideCapacity >
+    class ADN_CapacityInfos_InteractWithSide : public helpers::ADN_CapacityInfos_Default< helpers::eInteractWithSideCapacity >
     {
     public:
-        static const std::string TAG;
-        static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_InteractWithSide();
-
         void ReadArchive( xml::xistream& input );
         void ReadSide( xml::xistream& input );
         void WriteArchive( xml::xostream& output );

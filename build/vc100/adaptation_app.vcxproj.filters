@@ -886,9 +886,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_AttritionInfos.cpp">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_CapacityInfos.cpp">
-      <Filter>Source Files\Workspace\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNatureInfos.cpp">
       <Filter>Source Files\Workspace\Helpers</Filter>
     </ClCompile>

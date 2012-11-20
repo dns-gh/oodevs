@@ -3370,19 +3370,23 @@ The spawn capacity will be disabled.</translation>
     </message>
     <message>
         <source>Mine</source>
-        <translation type="unfinished">Mine</translation>
+        <translation>Mine</translation>
     </message>
     <message>
         <source>Explosive</source>
-        <translation type="unfinished">Explosive</translation>
+        <translation>Explosive</translation>
     </message>
     <message>
         <source>Use mine</source>
-        <translation type="unfinished"></translation>
+        <translation>Use mine</translation>
     </message>
     <message>
         <source>Use explosive</source>
-        <translation type="unfinished"></translation>
+        <translation>Use explosive</translation>
+    </message>
+    <message>
+        <source>Detection</source>
+        <translation>Detection</translation>
     </message>
 </context>
 <context>

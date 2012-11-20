@@ -3371,6 +3371,10 @@ The spawn capacity will be disabled.</source>
         <source>Use explosive</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Detection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenMode_Dialog</name>
