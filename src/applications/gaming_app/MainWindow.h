@@ -54,6 +54,7 @@ namespace gui
     class HelpSystem;
 }
 
+class AfterAction;
 class Config;
 class Services;
 class StatusBar;
@@ -167,6 +168,7 @@ private:
     QString planifName_;
     QString savedState_;
     gui::HelpSystem* help_;
+    AfterAction* aar_;
     //@}
 };
 
