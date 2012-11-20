@@ -30,8 +30,9 @@ CreateBlockAutoProcess::CreateBlockAutoProcess( const Database& database, Spatia
     : database_( database )
     , blocks_  ( 0 )
     , status_  ( status )
+    , geometryFactory_( new GeometryFactory() )
 {
-    geometryFactory_ =  new GeometryFactory();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +41,7 @@ CreateBlockAutoProcess::CreateBlockAutoProcess( const Database& database, Spatia
 // -----------------------------------------------------------------------------
 CreateBlockAutoProcess::~CreateBlockAutoProcess()
 {
-    delete geometryFactory_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +68,7 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, UrbanMod
     if( it != database_.tables_.end() )
         buildings = it->second->GetFeaturesIntersectsWith( poly );
     PrepareTerrainComponents( poly, areas, buffers );
-    gaiaFreeGeomColl( poly );    
+    gaiaFreeGeomColl( poly );
     ClippingUrbanAreaWithTerrainComponent( buffers, areas, urbans );
     UpdateBuildingTable( buildings ); //Update building tables
     UpdateUrbanModel( model, parent, projector, footprint ); //Update urban blocks
@@ -244,30 +245,42 @@ void CreateBlockAutoProcess::UpdateBuildingTable( gaiaGeomCollPtr buildings )
 
     while( block )
     {
+        // Create an empty collection
         temp = geometryFactory_->InitGeometryCollection();
-        gaiaAddPolygonToGeomColl( temp, block->Exterior->Points, block->NumInteriors );
+        // Insert a copy of the block in that collection
+        gaiaInsertPolygonInGeomColl( temp, gaiaCloneRing( block->Exterior ) );
+        // Go figure...
         gaiaMbrGeometry( temp );
-        if( gaiaGeomCollIntersects( temp, buildings ) == 1 ) //don't keep blocks
+
+        // If the buildings and this block (copy) intersect, remove the block from the collection
+        if( gaiaGeomCollIntersects( temp, buildings ) == 1 )
         {
+            // If it is the first polygon in the geometry set
             if( block == blocks_->FirstPolygon )
             {
                 blocks_->FirstPolygon = block->Next;
             }
-            else if( block == blocks_->LastPolygon )
+            // If it is the last polygon in the geometry set
+            // (not "else if" because the set can contain only 1 polygon)
+            if( block == blocks_->LastPolygon )
             {
                 blocks_->LastPolygon = prev;
-                prev->Next = block->Next;
             }
-            else
+            // If prev is not NULL, update it.
+            if( prev )
             {
                 prev->Next = block->Next;
             }
+
             gaiaPolygonPtr next = block->Next;
-            gaiaFreePolygon( block );
+            // Free the polygon, it is not needed anymore
+            gaiaFreePolygon( block );   // Would this call be enough ?
+                                        // Does it take care of removing from the linked list ?
             block = next;
         }
         else
         {
+            // Go on, there was no intersection...
             prev = block;
             block = block->Next;
         }
