@@ -131,6 +131,7 @@ namespace
 void EditorFactory::Call( QTime* const& value )
 {
     QTimeEditor* editor = new QTimeEditor( parent_ );
+    editor->setDisplayFormat( "HH:mm:ss" );
     editor->setTime( *value );
     result_ = editor;
 }
