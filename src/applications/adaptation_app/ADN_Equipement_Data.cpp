@@ -495,8 +495,12 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->bMaintainGuidance_ = bMaintainGuidance_.GetData();
     pCopy->fGuidanceRange_ = fGuidanceRange_.GetData();
 
-    for( uint n = 0; n < attritions_.size(); ++n )
-        pCopy->attritions_[n]->CopyFrom( * attritions_[n] );
+    for( unsigned int i = 0; i < attritions_.size(); ++i )
+        pCopy->attritions_[ i ]->CopyFrom( * attritions_[ i ] );
+
+    for( unsigned int i = 0; i < modifUrbanBlocks_.size(); ++i )
+        pCopy->modifUrbanBlocks_[ i ]->CopyFrom( *modifUrbanBlocks_[ i ] );
+
     pCopy->indirectAmmoInfos_.CopyFrom( indirectAmmoInfos_ );
 
     return pCopy;
