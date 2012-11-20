@@ -38,18 +38,18 @@ private:
     static void InitializeConvoyUnitType( xml::xistream& xis );
     static void InitializeConvoyMission ( xml::xistream& xis );
     static void InitializeConvoyType    ( xml::xistream& xis );
-    static void InitializeInterpolatedTime ( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< double >& data );
+    static void InitializeInterpolatedTime ( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction& data );
     static void InitializeSpeedModificators( xml::xistream& xis );
-    static void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< double >& data, std::pair< unsigned int, double >& upperBound );
+    static void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction& data, std::pair< unsigned int, double >& upperBound );
     static void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, double >& upperBound );
     static const SupplyConvoyFactory_ABC& GetConvoyFactory( xml::xistream& xis, const std::string& type );
     //@}
 
 public:
-    static MT_InterpolatedFunction< double > setupTime_;
-    static MT_InterpolatedFunction< double > loadingTime_;
-    static MT_InterpolatedFunction< double > unloadingTime_;
-    static MT_InterpolatedFunction< double > coefSpeedModificator_;
+    static MT_InterpolatedFunction setupTime_;
+    static MT_InterpolatedFunction loadingTime_;
+    static MT_InterpolatedFunction unloadingTime_;
+    static MT_InterpolatedFunction coefSpeedModificator_;
     static const MIL_AgentTypePion* convoyAgentType_;
     static const MIL_MissionType_ABC* convoyMissionType_;
 

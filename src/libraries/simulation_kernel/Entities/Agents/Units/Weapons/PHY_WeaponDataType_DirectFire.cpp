@@ -61,7 +61,7 @@
 // -----------------------------------------------------------------------------
 PHY_WeaponDataType_DirectFire::PHY_WeaponDataType_DirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis )
     : weaponType_( weaponType )
-    , phs_       ( PHY_Volume::GetVolumes().size(), MT_InterpolatedFunction< double >( 0., 0. ) )
+    , phs_       ( PHY_Volume::GetVolumes().size(), MT_InterpolatedFunction( 0., 0. ) )
 {
     xis >> xml::list( "hit-probabilities", *this, &PHY_WeaponDataType_DirectFire::InitializePH );
 }
@@ -92,7 +92,7 @@ void PHY_WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
 
     assert( phs_.size() > volume.GetID() );
 
-    MT_InterpolatedFunction< double >& phFunction = phs_[ volume.GetID() ];
+    MT_InterpolatedFunction& phFunction = phs_[ volume.GetID() ];
 
     xis >> xml::list( "hit-probability", *this, &PHY_WeaponDataType_DirectFire::ReadHitProbability, phFunction );
 }
@@ -101,7 +101,7 @@ void PHY_WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
 // Name: PHY_WeaponDataType_DirectFire::ReadHitProbability
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction< double >& phFunction )
+void PHY_WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction& phFunction )
 {
     double rDistance;
     double rPH;

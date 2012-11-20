@@ -11,9 +11,9 @@
 #define __SupplyConvoy_h_
 
 #include "SupplyConvoy_ABC.h"
-#include "MT_Tools/MT_InterpolatedFunction.h"
 
 class PHY_ComposantePion;
+class MT_InterpolatedFunction;
 
 namespace logistic {
     class SupplyConveyor_ABC;
@@ -80,7 +80,7 @@ private:
     //! @name Tools
     //@{
     void     ReserveTransporters          ( const PHY_DotationCategory& dotationCategory, double quantity );
-    unsigned ComputeTimeRemainingForAction( E_Action action, MT_InterpolatedFunction< double >& timeComputer );
+    unsigned ComputeTimeRemainingForAction( E_Action action, MT_InterpolatedFunction& timeComputer );
     template< typename T > SupplyConveyor_ABC* CreateConveyor( const T& constraint );
     //@}
 

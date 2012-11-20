@@ -14,42 +14,39 @@
 
 #include <vector>
 
-template < class TypeIn, class TypeOut >
-TypeOut Interpolate( const TypeIn& x1, const TypeOut& y1, const TypeIn& x2, const TypeOut& y2, const TypeIn& x )
+inline double Interpolate( const double& x1, const double& y1, const double& x2, const double& y2, const double& x )
 {
-    return (TypeOut)( y2 + ( y1 - y2 ) * ( x2 - x ) / ( x2 - x1 ) );
+    return ( y2 + ( y1 - y2 ) * ( x2 - x ) / ( x2 - x1 ) );
 }
 
-template < class TypeIn, class TypeOut >
-TypeIn InverseInterpolate( const TypeIn& x1, const TypeOut& y1, const TypeIn& x2, const TypeOut& y2, const TypeOut& y )
+inline double InverseInterpolate( const double& x1, const double& y1, const double& x2, const double& y2, const double& y )
 {
-    return y1 == y2 ? y == y1 ? x2 : 0  : (TypeIn)( x2 + ( x1 - x2 ) * ( y2 - y ) / ( y2 - y1 ) );
+    return y1 == y2 ? y == y1 ? x2 : 0.0 : ( x2 + ( x1 - x2 ) * ( y2 - y ) / ( y2 - y1 ) );
 }
 
-template < typename TypeIn, typename TypeOut = TypeIn >
 class MT_InterpolatedFunction
 {
 public:
-    typedef std::pair< TypeIn, TypeOut >                 T_Point;
-    typedef std::vector< T_Point >                       T_Points;
-    typedef typename T_Points::iterator                 IT_Points;
-    typedef typename T_Points::const_iterator          CIT_Points;
-    typedef typename T_Points::const_reverse_iterator CRIT_Points;
+    typedef std::pair< double, double >       T_Point;
+    typedef std::vector< T_Point >            T_Points;
+    typedef T_Points::iterator                IT_Points;
+    typedef T_Points::const_iterator          CIT_Points;
+    typedef T_Points::const_reverse_iterator  CRIT_Points;
 
 public:
     MT_InterpolatedFunction()
-        : knownData_(), useBeforeDefault_( false ), beforeDefaultValue_( TypeOut() ), useAfterDefault_( false ), afterDefaultValue_( TypeOut() ) {}
-    MT_InterpolatedFunction( const TypeOut& beforeVal, const TypeOut& afterVal )
+        : knownData_(), useBeforeDefault_( false ), beforeDefaultValue_( double() ), useAfterDefault_( false ), afterDefaultValue_( double() ) {}
+    MT_InterpolatedFunction( const double& beforeVal, const double& afterVal )
         : knownData_(), useBeforeDefault_( true ), beforeDefaultValue_( beforeVal ), useAfterDefault_( true ), afterDefaultValue_( afterVal ) {}
     virtual ~MT_InterpolatedFunction() {}
 
-    void SetBeforeValue( const TypeOut& val )
+    void SetBeforeValue( const double& val )
     {
         useBeforeDefault_   = true;
         beforeDefaultValue_ = val;
     }
 
-    void SetAfterValue( const TypeOut& val )
+    void SetAfterValue( const double& val )
     {
         useAfterDefault_   = true;
         afterDefaultValue_ = val;
@@ -60,7 +57,7 @@ public:
         knownData_.clear();
     }
 
-    void AddNewPoint( const TypeIn& x, const TypeOut& y )
+    void AddNewPoint( const double& x, const double& y )
     {
         IT_Points it = knownData_.begin();
         while( it != knownData_.end() && it->first < x )
@@ -76,10 +73,10 @@ public:
         return knownData_.empty();
     }
 
-    TypeOut operator () ( const TypeIn& x ) const
+    double operator () ( const double& x ) const
     {
         if( knownData_.empty() )
-            return (TypeOut)-1;
+            return (double)-1;
 
         // $$$$ AGE 2005-04-12: Use a dichotomy
         CIT_Points it = knownData_.begin();
@@ -102,10 +99,10 @@ public:
 
     // $$$$ JVT : Fonction un peu pourrie....
     // $$$$ AGE 2005-04-12: Et c'est plutot GetMaxXForY ...
-    TypeIn GetMaxYForX ( const TypeOut& y ) const
+    double GetMaxYForX ( const double& y ) const
     {
         if( knownData_.empty() )
-            return (TypeIn)0;
+            return (double)0;
 
         CRIT_Points it1 = knownData_.rbegin();
 
@@ -117,42 +114,42 @@ public:
             if( y <= it2->second )
                 return it2->first;
 
-            TypeIn rRes = InverseInterpolate( it1->first, it1->second, it2->first, it2->second, y );
-            if( rRes >= it1->first && rRes <= it2->first && rRes >= (TypeIn)0 )
+            double rRes = InverseInterpolate( it1->first, it1->second, it2->first, it2->second, y );
+            if( rRes >= it1->first && rRes <= it2->first && rRes >= (double)0 )
                 return rRes;
         }
 
-        return TypeIn();
+        return double();
     }
 
     // $$$$ JVT : Fonction un peu pourrie....
-    TypeIn GetMinYForX ( const TypeOut& y ) const
+    double GetMinYForX ( const double& y ) const
     {
         if( knownData_.empty() )
-            return (TypeIn)0;
+            return (double)0;
 
         CIT_Points it1 = knownData_.begin();
 
         if( ( useBeforeDefault_ && beforeDefaultValue_ >= y ) || ( !useBeforeDefault_ && it1->second >= y ) )
-            return std::min( (TypeIn)0, it1->first );
+            return std::min( (double)0, it1->first );
 
         for ( CIT_Points it2 = it1++; it1 != knownData_.end(); ++it1, ++it2 )
         {
             if( y <= it2->second )
                 return it2->first;
 
-            TypeIn rRes = InverseInterpolate( it2->first, it2->second, it1->first, it1->second, y );
-            if( rRes <= it1->first && rRes >= it2->first && rRes >= (TypeIn)0 )
+            double rRes = InverseInterpolate( it2->first, it2->second, it1->first, it1->second, y );
+            if( rRes <= it1->first && rRes >= it2->first && rRes >= (double)0 )
                 return rRes;
         }
-        return TypeIn();
+        return double();
     }
 
 private:
     T_Points      knownData_;
 
-    TypeOut       beforeDefaultValue_;
-    TypeOut       afterDefaultValue_;
+    double        beforeDefaultValue_;
+    double        afterDefaultValue_;
     bool          useBeforeDefault_;
     bool          useAfterDefault_;
 };

@@ -48,7 +48,7 @@ void WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
     std::size_t id = GET_HOOK( GetVolumeId )( targetType.c_str() );
     if( phs_.size() <= id )
         phs_.resize( id + 1 );
-    MT_InterpolatedFunction< double >& phFunction = phs_[ id ]; // $$$$ MCO 2012-04-30: how to handle unknown type ?
+    MT_InterpolatedFunction& phFunction = phs_[ id ]; // $$$$ MCO 2012-04-30: how to handle unknown type ?
     xis >> xml::list( "hit-probability", *this, &WeaponDataType_DirectFire::ReadHitProbability, phFunction );
 }
 
@@ -56,7 +56,7 @@ void WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
 // Name: WeaponDataType_DirectFire::ReadHitProbability
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction< double >& phFunction )
+void WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction& phFunction )
 {
     double rDistance;
     double ph;
@@ -150,7 +150,7 @@ double WeaponDataType_DirectFire::GetPH( const wrapper::View& firer, const wrapp
         return 0;
     rDistance /= rPHModificator;
     if( phs_.size() <= targetVolume )
-        return MT_InterpolatedFunction< double >()( rDistance );
+        return MT_InterpolatedFunction()( rDistance );
     const double ph = phs_[ targetVolume ]( rDistance );
     return dotation_.ModifyPh( firer, target, ph );
 }

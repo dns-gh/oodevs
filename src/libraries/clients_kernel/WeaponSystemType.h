@@ -48,7 +48,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, MT_InterpolatedFunction< double > >  T_HitProbabilities;
+    typedef std::map< unsigned int, MT_InterpolatedFunction >  T_HitProbabilities;
     //@}
 
 private:
@@ -62,7 +62,7 @@ private:
     //@{
     void ReadDirectFire( xml::xistream& xis );
     void ReadDirectFireHitProbabilities( xml::xistream& xis );
-    void ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction< double >* phFunction );
+    void ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction* phFunction );
     void ReadIndirectFire( xml::xistream& xis );
     //@}
 

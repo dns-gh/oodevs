@@ -72,14 +72,14 @@ private:
 
     void InitializePH( xml::xistream& xis );
 
-    void ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction< double >& phFunction );
+    void ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction& phFunction );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_InterpolatedFunction< double > >  T_PhVector;
-    typedef T_PhVector::const_iterator                      CIT_PhVector;
+    typedef std::vector< MT_InterpolatedFunction >  T_PhVector;
+    typedef T_PhVector::const_iterator              CIT_PhVector;
     //@}
 
 private:

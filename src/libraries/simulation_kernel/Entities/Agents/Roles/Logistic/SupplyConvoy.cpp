@@ -14,6 +14,7 @@
 #include "SupplyConvoyConfig.h"
 #include "SupplyRequestParameters_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "MT_Tools/MT_InterpolatedFunction.h"
 #include <boost/foreach.hpp>
 
 using namespace logistic;
@@ -135,7 +136,7 @@ unsigned SupplyConvoy::ReserveTransporters( const T_Resources& resources )
 // Name: SupplyConvoy::ComputeTimeRemainingForAction
 // Created: NLD 2011-08-01
 // -----------------------------------------------------------------------------
-unsigned SupplyConvoy::ComputeTimeRemainingForAction( E_Action action, MT_InterpolatedFunction< double >& timeComputer )
+unsigned SupplyConvoy::ComputeTimeRemainingForAction( E_Action action, MT_InterpolatedFunction& timeComputer )
 {
     if( currentAction_ == action )
     {

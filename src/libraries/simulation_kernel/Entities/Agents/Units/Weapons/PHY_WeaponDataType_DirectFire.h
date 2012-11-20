@@ -60,7 +60,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_InterpolatedFunction< double > >  T_PhVector;
+    typedef std::vector< MT_InterpolatedFunction >  T_PhVector;
     typedef T_PhVector::const_iterator                          CIT_PhVector;
     //@}
 
@@ -79,7 +79,7 @@ private:
     //@}
     //! @name Helpers
     //@{
-    void ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction< double >& phFunction );
+    void ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction& phFunction );
     void NotifyFirerPerception( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const;
     bool IsFirerInsideRecognitionDistance( MIL_Agent_ABC& firer, MIL_Agent_ABC& target ) const;
     //@}

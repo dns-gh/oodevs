@@ -59,7 +59,7 @@ void WeaponSystemType::ReadDirectFireHitProbabilities( xml::xistream& xis )
 {
     std::string targetType;
     xis >> xml::attribute( "target", targetType );
-    MT_InterpolatedFunction< double >* phFunction = 0;
+    MT_InterpolatedFunction* phFunction = 0;
     tools::Iterator< const kernel::VolumeType& > it = volumes_.CreateIterator();
     while( it.HasMoreElements() )
     {
@@ -77,7 +77,7 @@ void WeaponSystemType::ReadDirectFireHitProbabilities( xml::xistream& xis )
 // Name: WeaponSystemType::ReadDirectFireHitProbability
 // Created: SBO 2008-08-14
 // -----------------------------------------------------------------------------
-void WeaponSystemType::ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction< double >* phFunction )
+void WeaponSystemType::ReadDirectFireHitProbability( xml::xistream& xis, MT_InterpolatedFunction* phFunction )
 {
     unsigned int distance = 0;
     float percentage = 0;

@@ -21,10 +21,10 @@
 
 using namespace logistic;
 
-MT_InterpolatedFunction< double > SupplyConvoyConfig::setupTime_;
-MT_InterpolatedFunction< double > SupplyConvoyConfig::loadingTime_;
-MT_InterpolatedFunction< double > SupplyConvoyConfig::unloadingTime_;
-MT_InterpolatedFunction< double > SupplyConvoyConfig::coefSpeedModificator_;
+MT_InterpolatedFunction SupplyConvoyConfig::setupTime_;
+MT_InterpolatedFunction SupplyConvoyConfig::loadingTime_;
+MT_InterpolatedFunction SupplyConvoyConfig::unloadingTime_;
+MT_InterpolatedFunction SupplyConvoyConfig::coefSpeedModificator_;
 const MIL_AgentTypePion* SupplyConvoyConfig::convoyAgentType_ = 0;
 const MIL_MissionType_ABC* SupplyConvoyConfig::convoyMissionType_ = 0;
 const SupplyConvoyFactory_ABC* SupplyConvoyConfig::stockSupplyConvoyFactory_    = &SupplyConvoyRealFactory::Instance();
@@ -36,7 +36,7 @@ const SupplyConvoyFactory_ABC* SupplyConvoyConfig::dotationSupplyConvoyFactory_ 
 
 struct SupplyConvoyConfig::LoadingWrapper
 {
-    void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< double >& data, std::pair< unsigned int, double >& upperBound )
+    void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction& data, std::pair< unsigned int, double >& upperBound )
     {
         SupplyConvoyConfig::ReadInterpolatedTime( xis, data, upperBound );
     }
@@ -136,7 +136,7 @@ void SupplyConvoyConfig::InitializeConvoyType( xml::xistream& xis )
 // Name: SupplyConvoyConfig::InitializeInterpolatedTime
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
-void SupplyConvoyConfig::InitializeInterpolatedTime( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction< double >& data )
+void SupplyConvoyConfig::InitializeInterpolatedTime( xml::xistream& xis, const std::string& strTagName, MT_InterpolatedFunction& data )
 {
     data.AddNewPoint( 0., 0. );
     LoadingWrapper loader;
@@ -153,7 +153,7 @@ void SupplyConvoyConfig::InitializeInterpolatedTime( xml::xistream& xis, const s
 // Name: SupplyConvoyConfig::ReadTime
 // Created: ABL 2007-07-24
 // -----------------------------------------------------------------------------
-void SupplyConvoyConfig::ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< double >& data, std::pair< unsigned int, double >& upperBound )
+void SupplyConvoyConfig::ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction& data, std::pair< unsigned int, double >& upperBound )
 {
     unsigned int nNbrCamions;
     double rTime;
