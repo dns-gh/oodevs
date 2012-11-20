@@ -400,6 +400,7 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
     , vSpeedEffectInfos_    ()
     , vFireEffectInfos_     ()
     , vFireEffectRoeInfos_  ()
+    , vUrbanEffectInfos_    ()
 {
     Initialize();
 }
@@ -420,6 +421,7 @@ ADN_Population_Data::PopulationInfos::PopulationInfos( unsigned int id )
     , vSpeedEffectInfos_    ()
     , vFireEffectInfos_     ()
     , vFireEffectRoeInfos_  ()
+    , vUrbanEffectInfos_    ()
 {
     Initialize();
     ADN_Population_Data::idManager_.Lock( id );
@@ -482,6 +484,7 @@ ADN_Population_Data::PopulationInfos* ADN_Population_Data::PopulationInfos::Crea
     {
         pCopy->vSpeedEffectInfos_[ i ] = vSpeedEffectInfos_[ i ];
         pCopy->vFireEffectInfos_ [ i ] = vFireEffectInfos_ [ i ];
+        pCopy->vUrbanEffectInfos_[ i ] = vUrbanEffectInfos_[ i ];
     }
     for( unsigned int i = 0; i < vFireEffectRoeInfos_.size(); ++i )
         pCopy->vFireEffectRoeInfos_[ i ] = vFireEffectRoeInfos_[ i ];
