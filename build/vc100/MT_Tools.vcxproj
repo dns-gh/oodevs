@@ -103,7 +103,6 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_String.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Tools_Types.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Version.h" />
-    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ConstantInterpolation.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_InterpolatedFunction.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_LinearInterpolation.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_GaussianRandom.h" />

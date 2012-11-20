@@ -12,10 +12,21 @@
 #ifndef __MT_InterpolatedFunction_h_
 #define __MT_InterpolatedFunction_h_
 
-#include "MT_LinearInterpolation.h"
 #include <vector>
 
-template < typename TypeIn, typename TypeOut = TypeIn, class Interpolation = MT_LinearInterpolation< TypeIn, TypeOut > >
+template < class TypeIn, class TypeOut >
+TypeOut Interpolate( const TypeIn& x1, const TypeOut& y1, const TypeIn& x2, const TypeOut& y2, const TypeIn& x )
+{
+    return (TypeOut)( y2 + ( y1 - y2 ) * ( x2 - x ) / ( x2 - x1 ) );
+}
+
+template < class TypeIn, class TypeOut >
+TypeIn InverseInterpolate( const TypeIn& x1, const TypeOut& y1, const TypeIn& x2, const TypeOut& y2, const TypeOut& y )
+{
+    return y1 == y2 ? y == y1 ? x2 : 0  : (TypeIn)( x2 + ( x1 - x2 ) * ( y2 - y ) / ( y2 - y1 ) );
+}
+
+template < typename TypeIn, typename TypeOut = TypeIn >
 class MT_InterpolatedFunction
 {
 public:
@@ -27,9 +38,9 @@ public:
 
 public:
     MT_InterpolatedFunction()
-        : interpolation_(), knownData_(), useBeforeDefault_( false ), beforeDefaultValue_( TypeOut() ), useAfterDefault_( false ), afterDefaultValue_( TypeOut() ) {}
+        : knownData_(), useBeforeDefault_( false ), beforeDefaultValue_( TypeOut() ), useAfterDefault_( false ), afterDefaultValue_( TypeOut() ) {}
     MT_InterpolatedFunction( const TypeOut& beforeVal, const TypeOut& afterVal )
-        : interpolation_(), knownData_(), useBeforeDefault_( true ), beforeDefaultValue_( beforeVal ), useAfterDefault_( true ), afterDefaultValue_( afterVal ) {}
+        : knownData_(), useBeforeDefault_( true ), beforeDefaultValue_( beforeVal ), useAfterDefault_( true ), afterDefaultValue_( afterVal ) {}
     virtual ~MT_InterpolatedFunction() {}
 
     void SetBeforeValue( const TypeOut& val )
@@ -86,7 +97,7 @@ public:
 
         CIT_Points it0 = it;
         --it0;
-        return interpolation_( it0->first, it0->second, it->first, it->second, x );
+        return Interpolate( it0->first, it0->second, it->first, it->second, x );
     }
 
     // $$$$ JVT : Fonction un peu pourrie....
@@ -106,7 +117,7 @@ public:
             if( y <= it2->second )
                 return it2->first;
 
-            TypeIn rRes = interpolation_.InverseInterpolation( it1->first, it1->second, it2->first, it2->second, y );
+            TypeIn rRes = InverseInterpolate( it1->first, it1->second, it2->first, it2->second, y );
             if( rRes >= it1->first && rRes <= it2->first && rRes >= (TypeIn)0 )
                 return rRes;
         }
@@ -130,7 +141,7 @@ public:
             if( y <= it2->second )
                 return it2->first;
 
-            TypeIn rRes = interpolation_.InverseInterpolation( it2->first, it2->second, it1->first, it1->second, y );
+            TypeIn rRes = InverseInterpolate( it2->first, it2->second, it1->first, it1->second, y );
             if( rRes <= it1->first && rRes >= it2->first && rRes >= (TypeIn)0 )
                 return rRes;
         }
@@ -138,7 +149,6 @@ public:
     }
 
 private:
-    Interpolation interpolation_;
     T_Points      knownData_;
 
     TypeOut       beforeDefaultValue_;
