@@ -84,8 +84,8 @@ private:
     void Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
     void LoadKeyFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback );
-    void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback );
-    void LoadSimToClientMessage( char*& input, MessageHandler_ABC& handler );
+    void LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback, bool synchronized );
+    void LoadSimToClientMessage( char*& input, MessageHandler_ABC& handler, bool synchronized );
     //@}
 
 private:

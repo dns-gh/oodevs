@@ -28,7 +28,6 @@ using namespace dispatcher;
 
 namespace
 {
-    boost::mutex filesAccessMutex_;
     const std::string infoFileName( "info" );
     const std::string indexFileName( "index" );
     const std::string keyIndexFileName( "keyindex" );
@@ -72,10 +71,10 @@ MessageLoader::~MessageLoader()
 // -----------------------------------------------------------------------------
 bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
+    boost::mutex::scoped_lock lock( dataAccessMutex_ );
     ++frameNumber;
     if( disk_.get() )
     {
-        boost::mutex::scoped_lock lock( dataAccessMutex_ );
         for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
@@ -87,7 +86,6 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
     {
         if( !SwitchToFragment( frameNumber ) )
             return false;
-        boost::mutex::scoped_lock lock( dataAccessMutex_ );
         const Frame& current = frames_[ frameNumber - fragmentsInfos_[ currentOpenFolder_ ].first ];
         Load( updates_, current.offset_, current.size_, handler, callback );
     }
@@ -100,11 +98,11 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
 // -----------------------------------------------------------------------------
 void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
+    boost::mutex::scoped_lock lock( dataAccessMutex_ );
     synchronisation_ = frameNumber != 0;
     ++frameNumber;
     if( disk_.get() )
     {
-        boost::mutex::scoped_lock lock( dataAccessMutex_ );
         for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
@@ -153,6 +151,7 @@ unsigned int MessageLoader::GetFirstTick() const
 // -----------------------------------------------------------------------------
 unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
 {
+    boost::mutex::scoped_lock lock( dataAccessMutex_ );
     ++frameNumber;
     if( !SwitchToFragment( frameNumber ) )
         return 0;
@@ -170,11 +169,11 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
 {
     try
     {
-        boost::mutex::scoped_lock lock( filesAccessMutex_ );
         unsigned int tick = beginTick;
         while( tick <= endTick )
         {
             bool incremented = false;
+            boost::mutex::scoped_lock lock( dataAccessMutex_ );
             for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             {
                 if( tick >= it->second.first && tick <= it->second.second )
@@ -302,7 +301,6 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
 // -----------------------------------------------------------------------------
 void MessageLoader::AddFolder( const std::string& folderName )
 {
-    boost::mutex::scoped_lock lock( filesAccessMutex_ );
     std::ifstream infoFile;
     unsigned int start;
     unsigned int end;
@@ -393,29 +391,22 @@ namespace
 bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
 {
     frameNumber = std::max( firstTick_, std::min( frameNumber, tickCount_ ) );
-    {
-        boost::mutex::scoped_lock lock( dataAccessMutex_ );
-        const bool doSwitch = currentOpenFolder_.empty()
-            || frameNumber < fragmentsInfos_[ currentOpenFolder_ ].first
-            || frameNumber > fragmentsInfos_[ currentOpenFolder_ ].second;
-        if( !doSwitch )
-            return true;
-    }
+    const bool doSwitch = currentOpenFolder_.empty()
+                       || frameNumber < fragmentsInfos_[ currentOpenFolder_ ].first
+                       || frameNumber > fragmentsInfos_[ currentOpenFolder_ ].second;
+    if( !doSwitch )
+        return true;
 
     frames_.clear();
     keyFrames_.clear();
-    if( !currentOpenFolder_.empty() )
-    {
-        boost::mutex::scoped_lock lock( filesAccessMutex_ );
-        updates_.close();
-        keys_.close();
-        currentOpenFolder_.clear();
-    }
+    updates_.close();
+    keys_.close();
+    currentOpenFolder_.clear();
+
     for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
         if( frameNumber >= it->second.first && frameNumber <= it->second.second )
         {
             currentOpenFolder_ = it->first;
-            boost::mutex::scoped_lock lock( filesAccessMutex_ );
             std::ifstream index, keyIndex;
             OpenFile( index, currentOpenFolder_, indexFileName );
             OpenFile( keyIndex, currentOpenFolder_, keyIndexFileName );
@@ -461,7 +452,7 @@ void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, Messa
 {
     in.seekg( from );
     boost::shared_ptr< Buffer > buffer( boost::make_shared< Buffer >( size, boost::ref( in ) ) );
-    LoadBuffer( buffer, handler, callback );
+    LoadBuffer( buffer, handler, callback, synchronisation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -470,7 +461,6 @@ void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, Messa
 // -----------------------------------------------------------------------------
 void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
 {
-    boost::mutex::scoped_lock fileLock( filesAccessMutex_ );
     std::ifstream index;
     OpenFile( index, folder, indexFileName );
     T_Frames frames;
@@ -484,7 +474,7 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
     boost::shared_ptr< Buffer > buffer( boost::make_shared< Buffer >( current.size_, boost::ref( file ) ) );
     file.close();
     YieldMessages( cpu_->PendingMessages() );
-    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ), callback ) );
+    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -493,7 +483,6 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
 // -----------------------------------------------------------------------------
 void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
 {
-    boost::mutex::scoped_lock lock( filesAccessMutex_ );
     std::ifstream index;
     OpenFile( index, folder, keyIndexFileName );
     T_KeyFrames keyFrames;
@@ -508,18 +497,21 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     boost::shared_ptr< Buffer > buffer( boost::make_shared< Buffer >( keyFrame.size_, boost::ref( file ) ) );
     file.close();
     YieldMessages( cpu_->PendingMessages() );
-    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ), callback ) );
+    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::LoadBuffer
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer, MessageHandler_ABC& handler, const T_Callback& callback )
+void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer,
+                                MessageHandler_ABC& handler,
+                                const T_Callback& callback,
+                                bool synchronized )
 {
     char* current = buffer->data_;
     while( current < buffer->data_ + buffer->size_ )
-        LoadSimToClientMessage( current, handler );
+        LoadSimToClientMessage( current, handler, synchronized );
     if( callback )
         callback();
 }
@@ -528,7 +520,8 @@ void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer, Messa
 // Name: MessageLoader::LoadSimToClientMessage
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& handler )
+void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& handler,
+                                            bool synchronized )
 {
     unsigned int messageSize = *reinterpret_cast< const unsigned int* >( input );
     input += sizeof( unsigned int );
@@ -537,7 +530,7 @@ void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& ha
         throw std::runtime_error( __FUNCTION__ ": message deserialization failed." );
     // $$$$ JSR 2010-07-01: In synchronisation mode, we must not send order messages, as they were already sent,
     // to avoid them to be displayed several times in timeline (mantis 3725)
-    if( synchronisation_ && message.has_message() )
+    if( synchronized && message.has_message() )
     {
         if( message.message().has_unit_order() )
             message.mutable_message()->mutable_unit_order()->mutable_type()->set_id( 0 );
