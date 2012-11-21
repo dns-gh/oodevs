@@ -659,9 +659,9 @@
   </report>
   <report category="operational" id="447" message="Les officiers de l'unité ont subi un attentat"/>
   <report category="operational" id="448" message="L'unité n'est pas rendue à mon camp"/>
-  <report category="operational" id="449" message="Véhicule en panne (matériel : %1) mais pas de moyen nécessaire">
+  <report category="operational" id="449" message="Pas de moyens pour réparer %1">
     <parameter type="EquipmentType"/>
   </report>
   <report category="operational" id="450" message="Donneur indisponible"/>
 </reports>
-<!-- signature="2225221130" -->
+<!-- signature="1985116679" -->
