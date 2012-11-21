@@ -382,39 +382,39 @@ namespace
 bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
 {
     frameNumber = std::max( firstTick_, std::min( frameNumber, tickCount_ ) );
-    bool doSwitch = false;
     {
         boost::mutex::scoped_lock lock( dataAccessMutex_ );
-        doSwitch = currentOpenFolder_.empty() || frameNumber < fragmentsInfos_[ currentOpenFolder_ ].first || frameNumber > fragmentsInfos_[ currentOpenFolder_ ].second;
+        const bool doSwitch = currentOpenFolder_.empty()
+            || frameNumber < fragmentsInfos_[ currentOpenFolder_ ].first
+            || frameNumber > fragmentsInfos_[ currentOpenFolder_ ].second;
+        if( !doSwitch )
+            return true;
     }
-    if( doSwitch )
+
+    frames_.clear();
+    keyFrames_.clear();
+    if( !currentOpenFolder_.empty() )
     {
-        frames_.clear();
-        keyFrames_.clear();
-        if( !currentOpenFolder_.empty() )
-        {
-            boost::mutex::scoped_lock lock( filesAccessMutex_ );
-            updates_.close();
-            keys_.close();
-            currentOpenFolder_.clear();
-        }
-        for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
-            if( frameNumber >= it->second.first && frameNumber <= it->second.second )
-            {
-                currentOpenFolder_ = it->first;
-                boost::mutex::scoped_lock lock( filesAccessMutex_ );
-                std::ifstream index, keyIndex;
-                OpenFile( index, currentOpenFolder_, indexFileName );
-                OpenFile( keyIndex, currentOpenFolder_, keyIndexFileName );
-                OpenFile( updates_, currentOpenFolder_, updateFileName );
-                OpenFile( keys_, currentOpenFolder_, keyFileName );
-                LoadIndexes( frames_, index );
-                LoadIndexes( keyFrames_, keyIndex );
-                return true;
-            }
-        return false;
+        boost::mutex::scoped_lock lock( filesAccessMutex_ );
+        updates_.close();
+        keys_.close();
+        currentOpenFolder_.clear();
     }
-    return true;
+    for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+        if( frameNumber >= it->second.first && frameNumber <= it->second.second )
+        {
+            currentOpenFolder_ = it->first;
+            boost::mutex::scoped_lock lock( filesAccessMutex_ );
+            std::ifstream index, keyIndex;
+            OpenFile( index, currentOpenFolder_, indexFileName );
+            OpenFile( keyIndex, currentOpenFolder_, keyIndexFileName );
+            OpenFile( updates_, currentOpenFolder_, updateFileName );
+            OpenFile( keys_, currentOpenFolder_, keyFileName );
+            LoadIndexes( frames_, index );
+            LoadIndexes( keyFrames_, keyIndex );
+            return true;
+        }
+    return false;
 }
 
 namespace dispatcher
