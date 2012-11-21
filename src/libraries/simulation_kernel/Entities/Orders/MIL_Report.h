@@ -158,6 +158,7 @@ public:
         eRC_PrisSousTirFumigene = 445,
         eRC_DetectedObject = 446,
         eRC_RepairEvacuationNoMeans = 449,
+        eRC_SupplierUnavailable = 450,
     };
     //@}
 public:

@@ -461,4 +461,5 @@ eRC_DetectedObject = 446
 eRC_OfficersKilled = 447
 eRC_UnitNotCaptured = 448
 eRC_RepairEvacuationNoMeans = 449
-eNbr = 450
+eRC_SupplierUnavailable = 450
+eNbr = 451

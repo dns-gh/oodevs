@@ -662,5 +662,6 @@
   <report category="operational" id="449" message="Véhicule en panne mais pas de moyen nécessaire">
     <parameter type="EquipmentType"/>
   </report>
+  <report category="operational" id="450" message="Supplier is unavailable"/>
 </reports>
-<!-- signature="3947471213" -->
+<!-- signature="0816587010" -->
