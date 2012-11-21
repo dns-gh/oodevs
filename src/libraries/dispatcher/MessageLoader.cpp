@@ -40,8 +40,9 @@ namespace
 // Name: MessageLoader constructor
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-MessageLoader::MessageLoader( const Config& config, bool threaded, ClientPublisher_ABC* clients )
-    : config_   ( config )
+MessageLoader::MessageLoader( const bfs::path& records, bool threaded,
+                              ClientPublisher_ABC* clients )
+    : records_  ( records )
     , clients_  ( clients )
     , firstTick_( std::numeric_limits< unsigned int >::max() )
     , tickCount_( 0 )
@@ -256,13 +257,12 @@ namespace
 // -----------------------------------------------------------------------------
 void MessageLoader::ScanDataFolders( bool forceAdd )
 {
-    const bfs::path dir( config_.GetRecordDirectory() );
     for( ;; )
     {
-        if( bfs::exists( dir ) )
+        if( bfs::exists( records_ ) )
         {
             boost::mutex::scoped_lock lock( access_ );
-            for( bfs::directory_iterator it( dir ); it !=  bfs::directory_iterator(); ++it )
+            for( bfs::directory_iterator it( records_ ); it !=  bfs::directory_iterator(); ++it )
                 try
                 {
                     if( !IsValidRecordDir( it ) )
@@ -329,7 +329,7 @@ void MessageLoader::AddFolder( const std::string& folderName )
 // -----------------------------------------------------------------------------
 bool MessageLoader::OpenFile( std::ifstream& stream, const std::string& folder, const std::string& file ) const
 {
-    const bfs::path dir = bfs::path( config_.GetRecordDirectory() ) / folder / file;
+    const bfs::path dir = records_ / folder / file;
     if( !bfs::exists( dir ) )
         return false;
     stream.open( dir.string().c_str(), std::ios_base::binary | std::ios_base::in );

@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
+#include "Config.h"
 #include "Loader.h"
 #include "ReplayModel_ABC.h"
 #include "MessageLoader.h"
@@ -23,7 +24,7 @@ using namespace dispatcher;
 Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, ClientPublisher_ABC* clients )
     : model_          ( model )
     , handler_        ( handler )
-    , loader_         ( new MessageLoader( config, false, clients ) )
+    , loader_         ( new MessageLoader( config.GetRecordDirectory(), false, clients ) )
     , currentFrame_   ( 0 )
     , currentKeyFrame_( 0 )
 {
