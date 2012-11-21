@@ -14,6 +14,7 @@
 #include <boost/filesystem/convenience.hpp>
 #pragma warning( push, 0 )
 #include <QtGui/qapplication.h>
+#include <QtCore/QDir>
 #include <QtCore/qsettings.h>
 #pragma warning( pop )
 
@@ -26,15 +27,19 @@ namespace
     QString GetDirectory()
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readEntry( "/Common/Components/Terrain/RootDirectory", "noValue" );
+        QString directory = settings.value( "/Common/Components/Terrain/RootDirectory" ).toString();
+        if( directory.isNull() )
+        {
+            bfs::path dirPath = bfs::path( QApplication::applicationDirPath().toStdWString() )
+                .parent_path() / "Terrain" / "applications";
+            directory = QString::fromStdWString( dirPath.wstring() );
+        }
+        return directory;
     }
 
     std::string GetExecutable()
     {
-        std::string directory = GetDirectory().toStdString();
-        if( directory == "noValue" )
-            directory = ( bfs::current_path().branch_path() / "Terrain" / "applications" ).string();
-        return bfs::path( bfs::path( directory ) / "generation_app.exe" ).string();
+        return ( bfs::path( GetDirectory().toStdWString() ) / "generation_app.exe" ).string();
     }
 }
 
@@ -49,10 +54,7 @@ CreateTerrain::CreateTerrain( const tools::GeneralConfig& config, const QString&
     bfs::create_directories( directory );
 
     AddArgument( QString( "--out=\"%1\"" ).arg( directory.c_str() ) );
-    QString qdirectory = GetDirectory();
-    std::string rundirectory = qdirectory.toStdString();
-    if( rundirectory != "noValue" )
-        SetWorkingDirectory( qdirectory );
+    SetWorkingDirectory( GetDirectory() );
 }
 
 // -----------------------------------------------------------------------------
