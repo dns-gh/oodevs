@@ -42,6 +42,7 @@ include "integration/QueriesIntegration.lua"
 include "integration/IdentifyingIntegration.lua"
 include "integration/LoadableIntegration.lua"
 include "integration/DamageableIntegration.lua"
+include "integration/ToxicalIntegration.lua"
 
 include "integration/PositionableIntegration.lua"
 include "integration/SafeguardableIntegration.lua"
