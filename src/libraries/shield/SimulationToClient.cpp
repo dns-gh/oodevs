@@ -2027,7 +2027,8 @@ void SimulationToClient::Convert( const sword::CrowdFlowKnowledgeUpdate& from, M
     CONVERT_ID( knowledge );
     CONVERT_ID( crowd );
     CONVERT_ID( knowledge_group );
-    CONVERT_ID( flow );
+    if( from.has_flow() && from.flow().id() != 0 )
+        to->mutable_flow()->set_id( from.flow().id() );
     CONVERT_LIST_TO( parts, portions_flux, elem, ConvertFlowPart );
     CONVERT_CB( direction, ConvertHeading );
     CONVERT_TO( speed, vitesse );
