@@ -34,21 +34,22 @@ PropagationManager::~PropagationManager()
 // Name: PropagationManager::Initialize
 // Created: LGY 2012-11-07
 // -----------------------------------------------------------------------------
-void PropagationManager::Initialize( const std::string& config )
+void PropagationManager::Initialize( const std::string& config, const std::string& time )
 {
     bfs::path path( config );
     bfs::path parent( path.parent_path() );
     xml::xifstream xis( path.string() );
+    boost::posix_time::ptime startTime;
+    boost::posix_time::time_duration delta;
+    if( time != "" )
+       startTime = boost::posix_time::from_iso_string( time );
     xis >> xml::start( "config" )
             >> xml::content( "projection", projection_ )
                 >> xml::start( "files" )
-                    >> xml::list( "file", *this, &PropagationManager::ReadFile, parent )
+                    >> xml::list( "file", *this, &PropagationManager::ReadFile, parent, startTime, delta )
                 >> xml::end
-                >> xml::optional
-                    >> xml::start( "colors" )
-                        >> xml::list( "color", *this, &PropagationManager::ReadColor )
-                    >> xml::end
         >> xml::end;
+
     projection_ = bfs::path( parent / projection_ ).string();
 }
 
@@ -67,19 +68,15 @@ namespace
 // Name: PropagationManager::ReadFile
 // Created: LGY 2012-11-07
 // -----------------------------------------------------------------------------
-void PropagationManager::ReadFile( xml::xistream& xis, const boost::filesystem::path& path )
+void PropagationManager::ReadFile( xml::xistream& xis, const boost::filesystem::path& path,
+                                   const boost::posix_time::ptime& startTime, boost::posix_time::time_duration & delta )
 {
-    schedule_[ Convert( xis.attribute< std::string >( "time" ) ) ]
-        .push_back( bfs::path( path / bfs::path( xis.value< std::string >() ).filename() ).string() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropagationManager::ReadColor
-// Created: LGY 2012-11-07
-// -----------------------------------------------------------------------------
-void PropagationManager::ReadColor( xml::xistream& xis )
-{
-    colors_[ xis.attribute< float >( "threshold" ) ] = xis.value< std::string >().c_str();
+    boost::posix_time::ptime time = Convert( xis.attribute< std::string >( "time" ) );
+    if( !startTime.is_not_a_date_time() && schedule_.empty() && startTime > time )
+        delta = startTime - time;
+    if( !delta.is_not_a_date_time() )
+        time += delta;
+    schedule_[ time ].push_back( bfs::path( path / bfs::path( xis.value< std::string >() ).filename() ).string() );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,18 +105,4 @@ PropagationManager::T_Files PropagationManager::GetFiles( const std::string& tim
         return files;
     }
     return T_Files();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropagationManager::GetColor
-// Created: LGY 2012-11-07
-// -----------------------------------------------------------------------------
-std::string PropagationManager::GetColor( float value ) const
-{
-    if( colors_.empty() )
-        return "#00FF00";
-    CIT_Colors it = colors_.lower_bound( value );
-    if( it == colors_.end() )
-        return "#00FF00";
-    return it->second;
 }

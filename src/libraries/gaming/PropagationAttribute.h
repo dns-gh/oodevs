@@ -27,6 +27,9 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class CoordinateConverter_ABC;
+    class ObjectType;
+    class DisasterTypes;
+    class DisasterType;
 }
 
 class Simulation;
@@ -47,7 +50,8 @@ class PropagationAttribute : public kernel::DisasterAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PropagationAttribute( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
+             PropagationAttribute( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+                                   const kernel::ObjectType& type, const kernel::DisasterTypes& disasterTypes );
     virtual ~PropagationAttribute();
     //@}
 
@@ -83,6 +87,7 @@ private:
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     std::auto_ptr< PropagationManager > pManager_;
+    const kernel::DisasterType& disasterType_;
     T_Propagations propagations_;
     //@}
 };

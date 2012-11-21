@@ -1,0 +1,108 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "simulation_kernel_pch.h"
+#include "DisasterCapacity.h"
+#include "Object.h"
+#include "DisasterAttribute.h"
+#include "MIL_DisasterType.h"
+#include <xeumeuleu/xml.hpp>
+
+BOOST_CLASS_EXPORT_IMPLEMENT( DisasterCapacity )
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity constructor
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+DisasterCapacity::DisasterCapacity( xml::xistream& xis )
+    : type_( xis.attribute< std::string >( "model" ) )
+{
+    disasterType_ = MIL_DisasterType::Find( type_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity constructor
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+DisasterCapacity::DisasterCapacity()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity constructor
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+DisasterCapacity::DisasterCapacity( const DisasterCapacity& from )
+    : type_( from.type_ )
+{
+    disasterType_ = MIL_DisasterType::Find( type_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity destructor
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+DisasterCapacity::~DisasterCapacity()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity::load
+// Created: LGY 2012-11-21
+// -----------------------------------------------------------------------------
+void DisasterCapacity::load( MIL_CheckPointInArchive& archive, const unsigned int )
+{
+    archive >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+            >> type_;
+    disasterType_ = MIL_DisasterType::Find( type_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity::save
+// Created: LGY 2012-11-21
+// -----------------------------------------------------------------------------
+void DisasterCapacity::save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
+{
+    archive << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+            << type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity::Register
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+void DisasterCapacity::Register( MIL_Object_ABC& object )
+{
+    object.AddCapacity( this );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity::Instanciate
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+void DisasterCapacity::Instanciate( MIL_Object_ABC& object ) const
+{
+    DisasterCapacity* capacity = new DisasterCapacity( *this );
+    object.AddCapacity( capacity );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity::Update
+// Created: LGY 2012-11-20
+// -----------------------------------------------------------------------------
+void DisasterCapacity::Update( MIL_Object_ABC& object, unsigned int time )
+{
+    DisasterAttribute* disaster = object.RetrieveAttribute< DisasterAttribute >();
+    if( disaster )
+        disaster->UpdateLocalisation( object, time );
+}

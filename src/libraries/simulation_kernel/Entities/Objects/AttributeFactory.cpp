@@ -32,7 +32,7 @@
 #include "SupplyRouteAttribute.h"
 #include "TimeLimitedAttribute.h"
 #include "UndergroundAttribute.h"
-#include "InputPropagationAttribute.h"
+#include "DisasterAttribute.h"
 #include "BuildableCapacity.h"
 #include "ImprovableCapacity.h"
 #include "TrafficabilityAttribute.h"
@@ -113,7 +113,7 @@ AttributeFactory::AttributeFactory()
     Register( "obstacle", boost::bind( &AddBuilder< ObstacleAttribute >::Add, _1, _2 ) );
     Register( "nbc-agents", boost::bind( &AddBuilder< NBCAttribute >::Add, _1, _2 ) );
     Register( "input-toxic-cloud", boost::bind( &AddBuilder< InputToxicCloudAttribute, ToxicAttribute_ABC >::Add, _1, _2 ) );
-    Register( "input-propagation", boost::bind( &AddBuilder< InputPropagationAttribute >::Add, _1, _2 ) );
+    Register( "disaster", boost::bind( &AddBuilder< DisasterAttribute >::Add, _1, _2 ) );
     Register( "activity-time", boost::bind( &AddBuilder< TimeLimitedAttribute >::Add, _1, _2 ) );
     Register( "crossing-site", boost::bind( &AddBuilder< CrossingSiteAttribute >::Add, _1, _2 ) );
     Register( "fire", boost::bind( &AddBuilder< FireAttribute >::Add, _1, _2 ) );

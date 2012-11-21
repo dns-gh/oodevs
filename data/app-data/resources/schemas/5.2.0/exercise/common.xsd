@@ -257,7 +257,7 @@
 			<xs:element name="disaster" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="source" type="xs:string" use="required"/>
-					<xs:attribute name="date" type="xs:nonNegativeInteger" use="optional"/>
+					<xs:attribute name="date" type="xs:string" use="optional"/>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="stock" minOccurs="0">

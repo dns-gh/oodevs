@@ -2634,9 +2634,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\DirectFirePopulationEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationAttribute.cpp">
-      <Filter>Source Files\Entities\Objects\Attributes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Adapters\FlyingShellPerceptionEventListener.cpp">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClCompile>
@@ -2657,6 +2654,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticCapacity.cpp">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DisasterAttribute.cpp">
+      <Filter>Source Files\Entities\Objects\Attributes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DisasterCapacity.cpp">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DisasterType.cpp">
+      <Filter>Source Files\Entities\Objects\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -5420,9 +5426,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\ModelCounter.h">
       <Filter>Source Files\Adapters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InputPropagationAttribute.h">
-      <Filter>Source Files\Entities\Objects\Attributes</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\FlyingShellPerceptionEventListener.h">
       <Filter>Source Files\Adapters\EventListeners</Filter>
     </ClInclude>
@@ -5440,6 +5443,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\LogisticCapacity.h">
       <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DisasterAttribute.h">
+      <Filter>Source Files\Entities\Objects\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DisasterCapacity.h">
+      <Filter>Source Files\Entities\Objects\Capacities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DisasterType.h">
+      <Filter>Source Files\Entities\Objects\Models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -72,6 +72,7 @@
 #include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_DisasterType.h"
 #include "propagation/FloodModel.h"
 #include "Inhabitants/MIL_InhabitantType.h"
 #include "Inhabitants/MIL_Inhabitant.h"
@@ -169,6 +170,7 @@ void TerminateMilitarySingletons()
     MIL_AgentTypePion             ::Terminate();
     MIL_NbcAgentType              ::Terminate();
     MIL_FireClass                 ::Terminate();
+    MIL_DisasterType              ::Terminate();
     MIL_MedicalTreatmentType      ::Terminate();
     MIL_KnowledgeGroupType        ::Terminate();
     MIL_PopulationType            ::Terminate();

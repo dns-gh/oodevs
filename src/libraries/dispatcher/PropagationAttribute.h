@@ -41,6 +41,7 @@ private:
     //! @name Data member
     //@{
     std::string model_;
+    std::string date_;
     //@}
 };
 

@@ -38,6 +38,14 @@ public:
     //! @name Operations
     //@{
     const std::string& GetName() const;
+    QColor GetColor( double value ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::map< double, QColor > T_Color;
+    typedef T_Color::const_iterator  CIT_Color;
     //@}
 
 private:
@@ -47,16 +55,10 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< double, std::string > T_Contamination;
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::string name_;
-    T_Contamination contamination_;
+    T_Color color_;
     //@}
 };
 

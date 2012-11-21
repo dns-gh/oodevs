@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "DisasterType.h"
+#include <boost/algorithm/string/replace.hpp>
 
 using namespace kernel;
 
@@ -39,7 +40,9 @@ DisasterType::~DisasterType()
 // -----------------------------------------------------------------------------
 void DisasterType::ReadContaminationThresholds( xml::xistream& xis )
 {
-    contamination_[ xis.attribute< double > ( "value" ) ] = xis.attribute< std::string >( "color" );
+    std::string color = xis.attribute< std::string >( "color" );
+    boost::replace_all( color, "0x", "#" );
+    color_[ xis.attribute< double > ( "value" ) ] = QColor( color.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,4 +52,18 @@ void DisasterType::ReadContaminationThresholds( xml::xistream& xis )
 const std::string& DisasterType::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterType::GetColor
+// Created: LGY 2012-11-21
+// -----------------------------------------------------------------------------
+QColor DisasterType::GetColor( double value ) const
+{
+    if( color_.empty() )
+        return Qt::blue;
+    CIT_Color it = color_.lower_bound( value );
+    if( it == color_.end() )
+        return Qt::blue;
+    return it->second;
 }

@@ -57,6 +57,7 @@
 #include "UrbanDestructionCapacity.h"
 #include "WorkableCapacity.h"
 #include "TrafficabilityCapacity.h"
+#include "DisasterCapacity.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -189,6 +190,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
     DoRegister( "urban-destruction", boost::bind( &AddBuilder< UrbanDestructionCapacity >::Add, _1, _2 ) );
     DoRegister( "trafficability", boost::bind( &AddBuilder< TrafficabilityCapacity >::Add, _1, _2 ) );
+    DoRegister( "disaster", boost::bind( &AddBuilder< DisasterCapacity >::Add, _1, _2 ) );
 
     // $$$$ BCI 2011-01-05: comment faire plus simple?
     boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );

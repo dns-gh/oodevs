@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "InputPropagationAttribute.h"
+#include "DisasterAttribute.h"
 #include "MIL_AgentServer.h"
 #include "protocol/Protocol.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -18,15 +18,15 @@
 #include "propagation/ASCExtractor.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-BOOST_CLASS_EXPORT_IMPLEMENT( InputPropagationAttribute )
+BOOST_CLASS_EXPORT_IMPLEMENT( DisasterAttribute )
 
 namespace bpt = boost::posix_time;
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute constructor
+// Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-InputPropagationAttribute::InputPropagationAttribute()
+DisasterAttribute::DisasterAttribute()
     : pManager_( new PropagationManager() )
 {
     // NOTHING
@@ -41,64 +41,70 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute constructor
+// Name: DisasterAttribute constructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-InputPropagationAttribute::InputPropagationAttribute( xml::xistream& xis )
+DisasterAttribute::DisasterAttribute( xml::xistream& xis )
     : model_   ( BuildPropagationFile( xis.attribute< std::string >( "source" ) ) )
+    , date_    ( xis.attribute< std::string >( "date", "" ) )
     , pManager_( new PropagationManager() )
 {
-    pManager_->Initialize( model_ );
+    pManager_->Initialize( model_, date_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute::operator=
+// Name: DisasterAttribute::operator=
 // Created: LGY 2012-11-08
 // -----------------------------------------------------------------------------
-InputPropagationAttribute& InputPropagationAttribute::operator=( const InputPropagationAttribute& rhs )
+DisasterAttribute& DisasterAttribute::operator=( const DisasterAttribute& rhs )
 {
     model_ = rhs.model_;
-    pManager_->Initialize( model_ );
+    date_ = rhs.date_;
+    pManager_->Initialize( model_, date_ );
     return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute destructor
+// Name: DisasterAttribute destructor
 // Created: LGY 2012-10-05
 // -----------------------------------------------------------------------------
-InputPropagationAttribute::~InputPropagationAttribute()
+DisasterAttribute::~DisasterAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute::SendFullState
+// Name: DisasterAttribute::SendFullState
 // Created: LGY 2012-10-08
 // -----------------------------------------------------------------------------
-void InputPropagationAttribute::SendFullState( sword::ObjectAttributes& asn ) const
+void DisasterAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_propagation()->set_model( model_ );
+    if( date_ != "" )
+        asn.mutable_propagation()->set_date( date_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute::load
+// Name: DisasterAttribute::load
 // Created: LGY 2012-11-08
 // -----------------------------------------------------------------------------
-void InputPropagationAttribute::load( MIL_CheckPointInArchive& archive, const unsigned int )
+void DisasterAttribute::load( MIL_CheckPointInArchive& archive, const unsigned int )
 {
     archive >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-            >> model_;
-    pManager_->Initialize( model_ );
+            >> model_
+            >> date_;
+    pManager_->Initialize( model_, date_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute::save
+// Name: DisasterAttribute::save
 // Created: LGY 2012-11-08
 // -----------------------------------------------------------------------------
-void InputPropagationAttribute::save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
+void DisasterAttribute::save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
 {
     archive << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
-            << model_;
+            << model_
+            << date_;
 }
 
 namespace
@@ -117,10 +123,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: InputPropagationAttribute::UpdateLocalisation
+// Name: DisasterAttribute::UpdateLocalisation
 // Created: LGY 2012-11-08
 // -----------------------------------------------------------------------------
-void InputPropagationAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int time )
+void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int time )
 {
     const bpt::ptime realTime( bpt::from_time_t( MIL_AgentServer::GetWorkspace().TickToRealTime( time ) ) );
     PropagationManager::T_Files files = pManager_->GetFiles( boost::posix_time::to_iso_string( realTime ) );

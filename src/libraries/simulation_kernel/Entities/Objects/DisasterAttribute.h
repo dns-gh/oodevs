@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef InputPropagationAttribute_h
-#define InputPropagationAttribute_h
+#ifndef DisasterAttribute_h
+#define DisasterAttribute_h
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
@@ -28,20 +28,20 @@ class PropagationManager;
 class ASCExtractor;
 
 // =============================================================================
-/** @class  InputPropagationAttribute
-    @brief  Input propagation attribute
+/** @class  DisasterAttribute
+    @brief  Disaster attribute
 */
 // Created: LGY 2012-10-05
 // =============================================================================
-class InputPropagationAttribute : public ObjectAttribute_ABC
+class DisasterAttribute : public ObjectAttribute_ABC
                                 , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InputPropagationAttribute();
-    explicit InputPropagationAttribute( xml::xistream& xis );
-    virtual ~InputPropagationAttribute();
+             DisasterAttribute();
+    explicit DisasterAttribute( xml::xistream& xis );
+    virtual ~DisasterAttribute();
     //@}
 
     //! @name CheckPoints
@@ -56,7 +56,7 @@ public:
     void SendFullState( sword::ObjectAttributes& asn ) const;
     void UpdateLocalisation( MIL_Object_ABC& object, unsigned int time );
 
-    InputPropagationAttribute& operator=( const InputPropagationAttribute& ); //!< Assignment operator
+    DisasterAttribute& operator=( const DisasterAttribute& ); //!< Assignment operator
     //@}
 
 private:
@@ -69,11 +69,12 @@ private:
     //! @name Member data
     //@{
     std::string model_;
+    std::string date_;
     std::auto_ptr< PropagationManager > pManager_;
     std::vector< T_Extractor > values_;
     //@}
 };
 
-BOOST_CLASS_EXPORT_KEY( InputPropagationAttribute )
+BOOST_CLASS_EXPORT_KEY( DisasterAttribute )
 
-#endif // InputPropagationAttribute_h
+#endif // DisasterAttribute_h

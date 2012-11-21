@@ -22,6 +22,7 @@ namespace
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class DisasterType;
 }
 
 class ASCExtractor;
@@ -39,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Propagation( const std::string& file, const PropagationManager& manager,
-                          const kernel::CoordinateConverter_ABC& converter );
+                          const kernel::CoordinateConverter_ABC& converter, const kernel::DisasterType& disasterType );
     virtual ~Propagation();
     //@}
 

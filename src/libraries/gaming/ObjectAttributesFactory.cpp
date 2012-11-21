@@ -42,6 +42,8 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesFactory constructor
@@ -67,6 +69,34 @@ ObjectAttributesFactory::~ObjectAttributesFactory()
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributesFactory::Register
 // Created: JCR 2008-06-09
+// -----------------------------------------------------------------------------
+void ObjectAttributesFactory::Register( kernel::Object_ABC& entity, const sword::ObjectAttributes& attributes ) const
+{
+    Register( *static_cast< kernel::Entity_ABC* >( &entity ), attributes );
+    if( attributes.has_propagation() && entity.Retrieve< kernel::DisasterAttribute_ABC >() == 0 )
+        entity.Attach< kernel::DisasterAttribute_ABC >( *new PropagationAttribute( controllers_.controller_, static_.coordinateConverter_,
+                                                                                   entity.GetType(), static_.disasterTypes_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributesFactory::Register
+// Created: LGY 2012-11-21
+// -----------------------------------------------------------------------------
+void ObjectAttributesFactory::Register( kernel::ObjectKnowledge_ABC& entity, const sword::ObjectAttributes& attributes ) const
+{
+    Register( *static_cast< kernel::Entity_ABC* >( &entity ), attributes );
+    if( attributes.has_propagation() && entity.Retrieve< kernel::DisasterAttribute_ABC >() == 0 )
+    {
+        const kernel::Object_ABC* object = entity.GetEntity();
+        if( object )
+            entity.Attach< kernel::DisasterAttribute_ABC >( *new PropagationAttribute( controllers_.controller_, static_.coordinateConverter_,
+                                                                                       object->GetType(), static_.disasterTypes_ ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributesFactory::Register
+// Created: LGY 2012-11-21
 // -----------------------------------------------------------------------------
 void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes ) const
 {
@@ -129,9 +159,6 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 
     if( attributes.has_toxic_cloud() && entity.Retrieve< kernel::ToxicCloudAttribute_ABC >() == 0 )
         entity.Attach< kernel::ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
-
-    if( attributes.has_propagation() && entity.Retrieve< kernel::DisasterAttribute_ABC >() == 0 )
-        entity.Attach< kernel::DisasterAttribute_ABC >( *new PropagationAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
 
     if( attributes.has_underground() && entity.Retrieve< kernel::UndergroundAttribute_ABC >() == 0 )
         entity.Attach< kernel::UndergroundAttribute_ABC >( *new UndergroundAttribute( controllers_.controller_ ) );

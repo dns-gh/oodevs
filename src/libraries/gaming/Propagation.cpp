@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Propagation.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/DisasterType.h"
 #include "propagation/ASCExtractor.h"
 #include "propagation/PropagationManager.h"
 #include <graphics/Visitor2d.h>
@@ -21,7 +22,7 @@
 // Created: LGY 2012-10-26
 // -----------------------------------------------------------------------------
 Propagation::Propagation( const std::string& file, const PropagationManager& manager,
-                          const kernel::CoordinateConverter_ABC& converter )
+                          const kernel::CoordinateConverter_ABC& converter, const kernel::DisasterType& disasterType )
     : converter_ ( converter )
     , pExtractor_( new ASCExtractor( file, manager.GetProjectionFile() ) )
 {
@@ -30,7 +31,7 @@ Propagation::Propagation( const std::string& file, const PropagationManager& man
     for( unsigned int i = 0; i < values.size(); ++i )
     {
         float value = values[ i ];
-        QColor color = QColor( manager.GetColor( value ).c_str() );
+        QColor color = disasterType.GetColor( value );
         rgba[ 4 * i ] = static_cast< char >( color.red() );
         rgba[ 4 * i + 1] = static_cast< char >(  color.green() );
         rgba[ 4 * i + 2 ] = static_cast< char >( color.blue() );

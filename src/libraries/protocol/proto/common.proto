@@ -1581,6 +1581,7 @@ message ObjectAttributeToxicCloud {
 message ObjectAttributePropagation {
     //! The located quantities
     required string model = 1;
+    optional string date = 2;
 }
 
 /** @struct ObjectAttributeFire

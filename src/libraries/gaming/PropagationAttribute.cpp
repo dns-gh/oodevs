@@ -13,6 +13,8 @@
 #include "Propagation.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/DisasterTypes.h"
 #include "propagation/PropagationManager.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -25,10 +27,12 @@ using namespace kernel;
 // Name: PropagationAttribute constructor
 // Created: LGY 2012-10-12
 // -----------------------------------------------------------------------------
-PropagationAttribute::PropagationAttribute( Controller& controller, const CoordinateConverter_ABC& converter )
-    : controller_( controller )
-    , converter_ ( converter )
-    , pManager_  ( new PropagationManager() )
+PropagationAttribute::PropagationAttribute( Controller& controller, const CoordinateConverter_ABC& converter,
+                                            const kernel::ObjectType& type, const kernel::DisasterTypes& disasterTypes )
+    : controller_  ( controller )
+    , converter_   ( converter )
+    , pManager_    ( new PropagationManager() )
+    , disasterType_( disasterTypes.Get( type.GetDisasterType() ) )
 {
     controller_.Register( *this );
 }
@@ -49,7 +53,10 @@ PropagationAttribute::~PropagationAttribute()
 void PropagationAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.attributes().has_propagation() )
-        pManager_->Initialize( message.attributes().propagation().model() );
+    {
+        sword::ObjectAttributePropagation attribute = message.attributes().propagation();
+        pManager_->Initialize( attribute.model(), attribute.has_date() ? attribute.date() : "" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +71,7 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
     {
         propagations_.clear();
         for( std::size_t i = 0; i < files.size(); ++i )
-            propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( files[ i ], *pManager_, converter_ ) ) );
+            propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( files[ i ], *pManager_, converter_, disasterType_ ) ) );
     }
 }
 

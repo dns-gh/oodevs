@@ -30,14 +30,13 @@ DisasterAttribute::DisasterAttribute( kernel::PropertiesDictionary& dictionary, 
 // -----------------------------------------------------------------------------
 DisasterAttribute::DisasterAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
 {
-    std::string source;
-    unsigned int time = 0u;
+    std::string source, date;
     xis >> xml::attribute( "source", source )
         >> xml::optional
-        >> xml::attribute( "date", time );
+        >> xml::attribute( "date", date );
 
-    if( time != 0u )
-        date_.setTime_t( time );
+    if( date != "" )
+        date_ = QDateTime::fromString( date.c_str(), "yyyyMMddThhmmss" );
 
     source_ = source.c_str();
     CreateDictionary( dictionary );
@@ -72,6 +71,6 @@ void DisasterAttribute::SerializeObjectAttributes( xml::xostream& xos ) const
     xos << xml::start( "disaster" )
            << xml::attribute( "source", source_ );
     if( !date_.isNull() )
-        xos << xml::attribute( "date", date_.toTime_t() );
+        xos << xml::attribute( "date", date_.toString( "yyyyMMddThhmmss" ) );
     xos << xml::end;
 }

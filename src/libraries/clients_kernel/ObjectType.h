@@ -59,6 +59,7 @@ public:
     const std::string& GetType() const;
     const std::string& GetSymbol( const std::string& locationType ) const;
     const std::string& GetDescription() const;
+    const std::string& GetDisasterType() const;
 
     CIT_Capacities CapacitiesBegin() const;
     CIT_Capacities CapacitiesEnd() const;
@@ -97,6 +98,7 @@ private:
     //@{
     const std::string name_;
     const std::string type_;
+    std::string disaster_;
     T_GeometrySymbols geometrySymbols_;
     const std::string description_;
     T_Capacities capacities_;

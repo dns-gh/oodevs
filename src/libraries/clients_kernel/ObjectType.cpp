@@ -30,6 +30,10 @@ ObjectType::ObjectType( xml::xistream& xis )
         >> xml::end
         >> xml::optional >> xml::start( "constructor" )
             >> xml::list( "improvable", *this, &ObjectType::SetValorizable )
+        >> xml::end
+        >> xml::optional
+        >> xml::start( "disaster" )
+            >> xml::attribute( "model", disaster_ )
         >> xml::end;
     xis >> xml::list( *this, &ObjectType::ReadCapacities );
 }
@@ -108,6 +112,15 @@ const std::string& ObjectType::GetSymbol( const std::string& locationType ) cons
 const std::string& ObjectType::GetDescription() const
 {
     return description_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::GetDisasterType
+// Created: LGY 2012-11-21
+// -----------------------------------------------------------------------------
+const std::string& ObjectType::GetDisasterType() const
+{
+    return disaster_;
 }
 
 // -----------------------------------------------------------------------------

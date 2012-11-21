@@ -150,7 +150,7 @@ QString ObjectKnowledge::GetName() const
 // -----------------------------------------------------------------------------
 const Object_ABC* ObjectKnowledge::GetEntity() const
 {
-    return objectResolver_.Find( entityId_ );;
+    return objectResolver_.Find( entityId_ );
 }
 
 // -----------------------------------------------------------------------------

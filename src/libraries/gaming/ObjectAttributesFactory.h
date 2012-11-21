@@ -18,7 +18,8 @@ namespace sword
 namespace kernel
 {
     class Controllers;
-    class Entity_ABC;
+    class Object_ABC;
+    class ObjectKnowledge_ABC;
 }
 
 class Model;
@@ -31,7 +32,7 @@ class StaticModel;
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectAttributesFactory
+class ObjectAttributesFactory : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -42,14 +43,14 @@ public:
 
     //! @name Operations
     //@{
-    void Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes ) const;
+    void Register( kernel::Object_ABC& entity, const sword::ObjectAttributes& attributes ) const;
+    void Register( kernel::ObjectKnowledge_ABC& entity, const sword::ObjectAttributes& attributes ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    ObjectAttributesFactory( const ObjectAttributesFactory& );            //!< Copy constructor
-    ObjectAttributesFactory& operator=( const ObjectAttributesFactory& ); //!< Assignment operator
+    void Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes ) const;
     //@}
 
 private:

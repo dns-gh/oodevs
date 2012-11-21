@@ -34,7 +34,7 @@ namespace
 BOOST_AUTO_TEST_CASE( extract_information )
 {
     PropagationManager manager;
-    manager.Initialize( BOOST_RESOLVE( "propagation.xml" ) );
+    manager.Initialize( BOOST_RESOLVE( "propagation.xml" ), "" );
     CheckPath( manager.GetProjectionFile(), BOOST_RESOLVE( "projection.prj" ) );
 
     BOOST_CHECK( manager.GetFiles( "20100901T121500" ).empty() );
@@ -43,4 +43,31 @@ BOOST_AUTO_TEST_CASE( extract_information )
     BOOST_CHECK( manager.GetFiles( "20100901T122900" ).empty() );
     CheckVector( manager.GetFiles( "20100901T123000" ), boost::assign::list_of( BOOST_RESOLVE( "fileB" ) ) );
     CheckVector( manager.GetFiles( "20100901T125100" ), boost::assign::list_of( BOOST_RESOLVE( "fileC" ) )( BOOST_RESOLVE( "fileD" ) ) );
+}
+
+namespace
+{
+    unsigned int Convert( const boost::posix_time::ptime& time ) 
+    {
+        boost::posix_time::ptime epoch( boost::gregorian::date( 1970, 1, 1 ) );
+        return ( time - epoch ).total_seconds();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: extract_information_with_a_different_start_time
+// Created: LGY 2012-03-10
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( extract_information_with_a_different_start_time )
+{
+    PropagationManager manager;
+    manager.Initialize( BOOST_RESOLVE( "propagation.xml" ), "20100901T141011" );
+    CheckPath( manager.GetProjectionFile(), BOOST_RESOLVE( "projection.prj" ) );
+
+    BOOST_CHECK( manager.GetFiles( "20100901T141010" ).empty() );
+
+    CheckVector( manager.GetFiles( "20100901T141011" ), boost::assign::list_of( BOOST_RESOLVE( "fileA" ) ) );
+    BOOST_CHECK( manager.GetFiles( "20100901T141811" ).empty() );
+    CheckVector( manager.GetFiles( "20100901T141911" ), boost::assign::list_of( BOOST_RESOLVE( "fileB" ) ) );
+    CheckVector( manager.GetFiles( "20100901T143911" ), boost::assign::list_of( BOOST_RESOLVE( "fileC" ) )( BOOST_RESOLVE( "fileD" ) ) );
 }

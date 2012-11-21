@@ -38,7 +38,11 @@ PropagationAttribute::~PropagationAttribute()
 void PropagationAttribute::Update( const sword::ObjectAttributes& message )
 {
     if( message.has_propagation() )
+    {
         model_ = message.propagation().model();
+        if( message.propagation().has_date() )
+            date_ = message.propagation().date();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -48,4 +52,7 @@ void PropagationAttribute::Update( const sword::ObjectAttributes& message )
 void PropagationAttribute::Send( sword::ObjectAttributes& message ) const
 {
     message.mutable_propagation()->set_model( model_ );
+    if( date_ != "" )
+        message.mutable_propagation()->set_date( date_ );
+
 }

@@ -70,6 +70,7 @@
 #include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_MedicalTreatmentType.h"
 #include "Objects/MIL_NbcAgentType.h"
+#include "Objects/MIL_DisasterType.h"
 #include "Objects/MIL_ObjectFactory.h"
 #include "Objects/MIL_ObjectManager.h"
 #include "Objects/MIL_Object_ABC.h"
@@ -165,6 +166,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< MIL_FireClass                  >( config, "fires"              );
     InitializeType< PHY_BreakdownType              >( config, "breakdowns"         );
     InitializeType< PHY_LauncherType               >( config, "launchers"          );
+    InitializeType< MIL_DisasterType               >( config, "disasters"          );
     InitializeType< PHY_ActiveProtection           >( config, "active-protections" );
     InitializeObjects( config, objectFactory );
     InitializeSensors( config, time, objectFactory );
@@ -181,6 +183,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_RolePion_Communications    >( config, "communications"     );
     InitializeType< MIL_PopulationType             >( config, "populations"        );
     InitializeType< MIL_InhabitantType             >( config, "inhabitants"        );
+
     InitializeMedical( config );
     InitializeFuneral( config, time );
 }

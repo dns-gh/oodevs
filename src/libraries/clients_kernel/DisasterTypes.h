@@ -47,11 +47,6 @@ private:
     void ReadDisasters( xml::xistream& xis );
     void ReadDisaster( xml::xistream& xis );
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 }

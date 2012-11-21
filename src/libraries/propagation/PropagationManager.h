@@ -38,8 +38,6 @@ public:
 
     //! @name Types
     //@{
-    typedef std::map< double, std::string > T_Colors;
-    typedef T_Colors::const_iterator      CIT_Colors;
     typedef std::vector< std::string >                    T_Files;
     typedef std::map< boost::posix_time::ptime, T_Files > T_Schedule;
     typedef T_Schedule::const_iterator                  CIT_Schedule;
@@ -47,16 +45,16 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( const std::string& config );
+    void Initialize( const std::string& config, const std::string& time );
     T_Files GetFiles( const std::string& time );
     const std::string& GetProjectionFile() const;
-    std::string GetColor( float value ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ReadFile( xml::xistream& xis, const boost::filesystem::path& path );
+    void ReadFile( xml::xistream& xis, const boost::filesystem::path& path,
+                   const boost::posix_time::ptime& startTime, boost::posix_time::time_duration& delta );
     void ReadColor( xml::xistream& xis );
     //@}
 
@@ -64,7 +62,6 @@ private:
     //! @name Member data
     //@{
     std::string projection_;
-    T_Colors colors_;
     T_Schedule schedule_;
     T_Files currentFiles_;
     //@}
