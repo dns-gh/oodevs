@@ -91,7 +91,10 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
     {
         if( !SwitchToFragment( frameNumber ) )
             return false;
-        const Frame& current = frames_[ frameNumber - fragmentsInfos_[ currentOpenFolder_ ].first ];
+        const size_t next = frameNumber - fragmentsInfos_[ currentOpenFolder_ ].first;
+        if( next >= frames_.size() )
+            return false;
+        const Frame& current = frames_[ next ];
         Load( updates_, current.offset_, current.size_, handler, callback,
               bfs::path( currentFolderName ) / updateFileName );
     }
@@ -119,6 +122,8 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
     else
     {
         if( !SwitchToFragment( frameNumber ) )
+            return;
+        if( keyFrames_.empty() )
             return;
         KeyFrame keyFrame = *keyFrames_.begin();
         for( CIT_KeyFrames it = keyFrames_.begin(); it != keyFrames_.end(); ++it )
@@ -161,6 +166,8 @@ unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
     boost::mutex::scoped_lock lock( access_ );
     ++frameNumber;
     if( !SwitchToFragment( frameNumber ) )
+        return 0;
+    if( keyFrames_.empty() )
         return 0;
     unsigned int ret = keyFrames_.begin()->frameNumber_;
     for( CIT_KeyFrames it = keyFrames_.begin(); it != keyFrames_.end() && it->frameNumber_ <= frameNumber; ++it )
@@ -490,8 +497,17 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
     T_Frames frames;
     LoadIndexes( frames, index );
     index.close();
+
     boost::mutex::scoped_lock dataLock( access_ );
-    const Frame& current = frames[ frameNumber - fragmentsInfos_[ folder ].first ];
+    T_FragmentsInfos::const_iterator it = fragmentsInfos_.find( folder );
+    if( it == fragmentsInfos_.end() )
+        return;
+
+    const size_t next = frameNumber - it->second.first;
+    if( next >= frames.size() )
+        return;
+
+    const Frame& current = frames[ next ];
     std::ifstream file;
     OpenFile( file, folder, updateFileName );
     file.seekg( current.offset_ );
@@ -499,6 +515,7 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
     file.close();
     if( !buf )
         return;
+
     YieldMessages( cpu_->PendingMessages() );
     cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
@@ -514,6 +531,9 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     T_KeyFrames keyFrames;
     LoadIndexes( keyFrames, index );
     index.close();
+    if( keyFrames.empty() )
+        return;
+
     KeyFrame& keyFrame = *keyFrames.begin();
     for( CIT_KeyFrames it = keyFrames.begin(); it != keyFrames.end() && it->frameNumber_ <= frameNumber; ++it )
         keyFrame = *it;
@@ -524,6 +544,7 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     file.close();
     if( !buf )
         return;
+
     YieldMessages( cpu_->PendingMessages() );
     cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
