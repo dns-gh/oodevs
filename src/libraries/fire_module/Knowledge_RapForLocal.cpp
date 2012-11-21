@@ -82,7 +82,6 @@ namespace
         double rTotalFightScoreFriend = 0;
         // 1 - Compute the enemy fight score, and get the dangerous enemies
         const wrapper::View& enemies = model[ "enemies" ][ id ];
-        const wrapper::View& friends = model[ "friends" ][ id ];
         for( std::size_t i = 0; i < enemies.GetSize(); ++i )
         {
             const SWORD_Model* knowledgeEnemy = knowledges[ static_cast< unsigned int >( enemies.GetElement( i ) ) ];
@@ -93,17 +92,20 @@ namespace
             {
                 rTotalFightScoreEnemy += rDangerosity;
                 dangerousEnemies.push_back( knowledgeEnemy );
-                // 2 - Compute the friend fight scores against the agent local enemies
-                for( std::size_t j = 0; j < friends.GetSize(); ++j )
-                {
-                    const SWORD_Model* knowledgeFriend = knowledges[ static_cast< unsigned int >( friends.GetElement( j ) ) ];
-                    if( filter( knowledgeFriend, userData ) )
-                        rTotalFightScoreFriend += cache.Get( knowledgeFriend, knowledgeEnemy );
-                }
             }
         }
-        if( rTotalFightScoreEnemy == 0 )
+        // 2 - Compute the friend fight scores against the agent local enemies
+        if( dangerousEnemies.empty() )
             return defaultValue;
+        const wrapper::View& friends = model[ "friends" ][ id ];
+        for( std::size_t i = 0; i < friends.GetSize(); ++i )
+        {
+            const SWORD_Model* knowledgeFriend = knowledges[ static_cast< unsigned int >( friends.GetElement( i ) ) ];
+            if( ! filter( knowledgeFriend, userData ) )
+                continue;
+            for( Knowledge_RapForLocal::CIT_KnowledgeAgents it = dangerousEnemies.begin(); it != dangerousEnemies.end(); ++it )
+                rTotalFightScoreFriend += cache.Get( knowledgeFriend, *it );
+        }
         return rTotalFightScoreFriend / rTotalFightScoreEnemy / dangerousEnemies.size();
     }
 
