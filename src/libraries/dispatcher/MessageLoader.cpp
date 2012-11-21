@@ -87,7 +87,8 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
         if( !SwitchToFragment( frameNumber ) )
             return false;
         const Frame& current = frames_[ frameNumber - fragmentsInfos_[ currentOpenFolder_ ].first ];
-        Load( updates_, current.offset_, current.size_, handler, callback );
+        Load( updates_, current.offset_, current.size_, handler, callback,
+              bfs::path( currentFolderName ) / updateFileName );
     }
     return true;
 }
@@ -121,7 +122,8 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
                 break;
             keyFrame = *it;
         }
-        Load( keys_, keyFrame.offset_, keyFrame.size_, handler, callback );
+        Load( keys_, keyFrame.offset_, keyFrame.size_, handler, callback,
+              bfs::path( currentFolderName ) / keyFileName );
     }
 }
 
@@ -423,26 +425,36 @@ namespace dispatcher
 {
     struct Buffer
     {
-        Buffer( unsigned size, std::ifstream& in )
-            : data_( new char[ size ] )
-            , size_( size )
+        Buffer( size_t size )
+            : data_( size )
         {
-            unsigned len = 0;
-            while( !IsEof( in ) && in.good() && len < size )
+            // NOTHING
+        }
+        bool Read( std::ifstream& src )
+        {
+            size_t len = 0;
+            const size_t size = data_.size();
+            while( !IsEof( src ) && src.good() && len < size )
             {
-                in.read( &data_[len], size - len );
-                len += static_cast< unsigned >( in.gcount() );
+                src.read( &data_[len], size - len );
+                len += static_cast< size_t >( src.gcount() );
             }
-            if( len != size )
-                throw std::runtime_error( "Unable to read buffer completely in message loader" );
+            data_.resize( len );
+            return len == size;
         }
-        ~Buffer()
-        {
-            delete [] data_;
-        }
-        char* data_;
-        unsigned int size_;
+        std::vector< char > data_;
     };
+
+    typedef boost::shared_ptr< Buffer > BufPtr;
+
+    BufPtr MakeBuffer( std::ifstream& src, size_t size, const bfs::path& filename )
+    {
+        BufPtr next( boost::make_shared< Buffer >( size ) );
+        const bool valid = next->Read( src );
+        if( !valid )
+            MT_LOG_WARNING_MSG( "[dispatcher] Skipping invalid file " + filename.string() );
+        return valid ? next : BufPtr();
+    }
 
     void YieldMessages( std::size_t pendingMessages )
     {
@@ -455,11 +467,12 @@ namespace dispatcher
 // Name: MessageLoader::Load
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback )
+void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback, const bfs::path& filename )
 {
     in.seekg( from );
-    boost::shared_ptr< Buffer > buffer( boost::make_shared< Buffer >( size, boost::ref( in ) ) );
-    LoadBuffer( buffer, handler, callback, synchronisation_ );
+    BufPtr buf = MakeBuffer( in, size, filename );
+    if( buf )
+        LoadBuffer( buf, handler, callback, synchronisation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -478,10 +491,12 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
     std::ifstream file;
     OpenFile( file, folder, updateFileName );
     file.seekg( current.offset_ );
-    boost::shared_ptr< Buffer > buffer( boost::make_shared< Buffer >( current.size_, boost::ref( file ) ) );
+    BufPtr buf = MakeBuffer( file, current.size_, bfs::path( folder ) / updateFileName );
     file.close();
+    if( !buf )
+        return;
     YieldMessages( cpu_->PendingMessages() );
-    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ), callback, synchronisation_ ) );
+    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -501,23 +516,23 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     std::ifstream file;
     OpenFile( file, folder, keyFileName );
     file.seekg( keyFrame.offset_ );
-    boost::shared_ptr< Buffer > buffer( boost::make_shared< Buffer >( keyFrame.size_, boost::ref( file ) ) );
+    BufPtr buf = MakeBuffer( file, keyFrame.size_, bfs::path( folder ) / keyFileName );
     file.close();
+    if( !buf )
+        return;
     YieldMessages( cpu_->PendingMessages() );
-    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ), callback, synchronisation_ ) );
+    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::LoadBuffer
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer,
-                                MessageHandler_ABC& handler,
-                                const T_Callback& callback,
-                                bool synchronized )
+void MessageLoader::LoadBuffer( const BufPtr& buffer, MessageHandler_ABC& handler,
+                                const T_Callback& callback, bool synchronized )
 {
-    char* current = buffer->data_;
-    char* end = buffer->data_ + buffer->size_;
+    char* current = &buffer->data_[0];
+    char* end = current + buffer->data_.size();
     while( current < end )
         current += LoadSimToClientMessage( current, end - current, handler, synchronized );
     if( callback )
