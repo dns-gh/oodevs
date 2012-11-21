@@ -148,7 +148,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <Link>
-      <AdditionalDependencies>psapi.lib;dbghelp.lib;htmlhelp.lib;terrainextractor-vc100-mt-gd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew-vc100-mt-gd.lib;psapi.lib;dbghelp.lib;htmlhelp.lib;terrainextractor-vc100-mt-gd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -156,7 +156,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <Link>
-      <AdditionalDependencies>psapi.lib;dbghelp.lib;htmlhelp.lib;terrainextractor-vc100_x64-mt-gd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew-vc100_x64-mt-gd.lib;psapi.lib;dbghelp.lib;htmlhelp.lib;terrainextractor-vc100_x64-mt-gd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -164,7 +164,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <Link>
-      <AdditionalDependencies>psapi.lib;dbghelp.lib;htmlhelp.lib;terrainextractor-vc100-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew-vc100-mt.lib;psapi.lib;dbghelp.lib;htmlhelp.lib;terrainextractor-vc100-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ClCompile>
@@ -173,7 +173,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <Link>
-      <AdditionalDependencies>psapi.lib;dbghelp.lib;htmlhelp.lib;terrainextractor-vc100_x64-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew-vc100_x64-mt.lib;psapi.lib;dbghelp.lib;htmlhelp.lib;terrainextractor-vc100_x64-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
     <ClCompile>
