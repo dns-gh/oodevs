@@ -71,7 +71,7 @@ MessageLoader::~MessageLoader()
 // -----------------------------------------------------------------------------
 bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
-    boost::mutex::scoped_lock lock( dataAccessMutex_ );
+    boost::mutex::scoped_lock lock( access_ );
     ++frameNumber;
     if( disk_.get() )
     {
@@ -98,7 +98,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
 // -----------------------------------------------------------------------------
 void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
-    boost::mutex::scoped_lock lock( dataAccessMutex_ );
+    boost::mutex::scoped_lock lock( access_ );
     synchronisation_ = frameNumber != 0;
     ++frameNumber;
     if( disk_.get() )
@@ -131,7 +131,7 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
 // -----------------------------------------------------------------------------
 unsigned int MessageLoader::GetTickNumber() const
 {
-    boost::mutex::scoped_lock lock( dataAccessMutex_ );
+    boost::mutex::scoped_lock lock( access_ );
     return tickCount_;
 }
 
@@ -141,7 +141,7 @@ unsigned int MessageLoader::GetTickNumber() const
 // -----------------------------------------------------------------------------
 unsigned int MessageLoader::GetFirstTick() const
 {
-    boost::mutex::scoped_lock lock( dataAccessMutex_ );
+    boost::mutex::scoped_lock lock( access_ );
     return firstTick_;
 }
 
@@ -151,7 +151,7 @@ unsigned int MessageLoader::GetFirstTick() const
 // -----------------------------------------------------------------------------
 unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
 {
-    boost::mutex::scoped_lock lock( dataAccessMutex_ );
+    boost::mutex::scoped_lock lock( access_ );
     ++frameNumber;
     if( !SwitchToFragment( frameNumber ) )
         return 0;
@@ -173,7 +173,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
         while( tick <= endTick )
         {
             bool incremented = false;
-            boost::mutex::scoped_lock lock( dataAccessMutex_ );
+            boost::mutex::scoped_lock lock( access_ );
             for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             {
                 if( tick >= it->second.first && tick <= it->second.second )
@@ -259,7 +259,7 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
     {
         if( bfs::exists( dir ) )
         {
-            boost::mutex::scoped_lock lock( dataAccessMutex_ );
+            boost::mutex::scoped_lock lock( access_ );
             for( bfs::directory_iterator it( dir ); it !=  bfs::directory_iterator(); ++it )
                 try
                 {
@@ -466,7 +466,7 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
     T_Frames frames;
     LoadIndexes( frames, index );
     index.close();
-    boost::mutex::scoped_lock dataLock( dataAccessMutex_ );
+    boost::mutex::scoped_lock dataLock( access_ );
     const Frame& current = frames[ frameNumber - fragmentsInfos_[ folder ].first ];
     std::ifstream file;
     OpenFile( file, folder, updateFileName );
@@ -550,7 +550,7 @@ void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& ha
 void MessageLoader::ReloadAllFragmentsInfos()
 {
     {
-        boost::mutex::scoped_lock lock( dataAccessMutex_ );
+        boost::mutex::scoped_lock lock( access_ );
         fragmentsInfos_.clear();
         currentOpenFolder_.clear();
     }

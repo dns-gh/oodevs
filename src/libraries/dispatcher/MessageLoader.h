@@ -95,7 +95,7 @@ private:
     ClientPublisher_ABC* clients_;
     unsigned int firstTick_;
     unsigned int tickCount_;
-    mutable boost::mutex dataAccessMutex_;
+    mutable boost::mutex access_;
     std::auto_ptr< WaitEvent > init_;
     std::auto_ptr< boost::thread > folderObserver_;
     std::auto_ptr< tools::thread::ThreadPool > disk_;
