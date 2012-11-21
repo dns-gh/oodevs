@@ -66,6 +66,8 @@ MessageLoader::~MessageLoader()
 {
     quit_->Signal();
     folderObserver_->join();
+    disk_.reset();
+    cpu_.reset();
 }
 
 // -----------------------------------------------------------------------------
