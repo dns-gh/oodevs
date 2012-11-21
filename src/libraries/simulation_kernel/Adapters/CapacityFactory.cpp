@@ -10,22 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "CapacityFactory.h"
 #include "Entities/Objects/CapacityFactory.h"
-#include "Entities/Objects/ObjectPrototype.h"
-#include "Entities/Objects/PropagationCapacity.h"
 
 using namespace sword;
-
-namespace
-{
-    template< typename T >
-    struct AddBuilder
-    {
-        static void Add( ObjectPrototype& prototype, xml::xistream& xis )
-        {
-            prototype.AddCapacity( new T( xis ) );
-        }
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: CapacityFactory constructor
@@ -33,7 +19,7 @@ namespace
 // -----------------------------------------------------------------------------
 CapacityFactory::CapacityFactory()
 {
-    DoRegister( "disaster", boost::bind( &AddBuilder< sword::capacity::PropagationCapacity >::Add, _1, _2 ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
