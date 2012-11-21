@@ -447,6 +447,7 @@ target_link_libraries( perception_module mt_tools )
 
 # propagation_module
 add_module( propagation_module )
+target_link_libraries( propagation_module mt_tools )
 
 # module_tester_test
 add_target( module_tester_test modules "tests/module_tester_test" OPTIONS test )
