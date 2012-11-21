@@ -752,11 +752,11 @@ integration.meKnowledgeIsTranported = function( self )
 end
 
 integration.activeRadarOnLocalisation = function( radarType, area )
-    DEC_Perception_ActiverRadarSurLocalisation( radarType, area )
+    return DEC_Perception_ActiverRadarSurLocalisation( radarType, area )
 end
 
 integration.disableRadarOnLocalisation = function( radarType, radar )
-    DEC_Perception_DesactiverRadarSurLocalisation( radarType, radar )
+    return DEC_Perception_DesactiverRadarSurLocalisation( radarType, radar )
 end
 
 integration.isAgentFlying = function( agent )
