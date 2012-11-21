@@ -103,8 +103,6 @@ private:
     std::auto_ptr< tools::thread::ThreadPool > cpu_;
     T_FragmentsInfos fragmentsInfos_;
     std::string currentOpenFolder_;
-    std::ifstream index_;
-    std::ifstream keyIndex_;
     std::ifstream updates_;
     std::ifstream keys_;
     T_Frames frames_;

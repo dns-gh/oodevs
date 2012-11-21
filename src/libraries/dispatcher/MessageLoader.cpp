@@ -394,8 +394,6 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
         if( !currentOpenFolder_.empty() )
         {
             boost::mutex::scoped_lock lock( filesAccessMutex_ );
-            index_.close();
-            keyIndex_.close();
             updates_.close();
             keys_.close();
             currentOpenFolder_.clear();
@@ -405,12 +403,13 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
             {
                 currentOpenFolder_ = it->first;
                 boost::mutex::scoped_lock lock( filesAccessMutex_ );
-                OpenFile( index_, currentOpenFolder_, indexFileName );
-                OpenFile( keyIndex_, currentOpenFolder_, keyIndexFileName );
+                std::ifstream index, keyIndex;
+                OpenFile( index, currentOpenFolder_, indexFileName );
+                OpenFile( keyIndex, currentOpenFolder_, keyIndexFileName );
                 OpenFile( updates_, currentOpenFolder_, updateFileName );
                 OpenFile( keys_, currentOpenFolder_, keyFileName );
-                LoadIndexes( frames_, index_ );
-                LoadIndexes( keyFrames_, keyIndex_ );
+                LoadIndexes( frames_, index );
+                LoadIndexes( keyFrames_, keyIndex );
                 return true;
             }
         return false;
