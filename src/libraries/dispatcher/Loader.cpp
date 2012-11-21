@@ -46,7 +46,7 @@ Loader::~Loader()
 // -----------------------------------------------------------------------------
 void Loader::Start()
 {
-    loader_->LoadKeyFrame( 0, handler_ );
+    SkipToFrame( 0 );
     // simulates the end of the initialization
     sword::SimToClient wrapper;
     wrapper.mutable_message()->mutable_control_send_current_state_end();
@@ -72,7 +72,7 @@ void Loader::SkipToFrame( unsigned int frame )
         ;
     if( requiresKeyFrame )
         model_.EndSynchronisation();
-    if( currentFrame_ < frame || frame == 0 )
+    if( currentFrame_ < frame )
         Tick();
 }
 
@@ -85,16 +85,11 @@ bool Loader::Tick()
     if( currentFrame_ > GetTickNumber() )
         return false;
     bool ret = false;
-    bool needSync = currentFrame_ == 0 && !model_.IsSynching();
-    if( needSync )
-        model_.StartSynchronisation();
     if( loader_->LoadFrame( currentFrame_, handler_ ) )
     {
         ++currentFrame_;
         ret = true;
     }
-    if( needSync )
-        model_.EndSynchronisation();
     return ret;
 }
 
