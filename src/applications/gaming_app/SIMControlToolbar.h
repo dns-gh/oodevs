@@ -110,6 +110,7 @@ private:
     bool connected_, paused_;
     bool hasReplay_, hasSimulation_;
     bool gamingPaused_;
+    bool replayStepMode_;
 
     QIcon connectPix_, disconnectPix_;
     QIcon playPix_, stopPix_;

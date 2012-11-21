@@ -108,6 +108,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , hasReplay_( false )
     , hasSimulation_( true )
     , gamingPaused_( true )
+    , replayStepMode_( false )
     , connectPix_   ( MAKE_ICON( notconnected ) )
     , disconnectPix_( MAKE_ICON( connected ) )
     , playPix_      ( MAKE_ICON( play ) )
@@ -261,6 +262,7 @@ void SIMControlToolbar::SlotStep()
 {
     if( hasReplay_ )
     {
+        replayStepMode_ = true;
         replay::ControlResume message;
         message().set_tick( 1 );
         message.Send( publisher_ );
@@ -413,12 +415,13 @@ void SIMControlToolbar::NotifyUpdated( const Simulation::sEndTick& )
 {
     if( hasReplay_ )
     {
-        if( !gamingPaused_ )
+        if( !gamingPaused_ && !replayStepMode_ )
         {
             replay::ControlResume message;
             message().set_tick( 1 );
             message.Send( publisher_ );
         }
+        replayStepMode_ = false;
     }
 }
 
