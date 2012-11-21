@@ -487,10 +487,10 @@ void RolePion_Decision::RegisterPath()
         boost::function< boost::shared_ptr< MT_Vector2D >( const double, bool ) >( boost::bind( &::ExtrapolatePosition, boost::ref( GetPion() ), boost::ref( model_ ), _1, _2 ) ) );
     RegisterFunction( "DEC_GetNextObjectOnPath",
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
-        boost::bind( &GetNextObjectOnPath, boost::ref( GetPion() ), boost::cref( model_ ), _1, _3 ) ) );
+            boost::bind( &GetNextObjectOnPath, boost::ref( GetPion() ), boost::cref( model_ ), _1, _3 ) ) );
     RegisterFunction( "DEC_GetNextRemovableObjectOnPath",
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( const DEC_Decision_ABC&, boost::shared_ptr< DEC_Knowledge_Object >, float ) >(
-        boost::bind( &GetNextRemovableObjectOnPath, boost::cref( model_ ), _1, _2 ) ) );
+            boost::bind( &GetNextRemovableObjectOnPath, boost::cref( model_ ), _1, _2 ) ) );
     RegisterFunction( "DEC_ShouldEmbark",
         boost::function< bool( const boost::shared_ptr< DEC_Path_ABC >& ) >( boost::bind( &ShouldEmbark, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Itineraire_Etat",
