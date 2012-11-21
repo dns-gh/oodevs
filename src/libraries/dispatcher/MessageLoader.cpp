@@ -20,6 +20,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
+#include <boost/make_shared.hpp>
 
 namespace bfs = boost::filesystem;
 using namespace dispatcher;
@@ -449,7 +450,7 @@ namespace dispatcher
 void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback )
 {
     in.seekg( from );
-    boost::shared_ptr< Buffer > buffer( new Buffer( size, in ) );
+    boost::shared_ptr< Buffer > buffer( boost::make_shared< Buffer >( size, boost::ref( in ) ) );
     LoadBuffer( buffer, handler, callback );
 }
 
@@ -470,7 +471,7 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
     std::ifstream file;
     OpenFile( file, folder, updateFileName );
     file.seekg( current.offset_ );
-    boost::shared_ptr< Buffer > buffer( new Buffer( current.size_, file ) );
+    boost::shared_ptr< Buffer > buffer( boost::make_shared< Buffer >( current.size_, boost::ref( file ) ) );
     file.close();
     YieldMessages( cpu_->PendingMessages() );
     cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ), callback ) );
@@ -494,7 +495,7 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     std::ifstream file;
     OpenFile( file, folder, keyFileName );
     file.seekg( keyFrame.offset_ );
-    boost::shared_ptr< Buffer > buffer( new Buffer( keyFrame.size_, file ) );
+    boost::shared_ptr< Buffer > buffer( boost::make_shared< Buffer >( keyFrame.size_, boost::ref( file ) ) );
     file.close();
     YieldMessages( cpu_->PendingMessages() );
     cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buffer, boost::ref( handler ), callback ) );
