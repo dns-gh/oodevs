@@ -108,8 +108,8 @@ SpatialRequestStatus* GeoStoreManager::CreateUrbanBlocksOnCities( const geometry
     SpatialRequestStatus* processStatus = new SpatialRequestStatus();
     try
     {
-        std::auto_ptr< CreateBlockAutoProcess > process( new CreateBlockAutoProcess( *spatialDb_, *processStatus ) );
-        process->Run( footprint, urbanModel_, parent, *trans_ );
+        CreateBlockAutoProcess process( *spatialDb_, *processStatus );
+        process.Run( footprint, urbanModel_, parent, *trans_ );
         return processStatus;
     }
     catch( ... ) // Created: AME 2010-08-02 Improve exception catching
