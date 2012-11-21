@@ -54,7 +54,6 @@ namespace
     struct TestCase
     {
         std::string dir;
-        bool        threads;
         unsigned    first_tick;
         unsigned    last_tick;
         int         valid_frames;
@@ -62,42 +61,56 @@ namespace
         int         num_keymsg;
     };
 
-    const TestCase tests[] =
+    const TestCase default_tests[] =
     {
-        { "invalid_path",       false, ~0u,  0, 0,   0,   0 },
-        { "just_5",             false,   1,  5, 5, 256, 461 },
-        { "just_5_offset",      false,  91, 95, 5, 170, 773 },
-        { "single_current",     false,   1,  5, 5, 256, 461 },
-        { "truncated_info",     false,   1,  5, 5, 256, 461 },
-        { "truncated_index",    false,   1,  5, 1, 130, 461 },
-        { "truncated_update",   false,   1,  5, 5,   0, 461 },
-        { "truncated_key",      false,   1,  5, 5, 256,   0 },
-        { "truncated_keyindex", false,   1,  5, 5, 256,   0 },
-        { "invalid_path",       true,  ~0u,  0, 0,   0,   0 },
-        { "just_5",             true,    1,  5, 5, 130,   0 },
-        { "just_5_offset",      true,   91, 95, 5,  55,   0 },
-        { "single_current",     true,    1,  5, 5, 130,   0 },
-        { "truncated_info",     true,    1,  5, 5, 130,   0 },
-        { "truncated_index",    true,    1,  5, 5, 130,   0 },
-        { "truncated_update",   true,    1,  5, 5,   0,   0 },
-        { "truncated_key",      true,    1,  5, 5, 130,   0 },
-        { "truncated_keyindex", true,    1,  5, 5, 130,   0 },
+        { "invalid_path",       ~0u,  0, 0,   0,   0 },
+        { "just_5",               1,  5, 5, 256, 461 },
+        { "just_5_offset",       91, 95, 5, 170, 773 },
+        { "single_current",       1,  5, 5, 256, 461 },
+        { "truncated_info",       1,  5, 5, 256, 461 },
+        { "truncated_index",      1,  5, 1, 130, 461 },
+        { "truncated_update",     1,  5, 5,   0, 461 },
+        { "truncated_key",        1,  5, 5, 256,   0 },
+        { "truncated_keyindex",   1,  5, 5, 256,   0 },
+    };
+
+    const TestCase thread_tests[] =
+    {
+        { "invalid_path",       ~0u,  0, 0,   0,   0 },
+        { "just_5",               1,  5, 5, 130,   0 },
+        { "just_5_offset",       91, 95, 5,  55,   0 },
+        { "single_current",       1,  5, 5, 130,   0 },
+        { "truncated_info",       1,  5, 5, 130,   0 },
+        { "truncated_index",      1,  5, 5, 130,   0 },
+        { "truncated_update",     1,  5, 5,   0,   0 },
+        { "truncated_key",        1,  5, 5, 130,   0 },
+        { "truncated_keyindex",   1,  5, 5, 130,   0 },
     };
 
     #define COUNT_OF( X ) (sizeof(X)/sizeof*(X))
+
+    void TestRecords( const TestCase* tests, size_t size, bool thread )
+    {
+        for( size_t i = 0; i < size; ++i )
+        {
+            const TestCase& test = tests[i];
+            MockMessageHandler msg, keymsg;
+            MessageLoader loader( BOOST_RESOLVE( test.dir ), thread, 0 );
+            BOOST_CHECK_EQUAL( loader.GetFirstTick(),  test.first_tick );
+            BOOST_CHECK_EQUAL( loader.GetTickNumber(), test.last_tick );
+            LoadAllFrames( loader, test.valid_frames,
+                           msg,    test.num_msg,
+                           keymsg, test.num_keymsg );
+        }        
+    }
 }
 
 BOOST_FIXTURE_TEST_CASE( message_loader_loads_records, Fixture )
 {
-    for( size_t i = 0; i < COUNT_OF( tests ); ++i )
-    {
-        const TestCase& test = tests[i];
-        MockMessageHandler msg, keymsg;
-        MessageLoader loader( BOOST_RESOLVE( test.dir ), test.threads, 0 );
-        BOOST_CHECK_EQUAL( loader.GetFirstTick(),  test.first_tick );
-        BOOST_CHECK_EQUAL( loader.GetTickNumber(), test.last_tick );
-        LoadAllFrames( loader, test.valid_frames,
-                       msg,    test.num_msg,
-                       keymsg, test.num_keymsg );
-    }
+    TestRecords( default_tests, COUNT_OF( default_tests ), false );
+}
+
+BOOST_FIXTURE_TEST_CASE( message_loader_loads_records_with_threads, Fixture )
+{
+    TestRecords( thread_tests, COUNT_OF( thread_tests ), true);
 }
