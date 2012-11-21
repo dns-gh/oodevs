@@ -234,6 +234,21 @@ void MessageLoader::ScanData()
     ScanDataFolders( false );
 }
 
+namespace
+{
+    bool IsValidRecordDir( const bfs::directory_iterator& it )
+    {
+        if( !bfs::is_directory( it->status() ) )
+            return false;
+        const bfs::path& root = it->path();
+        return bfs::is_regular_file( root / infoFileName )
+            && bfs::is_regular_file( root / indexFileName )
+            && bfs::is_regular_file( root / keyIndexFileName )
+            && bfs::is_regular_file( root / keyFileName )
+            && bfs::is_regular_file( root / updateFileName );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::ScanDataFolders
 // Created: JSR 2010-10-27
@@ -249,7 +264,7 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
             for( bfs::directory_iterator it( dir ); it !=  bfs::directory_iterator(); ++it )
                 try
                 {
-                    if( !bfs::is_directory( it->status() ) )
+                    if( !IsValidRecordDir( it ) )
                         continue;
                     const std::string dir = it->path().filename().string();
                     bool doAdd = false;
