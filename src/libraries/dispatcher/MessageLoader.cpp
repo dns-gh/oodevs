@@ -338,50 +338,49 @@ bool MessageLoader::OpenFile( std::ifstream& stream, const std::string& folder, 
 
 namespace
 {
-    // $$$$ JSR 2011-07-29: temporaire : tentative fix 5947
+    bool IsEof( std::ifstream& file )
+    {
+        file.peek();
+        return file.eof();
+    }
+
     void LoadIndexes( MessageLoader::T_Frames& frames, std::ifstream& file )
     {
-        tools::InputBinaryWrapper input( file );
-        Frame frame;
-        input >> frame.offset_;
-        if( file )
+        try
         {
-            input >> frame.size_;
-            while( file )
+            tools::InputBinaryWrapper input( file );
+            while( !IsEof( file ) )
             {
-                frames.push_back( frame );
+                Frame frame;
                 input >> frame.offset_;
-                if( !file )
-                    break;
                 input >> frame.size_;
+                frames.push_back( frame );
             }
+        }
+        catch( ... )
+        {
+            MT_LOG_WARNING_MSG( "Unable to read index file completely" );
         }
         file.clear();
     }
 
     void LoadIndexes( MessageLoader::T_KeyFrames& frames, std::ifstream& file )
     {
-        tools::InputBinaryWrapper input( file );
-        KeyFrame frame;
-        input >> frame.frameNumber_;
-        if( file )
+        try
         {
-            input >> frame.offset_;
-            if( file )
+            tools::InputBinaryWrapper input( file );
+            while( !IsEof( file ) )
             {
+                KeyFrame frame;
+                input >> frame.frameNumber_;
+                input >> frame.offset_;
                 input >> frame.size_;
-                while( file )
-                {
-                    frames.push_back( frame );
-                    input >> frame.frameNumber_;
-                    if( !file )
-                        break;
-                    input >> frame.offset_;
-                    if( !file )
-                        break;
-                    input >> frame.size_;
-                 }
+                frames.push_back( frame );
             }
+        }
+        catch( ... )
+        {
+            MT_LOG_WARNING_MSG( "Unable to read key index file completely" );
         }
         file.clear();
     }
