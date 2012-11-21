@@ -517,8 +517,9 @@ void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer,
                                 bool synchronized )
 {
     char* current = buffer->data_;
-    while( current < buffer->data_ + buffer->size_ )
-        LoadSimToClientMessage( current, handler, synchronized );
+    char* end = buffer->data_ + buffer->size_;
+    while( current < end )
+        current += LoadSimToClientMessage( current, end - current, handler, synchronized );
     if( callback )
         callback();
 }
@@ -527,14 +528,20 @@ void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer,
 // Name: MessageLoader::LoadSimToClientMessage
 // Created: AGE 2007-07-13
 // -----------------------------------------------------------------------------
-void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& handler,
-                                            bool synchronized )
+size_t MessageLoader::LoadSimToClientMessage( const char* input, size_t size,
+                                              MessageHandler_ABC& handler,
+                                              bool synchronized )
 {
-    unsigned int messageSize = *reinterpret_cast< const unsigned int* >( input );
-    input += sizeof( unsigned int );
+    unsigned msgSize = 0;
+    if( size < sizeof msgSize )
+        throw std::runtime_error( __FUNCTION__" not enough data for message size" );
+    msgSize = *reinterpret_cast< const unsigned* >( input );
+    if( msgSize + sizeof msgSize > size )
+        throw std::runtime_error( __FUNCTION__" not enough data for message payload" );
     sword::SimToClient message;
-    if( ! message.ParseFromArray( input, messageSize ) )
-        throw std::runtime_error( __FUNCTION__ ": message deserialization failed." );
+    const bool valid = message.ParseFromArray( input + sizeof msgSize, msgSize );
+    if( !valid )
+        throw std::runtime_error( __FUNCTION__" invalid message" );
     // $$$$ JSR 2010-07-01: In synchronisation mode, we must not send order messages, as they were already sent,
     // to avoid them to be displayed several times in timeline (mantis 3725)
     if( synchronized && message.has_message() )
@@ -547,7 +554,7 @@ void MessageLoader::LoadSimToClientMessage( char*& input, MessageHandler_ABC& ha
             message.mutable_message()->mutable_crowd_order()->mutable_type()->set_id( 0 );
     }
     handler.Receive( message );
-    input += messageSize;
+    return msgSize + sizeof msgSize;
 }
 
 // -----------------------------------------------------------------------------
