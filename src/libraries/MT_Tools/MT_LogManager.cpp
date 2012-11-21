@@ -31,6 +31,16 @@ MT_LogManager::~MT_LogManager()
 }
 
 //-----------------------------------------------------------------------------
+// Name: MT_LogManager::Cleanup
+// Created: BAX 2012-11-20
+//-----------------------------------------------------------------------------
+void MT_LogManager::Cleanup()
+{
+    delete pInstance_;
+    pInstance_ = 0;
+}
+
+//-----------------------------------------------------------------------------
 // Name: MT_LogManager::RegisterLogger
 /**
     @param  logger Logger to register to the log manager

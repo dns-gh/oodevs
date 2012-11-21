@@ -47,6 +47,7 @@ public:
     //-------------------------------------------------------------------------
     //@{
     static MT_LogManager& Instance();
+    static void Cleanup();
     //@}
 
 private:
