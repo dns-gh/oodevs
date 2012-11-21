@@ -427,7 +427,14 @@ namespace dispatcher
             : data_( new char[ size ] )
             , size_( size )
         {
-            in.read( data_, size );
+            unsigned len = 0;
+            while( !IsEof( in ) && in.good() && len < size )
+            {
+                in.read( &data_[len], size - len );
+                len += static_cast< unsigned >( in.gcount() );
+            }
+            if( len != size )
+                throw std::runtime_error( "Unable to read buffer completely in message loader" );
         }
         ~Buffer()
         {
