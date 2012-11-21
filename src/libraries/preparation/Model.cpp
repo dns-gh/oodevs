@@ -282,24 +282,24 @@ namespace
             xml::xofstream xos( file );
             xos << xml::start( "debug" )
                     << xml::start( "dispatcher" )
-                        << xml::attribute( "logfiles", 100 )
-                        << xml::attribute( "logsize", 50000 )
+                        << xml::attribute( "logfiles", 500 )
+                        << xml::attribute( "logsize", 100000 )
                     << xml::end
                     << xml::start( "shield" )
-                        << xml::attribute( "logfiles", 100 )
+                        << xml::attribute( "logfiles", 10 )
                         << xml::attribute( "logsize", 1000000 )
                     << xml::end
                     << xml::start( "dispatcherlog" )
-                        << xml::attribute( "logfiles", 15 )
-                        << xml::attribute( "logsize", 100000000 )
+                        << xml::attribute( "logfiles", 150 )
+                        << xml::attribute( "logsize", 10000000 )
                     << xml::end
                     << xml::start( "sim" )
-                        << xml::attribute( "logfiles", 15 )
-                        << xml::attribute( "logsize", 100000000 )
+                        << xml::attribute( "logfiles", 150 )
+                        << xml::attribute( "logsize", 10000000 )
                     << xml::end
                     << xml::start( "messages" )
-                        << xml::attribute( "logfiles", 15 )
-                        << xml::attribute( "logsize", 100000000 )
+                        << xml::attribute( "logfiles", 150 )
+                        << xml::attribute( "logsize", 10000000 )
                     << xml::end
                 << xml::end;
         }
