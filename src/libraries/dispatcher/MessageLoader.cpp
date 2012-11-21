@@ -254,7 +254,7 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
                     bool doAdd = false;
                     if( !forceAdd )
                     {
-                        bool skipCurrentFolder = !disk_.get() && init_->IsSignaled() && it->path().filename().string() == currentFolderName;
+                        bool skipCurrentFolder = !disk_.get() && init_->IsSignaled() && it->path().filename() == currentFolderName;
                         doAdd = !skipCurrentFolder
                              && fragmentsInfos_.find( it->path().filename().string() ) == fragmentsInfos_.end();
                         if( !disk_.get() && init_->IsSignaled() && doAdd  )
