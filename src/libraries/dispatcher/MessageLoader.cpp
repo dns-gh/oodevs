@@ -327,7 +327,7 @@ bool MessageLoader::OpenFile( std::ifstream& stream, const std::string& folder, 
 namespace
 {
     // $$$$ JSR 2011-07-29: temporaire : tentative fix 5947
-    void LoadIndexes( std::vector< Frame >& frames, std::ifstream& file )
+    void LoadIndexes( MessageLoader::T_Frames& frames, std::ifstream& file )
     {
         tools::InputBinaryWrapper input( file );
         Frame frame;
@@ -347,7 +347,7 @@ namespace
         file.clear();
     }
 
-    void LoadIndexes( std::vector< KeyFrame >& frames, std::ifstream& file )
+    void LoadIndexes( MessageLoader::T_KeyFrames& frames, std::ifstream& file )
     {
         tools::InputBinaryWrapper input( file );
         KeyFrame frame;

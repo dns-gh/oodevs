@@ -56,7 +56,7 @@ public:
     void ReloadAllFragmentsInfos();
     //@}
 
-private:
+public:
     //! @name Types
     //@{
     typedef std::vector< Frame > T_Frames;
