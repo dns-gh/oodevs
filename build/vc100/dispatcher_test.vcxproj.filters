@@ -52,6 +52,9 @@
     <ClCompile Include="..\..\src\tests\dispatcher_test\Helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tests\dispatcher_test\MessageLoaderTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\dispatcher_test\dispatcher_test_pch.h">
