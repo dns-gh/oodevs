@@ -13,7 +13,7 @@
 
 namespace
 {
-    static long long int frequency = 0;
+    long long int frequency = 0;
 
     static struct MT_ProfilerInitializer
     {
@@ -35,7 +35,7 @@ MT_Profiler::MT_Profiler()
     , rTotalTime_       ( 0. )
     , nNbrCount_        ( 0 )
 {
-    assert( frequency != 0 ); // Call Initialize before instanciation
+    assert( frequency != 0 );
 }
 
 //-----------------------------------------------------------------------------
