@@ -528,7 +528,6 @@ end
 -- -------------------------------------------------------------------------------- 
 integration.deactivateRadar = function ( area )
     if myself.radarActivated then
-            DEC_Trace( tostring( myself.ecoute )..", "..tostring( myself.radar )..", "..tostring( myself.ecouteRadar ) )
         integration.disableRadarOnLocalisation( eRadarType_Ecoute, myself.ecoute )
         integration.disableRadarOnLocalisation( eRadarType_Radar, myself.radar )
         integration.disableRadarOnLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
