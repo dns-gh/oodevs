@@ -57,9 +57,9 @@ namespace
         bool        threads;
         unsigned    first_tick;
         unsigned    last_tick;
-        size_t      valid_frames;
-        size_t      num_msg;
-        size_t      num_keymsg;
+        int         valid_frames;
+        int         num_msg;
+        int         num_keymsg;
     };
 
     const TestCase tests[] =
