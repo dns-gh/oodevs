@@ -13,6 +13,12 @@ find_package( OpenGL REQUIRED )
 masa_find_with_prefix( ZLIB zlib REQUIRED )
 masa_find_qt4( REQUIRED QtCore QtGui QtNetwork QtOpenGL )
 
+function( masa_set_standard_library dst target )
+    masa_get_library_full_name( ${target} debug release )
+    masa_set_external_library( dst_ ${debug} ${release} )
+    set( ${dst} ${dst_} PARENT_SCOPE )
+endfunction()
+
 set( FLEX_LIBRARIES
     lm_new_md
     libnoact_md
@@ -33,6 +39,7 @@ masa_set_external_library( GEOS_I_LIBRARIES           geos_i_d geos_i )
 masa_set_external_library( GRAPHICS_LIBRARIES         graphics_d graphics )
 masa_set_external_library( HLA_LIBRARIES              hla_d hla )
 masa_set_external_library( LOG4CXX_LIBRARIES          log4cxxd log4cxx )
+masa_set_external_library( MASALLOC_LIBRARIES         masalloc_d masalloc )
 masa_set_external_library( MONGOOSE_LIBRARIES         mongoose_d mongoose )
 masa_set_external_library( PATHFIND_LIBRARIES         pathfind_d pathfind )
 masa_set_external_library( PROJ_I_LIBRARIES           proj_i_d proj_i )
@@ -45,7 +52,7 @@ masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
 masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
 masa_set_external_library( ZIPSTREAM_LIBRARIES        zipstream_d zipstream )
-masa_set_external_library( MASALLOC_LIBRARIES         masalloc_d masalloc )
+masa_set_standard_library( GLEW_LIBRARIES             glew )
 
 macro( grab_item output name items )
     list( LENGTH ${items} len )
@@ -152,6 +159,7 @@ target_link_libraries( clients_kernel
     ent
     sword_tools
     ${GEOCOORD_LIBRARIES}
+    ${GLEW_LIBRARIES}
     ${GRAPHICS_LIBRARIES}
 )
 
