@@ -528,6 +528,7 @@ end
 -- -------------------------------------------------------------------------------- 
 integration.deactivateRadar = function ( area )
     if myself.radarActivated then
+            DEC_Trace( tostring( myself.ecoute )..", "..tostring( myself.radar )..", "..tostring( myself.ecouteRadar ) )
         integration.disableRadarOnLocalisation( eRadarType_Ecoute, myself.ecoute )
         integration.disableRadarOnLocalisation( eRadarType_Radar, myself.radar )
         integration.disableRadarOnLocalisation( eRadarType_EcouteRadar, myself.ecouteRadar )
@@ -645,13 +646,13 @@ integration.unitAltitude = function( entity )
     elseif  string.find (nomPion, "DRAC") then
         altitude = 200
     end
-	return altitude
+    return altitude
 end
 
 integration.activeRadarOnLocalisation = function( radarType, area )
-    DEC_Perception_ActiverRadarSurLocalisation( radarType, area )
+    return DEC_Perception_ActiverRadarSurLocalisation( radarType, area )
 end
 
 integration.disableRadarOnLocalisation = function( radarType, radar )
-    DEC_Perception_DesactiverRadarSurLocalisation( radarType, radar )
+    return DEC_Perception_DesactiverRadarSurLocalisation( radarType, radar )
 end
