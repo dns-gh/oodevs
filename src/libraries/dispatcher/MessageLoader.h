@@ -29,6 +29,7 @@ namespace dispatcher
     class ClientPublisher_ABC;
     class MessageHandler_ABC;
     struct Buffer;
+    struct WaitEvent;
 
 // =============================================================================
 /** @class  MessageLoader
@@ -94,10 +95,8 @@ private:
     ClientPublisher_ABC* clients_;
     unsigned int firstTick_;
     unsigned int tickCount_;
-    bool initReady_;
     mutable boost::mutex dataAccessMutex_;
-    boost::mutex initMutex_;
-    boost::condition_variable initCondition_;
+    std::auto_ptr< WaitEvent > init_;
     std::auto_ptr< boost::thread > folderObserver_;
     std::auto_ptr< tools::thread::ThreadPool > disk_;
     std::auto_ptr< tools::thread::ThreadPool > cpu_;

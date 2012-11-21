@@ -402,6 +402,7 @@
     <ClInclude Include="..\..\src\libraries\dispatcher\Observer.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\Position.h" />
     <ClInclude Include="..\..\src\libraries\dispatcher\RotatingLog.h" />
+    <ClInclude Include="..\..\src\libraries\dispatcher\WaitEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\dispatcher\EquipmentAvailability.inl" />

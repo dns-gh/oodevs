@@ -12,6 +12,7 @@
 #include "Config.h"
 #include "MessageHandler_ABC.h"
 #include "Config.h"
+#include "WaitEvent.h"
 #include "tools/InputBinaryStream.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
@@ -45,7 +46,7 @@ MessageLoader::MessageLoader( const Config& config, bool threaded, ClientPublish
     , clients_  ( clients )
     , firstTick_( std::numeric_limits< unsigned int >::max() )
     , tickCount_( 0 )
-    , initReady_( false )
+    , init_     ( new WaitEvent() )
 {
     if( threaded )
     {
@@ -53,9 +54,7 @@ MessageLoader::MessageLoader( const Config& config, bool threaded, ClientPublish
         cpu_.reset ( new tools::thread::ThreadPool( 1 ) );
     }
     folderObserver_.reset( new boost::thread( boost::bind( &MessageLoader::ScanData, this ) ) );
-    boost::mutex::scoped_lock lock( initMutex_ );
-    while( !initReady_ )
-        initCondition_.wait( lock );
+    init_->Wait();
 }
 
 // -----------------------------------------------------------------------------
@@ -253,10 +252,10 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
                     bool doAdd = false;
                     if( !forceAdd )
                     {
-                        bool skipCurrentFolder = !disk_.get() && initReady_ && it->path().filename().string() == currentFolderName;
+                        bool skipCurrentFolder = !disk_.get() && init_->IsSignaled() && it->path().filename().string() == currentFolderName;
                         doAdd = !skipCurrentFolder
                             && bfs::is_directory( it->status() ) && fragmentsInfos_.find( it->path().filename().string() ) == fragmentsInfos_.end();
-                        if( !disk_.get() && initReady_ && doAdd  )
+                        if( !disk_.get() && init_->IsSignaled() && doAdd  )
                         {
                             T_FragmentsInfos::iterator itToDelete = fragmentsInfos_.find( currentFolderName );
                             if( itToDelete != fragmentsInfos_.end() )
@@ -274,12 +273,7 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
                     // NOTHING
                 }
         }
-        if( !initReady_ )
-        {
-            boost::lock_guard< boost::mutex > lock( initMutex_ );
-            initReady_ = true;
-            initCondition_.notify_all();
-        }
+        init_->Signal();
         boost::this_thread::sleep( boost::posix_time::seconds( 10 ) );
     }
 }
