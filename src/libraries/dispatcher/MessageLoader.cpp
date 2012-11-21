@@ -251,13 +251,14 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
                 {
                     if( !bfs::is_directory( it->status() ) )
                         continue;
+                    const std::string dir = it->path().filename().string();
                     bool doAdd = false;
                     if( !forceAdd )
                     {
-                        bool skipCurrentFolder = !disk_.get() && init_->IsSignaled() && it->path().filename() == currentFolderName;
-                        doAdd = !skipCurrentFolder
-                             && fragmentsInfos_.find( it->path().filename().string() ) == fragmentsInfos_.end();
-                        if( !disk_.get() && init_->IsSignaled() && doAdd  )
+                        const bool mainLoop = !disk_.get() && init_->IsSignaled();
+                        const bool skipCurrent = mainLoop && dir == currentFolderName;
+                        doAdd = !skipCurrent && fragmentsInfos_.find( dir ) == fragmentsInfos_.end();
+                        if( mainLoop && doAdd  )
                         {
                             T_FragmentsInfos::iterator itToDelete = fragmentsInfos_.find( currentFolderName );
                             if( itToDelete != fragmentsInfos_.end() )
@@ -268,7 +269,7 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
                         }
                     }
                     if( doAdd || forceAdd )
-                        AddFolder( it->path().filename().string() );
+                        AddFolder( dir );
                 }
                 catch( const std::exception & )
                 {
