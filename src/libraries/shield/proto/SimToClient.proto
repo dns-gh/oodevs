@@ -1461,6 +1461,8 @@ message MsgSimToClient {
         optional MsgLogFuneralHandlingUpdate                    log_funeral_handling_update                    = 141;
         optional MsgLogFuneralHandlingDestruction               log_funeral_handling_destruction               = 142;
         optional Common.MsgControlExportRequest                 control_export                                 = 143; // FT 45354
+        optional Common.MsgLogHistoryRequestForPlayAck          log_history_request_for_play_ack               = 144; // FT 45373
+
     }
     optional int32   context = 1;
     required Content message = 2;

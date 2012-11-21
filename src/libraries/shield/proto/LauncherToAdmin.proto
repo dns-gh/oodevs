@@ -10,6 +10,7 @@
 package MsgsLauncherToAdmin;
 
 import "Version.proto";
+import "Common.proto"; // FT 45373
 
 //base types
 
@@ -241,12 +242,22 @@ message MsgSessionNotification {
     message ExportCreation { 
         required string    export_directory = 1;
     }
+
+    message LogHistoryRequestForPlay {
+        required string profile = 1;
+        required Common.MsgDateTime date_time = 2;
+    }
+
+    message LogHistoryRequestForReplayAck {}
+
     message Notification {
-        optional UnitUpdate         unit_update          = 1;
-        optional FormationUpdate    formation_update     = 2;
-        optional ProfileCreation    profile_creation     = 3;
-        optional ProfileUpdate      profile_update       = 4;
-        optional ExportCreation     export_creation      = 5;
+        optional UnitUpdate                    unit_update          = 1;
+        optional FormationUpdate               formation_update     = 2;
+        optional ProfileCreation               profile_creation     = 3;
+        optional ProfileUpdate                 profile_update       = 4;
+        optional ExportCreation                export_creation      = 5;
+        optional LogHistoryRequestForPlay      log_history_request_for_play       = 6; // FT 45373
+        optional LogHistoryRequestForReplayAck log_history_request_for_replay_ack = 7; // FT 45373
     }
     required string         exercise = 1; 
     required string         session  = 2; 

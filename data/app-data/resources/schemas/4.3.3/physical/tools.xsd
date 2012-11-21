@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.1">
 	<xs:include schemaLocation="../exercise/common.xsd"/>
 	<xs:annotation>
 		<xs:documentation>Types de base</xs:documentation>
@@ -35,11 +35,11 @@
 			<xs:enumeration value="Pion LOG BLT Maintenance"/>
 			<xs:enumeration value="Pion LOG BLT Ravitaillement"/>
 			<xs:enumeration value="Pion LOG BLT Sante"/>
-            <xs:enumeration value="Pion Emergency"/>
-            <xs:enumeration value="Pion Organization"/>
-            <xs:enumeration value="Pion Notable"/>
-            <xs:enumeration value="Pion Journalist"/>
-            <xs:enumeration value="Pion Civilian"/>
+			<xs:enumeration value="Pion Emergency"/>
+			<xs:enumeration value="Pion Organization"/>
+			<xs:enumeration value="Pion Notable"/>
+			<xs:enumeration value="Pion Journalist"/>
+			<xs:enumeration value="Pion Civilian"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_AutomatType">
@@ -72,7 +72,7 @@
 			<xs:enumeration value="Automate RENS"/>
 			<xs:enumeration value="Automate TRANS"/>
 			<xs:enumeration value="Automate SGTIA"/>
-            <xs:enumeration value="Automate Emergency"/>
+			<xs:enumeration value="Automate Emergency"/>
 			<xs:enumeration value="Automate Organization"/>
 			<xs:enumeration value="Automate Notable"/>
 			<xs:enumeration value="Automate Journalist"/>
@@ -422,7 +422,7 @@
 			<xs:enumeration value="piece"/>
 			<xs:enumeration value="ration"/>
 			<xs:enumeration value="agent extincteur"/>
-            <xs:enumeration value="energie"/>
+			<xs:enumeration value="energie"/>
 			<xs:enumeration value="funeraire"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -437,8 +437,8 @@
 			<xs:enumeration value="Obus"/>
 			<xs:enumeration value="ALR"/>
 		</xs:restriction>
-        </xs:simpleType>
-        <xs:simpleType name="T_IndirectFireType">
+	</xs:simpleType>
+	<xs:simpleType name="T_IndirectFireType">
 		<xs:annotation>
 			<xs:documentation> </xs:documentation>
 		</xs:annotation>
@@ -574,9 +574,9 @@
 			<xs:enumeration value="long"/>
 		</xs:restriction>
 	</xs:simpleType>
-    <xs:complexType name="T_Repartition">
-        <xs:attribute name="male" type="T_ZeroToOneDouble" use="required"/>
-        <xs:attribute name="female" type="T_ZeroToOneDouble" use="required"/>
-        <xs:attribute name="children" type="T_ZeroToOneDouble" use="required"/>
-    </xs:complexType>
+	<xs:complexType name="T_Repartition">
+		<xs:attribute name="male" type="T_ZeroToOneDouble" use="required"/>
+		<xs:attribute name="female" type="T_ZeroToOneDouble" use="required"/>
+		<xs:attribute name="children" type="T_ZeroToOneDouble" use="required"/>
+	</xs:complexType>
 </xs:schema>

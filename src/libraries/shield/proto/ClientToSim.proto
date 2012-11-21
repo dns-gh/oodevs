@@ -125,6 +125,8 @@ message MsgClientToSim {
        optional Common.MsgControlExportRequest         control_export                       = 20; // FT 45354
        optional MsgOrderStream                         order_stream                         = 21;
        optional Common.MsgControlExportRequestAck      control_export_request_ack           = 22; // FT 45354
+       optional Common.MsgLogHistoryRequestForPlay     log_history_request_for_play         = 23; // FT 45373
+
     }
     optional int32   context = 1;
     required Content message = 2;

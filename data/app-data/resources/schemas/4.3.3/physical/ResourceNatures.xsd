@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.0">
-    <xs:include schemaLocation="tools.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.1">
+	<xs:include schemaLocation="tools.xsd"/>
 	<xs:element name="natures">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">TODO</xs:documentation>
@@ -24,7 +24,7 @@
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attribute name="model-version" type="T_Version"/>			
+			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>
 		<xs:unique name="NatureIdUnicity">
 			<xs:selector xpath="nature"/>

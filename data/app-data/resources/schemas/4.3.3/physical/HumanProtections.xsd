@@ -1,4 +1,4 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.9.1">
   <xs:include schemaLocation="tools.xsd"/>
   <xs:element name="protections">
     <xs:complexType>

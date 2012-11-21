@@ -10,6 +10,7 @@
 package MsgsAdminToLauncher;
 
 import "Version.proto";
+import "Common.proto"; // FT 45373
 
 // request connection to launcher
 message MsgConnectionRequest {
@@ -102,8 +103,18 @@ message MsgCheckpointDeleteRequest {
 // notification to specified exercise/session
 message MsgSessionNotification {
     message DirectoryChange {}
+
+    message LogHistoryRequestForReplay {}
+
+    message LogHistoryRequestForPlayAck {
+        required string profile = 1;
+        required Common.MsgDateTime date_time = 2;
+    }
+
     message Notification {
-        optional DirectoryChange    directory_change = 1;
+        optional DirectoryChange             directory_change                 = 1;
+        optional LogHistoryRequestForPlayAck log_history_request_for_play_ack = 2; // FT 45373
+        optional LogHistoryRequestForReplay  log_history_request_for_replay   = 3; // FT 45373
     }
     required string         exercise      = 1; //!< exercise to send notification to
     required string         session       = 2; //!< session to send notification to

@@ -374,7 +374,10 @@ enum EnumBurningCellPhase {
 // Control messages
 message MsgControlStop   {}
 message MsgControlPause  {}
-message MsgControlResume {}
+message MsgControlResume {
+   optional uint32 tick =1;
+} // FT 45376
+
 message MsgControlChangeTimeFactor {
    required int32 time_factor = 1;
 }
@@ -1032,4 +1035,29 @@ message MsgControlExportRequestAck {
     }
     required ErrorCode  error_code = 1;
     required string directory_name = 2;
+}
+
+// FT 45373 historique des consignes de logistique
+message MsgLogHistoryRequestForPlay {
+    required string exercise = 1;  //!< exercise to list checkpoint from
+    required string profile = 2;
+    required Common.MsgDateTime date_time = 3;
+    optional string session  = 4;  //!< session to list checkpoint from
+}
+
+message MsgLogHistoryRequestForPlayAck {
+    required string exercise = 1;   //!< exercise to list checkpoint from
+    required string session  = 2;   //!< session to list checkpoint from
+    required string profile = 3;
+    required Common.MsgDateTime date_time = 4;
+}
+
+message MsgLogHistoryRequestForReplay {
+    required string exercise = 1;   //!< exercise to list checkpoint from
+    required string session  = 2;   //!< session to list checkpoint from
+}
+
+message MsgLogHistoryRequestForReplayAck {
+    required string exercise = 1;   //!< exercise to list checkpoint from
+    required string session  = 2;   //!< session to list checkpoint from
 }
