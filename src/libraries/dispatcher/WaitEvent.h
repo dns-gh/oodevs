@@ -40,6 +40,13 @@ struct WaitEvent : public boost::noncopyable
         condition_.wait( lock, boost::bind( &WaitEvent::IsSignaledUnlocked, this ) );
     }
 
+    template< typename T >
+    bool Wait( const T& timeout )
+    {
+        boost::unique_lock< boost::mutex > lock( access_ );
+        return condition_.timed_wait( lock, timeout, boost::bind( &WaitEvent::IsSignaledUnlocked, this ) );
+    }
+
     void Signal()
     {
         boost::lock_guard< boost::mutex > lock( access_ );

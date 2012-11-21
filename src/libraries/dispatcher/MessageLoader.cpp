@@ -47,6 +47,7 @@ MessageLoader::MessageLoader( const bfs::path& records, bool threaded,
     , firstTick_( std::numeric_limits< unsigned int >::max() )
     , tickCount_( 0 )
     , init_     ( new WaitEvent() )
+    , quit_     ( new WaitEvent() )
 {
     if( threaded )
     {
@@ -63,7 +64,8 @@ MessageLoader::MessageLoader( const bfs::path& records, bool threaded,
 // -----------------------------------------------------------------------------
 MessageLoader::~MessageLoader()
 {
-    // NOTHING
+    quit_->Signal();
+    folderObserver_->join();
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +259,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MessageLoader::ScanDataFolders( bool forceAdd )
 {
-    for( ;; )
+    while( !quit_->IsSignaled() )
     {
         if( bfs::exists( records_ ) )
         {
@@ -293,7 +295,7 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
                 }
         }
         init_->Signal();
-        boost::this_thread::sleep( boost::posix_time::seconds( 10 ) );
+        quit_->Wait( boost::posix_time::seconds( 10 ) );
     }
 }
 

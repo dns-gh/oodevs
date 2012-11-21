@@ -96,6 +96,7 @@ private:
     unsigned int tickCount_;
     mutable boost::mutex access_;
     std::auto_ptr< WaitEvent > init_;
+    std::auto_ptr< WaitEvent > quit_;
     std::auto_ptr< boost::thread > folderObserver_;
     std::auto_ptr< tools::thread::ThreadPool > disk_;
     std::auto_ptr< tools::thread::ThreadPool > cpu_;
