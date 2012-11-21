@@ -83,7 +83,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
         for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
-                disk_->Enqueue( boost::bind( &MessageLoader::LoadFrameInThread, this, boost::cref( it->first ), frameNumber, boost::ref( handler ), callback ) );
+                disk_->Enqueue( boost::bind( &MessageLoader::LoadFrameInThread, this, it->first, frameNumber, boost::ref( handler ), callback ) );
                 break;
             }
     }
@@ -112,7 +112,7 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
         for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
-                disk_->Enqueue( boost::bind( &MessageLoader::LoadKeyFrameInThread, this, boost::cref( it->first ), frameNumber, boost::ref( handler ), callback ) );
+                disk_->Enqueue( boost::bind( &MessageLoader::LoadKeyFrameInThread, this, it->first, frameNumber, boost::ref( handler ), callback ) );
                 return;
             }
     }
