@@ -11,13 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRadarData.h"
+#include "DetectionComputer_ABC.h"
+#include "DetectionComputerFactory_ABC.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "MIL_AgentServer.h"
-#include "DetectionComputer_ABC.h"
-#include "DetectionComputerFactory_ABC.h"
+#include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_World.h"
 
@@ -72,12 +74,32 @@ PHY_PerceptionRadarData::~PHY_PerceptionRadarData()
     // NOTHING
 }
 
+namespace
+{
+    bool CanPerceive( const MT_Vector2D& sourcePosition, const MT_Vector2D& targetPosition )
+    {
+        static const double sensorHeight = 10.0;
+        const MT_Vector3D vSource3D( sourcePosition.rX_, sourcePosition.rY_, sensorHeight + MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( sourcePosition.rX_, sourcePosition.rY_ ) );
+        const MT_Vector3D vTarget3D( targetPosition.rX_, targetPosition.rY_, MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( targetPosition.rX_, targetPosition.rY_ ) );
+
+        PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
+        while ( !(++it).End() )
+        {
+            if( PHY_RawVisionData::eVisionGround & it.GetCurrentEnv() )
+                return false;
+        }
+        return true;
+    }
+
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadarData::AcquireTargets
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
 void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& targets, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
+    const MT_Vector2D& perceiverPosition = perceiver.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     for( TER_Agent_ABC::CIT_AgentPtrVector it = targets.begin(); it != targets.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
@@ -87,8 +109,12 @@ void PHY_PerceptionRadarData::AcquireTargets( PHY_RoleInterface_Perceiver& perce
 
         if( detectionComputer->CanBeSeen() && pRadarType_->CanAcquire( perceiver.GetPion(), target ) )
         {
-            sAcquisitionData& agentData = acquisitionData_[ &target ];
-            agentData.bUpdated_ = true;
+            const MT_Vector2D& targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
+            if( CanPerceive( perceiverPosition, targetPosition ) )
+            {
+                sAcquisitionData& agentData = acquisitionData_[ &target ];
+                agentData.bUpdated_ = true;
+            }
         }
     }
 }
