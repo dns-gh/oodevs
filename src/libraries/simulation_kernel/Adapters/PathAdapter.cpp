@@ -350,6 +350,16 @@ double PathAdapter::GetPopulationAttitudeCost( unsigned int attitudeID ) const
     return GET_HOOK( GetPopulationAttitudeCost )( path_, attitudeID );
 }
 
+namespace
+{
+    bool IsSlopeTooSteep( const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeFrom, double rAltitudeTo, double squareSlope )
+    {
+        const double rSquareDelta = Square( rAltitudeTo - rAltitudeFrom );
+        const double rSquareGroundDistance = rSquareDelta + from.SquareDistance( to );
+        return rSquareDelta > squareSlope * rSquareGroundDistance;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathAdapter::GetAltitudeCost
 // Created: NLD 2006-01-31
@@ -357,10 +367,8 @@ double PathAdapter::GetPopulationAttitudeCost( unsigned int attitudeID ) const
 double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) const
 {
     const double rAltitudeFrom = altitudeData_.GetAltitude( from );
-    const double rAltitudeTo   = altitudeData_.GetAltitude( to );
-    const double rSquareDelta = Square( rAltitudeTo - rAltitudeFrom );
-    const double rSquareGroundDistance = rSquareDelta + from.SquareDistance( to );
-    if( rSquareDelta > squareSlope_ * rSquareGroundDistance )
+    const double rAltitudeTo = altitudeData_.GetAltitude( to );
+    if( IsSlopeTooSteep( from, to, rAltitudeFrom, rAltitudeTo, squareSlope_ ) )
         return -1;
     if( rAltitudeCostPerMeter > 0 )
         return ( altitudeData_.GetMaxAltitude() - rAltitudeTo ) * rAltitudeCostPerMeter;
