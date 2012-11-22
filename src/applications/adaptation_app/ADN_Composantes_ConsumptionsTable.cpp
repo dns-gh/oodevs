@@ -95,7 +95,7 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( const QPoint& pt )
     for( int nConsumption = 0; nConsumption < eNbrConsumptionType; ++nConsumption )
     {
         const QString consumptionName = ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nConsumption, ADN_Tr::eToTr ).c_str();
-        int count = 0;
+        unsigned int count = 0;
         for( int i = 0; i < numRows(); ++i )
             if( dataModel_.item( i, 0 ) && dataModel_.item( i, 0 )->text() == consumptionName )
                 ++count;
