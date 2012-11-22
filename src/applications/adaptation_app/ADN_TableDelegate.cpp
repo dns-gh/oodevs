@@ -340,25 +340,25 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
     ADN_Connector_ABC* data = const_cast< ADN_Connector_ABC* >( static_cast< const ADN_Connector_ABC* >( index.model()->data( index, gui::Roles::SafeRole ).value< kernel::VariantPointer >().ptr_ ) );
     if( !position || !data )
         return;
-    ADN_Connector_ABC* guiConnetor = 0;
+    ADN_Connector_ABC* guiConnector = 0;
     if( const SpinBoxDescription< int >* element = Find( spinBoxs_, position->id_ ) )
-        guiConnetor = &static_cast< ADN_EditLine_Int* >( editor )->GetConnector();
+        guiConnector = &static_cast< ADN_EditLine_Int* >( editor )->GetConnector();
     else if( const SpinBoxDescription< double >* element = Find( doubleSpinBoxs_, position->id_ ) )
-        guiConnetor = &static_cast< ADN_EditLine_Double* >( editor )->GetConnector();
+        guiConnector = &static_cast< ADN_EditLine_Double* >( editor )->GetConnector();
     else if( const QStringList* element = Find( comboBoxs_, position->id_ ) )
-        guiConnetor = &static_cast< ADN_ComboBox_Enum* >( editor )->GetConnector();
+        guiConnector = &static_cast< ADN_ComboBox_Enum* >( editor )->GetConnector();
     else if( std::find( comboPtrInVectors_.begin(), comboPtrInVectors_.end(), position->id_ ) != comboPtrInVectors_.end() )
-        guiConnetor = &static_cast< ADN_ComboBox_Vector* >( editor )->GetConnector();
+        guiConnector = &static_cast< ADN_ComboBox_Vector* >( editor )->GetConnector();
     else if( std::find( lineEdits_.begin(), lineEdits_.end(), position->id_ ) != lineEdits_.end() )
-        guiConnetor = &static_cast< ADN_EditLine_String* >( editor )->GetConnector();
+        guiConnector = &static_cast< ADN_EditLine_String* >( editor )->GetConnector();
     else if( std::find( delayEdits_.begin(), delayEdits_.end(), position->id_ ) != delayEdits_.end() )
-        guiConnetor = &static_cast< ADN_TimeField* >( editor )->GetConnector();
+        guiConnector = &static_cast< ADN_TimeField* >( editor )->GetConnector();
     else if( std::find( timeEdits_.begin(), timeEdits_.end(), position->id_ ) != timeEdits_.end() )
-        guiConnetor = &static_cast< ADN_TimeEdit* >( editor )->GetConnector();
+        guiConnector = &static_cast< ADN_TimeEdit* >( editor )->GetConnector();
     else if( std::find( colorEdits_.begin(), colorEdits_.end(), position->id_ ) != colorEdits_.end() )
-        guiConnetor = &static_cast< ADN_ColorSelector* >( editor )->GetConnector();
-    if( guiConnetor )
-        guiConnetor->Disconnect( data );
+        guiConnector = &static_cast< ADN_ColorSelector* >( editor )->GetConnector();
+    if( guiConnector )
+        guiConnector->Disconnect( data );
 }
 
 void ADN_TableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
