@@ -41,7 +41,9 @@ public:
     //@{
     virtual ADN_Equipement_Data::CategoryInfo* NewT()
     {
-        if( parentDotation_.nType_ == eDotationFamily_Munition )
+        if( parentDotation_.nType_ == eDotationFamily_Munition ||
+            parentDotation_.nType_ == eDotationFamily_Mine ||
+            parentDotation_.nType_ == eDotationFamily_Explosif )
             return new ADN_Equipement_Data::AmmoCategoryInfo( parentDotation_ );
         else
             return new ADN_Equipement_Data::CategoryInfo( parentDotation_ );

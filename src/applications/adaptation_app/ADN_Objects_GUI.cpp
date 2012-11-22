@@ -41,6 +41,13 @@ ADN_Objects_GUI::ADN_Objects_GUI( ADN_Objects_Data& data )
     , pPointDistance_( 0 )
     , pContent_( 0 )
     , pCapacities_( 0 )
+    , attrition_( 0 )
+    , attritionDotation_( 0 )
+    , attritionMine_( 0 )
+    , attritionExplosive_( 0 )
+    , attritionDotationVector_( 0 )
+    , attritionMineVector_( 0 )
+    , attritionExplosiveVector_( 0 )
 {
     // NOTHING
 }
@@ -210,11 +217,11 @@ void ADN_Objects_GUI::Build()
         // Attrition
         attrition_ = CreateCapacityGroupBox( 1, tr( "Attrition" ), vInfosConnectors[ eAttritionCapacityPresent ] );
         attritionDotation_ = CreateCapacityGroupBox( 2, tr( "Use ammunition" ), vInfosConnectors[ eAttritionCapacity_UseDotation ], attrition_ );
-        builder.AddField< ADN_ComboBox_Vector >( attritionDotation_, tr( "Resource" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
+        attritionDotationVector_ = builder.AddField< ADN_ComboBox_Vector >( attritionDotation_, tr( "Resource" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
         attritionMine_ = CreateCapacityGroupBox( 2, tr( "Use mine" ), vInfosConnectors[ eAttritionCapacity_UseMine ], attrition_ );
-        builder.AddField< ADN_ComboBox_Vector >( attritionMine_, tr( "Mine" ), vInfosConnectors[ eAttritionCapacity_Mine ] );
+        attritionMineVector_ = builder.AddField< ADN_ComboBox_Vector >( attritionMine_, tr( "Mine" ), vInfosConnectors[ eAttritionCapacity_Mine ] );
         attritionExplosive_ = CreateCapacityGroupBox( 2, tr( "Use explosive" ), vInfosConnectors[ eAttritionCapacity_UseExplosive ], attrition_ );
-        builder.AddField< ADN_ComboBox_Vector >( attritionExplosive_, tr( "Explosive" ), vInfosConnectors[ eAttritionCapacity_Explosive ] );
+        attritionExplosiveVector_ = builder.AddField< ADN_ComboBox_Vector >( attritionExplosive_, tr( "Explosive" ), vInfosConnectors[ eAttritionCapacity_Explosive ] );
 
         QSignalMapper* mapper = new QSignalMapper( this );
         connect( attrition_, SIGNAL( toggled( bool ) ), mapper, SLOT( map() ) );
@@ -449,16 +456,27 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
 
 namespace
 {
-    void UpdateCheckedState( Q3GroupBox* current, Q3GroupBox* first, Q3GroupBox* second )
+    void UpdateCheckedState( Q3GroupBox* capacity, ADN_ComboBox_Vector* combo, Q3GroupBox* current, Q3GroupBox* first, Q3GroupBox* second )
     {
         if( current->isChecked() )
         {
-            first->setChecked( false );
-            second->setChecked( false );
+            if( combo->count() > 0 )
+            {
+                first->setChecked( false );
+                second->setChecked( false );
+                combo->setCurrentItem( 0 );
+            }
+            else
+            {
+                current->setChecked( false );
+            }
         }
         else if( !first->isChecked() && !second->isChecked() )
         {
-            current->setChecked( true );
+            if( combo->count() > 0 )
+                current->setChecked( true );
+            else
+                capacity->setChecked( false );
         }
     }
 }
@@ -471,19 +489,21 @@ void ADN_Objects_GUI::OnAttritionToggled( QWidget* widget )
 {
     if( !widget )
         return;
-
-    if( widget == attrition_ )
+    if( widget == attrition_ && attrition_->isChecked())
     {
-        if( attrition_->isChecked() && !attritionDotation_->isChecked() && !attritionMine_->isChecked() && !attritionExplosive_->isChecked() )
+        if( attritionDotationVector_->count() == 0 && attritionMineVector_->count() == 0 && attritionExplosiveVector_->count() == 0 )
+            attrition_->setChecked( false );
+        else if( attritionDotationVector_->count() > 0 )
             attritionDotation_->setChecked( true );
+        else if( attritionMineVector_->count() > 0 )
+            attritionMine_->setChecked( true );
+        else if( attritionExplosiveVector_->count() > 0 )
+            attritionExplosive_->setChecked( true );
     }
     else if( widget == attritionDotation_ )
-        UpdateCheckedState( attritionDotation_, attritionMine_, attritionExplosive_ );
+        UpdateCheckedState( attrition_, attritionDotationVector_, attritionDotation_, attritionMine_, attritionExplosive_ );
     else if( widget == attritionMine_ )
-        UpdateCheckedState( attritionMine_, attritionDotation_, attritionExplosive_ );
-    else
-    {
-        assert( widget == attritionExplosive_ );
-        UpdateCheckedState( attritionExplosive_, attritionDotation_, attritionMine_ );
-    }
+        UpdateCheckedState( attrition_, attritionMineVector_, attritionMine_, attritionDotation_, attritionExplosive_ );
+    else if( widget == attritionExplosive_ )
+        UpdateCheckedState( attrition_, attritionExplosiveVector_, attritionExplosive_, attritionDotation_, attritionMine_ );
 }

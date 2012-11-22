@@ -454,17 +454,19 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
         if( !useAmmo_.GetData() && !useMine_.GetData() && !useExplo_.GetData() )
             throw ADN_DataException( "Donnée invalide", "Capacité attrition invalide" );
     }
+    else
+        bPresent_ = false;
     attritionSurface_ = xis.attribute< double >( "attrition-surface", 0 );
     ph_ = xis.attribute< double >( "ph", 0 );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream& xos )
 {
-    if( useAmmo_.GetData() )
+    if( useAmmo_.GetData() && ammoCategory_.GetData() )
         xos << xml::attribute( "category", ammoCategory_.GetData()->strName_ );
-    else if( useMine_.GetData() )
+    else if( useMine_.GetData() && mineCategory_.GetData() )
         xos << xml::attribute( "category", mineCategory_.GetData()->strName_ );
-    else if( useExplo_.GetData() )
+    else if( useExplo_.GetData() && explosiveCategory_.GetData() )
         xos << xml::attribute( "category", explosiveCategory_.GetData()->strName_ );
     else
         xos << xml::attribute( "category", "" );
@@ -1402,9 +1404,9 @@ QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Equipement_Data::CategoryIn
         // Attrition
         ADN_CapacityInfos_Attrition* attrition = static_cast< ADN_CapacityInfos_Attrition* >( ( *itObject )->capacities_[ ADN_CapacityInfos_Attrition::TAG ].get() );
         if( !added && attrition && attrition->bPresent_.GetData() &&
-            ( ( attrition->useAmmo_.GetData() && attrition->ammoCategory_.GetData()->strName_ == object.strName_.GetData() ) ||
-              ( attrition->useMine_.GetData() && attrition->mineCategory_.GetData()->strName_ == object.strName_.GetData() ) ||
-              ( !attrition->useExplo_.GetData() && attrition->explosiveCategory_.GetData()->strName_ == object.strName_.GetData() ) ) )
+            ( ( attrition->useAmmo_.GetData() && attrition->ammoCategory_.GetData() && attrition->ammoCategory_.GetData()->strName_ == object.strName_.GetData() ) ||
+              ( attrition->useMine_.GetData() && attrition->mineCategory_.GetData() && attrition->mineCategory_.GetData()->strName_ == object.strName_.GetData() ) ||
+              ( attrition->useExplo_.GetData() && attrition->explosiveCategory_.GetData() && attrition->explosiveCategory_.GetData()->strName_ == object.strName_.GetData() ) ) )
             {
                 added = true;
                 result << ( *itObject )->strName_.GetData().c_str();

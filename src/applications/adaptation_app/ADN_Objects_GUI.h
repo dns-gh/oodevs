@@ -16,6 +16,7 @@
 #include "ADN_EditLine.h"
 
 class Q3GroupBox;
+class ADN_ComboBox_Vector;
 class ADN_Objects;
 class ADN_Objects_Data;
 
@@ -181,6 +182,9 @@ private:
     Q3GroupBox* attritionDotation_;
     Q3GroupBox* attritionMine_;
     Q3GroupBox* attritionExplosive_;
+    ADN_ComboBox_Vector* attritionDotationVector_;
+    ADN_ComboBox_Vector* attritionMineVector_;
+    ADN_ComboBox_Vector* attritionExplosiveVector_;
     QWidget* pContent_;
     QWidget* pCapacities_;
     //@}
