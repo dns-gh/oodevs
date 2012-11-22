@@ -76,7 +76,7 @@ using namespace tools;
 // Name: ModelConsistencyChecker constructor
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
-ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const ::StaticModel& staticModel, Controllers& controllers, tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
+ModelConsistencyChecker::ModelConsistencyChecker( Model& model, const ::StaticModel& staticModel, Controllers& controllers, tools::RealFileLoaderObserver_ABC& fileLoaderObserver )
     : model_      ( model )
     , staticModel_( staticModel )
     , controllers_( controllers )
@@ -734,7 +734,7 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
         if( hierarchy->CleanBadSubordinates() )
         {
             AddError( eBadLogisticSubordinate, &automat );
-            const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
+            model_.SetConsistencyErrorsOnLoad();
         }
     }    
     Iterator< const Formation_ABC& > itFormations = model_.GetFormationResolver().CreateIterator();
@@ -747,7 +747,7 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
         if( hierarchy->CleanBadSubordinates() )
         {
             AddError( eBadLogisticSubordinate, &formation );
-            const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
+            model_.SetConsistencyErrorsOnLoad();
         }
     }
 }
@@ -785,7 +785,7 @@ void ModelConsistencyChecker::CheckUrban()
     if( model_.urban_.TakeLinkErrors() )
     {
         AddError( eDeletedUrbanBlocks, 0, "" );
-        const_cast< Model& >( model_ ).SetConsistencyErrorsOnLoad();
+        model_.SetConsistencyErrorsOnLoad();
     }
 }
 
@@ -800,7 +800,7 @@ void ModelConsistencyChecker::CheckFiles()
     for( unsigned int i = 0; i < filesSignatureErrors.size(); ++i )
         AddError( eSignature, 0, filesSignatureErrors[ i ] );
     if( !filesSignatureErrors.empty() )
-        const_cast< Model& >( model_).SetConsistencyErrorsOnLoad();
+        model_.SetConsistencyErrorsOnLoad();
 
     std::vector< std::string > filesXsdErrors;
     fileLoaderObserver_.GetXsdErrors( filesXsdErrors );
