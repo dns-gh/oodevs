@@ -20,7 +20,7 @@
 ADN_Sensors_Illumination_GUI::ADN_Sensors_Illumination_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
     : ADN_Sensors_ModificatorTable_ABC( tools::translate( "ADN_Sensors_Illumination_GUI", "Illumination" ), tools::translate( "ADN_Sensors_Illumination_GUI", "Modifiers" ), objectName, connector, pParent )
 {
-    // NOTHING
+    setMinimumHeight( 250 );
 }
 
 // -----------------------------------------------------------------------------

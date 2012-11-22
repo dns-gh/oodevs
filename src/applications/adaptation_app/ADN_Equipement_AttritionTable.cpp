@@ -29,7 +29,7 @@ ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( const QString& obj
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     horizontalHeader()->setResizeMode( 3, QHeaderView::ResizeToContents );
     verticalHeader()->setVisible( false );
-    setFixedHeight( 180 );
+    setMinimumHeight( 200 );
 
     delegate_.AddColorOnColumn( 1, 0., 100. );
     delegate_.AddColorOnColumn( 2, 0., 100. );

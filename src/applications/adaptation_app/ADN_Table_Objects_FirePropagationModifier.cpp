@@ -31,7 +31,7 @@ ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModi
     verticalHeader()->setVisible( false );
     delegate_.AddSpinBoxOnColumn( 1, 0, INT_MAX );
     delegate_.AddSpinBoxOnColumn( 2, 0, INT_MAX );
-    setMinimumHeight( 80 );
+    setMinimumHeight( 120 );
 }
 
 //-----------------------------------------------------------------------------

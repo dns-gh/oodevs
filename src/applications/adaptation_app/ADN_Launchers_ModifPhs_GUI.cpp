@@ -38,8 +38,7 @@ ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( const QString& objectNam
 
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
 
-    int nRowHeight = this->rowHeight( 0 );
-    this->setMaximumHeight( ( eNbrUnitPosture + 1 ) * nRowHeight + 5);
+    setMaximumHeight( ( eNbrUnitPosture + 1 ) * rowHeight( 0 ) + 10 );
 }
 
 //-----------------------------------------------------------------------------

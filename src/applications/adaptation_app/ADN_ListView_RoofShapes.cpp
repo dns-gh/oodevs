@@ -22,6 +22,7 @@
 ADN_ListView_RoofShapes::ADN_ListView_RoofShapes( QWidget* pParent )
     :  ADN_ListView( pParent, "RoofShape", tools::translate( "ADN_ListView_RoofShapes", "RoofShape" ) )
 {
+    setMinimumHeight( 150 );
     pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::RoofShapeInfos >( *this );
     SetDeletionEnabled( true );
 }
