@@ -63,7 +63,6 @@ public:
     void ClearAttritions();
     void Update();
     QString GetTextTooltip( const QPoint& point, QRect& rc ) const;
-    virtual void setEnabled( bool enabled );
     //@}
 
 protected:

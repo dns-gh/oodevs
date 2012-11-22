@@ -400,12 +400,3 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
         }
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::setEnabled
-// Created: ABR 2012-11-14
-// -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionGraph::setEnabled( bool enabled )
-{
-    setEnabled( enabled );
-}
