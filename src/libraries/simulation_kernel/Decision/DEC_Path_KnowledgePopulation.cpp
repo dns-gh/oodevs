@@ -76,7 +76,7 @@ double DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/, c
     if( bAvoidPolicy_ ) // avoiding policy (non-terrorist)
     {
         if( !pClosestElement )
-            return 0.f;
+            return 0;
         const double rElementCost = pPathClass_->GetPopulationAttitudeCost( pClosestElement->pAttitude_->GetID() ) * pClosestElement->rDensity_;
         return rElementCost * ( rMaxRange - rDistance ) / rMaxRange;
     }
@@ -84,7 +84,7 @@ double DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/, c
     {
         if( !pClosestElement )
             return pPathClass_->GetCostOutsideOfPopulation();
-        return 0.;
+        return 0;
     }
 }
 
