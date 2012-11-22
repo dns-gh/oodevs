@@ -454,9 +454,12 @@ double PathAdapter::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& 
 {
     double rEnemyCost = 0.;
     const MT_Line lineLink( from, to );
+    static const double distance = DEC_Path_KnowledgeAgent::maxFireDistance_;
+    const MT_Rect boundingBox( std::min( from.rX_, to.rX_ ) - distance, std::min( from.rY_, to.rY_ ) - distance,
+                               std::max( from.rX_, to.rX_ ) + distance, std::max( from.rY_, to.rY_ ) + distance );
     for( CIT_PathKnowledgeAgentVector it = pathKnowledgeAgents_.begin(); it != pathKnowledgeAgents_.end(); ++it )
     {
-        double rCurrentEnemyCost = it->ComputeCost( lineLink );
+        double rCurrentEnemyCost = it->ComputeCost( lineLink, boundingBox );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
             return rCurrentEnemyCost;
         rEnemyCost += rCurrentEnemyCost;

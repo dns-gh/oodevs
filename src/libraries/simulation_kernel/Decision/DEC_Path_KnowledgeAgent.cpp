@@ -13,12 +13,13 @@
 
 namespace
 {
-    double ComputeSecurityDistance( double maxRangeToFire )
+    double Square( double x )
     {
-        const double capped = std::min( 2000., std::max( 1000., maxRangeToFire ) );
-        return capped * capped;
+        return x * x;
     }
 }
+
+const double DEC_Path_KnowledgeAgent::maxFireDistance_ = 2000;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent constructor
@@ -27,7 +28,7 @@ namespace
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const MT_Vector2D& position, double enemyCostAtSecurityRange, double enemyCostOnContact, double maxRangeToFire )
     : vEnemyPosition_         ( position )
-    , rSquareSecurityDistance_( ComputeSecurityDistance( maxRangeToFire ) )
+    , rSquareSecurityDistance_( Square( std::min( maxFireDistance_, std::max( 1000., maxRangeToFire ) ) ) )
     , rFactor_                ( enemyCostOnContact / 100. )
     , rOffset_                ( enemyCostAtSecurityRange )
 {
@@ -54,16 +55,17 @@ namespace
 // Created: AGE 2005-02-01
 // Modified: CMA 2011-04-27
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Line& lineLink ) const
+double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Line& lineLink, const MT_Rect& boundingBox ) const
 {
+    if( !boundingBox.IsInside( vEnemyPosition_ ) )
+        return 0;
     MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
     const double rSqDistBtwUnitAndEnemy = vPositionProjection.SquareDistance( vEnemyPosition_ );
-
     if( rFactor_ > 0 && rSqDistBtwUnitAndEnemy < rSquareSecurityDistance_ )
     {
         // Inverse-square law
         double intensity = rSquareSecurityDistance_ * rFactor_ / ( pi * rSqDistBtwUnitAndEnemy + epsilon );
         return rOffset_ * intensity;
     }
-    return 0.;
+    return 0;
 }

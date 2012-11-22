@@ -20,7 +20,10 @@ namespace
         const MT_Vector2D from( 0, 0 );
         const MT_Vector2D to( 1000, 0 );
         const MT_Line lineLink( from, to );
-        return cost.ComputeCost( lineLink );
+        static const double distance = DEC_Path_KnowledgeAgent::maxFireDistance_;
+        const MT_Rect boundingBox( std::min( from.rX_, to.rX_ ) - distance, std::min( from.rY_, to.rY_ ) - distance,
+                                   std::max( from.rX_, to.rX_ ) + distance, std::max( from.rY_, to.rY_ ) + distance );
+        return cost.ComputeCost( lineLink, boundingBox );
     }
 }
 
