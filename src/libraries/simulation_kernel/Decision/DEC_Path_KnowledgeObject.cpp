@@ -82,8 +82,8 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
             return std::max( 0., rCost_ );
         }
         if( ( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ) ||
-                 ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
-                 ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
+            ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
+            ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
             return rCost_;
     }
     return std::numeric_limits< double >::min();
