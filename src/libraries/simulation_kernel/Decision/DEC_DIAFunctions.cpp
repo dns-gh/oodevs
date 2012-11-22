@@ -16,6 +16,7 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "MIL_Random.h"
 #include <iostream>
 
 //-----------------------------------------------------------------------------
@@ -211,6 +212,15 @@ float DEC_DIAFunctions::GetRealTime()
 int DEC_DIAFunctions::ListPoint_Size( std::vector< MT_Vector2D* > list )
 {
     return static_cast< int >( list.size() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_DIAFunctions::GetRandomValue
+// Created: LGY 2012-11-21
+// -----------------------------------------------------------------------------
+int DEC_DIAFunctions::GetRandomValue( int min, int max )
+{
+    return static_cast< int >( MIL_Random::rand32_ii( min, max ) );
 }
 
 //-----------------------------------------------------------------------------

@@ -38,7 +38,9 @@ public:
 
     // DIA user types list manipulation
     static boost::shared_ptr< MT_Vector2D > ListPoint_GetAt( std::vector< MT_Vector2D* > list, int nId );
-    static int  ListPoint_Size( std::vector< MT_Vector2D* > list );
+    static int ListPoint_Size( std::vector< MT_Vector2D* > list );
+
+    static int GetRandomValue( int min, int max );
 
     // Time management
     static float GetSimTime();
