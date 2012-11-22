@@ -77,11 +77,9 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
         {
             if( rMaxTrafficability_ != 0. && weight > rMaxTrafficability_ )
                 return -1.; //$$$$ CMA in order to block the unit if there is a non-trafficable object
-            if( rCost_ < 0. )
-                return 0.;
             if( rCost_ >= rThreshold_ )
                 return -1;  //$$$$ SLG in order to block the unit if there is an object
-            return rCost_;
+            return std::max( 0., rCost_ );
         }
         if( ( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ) ||
                  ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
