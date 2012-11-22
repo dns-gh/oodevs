@@ -360,7 +360,7 @@ double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D&
     }
     if( rAltitudeCostPerMeter > 0 )
         return ( data.GetMaxAltitude() - rAltitudeTo ) * rAltitudeCostPerMeter;
-    else if( rAltitudeCostPerMeter < 0 )
+    if( rAltitudeCostPerMeter < 0 )
         return ( rAltitudeTo - data.GetMinAltitude() ) * - rAltitudeCostPerMeter;
     return 0;
 }
