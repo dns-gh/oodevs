@@ -370,11 +370,8 @@ double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D&
     const double rAltitudeTo = data_.GetAltitude( to );
     if( IsSlopeTooSteep( from, to, rAltitudeFrom, rAltitudeTo, squareSlope_ ) )
         return -1;
-    if( costPerMeter > 0 )
-        return ( data_.GetMaxAltitude() - rAltitudeTo ) * costPerMeter;
-    if( costPerMeter < 0 )
-        return ( data_.GetMinAltitude() - rAltitudeTo ) * costPerMeter;
-    return 0;
+    const double altitude = costPerMeter > 0 ? data_.GetMaxAltitude() : data_.GetMinAltitude();
+    return ( altitude - rAltitudeTo ) * costPerMeter;
 }
 
 namespace
