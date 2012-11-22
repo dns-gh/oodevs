@@ -106,7 +106,7 @@ namespace
             for( Knowledge_RapForLocal::CIT_KnowledgeAgents it = dangerousEnemies.begin(); it != dangerousEnemies.end(); ++it )
                 rTotalFightScoreFriend += cache.Get( knowledgeFriend, *it );
         }
-        return rTotalFightScoreFriend / rTotalFightScoreEnemy / dangerousEnemies.size();
+        return ( rTotalFightScoreFriend / dangerousEnemies.size() ) / rTotalFightScoreEnemy;
     }
 
     DEFINE_HOOK( ComputeForceRatio, 4, double, ( const SWORD_Model* model, const SWORD_Model* entity,
