@@ -131,6 +131,14 @@ boost::shared_ptr< PathAdapter > PathAdapter::Remove( const boost::shared_ptr< m
     return result;
 }
 
+namespace
+{
+    double Square( double x )
+    {
+        return x * x;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PathAdapter constructor
 // Created: MCO 2012-01-26
@@ -139,7 +147,7 @@ PathAdapter::PathAdapter( const core::Model& entity, const boost::shared_ptr< mo
     : path_        ( path )
     , altitudeData_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
     , weight_      ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from model
-    , slope_       ( entity[ "movement/max-slope" ] )
+    , squareSlope_ ( Square( entity[ "movement/max-slope" ] ) )
     , height_      ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight() ) // $$$$ MCO 2012-05-23: read from model
 {
     MIL_AgentPion& pion = entity[ "data" ].GetUserData< MIL_AgentPion >();
@@ -352,13 +360,13 @@ double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D&
     const double rAltitudeFrom = data.GetAltitude( from );
     const double rAltitudeTo   = data.GetAltitude( to );
     {
-        const double rDelta          = rAltitudeTo - rAltitudeFrom;
+        const double rDelta = rAltitudeTo - rAltitudeFrom;
         const double rSquareDelta = rDelta * rDelta;
         const double rSquareGroundDistance = rSquareDelta + from.SquareDistance( to );
         if( rSquareGroundDistance > 0 )
         {
             const double rSquareSlope = rSquareDelta / rSquareGroundDistance;
-            if( rSquareSlope > slope_ * slope_ )
+            if( rSquareSlope > squareSlope_ )
                 return -1;
         }
     }

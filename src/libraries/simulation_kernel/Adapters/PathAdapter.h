@@ -121,7 +121,7 @@ private:
     T_PathKnowledgeAgentVector pathKnowledgeAgents_;
     T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
     T_PathKnowledgePopulationVector pathKnowledgePopulations_;
-    double weight_, slope_;
+    double weight_, squareSlope_;
     E_CrossingHeight height_;
     double rCostOutsideOfAllObjects_;
     //@}
