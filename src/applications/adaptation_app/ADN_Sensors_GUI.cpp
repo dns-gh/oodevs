@@ -41,8 +41,8 @@ public:
     ADN_AgentDetection_Table( const QString& objectName, ADN_Categories_Data::T_SizeInfos_Vector& sizes, ADN_Urban_Data::T_UrbanMaterialInfos_Vector& materials, QWidget* pParent = 0  )
         : ADN_Table( objectName, pParent )
     {
-        int sizesSize = static_cast< int >( sizes.size() ); 
-        int materialsSize = static_cast< int >( materials.size() ); 
+        int sizesSize = static_cast< int >( sizes.size() );
+        int materialsSize = static_cast< int >( materials.size() );
 
         setNumRows( 2 );
         int totalTableSize = static_cast< int >( 6 + sizesSize + materialsSize + eNbrSensorWeatherModifiers + eNbrLightingType + eNbrVisionObjects + eNbrUnitPosture * 2 );

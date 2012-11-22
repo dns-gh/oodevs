@@ -24,7 +24,6 @@ public:
              ADN_Point_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
     virtual ~ADN_Point_GUI();
 
-
     virtual void AddRow( int row, void* data );
     virtual void OnContextMenu( const QPoint& pt );
 

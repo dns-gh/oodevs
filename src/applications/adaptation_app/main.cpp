@@ -52,7 +52,7 @@ namespace
 int main( int argc, char** argv )
 {
     gui::ApplicationMonitor monitor( argc, argv );
-    
+
 #ifdef _DEBUG
     // Set library path for Qt plugins
     monitor.setLibraryPaths( monitor.libraryPaths() << QDir::currentPath() );

@@ -67,7 +67,6 @@ void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-
     CategoryInfo* pInfos = static_cast< CategoryInfo* >( pCurData_ );
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Equipement_GUI::eNbrGenericGuiElements );
 

@@ -84,7 +84,6 @@ void ADN_Weapons_PhTable::OnContextMenu( const QPoint& pt )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhTable::AddRow
 // Created: JSR 2012-10-31

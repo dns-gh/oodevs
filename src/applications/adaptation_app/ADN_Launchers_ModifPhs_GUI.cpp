@@ -59,7 +59,7 @@ void ADN_Launchers_ModifPhs_GUI::AddRow( int row, void* data )
     ADN_Type_Line_ABC< ADN_Launchers_Data::ModifPhsInfos >* pLine = static_cast< ADN_Type_Line_ABC< ADN_Launchers_Data::ModifPhsInfos >* >( data );
     if( !pLine )
         return;
-    
+
     for( int col = 0; col < eNbrUnitPosture; ++col )
         AddItem( row, col, data, pLine->operator[]( col ), ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

@@ -241,7 +241,7 @@ void ADN_Missions_Data::ReadContextParameter( xml::xistream& input, T_MissionPar
 
 namespace
 {
-    void WriteMissions( xml::xostream& output, const std::string& name, E_EntityType type, 
+    void WriteMissions( xml::xostream& output, const std::string& name, E_EntityType type,
         const ADN_Missions_Data::T_MissionParameter_Vector& context, const ADN_Missions_Data::T_Mission_Vector& missions )
     {
         //xml datas saving

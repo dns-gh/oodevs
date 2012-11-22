@@ -115,7 +115,7 @@ void ADN_Units_Composantes_GUI::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Units_Composantes_GUI::AddNewElement( ComposanteInfos* info )
 {
-    if ( !info )
+    if( !info )
         return;
 
     UnitComposanteInfos* pNewInfo = new UnitComposanteInfos();

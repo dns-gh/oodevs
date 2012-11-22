@@ -147,7 +147,6 @@ QStandardItem* ADN_Table::AddItem( int row, int col, int rowSpan, int columnSpan
     return item;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Table::AddItem
 // Created: ABR 2012-10-18

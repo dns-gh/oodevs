@@ -13,30 +13,6 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_CommonGfx.h"
 
-// namespace
-// {
-//     class ADN_CT_MissionParameterValues : public ADN_Connector_Table_ABC
-//     {
-//     public:
-//         ADN_CT_MissionParameterValues( ADN_MissionParameterValues_Table& tab )
-//             : ADN_Connector_Table_ABC( tab, false )
-//         {
-//             SetAutoClear( true );
-//         }
-// 
-//         void AddSubItems( int i, void* obj )
-//         {
-//             assert( obj );
-// 
-//             ADN_Missions_ParameterValue* param = static_cast< ADN_Missions_ParameterValue* >( obj );
-//             ADN_TableItem_String* itemName = new ADN_TableItem_String( &tab_, obj );
-//             tab_.setItem( i, 0, itemName );
-//             itemName->GetConnector().Connect( &param->name_ );
-//             tab_.show();
-//         }
-//     };
-// }
-
 // -----------------------------------------------------------------------------
 // Name: ADN_MissionParameterValues_Table constructor
 // Created: SBO 2006-12-05

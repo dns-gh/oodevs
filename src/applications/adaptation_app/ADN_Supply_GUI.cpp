@@ -73,7 +73,7 @@ void ADN_Supply_GUI::Build()
 
     Q3HGroupBox* pLoadingGroup = new Q3HGroupBox( tr( "Convoy loading duration" ) );
     new ADN_Supply_TrucksTimeTable( strClassName_ + "ConvoyLoading", data_.infos_.vConvoyLoadingInfos_, pLoadingGroup );
- 
+
     Q3HGroupBox* pUnloadingGroup = new Q3HGroupBox( tr( "Convoy unloading duration" ) );
     new ADN_Supply_TrucksTimeTable( strClassName_ + "ConvoyUnloading", data_.infos_.vConvoyUnloadingInfos_, pUnloadingGroup );
 

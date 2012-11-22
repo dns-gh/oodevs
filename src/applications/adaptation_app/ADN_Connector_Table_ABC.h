@@ -62,5 +62,4 @@ bool ADN_Connector_Table_ABC::IsConnected() const
     return bIsConnected_;
 }
 
-
 #endif // __ADN_Connector_Table_ABC_h_

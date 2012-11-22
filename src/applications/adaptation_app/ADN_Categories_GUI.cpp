@@ -95,11 +95,6 @@ void ADN_Categories_GUI::Build()
     builder.AddField< ADN_EditLine_Double >( pArmorBreakdownGroup_, tr( "On site fixable" ), vArmorInfosConnectors[ eBreakdownNEVA ], tr( "%" ), ePercentage );
 
     pAttritionEffectGroup_ = new Q3VGroupBox( tr( "Attrition effects on humans" ), pArmorGroup );
-    //pAttritionEffects_ = new ADN_Categories_AttritionEffect_Table( pAttritionEffectGroup_ );
-    //pAttritionEffects_->setObjectName( strClassName_ + "_Attrition" );
-    //vArmorInfosConnectors[ eAttritionEffects ] = &pAttritionEffects_->GetConnector();
-
-    //ADN_Categories_AttritionEffect_Table2* test = 
     new ADN_Categories_AttritionEffect_Table( strClassName_ + "_Attrition", vArmorInfosConnectors[ eAttritionEffects ], pAttritionEffectGroup_ );
 
     Q3VBox* pBox = new Q3VBox();

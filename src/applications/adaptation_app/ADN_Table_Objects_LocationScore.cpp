@@ -36,7 +36,7 @@ ADN_Table_Objects_LocationScore::ADN_Table_Objects_LocationScore( const QString&
 {
     dataModel_.setColumnCount( 2 );
     QStringList horizontalHeaders;
-    horizontalHeaders << tr( "Ground Type" ) 
+    horizontalHeaders << tr( "Ground Type" )
                       << tr( "Weight" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );

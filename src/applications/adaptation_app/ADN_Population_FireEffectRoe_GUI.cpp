@@ -28,7 +28,7 @@ ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI( const QStrin
     dataModel_.setColumnCount( 3 );
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "ROE" )
-                      << tr( "Attrition Surface (m²)" ) 
+                      << tr( "Attrition Surface (m²)" )
                       << tr( "PH" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );

@@ -79,7 +79,7 @@ void ADN_Connector_Enum< T >::DisconnectPrivateSub( ADN_Connector_ABC* pTarget )
 template< class T >
 void ADN_Connector_Enum< T >::ClearPrivate(bool bInConnection )
 {
-    if ( !bInConnection )
+    if( !bInConnection )
     {
         pGfx_->setCurrentItem(-1);
         pGfx_->clear();

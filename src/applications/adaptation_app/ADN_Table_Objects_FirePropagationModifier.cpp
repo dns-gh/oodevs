@@ -24,7 +24,7 @@ ADN_Table_Objects_FirePropagationModifier::ADN_Table_Objects_FirePropagationModi
     dataModel_.setColumnCount( 3 );
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Fire model" )
-                      << tr( "Ignition threshold" ) 
+                      << tr( "Ignition threshold" )
                       << tr( "Max combustion energy" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
