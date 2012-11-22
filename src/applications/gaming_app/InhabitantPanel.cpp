@@ -29,7 +29,7 @@ InhabitantPanel::InhabitantPanel( QMainWindow* mainWindow, kernel::Controllers& 
     , model_      ( model )
     , current_    ( controllers )
 {
-    setObjectName( "ProfilesPanel" );
+    setObjectName( "inhabitant" );
     QWidget* main = new QWidget( this );
     QVBoxLayout* mainLayout = new QVBoxLayout( main );
     setCaption( tools::translate( "InhabitantPanel", "Living area" ) );

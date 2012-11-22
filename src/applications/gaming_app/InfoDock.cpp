@@ -22,7 +22,7 @@ InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const ker
     : QDockWidget( "info", parent )
     , controllers_( controllers )
 {
-    setObjectName( "infoDock" );
+    setObjectName( "info" );
     setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory, extractor, staticModel, actionsModel, simulation ) );
     setCaption( tools::translate( "InfoDock", "Info" ) );
     controllers_.Register( *this );

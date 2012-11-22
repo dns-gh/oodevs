@@ -70,7 +70,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , interfaceBuilder_        ( interfaceBuilder )
     , config_                  ( config )
 {
-    setObjectName( "missionPanel" );
+    setObjectName( "mission" );
     setFloating( true );
     setWindowTitle( tr( "Mission" ) );
 

@@ -40,7 +40,7 @@ ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& cont
     , red_         ( "resources/images/gaming/red.png" )
     , green_       ( "resources/images/gaming/green.png" )
 {
-    setObjectName( "ProfilesPanel" );
+    setObjectName( "profiles" );
     QWidget* main = new QWidget( this );
     QVBoxLayout* mainLayout = new QVBoxLayout( main );
     setCaption( tools::translate( "Profiles", "Profiles" ) );

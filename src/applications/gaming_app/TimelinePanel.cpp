@@ -85,7 +85,7 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     : QDockWidget( "timeline", parent )
 {
     // Init
-    setObjectName( "timeLine" );
+    setObjectName( "timeline" );
     setCaption( tools::translate( "TimelinePanel", "Actions timeline" ) );
     QWidget* box = new QWidget( this );
     QVBoxLayout* layout = new QVBoxLayout( box );

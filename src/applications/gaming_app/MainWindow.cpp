@@ -248,7 +248,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *pProfile_, *icons, model_.userProfileFactory_ );
 
     // Agent list panel
-    orbatDockWidget_ = new OrbatDockWidget( controllers_, this, "agentList", tr( "Orbat" ), *pProfile_, *automatsLayer, *formationLayer, model_.actions_, staticModel, simulation, *icons );
+    orbatDockWidget_ = new OrbatDockWidget( controllers_, this, "orbat", tr( "Orbat" ), *pProfile_, *automatsLayer, *formationLayer, model_.actions_, staticModel, simulation, *icons );
     addDockWidget( Qt::LeftDockWidgetArea, orbatDockWidget_ );
 
     // Mini views

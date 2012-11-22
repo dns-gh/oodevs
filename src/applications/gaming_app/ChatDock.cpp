@@ -18,7 +18,7 @@
 ChatDock::ChatDock( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler )
     : QDockWidget( "chat", parent )
 {
-    setObjectName( "chatDock" );
+    setObjectName( "chat" );
     setWidget( new ChatWidget( this, controllers, publisher, handler ) );
     setCaption( tr( "Chat" ) );
     hide();
