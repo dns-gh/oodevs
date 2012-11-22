@@ -155,5 +155,5 @@ void Dotations::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC
 bool Dotations::Accept( const kernel::DotationType& type ) const
 {
     Dotation* dotation = Find( type.GetId() );
-    return dotation && dotation->quantity_ > 0;
+    return dotation != 0;
 }
