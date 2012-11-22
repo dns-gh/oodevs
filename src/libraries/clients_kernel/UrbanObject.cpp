@@ -284,12 +284,14 @@ unsigned int UrbanObject::GetHumans() const
 float UrbanObject::GetLivingSpace( unsigned int floorNumber, unsigned int occupation ) const
 {
     if( livingSpace_ == 0 )
+    {
         if( const UrbanPositions_ABC* positions = Retrieve< UrbanPositions_ABC >() )
         {
             livingSpace_ = positions->ComputeArea();
             livingSpace_ *= ( floorNumber + 1 ) * ( static_cast< float >( occupation ) * 0.01f );
         }
-        return livingSpace_;
+    }
+    return livingSpace_;
 }
 
 // -----------------------------------------------------------------------------
