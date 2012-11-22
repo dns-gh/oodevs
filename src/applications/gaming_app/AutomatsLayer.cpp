@@ -97,7 +97,7 @@ bool AutomatsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
-    return selected_ && ( dnd::HasData< const kernel::AgentType >( event ) || dnd::HasData< const kernel::AutomatType >( event ) );
+    return selected_ && ( dnd::HasData< const kernel::AgentType >( event ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,11 +109,6 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
     if( !selected_ )
         return false;
     if( const kernel::AgentType* droppedItem = dnd::FindData< kernel::AgentType >( event ) )
-    {
-        RequestCreation( point, *droppedItem );
-        return true;
-    }
-    if( const kernel::AutomatType* droppedItem = dnd::FindData< kernel::AutomatType >( event ) )
     {
         RequestCreation( point, *droppedItem );
         return true;

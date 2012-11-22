@@ -2881,10 +2881,6 @@ This data can&apos;t be projected.</source>
         <translation>Unit Change Superior</translation>
     </message>
     <message>
-        <source>Change Automat Superior</source>
-        <translation>Change Automat Superior</translation>
-    </message>
-    <message>
         <source>Change Formation Superior</source>
         <translation>Change Formation Superior</translation>
     </message>

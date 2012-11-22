@@ -107,7 +107,7 @@ bool TacticalTreeView::CanChangeSuperior( const kernel::Entity_ABC& entity, cons
     if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
         return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
     if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-        return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0 || dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
+        return dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
     return false;
 }
 
@@ -167,27 +167,14 @@ void TacticalTreeView::Drop( const kernel::Agent_ABC& item, const kernel::Entity
 // -----------------------------------------------------------------------------
 void TacticalTreeView::Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target)
 {
-    actions::UnitMagicAction* action = 0;
-    if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &target ) )
-    {
-        if( &item.Get< kernel::TacticalHierarchies >().GetUp() == automat || &item == automat )
-            return;
-        kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "change_automat_superior" );
-        action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Automat Superior" ), true );
-        tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-        action->AddParameter( *new actions::parameters::Automat( it.NextElement(), *automat, controllers_.controller_ ) );
-    }
-    else if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &target ) )
+    if( const kernel::Formation_ABC* formation = dynamic_cast< const kernel::Formation_ABC* >( &target ) )
     {
         if( & item.Get< kernel::TacticalHierarchies >().GetUp() == formation )
             return;
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& >( static_.types_ ).Get( "change_formation_superior" );
-        action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Formation Superior" ), true );
+        actions::UnitMagicAction* action = new actions::UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Formation Superior" ), true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new actions::parameters::Formation( it.NextElement(), *formation, controllers_.controller_ ) );
-    }
-    if( action )
-    {
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( &item, false ) );
         action->RegisterAndPublish( actionsModel_ );

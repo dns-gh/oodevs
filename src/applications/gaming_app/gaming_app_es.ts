@@ -2886,10 +2886,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">Cambio de superior </translation>
     </message>
     <message>
-        <source>Change Automat Superior</source>
-        <translation type="unfinished">Cambiar Superior de autómata</translation>
-    </message>
-    <message>
         <source>Change Formation Superior</source>
         <translation type="unfinished">Cambiar Superior de formación</translation>
     </message>

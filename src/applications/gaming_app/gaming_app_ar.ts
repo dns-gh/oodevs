@@ -2883,10 +2883,6 @@ This data can&apos;t be projected.</source>
         <translation type="unfinished">وحدة التغيير متفوقة</translation>
     </message>
     <message>
-        <source>Change Automat Superior</source>
-        <translation type="unfinished">تغير [اوتومت] متفوقة</translation>
-    </message>
-    <message>
         <source>Change Formation Superior</source>
         <translation type="unfinished">تغيير تشكيل متفوقة</translation>
     </message>
