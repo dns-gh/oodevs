@@ -94,7 +94,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
 
     connect( pPerceptionListView_, SIGNAL( doubleClicked( const QModelIndex& ) ), SLOT( OnPerceptionRequestCenter() ) );
     connect( pPerceptionListView_, SIGNAL( customContextMenuRequested( const QPoint& ) ), SLOT( OnPerceptionContextMenuEvent( const QPoint& ) ) );
-    
+
     setWidget( view );
 
     controllers_.Register( *this );

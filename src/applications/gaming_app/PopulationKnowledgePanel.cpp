@@ -51,7 +51,7 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
     knowledgeList_->setModel( &knowledgeModel_ );
     knowledgeModel_.setColumnCount( 1 );
     knowledgeModel_.setHorizontalHeaderLabels( QStringList( tools::translate( "PopulationKnowledgePanel", "Known crowds" ) ) );
-    
+
     layout->addWidget( knowledgeList_ );
 
     display_ = new DisplayBuilder( view, factory );

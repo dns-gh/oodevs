@@ -26,7 +26,7 @@ class LogisticConsignsWidget_ABC : public Q3VBox
                                  , public tools::SelectionObserver< kernel::Entity_ABC >
 {
     Q_OBJECT
-    
+
 public:
     //! @name Constructors/Destructor
     //@{

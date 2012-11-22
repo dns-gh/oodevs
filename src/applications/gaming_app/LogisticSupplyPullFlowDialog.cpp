@@ -57,9 +57,9 @@ using namespace parameters;
 // Created : AHC 2010-10-14
 // -----------------------------------------------------------------------------
 LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel,
-                                                            const ::StaticModel& staticModel, const Time_ABC& simulation, 
+                                                            const ::StaticModel& staticModel, const Time_ABC& simulation,
                                                             ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats,
-                                                            const tools::Resolver_ABC< Formation_ABC >& formations, 
+                                                            const tools::Resolver_ABC< Formation_ABC >& formations,
                                                             const Profile_ABC& profile )
     : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
     ,  formations_( formations )

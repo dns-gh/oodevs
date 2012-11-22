@@ -62,7 +62,7 @@ using namespace parameters;
 // Name: LogisticSupplyFlowDialog_ABC constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, kernel::Controllers& controllers, 
+LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, kernel::Controllers& controllers,
                                                             actions::ActionsModel& actionsModel,
                                                             const ::StaticModel& staticModel, const kernel::Time_ABC& simulation,
                                                             gui::ParametersLayer& layer,
@@ -131,7 +131,7 @@ LogisticSupplyFlowDialog_ABC::LogisticSupplyFlowDialog_ABC( QWidget* parent, ker
     QStringList carriersHeader;
     carriersHeader << tools::translate( "Logistic : Push supply flow", "Type" )
         << tools::translate( "Logistic : Push supply flow", "Available" )
-        << tools::translate( "Logistic : Push supply flow", "Quantity" );  
+        << tools::translate( "Logistic : Push supply flow", "Quantity" );
     carriersTable_ = new LogisticSupplyAvailabilityTableWidget( this, carriersHeader );
     carriersTable_->setEnabled( false );
 
@@ -310,7 +310,6 @@ void LogisticSupplyFlowDialog_ABC::MoveDownWaypoint()
     }
     waypointList_->setFocus();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyFlowDialog_ABC::addCarryingEquipment

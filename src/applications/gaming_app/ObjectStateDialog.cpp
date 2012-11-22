@@ -60,7 +60,7 @@ ObjectStateDialog::ObjectStateDialog( QWidget* pParent, kernel::Controllers& con
     bypassSpinBox_->setSuffix( "%" );
     bypassSpinBox_->setEnabled( false );
 
-    QWidget* propertiesPanel = new QWidget( this ); 
+    QWidget* propertiesPanel = new QWidget( this );
     QGridLayout* propertiesLayout = new QGridLayout( propertiesPanel );
     propertiesLayout->addWidget( constructionLabel, 0, 0 );
     propertiesLayout->addWidget( constructionSpinBox_, 0, 1 );
@@ -75,7 +75,7 @@ ObjectStateDialog::ObjectStateDialog( QWidget* pParent, kernel::Controllers& con
     connect( applyButton, SIGNAL( clicked() ), SLOT( OnOk() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( OnCancel() ) );
 
-    QWidget* buttonPanel = new QWidget( this ); 
+    QWidget* buttonPanel = new QWidget( this );
     QHBoxLayout* pButtonLayout = new QHBoxLayout( buttonPanel );
     pButtonLayout->addWidget( applyButton, Qt::AlignCenter );
     pButtonLayout->addWidget( cancelButton, Qt::AlignCenter );

@@ -122,7 +122,7 @@ namespace
             table->verticalHeader()->hide();
             //table->setLeftMargin( 0 );
             QStringList headers;
-            headers << tools::translate( "TimeTableDialog", "Tick" ) 
+            headers << tools::translate( "TimeTableDialog", "Tick" )
                     << tools::translate( "TimeTableDialog", "Sim time" )
                     << tools::translate( "TimeTableDialog", "Real time" );
             table->setHorizontalHeaderLabels( headers );

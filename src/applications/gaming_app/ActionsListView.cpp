@@ -18,7 +18,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DisplayExtractor_ABC.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ActionsListView constructor
 // Created: SBO 2007-03-12

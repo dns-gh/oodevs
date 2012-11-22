@@ -58,7 +58,7 @@ void ObjectReportPanel::NotifySelected( const kernel::Object_ABC* object )
     {
         selected_ = object;
         if( selected_ )
-            Show(); 
+            Show();
         else
             Hide();
     }

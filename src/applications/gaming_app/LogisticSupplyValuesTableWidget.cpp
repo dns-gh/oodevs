@@ -155,7 +155,7 @@ bool LogisticSupplyValueItemDelegate::IsNameInTable( const QAbstractItemModel* m
 LogisticSupplyValuesTableWidget::LogisticSupplyValuesTableWidget( QWidget* parent, const QStringList& header )
     : QTableWidget( parent )
     , header_( header )
-{ 
+{
     setColumnCount( 2 );
     setSelectionMode( QAbstractItemView::NoSelection );
     setItemDelegate( new LogisticSupplyValueItemDelegate( this ) );

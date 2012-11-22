@@ -47,7 +47,7 @@ namespace
             QStandardItemModel* model = static_cast< QStandardItemModel* >( sourceModel() );
             if( left.isValid() && right.isValid() )
             {
-                //getting second column modelIndex for each 
+                //getting second column modelIndex for each
                 QModelIndex leftIndex = model->index( model->itemFromIndex( left )->row(), 1 );
                 QModelIndex rightIndex = model->index( model->itemFromIndex( right )->row(), 1 );
 
@@ -56,7 +56,7 @@ namespace
                 const QDateTime& timeRight = model->data( rightIndex, ReportRole ).value< const Report* >()->GetDateTime();
                 if( timeLeft == timeRight )
                     return model->data( leftIndex, OrderRole ).toUInt() < model->data( rightIndex, OrderRole ).toUInt();
-                else 
+                else
                     return timeLeft < timeRight;
             }
             return false;

@@ -10,7 +10,6 @@
 #ifndef __LogisticSupplyAvailabilityTableWidget_h_
 #define __LogisticSupplyAvailabilityTableWidget_h_
 
-
 // =============================================================================
 /** @class  LogisticSupplyAvailabilityItemDelegate
     @brief  LogisticSupplyAvailabilityItemDelegate

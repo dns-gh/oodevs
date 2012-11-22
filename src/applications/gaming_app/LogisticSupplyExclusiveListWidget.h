@@ -10,7 +10,6 @@
 #ifndef __LogisticSupplyExclusiveListWidget_h_
 #define __LogisticSupplyExclusiveListWidget_h_
 
-
 // =============================================================================
 /** @class  LogisticSupplyExclusiveListWidget
     @brief  LogisticSupplyExclusiveListWidget

@@ -1,10 +1,9 @@
-
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignsWidget constructor
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 template< typename Consign, typename Extension >
-LogisticConsignsWidget< Consign, Extension >::LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers 
+LogisticConsignsWidget< Consign, Extension >::LogisticConsignsWidget( QWidget* parent, kernel::Controllers& controllers
     , kernel::DisplayExtractor_ABC& extractor )
     : LogisticConsignsWidget_ABC( parent, extractor )
     , controllers_( controllers )
@@ -99,7 +98,7 @@ void LogisticConsignsWidget< Consign, Extension >::DisplayItem( const QString& k
 // Created: MMC 2012-10-29
 // -----------------------------------------------------------------------------
 template< typename Consign, typename Extension >
-void LogisticConsignsWidget< Consign, Extension >::DisplaySubItemValues( const QString& key, const QString& subKey, 
+void LogisticConsignsWidget< Consign, Extension >::DisplaySubItemValues( const QString& key, const QString& subKey,
                                                                          const QMap< QString, T_OrderedValues >& subValues )
 {
     if( !currentItem_ )
@@ -166,7 +165,6 @@ void LogisticConsignsWidget< Consign, Extension >::NotifySelected( const kernel:
         hide();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LogisticConsignsWidget::Display
 // Created: SBO 2007-02-19
@@ -175,7 +173,7 @@ template< typename Consign, typename Extension >
 void LogisticConsignsWidget< Consign, Extension >::DisplayConsign( const Consign& consign, QTreeWidgetItem* pCurrentItem )
 {
     if( pCurrentItem )
-    {        
+    {
         pCurrentItem->setTextColor( 0, pCurrentItem->textColor( 1 ) );
         pCurrentItem->setData( 0, Qt::UserRole, QVariant( reinterpret_cast< int >( &consign ) ) );
     }

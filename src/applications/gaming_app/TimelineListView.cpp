@@ -240,7 +240,6 @@ void TimelineListView::NotifyDeleted( const actions::Action_ABC& action )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TimelineListView::NotifyDeleted
 // Created: SBO 2008-04-22

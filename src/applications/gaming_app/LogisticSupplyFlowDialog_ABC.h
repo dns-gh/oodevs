@@ -64,7 +64,7 @@ protected:
     //! @name Constructors/Destructor
     //@{
     LogisticSupplyFlowDialog_ABC( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
-                                  const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, 
+                                  const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer,
                                   const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
                                   const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyFlowDialog_ABC();

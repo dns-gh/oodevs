@@ -11,7 +11,6 @@
 #include "LogisticSupplyExclusiveListWidget.h"
 #include "moc_LogisticSupplyExclusiveListWidget.cpp"
 
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyExclusiveListWidget constructor
 // Created: MMC 2012-10-11
@@ -23,7 +22,7 @@ LogisticSupplyExclusiveListWidget::LogisticSupplyExclusiveListWidget( QWidget* p
     , removeLabel_( removeLabel )
 {
     setSelectionMode( QAbstractItemView::SingleSelection );
-    connect( this, SIGNAL( currentItemChanged( QListWidgetItem*, QListWidgetItem* ) ), 
+    connect( this, SIGNAL( currentItemChanged( QListWidgetItem*, QListWidgetItem* ) ),
         this, SLOT( OnSelectionChanged( QListWidgetItem*, QListWidgetItem* )  ) );
 }
 

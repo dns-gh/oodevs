@@ -35,8 +35,8 @@ PopulationOptionChooser::PopulationOptionChooser( QMainWindow* parent, kernel::C
 
     displayCombo_ = new QComboBox();
     QStringList displays;
-    displays << tools::translate( "PopulationOptionChooser", "Off" ) 
-             << tools::translate( "PopulationOptionChooser", "Density" ) 
+    displays << tools::translate( "PopulationOptionChooser", "Off" )
+             << tools::translate( "PopulationOptionChooser", "Density" )
              << tools::translate( "PopulationOptionChooser", "Occupation" );
     displayCombo_->addItems( displays );
     displayCombo_->setCurrentItem( 0 );

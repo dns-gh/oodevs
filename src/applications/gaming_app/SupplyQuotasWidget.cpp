@@ -56,7 +56,7 @@ SupplyQuotasWidget::SupplyQuotasWidget( QWidget* parent, kernel::Controllers& co
     tableView_->setSelectionBehavior( QAbstractItemView::SelectRows );
     tableView_->setSortingEnabled( false );
     tableView_->setShowGrid( false );
-    
+
     hboxSuperior_= new Q3HBox( (Q3VBox*)this );
     new QLabel( tr( "Logistic superior" ), hboxSuperior_ );
     superior_ = new ValuedComboBox< const Entity_ABC* >( hboxSuperior_ );

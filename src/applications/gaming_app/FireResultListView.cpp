@@ -104,13 +104,13 @@ void FireResultListView::Display( const AgentFireResult& result, QTreeWidgetItem
     if( item->childCount() == 0 )
     {
         QStringList equipments;
-        equipments << tools::translate( "FireResultListView", "Equipments" ) 
+        equipments << tools::translate( "FireResultListView", "Equipments" )
                    << tools::translate( "FireResultListView", "( avail, " )
                    << tools::translate( "FireResultListView", "unavail," )
                    << tools::translate( "FireResultListView", "repairable )" );
         item->addChild( new QTreeWidgetItem( equipments ) );
         QStringList troops;
-        troops << tools::translate( "FireResultListView", "Troops" ) 
+        troops << tools::translate( "FireResultListView", "Troops" )
                << tools::translate( "FireResultListView", "( officer," )
                << tools::translate( "FireResultListView", "warrant-off.," )
                << tools::translate( "FireResultListView", "private )" );

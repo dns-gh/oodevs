@@ -62,9 +62,9 @@ using namespace parameters;
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel, 
-                                                            const ::StaticModel& staticModel, const Time_ABC& simulation, 
-                                                            ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats, 
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel,
+                                                            const ::StaticModel& staticModel, const Time_ABC& simulation,
+                                                            ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats,
                                                             const Profile_ABC& profile )
     : LogisticSupplyFlowDialog_ABC( parent, controllers, actionsModel, staticModel, simulation, layer, automats, profile )
 {
@@ -73,7 +73,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     recipientsList_ = new LogisticSupplyExclusiveListWidget( this, tr( "Add recipient" ), tr( "Remove recipient" ) );
     connect( recipientsList_, SIGNAL( ItemAdded( const QString& ) ), SLOT( AddRecipient( const QString& ) ) );
     connect( recipientsList_, SIGNAL( ItemRemoved( const QString& ) ), SLOT( RemoveRecipient( const QString& ) ) );
-    connect( recipientsList_, SIGNAL( SelectionChanged( const QString&, const QString& ) ), 
+    connect( recipientsList_, SIGNAL( SelectionChanged( const QString&, const QString& ) ),
                               SLOT( OnRecipientSelectionChanged( const QString&, const QString& ) ) );
     QStringList resourcesHeader;
     resourcesHeader << tools::translate( "Logistic : Push supply flow", "Resource" )

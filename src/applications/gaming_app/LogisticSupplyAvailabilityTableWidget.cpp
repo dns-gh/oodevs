@@ -157,7 +157,7 @@ bool LogisticSupplyAvailabilityItemDelegate::IsNameInTable( const QAbstractItemM
 LogisticSupplyAvailabilityTableWidget::LogisticSupplyAvailabilityTableWidget( QWidget* parent, const QStringList& header )
     : QTableWidget( parent )
     , header_( header )
-{ 
+{
     setColumnCount( 3 );
     setSelectionMode( QAbstractItemView::NoSelection );
     setItemDelegate( new LogisticSupplyAvailabilityItemDelegate( this ) );
