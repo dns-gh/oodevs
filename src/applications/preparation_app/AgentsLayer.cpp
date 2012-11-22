@@ -121,7 +121,7 @@ bool AgentsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) con
            ( dnd::HasData< kernel::Formation_ABC >( event ) && selectedFormation_ ) ||
            ( dnd::HasData< AgentPositions >( event ) && selectedAgent_ ) ||
            ( dnd::HasData< kernel::AgentType >( event ) && selectedAutomat_ ) ||
-           ( dnd::HasData<  kernel::AutomatType >( event ) && ( selectedFormation_ || selectedAutomat_ ) ) ||
+           ( dnd::HasData<  kernel::AutomatType >( event ) && ( selectedFormation_ ) ) ||
            IsValidTemplate( event );
 }
 
