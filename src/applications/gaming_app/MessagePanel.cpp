@@ -15,6 +15,7 @@
 #include "gaming/CommandPublisher.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ItemFactory_ABC.h"
+#include "clients_gui/Tools.h"
 #include <string>
 
 // -----------------------------------------------------------------------------
@@ -22,7 +23,7 @@
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
 MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler, gui::ItemFactory_ABC& factory )
-    : RichToolBar( controllers, mainWindow, "messagePanel", tr( "Message Panel" ) )
+    : QToolBar( tools::translate( "MessagePanel", "Messages" ) )
     , mainWindow_( mainWindow )
     , handler_( handler )
     , factory_( factory )
@@ -30,8 +31,8 @@ MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& contro
 {
     setObjectName( "message" );
     setPaletteBackgroundColor( QColor( 255, 255, 225 ) );
-    setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Fixed );
-    setMovable( false );
+    setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
+    setAllowedAreas( Qt::TopToolBarArea );
 
     //text layout
     text_ = factory_.CreateLabel();
@@ -58,10 +59,9 @@ MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& contro
     boxLayout->setStretch( 0, 100 );
 
     addWidget( box );
-    setVisible( false );
 
-    handler_.Register( "display", *this );
-    handler_.Register( "prompt", *this );
+     handler_.Register( "display", *this );
+     handler_.Register( "prompt", *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,8 +70,8 @@ MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& contro
 // -----------------------------------------------------------------------------
 MessagePanel::~MessagePanel()
 {
-    handler_.Unregister( "display", *this );
-    handler_.Unregister( "prompt", *this );
+     handler_.Unregister( "display", *this );
+     handler_.Unregister( "prompt", *this );
 }
 
 // -----------------------------------------------------------------------------

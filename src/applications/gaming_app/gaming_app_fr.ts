@@ -642,10 +642,6 @@ Raison: %3
 <context>
     <name>EventToolbar</name>
     <message>
-        <source>Messages</source>
-        <translation>Messages</translation>
-    </message>
-    <message>
         <source>Out of gas</source>
         <translation>Plus de carburant</translation>
     </message>
@@ -656,6 +652,10 @@ Raison: %3
     <message>
         <source>%L1 pending messages</source>
         <translation>%L1 message(s) en attente</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation>Notifications</translation>
     </message>
 </context>
 <context>
@@ -1401,7 +1401,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>LogisticConsignsWidget_ABC</name>
     <message>
         <source>Logistic requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Requètes logistiques</translation>
     </message>
     <message>
         <source>Processing consigns</source>
@@ -2119,8 +2119,8 @@ Ces données ne peuvent pas être projetées.</translation>
 <context>
     <name>MessagePanel</name>
     <message>
-        <source>Message Panel</source>
-        <translation type="unfinished"></translation>
+        <source>Messages</source>
+        <translation>Messages</translation>
     </message>
 </context>
 <context>
@@ -2838,7 +2838,7 @@ Ces données ne peuvent pas être projetées.</translation>
     <name>SupplyQuotasWidget</name>
     <message>
         <source>Logistic superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Supérieur logistique</translation>
     </message>
 </context>
 <context>

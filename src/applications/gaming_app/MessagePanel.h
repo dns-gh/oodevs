@@ -35,7 +35,7 @@ class Publisher_ABC;
 */
 // Created: SBO 2009-03-04
 // =============================================================================
-class MessagePanel : public gui::RichToolBar
+class MessagePanel : public QToolBar
                    , public CommandHandler_ABC
 {
     Q_OBJECT;

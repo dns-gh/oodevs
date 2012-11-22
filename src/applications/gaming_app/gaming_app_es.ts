@@ -640,10 +640,6 @@ Reason: %3
 <context>
     <name>EventToolbar</name>
     <message>
-        <source>Messages</source>
-        <translation>Mensajes</translation>
-    </message>
-    <message>
         <source>Out of gas</source>
         <translation>Sin gas</translation>
     </message>
@@ -653,6 +649,10 @@ Reason: %3
     </message>
     <message>
         <source>%L1 pending messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notifications</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2116,7 +2116,7 @@ This data can&apos;t be projected.</source>
 <context>
     <name>MessagePanel</name>
     <message>
-        <source>Message Panel</source>
+        <source>Messages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

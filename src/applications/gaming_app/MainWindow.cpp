@@ -365,6 +365,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     {
         QToolBar* messagePanel = new MessagePanel( this, controllers_, publisher, network.GetCommands(), *factory );
         addToolBar( messagePanel );
+        messagePanel->hide();
     }
     // ResourceNetwork panel
     {
