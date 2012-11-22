@@ -108,21 +108,3 @@ double DEC_Path_KnowledgeObject::GetMaxTrafficability() const
 {
     return rMaxTrafficability_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObject::New
-// Created: LDC 2012-05-14
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > DEC_Path_KnowledgeObject::New( const DEC_Knowledge_Object& knowledge, double rCost, double rObstructionThreshold )
-{
-    static int lastTick = 0;
-    static std::map< std::pair< double, double >, std::map< const DEC_Knowledge_Object*, boost::shared_ptr< DEC_Path_KnowledgeObject_ABC > > > cache;
-    const MIL_Time_ABC& time = MIL_Singletons::GetTime(); 
-    int currentTick = time.GetCurrentTick();
-    if( lastTick != currentTick )
-        cache.clear();
-    boost::shared_ptr< DEC_Path_KnowledgeObject_ABC >& result = cache[ std::make_pair( rCost, rObstructionThreshold ) ][&knowledge];
-    if( !result.get() )
-        result.reset( new DEC_Path_KnowledgeObject( knowledge, rCost, rObstructionThreshold ) );
-    return result;
-}
