@@ -356,9 +356,8 @@ double PathAdapter::GetPopulationAttitudeCost( unsigned int attitudeID ) const
 // -----------------------------------------------------------------------------
 double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) const
 {
-    const PHY_RawVisionData& data = altitudeData_;
-    const double rAltitudeFrom = data.GetAltitude( from );
-    const double rAltitudeTo   = data.GetAltitude( to );
+    const double rAltitudeFrom = altitudeData_.GetAltitude( from );
+    const double rAltitudeTo   = altitudeData_.GetAltitude( to );
     {
         const double rSquareDelta = Square( rAltitudeTo - rAltitudeFrom );
         const double rSquareGroundDistance = rSquareDelta + from.SquareDistance( to );
@@ -366,9 +365,9 @@ double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D&
             return -1;
     }
     if( rAltitudeCostPerMeter > 0 )
-        return ( data.GetMaxAltitude() - rAltitudeTo ) * rAltitudeCostPerMeter;
+        return ( altitudeData_.GetMaxAltitude() - rAltitudeTo ) * rAltitudeCostPerMeter;
     if( rAltitudeCostPerMeter < 0 )
-        return ( data.GetMinAltitude() - rAltitudeTo ) * rAltitudeCostPerMeter;
+        return ( altitudeData_.GetMinAltitude() - rAltitudeTo ) * rAltitudeCostPerMeter;
     return 0;
 }
 
