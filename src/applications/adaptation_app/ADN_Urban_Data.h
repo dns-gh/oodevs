@@ -251,8 +251,6 @@ public:
 
     T_UrbanMaterialInfos_Vector& GetMaterialsInfos();
     UrbanMaterialInfos* FindMaterial( const std::string& strName );
-    T_UrbanInfos_Vector& GetFacadesInfos();
-    UrbanInfos* FindFacade( const std::string& strName );
     T_RoofShapeInfos_Vector& GetRoofShapesInfos();
     RoofShapeInfos* FindRoofShape( const std::string& strName );
     T_AccommodationInfos_Vector& GetAccommodationsInfos();
@@ -271,10 +269,6 @@ private:
     void ReadMaterial  ( xml::xistream& input );
     void ReadMaterials ( xml::xistream& input );
     void WriteMaterials( xml::xostream& output ) const;
-
-    void ReadFacade  ( xml::xistream& input );
-    void ReadFacades ( xml::xistream& input );
-    void WriteFacades( xml::xostream& output ) const;
 
     void ReadRoofShape  ( xml::xistream& input );
     void ReadRoofShapes ( xml::xistream& input );
@@ -296,7 +290,6 @@ private:
     //@{
     T_UrbanMaterialInfos_Vector vMaterials_;
     T_RoofShapeInfos_Vector vRoofShapes_;
-    T_UrbanInfos_Vector vFacades_;
     T_AccommodationInfos_Vector vAccommodations_;
     T_InfrastructureInfos_Vector vInfrastructures_;
     T_UrbanTemplateInfos_Vector vTemplates_;
@@ -339,29 +332,6 @@ ADN_Urban_Data::UrbanMaterialInfos* ADN_Urban_Data::FindMaterial( const std::str
 {
     for( CIT_UrbanMaterialInfos_Vector it = vMaterials_.begin(); it != vMaterials_.end(); ++it )
         if( **it == strName )
-            return *it;
-    return 0;
-}
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::GetFacadesInfos
-// Created: SLG 2010-03-08
-//-----------------------------------------------------------------------------
-inline
-ADN_Urban_Data::T_UrbanInfos_Vector& ADN_Urban_Data::GetFacadesInfos()
-{
-    return vFacades_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::FindFacade
-// Created: SLG 2010-03-08
-// -----------------------------------------------------------------------------
-inline
-ADN_Urban_Data::UrbanInfos* ADN_Urban_Data::FindFacade( const std::string& strName )
-{
-    for( IT_UrbanInfos_Vector it = vFacades_.begin(); it != vFacades_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( ( *it )->strName_.GetData(), strName ) )
             return *it;
     return 0;
 }

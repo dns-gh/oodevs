@@ -175,7 +175,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\DotationCapacityType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DotationType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\EquipmentType.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\FacadeType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\FireClass.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\InfrastructureType.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\InhabitantType.cpp" />
@@ -360,7 +359,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\DotationCapacityType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DotationType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\EquipmentType.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\FacadeType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\FireClass.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\InfrastructureType.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\InhabitantType.h" />

@@ -13,7 +13,6 @@
 #include "DotationType.h"
 #include "EquipmentType.h"
 #include "FireClass.h"
-#include "FacadeType.h"
 #include "InfrastructureType.h"
 #include "MaterialCompositionType.h"
 #include "MedicalTreatmentType.h"
@@ -91,7 +90,6 @@ void ObjectTypes::Purge()
     Resolver2< MedicalTreatmentType >::DeleteAll();
     tools::Resolver< VolumeType >::DeleteAll();
     tools::StringResolver< ResourceNetworkType >::DeleteAll();
-    tools::StringResolver< FacadeType >::DeleteAll();
     tools::StringResolver< MaterialCompositionType >::DeleteAll();
     tools::StringResolver< RoofShapeType >::DeleteAll();
     tools::StringResolver< InfrastructureType >::DeleteAll();
@@ -334,9 +332,6 @@ void ObjectTypes::ReadUrbanTypes( xml::xistream& xis )
 {
     xis >> xml::start( "urban" )
             >> xml::start( "urban-block-types" )
-                >> xml::start( "facade-types" )
-                    >> xml::list ( "facade-type", *this, &ObjectTypes::ReadFacadeType )
-                >> xml::end
                 >> xml::start( "material-composition-types" )
                     >> xml::list ( "material-composition-type", *this, &ObjectTypes::ReadMaterialCompositionType )
                 >> xml::end
@@ -348,16 +343,6 @@ void ObjectTypes::ReadUrbanTypes( xml::xistream& xis )
                 >> xml::list ( "infrastructure", *this, &ObjectTypes::ReadInfrastructureType )
             >> xml::end
         >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadFacadeType
-// Created: SLG 2010-11-17
-// -----------------------------------------------------------------------------
-void ObjectTypes::ReadFacadeType( xml::xistream& xis )
-{
-    FacadeType* type = new FacadeType( xis );
-    StringResolver< FacadeType >::Register( type->GetName(), *type );
 }
 
 // -----------------------------------------------------------------------------

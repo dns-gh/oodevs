@@ -199,9 +199,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\EquipmentType.cpp">
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\FacadeType.cpp">
-      <Filter>Source Files\XML model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\FireClass.cpp">
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
@@ -673,9 +670,6 @@
       <Filter>Source Files\XML model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\EquipmentType.h">
-      <Filter>Source Files\XML model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\FacadeType.h">
       <Filter>Source Files\XML model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\FireClass.h">

@@ -13,7 +13,6 @@
 #include "ADN_GUI_ABC.h"
 
 class ADN_Urban_Data;
-class ADN_ListView_Urban_Type;
 class ADN_ListView_UrbanAccommodation_Type;
 class ADN_ListView_UrbanMaterial_Type;
 class ADN_ListView_UrbanInfrastructure_Type;
@@ -101,7 +100,6 @@ private:
     //@{
     ADN_Urban_Data& data_;
     ADN_ListView_UrbanMaterial_Type* pListMaterial_;
-    ADN_ListView_Urban_Type* pListFacade_;
     ADN_ListView_RoofShapes* pListRoofShape_;
     ADN_ListView_UrbanAccommodation_Type* pListAccommodation_;
     ADN_ListView_UrbanInfrastructure_Type* pListInfrastructure_;

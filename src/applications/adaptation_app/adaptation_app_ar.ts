@@ -2293,17 +2293,6 @@ stance</source>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Urban_Type</name>
-    <message>
-        <source>Facade</source>
-        <translation type="unfinished">الواجهة</translation>
-    </message>
-    <message>
-        <source>Facades</source>
-        <translation type="unfinished">الواجهات</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Logistic_GUI</name>
     <message>
         <source>Maintenance</source>
@@ -5445,14 +5434,6 @@ Click &quot;Ok&quot; to delete it.</source>
         <translation type="unfinished">المواد</translation>
     </message>
     <message>
-        <source>Facades</source>
-        <translation type="unfinished">الواجهات</translation>
-    </message>
-    <message>
-        <source>Facade</source>
-        <translation type="unfinished">الواجهة</translation>
-    </message>
-    <message>
         <source>RoofShapes</source>
         <translation type="unfinished">روفشابيس</translation>
     </message>
@@ -6370,18 +6351,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Invalid data</source>
         <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
-        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
-        <translation type="unfinished">الواجهة-نوع المواد المكررة اسم &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Material - Duplicated volume type names</source>
-        <translation type="unfinished">مادة-أسماء نوع وحدة التخزين المكررة</translation>
-    </message>
-    <message>
-        <source>Facade - Invalid volume type name</source>
-        <translation type="unfinished">الواجهة-اسم نوع وحدة التخزين غير صحيحة</translation>
     </message>
     <message>
         <source>Material attribute is empty for &apos;%1&apos; template.</source>

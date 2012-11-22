@@ -2306,17 +2306,6 @@ posture</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Urban_Type</name>
-    <message>
-        <source>Facade</source>
-        <translation>Facade</translation>
-    </message>
-    <message>
-        <source>Facades</source>
-        <translation>Facades</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Logistic_GUI</name>
     <message>
         <source>Maintenance</source>
@@ -5458,14 +5447,6 @@ Click &quot;Ok&quot; to delete it.</translation>
         <translation>Material</translation>
     </message>
     <message>
-        <source>Facades</source>
-        <translation>Facades</translation>
-    </message>
-    <message>
-        <source>Facade</source>
-        <translation>Facade</translation>
-    </message>
-    <message>
         <source>RoofShapes</source>
         <translation>RoofShapes</translation>
     </message>
@@ -6383,18 +6364,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Invalid data</source>
         <translation>Invalid data</translation>
-    </message>
-    <message>
-        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
-        <translation>Facade - Duplicated material type name &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Material - Duplicated volume type names</source>
-        <translation>Material - Duplicated volume type names</translation>
-    </message>
-    <message>
-        <source>Facade - Invalid volume type name</source>
-        <translation>Facade - Invalid volume type name</translation>
     </message>
     <message>
         <source>Material attribute is empty for &apos;%1&apos; template.</source>

@@ -859,9 +859,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.cpp">
       <Filter>Source Files\Workspace\Zurb\Zurb Data</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Urban_Type.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.cpp">
       <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
     </ClCompile>
@@ -1523,9 +1520,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.h">
       <Filter>Source Files\Workspace\Zurb\Zurb Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Urban_Type.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.h">
       <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>

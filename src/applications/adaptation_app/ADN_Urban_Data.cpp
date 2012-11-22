@@ -29,7 +29,6 @@ using namespace helpers;
 ADN_Urban_Data::ADN_Urban_Data()
     : ADN_Data_ABC           ()
     , vMaterials_            ()
-    , vFacades_              ()
     , vRoofShapes_           ()
     , vAccommodations_       ()
     , vInfrastructures_      ()
@@ -66,7 +65,6 @@ void ADN_Urban_Data::FilesNeeded(T_StringList& files) const
 void ADN_Urban_Data::Reset()
 {
     vMaterials_.Reset();
-    vFacades_.Reset();
     vRoofShapes_.Reset();
     vAccommodations_.Reset();
     vInfrastructures_.Reset();
@@ -167,7 +165,6 @@ void ADN_Urban_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "urban" )
             >> xml::start( "urban-block-types" );
     ReadMaterials( input );
-    ReadFacades( input );
     ReadRoofShapes( input );
     input >> xml::end;
     ReadAccommodations( input );
@@ -185,7 +182,6 @@ void ADN_Urban_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "UrbanTypes" );
     output  << xml::start( "urban-block-types" );
     WriteMaterials( output );
-    WriteFacades( output );
     WriteRoofShapes( output );
     output  << xml::end;
     WriteAccommodations( output );
@@ -330,57 +326,6 @@ void ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition( xml::xistream& input )
     if( itAttrition == vAttritionInfos_.end() )
         throw ADN_DataException( tr( "Invalid data" ).toStdString(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).toStdString() );
     ( *itAttrition )->ReadArchive( input );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::ReadFacades
-// Created: SLG 2010-03-08
-// -----------------------------------------------------------------------------
-void ADN_Urban_Data::ReadFacades( xml::xistream& input )
-{
-    input >> xml::start( "facade-types" )
-            >> xml::list( "facade-type", *this, &ADN_Urban_Data::ReadFacade )
-          >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::ReadFacade
-// Created: SLG 2010-03-08
-// -----------------------------------------------------------------------------
-void ADN_Urban_Data::ReadFacade( xml::xistream& input )
-{
-    const std::string strName = xml::attribute< std::string >( input, "name" );
-    T_UrbanInfos_Vector::const_iterator it = std::find_if( vFacades_.begin(), vFacades_.end(), ADN_String_Cmp( strName ) );
-    if( it != vFacades_.end() )
-        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toStdString(), tools::translate( "Urban_Data", "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).toStdString() );
-
-    UrbanInfos* pNewFacade = new UrbanInfos();
-    pNewFacade->strName_ = strName;
-    vFacades_.AddItem( pNewFacade );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::WriteFacades
-// Created: SLG 2010-03-10
-// -----------------------------------------------------------------------------
-void ADN_Urban_Data::WriteFacades( xml::xostream& output ) const
-{
-    // Check the sizes data for duplicates.
-    if( HasDuplicates( vFacades_, StringExtractor() ) )
-        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toStdString(), tools::translate( "Urban_Data", "Material - Duplicated volume type names" ).toStdString() );
-
-    output << xml::start( "facade-types" );
-    for( T_UrbanInfos_Vector::const_iterator itFacade = vFacades_.begin(); itFacade != vFacades_.end(); ++itFacade )
-    {
-        if( ( *itFacade )->strName_.GetData().empty() )
-            throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).toStdString(), tools::translate( "Urban_Data", "Facade - Invalid volume type name" ).toStdString() );
-
-        std::string strData = ( *itFacade )->strName_.GetData();
-        output << xml::start( "facade-type" )
-                    << xml::attribute( "name", trim( strData ) )
-               << xml::end;
-    }
-    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -9,7 +9,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Urban_GUI.h"
 #include "moc_ADN_Urban_GUI.cpp"
-#include "ADN_ListView_Urban_Type.h"
 #include "ADN_ListView_UrbanAccommodation_Type.h"
 #include "ADN_ListView_UrbanInfrastructure_Type.h"
 #include "ADN_ListView_UrbanMaterial_Type.h"
@@ -32,7 +31,6 @@ ADN_Urban_GUI::ADN_Urban_GUI( ADN_Urban_Data& data )
     : ADN_GUI_ABC( "ADN_Urban_GUI" )
     , data_          ( data )
     , pListMaterial_ ( 0 )
-    , pListFacade_   ( 0 )
     , pListRoofShape_( 0 )
     , pListAccommodation_( 0 )
     , pListInfrastructure_( 0 )
@@ -88,26 +86,7 @@ void ADN_Urban_GUI::Build()
         vMaterialInfosConnectors[ eUrbanMaterialName ] = &pEdit->GetConnector();
 
         pAttritionTable_ = new ADN_Urban_AttritionTable( strClassName_ + "_MaterialAttrition", vMaterialInfosConnectors[ eUrbanMaterialAttrition ], pGroupMaterial );
-        //pAttritionTable_->setObjectName( strClassName_ + "_MaterialAttrition" );
         pAttritionTable_->setFixedHeight( 180 );
-        //vMaterialInfosConnectors[ eUrbanMaterialAttrition ] = &pAttritionTable_->GetConnector();
-    }
-
-    // Facades
-    Q3GroupBox* pGroupFacades = new Q3VGroupBox( tr( "Facades" ) );
-    {
-        // facades list
-        pListFacade_ = new ADN_ListView_Urban_Type( pGroupFacades );
-        pListFacade_->setObjectName( strClassName_ + "_Facades" );
-        static_cast< ADN_Connector_Vector_ABC* >( &pListFacade_->GetConnector() )->Connect( &data_.GetFacadesInfos() );
-
-        // facade
-        Q3GroupBox* pGroupFacade = new Q3VGroupBox( tr( "Facade" ),pGroupFacades);
-        pGroupFacade->setInsideMargin( 10 );
-        pGroupFacade->setInsideSpacing( 10 );
-        ADN_EditLine_ABC* pEdit = new ADN_EditLine_String(pGroupFacade);
-        pEdit->setObjectName( strClassName_ + "_FacadeName" );
-        vFacadeInfosConnectors[ eUrbanName ] = &pEdit->GetConnector();
     }
 
     // RoofShapes
@@ -215,7 +194,6 @@ void ADN_Urban_GUI::Build()
 
     // set auto connectors
     pListMaterial_->SetItemConnectors( vMaterialInfosConnectors );
-    pListFacade_->SetItemConnectors( vFacadeInfosConnectors );
     pListRoofShape_->SetItemConnectors( vRoofShapeInfosConnectors );
     pListAccommodation_->SetItemConnectors( vAccommodationInfosConnectors );
     pListInfrastructure_->SetItemConnectors( vInfrastructureInfosConnectors );
@@ -231,7 +209,6 @@ void ADN_Urban_GUI::Build()
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
     pContentLayout->addWidget( pGroupMaterials );
-    pContentLayout->addWidget( pGroupFacades );
     pContentLayout->addWidget( pGroupRoofShapes );
     pContentLayout->addWidget( pGroupAccommodations );
     pContentLayout->addWidget( pGroupInfrastructures );

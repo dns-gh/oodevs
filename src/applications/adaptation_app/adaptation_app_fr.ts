@@ -2310,17 +2310,6 @@ du tireur</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Urban_Type</name>
-    <message>
-        <source>Facade</source>
-        <translation>Façade</translation>
-    </message>
-    <message>
-        <source>Facades</source>
-        <translation>Façades</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Logistic_GUI</name>
     <message>
         <source>Maintenance</source>
@@ -5472,14 +5461,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Matériau</translation>
     </message>
     <message>
-        <source>Facades</source>
-        <translation>Façades</translation>
-    </message>
-    <message>
-        <source>Facade</source>
-        <translation>Façade</translation>
-    </message>
-    <message>
         <source>RoofShapes</source>
         <translation>Formes des toits</translation>
     </message>
@@ -6397,18 +6378,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Invalid data</source>
         <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
-        <translation>Façade - Le type de matériaux &quot;%1&quot; existe déjà</translation>
-    </message>
-    <message>
-        <source>Material - Duplicated volume type names</source>
-        <translation>Matériaux - Le type de volume existe déjà</translation>
-    </message>
-    <message>
-        <source>Facade - Invalid volume type name</source>
-        <translation>Façade - Type de volume invalide</translation>
     </message>
     <message>
         <source>RoofShape - Invalid roofShape type name</source>

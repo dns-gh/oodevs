@@ -37,7 +37,6 @@ namespace kernel
     class ResourceNetworkType;
     class VolumeType;
     class MaterialCompositionType;
-    class FacadeType;
     class RoofShapeType;
     class LogisticSupplyClass;
     class UrbanTemplateType;
@@ -61,7 +60,6 @@ class ObjectTypes
     , public tools::StringResolver< LogisticSupplyClass >
     , public tools::StringResolver< ResourceNetworkType >
     , public tools::StringResolver< MaterialCompositionType >
-    , public tools::StringResolver< FacadeType >
     , public tools::StringResolver< RoofShapeType >
     , public tools::StringResolver< InfrastructureType >
     , public tools::StringResolver< UrbanTemplateType >
@@ -111,7 +109,6 @@ private:
     void ReadResourceNetworks( xml::xistream& xis );
     void ReadResourceNetwork( xml::xistream& xis );
     void ReadUrbanTypes( xml::xistream& xis );
-    void ReadFacadeType( xml::xistream& xis );
     void ReadMaterialCompositionType( xml::xistream& xis );
     void ReadRoofShapeType( xml::xistream& xis );
     void ReadInfrastructureType( xml::xistream& xis );

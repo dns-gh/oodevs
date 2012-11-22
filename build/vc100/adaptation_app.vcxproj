@@ -1153,7 +1153,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_WeaponsTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtectionsListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Urban_Type.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanInfrastructure_Type.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanMaterial_Type.cpp" />
@@ -2823,7 +2822,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Urban_Type.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanInfrastructure_Type.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanMaterial_Type.h" />

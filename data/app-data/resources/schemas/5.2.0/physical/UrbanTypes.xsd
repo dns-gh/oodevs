@@ -38,17 +38,6 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="facade-types">
-                <xs:complexType>
-                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                    <xs:element name="facade-type">
-                      <xs:complexType>
-                        <xs:attribute name="name" type="xs:string" use="required"/>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
               <xs:element name="roof-shape-types">
                 <xs:complexType>
                   <xs:sequence minOccurs="0" maxOccurs="unbounded">

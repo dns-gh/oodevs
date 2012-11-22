@@ -2309,17 +2309,6 @@ tirador</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Urban_Type</name>
-    <message>
-        <source>Facade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Facades</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Logistic_GUI</name>
     <message>
         <source>Maintenance</source>
@@ -5461,14 +5450,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
         <translation></translation>
     </message>
     <message>
-        <source>Facades</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Facade</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>RoofShapes</source>
         <translation></translation>
     </message>
@@ -6386,18 +6367,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Invalid data</source>
         <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Material - Duplicated volume type names</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Facade - Invalid volume type name</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>RoofShape - Invalid roofShape type name</source>
