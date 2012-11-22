@@ -71,9 +71,9 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
     bool isFromInsideReal = realLocalisation_.IsInside( from, epsilon );
     if( isIntersectingWithReal || isToInsideReal || isFromInsideReal )
     {
-        if( ( isIntersectingWithReal && localisation_.Intersect2D( line, epsilon ) ) ||
-            ( isToInsideReal && localisation_.IsInside( to, epsilon ) ) ||
-            ( isFromInsideReal && localisation_.IsInside( from, epsilon ) ) )
+        if( isIntersectingWithReal && localisation_.Intersect2D( line, epsilon ) ||
+            isToInsideReal && localisation_.IsInside( to, epsilon ) ||
+            isFromInsideReal && localisation_.IsInside( from, epsilon ) )
         {
             if( rMaxTrafficability_ != 0. && weight > rMaxTrafficability_ )
                 return -1.; //$$$$ CMA in order to block the unit if there is a non-trafficable object
@@ -81,9 +81,9 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
                 return -1;  //$$$$ SLG in order to block the unit if there is an object
             return std::max( 0., rCost_ );
         }
-        if( ( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ) ||
-            ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
-            ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
+        if( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ||
+            isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ||
+            isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) )
             return rCost_;
     }
     return std::numeric_limits< double >::min();
