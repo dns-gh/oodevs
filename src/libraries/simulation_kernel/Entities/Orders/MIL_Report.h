@@ -144,7 +144,6 @@ public:
         eRC_SectionUndeployed = 404,
         eRC_StartUndeploy = 405,
         eRC_DifficultMovementProgression = 406,
-        eRC_PrisSousTirIED = 457,
         eRC_UrbanCollisionStarted = 408,
         eRC_UrbanCollisionStopped = 409,
         eRC_Questionning = 420,
@@ -153,6 +152,8 @@ public:
         eRC_PrisSousTirEclairant = 444,
         eRC_PrisSousTirFumigene = 445,
         eRC_RepairEvacuationNoMeans = 449,
+        eRC_SupplierUnavailable = 450,
+        eRC_PrisSousTirIED = 457,
     };
 
     //@}

@@ -275,6 +275,8 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::PullFlowPa
     logistic::SupplyRequestManualDispatcher dispatcher( supplier );
     requestContainer->Execute( dispatcher );
     manualSupplyRequests_.push_back( requestContainer );
+    if( !dispatcher.AllowSupply() )
+        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eRC_SupplierUnavailable );
 }
 
 // -----------------------------------------------------------------------------
