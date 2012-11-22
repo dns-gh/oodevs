@@ -94,18 +94,32 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( const QPoint& pt )
     // Iterate over the consumption types, and create an 'add' submenu for each of them
     for( int nConsumption = 0; nConsumption < eNbrConsumptionType; ++nConsumption )
     {
+        const QString consumptionName = ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nConsumption, ADN_Tr::eToTr ).c_str();
+        int count = 0;
+        for( int i = 0; i < numRows(); ++i )
+            if( dataModel_.item( i, 0 ) && dataModel_.item( i, 0 )->text() == consumptionName )
+                ++count;
+        if( count == categories.size() )
+            continue;
+
         Q3PopupMenu* pConsumptionMenu = new Q3PopupMenu( &addMenu );
-        addMenu.insertItem( ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nConsumption, ADN_Tr::eToTr ).c_str(), pConsumptionMenu );
+        addMenu.insertItem( consumptionName, pConsumptionMenu );
 
         // Fill the popup menu with submenus, one for each dotation.
         for( ADN_Composantes_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
         {
-            // Add the item.
-            pConsumptionMenu->insertItem( (*it)->ptrCategory_.GetData()->strName_.GetData().c_str(), nItemId );
+            bool alreadyAdded = false;
+            for( int i = 0; i < numRows() && !alreadyAdded; ++i )
+                if( dataModel_.item( i, 0 ) && dataModel_.item( i, 0 )->text() == consumptionName &&
+                    dataModel_.item( i, 1 ) && dataModel_.item( i, 1 )->text() == (*it)->ptrCategory_.GetData()->strName_.GetData().c_str() )
+                    alreadyAdded = true;
+            if( alreadyAdded )
+                continue;
 
+            // Add the item.
+            pConsumptionMenu->insertItem( (*it)->ptrCategory_.GetData()->strName_.GetData().c_str(), nItemId++ );
             //Save its parameters.
             menuParametersList_.push_back( T_MenuItemParameters( (E_ConsumptionType)nConsumption, (*it)->ptrCategory_.GetData() ) );
-            nItemId++;
 
             ADN_Tools::SortMenu( *pConsumptionMenu );
         }
