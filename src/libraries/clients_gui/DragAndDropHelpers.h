@@ -148,7 +148,7 @@ namespace dnd
     }
 
     template< typename T >
-    QDrag* CreateDragObject( T* value, QWidget* parent )
+    QDrag* CreateDragObject( T* value, QWidget* parent, Qt::DropAction dropAction = Qt::MoveAction )
     {
         QDrag* drag = new QDrag( parent );
         QMimeData* mimeData = new QMimeData();
@@ -157,7 +157,7 @@ namespace dnd
         stream << reinterpret_cast< unsigned int >( value );
         mimeData->setData( QString( typeid( T ).name() ), encodedData );
         drag->setMimeData( mimeData );
-        drag->exec();
+        drag->exec( dropAction );
         return drag;
     }
 } // end namespace dnd

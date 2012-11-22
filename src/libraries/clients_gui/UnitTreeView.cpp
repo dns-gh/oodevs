@@ -32,6 +32,7 @@ UnitTreeView::UnitTreeView( kernel::Controllers& controllers, const kernel::Agen
     , types_( types )
     , selectOnlyAutomats_( selectOnlyAutomats )
 {
+    dropAction_ = Qt::CopyAction;
     EnableDragAndDrop( true );
     setHeaderHidden( true );
     dataModel_.setColumnCount( 2 );

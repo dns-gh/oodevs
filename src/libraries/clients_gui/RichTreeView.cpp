@@ -68,6 +68,7 @@ RichTreeView::RichTreeView( QWidget* parent /*= 0*/, kernel::Controllers* contro
     : QTreeView( parent )
     , proxyModel_( new CustomSortFilterProxyModel( *this ) )
     , dataModel_( controllers, *proxyModel_, this )
+    , dropAction_( Qt::MoveAction )
 {
     setSortingEnabled( true );
     setDropIndicatorShown( false );
@@ -159,7 +160,6 @@ bool RichTreeView::IsContextMenuBlocked() const
 void RichTreeView::CreateFilters( SearchTreeView_ABC& /*searchTreeView*/ )
 {
     // NOTHING
-    // $$$$ ABR 2012-08-14: TODO for urban, nothing here, cf existing list view.
 }
 
 // -----------------------------------------------------------------------------
@@ -284,4 +284,32 @@ void RichTreeView::SearchAndSelectNext( Qt::MatchFlags compareFlag /* = Qt::Matc
             return;
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichTreeView::startDrag
+// Created: ABR 2012-11-22
+// -----------------------------------------------------------------------------
+void RichTreeView::startDrag( Qt::DropActions supportedActions )
+{
+    QModelIndexList indexes = selectedIndexes();
+    if( indexes.empty() )
+        return;
+
+    QModelIndexList dragableObjects;
+    for( int i = 0; i < indexes.size(); ++i )
+    {
+        QStandardItem* item = dataModel_.GetItemFromIndex( indexes[ i ] );
+        if( item && item->flags() & Qt::ItemIsDragEnabled )
+            dragableObjects.push_back( indexes[ i ] );
+    }
+
+    QMimeData* data = dataModel_.mimeData( dragableObjects );
+    if( !data )
+        return;
+
+    QDrag* drag = new QDrag( this );
+    drag->setMimeData( data );
+    if( supportedActions & dropAction_ )
+        drag->exec( dropAction_ );
 }

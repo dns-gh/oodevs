@@ -76,6 +76,12 @@ public slots:
     //@}
 
 protected:
+    //! @name Helpers
+    //@{
+    virtual void startDrag( Qt::DropActions supportedActions );
+    //@}
+
+protected:
     //! @name Member data
     //@{
     QSortFilterProxyModel* proxyModel_;
@@ -83,6 +89,7 @@ protected:
     QString searchedText_;
     bool creationBlocked_;
     bool contextMenuBlocked_;
+    Qt::DropAction dropAction_;
     //@}
 };
 

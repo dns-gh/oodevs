@@ -134,7 +134,7 @@ void UnitsPanel::SelectionChanged()
 void UnitsPanel::IconDragged()
 {
     if( kernel::AgentType* type = list_->GetSelected< kernel::AgentType >() )
-        dnd::CreateDragObject( type, this );
+        dnd::CreateDragObject( type, this, Qt::CopyAction );
     else if( kernel::AutomatType* type = list_->GetSelected< kernel::AutomatType >() )
-        dnd::CreateDragObject( type, this );
+        dnd::CreateDragObject( type, this, Qt::CopyAction );
 }
