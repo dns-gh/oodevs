@@ -66,24 +66,21 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
 {
     static const double epsilon = 1e-4;
     const MT_Line line( from, to );
-    bool isIntersectingWithReal = realLocalisation_.Intersect2D( line, epsilon );
-    bool isToInsideReal = realLocalisation_.IsInside( to, epsilon );
-    bool isFromInsideReal = realLocalisation_.IsInside( from, epsilon );
-    if( isIntersectingWithReal )
+    if( realLocalisation_.Intersect2D( line, epsilon ) )
     {
         if( localisation_.Intersect2D( line, epsilon ) )
             return ComputeCost( weight );
         if( scaledLocalisation_.Intersect2D( line, epsilon ) )
             return rCost_;
     }
-    if( isToInsideReal )
+    if( realLocalisation_.IsInside( to, epsilon ) )
     {
         if( localisation_.IsInside( to, epsilon ) )
             return ComputeCost( weight );
         if( scaledLocalisation_.IsInside( to, epsilon ) )
             return rCost_;
     }
-    if( isFromInsideReal )
+    if( realLocalisation_.IsInside( from, epsilon ) )
     {
         if( localisation_.IsInside( from, epsilon ) )
             return ComputeCost( weight );
