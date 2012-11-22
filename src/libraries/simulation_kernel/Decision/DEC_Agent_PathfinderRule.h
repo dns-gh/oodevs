@@ -61,7 +61,7 @@ private:
     double GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     double GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     double GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double& rSpeed ) const;
-    double GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     double GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     //@}
 

@@ -47,6 +47,9 @@
     <Filter Include="Source Files\Logistic">
       <UniqueIdentifier>{5eb8527a-ef87-4ccd-95b6-0cf87a2be21c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Pathfind">
+      <UniqueIdentifier>{c16ac569-3fc2-4a80-a8c0-933e2e78358a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\tests\simulation_kernel_test\Fixture.h">
@@ -317,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tests\simulation_kernel_test\SingletonTerminator.cpp">
       <Filter>Source Files\stub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\simulation_kernel_test\DEC_Path_KnowledgeAgentTest.cpp">
+      <Filter>Source Files\Pathfind</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

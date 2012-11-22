@@ -9,23 +9,17 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgeAgent.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "MT_Tools/MT_Line.h"
-#include "DEC_PerceptionFunctions.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent constructor
 // Created: NLD 2004-04-06
 // Modified: CMA 2011-04-27
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion, double enemyCostAtSecurityRange, double enemyCostOnContact )
-    : vEnemyPosition_ ( knowledge.GetPosition() )
-    , pKnowledgeAgent_( &knowledge.GetAgentKnown() )
+DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const MT_Vector2D& position, double enemyCostAtSecurityRange, double enemyCostOnContact, double maxRangeToFire )
+    : vEnemyPosition_( position )
 {
-    assert( pKnowledgeAgent_ );
-
     // Range between 1000 and 2000 meters
-    double maxRangeToFire = knowledge.GetMaxRangeToFireOn( pion, 0 );
     if( maxRangeToFire > 2000. )
         maxRangeToFire = 2000.;
     else if( maxRangeToFire < 1000. )
@@ -50,7 +44,7 @@ DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
 // Created: AGE 2005-02-01
 // Modified: CMA 2011-04-27
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
+double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
     static const double pi = std::acos( -1. );
     static const double epsilon = 1; // in metres
@@ -59,9 +53,7 @@ double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_V
     MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
     const double rSqDistBtwUnitAndEnemy = vPositionProjection.SquareDistance( vEnemyPosition_ );
 
-    if( ( rFactor_ > 0. ) &&
-        ( rSqDistBtwUnitAndEnemy < rSquareSecurityDistance_ )/* &&
-        DEC_PerceptionFunctions::IsPointVisible( *pKnowledgeAgent_, &vPositionProjection )*/ ) // TODO: code commented since it sometimes provokes a crash in the simulation. One needs to copy the perception surface in the class in order to fix the problem
+    if( rFactor_ > 0 && rSqDistBtwUnitAndEnemy < rSquareSecurityDistance_ )
     {
         // Inverse-square law
         double intensity = rSquareSecurityDistance_ * rFactor_ / ( pi * rSqDistBtwUnitAndEnemy + epsilon );

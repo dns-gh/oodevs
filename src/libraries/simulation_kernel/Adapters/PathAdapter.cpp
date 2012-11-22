@@ -266,8 +266,12 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
             if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
-                pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge, pion,
-                    GET_HOOK( GetEnemyCostAtSecurityRange )( path_ ), GET_HOOK( GetEnemyCostOnContact )( path_ ) ) );
+            {
+                const double factor = GET_HOOK( GetEnemyCostOnContact )( path_ );
+                if( factor > 0 )
+                    pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
+                        GET_HOOK( GetEnemyCostAtSecurityRange )( path_ ), factor, knowledge.GetMaxRangeToFireOn( pion, 0 ) ) );
+            }
         }
     }
     // Objects
@@ -446,12 +450,12 @@ double PathAdapter::GetUrbanBlockCost( const MT_Vector2D& from, const MT_Vector2
 // Created: MCO 2012-05-23
 // -----------------------------------------------------------------------------
 double PathAdapter::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to,
-    const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rEnemyMaximumCost ) const
+    const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/, double rEnemyMaximumCost ) const
 {
     double rEnemyCost = 0.;
     for( CIT_PathKnowledgeAgentVector it = pathKnowledgeAgents_.begin(); it != pathKnowledgeAgents_.end(); ++it )
     {
-        double rCurrentEnemyCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+        double rCurrentEnemyCost = it->ComputeCost( from, to );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
             return rCurrentEnemyCost;
         rEnemyCost += rCurrentEnemyCost;

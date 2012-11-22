@@ -12,11 +12,6 @@
 
 #include "MT_Tools/MT_Vector2D.h"
 
-class DEC_Knowledge_Agent;
-class DEC_Agent_PathClass;
-class MIL_Agent_ABC;
-class TerrainData;
-
 // =============================================================================
 // Created: NLD 2004-04-06
 // =============================================================================
@@ -25,13 +20,13 @@ class DEC_Path_KnowledgeAgent
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Path_KnowledgeAgent( const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion, double enemyCostAtSecurityRange, double enemyCostOnContact );
+             DEC_Path_KnowledgeAgent( const MT_Vector2D& position, double enemyCostAtSecurityRange, double enemyCostOnContact, double maxRangeToFire );
     virtual ~DEC_Path_KnowledgeAgent();
     //@}
 
     //! @name Operations
     //@{
-    double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     //@}
 
 private:
@@ -41,7 +36,6 @@ private:
     double rSquareSecurityDistance_;
     double rFactor_;
     double rOffset_;
-    const MIL_Agent_ABC* pKnowledgeAgent_;
     //@}
 };
 

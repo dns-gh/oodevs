@@ -235,8 +235,12 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
             if( knowledge.IsValid() && fuseau_.IsInside( knowledge.GetPosition() ) )
-                pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge, queryMaker_,
-                    pathClass_.GetEnemyCostAtSecurityRange(), pathClass_.GetEnemyCostOnContact() ) );
+            {
+                const double factor = pathClass_.GetEnemyCostOnContact();
+                if( factor > 0 )
+                    pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( knowledge.GetPosition(),
+                        pathClass_.GetEnemyCostAtSecurityRange(), factor, knowledge.GetMaxRangeToFireOn( queryMaker_, 0 ) ) );
+            }
         }
     }
 

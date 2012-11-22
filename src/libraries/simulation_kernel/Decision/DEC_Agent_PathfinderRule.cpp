@@ -11,9 +11,9 @@
 #include "DEC_Agent_PathfinderRule.h"
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathClass.h"
-#include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject_ABC.h"
 #include "DEC_Path_KnowledgePopulation.h"
+#include "DEC_Path_KnowledgeAgent.h"
 #include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
@@ -185,13 +185,13 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
 inline
-double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
+double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
     assert( path_.GetPathClass().AvoidEnemies() || path_.GetPathKnowledgeAgents().empty() );
     double rEnemyCost = 0.;
     for( DEC_Agent_Path::CIT_PathKnowledgeAgentVector it = path_.GetPathKnowledgeAgents().begin(); it != path_.GetPathKnowledgeAgents().end(); ++it )
     {
-        double rCurrentEnemyCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+        double rCurrentEnemyCost = it->ComputeCost( from, to );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
             return rCurrentEnemyCost;
         rEnemyCost += rCurrentEnemyCost;
@@ -326,7 +326,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     rDynamicCost += rObjectsCost;
 
     // enemies
-    const double rEnemiesCost = GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType );
+    const double rEnemiesCost = GetEnemiesCost( from, to );
     if( rEnemiesCost < 0 )
         return IMPOSSIBLE_WAY( "Enemies" );
     rDynamicCost += rEnemiesCost;
