@@ -95,7 +95,7 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeObject::GetCostOut() const
 {
-    return rCost_ > 0 ? 0 : - rCost_;
+    return std::max( 0., - rCost_ );
 }
 
 // -----------------------------------------------------------------------------
