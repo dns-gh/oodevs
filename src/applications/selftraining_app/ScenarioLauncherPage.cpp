@@ -122,6 +122,11 @@ namespace
         }
         return result;
     }
+    bool ReadLegacy()
+    {
+        QSettings settings( "MASA Group", "SWORD" );
+        return settings.readBoolEntry( "/sword/IsLegacy", false );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +142,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, Q3WidgetStack* pag
     , progressPage_( new ProgressPage( app, pages, *this ) )
     , exercise_    ( 0 )
     , noClient_    ( false )
-    , isLegacy_    ( false )
+    , isLegacy_    ( ReadLegacy() )
 {
     setName( "ScenarioLauncherPage" );
     Q3VBox* box = new Q3VBox( this );
