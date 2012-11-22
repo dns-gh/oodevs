@@ -141,8 +141,8 @@
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
-        <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
-        <translation>Item &gt; Automaton &gt; Unit &gt; Comp</translation>
+        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <translation>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</translation>
     </message>
     <message>
         <source>Units</source>

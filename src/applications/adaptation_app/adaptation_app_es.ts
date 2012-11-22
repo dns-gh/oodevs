@@ -141,10 +141,6 @@
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
-        <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
-        <translation>Objeto &gt; Autómata &gt; Unidad &gt; Comp</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unidades</translation>
     </message>
@@ -195,6 +191,10 @@ Estacionado con motor encendido</translation>
 Parked engine running</source>
         <translation>Autonomía
 estacionado con motor encendido</translation>
+    </message>
+    <message>
+        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

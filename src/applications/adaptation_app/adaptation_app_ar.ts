@@ -141,10 +141,6 @@
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
-        <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
-        <translation type="unfinished">البند &gt; [اوتومت] &gt; وحدة &gt; شركات</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation type="unfinished">وحدات</translation>
     </message>
@@ -189,6 +185,10 @@ Parked engine running</source>
         <source>Autonomy
 Parked engine running</source>
         <translation type="unfinished">تشغيل المحرك المتوقفة الحكم الذاتي</translation>
+    </message>
+    <message>
+        <source>Resource type &gt; Resource &gt; Automaton &gt; Unit &gt; Equipment</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
