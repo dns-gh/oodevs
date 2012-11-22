@@ -360,8 +360,7 @@ double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D&
     const double rAltitudeFrom = data.GetAltitude( from );
     const double rAltitudeTo   = data.GetAltitude( to );
     {
-        const double rDelta = rAltitudeTo - rAltitudeFrom;
-        const double rSquareDelta = rDelta * rDelta;
+        const double rSquareDelta = Square( rAltitudeTo - rAltitudeFrom );
         const double rSquareGroundDistance = rSquareDelta + from.SquareDistance( to );
         if( rSquareGroundDistance > 0 && rSquareDelta / rSquareGroundDistance > squareSlope_ )
             return -1;
