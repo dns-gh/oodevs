@@ -94,7 +94,6 @@ double DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/, c
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgePopulation::ComputeClosestElementInRange( const MT_Vector2D& position, double rMaxRange, sPopulationElement const*& pResult ) const
 {
-    pResult = 0;
     double rMinDistance = std::numeric_limits< double >::max();
     for( CIT_PopulationElements it = elements_.begin(); it != elements_.end(); ++it )
     {
