@@ -44,8 +44,9 @@
 #include "clients_gui/LoadableLineEdit.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
-#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace actions;
 using namespace gui;
@@ -198,12 +199,12 @@ namespace
         factory->Register( "trafficability"            , boost::bind( &TrafficabilityAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "bypassable"                , boost::bind( &BypassableAttribute, _2, _3, boost::ref( attributesList ) ) );
 
-        boost::shared_ptr< NBCBuilder > pNBCBuilders( new NBCBuilder() );
+        boost::shared_ptr< NBCBuilder > pNBCBuilders = boost::make_shared< NBCBuilder >();
         factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "contamination"             , boost::bind( &NBCBuilder::Add, pNBCBuilders, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->RegisterFinalizeCreate( boost::bind( &NBCBuilder::Finalize, pNBCBuilders ) );
 
-        boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
+        boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders = boost::make_shared< FinalizableBuilders >();
         factory->Register( "burn"                      , boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "propagation"               , boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1 ) );
         factory->RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders ) );

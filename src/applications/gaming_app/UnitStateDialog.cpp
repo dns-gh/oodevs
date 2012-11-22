@@ -18,6 +18,8 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/Equipments.h"
 #include "gaming/Troops.h"
+#include <boost/ref.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: UnitStateDialog constructor
@@ -32,9 +34,9 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
 {
     setCaption( tr( "Unit state" ) );
     assert( tabWidget_ );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableCrew >     ( new UnitStateTableCrew(      controllers, staticModel, actionsModel, simulation, tabWidget_ ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableEquipment >( new UnitStateTableEquipment( controllers, staticModel, actionsModel, simulation, tabWidget_ ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableResource > ( new UnitStateTableResource(  controllers, staticModel, actionsModel, simulation, tabWidget_ ) ) );
+    tabs_.push_back( boost::make_shared< UnitStateTableCrew >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
+    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
+    tabs_.push_back( boost::make_shared< UnitStateTableResource > ( boost::ref( controllers ), staticModel, boost::ref( actionsModel ), simulation, tabWidget_ ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tr( "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tr( "Equipments" ) );
     tabWidget_->addTab( tabs_[ eResources ].get(), tr( "Resources" ) );

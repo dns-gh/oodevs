@@ -15,6 +15,7 @@
 #include "gaming/MeteoModel.h"
 #include "meteo/MeteoLocal.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: WeatherListView constructor
@@ -57,7 +58,7 @@ void WeatherListView::Update( const MeteoModel& model )
     unsigned int maxId = 0;
     for( weather::MeteoManager_ABC::CIT_Meteos it = meteos.begin(); it != meteos.end(); ++it )
     {
-        boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( *static_cast< weather::MeteoLocal* >( ( *it ).get() ) ) );
+        boost::shared_ptr< weather::MeteoLocal > weather = boost::make_shared< weather::MeteoLocal >( *static_cast< weather::MeteoLocal* >( ( *it ).get() ) );
         weathers_.push_back( weather );
         maxId = ( maxId > weather->GetId() ) ? maxId : weather->GetId();
         Create( weather->GetName(), *model_ );
@@ -71,7 +72,7 @@ void WeatherListView::Update( const MeteoModel& model )
 // -----------------------------------------------------------------------------
 void WeatherListView::CreateItem()
 {
-    boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).toStdString() ) );
+    boost::shared_ptr< weather::MeteoLocal > weather = boost::make_shared< weather::MeteoLocal >( converter_, tr( "Local weather " ).toStdString() );
     weather->SetCreated( true );
     weather->SetPeriod( tools::QTimeToBoostTime( simulation_.GetDateTime() ), tools::QTimeToBoostTime( simulation_.GetDateTime() ) );
 

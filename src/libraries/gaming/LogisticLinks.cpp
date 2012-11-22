@@ -21,6 +21,7 @@
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
+#include <boost/smart_ptr/make_shared.hpp>
 #include <boost/foreach.hpp>
 
 using namespace kernel;
@@ -115,7 +116,7 @@ void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
     {
         const kernel::Entity_ABC* superior = FindLogisticEntity( parentEntity );
         assert( superior );
-        superiorLinks_.push_back( boost::shared_ptr< LogisticLink >( new LogisticLink( *superior ) ) );
+        superiorLinks_.push_back( boost::make_shared< LogisticLink >( *superior ) );
         superiors_.push_back( superior );
     }
     controller_.Update( kernel::DictionaryUpdated( entity_, property_ ) );

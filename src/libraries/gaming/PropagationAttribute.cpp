@@ -17,6 +17,7 @@
 #include "clients_kernel/DisasterTypes.h"
 #include "propagation/PropagationManager.h"
 #include "protocol/Protocol.h"
+#include <boost/smart_ptr/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 
 namespace bfs = boost::filesystem;
@@ -71,7 +72,7 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
     {
         propagations_.clear();
         for( std::size_t i = 0; i < files.size(); ++i )
-            propagations_.push_back( boost::shared_ptr< Propagation >( new Propagation( files[ i ], *pManager_, converter_, disasterType_ ) ) );
+            propagations_.push_back( boost::make_shared< Propagation >( files[ i ], *pManager_, converter_, disasterType_ ) );
     }
 }
 

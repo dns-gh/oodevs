@@ -14,6 +14,7 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/DetectionMap.h"
 #include <boost/bind.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 #include <deque>
 
 using namespace kernel;
@@ -254,7 +255,7 @@ void ContourLinesLayer::Conrec()
     int nc = elevation.MaximumElevation() / linesHeight_;
     std::vector< boost::shared_ptr< T_PointVector > > points;
     for( int i = 0; i < nc; ++i )
-        points.push_back( boost::shared_ptr< T_PointVector >( new T_PointVector() ) );
+        points.push_back( boost::make_shared< T_PointVector >() );
 
     int sh[ 5 ];
     float h[ 5 ];
@@ -465,7 +466,7 @@ void ContourLinesLayer::Conrec()
                 }
             }
             if( !found )
-                contours.push_back( boost::shared_ptr< sContour >( new sContour( p1, p2 ) ) );
+                contours.push_back( boost::make_shared< sContour >( p1, p2 ) );
         }
         const std::size_t size = contours.size();
         for( register std::size_t nn = 0; nn < size; ++nn )
