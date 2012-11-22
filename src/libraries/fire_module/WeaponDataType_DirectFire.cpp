@@ -232,7 +232,7 @@ double WeaponDataType_DirectFire::GetDangerosity( const wrapper::View& compTarge
 // -----------------------------------------------------------------------------
 void WeaponDataType_DirectFire::Fire( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, bool bUsePH ) const
 {
-    const bool hit = bUsePH ? 1. - GET_HOOK( GetFireRandomNumber )( 0, 1 ) < GetPH( firer, target, compTarget[ "volume" ] ) : true;
+    const bool hit = ! bUsePH || (1 - GET_HOOK( GetFireRandomNumber )( 0, 1 )) <= GetPH( firer, target, compTarget[ "volume" ] );
     wrapper::Event event( "direct fire pion" );
     event[ "entity/identifier" ] = static_cast< std::size_t >( firer[ "identifier" ] );
     event[ "entity/data" ] = firer[ "data" ];
