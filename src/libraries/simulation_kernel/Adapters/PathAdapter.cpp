@@ -144,11 +144,11 @@ namespace
 // Created: MCO 2012-01-26
 // -----------------------------------------------------------------------------
 PathAdapter::PathAdapter( const core::Model& entity, const boost::shared_ptr< movement::Path_ABC >& path )
-    : path_        ( path )
-    , altitudeData_( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
-    , weight_      ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from model
-    , squareSlope_ ( Square( entity[ "movement/max-slope" ] ) )
-    , height_      ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight() ) // $$$$ MCO 2012-05-23: read from model
+    : path_       ( path )
+    , data_       ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
+    , weight_     ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) // $$$$ MCO 2012-05-23: read from model
+    , squareSlope_( Square( entity[ "movement/max-slope" ] ) )
+    , height_     ( entity[ "data" ].GetUserData< MIL_AgentPion >().GetType().GetUnitType().GetCrossingHeight() ) // $$$$ MCO 2012-05-23: read from model
 {
     MIL_AgentPion& pion = entity[ "data" ].GetUserData< MIL_AgentPion >();
     fuseau_= pion.GetOrderManager().GetFuseau();
@@ -364,16 +364,16 @@ namespace
 // Name: PathAdapter::GetAltitudeCost
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
-double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) const
+double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D& to, double costPerMeter ) const
 {
-    const double rAltitudeFrom = altitudeData_.GetAltitude( from );
-    const double rAltitudeTo = altitudeData_.GetAltitude( to );
+    const double rAltitudeFrom = data_.GetAltitude( from );
+    const double rAltitudeTo = data_.GetAltitude( to );
     if( IsSlopeTooSteep( from, to, rAltitudeFrom, rAltitudeTo, squareSlope_ ) )
         return -1;
-    if( rAltitudeCostPerMeter > 0 )
-        return ( altitudeData_.GetMaxAltitude() - rAltitudeTo ) * rAltitudeCostPerMeter;
-    if( rAltitudeCostPerMeter < 0 )
-        return ( altitudeData_.GetMinAltitude() - rAltitudeTo ) * rAltitudeCostPerMeter;
+    if( costPerMeter > 0 )
+        return ( data_.GetMaxAltitude() - rAltitudeTo ) * costPerMeter;
+    if( costPerMeter < 0 )
+        return ( data_.GetMinAltitude() - rAltitudeTo ) * costPerMeter;
     return 0;
 }
 

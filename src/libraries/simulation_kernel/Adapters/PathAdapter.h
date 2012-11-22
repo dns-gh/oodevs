@@ -69,7 +69,7 @@ public:
     virtual double GetLength() const;
     virtual E_State GetState() const;
 
-    double GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D& to, double rAltitudeCostPerMeter ) const;
+    double GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D& to, double costPerMeter ) const;
     double GetFuseauxCost( const MT_Vector2D& from, const MT_Vector2D& to,
                            double rMaximumFuseauDistance, double rMaximumFuseauDistanceWithAutomata, // $$$$ MCO : all those configuration values should stay out of the movement module
                            double rFuseauCostPerMeterOut, double rComfortFuseauDistance, double rFuseauCostPerMeterIn,
@@ -115,7 +115,7 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< movement::Path_ABC > path_;
-    const PHY_RawVisionData& altitudeData_;
+    const PHY_RawVisionData& data_;
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;
     T_PathKnowledgeAgentVector pathKnowledgeAgents_;
