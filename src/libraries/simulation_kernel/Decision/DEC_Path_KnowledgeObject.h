@@ -41,6 +41,12 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    double ComputeCost( double weight ) const;
+    //@}
+
+private:
     //! @name Member data
     //@{
     TER_Localisation localisation_;
