@@ -14,7 +14,6 @@
 #include "FilterPartiesListView.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/Model.h"
-#include "preparation/ModelConsistencyChecker.h"
 #include "preparation/TeamsModel.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/IdManager.h"

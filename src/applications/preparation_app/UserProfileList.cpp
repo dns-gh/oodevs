@@ -14,7 +14,6 @@
 #include "ProfileEditor.h"
 #include "NewProfileDialog.h"
 #include "ProfilesChecker_ABC.h"
-#include "preparation/ModelConsistencyChecker.h"
 #include "preparation/ProfilesModel.h"
 #include "preparation/UserProfile.h"
 #include "clients_kernel/Controllers.h"
