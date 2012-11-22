@@ -87,7 +87,6 @@ void WeatherPanel::NotifyUpdated( const MeteoModel& model )
     currentModel_ = const_cast< MeteoModel* >( &model );
     globalWidget_->Update( *currentModel_->GetGlobalMeteo() );
     static_cast< WeatherListView* >( localWeathers_ )->Update( *currentModel_ );
-    Show();
 }
 
 // -----------------------------------------------------------------------------

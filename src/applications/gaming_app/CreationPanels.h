@@ -26,6 +26,7 @@ namespace kernel
     class ModelUnLoaded;
     class Time_ABC;
     class Viewport_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -55,6 +56,7 @@ class CreationPanels : public gui::Panels
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                      , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
+                     , public tools::ElementObserver_ABC< kernel::Profile_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -75,6 +77,13 @@ private:
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& model );
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void AddPanels();
+    void RemovePanels();
     //@}
 
 private:
