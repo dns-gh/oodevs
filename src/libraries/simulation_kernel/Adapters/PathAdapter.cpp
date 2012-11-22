@@ -220,7 +220,7 @@ double PathAdapter::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& 
         for( CIT_PathKnowledgeObjectVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
             double rCurrentObjectCost = (*itKnowledge)->ComputeCost( from, to, nToTerrainType, nLinkTerrainType, weight_ );
-            if( rCurrentObjectCost != std::numeric_limits< double >::min()  )
+            if( rCurrentObjectCost != std::numeric_limits< double >::min() )
             {
                 if( !bInsideObjectType )
                 {
