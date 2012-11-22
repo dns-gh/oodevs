@@ -114,20 +114,7 @@ int Application::Run()
             if( message.exec() == QMessageBox::No )
                 return EXIT_SUCCESS;
         }
-        if( processes.Contains( "simulation_app.exe" ) )
-        {
-            MessageDialog message( mainWindow_, tools::translate( "Application", "Close Simulations" ), tools::translate( "Application", "Running Simulation(s) detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
-            if( message.exec() == QMessageBox::Yes )
-                processes.KillAll( "simulation_app.exe" );
-        }
-        if( processes.Contains( "gaming_app.exe" ) )
-        {
-            MessageDialog message( mainWindow_, tools::translate( "Application", "Close GUI" ), tools::translate( "Application", "Running GUI(s) detected. Close ?" ), QMessageBox::Yes, QMessageBox::No );
-            if( message.exec() == QMessageBox::Yes )
-                processes.KillAll( "gaming_app.exe" );
-        }
     }
-
     return app_.exec();
 }
 

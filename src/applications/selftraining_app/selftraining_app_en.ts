@@ -20,22 +20,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Close Simulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Running Simulation(s) detected. Close ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close GUI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Running GUI(s) detected. Close ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SWORD</source>
         <translation type="unfinished"></translation>
     </message>

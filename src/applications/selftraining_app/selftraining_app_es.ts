@@ -4,22 +4,6 @@
 <context>
     <name>Application</name>
     <message>
-        <source>Close Simulations</source>
-        <translation>Detener Simulaciones</translation>
-    </message>
-    <message>
-        <source>Running Simulation(s) detected. Close ?</source>
-        <translation>Se detectaron simulaciones ejecutándose. ¿Desea detenerlas?</translation>
-    </message>
-    <message>
-        <source>Close GUI</source>
-        <translation>Cerrar las interfaces</translation>
-    </message>
-    <message>
-        <source>Running GUI(s) detected. Close ?</source>
-        <translation>Interfaces en ejecución, ¿Desea cerrarlas?</translation>
-    </message>
-    <message>
         <source>Already running</source>
         <translation>Aplicaciones en ejecución</translation>
     </message>

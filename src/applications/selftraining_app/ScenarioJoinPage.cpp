@@ -119,7 +119,7 @@ void ScenarioJoinPage::ClearSelection()
 // -----------------------------------------------------------------------------
 void ScenarioJoinPage::OnJoin()
 {
-    if( !exercise_ || ! dialogs::KillRunningProcesses( this ) )
+    if( !exercise_ )
         return;
     {
         frontend::CreateSession action( config_, exercise_->GetName(), "remote" );

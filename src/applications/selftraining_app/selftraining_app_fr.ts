@@ -4,22 +4,6 @@
 <context>
     <name>Application</name>
     <message>
-        <source>Close Simulations</source>
-        <translation>Arrêter les exercices en cours</translation>
-    </message>
-    <message>
-        <source>Running Simulation(s) detected. Close ?</source>
-        <translation>Une ou plusieurs simulation(s) sont déjà lancées. Voulez-vous les fermer ? </translation>
-    </message>
-    <message>
-        <source>Close GUI</source>
-        <translation>Fermer les interfaces</translation>
-    </message>
-    <message>
-        <source>Running GUI(s) detected. Close ?</source>
-        <translation>Fermer les interfaces en cours d&apos;exécution?</translation>
-    </message>
-    <message>
         <source>Already running</source>
         <translation>Application en cours d&apos;exécution</translation>
     </message>

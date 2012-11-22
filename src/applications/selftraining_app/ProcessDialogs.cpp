@@ -19,18 +19,14 @@ namespace
     {
         frontend::ProcessList processes;
         return processes.Contains( "simulation_app.exe" )
-            || processes.Contains( "gaming_app.exe" )
-            || processes.Contains( "replayer_app.exe" )
-            || processes.Contains( "preparation_app.exe" );
+            || processes.Contains( "replayer_app.exe" );
     }
 
     void StopRunningProcess()
     {
         frontend::ProcessList processes;
         processes.KillAll( "simulation_app.exe" );
-        processes.KillAll( "gaming_app.exe" );
         processes.KillAll( "replayer_app.exe" );
-        processes.KillAll( "preparation_app.exe" );
     }
 }
 

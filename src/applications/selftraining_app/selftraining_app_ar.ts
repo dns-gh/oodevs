@@ -20,22 +20,6 @@
         <translation type="unfinished">الواجهة قيد التشغيل بالفعل. ابدأ على أي حال؟</translation>
     </message>
     <message>
-        <source>Close Simulations</source>
-        <translation type="unfinished">إغلاق المحاكاة</translation>
-    </message>
-    <message>
-        <source>Running Simulation(s) detected. Close ?</source>
-        <translation type="unfinished">تشغيل الكشف عن Simulation(s). إغلاق؟</translation>
-    </message>
-    <message>
-        <source>Close GUI</source>
-        <translation type="unfinished">قم بإغلاق واجهة المستخدم الرسومية</translation>
-    </message>
-    <message>
-        <source>Running GUI(s) detected. Close ?</source>
-        <translation type="unfinished">تشغيل الكشف عن GUI(s). إغلاق؟</translation>
-    </message>
-    <message>
         <source>SWORD</source>
         <translation type="unfinished">السيف</translation>
     </message>
