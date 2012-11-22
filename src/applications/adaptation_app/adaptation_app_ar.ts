@@ -3217,18 +3217,6 @@ The spawn capacity will be disabled.</source>
         <translation type="unfinished">الطبية</translation>
     </message>
     <message>
-        <source>Doctor night rate</source>
-        <translation type="unfinished">سعر الليلة الطبيب</translation>
-    </message>
-    <message>
-        <source>Emergency doctor rate</source>
-        <translation type="unfinished">معدل طبيب الطوارئ</translation>
-    </message>
-    <message>
-        <source>Emergency bed rate</source>
-        <translation type="unfinished">سعر سرير الطوارئ</translation>
-    </message>
-    <message>
         <source>Height interaction</source>
         <translation type="unfinished">ذروة التفاعل</translation>
     </message>
@@ -5488,18 +5476,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Medical</source>
         <translation type="unfinished">الطبية</translation>
-    </message>
-    <message>
-        <source>Doctor night rate</source>
-        <translation type="unfinished">سعر الليلة الطبيب</translation>
-    </message>
-    <message>
-        <source>Emergency doctor rate</source>
-        <translation type="unfinished">معدل طبيب الطوارئ</translation>
-    </message>
-    <message>
-        <source>Emergency bed rate</source>
-        <translation type="unfinished">سعر سرير الطوارئ</translation>
     </message>
     <message>
         <source>Templates</source>

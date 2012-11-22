@@ -51,16 +51,7 @@ void ADN_ListView_UrbanInfrastructure_Type::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Urban_GUI::eUrbanInfrastructureName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Urban_GUI::eUrbanInfrastructureSymbol]->Connect( &pInfos->pSymbol_, bConnect );
-
-    ADN_Urban_Data::InfrastructureInfos::CIT_CapacityMap cit = pInfos->capacities_.find( "medical" );
-    if( cit == pInfos->capacities_.end() )
-        throw std::runtime_error( "unregister object capacity: medical ");
-
-    ADN_Objects_Data::ADN_CapacityInfos_Medical* medical = static_cast< ADN_Objects_Data::ADN_CapacityInfos_Medical* >( cit->second.get() );
-    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacity_NightRate]->Connect( &medical->emergencyBedsRate_, bConnect );
-    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacity_EmergencyDoctorRate]->Connect( &medical->emergencyDoctorsRate_, bConnect );
-    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacity_EmergencyBedRate]->Connect( &medical->nightDoctorsRate_, bConnect );
-    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacityPresent]->Connect( &medical->bPresent_, bConnect );
+    vItemConnectors_[ADN_Urban_GUI::eMedicalCapacityPresent]->Connect( &pInfos->bMedical_, bConnect );
 }
 
 //-----------------------------------------------------------------------------

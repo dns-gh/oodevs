@@ -20,12 +20,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MedicalCapacity )
 // Name: MedicalCapacity::MedicalCapacity
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-MedicalCapacity::MedicalCapacity( xml::xistream& xis )
-    : emergencyBedsRate_     ( 0 )
-    , emergencyDoctorsRate_  ( 0 )
-    , nightDoctorsRate_      ( 0 )
+MedicalCapacity::MedicalCapacity( xml::xistream& )
 {
-    InitializeData( xis );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,23 +30,8 @@ MedicalCapacity::MedicalCapacity( xml::xistream& xis )
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 MedicalCapacity::MedicalCapacity()
-    : emergencyBedsRate_     ( 0 )
-    , emergencyDoctorsRate_  ( 0 )
-    , nightDoctorsRate_      ( 0 )
 {
-    //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalCapacity::MedicalCapacity
-// Created: RFT 2008-05-22
-// -----------------------------------------------------------------------------
-MedicalCapacity::MedicalCapacity( float emergencyBedsRate, float emergencyDoctorsRate, float nightDoctorsRate )
-: emergencyBedsRate_     ( emergencyBedsRate )
-, emergencyDoctorsRate_  ( emergencyDoctorsRate )
-, nightDoctorsRate_      ( nightDoctorsRate )
-{
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,20 +49,7 @@ MedicalCapacity::MedicalCapacity( const MedicalCapacity& /*from*/ )
 // -----------------------------------------------------------------------------
 MedicalCapacity::~MedicalCapacity()
 {
-    //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalCapacity::InitializeData
-// Created: JCR 2008-06-02
-// -----------------------------------------------------------------------------
-void MedicalCapacity::InitializeData( xml::xistream& xis )
-{
-    xis >> xml::attribute( "night-doctors-rate", nightDoctorsRate_ )
-        >> xml::start( "emergency-plan" )
-            >> xml::attribute( "beds-rate", emergencyBedsRate_ )
-            >> xml::attribute( "doctors-rate", emergencyDoctorsRate_ )
-        >> xml::end;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

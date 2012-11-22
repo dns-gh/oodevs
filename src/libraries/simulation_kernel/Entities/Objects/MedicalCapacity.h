@@ -30,7 +30,6 @@ public:
     //@{
              MedicalCapacity();
     explicit MedicalCapacity( xml::xistream& xis );
-             MedicalCapacity( float emergencyBedsRate, float emergencyDoctorsRate, float nightDoctorsRate );
 
     virtual ~MedicalCapacity();
     //@}
@@ -78,10 +77,6 @@ private:
 private:
     //! @name Member data
     //@{
-    float emergencyBedsRate_;
-    float emergencyDoctorsRate_;
-    float nightDoctorsRate_;
-
     T_WaitingList entranceWaitingList_;
     T_WaitingList transferWaitingList_;
     T_WaitingList deadsList_;

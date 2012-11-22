@@ -151,7 +151,7 @@ namespace
             const kernel::InfrastructureType* infraType = infrastructure->GetType();
             if( infraType )
             {
-                if( infraType->FindCapacity( "medical" ) )
+                if( infraType->IsMedical() )
                     ++medicalInfrastructures;
                 else
                     ++nonMedicalInfrastructures;

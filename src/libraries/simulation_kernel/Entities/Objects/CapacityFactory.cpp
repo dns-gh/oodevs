@@ -170,7 +170,6 @@ CapacityFactory::CapacityFactory()
     DoRegister( "lodging", boost::bind( &AddBuilder< LodgingCapacity >::Add, _1, _2 ) );
     DoRegister( "logistic", boost::bind( &AddBuilder< LogisticCapacity >::Add, _1, _2 ) );
     DoRegister( "medical", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ) );
-    DoRegister( "medical-treatment", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< MedicalCapacity >::Update, _1, _2 ) );
     DoRegister( "mobility", boost::bind( &AddBuilder< MobilityCapacity >::Add, _1, _2 ) );
     DoRegister( "perception", boost::bind( &AddBuilder< PerceptionCapacity >::Add, _1, _2 ) );
     DoRegister( "population-filter", boost::bind( &AddBuilder< PopulationFilterCapacity >::Add, _1, _2 ) );

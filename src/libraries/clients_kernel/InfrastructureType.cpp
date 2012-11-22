@@ -23,10 +23,9 @@ InfrastructureType::InfrastructureType( xml::xistream& xis )
     : id_    ( nNextID_++ )
     , name_  ( xis.attribute< std::string >( "name" ) )
     , symbol_( "infrastructures/" + xis.attribute< std::string >( "symbol" ) )
+    , medical_( xis.attribute< bool >( "medical", false ) )
 {
-    xis >> xml::optional >> xml::start( "capacities" )
-            >> xml::list( *this, &InfrastructureType::ReadCapacity )
-        >> xml::end;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,27 +35,6 @@ InfrastructureType::InfrastructureType( xml::xistream& xis )
 InfrastructureType::~InfrastructureType()
 {
     //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfrastructureType::ReadCapacity
-// Created: SLG 2010-12-29
-// -----------------------------------------------------------------------------
-void InfrastructureType::ReadCapacity( const std::string& capacity, xml::xistream& xis )
-{
-    capacities_[ capacity ].reset( new xml::xibufferstream( xis ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfrastructureType::FindCapacity
-// Created: SLG 2010-12-29
-// -----------------------------------------------------------------------------
-xml::xistream* InfrastructureType::FindCapacity( const std::string& capacity ) const
-{
-    CIT_Capacities it = capacities_.find( capacity );
-    if( it != capacities_.end() )
-        return it->second.get();
-    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -84,4 +62,13 @@ unsigned int InfrastructureType::GetId() const
 const std::string& InfrastructureType::GetSymbol() const
 {
     return symbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureType::IsMedical
+// Created: ABR 2012-11-22
+// -----------------------------------------------------------------------------
+bool InfrastructureType::IsMedical() const
+{
+    return medical_;
 }

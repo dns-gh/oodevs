@@ -145,6 +145,7 @@ void ADN_Objects_GUI::Build()
         CreateCapacityCheckBox( tr( "Underground network exit" ), vInfosConnectors[ eUndergroundNetworkCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Fire forbidden" ), vInfosConnectors[ eFireForbiddenCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Border" ), vInfosConnectors[ eBorderCapacityPresent ], capacitiesGroup );
+        CreateCapacityCheckBox( tr( "Medical" ), vInfosConnectors[ eMedicalCapacityPresent ], capacitiesGroup );
     }
 
     QGridLayout* grid = new QGridLayout();
@@ -262,11 +263,6 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_ComboBox_Vector >( spawn, tr( "Object" ), vInfosConnectors[ eSpawnCapacity_ObjectType ] );
         builder.AddField< ADN_CheckBox >( spawn, tr( "NBC" ), vInfosConnectors[ eSpawnCapacity_NBC ] );
 
-        ADN_GroupBox* medical = CreateCapacityGroupBox( 3, tr( "Medical" ), vInfosConnectors[ eMedicalCapacityPresent ] );
-        builder.AddField< ADN_EditLine_Int >( medical, tr( "Doctor night rate" ), vInfosConnectors[ eMedicalCapacity_NightRate ], 0, eGreaterEqualZero );
-        builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency doctor rate" ), vInfosConnectors[ eMedicalCapacity_EmergencyDoctorRate ], 0, eGreaterEqualZero );
-        builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency bed rate" ), vInfosConnectors[ eMedicalCapacity_EmergencyBedRate ], 0, eGreaterEqualZero );
-
         ADN_GroupBox* heightInteraction = CreateCapacityGroupBox( 3, tr( "Height interaction" ), vInfosConnectors[ eInteractionHeightCapacityPresent ] );
         builder.AddField< ADN_EditLine_Double >( heightInteraction, tr( "Interaction max height" ), vInfosConnectors[ eInteractionHeightCapacity_Height ], tr( "m" ), eGreaterEqualZero );
 
@@ -313,28 +309,35 @@ void ADN_Objects_GUI::Build()
         grid->addWidget( avoidable, 1, 1 );
         grid->addWidget( bypassable, 2, 1 );
         grid->addWidget( trafficability, 3, 1 );
+
         grid->addWidget( mobility, 4, 0 );
         grid->addWidget( gNBC, 4, 1 );
-        grid->addWidget( attrition_, 5, 0 );
+
+        grid->addWidget( attrition_, 5, 0, 2, 1 );
         grid->addWidget( urbanDestruction, 5, 1 );
-        grid->addWidget( workable, 6, 0 );
-        grid->addWidget( populationFilter, 6, 1 );
-        grid->addWidget( detection, 7, 0 );
-        grid->addWidget( spawn, 7, 1 );
-        grid->addWidget( medical, 8, 0 );
-        grid->addWidget( protection, 8, 1 );
+        grid->addWidget( protection, 6, 1 );
+
+        grid->addWidget( workable, 7, 0 );
+        grid->addWidget( populationFilter, 7, 1 );
+
+        grid->addWidget( detection, 8, 0 );
+        grid->addWidget( spawn, 8, 1 );
+
         grid->addWidget( heightInteraction, 9, 0 );
         grid->addWidget( bridging, 9, 1 );
+
         grid->addWidget( propagation, 10, 0 );
         grid->addWidget( attitudeModifier, 10, 1 );
+
         grid->addWidget( perception, 11, 0 );
         grid->addWidget( scattering, 11, 1 );
+
         grid->addWidget( structural, 12, 0 );
         grid->addWidget( flood, 12, 1, 2, 1 );
         grid->addWidget( firePropagationModifier, 13, 0 );
+
         grid->addWidget( interactWithSide, 14, 0 );
         grid->addWidget( disaster, 14, 1 );
-
     }
 
     // -------------------------------------------------------------------------

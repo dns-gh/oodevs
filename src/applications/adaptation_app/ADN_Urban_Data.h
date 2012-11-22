@@ -32,9 +32,6 @@ namespace xml
     class xistream;
 }
 
-class ADN_Objects_Data;
-class ADN_TypeCapacity_Infos;
-
 //*****************************************************************************
 // Created: JDY 03-08-27
 //*****************************************************************************
@@ -90,7 +87,7 @@ public:
         //! @name Member Data
         //@{
         ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolsInfra > pSymbol_;
-        T_CapacityMap capacities_;
+        ADN_Type_Bool bMedical_;
         //@}
     };
 

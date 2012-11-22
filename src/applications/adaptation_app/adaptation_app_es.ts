@@ -3171,18 +3171,6 @@ The spawn capacity will be disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Doctor night rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Emergency doctor rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Emergency bed rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Height interaction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5499,18 +5487,6 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Medical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctor night rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Emergency doctor rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Emergency bed rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

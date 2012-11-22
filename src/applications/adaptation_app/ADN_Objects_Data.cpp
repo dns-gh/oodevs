@@ -753,36 +753,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Workable::WriteArchive( xml::xostream& 
     xos << xml::attribute( "max-animator", worker_.GetData() );
 }
 
-//! @name ADN_CapacityInfos_Medical
-//@{
-ADN_Objects_Data::ADN_CapacityInfos_Medical::ADN_CapacityInfos_Medical()
-    : emergencyBedsRate_   ( 0 )
-    , emergencyDoctorsRate_( 0 )
-    , nightDoctorsRate_    ( 0 )
-{
-    // NOTHING
-}
-void ADN_Objects_Data::ADN_CapacityInfos_Medical::ReadArchive( xml::xistream& xis )
-{
-    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-
-    xis >> xml::attribute( "night-doctors-rate", nightDoctorsRate_ )
-        >> xml::start( "emergency-plan" )
-            >> xml::attribute( "doctors-rate", emergencyDoctorsRate_ )
-            >> xml::attribute( "beds-rate", emergencyBedsRate_ )
-        >> xml::end;
-}
-
-void ADN_Objects_Data::ADN_CapacityInfos_Medical::WriteArchive( xml::xostream& xos )
-{
-    xos << xml::attribute( "night-doctors-rate", nightDoctorsRate_ )
-        << xml::start( "emergency-plan" )
-            << xml::attribute( "doctors-rate", emergencyDoctorsRate_ )
-            << xml::attribute( "beds-rate", emergencyBedsRate_ )
-        << xml::end;
-}
-//@}
-
 //! @name ADN_CapacityInfos_TerrainHeuristic
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ADN_CapacityInfos_TerrainHeuristic()

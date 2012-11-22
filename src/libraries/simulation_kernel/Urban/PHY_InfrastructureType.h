@@ -25,21 +25,6 @@ public:
     //@{
     typedef std::map< std::string, const PHY_InfrastructureType* > T_InfrastructureMap;
     typedef T_InfrastructureMap::const_iterator CIT_InfrastructureMap;
-
-    struct MedicalProperties
-    {
-        //! @name Constructors/Destructor
-        //@{
-        explicit MedicalProperties( xml::xistream& xis );
-        //@}
-
-        //! @name Member data
-        //@{
-        float emergencyBedsRate_;
-        float emergencyDoctorsRate_;
-        float nightDoctorsRate_;
-        //@}
-    };
     //@}
 
 public:
@@ -53,7 +38,7 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-    const MedicalProperties* GetMedicalProperties() const;
+    bool IsMedical() const;
     //@}
 
 private:
@@ -68,7 +53,6 @@ private:
     //@{
     struct LoadingWrapper;
     static void ReadInfrastructure( xml::xistream& xis );
-    void LoadCapacity( const std::string& capacity, xml::xistream& xis );
     //@}
 
 private:
@@ -77,7 +61,7 @@ private:
     static T_InfrastructureMap infrastructures_;
     std::string name_;
     std::string symbol_;
-    std::auto_ptr< MedicalProperties > medicalProperties_;
+    bool medical_;
     //@}
 };
 

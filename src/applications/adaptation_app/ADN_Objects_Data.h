@@ -112,6 +112,7 @@ public:
     typedef helpers::ADN_CapacityInfos_Default< helpers::eOccupableCapacity >               ADN_CapacityInfos_Occupable;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eDecontaminationCapacity >         ADN_CapacityInfos_Decontamination;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eSupplyRouteCapacity >             ADN_CapacityInfos_SupplyRoute;
+    typedef helpers::ADN_CapacityInfos_Default< helpers::eMedicalCapacity >                 ADN_CapacityInfos_Medical;
 
     class ADN_CapacityInfos_Disaster : public helpers::ADN_CapacityInfos_Default< helpers::eDisasterCapacity >
     {
@@ -232,19 +233,6 @@ public:
         ADN_Type_Int nNbHurtHumans3_;
         ADN_Type_Int nNbHurtHumansE_;
         ADN_Type_Int nNbDeadHumans_;
-    };
-
-    class ADN_CapacityInfos_Medical : public helpers::ADN_CapacityInfos_Default< helpers::eMedicalCapacity >
-    {
-    public:
-        ADN_CapacityInfos_Medical();
-        void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
-
-    public:
-        ADN_Type_Int emergencyBedsRate_;
-        ADN_Type_Int emergencyDoctorsRate_;
-        ADN_Type_Int nightDoctorsRate_;
     };
 
     class ADN_CapacityInfos_Improvable : public helpers::ADN_CapacityInfos_Default< helpers::eImprovableCapacity >

@@ -147,18 +147,7 @@ void ADN_Urban_GUI::Build()
 
         builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );
         builder.AddField< ADN_ComboBox_Vector >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
-
-        ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), pGroupInfrastructures );
-        medical->setObjectName( strClassName_ + "_Medical" );
-        {
-            vInfrastructureInfosConnectors[ eMedicalCapacityPresent ] = &medical->GetConnector();
-            builder.AddField< ADN_EditLine_Int >( medical, tr( "Doctor night rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_NightRate ] );
-            builder.SetValidator( new ADN_IntValidator( 0, 5000, this ) );
-            builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency doctor rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_EmergencyDoctorRate ] );
-            builder.SetValidator( new ADN_IntValidator( 0, 5000, this ) );
-            builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency bed rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_EmergencyBedRate ] );
-            builder.SetValidator( new ADN_IntValidator( 0, 5000, this ) );
-        }
+        builder.AddField< ADN_CheckBox >( pHolder, tr( "Medical" ), vInfrastructureInfosConnectors[ eMedicalCapacityPresent ] );
     }
 
     // Templates
@@ -209,10 +198,10 @@ void ADN_Urban_GUI::Build()
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
     pContentLayout->addWidget( pGroupMaterials );
-    pContentLayout->addWidget( pGroupRoofShapes );
-    pContentLayout->addWidget( pGroupAccommodations );
     pContentLayout->addWidget( pGroupInfrastructures );
+    pContentLayout->addWidget( pGroupAccommodations );
     pContentLayout->addWidget( pTemplates );
+    pContentLayout->addWidget( pGroupRoofShapes );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );

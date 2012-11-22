@@ -3170,18 +3170,6 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
         <translation>Médical</translation>
     </message>
     <message>
-        <source>Doctor night rate</source>
-        <translation>Fréquence de rotation des médecins de nuit</translation>
-    </message>
-    <message>
-        <source>Emergency doctor rate</source>
-        <translation>Fréquence de rotation des médecins en phase d&apos;alerte</translation>
-    </message>
-    <message>
-        <source>Emergency bed rate</source>
-        <translation>Fréquence de rotation des lits en phase d&apos;alerte</translation>
-    </message>
-    <message>
         <source>Fire propagation modifier</source>
         <translation>Modification propagation feu</translation>
     </message>
@@ -5487,18 +5475,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Medical</source>
         <translation>Médical</translation>
-    </message>
-    <message>
-        <source>Doctor night rate</source>
-        <translation>Fréquence de rotation des médecins de nuit</translation>
-    </message>
-    <message>
-        <source>Emergency doctor rate</source>
-        <translation>Fréquence de rotation des médecins en phase d&apos;alerte</translation>
-    </message>
-    <message>
-        <source>Emergency bed rate</source>
-        <translation>Fréquence de rotation des lits en phase d&apos;alerte</translation>
     </message>
     <message>
         <source>Activities</source>

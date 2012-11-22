@@ -3230,18 +3230,6 @@ The spawn capacity will be disabled.</translation>
         <translation>Medical</translation>
     </message>
     <message>
-        <source>Doctor night rate</source>
-        <translation>Doctor night rate</translation>
-    </message>
-    <message>
-        <source>Emergency doctor rate</source>
-        <translation>Emergency doctor rate</translation>
-    </message>
-    <message>
-        <source>Emergency bed rate</source>
-        <translation>Emergency bed rate</translation>
-    </message>
-    <message>
         <source>Height interaction</source>
         <translation>Height interaction</translation>
     </message>
@@ -5501,18 +5489,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Medical</source>
         <translation>Medical</translation>
-    </message>
-    <message>
-        <source>Doctor night rate</source>
-        <translation>Doctor night rate</translation>
-    </message>
-    <message>
-        <source>Emergency doctor rate</source>
-        <translation>Emergency doctor rate</translation>
-    </message>
-    <message>
-        <source>Emergency bed rate</source>
-        <translation>Emergency bed rate</translation>
     </message>
     <message>
         <source>Templates</source>

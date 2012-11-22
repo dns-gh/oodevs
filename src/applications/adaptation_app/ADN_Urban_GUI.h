@@ -60,9 +60,6 @@ public:
         eUrbanInfrastructureName,
         eUrbanInfrastructureSymbol,
         eMedicalCapacityPresent,
-        eMedicalCapacity_NightRate,
-        eMedicalCapacity_EmergencyDoctorRate,
-        eMedicalCapacity_EmergencyBedRate,
         eNbrUrbanInfrastructureGuiElements
     };
 

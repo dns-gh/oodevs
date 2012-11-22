@@ -290,16 +290,10 @@ void MIL_UrbanObject::ReadInfrastructure( xml::xistream& xis )
         capacity->Update( xis, *this );
         xis     >> xml::end
             >> xml::end;
-        if( const PHY_InfrastructureType::MedicalProperties* medical = infraType->GetMedicalProperties() )
+        if( infraType->IsMedical() )
         {
-            MedicalCapacity* capacity = new MedicalCapacity( medical->emergencyBedsRate_, medical->emergencyDoctorsRate_, medical->nightDoctorsRate_ );
+            MedicalCapacity* capacity = new MedicalCapacity();
             capacity->Register( *this );
-            if( xis.has_child( "medical-treatment" ) )
-            {
-                xis >> xml::start( "medical-treatment" );
-                capacity->Update( xis, *this );
-                xis >> xml::end;
-            }
         }
     }
 }

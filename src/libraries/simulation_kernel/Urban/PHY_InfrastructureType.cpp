@@ -13,30 +13,6 @@
 
 PHY_InfrastructureType::T_InfrastructureMap PHY_InfrastructureType::infrastructures_;
 
-struct PHY_InfrastructureType::LoadingWrapper
-{
-    void ReadInfrastructure( xml::xistream& xis )
-    {
-        PHY_InfrastructureType::ReadInfrastructure( xis );
-    }
-};
-
-// -----------------------------------------------------------------------------
-// Name: PHY_InfrastructureType::MedicalProperties constructor
-// Created: JSR 2011-02-17
-// -----------------------------------------------------------------------------
-PHY_InfrastructureType::MedicalProperties::MedicalProperties( xml::xistream& xis )
-    : emergencyBedsRate_   ( 0 )
-    , emergencyDoctorsRate_( 0 )
-    , nightDoctorsRate_    ( 0 )
-{
-    xis >> xml::optional >> xml::attribute( "night-doctors-rate", nightDoctorsRate_ )
-        >> xml::optional >> xml::start( "emergency-plan" )
-            >> xml::optional >> xml::attribute( "doctors-rate", emergencyDoctorsRate_ )
-            >> xml::optional >> xml::attribute( "beds-rate", emergencyBedsRate_ )
-        >> xml::end;
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_InfrastructureType::Initialize
 // Created: JSR 2011-02-17
@@ -44,10 +20,9 @@ PHY_InfrastructureType::MedicalProperties::MedicalProperties( xml::xistream& xis
 void PHY_InfrastructureType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing infrastructures" );
-    LoadingWrapper loader;
     xis >> xml::start( "urban" )
             >> xml::optional >> xml::start( "infrastructures" )
-                >> xml::list( "infrastructure", loader, &LoadingWrapper::ReadInfrastructure )
+                >> xml::list( "infrastructure", &PHY_InfrastructureType::ReadInfrastructure )
             >> xml::end
         >> xml::end;
 }
@@ -85,25 +60,15 @@ const std::string& PHY_InfrastructureType::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_InfrastructureType::GetMedicalProperties
-// Created: JSR 2011-02-17
-// -----------------------------------------------------------------------------
-const PHY_InfrastructureType::MedicalProperties* PHY_InfrastructureType::GetMedicalProperties() const
-{
-    return medicalProperties_.get();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_InfrastructureType constructor
 // Created: JSR 2011-02-17
 // -----------------------------------------------------------------------------
 PHY_InfrastructureType::PHY_InfrastructureType( const std::string& name, xml::xistream& xis )
     : name_  ( name )
     , symbol_( "infrastructures/" + xis.attribute< std::string >( "symbol" ) )
+    , medical_( xis.attribute< bool >( "medical", false ) )
 {
-    xis >> xml::optional() >> xml::start( "capacities" )
-        >> xml::list( *this, &PHY_InfrastructureType::LoadCapacity )
-        >> xml::end;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +78,15 @@ PHY_InfrastructureType::PHY_InfrastructureType( const std::string& name, xml::xi
 PHY_InfrastructureType::~PHY_InfrastructureType()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_InfrastructureType::IsMedical
+// Created: ABR 2012-11-22
+// -----------------------------------------------------------------------------
+bool PHY_InfrastructureType::IsMedical() const
+{
+    return medical_;
 }
 
 // -----------------------------------------------------------------------------
@@ -126,14 +100,4 @@ void PHY_InfrastructureType::ReadInfrastructure( xml::xistream& xis )
     if( pInfrastructure )
         xis.error( "Infrastructure " + strName + " already defined" );
     pInfrastructure = new PHY_InfrastructureType( strName, xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_InfrastructureType::LoadCapacity
-// Created: JSR 2011-02-17
-// -----------------------------------------------------------------------------
-void PHY_InfrastructureType::LoadCapacity( const std::string& capacity, xml::xistream& xis )
-{
-    if( capacity == "medical" )
-        medicalProperties_.reset( new MedicalProperties( xis ) );
 }

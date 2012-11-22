@@ -11,7 +11,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_DataException.h"
-#include "ADN_Objects_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
@@ -508,20 +507,9 @@ void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& ou
         output << xml::attribute( "symbol", pSymbol_.GetData()->strName_ );
     else
         output << xml::attribute( "symbol", "" );
-    if( !capacities_.empty() )
-    {
-        output << xml::start( "capacities" );
-        for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
-        {
-            if( it->second->bPresent_.GetData() )
-            {
-                output << xml::start( it->first );
-                it->second->WriteArchive( output );
-                output << xml::end;
-            }
-        }
-        output << xml::end;
-    }
+
+    if( bMedical_.GetData() )
+        output << xml::attribute( "medical", bMedical_.GetData() );
     output << xml::end;
 }
 
@@ -534,20 +522,9 @@ ADN_Urban_Data::InfrastructureInfos* ADN_Urban_Data::InfrastructureInfos::Create
     ADN_Urban_Data::InfrastructureInfos* result = new ADN_Urban_Data::InfrastructureInfos();
 
     result->pSymbol_ = pSymbol_.GetData();
-    result->capacities_ = capacities_;
+    result->bMedical_ = bMedical_.GetData();
 
     return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::ReadCapacityArchive
-// Created: JCR 2008-07-15
-// -----------------------------------------------------------------------------
-void ADN_Urban_Data::InfrastructureInfos::ReadCapacityArchive( const std::string& type, xml::xistream& xis )
-{
-    IT_CapacityMap it = capacities_.find( type );
-    if( it != capacities_.end() )
-        it->second->ReadArchive( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -556,14 +533,12 @@ void ADN_Urban_Data::InfrastructureInfos::ReadCapacityArchive( const std::string
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
     : pSymbol_( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsInfras(), 0 )
+    , bMedical_( false )
 {
     std::string symbol;
-    capacities_[ "medical" ].reset( new ADN_Objects_Data::ADN_CapacityInfos_Medical() );
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "symbol", symbol )
-          >> xml::start( "capacities" )
-             >> xml::list( *this, &ADN_Urban_Data::InfrastructureInfos::ReadCapacityArchive )
-          >> xml::end;
+          >> xml::optional >> xml::attribute( "medical", bMedical_ );
     ADN_Symbols_Data::SymbolsInfra* pSymbol = ADN_Workspace::GetWorkspace().GetSymbols().GetData().FindSymbolInfra( symbol );
     if( !pSymbol )
         return;
@@ -576,8 +551,9 @@ ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos()
     : pSymbol_( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsInfras(), 0 )
+    , bMedical_( false )
 {
-    capacities_[ "medical" ].reset( new ADN_Objects_Data::ADN_CapacityInfos_Medical() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

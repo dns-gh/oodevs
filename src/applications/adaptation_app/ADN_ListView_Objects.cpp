@@ -221,9 +221,6 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     BUILDER_HELPER( Extinguishable );
 
     BUILDER_HELPER( Medical );
-    CONNECT_HELPER( Medical, NightRate, nightDoctorsRate_ );
-    CONNECT_HELPER( Medical, EmergencyDoctorRate, emergencyDoctorsRate_ );
-    CONNECT_HELPER( Medical, EmergencyBedRate, emergencyBedsRate_ );
 
     BUILDER_HELPER( Interference );
 
