@@ -11,6 +11,7 @@
 #define __DEC_Path_KnowledgeAgent_h_
 
 #include "MT_Tools/MT_Vector2D.h"
+#include "MT_Tools/MT_Line.h"
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -26,7 +27,7 @@ public:
 
     //! @name Operations
     //@{
-    double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    double ComputeCost( const MT_Line& lineLink ) const;
     //@}
 
 private:

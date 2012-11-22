@@ -453,9 +453,10 @@ double PathAdapter::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& 
     const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/, double rEnemyMaximumCost ) const
 {
     double rEnemyCost = 0.;
+    const MT_Line lineLink( from, to );
     for( CIT_PathKnowledgeAgentVector it = pathKnowledgeAgents_.begin(); it != pathKnowledgeAgents_.end(); ++it )
     {
-        double rCurrentEnemyCost = it->ComputeCost( from, to );
+        double rCurrentEnemyCost = it->ComputeCost( lineLink );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
             return rCurrentEnemyCost;
         rEnemyCost += rCurrentEnemyCost;

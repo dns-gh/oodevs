@@ -54,9 +54,8 @@ namespace
 // Created: AGE 2005-02-01
 // Modified: CMA 2011-04-27
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
+double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Line& lineLink ) const
 {
-    const MT_Line lineLink( from, to );
     MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
     const double rSqDistBtwUnitAndEnemy = vPositionProjection.SquareDistance( vEnemyPosition_ );
 

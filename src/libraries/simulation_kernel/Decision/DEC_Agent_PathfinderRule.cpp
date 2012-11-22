@@ -189,9 +189,10 @@ double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const 
 {
     assert( path_.GetPathClass().AvoidEnemies() || path_.GetPathKnowledgeAgents().empty() );
     double rEnemyCost = 0.;
+    const MT_Line lineLink( from, to );
     for( DEC_Agent_Path::CIT_PathKnowledgeAgentVector it = path_.GetPathKnowledgeAgents().begin(); it != path_.GetPathKnowledgeAgents().end(); ++it )
     {
-        double rCurrentEnemyCost = it->ComputeCost( from, to );
+        double rCurrentEnemyCost = it->ComputeCost( lineLink );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
             return rCurrentEnemyCost;
         rEnemyCost += rCurrentEnemyCost;

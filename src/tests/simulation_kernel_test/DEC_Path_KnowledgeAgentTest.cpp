@@ -17,9 +17,10 @@ namespace
     {
         const MT_Vector2D enemyPosition( 0, distanceFromEnemy );
         const DEC_Path_KnowledgeAgent cost( enemyPosition, enemyCostAtSecurityRange, enemyCostOnContact, maxRangeToFire );
-        const MT_Vector2D segmentFrom( 0, 0 );
-        const MT_Vector2D segmentTo( 1000, 0 );
-        return cost.ComputeCost( segmentFrom, segmentTo );
+        const MT_Vector2D from( 0, 0 );
+        const MT_Vector2D to( 1000, 0 );
+        const MT_Line lineLink( from, to );
+        return cost.ComputeCost( lineLink );
     }
 }
 
