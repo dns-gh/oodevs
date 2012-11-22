@@ -301,7 +301,7 @@ void DotationsEditor::AddItem( int row, const Dotation* dotation /* =0*/ )
         table_->item( row, 0 )->setText( dotation->type_.GetName().c_str() );
         table_->item( row, 1 )->setText( locale().toString( dotation->quantity_ ) );
     }
-    else 
+    else
         table_->item( row, 1 )->setText( locale().toString( 0 ) );
     table_->setCurrentCell( row, 1 );
     table_->blockSignals( false );

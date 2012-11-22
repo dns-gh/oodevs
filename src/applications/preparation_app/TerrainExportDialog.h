@@ -56,7 +56,6 @@ private:
     //@{
     const UrbanModel&               urbanModel_;
     const tools::ExerciseConfig&    config_;
-    
     QLineEdit*                      exportPathEditor_;
     QCheckBox*                      shapeCheck_;
     QCheckBox*                      elevationCheck_;
