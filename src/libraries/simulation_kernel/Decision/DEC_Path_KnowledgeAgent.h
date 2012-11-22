@@ -43,7 +43,6 @@ private:
     MT_Vector2D vEnemyPosition_;
     double rSquareSecurityDistance_;
     double rFactor_;
-    double rOffset_;
     //@}
 };
 
