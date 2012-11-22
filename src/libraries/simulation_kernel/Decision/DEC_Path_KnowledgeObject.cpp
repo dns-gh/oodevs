@@ -58,13 +58,28 @@ DEC_Path_KnowledgeObject::~DEC_Path_KnowledgeObject()
     // NOTHING
 }
 
+namespace
+{
+    const double epsilon = 1e-4;
+
+    bool OutOfBoundingBox( const MT_Rect& box, const MT_Vector2D& from, const MT_Vector2D& to )
+    {
+        return box.GetRight() < from.GetX() - epsilon && box.GetRight() < to.GetX() - epsilon
+            || box.GetLeft() > from.GetX() + epsilon && box.GetLeft() > to.GetX() + epsilon
+            || box.GetTop() < from.GetY() - epsilon && box.GetTop() < to.GetY() - epsilon
+            || box.GetBottom() > from.GetY() + epsilon && box.GetBottom() > to.GetY() + epsilon;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeObject::ComputeCost
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData&, double weight ) const
 {
-    static const double epsilon = 1e-4;
+    static const double min = std::numeric_limits< double >::min();
+    if( OutOfBoundingBox( realLocalisation_.GetBoundingBox(), from, to ) )
+        return min;
     const MT_Line line( from, to );
     if( realLocalisation_.Intersect2D( line, epsilon ) )
     {
@@ -87,7 +102,7 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
         if( scaledLocalisation_.IsInside( from, epsilon ) )
             return rCost_;
     }
-    return std::numeric_limits< double >::min();
+    return min;
 }
 
 // -----------------------------------------------------------------------------
