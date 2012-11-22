@@ -354,9 +354,12 @@ double PathAdapter::GetAltitudeCost( const MT_Vector2D& from, const MT_Vector2D&
     {
         const double rDelta          = rAltitudeTo - rAltitudeFrom;
         const double rSquareGroundDistance = rDelta * rDelta + from.SquareDistance( to );
-        const double rSquareSlope          = rSquareGroundDistance > 0 ? rDelta * rDelta / rSquareGroundDistance : 0;
-        if( rSquareSlope > slope_ * slope_ )
-            return -1;
+        if( rSquareGroundDistance > 0 )
+        {
+            const double rSquareSlope = rDelta * rDelta / rSquareGroundDistance;
+            if( rSquareSlope > slope_ * slope_ )
+                return -1;
+        }
     }
     if( rAltitudeCostPerMeter > 0 )
         return ( data.GetMaxAltitude() - rAltitudeTo ) * rAltitudeCostPerMeter;
