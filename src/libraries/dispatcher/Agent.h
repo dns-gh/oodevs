@@ -201,6 +201,7 @@ private:
     std::vector< unsigned int >                nbcAgentTypesContaminating_;
     int                                        contaminationPercentage_;
     float                                      contaminationQuantity_;
+    float                                      dose_;
     unsigned int                               knowledgeGroupJammed_;
     tools::Resolver< const kernel::Agent_ABC > transportedAgents_;
     kernel::Agent_ABC*                         pTransporter_;

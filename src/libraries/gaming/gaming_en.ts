@@ -920,6 +920,14 @@
         <source>NBC agent(s):</source>
         <translation>NBC agent(s):</translation>
     </message>
+    <message>
+        <source>NBC/Dose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dose:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Network</name>

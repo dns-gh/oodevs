@@ -62,6 +62,7 @@ public:
     //@{
     virtual void Poison( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Contaminate( const MIL_ToxicEffectManipulator& nbcAgent );
+    virtual void Afflict( float dose );
     virtual void Decontaminate();
     virtual void Decontaminate( double rRatioAgentsWorking );
     void WearNbcProtectionSuit();
@@ -115,6 +116,7 @@ private:
     T_NbcAgentTypeSet nbcAgentTypesContaminating_;
     double rContaminationState_;
     double rContaminationQuantity_;
+    float dose_;
     bool bNbcProtectionSuitWorn_;
     bool bHasChanged_;
     bool poisoned_;

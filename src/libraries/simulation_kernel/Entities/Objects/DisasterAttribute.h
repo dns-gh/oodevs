@@ -55,7 +55,7 @@ public:
     //@{
     void SendFullState( sword::ObjectAttributes& asn ) const;
     void UpdateLocalisation( MIL_Object_ABC& object, unsigned int time );
-
+    float GetDose( const MT_Vector2D& position ) const;
     DisasterAttribute& operator=( const DisasterAttribute& ); //!< Assignment operator
     //@}
 

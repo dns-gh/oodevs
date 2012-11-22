@@ -12,6 +12,9 @@
 #include "Object.h"
 #include "DisasterAttribute.h"
 #include "MIL_DisasterType.h"
+#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DisasterCapacity )
@@ -105,4 +108,19 @@ void DisasterCapacity::Update( MIL_Object_ABC& object, unsigned int time )
     DisasterAttribute* disaster = object.RetrieveAttribute< DisasterAttribute >();
     if( disaster )
         disaster->UpdateLocalisation( object, time );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity::ProcessAgentInside
+// Created: LGY 2012-11-21
+// -----------------------------------------------------------------------------
+void DisasterCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
+{
+    DisasterAttribute* disaster = object.RetrieveAttribute< DisasterAttribute >();
+    if( disaster )
+    {
+        float dose = disaster->GetDose( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+        if( dose > 0.f )
+            agent.GetRole< nbc::PHY_RoleInterface_NBC >().Afflict( dose );
+    }
 }

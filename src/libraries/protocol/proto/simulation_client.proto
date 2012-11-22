@@ -1082,6 +1082,8 @@ message ContaminationState {
     optional int32 percentage = 1;
     //! @todo What's this ?
     optional float quantity   = 2;
+    //! The contamination dose
+    optional float dose       = 3;
 }
 
 /** @struct NBCAgents

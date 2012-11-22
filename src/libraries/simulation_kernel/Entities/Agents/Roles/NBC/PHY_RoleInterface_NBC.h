@@ -49,6 +49,7 @@ public:
     virtual bool IsIntoxicated() const = 0;
     virtual void Poison( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void Contaminate( const MIL_ToxicEffectManipulator& contamination ) = 0;
+    virtual void Afflict( float dose ) = 0;
     virtual void Decontaminate() = 0;
     virtual void Decontaminate( double rRatioAgentsWorking ) = 0;
     virtual double GetContaminationQuantity() const = 0;

@@ -17,6 +17,7 @@
 #include "propagation/PropagationManager.h"
 #include "propagation/ASCExtractor.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DisasterAttribute )
 
@@ -132,6 +133,7 @@ void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int
     PropagationManager::T_Files files = pManager_->GetFiles( boost::posix_time::to_iso_string( realTime ) );
     if( !files.empty() )
     {
+        values_.clear();
         std::vector< geometry::Point2d > points;
         for( std::size_t i = 0; i < files.size(); ++i )
         {
@@ -144,4 +146,22 @@ void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int
         polygon.Reset( Convert( points ), true );
         object.UpdateLocalisation( polygon );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterAttribute::GetDose
+// Created: LGY 2012-11-22
+// -----------------------------------------------------------------------------
+float DisasterAttribute::GetDose( const MT_Vector2D& position ) const
+{
+    double latitude, longitude;
+    TER_World::GetWorld().SimToMosMgrsCoord( position, latitude, longitude );
+
+    BOOST_FOREACH( boost::shared_ptr< ASCExtractor > value, values_ )
+    {
+        float dose = value->GetValue( longitude, latitude );
+        if( dose > 0.f )
+            return dose;
+    }
+    return 0.f;
 }

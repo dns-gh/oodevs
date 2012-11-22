@@ -227,6 +227,7 @@ void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
     msg().set_protective_suits( bNbcProtectionSuitWorn_ );
     msg().mutable_contamination_state()->set_percentage( static_cast< unsigned int >( rContaminationState_ * 100. ) );
     msg().mutable_contamination_state()->set_quantity( static_cast< float >( rContaminationQuantity_ ) );
+    msg().mutable_contamination_state()->set_dose( dose_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -407,4 +408,15 @@ double PHY_RolePion_NBC::GetContaminationQuantity() const
 {
     return rContaminationQuantity_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::Afflict
+// Created: LGY 2012-11-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::Afflict( float dose )
+{
+    dose_ += dose;
+    bHasChanged_ = true;
+}
+
 }

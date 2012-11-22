@@ -68,6 +68,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , nInstallationState_         ( 0 )
     , contaminationPercentage_    ( 0 )
     , contaminationQuantity_      ( 0.f )
+    , dose_                       ( 0.f )
     , knowledgeGroupJammed_       ( 0 )
     , pTransporter_               ( 0 )
     , nForceRatioState_           ( sword::ForceRatio::neutral )
@@ -197,10 +198,13 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
 
     if( message.has_contamination_state() )
     {
-        if( message.contamination_state().has_percentage() )
-            contaminationPercentage_ = message.contamination_state().percentage();
-        if( message.contamination_state().has_quantity() )
-            contaminationQuantity_   = message.contamination_state().quantity();
+        sword::ContaminationState state = message.contamination_state();
+        if( state.has_percentage() )
+            contaminationPercentage_ = state.percentage();
+        if( state.has_quantity() )
+            contaminationQuantity_= state.quantity();
+        if( state.has_dose() )
+            dose_ = state.dose();
     }
     if( message.has_contamination_agents() )
     {
@@ -547,6 +551,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         }
         asn().mutable_contamination_state()->set_percentage( contaminationPercentage_ );
         asn().mutable_contamination_state()->set_quantity( contaminationQuantity_ );
+        asn().mutable_contamination_state()->set_dose( dose_ );
         asn().mutable_communications()->set_jammed( communicationJammed_ );
         asn().mutable_communications()->mutable_knowledge_group()->set_id( knowledgeGroupJammed_ );
         asn().set_radio_emitter_disabled( bRadioEmitterEnabled_ );

@@ -76,10 +76,11 @@ public:
     kernel::Controller& controller_;
     kernel::Entity_ABC& entity_;
     const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;
-    bool        bNbcProtectionSuitWorn_;
+    bool bNbcProtectionSuitWorn_;
     T_NbcAgents contaminatingNbcAgents_;
-    int         nContamination_;
-    double      quantity_;
+    int nContamination_;
+    double quantity_;
+    double dose_;
     //@}
 };
 

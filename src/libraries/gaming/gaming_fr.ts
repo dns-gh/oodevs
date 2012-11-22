@@ -920,6 +920,14 @@
         <source>Danger:</source>
         <translation>Danger:</translation>
     </message>
+    <message>
+        <source>NBC/Dose</source>
+        <translation>NBC/Dose</translation>
+    </message>
+    <message>
+        <source>Dose:</source>
+        <translation>Dose</translation>
+    </message>
 </context>
 <context>
     <name>Network</name>
