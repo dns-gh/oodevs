@@ -49,7 +49,7 @@ void ObjectTreeView::NotifyCreated( const kernel::Object_ABC& object )
     if( !teamItem )
         teamItem = dataModel_.AddRootSafeItem( dataModel_.rowCount(), 0, team.GetName(), team.GetTooltip(), team );
     const kernel::ObjectType& type = object.GetType();
-    QStandardItem* typeItem = dataModel_.FindTextItem( type.GetName().c_str() );
+    QStandardItem* typeItem = dataModel_.FindTextItem( type.GetName().c_str(), teamItem );
     if( !typeItem )
         typeItem = dataModel_.AddChildTextItem( teamItem, teamItem->rowCount(), 0, type.GetName().c_str(), type.GetName().c_str() );
     dataModel_.AddChildSafeItem( typeItem, typeItem->rowCount(), 0, object.GetName(), object.GetTooltip(), object, ItemSpecificFlags( object ) );
