@@ -11,23 +11,27 @@
 #include "DEC_Path_KnowledgeAgent.h"
 #include "MT_Tools/MT_Line.h"
 
+namespace
+{
+    double ComputeSecurityDistance( double maxRangeToFire )
+    {
+        const double capped = std::min( 2000., std::max( 1000., maxRangeToFire ) );
+        return capped * capped;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent constructor
 // Created: NLD 2004-04-06
 // Modified: CMA 2011-04-27
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const MT_Vector2D& position, double enemyCostAtSecurityRange, double enemyCostOnContact, double maxRangeToFire )
-    : vEnemyPosition_( position )
+    : vEnemyPosition_         ( position )
+    , rSquareSecurityDistance_( ComputeSecurityDistance( maxRangeToFire ) )
+    , rFactor_                ( enemyCostOnContact / 100. )
+    , rOffset_                ( enemyCostAtSecurityRange )
 {
-    // Range between 1000 and 2000 meters
-    if( maxRangeToFire > 2000. )
-        maxRangeToFire = 2000.;
-    else if( maxRangeToFire < 1000. )
-        maxRangeToFire = 1000.;
-
-    rSquareSecurityDistance_ = maxRangeToFire * maxRangeToFire;
-    rOffset_ = enemyCostAtSecurityRange;
-    rFactor_ = enemyCostOnContact / 100.;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,6 +43,12 @@ DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
     // NOTHING
 }
 
+namespace
+{
+    const double pi = std::acos( -1. );
+    const double epsilon = 1; // in metres
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent::ComputeCost
 // Created: AGE 2005-02-01
@@ -46,9 +56,6 @@ DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
-    static const double pi = std::acos( -1. );
-    static const double epsilon = 1; // in metres
-
     const MT_Line lineLink( from, to );
     MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
     const double rSqDistBtwUnitAndEnemy = vPositionProjection.SquareDistance( vEnemyPosition_ );
