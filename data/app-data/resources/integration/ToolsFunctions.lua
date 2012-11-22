@@ -609,3 +609,10 @@ end
 installErrorHandler = function()
     errorhandlermanager.installErrorHandler( swordErrorHandler )
 end
+
+--
+-- Return a random number between minValue and maxValue, maxValue excluded
+--
+getRandomNumber = function( minValue, maxValue )
+    return DEC_RandomValue( minValue, maxValue )
+end
