@@ -247,7 +247,12 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
 // -----------------------------------------------------------------------------
 void MessageLoader::ScanData()
 {
-    ScanDataFolders( false );
+    while( !quit_->IsSignaled() )
+    {
+        ScanDataFolders( false );
+        init_->Signal();
+        quit_->Wait( boost::posix_time::seconds( 10 ) );
+    }
 }
 
 namespace
@@ -271,36 +276,31 @@ namespace
 // -----------------------------------------------------------------------------
 void MessageLoader::ScanDataFolders( bool forceAdd )
 {
-    while( !quit_->IsSignaled() )
+    if( bfs::exists( records_ ) )
     {
-        if( bfs::exists( records_ ) )
-        {
-            boost::mutex::scoped_lock lock( access_ );
-            for( bfs::directory_iterator it( records_ ); it !=  bfs::directory_iterator(); ++it )
-                try
+        boost::mutex::scoped_lock lock( access_ );
+        for( bfs::directory_iterator it( records_ ); it !=  bfs::directory_iterator(); ++it )
+            try
+            {
+                if( !IsValidRecordDir( it ) )
+                    continue;
+                const std::string dir = it->path().filename().string();
+                bool doAdd = false;
+                if( !forceAdd )
                 {
-                    if( !IsValidRecordDir( it ) )
-                        continue;
-                    const std::string dir = it->path().filename().string();
-                    bool doAdd = false;
-                    if( !forceAdd )
-                    {
-                        const bool mainLoop = !disk_.get() && init_->IsSignaled();
-                        const bool skipCurrent = mainLoop && dir == currentFolderName;
-                        doAdd = !skipCurrent && fragmentsInfos_.find( dir ) == fragmentsInfos_.end();
-                        if( mainLoop && doAdd  )
-                            fragmentsInfos_.erase( currentFolderName );
-                    }
-                    if( doAdd || forceAdd )
-                        AddFolder( dir );
+                    const bool mainLoop = !disk_.get() && init_->IsSignaled();
+                    const bool skipCurrent = mainLoop && dir == currentFolderName;
+                    doAdd = !skipCurrent && fragmentsInfos_.find( dir ) == fragmentsInfos_.end();
+                    if( mainLoop && doAdd  )
+                        fragmentsInfos_.erase( currentFolderName );
                 }
-                catch( const std::exception & )
-                {
-                    // NOTHING
-                }
-        }
-        init_->Signal();
-        quit_->Wait( boost::posix_time::seconds( 10 ) );
+                if( doAdd || forceAdd )
+                    AddFolder( dir );
+            }
+            catch( const std::exception & )
+            {
+                // NOTHING
+            }
     }
 }
 
