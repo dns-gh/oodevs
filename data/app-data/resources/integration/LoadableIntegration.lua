@@ -264,11 +264,11 @@ integration.retrieveCarriers = function()
     DEC_RecupererTransporteursSansDelai()
 end
 
-integration.isFriendSurrendered = function( friend )
+integration.isAgentSurrendered = function( friend )
     return DEC_Agent_EstRendu( friend.source )
 end
 
-integration.isFriendOrFoeSurrendered = function( platoon )
+integration.isKnowledgeAgentSurrendered = function( platoon )
     return DEC_ConnaissanceAgent_EstRenduAMonCamp( meKnowledge.source, platoon.source )
 end
 
