@@ -324,11 +324,7 @@ bool MIL_PopulationFlow::CanObjectInteractWith( const MIL_Object_ABC& object ) c
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::NotifyMovingOnPathPoint( const MT_Vector2D& point )
 {
-    // Head position
-    assert( !flowShape_.empty() );
-    IT_PointList itTmp = flowShape_.end();
-    --itTmp;
-    flowShape_.insert( itTmp, point );
+    pointsToInsert_.push_back( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -393,6 +389,7 @@ bool MIL_PopulationFlow::ManageSplit()
 {
     if( !pTailPath_ )
         return false;
+    pointsToInsert_.clear();
     bool bSplit = false;
     IT_PointList itSplit = flowShape_.begin();
     for( IT_PointList it = flowShape_.begin(); it != flowShape_.end(); ++it )
@@ -436,6 +433,7 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 {
     if( pDestConcentration_ || !pSplittingObject_ || pFirstSplittingObject_ )
         return false;
+    pointsToInsert_.clear();
     MoveToAlternateDestination( GetHeadPosition() );
     pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
     pDestConcentration_->SetPullingFlowsDensity( *pSplittingObject_ );
@@ -888,6 +886,14 @@ void MIL_PopulationFlow::SetHeadPosition( const MT_Vector2D& position )
         return;
     bFlowShapeUpdated_ = true;
     flowShape_.back() = position;
+    
+    for( std::vector< MT_Vector2D >::const_iterator it = pointsToInsert_.begin(); it != pointsToInsert_.end(); ++it )
+    {
+        IT_PointList itTmp = flowShape_.end();
+        --itTmp;
+        flowShape_.insert( itTmp, *it );
+    }
+    pointsToInsert_.clear();
 }
 
 // -----------------------------------------------------------------------------

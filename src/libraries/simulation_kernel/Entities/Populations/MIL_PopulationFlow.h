@@ -152,6 +152,7 @@ private:
     MT_Vector2D direction_;
     double rSpeed_;
     T_PointList flowShape_; // begin() == head ...
+    std::vector< MT_Vector2D >pointsToInsert_;
     TER_Localisation location_; // For terrain
     bool bHeadMoveFinished_;
     // Network
