@@ -248,7 +248,7 @@ std::string ScenarioLauncherPage::BuildSessionName() const
 // -----------------------------------------------------------------------------
 void ScenarioLauncherPage::OnStart()
 {
-    if( !CanBeStarted() || ! dialogs::KillRunningProcesses( this ) )
+    if( !CanBeStarted() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
         return;
     const QString exerciseName = exercise_->GetName().c_str();
 

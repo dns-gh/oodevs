@@ -77,15 +77,11 @@ void CreateTerrainPage::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void CreateTerrainPage::OnStart()
 {
-    if( !dialogs::KillRunningProcesses( this ) )
-        return;
-
     boost::shared_ptr< frontend::SpawnCommand > command( new frontend::CreateTerrain( config_, editName_->text(), true ) );
     boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();
-
     Update();
 }
 

@@ -90,7 +90,7 @@ void ReplayPage::Update()
 // -----------------------------------------------------------------------------
 void ReplayPage::StartExercise()
 {
-    if( !exercise_ || session_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
+    if( !exercise_ || session_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( parentWidget()->parentWidget() ) )
         return;
     const QString exerciseName = exercise_->GetName().c_str();
     const unsigned int port = exercise_->GetPort();
