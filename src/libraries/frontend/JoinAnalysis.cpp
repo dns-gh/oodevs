@@ -17,7 +17,7 @@ using namespace frontend;
 // Name: JoinAnalysis constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& profile, unsigned port, bool attach )
+JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& profile, bool attach )
     : SpawnCommand( config, "gaming_app.exe", attach, "" )
 {
     AddRootDirArgument();
@@ -28,10 +28,6 @@ JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const QString& e
         AddArgument( "--login=\"anonymous\"" );
     else
         AddArgument( "--login=\"" + profile +"\"" );
-
-    const std::string host = "--host=localhost:"  // $$$$ AGE 2008-01-07:
-                           + boost::lexical_cast< std::string >( port );
-    AddArgument( host.c_str() );
 }
 
 // -----------------------------------------------------------------------------

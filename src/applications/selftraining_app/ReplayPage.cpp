@@ -96,7 +96,7 @@ void ReplayPage::StartExercise()
     const unsigned int port = exercise_->GetPort();
     ConfigureSession( exerciseName, session_ );
     boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exerciseName, session_, port, true ) );
-    boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exerciseName, session_, profile_.GetLogin(), port, true ) );
+    boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exerciseName, session_, profile_.GetLogin(), true ) );
     boost::shared_ptr< CompositeProcessWrapper >  process( new CompositeProcessWrapper( *progressPage_, replay, client ) );
     progressPage_->Attach( process );
     process->Start();
