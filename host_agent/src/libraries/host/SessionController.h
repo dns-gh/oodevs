@@ -54,7 +54,8 @@ public:
                                 const SessionFactory_ABC& sessions,
                                 const NodeController_ABC& nodes,
                                 const Path& root,
-                                const Path& apps,
+                                const Path& simulation,
+                                const Path& replayer,
                                 runtime::Pool_ABC& pool );
     virtual ~SessionController();
     //@}
@@ -110,7 +111,8 @@ private:
     const NodeController_ABC& nodes_;
     const Path root_;
     const Path trash_;
-    const Path apps_;
+    const Path simulation_;
+    const Path replayer_;
     Container< Session_ABC > sessions_;
     runtime::Timer timer_;
     runtime::Timer sizes_;

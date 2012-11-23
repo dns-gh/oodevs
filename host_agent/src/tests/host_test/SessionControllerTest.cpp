@@ -37,6 +37,7 @@ using runtime::Utf8;
 
 namespace
 {
+#if 0
     std::string GetApp( const Path& apps, bool replace = true )
     {
         std::string reply = Utf8( apps / "simulation_app.exe" );
@@ -44,18 +45,18 @@ namespace
             std::replace( reply.begin(), reply.end(), '\\', '/' );
         return reply;
     }
+#endif
 
     struct SubFixture
     {
-        SubFixture( const Path& root, const Path& apps )
+        SubFixture( const Path& root, const Path& simulation, const Path& replayer )
             : nodes( false )
             , idx  ( 0 )
         {
             MOCK_EXPECT( fs.MakePaths ).with( root / "sessions" / "_" );
             MOCK_EXPECT( fs.IsDirectory ).with( root ).returns( true );
-            MOCK_EXPECT( fs.IsDirectory ).with( apps ).returns( true );
-            MOCK_EXPECT( fs.Exists ).with( GetApp( apps ) ).returns( true );
-            MOCK_EXPECT( fs.IsFile ).with( GetApp( apps ) ).returns( true );
+            MOCK_EXPECT( fs.IsFile ).with( simulation ).returns( true );
+            MOCK_EXPECT( fs.IsFile ).with( replayer ).returns( true );
             MOCK_EXPECT( fs.MakeAnyPath ).calls( boost::bind( &SubFixture::MakePath, this, _1 ) );
             MOCK_EXPECT( fs.Remove ).returns( true );
         };
@@ -108,15 +109,17 @@ namespace
     struct Fixture
     {
         Fixture()
-            : root   ( "e:/root" )
-            , apps   ( "e:/apps" )
-            , sub    ( root, apps )
-            , control( sub.log, sub.runtime, sub.fs, sub.factory, sub.nodes, root, apps, sub.pool )
+            : root      ( "e:/root" )
+            , simulation( "e:/apps/sim.exe" )
+            , replayer  ( "e:/apps/sim.exe" )
+            , sub       ( root, simulation, replayer )
+            , control   ( sub.log, sub.runtime, sub.fs, sub.factory, sub.nodes, root, simulation, replayer, sub.pool )
         {
             // NOTHING
         }
         const Path root;
-        const Path apps;
+        const Path simulation;
+        const Path replayer;
         SubFixture sub;
         SessionController control;
         boost::shared_ptr< MockSession > active;

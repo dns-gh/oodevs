@@ -35,24 +35,25 @@ SessionController::SessionController( cpplog::BaseLogger& log,
                                       const SessionFactory_ABC& sessions,
                                       const NodeController_ABC& nodes,
                                       const Path& root,
-                                      const Path& apps,
+                                      const Path& simulation,
+                                      const Path& replayer,
                                       Pool_ABC& pool )
-    : log_     ( log )
-    , runtime_ ( runtime )
-    , fs_      ( fs )
-    , factory_ ( sessions )
-    , nodes_   ( nodes )
-    , root_    ( root / "sessions" )
-    , trash_   ( root_ / "_" )
-    , apps_    ( apps )
-    , async_   ( pool )
+    : log_       ( log )
+    , runtime_   ( runtime )
+    , fs_        ( fs )
+    , factory_   ( sessions )
+    , nodes_     ( nodes )
+    , root_      ( root / "sessions" )
+    , trash_     ( root_ / "_" )
+    , simulation_( simulation )
+    , replayer_  ( replayer )
+    , async_     ( pool )
 {
     fs_.MakePaths( trash_ );
-    if( !fs_.IsDirectory( apps_ ) )
-        throw std::runtime_error( "'" + runtime::Utf8( apps_ ) + "' is not a directory" );
-    const Path app = apps_ / "simulation_app.exe";
-    if( !fs_.IsFile( app ) )
-        throw std::runtime_error( "'" + Utf8( app ) + "' is not a file" );
+    if( !fs_.IsFile( simulation_ ) )
+        throw std::runtime_error( "'" + runtime::Utf8( simulation_ ) + "' is not a file" );
+    if( !fs_.IsFile( replayer_ ) )
+        throw std::runtime_error( "'" + runtime::Utf8( replayer_ ) + "' is not a file" );
     timer_ = MakeTimer( pool, boost::posix_time::seconds( 5 ), boost::bind( &SessionController::Refresh, this ) );
     sizes_ = MakeTimer( pool, boost::posix_time::minutes( 1 ), boost::bind( &SessionController::RefreshSize, this ) );
 }
@@ -301,7 +302,8 @@ SessionController::T_Session SessionController::Dispatch( const Uuid& node, cons
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Start( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const
 {
-    return Dispatch( node, id, boost::bind( &Session_ABC::Start, _1, boost::cref( apps_ ), boost::cref( checkpoint ) ) );
+    return Dispatch( node, id, boost::bind( &Session_ABC::Start, _1,
+                     boost::cref( simulation_ ), boost::cref( checkpoint ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -387,7 +389,7 @@ SessionController::T_Session SessionController::Replay( const Uuid& node, const 
         return next;
     sessions_.Attach( next );
     Create( *next );
-    Apply( next, boost::bind( &Session_ABC::Start, _1, boost::cref( apps_ ), std::string() ) );
+    Apply( next, boost::bind( &Session_ABC::Start, _1, boost::cref( replayer_ ), std::string() ) );
     return next;
 }
 

@@ -607,7 +607,7 @@ std::string MakeOption( const std::string& option, const T& value )
 // Name: Session::Start
 // Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-bool Session::Start( const Path& apps, const std::string& checkpoint )
+bool Session::Start( const Path& app, const std::string& checkpoint )
 {
     boost::upgrade_lock< boost::shared_mutex > lock( access_ );
 
@@ -643,19 +643,17 @@ bool Session::Start( const Path& apps, const std::string& checkpoint )
         ( MakeOption( "exercise", Utf8( GetExercise() ) ) )
         ( MakeOption( "session",  output.filename() ) );
     std::string file = "session.xml";
-    Path app = "simulation_app.exe";
     if( replay )
     {
         file = boost::lexical_cast< std::string >( id_ );
         options.push_back( MakeOption( "session-file", file ) );
         options.push_back( "--no-log" );
-        app = "replayer_app.exe";
     }
     deps_.fs.WriteFile( output / file, GetConfiguration( cfg_, port_->Get() ) );
     if( !checkpoint.empty() )
         options.push_back( MakeOption( "checkpoint", checkpoint ) );
-    T_Process ptr = deps_.runtime.Start( Utf8( apps / app ),
-        options, Utf8( apps ), Utf8( GetRoot() / "session.log" ) );
+    T_Process ptr = deps_.runtime.Start( Utf8( app ),
+        options, Utf8( Path( app ).remove_filename() ), Utf8( GetRoot() / "session.log" ) );
     if( !ptr )
         return false;
 

@@ -155,7 +155,7 @@ public:
     virtual Path  GetPath( const std::string& type ) const;
     virtual Path  GetOutput() const;
     virtual Tree  Save() const;
-    virtual bool  Start( const Path& apps, const std::string& checkpoint );
+    virtual bool  Start( const Path& app, const std::string& checkpoint );
     virtual bool  Stop();
     virtual bool  Refresh();
     virtual bool  RefreshSize();
