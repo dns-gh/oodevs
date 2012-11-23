@@ -675,7 +675,8 @@ void MainWindow::SaveAs()
 // -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
-    if( CheckSaving() == QMessageBox::Cancel )
+    QMessageBox::StandardButton result = CheckSaving();
+    if( result == QMessageBox::Cancel || result == QMessageBox::Yes )
     {
         pEvent->ignore();
         return;
@@ -687,7 +688,6 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
     settings.setValue( "mainWindowGeometry", saveGeometry() );
 
     WriteOptions();
-
     QMainWindow::closeEvent( pEvent );
 }
 
@@ -814,7 +814,7 @@ void MainWindow::SetNeedsSaving( bool status )
 // -----------------------------------------------------------------------------
 QMessageBox::StandardButton MainWindow::CheckSaving( bool checkConsistency /* = false */ )
 {
-    QMessageBox::StandardButton result = QMessageBox::Yes;
+    QMessageBox::StandardButton result = QMessageBox::NoButton;
     if( needsSaving_ )
     {
         assert( controllers_.modes_ != 0 );

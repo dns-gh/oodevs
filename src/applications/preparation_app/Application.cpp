@@ -127,10 +127,6 @@ bool Application::Initialize( int argc, char** argv )
         return false;
 
     mainWindow_->show();
-
-    // Make sure the application exits when the main window is closed.
-    connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) );
-
     observer_->DisplayErrors();
 
     return true;
