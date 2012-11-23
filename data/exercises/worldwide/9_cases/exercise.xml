@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
   <meta>
+    <name><![CDATA[9 cases demo]]></name>
     <briefing>
       <text lang="en"><![CDATA[
             <h1>Sword's demo in 9 use cases</h1>
