@@ -289,11 +289,7 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
                         const bool skipCurrent = mainLoop && dir == currentFolderName;
                         doAdd = !skipCurrent && fragmentsInfos_.find( dir ) == fragmentsInfos_.end();
                         if( mainLoop && doAdd  )
-                        {
-                            T_FragmentsInfos::iterator itToDelete = fragmentsInfos_.find( currentFolderName );
-                            if( itToDelete != fragmentsInfos_.end() )
-                                fragmentsInfos_.erase( itToDelete );
-                        }
+                            fragmentsInfos_.erase( currentFolderName );
                     }
                     if( doAdd || forceAdd )
                         AddFolder( dir );
