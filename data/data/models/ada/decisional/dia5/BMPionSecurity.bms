@@ -22,5 +22,6 @@ integration.ontology = {
         genObject = sword.military.world.EngineerObject,
         limaStatique = sword.military.world.LimaStatique,
         fragOrder = sword.military.world.FragOrder,
+        fuseau = sword.military.world.Fuseau
         }
 }

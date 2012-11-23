@@ -23,7 +23,8 @@ integration.ontology = {
         fragOrder = sword.military.world.FragOrder,
         resourceNetwork = sword.military.world.ResourceNetwork,
         humanWound = sword.military.world.HumanWound,
-        equipmentType = sword.military.world.EquipmentType
+        equipmentType = sword.military.world.EquipmentType,
+        fuseau = sword.military.world.Fuseau
         }
 }
 
