@@ -20,6 +20,7 @@
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
 #include "preparation/StaticModel.h"
+#include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ScoreVariablesList constructor
@@ -105,7 +106,7 @@ indicators::Variables ScoreVariablesList::GetValue() const
         const QString name  = item->text( 0 ).remove( 0, 1 );
         const QString type  = item->text( 1 );
         const QString value = item->text( 2 );
-        boost::shared_ptr< indicators::Element_ABC > variable( new indicators::Variable( name.toStdString(), types.Instanciate( type.toStdString() ), value.toStdString() ) );
+        boost::shared_ptr< indicators::Element_ABC > variable = boost::make_shared< indicators::Variable >( name.toStdString(), types.Instanciate( type.toStdString() ), value.toStdString() );
         result.Register( name.toStdString(), variable );
     }
     return result;

@@ -13,6 +13,7 @@
 #include "clients_kernel/Tools.h"
 #include "meteo/MeteoLocal.h"
 #include "preparation/WeatherModel.h"
+#include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: WeatherListView constructor
@@ -74,7 +75,7 @@ void WeatherListView::Update( const WeatherModel& model )
     tools::Iterator< const weather::MeteoLocal& > it( model.Resolver< weather::MeteoLocal >::CreateIterator() );
     while( it.HasMoreElements() )
     {
-        boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( it.NextElement() ) );
+        boost::shared_ptr< weather::MeteoLocal > weather = boost::make_shared< weather::MeteoLocal >( it.NextElement() );
         weather->SetCreated( true );
         weathers_.push_back( weather );
         Create( weather->GetName(), *model_ );
@@ -87,7 +88,7 @@ void WeatherListView::Update( const WeatherModel& model )
 // -----------------------------------------------------------------------------
 void WeatherListView::CreateItem()
 {
-    boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).toStdString() ) );
+    boost::shared_ptr< weather::MeteoLocal > weather = boost::make_shared< weather::MeteoLocal >( converter_, tr( "Local weather " ).toStdString() );
     weather->SetCreated( true );
     weather->SetPeriod( tools::QTimeToBoostTime( exerciceTime_ ), tools::QTimeToBoostTime( exerciceTime_.addDays( 1 ) ) );
     Create( weather->GetName(), *model_ );

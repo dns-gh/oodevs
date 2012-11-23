@@ -33,6 +33,7 @@
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 #include <QtGui/qmessagebox.h>
 #include <QtGui/qprogressdialog.h>
 #include <xeumeuleu/xml.hpp>
@@ -543,7 +544,7 @@ namespace
 // -----------------------------------------------------------------------------
 void UrbanModel::ExportShapeFile( const std::string& exportDirectory, const tools::ExerciseConfig& config, QProgressDialog& progressDialog ) const
 {
-    boost::shared_ptr< Translator > trans( new Translator( *new PlanarCartesianProjector( config.GetTerrainLatitude(), config.GetTerrainLongitude() ), geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) ) );
+    boost::shared_ptr< Translator > trans = boost::make_shared< Translator >( *new PlanarCartesianProjector( config.GetTerrainLatitude(), config.GetTerrainLongitude() ), geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) );
 
     SetProgression( progressDialog, 0, tools::translate( "UrbanModel", "Exporting terrain data..." ) );
     std::auto_ptr< TerrainExportManager > pTerrainExportManager( new TerrainExportManager( config.GetTerrainDir( config.GetTerrainName() ), exportDirectory, *trans ) );

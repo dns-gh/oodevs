@@ -23,6 +23,7 @@
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <QtGui/qmessagebox.h>
 #include "ENT/ENT_Tr.h"
@@ -196,7 +197,7 @@ void ScoresModel::ReadForeach( xml::xistream& xis )
         std::string name;
         xis >> xml::start( "score" )
             >> xml::attribute( "name", name );
-        boost::shared_ptr< xml::xibufferstream > pXis( new xml::xibufferstream( xis ) );
+        boost::shared_ptr< xml::xibufferstream > pXis = boost::make_shared< xml::xibufferstream >( xis );
         xis >> xml::end;
         xml::xostringstream xos;
         xos << xml::start( "score" )

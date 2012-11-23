@@ -38,6 +38,7 @@
 #include "preparation/UrbanModel.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -225,14 +226,14 @@ namespace
         factory->Register( "medical"                   , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "stock"                     , boost::bind( &::StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
 
-        boost::shared_ptr< NBCBuilder > pNBCBuilder( new NBCBuilder() );
+        boost::shared_ptr< NBCBuilder > pNBCBuilder = boost::make_shared< NBCBuilder >();
         factory->Register( "intoxication"              , boost::bind( &NBCBuilder::Add, pNBCBuilder, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "contamination"             , boost::bind( &NBCBuilder::Add, pNBCBuilder, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->RegisterFinalizeCreate( boost::bind( &NBCBuilder::Finalize, pNBCBuilder ) );
 
         factory->Register( "resources"                 , boost::bind( &::ResourceNetworkAttribute, _2, _3, boost::ref( controllers ), boost::cref( urbanModel ), boost::cref( objectsModel ), boost::cref( resolver ), boost::ref( object ) ) );
 
-        boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
+        boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders = boost::make_shared< FinalizableBuilders >();
         factory->Register( "burn"                      , boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "propagation"               , boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1, _2, _3, boost::ref( config ), boost::ref( object ) ) );
 

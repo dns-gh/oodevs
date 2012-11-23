@@ -19,6 +19,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "preparation/InitialState.h"
+#include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: UnitStateDialog constructor
@@ -29,9 +30,9 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
 {
     setCaption( tools::translate( "UnitStateDialog", "Initial state" ) );
     assert( tabWidget_ );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableCrew >     ( new UnitStateTableCrew(      tabWidget_ ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableEquipment >( new UnitStateTableEquipment( tabWidget_ ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableResource > ( new UnitStateTableResource(  tabWidget_, staticModel ) ) );
+    tabs_.push_back( boost::make_shared< UnitStateTableCrew >( tabWidget_ ) );
+    tabs_.push_back( boost::make_shared< UnitStateTableEquipment >( tabWidget_ ) );
+    tabs_.push_back( boost::make_shared< UnitStateTableResource > ( tabWidget_, staticModel ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tools::translate( "UnitStateDialog", "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tools::translate( "UnitStateDialog", "Equipments" ) );
     tabWidget_->addTab( tabs_[ eResources ].get(), tools::translate( "UnitStateDialog", "Resources" ) );
