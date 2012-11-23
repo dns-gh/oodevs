@@ -115,7 +115,7 @@ bool AgentsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) con
 {
     return ( gui::ValuedDragObject::Provides< const AgentPositions >   ( event ) && selectedAgent_ )
         || ( gui::ValuedDragObject::Provides< const AgentType >        ( event ) && selectedAutomat_ )
-        || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && ( selectedFormation_ || selectedAutomat_ ) )
+        || ( gui::ValuedDragObject::Provides< const AutomatType >      ( event ) && selectedFormation_ )
         || ( gui::ValuedDragObject::Provides< const HierarchyTemplate >( event ) && IsValidTemplate( event ) )
         || ( gui::ValuedDragObject::Provides< const Entity_ABC >       ( event ) && ( selectedAutomat_ || selectedAgent_ || selectedFormation_ ) );
 }

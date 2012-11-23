@@ -111,8 +111,7 @@ bool AutomatsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2
 // -----------------------------------------------------------------------------
 bool AutomatsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
-    return selected_ && ( gui::ValuedDragObject::Provides< const AgentType >( event )
-        || gui::ValuedDragObject::Provides< const AutomatType >( event ) );
+    return selected_ && ( gui::ValuedDragObject::Provides< const AgentType >( event ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,11 +123,6 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
     if( !selected_ )
         return false;
     if( const AgentType* droppedItem = gui::ValuedDragObject::GetValue< const AgentType >( event ) )
-    {
-        RequestCreation( point, *droppedItem );
-        return true;
-    }
-    if( const AutomatType* droppedItem = gui::ValuedDragObject::GetValue< const AutomatType >( event ) )
     {
         RequestCreation( point, *droppedItem );
         return true;

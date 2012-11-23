@@ -3035,10 +3035,6 @@ This data can&apos;t be projected.</source>
         <translation>Cambiar el superior de la unidad</translation>
     </message>
     <message>
-        <source>Change Automat Superior</source>
-        <translation>Cambiar Superior de autómata</translation>
-    </message>
-    <message>
         <source>Change Formation Superior</source>
         <translation>Cambiar Superior de formación</translation>
     </message>

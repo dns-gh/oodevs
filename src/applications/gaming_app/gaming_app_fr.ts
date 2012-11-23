@@ -3038,10 +3038,6 @@ Ces données ne peuvent pas être projetées.</translation>
         <translation>Changer le supérieur de l&apos;unité</translation>
     </message>
     <message>
-        <source>Change Automat Superior</source>
-        <translation>Changer le supérieur de l&apos;automate</translation>
-    </message>
-    <message>
         <source>Change Formation Superior</source>
         <translation>Changer le supérieur de la formation</translation>
     </message>

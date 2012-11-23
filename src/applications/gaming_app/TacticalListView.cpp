@@ -187,7 +187,7 @@ bool TacticalListView::CanChangeSuperior( const Entity_ABC& entity, const Entity
     if( dynamic_cast< const Agent_ABC* >( &entity ) )
         return dynamic_cast< const Automat_ABC* >( &superior ) != 0;
     if( dynamic_cast< const Automat_ABC* >( &entity ) )
-        return dynamic_cast< const Automat_ABC* >( &superior ) != 0 || dynamic_cast< const Formation_ABC* >( &superior ) != 0;
+        return dynamic_cast< const Formation_ABC* >( &superior ) != 0;
     return false;
 }
 
@@ -211,9 +211,7 @@ bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
             return Drop( *agent, *automat );
 
     if( const Automat_ABC* automatSource = dynamic_cast< const Automat_ABC* >( &item ) )
-        if( const Automat_ABC* automatTarget = dynamic_cast< const Automat_ABC* >( &target ) )
-            return Drop( *automatSource, *automatTarget );
-        else if( const Formation_ABC* formationTarget = dynamic_cast< const Formation_ABC* >( &target ) )
+        if( const Formation_ABC* formationTarget = dynamic_cast< const Formation_ABC* >( &target ) )
             return Drop( *automatSource, *formationTarget );
 
     return false;
@@ -230,25 +228,6 @@ bool TacticalListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, tr( "Unit Change Superior" ), true );
-    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
-    action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( &item, false ) );
-    action->RegisterAndPublish( actionsModel_ );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalListView::Drop
-// Created: NLD 2007-04-12
-// -----------------------------------------------------------------------------
-bool TacticalListView::Drop( const Automat_ABC& item, const Automat_ABC& target )
-{
-    if( & item.Get< TacticalHierarchies >().GetUp() == &target || &item == &target )
-        return false;
-
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_automat_superior" );
-    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Automat Superior" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
