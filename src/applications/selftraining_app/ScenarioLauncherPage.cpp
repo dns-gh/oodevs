@@ -122,10 +122,10 @@ namespace
         }
         return result;
     }
-    bool ReadLegacy()
+    bool ReadRegistry( const std::string& key )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readBoolEntry( "/sword/IsLegacy", false );
+        return settings.readBoolEntry( ( "/sword/" + key ).c_str(), false );
     }
 }
 
@@ -141,8 +141,8 @@ ScenarioLauncherPage::ScenarioLauncherPage( Application& app, Q3WidgetStack* pag
     , interpreter_ ( interpreter )
     , progressPage_( new ProgressPage( app, pages, *this ) )
     , exercise_    ( 0 )
-    , noClient_    ( false )
-    , isLegacy_    ( ReadLegacy() )
+    , noClient_    ( ReadRegistry( "NoClientSelected" ) )
+    , isLegacy_    ( ReadRegistry( "IsLegacy" ) )
 {
     setName( "ScenarioLauncherPage" );
     Q3VBox* box = new Q3VBox( this );

@@ -23,15 +23,15 @@ using namespace frontend;
 
 namespace
 {
-    bool ReadLegacy()
+    bool ReadRegistry( const std::string& key )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        return settings.readBoolEntry( "/sword/IsLegacy", false );
+        return settings.readBoolEntry( ( "/sword/" + key ).c_str(), false );
     }
-    void WriteLegacy( bool isLegacy )
+    void WriteRegistry( const std::string& key, bool value )
     {
         QSettings settings( "MASA Group", "SWORD" );
-        settings.writeEntry( "/sword/IsLegacy", isLegacy );
+        settings.writeEntry( ( "/sword/" + key ).c_str(), value );
     }
 }
 
@@ -88,14 +88,14 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     {
         noClientLabel_ = new QLabel( clientBox_ );
         noClientCheckBox_ = new QCheckBox( clientBox_ );
-        noClientCheckBox_->setChecked( false );
+        noClientCheckBox_->setChecked( ReadRegistry( "NoClientSelected" ) );
         connect( noClientCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( NoClientChecked( int ) ) );
     }
     legacyBox_ = new Q3GroupBox( 2, Qt::Horizontal, box );
     {
         legacyLabel_ = new QLabel( legacyBox_ );
         legacyCheckBox_ = new QCheckBox( legacyBox_ );
-        legacyCheckBox_->setChecked( ReadLegacy() );
+        legacyCheckBox_->setChecked( ReadRegistry( "IsLegacy" ) );
         connect( legacyCheckBox_, SIGNAL( stateChanged ( int ) ), SLOT( SwordVersionChecked( int ) ) );
     }
 }
@@ -165,7 +165,9 @@ void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string
 // -----------------------------------------------------------------------------
 void AdvancedConfigPanel::NoClientChecked( int state )
 {
-    emit NoClientSelected( state == Qt::Checked );
+    const bool noClientSelected = state == Qt::Checked;
+    WriteRegistry( "NoClientSelected", noClientSelected );
+    emit NoClientSelected( noClientSelected );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,6 +177,6 @@ void AdvancedConfigPanel::NoClientChecked( int state )
 void AdvancedConfigPanel::SwordVersionChecked( int state )
 {
     const bool isLegacy = state == Qt::Checked;
-    WriteLegacy( isLegacy );
+    WriteRegistry( "IsLegacy", isLegacy );
     emit SwordVersionSelected( isLegacy );
 }
