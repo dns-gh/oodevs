@@ -187,13 +187,16 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
 // Created: NLD 2006-01-31
 // -----------------------------------------------------------------------------
 inline
-double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
+double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
     assert( path_.GetPathClass().AvoidEnemies() || path_.GetPathKnowledgeAgents().empty() );
     double rEnemyCost = 0.;
+    const MT_Line lineLink( from, to );
+    MT_Rect boundingBox( std::min( from.rX_, to.rX_ ) - 2000, std::min( from.rY_, to.rY_ ) - 2000,
+                         std::max( from.rX_, to.rX_ ) + 2000, std::max( from.rY_, to.rY_ ) + 2000 );
     for( DEC_Agent_Path::CIT_PathKnowledgeAgentVector it = path_.GetPathKnowledgeAgents().begin(); it != path_.GetPathKnowledgeAgents().end(); ++it )
     {
-        double rCurrentEnemyCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+        double rCurrentEnemyCost = it->ComputeCost( lineLink, boundingBox );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
             return rCurrentEnemyCost;
         rEnemyCost += rCurrentEnemyCost;
@@ -328,7 +331,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     rDynamicCost += rObjectsCost;
 
     // enemies
-    const double rEnemiesCost = GetEnemiesCost( from, to, nToTerrainType, nLinkTerrainType );
+    const double rEnemiesCost = GetEnemiesCost( from, to );
     if( rEnemiesCost < 0 )
         return IMPOSSIBLE_WAY( "Enemies" );
     rDynamicCost += rEnemiesCost;

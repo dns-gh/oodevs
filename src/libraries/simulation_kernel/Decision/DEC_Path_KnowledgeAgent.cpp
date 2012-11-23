@@ -12,7 +12,15 @@
 #include "DEC_Agent_PathClass.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "MT_Tools/MT_Line.h"
-#include "DEC_PerceptionFunctions.h"
+
+namespace
+{
+    double Square( double x )
+    {
+        return x * x;
+    }
+    const double pi = std::acos( -1. );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent constructor
@@ -46,27 +54,24 @@ DEC_Path_KnowledgeAgent::~DEC_Path_KnowledgeAgent()
     // NOTHING
 }
 
+namespace
+{
+    const double epsilon = 1 / pi; // in metres / pi
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeAgent::ComputeCost
 // Created: AGE 2005-02-01
 // Modified: CMA 2011-04-27
 // -----------------------------------------------------------------------------
-double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData& ) const
+double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Line& lineLink, const MT_Rect& boundingBox ) const
 {
-    static const double pi = std::acos( -1. );
-    static const double epsilon = 1; // in metres
-
-    const MT_Line lineLink( from, to );
-    MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
+    if( !boundingBox.IsInside( vEnemyPosition_ ) )
+        return 0;
+    const MT_Vector2D vPositionProjection = lineLink.ClosestPointOnLine( vEnemyPosition_ );
     const double rSqDistBtwUnitAndEnemy = vPositionProjection.SquareDistance( vEnemyPosition_ );
-
-    if( ( rFactor_ > 0. ) &&
-        ( rSqDistBtwUnitAndEnemy < rSquareSecurityDistance_ )/* &&
-        DEC_PerceptionFunctions::IsPointVisible( *pKnowledgeAgent_, &vPositionProjection )*/ ) // TODO: code commented since it sometimes provokes a crash in the simulation. One needs to copy the perception surface in the class in order to fix the problem
-    {
+    if( rFactor_ > 0 && rSqDistBtwUnitAndEnemy < rSquareSecurityDistance_ )
         // Inverse-square law
-        double intensity = rSquareSecurityDistance_ * rFactor_ / ( pi * rSqDistBtwUnitAndEnemy + epsilon );
-        return rOffset_ * intensity;
-    }
-    return 0.;
+        return rFactor_ / ( rSqDistBtwUnitAndEnemy + epsilon );
+    return 0;
 }

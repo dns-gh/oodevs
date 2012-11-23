@@ -11,6 +11,8 @@
 #define __DEC_Path_KnowledgeAgent_h_
 
 #include "MT_Tools/MT_Vector2D.h"
+#include "MT_Tools/MT_Line.h"
+#include "MT_Tools/MT_Rect.h"
 
 class DEC_Knowledge_Agent;
 class DEC_Agent_PathClass;
@@ -31,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    double ComputeCost( const MT_Line& lineLink, const MT_Rect& boundingBox ) const;
     //@}
 
 private:

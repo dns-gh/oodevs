@@ -88,6 +88,17 @@ double DEC_Path_KnowledgePopulation::ComputeCost( const MT_Vector2D& /*from*/, c
     }
 }
 
+namespace
+{
+    bool OutOfBoundingBox( const MT_Rect& box, const MT_Vector2D& p, double epsilon )
+    {
+        return box.GetRight() < p.GetX() - epsilon
+            || box.GetLeft() > p.GetX() + epsilon
+            || box.GetTop() < p.GetY() - epsilon
+            || box.GetBottom() > p.GetY() + epsilon;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgePopulation::ComputeClosestElementInRange
 // Created: SBO 2006-02-24
@@ -98,6 +109,8 @@ double DEC_Path_KnowledgePopulation::ComputeClosestElementInRange( const MT_Vect
     double rMinDistance = std::numeric_limits< double >::max();
     for( CIT_PopulationElements it = elements_.begin(); it != elements_.end(); ++it )
     {
+        if( OutOfBoundingBox( it->location_.GetBoundingBox(), position, rMaxRange ) )
+            continue;
         MT_Vector2D nearestPoint;
         if( !it->location_.ComputeNearestPoint( position, nearestPoint ) )
             continue;
