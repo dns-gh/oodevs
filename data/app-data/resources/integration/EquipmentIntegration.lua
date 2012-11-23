@@ -802,3 +802,17 @@ integration.deactivateSpecialSensors = function ( area, eType )
         meKnowledge:RC( eRC_FinSurveillance )
     end
 end
+
+-- -------------------------------------------------------------------------------- 
+-- activate special sensors on toxic CBRN plume
+-- --------------------------------------------------------------------------------  
+integration.activateSpecialSensorForCBRN = function ()
+    -- $$$ GGE TODO wait lgy DEC function
+end
+
+-- -------------------------------------------------------------------------------- 
+-- deactivate special sensors on toxic CBRN plume
+-- -------------------------------------------------------------------------------- 
+integration.deactivateSpecialSensorForCBRN = function ()
+    -- $$$ GGE TODO wait lgy DEC function
+end
