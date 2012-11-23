@@ -100,13 +100,6 @@ void SessionList::ReadComments( const QString& session )
         std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( (bfs::path( config_.BuildSessionDir( exercise_.toAscii().constData(), session.toAscii().constData() ) ) / "session.xml" ).native_file_string() );
         *xis >> xml::start( "session" )
                 >> xml::start( "meta" );
-        if( xis->has_child( "name" ) )
-        {
-            *xis >> xml::start( "name" );
-            if( xis->has_content() )
-                *xis >> name;
-            *xis >> xml::end;
-        }
         if( xis->has_child( "comment" ) )
         {
             *xis >> xml::start( "comment" );

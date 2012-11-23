@@ -50,7 +50,6 @@ void Exercise::Load( xml::xistream& xis )
     std::string name;
     xis >> xml::start( "exercise" )
             >> xml::optional >> xml::start( "meta" )
-                >> xml::optional >> xml::content( "name", name )
                 >> xml::optional >> xml::start( "briefing" )
                     >> xml::list( "text", *this, &Exercise::ReadBriefing )
                 >> xml::end // end briefing
@@ -131,8 +130,6 @@ void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tool
     xos << xml::start( "exercise" );
     schemaWriter.WriteExerciseSchema( xos, "exercise" );
     xos << xml::start( "meta" );
-    if( ! name_.isEmpty() )
-        xos << xml::start( "name" ) << xml::cdata( name_.toAscii().constData() ) << xml::end;
     SerializeBriefings( xos );
     SerializeResources( xos );
     xos     << xml::end;

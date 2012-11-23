@@ -686,14 +686,11 @@ namespace
     {
         if( !bfs::exists( filename ) )
             return "";
-
-        std::string name;
         xml::xifstream xis( filename );
         xis >> xml::start( "exercise" )
                 >> xml::optional >> xml::start( "meta" );
-        if( xis.has_child( "name" ) )
-            xis >> xml::content( "name", name );
-        return ( !name.empty() ) ? name.c_str() : bfs::path( filename, bfs::native ).parent_path().leaf().c_str();
+
+        return bfs::path( filename, bfs::native ).parent_path().leaf().c_str();
     }
 }
 
