@@ -161,8 +161,7 @@ QString ExerciseListView::GetExerciseDisplayName( const QString& exercise ) cons
         {
             std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
             *xis >> xml::start( "exercise" )
-                >> xml::optional >> xml::start( "meta" )
-                >> xml::optional >> xml::content( "name", displayName );
+                >> xml::optional >> xml::start( "meta" );
         }
     }
     catch( ... )
