@@ -118,6 +118,7 @@ kernel::Team_ABC* TeamFactory::CreateNoSideTeam()
     kernel::Team_ABC* result = new kernel::EntityImplementation< kernel::Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ) );
     result->Attach< kernel::Diplomacies_ABC >( *new NoSideDiplomacy() );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
+    result->Update( kernel::InstanciationComplete() );
     // TODO other extensions needed?
     return result;
 }
