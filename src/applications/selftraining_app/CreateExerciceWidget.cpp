@@ -103,9 +103,8 @@ void CreateExerciceWidget::Update()
         std::string exercise( item->text().toAscii().constData() );
         contentList_->clear();
         contentList_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, contentList_ ) );
-    }
-    else
         UpdateExercises();
+    }
 }
 
 // -----------------------------------------------------------------------------
