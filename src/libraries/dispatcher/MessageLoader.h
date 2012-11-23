@@ -12,15 +12,25 @@
 
 #include "Frames.h"
 #include "MessageLoader_ABC.h"
-#include <tools/thread/ThreadPool.h>
 #include <boost/shared_ptr.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/thread/mutex.hpp>
 #include <vector>
 #include <fstream>
+
+namespace boost
+{
+    class thread;
+}
 
 namespace sword
 {
     class TimeTable;
+}
+
+namespace tools
+{
+    class ThreadPool;
 }
 
 namespace dispatcher
@@ -98,8 +108,8 @@ private:
     std::auto_ptr< WaitEvent > init_;
     std::auto_ptr< WaitEvent > quit_;
     std::auto_ptr< boost::thread > folderObserver_;
-    std::auto_ptr< tools::thread::ThreadPool > disk_;
-    std::auto_ptr< tools::thread::ThreadPool > cpu_;
+    std::auto_ptr< tools::ThreadPool > disk_;
+    std::auto_ptr< tools::ThreadPool > cpu_;
     T_FragmentsInfos fragmentsInfos_;
     std::string currentOpenFolder_;
     std::ifstream updates_;

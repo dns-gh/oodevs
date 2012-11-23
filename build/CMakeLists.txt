@@ -314,7 +314,10 @@ target_link_libraries( dispatcher_dll
 
 # dispatcher_test
 add_target( dispatcher_test tests "tests/dispatcher_test" OPTIONS protocol test )
-target_link_libraries( dispatcher_test dispatcher )
+target_link_libraries( dispatcher_test
+    dispatcher
+    sword_tools
+)
 
 # dis_plugin_dll
 add_target( dis_plugin_dll plugins "libraries/dis_plugin_dll" OPTIONS plugin shared )

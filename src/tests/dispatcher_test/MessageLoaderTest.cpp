@@ -36,11 +36,11 @@ namespace
     };
 
     void LoadAllFrames( MessageLoader& loader,      int num_valid,
-                        MockMessageHandler& msg,    int /*num_msg*/,
-                        MockMessageHandler& keymsg, int /*num_keymsg*/ )
+                        MockMessageHandler& msg,    int num_msg,
+                        MockMessageHandler& keymsg, int num_keymsg )
     {
-        MOCK_EXPECT( msg.OnReceiveMessageSimToClient )/*.exactly( num_msg )*/;
-        MOCK_EXPECT( keymsg.OnReceiveMessageSimToClient )/*.exactly( num_keymsg )*/;
+        MOCK_EXPECT( msg.OnReceiveMessageSimToClient ).exactly( num_msg );
+        MOCK_EXPECT( keymsg.OnReceiveMessageSimToClient ).exactly( num_keymsg );
         for( unsigned i = loader.GetFirstTick(); i <= loader.GetTickNumber(); ++i )
         {
             bool valid = loader.LoadFrame( i, msg );
@@ -76,15 +76,15 @@ namespace
 
     const TestCase thread_tests[] =
     {
-        { "invalid_path",       ~0u,  0, 0,   0,   0 },
-        { "just_5",               1,  5, 5, 130,   0 },
-        { "just_5_offset",       91, 95, 5,  55,   0 },
-        { "single_current",       1,  5, 5, 130,   0 },
-        { "truncated_info",       1,  5, 5, 130,   0 },
-        { "truncated_index",      1,  5, 5, 130,   0 },
-        { "truncated_update",     1,  5, 5,   0,   0 },
-        { "truncated_key",        1,  5, 5, 130,   0 },
-        { "truncated_keyindex",   1,  5, 5, 130,   0 },
+        { "invalid_path",       ~0u,  0, 0,   0,    0 },
+        { "just_5",               1,  5, 5, 256, 1844 },
+        { "just_5_offset",       91, 95, 5, 170, 3092 },
+        { "single_current",       1,  5, 5, 256, 1844 },
+        { "truncated_info",       1,  5, 5, 256, 1844 },
+        { "truncated_index",      1,  5, 5, 130, 1844 },
+        { "truncated_update",     1,  5, 5,   0, 1844 },
+        { "truncated_key",        1,  5, 5, 256,    0 },
+        { "truncated_keyindex",   1,  5, 5, 256,    0 },
     };
 
     #define COUNT_OF( X ) (sizeof(X)/sizeof*(X))
@@ -101,7 +101,7 @@ namespace
             LoadAllFrames( loader, test.valid_frames,
                            msg,    test.num_msg,
                            keymsg, test.num_keymsg );
-        }        
+        }
     }
 }
 

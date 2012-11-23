@@ -17,6 +17,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
 #include "protocol/ReplaySenders.h"
+#include "tools/ThreadPool.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/thread/thread.hpp>
@@ -51,8 +52,8 @@ MessageLoader::MessageLoader( const bfs::path& records, bool threaded,
 {
     if( threaded )
     {
-        disk_.reset( new tools::thread::ThreadPool( 1 ) );
-        cpu_.reset ( new tools::thread::ThreadPool( 1 ) );
+        disk_.reset( new tools::ThreadPool( 1 ) );
+        cpu_.reset ( new tools::ThreadPool( 1 ) );
     }
     folderObserver_.reset( new boost::thread( boost::bind( &MessageLoader::ScanData, this ) ) );
     init_->Wait();
@@ -66,8 +67,10 @@ MessageLoader::~MessageLoader()
 {
     quit_->Signal();
     folderObserver_->join();
-    disk_.reset();
-    cpu_.reset();
+    if( disk_.get() )
+        disk_->Join( tools::ThreadPool::ProcessPending );
+    if( cpu_.get() )
+        cpu_->Join( tools::ThreadPool::ProcessPending );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +86,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
         for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
-                disk_->Enqueue( boost::bind( &MessageLoader::LoadFrameInThread, this, it->first, frameNumber, boost::ref( handler ), callback ) );
+                disk_->Post( boost::bind( &MessageLoader::LoadFrameInThread, this, it->first, frameNumber, boost::ref( handler ), callback ) );
                 break;
             }
     }
@@ -115,7 +118,7 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
         for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
-                disk_->Enqueue( boost::bind( &MessageLoader::LoadKeyFrameInThread, this, it->first, frameNumber, boost::ref( handler ), callback ) );
+                disk_->Post( boost::bind( &MessageLoader::LoadKeyFrameInThread, this, it->first, frameNumber, boost::ref( handler ), callback ) );
                 return;
             }
     }
@@ -510,7 +513,7 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
     if( !buf )
         return;
 
-    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
+    cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -538,7 +541,7 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     if( !buf )
         return;
 
-    cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
+    cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
 // -----------------------------------------------------------------------------
