@@ -166,10 +166,10 @@ end
         <xsl:choose>
             <xsl:when test="$operator = 'eq'"><xsl:text>==</xsl:text></xsl:when>
             <xsl:when test="$operator = 'ne'"><xsl:text>!=</xsl:text></xsl:when>
-            <xsl:when test="$operator = 'lt'"><xsl:text>&lt;</xsl:text></xsl:when>
-            <xsl:when test="$operator = 'le'"><xsl:text>&lt;=</xsl:text></xsl:when>
-            <xsl:when test="$operator = 'gt'"><xsl:text>&gt;</xsl:text></xsl:when>
-            <xsl:when test="$operator = 'ge'"><xsl:text>&gt;=</xsl:text></xsl:when>
+            <xsl:when test="$operator = 'lt'"><xsl:text disable-output-escaping='yes'>&lt;</xsl:text></xsl:when>
+            <xsl:when test="$operator = 'le'"><xsl:text disable-output-escaping='yes'>&lt;=</xsl:text></xsl:when>
+            <xsl:when test="$operator = 'gt'"><xsl:text disable-output-escaping='yes'>&gt;</xsl:text></xsl:when>
+            <xsl:when test="$operator = 'ge'"><xsl:text disable-output-escaping='yes'>&gt;=</xsl:text></xsl:when>
         </xsl:choose>
     </xsl:template>
 
