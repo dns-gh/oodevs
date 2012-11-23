@@ -120,7 +120,7 @@ return
         return true -- in skill load, load element if arrived on position
     end,
     isSurrendered = function( self )
-        return integration.isFriendOrFoeSurrendered( self )
+        return integration.isKnowledgeAgentSurrendered( self )
     end,
     canUnloadIt = function( self )
         return true -- in skill unload, load element if arrived on position

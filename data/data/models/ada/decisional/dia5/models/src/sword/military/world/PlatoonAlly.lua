@@ -860,7 +860,7 @@ return
         return integration.isTransportingCrowd( self )
     end,
     isSurrendered = function( self )
-        return integration.isSurrendered( self )
+        return integration.isAgentSurrendered( self )
     end,
     changeAutomate = function( self )
         integration.changeAutomate( self )
