@@ -147,6 +147,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
 //            message.mutable_contamination_agents();
                 message.mutable_contamination_state()->set_percentage( 0 );
                 message.mutable_contamination_state()->set_quantity( 2.f );
+                message.mutable_contamination_state()->set_dose( 0.f );
                 message.mutable_communications()->set_jammed( true );
                 message.mutable_communications()->mutable_knowledge_group()->set_id( 0 );
                 message.set_radio_emitter_disabled( true );
