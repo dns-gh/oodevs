@@ -406,19 +406,6 @@ target_link_libraries( replayer_app
     license_gui
 )
 
-# simulation_app
-add_target( simulation_app server "applications/simulation_app" OPTIONS win32 executable )
-masa_add_target_definition( simulation_app PLATFORM=${platform} )
-masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
-masa_add_target_definition( simulation_app _WIN32_WINNT=0x501 )
-masa_add_target_definition( simulation_app WINVER=0x501 )
-set_property( TARGET simulation_app APPEND PROPERTY LINK_FLAGS "/LARGEADDRESSAWARE" )
-target_link_libraries( simulation_app
-    simulation_kernel
-    dispatcher
-    license_gui
-)
-
 # wrapper
 add_target( wrapper modules "libraries/wrapper" )
 
@@ -463,6 +450,25 @@ target_link_libraries( propagation_module mt_tools )
 # module_tester_test
 add_target( module_tester_test modules "tests/module_tester_test" OPTIONS test )
 target_link_libraries( module_tester_test ${CORE_LIBRARIES} )
+
+# simulation_app
+add_target( simulation_app server "applications/simulation_app" OPTIONS win32 executable )
+masa_add_target_definition( simulation_app PLATFORM=${platform} )
+masa_add_target_include( simulation_app "${root_dir}/src/libraries/simulation_kernel" )
+masa_add_target_definition( simulation_app _WIN32_WINNT=0x501 )
+masa_add_target_definition( simulation_app WINVER=0x501 )
+set_property( TARGET simulation_app APPEND PROPERTY LINK_FLAGS "/LARGEADDRESSAWARE" )
+target_link_libraries( simulation_app
+    simulation_kernel
+    dispatcher_dll
+    license_gui
+)
+add_dependencies( simulation_app
+    fire_module_dll
+    movement_module_dll
+    perception_module_dll
+    propagation_module_dll
+)
 
 # decisional_test
 add_target( decisional_test tests "tests/integration_decisionnal_test" OPTIONS executable )
