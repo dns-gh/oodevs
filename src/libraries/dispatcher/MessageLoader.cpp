@@ -268,6 +268,13 @@ namespace
             && bfs::is_regular_file( root / keyFileName )
             && bfs::is_regular_file( root / updateFileName );
     }
+
+    bfs::directory_iterator IterateDirectory( const bfs::path& path )
+    {
+        if( !bfs::exists( path ) )
+            return bfs::directory_iterator();
+        return bfs::directory_iterator( path );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -276,32 +283,29 @@ namespace
 // -----------------------------------------------------------------------------
 void MessageLoader::ScanDataFolders( bool forceAdd )
 {
-    if( bfs::exists( records_ ) )
-    {
-        boost::mutex::scoped_lock lock( access_ );
-        for( bfs::directory_iterator it( records_ ); it !=  bfs::directory_iterator(); ++it )
-            try
+    boost::mutex::scoped_lock lock( access_ );
+    for( bfs::directory_iterator it = IterateDirectory( records_ ); it !=  bfs::directory_iterator(); ++it )
+        try
+        {
+            if( !IsValidRecordDir( it ) )
+                continue;
+            const std::string dir = it->path().filename().string();
+            bool doAdd = false;
+            if( !forceAdd )
             {
-                if( !IsValidRecordDir( it ) )
-                    continue;
-                const std::string dir = it->path().filename().string();
-                bool doAdd = false;
-                if( !forceAdd )
-                {
-                    const bool mainLoop = !disk_.get() && init_->IsSignaled();
-                    const bool skipCurrent = mainLoop && dir == currentFolderName;
-                    doAdd = !skipCurrent && fragmentsInfos_.find( dir ) == fragmentsInfos_.end();
-                    if( mainLoop && doAdd  )
-                        fragmentsInfos_.erase( currentFolderName );
-                }
-                if( doAdd || forceAdd )
-                    AddFolder( dir );
+                const bool mainLoop = !disk_.get() && init_->IsSignaled();
+                const bool skipCurrent = mainLoop && dir == currentFolderName;
+                doAdd = !skipCurrent && fragmentsInfos_.find( dir ) == fragmentsInfos_.end();
+                if( mainLoop && doAdd  )
+                    fragmentsInfos_.erase( currentFolderName );
             }
-            catch( const std::exception & )
-            {
-                // NOTHING
-            }
-    }
+            if( doAdd || forceAdd )
+                AddFolder( dir );
+        }
+        catch( const std::exception & )
+        {
+            // NOTHING
+        }
 }
 
 // -----------------------------------------------------------------------------
