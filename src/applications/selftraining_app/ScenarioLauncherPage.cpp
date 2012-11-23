@@ -256,7 +256,7 @@ void ScenarioLauncherPage::OnStart()
         const unsigned int port = exercise_->GetPort();
         CreateSession( exerciseName, "default" );
         boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exerciseName, "default", port, true ) );
-        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exerciseName, "default", profile_.GetLogin(), port, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exerciseName, "default", profile_.GetLogin(), true ) );
         boost::shared_ptr< CompositeProcessWrapper >  process( new CompositeProcessWrapper( *progressPage_, replay, client ) );
         progressPage_->Attach( process );
         process->Start();
