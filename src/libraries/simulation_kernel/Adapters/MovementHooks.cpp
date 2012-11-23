@@ -318,6 +318,54 @@ namespace
     typedef float (*PathfindEvaluateCost)( const geometry::Point2f& from, const geometry::Point2f& to, void* userData );
     typedef float (*PathfindGetCost)( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween, void* userData );
     typedef void (*PathfindHandlePathPoint)( const geometry::Point2f& point, const TerrainData& dataAtPoint, const TerrainData& dataToNextPoint, void* userData );
+    struct PathfindCallbackAdapter : pathfind::AStarManagementCallback_ABC
+    {
+        PathfindCallbackAdapter( PathfindShouldEndComputation callback, void* userData )
+            : callback_( callback )
+            , userData_( userData )
+        {}
+        virtual bool ShouldEndComputation( float rCostToCurrentNode, float rCostToGoalNode )
+        {
+            return callback_( rCostToCurrentNode, rCostToGoalNode, userData_ );
+        }
+        PathfindShouldEndComputation callback_;
+        void* userData_;
+    };
+    struct TerrainRuleAdapter : TerrainRule_ABC
+    {
+        TerrainRuleAdapter( PathfindEvaluateCost evaluate, void* evaluateData,
+                            PathfindGetCost get, void* getData )
+            : evaluate_    ( evaluate )
+            , evaluateData_( evaluateData )
+            , get_         ( get )
+            , getData_     ( getData )
+        {}
+        virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to )
+        {
+            return evaluate_( from, to, evaluateData_ );
+        }
+        virtual float GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween )
+        {
+            return get_( from, to, terrainTo, terrainBetween, getData_ );
+        }
+        PathfindEvaluateCost evaluate_;
+        void* evaluateData_;
+        PathfindGetCost get_;
+        void* getData_;
+    };
+    struct ThreadHandlerAdapter : tools::thread::Handler_ABC< TerrainPathPoint >
+    {
+        ThreadHandlerAdapter( PathfindHandlePathPoint handler, void* handlerData )
+            : handler_    ( handler )
+            , handlerData_( handlerData )
+        {}
+        virtual void Handle( const TerrainPathPoint& point )
+        {
+            handler_( point, point.DataAtPoint(), point.DataToNextPoint(), handlerData_ );
+        }
+        PathfindHandlePathPoint handler_;
+        void* handlerData_;
+    };
     DEFINE_HOOK( ComputePathfind, 13, bool, ( TerrainPathfinder& pathfind, bool needRefine, bool strictClosest,
                                               const geometry::Point2f& from, const geometry::Point2f& to,
                                               PathfindEvaluateCost evaluate, void* evaluateData,
@@ -328,55 +376,10 @@ namespace
         if( needRefine )
             pathfind.SetConfiguration( 1, 3 ); // $$$$ AGE 2005-03-30: whatever
         pathfind.SetChoiceRatio( strictClosest ? 0.f : 0.1f );
-        struct PathfindCallbackAdapter : pathfind::AStarManagementCallback_ABC
-        {
-            PathfindCallbackAdapter( PathfindShouldEndComputation callback, void* userData )
-                : callback_( callback )
-                , userData_( userData )
-            {}
-            virtual bool ShouldEndComputation( float rCostToCurrentNode, float rCostToGoalNode )
-            {
-                return callback_( rCostToCurrentNode, rCostToGoalNode, userData_ );
-            }
-            PathfindShouldEndComputation callback_;
-            void* userData_;
-        } callback( termination, terminationData );
+        PathfindCallbackAdapter callback( termination, terminationData );
         pathfind.SetCallback( &callback );
-        struct TerrainRuleAdapter : TerrainRule_ABC
-        {
-            TerrainRuleAdapter( PathfindEvaluateCost evaluate, void* evaluateData,
-                                PathfindGetCost get, void* getData )
-                : evaluate_    ( evaluate )
-                , evaluateData_( evaluateData )
-                , get_         ( get )
-                , getData_     ( getData )
-            {}
-            virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to )
-            {
-                return evaluate_( from, to, evaluateData_ );
-            }
-            virtual float GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween )
-            {
-                return get_( from, to, terrainTo, terrainBetween, getData_ );
-            }
-            PathfindEvaluateCost evaluate_;
-            void* evaluateData_;
-            PathfindGetCost get_;
-            void* getData_;
-        } rule( evaluate, evaluateData, get, getData );
-        struct ThreadHandlerAdapter : tools::thread::Handler_ABC< TerrainPathPoint >
-        {
-            ThreadHandlerAdapter( PathfindHandlePathPoint handler, void* handlerData )
-                : handler_    ( handler )
-                , handlerData_( handlerData )
-            {}
-            virtual void Handle( const TerrainPathPoint& point )
-            {
-                handler_( point, point.DataAtPoint(), point.DataToNextPoint(), handlerData_ );
-            }
-            PathfindHandlePathPoint handler_;
-            void* handlerData_;
-        } h( handler, handlerData );
+        TerrainRuleAdapter rule( evaluate, evaluateData, get, getData );
+        ThreadHandlerAdapter h( handler, handlerData );
         const bool bResult = pathfind.ComputePath( from, to, rule, h );
         pathfind.SetConfiguration( 0, 0 );
         pathfind.SetCallback( 0 );
