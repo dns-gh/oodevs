@@ -165,9 +165,8 @@ void CreateExerciceWidget::Update()
         if( !sessionList_->count() )
             sessionList_->addItem( tools::translate( "CreateExerciceWidget", "No session" ) );
         sessionList_->setCurrentRow( 0 );
-    }
-    else
         UpdateExercises();
+    }
 }
 
 // -----------------------------------------------------------------------------
