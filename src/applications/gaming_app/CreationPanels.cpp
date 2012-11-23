@@ -12,6 +12,7 @@
 #include "gaming/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/DrawerPanel.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
@@ -40,9 +41,10 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy, false ) );
     AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
     AddPanel( objects_ = new ObjectCreationPanel( box, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
-    AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, drawings, config ) );
     AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel, paramLayer, tools ) );
     AddPanel( weather_ = new ::WeatherPanel( this, *this, controllers, actionsModel, staticModel, simulation, weatherLayer ) );
+    AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, drawings, config ) );
+
     controllers_.Register( *this );
 }
 
@@ -71,12 +73,8 @@ void CreationPanels::Draw( Viewport_ABC& viewport ) const
 // -----------------------------------------------------------------------------
 void CreationPanels::NotifyUpdated( const ModelLoaded& )
 {
-    Add( units_ );
-    Add( objects_ );
-    Add( crowds_ );
-    Add( weather_ );
+    AddPanels();
     Add( drawings_ );
-    Add( fires_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,10 +83,44 @@ void CreationPanels::NotifyUpdated( const ModelLoaded& )
 // -----------------------------------------------------------------------------
 void CreationPanels::NotifyUpdated( const ModelUnLoaded& )
 {
+    RemovePanels();
+    Remove( drawings_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::NotifyUpdated
+// Created: LGY 2012-11-22
+// -----------------------------------------------------------------------------
+void CreationPanels::NotifyUpdated( const kernel::Profile_ABC& profile )
+{
+    if( !profile.IsSupervision() )
+        RemovePanels();
+    else
+        AddPanels();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::AddPanels
+// Created: LGY 2012-11-22
+// -----------------------------------------------------------------------------
+void CreationPanels::AddPanels()
+{
+    Add( units_ );
+    Add( objects_ );
+    Add( crowds_ );
+    Add( weather_ );
+    Add( fires_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::RemovePanels
+// Created: LGY 2012-11-22
+// -----------------------------------------------------------------------------
+void CreationPanels::RemovePanels()
+{
     Remove( units_ );
     Remove( objects_ );
     Remove( crowds_ );
     Remove( weather_ );
-    Remove( drawings_ );
     Remove( fires_ );
 }
