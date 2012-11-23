@@ -92,6 +92,9 @@ void ADN_Units_GUI::Build()
     goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
     builder.SetToolTip( tr( "The decisional model associated to the unit." ) );
 
+    // nbc suit
+    builder.AddEnumField( pInfoHolder, tr( "NBC suit" ), vInfosConnectors[ eNbcSuit ] );
+
     // Decontamination delay
     ADN_TimeField* pTimeField = builder.AddField< ADN_TimeField >( pInfoHolder, tr( "Decontamination delay" ), vInfosConnectors[ eDecontaminationDelay ], 0, eGreaterZero );
     pTimeField->SetMinimumValueInSecond( 1 );

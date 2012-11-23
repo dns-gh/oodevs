@@ -185,6 +185,7 @@ void ADN_Workspace::InitializeEnumType()
 {
     INITIALIZE_ADN_ENUMTYPE( AgentTypeAutomate );
     INITIALIZE_ADN_ENUMTYPE( AgentTypePion );
+    INITIALIZE_ENT_ENUMTYPE( AgentNbcSuit );
     INITIALIZE_ADN_ENUMTYPE( BreakdownNTI );
     INITIALIZE_ADN_ENUMTYPE( BreakdownType );
     INITIALIZE_ADN_ENUMTYPE( ConstructorType );

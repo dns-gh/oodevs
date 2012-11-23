@@ -406,6 +406,19 @@
 			<xs:enumeration value="xxxxx"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="T_NbcSuit">
+		<xs:annotation>
+			<xs:documentation>Protection nbc.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="level1"/>
+			<xs:enumeration value="level2"/>
+			<xs:enumeration value="level3"/>
+			<xs:enumeration value="level4"/>
+			<xs:enumeration value="level5"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="T_UnitNature">
 		<xs:annotation>
 			<xs:documentation>Chaine permettant de reconstituer le symbole associé à l'unité. </xs:documentation>

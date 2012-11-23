@@ -92,6 +92,7 @@ public:
         eRanges,
         eEquipmentRange,
         eSensorRange,
+        eNbcSuit,
         eNbrGuiElements
     };
     //@}

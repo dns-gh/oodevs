@@ -5348,6 +5348,10 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Units</source>
         <translation>Units</translation>
     </message>
+    <message>
+        <source>NBC suit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

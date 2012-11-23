@@ -62,6 +62,7 @@ public:
     static const std::string& ConvertFromGhostType( E_GhostType, E_Conversion = eToSim );
     static const std::string& ConvertFromNbcState( E_NbcState, E_Conversion = eToSim );
     static const std::string& ConvertFromPreparationMode( E_PreparationMode, E_Conversion = eToSim );
+    static const std::string& ConvertFromAgentNbcSuit( E_AgentNbcSuit, E_Conversion = eToSim );
 
     // ConvertTo functions
     static E_LocationType ConvertToLocationType( const std::string& );
@@ -100,6 +101,7 @@ public:
     static E_GhostType ConvertToGhostType( const std::string& );
     static E_NbcState ConvertToNbcState( const std::string& );
     static E_PreparationMode ConvertToPreparationMode( const std::string& );
+    static E_AgentNbcSuit ConvertToAgentNbcSuit( const std::string& );
 
 private:
     // Typedefs
@@ -139,6 +141,7 @@ private:
     typedef ENT_Tr::converter<E_GhostType> T_ConverterGhostType;
     typedef ENT_Tr::converter<E_NbcState> T_ConverterNbcState;
     typedef ENT_Tr::converter<E_PreparationMode> T_ConverterPreparationMode;
+    typedef ENT_Tr::converter<E_AgentNbcSuit> T_ConverterAgentNbcSuit;
 
     // Converters
     static T_ConverterLocationType LocationTypeConverter_ [];
@@ -177,6 +180,7 @@ private:
     static T_ConverterGhostType GhostTypeConverter_ [];
     static T_ConverterNbcState NbcStateConverter_ [];
     static T_ConverterPreparationMode PreparationModeConverter_ [];
+    static T_ConverterAgentNbcSuit AgentNbcSuitConverter_ [];
 };
 
 #endif // __ENT_Tr_Gen_h_

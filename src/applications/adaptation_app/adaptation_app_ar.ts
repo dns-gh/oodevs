@@ -5335,6 +5335,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Units</source>
         <translation type="unfinished">وحدات</translation>
     </message>
+    <message>
+        <source>NBC suit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

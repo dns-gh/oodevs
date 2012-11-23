@@ -169,6 +169,7 @@ public:
     public:
         ADN_Type_Int                                                nId_;
         ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>            eTypeId_;
+        ADN_Type_Enum<E_AgentNbcSuit,eNbrAgentNbcSuit>              eNbcSuit_;
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos>       ptrModel_;
         ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>                eNatureLevel_;
         ADN_Type_Enum<E_NatureAtlasType, eNbrNatureAtlasType>       eNatureAtlas_;

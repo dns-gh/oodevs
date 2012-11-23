@@ -315,6 +315,7 @@ void ADN_Units_Data::PostureInfos::WriteArchive( xml::xostream& output ) const
 //-----------------------------------------------------------------------------
 ADN_Units_Data::UnitInfos::UnitInfos()
     : eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
+    , eNbcSuit_                         ( static_cast< E_AgentNbcSuit >( 0 ) )
     , nId_                              ( ADN_Units_Data::idManager_.GetNextId() )
     , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
     , eNatureLevel_                     ( static_cast< E_NatureLevel >( 0 ) )
@@ -360,6 +361,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
 //-----------------------------------------------------------------------------
 ADN_Units_Data::UnitInfos::UnitInfos( unsigned int id )
     : eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
+    , eNbcSuit_                         ( static_cast< E_AgentNbcSuit >( 0 ) )
     , nId_                              ( id )
     , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
     , eNatureLevel_                     ( static_cast< E_NatureLevel >( 0 ) )
@@ -437,6 +439,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     UnitInfos* pCopy = new UnitInfos();
 
     pCopy->eTypeId_ = eTypeId_.GetData();
+    pCopy->eNbcSuit_ = eNbcSuit_.GetData();
     pCopy->ptrModel_ = ptrModel_.GetData();
     pCopy->eNatureLevel_ = eNatureLevel_.GetData();
     pCopy->eNatureAtlas_ = eNatureAtlas_.GetData();
@@ -548,7 +551,7 @@ void ADN_Units_Data::UnitInfos::ReadPointDistance( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 {
-    std::string strType, strModel;
+    std::string strType, strModel, nbcSuit;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "type", strType )
         >> xml::attribute( "decisional-model", strModel );
@@ -556,6 +559,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
     eTypeId_ = ADN_Tr::ConvertToAgentTypePion( strType );
     if( eTypeId_ == (E_AgentTypePion)-1 )
         throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid unit type '%1'" ).arg( strType.c_str() ).toStdString() );
+
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindUnitModel( strModel );
     if( !pModel )
         throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid doctrine model '%1'" ).arg( strModel.c_str() ).toStdString() );
@@ -610,6 +614,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
     bInstallationDelay_ = installationDelay_ != "0s" || uninstallationDelay_ != "0s";
     input >> xml::start( "nbc" )
             >> xml::attribute( "decontamination-delay", decontaminationDelay_ )
+            >> xml::attribute( "suit", nbcSuit )
           >> xml::end
           >> xml::optional >> xml::start( "distance-before-points" )
             >> xml::list( "distance-before-point", *this, &ADN_Units_Data::UnitInfos::ReadPointDistance )
@@ -627,6 +632,11 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::start( "force-ratio" )
             >> xml::attribute( "feedback-time", strengthRatioFeedbackTime_ )
           >> xml::end;
+
+    eNbcSuit_ = ENT_Tr::ConvertToAgentNbcSuit( nbcSuit );
+    if( eNbcSuit_ == ( E_AgentNbcSuit )-1 )
+        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid nbc suit level '%1'" ).arg( nbcSuit.c_str() ).toStdString() );
+
     bProbe_ = rProbeWidth_ != 0. || rProbeLength_ != 0.;
     bRanges_ = nSensorRange_ != 0 || nEquipmentRange_ != 0;
     bStrengthRatioFeedbackTime_ = strengthRatioFeedbackTime_ != "0s";
@@ -729,7 +739,8 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
                << xml::end;
 
     output << xml::start( "nbc" )
-            << xml::attribute(  "decontamination-delay", decontaminationDelay_ )
+            << xml::attribute( "decontamination-delay", decontaminationDelay_ )
+            << xml::attribute( "suit", eNbcSuit_.Convert() )
            << xml::end;
 
     if( ! vPointInfos_.empty() )

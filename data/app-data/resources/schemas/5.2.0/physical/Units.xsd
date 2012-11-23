@@ -129,6 +129,7 @@
 							<xs:element name="nbc">
 								<xs:complexType>
 									<xs:attribute name="decontamination-delay" type="T_Time" use="required"/>
+									<xs:attribute name="suit" type="T_NbcSuit" use="required"/>
 								</xs:complexType>
 							</xs:element>
 							<xs:element name="distance-before-points" minOccurs="0">

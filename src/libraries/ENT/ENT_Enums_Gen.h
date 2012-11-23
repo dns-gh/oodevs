@@ -430,4 +430,15 @@ enum E_GamingMode
     eGamingMode_All           = 0x0F  // Filter
 };
 
+enum E_AgentNbcSuit
+{
+    eAgentNone,
+    eAgentNbcSuitLevel1,
+    eAgentNbcSuitLevel2,
+    eAgentNbcSuitLevel3,
+    eAgentNbcSuitLevel4,
+    eAgentNbcSuitLevel5,
+    eNbrAgentNbcSuit
+};
+
 #endif // __ENT_Enums_Gen_h_

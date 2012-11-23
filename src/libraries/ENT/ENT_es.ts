@@ -2,6 +2,33 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="es" sourcelanguage="en">
 <context>
+    <name>ADN_Tr</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ENT_Tr</name>
     <message>
         <source>circle</source>

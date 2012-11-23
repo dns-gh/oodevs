@@ -417,6 +417,17 @@ ENT_Tr::T_ConverterPreparationMode ENT_Tr::PreparationModeConverter_ [] =
     T_ConverterPreparationMode( "", "", ( E_PreparationMode ) - 1 )
 };
 
+ENT_Tr::T_ConverterAgentNbcSuit ENT_Tr::AgentNbcSuitConverter_[] =
+{
+    T_ConverterAgentNbcSuit( "none",   QT_TRANSLATE_NOOP( "ADN_Tr", "None" ),    eAgentNone ),
+    T_ConverterAgentNbcSuit( "level1", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 1" ), eAgentNbcSuitLevel1 ),
+    T_ConverterAgentNbcSuit( "level2", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 2" ), eAgentNbcSuitLevel2 ),
+    T_ConverterAgentNbcSuit( "level3", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 3" ), eAgentNbcSuitLevel3 ),
+    T_ConverterAgentNbcSuit( "level4", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 4" ), eAgentNbcSuitLevel4 ),
+    T_ConverterAgentNbcSuit( "level5", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 5" ), eAgentNbcSuitLevel5 ),
+    T_ConverterAgentNbcSuit( "", "", (E_AgentNbcSuit)-1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -459,6 +470,7 @@ void ENT_Tr::InitTranslations()
     InitTr( GhostTypeConverter_, "ENT_Tr" );
     InitTr( NbcStateConverter_, "ENT_Tr" );
     InitTr( PreparationModeConverter_, "ENT_Tr" );
+    InitTr( AgentNbcSuitConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -785,6 +797,16 @@ const std::string& ENT_Tr::ConvertFromPreparationMode( E_PreparationMode nValue,
     return ENT_Tr::InverseFindInConverter( PreparationModeConverter_, nValue, nConverterType );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertFromAgentNbcSuit
+// Created: LGY 2012-11-23
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromAgentNbcSuit( E_AgentNbcSuit nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( AgentNbcSuitConverter_, nValue, nConverterType );
+
+}
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
@@ -1107,4 +1129,13 @@ E_NbcState ENT_Tr::ConvertToNbcState( const std::string& strName )
 E_PreparationMode ENT_Tr::ConvertToPreparationMode( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( PreparationModeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertToAgentNbcSuit
+// Created: LGY 2012-11-23
+// -----------------------------------------------------------------------------
+E_AgentNbcSuit ENT_Tr::ConvertToAgentNbcSuit( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( AgentNbcSuitConverter_, strName );
 }

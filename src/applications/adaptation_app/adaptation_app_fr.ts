@@ -5362,6 +5362,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <source>Sensors</source>
         <translation>Capteurs</translation>
     </message>
+    <message>
+        <source>NBC suit</source>
+        <translation>Protection NBC</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
