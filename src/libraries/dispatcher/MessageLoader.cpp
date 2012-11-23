@@ -466,12 +466,6 @@ namespace dispatcher
             MT_LOG_WARNING_MSG( "[dispatcher] Skipping invalid file " + filename.string() );
         return valid ? next : BufPtr();
     }
-
-    void YieldMessages( std::size_t pendingMessages )
-    {
-        if( pendingMessages > 10 )
-            tools::thread::Thread::Sleep( static_cast< unsigned int >( pendingMessages / 10 ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -516,7 +510,6 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
     if( !buf )
         return;
 
-    YieldMessages( cpu_->PendingMessages() );
     cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
@@ -545,7 +538,6 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     if( !buf )
         return;
 
-    YieldMessages( cpu_->PendingMessages() );
     cpu_->Enqueue( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
