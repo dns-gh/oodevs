@@ -292,10 +292,7 @@ void MessageLoader::ScanDataFolders( bool forceAdd )
                         {
                             T_FragmentsInfos::iterator itToDelete = fragmentsInfos_.find( currentFolderName );
                             if( itToDelete != fragmentsInfos_.end() )
-                            {
                                 fragmentsInfos_.erase( itToDelete );
-                                currentOpenFolder_.clear();
-                            }
                         }
                     }
                     if( doAdd || forceAdd )
