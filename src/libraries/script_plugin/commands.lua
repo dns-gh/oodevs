@@ -14,7 +14,7 @@ local function CheckTable( t, params )
         ReportError( "Bad parameter type: "..type( t ) )
     end
     for _, param in ipairs( params ) do
-        if not t[param] then
+        if t[param] == nil then
             ReportError( "Parameter "..tostring( param ).." is nil" )
         end
     end
@@ -152,7 +152,6 @@ function ChangeOptionByName( t )
 end
 
 function ChangeOptions( t )
-    CheckTable( t, { "profile", "client" } )
     for k, v in pairs( t ) do
         if k ~= "profile" and k ~= "client" then
             ChangeOptionByName( { profile = t.profile, client = t.client, name = k, value = v } )
