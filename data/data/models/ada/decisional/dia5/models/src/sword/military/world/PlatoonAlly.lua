@@ -912,8 +912,8 @@ return
     } ),
     activateFunctions = masalife.brain.integration.startStopAction(
     {
-        start = integration.activateFunctions,
-        stop = integration.desactivateFunctions
+        start = integration.activateLogisticChains,
+        stop = integration.desactivateLogisticChains
     } ),
     activateSensors = masalife.brain.integration.startStopAction(
     {
