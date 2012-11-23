@@ -326,7 +326,7 @@ end
 -- --------------------------------------------------------------------------------
 integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appeler une seule fois.
     local localisation
-    if masalife.brain.core.class.isOfType( position, world.Area) then
+    if masalife.brain.core.class.isOfType( position, integration.ontology.types.area) then
         localisation = position.source
     else
         localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )

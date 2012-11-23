@@ -29,7 +29,7 @@ integration.getPositionToSupportFriend = function( friendToSupport )
         local dir = integration.getDangerousDirection( mission )
         local friendPos = friendToSupport:getPosition()
         local positionToSupport = DEC_Geometrie_PositionTranslateDir( friendPos, dir, - rangeDistance )
-        return CreateKnowledge( world.Point, positionToSupport )
+        return CreateKnowledge( integration.ontology.types.point, positionToSupport )
     end
     return nil
 end

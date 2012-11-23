@@ -66,7 +66,7 @@ integration.getPositionsAroundObject = function( object )
         local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 20 )
         object.getObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
     end
-    return { CreateKnowledge( world.Point, object.getObjectNearestBorderPosition ) }
+    return { CreateKnowledge( integration.ontology.types.point, object.getObjectNearestBorderPosition ) }
 end
 
 integration.getKnowledgesObjectsInCircle = function( position, distance, objectTypeList )

@@ -381,7 +381,7 @@ integration.startedActivateDrone = function ( self )
     if not myself.Deployed and meKnowledge:isDeployed() and myself.droneAvailable then
         myself.Deployed = true
         myself.droneAvailable:SetbMiseEnOeuvre_( true ) -- mandatory to permit the flight
-        local droneKn = CreateKnowledge( world.PlatoonAlly, myself.droneAvailable )
+        local droneKn = CreateKnowledge( integration.ontology.types.agent, myself.droneAvailable )
         meKnowledge:RC( eRC_FinMiseEnOeuvreDrone )
         meKnowledge:sendRC( droneKn, eRC_DroneDisponible )
         meKnowledge:sendDisponibleDrone(meKnowledge:getAutomat(), droneKn)
@@ -417,11 +417,11 @@ end
 -- @release 2011-05-04
 -- --------------------------------------------------------------------------------
 integration.randomPositionInCircle = function( position, radius )
-    return CreateKnowledge( world.Point, DEC_Geometrie_PositionAleatoireDansCercle( position:getPosition(), radius ) )
+    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireDansCercle( position:getPosition(), radius ) )
 end
 
 integration.randomPositionOnCircle = function( position, radius )
-    return CreateKnowledge( world.Point, DEC_Geometrie_PositionAleatoireSurCercle( position:getPosition(), radius ) )
+    return CreateKnowledge( integration.ontology.types.point, DEC_Geometrie_PositionAleatoireSurCercle( position:getPosition(), radius ) )
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -434,7 +434,7 @@ integration.splitArea = function( area, numberOfParts )
     subAreas = subAreas.first
     myself.leadData.subAreas = {}
     for _, localArea in pairs( subAreas ) do
-        myself.leadData.subAreas[#myself.leadData.subAreas + 1] = CreateKnowledge( world.Area, localArea )
+        myself.leadData.subAreas[#myself.leadData.subAreas + 1] = CreateKnowledge( integration.ontology.types.area, localArea )
     end
     if #subAreas == 0 then
         myself.leadData.subAreas[#myself.leadData.subAreas + 1] = area -- cas ou la zone est hors limite
@@ -708,7 +708,7 @@ integration.forcerImmunisationNbc = function( self, immunize )
 end
 
 integration.getUnitPC = function( self ) 
-    return CreateKnowledge( world.PlatoonAlly, DEC_Pion_PionPC() )
+    return CreateKnowledge( integration.ontology.types.agent, DEC_Pion_PionPC() )
 end
 
 integration.isLogisticTypeUnit = function( )

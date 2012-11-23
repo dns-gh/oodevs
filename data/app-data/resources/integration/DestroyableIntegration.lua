@@ -196,7 +196,7 @@ end
 integration.canBeDestroyedWithMissiles = function( targetUnit, ph, speed )
     targetUnit[ myself ] = targetUnit[ myself ] or {}
     targetUnit[ myself ].distanceCouverte = targetUnit[ myself ].distanceCouverte or integration.porteeMaxPourTirerSurUnitePosturesReelles( targetUnit, ph )
-    targetUnit[ myself ].pointInterception = CreateKnowledge( world.Point, integration.positionInterception( targetUnit, speed ) )
+    targetUnit[ myself ].pointInterception = CreateKnowledge( integration.ontology.types.point, integration.positionInterception( targetUnit, speed ) )
     targetUnit[ myself ].distancePointInterception = targetUnit[ myself ].distancePointInterception or integration.distance( meKnowledge, targetUnit[ myself ].pointInterception )
     targetUnit[ myself ].tempsInterception =  targetUnit[ myself ].tempsInterception or targetUnit[ myself ].distancePointInterception / ( speed * 60 )
 

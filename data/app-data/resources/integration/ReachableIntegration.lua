@@ -83,7 +83,7 @@ integration.getEngineerObjectPosition = function( object )
 end
 integration.getAreaPosition = function( area )
     area.getAreaPositionResult = integration.getCentralAreaPosition( area )
-    if integration.isPointInUrbanBlockTrafficable(CreateKnowledge( world.Point, area.getAreaPositionResult), true ) == 0 then
+    if integration.isPointInUrbanBlockTrafficable(CreateKnowledge( integration.ontology.types.point, area.getAreaPositionResult), true ) == 0 then
         return integration.getAreaPositions( area )[1]
     end
     return area.getAreaPositionResult
@@ -105,7 +105,7 @@ integration.getAreaPositions = function( area )
     area.getTrafficableAreaPositionsResult = area.getTrafficableAreaPositionsResult or {}
     if #area.getTrafficableAreaPositionsResult == 0 then
         for i = 1, #area.getAreaPositionsResult do -- On ne veut que les positions qui sont dans la zone
-            if integration.isPointInLocalisation(CreateKnowledge( world.Point, area.getAreaPositionsResult[i] ), area) then
+            if integration.isPointInLocalisation(CreateKnowledge( integration.ontology.types.point, area.getAreaPositionsResult[i] ), area) then
                area.getTrafficableAreaPositionsResult[#area.getTrafficableAreaPositionsResult] = area.getAreaPositionsResult[i]
             end
         end
@@ -351,7 +351,7 @@ integration.updateMoveToIt = function( objective, pathType )
                 F_Pion_SetitMvt( meKnowledge.source, it )
                 local escort = F_Pion_GetpionEnEscorte( meKnowledge.source )
                 if escort then -- Une unité m'escorte, la mission MoveToward devient StayClose
-                    local escortUnit = CreateKnowledge( world.PlatoonAlly, escort )
+                    local escortUnit = CreateKnowledge( integration.ontology.types.agent, escort )
                     escortUnit:sendNeedRoute( meKnowledge, true )
                     escortUnit:sendGetRouteForEscorting( meKnowledge, false )
                 end
@@ -657,7 +657,7 @@ integration.isPointInUrbanBlockTrafficable = function( self, loaded )
     local isTrafficable = false
     if not self.isPointInUrbanBlockTrafficableCache then
         local pos = self:getPosition()
-        if masalife.brain.core.class.isOfType( meKnowledge, world.Company  ) then 
+        if masalife.brain.core.class.isOfType( meKnowledge, integration.ontology.types.automat  ) then 
             local platoons = DEC_Automate_PionsAvecPC()
             for i = 1, #platoons do -- Est ce que ce point est trafficable pour tous les pions de l'automate
                 if integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i], self.source ) then

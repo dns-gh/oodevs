@@ -274,7 +274,7 @@ integration.getEntitiesFromAutomat = function ( automat, role, withPC)
     local nTemp = #temp
     for i = 1, nTemp do
         local pion = temp[i]
-        knowledges[ #knowledges + 1 ] = CreateKnowledge( world.PlatoonAlly, pion )
+        knowledges[ #knowledges + 1 ] = CreateKnowledge( integration.ontology.types.agent, pion )
     end
 
     if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters
@@ -301,7 +301,7 @@ integration.getEntitiesFromAutomatCommunication = function ( automat, role, with
     local nTemp = #temp
     for i = 1, nTemp do
         local pion = temp[i]
-        knowledges[ #knowledges + 1 ] = CreateKnowledge( world.PlatoonAlly, pion )
+        knowledges[ #knowledges + 1 ] = CreateKnowledge( integration.ontology.types.agent, pion )
     end
 
     if role ~= "none" then --TODO replace by NIL when a queries will have nullable parameters
@@ -325,7 +325,7 @@ integration.getEntitiesFromBatallion = function ()
     local nTemp = #temp
     for i = 1, nTemp do
         local automat = temp[i]
-        knowledges[ #knowledges + 1 ] = CreateKnowledge( world.Company, automat )
+        knowledges[ #knowledges + 1 ] = CreateKnowledge( integration.ontology.types.automat, automat )
     end
     return knowledges
  end
@@ -356,9 +356,9 @@ integration.getOperationnalEntitiesFromAutomat = function ( automat, role, withP
 integration.getDestroyableInObjective = function( objective )
     local res = {}
     local enemies = {}
-    if masalife.brain.core.class.isOfType( objective, world.Area ) then
+    if masalife.brain.core.class.isOfType( objective, integration.ontology.types.area ) then
         enemies = integration.isKnowledgesAgentsInArea( objective.source ) 
-    elseif masalife.brain.core.class.isOfType( objective, world.UrbanBlock ) then
+    elseif masalife.brain.core.class.isOfType( objective, integration.ontology.types.urbanBlock ) then
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
     else
         enemies = integration.getKnowledgesLivingAgentsInCircle( objective:getPosition(), 600 )
@@ -367,7 +367,7 @@ integration.getDestroyableInObjective = function( objective )
     local nEnemies = #enemies
     for i = 1,nEnemies do
         local enemy = enemies[i]
-        res[#res + 1] = CreateKnowledge( world.Platoon, enemy )
+        res[#res + 1] = CreateKnowledge( integration.ontology.types.agentKnowledge, enemy )
     end
     return res
 end
@@ -381,9 +381,9 @@ end
 integration.getTerroristsInObjective = function( objective )
     local res = {}
     local enemies = {}
-    if masalife.brain.core.class.isOfType( objective, world.Area ) then
+    if masalife.brain.core.class.isOfType( objective, integration.ontology.types.area ) then
         enemies = integration.isKnowledgesAgentsInArea( objective.source ) 
-    elseif masalife.brain.core.class.isOfType( objective, world.UrbanBlock ) then
+    elseif masalife.brain.core.class.isOfType( objective, integration.ontology.types.urbanBlock ) then
         enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
     else
         enemies = integration.getKnowledgesLivingAgentsInCircle( objective:getPosition(), 600 )
@@ -393,7 +393,7 @@ integration.getTerroristsInObjective = function( objective )
     for i = 1,nEnemies do
         local enemy = enemies[i]
         if DEC_ConnaissanceAgent_EstTerroriste( enemy ) then
-            res[#res + 1] = CreateKnowledge( world.Platoon, enemy )
+            res[#res + 1] = CreateKnowledge( integration.ontology.types.agentKnowledge, enemy )
         end
     end
     return res
@@ -405,7 +405,7 @@ end
 -- @release 2011-06-08
 -- --------------------------------------------------------------------------------
 integration.getPCOfAutomate = function( automate )
-    return CreateKnowledge( world.PlatoonAlly, DEC_Automate_PionPCDeAutomate( automate.source ) )
+    return CreateKnowledge( integration.ontology.types.agent, DEC_Automate_PionPCDeAutomate( automate.source ) )
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -424,7 +424,7 @@ integration.query.getSiteFranchissementDansZone = function ( zone )
     local obstacles = {}
     obstacles = DEC_ObjectKnowledgesInZone( zone.source, { eTypeObjectCrossingSite } )
     for _, objective in pairs( obstacles ) do
-        allRes[ #allRes + 1 ] = CreateKnowledge( world.Object, objective )
+        allRes[ #allRes + 1 ] = CreateKnowledge( integration.ontology.types.object, objective )
     end
     return allRes
 end
@@ -464,7 +464,7 @@ integration.getFirePositions = function( modeDeploiement, zone, angle )
     end
     local returnPositions = {}
     for i = 1, #firePositions do
-        returnPositions[i] = CreateKnowledge(world.Point, firePositions[i])
+        returnPositions[i] = CreateKnowledge(integration.ontology.types.point, firePositions[i])
     end
     return returnPositions
 end
@@ -480,7 +480,7 @@ integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
     for i = 1, #friends do
         local simEnemies = integration.getMortarUnitsToNeutralize( friends[i] )
         for j = 1, #simEnemies do
-            local eny = CreateKnowledge( sword.military.world.Platoon, simEnemies[j] )
+            local eny = CreateKnowledge( integration.ontology.types.agentKnowledge, simEnemies[j] )
             if not eny:isTransported() then
                 if not exists( enemies, eny ) then
                     enemies[ #enemies + 1 ] = eny
@@ -511,7 +511,7 @@ end
 integration.query.getNearestPositionInAOR = function( objective )
     local target = objective:getPosition()
     local simPos = DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( DEC_Geometrie_ConvertirPointEnLocalisation( target ) )
-    return CreateKnowledge( world.Point, simPos )
+    return CreateKnowledge( integration.ontology.types.point, simPos )
 end
 
 -- -------------------------------------------------------------------------------- 

@@ -17,40 +17,38 @@ integration.communication = {}
 initializeAssignMissions = function()
     myself = myself or {}
     myself.ParameterRegistrationFunctor = {}
-    myself.ParameterRegistrationFunctor["world.Area"] = DEC_AssignMissionLocationParameter
-    myself.ParameterRegistrationFunctor["world.Company"] = DEC_AssignMissionAutomatParameter
-    myself.ParameterRegistrationFunctor["world.Crowd"] = DEC_AssignMissionCrowdParameter
-    myself.ParameterRegistrationFunctor["world.Object"] = DEC_AssignMissionObjectKnowledgeParameter
-    myself.ParameterRegistrationFunctor["world.EngineerObject"] = DEC_AssignMissionGenObjectParameter
-    myself.ParameterRegistrationFunctor["world.Point"] = DEC_AssignMissionPointParameter
-    myself.ParameterRegistrationFunctor["world.Platoon"] = DEC_AssignMissionAgentKnowledgeParameter
-    myself.ParameterRegistrationFunctor["world.PlatoonAlly"] = DEC_AssignMissionPionParameter
-    myself.ParameterRegistrationFunctor["world.UrbanBlock"] = DEC_AssignMissionUrbanBlockParameter
-    myself.ParameterRegistrationFunctor["world.ResourceNetwork"] = DEC_AssignMissionResourceNetworkParameter
-    myself.ParameterRegistrationFunctor["world.Fuseau"] = function( missionPion, parameterName, value) DEC_AssignerFuseauAMissionPion_Mission( value, missionPion ) end
-    myself.ParameterRegistrationFunctor["security.integration.Unit"] = DEC_AssignMissionPionParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.area] = DEC_AssignMissionLocationParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.automat] = DEC_AssignMissionAutomatParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.population] = DEC_AssignMissionCrowdParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.object] = DEC_AssignMissionObjectKnowledgeParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.genObject] = DEC_AssignMissionGenObjectParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.point] = DEC_AssignMissionPointParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.agentKnowledge] = DEC_AssignMissionAgentKnowledgeParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.agent] = DEC_AssignMissionPionParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.urbanBlock] = DEC_AssignMissionUrbanBlockParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.resourceNetwork] = DEC_AssignMissionResourceNetworkParameter
+    myself.ParameterRegistrationFunctor[integration.ontology.types.fuseau] = function( missionPion, parameterName, value) DEC_AssignerFuseauAMissionPion_Mission( value, missionPion ) end
     myself.ParameterRegistrationFunctor["number"] = DEC_AssignMissionNumericTypeParameter
     myself.ParameterRegistrationFunctor["userdata"] = DEC_AssignMissionDotationTypeParameter
     myself.ParameterRegistrationFunctor["boolean"] = DEC_AssignMissionBoolParameter
 
     myself.ParameterListRegistrationFunctor = {}
-    myself.ParameterListRegistrationFunctor["world.Point"] = DEC_AssignMissionPointListParameter
-    myself.ParameterListRegistrationFunctor["world.Platoon"] = DEC_AssignMissionAgentKnowledgeListParameter
-    myself.ParameterListRegistrationFunctor["world.PlatoonAlly"] = DEC_AssignMissionPionListParameter
-    myself.ParameterListRegistrationFunctor["world.Company"] = DEC_AssignMissionAutomatListParameter
-    myself.ParameterListRegistrationFunctor["world.Object"] = DEC_AssignMissionObjectKnowledgeListParameter
-    myself.ParameterListRegistrationFunctor["world.EngineerObject"] = DEC_AssignMissionGenObjectListParameter
-    myself.ParameterListRegistrationFunctor["world.Area"] = DEC_AssignMissionLocationListParameter
-    myself.ParameterListRegistrationFunctor["world.UrbanBlock"] = DEC_AssignMissionUrbanBlockListParameter
-    myself.ParameterListRegistrationFunctor["security.integration.Unit"] = DEC_AssignMissionPionListParameter
-    myself.ParameterListRegistrationFunctor["world.ResourceNetwork"] = DEC_AssignMissionResourceNetworkListParameter
+    myself.ParameterListRegistrationFunctor[integration.ontology.types.point] = DEC_AssignMissionPointListParameter
+    myself.ParameterListRegistrationFunctor[integration.ontology.types.agentKnowledge] = DEC_AssignMissionAgentKnowledgeListParameter
+    myself.ParameterListRegistrationFunctor[integration.ontology.types.agent] = DEC_AssignMissionPionListParameter
+    myself.ParameterListRegistrationFunctor[integration.ontology.types.automat] = DEC_AssignMissionAutomatListParameter
+    myself.ParameterListRegistrationFunctor[integration.ontology.types.object] = DEC_AssignMissionObjectKnowledgeListParameter
+    myself.ParameterListRegistrationFunctor[integration.ontology.types.genObject] = DEC_AssignMissionGenObjectListParameter
+    myself.ParameterListRegistrationFunctor[integration.ontology.types.area] = DEC_AssignMissionLocationListParameter
+    myself.ParameterListRegistrationFunctor[integration.ontology.types.urbanBlock] = DEC_AssignMissionUrbanBlockListParameter
+    myself.ParameterListRegistrationFunctor[integration.ontology.types.resourceNetwork] = DEC_AssignMissionResourceNetworkListParameter
 end
 
 local function InferType( param )
     if param.GetTypeName then
         return param:GetTypeName()
     elseif existsIndex(param , "__tag" ) then
-        return tostring( masalife.brain.core.class.getType(param) )
+        return masalife.brain.core.class.getType(param)
     else
         return nil
     end
@@ -69,9 +67,9 @@ local AssignMissionParameterList = function ( missionPion, parameterName, value 
     if DEC_Mission_IsPath( missionPion, parameterName ) then
         for i = 1, nValues do
             local currentValue = value[i]
-            if InferType( currentValue ) ~= "world.Point" then
+            if InferType( currentValue ) ~= "integration.ontology.types.point" then
                 currentValue = value[i]:getMyPosition() -- Transform the parameter into a point
-                if InferType( currentValue ) ~= "world.Point" then
+                if InferType( currentValue ) ~= "integration.ontology.types.point" then
                     error( "Expected point in path, received something else: "..tostring( InferType( currentValue ) ) )
                 end
             end
@@ -93,7 +91,7 @@ local function fillParameters( mission, params )
     for parameterName, parameterValue in pairs( params ) do
         if type(parameterValue) == "table" then
             if existsIndex(parameterValue , "__tag" ) then
-                AssignMissionParameter( mission, parameterName, tostring( masalife.brain.core.class.getType(parameterValue) ), parameterValue.source )
+                AssignMissionParameter( mission, parameterName, masalife.brain.core.class.getType(parameterValue), parameterValue.source )
             else
                 local tempList = {}
                 for _, value in pairs( parameterValue ) do
@@ -240,12 +238,12 @@ end
 
 integration.getAgentFromKnowledge = function( entity )
     local agent = DEC_ConnaissanceAgent_EnAgent(entity.source)
-    return CreateKnowledge(world.PlatoonAlly, agent)
+    return CreateKnowledge(integration.ontology.types.agent, agent)
 end
 
 integration.getAgentFromAutomatKnowledge = function( entity )
     local agent = DEC_Connaissance_EnAgent( entity.source )
-    return CreateKnowledge(world.PlatoonAlly, agent)
+    return CreateKnowledge(integration.ontology.types.agent, agent)
 end
 
 function DEC_GetMission( entity )
