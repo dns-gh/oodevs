@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <exercise model-version="4.8.2" valid="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/exercise.xsd">
   <meta>
-    <name><![CDATA[Egypt]]></name>
     <briefing>
       <text lang="en"><![CDATA[
         <h1>Egypt</h1>

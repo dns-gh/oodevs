@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <exercise model-version="4.0.0">
   <meta>
-    <name><![CDATA[Test1 Incrément1 Scipio.V1]]></name>
     <briefing/>
     <resources>
       <resource file="docs/fr/html/pihce N015 - Annexes OPO 01.htm" name="Annexes OPO 01"/>
