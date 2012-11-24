@@ -343,6 +343,9 @@ bool MessageLoader::OpenFile( std::ifstream& stream, const std::string& folder, 
     const bfs::path dir = records_ / folder / file;
     if( !bfs::exists( dir ) )
         return false;
+    // istream open()/close() are not supposed to clear the file state,
+    // it must be done manually, nice move C++.
+    stream.clear();
     stream.open( dir.string().c_str(), std::ios_base::binary | std::ios_base::in );
     return true;
 }
