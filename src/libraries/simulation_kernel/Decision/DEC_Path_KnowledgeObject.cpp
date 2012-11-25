@@ -71,15 +71,6 @@ namespace
     }
 }
 
-#define COMPUTE_COST( f, o ) \
-    if( realLocalisation_.f( o, epsilon ) ) \
-    { \
-        if( localisation_.f( o, epsilon ) ) \
-            return ComputeCost( weight ); \
-        if( scaledLocalisation_.f( o, epsilon ) ) \
-            return rCost_; \
-    }
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeObject::ComputeCost
 // Created: AGE 2005-02-01
@@ -90,9 +81,27 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
     if( OutOfBoundingBox( realLocalisation_.GetBoundingBox(), from, to ) )
         return min;
     const MT_Line line( from, to );
-    COMPUTE_COST( Intersect2D, line )
-    COMPUTE_COST( IsInside, to )
-    COMPUTE_COST( IsInside, from )
+    if( realLocalisation_.Intersect2D( line, epsilon ) )
+    {
+        if( localisation_.Intersect2D( line, epsilon ) )
+            return ComputeCost( weight );
+        if( scaledLocalisation_.Intersect2D( line, epsilon ) )
+            return rCost_;
+    }
+    if( realLocalisation_.IsInside( to, epsilon ) )
+    {
+        if( localisation_.IsInside( to, epsilon ) )
+            return ComputeCost( weight );
+        if( scaledLocalisation_.IsInside( to, epsilon ) )
+            return rCost_;
+    }
+    if( realLocalisation_.IsInside( from, epsilon ) )
+    {
+        if( localisation_.IsInside( from, epsilon ) )
+            return ComputeCost( weight );
+        if( scaledLocalisation_.IsInside( from, epsilon ) )
+            return rCost_;
+    }
     return min;
 }
 
