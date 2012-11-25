@@ -1226,6 +1226,18 @@ double PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC& f
     return rRange;
  }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetMaxRangeToDirectFire
+// Created: MCO 2012-11-23
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetMaxRangeToDirectFire() const
+{
+    double rRange = 0.;
+    for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+        rRange = std::max( rRange, it->first->GetMaxRangeToDirectFire() );
+    return rRange;
+}
+
 // =============================================================================
 // LOGISTIC
 // =============================================================================

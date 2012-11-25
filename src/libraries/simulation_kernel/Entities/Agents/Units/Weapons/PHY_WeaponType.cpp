@@ -464,6 +464,15 @@ double PHY_WeaponType::GetMinRangeToIndirectFire() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetMaxRangeToDirectFire
+// Created: MCO 2012-11-23
+// -----------------------------------------------------------------------------
+double PHY_WeaponType::GetMaxRangeToDirectFire() const
+{
+    return pDirectFireData_ ? pDirectFireData_->GetMaxRange() : 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::FindWeaponType
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------

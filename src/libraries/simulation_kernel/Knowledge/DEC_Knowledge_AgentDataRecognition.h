@@ -68,6 +68,7 @@ public:
     unsigned int GetTimeLastUpdate() const;
     double GetOperationalState() const;
     double GetMajorOperationalState() const;
+    double GetMaxSquareRange() const;
     const T_KnowledgeComposanteVector& GetComposantes() const;
     const MIL_Army_ABC* GetArmy() const;
     const PHY_NatureAtlas& GetNatureAtlas() const;
@@ -88,6 +89,7 @@ private:
     unsigned int nTimeLastUpdate_;
     double rOperationalState_;
     double rMajorOperationalState_;
+    double maxSquareRange_;
     T_KnowledgeComposanteVector composantes_;
     const MIL_Army_ABC* pArmy_;
     const MIL_AgentType_ABC* pAgentType_; // For 'natures'

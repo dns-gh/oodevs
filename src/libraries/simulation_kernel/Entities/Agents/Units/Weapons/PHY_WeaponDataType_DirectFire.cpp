@@ -265,6 +265,18 @@ double PHY_WeaponDataType_DirectFire::GetMaxRangeToFire( double rWantedPH ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_DirectFire::GetMaxRange
+// Created: MCO 2012-11-23
+// -----------------------------------------------------------------------------
+double PHY_WeaponDataType_DirectFire::GetMaxRange() const
+{
+    double result = 0;
+    for( CIT_PhVector it = phs_.begin(); it != phs_.end(); ++it )
+        result = std::max( result, it->GetMaxYForX( 0 ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_DirectFire::GetDangerosity
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
