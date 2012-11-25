@@ -47,26 +47,28 @@ void WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
     xis >> xml::attribute( "target", targetType );
     std::size_t id = GET_HOOK( GetVolumeId )( targetType.c_str() );
     if( phs_.size() <= id )
-        phs_.resize( id + 1 );
-    MT_InterpolatedFunction& phFunction = phs_[ id ]; // $$$$ MCO 2012-04-30: how to handle unknown type ?
-    xis >> xml::list( "hit-probability", *this, &WeaponDataType_DirectFire::ReadHitProbability, phFunction );
+        phs_.resize( id + 1 ); // $$$$ MCO 2012-04-30: how to handle unknown type e.g. if ids are not continuous ?
+    MT_InterpolatedFunction& function = phs_[ id ];
+    function.SetBeforeValue( 0 );
+    function.SetAfterValue( 0 );
+    xis >> xml::list( "hit-probability", *this, &WeaponDataType_DirectFire::ReadHitProbability, phs_[ id ] );
 }
 
 // -----------------------------------------------------------------------------
 // Name: WeaponDataType_DirectFire::ReadHitProbability
 // Created: ABL 2007-07-20
 // -----------------------------------------------------------------------------
-void WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction& phFunction )
+void WeaponDataType_DirectFire::ReadHitProbability( xml::xistream& xis, MT_InterpolatedFunction& function )
 {
-    double rDistance;
+    double distance;
     double ph;
-    xis >> xml::attribute( "distance", rDistance )
+    xis >> xml::attribute( "distance", distance )
         >> xml::attribute( "percentage", ph );
-    if( rDistance < 0 )
+    if( distance < 0 )
         xis.error( "hit-probability: distance <  0" );
     if( ph < 0 || ph > 1 )
         xis.error( "hit-probability: percentage not in [0.1]" );
-    phFunction.AddNewPoint( rDistance, ph );
+    function.AddNewPoint( distance, ph );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,8 +81,7 @@ double WeaponDataType_DirectFire::GetMaxDistanceForPH( double ph, const wrapper:
     if( targetVolume >= phs_.size() )
         throw std::runtime_error( "Invalid target volume identifier in GetMaxDistanceForPH : "
                                   + boost::lexical_cast< std::string >( targetVolume ) );
-    return launcherType_.GetPHModificator()
-        * phs_[ targetVolume ].GetMaxYForX( ph );
+    return launcherType_.GetPHModificator() * phs_[ targetVolume ].GetMaxYForX( ph );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,8 +94,7 @@ double WeaponDataType_DirectFire::GetMaxDistanceForPH( const wrapper::View& fire
     if( targetVolume >= phs_.size() )
         throw std::runtime_error( "Invalid target volume identifier in GetMaxDistanceForPH : "
                                   + boost::lexical_cast< std::string >( targetVolume ) );
-    return launcherType_.GetPHModificator( firer, target )
-        * phs_[ targetVolume ].GetMaxYForX( ph );
+    return launcherType_.GetPHModificator( firer, target ) * phs_[ targetVolume ].GetMaxYForX( ph );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,8 +107,7 @@ double WeaponDataType_DirectFire::GetMinDistanceForPH( double ph, const wrapper:
     if( targetVolume >= phs_.size() )
         throw std::runtime_error( "Invalid target volume identifier in GetMinDistanceForPH : "
                                   + boost::lexical_cast< std::string >( targetVolume ) );
-    return launcherType_.GetPHModificator()
-        * phs_[ targetVolume ].GetMinYForX( ph );
+    return launcherType_.GetPHModificator() * phs_[ targetVolume ].GetMinYForX( ph );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,8 +132,7 @@ double WeaponDataType_DirectFire::GetMinDistanceForPH( const wrapper::View& fire
     if( targetVolume >= phs_.size() )
         throw std::runtime_error( "Invalid target volume identifier in GetMinDistanceForPH : "
                                   + boost::lexical_cast< std::string >( targetVolume ) );
-    return launcherType_.GetPHModificator( firer, target )
-        * phs_[ targetVolume ].GetMinYForX( ph );
+    return launcherType_.GetPHModificator( firer, target ) * phs_[ targetVolume ].GetMinYForX( ph );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,14 +142,15 @@ double WeaponDataType_DirectFire::GetMinDistanceForPH( const wrapper::View& fire
 // -----------------------------------------------------------------------------
 double WeaponDataType_DirectFire::GetPH( const wrapper::View& firer, const wrapper::View& target, std::size_t targetVolume ) const
 {
-    double rDistance = GET_HOOK( GetDistance )( firer, target );
-    const double rPHModificator = launcherType_.GetPHModificator( firer, target );
-    if( rPHModificator <= 0 )
-        return 0;
-    rDistance /= rPHModificator;
     if( phs_.size() <= targetVolume )
-        return MT_InterpolatedFunction()( rDistance );
-    const double ph = phs_[ targetVolume ]( rDistance );
+        throw std::runtime_error( "Invalid target volume identifier in GetDangerosity : "
+                                  + boost::lexical_cast< std::string >( targetVolume ) );
+    double distance = GET_HOOK( GetDistance )( firer, target );
+    const double modificator = launcherType_.GetPHModificator( firer, target );
+    if( modificator <= 0 )
+        return 0;
+    distance /= modificator;
+    const double ph = phs_[ targetVolume ]( distance );
     return dotation_.ModifyPh( firer, target, ph );
 }
 
@@ -159,16 +158,16 @@ double WeaponDataType_DirectFire::GetPH( const wrapper::View& firer, const wrapp
 // Name: WeaponDataType_DirectFire::GetPH
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double WeaponDataType_DirectFire::GetPH( std::size_t targetVolume, double rDistance ) const
+double WeaponDataType_DirectFire::GetPH( std::size_t targetVolume, double distance ) const
 {
     if( targetVolume >= phs_.size() )
         throw std::runtime_error( "Invalid target volume identifier in GetDangerosity : "
                                   + boost::lexical_cast< std::string >( targetVolume ) );
-    const double rPHModificator = launcherType_.GetPHModificator();
-    if( rPHModificator <= 0 )
+    const double modificator = launcherType_.GetPHModificator();
+    if( modificator <= 0 )
         return 0;
-    rDistance /= rPHModificator;
-    return phs_[ targetVolume ]( rDistance );
+    distance /= modificator;
+    return phs_[ targetVolume ]( distance );
 }
 
 // -----------------------------------------------------------------------------
