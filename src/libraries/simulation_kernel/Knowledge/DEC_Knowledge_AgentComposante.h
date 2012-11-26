@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 
-class PHY_Composante_ABC;
 class PHY_ComposantePion;
 class PHY_ComposanteType_ABC;
 class MIL_Agent_ABC;
@@ -32,7 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_AgentComposante();
-    explicit DEC_Knowledge_AgentComposante( const PHY_Composante_ABC& composante );
+    explicit DEC_Knowledge_AgentComposante( const PHY_ComposantePion& composante );
     virtual ~DEC_Knowledge_AgentComposante();
     //@}
 
@@ -49,6 +48,7 @@ public:
     const PHY_ComposanteType_ABC& GetType() const;
     unsigned int GetMajorScore() const;
     bool IsMajor() const;
+    double GetMaxRange() const;
     //@}
 
     //! @name Operations
@@ -65,6 +65,7 @@ private:
     bool bCanFireWhenUnloaded_;
     bool bMajor_;
     unsigned int nMajorScore_;
+    double maxRange_;
     //@}
 };
 

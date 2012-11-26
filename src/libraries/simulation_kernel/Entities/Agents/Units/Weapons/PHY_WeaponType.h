@@ -86,6 +86,8 @@ public:
     double GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
     double GetMaxRangeToFire( const MIL_Agent_ABC& firer, double rWantedPH ) const;
 
+    double GetMaxRangeToDirectFire() const;
+
     double GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const;
     double GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const;
     double GetMaxRangeToIndirectFire() const;

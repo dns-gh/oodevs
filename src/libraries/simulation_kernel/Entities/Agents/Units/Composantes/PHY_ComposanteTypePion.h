@@ -141,6 +141,7 @@ public:
             double GetMaxRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
             double GetMinRangeToIndirectFire     ( const MIL_Agent_ABC& firer, const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
             double GetMaxRangeToIndirectFire     ( const MIL_Agent_ABC& firer ) const;
+            double GetMaxRangeToDirectFire       () const;
     virtual double GetAttritionIndexComposante   ( const PHY_MaterialCompositionType& material ) const;
     virtual double GetMaxRangeToFire             ( const MIL_Agent_ABC&  pion, double rWantedPH ) const;
     //@}

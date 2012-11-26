@@ -614,22 +614,45 @@ double DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target, bool bU
         ||  IsAFriend( target.GetArmy() ) == eTristate_True
         ||  dataDetection_.IsSurrendered() )
         return 0.;
+    const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
+    const MT_Vector2D& position2d = targetLocation.GetPosition();
+    if( dataDetection_.GetPosition().SquareDistance( position2d ) > dataRecognition_.GetMaxSquareRange() )
+        return 0;
     // Target is dead ....
     const PHY_ComposantePion* pTargetMajorComposante = target.GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
     if( !pTargetMajorComposante )
         return 0.;
-    const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();    
-    const MT_Vector2D& position2d = targetLocation.GetPosition();
     const MT_Vector3D vTargetPosition( position2d.rX_, position2d.rY_, targetLocation.GetAltitude() );
     const PHY_ComposanteType_ABC& targetType = pTargetMajorComposante->GetType();
-    return GetDangerosity( vTargetPosition, targetType, bUseAmmo );
+    return ComputeDangerosity( vTargetPosition, targetType, bUseAmmo );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetDangerosity
+// Created: NLD 2004-05-07
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target, bool bUseAmmo ) const
+{
+    if( *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_ )
+        return 0.;
+    const MT_Vector2D& position2d = target.GetPosition();
+    if( dataDetection_.GetPosition().SquareDistance( position2d ) > dataRecognition_.GetMaxSquareRange() )
+        return 0;
+    // Target is dead ....
+    const DEC_Knowledge_AgentComposante* pTargetMajorComposante = target.GetMajorComposante();
+    if( !pTargetMajorComposante )
+        return 0.;
+    // Fight score
+    const MT_Vector3D vTargetPosition( position2d.rX_, position2d.rY_, target.GetAltitude() );
+    const PHY_ComposanteType_ABC& targetType = pTargetMajorComposante->GetType();
+    return ComputeDangerosity( vTargetPosition, targetType, bUseAmmo );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::GetDangerosity
 // Created: JSR 2011-09-09
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_Agent::GetDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo ) const
+double DEC_Knowledge_Agent::ComputeDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo ) const
 {
     double rDangerosity = 0.;
     // Fight score
@@ -642,25 +665,6 @@ double DEC_Knowledge_Agent::GetDangerosity( const MT_Vector3D& vTargetPosition, 
         rDangerosity = std::max( rDangerosity, itComposante->GetDangerosity( *pAgentKnown_, targetMajorComposante, rDistBtwSourceAndTarget, bUseAmmo ) );
     DegradeDangerosity( rDangerosity );
     return rDangerosity;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Agent::GetDangerosity
-// Created: NLD 2004-05-07
-// -----------------------------------------------------------------------------
-double DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target, bool bUseAmmo ) const
-{
-    if( *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_ )
-        return 0.;
-    // Target is dead ....
-    const DEC_Knowledge_AgentComposante* pTargetMajorComposante = target.GetMajorComposante();
-    if( !pTargetMajorComposante )
-        return 0.;
-    // Fight score
-    const MT_Vector2D& position2d = target.GetPosition();
-    const MT_Vector3D vTargetPosition( position2d.rX_, position2d.rY_, target.GetAltitude() );
-    const PHY_ComposanteType_ABC& targetType = pTargetMajorComposante->GetType();
-    return GetDangerosity( vTargetPosition, targetType, bUseAmmo );
 }
 
 // -----------------------------------------------------------------------------

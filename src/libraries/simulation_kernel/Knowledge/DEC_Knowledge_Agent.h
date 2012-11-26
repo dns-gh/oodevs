@@ -181,7 +181,7 @@ private:
 
     //! @name Tools
     //@{
-    double GetDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo ) const;
+    double ComputeDangerosity( const MT_Vector3D& vTargetPosition, const PHY_ComposanteType_ABC& targetMajorComposante, bool bUseAmmo ) const;
     void DegradeDangerosity( double& rDangerosity ) const;
     void ChangeRelevance( double rNewRelevance );
     //@}

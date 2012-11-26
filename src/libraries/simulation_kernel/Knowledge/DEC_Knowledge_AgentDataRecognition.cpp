@@ -34,6 +34,7 @@ DEC_Knowledge_AgentDataRecognition::DEC_Knowledge_AgentDataRecognition()
     , pArmy_                   ( 0 )
     , rOperationalState_       ( std::numeric_limits< double >::max() )
     , rMajorOperationalState_  ( std::numeric_limits< double >::max() )
+    , maxSquareRange_          ( 0 )
     , pAgentType_              ( 0 )
     , bIsPC_                   ( false )
     , bOperationalStateChanged_( false )
@@ -60,6 +61,7 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
     file >> nTimeLastUpdate_
          >> rOperationalState_
          >> rMajorOperationalState_
+         >> maxSquareRange_
          >> composantes_
          >> const_cast< MIL_Army_ABC*& >( pArmy_ )
          >> bIsPC_;
@@ -80,6 +82,7 @@ void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, c
     file << nTimeLastUpdate_
          << rOperationalState_
          << rMajorOperationalState_
+         << maxSquareRange_
          << composantes_
          << pArmy_
          << bIsPC_
@@ -115,6 +118,10 @@ void DEC_Knowledge_AgentDataRecognition::DoUpdate( const T& data )
     }
     rMajorOperationalState_ = data.GetMajorOperationalState();
     composantes_ = data.GetComposantes();
+    double maxRange = 0;
+    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        maxRange = std::max( maxRange, it->GetMaxRange() );
+    maxSquareRange_ = maxRange * maxRange;
     if( !pAgentType_ )
     {
         bAgentTypeUpdated_ = true;
@@ -224,6 +231,15 @@ double DEC_Knowledge_AgentDataRecognition::GetOperationalState() const
 double DEC_Knowledge_AgentDataRecognition::GetMajorOperationalState() const
 {
     return rMajorOperationalState_ == std::numeric_limits< double >::max() ? 1. : rMajorOperationalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataRecognition::GetMaxSquareRange
+// Created: MCO 2012-11-23
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_AgentDataRecognition::GetMaxSquareRange() const
+{
+    return maxSquareRange_;
 }
 
 // -----------------------------------------------------------------------------

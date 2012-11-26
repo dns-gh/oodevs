@@ -25,7 +25,8 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante()
     , bCanFire_            ( false )
     , bCanFireWhenUnloaded_( false )
     , bMajor_              ( false )
-    , nMajorScore_         ( 0 )
+    , nMajorScore_( 0 )
+    , maxRange_   ( 0 )
 {
     // NOTHING
 }
@@ -34,12 +35,13 @@ DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante()
 // Name: DEC_Knowledge_AgentComposante constructor
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------
-DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante( const PHY_Composante_ABC& composante )
+DEC_Knowledge_AgentComposante::DEC_Knowledge_AgentComposante( const PHY_ComposantePion& composante )
     : pType_               ( &composante.GetType() )
     , bCanFire_            ( composante.CanFire() )
     , bCanFireWhenUnloaded_( composante.CanFireWhenUnloaded() )
     , bMajor_              ( composante.IsMajor() )
-    , nMajorScore_         ( composante.GetMajorScore() )
+    , nMajorScore_( composante.GetMajorScore() )
+    , maxRange_   ( composante.GetMaxRangeToDirectFire() )
 {
     // NOTHING
 }
@@ -67,7 +69,8 @@ void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const u
     file >> bCanFire_
          >> bCanFireWhenUnloaded_
          >> bMajor_
-         >> nMajorScore_;
+         >> nMajorScore_
+         >> maxRange_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +85,8 @@ void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const 
          << bCanFire_
          << bCanFireWhenUnloaded_
          << bMajor_
-         << nMajorScore_;
+         << nMajorScore_
+         << maxRange_;
 }
 
 // -----------------------------------------------------------------------------
@@ -94,6 +98,8 @@ double DEC_Knowledge_AgentComposante::GetDangerosity( const MIL_Agent_ABC& firer
     assert( pType_ );
     if( !bCanFire_ )
         return 0.;
+    if( maxRange_ < rDistBtwSourceAndTarget )
+        return 0;
     return pType_->GetDangerosity( firer, compTarget, rDistBtwSourceAndTarget, bUseAmmo );
 }
 
@@ -135,4 +141,13 @@ unsigned int DEC_Knowledge_AgentComposante::GetMajorScore() const
 bool DEC_Knowledge_AgentComposante::IsMajor() const
 {
     return bMajor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentComposante::GetMaxRange
+// Created: MCO 2012-11-23
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_AgentComposante::GetMaxRange() const
+{
+    return maxRange_;
 }

@@ -135,6 +135,15 @@ bool PHY_Weapon::IsReady() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Weapon::GetMaxRangeToDirectFire
+// Created: MCO 2012-11-23
+// -----------------------------------------------------------------------------
+double PHY_Weapon::GetMaxRangeToDirectFire() const
+{
+    return type_.GetMaxRangeToDirectFire();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Weapon::GetMaxRangeToIndirectFire
 // Created: JVT 2005-05-02
 // -----------------------------------------------------------------------------
