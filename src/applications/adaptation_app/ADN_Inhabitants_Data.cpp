@@ -396,7 +396,7 @@ ADN_Inhabitants_Data::~ADN_Inhabitants_Data()
 void ADN_Inhabitants_Data::Reset()
 {
     idManager_.Reset();
-    vPeople_.Reset();
+    vInhabitants_.Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -427,7 +427,7 @@ void ADN_Inhabitants_Data::ReadPeople( xml::xistream& input )
 {
     std::auto_ptr< InhabitantsInfos > spNew( new InhabitantsInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
-    vPeople_.AddItem( spNew.release() );
+    vInhabitants_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -438,7 +438,7 @@ void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "populations" );
     ADN_Tools::AddSchema( output, "Inhabitants" );
-    for( CIT_InhabitantsInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+    for( CIT_InhabitantsInfosVector it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 }
@@ -450,7 +450,7 @@ void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output )
 QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_Crowds_Data::CrowdsInfos& population )
 {
     QStringList result;
-    for( CIT_InhabitantsInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+    for( CIT_InhabitantsInfosVector it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
         if( ( *it )->ptrModel_.GetData()->strName_.GetData() == population.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     return result;
@@ -463,7 +463,7 @@ QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_Crowds_Data::Crowds
 QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network )
 {
     QStringList result;
-    for( CIT_InhabitantsInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+    for( CIT_InhabitantsInfosVector it = vInhabitants_.begin(); it != vInhabitants_.end(); ++it )
         for( CIT_InhabitantsInfosConsumptionVector itConsumption = ( *it )->consumptions_.begin(); itConsumption != ( *it )->consumptions_.end(); ++itConsumption )
             if( ( *itConsumption )->ptrResource_.GetData()->strName_.GetData() == network.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();

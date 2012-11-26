@@ -122,7 +122,7 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    T_InhabitantsInfosVector vPeople_;
+    T_InhabitantsInfosVector vInhabitants_;
 
 private:
     static tools::IdManager idManager_;
@@ -135,7 +135,7 @@ private:
 inline
 ADN_Inhabitants_Data::T_InhabitantsInfosVector& ADN_Inhabitants_Data::GetInhabitants()
 {
-    return vPeople_;
+    return vInhabitants_;
 }
 
 // -----------------------------------------------------------------------------
@@ -145,8 +145,8 @@ ADN_Inhabitants_Data::T_InhabitantsInfosVector& ADN_Inhabitants_Data::GetInhabit
 inline
 ADN_Inhabitants_Data::InhabitantsInfos* ADN_Inhabitants_Data::FindInhabitant( const std::string& strName )
 {
-    IT_InhabitantsInfosVector it = std::find_if( vPeople_.begin(), vPeople_.end(), ADN_Tools::NameCmp< InhabitantsInfos >( strName ) );
-    if( it == vPeople_.end() )
+    IT_InhabitantsInfosVector it = std::find_if( vInhabitants_.begin(), vInhabitants_.end(), ADN_Tools::NameCmp< InhabitantsInfos >( strName ) );
+    if( it == vInhabitants_.end() )
         return 0;
     return *it;
 }
