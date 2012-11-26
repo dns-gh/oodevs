@@ -47,11 +47,6 @@ return
     isBeingReconnoiteredByMeOrNoOne = function( self )
        return true
     end,
-    activateRadar = masalife.brain.integration.startStopAction( 
-    { 
-        start = integration.startActivateRadar,
-        stop = integration.stopActivateRadar
-    } ),
     radarOn = function( self )
        return integration.activateRadar( self )
     end,

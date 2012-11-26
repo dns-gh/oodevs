@@ -49,7 +49,6 @@
 		<skill name="france.military.platoon.combat.support.art.skills.Defendre"/>
 		<skill name="france.military.platoon.combat.support.art.skills.IntercepterMissile"/>
 		<skill name="france.military.platoon.combat.support.art.skills.Surveiller"/>
-		<skill name="france.military.platoon.combat.support.rens.skills.primitives.ActivateRadar"/>
 		<skill name="france.military.platoon.combat.support.rens.skills.Renseigner"/>
 		<skill name="france.military.platoon.combat.support.rens.skills.SExfiltrer"/>
 		<skill name="france.military.platoon.combat.support.rens.skills.RASIT_RenseignerSur"/>

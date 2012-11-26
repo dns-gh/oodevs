@@ -413,13 +413,6 @@
                 </type>
             </return>
         </method>
-        <method name="activateRadar" abstract="false">
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="activateRadarTirIndirect" abstract="false">
             <return>
                 <type>
