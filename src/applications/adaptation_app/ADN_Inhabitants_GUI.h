@@ -7,22 +7,22 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_People_GUI_h_
-#define __ADN_People_GUI_h_
+#ifndef __ADN_Inhabitants_GUI_h_
+#define __ADN_Inhabitants_GUI_h_
 
 #include "ADN_GUI_ABC.h"
 #include "ADN_EditLine.h"
 
-class ADN_People_Data;
-class ADN_People_ListView;
+class ADN_Inhabitants_Data;
+class ADN_Inhabitants_ListView;
 
 // =============================================================================
-/** @class  ADN_People_GUI
-    @brief  ADN_People_GUI
+/** @class  ADN_Inhabitants_GUI
+    @brief  ADN_Inhabitants_GUI
 */
 // Created: SLG 2010-11-23
 // =============================================================================
-class ADN_People_GUI : public ADN_GUI_ABC
+class ADN_Inhabitants_GUI : public ADN_GUI_ABC
 {
 
 public:
@@ -49,8 +49,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_People_GUI( ADN_People_Data& data );
-    virtual ~ADN_People_GUI();
+    explicit ADN_Inhabitants_GUI( ADN_Inhabitants_Data& data );
+    virtual ~ADN_Inhabitants_GUI();
     //@}
 
     //! @name Operations
@@ -61,8 +61,8 @@ public:
 private:
     //! @name Member data
     //@{
-    ADN_People_Data& data_;
+    ADN_Inhabitants_Data& data_;
     //@}
 };
 
-#endif // __ADN_People_GUI_h_
+#endif // __ADN_Inhabitants_GUI_h_

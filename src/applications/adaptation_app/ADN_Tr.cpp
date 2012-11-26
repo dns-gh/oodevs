@@ -304,7 +304,7 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "humanfactors",     QT_TRANSLATE_NOOP("ADN_Tr", "Human factors" ),        eHumanFactors ),
     T_ConverterWorkspaceElements( "knowledgegroups",  QT_TRANSLATE_NOOP("ADN_Tr", "Knowledge groups" ),     eKnowledgeGroups ),
     T_ConverterWorkspaceElements( "population",       QT_TRANSLATE_NOOP("ADN_Tr", "Crowds" ),               ePopulation ),
-    T_ConverterWorkspaceElements( "people",           QT_TRANSLATE_NOOP("ADN_Tr", "Populations" ),          ePeople ),
+    T_ConverterWorkspaceElements( "people",           QT_TRANSLATE_NOOP("ADN_Tr", "Populations" ),          eInhabitants ),
     T_ConverterWorkspaceElements( "reports",          QT_TRANSLATE_NOOP("ADN_Tr", "Reports" ),              eReports ),
     T_ConverterWorkspaceElements( "logistic",         QT_TRANSLATE_NOOP("ADN_Tr", "Log" ),                  eLogistic ),
     T_ConverterWorkspaceElements( "disasters",        QT_TRANSLATE_NOOP("ADN_Tr", "Disasters" ),            eDisasters ),

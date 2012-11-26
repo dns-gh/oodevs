@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_People_Data.h"
+#include "ADN_Inhabitants_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_DataException.h"
@@ -18,13 +18,13 @@
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
 
-tools::IdManager ADN_People_Data::idManager_;
+tools::IdManager ADN_Inhabitants_Data::idManager_;
 
 // -----------------------------------------------------------------------------
 // Name: EventInfos::EventInfos
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-ADN_People_Data::EventInfos::EventInfos()
+ADN_Inhabitants_Data::EventInfos::EventInfos()
     : ptrAccommodation_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetAccommodationsInfos(), 0 )
     , day_( eDays_Monday )
     , from_( "00:00" )
@@ -37,7 +37,7 @@ ADN_People_Data::EventInfos::EventInfos()
 // Name: EventInfos::~EventInfos
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-ADN_People_Data::EventInfos::~EventInfos()
+ADN_Inhabitants_Data::EventInfos::~EventInfos()
 {
     // NOTHING
 }
@@ -46,7 +46,7 @@ ADN_People_Data::EventInfos::~EventInfos()
 // Name: EventInfos::CreateCopy
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-ADN_People_Data::EventInfos* ADN_People_Data::EventInfos::CreateCopy()
+ADN_Inhabitants_Data::EventInfos* ADN_Inhabitants_Data::EventInfos::CreateCopy()
 {
     EventInfos* pCopy = new EventInfos();
 
@@ -63,7 +63,7 @@ ADN_People_Data::EventInfos* ADN_People_Data::EventInfos::CreateCopy()
 // Name: EventInfos::ReadArchive
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
+void ADN_Inhabitants_Data::EventInfos::ReadArchive( xml::xistream& input )
 {
     std::string day, accommodation;
     day = input.attribute< std::string >( "day" );
@@ -82,7 +82,7 @@ void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
 // Name: EventInfos::WriteArchive
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Inhabitants_Data::EventInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "event" )
            << xml::attribute( "day", day_.Convert() )
@@ -93,10 +93,10 @@ void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfosConsumption::PeopleInfosConsumption
+// Name: InhabitantsInfosConsumption::InhabitantsInfosConsumption
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-ADN_People_Data::PeopleInfosConsumption::PeopleInfosConsumption()
+ADN_Inhabitants_Data::InhabitantsInfosConsumption::InhabitantsInfosConsumption()
     : ptrResource_( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0 )
     , consumption_( 0 )
 {
@@ -104,21 +104,21 @@ ADN_People_Data::PeopleInfosConsumption::PeopleInfosConsumption()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfosConsumption::GetItemName
+// Name: InhabitantsInfosConsumption::GetItemName
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-std::string ADN_People_Data::PeopleInfosConsumption::GetItemName()
+std::string ADN_Inhabitants_Data::InhabitantsInfosConsumption::GetItemName()
 {
     return ptrResource_.GetData()->strName_.GetData();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfosConsumption::CreateCopy
+// Name: InhabitantsInfosConsumption::CreateCopy
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-ADN_People_Data::PeopleInfosConsumption* ADN_People_Data::PeopleInfosConsumption::CreateCopy()
+ADN_Inhabitants_Data::InhabitantsInfosConsumption* ADN_Inhabitants_Data::InhabitantsInfosConsumption::CreateCopy()
 {
-    PeopleInfosConsumption* pCopy = new PeopleInfosConsumption();
+    InhabitantsInfosConsumption* pCopy = new InhabitantsInfosConsumption();
     pCopy->ptrResource_ = ptrResource_.GetData();
     pCopy->ptrResource_.SetVector( ptrResource_.GetVector() );
     pCopy->consumption_ = consumption_.GetData();
@@ -126,10 +126,10 @@ ADN_People_Data::PeopleInfosConsumption* ADN_People_Data::PeopleInfosConsumption
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfosConsumption::ReadArchive
+// Name: InhabitantsInfosConsumption::ReadArchive
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfosConsumption::ReadArchive( xml::xistream& xis )
+void ADN_Inhabitants_Data::InhabitantsInfosConsumption::ReadArchive( xml::xistream& xis )
 {
     std::string strResource;
     xis >> xml::attribute( "type", strResource )
@@ -141,10 +141,10 @@ void ADN_People_Data::PeopleInfosConsumption::ReadArchive( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfosConsumption::WriteArchive
+// Name: InhabitantsInfosConsumption::WriteArchive
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfosConsumption::WriteArchive( xml::xostream& xos ) const
+void ADN_Inhabitants_Data::InhabitantsInfosConsumption::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "resource" )
             << xml::attribute( "type", ptrResource_.GetData()->strName_ )
@@ -153,15 +153,15 @@ void ADN_People_Data::PeopleInfosConsumption::WriteArchive( xml::xostream& xos )
 }
 
 // =============================================================================
-// ADN_People_Data::PeopleInfos
+// ADN_Inhabitants_Data::InhabitantsInfos
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfos::PeopleInfos
+// Name: InhabitantsInfos::InhabitantsInfos
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-ADN_People_Data::PeopleInfos::PeopleInfos()
-    : nId_                ( ADN_People_Data::idManager_.GetNextId() )
+ADN_Inhabitants_Data::InhabitantsInfos::InhabitantsInfos()
+    : nId_                ( ADN_Inhabitants_Data::idManager_.GetNextId() )
     , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
     , repartition_        ( tools::translate( "People_Data", "Population" ) )
     , securityLossOnFire_ ( 0 )
@@ -173,10 +173,10 @@ ADN_People_Data::PeopleInfos::PeopleInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfos::PeopleInfos
+// Name: InhabitantsInfos::InhabitantsInfos
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-ADN_People_Data::PeopleInfos::PeopleInfos( unsigned int id )
+ADN_Inhabitants_Data::InhabitantsInfos::InhabitantsInfos( unsigned int id )
     : nId_                ( id )
     , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
     , repartition_        ( tools::translate( "People_Data", "Population" ) )
@@ -186,25 +186,25 @@ ADN_People_Data::PeopleInfos::PeopleInfos( unsigned int id )
     , transferTime_       ( "0h" )
 {
     BindExistenceTo( &ptrModel_ );
-    ADN_People_Data::idManager_.Lock( id );
+    ADN_Inhabitants_Data::idManager_.Lock( id );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfos::~PeopleInfos
+// Name: InhabitantsInfos::~InhabitantsInfos
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-ADN_People_Data::PeopleInfos::~PeopleInfos()
+ADN_Inhabitants_Data::InhabitantsInfos::~InhabitantsInfos()
 {
     consumptions_.Delete();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfos::CreateCopy
+// Name: InhabitantsInfos::CreateCopy
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
+ADN_Inhabitants_Data::InhabitantsInfos* ADN_Inhabitants_Data::InhabitantsInfos::CreateCopy()
 {
-    PeopleInfos* pCopy = new PeopleInfos();
+    InhabitantsInfos* pCopy = new InhabitantsInfos();
     pCopy->ptrModel_ = ptrModel_.GetData();
     pCopy->strAngryCrowdMission_ = strAngryCrowdMission_.GetData();
     pCopy->repartition_ = repartition_;
@@ -218,19 +218,19 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
         EventInfos* pNew = ( *it )->CreateCopy();
         pCopy->schedule_.AddItem( pNew );
     }
-    for( IT_PeopleInfosConsumptionVector itConsumption = consumptions_.begin(); itConsumption != consumptions_.end(); ++itConsumption )
+    for( IT_InhabitantsInfosConsumptionVector itConsumption = consumptions_.begin(); itConsumption != consumptions_.end(); ++itConsumption )
     {
-        PeopleInfosConsumption* pNew = ( *itConsumption )->CreateCopy();
+        InhabitantsInfosConsumption* pNew = ( *itConsumption )->CreateCopy();
         pCopy->consumptions_.AddItem( pNew );
     }
     return pCopy;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfos::ReadArchive
+// Name: InhabitantsInfos::ReadArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
+void ADN_Inhabitants_Data::InhabitantsInfos::ReadArchive( xml::xistream& input )
 {
     std::string strModel;
     input >> xml::attribute( "name", strName_ )
@@ -247,14 +247,14 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
     input >> xml::end
           >> xml::start( "schedule" )
             >> xml::attribute( "transfer-time", transferTime_ )
-            >> xml::list( "event", *this, &ADN_People_Data::PeopleInfos::ReadEvent )
+            >> xml::list( "event", *this, &ADN_Inhabitants_Data::InhabitantsInfos::ReadEvent )
           >> xml::end
           >> xml::start( "safety-level" )
             >> xml::attribute( "loss-on-fire", securityLossOnFire_ )
             >> xml::attribute( "gain-per-hour", securityGainPerHour_ )
           >> xml::end
           >> xml::start( "consumption" )
-            >> xml::list( "resource", *this, &ADN_People_Data::PeopleInfos::ReadConsumption )
+            >> xml::list( "resource", *this, &ADN_Inhabitants_Data::InhabitantsInfos::ReadConsumption )
           >> xml::end
           >> xml::start( "health-need" )
             >> xml::attribute( "people-per-facility", healthNeed_ )
@@ -291,10 +291,10 @@ namespace
     }
 }
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::CheckErrors
+// Name: ADN_Inhabitants_Data::CheckErrors
 // Created: LGY 2011-01-31
 // -----------------------------------------------------------------------------
-const std::string ADN_People_Data::PeopleInfos::CheckErrors() const
+const std::string ADN_Inhabitants_Data::InhabitantsInfos::CheckErrors() const
 {
     for( CIT_EventInfosVector it1 = schedule_.begin(); it1 != schedule_.end(); ++it1 )
         for( CIT_EventInfosVector it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
@@ -303,15 +303,15 @@ const std::string ADN_People_Data::PeopleInfos::CheckErrors() const
                 return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).toStdString() + std::string( "\n" ) +
                                          "- " + ( *it1 )->day_.Convert( ENT_Tr_ABC::eToTr ) + " : " + ( *it1 )->from_.GetData() + " / " + ( *it1 )->to_.GetData() + "\n" +
                                          "- " + ( *it2 )->day_.Convert( ENT_Tr_ABC::eToTr ) + " : " + ( *it2 )->from_.GetData() + " / " + ( *it2 )->to_.GetData() + "\n";
-    repartition_.CheckNoError( "ADN_People_Data", strName_.GetData().c_str() );
+    repartition_.CheckNoError( "ADN_Inhabitants_Data", strName_.GetData().c_str() );
     return "";
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfos::WriteArchive
+// Name: InhabitantsInfos::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output ) const
+void ADN_Inhabitants_Data::InhabitantsInfos::WriteArchive( xml::xostream& output ) const
 {
     const std::string error = CheckErrors();
     if( error != "" )
@@ -338,17 +338,17 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output ) const
                 << xml::attribute( "people-per-facility", healthNeed_ )
             << xml::end
             << xml::start( "consumption" );
-    for( CIT_PeopleInfosConsumptionVector it = consumptions_.begin(); it != consumptions_.end(); ++it )
+    for( CIT_InhabitantsInfosConsumptionVector it = consumptions_.begin(); it != consumptions_.end(); ++it )
         ( *it )->WriteArchive( output );
     output  << xml::end
         << xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::ReadEvent
+// Name: ADN_Inhabitants_Data::ReadEvent
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfos::ReadEvent( xml::xistream& input )
+void ADN_Inhabitants_Data::InhabitantsInfos::ReadEvent( xml::xistream& input )
 {
     std::auto_ptr< EventInfos > spNew( new EventInfos() );
     spNew->ReadArchive( input );
@@ -356,115 +356,115 @@ void ADN_People_Data::PeopleInfos::ReadEvent( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PeopleInfos::ReadConsumption
+// Name: InhabitantsInfos::ReadConsumption
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfos::ReadConsumption( xml::xistream& input )
+void ADN_Inhabitants_Data::InhabitantsInfos::ReadConsumption( xml::xistream& input )
 {
-    std::auto_ptr< PeopleInfosConsumption > spNew( new PeopleInfosConsumption() );
+    std::auto_ptr< InhabitantsInfosConsumption > spNew( new InhabitantsInfosConsumption() );
     spNew->ReadArchive( input );
     consumptions_.AddItem( spNew.release() );
 }
 
 // =============================================================================
-// ADN_People_Data
+// ADN_Inhabitants_Data
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data constructor
+// Name: ADN_Inhabitants_Data constructor
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-ADN_People_Data::ADN_People_Data()
+ADN_Inhabitants_Data::ADN_Inhabitants_Data()
     : ADN_Data_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data destructor
+// Name: ADN_Inhabitants_Data destructor
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-ADN_People_Data::~ADN_People_Data()
+ADN_Inhabitants_Data::~ADN_Inhabitants_Data()
 {
     Reset();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::Reset
+// Name: ADN_Inhabitants_Data::Reset
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_People_Data::Reset()
+void ADN_Inhabitants_Data::Reset()
 {
     idManager_.Reset();
     vPeople_.Reset();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::FilesNeeded
+// Name: ADN_Inhabitants_Data::FilesNeeded
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-void ADN_People_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_Inhabitants_Data::FilesNeeded( T_StringList& vFiles ) const
 {
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szPeople_.GetData() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::ReadArchive
+// Name: ADN_Inhabitants_Data::ReadArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_People_Data::ReadArchive( xml::xistream& input )
+void ADN_Inhabitants_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "populations" )
-              >> xml::list( "population", *this, &ADN_People_Data::ReadPeople )
+              >> xml::list( "population", *this, &ADN_Inhabitants_Data::ReadPeople )
           >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::ReadPeople
+// Name: ADN_Inhabitants_Data::ReadPeople
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-void ADN_People_Data::ReadPeople( xml::xistream& input )
+void ADN_Inhabitants_Data::ReadPeople( xml::xistream& input )
 {
-    std::auto_ptr< PeopleInfos > spNew( new PeopleInfos( input.attribute< unsigned int >( "id" ) ) );
+    std::auto_ptr< InhabitantsInfos > spNew( new InhabitantsInfos( input.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( input );
     vPeople_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::WriteArchive
+// Name: ADN_Inhabitants_Data::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_People_Data::WriteArchive( xml::xostream& output )
+void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "populations" );
     ADN_Tools::AddSchema( output, "Inhabitants" );
-    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+    for( CIT_InhabitantsInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::GetPeopleThatUse
+// Name: ADN_Inhabitants_Data::GetInhabitantsThatUse
 // Created: ABR 2012-08-01
 // -----------------------------------------------------------------------------
-QStringList ADN_People_Data::GetPeopleThatUse( ADN_Population_Data::PopulationInfos& population )
+QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_Population_Data::PopulationInfos& population )
 {
     QStringList result;
-    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+    for( CIT_InhabitantsInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
         if( ( *it )->ptrModel_.GetData()->strName_.GetData() == population.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     return result;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::GetPeopleThatUse
+// Name: ADN_Inhabitants_Data::GetInhabitantsThatUse
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-QStringList ADN_People_Data::GetPeopleThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network )
+QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network )
 {
     QStringList result;
-    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
-        for( CIT_PeopleInfosConsumptionVector itConsumption = ( *it )->consumptions_.begin(); itConsumption != ( *it )->consumptions_.end(); ++itConsumption )
+    for( CIT_InhabitantsInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+        for( CIT_InhabitantsInfosConsumptionVector itConsumption = ( *it )->consumptions_.begin(); itConsumption != ( *it )->consumptions_.end(); ++itConsumption )
             if( ( *itConsumption )->ptrResource_.GetData()->strName_.GetData() == network.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();
     return result;

@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Consumptions_Table.h"
-#include "ADN_People_Data.h"
+#include "ADN_Inhabitants_Data.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Consumptions_Table constructor
@@ -79,7 +79,7 @@ void ADN_Consumptions_Table::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Consumptions_Table::CreateNewConsumption( int resource )
 {
-    ADN_People_Data::PeopleInfosConsumption* pNewInfo = new ADN_People_Data::PeopleInfosConsumption();
+    ADN_Inhabitants_Data::InhabitantsInfosConsumption* pNewInfo = new ADN_Inhabitants_Data::InhabitantsInfosConsumption();
     pNewInfo->ptrResource_ = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos()[ resource ];
     pNewInfo->consumption_ = 0;
     ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
@@ -93,7 +93,7 @@ void ADN_Consumptions_Table::CreateNewConsumption( int resource )
 // -----------------------------------------------------------------------------
 void ADN_Consumptions_Table::RemoveCurrentConsumption()
 {
-    ADN_People_Data::PeopleInfosConsumption* pCurResource = static_cast< ADN_People_Data::PeopleInfosConsumption* >( GetSelectedData() );
+    ADN_Inhabitants_Data::InhabitantsInfosConsumption* pCurResource = static_cast< ADN_Inhabitants_Data::InhabitantsInfosConsumption* >( GetSelectedData() );
     if( pCurResource )
     {
         // remove current data from list
@@ -111,7 +111,7 @@ bool ADN_Consumptions_Table::Contains( const ADN_ResourceNetworks_Data::Resource
     int n = 0;
     while( ADN_StandardItem* pItem =  static_cast< ADN_StandardItem* >( dataModel_.item( n, 1 ) ) )
     {
-        ADN_People_Data::PeopleInfosConsumption* pInfos = static_cast< ADN_People_Data::PeopleInfosConsumption* >( pItem->GetData() );
+        ADN_Inhabitants_Data::InhabitantsInfosConsumption* pInfos = static_cast< ADN_Inhabitants_Data::InhabitantsInfosConsumption* >( pItem->GetData() );
         if( pInfos->ptrResource_.GetData() == &infos )
             return true;
         ++n;
@@ -125,7 +125,7 @@ bool ADN_Consumptions_Table::Contains( const ADN_ResourceNetworks_Data::Resource
 // -----------------------------------------------------------------------------
 void ADN_Consumptions_Table::AddRow( int row, void* data )
 {
-    ADN_People_Data::PeopleInfosConsumption* pCurResource = static_cast< ADN_People_Data::PeopleInfosConsumption* >( data );
+    ADN_Inhabitants_Data::InhabitantsInfosConsumption* pCurResource = static_cast< ADN_Inhabitants_Data::InhabitantsInfosConsumption* >( data );
     if( !pCurResource )
         return;
 

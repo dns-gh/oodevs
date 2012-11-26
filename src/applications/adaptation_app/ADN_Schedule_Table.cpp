@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Schedule_Table.h"
-#include "ADN_People_Data.h"
+#include "ADN_Inhabitants_Data.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Schedule_Table constructor
@@ -52,7 +52,7 @@ ADN_Schedule_Table::~ADN_Schedule_Table()
 // -----------------------------------------------------------------------------
 void ADN_Schedule_Table::AddRow( int row, void* data )
 {
-    ADN_People_Data::EventInfos* pEventInfos = static_cast< ADN_People_Data::EventInfos* >( data );
+    ADN_Inhabitants_Data::EventInfos* pEventInfos = static_cast< ADN_Inhabitants_Data::EventInfos* >( data );
     if( !pEventInfos )
         return;
 
@@ -87,7 +87,7 @@ void ADN_Schedule_Table::OnContextMenu( const QPoint& pt )
 // -----------------------------------------------------------------------------
 void ADN_Schedule_Table::AddNewElement()
 {
-    ADN_People_Data::EventInfos* newElement = new ADN_People_Data::EventInfos();
+    ADN_Inhabitants_Data::EventInfos* newElement = new ADN_Inhabitants_Data::EventInfos();
     ADN_Connector_Vector_ABC* connector = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     connector->AddItem( newElement );
     connector->AddItem( 0 );
@@ -99,7 +99,7 @@ void ADN_Schedule_Table::AddNewElement()
 // -----------------------------------------------------------------------------
 void ADN_Schedule_Table::RemoveCurrentElement()
 {
-    ADN_People_Data::EventInfos* param = static_cast< ADN_People_Data::EventInfos* >( GetSelectedData() );
+    ADN_Inhabitants_Data::EventInfos* param = static_cast< ADN_Inhabitants_Data::EventInfos* >( GetSelectedData() );
     if( param )
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( param );
 }

@@ -1168,10 +1168,10 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_ResourceNetworks.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_GUI.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_ListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_GUI.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FireClass_Data.cpp" />
@@ -2875,9 +2875,9 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_Data.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.h" />
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_People_GUI.h">
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_GUI.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -2903,7 +2903,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_ListView.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>

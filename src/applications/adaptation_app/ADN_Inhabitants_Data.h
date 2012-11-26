@@ -26,11 +26,11 @@ namespace xml
 }
 
 // =============================================================================
-/** @class  ADN_People_Data
+/** @class  ADN_Inhabitants_Data
 */
 // Created: SLG 2010-11-22
 // =============================================================================
-class ADN_People_Data : public ADN_Data_ABC
+class ADN_Inhabitants_Data : public ADN_Data_ABC
 {
 public:
 // *****************************************************************************
@@ -52,16 +52,15 @@ public:
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< EventInfos >, EventInfosVector )
 
-    class PeopleInfosConsumption
-        : public ADN_Ref_ABC
+    class InhabitantsInfosConsumption : public ADN_Ref_ABC
     {
 
     public:
-                 PeopleInfosConsumption();
-        virtual ~PeopleInfosConsumption() {}
+                 InhabitantsInfosConsumption();
+        virtual ~InhabitantsInfosConsumption() {}
         std::string GetItemName();
 
-        PeopleInfosConsumption* CreateCopy();
+        InhabitantsInfosConsumption* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& xos ) const;
@@ -70,17 +69,17 @@ public:
         ADN_TypePtr_InVector_ABC< ADN_ResourceNetworks_Data::ResourceNetworkInfos > ptrResource_;
         ADN_Type_Int consumption_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< PeopleInfosConsumption >, PeopleInfosConsumptionVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< InhabitantsInfosConsumption >, InhabitantsInfosConsumptionVector )
 
 // *****************************************************************************
-    class PeopleInfos : public ADN_RefWithName
+    class InhabitantsInfos : public ADN_RefWithName
     {
     public:
-        PeopleInfos();
-        PeopleInfos( unsigned int );
-        ~PeopleInfos();
+        InhabitantsInfos();
+        InhabitantsInfos( unsigned int );
+        ~InhabitantsInfos();
 
-        PeopleInfos* CreateCopy();
+        InhabitantsInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
@@ -99,23 +98,23 @@ public:
         ADN_Type_Double securityGainPerHour_;
         ADN_Type_Int healthNeed_;
         T_EventInfosVector schedule_;
-        T_PeopleInfosConsumptionVector consumptions_;
+        T_InhabitantsInfosConsumptionVector consumptions_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< PeopleInfos >, PeopleInfosVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< InhabitantsInfos >, InhabitantsInfosVector )
 
 // *****************************************************************************
 public:
-             ADN_People_Data();
-    virtual ~ADN_People_Data();
+             ADN_Inhabitants_Data();
+    virtual ~ADN_Inhabitants_Data();
 
     void Reset();
     void FilesNeeded(T_StringList& l) const;
 
-    T_PeopleInfosVector& GetPeople();
-    PeopleInfos* FindPeople( const std::string& strName );
+    T_InhabitantsInfosVector& GetInhabitants();
+    InhabitantsInfos* FindInhabitant( const std::string& strName );
 
-    QStringList GetPeopleThatUse( ADN_Population_Data::PopulationInfos& population );
-    QStringList GetPeopleThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network );
+    QStringList GetInhabitantsThatUse( ADN_Population_Data::PopulationInfos& population );
+    QStringList GetInhabitantsThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network );
 
 private:
     void ReadArchive( xml::xistream& input );
@@ -123,7 +122,7 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    T_PeopleInfosVector vPeople_;
+    T_InhabitantsInfosVector vPeople_;
 
 private:
     static tools::IdManager idManager_;
@@ -134,7 +133,7 @@ private:
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 inline
-ADN_People_Data::T_PeopleInfosVector& ADN_People_Data::GetPeople()
+ADN_Inhabitants_Data::T_InhabitantsInfosVector& ADN_Inhabitants_Data::GetInhabitants()
 {
     return vPeople_;
 }
@@ -144,9 +143,9 @@ ADN_People_Data::T_PeopleInfosVector& ADN_People_Data::GetPeople()
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 inline
-ADN_People_Data::PeopleInfos* ADN_People_Data::FindPeople( const std::string& strName )
+ADN_Inhabitants_Data::InhabitantsInfos* ADN_Inhabitants_Data::FindInhabitant( const std::string& strName )
 {
-    IT_PeopleInfosVector it = std::find_if( vPeople_.begin(), vPeople_.end(), ADN_Tools::NameCmp< PeopleInfos >( strName ) );
+    IT_InhabitantsInfosVector it = std::find_if( vPeople_.begin(), vPeople_.end(), ADN_Tools::NameCmp< InhabitantsInfos >( strName ) );
     if( it == vPeople_.end() )
         return 0;
     return *it;

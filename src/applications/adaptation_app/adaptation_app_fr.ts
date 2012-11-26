@@ -1987,6 +1987,73 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
     </message>
 </context>
 <context>
+    <name>ADN_Inhabitants_GUI</name>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Associated Crowd</source>
+        <translation>Foule associée</translation>
+    </message>
+    <message>
+        <source>Angry crowd mission</source>
+        <translation>Mission pour les foules en colère</translation>
+    </message>
+    <message>
+        <source>Distribution</source>
+        <translation>Répartition</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation>Hommes</translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation>Femmes</translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation>Enfants</translation>
+    </message>
+    <message>
+        <source>Security satisfaction level</source>
+        <translation>Niveau de satisfaction en sécurité</translation>
+    </message>
+    <message>
+        <source>Loss on fire</source>
+        <translation>Perte par tir</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Gain per hour</source>
+        <translation>Gain par heure</translation>
+    </message>
+    <message>
+        <source>Health satisfaction</source>
+        <translation>Satisfaction en santé</translation>
+    </message>
+    <message>
+        <source>Number of people per medical infrastructure</source>
+        <translation>Nombre de personnes par infrastructure médicale</translation>
+    </message>
+    <message>
+        <source>Moving weekly schedule</source>
+        <translation>Agenda hebdomadaire des déplacements</translation>
+    </message>
+    <message>
+        <source>Transfer time</source>
+        <translation>Temps de transfert</translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation>Consommations</translation>
+    </message>
+</context>
+<context>
     <name>ADN_KnowledgeGroups_GUI</name>
     <message>
         <source>Name</source>
@@ -3410,73 +3477,6 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_People_GUI</name>
-    <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Associated Crowd</source>
-        <translation>Foule associée</translation>
-    </message>
-    <message>
-        <source>Males</source>
-        <translation>Hommes</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <source>Females</source>
-        <translation>Femmes</translation>
-    </message>
-    <message>
-        <source>Children</source>
-        <translation>Enfants</translation>
-    </message>
-    <message>
-        <source>Security satisfaction level</source>
-        <translation>Niveau de satisfaction en sécurité</translation>
-    </message>
-    <message>
-        <source>Loss on fire</source>
-        <translation>Perte par tir</translation>
-    </message>
-    <message>
-        <source>Gain per hour</source>
-        <translation>Gain par heure</translation>
-    </message>
-    <message>
-        <source>Moving weekly schedule</source>
-        <translation>Agenda hebdomadaire des déplacements</translation>
-    </message>
-    <message>
-        <source>Transfer time</source>
-        <translation>Temps de transfert</translation>
-    </message>
-    <message>
-        <source>Consumptions</source>
-        <translation>Consommations</translation>
-    </message>
-    <message>
-        <source>Health satisfaction</source>
-        <translation>Satisfaction en santé</translation>
-    </message>
-    <message>
-        <source>Number of people per medical infrastructure</source>
-        <translation>Nombre de personnes par infrastructure médicale</translation>
-    </message>
-    <message>
-        <source>Angry crowd mission</source>
-        <translation>Mission pour les foules en colère</translation>
-    </message>
-    <message>
-        <source>Distribution</source>
-        <translation>Répartition</translation>
     </message>
 </context>
 <context>

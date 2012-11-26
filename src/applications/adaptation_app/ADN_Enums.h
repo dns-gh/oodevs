@@ -42,7 +42,7 @@ enum E_WorkspaceElements
     eHumanFactors,
     eKnowledgeGroups,
     ePopulation,
-    ePeople,
+    eInhabitants,
     eReports,
     eLogistic, // Gather eMaintenance, eSupply, eHealth and eFuneral in a container
     eNbrWorkspaceElements

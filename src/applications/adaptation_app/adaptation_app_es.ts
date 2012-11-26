@@ -1986,6 +1986,73 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Inhabitants_GUI</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angry crowd mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distribution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Security satisfaction level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loss on fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>Gain per hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Health satisfaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of people per medical infrastructure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moving weekly schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation type="unfinished">Consumos</translation>
+    </message>
+</context>
+<context>
     <name>ADN_KnowledgeGroups_GUI</name>
     <message>
         <source>Name</source>
@@ -3407,73 +3474,6 @@ The spawn capacity will be disabled.</source>
     <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_People_GUI</name>
-    <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Associated Crowd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Angry crowd mission</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Males</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Females</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Children</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Security satisfaction level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loss on fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <source>Gain per hour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Health satisfaction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of people per medical infrastructure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Moving weekly schedule</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transfer time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Consumptions</source>
-        <translation>Consumos</translation>
-    </message>
-    <message>
-        <source>Distribution</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

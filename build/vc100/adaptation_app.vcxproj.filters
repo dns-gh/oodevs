@@ -239,15 +239,6 @@
     <Filter Include="Source Files\Workspace\Resource networks\Resource networks GUI">
       <UniqueIdentifier>{1f0d8138-79a5-4622-b2bf-26de2d678a00}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\People">
-      <UniqueIdentifier>{b2b2704c-c4f2-4c2a-8587-77ae233b4a23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\People\People Data">
-      <UniqueIdentifier>{1ff05ca1-d28b-40f0-adff-5875ec0e2473}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\People\People GUI">
-      <UniqueIdentifier>{dedd201e-5dae-4914-b93f-896914b54c9e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Fires">
       <UniqueIdentifier>{2dac1d26-7beb-4e8b-85f3-94a809cc3a98}</UniqueIdentifier>
     </Filter>
@@ -388,6 +379,15 @@
     </Filter>
     <Filter Include="Source Files\Workspace\Disasters\Disasters Data">
       <UniqueIdentifier>{1d41e2a0-53c7-42c2-9c92-e99c8e7cff93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Inhabitants">
+      <UniqueIdentifier>{b9ad5605-60be-449d-88c7-8b9aa42e2671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Inhabitants\Inhabitants Data">
+      <UniqueIdentifier>{2231f810-8d00-4c36-8b17-36798181f69f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Inhabitants\Inhabitants GUI">
+      <UniqueIdentifier>{1b249af3-ebaa-435f-a93c-123cb20ee9dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -901,21 +901,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ResourceNetworks_GUI.cpp">
       <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_Data.cpp">
-      <Filter>Source Files\Workspace\People\People Data</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.cpp">
-      <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_GUI.cpp">
-      <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_People_ListView.cpp">
-      <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.cpp">
-      <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.cpp">
       <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
     </ClCompile>
@@ -1200,6 +1185,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NbcSuitTable.cpp">
       <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_Data.cpp">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.cpp">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.cpp">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_GUI.cpp">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_ListView.cpp">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1563,15 +1563,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_ResourceNetworks.h">
       <Filter>Source Files\Workspace\Resource networks\Resource networks GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_Data.h">
-      <Filter>Source Files\Workspace\People\People Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.h">
-      <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_People_ListView.h">
-      <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ExtinguisherAgentInfos.h">
       <Filter>Source Files\Workspace\Fires\Fires Data</Filter>
     </ClInclude>
@@ -1815,9 +1806,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_WeaponsTable.h">
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.h">
-      <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.h">
       <Filter>Source Files\Common widgets</Filter>
     </ClInclude>
@@ -1844,6 +1832,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NbcSuitTable.h">
       <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_Data.h">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Consumptions_Table.h">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Schedule_Table.h">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_ListView.h">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2060,9 +2060,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.h">
       <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_People_GUI.h">
-      <Filter>Source Files\Workspace\People\People GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_FireClass_GUI.h">
       <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
     </CustomBuild>
@@ -2182,6 +2179,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Disasters.h">
       <Filter>Source Files\Workspace\Disasters\Disasters GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_GUI.h">
+      <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

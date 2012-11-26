@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_People_GUI.h"
+#include "ADN_Inhabitants_GUI.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_GoToButton.h"
-#include "ADN_People_Data.h"
-#include "ADN_People_ListView.h"
+#include "ADN_Inhabitants_Data.h"
+#include "ADN_Inhabitants_ListView.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Consumptions_Table.h"
 #include "ADN_MultiPercentage.h"
@@ -20,30 +20,30 @@
 #include "ADN_SearchListView.h"
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_GUI constructor
+// Name: ADN_Inhabitants_GUI constructor
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-ADN_People_GUI::ADN_People_GUI( ADN_People_Data& data )
-    : ADN_GUI_ABC( "ADN_People_GUI" )
+ADN_Inhabitants_GUI::ADN_Inhabitants_GUI( ADN_Inhabitants_Data& data )
+    : ADN_GUI_ABC( "ADN_Inhabitants_GUI" )
     , data_      ( data )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_GUI destructor
+// Name: ADN_Inhabitants_GUI destructor
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-ADN_People_GUI::~ADN_People_GUI()
+ADN_Inhabitants_GUI::~ADN_Inhabitants_GUI()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_GUI::Build
+// Name: ADN_Inhabitants_GUI::Build
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-void ADN_People_GUI::Build()
+void ADN_Inhabitants_GUI::Build()
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -102,7 +102,7 @@ void ADN_People_GUI::Build()
     pContentLayout->addWidget( pConsumptionsGroup, 5, 1 );
 
     // List view
-    ADN_SearchListView< ADN_People_ListView >* pSearchListView = new ADN_SearchListView< ADN_People_ListView >( this, data_.GetPeople(), vInfosConnectors );
+    ADN_SearchListView< ADN_Inhabitants_ListView >* pSearchListView = new ADN_SearchListView< ADN_Inhabitants_ListView >( this, data_.GetInhabitants(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
 

@@ -1983,6 +1983,73 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Inhabitants_GUI</name>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>Associated Crowd</source>
+        <translation>Associated Crowd</translation>
+    </message>
+    <message>
+        <source>Angry crowd mission</source>
+        <translation>Angry crowd mission</translation>
+    </message>
+    <message>
+        <source>Distribution</source>
+        <translation>Distribution</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation>Males</translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation>Females</translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation>Children</translation>
+    </message>
+    <message>
+        <source>Security satisfaction level</source>
+        <translation>Security satisfaction level</translation>
+    </message>
+    <message>
+        <source>Loss on fire</source>
+        <translation>Loss on fire</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Gain per hour</source>
+        <translation>Gain per hour</translation>
+    </message>
+    <message>
+        <source>Health satisfaction</source>
+        <translation>Health satisfaction</translation>
+    </message>
+    <message>
+        <source>Number of people per medical infrastructure</source>
+        <translation>Number of people per medical infrastructure</translation>
+    </message>
+    <message>
+        <source>Moving weekly schedule</source>
+        <translation>Moving weekly schedule</translation>
+    </message>
+    <message>
+        <source>Transfer time</source>
+        <translation>Transfer time</translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation>Consumptions</translation>
+    </message>
+</context>
+<context>
     <name>ADN_KnowledgeGroups_GUI</name>
     <message>
         <source>Name</source>
@@ -3406,73 +3473,6 @@ The spawn capacity will be disabled.</translation>
     <message>
         <source>Cancel</source>
         <translation>Cancel</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_People_GUI</name>
-    <message>
-        <source>Name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>Associated Crowd</source>
-        <translation>Associated Crowd</translation>
-    </message>
-    <message>
-        <source>Angry crowd mission</source>
-        <translation>Angry crowd mission</translation>
-    </message>
-    <message>
-        <source>Distribution</source>
-        <translation>Distribution</translation>
-    </message>
-    <message>
-        <source>Males</source>
-        <translation>Males</translation>
-    </message>
-    <message>
-        <source>Females</source>
-        <translation>Females</translation>
-    </message>
-    <message>
-        <source>Children</source>
-        <translation>Children</translation>
-    </message>
-    <message>
-        <source>Security satisfaction level</source>
-        <translation>Security satisfaction level</translation>
-    </message>
-    <message>
-        <source>Loss on fire</source>
-        <translation>Loss on fire</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <source>Gain per hour</source>
-        <translation>Gain per hour</translation>
-    </message>
-    <message>
-        <source>Health satisfaction</source>
-        <translation>Health satisfaction</translation>
-    </message>
-    <message>
-        <source>Number of people per medical infrastructure</source>
-        <translation>Number of people per medical infrastructure</translation>
-    </message>
-    <message>
-        <source>Moving weekly schedule</source>
-        <translation>Moving weekly schedule</translation>
-    </message>
-    <message>
-        <source>Transfer time</source>
-        <translation>Transfer time</translation>
-    </message>
-    <message>
-        <source>Consumptions</source>
-        <translation>Consumptions</translation>
     </message>
 </context>
 <context>

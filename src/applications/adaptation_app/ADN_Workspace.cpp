@@ -53,8 +53,8 @@
 #include "ADN_NBC_GUI.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Objects_GUI.h"
-#include "ADN_People_Data.h"
-#include "ADN_People_GUI.h"
+#include "ADN_Inhabitants_Data.h"
+#include "ADN_Inhabitants_GUI.h"
 #include "ADN_Population_Data.h"
 #include "ADN_Population_GUI.h"
 #include "ADN_ProgressIndicator_ABC.h"
@@ -164,7 +164,7 @@ void ADN_Workspace::Initialize()
     elements_[eMissions]          = new ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI>                   ( eMissions );
     elements_[eKnowledgeGroups]   = new ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI>     ( eKnowledgeGroups );
     elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >              ( ePopulation );
-    elements_[ePeople]            = new ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >                      ( ePeople );
+    elements_[eInhabitants]       = new ADN_WorkspaceElement< ADN_Inhabitants_Data, ADN_Inhabitants_GUI >            ( eInhabitants );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >                    ( eReports );
     elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >                ( eFireClasses );
     elements_[eLogistic]          = new ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >                  ( eLogistic );
@@ -259,7 +259,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
     AddPage( mainwindow, eUnits );
     AddPage( mainwindow, eAutomata );
     AddPage( mainwindow, ePopulation );
-    AddPage( mainwindow, ePeople );
+    AddPage( mainwindow, eInhabitants );
     AddPage( mainwindow, eLogistic );
     AddPage( mainwindow, eCommunications );
     AddPage( mainwindow, eKnowledgeGroups );
@@ -634,7 +634,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
 
     // Inhabitant to delete when crowd deleted
     if( ADN_Population_Data::PopulationInfos* infos = dynamic_cast< ADN_Population_Data::PopulationInfos* >( data ) )
-        return FillUsingElements( ePeople, *infos, GetPeople().GetData(), &ADN_People_Data::GetPeopleThatUse, result );
+        return FillUsingElements( eInhabitants, *infos, GetInhabitants().GetData(), &ADN_Inhabitants_Data::GetInhabitantsThatUse, result );
 
     // Actives protections to delete when ammo deleted
     if( ADN_Equipement_Data::AmmoCategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( data ) )
@@ -702,7 +702,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
 
     // Peoples that use resource network
     if( ADN_ResourceNetworks_Data::ResourceNetworkInfos* infos = dynamic_cast< ADN_ResourceNetworks_Data::ResourceNetworkInfos* >( data ) )
-        return FillUsingElements( ePeople, *infos, GetPeople().GetData(), &ADN_People_Data::GetPeopleThatUse, result );
+        return FillUsingElements( eInhabitants, *infos, GetInhabitants().GetData(), &ADN_Inhabitants_Data::GetInhabitantsThatUse, result );
 
     // Active protections, breakdowns, or fire that use category ammo
     if( ADN_Equipement_Data::CategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::CategoryInfo* >( data ) )

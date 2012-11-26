@@ -38,6 +38,8 @@ class ADN_FireClass_Data;
 class ADN_FireClass_GUI;
 class ADN_HumanFactors_Data;
 class ADN_HumanFactors_GUI;
+class ADN_Inhabitants_Data;
+class ADN_Inhabitants_GUI;
 class ADN_KnowledgeGroups_Data;
 class ADN_KnowledgeGroups_GUI;
 class ADN_Launchers_Data;
@@ -53,8 +55,6 @@ class ADN_NBC_Datas;
 class ADN_NBC_GUI;
 class ADN_Objects_Data;
 class ADN_Objects_GUI;
-class ADN_People_Data;
-class ADN_People_GUI;
 class ADN_Population_Data;
 class ADN_Population_GUI;
 class ADN_ProgressIndicator_ABC;
@@ -135,7 +135,7 @@ public:
     ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI>& GetAiEngine();
     ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI>& GetBreakdowns();
     ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& GetPopulation();
-    ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >& GetPeople();
+    ADN_WorkspaceElement< ADN_Inhabitants_Data, ADN_Inhabitants_GUI >& GetInhabitants();
     ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& GetReports();
     ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& GetHumanFactors();
     ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& GetKnowledgeGroups();
@@ -375,13 +375,13 @@ ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& ADN_Workspace::
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetPeople
+// Name: ADN_Workspace::GetInhabitants
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >& ADN_Workspace::GetPeople()
+ADN_WorkspaceElement< ADN_Inhabitants_Data, ADN_Inhabitants_GUI >& ADN_Workspace::GetInhabitants()
 {
-    return ( ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >& )( *elements_[ ePeople ] );
+    return ( ADN_WorkspaceElement< ADN_Inhabitants_Data, ADN_Inhabitants_GUI >& )( *elements_[ eInhabitants ] );
 }
 
 // -----------------------------------------------------------------------------
