@@ -48,7 +48,7 @@ ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel:
     , obstacleTypeCombo_( 0 )
 {
     location_ = static_cast< ParamLocation* >( AddElement( "location", tr( "Construction location" ).toStdString() ) );
-    density_ = static_cast< ParamFloat* >( AddElement( "float", tr( "Density per 100 square meter" ).toStdString() ) );
+    density_ = static_cast< ParamFloat* >( &builder.BuildOne( kernel::OrderParameter( tr( "Density per 100 square meter" ).toStdString(), "float", true ), false ) );
     tc2_ = static_cast< ParamAutomat* >( AddElement( "automat", tr( "TC2" ).toStdString() ) );
     kernel::OrderParameter activityTimeParameter( tools::translate( "gui::ObstaclePrototype_ABC", "Activity time:" ).toStdString(), "integer", true );
     activityTimeParameter.SetKeyName( "ActivityTime" );
