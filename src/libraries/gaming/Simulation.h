@@ -27,6 +27,7 @@ namespace sword
     class ControlEndTick;
     class ControlSendCurrentStateEnd;
     class ControlCheckPointSaveEnd;
+    class NewDataChunkNotification;
     class TimeTable;
 }
 
@@ -67,6 +68,7 @@ public:
     void Update( const sword::ControlBeginTick& message );
     void Update( const sword::ControlEndTick& message );
     void Update( const sword::ControlSendCurrentStateEnd& message );
+    void Update( const sword::NewDataChunkNotification& message );
     void Update( const sword::TimeTable& message );
     //@}
 

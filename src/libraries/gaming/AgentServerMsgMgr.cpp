@@ -306,6 +306,15 @@ void AgentServerMsgMgr::OnReceiveMsgCtrReplayInfo( const sword::ControlReplayInf
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveNewDataChunkNotification
+// Created: JSR 2012-11-21
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveNewDataChunkNotification( const sword::NewDataChunkNotification& message )
+{
+    simulation_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgProfilingValues
 // Created: AGE 2007-07-05
 // -----------------------------------------------------------------------------
@@ -2050,7 +2059,7 @@ void AgentServerMsgMgr::OnReceiveMsgReplayToClient( const std::string& , const s
     else if( wrapper.message().has_control_change_time_factor_ack() )
         OnReceiveControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
     else if( wrapper.message().has_new_data_chunk_notification() )
-        {}
+        OnReceiveNewDataChunkNotification( wrapper.message().new_data_chunk_notification() );
     else if( wrapper.message().has_time_table_request_ack() )
         OnReceiveTimeTableRequestAck( wrapper.message().time_table_request_ack() );
     else if( wrapper.message().has_time_table() )

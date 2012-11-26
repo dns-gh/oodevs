@@ -127,6 +127,16 @@ void Simulation::Update( const sword::ControlReplayInformation& message )
 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Update
+// Created: JSR 2012-11-21
+// -----------------------------------------------------------------------------
+void Simulation::Update( const sword::NewDataChunkNotification& message )
+{
+    tickCount_ = message.last_tick();
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::Update
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
 void Simulation::Update( const sword::ControlProfilingInformation& message )

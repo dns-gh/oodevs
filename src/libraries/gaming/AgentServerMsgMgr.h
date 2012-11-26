@@ -131,6 +131,7 @@ namespace sword
     class MarkerUpdate;
     class MessengerToClient;
     class MessengerToClient;
+    class NewDataChunkNotification;
     class ObjectCreation;
     class ObjectDestruction;
     class ObjectDetection;
@@ -283,6 +284,7 @@ private:
     void OnReceiveControlInformation          ( const sword::ControlInformation& message );
     void OnReceiveMsgProfilingValues          ( const sword::ControlProfilingInformation& message );
     void OnReceiveMsgCtrReplayInfo            ( const sword::ControlReplayInformation& message );
+    void OnReceiveNewDataChunkNotification    ( const sword::NewDataChunkNotification& message );
     void OnReceiveControlMeteoGlobalAck       ();
     void OnReceiveControlMeteoLocalAck        ();
     void OnReceiveMsgCheckPointSaveBegin      ();
