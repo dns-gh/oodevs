@@ -174,7 +174,7 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
     }
     else
         throw std::exception( __FUNCTION__ "Error, entity not found." );
-    QMetaObject::invokeMethod( &dataModel_, "dataChanged", Q_ARG( const QModelIndex&, dataModel_.index( 0, 0 ) ), Q_ARG( const QModelIndex&, dataModel_.index( 0, dataModel_.columnCount() - 1 ) ) );
+    proxyModel_->invalidate();
 }
 
 // -----------------------------------------------------------------------------
