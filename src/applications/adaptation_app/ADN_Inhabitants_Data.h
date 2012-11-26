@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_People_Data_h_
-#define __ADN_People_Data_h_
+#ifndef __ADN_Inhabitants_Data_h_
+#define __ADN_Inhabitants_Data_h_
 
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
@@ -151,4 +151,4 @@ ADN_Inhabitants_Data::InhabitantsInfos* ADN_Inhabitants_Data::FindInhabitant( co
     return *it;
 }
 
-#endif // __ADN_People_Data_h_
+#endif // __ADN_Inhabitants_Data_h_
