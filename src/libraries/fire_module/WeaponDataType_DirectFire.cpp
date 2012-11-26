@@ -51,7 +51,7 @@ void WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
     MT_InterpolatedFunction& function = phs_[ id ];
     function.SetBeforeValue( 0 );
     function.SetAfterValue( 0 );
-    xis >> xml::list( "hit-probability", *this, &WeaponDataType_DirectFire::ReadHitProbability, phs_[ id ] );
+    xis >> xml::list( "hit-probability", *this, &WeaponDataType_DirectFire::ReadHitProbability, function );
 }
 
 // -----------------------------------------------------------------------------
