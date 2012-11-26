@@ -48,6 +48,7 @@ boost::shared_ptr< kernel::AgentType > StaticModel::MakeAgentType()
             "<nature level='iii' nature-app6='undefined/undefined' atlas-nature='none'/>"
             "<equipments/>"
             "<crew-ranks/>"
+            "<nbc suit='level1'/>"
         "</type>"
     );
     xml::xistringstream xis( xml );
