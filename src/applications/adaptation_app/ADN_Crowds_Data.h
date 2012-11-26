@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Population_Data_h_
-#define __ADN_Population_Data_h_
+#ifndef __ADN_Crowds_Data_h_
+#define __ADN_Crowds_Data_h_
 
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
@@ -22,11 +22,11 @@
 namespace xml { class xistream; }
 
 // =============================================================================
-/** @class  ADN_Population_Data
+/** @class  ADN_Crowds_Data
 */
 // Created: APE 2004-12-02
 // =============================================================================
-class ADN_Population_Data : public ADN_Data_ABC
+class ADN_Crowds_Data : public ADN_Data_ABC
 {
 
 public:
@@ -187,15 +187,15 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<UrbanEffectInfos>, UrbanEffectInfosVector )
 
 // *****************************************************************************
-    class PopulationInfos : public ADN_RefWithName
+    class CrowdsInfos : public ADN_RefWithName
     {
     public:
-                 PopulationInfos();
-                 PopulationInfos( unsigned int id );
-        virtual ~PopulationInfos();
+                 CrowdsInfos();
+                 CrowdsInfos( unsigned int id );
+        virtual ~CrowdsInfos();
 
         void Initialize();
-        PopulationInfos* CreateCopy();
+        CrowdsInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void ReadSlowingEffect( xml::xistream& input );
         void ReadAttritionEffect( xml::xistream& input );
@@ -217,7 +217,7 @@ public:
         T_FireEffectRoeInfosVector                            vFireEffectRoeInfos_;
         T_UrbanEffectInfosVector                              vUrbanEffectInfos_;
     };
-    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<PopulationInfos>, PopulationInfosVector )
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<CrowdsInfos>, CrowdsInfosVector )
 
 // *****************************************************************************
     class ReloadingSpeedEffectInfos : public ADN_Ref_ABC
@@ -236,15 +236,15 @@ public:
 
 // *****************************************************************************
 public:
-             ADN_Population_Data();
-    virtual ~ADN_Population_Data();
+             ADN_Crowds_Data();
+    virtual ~ADN_Crowds_Data();
 
     void FilesNeeded( T_StringList& l ) const;
     void Reset();
 
-    T_PopulationInfosVector& GetPopulation();
-    PopulationInfos* FindPopulation( const std::string& strName );
-    QStringList GetPopulationsThatUse( ADN_Models_Data::ModelInfos& model );
+    T_CrowdsInfosVector& GetCrowds();
+    CrowdsInfos* FindCrowd( const std::string& strName );
+    QStringList GetCrowdsThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
     void ReadArchive( xml::xistream& input );
@@ -252,7 +252,7 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    T_PopulationInfosVector   vPopulation_;
+    T_CrowdsInfosVector   vCrowds_;
     ReloadingSpeedEffectInfos reloadingSpeedEffectInfos_;
     ADN_Type_Time timeBetweenNbcApplication_;
 
@@ -261,26 +261,26 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::GetPopulation
+// Name: ADN_Crowds_Data::GetCrowds
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 inline
-ADN_Population_Data::T_PopulationInfosVector& ADN_Population_Data::GetPopulation()
+ADN_Crowds_Data::T_CrowdsInfosVector& ADN_Crowds_Data::GetCrowds()
 {
-    return vPopulation_;
+    return vCrowds_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::FindPopulation
+// Name: ADN_Crowds_Data::FindCrowd
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 inline
-ADN_Population_Data::PopulationInfos* ADN_Population_Data::FindPopulation( const std::string& strName )
+ADN_Crowds_Data::CrowdsInfos* ADN_Crowds_Data::FindCrowd( const std::string& strName )
 {
-    IT_PopulationInfosVector it = std::find_if( vPopulation_.begin(), vPopulation_.end(), ADN_Tools::NameCmp<PopulationInfos>( strName ) );
-    if( it == vPopulation_.end() )
+    IT_CrowdsInfosVector it = std::find_if( vCrowds_.begin(), vCrowds_.end(), ADN_Tools::NameCmp<CrowdsInfos>( strName ) );
+    if( it == vCrowds_.end() )
         return 0;
     return *it;
 }
 
-#endif // __ADN_Population_Data_h_
+#endif // __ADN_Crowds_Data_h_

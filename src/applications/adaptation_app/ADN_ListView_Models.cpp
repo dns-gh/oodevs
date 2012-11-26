@@ -16,7 +16,7 @@
 #include "ADN_Models_GUI.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Automata_Data.h"
-#include "ADN_Population_Data.h"
+#include "ADN_Crowds_Data.h"
 #include "ADN_Wizard.h"
 #include "ADN_enums.h"
 
@@ -96,8 +96,8 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
                                           ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ), eAutomata );
         else if( eEntityType_ == eEntityType_Population )
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                          ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData ), ePopulation );
+                                          ADN_Tr::ConvertFromWorkspaceElement( eCrowds ).c_str(),
+                                          ADN_Workspace::GetWorkspace().GetCrowds().GetData().GetCrowdsThatUse( *pCastData ), eCrowds );
     }
     popupMenu.exec( pt );
 }
@@ -120,7 +120,7 @@ std::string ADN_ListView_Models::GetToolTipFor( const QModelIndex& index )
         return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eAutomata ).c_str(),
                                 ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ) );
     else if( eEntityType_ == eEntityType_Population )
-        return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str(),
-                                ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData ) );
+        return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eCrowds ).c_str(),
+                                ADN_Workspace::GetWorkspace().GetCrowds().GetData().GetCrowdsThatUse( *pCastData ) );
     return "";
 }

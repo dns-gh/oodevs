@@ -8,22 +8,22 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Population_ListView.h"
-#include "ADN_Population_Data.h"
-#include "ADN_Population_GUI.h"
+#include "ADN_Crowds_ListView.h"
+#include "ADN_Crowds_Data.h"
+#include "ADN_Crowds_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Inhabitants_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 
-typedef ADN_Population_Data::PopulationInfos PopulationInfos;
+typedef ADN_Crowds_Data::CrowdsInfos PopulationInfos;
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_ListView constructor
+// Name: ADN_Crowds_ListView constructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Population_ListView::ADN_Population_ListView( QWidget* pParent )
-    : ADN_ListView( pParent, "ADN_Population_ListView", ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str() )
+ADN_Crowds_ListView::ADN_Crowds_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Crowds_ListView", ADN_Tr::ConvertFromWorkspaceElement( eCrowds ).c_str() )
 {
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<PopulationInfos>(*this);
@@ -31,48 +31,48 @@ ADN_Population_ListView::ADN_Population_ListView( QWidget* pParent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_ListView destructor
+// Name: ADN_Crowds_ListView destructor
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-ADN_Population_ListView::~ADN_Population_ListView()
+ADN_Crowds_ListView::~ADN_Crowds_ListView()
 {
     delete pConnector_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_ListView::ConnectItem
+// Name: ADN_Crowds_ListView::ConnectItem
 // Created: APE 2005-01-06
 // -----------------------------------------------------------------------------
-void ADN_Population_ListView::ConnectItem( bool bConnect )
+void ADN_Crowds_ListView::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
     PopulationInfos* pInfos = (PopulationInfos*)pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Population_GUI::eNbrGuiElements );
-    vItemConnectors_[ADN_Population_GUI::eName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eModel]->Connect( &pInfos->ptrModel_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eConcentrationDensity]->Connect( &pInfos->rConcentrationDensity_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eMoveDensity]->Connect( &pInfos->rMoveDensity_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eMoveSpeed]->Connect( &pInfos->rMoveSpeed_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eMale ]->Connect( &pInfos->repartition_.male_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eFemale ]->Connect( &pInfos->repartition_.female_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eChildren ]->Connect( &pInfos->repartition_.children_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eArmedIndividuals ]->Connect( &pInfos->armedIndividuals_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eDecontaminationDelay ]->Connect( &pInfos->decontaminationDelay_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eSpeedEffectAttitude]->Connect( &pInfos->vSpeedEffectInfos_  , bConnect );
-    vItemConnectors_[ADN_Population_GUI::eFireEffectAttitude] ->Connect( &pInfos->vFireEffectInfos_   , bConnect );
-    vItemConnectors_[ADN_Population_GUI::eFireEffectRoe]      ->Connect( &pInfos->vFireEffectRoeInfos_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eUrbanBlocDestructionAttitude] ->Connect( &pInfos->vUrbanEffectInfos_, bConnect );
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Crowds_GUI::eNbrGuiElements );
+    vItemConnectors_[ADN_Crowds_GUI::eName]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eModel]->Connect( &pInfos->ptrModel_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eConcentrationDensity]->Connect( &pInfos->rConcentrationDensity_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eMoveDensity]->Connect( &pInfos->rMoveDensity_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eMoveSpeed]->Connect( &pInfos->rMoveSpeed_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eMale ]->Connect( &pInfos->repartition_.male_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eFemale ]->Connect( &pInfos->repartition_.female_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eChildren ]->Connect( &pInfos->repartition_.children_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eArmedIndividuals ]->Connect( &pInfos->armedIndividuals_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eDecontaminationDelay ]->Connect( &pInfos->decontaminationDelay_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eSpeedEffectAttitude]->Connect( &pInfos->vSpeedEffectInfos_  , bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eFireEffectAttitude] ->Connect( &pInfos->vFireEffectInfos_   , bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eFireEffectRoe]      ->Connect( &pInfos->vFireEffectRoeInfos_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eUrbanBlocDestructionAttitude] ->Connect( &pInfos->vUrbanEffectInfos_, bConnect );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_ListView::OnContextMenu
+// Name: ADN_Crowds_ListView::OnContextMenu
 // Created: APE 2005-01-10
 // -----------------------------------------------------------------------------
-void ADN_Population_ListView::OnContextMenu( const QPoint& pt )
+void ADN_Crowds_ListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ADN_Wizard< PopulationInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( ePopulation ).c_str(), ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), this );
+    ADN_Wizard< PopulationInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eCrowds ).c_str(), ADN_Workspace::GetWorkspace().GetCrowds().GetData().GetCrowds(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
@@ -85,10 +85,10 @@ void ADN_Population_ListView::OnContextMenu( const QPoint& pt )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_ListView::GetToolTipFor
+// Name: ADN_Crowds_ListView::GetToolTipFor
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-std::string ADN_Population_ListView::GetToolTipFor( const QModelIndex& index )
+std::string ADN_Crowds_ListView::GetToolTipFor( const QModelIndex& index )
 {
     if( !index.isValid() )
         return "";

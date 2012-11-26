@@ -8,23 +8,23 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Population_GUI.h"
+#include "ADN_Crowds_GUI.h"
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Workspace.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_Population_Data.h"
+#include "ADN_Crowds_Data.h"
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_GoToButton.h"
 #include "ADN_MultiPercentage.h"
-#include "ADN_Population_ListView.h"
-#include "ADN_Population_SpeedEffect_Attitude_ListView.h"
-#include "ADN_Population_SpeedEffect_Volume_ListView.h"
-#include "ADN_Population_FireEffect_Attitude_ListView.h"
-#include "ADN_Population_FireEffect_Protection_ListView.h"
-#include "ADN_Population_UrbanEffect_Attitude_ListView.h"
-#include "ADN_Population_FireEffectRoe_GUI.h"
+#include "ADN_Crowds_ListView.h"
+#include "ADN_Crowds_SpeedEffect_Attitude_ListView.h"
+#include "ADN_Crowds_SpeedEffect_Volume_ListView.h"
+#include "ADN_Crowds_FireEffect_Attitude_ListView.h"
+#include "ADN_Crowds_FireEffect_Protection_ListView.h"
+#include "ADN_Crowds_UrbanEffect_Attitude_ListView.h"
+#include "ADN_Crowds_FireEffectRoe_GUI.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
 #include "ADN_SearchListView.h"
@@ -39,30 +39,30 @@
 #include <Qt3Support/q3gridlayout.h>
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_GUI constructor
+// Name: ADN_Crowds_GUI constructor
 // Created: APE 2004-12-10
 // -----------------------------------------------------------------------------
-ADN_Population_GUI::ADN_Population_GUI( ADN_Population_Data& data )
-    : ADN_GUI_ABC( "ADN_Population_GUI" )
+ADN_Crowds_GUI::ADN_Crowds_GUI( ADN_Crowds_Data& data )
+    : ADN_GUI_ABC( "ADN_Crowds_GUI" )
     , data_( data )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_GUI destructor
+// Name: ADN_Crowds_GUI destructor
 // Created: APE 2004-12-10
 // -----------------------------------------------------------------------------
-ADN_Population_GUI::~ADN_Population_GUI()
+ADN_Crowds_GUI::~ADN_Crowds_GUI()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_GUI::Build
+// Name: ADN_Crowds_GUI::Build
 // Created: APE 2004-12-10
 // -----------------------------------------------------------------------------
-void ADN_Population_GUI::Build()
+void ADN_Crowds_GUI::Build()
 {
     // -------------------------------------------------------------------------
     // Layouts
@@ -118,10 +118,10 @@ void ADN_Population_GUI::Build()
     // Speed effects
     Q3GroupBox* pSpeedEffectGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units movement capability" ) );
     pSpeedEffectGroup->setFixedHeight( 200 );
-    ADN_Population_SpeedEffect_Attitude_ListView* pSpeedEffectAttitudeList = new ADN_Population_SpeedEffect_Attitude_ListView( pSpeedEffectGroup );
+    ADN_Crowds_SpeedEffect_Attitude_ListView* pSpeedEffectAttitudeList = new ADN_Crowds_SpeedEffect_Attitude_ListView( pSpeedEffectGroup );
     pSpeedEffectAttitudeList->setObjectName( strClassName_ + "_AttitudeList" );
     vInfosConnectors[ eSpeedEffectAttitude ] = &pSpeedEffectAttitudeList->GetConnector();
-    ADN_Population_SpeedEffect_Volume_ListView* pVolumeList = new ADN_Population_SpeedEffect_Volume_ListView( pSpeedEffectGroup );
+    ADN_Crowds_SpeedEffect_Volume_ListView* pVolumeList = new ADN_Crowds_SpeedEffect_Volume_ListView( pSpeedEffectGroup );
     pVolumeList->setObjectName( strClassName_ + "_VolumeList" );
     vInfosConnectors[ eSpeedEffectVolume ] = &pVolumeList->GetConnector();
     Q3GroupBox* pSpeedEffectVolumeGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect" ), pSpeedEffectGroup );
@@ -132,13 +132,13 @@ void ADN_Population_GUI::Build()
     Q3GroupBox* pFireEffectGlobalGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Attritions" ) );
     //{
         Q3GroupBox* pFireEffectGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd -> Units" ), pFireEffectGlobalGroup );
-        ADN_Population_FireEffect_Attitude_ListView* pFireEffectAttitudeList = new ADN_Population_FireEffect_Attitude_ListView( pFireEffectGroup );
+        ADN_Crowds_FireEffect_Attitude_ListView* pFireEffectAttitudeList = new ADN_Crowds_FireEffect_Attitude_ListView( pFireEffectGroup );
         pFireEffectAttitudeList->setObjectName( strClassName_ + "_FireAttitudeList" );
         vInfosConnectors[ eFireEffectAttitude ] = &pFireEffectAttitudeList->GetConnector();
         Q3VBox* pFireEffectProtectionBox = new Q3VBox( pFireEffectGroup );
         pFireEffectProtectionBox->setSpacing( 5 );
         // Protection
-        ADN_Population_FireEffect_Protection_ListView* pProtectionList = new ADN_Population_FireEffect_Protection_ListView( pFireEffectProtectionBox );
+        ADN_Crowds_FireEffect_Protection_ListView* pProtectionList = new ADN_Crowds_FireEffect_Protection_ListView( pFireEffectProtectionBox );
         pProtectionList->setObjectName( strClassName_ + "_ProtectionList" );
         vInfosConnectors[ eFireEffectProtection ] = &pProtectionList->GetConnector();
         // Intensity
@@ -163,13 +163,13 @@ void ADN_Population_GUI::Build()
 
         // Fire Roe effects
         Q3GroupBox* pFireEffectRoeGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Units -> Crowd" ), pFireEffectGlobalGroup );
-        new ADN_Population_FireEffectRoe_GUI( strClassName_ + "_FireEffectRoe", vInfosConnectors[ eFireEffectRoe ], pFireEffectRoeGroup );
+        new ADN_Crowds_FireEffectRoe_GUI( strClassName_ + "_FireEffectRoe", vInfosConnectors[ eFireEffectRoe ], pFireEffectRoeGroup );
     //}
 
     // Urban area destruction
     Q3GroupBox* pUrbanAreaDestructionlGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Urban area destruction" ) );
     pUrbanAreaDestructionlGroup->setFixedHeight( 200 );
-    ADN_Population_UrbanEffect_Attitude_ListView* pUrbanEffectAttitudeList = new ADN_Population_UrbanEffect_Attitude_ListView( pUrbanAreaDestructionlGroup );
+    ADN_Crowds_UrbanEffect_Attitude_ListView* pUrbanEffectAttitudeList = new ADN_Crowds_UrbanEffect_Attitude_ListView( pUrbanAreaDestructionlGroup );
     pUrbanEffectAttitudeList->setObjectName( strClassName_+ "_UrbanDestructionList" );
     vInfosConnectors[ eUrbanBlocDestructionAttitude ] = &pUrbanEffectAttitudeList->GetConnector();
     Q3GroupBox* pTimeDestructUrbanGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Time to destruct a urban block" ), pUrbanAreaDestructionlGroup );
@@ -205,7 +205,7 @@ void ADN_Population_GUI::Build()
     pSpecificLayout->addWidget( pUrbanAreaDestructionlGroup );
 
     // List view
-    ADN_SearchListView< ADN_Population_ListView >* pSearchListView = new ADN_SearchListView< ADN_Population_ListView >( this, data_.GetPopulation(), vInfosConnectors );
+    ADN_SearchListView< ADN_Crowds_ListView >* pSearchListView = new ADN_SearchListView< ADN_Crowds_ListView >( this, data_.GetCrowds(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
 

@@ -1138,15 +1138,15 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_Data.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Attitude_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Protection_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffectRoe_GUI.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_GUI.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Attitude_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Volume_ListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffect_Attitude_ListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffect_Protection_ListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffectRoe_GUI.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_GUI.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_ListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_SpeedEffect_Attitude_ListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_SpeedEffect_Volume_ListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_UrbanEffect_Attitude_ListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Reports_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Data.cpp" />
@@ -2728,11 +2728,11 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_Data.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Attitude_ListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Protection_ListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffectRoe_GUI.h" />
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Population_GUI.h">
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_Data.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffect_Attitude_ListView.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffect_Protection_ListView.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffectRoe_GUI.h" />
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Crowds_GUI.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
       </Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -2754,10 +2754,10 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_ListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Attitude_ListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Volume_ListView.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_ListView.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_SpeedEffect_Attitude_ListView.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_SpeedEffect_Volume_ListView.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_UrbanEffect_Attitude_ListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Reports_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_Data.h" />

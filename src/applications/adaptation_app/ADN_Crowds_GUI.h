@@ -7,20 +7,20 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Population_GUI_h_
-#define __ADN_Population_GUI_h_
+#ifndef __ADN_Crowds_GUI_h_
+#define __ADN_Crowds_GUI_h_
 
 #include "ADN_GUI_ABC.h"
 
-class ADN_Population_Data;
+class ADN_Crowds_Data;
 
 // =============================================================================
-/** @class  ADN_Population_GUI
-    @brief  ADN_Population_GUI
+/** @class  ADN_Crowds_GUI
+    @brief  ADN_Crowds_GUI
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Population_GUI : public ADN_GUI_ABC
+class ADN_Crowds_GUI : public ADN_GUI_ABC
 {
 public:
     enum E_GuiElements
@@ -62,8 +62,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Population_GUI( ADN_Population_Data& data );
-    virtual ~ADN_Population_GUI();
+    explicit ADN_Crowds_GUI( ADN_Crowds_Data& data );
+    virtual ~ADN_Crowds_GUI();
     //@}
 
     //! @name Operations
@@ -74,8 +74,8 @@ public:
 private:
     //! @name Member data
     //@{
-    ADN_Population_Data& data_;
+    ADN_Crowds_Data& data_;
     //@}
 };
 
-#endif // __ADN_Population_GUI_h_
+#endif // __ADN_Crowds_GUI_h_

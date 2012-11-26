@@ -7,30 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Population_FireEffect_Attitude_ListView_h_
-#define __ADN_Population_FireEffect_Attitude_ListView_h_
+#ifndef __ADN_Crowds_ListView_h_
+#define __ADN_Crowds_ListView_h_
 
 #include "ADN_ListView.h"
-#include <boost/noncopyable.hpp>
 
 // =============================================================================
-// Created: SBO 2005-10-25
+/** @class  ADN_Crowds_ListView
+    @brief  ADN_Crowds_ListView
+*/
+// Created: APE 2005-01-06
 // =============================================================================
-class ADN_Population_FireEffect_Attitude_ListView : public ADN_ListView
-                                                  , private boost::noncopyable
+class ADN_Crowds_ListView : public ADN_ListView
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Population_FireEffect_Attitude_ListView( QWidget* pParent );
-    virtual ~ADN_Population_FireEffect_Attitude_ListView();
+    explicit ADN_Crowds_ListView( QWidget* pParent );
+    virtual ~ADN_Crowds_ListView();
     //@}
 
     //! @name Operations
     //@{
     void ConnectItem( bool bConnect );
+    void OnContextMenu( const QPoint& pt );
+    std::string GetToolTipFor( const QModelIndex& index );
     //@}
 };
 
-#endif // __ADN_Population_FireEffect_Attitude_ListView_h_
+#endif // __ADN_Crowds_ListView_h_

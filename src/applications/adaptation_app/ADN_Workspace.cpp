@@ -26,6 +26,8 @@
 #include "ADN_Communications_GUI.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Composantes_GUI.h"
+#include "ADN_Crowds_Data.h"
+#include "ADN_Crowds_GUI.h"
 #include "ADN_DialogLog.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Drawings_GUI.h"
@@ -38,6 +40,8 @@
 #include "ADN_HtmlBuilder.h"
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_HumanFactors_GUI.h"
+#include "ADN_Inhabitants_Data.h"
+#include "ADN_Inhabitants_GUI.h"
 #include "ADN_KnowledgeGroups_Data.h"
 #include "ADN_KnowledgeGroups_GUI.h"
 #include "ADN_Launchers_Data.h"
@@ -53,10 +57,6 @@
 #include "ADN_NBC_GUI.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Objects_GUI.h"
-#include "ADN_Inhabitants_Data.h"
-#include "ADN_Inhabitants_GUI.h"
-#include "ADN_Population_Data.h"
-#include "ADN_Population_GUI.h"
 #include "ADN_ProgressIndicator_ABC.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Reports_Data.h"
@@ -163,7 +163,7 @@ void ADN_Workspace::Initialize()
     elements_[eHumanFactors]      = new ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI>           ( eHumanFactors );
     elements_[eMissions]          = new ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI>                   ( eMissions );
     elements_[eKnowledgeGroups]   = new ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI>     ( eKnowledgeGroups );
-    elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >              ( ePopulation );
+    elements_[eCrowds]            = new ADN_WorkspaceElement< ADN_Crowds_Data, ADN_Crowds_GUI >                      ( eCrowds );
     elements_[eInhabitants]       = new ADN_WorkspaceElement< ADN_Inhabitants_Data, ADN_Inhabitants_GUI >            ( eInhabitants );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >                    ( eReports );
     elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >                ( eFireClasses );
@@ -258,7 +258,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
     AddPage( mainwindow, eComposantes );
     AddPage( mainwindow, eUnits );
     AddPage( mainwindow, eAutomata );
-    AddPage( mainwindow, ePopulation );
+    AddPage( mainwindow, eCrowds );
     AddPage( mainwindow, eInhabitants );
     AddPage( mainwindow, eLogistic );
     AddPage( mainwindow, eCommunications );
@@ -623,7 +623,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
     if( ADN_Models_Data::ModelInfos* infos = dynamic_cast< ADN_Models_Data::ModelInfos* >( data ) )
     {
         FillUsingElements( eAutomata, *infos, GetAutomata().GetData(), &ADN_Automata_Data::GetAutomataThatUse, result );
-        FillUsingElements( ePopulation, *infos, GetPopulation().GetData(), &ADN_Population_Data::GetPopulationsThatUse, result );
+        FillUsingElements( eCrowds, *infos, GetCrowds().GetData(), &ADN_Crowds_Data::GetCrowdsThatUse, result );
         FillUsingElements( eUnits, *infos, GetUnits().GetData(), &ADN_Units_Data::GetUnitsThatUse, result );
         return result;
     }
@@ -633,7 +633,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
         return FillUsingElements( eAutomata, *infos, GetAutomata().GetData(), &ADN_Automata_Data::GetAutomataThatUseForPC, result );
 
     // Inhabitant to delete when crowd deleted
-    if( ADN_Population_Data::PopulationInfos* infos = dynamic_cast< ADN_Population_Data::PopulationInfos* >( data ) )
+    if( ADN_Crowds_Data::CrowdsInfos* infos = dynamic_cast< ADN_Crowds_Data::CrowdsInfos* >( data ) )
         return FillUsingElements( eInhabitants, *infos, GetInhabitants().GetData(), &ADN_Inhabitants_Data::GetInhabitantsThatUse, result );
 
     // Actives protections to delete when ammo deleted
@@ -740,7 +740,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     if( helpers::ArmorInfos* infos = dynamic_cast< helpers::ArmorInfos* >( data ) )
     {
         result[ eUrban ];
-        result[ ePopulation ];
+        result[ eCrowds ];
         result[ eEquipement ] = GetEquipements().GetData().GetEquipmentsWithDirectFire();
         return result;
     }
@@ -748,7 +748,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     if( ADN_Categories_Data::SizeInfos* infos = dynamic_cast< ADN_Categories_Data::SizeInfos* >( data ) )
     {
         result[ eSensors ];
-        result[ ePopulation ];
+        result[ eCrowds ];
         result[ eWeapons ];
         return result;
     }

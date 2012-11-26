@@ -41,7 +41,7 @@ enum E_WorkspaceElements
     eCommunications,
     eHumanFactors,
     eKnowledgeGroups,
-    ePopulation,
+    eCrowds,
     eInhabitants,
     eReports,
     eLogistic, // Gather eMaintenance, eSupply, eHealth and eFuneral in a container

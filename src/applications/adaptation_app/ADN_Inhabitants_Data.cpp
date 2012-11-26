@@ -162,7 +162,7 @@ void ADN_Inhabitants_Data::InhabitantsInfosConsumption::WriteArchive( xml::xostr
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_Data::InhabitantsInfos::InhabitantsInfos()
     : nId_                ( ADN_Inhabitants_Data::idManager_.GetNextId() )
-    , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
+    , ptrModel_           ( ADN_Workspace::GetWorkspace().GetCrowds().GetData().GetCrowds(), 0 )
     , repartition_        ( tools::translate( "People_Data", "Population" ) )
     , securityLossOnFire_ ( 0 )
     , securityGainPerHour_( 0 )
@@ -178,7 +178,7 @@ ADN_Inhabitants_Data::InhabitantsInfos::InhabitantsInfos()
 // -----------------------------------------------------------------------------
 ADN_Inhabitants_Data::InhabitantsInfos::InhabitantsInfos( unsigned int id )
     : nId_                ( id )
-    , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
+    , ptrModel_           ( ADN_Workspace::GetWorkspace().GetCrowds().GetData().GetCrowds(), 0 )
     , repartition_        ( tools::translate( "People_Data", "Population" ) )
     , securityLossOnFire_ ( 0 )
     , securityGainPerHour_( 0 )
@@ -237,7 +237,7 @@ void ADN_Inhabitants_Data::InhabitantsInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "associated-crowd", strModel )
           >> xml::optional >> xml::attribute( "angry-crowd-mission", strAngryCrowdMission_ );
 
-    ADN_Population_Data::PopulationInfos* pModel = ADN_Workspace::GetWorkspace().GetPopulation().GetData().FindPopulation( strModel );
+    ADN_Crowds_Data::CrowdsInfos* pModel = ADN_Workspace::GetWorkspace().GetCrowds().GetData().FindCrowd( strModel );
     if( !pModel )
         throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Population types - Invalid Population type '%1'" ).arg( strModel.c_str() ).toStdString() );
     ptrModel_ = pModel;
@@ -447,7 +447,7 @@ void ADN_Inhabitants_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Inhabitants_Data::GetInhabitantsThatUse
 // Created: ABR 2012-08-01
 // -----------------------------------------------------------------------------
-QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_Population_Data::PopulationInfos& population )
+QStringList ADN_Inhabitants_Data::GetInhabitantsThatUse( ADN_Crowds_Data::CrowdsInfos& population )
 {
     QStringList result;
     for( CIT_InhabitantsInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )

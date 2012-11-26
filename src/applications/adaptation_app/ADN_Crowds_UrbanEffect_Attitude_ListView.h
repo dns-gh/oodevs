@@ -3,28 +3,26 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __ADN_Population_SpeedEffect_Volume_ListView_h_
-#define __ADN_Population_SpeedEffect_Volume_ListView_h_
+#ifndef __ADN_Crowds_UrbanEffect_Attitude_ListView_h_
+#define __ADN_Crowds_UrbanEffect_Attitude_ListView_h_
 
 #include "ADN_ListView.h"
-#include <boost/noncopyable.hpp>
 
 // =============================================================================
-// Created: SBO 2005-10-25
+// Created: MMC 2011-03-30
 // =============================================================================
-class ADN_Population_SpeedEffect_Volume_ListView : public ADN_ListView
-                                                 , private boost::noncopyable
+class ADN_Crowds_UrbanEffect_Attitude_ListView : public ADN_ListView
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Population_SpeedEffect_Volume_ListView( QWidget* pParent );
-    virtual ~ADN_Population_SpeedEffect_Volume_ListView();
+    explicit ADN_Crowds_UrbanEffect_Attitude_ListView( QWidget* pParent );
+    virtual ~ADN_Crowds_UrbanEffect_Attitude_ListView();
     //@}
 
     //! @name Operations
@@ -33,4 +31,4 @@ public:
     //@}
 };
 
-#endif // __ADN_Population_SpeedEffect_Volume_ListView_h_
+#endif // __ADN_Crowds_UrbanEffect_Attitude_ListView_h_

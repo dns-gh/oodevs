@@ -1284,6 +1284,191 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Crowds_FireEffectRoe_GUI</name>
+    <message>
+        <source>ROE</source>
+        <translation type="unfinished">ROE</translation>
+    </message>
+    <message>
+        <source>Attrition Surface (m²)</source>
+        <translation type="unfinished">Superficie de atrición (m²)</translation>
+    </message>
+    <message>
+        <source>PH</source>
+        <translation type="unfinished">PH</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation>Actitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Protection_ListView</name>
+    <message>
+        <source>Protections</source>
+        <translation type="unfinished">Protecciones</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_GUI</name>
+    <message>
+        <source>Global parameters</source>
+        <translation type="unfinished">Parámetros globales</translation>
+    </message>
+    <message>
+        <source>Crowd effects on units firing capability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished">Densidad</translation>
+    </message>
+    <message>
+        <source>people/m²</source>
+        <translation type="unfinished">personas/m²</translation>
+    </message>
+    <message>
+        <source>Modifier</source>
+        <translation type="unfinished">Modificadores</translation>
+    </message>
+    <message>
+        <source>Time between two NBC applications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished">Detalles</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Behavior model</source>
+        <translation type="unfinished">Modelo de comportamiento</translation>
+    </message>
+    <message>
+        <source>Density while moving</source>
+        <translation type="unfinished">Densidad en movimiento</translation>
+    </message>
+    <message>
+        <source>Average movement speed</source>
+        <translation type="unfinished">Velocidad promedio de movimiento</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation type="unfinished">km/h</translation>
+    </message>
+    <message>
+        <source>Armed individuals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decontamination delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd effects on units movement capability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation type="unfinished">Efecto</translation>
+    </message>
+    <message>
+        <source>Max speed</source>
+        <translation type="unfinished">Velocidad máxima</translation>
+    </message>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished">Atriciones</translation>
+    </message>
+    <message>
+        <source>Crowd -&gt; Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intensity</source>
+        <translation type="unfinished">Intensidad</translation>
+    </message>
+    <message>
+        <source>Unarmed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destruction</source>
+        <translation type="unfinished">Destrucción</translation>
+    </message>
+    <message>
+        <source>Fixable with evacuation</source>
+        <translation type="unfinished">Reparable con evacuación</translation>
+    </message>
+    <message>
+        <source>Fixable without evacuation</source>
+        <translation type="unfinished">Reparable sin evacuación</translation>
+    </message>
+    <message>
+        <source>Armed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units -&gt; Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban area destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time to destruct a urban block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">Actitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Volume_ListView</name>
+    <message>
+        <source>Volumes</source>
+        <translation type="unfinished">Volumenes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_UrbanEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">Actitudes</translation>
+    </message>
+</context>
+<context>
     <name>ADN_DataException</name>
     <message>
         <source>Data error</source>
@@ -3493,191 +3678,6 @@ The spawn capacity will be disabled.</source>
     <message>
         <source>Remove point</source>
         <translation>Remover punto</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_FireEffectRoe_GUI</name>
-    <message>
-        <source>ROE</source>
-        <translation>ROE</translation>
-    </message>
-    <message>
-        <source>Attrition Surface (m²)</source>
-        <translation>Superficie de atrición (m²)</translation>
-    </message>
-    <message>
-        <source>PH</source>
-        <translation>PH</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_FireEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation>Actitudes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_FireEffect_Protection_ListView</name>
-    <message>
-        <source>Protections</source>
-        <translation>Protecciones</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_GUI</name>
-    <message>
-        <source>Global parameters</source>
-        <translation>Parámetros globales</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation>Densidad</translation>
-    </message>
-    <message>
-        <source>people/m²</source>
-        <translation>personas/m²</translation>
-    </message>
-    <message>
-        <source>Modifier</source>
-        <translation>Modificadores</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation>Detalles</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Behavior model</source>
-        <translation>Modelo de comportamiento</translation>
-    </message>
-    <message>
-        <source>Density while moving</source>
-        <translation>Densidad en movimiento</translation>
-    </message>
-    <message>
-        <source>Average movement speed</source>
-        <translation>Velocidad promedio de movimiento</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
-        <source>Effect</source>
-        <translation>Efecto</translation>
-    </message>
-    <message>
-        <source>Max speed</source>
-        <translation>Velocidad máxima</translation>
-    </message>
-    <message>
-        <source>Attritions</source>
-        <translation>Atriciones</translation>
-    </message>
-    <message>
-        <source>Intensity</source>
-        <translation>Intensidad</translation>
-    </message>
-    <message>
-        <source>Destruction</source>
-        <translation>Destrucción</translation>
-    </message>
-    <message>
-        <source>Fixable with evacuation</source>
-        <translation>Reparable con evacuación</translation>
-    </message>
-    <message>
-        <source>Fixable without evacuation</source>
-        <translation>Reparable sin evacuación</translation>
-    </message>
-    <message>
-        <source>Crowd effects on units firing capability</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time between two NBC applications</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Armed individuals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <source>Males</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Females</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Children</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd effects on units movement capability</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd -&gt; Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unarmed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Armed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Units -&gt; Crowd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban area destruction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time to destruct a urban block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decontamination delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_SpeedEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation>Actitudes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_SpeedEffect_Volume_ListView</name>
-    <message>
-        <source>Volumes</source>
-        <translation>Volumenes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_UrbanEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation>Actitudes</translation>
     </message>
 </context>
 <context>

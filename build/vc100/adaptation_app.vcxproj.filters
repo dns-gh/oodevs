@@ -191,15 +191,6 @@
     <Filter Include="Source Files\Workspace\Radars\Radars GUI">
       <UniqueIdentifier>{4a60cae5-36a5-49bc-bf89-4ce1c454cbf9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Population">
-      <UniqueIdentifier>{ae340b71-36c4-4151-b625-fd4976f56f0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Population\Population data">
-      <UniqueIdentifier>{42b72293-8889-46c3-aea6-3b79a0bc3093}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Population\Population GUI">
-      <UniqueIdentifier>{88e6d076-fac5-43db-b440-a6364d21b212}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Reports">
       <UniqueIdentifier>{0c323936-f49a-4b6d-a871-0becf5316d36}</UniqueIdentifier>
     </Filter>
@@ -388,6 +379,15 @@
     </Filter>
     <Filter Include="Source Files\Workspace\Inhabitants\Inhabitants GUI">
       <UniqueIdentifier>{1b249af3-ebaa-435f-a93c-123cb20ee9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Crowds">
+      <UniqueIdentifier>{4e29cf1d-2a1d-4073-b20b-1a57a187b96e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Crowds\Crowds GUI">
+      <UniqueIdentifier>{1a5e24be-540d-4a79-874c-f2e7a2af5f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Crowds\Crowds Data">
+      <UniqueIdentifier>{9ce6c9b2-89c0-48e7-bb8f-132fb22f4619}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -811,33 +811,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.cpp">
       <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_Data.cpp">
-      <Filter>Source Files\Workspace\Population\Population data</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Attitude_ListView.cpp">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Protection_ListView.cpp">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffectRoe_GUI.cpp">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_GUI.cpp">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_ListView.cpp">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Attitude_ListView.cpp">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Volume_ListView.cpp">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.cpp">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.cpp">
       <Filter>Source Files\Workspace\Reports\Reports Data</Filter>
     </ClCompile>
@@ -1201,6 +1174,33 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_ListView.cpp">
       <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_Data.cpp">
+      <Filter>Source Files\Workspace\Crowds\Crowds Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_GUI.cpp">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_ListView.cpp">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffect_Attitude_ListView.cpp">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffect_Protection_ListView.cpp">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffectRoe_GUI.cpp">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_SpeedEffect_Attitude_ListView.cpp">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_SpeedEffect_Volume_ListView.cpp">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_UrbanEffect_Attitude_ListView.cpp">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1487,30 +1487,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Radars_ListView.h">
       <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_Data.h">
-      <Filter>Source Files\Workspace\Population\Population data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Attitude_ListView.h">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffect_Protection_ListView.h">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_FireEffectRoe_GUI.h">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_ListView.h">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Attitude_ListView.h">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_SpeedEffect_Volume_ListView.h">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Population_UrbanEffect_Attitude_ListView.h">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Reports_Data.h">
       <Filter>Source Files\Workspace\Reports\Reports Data</Filter>
@@ -1845,6 +1821,30 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_ListView.h">
       <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_Data.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_ListView.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffect_Attitude_ListView.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffect_Protection_ListView.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_FireEffectRoe_GUI.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_SpeedEffect_Attitude_ListView.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_SpeedEffect_Volume_ListView.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_UrbanEffect_Attitude_ListView.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2048,9 +2048,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Missions_GUI.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Population_GUI.h">
-      <Filter>Source Files\Workspace\Population\Population GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ActiveProtections_GUI.h">
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
     </CustomBuild>
@@ -2182,6 +2179,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Inhabitants_GUI.h">
       <Filter>Source Files\Workspace\Inhabitants\Inhabitants GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Crowds_GUI.h">
+      <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

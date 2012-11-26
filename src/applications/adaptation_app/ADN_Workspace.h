@@ -30,6 +30,8 @@ class ADN_Categories_GUI;
 class ADN_Composantes_Data;
 class ADN_Composantes_GUI;
 class ADN_ConsistencyChecker;
+class ADN_Crowds_Data;
+class ADN_Crowds_GUI;
 class ADN_Drawings_Data;
 class ADN_Drawings_GUI;
 class ADN_Equipement_Data;
@@ -55,8 +57,6 @@ class ADN_NBC_Datas;
 class ADN_NBC_GUI;
 class ADN_Objects_Data;
 class ADN_Objects_GUI;
-class ADN_Population_Data;
-class ADN_Population_GUI;
 class ADN_ProgressIndicator_ABC;
 class ADN_Project_Data;
 class ADN_Reports_Data;
@@ -134,7 +134,7 @@ public:
     ADN_WorkspaceElement< ADN_Automata_Data, ADN_Automata_GUI >& GetAutomata();
     ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI>& GetAiEngine();
     ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI>& GetBreakdowns();
-    ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& GetPopulation();
+    ADN_WorkspaceElement< ADN_Crowds_Data, ADN_Crowds_GUI >& GetCrowds();
     ADN_WorkspaceElement< ADN_Inhabitants_Data, ADN_Inhabitants_GUI >& GetInhabitants();
     ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& GetReports();
     ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& GetHumanFactors();
@@ -365,13 +365,13 @@ ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI>& ADN_Workspace::G
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetPopulation
+// Name: ADN_Workspace::GetCrowds
 // Created: SBO 2005-10-04
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& ADN_Workspace::GetPopulation()
+ADN_WorkspaceElement< ADN_Crowds_Data, ADN_Crowds_GUI >& ADN_Workspace::GetCrowds()
 {
-    return ( ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& )( *elements_[ ePopulation ] );
+    return ( ADN_WorkspaceElement< ADN_Crowds_Data, ADN_Crowds_GUI >& )( *elements_[ eCrowds ] );
 }
 
 // -----------------------------------------------------------------------------

@@ -1269,6 +1269,191 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Crowds_FireEffectRoe_GUI</name>
+    <message>
+        <source>ROE</source>
+        <translation type="unfinished">قواعد الاشتباك</translation>
+    </message>
+    <message>
+        <source>Attrition Surface (m²)</source>
+        <translation type="unfinished">الاستنزاف السطح (م 2)</translation>
+    </message>
+    <message>
+        <source>PH</source>
+        <translation type="unfinished">الأس الهيدروجيني</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">المواقف</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Protection_ListView</name>
+    <message>
+        <source>Protections</source>
+        <translation type="unfinished">سبل الحماية</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_GUI</name>
+    <message>
+        <source>Global parameters</source>
+        <translation type="unfinished">معلمات العمومية</translation>
+    </message>
+    <message>
+        <source>Crowd effects on units firing capability</source>
+        <translation type="unfinished">آثار الحشد على وحدات إطلاق القدرة</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished">الكثافة</translation>
+    </message>
+    <message>
+        <source>people/m²</source>
+        <translation type="unfinished">الشعب/م 2</translation>
+    </message>
+    <message>
+        <source>Modifier</source>
+        <translation type="unfinished">التغيير</translation>
+    </message>
+    <message>
+        <source>Time between two NBC applications</source>
+        <translation type="unfinished">الوقت بين اثنين من التطبيقات شبكة أن بي سي</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished">تفاصيل</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
+    <message>
+        <source>Behavior model</source>
+        <translation type="unfinished">نموذج السلوك</translation>
+    </message>
+    <message>
+        <source>Density while moving</source>
+        <translation type="unfinished">كثافة أثناء تحريك</translation>
+    </message>
+    <message>
+        <source>Average movement speed</source>
+        <translation type="unfinished">سرعة حركة متوسط</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation type="unfinished">كم/ساعة</translation>
+    </message>
+    <message>
+        <source>Armed individuals</source>
+        <translation type="unfinished">الأفراد المسلحين</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation type="unfinished">الذكور</translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation type="unfinished">الإناث</translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation type="unfinished">الأطفال</translation>
+    </message>
+    <message>
+        <source>Decontamination delay</source>
+        <translation type="unfinished">تأخير إزالة التلوث</translation>
+    </message>
+    <message>
+        <source>Crowd effects on units movement capability</source>
+        <translation type="unfinished">آثار الحشد على قدرة حركة الوحدات</translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation type="unfinished">تأثير</translation>
+    </message>
+    <message>
+        <source>Max speed</source>
+        <translation type="unfinished">ماكس السرعة</translation>
+    </message>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished">أتريشنز</translation>
+    </message>
+    <message>
+        <source>Crowd -&gt; Units</source>
+        <translation type="unfinished">الحشد-&gt; الوحدات</translation>
+    </message>
+    <message>
+        <source>Intensity</source>
+        <translation type="unfinished">كثافة</translation>
+    </message>
+    <message>
+        <source>Unarmed</source>
+        <translation type="unfinished">العزل</translation>
+    </message>
+    <message>
+        <source>Destruction</source>
+        <translation type="unfinished">تدمير</translation>
+    </message>
+    <message>
+        <source>Fixable with evacuation</source>
+        <translation type="unfinished">يمكن حلها مع إجلاء</translation>
+    </message>
+    <message>
+        <source>Fixable without evacuation</source>
+        <translation type="unfinished">يمكن حلها دون إخلاء</translation>
+    </message>
+    <message>
+        <source>Armed</source>
+        <translation type="unfinished">المسلحة</translation>
+    </message>
+    <message>
+        <source>Units -&gt; Crowd</source>
+        <translation type="unfinished">وحدات-&gt; الحشد</translation>
+    </message>
+    <message>
+        <source>Urban area destruction</source>
+        <translation type="unfinished">تدمير المنطقة الحضرية</translation>
+    </message>
+    <message>
+        <source>Time to destruct a urban block</source>
+        <translation type="unfinished">الوقت للتدمير كتلة حضرية</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished">الوقت</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">المواقف</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Volume_ListView</name>
+    <message>
+        <source>Volumes</source>
+        <translation type="unfinished">وحدات التخزين</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_UrbanEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">المواقف</translation>
+    </message>
+</context>
+<context>
     <name>ADN_DataException</name>
     <message>
         <source>Data error</source>
@@ -3479,191 +3664,6 @@ The spawn capacity will be disabled.</source>
     <message>
         <source>Remove point</source>
         <translation type="unfinished">إزالة نقطة</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_FireEffectRoe_GUI</name>
-    <message>
-        <source>ROE</source>
-        <translation type="unfinished">قواعد الاشتباك</translation>
-    </message>
-    <message>
-        <source>Attrition Surface (m²)</source>
-        <translation type="unfinished">الاستنزاف السطح (م 2)</translation>
-    </message>
-    <message>
-        <source>PH</source>
-        <translation type="unfinished">الأس الهيدروجيني</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_FireEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation type="unfinished">المواقف</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_FireEffect_Protection_ListView</name>
-    <message>
-        <source>Protections</source>
-        <translation type="unfinished">سبل الحماية</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_GUI</name>
-    <message>
-        <source>Global parameters</source>
-        <translation type="unfinished">معلمات العمومية</translation>
-    </message>
-    <message>
-        <source>Crowd effects on units firing capability</source>
-        <translation type="unfinished">آثار الحشد على وحدات إطلاق القدرة</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="unfinished">الكثافة</translation>
-    </message>
-    <message>
-        <source>people/m²</source>
-        <translation type="unfinished">الشعب/م 2</translation>
-    </message>
-    <message>
-        <source>Modifier</source>
-        <translation type="unfinished">التغيير</translation>
-    </message>
-    <message>
-        <source>Time between two NBC applications</source>
-        <translation type="unfinished">الوقت بين اثنين من التطبيقات شبكة أن بي سي</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="unfinished">تفاصيل</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
-    </message>
-    <message>
-        <source>Behavior model</source>
-        <translation type="unfinished">نموذج السلوك</translation>
-    </message>
-    <message>
-        <source>Density while moving</source>
-        <translation type="unfinished">كثافة أثناء تحريك</translation>
-    </message>
-    <message>
-        <source>Average movement speed</source>
-        <translation type="unfinished">سرعة حركة متوسط</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation type="unfinished">كم/ساعة</translation>
-    </message>
-    <message>
-        <source>Armed individuals</source>
-        <translation type="unfinished">الأفراد المسلحين</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation type="unfinished">%</translation>
-    </message>
-    <message>
-        <source>Males</source>
-        <translation type="unfinished">الذكور</translation>
-    </message>
-    <message>
-        <source>Females</source>
-        <translation type="unfinished">الإناث</translation>
-    </message>
-    <message>
-        <source>Children</source>
-        <translation type="unfinished">الأطفال</translation>
-    </message>
-    <message>
-        <source>Decontamination delay</source>
-        <translation type="unfinished">تأخير إزالة التلوث</translation>
-    </message>
-    <message>
-        <source>Crowd effects on units movement capability</source>
-        <translation type="unfinished">آثار الحشد على قدرة حركة الوحدات</translation>
-    </message>
-    <message>
-        <source>Effect</source>
-        <translation type="unfinished">تأثير</translation>
-    </message>
-    <message>
-        <source>Max speed</source>
-        <translation type="unfinished">ماكس السرعة</translation>
-    </message>
-    <message>
-        <source>Attritions</source>
-        <translation type="unfinished">أتريشنز</translation>
-    </message>
-    <message>
-        <source>Crowd -&gt; Units</source>
-        <translation type="unfinished">الحشد-&gt; الوحدات</translation>
-    </message>
-    <message>
-        <source>Intensity</source>
-        <translation type="unfinished">كثافة</translation>
-    </message>
-    <message>
-        <source>Unarmed</source>
-        <translation type="unfinished">العزل</translation>
-    </message>
-    <message>
-        <source>Destruction</source>
-        <translation type="unfinished">تدمير</translation>
-    </message>
-    <message>
-        <source>Fixable with evacuation</source>
-        <translation type="unfinished">يمكن حلها مع إجلاء</translation>
-    </message>
-    <message>
-        <source>Fixable without evacuation</source>
-        <translation type="unfinished">يمكن حلها دون إخلاء</translation>
-    </message>
-    <message>
-        <source>Armed</source>
-        <translation type="unfinished">المسلحة</translation>
-    </message>
-    <message>
-        <source>Units -&gt; Crowd</source>
-        <translation type="unfinished">وحدات-&gt; الحشد</translation>
-    </message>
-    <message>
-        <source>Urban area destruction</source>
-        <translation type="unfinished">تدمير المنطقة الحضرية</translation>
-    </message>
-    <message>
-        <source>Time to destruct a urban block</source>
-        <translation type="unfinished">الوقت للتدمير كتلة حضرية</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation type="unfinished">الوقت</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_SpeedEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation type="unfinished">المواقف</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_SpeedEffect_Volume_ListView</name>
-    <message>
-        <source>Volumes</source>
-        <translation type="unfinished">وحدات التخزين</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Population_UrbanEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation type="unfinished">المواقف</translation>
     </message>
 </context>
 <context>

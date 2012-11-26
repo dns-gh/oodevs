@@ -7,24 +7,22 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Population_FireEffect_Protection_ListView_h_
-#define __ADN_Population_FireEffect_Protection_ListView_h_
+#ifndef __ADN_Crowds_FireEffect_Attitude_ListView_h_
+#define __ADN_Crowds_FireEffect_Attitude_ListView_h_
 
 #include "ADN_ListView.h"
-#include <boost/noncopyable.hpp>
 
 // =============================================================================
 // Created: SBO 2005-10-25
 // =============================================================================
-class ADN_Population_FireEffect_Protection_ListView : public ADN_ListView
-                                                    , private boost::noncopyable
+class ADN_Crowds_FireEffect_Attitude_ListView : public ADN_ListView
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Population_FireEffect_Protection_ListView( QWidget* pParent );
-    virtual ~ADN_Population_FireEffect_Protection_ListView();
+    explicit ADN_Crowds_FireEffect_Attitude_ListView( QWidget* pParent );
+    virtual ~ADN_Crowds_FireEffect_Attitude_ListView();
     //@}
 
     //! @name Operations
@@ -33,4 +31,4 @@ public:
     //@}
 };
 
-#endif // __ADN_Population_FireEffect_Protection_ListView_h_
+#endif // __ADN_Crowds_FireEffect_Attitude_ListView_h_

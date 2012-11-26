@@ -15,7 +15,7 @@
 #include "ADN_Types.h"
 #include "ADN_Type_Repartition.h"
 #include "ADN_Type_Vector_ABC.h"
-#include "ADN_Population_Data.h"
+#include "ADN_Crowds_Data.h"
 #include "ADN_ResourceNetworks_Data.h"
 #include <map>
 #include <boost/shared_ptr.hpp>
@@ -90,7 +90,7 @@ public:
 
     public:
         ADN_Type_Int nId_;
-        ADN_TypePtr_InVector_ABC<ADN_Population_Data::PopulationInfos> ptrModel_;
+        ADN_TypePtr_InVector_ABC<ADN_Crowds_Data::CrowdsInfos> ptrModel_;
         ADN_Type_String strAngryCrowdMission_;
         ADN_Type_Repartition repartition_;
         ADN_Type_Time transferTime_;
@@ -113,7 +113,7 @@ public:
     T_InhabitantsInfosVector& GetInhabitants();
     InhabitantsInfos* FindInhabitant( const std::string& strName );
 
-    QStringList GetInhabitantsThatUse( ADN_Population_Data::PopulationInfos& population );
+    QStringList GetInhabitantsThatUse( ADN_Crowds_Data::CrowdsInfos& population );
     QStringList GetInhabitantsThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network );
 
 private:
@@ -129,7 +129,7 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::GetPopulation
+// Name: ADN_Crowds_Data::GetPopulation
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 inline
@@ -139,7 +139,7 @@ ADN_Inhabitants_Data::T_InhabitantsInfosVector& ADN_Inhabitants_Data::GetInhabit
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_Data::FindPopulation
+// Name: ADN_Crowds_Data::FindPopulation
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 inline

@@ -1,28 +1,28 @@
 //*****************************************************************************
 //
 // $Created: JDY 03-07-08 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Population_FireEffectRoe_GUI.cpp $
+// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Crowds_FireEffectRoe_GUI.cpp $
 // $Author: Ape $
 // $Modtime: 20/04/05 16:50 $
 // $Revision: 9 $
-// $Workfile: ADN_Population_FireEffectRoe_GUI.cpp $
+// $Workfile: ADN_Crowds_FireEffectRoe_GUI.cpp $
 //
 //*****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Population_FireEffectRoe_GUI.h"
+#include "ADN_Crowds_FireEffectRoe_GUI.h"
 #include "ADN_App.h"
 #include "ADN_Tools.h"
-#include "ADN_Population_Data.h"
+#include "ADN_Crowds_Data.h"
 #include "ENT/ENT_Tr.h"
 
-typedef ADN_Population_Data::FireEffectRoeInfos FireEffectRoeInfos;
+typedef ADN_Crowds_Data::FireEffectRoeInfos FireEffectRoeInfos;
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Population_FireEffectRoe_GUI constructor
+// Name: ADN_Crowds_FireEffectRoe_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Crowds_FireEffectRoe_GUI::ADN_Crowds_FireEffectRoe_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 3 );
@@ -38,19 +38,19 @@ ADN_Population_FireEffectRoe_GUI::ADN_Population_FireEffectRoe_GUI( const QStrin
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Population_FireEffectRoe_GUI destructor
+// Name: ADN_Crowds_FireEffectRoe_GUI destructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Population_FireEffectRoe_GUI::~ADN_Population_FireEffectRoe_GUI()
+ADN_Crowds_FireEffectRoe_GUI::~ADN_Crowds_FireEffectRoe_GUI()
 {
     //NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_FireEffectRoe_GUI::AddRow
+// Name: ADN_Crowds_FireEffectRoe_GUI::AddRow
 // Created: NPT 2012-11-05
 // -----------------------------------------------------------------------------
-void ADN_Population_FireEffectRoe_GUI::AddRow( int row, void* data )
+void ADN_Crowds_FireEffectRoe_GUI::AddRow( int row, void* data )
 {
     FireEffectRoeInfos* info = static_cast< FireEffectRoeInfos* >( data );
     if( !info )

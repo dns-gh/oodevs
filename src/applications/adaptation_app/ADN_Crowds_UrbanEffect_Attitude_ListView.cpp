@@ -8,20 +8,20 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Population_UrbanEffect_Attitude_ListView.h"
-#include "ADN_Population_Data.h"
-#include "ADN_Population_GUI.h"
+#include "ADN_Crowds_UrbanEffect_Attitude_ListView.h"
+#include "ADN_Crowds_Data.h"
+#include "ADN_Crowds_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tr.h"
 
-typedef ADN_Population_Data::UrbanEffectInfos UrbanEffectInfos;
+typedef ADN_Crowds_Data::UrbanEffectInfos UrbanEffectInfos;
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_UrbanEffect_Attitude_ListView constructor
+// Name: ADN_Crowds_UrbanEffect_Attitude_ListView constructor
 // Created: MMC 2011-03-30
 // -----------------------------------------------------------------------------
-ADN_Population_UrbanEffect_Attitude_ListView::ADN_Population_UrbanEffect_Attitude_ListView( QWidget* pParent )
-    : ADN_ListView( pParent, "ADN_Population_UrbanEffect_Attitude_ListView", tools::translate( "ADN_Population_UrbanEffect_Attitude_ListView", "Attitudes" ) )
+ADN_Crowds_UrbanEffect_Attitude_ListView::ADN_Crowds_UrbanEffect_Attitude_ListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Crowds_UrbanEffect_Attitude_ListView", tools::translate( "ADN_Crowds_UrbanEffect_Attitude_ListView", "Attitudes" ) )
 {
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< UrbanEffectInfos >( *this );
@@ -29,25 +29,25 @@ ADN_Population_UrbanEffect_Attitude_ListView::ADN_Population_UrbanEffect_Attitud
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_UrbanEffect_Attitude_ListView destructor
+// Name: ADN_Crowds_UrbanEffect_Attitude_ListView destructor
 // Created: MMC 2011-03-30
 // -----------------------------------------------------------------------------
-ADN_Population_UrbanEffect_Attitude_ListView::~ADN_Population_UrbanEffect_Attitude_ListView()
+ADN_Crowds_UrbanEffect_Attitude_ListView::~ADN_Crowds_UrbanEffect_Attitude_ListView()
 {
     delete pConnector_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Population_UrbanEffect_Attitude_ListView::ConnectItem
+// Name: ADN_Crowds_UrbanEffect_Attitude_ListView::ConnectItem
 // Created: MMC 2011-03-30
 // -----------------------------------------------------------------------------
-void ADN_Population_UrbanEffect_Attitude_ListView::ConnectItem( bool bConnect )
+void ADN_Crowds_UrbanEffect_Attitude_ListView::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
 
     UrbanEffectInfos* pInfos = (UrbanEffectInfos*)pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Population_GUI::eNbrGuiElements );
-    vItemConnectors_[ADN_Population_GUI::eUrbanBlocDestructionDensity]->Connect( &pInfos->rDensity_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eUrbanBlocDestructionTime]->Connect( &pInfos->rTime_, bConnect );
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Crowds_GUI::eNbrGuiElements );
+    vItemConnectors_[ADN_Crowds_GUI::eUrbanBlocDestructionDensity]->Connect( &pInfos->rDensity_, bConnect );
+    vItemConnectors_[ADN_Crowds_GUI::eUrbanBlocDestructionTime]->Connect( &pInfos->rTime_, bConnect );
 }
