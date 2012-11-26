@@ -291,7 +291,7 @@ integration.startFragOrderTask = function( self )
     return
   elseif orderType == "Rep_OrderConduite_ModifierPrioritesBlesses" then
     if integration.isLogisticTypeUnit( ) then
-        integration.changeHealthPriority( integration.getOrderConduiteModifierPrioritesBlesses( self ) )
+        integration.changeHealthPriority( integration.getOrderConduiteModifierPrioritesBlessesParameter( self ) )
     end
     integration.cleanFragOrder( self )
     return
