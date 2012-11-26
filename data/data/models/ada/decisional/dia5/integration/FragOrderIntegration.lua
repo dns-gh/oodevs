@@ -43,7 +43,7 @@ local eAmbianceMission_Vitesse = 1
 
 integration.getFireParameters = function( self )
     local params = {}
-    local uggly = function() params.entities = { CreateKnowledge( integration.ontology.types.agentKnowledge, integration.getAgentKnowledge( self ) ) } end
+    local uggly = function() params.entities = { CreateKnowledge( integration.ontology.types.agentKnowledge, integration.getAgentKnowledgeParameter( self ) ) } end
     if not pcall( uggly ) then
         params.entities = { CreateKnowledge( integration.ontology.types.point, integration.getpointCibleParameter( self ) ) }
     end

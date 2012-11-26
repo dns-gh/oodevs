@@ -119,7 +119,7 @@ integration.startFragOrderTask = function( self )
   local orderType = integration.getOrderType( self )
 
   if orderType == "france.military.platoon.tasks.Illuminer" then
-      mission.entity = CreateKnowledge( integration.ontology.types.agentKnowledge, integration.getAgentKnowledge( self ) )
+      mission.entity = CreateKnowledge( integration.ontology.types.agentKnowledge, integration.getAgentKnowledgeParameter( self ) )
       if self.source == meKnowledge.source then
         mission.ally = meKnowledge
       else
@@ -133,7 +133,7 @@ integration.startFragOrderTask = function( self )
     mission.objectif = CreateKnowledge( integration.ontology.types.point, integration.getpointCibleParameter( self ) )
   elseif orderType == "france.military.platoon.tasks.DeposerUnite" then
         local targetPoint = integration.getpointCibleParameter( self )
-        mission.unite = CreateKnowledge( integration.ontology.types.agentKnowledge, integration.getAgentKnowledge( self ) )
+        mission.unite = CreateKnowledge( integration.ontology.types.agentKnowledge, integration.getAgentKnowledgeParameter( self ) )
         if targetPoint ~= nil then
             mission.position = CreateKnowledge( integration.ontology.types.point, targetPoint )
         end
