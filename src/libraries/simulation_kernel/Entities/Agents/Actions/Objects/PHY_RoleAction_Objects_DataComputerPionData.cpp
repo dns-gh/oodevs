@@ -191,9 +191,8 @@ void PHY_RoleAction_Objects_DataComputerPionData::GetTotalOperationSpeed( double
 
     for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
     {
-        if( it->second == 0 )
-            continue;
-        rOperationTime += ( 1.0 / it->second );
+        if( it->second != 0 )
+            rOperationTime += ( 1.0 / it->second );
         ++ nNbrComposantes;
     }
 }

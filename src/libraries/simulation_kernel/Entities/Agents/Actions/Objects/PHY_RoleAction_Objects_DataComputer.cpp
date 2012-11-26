@@ -147,6 +147,8 @@ double PHY_RoleAction_Objects_DataComputer::ComputeDeltaPercentage()
     double rTimeTmp  = ComputeWorkTime();
     if( rTimeTmp == 0. )
         return 1.;
+    if( rTimeTmp == std::numeric_limits< double >::max() )
+        return std::numeric_limits< double >::max();
     return MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / rTimeTmp;
 }
 
@@ -172,5 +174,5 @@ double PHY_RoleAction_Objects_DataComputer::ComputeWorkTime()
         RollbackConsumptionsReservations();
         return std::numeric_limits< double >::max();
     }
-    return rTotalOperationTime != 0. ? 1.0 / rTotalOperationTime : std::numeric_limits< double >::max();
+    return rTotalOperationTime != 0. ? 1.0 / rTotalOperationTime : 0;
 }
