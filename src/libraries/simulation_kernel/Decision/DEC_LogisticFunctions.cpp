@@ -197,9 +197,7 @@ void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_Decision_ABC* pPionW
 {
     if( !pPionWounded || !pDecTC2 )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
-    if( !pDecTC2->GetAutomate().GetType().IsLogistic() )
-        return;
-    MIL_AutomateLOG* tc2 = pDecTC2->GetAutomate().GetBrainLogistic();
+    MIL_AutomateLOG* tc2 = pDecTC2->GetAutomate().FindLogisticManager();
     if( !tc2 )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     pPionWounded->GetPion().GetRole< PHY_RoleInterface_Humans >().EvacuateWoundedHumans( *tc2 );
