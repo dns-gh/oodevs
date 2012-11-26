@@ -1,6 +1,7 @@
 ^(bin|dist|include|out|run|lib)/
 ^data/data/
 ^data/exercises/
+^tags$
 
 syntax: glob
 *.ipch
