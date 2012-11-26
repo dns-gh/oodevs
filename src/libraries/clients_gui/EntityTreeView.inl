@@ -51,9 +51,11 @@ void EntityTreeView< Entity >::NotifyCreated( const Entity& entity )
     }
 
     const int row = teamItem->rowCount();
-    dataModel_.AddChildSafeItem( teamItem, row, 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
+    QStandardItem* entityItem = dataModel_.AddChildSafeItem( teamItem, row, 0, entity.GetName(), entity.GetTooltip(), entity, ItemSpecificFlags( entity ) );
     for( int col = 1; col < dataModel_.columnCount(); ++col )
         dataModel_.AddChildItem( teamItem, row, col );
+    if( entityItem )
+        ApplyProfileFilter();
 }
 
 // -----------------------------------------------------------------------------

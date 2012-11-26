@@ -132,7 +132,16 @@ bool EntityTreeView_ABC::ApplyProfileFilter( QStandardItem& item, StandardModel&
 // Name: EntityTreeView_ABC::NotifyUpdated
 // Created: ABR 2012-08-16
 // -----------------------------------------------------------------------------
-void EntityTreeView_ABC::NotifyUpdated( const kernel::Profile_ABC& /* profile */ )
+void EntityTreeView_ABC::NotifyUpdated( const kernel::Profile_ABC& /*profile*/ )
+{
+    ApplyProfileFilter();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityTreeView_ABC::ApplyProfileFilter
+// Created: ABR 2012-08-16
+// -----------------------------------------------------------------------------
+void EntityTreeView_ABC::ApplyProfileFilter()
 {
     dataModel_.ApplyFilter( boost::bind( &EntityTreeView_ABC::ApplyProfileFilter, this, _1, _2 ) );
 }

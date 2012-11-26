@@ -114,6 +114,19 @@ void StandardModel::Purge()
         PurgeChildren( *invisibleRootItem() );
 }
 
+namespace
+{
+    void SetRowVisible( const QStandardItem& root, int row, bool visible )
+    {
+        for( int col = 0; col < root.columnCount(); ++col )
+        {
+            QStandardItem* curItem = root.child( row, col );
+            if( curItem )
+                curItem->setData( StandardModel::GetShowValue( visible ), Roles::FilterRole );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: StandardModel::HasAnyChildVisible
 // Created: JSR 2012-09-18
@@ -125,9 +138,9 @@ bool StandardModel::HasAnyChildVisible( QStandardItem& root, T_FilterFunction fu
     {
         QStandardItem* childItem = root.child( row, 0 );
         assert( childItem );
-        bool childVisible = HasAnyChildVisible( *childItem, func );
-        childItem->setData( childVisible ? showValue_ : hideValue_, Roles::FilterRole );
-        isVisible = isVisible || childVisible;
+        bool isChildVisible = HasAnyChildVisible( *childItem, func );
+        SetRowVisible( root, row, isChildVisible );
+        isVisible = isVisible || isChildVisible;
     }
     return isVisible;
 }
@@ -142,7 +155,8 @@ void StandardModel::ApplyFilter( T_FilterFunction func )
     {
         QStandardItem* childItem = item( row, 0 );
         assert( childItem );
-        childItem->setData( ( HasAnyChildVisible( *childItem, func ) ) ? showValue_ : hideValue_, Roles::FilterRole );
+        if( invisibleRootItem() )
+            SetRowVisible( *invisibleRootItem(), row, HasAnyChildVisible( *childItem, func ) );
     }
 }
 

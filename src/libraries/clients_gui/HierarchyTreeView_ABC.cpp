@@ -119,6 +119,8 @@ bool HierarchyTreeView_ABC::AddItemIfPossible( const kernel::Entity_ABC& entity,
         ret = dataModel_.AddChildSafeItem( parent, row, 0, entity.GetName(), entity.GetTooltip(), static_cast< const Entity& >( entity ), Qt::ItemIsEditable | ItemSpecificFlags( entity ) );
         for( int col = 1; col < dataModel_.columnCount(); ++col )
             dataModel_.AddChildItem( parent, row, col );
+        if( ret )
+            ApplyProfileFilter();
         return true;
     }
     return false;
@@ -376,7 +378,7 @@ void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
                 if( safePtr && *safePtr )
                 {
                     const kernel::Entity_ABC* entity = *safePtr;
-                    if( entity->GetId() != target->GetId() && CanChangeSuperior( *entity, *target ) && profile_.CanDoMagic( *entity ) && profile_.CanDoMagic( *target ))
+                    if( entity->GetId() != target->GetId() && CanChangeSuperior( *entity, *target ) && profile_.CanDoMagic( *entity ) && profile_.CanDoMagic( *target ) )
                     {
                         pEvent->accept();
                         return;

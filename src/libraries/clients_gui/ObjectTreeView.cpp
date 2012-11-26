@@ -53,6 +53,7 @@ void ObjectTreeView::NotifyCreated( const kernel::Object_ABC& object )
     if( !typeItem )
         typeItem = dataModel_.AddChildTextItem( teamItem, teamItem->rowCount(), 0, type.GetName().c_str(), type.GetName().c_str() );
     dataModel_.AddChildSafeItem( typeItem, typeItem->rowCount(), 0, object.GetName(), object.GetTooltip(), object, ItemSpecificFlags( object ) );
+    ApplyProfileFilter();
 }
 
 // -----------------------------------------------------------------------------
