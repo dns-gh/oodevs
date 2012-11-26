@@ -10,7 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Resources_Data.h"
 
 // -----------------------------------------------------------------------------
@@ -96,11 +96,11 @@ void ADN_ConsistencyChecker::CheckNNOConsistency()
 {
     // Fill elements
     T_NNOElements elements_;
-    ADN_Composantes_Data::T_ComposanteInfos_Vector composantes = ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes();
-    for( ADN_Composantes_Data::CIT_ComposanteInfos_Vector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
+    ADN_Equipments_Data::T_EquipmentInfos_Vector composantes = ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments();
+    for( ADN_Equipments_Data::CIT_EquipmentInfos_Vector itComposante = composantes.begin(); itComposante != composantes.end(); ++itComposante )
     {
-        ADN_Composantes_Data::ComposanteInfos& infos = **itComposante;
-        elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eComposantes ) );
+        ADN_Equipments_Data::EquipmentInfos& infos = **itComposante;
+        elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eEquipments ) );
     }
 
     ADN_Resources_Data::T_ResourceInfos_Vector ressourceCategories = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();

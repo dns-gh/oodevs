@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Radars_ListView.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Radars_Data.h"
 #include "ADN_Radars_GUI.h"
@@ -93,7 +93,7 @@ void ADN_Radars_ListView::OnContextMenu( const QPoint& pt )
     {
         RadarInfos* pCastData = static_cast< RadarInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(), ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );
     }
     popupMenu.exec( pt );
 }
@@ -108,6 +108,6 @@ std::string ADN_Radars_ListView::GetToolTipFor( const QModelIndex& index )
         return "";
     void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     RadarInfos* pCastData = static_cast< RadarInfos* >( pData );
-    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
-                            ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ) );
 }

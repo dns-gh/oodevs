@@ -293,7 +293,7 @@ ADN_Tr::T_ConverterWorkspaceElements ADN_Tr::workspaceElementsConverter_[] =
     T_ConverterWorkspaceElements( "activeprotection", QT_TRANSLATE_NOOP("ADN_Tr", "Active Protections" ),   eActiveProtections ),
     T_ConverterWorkspaceElements( "sensors",          QT_TRANSLATE_NOOP("ADN_Tr", "Sensors" ),              eSensors ),
     T_ConverterWorkspaceElements( "breakdowns",       QT_TRANSLATE_NOOP("ADN_Tr", "Breakdowns" ),           eBreakdowns ),
-    T_ConverterWorkspaceElements( "composantes",      QT_TRANSLATE_NOOP("ADN_Tr", "Equipments" ),           eComposantes ),
+    T_ConverterWorkspaceElements( "composantes",      QT_TRANSLATE_NOOP("ADN_Tr", "Equipments" ),           eEquipments ),
     T_ConverterWorkspaceElements( "resourcenetworks", QT_TRANSLATE_NOOP("ADN_Tr", "Resource networks" ),    eResourceNetworks ),
     T_ConverterWorkspaceElements( "aiengine",         QT_TRANSLATE_NOOP("ADN_Tr", "Op. indicators" ),       eAiEngine ),
     T_ConverterWorkspaceElements( "missions",         QT_TRANSLATE_NOOP("ADN_Tr", "Missions" ),             eMissions ),

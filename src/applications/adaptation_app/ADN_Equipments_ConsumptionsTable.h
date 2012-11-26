@@ -7,35 +7,31 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Composantes_ConsumptionsTable_h_
-#define __ADN_Composantes_ConsumptionsTable_h_
+#ifndef __ADN_Equipments_ConsumptionsTable_h_
+#define __ADN_Equipments_ConsumptionsTable_h_
 
 #include "ADN_Table.h"
 #include "ADN_Resources_Data.h"
 #include <QtGui/qapplication.h>
 #include <boost/noncopyable.hpp>
 
-class ADN_ListView_Composantes;
+class ADN_ListView_Equipments;
 
 // =============================================================================
-/** @class  ADN_Composantes_ConsumptionsTable
-    @brief  ADN_Composantes_ConsumptionsTable
-    @par    Using example
-    @code
-    ADN_Composantes_ConsumptionsTable;
-    @endcode
+/** @class  ADN_Equipments_ConsumptionsTable
+    @brief  ADN_Equipments_ConsumptionsTable
 */
 // Created: APE 2005-01-25
 // =============================================================================
-class ADN_Composantes_ConsumptionsTable : public ADN_Table
+class ADN_Equipments_ConsumptionsTable : public ADN_Table
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Composantes_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
-    virtual ~ADN_Composantes_ConsumptionsTable();
+             ADN_Equipments_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
+    virtual ~ADN_Equipments_ConsumptionsTable();
     //@}
 
     //! @name Operations
@@ -62,4 +58,4 @@ private:
     ADN_ListView* composanteListView_;
 };
 
-#endif // __ADN_Composantes_ConsumptionsTable_h_
+#endif // __ADN_Equipments_ConsumptionsTable_h_

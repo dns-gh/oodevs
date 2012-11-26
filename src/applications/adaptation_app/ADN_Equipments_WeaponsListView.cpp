@@ -1,31 +1,30 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_WeaponsListView.cpp $
-// $Author: Ape $
-// $Modtime: 8/04/05 15:04 $
-// $Revision: 6 $
-// $Workfile: ADN_Composantes_WeaponsListView.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_WeaponsListView.h"
-#include "moc_ADN_Composantes_WeaponsListView.cpp"
+#include "ADN_Equipments_WeaponsListView.h"
+#include "moc_ADN_Equipments_WeaponsListView.cpp"
 
 #include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Connector_ListView.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Workspace.h"
 
-typedef ADN_Composantes_Data::WeaponInfos WeaponInfos;
+typedef ADN_Equipments_Data::WeaponInfos WeaponInfos;
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_WeaponsListView constructor
+// Name: ADN_Equipments_WeaponsListView constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_WeaponsListView::ADN_Composantes_WeaponsListView( QWidget* pParent )
-    : ADN_ListView( pParent, "ADN_Composantes_WeaponsListView", tr( "Weapon systems" ) )
+ADN_Equipments_WeaponsListView::ADN_Equipments_WeaponsListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Equipments_WeaponsListView", tr( "Weapon systems" ) )
 {
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
@@ -37,28 +36,28 @@ ADN_Composantes_WeaponsListView::ADN_Composantes_WeaponsListView( QWidget* pPare
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_WeaponsListView destructor
+// Name: ADN_Equipments_WeaponsListView destructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_WeaponsListView::~ADN_Composantes_WeaponsListView()
+ADN_Equipments_WeaponsListView::~ADN_Equipments_WeaponsListView()
 {
     delete pConnector_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_WeaponsListView::ConnectItem
+// Name: ADN_Equipments_WeaponsListView::ConnectItem
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-void ADN_Composantes_WeaponsListView::ConnectItem( bool /*bConnect*/ )
+void ADN_Equipments_WeaponsListView::ConnectItem( bool /*bConnect*/ )
 {
     // Nothing
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_WeaponsListView::OnContextMenu
+// Name: ADN_Equipments_WeaponsListView::OnContextMenu
 // Created: AGN 03-08-01
 //-----------------------------------------------------------------------------
-void ADN_Composantes_WeaponsListView::OnContextMenu( const QPoint& pt )
+void ADN_Equipments_WeaponsListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     Q3PopupMenu addMenu( this );
@@ -102,16 +101,16 @@ void ADN_Composantes_WeaponsListView::OnContextMenu( const QPoint& pt )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_WeaponsListView::Contains
+// Name: ADN_Equipments_WeaponsListView::Contains
 // Created: AGN 03-08-01
 //-----------------------------------------------------------------------------
-bool ADN_Composantes_WeaponsListView::Contains( const ADN_Weapons_Data::WeaponInfos* pInfo )
+bool ADN_Equipments_WeaponsListView::Contains( const ADN_Weapons_Data::WeaponInfos* pInfo )
 {
     const int rowCount = dataModel_.rowCount();
     for( int row = 0; row < rowCount; ++row )
     {
         ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
-        ADN_Composantes_Data::WeaponInfos* pData = static_cast< ADN_Composantes_Data::WeaponInfos* >( pCurr->GetData() );
+        ADN_Equipments_Data::WeaponInfos* pData = static_cast< ADN_Equipments_Data::WeaponInfos* >( pCurr->GetData() );
         if( pData->ptrWeapon_.GetData() == pInfo )
             return true;
     }

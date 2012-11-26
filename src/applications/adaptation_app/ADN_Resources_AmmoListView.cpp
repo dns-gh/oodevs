@@ -19,7 +19,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Resources_AmmoListView.h"
 #include "ADN_ActiveProtections_Data.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Resources_Wizard.h"
 #include "ADN_Resources_GUI.h"
@@ -160,8 +160,8 @@ void ADN_Resources_AmmoListView::OnContextMenu( const QPoint& pt )
                                       ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
         FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
                                       ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
-                                      ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );
     }
     popupMenu.exec( pt );
 }
@@ -182,7 +182,7 @@ std::string ADN_Resources_AmmoListView::GetToolTipFor( const QModelIndex& index 
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eActiveProtections ).c_str(), ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eWeapons ).c_str(), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(), ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
-    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(), ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), result );
 
     if( result.empty() )
         result = tr( "<b>Unused</b>" ).toStdString();

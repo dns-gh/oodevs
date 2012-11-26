@@ -1,27 +1,30 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: FDS 10-02-24 $
-// $Workfile: ADN_Composantes_ActiveProtectionsListView.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_ActiveProtectionsListView.h"
-#include "moc_ADN_Composantes_ActiveProtectionsListView.cpp"
+#include "ADN_Equipments_ActiveProtectionsListView.h"
+#include "moc_ADN_Equipments_ActiveProtectionsListView.cpp"
 
 #include "ADN_Connector_ListView.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Workspace.h"
 
 #include <Qt3Support/q3popupmenu.h>
 
-typedef ADN_Composantes_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
+typedef ADN_Equipments_Data::ActiveProtectionsInfos ActiveProtectionsInfos;
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_ActiveProtectionsListView constructor
+// Name: ADN_Equipments_ActiveProtectionsListView constructor
 // Created: FDS 10-02-24
 //-----------------------------------------------------------------------------
-ADN_Composantes_ActiveProtectionsListView::ADN_Composantes_ActiveProtectionsListView( QWidget* pParent )
-    : ADN_ListView( pParent, "ADN_Composantes_ActiveProtectionsListView", tr( "ActiveProtections" ) )
+ADN_Equipments_ActiveProtectionsListView::ADN_Equipments_ActiveProtectionsListView( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Equipments_ActiveProtectionsListView", tr( "ActiveProtections" ) )
 {
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );
@@ -33,28 +36,28 @@ ADN_Composantes_ActiveProtectionsListView::ADN_Composantes_ActiveProtectionsList
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_ActiveProtectionsListView destructor
+// Name: ADN_Equipments_ActiveProtectionsListView destructor
 // Created: FDS 10-02-24
 //-----------------------------------------------------------------------------
-ADN_Composantes_ActiveProtectionsListView::~ADN_Composantes_ActiveProtectionsListView()
+ADN_Equipments_ActiveProtectionsListView::~ADN_Equipments_ActiveProtectionsListView()
 {
     delete pConnector_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_ActiveProtectionsListView::ConnectItem
+// Name: ADN_Equipments_ActiveProtectionsListView::ConnectItem
 // Created: FDS 10-02-24
 //-----------------------------------------------------------------------------
-void ADN_Composantes_ActiveProtectionsListView::ConnectItem( bool )
+void ADN_Equipments_ActiveProtectionsListView::ConnectItem( bool )
 {
     // Nothing
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_ActiveProtectionsListView::OnContextMenu
+// Name: ADN_Equipments_ActiveProtectionsListView::OnContextMenu
 // Created: FDS 10-02-24
 //-----------------------------------------------------------------------------
-void ADN_Composantes_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
+void ADN_Equipments_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     Q3PopupMenu addMenu( this );
@@ -98,16 +101,16 @@ void ADN_Composantes_ActiveProtectionsListView::OnContextMenu( const QPoint& pt 
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_ActiveProtectionsListView::Contains
+// Name: ADN_Equipments_ActiveProtectionsListView::Contains
 // Created: FDS 10-02-24
 //-----------------------------------------------------------------------------
-bool ADN_Composantes_ActiveProtectionsListView::Contains( const ADN_ActiveProtections_Data::ActiveProtectionsInfos* pInfo )
+bool ADN_Equipments_ActiveProtectionsListView::Contains( const ADN_ActiveProtections_Data::ActiveProtectionsInfos* pInfo )
 {
     const int rowCount = dataModel_.rowCount();
     for( int row = 0; row < rowCount; ++row )
     {
         ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
-        ADN_Composantes_Data::ActiveProtectionsInfos* pData = static_cast< ADN_Composantes_Data::ActiveProtectionsInfos* >( pCurr->GetData() );
+        ADN_Equipments_Data::ActiveProtectionsInfos* pData = static_cast< ADN_Equipments_Data::ActiveProtectionsInfos* >( pCurr->GetData() );
         if( pData->ptrActiveProtections_.GetData() == pInfo )
             return true;
     }

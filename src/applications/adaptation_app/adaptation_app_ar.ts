@@ -523,7 +523,385 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_ActiveProtectionsListView</name>
+    <name>ADN_ConfigDialog</name>
+    <message>
+        <source>Configuration</source>
+        <translation type="unfinished">التكوين</translation>
+    </message>
+    <message>
+        <source>SIM path</source>
+        <translation type="unfinished">مسار سيم</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">تصفح</translation>
+    </message>
+    <message>
+        <source>SIM parameters</source>
+        <translation type="unfinished">معلمات سيم</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished">آند موافق</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished">آند إلغاء الأمر</translation>
+    </message>
+    <message>
+        <source>Sword executable (*.exe)</source>
+        <translation type="unfinished">السيف القابل للتنفيذ (*.exe)</translation>
+    </message>
+    <message>
+        <source>Select SIM to use for data test</source>
+        <translation type="unfinished">حدد سيم لاستخدامها لاختبار البيانات</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ConsistencyDialog</name>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">الوصف</translation>
+    </message>
+    <message>
+        <source>Initialization</source>
+        <translation type="unfinished">التهيئة</translation>
+    </message>
+    <message>
+        <source>Unicity</source>
+        <translation type="unfinished">الوحدة</translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation type="unfinished">الآخرين</translation>
+    </message>
+    <message>
+        <source>Duplicate NNO code for %1.</source>
+        <translation type="unfinished">تكرار التعليمات البرمجية NNO ل %1.</translation>
+    </message>
+    <message>
+        <source>Duplicate EMAT8 code for %1.</source>
+        <translation type="unfinished">تكرار التعليمات البرمجية EMAT8 ل %1.</translation>
+    </message>
+    <message>
+        <source>%1 has no NNO code defined.</source>
+        <translation type="unfinished">وقد %1 لم يتم تعريف رمز NNO.</translation>
+    </message>
+    <message>
+        <source>%1 has no EMAT8 code defined.</source>
+        <translation type="unfinished">وقد %1 لم يتم تعريف رمز EMAT8.</translation>
+    </message>
+    <message>
+        <source> and &apos;</source>
+        <translation type="unfinished">و &apos;</translation>
+    </message>
+    <message>
+        <source>The equipement &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The resource &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The mission %1 has no type defined for a localisation composite parameter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The breakdown %1 has no replacement part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment %1 requires at least one breakdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy unit type not defined in Log/Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy mission not defined in Log/Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No geometry defined for object %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No decisional model defined for unit %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one sub unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least one armor must be defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No disaster model for object %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate type for missions %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Consumptions_Table</name>
+    <message>
+        <source>Resource network</source>
+        <translation type="unfinished">شبكة الموارد</translation>
+    </message>
+    <message>
+        <source>Consumption</source>
+        <translation type="unfinished">الاستهلاك</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">إضافة مورد</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">إزالة مورد</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffectRoe_GUI</name>
+    <message>
+        <source>ROE</source>
+        <translation type="unfinished">قواعد الاشتباك</translation>
+    </message>
+    <message>
+        <source>Attrition Surface (m²)</source>
+        <translation type="unfinished">الاستنزاف السطح (م 2)</translation>
+    </message>
+    <message>
+        <source>PH</source>
+        <translation type="unfinished">الأس الهيدروجيني</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">المواقف</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Protection_ListView</name>
+    <message>
+        <source>Protections</source>
+        <translation type="unfinished">سبل الحماية</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_GUI</name>
+    <message>
+        <source>Global parameters</source>
+        <translation type="unfinished">معلمات العمومية</translation>
+    </message>
+    <message>
+        <source>Crowd effects on units firing capability</source>
+        <translation type="unfinished">آثار الحشد على وحدات إطلاق القدرة</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished">الكثافة</translation>
+    </message>
+    <message>
+        <source>people/m²</source>
+        <translation type="unfinished">الشعب/م 2</translation>
+    </message>
+    <message>
+        <source>Modifier</source>
+        <translation type="unfinished">التغيير</translation>
+    </message>
+    <message>
+        <source>Time between two NBC applications</source>
+        <translation type="unfinished">الوقت بين اثنين من التطبيقات شبكة أن بي سي</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished">تفاصيل</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
+    <message>
+        <source>Behavior model</source>
+        <translation type="unfinished">نموذج السلوك</translation>
+    </message>
+    <message>
+        <source>Density while moving</source>
+        <translation type="unfinished">كثافة أثناء تحريك</translation>
+    </message>
+    <message>
+        <source>Average movement speed</source>
+        <translation type="unfinished">سرعة حركة متوسط</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation type="unfinished">كم/ساعة</translation>
+    </message>
+    <message>
+        <source>Armed individuals</source>
+        <translation type="unfinished">الأفراد المسلحين</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation type="unfinished">الذكور</translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation type="unfinished">الإناث</translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation type="unfinished">الأطفال</translation>
+    </message>
+    <message>
+        <source>Decontamination delay</source>
+        <translation type="unfinished">تأخير إزالة التلوث</translation>
+    </message>
+    <message>
+        <source>Crowd effects on units movement capability</source>
+        <translation type="unfinished">آثار الحشد على قدرة حركة الوحدات</translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation type="unfinished">تأثير</translation>
+    </message>
+    <message>
+        <source>Max speed</source>
+        <translation type="unfinished">ماكس السرعة</translation>
+    </message>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished">أتريشنز</translation>
+    </message>
+    <message>
+        <source>Crowd -&gt; Units</source>
+        <translation type="unfinished">الحشد-&gt; الوحدات</translation>
+    </message>
+    <message>
+        <source>Intensity</source>
+        <translation type="unfinished">كثافة</translation>
+    </message>
+    <message>
+        <source>Unarmed</source>
+        <translation type="unfinished">العزل</translation>
+    </message>
+    <message>
+        <source>Destruction</source>
+        <translation type="unfinished">تدمير</translation>
+    </message>
+    <message>
+        <source>Fixable with evacuation</source>
+        <translation type="unfinished">يمكن حلها مع إجلاء</translation>
+    </message>
+    <message>
+        <source>Fixable without evacuation</source>
+        <translation type="unfinished">يمكن حلها دون إخلاء</translation>
+    </message>
+    <message>
+        <source>Armed</source>
+        <translation type="unfinished">المسلحة</translation>
+    </message>
+    <message>
+        <source>Units -&gt; Crowd</source>
+        <translation type="unfinished">وحدات-&gt; الحشد</translation>
+    </message>
+    <message>
+        <source>Urban area destruction</source>
+        <translation type="unfinished">تدمير المنطقة الحضرية</translation>
+    </message>
+    <message>
+        <source>Time to destruct a urban block</source>
+        <translation type="unfinished">الوقت للتدمير كتلة حضرية</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished">الوقت</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">المواقف</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Volume_ListView</name>
+    <message>
+        <source>Volumes</source>
+        <translation type="unfinished">وحدات التخزين</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_UrbanEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">المواقف</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_DataException</name>
+    <message>
+        <source>Data error</source>
+        <translation type="unfinished">خطأ في البيانات</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_DialogLog</name>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="unfinished">آند موافق</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Disasters_GUI</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
+    <message>
+        <source>Concentration thresholds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attrition thresholds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC protection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_EquipementSelector</name>
+    <message>
+        <source>Click here to select</source>
+        <translation type="unfinished">انقر هنا لتحديد</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_ActiveProtectionsListView</name>
     <message>
         <source>ActiveProtections</source>
         <translation type="unfinished">أكتيفيبروتيكشنز</translation>
@@ -538,7 +916,7 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_BreakdownsTable</name>
+    <name>ADN_Equipments_BreakdownsTable</name>
     <message>
         <source>Odds (%)</source>
         <translation type="unfinished">الصعاب (%)</translation>
@@ -553,7 +931,7 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_ConsumptionsTable</name>
+    <name>ADN_Equipments_ConsumptionsTable</name>
     <message>
         <source>Activity</source>
         <translation type="unfinished">النشاط</translation>
@@ -576,7 +954,7 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Dotations_GUI</name>
+    <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <source>Category</source>
         <translation type="unfinished">الفئة</translation>
@@ -603,7 +981,7 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_GUI</name>
+    <name>ADN_Equipments_GUI</name>
     <message>
         <source>Name</source>
         <translation type="unfinished">الاسم</translation>
@@ -1042,7 +1420,7 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_RadarsListView</name>
+    <name>ADN_Equipments_RadarsListView</name>
     <message>
         <source>Special sensors</source>
         <translation type="unfinished">أجهزة الاستشعار الخاصة</translation>
@@ -1057,7 +1435,7 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Sensors_GUI</name>
+    <name>ADN_Equipments_Sensors_GUI</name>
     <message>
         <source>Sensor</source>
         <translation type="unfinished">أجهزة الاستشعار</translation>
@@ -1076,7 +1454,7 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Speeds_GUI</name>
+    <name>ADN_Equipments_Speeds_GUI</name>
     <message>
         <source>Ground type</source>
         <translation type="unfinished">نوع الأرض</translation>
@@ -1101,7 +1479,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_WeaponsListView</name>
+    <name>ADN_Equipments_WeaponsListView</name>
     <message>
         <source>Weapon systems</source>
         <translation type="unfinished">نظم الأسلحة</translation>
@@ -1113,384 +1491,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Remove weapon</source>
         <translation type="unfinished">إزالة الأسلحة</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation type="unfinished">التكوين</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation type="unfinished">مسار سيم</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="unfinished">تصفح</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation type="unfinished">معلمات سيم</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished">آند موافق</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">آند إلغاء الأمر</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation type="unfinished">السيف القابل للتنفيذ (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation type="unfinished">حدد سيم لاستخدامها لاختبار البيانات</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ConsistencyDialog</name>
-    <message>
-        <source>Description</source>
-        <translation type="unfinished">الوصف</translation>
-    </message>
-    <message>
-        <source>Initialization</source>
-        <translation type="unfinished">التهيئة</translation>
-    </message>
-    <message>
-        <source>Unicity</source>
-        <translation type="unfinished">الوحدة</translation>
-    </message>
-    <message>
-        <source>Others</source>
-        <translation type="unfinished">الآخرين</translation>
-    </message>
-    <message>
-        <source>Duplicate NNO code for %1.</source>
-        <translation type="unfinished">تكرار التعليمات البرمجية NNO ل %1.</translation>
-    </message>
-    <message>
-        <source>Duplicate EMAT8 code for %1.</source>
-        <translation type="unfinished">تكرار التعليمات البرمجية EMAT8 ل %1.</translation>
-    </message>
-    <message>
-        <source>%1 has no NNO code defined.</source>
-        <translation type="unfinished">وقد %1 لم يتم تعريف رمز NNO.</translation>
-    </message>
-    <message>
-        <source>%1 has no EMAT8 code defined.</source>
-        <translation type="unfinished">وقد %1 لم يتم تعريف رمز EMAT8.</translation>
-    </message>
-    <message>
-        <source> and &apos;</source>
-        <translation type="unfinished">و &apos;</translation>
-    </message>
-    <message>
-        <source>The equipement &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The resource &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The mission %1 has no type defined for a localisation composite parameter.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The breakdown %1 has no replacement part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment %1 requires at least one breakdown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convoy unit type not defined in Log/Supply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convoy mission not defined in Log/Supply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No geometry defined for object %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No decisional model defined for unit %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one sub unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one PC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>At least one armor must be defined</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No disaster model for object %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duplicate type for missions %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Consumptions_Table</name>
-    <message>
-        <source>Resource network</source>
-        <translation type="unfinished">شبكة الموارد</translation>
-    </message>
-    <message>
-        <source>Consumption</source>
-        <translation type="unfinished">الاستهلاك</translation>
-    </message>
-    <message>
-        <source>Add resource</source>
-        <translation type="unfinished">إضافة مورد</translation>
-    </message>
-    <message>
-        <source>Remove resource</source>
-        <translation type="unfinished">إزالة مورد</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_FireEffectRoe_GUI</name>
-    <message>
-        <source>ROE</source>
-        <translation type="unfinished">قواعد الاشتباك</translation>
-    </message>
-    <message>
-        <source>Attrition Surface (m²)</source>
-        <translation type="unfinished">الاستنزاف السطح (م 2)</translation>
-    </message>
-    <message>
-        <source>PH</source>
-        <translation type="unfinished">الأس الهيدروجيني</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_FireEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation type="unfinished">المواقف</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_FireEffect_Protection_ListView</name>
-    <message>
-        <source>Protections</source>
-        <translation type="unfinished">سبل الحماية</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_GUI</name>
-    <message>
-        <source>Global parameters</source>
-        <translation type="unfinished">معلمات العمومية</translation>
-    </message>
-    <message>
-        <source>Crowd effects on units firing capability</source>
-        <translation type="unfinished">آثار الحشد على وحدات إطلاق القدرة</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="unfinished">الكثافة</translation>
-    </message>
-    <message>
-        <source>people/m²</source>
-        <translation type="unfinished">الشعب/م 2</translation>
-    </message>
-    <message>
-        <source>Modifier</source>
-        <translation type="unfinished">التغيير</translation>
-    </message>
-    <message>
-        <source>Time between two NBC applications</source>
-        <translation type="unfinished">الوقت بين اثنين من التطبيقات شبكة أن بي سي</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="unfinished">تفاصيل</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
-    </message>
-    <message>
-        <source>Behavior model</source>
-        <translation type="unfinished">نموذج السلوك</translation>
-    </message>
-    <message>
-        <source>Density while moving</source>
-        <translation type="unfinished">كثافة أثناء تحريك</translation>
-    </message>
-    <message>
-        <source>Average movement speed</source>
-        <translation type="unfinished">سرعة حركة متوسط</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation type="unfinished">كم/ساعة</translation>
-    </message>
-    <message>
-        <source>Armed individuals</source>
-        <translation type="unfinished">الأفراد المسلحين</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation type="unfinished">%</translation>
-    </message>
-    <message>
-        <source>Males</source>
-        <translation type="unfinished">الذكور</translation>
-    </message>
-    <message>
-        <source>Females</source>
-        <translation type="unfinished">الإناث</translation>
-    </message>
-    <message>
-        <source>Children</source>
-        <translation type="unfinished">الأطفال</translation>
-    </message>
-    <message>
-        <source>Decontamination delay</source>
-        <translation type="unfinished">تأخير إزالة التلوث</translation>
-    </message>
-    <message>
-        <source>Crowd effects on units movement capability</source>
-        <translation type="unfinished">آثار الحشد على قدرة حركة الوحدات</translation>
-    </message>
-    <message>
-        <source>Effect</source>
-        <translation type="unfinished">تأثير</translation>
-    </message>
-    <message>
-        <source>Max speed</source>
-        <translation type="unfinished">ماكس السرعة</translation>
-    </message>
-    <message>
-        <source>Attritions</source>
-        <translation type="unfinished">أتريشنز</translation>
-    </message>
-    <message>
-        <source>Crowd -&gt; Units</source>
-        <translation type="unfinished">الحشد-&gt; الوحدات</translation>
-    </message>
-    <message>
-        <source>Intensity</source>
-        <translation type="unfinished">كثافة</translation>
-    </message>
-    <message>
-        <source>Unarmed</source>
-        <translation type="unfinished">العزل</translation>
-    </message>
-    <message>
-        <source>Destruction</source>
-        <translation type="unfinished">تدمير</translation>
-    </message>
-    <message>
-        <source>Fixable with evacuation</source>
-        <translation type="unfinished">يمكن حلها مع إجلاء</translation>
-    </message>
-    <message>
-        <source>Fixable without evacuation</source>
-        <translation type="unfinished">يمكن حلها دون إخلاء</translation>
-    </message>
-    <message>
-        <source>Armed</source>
-        <translation type="unfinished">المسلحة</translation>
-    </message>
-    <message>
-        <source>Units -&gt; Crowd</source>
-        <translation type="unfinished">وحدات-&gt; الحشد</translation>
-    </message>
-    <message>
-        <source>Urban area destruction</source>
-        <translation type="unfinished">تدمير المنطقة الحضرية</translation>
-    </message>
-    <message>
-        <source>Time to destruct a urban block</source>
-        <translation type="unfinished">الوقت للتدمير كتلة حضرية</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation type="unfinished">الوقت</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation type="unfinished">المواقف</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_SpeedEffect_Volume_ListView</name>
-    <message>
-        <source>Volumes</source>
-        <translation type="unfinished">وحدات التخزين</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_UrbanEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation type="unfinished">المواقف</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_DataException</name>
-    <message>
-        <source>Data error</source>
-        <translation type="unfinished">خطأ في البيانات</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_DialogLog</name>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished">آند موافق</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Disasters_GUI</name>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
-    </message>
-    <message>
-        <source>Concentration thresholds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attrition thresholds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC protection</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_EquipementSelector</name>
-    <message>
-        <source>Click here to select</source>
-        <translation type="unfinished">انقر هنا لتحديد</translation>
     </message>
 </context>
 <context>
@@ -2037,7 +2037,14 @@ stance</source>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Composantes_Objects</name>
+    <name>ADN_ListView_Disasters</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_Equipments_Objects</name>
     <message>
         <source>Objects</source>
         <translation type="unfinished">الكائنات</translation>
@@ -2049,13 +2056,6 @@ stance</source>
     <message>
         <source>Remove object</source>
         <translation type="unfinished">قم بإزالة الكائن</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ListView_Disasters</name>
-    <message>
-        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -6009,7 +6009,7 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
-    <name>Composante_Data</name>
+    <name>Equipments_Data</name>
     <message>
         <source>Invalid data</source>
         <translation type="unfinished">بيانات غير صالحة</translation>
@@ -6058,35 +6058,9 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Equipment - Invalid armor and/or volume</source>
         <translation type="unfinished">معدات-الدروع غير صحيحة و/أو وحدة التخزين</translation>
     </message>
-</context>
-<context>
-    <name>Composantes_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
         <translation type="unfinished">معدات-نوع التضاريس غير صالح &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Equipment_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-طبيعة المورد غير صحيحة &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-فئة الإمداد اللوجستي المورد غير صالحة &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Object type - Invalid object &apos;%1&apos;</source>
-        <translation type="unfinished">نوع الكائن-كائن غير صالح &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6254,6 +6228,25 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Sensors - Invalid activity &apos;%1&apos;</source>
         <translation type="unfinished">أجهزة الاستشعار-نشاط غير صالح &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Resources_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-طبيعة المورد غير صحيحة &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-فئة الإمداد اللوجستي المورد غير صالحة &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Object type - Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished">نوع الكائن-كائن غير صالح &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

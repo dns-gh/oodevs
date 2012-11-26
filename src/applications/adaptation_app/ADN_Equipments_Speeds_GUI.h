@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Composantes_Speeds_GUI_h_
-#define __ADN_Composantes_Speeds_GUI_h_
+#ifndef __ADN_Equipments_Speeds_GUI_h_
+#define __ADN_Equipments_Speeds_GUI_h_
 
 #include "ADN_CommonGfx.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-15
 //*****************************************************************************
-class ADN_Composantes_Speeds_GUI : public ADN_Table
+class ADN_Equipments_Speeds_GUI : public ADN_Table
 {
     Q_OBJECT
 
 public:
-             ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
-    virtual ~ADN_Composantes_Speeds_GUI();
+             ADN_Equipments_Speeds_GUI( QLineEdit* maxSpeed, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
+    virtual ~ADN_Equipments_Speeds_GUI();
 
 public slots:
     void OnItemSelected( void* pData );
@@ -37,4 +37,4 @@ private:
     double oldMaxSpeed_;
 };
 
-#endif // __ADN_Composantes_Speeds_GUI_h_
+#endif // __ADN_Equipments_Speeds_GUI_h_

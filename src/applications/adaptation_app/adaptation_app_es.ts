@@ -535,7 +535,385 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_ActiveProtectionsListView</name>
+    <name>ADN_ConfigDialog</name>
+    <message>
+        <source>Configuration</source>
+        <translation>Configuración</translation>
+    </message>
+    <message>
+        <source>SIM path</source>
+        <translation>Sendero SIM</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation>Buscar</translation>
+    </message>
+    <message>
+        <source>SIM parameters</source>
+        <translation>Parámetros SIM</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation>&amp;Ok</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Cancelar</translation>
+    </message>
+    <message>
+        <source>Sword executable (*.exe)</source>
+        <translation>Ejecutable SWORD (*.exe)</translation>
+    </message>
+    <message>
+        <source>Select SIM to use for data test</source>
+        <translation>Seleccionar el SIM à usar en la prueba de datos</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ConsistencyDialog</name>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initialization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unicity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate NNO code for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate EMAT8 code for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has no NNO code defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 has no EMAT8 code defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> and &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The equipement &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The resource &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The mission %1 has no type defined for a localisation composite parameter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, because of this, the simulation can&apos;t start with this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The breakdown %1 has no replacement part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment %1 requires at least one breakdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy unit type not defined in Log/Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoy mission not defined in Log/Supply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No geometry defined for object %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No decisional model defined for unit %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one sub unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least one armor must be defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No disaster model for object %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duplicate type for missions %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Consumptions_Table</name>
+    <message>
+        <source>Resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">Agregar dotación</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">Remover dotación</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffectRoe_GUI</name>
+    <message>
+        <source>ROE</source>
+        <translation type="unfinished">ROE</translation>
+    </message>
+    <message>
+        <source>Attrition Surface (m²)</source>
+        <translation type="unfinished">Superficie de atrición (m²)</translation>
+    </message>
+    <message>
+        <source>PH</source>
+        <translation type="unfinished">PH</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation>Actitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Protection_ListView</name>
+    <message>
+        <source>Protections</source>
+        <translation type="unfinished">Protecciones</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_GUI</name>
+    <message>
+        <source>Global parameters</source>
+        <translation type="unfinished">Parámetros globales</translation>
+    </message>
+    <message>
+        <source>Crowd effects on units firing capability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished">Densidad</translation>
+    </message>
+    <message>
+        <source>people/m²</source>
+        <translation type="unfinished">personas/m²</translation>
+    </message>
+    <message>
+        <source>Modifier</source>
+        <translation type="unfinished">Modificadores</translation>
+    </message>
+    <message>
+        <source>Time between two NBC applications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished">Detalles</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Behavior model</source>
+        <translation type="unfinished">Modelo de comportamiento</translation>
+    </message>
+    <message>
+        <source>Density while moving</source>
+        <translation type="unfinished">Densidad en movimiento</translation>
+    </message>
+    <message>
+        <source>Average movement speed</source>
+        <translation type="unfinished">Velocidad promedio de movimiento</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation type="unfinished">km/h</translation>
+    </message>
+    <message>
+        <source>Armed individuals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decontamination delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd effects on units movement capability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation type="unfinished">Efecto</translation>
+    </message>
+    <message>
+        <source>Max speed</source>
+        <translation type="unfinished">Velocidad máxima</translation>
+    </message>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished">Atriciones</translation>
+    </message>
+    <message>
+        <source>Crowd -&gt; Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Intensity</source>
+        <translation type="unfinished">Intensidad</translation>
+    </message>
+    <message>
+        <source>Unarmed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destruction</source>
+        <translation type="unfinished">Destrucción</translation>
+    </message>
+    <message>
+        <source>Fixable with evacuation</source>
+        <translation type="unfinished">Reparable con evacuación</translation>
+    </message>
+    <message>
+        <source>Fixable without evacuation</source>
+        <translation type="unfinished">Reparable sin evacuación</translation>
+    </message>
+    <message>
+        <source>Armed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units -&gt; Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban area destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time to destruct a urban block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">Actitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Volume_ListView</name>
+    <message>
+        <source>Volumes</source>
+        <translation type="unfinished">Volumenes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_UrbanEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation type="unfinished">Actitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_DataException</name>
+    <message>
+        <source>Data error</source>
+        <translation>Error de datos</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_DialogLog</name>
+    <message>
+        <source>&amp;OK</source>
+        <translation>&amp;Ok</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Disasters_GUI</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentration thresholds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attrition thresholds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC protection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_EquipementSelector</name>
+    <message>
+        <source>Click here to select</source>
+        <translation>Hacer click para seleccionar</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_ActiveProtectionsListView</name>
     <message>
         <source>ActiveProtections</source>
         <translation>Protecciones activas</translation>
@@ -550,7 +928,7 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_BreakdownsTable</name>
+    <name>ADN_Equipments_BreakdownsTable</name>
     <message>
         <source>Odds (%)</source>
         <translation>Probabilidades (%)</translation>
@@ -565,7 +943,7 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_ConsumptionsTable</name>
+    <name>ADN_Equipments_ConsumptionsTable</name>
     <message>
         <source>Activity</source>
         <translation>Actividad</translation>
@@ -588,7 +966,7 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Dotations_GUI</name>
+    <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <source>Category</source>
         <translation>Categoría</translation>
@@ -615,7 +993,7 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_GUI</name>
+    <name>ADN_Equipments_GUI</name>
     <message>
         <source>Data</source>
         <translation>Data</translation>
@@ -1058,7 +1436,7 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_RadarsListView</name>
+    <name>ADN_Equipments_RadarsListView</name>
     <message>
         <source>Special sensors</source>
         <translation>Sensores especiales</translation>
@@ -1073,7 +1451,7 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Sensors_GUI</name>
+    <name>ADN_Equipments_Sensors_GUI</name>
     <message>
         <source>Sensor</source>
         <translation>Sensor</translation>
@@ -1092,7 +1470,7 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Speeds_GUI</name>
+    <name>ADN_Equipments_Speeds_GUI</name>
     <message>
         <source>Speed (km/h)</source>
         <translation>Velocidad (km/h)</translation>
@@ -1116,7 +1494,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_WeaponsListView</name>
+    <name>ADN_Equipments_WeaponsListView</name>
     <message>
         <source>Add weapon</source>
         <translation>Agregar un arma</translation>
@@ -1128,384 +1506,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     <message>
         <source>Weapon systems</source>
         <translation>Sistemas de arma</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation>Configuración</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation>Sendero SIM</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation>Buscar</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation>Parámetros SIM</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;Ok</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Cancelar</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation>Ejecutable SWORD (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation>Seleccionar el SIM à usar en la prueba de datos</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ConsistencyDialog</name>
-    <message>
-        <source>Description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Initialization</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unicity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Others</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duplicate NNO code for %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duplicate EMAT8 code for %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has no NNO code defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has no EMAT8 code defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> and &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The equipement &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The resource &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The mission %1 has no type defined for a localisation composite parameter.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, because of this, the simulation can&apos;t start with this database.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The breakdown %1 has no replacement part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment %1 requires at least one breakdown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convoy unit type not defined in Log/Supply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convoy mission not defined in Log/Supply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No geometry defined for object %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No decisional model defined for unit %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one sub unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one PC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>At least one armor must be defined</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No disaster model for object %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Duplicate type for missions %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Consumptions_Table</name>
-    <message>
-        <source>Resource network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Consumption</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add resource</source>
-        <translation type="unfinished">Agregar dotación</translation>
-    </message>
-    <message>
-        <source>Remove resource</source>
-        <translation type="unfinished">Remover dotación</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_FireEffectRoe_GUI</name>
-    <message>
-        <source>ROE</source>
-        <translation type="unfinished">ROE</translation>
-    </message>
-    <message>
-        <source>Attrition Surface (m²)</source>
-        <translation type="unfinished">Superficie de atrición (m²)</translation>
-    </message>
-    <message>
-        <source>PH</source>
-        <translation type="unfinished">PH</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_FireEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation>Actitudes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_FireEffect_Protection_ListView</name>
-    <message>
-        <source>Protections</source>
-        <translation type="unfinished">Protecciones</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_GUI</name>
-    <message>
-        <source>Global parameters</source>
-        <translation type="unfinished">Parámetros globales</translation>
-    </message>
-    <message>
-        <source>Crowd effects on units firing capability</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation type="unfinished">Densidad</translation>
-    </message>
-    <message>
-        <source>people/m²</source>
-        <translation type="unfinished">personas/m²</translation>
-    </message>
-    <message>
-        <source>Modifier</source>
-        <translation type="unfinished">Modificadores</translation>
-    </message>
-    <message>
-        <source>Time between two NBC applications</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="unfinished">Detalles</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Behavior model</source>
-        <translation type="unfinished">Modelo de comportamiento</translation>
-    </message>
-    <message>
-        <source>Density while moving</source>
-        <translation type="unfinished">Densidad en movimiento</translation>
-    </message>
-    <message>
-        <source>Average movement speed</source>
-        <translation type="unfinished">Velocidad promedio de movimiento</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation type="unfinished">km/h</translation>
-    </message>
-    <message>
-        <source>Armed individuals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation type="unfinished">%</translation>
-    </message>
-    <message>
-        <source>Males</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Females</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Children</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decontamination delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd effects on units movement capability</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Effect</source>
-        <translation type="unfinished">Efecto</translation>
-    </message>
-    <message>
-        <source>Max speed</source>
-        <translation type="unfinished">Velocidad máxima</translation>
-    </message>
-    <message>
-        <source>Attritions</source>
-        <translation type="unfinished">Atriciones</translation>
-    </message>
-    <message>
-        <source>Crowd -&gt; Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Intensity</source>
-        <translation type="unfinished">Intensidad</translation>
-    </message>
-    <message>
-        <source>Unarmed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Destruction</source>
-        <translation type="unfinished">Destrucción</translation>
-    </message>
-    <message>
-        <source>Fixable with evacuation</source>
-        <translation type="unfinished">Reparable con evacuación</translation>
-    </message>
-    <message>
-        <source>Fixable without evacuation</source>
-        <translation type="unfinished">Reparable sin evacuación</translation>
-    </message>
-    <message>
-        <source>Armed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Units -&gt; Crowd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban area destruction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time to destruct a urban block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation type="unfinished">Actitudes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_SpeedEffect_Volume_ListView</name>
-    <message>
-        <source>Volumes</source>
-        <translation type="unfinished">Volumenes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_UrbanEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation type="unfinished">Actitudes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_DataException</name>
-    <message>
-        <source>Data error</source>
-        <translation>Error de datos</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_DialogLog</name>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;Ok</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Disasters_GUI</name>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Concentration thresholds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attrition thresholds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC protection</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_EquipementSelector</name>
-    <message>
-        <source>Click here to select</source>
-        <translation>Hacer click para seleccionar</translation>
     </message>
 </context>
 <context>
@@ -2053,7 +2053,14 @@ tirador</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Composantes_Objects</name>
+    <name>ADN_ListView_Disasters</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_Equipments_Objects</name>
     <message>
         <source>Objects</source>
         <translation>Objetos</translation>
@@ -2065,13 +2072,6 @@ tirador</translation>
     <message>
         <source>Remove object</source>
         <translation>Borrar objetos</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ListView_Disasters</name>
-    <message>
-        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6025,10 +6025,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
 </context>
 <context>
-    <name>Composante_Data</name>
+    <name>Equipments_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
+        <translation type="unfinished">Datos inválidos</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
@@ -6036,72 +6036,46 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de falla &apos;%1&apos; inválido</translation>
+        <translation type="unfinished">Equipo - Tipo de falla &apos;%1&apos; inválido</translation>
     </message>
     <message>
-        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de rada inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
-        <translation>Equipo - Sistema de armas inválido &apos;%1/%2&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
-        <translation>Equipos - Tipo de protección activa &apos;%1&apos; inválida</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid object type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de objeto inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid activty &apos;%1&apos;</source>
-        <translation>Equipo - Actividad inválida &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid armor and/or volume</source>
-        <translation>Equipo - Blindaje y/o volumen inválido</translation>
+        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Equipment &apos;%1&apos; - Invalid breakdown data : sum != 100</source>
-        <translation type="unfinished"></translation>
+        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipo - Tipo de rada inválido &apos;%1&apos;</translation>
     </message>
-</context>
-<context>
-    <name>Composantes_Data</name>
     <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Datos inválidos</translation>
+        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
+        <translation type="unfinished">Equipo - Sistema de armas inválido &apos;%1/%2&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipos - Tipo de protección activa &apos;%1&apos; inválida</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid object type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipo - Tipo de objeto inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid activty &apos;%1&apos;</source>
+        <translation type="unfinished">Equipo - Actividad inválida &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor and/or volume</source>
+        <translation type="unfinished">Equipo - Blindaje y/o volumen inválido</translation>
     </message>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Equipment_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Object type - Invalid object &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6270,6 +6244,25 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>Sensors - Invalid activity &apos;%1&apos;</source>
         <translation>Sensores - Actividad inválida &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Resources_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object type - Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

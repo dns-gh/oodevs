@@ -24,7 +24,7 @@
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
-#include "ADN_Composantes_Dotations_GUI.h"
+#include "ADN_Equipments_Dotations_GUI.h"
 #include "ADN_UrbanModifiersTable.h"
 #include "ADN_SearchListView.h"
 #include "ENT/ENT_Tr.h"
@@ -172,13 +172,13 @@ void ADN_Objects_GUI::Build()
         builder.AddEnumField( constr, tr( "Model" ), vInfosConnectors[ eConstructorCapacity_UnitType ] );
         // Buildable
         ADN_GroupBox* buildable = CreateCapacityGroupBox( 3, tr( "Buildable" ), vInfosConnectors[ eBuildableCapacityPresent], constructor );
-        ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( strClassName_ +"_BuildableDotations", vInfosConnectors[ eBuildableCapacity_Dotation ], false, buildable, false );
+        ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( strClassName_ +"_BuildableDotations", vInfosConnectors[ eBuildableCapacity_Dotation ], false, buildable, false );
         pDotations->SetGoToOnDoubleClick( ::eResources );
 
         // Improvable
         ADN_GroupBox* improvable = CreateCapacityGroupBox( 3, tr( "Improvable" ), vInfosConnectors[ eImprovableCapacityPresent ], constructor );
         {
-            ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( strClassName_ +"_ImprovableDotations", vInfosConnectors[ eImprovableCapacity_Dotation ], false, improvable, false );
+            ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( strClassName_ +"_ImprovableDotations", vInfosConnectors[ eImprovableCapacity_Dotation ], false, improvable, false );
             pDotations->SetGoToOnDoubleClick( ::eResources );
         }
 

@@ -1,29 +1,28 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_Sensors_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 16:56 $
-// $Revision: 11 $
-// $Workfile: ADN_Composantes_Sensors_GUI.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_Sensors_GUI.h"
+#include "ADN_Equipments_Sensors_GUI.h"
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Workspace.h"
 #include <Qt3Support/q3popupmenu.h>
 
-typedef ADN_Composantes_Data::SensorInfos SensorInfos;
+typedef ADN_Equipments_Data::SensorInfos SensorInfos;
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_Sensors_GUI constructor
+// Name: ADN_Equipments_Sensors_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Sensors_GUI::ADN_Composantes_Sensors_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Equipments_Sensors_GUI::ADN_Equipments_Sensors_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
     : ADN_Table( objectName, connector, pParent )
 {
     // peut etre selectionne & trie
@@ -42,19 +41,19 @@ ADN_Composantes_Sensors_GUI::ADN_Composantes_Sensors_GUI( const QString& objectN
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_Sensors_GUI destructor
+// Name: ADN_Equipments_Sensors_GUI destructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Sensors_GUI::~ADN_Composantes_Sensors_GUI()
+ADN_Equipments_Sensors_GUI::~ADN_Equipments_Sensors_GUI()
 {
     delete pConnector_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_Sensors_GUI::OnContextMenu
+// Name: ADN_Equipments_Sensors_GUI::OnContextMenu
 // Created: AGN 03-08-01
 //-----------------------------------------------------------------------------
-void ADN_Composantes_Sensors_GUI::OnContextMenu( const QPoint& pt )
+void ADN_Equipments_Sensors_GUI::OnContextMenu( const QPoint& pt )
 {
     std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu( this ) );
     // Get the list of the possible munitions
@@ -85,12 +84,12 @@ void ADN_Composantes_Sensors_GUI::OnContextMenu( const QPoint& pt )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Sensors_GUI::CreateNewSensor
+// Name: ADN_Equipments_Sensors_GUI::CreateNewSensor
 /** @param  nSensor
 */
 // Created: AGN 2003-12-04
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Sensors_GUI::CreateNewSensor( int nSensor )
+void ADN_Equipments_Sensors_GUI::CreateNewSensor( int nSensor )
 {
     SensorInfos* pNewInfo = new SensorInfos();
     pNewInfo->ptrSensor_ = ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsInfos()[ nSensor ];
@@ -100,10 +99,10 @@ void ADN_Composantes_Sensors_GUI::CreateNewSensor( int nSensor )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Sensors_GUI::RemoveCurrentSensor
+// Name: ADN_Equipments_Sensors_GUI::RemoveCurrentSensor
 // Created: AGN 2003-12-04
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Sensors_GUI::RemoveCurrentSensor()
+void ADN_Equipments_Sensors_GUI::RemoveCurrentSensor()
 {
     SensorInfos* pCurSensor = static_cast< SensorInfos* >( GetSelectedData() );
     if( pCurSensor )
@@ -115,10 +114,10 @@ void ADN_Composantes_Sensors_GUI::RemoveCurrentSensor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Sensors_GUI::AddRow
+// Name: ADN_Equipments_Sensors_GUI::AddRow
 // Created: NPT 2012-11-06
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Sensors_GUI::AddRow( int row, void* data )
+void ADN_Equipments_Sensors_GUI::AddRow( int row, void* data )
 {
     SensorInfos* infos = static_cast< SensorInfos* >( data );
     if( !infos )

@@ -13,7 +13,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
 
@@ -67,8 +67,8 @@ void  ADN_ListView_Categories_Size::OnContextMenu( const QPoint& pt)
     {
         SizeInfos* pCastData = static_cast< SizeInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
-                                      ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );
     }
     popupMenu.exec( pt );
 }
@@ -84,6 +84,6 @@ std::string ADN_ListView_Categories_Size::GetToolTipFor( const QModelIndex& inde
     void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     SizeInfos* pCastData = static_cast< SizeInfos* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
-                            ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ) );
 }

@@ -1,24 +1,22 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-23 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_ListView_Composantes_Objects.cpp $
-// $Author: Ape $
-// $Modtime: 8/04/05 15:04 $
-// $Revision: 9 $
-// $Workfile: ADN_ListView_Composantes_Objects.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_ListView_Composantes_Objects.h"
-#include "moc_ADN_ListView_Composantes_Objects.cpp"
+#include "ADN_ListView_Equipments_Objects.h"
+#include "moc_ADN_ListView_Equipments_Objects.cpp"
 #include <Qt3Support/q3popupmenu.h>
 #include "ADN_Connector_ListView.h"
-#include "ADN_Composantes_Data.h"
-#include "ADN_Composantes_GUI.h"
+#include "ADN_Equipments_Data.h"
+#include "ADN_Equipments_GUI.h"
 #include "ADN_Workspace.h"
 
-typedef ADN_Composantes_Data::ObjectInfos ObjectInfos;
+typedef ADN_Equipments_Data::ObjectInfos ObjectInfos;
 
 // Internal connector
 class ADN_Connector_Objects : public ADN_Connector_ListView_ABC
@@ -46,11 +44,11 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView_Composantes_Objects constructor
+// Name: ADN_ListView_Equipments_Objects constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Composantes_Objects::ADN_ListView_Composantes_Objects( QWidget* pParent )
-    : ADN_ListView( pParent, "ADN_ListView_Composantes_Objects", tr( "Objects" ) )
+ADN_ListView_Equipments_Objects::ADN_ListView_Equipments_Objects( QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_ListView_Equipments_Objects", tr( "Objects" ) )
 {
     setMaximumHeight( 270 );
 
@@ -61,54 +59,54 @@ ADN_ListView_Composantes_Objects::ADN_ListView_Composantes_Objects( QWidget* pPa
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView_Composantes_Objects destructor
+// Name: ADN_ListView_Equipments_Objects destructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_ListView_Composantes_Objects::~ADN_ListView_Composantes_Objects()
+ADN_ListView_Equipments_Objects::~ADN_ListView_Equipments_Objects()
 {
     delete pConnector_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView_Composantes_Objects::ConnectItem
+// Name: ADN_ListView_Equipments_Objects::ConnectItem
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-void ADN_ListView_Composantes_Objects::ConnectItem( bool bConnect )
+void ADN_ListView_Equipments_Objects::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
 
     ObjectInfos* pInfos = (ObjectInfos*)pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Composantes_GUI::eNbrObjGuiElements );
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Equipments_GUI::eNbrObjGuiElements );
 
-    vItemConnectors_[ADN_Composantes_GUI::eInitialBuildTime]->Connect( &pInfos->initialBuildTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eInitialDestructionTime]->Connect( &pInfos->initialDestructionTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eCoeffBuildTime]->Connect( &pInfos->coeffBuildTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eCoeffDestructionTime]->Connect( &pInfos->coeffDestructionTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eValorizationTime]->Connect( &pInfos->valorizationTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eDevalorizationTime]->Connect( &pInfos->devalorizationTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eExtinguishingTime]->Connect( &pInfos->extinguishingTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eCoeffCircTime]->Connect( &pInfos->rCoeffCirc_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eSpeedCirc]->Connect( &pInfos->rSpeedCirc_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eSpeedNotCirc]->Connect( &pInfos->rSpeedNotCirc_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eInitialBuildTime]->Connect( &pInfos->initialBuildTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eInitialDestructionTime]->Connect( &pInfos->initialDestructionTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eCoeffBuildTime]->Connect( &pInfos->coeffBuildTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eCoeffDestructionTime]->Connect( &pInfos->coeffDestructionTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eValorizationTime]->Connect( &pInfos->valorizationTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eDevalorizationTime]->Connect( &pInfos->devalorizationTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eExtinguishingTime]->Connect( &pInfos->extinguishingTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eCoeffCircTime]->Connect( &pInfos->rCoeffCirc_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eSpeedCirc]->Connect( &pInfos->rSpeedCirc_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eSpeedNotCirc]->Connect( &pInfos->rSpeedNotCirc_, bConnect );
 
-    vItemConnectors_[ADN_Composantes_GUI::eHasInitialBuildTime]->Connect( &pInfos->bInitialBuildTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasInitialDestructionTime]->Connect( &pInfos->bInitialDestructionTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasCoeffBuildTime]->Connect( &pInfos->bCoeffBuildTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasCoeffDestructionTime]->Connect( &pInfos->bCoeffDestructionTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasValorizationTime]->Connect( &pInfos->bValorizationTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasDevalorizationTime]->Connect( &pInfos->bDevalorizationTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasExtinguishingTime]->Connect( &pInfos->bExtinguishingTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasCoeffCircTime]->Connect( &pInfos->bCoeffCircTime_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasSpeedCirc]->Connect( &pInfos->bSpeedCirc_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasSpeedNotCirc]->Connect( &pInfos->bSpeedNotCirc_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasInitialBuildTime]->Connect( &pInfos->bInitialBuildTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasInitialDestructionTime]->Connect( &pInfos->bInitialDestructionTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasCoeffBuildTime]->Connect( &pInfos->bCoeffBuildTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasCoeffDestructionTime]->Connect( &pInfos->bCoeffDestructionTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasValorizationTime]->Connect( &pInfos->bValorizationTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasDevalorizationTime]->Connect( &pInfos->bDevalorizationTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasExtinguishingTime]->Connect( &pInfos->bExtinguishingTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasCoeffCircTime]->Connect( &pInfos->bCoeffCircTime_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasSpeedCirc]->Connect( &pInfos->bSpeedCirc_, bConnect );
+    vItemConnectors_[ADN_Equipments_GUI::eHasSpeedNotCirc]->Connect( &pInfos->bSpeedNotCirc_, bConnect );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView_Composantes_Objects::OnContextMenu
+// Name: ADN_ListView_Equipments_Objects::OnContextMenu
 // Created: AGN 03-08-04
 //-----------------------------------------------------------------------------
-void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
+void ADN_ListView_Equipments_Objects::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
     Q3PopupMenu addMenu( this );
@@ -151,16 +149,16 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView_Composantes_Objects::Contains
+// Name: ADN_ListView_Equipments_Objects::Contains
 // Created: AGN 03-08-04
 //-----------------------------------------------------------------------------
-bool ADN_ListView_Composantes_Objects::Contains( const ADN_Objects_Data_ObjectInfos* pInfo )
+bool ADN_ListView_Equipments_Objects::Contains( const ADN_Objects_Data_ObjectInfos* pInfo )
 {
     const int rowCount = dataModel_.rowCount();
     for( int row = 0; row < rowCount; ++row )
     {
         ADN_ListViewItem* pCurr = static_cast< ADN_ListViewItem* >( dataModel_.item( row ) );
-        ADN_Composantes_Data::ObjectInfos* pData = static_cast< ADN_Composantes_Data::ObjectInfos* >( pCurr->GetData() );
+        ADN_Equipments_Data::ObjectInfos* pData = static_cast< ADN_Equipments_Data::ObjectInfos* >( pCurr->GetData() );
         if( pData->ptrObject_.GetData() == pInfo )
             return true;
     }

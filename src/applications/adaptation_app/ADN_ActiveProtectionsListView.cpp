@@ -11,7 +11,7 @@
 #include "ADN_ActiveProtectionsListView.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ActiveProtections_Gui.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
 #include "ADN_ObjectCreator_ABC.h"
@@ -73,8 +73,8 @@ void ADN_ActiveProtectionsListView::OnContextMenu( const QPoint& pt )
     {
         ActiveProtectionsInfos* pCastData = static_cast< ActiveProtectionsInfos* >( pCurData_ );
         assert( pCastData != 0 );
-        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
-                                      ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );
     }
     popupMenu.exec( pt );
 }
@@ -90,6 +90,6 @@ std::string ADN_ActiveProtectionsListView::GetToolTipFor( const QModelIndex& ind
     void* pData = static_cast< ADN_ListViewItem* >( dataModel_.GetItemFromIndex( index ) )->GetData();
     ActiveProtectionsInfos* pCastData = static_cast< ActiveProtectionsInfos* >( pData );
     assert( pCastData != 0 );
-    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
-                            ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
+    return FormatUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+                            ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ) );
 }

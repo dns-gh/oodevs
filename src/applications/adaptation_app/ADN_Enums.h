@@ -31,7 +31,7 @@ enum E_WorkspaceElements
     eActiveProtections,
     eSensors,
     eBreakdowns,
-    eComposantes,
+    eEquipments,
     eResourceNetworks,
     eAiEngine,
     eMissions,

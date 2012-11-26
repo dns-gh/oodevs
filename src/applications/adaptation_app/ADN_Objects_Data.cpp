@@ -11,7 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Objects_Data.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
@@ -102,7 +102,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation( xml::xistream&
         ADN_Resources_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( dotation );
         if( category == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
-        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentResource_ );
+        ADN_Equipments_Data::CategoryInfos* infos = new ADN_Equipments_Data::CategoryInfos( category->parentResource_ );
         infos->ptrCategory_ = category;
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
@@ -120,7 +120,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
     xos << xml::start( "resources" );
     for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
     {
-        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >( *it );
+        ADN_Equipments_Data::CategoryInfos* infos = reinterpret_cast< ADN_Equipments_Data::CategoryInfos* >( *it );
         xos << xml::start( "resource" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end;
@@ -162,7 +162,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation( xml::xistream
         ADN_Resources_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( dotation );
         if( category == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
-        ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentResource_ );
+        ADN_Equipments_Data::CategoryInfos* infos = new ADN_Equipments_Data::CategoryInfos( category->parentResource_ );
         infos->ptrCategory_ = category;
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
@@ -180,7 +180,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
     xos << xml::start( "resources" );
     for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
     {
-        ADN_Composantes_Data::CategoryInfos* infos = *it;
+        ADN_Equipments_Data::CategoryInfos* infos = *it;
         xos << xml::start( "resource" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end;

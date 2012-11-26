@@ -128,11 +128,11 @@ void ADN_Resources_Data::CategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "network-usable", bNetworkUsable_ );
     helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( dotationNature );
     if( !pNature )
-        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).toStdString(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( dotationNature.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Resources_Data", "Invalid data" ).toStdString(), tools::translate( "Resources_Data", "Equipment - Invalid resource nature '%1'" ).arg( dotationNature.c_str() ).toStdString() );
     ptrResourceNature_ = pNature;
     helpers::LogisticSupplyClass* pClass = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindLogisticSupplyClass( logisticSupplyClass );
     if( !pClass )
-        throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).toStdString(), tools::translate( "Equipment_Data", "Equipment - Invalid resource logistic supply class '%1'" ).arg( logisticSupplyClass.c_str() ).toStdString() );
+        throw ADN_DataException( tools::translate( "Resources_Data", "Invalid data" ).toStdString(), tools::translate( "Resources_Data", "Equipment - Invalid resource logistic supply class '%1'" ).arg( logisticSupplyClass.c_str() ).toStdString() );
     ptrLogisticSupplyClass_ = pClass;
 }
 
@@ -411,7 +411,7 @@ void ADN_Resources_Data::IndirectAmmoInfos::Initialize()
         if( pObject )
             objectType_ = pObject;
         else
-            QMessageBox::warning( QApplication::activeWindow(), tools::translate( "Equipment_Data", "Invalid data" ), tools::translate( "Equipment_Data", "Object type - Invalid object '%1'" ).arg( strObjectType_.c_str() ), QMessageBox::Ok, Qt::NoButton );
+            QMessageBox::warning( QApplication::activeWindow(), tools::translate( "Resources_Data", "Invalid data" ), tools::translate( "Resources_Data", "Object type - Invalid object '%1'" ).arg( strObjectType_.c_str() ), QMessageBox::Ok, Qt::NoButton );
     }
     else if( !ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos().empty() )
     {

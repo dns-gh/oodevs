@@ -1,32 +1,30 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_Dotations_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 16:55 $
-// $Revision: 11 $
-// $Workfile: ADN_Composantes_Dotations_GUI.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_Dotations_GUI.h"
-#include "moc_ADN_Composantes_Dotations_GUI.cpp"
+#include "ADN_Equipments_Dotations_GUI.h"
+#include "moc_ADN_Equipments_Dotations_GUI.cpp"
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Connector_Table_ABC.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"
 
-typedef ADN_Composantes_Data::CategoryInfos CategoryInfos;
+typedef ADN_Equipments_Data::CategoryInfos CategoryInfos;
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_Dotations_GUI constructor
+// Name: ADN_Equipments_Dotations_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector,
+ADN_Equipments_Dotations_GUI::ADN_Equipments_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector,
                                                               bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
     : ADN_Table( objectName, connector, pParent )
     , bIncludeNormalizedConsumption_( bIncludeNormalizedConsumption )
@@ -57,19 +55,19 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( const QString& obj
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_Dotations_GUI destructor
+// Name: ADN_Equipments_Dotations_GUI destructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Dotations_GUI::~ADN_Composantes_Dotations_GUI()
+ADN_Equipments_Dotations_GUI::~ADN_Equipments_Dotations_GUI()
 {
     // NOTHING
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_Dotations_GUI::OnContextMenu
+// Name: ADN_Equipments_Dotations_GUI::OnContextMenu
 // Created: AGN 03-08-04
 //-----------------------------------------------------------------------------
-void ADN_Composantes_Dotations_GUI::OnContextMenu( const QPoint& pt )
+void ADN_Equipments_Dotations_GUI::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu menu( this );
     Q3PopupMenu targetMenu( &menu );
@@ -112,10 +110,10 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( const QPoint& pt )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Dotations_GUI::Contains
+// Name: ADN_Equipments_Dotations_GUI::Contains
 // Created: AGN 2004-02-25
 // -----------------------------------------------------------------------------
-bool ADN_Composantes_Dotations_GUI::Contains( ADN_Resources_Data::CategoryInfo& category )
+bool ADN_Equipments_Dotations_GUI::Contains( ADN_Resources_Data::CategoryInfo& category )
 {
     int n = 0;
     while( dataModel_.item( n, 1 ) != 0 )
@@ -130,10 +128,10 @@ bool ADN_Composantes_Dotations_GUI::Contains( ADN_Resources_Data::CategoryInfo& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Dotations_GUI::AddNewDotation
+// Name: ADN_Equipments_Dotations_GUI::AddNewDotation
 // Created: AGN 2003-12-04
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Dotations_GUI::AddNewDotation( ADN_Resources_Data::CategoryInfo& category )
+void ADN_Equipments_Dotations_GUI::AddNewDotation( ADN_Resources_Data::CategoryInfo& category )
 {
     CategoryInfos* pNewInfo = new CategoryInfos( category.parentResource_ );
     pNewInfo->ptrCategory_ = &category;
@@ -145,10 +143,10 @@ void ADN_Composantes_Dotations_GUI::AddNewDotation( ADN_Resources_Data::Category
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Dotations_GUI::RemoveCurrentDotation
+// Name: ADN_Equipments_Dotations_GUI::RemoveCurrentDotation
 // Created: AGN 2003-12-04
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Dotations_GUI::RemoveCurrentDotation()
+void ADN_Equipments_Dotations_GUI::RemoveCurrentDotation()
 {
     assert( GetSelectedData() != 0 );
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( GetSelectedData() );
@@ -158,7 +156,7 @@ void ADN_Composantes_Dotations_GUI::RemoveCurrentDotation()
 // Name: ADN_Consumptions_Table::AddRow
 // Created: MMC 2012-11-06
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Dotations_GUI::AddRow( int row, void* data )
+void ADN_Equipments_Dotations_GUI::AddRow( int row, void* data )
 {
     CategoryInfos* pCategory = static_cast< CategoryInfos* >( data );
     if( !pCategory )

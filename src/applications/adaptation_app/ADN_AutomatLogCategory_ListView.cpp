@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_AutomatLogCategory_ListView.h"
 #include "ADN_GridDelegate.h"
 #include "ADN_Automata_Data.h"
@@ -173,8 +173,8 @@ void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem& 
     item.setText( eColumnNbrComp, QString::number( comp.nNb_.GetData() ) );
 
     // retrieve corresponding dotation category
-    ADN_Composantes_Data::T_CategoryInfos_Vector& categories = comp.ptrComposante_.GetData()->resources_.categories_;
-    ADN_Composantes_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
+    ADN_Equipments_Data::T_CategoryInfos_Vector& categories = comp.ptrComposante_.GetData()->resources_.categories_;
+    ADN_Equipments_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
     for( ; itCategory != categories.end(); ++itCategory )
         if( (*itCategory)->ptrCategory_.GetData() == &category )
             break;
@@ -186,10 +186,10 @@ void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem& 
     compTotal_.rNormalizedConsumption_ = (*itCategory)->rNormalizedConsumption_.GetData();
 
     // consumption
-    ADN_Composantes_Data::T_ConsumptionItem_Vector& consumptions = comp.ptrComposante_.GetData()->consumptions_.vConsumptions_;
-    for( ADN_Composantes_Data::IT_ConsumptionItem_Vector itConso = consumptions.begin(); itConso != consumptions.end(); ++itConso )
+    ADN_Equipments_Data::T_ConsumptionItem_Vector& consumptions = comp.ptrComposante_.GetData()->consumptions_.vConsumptions_;
+    for( ADN_Equipments_Data::IT_ConsumptionItem_Vector itConso = consumptions.begin(); itConso != consumptions.end(); ++itConso )
     {
-        ADN_Composantes_Data::ConsumptionItem& conso = **itConso;
+        ADN_Equipments_Data::ConsumptionItem& conso = **itConso;
         if( conso.ptrCategory_.GetData() == &category )
         {
             if( conso.nConsumptionType_ != eMoving && conso.nConsumptionType_ != eEngineStopped )

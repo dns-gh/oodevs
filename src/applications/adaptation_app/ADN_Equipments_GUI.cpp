@@ -1,30 +1,29 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-17 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_GUI.cpp $
-// $Author: Nld $
-// $Modtime: 20/07/05 14:34 $
-// $Revision: 31 $
-// $Workfile: ADN_Composantes_GUI.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_GUI.h"
-#include "moc_ADN_Composantes_GUI.cpp"
+#include "ADN_Equipments_GUI.h"
+#include "moc_ADN_Equipments_GUI.cpp"
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_ListView_Composantes.h"
-#include "ADN_Composantes_WeaponsListView.h"
-#include "ADN_Composantes_ActiveProtectionsListView.h"
-#include "ADN_ListView_Composantes_Objects.h"
-#include "ADN_Composantes_Speeds_GUI.h"
-#include "ADN_Composantes_Sensors_GUI.h"
-#include "ADN_Composantes_RadarsListView.h"
-#include "ADN_Composantes_Dotations_GUI.h"
-#include "ADN_Composantes_ConsumptionsTable.h"
-#include "ADN_Composantes_BreakdownsTable.h"
+#include "ADN_ListView_Equipments.h"
+#include "ADN_Equipments_WeaponsListView.h"
+#include "ADN_Equipments_ActiveProtectionsListView.h"
+#include "ADN_ListView_Equipments_Objects.h"
+#include "ADN_Equipments_Speeds_GUI.h"
+#include "ADN_Equipments_Sensors_GUI.h"
+#include "ADN_Equipments_RadarsListView.h"
+#include "ADN_Equipments_Dotations_GUI.h"
+#include "ADN_Equipments_ConsumptionsTable.h"
+#include "ADN_Equipments_BreakdownsTable.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_DateEdit.h"
 #include "ADN_GroupBox.h"
@@ -37,11 +36,11 @@
 #include "ENT/ENT_Tr.h"
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI constructor
+// Name: ADN_Equipments_GUI constructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
-ADN_Composantes_GUI::ADN_Composantes_GUI( ADN_Composantes_Data& data )
-    : ADN_GUI_ABC( "ADN_Composantes_GUI" )
+ADN_Equipments_GUI::ADN_Equipments_GUI( ADN_Equipments_Data& data )
+    : ADN_GUI_ABC( "ADN_Equipments_GUI" )
     , data_( data )
     , pBreakdownsGroup_( 0 )
     , pSpeeds_( 0 )
@@ -56,19 +55,19 @@ ADN_Composantes_GUI::ADN_Composantes_GUI( ADN_Composantes_Data& data )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI destructor
+// Name: ADN_Equipments_GUI destructor
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
-ADN_Composantes_GUI::~ADN_Composantes_GUI()
+ADN_Equipments_GUI::~ADN_Equipments_GUI()
 {
     // NOTHING
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::Build
+// Name: ADN_Equipments_GUI::Build
 // Created: JDY 03-07-17
 //-----------------------------------------------------------------------------
-void ADN_Composantes_GUI::Build()
+void ADN_Equipments_GUI::Build()
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -134,12 +133,12 @@ void ADN_Composantes_GUI::Build()
 
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );
-    ADN_Composantes_BreakdownsTable* pAttritionBreakdowns = new ADN_Composantes_BreakdownsTable( strClassName_ + "_AttritionBreakdowns",
+    ADN_Equipments_BreakdownsTable* pAttritionBreakdowns = new ADN_Equipments_BreakdownsTable( strClassName_ + "_AttritionBreakdowns",
                                                                                                 tr( "Attrition breakdowns" ),
                                                                                                 vInfosConnectors[ eAttritionBreakdowns ],
                                                                                                 pBreakdownsGroup_ );
     pAttritionBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
-    ADN_Composantes_BreakdownsTable* pRandomBreakdowns = new ADN_Composantes_BreakdownsTable( strClassName_ + "_RandomBreakdowns",
+    ADN_Equipments_BreakdownsTable* pRandomBreakdowns = new ADN_Equipments_BreakdownsTable( strClassName_ + "_RandomBreakdowns",
                                                                                               tr( "Random breakdowns" ),
                                                                                               vInfosConnectors[ eRandomBreakdowns ],
                                                                                               pBreakdownsGroup_ );
@@ -150,40 +149,40 @@ void ADN_Composantes_GUI::Build()
     QWidget* pMaxSpeedHolder = builder.AddFieldHolder( pSpeedGroup );
     // Max speed
     ADN_EditLine_Double* maxSpeed = builder.AddField< ADN_EditLine_Double >( pMaxSpeedHolder, tr( "Max speed" ), vInfosConnectors[ eMaxSpeed ], tr( "km/h" ), eGreaterZero );
-    pSpeeds_ = new ADN_Composantes_Speeds_GUI( maxSpeed, strClassName_ + "_Speeds", vInfosConnectors[ eSpeeds ], pSpeedGroup );
+    pSpeeds_ = new ADN_Equipments_Speeds_GUI( maxSpeed, strClassName_ + "_Speeds", vInfosConnectors[ eSpeeds ], pSpeedGroup );
 
     // Sensors
     Q3HGroupBox* pSensorsGroup = new Q3HGroupBox( tr( "Sensors" ) );
-    pSensors_ = new ADN_Composantes_Sensors_GUI( strClassName_ + "_Sensors", vInfosConnectors[ eSensors ], pSensorsGroup );
+    pSensors_ = new ADN_Equipments_Sensors_GUI( strClassName_ + "_Sensors", vInfosConnectors[ eSensors ], pSensorsGroup );
     pSensors_->SetGoToOnDoubleClick( ::eSensors, 0 );
     // Special sensors
     Q3HGroupBox* pRadarsGroup = new Q3HGroupBox( tr( "Special sensors" ) );
-    pRadars_ = new ADN_Composantes_RadarsListView( pRadarsGroup );
+    pRadars_ = new ADN_Equipments_RadarsListView( pRadarsGroup );
     pRadars_->setObjectName( strClassName_ + "_Radars" );
     pRadars_->SetGoToOnDoubleClick( ::eSensors, 1 );
     vInfosConnectors[ eRadars ] = &pRadars_->GetConnector();
     // Weapons
     Q3HGroupBox* pWeaponsGroup = new Q3HGroupBox( tr( "Weapon systems" ) );
-    pWeapons_ = new ADN_Composantes_WeaponsListView( pWeaponsGroup );
+    pWeapons_ = new ADN_Equipments_WeaponsListView( pWeaponsGroup );
     pWeapons_->setObjectName( strClassName_ + "_Weapons" );
     pWeapons_->SetGoToOnDoubleClick( ::eWeapons );
     vInfosConnectors[ eWeapons ] = &pWeapons_->GetConnector();
     // Active Protections
     Q3HGroupBox* pActiveProtectionsGroup = new Q3HGroupBox( tr( "Active Protections" ) );
-    pActiveProtections_ = new ADN_Composantes_ActiveProtectionsListView( pActiveProtectionsGroup );
+    pActiveProtections_ = new ADN_Equipments_ActiveProtectionsListView( pActiveProtectionsGroup );
     pActiveProtections_->setObjectName( strClassName_ + "_ActiveProtections" );
     pActiveProtections_->SetGoToOnDoubleClick( ::eActiveProtections );
     vInfosConnectors[ eActiveProtections ] = &pActiveProtections_->GetConnector();
     // Dotations
     Q3HGroupBox* pDotationGroup = new Q3HGroupBox( tr( "Resources" ) );
-    pDotations_ = new ADN_Composantes_Dotations_GUI( strClassName_ + "_Resources", vInfosConnectors[ eDotations ], true, pDotationGroup );
+    pDotations_ = new ADN_Equipments_Dotations_GUI( strClassName_ + "_Resources", vInfosConnectors[ eDotations ], true, pDotationGroup );
     pDotations_->SetGoToOnDoubleClick( ::eResources ); // $$$$ ABR 2012-03-09: TODO, GOOD TAB
     // Consumptions
     Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
-    pConsumptions_ = new ADN_Composantes_ConsumptionsTable( strClassName_ + "_Consumptions", vInfosConnectors[ eConsumptions ], pConsumptionsGroup );
+    pConsumptions_ = new ADN_Equipments_ConsumptionsTable( strClassName_ + "_Consumptions", vInfosConnectors[ eConsumptions ], pConsumptionsGroup );
     // Objects
     Q3HGroupBox* pObjectsGroup = new Q3HGroupBox( tr( "Objects" ) );
-    ADN_ListView_Composantes_Objects* pListObjects = new ADN_ListView_Composantes_Objects( pObjectsGroup );
+    ADN_ListView_Equipments_Objects* pListObjects = new ADN_ListView_Equipments_Objects( pObjectsGroup );
     pListObjects->setObjectName( strClassName_ +"_Objects" );
     pListObjects->SetGoToOnDoubleClick( ::eObjects );
     vInfosConnectors[ eObjects ] = &pListObjects->GetConnector();
@@ -258,7 +257,7 @@ void ADN_Composantes_GUI::Build()
     pDataPageLayout->addMultiCellWidget( pObjectsGroup , 6, 6, 0, 2 );
 
     // List view
-    ADN_SearchListView< ADN_ListView_Composantes >* pSearchListView = new ADN_SearchListView< ADN_ListView_Composantes >( this, data_.GetComposantes(), vInfosConnectors );
+    ADN_SearchListView< ADN_ListView_Equipments >* pSearchListView = new ADN_SearchListView< ADN_ListView_Equipments >( this, data_.GetEquipments(), vInfosConnectors );
     pListView_ = pSearchListView->GetListView();
     pListView_->setObjectName( strClassName_ + "_List" );
     connect( pListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnProtectionTypeChanged() ) );
@@ -278,10 +277,10 @@ void ADN_Composantes_GUI::Build()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::BuildHealth
+// Name: ADN_Equipments_GUI::BuildHealth
 // Created: APE 2005-03-15
 // -----------------------------------------------------------------------------
-QWidget* ADN_Composantes_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
+QWidget* ADN_Equipments_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
 {
     ADN_GuiBuilder builder( strClassName_ + "_Health" );
     ADN_GroupBox* pHealthGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Medical system" ), pParent );
@@ -316,10 +315,10 @@ QWidget* ADN_Composantes_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::BuildAmbulance
+// Name: ADN_Equipments_GUI::BuildAmbulance
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex )
+QWidget* ADN_Equipments_GUI::BuildAmbulance( QWidget* pParent, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex )
 {
     ADN_GuiBuilder builder( strClassName_ + "_Ambulance" );
     ADN_GroupBox* pAmbulanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, szName, pParent );
@@ -348,10 +347,10 @@ QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szNa
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::BuildSupply
+// Name: ADN_Equipments_GUI::BuildSupply
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
+QWidget* ADN_Equipments_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
 {
     ADN_GuiBuilder builder( strClassName_ + "_Supply" );
     ADN_GroupBox* pSupplyGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Supply system" ), pParent );
@@ -373,10 +372,10 @@ QWidget* ADN_Composantes_GUI::BuildSupply( QWidget* pParent, T_ConnectorVector& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::BuildMaintenance
+// Name: ADN_Equipments_GUI::BuildMaintenance
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Composantes_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
+QWidget* ADN_Equipments_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
 {
     ADN_GuiBuilder builder( strClassName_ + "_Maintenance" );
     ADN_GroupBox* pMaintenanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Maintenance system" ), pParent );
@@ -400,10 +399,10 @@ QWidget* ADN_Composantes_GUI::BuildMaintenance( QWidget* pParent, T_ConnectorVec
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::BuildNTI
+// Name: ADN_Equipments_GUI::BuildNTI
 // Created: APE 2005-03-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Composantes_GUI::BuildNTI( QWidget* pParent, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex )
+QWidget* ADN_Equipments_GUI::BuildNTI( QWidget* pParent, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex )
 {
     ADN_GuiBuilder builder( strClassName_ + "_NTI" + szName );
     ADN_GroupBox* pNTIGroup = new ADN_GroupBox( 3, Qt::Horizontal, szName, pParent );
@@ -421,10 +420,10 @@ QWidget* ADN_Composantes_GUI::BuildNTI( QWidget* pParent, const char* szName, T_
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::BuildPowerIndicators
+// Name: ADN_Equipments_GUI::BuildPowerIndicators
 // Created: FPO 2011-03-30
 // -----------------------------------------------------------------------------
-QWidget* ADN_Composantes_GUI::BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
+QWidget* ADN_Equipments_GUI::BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
 {
     ADN_GuiBuilder builder( strClassName_ + "_PowerInd" );
     Q3GroupBox* pPowerIndicatorsGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pParent );
@@ -469,21 +468,21 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::CreateComposanteSpeedsTable
+// Name: ADN_Equipments_GUI::CreateComposanteSpeedsTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
+ADN_Table* ADN_Equipments_GUI::CreateComposanteSpeedsTable()
 {
     ADN_Table* pTable = new ADN_Speeds_Table( strClassName_ + "_ComposanteSpeeds" );
-    pTable->setNumRows( static_cast< int >( data_.vComposantes_.size() ) );
+    pTable->setNumRows( static_cast< int >( data_.vEquipments_.size() ) );
     pTable->AddBoldGridCol( 1 );
     pTable->AddBoldGridRow( 1 );
 
     // Fill the table.
     int nRow = 0;
-    for( ADN_Composantes_Data::IT_ComposanteInfos_Vector it = data_.vComposantes_.begin(); it != data_.vComposantes_.end(); ++it, ++nRow )
+    for( ADN_Equipments_Data::IT_EquipmentInfos_Vector it = data_.vEquipments_.begin(); it != data_.vEquipments_.end(); ++it, ++nRow )
     {
-        ADN_Composantes_Data::ComposanteInfos& composante = **it;
+        ADN_Equipments_Data::EquipmentInfos& composante = **it;
         pTable->AddItem( nRow, 0, &composante, &composante.strName_, ADN_StandardItem::eString );
         for( unsigned int n = 0; n < eNbrLocation; ++n )
             pTable->AddItem( nRow, n + 1, &composante, &composante.vSpeeds_[ n ]->rSpeed_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
@@ -493,19 +492,19 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::RegisterTable
+// Name: ADN_Equipments_GUI::RegisterTable
 // Created: APE 2005-03-31
 // -----------------------------------------------------------------------------
-void ADN_Composantes_GUI::RegisterTable( ADN_MainWindow& mainWindow )
+void ADN_Equipments_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "Equipment speeds" ), new ADN_Callback<ADN_Table*,ADN_Composantes_GUI>( this, & ADN_Composantes_GUI::CreateComposanteSpeedsTable ) );
+    mainWindow.AddTable( tr( "Equipment speeds" ), new ADN_Callback<ADN_Table*,ADN_Equipments_GUI>( this, & ADN_Equipments_GUI::CreateComposanteSpeedsTable ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::ExportHtml
+// Name: ADN_Equipments_GUI::ExportHtml
 // Created: APE 2005-04-19
 // -----------------------------------------------------------------------------
-void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
+void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
 {
     QString strLocalPath = strPath + tr( "Equipments/" );
     ADN_Tools::CreatePathToFile( strLocalPath.toStdString() );
@@ -514,9 +513,9 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
     indexBuilder.BeginList();
 
     int n = 0;
-    for( ADN_Composantes_Data::IT_ComposanteInfos_Vector it = data_.vComposantes_.begin(); it != data_.vComposantes_.end(); ++it, ++n )
+    for( ADN_Equipments_Data::IT_EquipmentInfos_Vector it = data_.vEquipments_.begin(); it != data_.vEquipments_.end(); ++it, ++n )
     {
-        ADN_Composantes_Data::ComposanteInfos& composante = **it;
+        ADN_Equipments_Data::EquipmentInfos& composante = **it;
 
         ADN_HtmlBuilder builder;
 
@@ -566,9 +565,9 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
         builder.CreateTableFrom( *pActiveProtections_ );
 
         builder.Section( tr( "Objects" ) );
-        for( ADN_Composantes_Data::IT_ObjectInfos_Vector it2 = composante.vObjects_.begin(); it2 != composante.vObjects_.end(); ++it2 )
+        for( ADN_Equipments_Data::IT_ObjectInfos_Vector it2 = composante.vObjects_.begin(); it2 != composante.vObjects_.end(); ++it2 )
         {
-            ADN_Composantes_Data::ObjectInfos& object = **it2;
+            ADN_Equipments_Data::ObjectInfos& object = **it2;
             builder.SubSection( object.ptrObject_.GetData()->strName_.GetData().c_str() );
             builder.BeginList();
             if( object.bInitialBuildTime_.GetData() )
@@ -610,12 +609,12 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_GUI::OnProtectionTypeChanged
+// Name: ADN_Equipments_GUI::OnProtectionTypeChanged
 // Created: APE 2005-06-02
 // -----------------------------------------------------------------------------
-void ADN_Composantes_GUI::OnProtectionTypeChanged()
+void ADN_Equipments_GUI::OnProtectionTypeChanged()
 {
-    ADN_Composantes_Data::ComposanteInfos* pInfos = static_cast< ADN_Composantes_Data::ComposanteInfos* >( pListView_->GetCurrentData() );
+    ADN_Equipments_Data::EquipmentInfos* pInfos = static_cast< ADN_Equipments_Data::EquipmentInfos* >( pListView_->GetCurrentData() );
     if( pInfos == 0 )
         pBreakdownsGroup_->setEnabled( false );
     else

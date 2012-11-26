@@ -37,7 +37,7 @@ tools::IdManager ADN_Units_Data::idManager_;
 //-----------------------------------------------------------------------------
 ADN_Units_Data::ComposanteInfos::ComposanteInfos()
 : ADN_Ref_ABC   ()
-, ptrComposante_( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes(),0)
+, ptrComposante_( ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments(),0)
 , bLoadable_    ( false )
 , bMajor_       ( false )
 , bConveyor_    ( false )
@@ -76,7 +76,7 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "crew", nNbrHumanInCrew_ )
           >> xml::optional >> xml::attribute( "convoyer", bConveyor_ )
           >> xml::optional >> xml::attribute( "loadable", bLoadable_ );
-    ADN_Composantes_Data::ComposanteInfos* pComposante = ADN_Workspace::GetWorkspace().GetComposantes().GetData().FindComposante( strName );
+    ADN_Equipments_Data::EquipmentInfos* pComposante = ADN_Workspace::GetWorkspace().GetEquipments().GetData().FindEquipment( strName );
     if( pComposante == 0 )
         throw ADN_DataException( tools::translate( "Units_Data",  "Invalid data" ).toStdString(), tools::translate( "Units_Data", "Unit types - Invalid equipment '%1'" ).arg( strName.c_str() ).toStdString() );
     ptrComposante_ = pComposante;
@@ -594,10 +594,10 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::list( "crew-rank", *this, &ADN_Units_Data::UnitInfos::ReadCrew )
           >> xml::end
           >> xml::optional >> xml::start( "logistics" )
-            >> xml::list( "category", contenancesTC1_, &ADN_Composantes_Data::ResourceInfos::ReadCategory )
+            >> xml::list( "category", contenancesTC1_, &ADN_Equipments_Data::ResourceInfos::ReadCategory )
           >> xml::end;
     bTC1_ = ! contenancesTC1_.categories_.empty();
-    for( ADN_Composantes_Data::T_CategoryInfos_Vector::iterator it = contenancesTC1_.categories_.begin(); it != contenancesTC1_.categories_.end(); ++it )
+    for( ADN_Equipments_Data::T_CategoryInfos_Vector::iterator it = contenancesTC1_.categories_.begin(); it != contenancesTC1_.categories_.end(); ++it )
         (*it)->rNormalizedConsumption_ = 0.;
 
     stocks_.ReadArchive( input, bStock_ );
@@ -906,7 +906,7 @@ void ADN_Units_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Units_Data::GetUnitsThatUse
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante )
+QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Equipments_Data::EquipmentInfos& composante )
 {
     QStringList result;
     for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )

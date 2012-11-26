@@ -1,16 +1,14 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-17 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_GUI.h $
-// $Author: Nld $
-// $Modtime: 20/07/05 13:50 $
-// $Revision: 18 $
-// $Workfile: ADN_Composantes_GUI.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 
-#ifndef __ADN_Composantes_GUI_h_
-#define __ADN_Composantes_GUI_h_
+#ifndef __ADN_Equipments_GUI_h_
+#define __ADN_Equipments_GUI_h_
 
 #include "ADN_GUI_ABC.h"
 #include "ADN_Enums.h"
@@ -18,23 +16,23 @@
 
 class QWidget;
 class ADN_Table;
-class ADN_Composantes_Data;
-class ADN_ListView_Composantes;
-class ADN_Composantes_Speeds_GUI;
-class ADN_Composantes_Sensors_GUI;
-class ADN_Composantes_RadarsListView;
-class ADN_Composantes_Dotations_GUI;
-class ADN_Composantes_ConsumptionsTable;
-class ADN_Composantes_WeaponsListView;
-class ADN_Composantes_ActiveProtectionsListView;
+class ADN_Equipments_Data;
+class ADN_ListView_Equipments;
+class ADN_Equipments_Speeds_GUI;
+class ADN_Equipments_Sensors_GUI;
+class ADN_Equipments_RadarsListView;
+class ADN_Equipments_Dotations_GUI;
+class ADN_Equipments_ConsumptionsTable;
+class ADN_Equipments_WeaponsListView;
+class ADN_Equipments_ActiveProtectionsListView;
 
 // =============================================================================
-/** @class  ADN_Composantes_GUI
-@brief  ADN_Composantes_GUI
+/** @class  ADN_Equipments_GUI
+@brief  ADN_Equipments_GUI
 */
 // Created: APE 2004-12-07
 // =============================================================================
-class ADN_Composantes_GUI : public ADN_GUI_ABC
+class ADN_Equipments_GUI : public ADN_GUI_ABC
 {
     Q_OBJECT
 
@@ -158,8 +156,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Composantes_GUI( ADN_Composantes_Data& data );
-    virtual ~ADN_Composantes_GUI();
+    ADN_Equipments_GUI( ADN_Equipments_Data& data );
+    virtual ~ADN_Equipments_GUI();
     //@}
 
     //! @name Operations
@@ -192,17 +190,17 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ADN_Composantes_Data& data_;
+    ADN_Equipments_Data& data_;
 
     Q3GroupBox* pBreakdownsGroup_;
-    ADN_Composantes_Speeds_GUI* pSpeeds_;
-    ADN_Composantes_Sensors_GUI* pSensors_;
-    ADN_Composantes_RadarsListView* pRadars_;
-    ADN_Composantes_Dotations_GUI* pDotations_;
-    ADN_Composantes_ConsumptionsTable* pConsumptions_;
-    ADN_Composantes_WeaponsListView* pWeapons_;
-    ADN_Composantes_ActiveProtectionsListView* pActiveProtections_;
+    ADN_Equipments_Speeds_GUI* pSpeeds_;
+    ADN_Equipments_Sensors_GUI* pSensors_;
+    ADN_Equipments_RadarsListView* pRadars_;
+    ADN_Equipments_Dotations_GUI* pDotations_;
+    ADN_Equipments_ConsumptionsTable* pConsumptions_;
+    ADN_Equipments_WeaponsListView* pWeapons_;
+    ADN_Equipments_ActiveProtectionsListView* pActiveProtections_;
     //@}
 };
 
-#endif // __ADN_Composantes_GUI_h_
+#endif // __ADN_Equipments_GUI_h_

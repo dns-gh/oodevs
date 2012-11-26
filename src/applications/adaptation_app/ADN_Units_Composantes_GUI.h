@@ -13,7 +13,7 @@
 #define __ADN_Units_Composantes_GUI_h_
 
 #include "ADN_Table.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 
 class ADN_Connector_ABC;
 
@@ -29,7 +29,7 @@ public:
     virtual ~ADN_Units_Composantes_GUI();
 
     void AddRow( int row, void* data );
-    void AddNewElement( ADN_Composantes_Data::ComposanteInfos* info );
+    void AddNewElement( ADN_Equipments_Data::EquipmentInfos* info );
     void RemoveCurrentElement();
     virtual void OnContextMenu( const QPoint& pt );
 

@@ -13,7 +13,7 @@
 #include "moc_ADN_Units_GUI.cpp"
 #include "ADN_App.h"
 #include "ADN_ComboBox_Vector.h"
-#include "ADN_Composantes_Dotations_GUI.h"
+#include "ADN_Equipments_Dotations_GUI.h"
 #include "ADN_GoToButton.h"
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
@@ -199,7 +199,7 @@ void ADN_Units_GUI::Build()
     // Composantes
     Q3VGroupBox* pComposantesGroup = new Q3VGroupBox( tr( "Equipments" ) );
     ADN_Units_Composantes_GUI * pComposantes = new ADN_Units_Composantes_GUI( strClassName_ + "_Equipments", vInfosConnectors[ eComposantes ], pComposantesGroup );
-    pComposantes->SetGoToOnDoubleClick( ::eComposantes );
+    pComposantes->SetGoToOnDoubleClick( ::eEquipments );
     if( QAbstractProxyModel* model = static_cast< QAbstractProxyModel* >( pComposantes->model() ) )
         connect( model->sourceModel(), SIGNAL( itemChanged( QStandardItem* ) ), this, SLOT( OnComponentChanged() ) );
 
@@ -207,7 +207,7 @@ void ADN_Units_GUI::Build()
     ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary resources" ) );
     pDotationsGroup->setObjectName( strClassName_ + "_ComplementaryResources" );
     vInfosConnectors[ eHasTC1 ] = &pDotationsGroup->GetConnector();
-    ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( strClassName_ + "_Dotations", vInfosConnectors[ eContenancesTC1 ], false, pDotationsGroup );
+    ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( strClassName_ + "_Dotations", vInfosConnectors[ eContenancesTC1 ], false, pDotationsGroup );
     pDotations->SetGoToOnDoubleClick( ::eResources );
 
     // Stock

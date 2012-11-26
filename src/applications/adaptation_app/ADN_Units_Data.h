@@ -12,7 +12,7 @@
 #ifndef __ADN_Units_Data_h_
 #define __ADN_Units_Data_h_
 
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
 #include "ADN_Enums.h"
@@ -40,7 +40,7 @@ public:
         void WriteArchive( xml::xostream& output, bool bIsAutonomous ) const;
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Composantes_Data::ComposanteInfos> ptrComposante_;
+        ADN_TypePtr_InVector_ABC<ADN_Equipments_Data::EquipmentInfos> ptrComposante_;
         ADN_Type_Bool                                                   bMajor_;
         ADN_Type_Bool                                                   bLoadable_;
         ADN_Type_Bool                                                   bConveyor_;
@@ -64,7 +64,7 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<ComposanteInfos>, ComposanteInfos_Vector )
 
     //*****************************************************************************
-    typedef ADN_Composantes_Data::ResourceInfos ResourceInfos;
+    typedef ADN_Equipments_Data::ResourceInfos ResourceInfos;
 
     //*****************************************************************************
 
@@ -231,7 +231,7 @@ public:
     T_UnitInfos_Vector& GetUnitsInfos();
     UnitInfos*          FindUnit( const std::string& strName );
 
-    QStringList GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante );
+    QStringList GetUnitsThatUse( ADN_Equipments_Data::EquipmentInfos& composante );
     QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
     QStringList GetUnitsThatUse( helpers::LogisticSupplyClass& supply );
 

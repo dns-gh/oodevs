@@ -8,19 +8,19 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_Speeds_GUI.h"
-#include "moc_ADN_Composantes_Speeds_GUI.cpp"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Speeds_GUI.h"
+#include "moc_ADN_Equipments_Speeds_GUI.cpp"
+#include "ADN_Equipments_Data.h"
 #include "ENT/ENT_Tr.h"
 
-typedef ADN_Composantes_Data::SpeedInfos SpeedInfos;
-typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
+typedef ADN_Equipments_Data::SpeedInfos SpeedInfos;
+typedef ADN_Equipments_Data::EquipmentInfos ComposanteInfos;
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_Speeds_GUI constructor
+// Name: ADN_Equipments_Speeds_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Equipments_Speeds_GUI::ADN_Equipments_Speeds_GUI( QLineEdit* maxSpeed, const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
     : ADN_Table( objectName, connector, pParent )
     , maxSpeed_( maxSpeed )
     , popupIsDisplayed_( false )
@@ -40,19 +40,19 @@ ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, con
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_Speeds_GUI destructor
+// Name: ADN_Equipments_Speeds_GUI destructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Speeds_GUI::~ADN_Composantes_Speeds_GUI()
+ADN_Equipments_Speeds_GUI::~ADN_Equipments_Speeds_GUI()
 {
     //NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Speeds_GUI::UpdateSpeedsValidator
+// Name: ADN_Equipments_Speeds_GUI::UpdateSpeedsValidator
 // Created: ABR 2012-04-17
 // -----------------------------------------------------------------------------
-bool ADN_Composantes_Speeds_GUI::UpdateSpeedsValidator( double maxSpeed )
+bool ADN_Equipments_Speeds_GUI::UpdateSpeedsValidator( double maxSpeed )
 {
     bool needReBound = false;
     for( int row = 0; row < numRows(); ++row )
@@ -67,10 +67,10 @@ bool ADN_Composantes_Speeds_GUI::UpdateSpeedsValidator( double maxSpeed )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Speeds_GUI::OnItemSelected
+// Name: ADN_Equipments_Speeds_GUI::OnItemSelected
 // Created: ABR 2012-04-17
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Speeds_GUI::OnItemSelected( void* pData )
+void ADN_Equipments_Speeds_GUI::OnItemSelected( void* pData )
 {
     if( pData == 0 )
         return;
@@ -80,10 +80,10 @@ void ADN_Composantes_Speeds_GUI::OnItemSelected( void* pData )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Speeds_GUI::OnMaxSpeedFinishedEditing
+// Name: ADN_Equipments_Speeds_GUI::OnMaxSpeedFinishedEditing
 // Created: ABR 2012-04-16
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Speeds_GUI::OnMaxSpeedFinishedEditing()
+void ADN_Equipments_Speeds_GUI::OnMaxSpeedFinishedEditing()
 {
     if( popupIsDisplayed_ )
         return;
@@ -119,10 +119,10 @@ void ADN_Composantes_Speeds_GUI::OnMaxSpeedFinishedEditing()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Speeds_GUI::AddRow
+// Name: ADN_Equipments_Speeds_GUI::AddRow
 // Created: NPT 2012-11-06
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Speeds_GUI::AddRow( int row, void* data )
+void ADN_Equipments_Speeds_GUI::AddRow( int row, void* data )
 {
     SpeedInfos* infos = static_cast< SpeedInfos* >( data );
     if( !infos )

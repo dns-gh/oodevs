@@ -535,7 +535,385 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_ActiveProtectionsListView</name>
+    <name>ADN_ConfigDialog</name>
+    <message>
+        <source>Configuration</source>
+        <translation>Configuration</translation>
+    </message>
+    <message>
+        <source>SIM path</source>
+        <translation>SIM path</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation>Browse</translation>
+    </message>
+    <message>
+        <source>SIM parameters</source>
+        <translation>SIM parameters</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Cancel</translation>
+    </message>
+    <message>
+        <source>Sword executable (*.exe)</source>
+        <translation>Sword executable (*.exe)</translation>
+    </message>
+    <message>
+        <source>Select SIM to use for data test</source>
+        <translation>Select SIM to use for data test</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ConsistencyDialog</name>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Initialization</source>
+        <translation>Initialization</translation>
+    </message>
+    <message>
+        <source>Unicity</source>
+        <translation>Unicity</translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation>Others</translation>
+    </message>
+    <message>
+        <source>Duplicate NNO code for %1.</source>
+        <translation>Duplicate NNO code for %1.</translation>
+    </message>
+    <message>
+        <source>Duplicate EMAT8 code for %1.</source>
+        <translation>Duplicate EMAT8 code for %1.</translation>
+    </message>
+    <message>
+        <source>%1 has no NNO code defined.</source>
+        <translation>%1 has no NNO code defined.</translation>
+    </message>
+    <message>
+        <source>%1 has no EMAT8 code defined.</source>
+        <translation>%1 has no EMAT8 code defined.</translation>
+    </message>
+    <message>
+        <source> and &apos;</source>
+        <translation> and &apos;</translation>
+    </message>
+    <message>
+        <source>The equipement &apos;</source>
+        <translation>The equipement &apos;</translation>
+    </message>
+    <message>
+        <source>The resource &apos;</source>
+        <translation>The resource &apos;</translation>
+    </message>
+    <message>
+        <source>The mission %1 has no type defined for a localisation composite parameter.</source>
+        <translation>The mission %1 has no type defined for a localisation composite parameter.</translation>
+    </message>
+    <message>
+        <source>, because of this, the simulation can&apos;t start with this database.</source>
+        <translation>, because of this, the simulation can&apos;t start with this database.</translation>
+    </message>
+    <message>
+        <source>The breakdown %1 has no replacement part</source>
+        <translation>The breakdown %1 has no replacement part</translation>
+    </message>
+    <message>
+        <source>Equipment %1 requires at least one breakdown</source>
+        <translation>Equipment %1 requires at least one breakdown</translation>
+    </message>
+    <message>
+        <source>Convoy unit type not defined in Log/Supply</source>
+        <translation>Convoy unit type not defined in Log/Supply</translation>
+    </message>
+    <message>
+        <source>Convoy mission not defined in Log/Supply</source>
+        <translation>Convoy mission not defined in Log/Supply</translation>
+    </message>
+    <message>
+        <source>No geometry defined for object %1</source>
+        <translation>No geometry defined for object %1</translation>
+    </message>
+    <message>
+        <source>No decisional model defined for unit %1</source>
+        <translation>No decisional model defined for unit %1</translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one sub unit</source>
+        <translation>Automat %1 requires at least one sub unit</translation>
+    </message>
+    <message>
+        <source>Automat %1 requires at least one PC</source>
+        <translation>Automat %1 requires at least one PC</translation>
+    </message>
+    <message>
+        <source>At least one armor must be defined</source>
+        <translation>At least one armor must be defined</translation>
+    </message>
+    <message>
+        <source>No disaster model for object %1</source>
+        <translation>No disaster model for object %1</translation>
+    </message>
+    <message>
+        <source>Duplicate type for missions %1</source>
+        <translation>Duplicate type for missions %1</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Consumptions_Table</name>
+    <message>
+        <source>Resource network</source>
+        <translation>Resource network</translation>
+    </message>
+    <message>
+        <source>Consumption</source>
+        <translation>Consumption</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation>Add resource</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation>Remove resource</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffectRoe_GUI</name>
+    <message>
+        <source>ROE</source>
+        <translation>ROE</translation>
+    </message>
+    <message>
+        <source>Attrition Surface (m²)</source>
+        <translation>Attrition Surface (m²)</translation>
+    </message>
+    <message>
+        <source>PH</source>
+        <translation>PH</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation>Attitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_FireEffect_Protection_ListView</name>
+    <message>
+        <source>Protections</source>
+        <translation>Protection</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_GUI</name>
+    <message>
+        <source>Global parameters</source>
+        <translation>Global parameters</translation>
+    </message>
+    <message>
+        <source>Crowd effects on units firing capability</source>
+        <translation>Crowd effect on units firing capability</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation>Density</translation>
+    </message>
+    <message>
+        <source>people/m²</source>
+        <translation>people/m²</translation>
+    </message>
+    <message>
+        <source>Modifier</source>
+        <translation>Modifier</translation>
+    </message>
+    <message>
+        <source>Time between two NBC applications</source>
+        <translation>Time between two NBC applications</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Details</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>Behavior model</source>
+        <translation>Behavior model</translation>
+    </message>
+    <message>
+        <source>Density while moving</source>
+        <translation>Density while moving</translation>
+    </message>
+    <message>
+        <source>Average movement speed</source>
+        <translation>Average movement speed</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <source>Armed individuals</source>
+        <translation>Armed individuals</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation>Males</translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation>Females</translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation>Children</translation>
+    </message>
+    <message>
+        <source>Decontamination delay</source>
+        <translation>Decontamination delay</translation>
+    </message>
+    <message>
+        <source>Crowd effects on units movement capability</source>
+        <translation>Crowd effect on units movement capability</translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation>Effect</translation>
+    </message>
+    <message>
+        <source>Max speed</source>
+        <translation>Max speed</translation>
+    </message>
+    <message>
+        <source>Attritions</source>
+        <translation>Attritions</translation>
+    </message>
+    <message>
+        <source>Crowd -&gt; Units</source>
+        <translation>Crowd -&gt; Units</translation>
+    </message>
+    <message>
+        <source>Intensity</source>
+        <translation>Intensity</translation>
+    </message>
+    <message>
+        <source>Unarmed</source>
+        <translation>Unarmed</translation>
+    </message>
+    <message>
+        <source>Destruction</source>
+        <translation>Destruction</translation>
+    </message>
+    <message>
+        <source>Fixable with evacuation</source>
+        <translation>Maintenance support needed</translation>
+    </message>
+    <message>
+        <source>Fixable without evacuation</source>
+        <translation>On site repairable</translation>
+    </message>
+    <message>
+        <source>Armed</source>
+        <translation>Armed</translation>
+    </message>
+    <message>
+        <source>Units -&gt; Crowd</source>
+        <translation>Units -&gt; Crowd</translation>
+    </message>
+    <message>
+        <source>Urban area destruction</source>
+        <translation>Urban area destruction</translation>
+    </message>
+    <message>
+        <source>Time to destruct a urban block</source>
+        <translation>Time to destruct a urban block</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Time</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation>Attitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_SpeedEffect_Volume_ListView</name>
+    <message>
+        <source>Volumes</source>
+        <translation>Volumes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Crowds_UrbanEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation>Attitudes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_DataException</name>
+    <message>
+        <source>Data error</source>
+        <translation>Data error</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_DialogLog</name>
+    <message>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Disasters_GUI</name>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>Concentration thresholds</source>
+        <translation>Concentration thresholds</translation>
+    </message>
+    <message>
+        <source>Attrition thresholds</source>
+        <translation>Attrition thresholds</translation>
+    </message>
+    <message>
+        <source>NBC protection</source>
+        <translation>NBC protection</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_EquipementSelector</name>
+    <message>
+        <source>Click here to select</source>
+        <translation>Click here to select</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_ActiveProtectionsListView</name>
     <message>
         <source>ActiveProtections</source>
         <translation>Active Protection</translation>
@@ -550,7 +928,7 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_BreakdownsTable</name>
+    <name>ADN_Equipments_BreakdownsTable</name>
     <message>
         <source>Odds (%)</source>
         <translation>Odds (%)</translation>
@@ -565,7 +943,7 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_ConsumptionsTable</name>
+    <name>ADN_Equipments_ConsumptionsTable</name>
     <message>
         <source>Activity</source>
         <translation>Activity</translation>
@@ -588,7 +966,7 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Dotations_GUI</name>
+    <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <source>Category</source>
         <translation>Category</translation>
@@ -615,7 +993,7 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_GUI</name>
+    <name>ADN_Equipments_GUI</name>
     <message>
         <source>Name</source>
         <translation>Name</translation>
@@ -1054,7 +1432,7 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_RadarsListView</name>
+    <name>ADN_Equipments_RadarsListView</name>
     <message>
         <source>Special sensors</source>
         <translation>Special sensors</translation>
@@ -1069,7 +1447,7 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Sensors_GUI</name>
+    <name>ADN_Equipments_Sensors_GUI</name>
     <message>
         <source>Sensor</source>
         <translation>Sensor</translation>
@@ -1088,7 +1466,7 @@ Parked engine running</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Speeds_GUI</name>
+    <name>ADN_Equipments_Speeds_GUI</name>
     <message>
         <source>Ground type</source>
         <translation>Ground type</translation>
@@ -1113,7 +1491,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_WeaponsListView</name>
+    <name>ADN_Equipments_WeaponsListView</name>
     <message>
         <source>Weapon systems</source>
         <translation>Weapon systems</translation>
@@ -1125,384 +1503,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     <message>
         <source>Remove weapon</source>
         <translation>Remove weapon</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ConfigDialog</name>
-    <message>
-        <source>Configuration</source>
-        <translation>Configuration</translation>
-    </message>
-    <message>
-        <source>SIM path</source>
-        <translation>SIM path</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation>Browse</translation>
-    </message>
-    <message>
-        <source>SIM parameters</source>
-        <translation>SIM parameters</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Cancel</translation>
-    </message>
-    <message>
-        <source>Sword executable (*.exe)</source>
-        <translation>Sword executable (*.exe)</translation>
-    </message>
-    <message>
-        <source>Select SIM to use for data test</source>
-        <translation>Select SIM to use for data test</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ConsistencyDialog</name>
-    <message>
-        <source>Description</source>
-        <translation>Description</translation>
-    </message>
-    <message>
-        <source>Initialization</source>
-        <translation>Initialization</translation>
-    </message>
-    <message>
-        <source>Unicity</source>
-        <translation>Unicity</translation>
-    </message>
-    <message>
-        <source>Others</source>
-        <translation>Others</translation>
-    </message>
-    <message>
-        <source>Duplicate NNO code for %1.</source>
-        <translation>Duplicate NNO code for %1.</translation>
-    </message>
-    <message>
-        <source>Duplicate EMAT8 code for %1.</source>
-        <translation>Duplicate EMAT8 code for %1.</translation>
-    </message>
-    <message>
-        <source>%1 has no NNO code defined.</source>
-        <translation>%1 has no NNO code defined.</translation>
-    </message>
-    <message>
-        <source>%1 has no EMAT8 code defined.</source>
-        <translation>%1 has no EMAT8 code defined.</translation>
-    </message>
-    <message>
-        <source> and &apos;</source>
-        <translation> and &apos;</translation>
-    </message>
-    <message>
-        <source>The equipement &apos;</source>
-        <translation>The equipement &apos;</translation>
-    </message>
-    <message>
-        <source>The resource &apos;</source>
-        <translation>The resource &apos;</translation>
-    </message>
-    <message>
-        <source>The mission %1 has no type defined for a localisation composite parameter.</source>
-        <translation>The mission %1 has no type defined for a localisation composite parameter.</translation>
-    </message>
-    <message>
-        <source>, because of this, the simulation can&apos;t start with this database.</source>
-        <translation>, because of this, the simulation can&apos;t start with this database.</translation>
-    </message>
-    <message>
-        <source>The breakdown %1 has no replacement part</source>
-        <translation>The breakdown %1 has no replacement part</translation>
-    </message>
-    <message>
-        <source>Equipment %1 requires at least one breakdown</source>
-        <translation>Equipment %1 requires at least one breakdown</translation>
-    </message>
-    <message>
-        <source>Convoy unit type not defined in Log/Supply</source>
-        <translation>Convoy unit type not defined in Log/Supply</translation>
-    </message>
-    <message>
-        <source>Convoy mission not defined in Log/Supply</source>
-        <translation>Convoy mission not defined in Log/Supply</translation>
-    </message>
-    <message>
-        <source>No geometry defined for object %1</source>
-        <translation>No geometry defined for object %1</translation>
-    </message>
-    <message>
-        <source>No decisional model defined for unit %1</source>
-        <translation>No decisional model defined for unit %1</translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one sub unit</source>
-        <translation>Automat %1 requires at least one sub unit</translation>
-    </message>
-    <message>
-        <source>Automat %1 requires at least one PC</source>
-        <translation>Automat %1 requires at least one PC</translation>
-    </message>
-    <message>
-        <source>At least one armor must be defined</source>
-        <translation>At least one armor must be defined</translation>
-    </message>
-    <message>
-        <source>No disaster model for object %1</source>
-        <translation>No disaster model for object %1</translation>
-    </message>
-    <message>
-        <source>Duplicate type for missions %1</source>
-        <translation>Duplicate type for missions %1</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Consumptions_Table</name>
-    <message>
-        <source>Resource network</source>
-        <translation>Resource network</translation>
-    </message>
-    <message>
-        <source>Consumption</source>
-        <translation>Consumption</translation>
-    </message>
-    <message>
-        <source>Add resource</source>
-        <translation>Add resource</translation>
-    </message>
-    <message>
-        <source>Remove resource</source>
-        <translation>Remove resource</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_FireEffectRoe_GUI</name>
-    <message>
-        <source>ROE</source>
-        <translation>ROE</translation>
-    </message>
-    <message>
-        <source>Attrition Surface (m²)</source>
-        <translation>Attrition Surface (m²)</translation>
-    </message>
-    <message>
-        <source>PH</source>
-        <translation>PH</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_FireEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation>Attitudes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_FireEffect_Protection_ListView</name>
-    <message>
-        <source>Protections</source>
-        <translation>Protection</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_GUI</name>
-    <message>
-        <source>Global parameters</source>
-        <translation>Global parameters</translation>
-    </message>
-    <message>
-        <source>Crowd effects on units firing capability</source>
-        <translation>Crowd effect on units firing capability</translation>
-    </message>
-    <message>
-        <source>Density</source>
-        <translation>Density</translation>
-    </message>
-    <message>
-        <source>people/m²</source>
-        <translation>people/m²</translation>
-    </message>
-    <message>
-        <source>Modifier</source>
-        <translation>Modifier</translation>
-    </message>
-    <message>
-        <source>Time between two NBC applications</source>
-        <translation>Time between two NBC applications</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation>Details</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>Behavior model</source>
-        <translation>Behavior model</translation>
-    </message>
-    <message>
-        <source>Density while moving</source>
-        <translation>Density while moving</translation>
-    </message>
-    <message>
-        <source>Average movement speed</source>
-        <translation>Average movement speed</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
-        <source>Armed individuals</source>
-        <translation>Armed individuals</translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
-        <source>Males</source>
-        <translation>Males</translation>
-    </message>
-    <message>
-        <source>Females</source>
-        <translation>Females</translation>
-    </message>
-    <message>
-        <source>Children</source>
-        <translation>Children</translation>
-    </message>
-    <message>
-        <source>Decontamination delay</source>
-        <translation>Decontamination delay</translation>
-    </message>
-    <message>
-        <source>Crowd effects on units movement capability</source>
-        <translation>Crowd effect on units movement capability</translation>
-    </message>
-    <message>
-        <source>Effect</source>
-        <translation>Effect</translation>
-    </message>
-    <message>
-        <source>Max speed</source>
-        <translation>Max speed</translation>
-    </message>
-    <message>
-        <source>Attritions</source>
-        <translation>Attritions</translation>
-    </message>
-    <message>
-        <source>Crowd -&gt; Units</source>
-        <translation>Crowd -&gt; Units</translation>
-    </message>
-    <message>
-        <source>Intensity</source>
-        <translation>Intensity</translation>
-    </message>
-    <message>
-        <source>Unarmed</source>
-        <translation>Unarmed</translation>
-    </message>
-    <message>
-        <source>Destruction</source>
-        <translation>Destruction</translation>
-    </message>
-    <message>
-        <source>Fixable with evacuation</source>
-        <translation>Maintenance support needed</translation>
-    </message>
-    <message>
-        <source>Fixable without evacuation</source>
-        <translation>On site repairable</translation>
-    </message>
-    <message>
-        <source>Armed</source>
-        <translation>Armed</translation>
-    </message>
-    <message>
-        <source>Units -&gt; Crowd</source>
-        <translation>Units -&gt; Crowd</translation>
-    </message>
-    <message>
-        <source>Urban area destruction</source>
-        <translation>Urban area destruction</translation>
-    </message>
-    <message>
-        <source>Time to destruct a urban block</source>
-        <translation>Time to destruct a urban block</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation>Time</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_SpeedEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation>Attitudes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_SpeedEffect_Volume_ListView</name>
-    <message>
-        <source>Volumes</source>
-        <translation>Volumes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Crowds_UrbanEffect_Attitude_ListView</name>
-    <message>
-        <source>Attitudes</source>
-        <translation>Attitudes</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_DataException</name>
-    <message>
-        <source>Data error</source>
-        <translation>Data error</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_DialogLog</name>
-    <message>
-        <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Disasters_GUI</name>
-    <message>
-        <source>Name</source>
-        <translation>Name</translation>
-    </message>
-    <message>
-        <source>Concentration thresholds</source>
-        <translation>Concentration thresholds</translation>
-    </message>
-    <message>
-        <source>Attrition thresholds</source>
-        <translation>Attrition thresholds</translation>
-    </message>
-    <message>
-        <source>NBC protection</source>
-        <translation>NBC protection</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_EquipementSelector</name>
-    <message>
-        <source>Click here to select</source>
-        <translation>Click here to select</translation>
     </message>
 </context>
 <context>
@@ -2050,7 +2050,14 @@ posture</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_Composantes_Objects</name>
+    <name>ADN_ListView_Disasters</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_Equipments_Objects</name>
     <message>
         <source>Objects</source>
         <translation>Objects</translation>
@@ -2062,13 +2069,6 @@ posture</translation>
     <message>
         <source>Remove object</source>
         <translation>Remove object</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ListView_Disasters</name>
-    <message>
-        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Unused&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -6022,7 +6022,7 @@ Click &quot;Ok&quot; to delete it.</translation>
     </message>
 </context>
 <context>
-    <name>Composante_Data</name>
+    <name>Equipments_Data</name>
     <message>
         <source>Invalid data</source>
         <translation>Invalid data</translation>
@@ -6071,35 +6071,9 @@ Click &quot;Ok&quot; to delete it.</translation>
         <source>Equipment - Invalid armor and/or volume</source>
         <translation>Equipment - Invalid armor and/or volume</translation>
     </message>
-</context>
-<context>
-    <name>Composantes_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
         <translation>Equipment - Invalid terrain type &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>Equipment_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Invalid data</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Equipment - Invalid resource nature &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation>Equipment - Invalid resource logistic supply class &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Object type - Invalid object &apos;%1&apos;</source>
-        <translation>Object type - Invalid object &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6267,6 +6241,25 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>Sensors - Invalid activity &apos;%1&apos;</source>
         <translation>Sensors - Invalid activity &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Resources_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Invalid data</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished">Equipment - Invalid resource nature &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
+        <translation type="unfinished">Equipment - Invalid resource logistic supply class &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Object type - Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished">Object type - Invalid object &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

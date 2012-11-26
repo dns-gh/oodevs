@@ -39,10 +39,10 @@ private:
     void BuildHeaders();
     void BuildBody   ();
     void InsertCategory( QStandardItem&                         parent,
-                         ADN_Composantes_Data::CategoryInfos&   category,
-                         ADN_Composantes_Data::ConsumptionItem& conso );
+                         ADN_Equipments_Data::CategoryInfos&   category,
+                         ADN_Equipments_Data::ConsumptionItem& conso );
     void InsertCategory( QStandardItem&                         parent,
-                         ADN_Composantes_Data::CategoryInfos&   category );
+                         ADN_Equipments_Data::CategoryInfos&   category );
     virtual bool LessThan( const QModelIndex& left, const QModelIndex& right, bool& valid ) const;
     //@}
 

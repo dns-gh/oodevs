@@ -6,33 +6,24 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-04-27 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Composantes_BreakdownsTable.cpp $
-// $Author: Nld $
-// $Modtime: 11/05/05 10:36 $
-// $Revision: 2 $
-// $Workfile: ADN_Composantes_BreakdownsTable.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_BreakdownsTable.h"
-#include "moc_ADN_Composantes_BreakdownsTable.cpp"
+#include "ADN_Equipments_BreakdownsTable.h"
+#include "moc_ADN_Equipments_BreakdownsTable.cpp"
 
 #include <Qt3Support/q3popupmenu.h>
 
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Workspace.h"
 
-typedef ADN_Composantes_Data::BreakdownInfos BreakdownInfos;
+typedef ADN_Equipments_Data::BreakdownInfos BreakdownInfos;
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_BreakdownsTable constructor
+// Name: ADN_Equipments_BreakdownsTable constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const QString& objectName, const QString& name, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0 */ )
+ADN_Equipments_BreakdownsTable::ADN_Equipments_BreakdownsTable( const QString& objectName, const QString& name, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0 */ )
 :   ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );
@@ -51,19 +42,19 @@ ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const QString&
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_BreakdownsTable destructor
+// Name: ADN_Equipments_BreakdownsTable destructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_BreakdownsTable::~ADN_Composantes_BreakdownsTable()
+ADN_Equipments_BreakdownsTable::~ADN_Equipments_BreakdownsTable()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_BreakdownsTable::OnContextMenu
+// Name: ADN_Equipments_BreakdownsTable::OnContextMenu
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_BreakdownsTable::OnContextMenu( const QPoint& pt )
+void ADN_Equipments_BreakdownsTable::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu menu( this );
     Q3PopupMenu addMenu( &menu );
@@ -102,10 +93,10 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( const QPoint& pt )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_BreakdownsTable::dataChanged
+// Name: ADN_Equipments_BreakdownsTable::dataChanged
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_BreakdownsTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
+void ADN_Equipments_BreakdownsTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
     ADN_Table::dataChanged( topLeft, bottomRight );
 
@@ -143,10 +134,10 @@ void ADN_Composantes_BreakdownsTable::dataChanged( const QModelIndex& topLeft, c
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_BreakdownsTable::AddRow
+// Name: ADN_Equipments_BreakdownsTable::AddRow
 // Created: MMC 2012-11-06
 // -----------------------------------------------------------------------------
-void ADN_Composantes_BreakdownsTable::AddRow( int row, void* data )
+void ADN_Equipments_BreakdownsTable::AddRow( int row, void* data )
 {
     BreakdownInfos* pBreakdown = static_cast<BreakdownInfos*>( data );
     if( !pBreakdown )

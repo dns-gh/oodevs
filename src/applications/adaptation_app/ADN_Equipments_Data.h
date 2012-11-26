@@ -1,16 +1,14 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-17 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Composantes_Data.h $
-// $Author: Nld $
-// $Modtime: 20/07/05 13:46 $
-// $Revision: 20 $
-// $Workfile: ADN_Composantes_Data.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 
-#ifndef __ADN_Composantes_Data_h_
-#define __ADN_Composantes_Data_h_
+#ifndef __ADN_Equipments_Data_h_
+#define __ADN_Equipments_Data_h_
 
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
@@ -28,12 +26,12 @@
 #include "ADN_Tr.h"
 
 // =============================================================================
-/** @class  ADN_Composantes_Data
-    @brief  ADN_Composantes_Data
+/** @class  ADN_Equipments_Data
+    @brief  ADN_Equipments_Data
 */
 // Created: APE 2004-12-07
 // =============================================================================
-class ADN_Composantes_Data : public ADN_Data_ABC
+class ADN_Equipments_Data : public ADN_Data_ABC
 {
 
 public:
@@ -488,16 +486,16 @@ public:
     };
 
     //*****************************************************************************
-    class ComposanteInfos : public ADN_RefWithName
+    class EquipmentInfos : public ADN_RefWithName
     {
 
     public:
-        ComposanteInfos();
-        ComposanteInfos( unsigned int id );
-        ~ComposanteInfos();
+        EquipmentInfos();
+        EquipmentInfos( unsigned int id );
+        ~EquipmentInfos();
 
         void Initialize();
-        ComposanteInfos* CreateCopy();
+        EquipmentInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void ReadSpeed( xml::xistream& input );
         void ReadSensor( xml::xistream& input );
@@ -555,13 +553,13 @@ public:
         ADN_Type_Int nPowerEngineering_;
 
     public:
-        class CmpId : public std::unary_function< ComposanteInfos* , bool >
+        class CmpId : public std::unary_function< EquipmentInfos* , bool >
         {
         public:
             CmpId( int val) : val_(val) {}
             ~CmpId(){}
 
-            bool operator()( ComposanteInfos* tgtnfos ) const
+            bool operator()( EquipmentInfos* tgtnfos ) const
             { return tgtnfos->nId_.GetData() ==val_; }
 
         private:
@@ -569,30 +567,30 @@ public:
         };
     };
 
-    typedef ADN_Type_Vector_ABC<ComposanteInfos>       T_ComposanteInfos_Vector;
-    typedef T_ComposanteInfos_Vector::iterator        IT_ComposanteInfos_Vector;
-    typedef T_ComposanteInfos_Vector::const_iterator CIT_ComposanteInfos_Vector;
+    typedef ADN_Type_Vector_ABC<EquipmentInfos>        T_EquipmentInfos_Vector;
+    typedef T_EquipmentInfos_Vector::iterator         IT_EquipmentInfos_Vector;
+    typedef T_EquipmentInfos_Vector::const_iterator  CIT_EquipmentInfos_Vector;
 
     //*****************************************************************************
 public:
-    explicit ADN_Composantes_Data();
-    virtual ~ADN_Composantes_Data();
+    explicit ADN_Equipments_Data();
+    virtual ~ADN_Equipments_Data();
 
     void FilesNeeded(T_StringList& l) const;
     void Reset();
     virtual void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
-    T_ComposanteInfos_Vector& GetComposantes();
-    ComposanteInfos* FindComposante( const std::string& strName );
+    T_EquipmentInfos_Vector& GetEquipments();
+    EquipmentInfos* FindEquipment( const std::string& strName );
 
-    QStringList GetComposantesThatUse( ADN_Radars_Data::RadarInfos& sensor );
-    QStringList GetComposantesThatUse( ADN_Sensors_Data::SensorInfos& sensor );
-    QStringList GetComposantesThatUse( ADN_Weapons_Data::WeaponInfos& weapon );
-    QStringList GetComposantesThatUse( ADN_Breakdowns_Data::BreakdownInfo& breakdown );
-    QStringList GetComposantesThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList GetComposantesThatUse( helpers::ArmorInfos& armor );
-    QStringList GetComposantesThatUse( ADN_Categories_Data::SizeInfos& size );
-    QStringList GetComposantesThatUse( ADN_ActiveProtections_Data::ActiveProtectionsInfos& activeProtection );
-    QStringList GetComposantesThatUse( ADN_Resources_Data::CategoryInfo& category );
+    QStringList GetEquipmentsThatUse( ADN_Radars_Data::RadarInfos& sensor );
+    QStringList GetEquipmentsThatUse( ADN_Sensors_Data::SensorInfos& sensor );
+    QStringList GetEquipmentsThatUse( ADN_Weapons_Data::WeaponInfos& weapon );
+    QStringList GetEquipmentsThatUse( ADN_Breakdowns_Data::BreakdownInfo& breakdown );
+    QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetEquipmentsThatUse( helpers::ArmorInfos& armor );
+    QStringList GetEquipmentsThatUse( ADN_Categories_Data::SizeInfos& size );
+    QStringList GetEquipmentsThatUse( ADN_ActiveProtections_Data::ActiveProtectionsInfos& activeProtection );
+    QStringList GetEquipmentsThatUse( ADN_Resources_Data::CategoryInfo& category );
 
 private:
     void ReadElement( xml::xistream& input );
@@ -600,33 +598,33 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    T_ComposanteInfos_Vector vComposantes_;
+    T_EquipmentInfos_Vector vEquipments_;
 
 private:
     static tools::IdManager idManager_;
 };
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::T_ComposanteInfos_Vector
+// Name: ADN_Equipments_Data::T_ComposanteInfos_Vector
 // Created: JDY 03-07-17
 //-----------------------------------------------------------------------------
 inline
-ADN_Composantes_Data::T_ComposanteInfos_Vector&  ADN_Composantes_Data::GetComposantes()
+ADN_Equipments_Data::T_EquipmentInfos_Vector&  ADN_Equipments_Data::GetEquipments()
 {
-    return vComposantes_;
+    return vEquipments_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::FindComposante
+// Name: ADN_Equipments_Data::FindComposante
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
 inline
-ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::FindComposante( const std::string& strName )
+ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::FindEquipment( const std::string& strName )
 {
-    IT_ComposanteInfos_Vector it = std::find_if( vComposantes_.begin(), vComposantes_.end(), ADN_Tools::NameCmp<ComposanteInfos>( strName ) );
-    if( it == vComposantes_.end() )
+    IT_EquipmentInfos_Vector it = std::find_if( vEquipments_.begin(), vEquipments_.end(), ADN_Tools::NameCmp<EquipmentInfos>( strName ) );
+    if( it == vEquipments_.end() )
         return 0;
     return *it;
 }
 
-#endif // __ADN_Composantes_Data_h_
+#endif // __ADN_Equipments_Data_h_

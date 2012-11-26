@@ -6,35 +6,26 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-01-25 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Composantes_ConsumptionsTable.cpp $
-// $Author: Nld $
-// $Modtime: 28/04/05 15:03 $
-// $Revision: 8 $
-// $Workfile: ADN_Composantes_ConsumptionsTable.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_ConsumptionsTable.h"
-#include "moc_ADN_Composantes_ConsumptionsTable.cpp"
+#include "ADN_Equipments_ConsumptionsTable.h"
+#include "moc_ADN_Equipments_ConsumptionsTable.cpp"
 
 #include <Qt3Support/q3popupmenu.h>
 
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Validator.h"
 #include "ADN_Tr.h"
-#include "ADN_ListView_Composantes.h"
+#include "ADN_ListView_Equipments.h"
 
-typedef ADN_Composantes_Data::ConsumptionItem ConsumptionItem;
+typedef ADN_Equipments_Data::ConsumptionItem ConsumptionItem;
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_ConsumptionsTable constructor
+// Name: ADN_Equipments_ConsumptionsTable constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Equipments_ConsumptionsTable::ADN_Equipments_ConsumptionsTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
     : ADN_Table( objectName, connector, pParent )
     , composanteListView_( 0 )
 {
@@ -55,37 +46,37 @@ ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable( const QStr
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_ConsumptionsTable destructor
+// Name: ADN_Equipments_ConsumptionsTable destructor
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-ADN_Composantes_ConsumptionsTable::~ADN_Composantes_ConsumptionsTable()
+ADN_Equipments_ConsumptionsTable::~ADN_Equipments_ConsumptionsTable()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_ConsumptionsTable::SetListView
+// Name: ADN_Equipments_ConsumptionsTable::SetListView
 // Created: ABR 2012-01-20
 // -----------------------------------------------------------------------------
-void ADN_Composantes_ConsumptionsTable::SetListView( ADN_ListView* listView )
+void ADN_Equipments_ConsumptionsTable::SetListView( ADN_ListView* listView )
 {
     composanteListView_ = listView;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_ConsumptionsTable::OnContextMenu
+// Name: ADN_Equipments_ConsumptionsTable::OnContextMenu
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Composantes_ConsumptionsTable::OnContextMenu( const QPoint& pt )
+void ADN_Equipments_ConsumptionsTable::OnContextMenu( const QPoint& pt )
 {
     /**********************************************/
     menuParametersList_.clear();
 
     // Get the available category list.
     assert( composanteListView_ != 0 && composanteListView_->GetCurrentData() != 0 );
-    ADN_Composantes_Data::ComposanteInfos* pComp = (ADN_Composantes_Data::ComposanteInfos*)( composanteListView_->GetCurrentData() );
-    ADN_Composantes_Data::ResourceInfos& dotation = pComp->resources_;
-    ADN_Composantes_Data::T_CategoryInfos_Vector& categories = dotation.categories_;
+    ADN_Equipments_Data::EquipmentInfos* pComp = (ADN_Equipments_Data::EquipmentInfos*)( composanteListView_->GetCurrentData() );
+    ADN_Equipments_Data::ResourceInfos& dotation = pComp->resources_;
+    ADN_Equipments_Data::T_CategoryInfos_Vector& categories = dotation.categories_;
 
     Q3PopupMenu menu( this );
     Q3PopupMenu addMenu( &menu );
@@ -106,7 +97,7 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( const QPoint& pt )
         addMenu.insertItem( consumptionName, pConsumptionMenu );
 
         // Fill the popup menu with submenus, one for each dotation.
-        for( ADN_Composantes_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
+        for( ADN_Equipments_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
         {
             bool alreadyAdded = false;
             for( int i = 0; i < numRows() && !alreadyAdded; ++i )
@@ -142,10 +133,10 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( const QPoint& pt )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_ConsumptionsTable::CreateNewElement
+// Name: ADN_Equipments_ConsumptionsTable::CreateNewElement
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Composantes_ConsumptionsTable::CreateNewElement( T_MenuItemParameters& parameters )
+void ADN_Equipments_ConsumptionsTable::CreateNewElement( T_MenuItemParameters& parameters )
 {
     ConsumptionItem* pNewItem = new ConsumptionItem( parameters.first, * parameters.second );
     pNewItem->nQuantityUsedPerHour_ = 0;
@@ -156,10 +147,10 @@ void ADN_Composantes_ConsumptionsTable::CreateNewElement( T_MenuItemParameters& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_ConsumptionsTable::DeleteCurrentElement
+// Name: ADN_Equipments_ConsumptionsTable::DeleteCurrentElement
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Composantes_ConsumptionsTable::DeleteCurrentElement()
+void ADN_Equipments_ConsumptionsTable::DeleteCurrentElement()
 {
     assert( GetSelectedData() != 0 );
 
@@ -168,10 +159,10 @@ void ADN_Composantes_ConsumptionsTable::DeleteCurrentElement()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_ConsumptionsTable::AddRow
+// Name: ADN_Equipments_ConsumptionsTable::AddRow
 // Created: MMC 2012-11-06
 // -----------------------------------------------------------------------------
-void ADN_Composantes_ConsumptionsTable::AddRow( int row, void* data )
+void ADN_Equipments_ConsumptionsTable::AddRow( int row, void* data )
 {
     ConsumptionItem* pConsumption = static_cast<ConsumptionItem*>( data );
     if( !pConsumption )

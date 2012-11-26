@@ -14,7 +14,7 @@
 #include "ADN_Objects_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_ComboBox.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
@@ -351,8 +351,8 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
                                           ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eResources, eDotationFamily_Munition );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                          ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+                                          ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+                                          ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), eEquipments );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
@@ -386,8 +386,8 @@ std::string ADN_ListView_Objects::GetToolTipFor( const QModelIndex& index )
                         ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
                         ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), result );
-    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
-                        ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipments ).c_str(),
+                        ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipmentsThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
                         ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
     FillMultiUsersList( tools::translate( "ADN_ListView_Objects", "Unit missions" ),      ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissionsThatUse( *pCastData ),         result );

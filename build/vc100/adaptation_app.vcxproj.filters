@@ -80,15 +80,6 @@
     <Filter Include="Source Files\Workspace\Sensors\Sensors Data">
       <UniqueIdentifier>{1be6622d-2b47-4d39-b55b-ef4953fa913e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Composantes">
-      <UniqueIdentifier>{e22c3acc-6752-4ded-82c2-3c0cf5d753c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Composantes\Composantes Data">
-      <UniqueIdentifier>{cb220e06-0d46-44f0-ac52-9065d6a167a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Composantes\Composantes GUI">
-      <UniqueIdentifier>{a85c5bd6-f85c-493f-91bb-ae567beb2be3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Units">
       <UniqueIdentifier>{25592e7e-2e9a-4e7b-afea-027e80fcbb04}</UniqueIdentifier>
     </Filter>
@@ -389,6 +380,15 @@
     <Filter Include="Source Files\Workspace\Resources\Resources GUI\Resources Wizard">
       <UniqueIdentifier>{b0aba9e8-22f1-42a6-826f-8b90caf8e588}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Equipments">
+      <UniqueIdentifier>{041fc7b8-47c6-4159-a26c-58f542459dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Equipments\Equipments Data">
+      <UniqueIdentifier>{2848f2df-11e5-4f70-a435-78652d3cee07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Equipments\Equipments GUI">
+      <UniqueIdentifier>{de9d6931-ea56-479b-bda3-735d062d1bcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -582,42 +582,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_Data.cpp">
       <Filter>Source Files\Workspace\Sensors\Sensors Data</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_Data.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes Data</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_ActiveProtectionsListView.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_BreakdownsTable.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_ConsumptionsTable.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_Dotations_GUI.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_GUI.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_RadarsListView.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_Sensors_GUI.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Composantes_WeaponsListView.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes_Objects.cpp">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Units_Data.cpp">
       <Filter>Source Files\Workspace\Units\Units Data</Filter>
@@ -1201,6 +1165,42 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_Data.cpp">
       <Filter>Source Files\Workspace\Resources\Resources Data</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_Data.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_ActiveProtectionsListView.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_BreakdownsTable.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_ConsumptionsTable.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_Dotations_GUI.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_GUI.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_RadarsListView.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_Sensors_GUI.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_Speeds_GUI.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_WeaponsListView.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Equipments.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Equipments_Objects.cpp">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1337,12 +1337,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Data.h">
       <Filter>Source Files\Workspace\Sensors\Sensors Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Data.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Sensors_GUI.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Units_Data.h">
       <Filter>Source Files\Workspace\Units\Units Data</Filter>
@@ -1845,6 +1839,12 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_Data.h">
       <Filter>Source Files\Workspace\Resources\Resources Data</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_Data.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_Sensors_GUI.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -1982,33 +1982,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_ActiveProtectionsListView.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_BreakdownsTable.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_ConsumptionsTable.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_Dotations_GUI.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_GUI.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_RadarsListView.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_WeaponsListView.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Composantes_Objects.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Nature_GUI.h">
       <Filter>Source Files\Workspace\Units\Units GUI</Filter>
     </CustomBuild>
@@ -2144,9 +2117,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SearchListView.h">
       <Filter>Source Files\Common widgets\List view</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionParameter_GroupBox.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </CustomBuild>
@@ -2182,6 +2152,36 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Resources_GUI.h">
       <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_ActiveProtectionsListView.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_BreakdownsTable.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_ConsumptionsTable.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_Dotations_GUI.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_GUI.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_RadarsListView.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_Speeds_GUI.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_WeaponsListView.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Equipments.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Equipments_Objects.h">
+      <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

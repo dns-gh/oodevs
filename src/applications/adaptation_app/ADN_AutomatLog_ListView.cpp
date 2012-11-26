@@ -17,7 +17,7 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_AutomatLog_ListView.h"
 #include "ADN_GridDelegate.h"
 #include "ADN_Automata_Data.h"
@@ -167,18 +167,18 @@ uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QStr
         nCompInUnit += (*it3)->nNb_.GetData();
 
         // Consumption
-        ADN_Composantes_Data::T_ConsumptionItem_Vector& consumptions = (*it3)->ptrComposante_.GetData()->consumptions_.vConsumptions_;
-        ADN_Composantes_Data::T_CategoryInfos_Vector&   categories   = (*it3)->ptrComposante_.GetData()->resources_.categories_;
-        for( ADN_Composantes_Data::IT_ConsumptionItem_Vector itCompCons = consumptions.begin(); itCompCons != consumptions.end(); ++itCompCons )
+        ADN_Equipments_Data::T_ConsumptionItem_Vector& consumptions = (*it3)->ptrComposante_.GetData()->consumptions_.vConsumptions_;
+        ADN_Equipments_Data::T_CategoryInfos_Vector&   categories   = (*it3)->ptrComposante_.GetData()->resources_.categories_;
+        for( ADN_Equipments_Data::IT_ConsumptionItem_Vector itCompCons = consumptions.begin(); itCompCons != consumptions.end(); ++itCompCons )
         {
-            ADN_Composantes_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
+            ADN_Equipments_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
             for( ; itCategory != categories.end(); ++itCategory )
                 if( (*itCategory)->ptrCategory_.GetData() == (*itCompCons)->ptrCategory_.GetData() )
                     break;
             if( itCategory != categories.end() )
                 InsertCategory( *pCompItem, **itCategory, **itCompCons );
         }
-        for( ADN_Composantes_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
+        for( ADN_Equipments_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
             InsertCategory( *pCompItem, **it );
         pCompItem->SetValueGreaterThan( eColumnMoveAutonomy         , GetMinMoveAutonomy         ( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
         pCompItem->SetValueGreaterThan( eColumnEngineStoppedAutonomy, GetMinEngineStoppedAutonomy( compTotal_ ), 2., 3., ADN_Rich_ListViewItem::eUnitHour );
@@ -201,8 +201,8 @@ uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QStr
 // Created: SBO 2006-01-05
 // -----------------------------------------------------------------------------
 void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                         parent,
-                                              ADN_Composantes_Data::CategoryInfos&   category,
-                                              ADN_Composantes_Data::ConsumptionItem& conso )
+                                              ADN_Equipments_Data::CategoryInfos&   category,
+                                              ADN_Equipments_Data::ConsumptionItem& conso )
 {
     if( conso.nConsumptionType_ != eMoving
         && conso.nConsumptionType_ != eEngineStopped
@@ -268,7 +268,7 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
 // Created: SBO 2006-01-05
 // -----------------------------------------------------------------------------
 void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                       parent,
-                                              ADN_Composantes_Data::CategoryInfos& category )
+                                              ADN_Equipments_Data::CategoryInfos& category )
 {
     ADN_Rich_ListViewItem* pItem = 0;
     // try to find existing item

@@ -27,13 +27,13 @@ class ADN_Breakdowns_Data;
 class ADN_Breakdowns_GUI;
 class ADN_Categories_Data;
 class ADN_Categories_GUI;
-class ADN_Composantes_Data;
-class ADN_Composantes_GUI;
 class ADN_ConsistencyChecker;
 class ADN_Crowds_Data;
 class ADN_Crowds_GUI;
 class ADN_Drawings_Data;
 class ADN_Drawings_GUI;
+class ADN_Equipments_Data;
+class ADN_Equipments_GUI;
 class ADN_FireClass_Data;
 class ADN_FireClass_GUI;
 class ADN_HumanFactors_Data;
@@ -127,7 +127,7 @@ public:
     ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>& GetObjects();
     ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI>& GetWeapons();
     ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI>& GetSensors();
-    ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >& GetComposantes();
+    ADN_WorkspaceElement< ADN_Equipments_Data, ADN_Equipments_GUI >& GetEquipments();
     ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >& GetUnits();
     ADN_WorkspaceElement< ADN_Models_Data, ADN_Models_GUI >& GetModels();
     ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI >& GetMissions();
@@ -299,9 +299,9 @@ ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI>& ADN_Workspace::GetSens
 // Created: APE 2004-12-07
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >& ADN_Workspace::GetComposantes()
+ADN_WorkspaceElement< ADN_Equipments_Data, ADN_Equipments_GUI >& ADN_Workspace::GetEquipments()
 {
-    return (ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >&)(*elements_[eComposantes]);
+    return (ADN_WorkspaceElement< ADN_Equipments_Data, ADN_Equipments_GUI >&)(*elements_[eEquipments]);
 }
 
 // -----------------------------------------------------------------------------

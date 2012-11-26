@@ -20,7 +20,7 @@
 #include "ADN_Units_Data.h"
 #include "ADN_Workspace.h"
 
-typedef ADN_Composantes_Data::ComposanteInfos   ComposanteInfos;
+typedef ADN_Equipments_Data::EquipmentInfos   ComposanteInfos;
 typedef ADN_Units_Data::ComposanteInfos         UnitComposanteInfos;
 
 Q_DECLARE_METATYPE( ComposanteInfos* )
@@ -93,7 +93,7 @@ void ADN_Units_Composantes_GUI::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     Q3PopupMenu& addMenu = *new Q3PopupMenu( &popupMenu );
 
-    ADN_MenuListView< ComposanteInfos >* list = new ADN_MenuListView< ComposanteInfos >( this, ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantes(), &addMenu );
+    ADN_MenuListView< ComposanteInfos >* list = new ADN_MenuListView< ComposanteInfos >( this, ADN_Workspace::GetWorkspace().GetEquipments().GetData().GetEquipments(), &addMenu );
     addMenu.addAction( list );
     // Get the list of the possible munitions
 

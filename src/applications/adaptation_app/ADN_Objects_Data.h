@@ -17,7 +17,7 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_CapacityInfos.h"
 #include "ADN_Resources_Data.h"
-#include "ADN_Composantes_Data.h"
+#include "ADN_Equipments_Data.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_Drawings_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
@@ -188,10 +188,10 @@ public:
         void ReadDotation( xml::xistream& xis );
 
     public:
-        typedef ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > ::const_iterator CIT_Categories;
+        typedef ADN_Type_Vector_ABC< ADN_Equipments_Data::CategoryInfos > ::const_iterator CIT_Categories;
 
     public:
-        ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > categories_;
+        ADN_Type_Vector_ABC< ADN_Equipments_Data::CategoryInfos > categories_;
     };
 
     class ADN_CapacityInfos_Bypassable : public helpers::ADN_CapacityInfos_Default< helpers::eBypassableCapacity, boost::tuples::tuple< NamedField< ADN_Type_Double > > >
@@ -246,10 +246,10 @@ public:
         void ReadDotation( xml::xistream& xis );
 
     public:
-        typedef ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > ::const_iterator CIT_Categories;
+        typedef ADN_Type_Vector_ABC< ADN_Equipments_Data::CategoryInfos > ::const_iterator CIT_Categories;
 
     public:
-        ADN_Type_Vector_ABC< ADN_Composantes_Data::CategoryInfos > categories_;
+        ADN_Type_Vector_ABC< ADN_Equipments_Data::CategoryInfos > categories_;
     };
 
     class ADN_CapacityInfos_InteractionHeight : public helpers::ADN_CapacityInfos_Default< helpers::eInteractionHeightCapacity >
