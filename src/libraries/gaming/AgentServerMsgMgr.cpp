@@ -311,7 +311,8 @@ void AgentServerMsgMgr::OnReceiveMsgCtrReplayInfo( const sword::ControlReplayInf
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveNewDataChunkNotification( const sword::NewDataChunkNotification& message )
 {
-    simulation_.Update( message );
+    if( services_.RequireService< replay::Service >() )
+        simulation_.Update( message );
 }
 
 // -----------------------------------------------------------------------------
