@@ -16,6 +16,7 @@
 #include "ADN_Disasters_Data.h"
 #include "ADN_ThresholdConcentrationsTable.h"
 #include "ADN_ThresholdAttritionsTable.h"
+#include "ADN_NbcSuitTable.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Disasters_GUI constructor
@@ -57,6 +58,9 @@ void ADN_Disasters_GUI::Build()
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
+    Q3GroupBox* pNbcSuit = new Q3VGroupBox( tr( "NBC protection" ) );
+    new ADN_NbcSuitTable( strClassName_ + "NbcSuitTable", vConnectors[ eNbcSuitRatio ], pNbcSuit );
+
     Q3GroupBox* pConcentrationThresholds = new Q3VGroupBox( tr( "Concentration thresholds" ) );
     new ADN_ThresholdConcentrationsTable( strClassName_ + "ConcentrationThresholds", vConnectors[ eConcentrationThresholds ], pConcentrationThresholds );
 
@@ -70,9 +74,10 @@ void ADN_Disasters_GUI::Build()
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
     pContentLayout->addWidget( pInfoHolder, 0, 0, 1, 2 );
-    pContentLayout->addWidget( pConcentrationThresholds, 1, 0 );
-    pContentLayout->addWidget( pAttritionThresholds, 1, 1 );
-    pContentLayout->setRowStretch( 2, 1 );
+    pContentLayout->addWidget( pNbcSuit, 1, 0 );
+    pContentLayout->addWidget( pConcentrationThresholds, 2, 0 );
+    pContentLayout->addWidget( pAttritionThresholds, 2, 1 );
+    pContentLayout->setRowStretch( 3, 1 );
 
     // ListView
     ADN_SearchListView< ADN_ListView_Disasters >* pSearchListView = new ADN_SearchListView< ADN_ListView_Disasters >( this, data_.GetDisastersInfos(), vConnectors );

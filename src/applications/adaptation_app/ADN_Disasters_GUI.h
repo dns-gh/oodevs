@@ -28,6 +28,7 @@ public:
         eName,
         eConcentrationThresholds,
         eAttritionThresholds,
+        eNbcSuitRatio,
         eNbrGuiElements
     };
 

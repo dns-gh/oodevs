@@ -10,6 +10,48 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Disasters_Data.h"
 #include "ADN_Project_Data.h"
+#include "ENT/ENT_Tr.h"
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Disasters_Data::NbcSuitRatioInfos
+// Created: LGY 2012-11-23
+// -----------------------------------------------------------------------------
+ADN_Disasters_Data::NbcSuitRatioInfos::NbcSuitRatioInfos( const E_AgentNbcSuit& eType )
+    : eType_ ( eType )
+    , rCoeff_( 0. )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Disasters_Data::~NbcSuitRatioInfos
+// Created: LGY 2012-11-23
+// -----------------------------------------------------------------------------
+ADN_Disasters_Data::NbcSuitRatioInfos::~NbcSuitRatioInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Disasters_Data::ReadArchive
+// Created: LGY 2012-11-23
+// -----------------------------------------------------------------------------
+void ADN_Disasters_Data::NbcSuitRatioInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "value", rCoeff_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Disasters_Data::WriteArchive
+// Created: LGY 2012-11-23
+// -----------------------------------------------------------------------------
+void ADN_Disasters_Data::NbcSuitRatioInfos::WriteArchive( xml::xostream& output ) const
+{
+    output << xml::start( "protection" )
+               << xml::attribute( "type", ENT_Tr::ConvertFromAgentNbcSuit( eType_ ) )
+               << xml::attribute( "value", rCoeff_ )
+            << xml::end;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Disasters_Data::AttritionThresholdInfos
@@ -170,7 +212,11 @@ void ADN_Disasters_Data::ConcentrationThresholdInfos::WriteArchive( xml::xostrea
 //-----------------------------------------------------------------------------
 ADN_Disasters_Data::DisasterInfos::DisasterInfos()
 {
-    // NOTHING
+    for( unsigned int i = 0; i< eNbrAgentNbcSuit; ++i )
+    {
+        NbcSuitRatioInfos* pInfo = new NbcSuitRatioInfos( static_cast< E_AgentNbcSuit >( i ) );
+        nbcSuitRatio_.AddItem( pInfo );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -179,7 +225,9 @@ ADN_Disasters_Data::DisasterInfos::DisasterInfos()
 //-----------------------------------------------------------------------------
 ADN_Disasters_Data::DisasterInfos::~DisasterInfos()
 {
-    // NOTHING
+    concentrationThresholds_.Reset();
+    attritionThresholds_.Reset();
+    nbcSuitRatio_.Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -194,6 +242,14 @@ ADN_Disasters_Data::DisasterInfos* ADN_Disasters_Data::DisasterInfos::CreateCopy
         ConcentrationThresholdInfos* pNew = (*it)->CreateCopy();
         pCopy->concentrationThresholds_.AddItem( pNew );
     }
+    for( IT_AttritionThresholdInfosVector it = attritionThresholds_.begin(); it != attritionThresholds_.end(); ++it )
+    {
+        AttritionThresholdInfos* pNew = (*it)->CreateCopy();
+        pCopy->attritionThresholds_.AddItem( pNew );
+    }
+
+    for( unsigned int i= 0 ; i< eNbrAgentNbcSuit; ++i )
+        pCopy->nbcSuitRatio_[ i ]->rCoeff_ = nbcSuitRatio_[ i ]->rCoeff_.GetData();
     return pCopy;
 }
 
@@ -209,7 +265,25 @@ void ADN_Disasters_Data::DisasterInfos::ReadArchive( xml::xistream& input )
               >> xml::end
               >> xml::start( "attrition" )
                   >> xml::list( "threshold", *this, &ADN_Disasters_Data::DisasterInfos::ReadAttrition )
+              >> xml::end
+              >> xml::start( "protections" )
+                  >> xml::list( "protection", *this, &ADN_Disasters_Data::DisasterInfos::ReadProtection )
               >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Disasters_Data::ReadProtection
+// Created: LGY 2012-11-23
+// -----------------------------------------------------------------------------
+void ADN_Disasters_Data::DisasterInfos::ReadProtection( xml::xistream& input )
+{
+    const std::string type = input.attribute< std::string >( "type" );
+    for( unsigned int i = 0; i < eNbrAgentNbcSuit; ++i )
+        if( ENT_Tr::ConvertFromAgentNbcSuit( E_AgentNbcSuit( i ) ) == type )
+        {
+            nbcSuitRatio_.at( i )->ReadArchive( input );
+            return;
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -248,6 +322,10 @@ void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output )
     output        << xml::end
                   << xml::start( "attrition" );
     for( IT_AttritionThresholdInfosVector it = attritionThresholds_.begin(); it != attritionThresholds_.end(); ++it )
+        (*it)->WriteArchive( output );
+    output        << xml::end
+                  << xml::start( "protections" );
+    for( IT_NbcSuitRatioInfosVector it = nbcSuitRatio_.begin(); it != nbcSuitRatio_.end(); ++it )
         (*it)->WriteArchive( output );
     output        << xml::end
          << xml::end;

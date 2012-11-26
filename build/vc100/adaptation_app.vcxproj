@@ -226,6 +226,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_Type.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Missions_ParameterValue.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MultiRefWarningDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NbcSuitTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.cpp" />
@@ -1773,6 +1774,7 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_Type.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Missions_ParameterValue.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NavigationInfos.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NbcSuitTable.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_RefWithName.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_StandardItem.h" />

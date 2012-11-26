@@ -52,6 +52,7 @@ void ADN_ListView_Disasters::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Disasters_GUI::eName ]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ ADN_Disasters_GUI::eConcentrationThresholds ]->Connect( &pInfos->concentrationThresholds_, bConnect );
     vItemConnectors_[ ADN_Disasters_GUI::eAttritionThresholds ]->Connect( &pInfos->attritionThresholds_, bConnect );
+    vItemConnectors_[ ADN_Disasters_GUI::eNbcSuitRatio ]->Connect( &pInfos->nbcSuitRatio_, bConnect );
 }
 
 // -----------------------------------------------------------------------------

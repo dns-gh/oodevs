@@ -37,6 +37,18 @@
 									</xs:sequence>
 							    </xs:complexType>
 							</xs:element>
+							<xs:element name="protections">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="protection" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="type" type="T_NbcSuit" use="required"/>
+												<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+							    </xs:complexType>
+							</xs:element>
 						</xs:sequence>
 						<xs:attribute name="name" type="xs:string" use="required"/>
 					</xs:complexType>

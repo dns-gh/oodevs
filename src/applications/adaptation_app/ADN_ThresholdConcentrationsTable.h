@@ -40,11 +40,6 @@ private:
     void AddNewElement();
     void RemoveCurrentElement();
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 #endif // ADN_ThresholdConcentrationsTable_h

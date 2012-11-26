@@ -1311,6 +1311,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Attrition thresholds</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>NBC protection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>
@@ -2875,6 +2879,17 @@ tirador</translation>
     <message>
         <source>Contamination</source>
         <translation>Contaminación</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_NbcSuitTable</name>
+    <message>
+        <source>Suit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratio</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6339,6 +6354,10 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid nbc suit level &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

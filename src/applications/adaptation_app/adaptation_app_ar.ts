@@ -1296,6 +1296,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Attrition thresholds</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>NBC protection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>
@@ -2859,6 +2863,17 @@ stance</source>
     <message>
         <source>Contamination</source>
         <translation type="unfinished">تلوث</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_NbcSuitTable</name>
+    <message>
+        <source>Suit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ratio</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6324,6 +6339,10 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>Unit types - Invalid crossing height &apos;%1&apos;</source>
         <translation type="unfinished">أنواع وحدة-الارتفاع عبور غير صالح &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid nbc suit level &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

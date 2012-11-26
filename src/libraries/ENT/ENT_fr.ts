@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Level 4</source>
-        <translation>Niveau 4></translation>
+        <translation>Niveau 4</translation>
     </message>
     <message>
         <source>Level 5</source>

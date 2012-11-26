@@ -1312,6 +1312,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Attrition thresholds</source>
         <translation>Seuils d&apos;attrition</translation>
     </message>
+    <message>
+        <source>NBC protection</source>
+        <translation>Protection NBC</translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>
@@ -2876,6 +2880,17 @@ du tireur</translation>
     <message>
         <source>Wounded extreme seriousness</source>
         <translation>Blessure extrêmement grave</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_NbcSuitTable</name>
+    <message>
+        <source>Suit</source>
+        <translation>Protection</translation>
+    </message>
+    <message>
+        <source>Ratio</source>
+        <translation>Coefficient</translation>
     </message>
 </context>
 <context>
@@ -6351,6 +6366,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>Unit - Invalid resource logistic supply class &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid nbc suit level &apos;%1&apos;</source>
+        <translation>Type de pion - Niveau de protection nbc invalide</translation>
     </message>
 </context>
 <context>

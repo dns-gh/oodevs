@@ -28,6 +28,33 @@ namespace xml
 class ADN_Disasters_Data : public ADN_Data_ABC
 {
 public:
+    //*****************************************************************************
+    class NbcSuitRatioInfos : public ADN_Ref_ABC
+    {
+    public:
+        //! @name Constructors/Destructor
+        //@{
+        explicit NbcSuitRatioInfos( const E_AgentNbcSuit& eType );
+        virtual ~NbcSuitRatioInfos();
+        //@}
+
+    public:
+        //! @name Operations
+        //@{
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output ) const;
+        //@}
+
+    public:
+        //! @name Member Data
+        //@{
+        E_AgentNbcSuit eType_;
+        ADN_Type_Double rCoeff_;
+        //@}
+    };
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< NbcSuitRatioInfos >, NbcSuitRatioInfosVector )
+
+public:
 //*****************************************************************************
     class AttritionThresholdInfos : public ADN_Ref_ABC
     {
@@ -106,6 +133,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadContamination( xml::xistream& input );
         void ReadAttrition( xml::xistream& input );
+        void ReadProtection( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
         //@}
 
@@ -114,6 +142,7 @@ public:
         //@{
         T_ConcentrationThresholdInfosVector concentrationThresholds_;
         T_AttritionThresholdInfosVector attritionThresholds_;
+        T_NbcSuitRatioInfosVector nbcSuitRatio_;
         //@}
     };
 public:
