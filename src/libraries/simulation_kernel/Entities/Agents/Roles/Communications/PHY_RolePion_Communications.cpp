@@ -410,7 +410,7 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision( const DEC
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Communications::CanReceive() const
 {
-    return jammers_.empty() && !bBlackoutReceivedActivated_ && !entity_.IsDead();
+    return jammers_.empty() && !bBlackoutReceivedActivated_ && !owner_.IsDead();
 }
 
 // -----------------------------------------------------------------------------
@@ -419,7 +419,7 @@ bool PHY_RolePion_Communications::CanReceive() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Communications::CanEmit() const
 {
-    return jammers_.empty() && !bBlackoutEmmittedActivated_ && !entity_.IsDead();
+    return jammers_.empty() && !bBlackoutEmmittedActivated_ && !owner_.IsDead();
 }
 
 // -----------------------------------------------------------------------------
