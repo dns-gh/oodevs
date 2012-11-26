@@ -38,9 +38,6 @@
     <Filter Include="Source Files\Workspace\Launchers\Launchers Data">
       <UniqueIdentifier>{3b83057a-280a-4107-a21f-a347f06f89b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Project">
-      <UniqueIdentifier>{d6186bc8-7198-4853-92ad-7e7e032c734b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Categories">
       <UniqueIdentifier>{4e0b86be-a77c-4b8b-b68e-c0d7808a5623}</UniqueIdentifier>
     </Filter>
@@ -187,15 +184,6 @@
     </Filter>
     <Filter Include="Source Files\Workspace\ActiveProtections\ActiveProtections GUI">
       <UniqueIdentifier>{ac85fda1-f660-4f94-baa0-1417a81c4a0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Zurb">
-      <UniqueIdentifier>{2361c9eb-4537-4b5b-9bab-727a76467555}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Zurb\Zurb Data">
-      <UniqueIdentifier>{8c430aa5-92de-4e0e-87ac-1231f67e0a1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Zurb\Zurb GUI">
-      <UniqueIdentifier>{b74a65f7-9a8b-4b34-8b3a-199855789f2f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Workspace\Helpers">
       <UniqueIdentifier>{d7398970-f1c5-4ede-9563-274ef61362a2}</UniqueIdentifier>
@@ -389,6 +377,15 @@
     <Filter Include="Source Files\Workspace\Equipments\Equipments GUI">
       <UniqueIdentifier>{de9d6931-ea56-479b-bda3-735d062d1bcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Urban">
+      <UniqueIdentifier>{2361c9eb-4537-4b5b-9bab-727a76467555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Urban\Urban Data">
+      <UniqueIdentifier>{8c430aa5-92de-4e0e-87ac-1231f67e0a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Urban\Urban GUI">
+      <UniqueIdentifier>{b74a65f7-9a8b-4b34-8b3a-199855789f2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -492,9 +489,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Launchers_Data.cpp">
       <Filter>Source Files\Workspace\Launchers\Launchers Data</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Project_Data.cpp">
-      <Filter>Source Files\Workspace\Project</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Categories_Data.cpp">
       <Filter>Source Files\Workspace\Categories\Categories Data</Filter>
@@ -773,22 +767,22 @@
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb Data</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban Data</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanInfrastructure_Type.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanMaterial_Type.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_AttritionTable.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.cpp">
       <Filter>Source Files\Workspace\Helpers</Filter>
@@ -956,13 +950,13 @@
       <Filter>Source Files\Common widgets\Color selector</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.cpp">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.cpp">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
@@ -1201,6 +1195,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Equipments_Objects.cpp">
       <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Project_Data.cpp">
+      <Filter>Source Files\Workspace</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1289,9 +1286,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Launchers_Data.h">
       <Filter>Source Files\Workspace\Launchers\Launchers Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Project_Data.h">
-      <Filter>Source Files\Workspace\Project</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Categories_Data.h">
       <Filter>Source Files\Workspace\Categories\Categories Data</Filter>
@@ -1474,19 +1468,19 @@
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_Data.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb Data</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban Data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanAccommodation_Type.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanInfrastructure_Type.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_UrbanMaterial_Type.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Urban_AttritionTable.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ArmorInfos.h">
       <Filter>Source Files\Workspace\Helpers</Filter>
@@ -1624,10 +1618,10 @@
       <Filter>Source Files\Common widgets\List view</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_RoofShapes.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Templates.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_LogisticSupplyClass.h">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
@@ -1845,6 +1839,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_Sensors_GUI.h">
       <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Project_Data.h">
+      <Filter>Source Files\Workspace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2022,7 +2019,7 @@
       <Filter>Source Files\Workspace\ActiveProtections\ActiveProtections GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Urban_GUI.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_FireClass_GUI.h">
       <Filter>Source Files\Workspace\Fires\Fires GUI</Filter>
@@ -2091,7 +2088,7 @@
       <Filter>Source Files\Common widgets\Color selector</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Template_Usages.h">
-      <Filter>Source Files\Workspace\Zurb\Zurb GUI</Filter>
+      <Filter>Source Files\Workspace\Urban\Urban GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_DateEdit.h">
       <Filter>Source Files\Common widgets</Filter>
