@@ -17,7 +17,7 @@
 // -----------------------------------------------------------------------------
 EventWidget::EventWidget( QWidget* parent, const QPixmap& pixmap, const QString& text )
     : QLabel( parent )
-    , label_( "ed" )
+    , label_( "" )
 {
     QImage img; // $$$$ SBO 2007-02-09: TODO: make new icons instead of resizing
     img = pixmap;
