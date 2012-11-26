@@ -47,10 +47,13 @@ void ADN_Disasters_Data::NbcSuitRatioInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Disasters_Data::NbcSuitRatioInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "protection" )
-               << xml::attribute( "type", ENT_Tr::ConvertFromAgentNbcSuit( eType_ ) )
-               << xml::attribute( "value", rCoeff_ )
-            << xml::end;
+    if( eType_ != eAgentNone )
+    {
+        output << xml::start( "protection" )
+                   << xml::attribute( "type", ENT_Tr::ConvertFromAgentNbcSuit( eType_ ) )
+                   << xml::attribute( "value", rCoeff_ )
+                << xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
