@@ -20,7 +20,7 @@ integration.computePositionsRelativeToLima = function( id, distance, number )
     return DEC_Geometrie_CalculerPositionsParRapportALima( id, distance, number )
 end
 
-integration.computePositionsRelativeToLima = function( id )
+integration.computeLima = function( id )
     return DEC_GetMissionLimaFlag( id )
 end
 
