@@ -802,6 +802,9 @@
     <ClCompile Include="..\..\src\applications\gaming_app\BypassPrototype.cpp">
       <Filter>Source Files\Creation\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\EventWidget.cpp">
+      <Filter>Source Files\Panels\Info\components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\gaming_app\Config.h">
@@ -1139,6 +1142,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\BypassPrototype.h">
       <Filter>Source Files\Creation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\gaming_app\EventWidget.h">
+      <Filter>Source Files\Panels\Info\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

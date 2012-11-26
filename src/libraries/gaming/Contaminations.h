@@ -82,6 +82,7 @@ public:
     int nContamination_;
     double quantity_;
     double dose_;
+    E_AgentNbcSuit type_;
     const QString suit_;
     //@}
 };

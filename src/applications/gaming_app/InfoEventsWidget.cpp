@@ -17,59 +17,6 @@
 #include "clients_kernel/NBCAgent.h"
 #include "tools/GeneralConfig.h"
 #include "icons.h"
-#include <QtGui/qimage.h>
-#include <QtGui/qpainter.h>
-
-namespace
-{
-    class EventWidget : public QLabel
-    {
-    public:
-        EventWidget( QWidget* parent, const QPixmap& pixmap, const QString& text )
-            : QLabel( parent )
-            , label_( "" )
-        {
-            QImage img; // $$$$ SBO 2007-02-09: TODO: make new icons instead of resizing
-            img = pixmap;
-            img = img.smoothScale( 26, 26, Qt::KeepAspectRatioByExpanding );
-            QPixmap pix( img );
-            setPixmap( pix );
-            QFont font;
-            font.setPointSize( 9 );
-            setFont( font );
-            setFixedSize( 27, 27 );
-            QToolTip::add( this, text );
-            hide();
-        }
-
-    protected:
-        virtual void drawContents( QPainter* paint )
-        {
-            QPen pen( QColor( 100, 100, 100 ) );
-            paint->setPen( pen );
-            paint->drawRoundRect( 0, 0, width(), height() );
-            paint->drawPixmap( 0, 0, *pixmap() );
-            if( label_.isEmpty() )
-                return;
-            const QRect rect = paint->boundingRect( QRect( 0, 0, width() - 2, height() - 1 ), Qt::AlignRight | Qt::AlignBottom, label_ );
-            const QRect out( rect.left() - 1, rect.top() - 1, rect.width() + 3, rect.height() + 2 );
-            paint->fillRect( out, Qt::white );
-            paint->drawRoundRect( out );
-            pen.setColor( Qt::black );
-            paint->setPen( pen );
-            paint->drawText( rect, Qt::AlignRight | Qt::AlignBottom, label_ );
-        }
-
-        virtual void setText( const QString& text )
-        {
-            label_ = text;
-            update();
-        }
-
-    private:
-        QString label_;
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: InfoEventsWidget constructor
@@ -105,22 +52,30 @@ void InfoEventsWidget::InitializeEvents( QWidget* parent )
 {
     const QPixmap defaultIcon( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() );
 
-    events_["jammed"]         = CreateEvent( parent, MAKE_PIXMAP( brouillage )     , tools::translate( "InfoEventsWidget", "Communication: jammed" ) );
-    events_["silenceEmitted"] = CreateEvent( parent, MAKE_PIXMAP( silence_radio_outgoing ), tools::translate( "InfoEventsWidget", "Communication: radio emitter silence" ) );
-    events_["silenceReceived"]= CreateEvent( parent, MAKE_PIXMAP( silence_radio_incoming ), tools::translate( "InfoEventsWidget", "Communication: radio receiver silence" ) );
-    events_["radar"]          = CreateEvent( parent, MAKE_PIXMAP( radars_on )      , tools::translate( "InfoEventsWidget", "Communication: radar enabled" ) );
-    events_["stealth"]        = CreateEvent( parent, defaultIcon                   , tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
-    events_["nbc suit"]       = CreateEvent( parent, MAKE_PIXMAP( nbc )            , tools::translate( "InfoEventsWidget", "NBC: suit on" ) );
-    events_["underground"]    = CreateEvent( parent, MAKE_PIXMAP( underground )    , tools::translate( "InfoEventsWidget", "Underground" ) );
-    events_["contamination"]  = CreateEvent( parent, MAKE_PIXMAP( nbc )            , "" );
-    events_["refugees"]       = CreateEvent( parent, defaultIcon                   , tools::translate( "InfoEventsWidget", "Refugees handled" ) );
+    events_["jammed"]         = CreateEvent( parent, MAKE_PIXMAP( brouillage ),
+                                    tools::translate( "InfoEventsWidget", "Communication: jammed" ) );
+    events_["silenceEmitted"] = CreateEvent( parent, MAKE_PIXMAP( silence_radio_outgoing ),
+                                    tools::translate( "InfoEventsWidget", "Communication: radio emitter silence" ) );
+    events_["silenceReceived"]= CreateEvent( parent, MAKE_PIXMAP( silence_radio_incoming ),
+                                    tools::translate( "InfoEventsWidget", "Communication: radio receiver silence" ) );
+    events_["radar"]          = CreateEvent( parent, MAKE_PIXMAP( radars_on ),
+                                    tools::translate( "InfoEventsWidget", "Communication: radar enabled" ) );
+    events_["stealth"]        = CreateEvent( parent, defaultIcon,
+                                    tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
+    events_["nbc suit"]       = CreateEvent( parent, QPixmap( "resources/images/gaming/nbcSuit.png" ),
+                                    tools::translate( "InfoEventsWidget", "NBC: suit on" ) );
+    events_["underground"]    = CreateEvent( parent, MAKE_PIXMAP( underground ),
+                                    tools::translate( "InfoEventsWidget", "Underground" ) );
+    events_["contamination"]  = CreateEvent( parent, QPixmap( "resources/images/gaming/nbc.png" ), "" );
+    events_["refugees"]       = CreateEvent( parent, defaultIcon,
+                                    tools::translate( "InfoEventsWidget", "Refugees handled" ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InfoEventsWidget::CreateEvent
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-QLabel* InfoEventsWidget::CreateEvent( QWidget* parent, const QPixmap& pixmap, const QString& text )
+EventWidget* InfoEventsWidget::CreateEvent( QWidget* parent, const QPixmap& pixmap, const QString& text )
 {
     return new EventWidget( parent, pixmap, text );
 }
@@ -157,15 +112,20 @@ void InfoEventsWidget::SetAttributes( const Attributes& attributes )
 void InfoEventsWidget::SetContaminations( const Contaminations& attributes )
 {
     ToggleEvent( "nbc suit", attributes.bNbcProtectionSuitWorn_ );
+    if( attributes.type_ != eAgentNone )
+    {
+        EventWidget* label = events_["nbc suit"];
+        label->setText( locale().toString( attributes.type_ ) );
+    }
     ToggleEvent( "contamination", !attributes.contaminatingNbcAgents_.empty() );
     if( !attributes.contaminatingNbcAgents_.empty() )
     {
-        QLabel* label = events_["contamination"];
+        EventWidget* label = events_["contamination"];
         QStringList agents;
         for( unsigned int i = 0; i < attributes.contaminatingNbcAgents_.size(); ++i )
             agents.append( attributes.contaminatingNbcAgents_[i]->GetName().c_str() );
         label->setText( locale().toString( attributes.nContamination_ ) );
-        QToolTip::add( label, tools::translate( "InfoEventsWidget", "NBC: contamination of type '%1' level '%2'" ).arg( agents.join( ", " ) ).arg( attributes.nContamination_ ) );
+        label->setToolTip( tools::translate( "InfoEventsWidget", "NBC: contamination of type '%1' level '%2'" ).arg( agents.join( ", " ) ).arg( attributes.nContamination_ ) );
     }
     SetShown();
 }

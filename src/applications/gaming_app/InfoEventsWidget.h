@@ -13,6 +13,7 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "EventWidget.h"
 
 namespace kernel
 {
@@ -57,7 +58,7 @@ private:
     virtual void NotifyUpdated( const Contaminations& element );
 
     void InitializeEvents( QWidget* parent );
-    QLabel* CreateEvent( QWidget* parent, const QPixmap& pixmap, const QString& text );
+    EventWidget* CreateEvent( QWidget* parent, const QPixmap& pixmap, const QString& text );
     void ToggleEvent( const std::string& event, bool toggle );
 
     void SetAttributes( const Attributes& attributes );
@@ -68,7 +69,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, QLabel* > T_Events;
+    typedef std::map< std::string, EventWidget* > T_Events;
     //@}
 
 private:

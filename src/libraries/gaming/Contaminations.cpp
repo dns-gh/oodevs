@@ -23,14 +23,6 @@
 
 using namespace kernel;
 
-namespace
-{
-    QString Convert( E_AgentNbcSuit suit )
-    {
-        return suit == eAgentNone ? "" : tools::ToString( suit );
-    }
-}
-
 // -----------------------------------------------------------------------------<
 // Name: Contaminations constructor
 // Created: AGE 2006-02-13
@@ -44,14 +36,15 @@ Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& enti
     , nContamination_        ( 0 )
     , quantity_              ( 0 )
     , dose_                  ( 0.f )
-    , suit_                  ( Convert( type.GetNbcSuit() ) )
+    , type_                  ( type.GetNbcSuit() )
+    , suit_                  ( tools::ToString( type_ ) )
 {
     dico.Register( entity_, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_ );
     dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_ );
     dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_ );
     dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_ );
     dico.Register( entity_, tools::translate( "NBC", "NBC/Dose" ), dose_ );
-    if( suit_ != "" )
+    if( type_ != eAgentNone )
         dico.Register( entity_, tools::translate( "NBC", "NBC/Suit" ), suit_, true );
 }
 
