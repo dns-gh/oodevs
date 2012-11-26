@@ -267,25 +267,25 @@ integration.startFragOrderTask = function( self )
     return
   elseif orderType == "Rep_OrderConduite_ModifierRegimeTravailMaintenance" then
     if integration.isLogisticTypeUnit( ) then
-        integration.changeMaintenanceWorkMode( integration.getOrderConduiteModifierRegimeTravailMaintenance( self ) )
+        integration.changeMaintenanceWorkMode( integration.getOrderConduiteModifierRegimeTravailMaintenanceParameter( self ) )
     end
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses" then
     if integration.isLogisticTypeUnit( ) then
-        integration.changeTacticPriority( integration.getOrderConduiteModifierPrioritesTactiquesBlesses( self ) )
+        integration.changeTacticPriority( integration.getOrderConduiteModifierPrioritesTactiquesBlessesParameter( self ) )
     end
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_ModifierPrioritesTactiquesReparations" then
     if integration.isLogisticTypeUnit( ) then
-        integration.changeTacticMaintenancePriority( integration.getOrderConduiteModifierPrioritesTactiquesReparations( self ) )
+        integration.changeTacticMaintenancePriority( integration.getOrderConduiteModifierPrioritesTactiquesReparationsParameter( self ) )
     end
     integration.cleanFragOrder( self )
     return
   elseif orderType == "Rep_OrderConduite_ModifierPrioritesReparations" then
     if integration.isLogisticTypeUnit( ) then
-        integration.changeMaintenancePriority( integration.getOrderConduiteModifierPrioritesReparations( self ) )
+        integration.changeMaintenancePriority( integration.getOrderConduiteModifierPrioritesReparationsParameter( self ) )
     end
     integration.cleanFragOrder( self )
     return
