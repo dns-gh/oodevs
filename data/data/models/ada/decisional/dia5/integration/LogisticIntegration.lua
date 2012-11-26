@@ -60,3 +60,7 @@ end
 integration.changeHealthPriority = function( priority )
     DEC_Sante_ChangerPriorites( priority )
 end
+
+integration.changeTacticPriority = function( priority )
+    DEC_Sante_ChangerPrioritesTactiques( priority )
+end
