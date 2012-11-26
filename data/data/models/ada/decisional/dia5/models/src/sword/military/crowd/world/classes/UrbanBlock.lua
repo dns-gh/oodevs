@@ -12,8 +12,7 @@ return
     -- --------------------------------------------------------------------------------
     damageIt = masalife.brain.integration.startStopAction( 
     {
-        start = integration.startDamageUrbanBlock, 
-        started = integration.updateDamageUrbanBlock, 
+        start = integration.startDamageUrbanBlock,
         stop = integration.stopDamageUrbanBlock
     } ),
     
