@@ -344,7 +344,7 @@ void ADN_AutomatLog_ListView::AddEntryToTotal( const T_CategoryEntry& entry, T_C
 {
     for( CIT_CategoryEntry it = entry.begin(); it != entry.end(); ++it )
     {
-        const ADN_Equipement_Data::CategoryInfo* pCat = it->first;
+        const ADN_Resources_Data::CategoryInfo* pCat = it->first;
         if( total[ pCat ] == 0 )
             total[ pCat ] = new ADN_AutomatLog_Entry();
         total[ pCat ]->rNbr_                   += it->second->rNbr_                   * nArity;

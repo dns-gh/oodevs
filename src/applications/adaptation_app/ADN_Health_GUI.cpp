@@ -12,7 +12,7 @@
 #include "ADN_Health_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
-#include "ADN_Equipement_GUI.h"
+#include "ADN_Resources_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Table.h"
 #include "ADN_TimeField.h"
@@ -73,7 +73,7 @@ protected slots:
     virtual void OnItemChanged( QStandardItem* item )
     {
         delegate_.OnItemChanged( item );
-        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+        ADN_Workspace::GetWorkspace().GetResources().GetGui().UpdateGraph();
     }
 };
 

@@ -12,7 +12,7 @@
 
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 class ADN_FuneralPackagingResource;
 
@@ -48,7 +48,7 @@ public:
 public:
     //! @name Member data
     //@{
-    ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo> resource_;
+    ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo> resource_;
     ADN_Type_Time processDuration_;
     ADN_Type_Bool terminal_;
     //@}

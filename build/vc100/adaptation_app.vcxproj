@@ -544,13 +544,13 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Data.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AmmoListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionGraph.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionTable.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_GenericListView.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_GUI.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Postures_GUI.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_Data.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_AmmoListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionGraph.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionTable.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_GenericListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_GUI.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_Postures_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Disabled</Optimization>
@@ -1612,7 +1612,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_WizardPage.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_WizardPage.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.h" />
@@ -2024,9 +2024,9 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Armor.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_DotationNature.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Size.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Data.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_AmmoListView.h" />
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionGraph.h">
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_Data.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_AmmoListView.h" />
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionGraph.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
@@ -2044,9 +2044,9 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionTable.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_GenericListView.h" />
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipement_GUI.h">
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionTable.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_GenericListView.h" />
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Resources_GUI.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
@@ -2064,8 +2064,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Postures_GUI.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_Postures_GUI.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Objects.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Objects_GUI.h">

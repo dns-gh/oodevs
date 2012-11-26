@@ -7,25 +7,25 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Equipement_AttritionTable_h_
-#define __ADN_Equipement_AttritionTable_h_
+#ifndef __ADN_Resources_AttritionTable_h_
+#define __ADN_Resources_AttritionTable_h_
 
 #include "ADN_Table.h"
 
 // =============================================================================
-/** @class  ADN_Equipement_AttritionTable
-    @brief  ADN_Equipement_AttritionTable
+/** @class  ADN_Resources_AttritionTable
+    @brief  ADN_Resources_AttritionTable
 */
 // Created: APE 2004-12-29
 // =============================================================================
-class ADN_Equipement_AttritionTable : public ADN_Table
+class ADN_Resources_AttritionTable : public ADN_Table
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Equipement_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
-    virtual ~ADN_Equipement_AttritionTable();
+             ADN_Resources_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 );
+    virtual ~ADN_Resources_AttritionTable();
     //@}
 
 public:
@@ -36,4 +36,4 @@ public:
     //@}
 };
 
-#endif // __ADN_Equipement_AttritionTable_h_
+#endif // __ADN_Resources_AttritionTable_h_

@@ -22,7 +22,7 @@ enum E_WorkspaceElements
     eUrban,
     eNBC,
     eLaunchers,
-    eEquipement,
+    eResources,
     eFireClasses,
     eDrawings, // Must be before eObjects
     eDisasters, // Must be before eObjects

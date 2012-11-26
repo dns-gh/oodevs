@@ -11,7 +11,7 @@
 #define __ADN_Composantes_ConsumptionsTable_h_
 
 #include "ADN_Table.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include <QtGui/qapplication.h>
 #include <boost/noncopyable.hpp>
 
@@ -46,7 +46,7 @@ public:
     //@}
 
 private:
-    typedef std::pair< E_ConsumptionType, ADN_Equipement_Data::CategoryInfo* > T_MenuItemParameters;
+    typedef std::pair< E_ConsumptionType, ADN_Resources_Data::CategoryInfo* > T_MenuItemParameters;
     typedef std::vector< T_MenuItemParameters >   T_ParametersVector;
     typedef T_ParametersVector::iterator         IT_ParametersVector;
 

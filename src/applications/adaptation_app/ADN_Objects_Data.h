@@ -16,7 +16,7 @@
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_CapacityInfos.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_Drawings_Data.h"
@@ -136,9 +136,9 @@ public:
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > ammoCategory_;
-        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > mineCategory_;
-        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > explosiveCategory_;
+        ADN_TypePtr_InVector_ABC< ADN_Resources_Data::CategoryInfo > ammoCategory_;
+        ADN_TypePtr_InVector_ABC< ADN_Resources_Data::CategoryInfo > mineCategory_;
+        ADN_TypePtr_InVector_ABC< ADN_Resources_Data::CategoryInfo > explosiveCategory_;
         ADN_Type_Bool useAmmo_;
         ADN_Type_Bool useMine_;
         ADN_Type_Bool useExplo_;
@@ -544,7 +544,7 @@ public:
     ADN_Objects_Data_ObjectInfos* FindObject( const std::string& strName );
 
     QStringList GetObjectsThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList GetObjectsThatUse( ADN_Equipement_Data::CategoryInfo& object );
+    QStringList GetObjectsThatUse( ADN_Resources_Data::CategoryInfo& object );
     QStringList GetObjectsThatUse( ADN_Disasters_Data::DisasterInfos& disaster );
     QStringList GetObjectsWithCapacity( const std::string& tag );
 

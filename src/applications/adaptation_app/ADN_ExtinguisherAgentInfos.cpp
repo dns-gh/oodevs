@@ -15,8 +15,8 @@
 // Name: ADN_ExtinguisherAgentInfos constructor
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
-ADN_ExtinguisherAgentInfos::ADN_ExtinguisherAgentInfos( ADN_Equipement_Data::CategoryInfo* agent )
-    : ptrAgent_        ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_AgentExtincteur ).categories_, agent )
+ADN_ExtinguisherAgentInfos::ADN_ExtinguisherAgentInfos( ADN_Resources_Data::CategoryInfo* agent )
+    : ptrAgent_        ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_, agent )
     , heatDecreaseRate_( 0 )
 {
     BindExistenceTo( &ptrAgent_ );

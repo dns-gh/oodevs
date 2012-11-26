@@ -10,7 +10,7 @@
 #ifndef __ADN_ExtinguisherAgentInfos_h_
 #define __ADN_ExtinguisherAgentInfos_h_
 
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 // =============================================================================
 /** @class  ADN_ExtinguisherAgentInfos
@@ -25,7 +25,7 @@ class ADN_ExtinguisherAgentInfos : public ADN_Ref_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_ExtinguisherAgentInfos( ADN_Equipement_Data::CategoryInfo* agent );
+    explicit ADN_ExtinguisherAgentInfos( ADN_Resources_Data::CategoryInfo* agent );
     virtual ~ADN_ExtinguisherAgentInfos();
     //@}
 
@@ -43,17 +43,17 @@ public:
     //@}
 
 public:
-    typedef ADN_Equipement_Data::CategoryInfo T_Item;
+    typedef ADN_Resources_Data::CategoryInfo T_Item;
 
     class CmpRef : public std::unary_function< ADN_ExtinguisherAgentInfos* , bool >
     {
     public:
-        CmpRef( ADN_Equipement_Data::CategoryInfo* val ) : val_( val ){}
+        CmpRef( ADN_Resources_Data::CategoryInfo* val ) : val_( val ){}
         bool operator()( ADN_ExtinguisherAgentInfos* other ) const
         { return other->ptrAgent_.GetData() == val_; }
 
     private:
-        ADN_Equipement_Data::CategoryInfo* val_;
+        ADN_Resources_Data::CategoryInfo* val_;
     };
 
     class Cmp : public std::unary_function< ADN_ExtinguisherAgentInfos* , bool >
@@ -70,7 +70,7 @@ public:
 public:
     //! @name Member data
     //@{
-    ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > ptrAgent_;
+    ADN_TypePtr_InVector_ABC< ADN_Resources_Data::CategoryInfo > ptrAgent_;
     ADN_Type_Int heatDecreaseRate_;
     //@}
 };

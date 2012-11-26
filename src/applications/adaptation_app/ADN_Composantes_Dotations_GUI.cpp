@@ -75,17 +75,17 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( const QPoint& pt )
     Q3PopupMenu targetMenu( &menu );
 
     // Get the dotation list.
-    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations
-        = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
+    ADN_Resources_Data::T_ResourceInfos_Vector& dotations
+        = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
 
     // Fill the popup menu with submenus, one for each dotation.
-    for( ADN_Equipement_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
+    for( ADN_Resources_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
     {
         Q3PopupMenu* pSubMenu = new Q3PopupMenu( &targetMenu );
 
         // Fill the submenu with an entry for each equipement category.
-        ADN_Equipement_Data::T_CategoryInfos_Vector& categories = (*it)->GetCategories();
-        for( ADN_Equipement_Data::IT_CategoryInfos_Vector it2 = categories.begin(); it2 != categories.end(); ++it2 )
+        ADN_Resources_Data::T_CategoryInfos_Vector& categories = (*it)->GetCategories();
+        for( ADN_Resources_Data::IT_CategoryInfos_Vector it2 = categories.begin(); it2 != categories.end(); ++it2 )
         {
             // Avoid offering to add items already present.
             if( Contains( **it2 ) )
@@ -108,14 +108,14 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( const QPoint& pt )
     if( nMenuResult == 1 )
         RemoveCurrentDotation();
     else if( nMenuResult > 1 )
-        AddNewDotation( *(ADN_Equipement_Data::CategoryInfo*)nMenuResult );
+        AddNewDotation( *(ADN_Resources_Data::CategoryInfo*)nMenuResult );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Dotations_GUI::Contains
 // Created: AGN 2004-02-25
 // -----------------------------------------------------------------------------
-bool ADN_Composantes_Dotations_GUI::Contains( ADN_Equipement_Data::CategoryInfo& category )
+bool ADN_Composantes_Dotations_GUI::Contains( ADN_Resources_Data::CategoryInfo& category )
 {
     int n = 0;
     while( dataModel_.item( n, 1 ) != 0 )
@@ -133,7 +133,7 @@ bool ADN_Composantes_Dotations_GUI::Contains( ADN_Equipement_Data::CategoryInfo&
 // Name: ADN_Composantes_Dotations_GUI::AddNewDotation
 // Created: AGN 2003-12-04
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Dotations_GUI::AddNewDotation( ADN_Equipement_Data::CategoryInfo& category )
+void ADN_Composantes_Dotations_GUI::AddNewDotation( ADN_Resources_Data::CategoryInfo& category )
 {
     CategoryInfos* pNewInfo = new CategoryInfos( category.parentResource_ );
     pNewInfo->ptrCategory_ = &category;

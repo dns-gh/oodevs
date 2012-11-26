@@ -13,7 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
 #include "ADN_Types.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Tr.h"
 
 namespace xml { class xistream; }
@@ -41,7 +41,7 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo> ptrPart_;
+        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo> ptrPart_;
         ADN_Type_Int nNbr_;
     };
 
@@ -93,7 +93,7 @@ public:
 
     T_BreakdownInfoVector& GetBreakdowns();
     ADN_Breakdowns_Data::BreakdownInfo* FindBreakdown( const std::string& strName );
-    QStringList GetBreakdownsThatUse( ADN_Equipement_Data::CategoryInfo& part );
+    QStringList GetBreakdownsThatUse( ADN_Resources_Data::CategoryInfo& part );
     //@}
 
 private:

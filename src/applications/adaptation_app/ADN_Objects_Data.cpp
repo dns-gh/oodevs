@@ -99,7 +99,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation( xml::xistream&
         >> xml::attribute( "count", quantity );
     if( dotation != "" )
     {
-        ADN_Equipement_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
+        ADN_Resources_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( dotation );
         if( category == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
         ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentResource_ );
@@ -159,7 +159,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation( xml::xistream
         >> xml::attribute( "count", quantity );
     if( dotation != "" )
     {
-        ADN_Equipement_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
+        ADN_Resources_Data::CategoryInfo* category = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( dotation );
         if( category == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
         ADN_Composantes_Data::CategoryInfos* infos = new ADN_Composantes_Data::CategoryInfos( category->parentResource_ );
@@ -415,9 +415,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Disaster::CheckDatabaseValidity( ADN_Co
 //@{
 
 ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
-    : ammoCategory_     ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
-    , mineCategory_     ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Mine ).categories_, 0 )
-    , explosiveCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Explosif ).categories_, 0 )
+    : ammoCategory_     ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_, 0 )
+    , mineCategory_     ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Mine ).categories_, 0 )
+    , explosiveCategory_( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Explosif ).categories_, 0 )
     , useAmmo_          ( false )
     , useMine_          ( false )
     , useExplo_         ( false )
@@ -433,7 +433,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
     std::string dotation( xis.attribute< std::string >( "category" ) );
     if( dotation != "" )
     {
-        ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( dotation );
+        ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( dotation );
         if( pCategory == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
         if( pCategory->category_.GetData() == ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToSim ) )
@@ -1374,7 +1374,7 @@ QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Objects_Data_ObjectInfos& o
 // Name: ADN_Objects_Data::GetObjectsThatUse
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Equipement_Data::CategoryInfo& object )
+QStringList ADN_Objects_Data::GetObjectsThatUse( ADN_Resources_Data::CategoryInfo& object )
 {
     QStringList result;
     for( IT_ObjectsInfos_Vector itObject = vObjectInfos_.begin(); itObject != vObjectInfos_.end(); ++itObject )

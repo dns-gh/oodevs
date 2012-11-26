@@ -12,7 +12,7 @@
 
 #include "ADN_ListView.h"
 #include "ADN_Data_ABC.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Units_Data.h"
 #include <boost/noncopyable.hpp>
 
@@ -91,7 +91,7 @@ private:
         double rEngineStartedAutonomy_;
     };
 
-    typedef std::map< const ADN_Equipement_Data::CategoryInfo*, ADN_AutomatLog_Entry* > T_CategoryEntry;
+    typedef std::map< const ADN_Resources_Data::CategoryInfo*, ADN_AutomatLog_Entry* > T_CategoryEntry;
     typedef T_CategoryEntry::iterator                                                   IT_CategoryEntry;
     typedef T_CategoryEntry::const_iterator                                             CIT_CategoryEntry;
     //@}

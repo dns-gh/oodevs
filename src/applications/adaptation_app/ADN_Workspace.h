@@ -34,8 +34,6 @@ class ADN_Crowds_Data;
 class ADN_Crowds_GUI;
 class ADN_Drawings_Data;
 class ADN_Drawings_GUI;
-class ADN_Equipement_Data;
-class ADN_Equipement_GUI;
 class ADN_FireClass_Data;
 class ADN_FireClass_GUI;
 class ADN_HumanFactors_Data;
@@ -63,6 +61,8 @@ class ADN_Reports_Data;
 class ADN_Reports_GUI;
 class ADN_ResourceNetworks_Data;
 class ADN_ResourceNetworks_GUI;
+class ADN_Resources_Data;
+class ADN_Resources_GUI;
 class ADN_Sensors_Data;
 class ADN_Sensors_GUI;
 class ADN_Symbols_Data;
@@ -123,7 +123,7 @@ public:
     ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& GetCategories();
     ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >& GetUrban();
     ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI>& GetActiveProtections();
-    ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >& GetEquipements();
+    ADN_WorkspaceElement< ADN_Resources_Data, ADN_Resources_GUI >& GetResources();
     ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>& GetObjects();
     ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI>& GetWeapons();
     ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI>& GetSensors();
@@ -245,13 +245,13 @@ ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >& ADN_Workspace::GetUrban()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetEquipements
+// Name: ADN_Workspace::GetResources
 // Created: APE 2004-12-07
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >& ADN_Workspace::GetEquipements()
+ADN_WorkspaceElement< ADN_Resources_Data, ADN_Resources_GUI >& ADN_Workspace::GetResources()
 {
-    return (ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >&)(*elements_[eEquipement]);
+    return (ADN_WorkspaceElement< ADN_Resources_Data, ADN_Resources_GUI >&)(*elements_[eResources]);
 }
 
 // -----------------------------------------------------------------------------

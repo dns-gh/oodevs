@@ -17,7 +17,7 @@
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Launchers_Data.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 namespace xml { class xistream; }
 
@@ -116,7 +116,7 @@ public:
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Launchers_Data::LauncherInfos>         ptrLauncher_;
-        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::AmmoCategoryInfo>     ptrAmmunition_;
+        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::AmmoCategoryInfo>     ptrAmmunition_;
 
         ADN_Type_Int       nRoundsPerBurst_;
         ADN_Type_Time      burstDuration_;
@@ -175,7 +175,7 @@ public:
     WeaponInfos*         FindWeapon( const std::string& strLauncher, const std::string& strAmmunition );
     int                  GetIndex( WeaponInfos& weapon );
     QStringList          GetWeaponThatUse( ADN_Launchers_Data::LauncherInfos& launcher );
-    QStringList          GetWeaponThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammunition );
+    QStringList          GetWeaponThatUse( ADN_Resources_Data::AmmoCategoryInfo& ammunition );
     void                 UpdateNames();
 
 private:

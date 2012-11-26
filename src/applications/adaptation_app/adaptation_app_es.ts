@@ -1509,349 +1509,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Equipement_AmmoListView</name>
-    <message>
-        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_AttritionGraph</name>
-    <message>
-        <source>Dead</source>
-        <translation>Muerto</translation>
-    </message>
-    <message>
-        <source>Unwounded</source>
-        <translation>Ileso</translation>
-    </message>
-    <message>
-        <source>Undamaged</source>
-        <translation>Sin daños</translation>
-    </message>
-    <message>
-        <source>Wounded (%1)</source>
-        <translation>Herido (%1)</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_AttritionTable</name>
-    <message>
-        <source>% destroyed</source>
-        <translation>% détruit</translation>
-    </message>
-    <message>
-        <source>% maintenance support needed</source>
-        <translation>% requiere mantenimiento</translation>
-    </message>
-    <message>
-        <source>% on site fixable</source>
-        <translation>% reparable en sitio</translation>
-    </message>
-    <message>
-        <source>Armor</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de blindaje inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de material urbano inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_Data::IndirectAmmoInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid stance &apos;%1&apos;</source>
-        <translation>Equipo - Postura inválida &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_GUI</name>
-    <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation>Naturaleza</translation>
-    </message>
-    <message>
-        <source>Packaging</source>
-        <translation>Empaquetado</translation>
-    </message>
-    <message>
-        <source>Nbr per package</source>
-        <translation>N° por paquete</translation>
-    </message>
-    <message>
-        <source>Package weight</source>
-        <translation>Peso de paquete</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <translation>T</translation>
-    </message>
-    <message>
-        <source>Package volume</source>
-        <translation>Volúmen de paquete</translation>
-    </message>
-    <message>
-        <source>m3</source>
-        <translation>m3</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Tipo</translation>
-    </message>
-    <message>
-        <source>Attritions</source>
-        <translation>Atriciones</translation>
-    </message>
-    <message>
-        <source>Simulation</source>
-        <translation>Simulación</translation>
-    </message>
-    <message>
-        <source>Armor-Plating</source>
-        <translation>Blindaje</translation>
-    </message>
-    <message>
-        <source>Urban material</source>
-        <translation>Zona urbana</translation>
-    </message>
-    <message>
-        <source>Indirect fire</source>
-        <translation>Fuego indirecto</translation>
-    </message>
-    <message>
-        <source>Intervention</source>
-        <translation>Intervención</translation>
-    </message>
-    <message>
-        <source>X Dispersion</source>
-        <translation>Dispersión X</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Y Dispersion</source>
-        <translation>Dispersión Y</translation>
-    </message>
-    <message>
-        <source>Illumination capacity</source>
-        <translation>Capacidad de iluminación</translation>
-    </message>
-    <message>
-        <source>Range</source>
-        <translation>Rango</translation>
-    </message>
-    <message>
-        <source>Must Maintain illumination</source>
-        <translation>Debe mantener iluminación</translation>
-    </message>
-    <message>
-        <source>Guidance</source>
-        <translation>Guiado</translation>
-    </message>
-    <message>
-        <source>Must Maintain guidance</source>
-        <translation>Debe mantener guiado</translation>
-    </message>
-    <message>
-        <source>Illumination range needed</source>
-        <translation>Se requiere rango de iluminación</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Ninguno</translation>
-    </message>
-    <message>
-        <source>PKs</source>
-        <translation>PKs</translation>
-    </message>
-    <message>
-        <source>Logistic supply class</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Improvised explosive device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Effects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Explosive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smoke</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Illumination shell</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Effect</source>
-        <translation type="unfinished">Efecto</translation>
-    </message>
-    <message>
-        <source>Explosive ammo parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stance</source>
-        <translation type="unfinished">Postura</translation>
-    </message>
-    <message>
-        <source>Neutralization ratio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activation duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Span</source>
-        <translation type="unfinished">Duración</translation>
-    </message>
-    <message>
-        <source>Effect ammo parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Created object</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mine ammo parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mines quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smoke ammo parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flare ammo parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Usable within a resource network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This will delete all the following associated resource network :</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proceed anyway ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dispersion factor per iteration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code EMAT8</source>
-        <translation type="unfinished">Código EMAT8</translation>
-    </message>
-    <message>
-        <source>Code EMAT6</source>
-        <translation type="unfinished">Código EMAT6</translation>
-    </message>
-    <message>
-        <source>Code NNO</source>
-        <translation type="unfinished">Código NNO</translation>
-    </message>
-    <message>
-        <source>Code LFRIL</source>
-        <translation type="unfinished">Código LFRIL</translation>
-    </message>
-    <message>
-        <source>Ammunition</source>
-        <translation type="unfinished">Munición</translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation type="unfinished">Blindaje objetivo</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation type="unfinished">Destruido</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_GenericListView</name>
-    <message>
-        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_Postures_GUI</name>
-    <message>
-        <source>PH factor</source>
-        <translation>Factor PH</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ExtinguisherAgentInfos_Table</name>
     <message>
         <source>Agent</source>
@@ -3761,6 +3418,349 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     <message>
         <source>Color</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_AmmoListView</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_AttritionGraph</name>
+    <message>
+        <source>Dead</source>
+        <translation type="unfinished">Muerto</translation>
+    </message>
+    <message>
+        <source>Wounded (%1)</source>
+        <translation type="unfinished">Herido (%1)</translation>
+    </message>
+    <message>
+        <source>Unwounded</source>
+        <translation type="unfinished">Ileso</translation>
+    </message>
+    <message>
+        <source>Undamaged</source>
+        <translation type="unfinished">Sin daños</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_AttritionTable</name>
+    <message>
+        <source>Armor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>% on site fixable</source>
+        <translation type="unfinished">% réparable sur place</translation>
+    </message>
+    <message>
+        <source>% maintenance support needed</source>
+        <translation type="unfinished">% réparable avec évacuation</translation>
+    </message>
+    <message>
+        <source>% destroyed</source>
+        <translation type="unfinished">% détruit</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_Data::AmmoCategoryInfo</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipo - Tipo de blindaje inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipo - Tipo de material urbano inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished">Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_Data::IndirectAmmoInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished">Equipo - Postura inválida &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_GUI</name>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished">Munición</translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation type="unfinished">Blindaje objetivo</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished">Destruido</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code NNO</source>
+        <translation type="unfinished">Código NNO</translation>
+    </message>
+    <message>
+        <source>Code EMAT8</source>
+        <translation type="unfinished">Código EMAT8</translation>
+    </message>
+    <message>
+        <source>Code EMAT6</source>
+        <translation type="unfinished">Código EMAT6</translation>
+    </message>
+    <message>
+        <source>Code LFRIL</source>
+        <translation type="unfinished">Código LFRIL</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic supply class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usable within a resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Packaging</source>
+        <translation type="unfinished">Empaquetado</translation>
+    </message>
+    <message>
+        <source>Nbr per package</source>
+        <translation type="unfinished">N° por paquete</translation>
+    </message>
+    <message>
+        <source>Package weight</source>
+        <translation type="unfinished">Peso de paquete</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <translation type="unfinished">T</translation>
+    </message>
+    <message>
+        <source>Package volume</source>
+        <translation type="unfinished">Volúmen de paquete</translation>
+    </message>
+    <message>
+        <source>m3</source>
+        <translation type="unfinished">m3</translation>
+    </message>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished">Atriciones</translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation type="unfinished">Simulación</translation>
+    </message>
+    <message>
+        <source>Armor-Plating</source>
+        <translation type="unfinished">Blindaje</translation>
+    </message>
+    <message>
+        <source>Urban material</source>
+        <translation type="unfinished">Zona urbana</translation>
+    </message>
+    <message>
+        <source>Improvised explosive device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation type="unfinished">Fuego indirecto</translation>
+    </message>
+    <message>
+        <source>Intervention</source>
+        <translation type="unfinished">Intervención</translation>
+    </message>
+    <message>
+        <source>X Dispersion</source>
+        <translation type="unfinished">Dispersión X</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
+    </message>
+    <message>
+        <source>Y Dispersion</source>
+        <translation type="unfinished">Dispersión Y</translation>
+    </message>
+    <message>
+        <source>Effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoke</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illumination shell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation type="unfinished">Efecto</translation>
+    </message>
+    <message>
+        <source>Explosive ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stance</source>
+        <translation type="unfinished">Postura</translation>
+    </message>
+    <message>
+        <source>Neutralization ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dispersion factor per iteration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoke ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Span</source>
+        <translation type="unfinished">Duración</translation>
+    </message>
+    <message>
+        <source>Flare ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Created object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mines quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illumination capacity</source>
+        <translation type="unfinished">Capacidad de iluminación</translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="unfinished">Rango</translation>
+    </message>
+    <message>
+        <source>Must Maintain illumination</source>
+        <translation type="unfinished">Debe mantener iluminación</translation>
+    </message>
+    <message>
+        <source>Guidance</source>
+        <translation type="unfinished">Guiado</translation>
+    </message>
+    <message>
+        <source>Must Maintain guidance</source>
+        <translation type="unfinished">Debe mantener guiado</translation>
+    </message>
+    <message>
+        <source>Illumination range needed</source>
+        <translation type="unfinished">Se requiere rango de iluminación</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Ninguno</translation>
+    </message>
+    <message>
+        <source>PKs</source>
+        <translation type="unfinished">PKs</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete all the following associated resource network :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proceed anyway ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_GenericListView</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_Postures_GUI</name>
+    <message>
+        <source>PH factor</source>
+        <translation type="unfinished">Factor PH</translation>
     </message>
 </context>
 <context>

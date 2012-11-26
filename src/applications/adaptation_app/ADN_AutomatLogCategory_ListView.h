@@ -21,7 +21,7 @@
 
 #include "ADN_ListView.h"
 #include "ADN_Data_ABC.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Units_Data.h"
 #include <boost/noncopyable.hpp>
 
@@ -48,7 +48,7 @@ private:
     void BuildHeaders();
     void BuildBody   ();
     void FillComponentItem( ADN_Rich_ListViewItem&             item,
-                            ADN_Equipement_Data::CategoryInfo& category,
+                            ADN_Resources_Data::CategoryInfo& category,
                             ADN_Units_Data::ComposanteInfos&   comp );
     //@}
 

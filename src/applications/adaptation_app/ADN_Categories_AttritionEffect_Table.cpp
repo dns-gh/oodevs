@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Categories_AttritionEffect_Table.h"
-#include "ADN_Equipement_GUI.h"
+#include "ADN_Resources_GUI.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
@@ -72,5 +72,5 @@ void ADN_Categories_AttritionEffect_Table::dataChanged( const QModelIndex& topLe
 {
     ADN_Table::dataChanged( topLeft, bottomRight );
     if( topLeft == bottomRight )
-        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+        ADN_Workspace::GetWorkspace().GetResources().GetGui().UpdateGraph();
 }

@@ -12,7 +12,7 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_ResourceNatureInfos.h"
 #include "ADN_Tr.h"
 #include "ADN_Wizard.h"
@@ -71,7 +71,7 @@ void ADN_ListView_Categories_DotationNature::OnContextMenu( const QPoint& pt )
             E_DotationFamily value = static_cast< E_DotationFamily >( n );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ENT_Tr::ConvertFromDotationFamily( value ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData, value ), eEquipement, value );
+                                          ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), eResources, value );
         }
     }
     popupMenu.exec( pt );
@@ -94,7 +94,7 @@ std::string ADN_ListView_Categories_DotationNature::GetToolTipFor( const QModelI
     {
         E_DotationFamily value = static_cast< E_DotationFamily >( n );
         FillMultiUsersList( ENT_Tr::ConvertFromDotationFamily( value ).c_str(),
-                            ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData, value ), result );
+                            ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData, value ), result );
     }
 
     if( result.empty() )

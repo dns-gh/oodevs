@@ -7,17 +7,17 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Equipement_GUI_h_
-#define __ADN_Equipement_GUI_h_
+#ifndef __ADN_Resources_GUI_h_
+#define __ADN_Resources_GUI_h_
 
 #include "ADN_GUI_ABC.h"
 #include "ADN_Enums.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 class ADN_CheckBox;
 class ADN_ComboBox;
-class ADN_Equipement_AttritionTable;
-class ADN_Equipement_AttritionGraph;
+class ADN_Resources_AttritionTable;
+class ADN_Resources_AttritionGraph;
 class ADN_ListView;
 class ADN_Table;
 class ADN_ComboBox_Vector;
@@ -28,12 +28,12 @@ namespace helpers
 }
 
 // =============================================================================
-/** @class  ADN_Equipement_GUI
-    @brief  ADN_Equipement_GUI
+/** @class  ADN_Resources_GUI
+    @brief  ADN_Resources_GUI
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Equipement_GUI : public ADN_Tabbed_GUI_ABC // $$$$ ABR 2012-01-20: Misnamed, should be ADN_Equipment_GUI ...
+class ADN_Resources_GUI : public ADN_Tabbed_GUI_ABC
 {
     Q_OBJECT
 
@@ -122,8 +122,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Equipement_GUI( ADN_Equipement_Data& data );
-    virtual ~ADN_Equipement_GUI();
+    explicit ADN_Resources_GUI( ADN_Resources_Data& data );
+    virtual ~ADN_Resources_GUI();
     //@}
 
     //! @name Operations
@@ -131,7 +131,7 @@ public:
     void Build();
     void RegisterTable( ADN_MainWindow& mainWindow );
     ADN_Table* CreatePKTable();
-    void ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Data::AmmoCategoryInfo& infos );
+    void ExportPKs( ADN_HtmlBuilder& builder, ADN_Resources_Data::AmmoCategoryInfo& infos );
     void UpdateGraph();
     void InitializeSimulationCombos();
     helpers::ArmorInfos* GetSelectedArmor() const;
@@ -157,11 +157,11 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ADN_Equipement_Data&            data_;
+    ADN_Resources_Data&            data_;
     std::vector< ADN_CheckBox* >    vNetworkUsableCheckBoxs_;
     E_DotationFamily                currentTab_;
-    std::map< E_DotationFamily, ADN_Equipement_AttritionTable* > pAttritionTables_;
-    std::map< E_DotationFamily, ADN_Equipement_AttritionGraph* > pAttritionGraphs_;
+    std::map< E_DotationFamily, ADN_Resources_AttritionTable* > pAttritionTables_;
+    std::map< E_DotationFamily, ADN_Resources_AttritionGraph* > pAttritionGraphs_;
     std::map< E_DotationFamily, ADN_ComboBox_Vector* >           pArmorCombos_;
     std::map< E_DotationFamily, ADN_ComboBox_Vector* >           pMaterialCombos_;
     QButtonGroup*                   buttonGroup_;
@@ -173,4 +173,4 @@ private:
     //@}
 };
 
-#endif // __ADN_Equipement_GUI_h_
+#endif // __ADN_Resources_GUI_h_

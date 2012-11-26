@@ -18,7 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_PartsTable.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Breakdowns_Data.h"
 
 // -----------------------------------------------------------------------------
@@ -69,8 +69,8 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( const QPoint& pt )
     Q3PopupMenu menu( this );
     Q3PopupMenu subMenu( &menu );
 
-    ADN_Equipement_Data::T_CategoryInfos_Vector& parts = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).categories_;
-    for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = parts.begin(); it != parts.end(); ++it )
+    ADN_Resources_Data::T_CategoryInfos_Vector& parts = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_;
+    for( ADN_Resources_Data::IT_CategoryInfos_Vector it = parts.begin(); it != parts.end(); ++it )
     {
         if( Contains( **it ) )
             continue;
@@ -108,7 +108,7 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( const QPoint& pt )
 // Name: ADN_Breakdowns_PartsTable::Contains
 // Created: AGN 2004-02-25
 // -----------------------------------------------------------------------------
-bool ADN_Breakdowns_PartsTable::Contains( ADN_Equipement_Data::CategoryInfo& category )
+bool ADN_Breakdowns_PartsTable::Contains( ADN_Resources_Data::CategoryInfo& category )
 {
     for( int row = 0; row < dataModel_.rowCount(); ++row )
     {

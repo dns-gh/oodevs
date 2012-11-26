@@ -62,7 +62,7 @@ void ADN_Funeral_GUI::Build()
     pHolder->setMaximumWidth( maxSize );
 
     resourceTable_ = new ADN_FuneralPackagingResources_GUI( strClassName_ + "FuneralTable", data_.funeralPackagingResources_ );
-    resourceTable_->SetGoToOnDoubleClick( ::eEquipement );
+    resourceTable_->SetGoToOnDoubleClick( ::eResources );
     resourceTable_->setMaximumWidth( maxSize );
     resourceTable_->setFixedHeight( 200 );
     resourceTable_->setSortingEnabled( false );

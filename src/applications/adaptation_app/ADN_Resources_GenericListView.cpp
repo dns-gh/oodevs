@@ -6,42 +6,33 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_GenericListView.cpp $
-// $Author: Nld $
-// $Modtime: 20/07/05 14:20 $
-// $Revision: 11 $
-// $Workfile: ADN_Equipement_GenericListView.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Equipement_GenericListView.h"
+#include "ADN_Resources_GenericListView.h"
 
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_Breakdowns_Data.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_FireClass_Data.h"
-#include "ADN_Equipement_Data.h"
-#include "ADN_Equipement_GUI.h"
+#include "ADN_Resources_Data.h"
+#include "ADN_Resources_GUI.h"
 #include "ADN_Enums.h"
-#include "ADN_Equipement_Wizard.h"
+#include "ADN_Resources_Wizard.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_ResourceNetworks_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 
-typedef ADN_Equipement_Data::ResourceInfos ResourceInfos;
-typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
+typedef ADN_Resources_Data::ResourceInfos ResourceInfos;
+typedef ADN_Resources_Data::CategoryInfo CategoryInfo;
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GenericListView constructor
+// Name: ADN_Resources_GenericListView constructor
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Equipement_GenericListView::ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent )
-    : ADN_ListView( pParent, "ADN_Equipement_GenericListView", ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr ).c_str() )
+ADN_Resources_GenericListView::ADN_Resources_GenericListView( E_DotationFamily nType, QWidget* pParent )
+    : ADN_ListView( pParent, "ADN_Resources_GenericListView", ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr::eToTr ).c_str() )
     , nType_      ( nType )
 {
     // Connector creation
@@ -50,63 +41,63 @@ ADN_Equipement_GenericListView::ADN_Equipement_GenericListView( E_DotationFamily
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GenericListView destructor
+// Name: ADN_Resources_GenericListView destructor
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Equipement_GenericListView::~ADN_Equipement_GenericListView()
+ADN_Resources_GenericListView::~ADN_Resources_GenericListView()
 {
     delete pConnector_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GenericListView::ConnectItem
+// Name: ADN_Resources_GenericListView::ConnectItem
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
+void ADN_Resources_GenericListView::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
 
     CategoryInfo* pInfos = static_cast< CategoryInfo* >( pCurData_ );
 
-    vItemConnectors_[ADN_Equipement_GUI::eName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::ePackageNbr    ]->Connect( &pInfos->rNbrInPackage_ , bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::ePackageWeight ]->Connect( &pInfos->rPackageWeight_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::ePackageVolume ]->Connect( &pInfos->rPackageVolume_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eGenEMAT6Code]->Connect( &pInfos->strCodeEMAT6_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eGenEMAT8Code]->Connect( &pInfos->strCodeEMAT8_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eGenLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eGenNNOCode]->Connect( &pInfos->strCodeNNO_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eGenNature]->Connect( &pInfos->ptrResourceNature_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eGenLogisticSupplyClass]->Connect( &pInfos->ptrLogisticSupplyClass_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eGenNetworkUsable]->Connect( &pInfos->bNetworkUsable_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eName]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::ePackageNbr    ]->Connect( &pInfos->rNbrInPackage_ , bConnect );
+    vItemConnectors_[ADN_Resources_GUI::ePackageWeight ]->Connect( &pInfos->rPackageWeight_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::ePackageVolume ]->Connect( &pInfos->rPackageVolume_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eGenEMAT6Code]->Connect( &pInfos->strCodeEMAT6_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eGenEMAT8Code]->Connect( &pInfos->strCodeEMAT8_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eGenLFRILCode]->Connect( &pInfos->strCodeLFRIL_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eGenNNOCode]->Connect( &pInfos->strCodeNNO_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eGenNature]->Connect( &pInfos->ptrResourceNature_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eGenLogisticSupplyClass]->Connect( &pInfos->ptrLogisticSupplyClass_, bConnect );
+    vItemConnectors_[ADN_Resources_GUI::eGenNetworkUsable]->Connect( &pInfos->bNetworkUsable_, bConnect );
 
-    if( ADN_Equipement_Data::IsMineOrExplosive( nType_ ) )
+    if( ADN_Resources_Data::IsMineOrExplosive( nType_ ) )
     {
-        ADN_Equipement_Data::AmmoCategoryInfo* pAmmoInfos = static_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( pCurData_ );
+        ADN_Resources_Data::AmmoCategoryInfo* pAmmoInfos = static_cast< ADN_Resources_Data::AmmoCategoryInfo* >( pCurData_ );
 
-        vItemConnectors_[ADN_Equipement_GUI::eGenType]->Connect( &pAmmoInfos->nType_, bConnect );
+        vItemConnectors_[ADN_Resources_GUI::eGenType]->Connect( &pAmmoInfos->nType_, bConnect );
 
-        vItemConnectors_[ADN_Equipement_GUI::eGenAttritions]->Connect( &pAmmoInfos->attritions_, bConnect );
-        vItemConnectors_[ADN_Equipement_GUI::eGenUrbanAttritions]->Connect( &pAmmoInfos->modifUrbanBlocks_, bConnect );
-        vItemConnectors_[ADN_Equipement_GUI::eGenArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), bConnect );
-        vItemConnectors_[ADN_Equipement_GUI::eGenMaterial]->Connect( &pAmmoInfos->modifUrbanBlocks_, bConnect );
-        vItemConnectors_[ADN_Equipement_GUI::eGenAttritionGraph]->Connect( &pAmmoInfos->attritions_, bConnect );
+        vItemConnectors_[ADN_Resources_GUI::eGenAttritions]->Connect( &pAmmoInfos->attritions_, bConnect );
+        vItemConnectors_[ADN_Resources_GUI::eGenUrbanAttritions]->Connect( &pAmmoInfos->modifUrbanBlocks_, bConnect );
+        vItemConnectors_[ADN_Resources_GUI::eGenArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), bConnect );
+        vItemConnectors_[ADN_Resources_GUI::eGenMaterial]->Connect( &pAmmoInfos->modifUrbanBlocks_, bConnect );
+        vItemConnectors_[ADN_Resources_GUI::eGenAttritionGraph]->Connect( &pAmmoInfos->attritions_, bConnect );
 
         if( bConnect )
-            ADN_Workspace::GetWorkspace().GetEquipements().GetGui().InitializeSimulationCombos();
+            ADN_Workspace::GetWorkspace().GetResources().GetGui().InitializeSimulationCombos();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GenericListView::OnContextMenu
+// Name: ADN_Resources_GenericListView::OnContextMenu
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GenericListView::OnContextMenu( const QPoint& pt )
+void ADN_Resources_GenericListView::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
-    ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( nType_ );
-    ADN_Equipement_Wizard wizard( dotation, ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str(), this );
+    ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( nType_ );
+    ADN_Resources_Wizard wizard( dotation, ENT_Tr::ConvertFromDotationFamily( nType_, ENT_Tr::eToTr ).c_str(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
     if( pCurData_ != 0 )
     {
@@ -129,10 +120,10 @@ void ADN_Equipement_GenericListView::OnContextMenu( const QPoint& pt )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GenericListView::GetToolTipFor
+// Name: ADN_Resources_GenericListView::GetToolTipFor
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-std::string ADN_Equipement_GenericListView::GetToolTipFor( const QModelIndex& index )
+std::string ADN_Resources_GenericListView::GetToolTipFor( const QModelIndex& index )
 {
     if( !index.isValid() )
         return "";

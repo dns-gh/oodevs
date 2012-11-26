@@ -51,9 +51,9 @@ QWidget* ADN_Weapons_WizardPage::CreateNameField()
         pComboLauncher_->insertItem( (*itLauncher)->strName_.GetData().c_str() );
     pComboLauncher_->model()->sort( 0 );
 
-    ADN_Equipement_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
-    ADN_Equipement_Data::T_CategoryInfos_Vector& vAmmo = ammoDotation.GetCategories();
-    for( ADN_Equipement_Data::IT_CategoryInfos_Vector itAmmo = vAmmo.begin(); itAmmo != vAmmo.end(); ++itAmmo )
+    ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition );
+    ADN_Resources_Data::T_CategoryInfos_Vector& vAmmo = ammoDotation.GetCategories();
+    for( ADN_Resources_Data::IT_CategoryInfos_Vector itAmmo = vAmmo.begin(); itAmmo != vAmmo.end(); ++itAmmo )
         pComboAmmo_->insertItem( (*itAmmo)->strName_.GetData().c_str() );
     pComboAmmo_->model()->sort( 0 );
 
@@ -80,10 +80,10 @@ bool ADN_Weapons_WizardPage::validatePage()
 
     ADN_Launchers_Data::LauncherInfos* pLauncher = ADN_Workspace::GetWorkspace().GetLaunchers().GetData().FindLauncher( strLauncher );
     assert( pLauncher != 0 );
-    ADN_Equipement_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
-    ADN_Equipement_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
+    ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition );
+    ADN_Resources_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
     assert( pAmmo != 0 );
-    ADN_Equipement_Data::AmmoCategoryInfo& ammo = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo& >( *pAmmo );
+    ADN_Resources_Data::AmmoCategoryInfo& ammo = dynamic_cast< ADN_Resources_Data::AmmoCategoryInfo& >( *pAmmo );
     if( ammo.bDirect_.GetData() != pLauncher->bDirect_.GetData() &&
         ammo.bIndirect_.GetData() != pLauncher->bIndirect_.GetData() )
     {
@@ -109,9 +109,9 @@ void ADN_Weapons_WizardPage::ApplyOptions()
         element_->ptrLauncher_ = pLauncher;
 
         std::string strAmmo = pComboAmmo_->currentText().toStdString();
-        ADN_Equipement_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
-        ADN_Equipement_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
-        ADN_Equipement_Data::AmmoCategoryInfo* ammo = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( pAmmo );
+        ADN_Resources_Data::ResourceInfos& ammoDotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition );
+        ADN_Resources_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
+        ADN_Resources_Data::AmmoCategoryInfo* ammo = dynamic_cast< ADN_Resources_Data::AmmoCategoryInfo* >( pAmmo );
         element_->ptrAmmunition_ = ammo;
     }
 }

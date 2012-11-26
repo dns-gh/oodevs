@@ -8,14 +8,14 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Equipement_AttritionGraph.h"
+#include "ADN_Resources_AttritionGraph.h"
+#include "moc_ADN_Resources_AttritionGraph.cpp"
 #include "ADN_Connector_Vector_ABC.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Logistic_Data.h"
 #include "ADN_Health_Data.h"
-#include "ADN_Equipement_GUI.h"
+#include "ADN_Resources_GUI.h"
 #include "ADN_Tr.h"
-#include "moc_ADN_Equipement_AttritionGraph.cpp"
 #include <boost/noncopyable.hpp>
 
 //-----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ class ADN_Connector_AttritionGraph : public ADN_Connector_Vector_ABC
 {
 
 public:
-    explicit ADN_Connector_AttritionGraph( ADN_Equipement_AttritionGraph* graph )
+    explicit ADN_Connector_AttritionGraph( ADN_Resources_AttritionGraph* graph )
         : ADN_Connector_Vector_ABC()
         , graph_( graph )
     {}
@@ -72,14 +72,14 @@ public:
     }
 
 private:
-    ADN_Equipement_AttritionGraph* graph_;
+    ADN_Resources_AttritionGraph* graph_;
 };
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph constructor
+// Name: ADN_Resources_AttritionGraph constructor
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
-ADN_Equipement_AttritionGraph::ADN_Equipement_AttritionGraph( QWidget* pParent /* = 0*/ )
+ADN_Resources_AttritionGraph::ADN_Resources_AttritionGraph( QWidget* pParent /* = 0*/ )
     : QWidget( pParent )
 {
     setMinimumWidth( 500 );
@@ -109,28 +109,28 @@ ADN_Equipement_AttritionGraph::ADN_Equipement_AttritionGraph( QWidget* pParent /
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph destructor
+// Name: ADN_Resources_AttritionGraph destructor
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
-ADN_Equipement_AttritionGraph::~ADN_Equipement_AttritionGraph()
+ADN_Resources_AttritionGraph::~ADN_Resources_AttritionGraph()
 {
     delete pConnector_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::AddAttrition
+// Name: ADN_Resources_AttritionGraph::AddAttrition
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionGraph::AddAttrition( helpers::AttritionInfos& info )
+void ADN_Resources_AttritionGraph::AddAttrition( helpers::AttritionInfos& info )
 {
     attritions_.push_back( &info );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::RemoveAttrition
+// Name: ADN_Resources_AttritionGraph::RemoveAttrition
 // Created: JSR 2010-04-30
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionGraph::RemoveAttrition( helpers::AttritionInfos& info )
+void ADN_Resources_AttritionGraph::RemoveAttrition( helpers::AttritionInfos& info )
 {
     for( IT_Attritions it = attritions_.begin(); it != attritions_.end(); ++it )
         if( *it == &info )
@@ -141,25 +141,25 @@ void ADN_Equipement_AttritionGraph::RemoveAttrition( helpers::AttritionInfos& in
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::ClearAttritions
+// Name: ADN_Resources_AttritionGraph::ClearAttritions
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionGraph::ClearAttritions()
+void ADN_Resources_AttritionGraph::ClearAttritions()
 {
     attritions_.clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::Update
+// Name: ADN_Resources_AttritionGraph::Update
 // Created: JSR 2010-04-30
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionGraph::Update()
+void ADN_Resources_AttritionGraph::Update()
 {
-    helpers::ArmorInfos* info = ADN_Workspace::GetWorkspace().GetEquipements().GetGui().GetSelectedArmor();
+    helpers::ArmorInfos* info = ADN_Workspace::GetWorkspace().GetResources().GetGui().GetSelectedArmor();
     if( info == 0 )
         return;
 
-    helpers::ADN_UrbanAttritionInfos* material = ADN_Workspace::GetWorkspace().GetEquipements().GetGui().GetSelectedMaterial();
+    helpers::ADN_UrbanAttritionInfos* material = ADN_Workspace::GetWorkspace().GetResources().GetGui().GetSelectedMaterial();
     const double urbanProtection = material ? material->rCoeff_.GetData() : 0.;
 
     ADN_Health_Data::WoundInfo* wounds = ADN_Workspace::GetWorkspace().GetLogistic().GetData().GetElement< ADN_Health_Data >( eHealth ).wounds;
@@ -240,10 +240,10 @@ void ADN_Equipement_AttritionGraph::Update()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::GetTextTooltip
+// Name: ADN_Resources_AttritionGraph::GetTextTooltip
 // Created: JSR 2010-06-01
 // -----------------------------------------------------------------------------
-QString ADN_Equipement_AttritionGraph::GetTextTooltip( const QPoint& point, QRect& rc ) const
+QString ADN_Resources_AttritionGraph::GetTextTooltip( const QPoint& point, QRect& rc ) const
 {
     for( CIT_Columns column = columns_.begin(); column != columns_.end(); ++column )
     {
@@ -267,10 +267,10 @@ QString ADN_Equipement_AttritionGraph::GetTextTooltip( const QPoint& point, QRec
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::event
+// Name: ADN_Resources_AttritionGraph::event
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
-bool ADN_Equipement_AttritionGraph::event( QEvent* e )
+bool ADN_Resources_AttritionGraph::event( QEvent* e )
 {
     if( e->type() == QEvent::ToolTip )
     {
@@ -287,10 +287,10 @@ bool ADN_Equipement_AttritionGraph::event( QEvent* e )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionGraph::paintEvent
+// Name: ADN_Resources_AttritionGraph::paintEvent
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
+void ADN_Resources_AttritionGraph::paintEvent( QPaintEvent* )
 {
     QPainter painter( this );
 

@@ -12,7 +12,7 @@
 
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Project_Data.h"
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
@@ -26,7 +26,7 @@ tools::IdManager ADN_Breakdowns_Data::idManager_;
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
     : nNbr_               ( 0 )
-    , ptrPart_            ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).categories_, 0 )
+    , ptrPart_            ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).categories_, 0 )
 {
     this->BindExistenceTo( &ptrPart_ );
 }
@@ -53,7 +53,7 @@ void ADN_Breakdowns_Data::RepairPartInfo::ReadArchive( xml::xistream& input )
     std::string strCategoryName;
     input >> xml::attribute( "resource", strCategoryName )
           >> xml::attribute( "quantity", nNbr_ );
-    ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Piece ).FindCategory( strCategoryName );
+    ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Piece ).FindCategory( strCategoryName );
     if( pCategory == 0 )
         throw ADN_DataException( tools::translate( "Breakdown_Data", "Invalid data" ).toStdString(), tools::translate( "Breakdown_Data", "Breakdowns - Invalid part '%1'" ).arg( strCategoryName.c_str() ).toStdString() );
     ptrPart_ = pCategory;
@@ -293,7 +293,7 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Breakdowns_Data::GetBreakdownsThatUse
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-QStringList ADN_Breakdowns_Data::GetBreakdownsThatUse( ADN_Equipement_Data::CategoryInfo& part )
+QStringList ADN_Breakdowns_Data::GetBreakdownsThatUse( ADN_Resources_Data::CategoryInfo& part )
 {
     QStringList result;
     for( IT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )

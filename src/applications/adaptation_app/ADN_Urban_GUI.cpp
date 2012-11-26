@@ -17,7 +17,7 @@
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
 #include "ADN_ComboBox_Vector.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_ListView_Templates.h"
 #include "ADN_Template_Usages.h"
 #include "ADN_ColorNameSelector.h"

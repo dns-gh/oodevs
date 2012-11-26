@@ -7,27 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Equipement_AmmoListView_h_
-#define __ADN_Equipement_AmmoListView_h_
+#ifndef __ADN_Resources_AmmoListView_h_
+#define __ADN_Resources_AmmoListView_h_
 
 #include "ADN_ListView.h"
 #include <boost/noncopyable.hpp>
 
 // =============================================================================
-/** @class  ADN_Equipement_AmmoListView
-    @brief  ADN_Equipement_AmmoListView
+/** @class  ADN_Resources_AmmoListView
+    @brief  ADN_Resources_AmmoListView
 */
 // Created: APE 2004-12-29
 // =============================================================================
-class ADN_Equipement_AmmoListView : public ADN_ListView
-                                  , private boost::noncopyable
+class ADN_Resources_AmmoListView : public ADN_ListView
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Equipement_AmmoListView( QWidget* pParent );
-    virtual ~ADN_Equipement_AmmoListView();
+    explicit ADN_Resources_AmmoListView( QWidget* pParent );
+    virtual ~ADN_Resources_AmmoListView();
     //@}
 
 private:
@@ -39,4 +38,4 @@ private:
     //@}
 };
 
-#endif // __ADN_Equipement_AmmoListView_h_
+#endif // __ADN_Resources_AmmoListView_h_

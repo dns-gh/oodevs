@@ -1,30 +1,28 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-09-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_Postures_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 20/04/05 17:04 $
-// $Revision: 9 $
-// $Workfile: ADN_Equipement_Postures_GUI.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Equipement_Postures_GUI.h"
+#include "ADN_Resources_Postures_GUI.h"
 #include "ADN_App.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Connector_Table_ABC.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"
 
-typedef ADN_Equipement_Data::ModificatorPostureInfos ModificatorPostureInfos;
+typedef ADN_Resources_Data::ModificatorPostureInfos ModificatorPostureInfos;
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Equipement_Postures_GUI constructor
+// Name: ADN_Resources_Postures_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& objectName, const QString& strColCaption, ADN_Connector_ABC*& connector,  QWidget* pParent /*= 0*/ )
+ADN_Resources_Postures_GUI::ADN_Resources_Postures_GUI( const QString& objectName, const QString& strColCaption, ADN_Connector_ABC*& connector,  QWidget* pParent /*= 0*/ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 2 );
@@ -40,19 +38,19 @@ ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& objectN
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Equipement_Postures_GUI destructor
+// Name: ADN_Resources_Postures_GUI destructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Equipement_Postures_GUI::~ADN_Equipement_Postures_GUI()
+ADN_Resources_Postures_GUI::~ADN_Resources_Postures_GUI()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_Postures_GUI::AddRow
+// Name: ADN_Resources_Postures_GUI::AddRow
 // Created: MMC 2012-11-06
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Postures_GUI::AddRow( int row, void* data )
+void ADN_Resources_Postures_GUI::AddRow( int row, void* data )
 {
     ModificatorPostureInfos* pPostureInfo = static_cast< ModificatorPostureInfos* >( data );
     if( !pPostureInfo )

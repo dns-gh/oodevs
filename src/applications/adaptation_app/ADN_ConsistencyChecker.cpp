@@ -11,7 +11,7 @@
 #include "ADN_ConsistencyChecker.h"
 #include "ADN_Workspace.h"
 #include "ADN_Composantes_Data.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ConsistencyChecker constructor
@@ -103,14 +103,14 @@ void ADN_ConsistencyChecker::CheckNNOConsistency()
         elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eComposantes ) );
     }
 
-    ADN_Equipement_Data::T_ResourceInfos_Vector ressourceCategories = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
-    for( ADN_Equipement_Data::CIT_ResourceInfos_Vector itCategory = ressourceCategories.begin(); itCategory != ressourceCategories.end(); ++itCategory )
+    ADN_Resources_Data::T_ResourceInfos_Vector ressourceCategories = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
+    for( ADN_Resources_Data::CIT_ResourceInfos_Vector itCategory = ressourceCategories.begin(); itCategory != ressourceCategories.end(); ++itCategory )
     {
-        ADN_Equipement_Data::T_CategoryInfos_Vector ressources = ( *itCategory )->categories_;
-        for( ADN_Equipement_Data::CIT_CategoryInfos_Vector itRessource = ressources.begin(); itRessource != ressources.end(); ++itRessource )
+        ADN_Resources_Data::T_CategoryInfos_Vector ressources = ( *itCategory )->categories_;
+        for( ADN_Resources_Data::CIT_CategoryInfos_Vector itRessource = ressources.begin(); itRessource != ressources.end(); ++itRessource )
         {
-            ADN_Equipement_Data::CategoryInfo& infos = **itRessource;
-            elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eEquipement, ( *itCategory )->nType_ ) );
+            ADN_Resources_Data::CategoryInfo& infos = **itRessource;
+            elements_.push_back( NNOElement( infos.strName_.GetData(), infos.strCodeNNO_.GetData(), infos.strCodeEMAT8_.GetData(), eResources, ( *itCategory )->nType_ ) );
         }
     }
 

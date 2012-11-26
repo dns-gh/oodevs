@@ -157,7 +157,7 @@ void ADN_Weapons_Data::PhSizeInfos::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 ADN_Weapons_Data::WeaponInfos::WeaponInfos()
     : ptrLauncher_      ( ADN_Workspace::GetWorkspace().GetLaunchers().GetData().GetLaunchersInfos(), 0 )
-    , ptrAmmunition_    ( (ADN_Equipement_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
+    , ptrAmmunition_    ( (ADN_Resources_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_, 0 )
     , nRoundsPerBurst_  ( 1 )
     , burstDuration_    ( "1s" )
     , nRoundsPerReload_ ( 1 )
@@ -246,10 +246,10 @@ void ADN_Weapons_Data::WeaponInfos::ReadArchive( xml::xistream& input )
         throw ADN_DataException( tools::translate( "Weapons_Data", "Invalid data" ).toStdString(), tools::translate( "Weapons_Data", "Weapon systems '%1'/'%2' - Invalid launcher type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toStdString() );
     ptrLauncher_ = pLauncher;
 
-    ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
+    ADN_Resources_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( "munition", strAmmunition );
     if( !pAmmo )
         throw ADN_DataException( tools::translate( "Weapons_Data", "Invalid data" ).toStdString(), tools::translate( "Weapons_Data", "Weapon systems '%1'/'%2' - Invalid ammunition type" ).arg( strLauncher.c_str(), strAmmunition.c_str() ).toStdString() );
-    ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
+    ptrAmmunition_ = (ADN_Resources_Data::AmmoCategoryInfo*)pAmmo;
 
     strName_ = strLauncher + " & " + strAmmunition;
     input >> xml::start( "burst" )
@@ -406,7 +406,7 @@ QStringList ADN_Weapons_Data::GetWeaponThatUse( ADN_Launchers_Data::LauncherInfo
 // Name: ADN_Weapons_Data::GetWeaponThatUse
 // Created: SBO 2005-09-06
 // -----------------------------------------------------------------------------
-QStringList ADN_Weapons_Data::GetWeaponThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammunition )
+QStringList ADN_Weapons_Data::GetWeaponThatUse( ADN_Resources_Data::AmmoCategoryInfo& ammunition )
 {
     QStringList result;
     for( IT_WeaponInfosVector it = weapons_.begin(); it != weapons_.end(); ++it )

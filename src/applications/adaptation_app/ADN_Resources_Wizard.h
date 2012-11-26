@@ -7,34 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Equipement_Wizard_h_
-#define __ADN_Equipement_Wizard_h_
+#ifndef __ADN_Resources_Wizard_h_
+#define __ADN_Resources_Wizard_h_
 
 #include "ADN_Wizard.h"
-#include "ADN_Equipement_Data.h"
-#include "ADN_Equipement_WizardPage.h"
+#include "ADN_Resources_Data.h"
+#include "ADN_Resources_WizardPage.h"
 
 // =============================================================================
-/** @class  ADN_Equipement_Wizard
-    @brief  ADN_Equipement_Wizard
-    ADN_Equipement_Wizard;
+/** @class  ADN_Resources_Wizard
+    @brief  ADN_Resources_Wizard
+    ADN_Resources_Wizard;
     @endcode
 */
 // Created: APE 2005-01-19
 // =============================================================================
-class ADN_Equipement_Wizard : public ADN_Wizard< ADN_Equipement_Data::CategoryInfo, ADN_Equipement_WizardPage >
+class ADN_Resources_Wizard : public ADN_Wizard< ADN_Resources_Data::CategoryInfo, ADN_Resources_WizardPage >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Equipement_Wizard( ADN_Equipement_Data::ResourceInfos& parentDotation, const QString& elementName, QWidget* pParent = 0 )
-        : ADN_Wizard< ADN_Equipement_Data::CategoryInfo, ADN_Equipement_WizardPage >( elementName, parentDotation.categories_, pParent )
+    explicit ADN_Resources_Wizard( ADN_Resources_Data::ResourceInfos& parentDotation, const QString& elementName, QWidget* pParent = 0 )
+        : ADN_Wizard< ADN_Resources_Data::CategoryInfo, ADN_Resources_WizardPage >( elementName, parentDotation.categories_, pParent )
         , parentDotation_( parentDotation )
     {
         // NOTHING
     }
-    virtual ~ADN_Equipement_Wizard()
+    virtual ~ADN_Resources_Wizard()
     {
         // NOTHING
     }
@@ -43,17 +43,17 @@ public:
 public:
     //! @name Helpers
     //@{
-    virtual ADN_Equipement_WizardPage* CreatePage()
+    virtual ADN_Resources_WizardPage* CreatePage()
     {
-        return new ADN_Equipement_WizardPage( vector_, title_, this, &parentDotation_ );
+        return new ADN_Resources_WizardPage( vector_, title_, this, &parentDotation_ );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    ADN_Equipement_Data::ResourceInfos& parentDotation_;
+    ADN_Resources_Data::ResourceInfos& parentDotation_;
     //@}
 };
 
-#endif // __ADN_Equipement_Wizard_h_
+#endif // __ADN_Resources_Wizard_h_

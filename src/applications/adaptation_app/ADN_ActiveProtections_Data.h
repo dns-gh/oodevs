@@ -15,7 +15,7 @@
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Weapons_Data.h"
 
 // =============================================================================
@@ -40,7 +40,7 @@ public:
         void WriteArchive( xml::xostream& xos );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo> ptrWeapon_;
+        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo> ptrWeapon_;
         ADN_Type_Double coefficient_;
     };
 
@@ -69,7 +69,7 @@ public:
         ADN_Type_Bool hardKill_;
         ADN_Type_Double usage_;
         T_ActiveProtectionsInfosWeaponsVector weapons_;
-        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::AmmoCategoryInfo> ptrAmmunition_;
+        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::AmmoCategoryInfo> ptrAmmunition_;
     };
 
     typedef ADN_Type_Vector_ABC< ActiveProtectionsInfos > T_ActiveProtectionsInfosVector;
@@ -92,8 +92,8 @@ public:
     virtual void Reset();
     T_ActiveProtectionsInfosVector& GetActiveProtectionsInfos();
 
-    QStringList GetActiveProtectionsThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammo );
-    QStringList GetActiveProtectionsThatUse( ADN_Equipement_Data::CategoryInfo& category );
+    QStringList GetActiveProtectionsThatUse( ADN_Resources_Data::AmmoCategoryInfo& ammo );
+    QStringList GetActiveProtectionsThatUse( ADN_Resources_Data::CategoryInfo& category );
     //@}
 
     //! @name Member data

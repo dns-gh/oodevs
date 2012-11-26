@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Equipement_Data_h_
-#define __ADN_Equipement_Data_h_
+#ifndef __ADN_Resources_Data_h_
+#define __ADN_Resources_Data_h_
 
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
@@ -26,11 +26,11 @@
 namespace xml { class xistream; }
 
 // =============================================================================
-/** @class  ADN_Equipement_Data
+/** @class  ADN_Resources_Data
 */
 // Created: APE 2004-11-15
 // =============================================================================
-class ADN_Equipement_Data : public ADN_Data_ABC
+class ADN_Resources_Data : public ADN_Data_ABC
 {
     friend class ADN_Equipement;
 
@@ -210,26 +210,26 @@ public:
 
 // *****************************************************************************
 public:
-             ADN_Equipement_Data();
-    virtual ~ADN_Equipement_Data();
+             ADN_Resources_Data();
+    virtual ~ADN_Resources_Data();
 
 public:
     void FilesNeeded(T_StringList& files ) const;
     void Reset();
 
-    T_ResourceInfos_Vector& GetDotations();
-    ResourceInfos&          GetDotation( E_DotationFamily nType );
-    T_CategoryInfos_Vector& GetNetworkUsableDotation();
-    CategoryInfo*           FindEquipementCategory( const std::string& strDotationName, const std::string& strCategoryName );
-    CategoryInfo*           FindEquipementCategory( const std::string& strCategoryName );
+    T_ResourceInfos_Vector& GetResources();
+    ResourceInfos&          GetResource( E_DotationFamily nType );
+    T_CategoryInfos_Vector& GetNetworkUsableResources();
+    CategoryInfo*           FindResourceCategory( const std::string& strDotationName, const std::string& strCategoryName );
+    CategoryInfo*           FindResourceCategory( const std::string& strCategoryName );
 
     void                    Initialize();
 
-    QStringList GetEquipmentsThatUse( ADN_Objects_Data_ObjectInfos& object );
-    QStringList GetEquipmentsThatUse( helpers::ResourceNatureInfos& object );
-    QStringList GetEquipmentsThatUse( helpers::ResourceNatureInfos& object, E_DotationFamily familly );
-    QStringList GetEquipmentsThatUse( helpers::LogisticSupplyClass& object );
-    QStringList GetEquipmentsWithDirectFire();
+    QStringList GetResourcesThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetResourcesThatUse( helpers::ResourceNatureInfos& object );
+    QStringList GetResourcesThatUse( helpers::ResourceNatureInfos& object, E_DotationFamily familly );
+    QStringList GetResourcesThatUse( helpers::LogisticSupplyClass& object );
+    QStringList GetResourcesWithDirectFire();
 
     static bool IsMineOrExplosive( E_DotationFamily type );
 
@@ -247,23 +247,23 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_Data::GetDotations
+// Name: ADN_Resources_Data::GetResources
 // Created: APE 2004-12-01
 // -----------------------------------------------------------------------------
 inline
-ADN_Equipement_Data::T_ResourceInfos_Vector& ADN_Equipement_Data::GetDotations()
+ADN_Resources_Data::T_ResourceInfos_Vector& ADN_Resources_Data::GetResources()
 {
     return resources_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_Data::GetNetworkUsableDotation
+// Name: ADN_Resources_Data::GetNetworkUsableResources
 // Created: ABR 2012-02-29
 // -----------------------------------------------------------------------------
 inline
-ADN_Equipement_Data::T_CategoryInfos_Vector& ADN_Equipement_Data::GetNetworkUsableDotation()
+ADN_Resources_Data::T_CategoryInfos_Vector& ADN_Resources_Data::GetNetworkUsableResources()
 {
     return networkUsableResources_;
 }
 
-#endif // __ADN_Equipement_Data_h_
+#endif // __ADN_Resources_Data_h_

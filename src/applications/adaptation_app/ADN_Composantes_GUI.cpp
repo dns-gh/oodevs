@@ -177,7 +177,7 @@ void ADN_Composantes_GUI::Build()
     // Dotations
     Q3HGroupBox* pDotationGroup = new Q3HGroupBox( tr( "Resources" ) );
     pDotations_ = new ADN_Composantes_Dotations_GUI( strClassName_ + "_Resources", vInfosConnectors[ eDotations ], true, pDotationGroup );
-    pDotations_->SetGoToOnDoubleClick( ::eEquipement ); // $$$$ ABR 2012-03-09: TODO, GOOD TAB
+    pDotations_->SetGoToOnDoubleClick( ::eResources ); // $$$$ ABR 2012-03-09: TODO, GOOD TAB
     // Consumptions
     Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
     pConsumptions_ = new ADN_Composantes_ConsumptionsTable( strClassName_ + "_Consumptions", vInfosConnectors[ eConsumptions ], pConsumptionsGroup );

@@ -146,7 +146,7 @@ void ADN_ConsistencyDialog::UpdateDataModel()
             {
                 if( error.items_.front()->targetTab_ == eComposantes )
                     text = text.arg( tr( "The equipement '" ) + error.items_.front()->targetName_ + "'" );
-                else if ( error.items_.front()->targetTab_ == eEquipement )
+                else if ( error.items_.front()->targetTab_ == eResources )
                     text = text.arg( tr( "The resource '" ) + error.items_.front()->targetName_ + "'" );
                 else
                 {

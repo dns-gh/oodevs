@@ -20,7 +20,7 @@
 #include "ADN_Sensors_Data.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_ActiveProtections_Data.h"
 #include "ADN_ResourceNatureInfos.h"
@@ -373,15 +373,15 @@ public:
     {
 
     public:
-        CategoryInfos( ADN_Equipement_Data::ResourceInfos& parentDotation );
+        CategoryInfos( ADN_Resources_Data::ResourceInfos& parentDotation );
 
         CategoryInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::ResourceInfos> ptrDotation_;
-        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo>  ptrCategory_;
+        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::ResourceInfos> ptrDotation_;
+        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo>  ptrCategory_;
         ADN_Type_Int                                                 rNbr_;
         ADN_Type_Double                                              rLogThreshold_;
         ADN_Type_Double                                              rNormalizedConsumption_;
@@ -401,7 +401,7 @@ public:
         void CopyFrom( ResourceInfos& src );
         void ReadCategory( xml::xistream& input );
         void ReadArchive( xml::xistream& input );
-        void ReadDotation( xml::xistream& input, ADN_Equipement_Data::ResourceInfos& dotation );
+        void ReadDotation( xml::xistream& input, ADN_Resources_Data::ResourceInfos& dotation );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
@@ -454,7 +454,7 @@ public:
     {
 
     public:
-        ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Equipement_Data::CategoryInfo& category );
+        ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Resources_Data::CategoryInfo& category );
 
         ConsumptionItem* CreateCopy();
         void ReadArchive( xml::xistream& input );
@@ -462,7 +462,7 @@ public:
 
     public:
         E_ConsumptionType                                           nConsumptionType_;
-        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo> ptrCategory_;
+        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo> ptrCategory_;
         ADN_Type_Double                                             nQuantityUsedPerHour_;
     };
 
@@ -592,7 +592,7 @@ public:
     QStringList GetComposantesThatUse( helpers::ArmorInfos& armor );
     QStringList GetComposantesThatUse( ADN_Categories_Data::SizeInfos& size );
     QStringList GetComposantesThatUse( ADN_ActiveProtections_Data::ActiveProtectionsInfos& activeProtection );
-    QStringList GetComposantesThatUse( ADN_Equipement_Data::CategoryInfo& category );
+    QStringList GetComposantesThatUse( ADN_Resources_Data::CategoryInfo& category );
 
 private:
     void ReadElement( xml::xistream& input );

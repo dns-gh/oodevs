@@ -59,8 +59,8 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( const QPoint& pt )
     Q3PopupMenu menu( this );
     Q3PopupMenu addMenu( &menu );
 
-    ADN_Equipement_Data::T_CategoryInfos_Vector& pWeapon = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_;
-    for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = pWeapon.begin(); it != pWeapon.end(); ++it )
+    ADN_Resources_Data::T_CategoryInfos_Vector& pWeapon = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_;
+    for( ADN_Resources_Data::IT_CategoryInfos_Vector it = pWeapon.begin(); it != pWeapon.end(); ++it )
     {
         if( Contains( **it ) )
             continue;
@@ -101,7 +101,7 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( const QPoint& pt )
 // Name: ADN_ActiveProtections_WeaponsTable::Contains
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
-bool ADN_ActiveProtections_WeaponsTable::Contains( ADN_Equipement_Data::CategoryInfo& category )
+bool ADN_ActiveProtections_WeaponsTable::Contains( ADN_Resources_Data::CategoryInfo& category )
 {
     for( int row = 0; row < dataModel_.rowCount(); ++row )
     {

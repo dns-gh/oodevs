@@ -1494,349 +1494,6 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Equipement_AmmoListView</name>
-    <message>
-        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_AttritionGraph</name>
-    <message>
-        <source>Dead</source>
-        <translation type="unfinished">الميت</translation>
-    </message>
-    <message>
-        <source>Wounded (%1)</source>
-        <translation type="unfinished">الجرحى (1%)</translation>
-    </message>
-    <message>
-        <source>Unwounded</source>
-        <translation type="unfinished">المعافين</translation>
-    </message>
-    <message>
-        <source>Undamaged</source>
-        <translation type="unfinished">غير التالفة</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_AttritionTable</name>
-    <message>
-        <source>% on site fixable</source>
-        <translation type="unfinished">% في الموقع يمكن حلها</translation>
-    </message>
-    <message>
-        <source>% maintenance support needed</source>
-        <translation type="unfinished">دعم الصيانة % اللازمة</translation>
-    </message>
-    <message>
-        <source>% destroyed</source>
-        <translation type="unfinished">% دمرت</translation>
-    </message>
-    <message>
-        <source>Armor</source>
-        <translation type="unfinished">درع</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_Data::AmmoCategoryInfo</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع الدروع غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع المواد الحضرية &apos;%1&apos; غير صالح</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_Data::IndirectAmmoInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid stance &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-موقف غير صالح &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
-        <translation type="unfinished">معدات-نوع الذخيرة النيران غير المباشرة غير صالح &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_GUI</name>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished">الاسم</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation type="unfinished">طبيعة</translation>
-    </message>
-    <message>
-        <source>Logistic supply class</source>
-        <translation type="unfinished">فئة الإمداد اللوجستي</translation>
-    </message>
-    <message>
-        <source>Usable within a resource network</source>
-        <translation type="unfinished">للاستخدام داخل شبكة الموارد</translation>
-    </message>
-    <message>
-        <source>Packaging</source>
-        <translation type="unfinished">التعبئة والتغليف</translation>
-    </message>
-    <message>
-        <source>Nbr per package</source>
-        <translation type="unfinished">Nbr كل حزمة</translation>
-    </message>
-    <message>
-        <source>Package weight</source>
-        <translation type="unfinished">وزن الحزمة</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <translation type="unfinished">T</translation>
-    </message>
-    <message>
-        <source>Package volume</source>
-        <translation type="unfinished">حجم الحزمة</translation>
-    </message>
-    <message>
-        <source>m3</source>
-        <translation type="unfinished">m3</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished">نوع</translation>
-    </message>
-    <message>
-        <source>Improvised explosive device</source>
-        <translation type="unfinished">جهاز متفجر مرتجل</translation>
-    </message>
-    <message>
-        <source>Attritions</source>
-        <translation type="unfinished">أتريشنز</translation>
-    </message>
-    <message>
-        <source>Simulation</source>
-        <translation type="unfinished">محاكاة</translation>
-    </message>
-    <message>
-        <source>Armor-Plating</source>
-        <translation type="unfinished">دروع</translation>
-    </message>
-    <message>
-        <source>Urban material</source>
-        <translation type="unfinished">المواد الحضرية</translation>
-    </message>
-    <message>
-        <source>Indirect fire</source>
-        <translation type="unfinished">النيران غير المباشرة</translation>
-    </message>
-    <message>
-        <source>Intervention</source>
-        <translation type="unfinished">التدخل</translation>
-    </message>
-    <message>
-        <source>X Dispersion</source>
-        <translation type="unfinished">× التشتت</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <translation type="unfinished">m</translation>
-    </message>
-    <message>
-        <source>Y Dispersion</source>
-        <translation type="unfinished">تشتت y</translation>
-    </message>
-    <message>
-        <source>Effects</source>
-        <translation type="unfinished">آثار</translation>
-    </message>
-    <message>
-        <source>Explosive</source>
-        <translation type="unfinished">المتفجرة</translation>
-    </message>
-    <message>
-        <source>Smoke</source>
-        <translation type="unfinished">الدخان</translation>
-    </message>
-    <message>
-        <source>Illumination shell</source>
-        <translation type="unfinished">قذيفة إنارة</translation>
-    </message>
-    <message>
-        <source>Mine</source>
-        <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
-    </message>
-    <message>
-        <source>Effect</source>
-        <translation type="unfinished">تأثير</translation>
-    </message>
-    <message>
-        <source>Explosive ammo parameters</source>
-        <translation type="unfinished">معلمات الذخيرة المتفجرة</translation>
-    </message>
-    <message>
-        <source>Stance</source>
-        <translation type="unfinished">موقف</translation>
-    </message>
-    <message>
-        <source>Neutralization ratio</source>
-        <translation type="unfinished">تحييد نسبة</translation>
-    </message>
-    <message>
-        <source>Dispersion factor per iteration</source>
-        <translation type="unfinished">معامل التشتت كل تكرار</translation>
-    </message>
-    <message>
-        <source>Smoke ammo parameters</source>
-        <translation type="unfinished">معلمات الذخيرة دخان</translation>
-    </message>
-    <message>
-        <source>Activation duration</source>
-        <translation type="unfinished">مدة التنشيط</translation>
-    </message>
-    <message>
-        <source>Span</source>
-        <translation type="unfinished">سبان</translation>
-    </message>
-    <message>
-        <source>Flare ammo parameters</source>
-        <translation type="unfinished">معلمات الذخيرة مضيئة</translation>
-    </message>
-    <message>
-        <source>Effect ammo parameters</source>
-        <translation type="unfinished">تأثير الذخيرة المعلمات</translation>
-    </message>
-    <message>
-        <source>Created object</source>
-        <translation type="unfinished">الكائن الذي تم إنشاؤه</translation>
-    </message>
-    <message>
-        <source>Mine ammo parameters</source>
-        <translation type="unfinished">معلمات ذخيرة الأعمال المتعلقة بالألغام</translation>
-    </message>
-    <message>
-        <source>Mines quantity</source>
-        <translation type="unfinished">كمية الألغام</translation>
-    </message>
-    <message>
-        <source>Illumination capacity</source>
-        <translation type="unfinished">قدرة الإضاءة</translation>
-    </message>
-    <message>
-        <source>Range</source>
-        <translation type="unfinished">النطاق</translation>
-    </message>
-    <message>
-        <source>Must Maintain illumination</source>
-        <translation type="unfinished">ويجب المحافظة على الإضاءة</translation>
-    </message>
-    <message>
-        <source>Guidance</source>
-        <translation type="unfinished">التوجيه</translation>
-    </message>
-    <message>
-        <source>Must Maintain guidance</source>
-        <translation type="unfinished">ويجب الحفاظ على التوجيه</translation>
-    </message>
-    <message>
-        <source>Illumination range needed</source>
-        <translation type="unfinished">مجموعة الإضاءة اللازمة</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished">لا شيء</translation>
-    </message>
-    <message>
-        <source>PKs</source>
-        <translation type="unfinished">تيفاتول</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished">تحذير</translation>
-    </message>
-    <message>
-        <source>This will delete all the following associated resource network :</source>
-        <translation type="unfinished">سيؤدي هذا إلى حذف جميع شبكة الموارد ذات الصلة التالية:</translation>
-    </message>
-    <message>
-        <source>Proceed anyway ?</source>
-        <translation type="unfinished">هل تريد المتابعة على أية حال؟</translation>
-    </message>
-    <message>
-        <source>Code EMAT8</source>
-        <translation type="unfinished">رمز EMAT8</translation>
-    </message>
-    <message>
-        <source>Code EMAT6</source>
-        <translation type="unfinished">رمز EMAT6</translation>
-    </message>
-    <message>
-        <source>Code NNO</source>
-        <translation type="unfinished">قوائم انتظار NNO</translation>
-    </message>
-    <message>
-        <source>Code LFRIL</source>
-        <translation type="unfinished">رمز لفريل</translation>
-    </message>
-    <message>
-        <source>Ammunition</source>
-        <translation type="unfinished">الذخيرة</translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation type="unfinished">درع المستهدفة</translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation type="unfinished">في الموقع يمكن حلها</translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation type="unfinished">دعم الصيانة اللازمة</translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation type="unfinished">دمرت</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_GenericListView</name>
-    <message>
-        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_Postures_GUI</name>
-    <message>
-        <source>PH factor</source>
-        <translation type="unfinished">عامل PH</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ExtinguisherAgentInfos_Table</name>
     <message>
         <source>Agent</source>
@@ -3747,6 +3404,349 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
     <message>
         <source>Color</source>
         <translation type="unfinished">لون</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_AmmoListView</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_AttritionGraph</name>
+    <message>
+        <source>Dead</source>
+        <translation type="unfinished">الميت</translation>
+    </message>
+    <message>
+        <source>Wounded (%1)</source>
+        <translation type="unfinished">الجرحى (1%)</translation>
+    </message>
+    <message>
+        <source>Unwounded</source>
+        <translation type="unfinished">المعافين</translation>
+    </message>
+    <message>
+        <source>Undamaged</source>
+        <translation type="unfinished">غير التالفة</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_AttritionTable</name>
+    <message>
+        <source>Armor</source>
+        <translation type="unfinished">درع</translation>
+    </message>
+    <message>
+        <source>% on site fixable</source>
+        <translation type="unfinished">% في الموقع يمكن حلها</translation>
+    </message>
+    <message>
+        <source>% maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة % اللازمة</translation>
+    </message>
+    <message>
+        <source>% destroyed</source>
+        <translation type="unfinished">% دمرت</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_Data::AmmoCategoryInfo</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع الدروع غير صالح &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع المواد الحضرية &apos;%1&apos; غير صالح</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع المورد غير صالحة &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_Data::IndirectAmmoInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">بيانات غير صالحة</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-موقف غير صالح &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
+        <translation type="unfinished">معدات-نوع الذخيرة النيران غير المباشرة غير صالح &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_GUI</name>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished">الذخيرة</translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation type="unfinished">درع المستهدفة</translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished">في الموقع يمكن حلها</translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished">دعم الصيانة اللازمة</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished">دمرت</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">الاسم</translation>
+    </message>
+    <message>
+        <source>Code NNO</source>
+        <translation type="unfinished">قوائم انتظار NNO</translation>
+    </message>
+    <message>
+        <source>Code EMAT8</source>
+        <translation type="unfinished">رمز EMAT8</translation>
+    </message>
+    <message>
+        <source>Code EMAT6</source>
+        <translation type="unfinished">رمز EMAT6</translation>
+    </message>
+    <message>
+        <source>Code LFRIL</source>
+        <translation type="unfinished">رمز لفريل</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">نوع</translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation type="unfinished">طبيعة</translation>
+    </message>
+    <message>
+        <source>Logistic supply class</source>
+        <translation type="unfinished">فئة الإمداد اللوجستي</translation>
+    </message>
+    <message>
+        <source>Usable within a resource network</source>
+        <translation type="unfinished">للاستخدام داخل شبكة الموارد</translation>
+    </message>
+    <message>
+        <source>Packaging</source>
+        <translation type="unfinished">التعبئة والتغليف</translation>
+    </message>
+    <message>
+        <source>Nbr per package</source>
+        <translation type="unfinished">Nbr كل حزمة</translation>
+    </message>
+    <message>
+        <source>Package weight</source>
+        <translation type="unfinished">وزن الحزمة</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <translation type="unfinished">T</translation>
+    </message>
+    <message>
+        <source>Package volume</source>
+        <translation type="unfinished">حجم الحزمة</translation>
+    </message>
+    <message>
+        <source>m3</source>
+        <translation type="unfinished">m3</translation>
+    </message>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished">أتريشنز</translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation type="unfinished">محاكاة</translation>
+    </message>
+    <message>
+        <source>Armor-Plating</source>
+        <translation type="unfinished">دروع</translation>
+    </message>
+    <message>
+        <source>Urban material</source>
+        <translation type="unfinished">المواد الحضرية</translation>
+    </message>
+    <message>
+        <source>Improvised explosive device</source>
+        <translation type="unfinished">جهاز متفجر مرتجل</translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation type="unfinished">النيران غير المباشرة</translation>
+    </message>
+    <message>
+        <source>Intervention</source>
+        <translation type="unfinished">التدخل</translation>
+    </message>
+    <message>
+        <source>X Dispersion</source>
+        <translation type="unfinished">× التشتت</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation type="unfinished">m</translation>
+    </message>
+    <message>
+        <source>Y Dispersion</source>
+        <translation type="unfinished">تشتت y</translation>
+    </message>
+    <message>
+        <source>Effects</source>
+        <translation type="unfinished">آثار</translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation type="unfinished">المتفجرة</translation>
+    </message>
+    <message>
+        <source>Smoke</source>
+        <translation type="unfinished">الدخان</translation>
+    </message>
+    <message>
+        <source>Illumination shell</source>
+        <translation type="unfinished">قذيفة إنارة</translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation type="unfinished">تأثير</translation>
+    </message>
+    <message>
+        <source>Explosive ammo parameters</source>
+        <translation type="unfinished">معلمات الذخيرة المتفجرة</translation>
+    </message>
+    <message>
+        <source>Stance</source>
+        <translation type="unfinished">موقف</translation>
+    </message>
+    <message>
+        <source>Neutralization ratio</source>
+        <translation type="unfinished">تحييد نسبة</translation>
+    </message>
+    <message>
+        <source>Dispersion factor per iteration</source>
+        <translation type="unfinished">معامل التشتت كل تكرار</translation>
+    </message>
+    <message>
+        <source>Smoke ammo parameters</source>
+        <translation type="unfinished">معلمات الذخيرة دخان</translation>
+    </message>
+    <message>
+        <source>Activation duration</source>
+        <translation type="unfinished">مدة التنشيط</translation>
+    </message>
+    <message>
+        <source>Span</source>
+        <translation type="unfinished">سبان</translation>
+    </message>
+    <message>
+        <source>Flare ammo parameters</source>
+        <translation type="unfinished">معلمات الذخيرة مضيئة</translation>
+    </message>
+    <message>
+        <source>Effect ammo parameters</source>
+        <translation type="unfinished">تأثير الذخيرة المعلمات</translation>
+    </message>
+    <message>
+        <source>Created object</source>
+        <translation type="unfinished">الكائن الذي تم إنشاؤه</translation>
+    </message>
+    <message>
+        <source>Mine ammo parameters</source>
+        <translation type="unfinished">معلمات ذخيرة الأعمال المتعلقة بالألغام</translation>
+    </message>
+    <message>
+        <source>Mines quantity</source>
+        <translation type="unfinished">كمية الألغام</translation>
+    </message>
+    <message>
+        <source>Illumination capacity</source>
+        <translation type="unfinished">قدرة الإضاءة</translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="unfinished">النطاق</translation>
+    </message>
+    <message>
+        <source>Must Maintain illumination</source>
+        <translation type="unfinished">ويجب المحافظة على الإضاءة</translation>
+    </message>
+    <message>
+        <source>Guidance</source>
+        <translation type="unfinished">التوجيه</translation>
+    </message>
+    <message>
+        <source>Must Maintain guidance</source>
+        <translation type="unfinished">ويجب الحفاظ على التوجيه</translation>
+    </message>
+    <message>
+        <source>Illumination range needed</source>
+        <translation type="unfinished">مجموعة الإضاءة اللازمة</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">لا شيء</translation>
+    </message>
+    <message>
+        <source>PKs</source>
+        <translation type="unfinished">تيفاتول</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
+    </message>
+    <message>
+        <source>This will delete all the following associated resource network :</source>
+        <translation type="unfinished">سيؤدي هذا إلى حذف جميع شبكة الموارد ذات الصلة التالية:</translation>
+    </message>
+    <message>
+        <source>Proceed anyway ?</source>
+        <translation type="unfinished">هل تريد المتابعة على أية حال؟</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_GenericListView</name>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished">&lt;b&gt;غير مستخدمة&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Resources_Postures_GUI</name>
+    <message>
+        <source>PH factor</source>
+        <translation type="unfinished">عامل PH</translation>
     </message>
 </context>
 <context>

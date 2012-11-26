@@ -145,7 +145,7 @@ public:
     void Reset();
     ADN_Type_Int& GetCellSize();
     T_FireClassInfosVector& GetFireClassesInfos();
-    QStringList GetFireThatUse( ADN_Equipement_Data::CategoryInfo& infos );
+    QStringList GetFireThatUse( ADN_Resources_Data::CategoryInfo& infos );
     //@}
 
 private:

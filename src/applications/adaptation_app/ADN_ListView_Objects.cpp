@@ -348,8 +348,8 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
                                           ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
-                                          ADN_Tr::ConvertFromWorkspaceElement( eEquipement ).c_str(),
-                                          ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ), eEquipement, eDotationFamily_Munition );
+                                          ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
+                                          ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), eResources, eDotationFamily_Munition );
             FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
                                           ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
                                           ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
@@ -384,8 +384,8 @@ std::string ADN_ListView_Objects::GetToolTipFor( const QModelIndex& index )
     std::string result;
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
                         ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), result );
-    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eEquipement ).c_str(),
-                        ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetEquipmentsThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eResources ).c_str(),
+                        ADN_Workspace::GetWorkspace().GetResources().GetData().GetResourcesThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eComposantes ).c_str(),
                         ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), result );
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),

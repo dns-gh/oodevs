@@ -19,7 +19,7 @@
 #include "ADN_GroupBox.h"
 #include "ADN_EditLine.h"
 #include "ADN_Launchers_Data.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_GoToButton.h"
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_Weapons_PhSizeListView.h"
@@ -28,7 +28,7 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_Launchers_GUI.h"
-#include "ADN_Equipement_GUI.h"
+#include "ADN_Resources_GUI.h"
 #include "ADN_TimeField.h"
 #include "ADN_Graph.h"
 #include "ADN_GraphData.h"
@@ -281,7 +281,7 @@ void ADN_Weapons_GUI::Build()
         builder.SetEnabled( false );
     }
     {
-        ADN_GoToButton* goToButton = new ADN_GoToButton( ::eEquipement, 0 );
+        ADN_GoToButton* goToButton = new ADN_GoToButton( ::eResources, 0 );
         ADN_ComboBox_Vector* combo = builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Ammo" ), vInfosConnectors[eAmmo], 0, eNone, goToButton );
         combo->setObjectName( strClassName_ + "_Ammos" );
         goToButton->SetLinkedCombo( combo );
@@ -550,7 +550,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
         }
 
         ADN_Workspace::GetWorkspace().GetLaunchers().GetGui().ExportPHModifiers( builder, *(weapon.ptrLauncher_.GetData()) );
-        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().ExportPKs( builder, *(weapon.ptrAmmunition_.GetData()) );
+        ADN_Workspace::GetWorkspace().GetResources().GetGui().ExportPKs( builder, *(weapon.ptrAmmunition_.GetData()) );
 
         if( weapon.bIndirect_.GetData() )
         {

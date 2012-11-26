@@ -83,7 +83,7 @@ void ADN_FireClass_GUI::Build()
     // Extinguisher
     Q3GroupBox* pExtinguisherAgentsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ) );
     ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( strClassName_ + "Extinguisher", vInfosConnectors[ eExtinguisherAgents ], pExtinguisherAgentsGroup );
-    pExtinguisherAgentInfosTable->SetGoToOnDoubleClick( ::eEquipement );
+    pExtinguisherAgentInfosTable->SetGoToOnDoubleClick( ::eResources );
     // Weather fire effects
     Q3GroupBox* pWeatherFireEffectsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Weather fire effects" ) );
     new ADN_WeatherFireEffects_Table( strClassName_ + "Weather", vInfosConnectors[ eWeatherFireEffects ], pWeatherFireEffectsGroup );

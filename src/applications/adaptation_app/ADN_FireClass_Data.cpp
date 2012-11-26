@@ -170,7 +170,7 @@ void ADN_FireClass_Data::FireSurfaceInfos::WriteArchive( xml::xostream& output )
 // Created: JSR 2010-12-01
 // -----------------------------------------------------------------------------
 ADN_FireClass_Data::FireClassInfos::FireClassInfos()
-    : agents_          ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_AgentExtincteur ).categories_ )
+    : agents_          ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_AgentExtincteur ).categories_ )
     , initialHeat_     ( 0 )
     , maxHeat_         ( 0 )
     , increaseRate_    ( 0 )
@@ -447,7 +447,7 @@ ADN_FireClass_Data::T_FireClassInfosVector& ADN_FireClass_Data::GetFireClassesIn
 // Name: ADN_FireClass_Data::GetFireThatUse
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-QStringList ADN_FireClass_Data::GetFireThatUse( ADN_Equipement_Data::CategoryInfo& infos )
+QStringList ADN_FireClass_Data::GetFireThatUse( ADN_Resources_Data::CategoryInfo& infos )
 {
     QStringList result;
     for( IT_FireClassInfosVector it = fireClasses_.begin(); it != fireClasses_.end(); ++it )

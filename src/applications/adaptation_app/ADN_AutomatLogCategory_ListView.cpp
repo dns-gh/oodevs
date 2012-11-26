@@ -77,18 +77,18 @@ void ADN_AutomatLogCategory_ListView::BuildHeaders()
 void ADN_AutomatLogCategory_ListView::BuildBody()
 {
     // Dotation (eg. ration)
-    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
-    for( ADN_Equipement_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
+    ADN_Resources_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
+    for( ADN_Resources_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
     {
-        ADN_Equipement_Data::ResourceInfos& dotation = **itDotation;
+        ADN_Resources_Data::ResourceInfos& dotation = **itDotation;
         ADN_Rich_ListViewItem* pDotationItem = new ADN_Rich_ListViewItem( this, Qt::AlignVCenter | Qt::AlignRight );
         pDotationItem->setText( eColumnTarget, dotation.strName_.GetData().c_str() );
 
         // Dotation category (eg. bouffe)
-        ADN_Equipement_Data::T_CategoryInfos_Vector& categories = dotation.GetCategories();
-        for( ADN_Equipement_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
+        ADN_Resources_Data::T_CategoryInfos_Vector& categories = dotation.GetCategories();
+        for( ADN_Resources_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
         {
-            ADN_Equipement_Data::CategoryInfo& category = **itCat;
+            ADN_Resources_Data::CategoryInfo& category = **itCat;
             ADN_Rich_ListViewItem* pCatItem = new ADN_Rich_ListViewItem( pDotationItem, Qt::AlignVCenter | Qt::AlignRight );
             pCatItem->setText( eColumnTarget, category.strName_.GetData().c_str() );
 
@@ -166,7 +166,7 @@ void ADN_AutomatLogCategory_ListView::BuildBody()
 // Created: SBO 2006-01-12
 // -----------------------------------------------------------------------------
 void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem&             item,
-                                                         ADN_Equipement_Data::CategoryInfo& category,
+                                                         ADN_Resources_Data::CategoryInfo& category,
                                                          ADN_Units_Data::ComposanteInfos&   comp )
 {
     item.setText( eColumnTarget, comp.ptrComposante_.GetData()->strName_.GetData().c_str() );

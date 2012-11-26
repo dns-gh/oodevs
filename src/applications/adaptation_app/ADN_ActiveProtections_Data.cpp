@@ -111,7 +111,7 @@ void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
 // Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfosWeapons()
-    : ptrWeapon_  ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
+    : ptrWeapon_  ( ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_, 0 )
     , coefficient_( 0 )
 {
     BindExistenceTo(&ptrWeapon_);
@@ -126,10 +126,10 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml
     std::string strAmmunition;
     xis >> xml::attribute( "name", strAmmunition)
         >> xml::attribute( "coefficient", coefficient_ );
-    ADN_Equipement_Data::CategoryInfo* pWeapon = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
+    ADN_Resources_Data::CategoryInfo* pWeapon = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( "munition", strAmmunition );
     if( !pWeapon )
         throw ADN_DataException( tools::translate( "ActiveProtections_Data",  "Invalid data" ).toStdString(), tools::translate( "ActiveProtections_Data",  "Equipment - Invalid amunition '%1/%2'" ).arg( strAmmunition.c_str() ).toStdString() );
-    ptrWeapon_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pWeapon;
+    ptrWeapon_ = (ADN_Resources_Data::AmmoCategoryInfo*)pWeapon;
     strName_ = pWeapon->strName_.GetData();
 }
 
@@ -162,7 +162,7 @@ ADN_ActiveProtections_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
     : coefficient_  ( 0 )
     , hardKill_     ( false )
     , usage_        ( 0 )
-    , ptrAmmunition_( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
+    , ptrAmmunition_( ( ADN_Resources_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( eDotationFamily_Munition ).categories_, 0 )
 {
     BindExistenceTo( &ptrAmmunition_ );
 }
@@ -216,10 +216,10 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistr
             >> xml::attribute( "usage", usage_ )
         >> xml::end
         >> xml::list( "weapon", *this, &ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon );
-    ADN_Equipement_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( "munition", strAmmunition );
+    ADN_Resources_Data::CategoryInfo* pAmmo = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( "munition", strAmmunition );
     if( !pAmmo )
         throw ADN_DataException( tools::translate( "ActiveProtections_Data",  "Invalid data" ).toStdString(), tools::translate( "ActiveProtections_Data",  "Active protection '%1' - Invalid ammunition type '%2'" ).arg( strName_.GetData().c_str() ,strAmmunition.c_str() ).toStdString() );
-    ptrAmmunition_ = (ADN_Equipement_Data::AmmoCategoryInfo*)pAmmo;
+    ptrAmmunition_ = (ADN_Resources_Data::AmmoCategoryInfo*)pAmmo;
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +257,7 @@ void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xost
 // Name: ADN_ActiveProtections_Data::GetActiveProtectionsThatUse
 // Created: ABR 2012-08-01
 // -----------------------------------------------------------------------------
-QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammo )
+QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resources_Data::AmmoCategoryInfo& ammo )
 {
     QStringList result;
     for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
@@ -270,7 +270,7 @@ QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Equipem
 // Name: ADN_ActiveProtections_Data::GetActiveProtectionsThatUse
 // Created: ABR 2012-08-01
 // -----------------------------------------------------------------------------
-QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Equipement_Data::CategoryInfo& category )
+QStringList ADN_ActiveProtections_Data::GetActiveProtectionsThatUse( ADN_Resources_Data::CategoryInfo& category )
 {
     QStringList result;
     for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )

@@ -11,7 +11,7 @@
 #include "ADN_EquipementSelector.h"
 #include "moc_ADN_EquipementSelector.cpp"
 #include "ADN_Workspace.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_EquipementSelector::ADN_EquipementSelector
@@ -46,17 +46,17 @@ void ADN_EquipementSelector::OnButtonPressed()
     Q3PopupMenu* pPopup = new Q3PopupMenu( this );
 
     // Get the dotation list.
-    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations
-        = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
+    ADN_Resources_Data::T_ResourceInfos_Vector& dotations
+        = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
 
     // Fill the popup menu with submenus, one for each dotation.
-    for( ADN_Equipement_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
+    for( ADN_Resources_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
     {
         Q3PopupMenu* pSubMenu = new Q3PopupMenu( pPopup );
 
         // Fill the submenu with an entry for each equipement category.
-        ADN_Equipement_Data::T_CategoryInfos_Vector& categories = (*it)->GetCategories();
-        for( ADN_Equipement_Data::IT_CategoryInfos_Vector it2 = categories.begin(); it2 != categories.end(); ++it2 )
+        ADN_Resources_Data::T_CategoryInfos_Vector& categories = (*it)->GetCategories();
+        for( ADN_Resources_Data::IT_CategoryInfos_Vector it2 = categories.begin(); it2 != categories.end(); ++it2 )
         {
             // This id is used to encode the category into the item.
             int nItemId = (int)(*it2);
@@ -111,10 +111,10 @@ void ADN_EquipementSelector::SetItem( void* pItem )
         return;
     }
 
-    pConnected_ = & ((ADN_Equipement_Data::CategoryInfo*)pItem)->parentResource_.categories_;
+    pConnected_ = & ((ADN_Resources_Data::CategoryInfo*)pItem)->parentResource_.categories_;
     pData_ = pItem;
     connect( pConnected_, SIGNAL( ItemRemoved( void* ) ), this, SLOT( ItemRemoved( void* ) ) );
-    setText( ((ADN_Equipement_Data::CategoryInfo*)pItem)->strName_.GetData().c_str() );
+    setText( ((ADN_Resources_Data::CategoryInfo*)pItem)->strName_.GetData().c_str() );
 }
 
 // -----------------------------------------------------------------------------

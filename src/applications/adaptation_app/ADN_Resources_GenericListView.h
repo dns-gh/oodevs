@@ -6,36 +6,26 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-29 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_GenericListView.h $
-// $Author: Ape $
-// $Modtime: 7/04/05 11:21 $
-// $Revision: 5 $
-// $Workfile: ADN_Equipement_GenericListView.h $
-//
-// *****************************************************************************
 
-#ifndef __ADN_Equipement_GenericListView_h_
-#define __ADN_Equipement_GenericListView_h_
+#ifndef __ADN_Resources_GenericListView_h_
+#define __ADN_Resources_GenericListView_h_
 
 #include "ADN_ListView.h"
 #include "ADN_Enums.h"
 
 // =============================================================================
-/** @class  ADN_Equipement_GenericListView
-    @brief  ADN_Equipement_GenericListView
+/** @class  ADN_Resources_GenericListView
+    @brief  ADN_Resources_GenericListView
 */
 // Created: APE 2004-12-29
 // =============================================================================
-class ADN_Equipement_GenericListView
-: public ADN_ListView
+class ADN_Resources_GenericListView : public ADN_ListView
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_Equipement_GenericListView( E_DotationFamily nType, QWidget* pParent );
-    virtual ~ADN_Equipement_GenericListView();
+    ADN_Resources_GenericListView( E_DotationFamily nType, QWidget* pParent );
+    virtual ~ADN_Resources_GenericListView();
     //@}
 
 private:
@@ -50,4 +40,4 @@ private:
     E_DotationFamily nType_;
 };
 
-#endif // __ADN_Equipement_GenericListView_h_
+#endif // __ADN_Resources_GenericListView_h_

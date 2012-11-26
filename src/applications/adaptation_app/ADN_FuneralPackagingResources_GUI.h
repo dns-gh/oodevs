@@ -13,7 +13,7 @@
 #define __ADN_FuneralPackagingResources_GUI_h_
 
 #include "ADN_CommonGfx.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 // =============================================================================
 /** @class  ADN_FuneralPackagingResources_GUI
@@ -30,8 +30,8 @@ public:
 
 private:
     virtual void OnContextMenu( const QPoint& pt );
-    bool Contains( ADN_Equipement_Data::CategoryInfo& category );
-    void AddNewDotation( ADN_Equipement_Data::CategoryInfo& category );
+    bool Contains( ADN_Resources_Data::CategoryInfo& category );
+    void AddNewDotation( ADN_Resources_Data::CategoryInfo& category );
     virtual void AddRow( int row, void* data );
     void RemoveCurrentDotation();
 };

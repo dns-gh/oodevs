@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ResourceNetworks_Data.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Project_Data.h"
 
 // -----------------------------------------------------------------------------
@@ -19,7 +19,7 @@
 ADN_ResourceNetworks_Data::ResourceNetworkInfos::ResourceNetworkInfos()
     : strColor_   ( "0xffffff" )
     , nProduction_( 0 )
-    , ptrCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNetworkUsableDotation(), 0 )
+    , ptrCategory_( ADN_Workspace::GetWorkspace().GetResources().GetData().GetNetworkUsableResources(), 0 )
 {
     BindExistenceTo( &ptrCategory_ );
 }
@@ -64,11 +64,11 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream
           >> xml::start( "defaults" )
               >> xml::attribute( "production", nProduction_ )
           >> xml::end;
-    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
-    for( ADN_Equipement_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
+    ADN_Resources_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
+    for( ADN_Resources_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
     {
-        ADN_Equipement_Data::T_CategoryInfos_Vector& categories = ( *itDotation )->GetCategories();
-        for( ADN_Equipement_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
+        ADN_Resources_Data::T_CategoryInfos_Vector& categories = ( *itDotation )->GetCategories();
+        for( ADN_Resources_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
             if( ( *itCat )->nId_ == id && ( *itCat )->bNetworkUsable_.GetData() )
             {
                 ptrCategory_ = *itCat;
@@ -193,7 +193,7 @@ void ADN_ResourceNetworks_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_ResourceNetworks_Data::GetResourceNetworksThatUse
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-QStringList ADN_ResourceNetworks_Data::GetResourceNetworksThatUse( ADN_Equipement_Data::CategoryInfo& category )
+QStringList ADN_ResourceNetworks_Data::GetResourceNetworksThatUse( ADN_Resources_Data::CategoryInfo& category )
 {
     QStringList result;
     for( IT_ResourceNetworkInfosVector it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )

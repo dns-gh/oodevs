@@ -32,8 +32,8 @@
 #include "ADN_Drawings_Data.h"
 #include "ADN_Drawings_GUI.h"
 #include "ADN_enums.h"
-#include "ADN_Equipement_Data.h"
-#include "ADN_Equipement_GUI.h"
+#include "ADN_Resources_Data.h"
+#include "ADN_Resources_GUI.h"
 #include "ADN_FireClass_Data.h"
 #include "ADN_FireClass_GUI.h"
 #include "ADN_GuiBuilder.h"
@@ -147,7 +147,7 @@ void ADN_Workspace::Initialize()
     elements_[eUrban]             = new ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >                        ( eUrban );
     elements_[eNBC]               = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >                           ( eNBC );
     elements_[eLaunchers]         = new ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >                ( eLaunchers );
-    elements_[eEquipement]        = new ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >              ( eEquipement );
+    elements_[eResources]         = new ADN_WorkspaceElement< ADN_Resources_Data, ADN_Resources_GUI >                ( eResources );
     elements_[eActiveProtections] = new ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI >( eActiveProtections );
     elements_[eObjects]           = new ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>                     ( eObjects );
     elements_[eWeapons]           = new ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI >                    ( eWeapons );
@@ -243,7 +243,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
     // Tab order
     AddPage( mainwindow, eCategories );
     AddPage( mainwindow, eUrban );
-    AddPage( mainwindow, eEquipement );
+    AddPage( mainwindow, eResources );
     AddPage( mainwindow, eResourceNetworks );
     AddPage( mainwindow, eLaunchers );
     AddPage( mainwindow, eWeapons );
@@ -609,14 +609,14 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
 
     // Equipments to delete when object or nature deleted
     if( ADN_Objects_Data_ObjectInfos* infos = dynamic_cast< ADN_Objects_Data_ObjectInfos* >( data ) )
-        return FillUsingElements( eEquipement, *infos, GetEquipements().GetData(), &ADN_Equipement_Data::GetEquipmentsThatUse, result );
+        return FillUsingElements( eResources, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
     if( helpers::ResourceNatureInfos* infos = dynamic_cast< helpers::ResourceNatureInfos* >( data ) )
-        return FillUsingElements( eEquipement, *infos, GetEquipements().GetData(), &ADN_Equipement_Data::GetEquipmentsThatUse, result );
+        return FillUsingElements( eResources, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
 
     // Weapons to delete when launcher or ammo deleted
     if( ADN_Launchers_Data::LauncherInfos* infos = dynamic_cast< ADN_Launchers_Data::LauncherInfos* >( data ) )
         return FillUsingElements( eWeapons, *infos, GetWeapons().GetData(), &ADN_Weapons_Data::GetWeaponThatUse, result );
-    if( ADN_Equipement_Data::AmmoCategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( data ) )
+    if( ADN_Resources_Data::AmmoCategoryInfo* infos = dynamic_cast< ADN_Resources_Data::AmmoCategoryInfo* >( data ) )
         return FillUsingElements( eWeapons, *infos, GetWeapons().GetData(), &ADN_Weapons_Data::GetWeaponThatUse, result );
 
     // Automat, population or units to delete when model deleted
@@ -637,11 +637,11 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatWillBeDeleted( ADN_R
         return FillUsingElements( eInhabitants, *infos, GetInhabitants().GetData(), &ADN_Inhabitants_Data::GetInhabitantsThatUse, result );
 
     // Actives protections to delete when ammo deleted
-    if( ADN_Equipement_Data::AmmoCategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( data ) )
+    if( ADN_Resources_Data::AmmoCategoryInfo* infos = dynamic_cast< ADN_Resources_Data::AmmoCategoryInfo* >( data ) )
         return FillUsingElements( eActiveProtections, *infos, GetActiveProtections().GetData(), &ADN_ActiveProtections_Data::GetActiveProtectionsThatUse, result );
 
     // RN to delete when ammunition deleted
-    if( ADN_Equipement_Data::CategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::CategoryInfo* >( data ) )
+    if( ADN_Resources_Data::CategoryInfo* infos = dynamic_cast< ADN_Resources_Data::CategoryInfo* >( data ) )
         return FillUsingElements( eResourceNetworks, *infos, GetResourceNetworks().GetData(), &ADN_ResourceNetworks_Data::GetResourceNetworksThatUse, result );
 
     return result;
@@ -705,7 +705,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         return FillUsingElements( eInhabitants, *infos, GetInhabitants().GetData(), &ADN_Inhabitants_Data::GetInhabitantsThatUse, result );
 
     // Active protections, breakdowns, or fire that use category ammo
-    if( ADN_Equipement_Data::CategoryInfo* infos = dynamic_cast< ADN_Equipement_Data::CategoryInfo* >( data ) )
+    if( ADN_Resources_Data::CategoryInfo* infos = dynamic_cast< ADN_Resources_Data::CategoryInfo* >( data ) )
     {
         FillUsingElements( eActiveProtections, *infos, GetActiveProtections().GetData(), &ADN_ActiveProtections_Data::GetActiveProtectionsThatUse, result );
         FillUsingElements( eBreakdowns, *infos, GetBreakdowns().GetData(), &ADN_Breakdowns_Data::GetBreakdownsThatUse, result );
@@ -722,7 +722,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     if( helpers::LogisticSupplyClass* infos = dynamic_cast< helpers::LogisticSupplyClass* >( data ) )
     {
         FillUsingElements( eUnits, *infos, GetUnits().GetData(), &ADN_Units_Data::GetUnitsThatUse, result );
-        FillUsingElements( eEquipement, *infos, GetEquipements().GetData(), &ADN_Equipement_Data::GetEquipmentsThatUse, result );
+        FillUsingElements( eResources, *infos, GetResources().GetData(), &ADN_Resources_Data::GetResourcesThatUse, result );
         return result;
     }
 
@@ -732,7 +732,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
         result[ eFireClasses ]; // Empty list means all resources
         result[ eSensors ];
         result[ eObjects ] = GetObjects().GetData().GetObjectsWithCapacity( ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::TAG );
-        result[ eEquipement ] = GetEquipements().GetData().GetEquipmentsWithDirectFire();
+        result[ eResources ] = GetResources().GetData().GetResourcesWithDirectFire();
         FillUsingElements( eUrban, *infos, GetUrban().GetData(), &ADN_Urban_Data::GetUrbanTemplateThatUse, result );
         return result;
     }
@@ -741,7 +741,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     {
         result[ eUrban ];
         result[ eCrowds ];
-        result[ eEquipement ] = GetEquipements().GetData().GetEquipmentsWithDirectFire();
+        result[ eResources ] = GetResources().GetData().GetResourcesWithDirectFire();
         return result;
     }
     // All crowds and sensors use volume

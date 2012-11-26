@@ -10,7 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_FuneralPackagingResource.h"
 #include "ADN_Workspace.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
 #include "ADN_Tr.h"
@@ -45,7 +45,7 @@ void ADN_FuneralPackagingResource::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "resource", resourceName )
           >> xml::attribute( "process-duration", processDuration_ )
           >> xml::attribute( "terminal", terminal_ );
-    ADN_Equipement_Data::CategoryInfo* resource = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( resourceName );
+    ADN_Resources_Data::CategoryInfo* resource = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( resourceName );
     if( resource == 0 )
         throw ADN_DataException( tools::translate( "Funeral_Data", "Invalid data" ).toStdString(), tools::translate( "Funeral_Data", "Invalid resource '%1'" ).arg( resourceName.c_str() ).toStdString() );
     resource_ = resource;
@@ -70,7 +70,7 @@ void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output )
 // -----------------------------------------------------------------------------
 void ADN_FuneralPackagingResource::ExchangeData( ADN_FuneralPackagingResource& packResource )
 {
-    ADN_Equipement_Data::CategoryInfo* curResource = resource_.GetData();
+    ADN_Resources_Data::CategoryInfo* curResource = resource_.GetData();
     std::string curProcessDuration  = processDuration_.GetData();
     bool curTerminal                = terminal_.GetData();
 

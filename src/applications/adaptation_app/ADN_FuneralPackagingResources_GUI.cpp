@@ -16,7 +16,7 @@
 #include "ADN_CommonGfx.h"
 #include "ADN_Workspace.h"
 #include "ADN_FuneralPackagingResource.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/Ent_Tr.h"
 
@@ -60,17 +60,17 @@ void ADN_FuneralPackagingResources_GUI::OnContextMenu( const QPoint& pt )
     Q3PopupMenu targetMenu( &menu );
 
     // Get the dotation list.
-    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations
-        = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
+    ADN_Resources_Data::T_ResourceInfos_Vector& dotations
+        = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResources();
 
     // Fill the popup menu with submenus, one for each dotation.
-    for( ADN_Equipement_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
+    for( ADN_Resources_Data::IT_ResourceInfos_Vector it = dotations.begin(); it != dotations.end(); ++it )
     {
         Q3PopupMenu* pSubMenu = new Q3PopupMenu( &targetMenu );
 
         // Fill the submenu with an entry for each equipement category.
-        ADN_Equipement_Data::T_CategoryInfos_Vector& categories = (*it)->GetCategories();
-        for( ADN_Equipement_Data::IT_CategoryInfos_Vector it2 = categories.begin(); it2 != categories.end(); ++it2 )
+        ADN_Resources_Data::T_CategoryInfos_Vector& categories = (*it)->GetCategories();
+        for( ADN_Resources_Data::IT_CategoryInfos_Vector it2 = categories.begin(); it2 != categories.end(); ++it2 )
         {
             // Avoid offering to add items already present.
             if( Contains( **it2 ) )
@@ -93,14 +93,14 @@ void ADN_FuneralPackagingResources_GUI::OnContextMenu( const QPoint& pt )
     if( nMenuResult == 1 )
         RemoveCurrentDotation();
     else if( nMenuResult > 1 )
-        AddNewDotation( *(ADN_Equipement_Data::CategoryInfo*)nMenuResult );
+        AddNewDotation( *(ADN_Resources_Data::CategoryInfo*)nMenuResult );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_FuneralPackagingResources_GUI::Contains
 // Created: AGN 2004-02-25
 // -----------------------------------------------------------------------------
-bool ADN_FuneralPackagingResources_GUI::Contains( ADN_Equipement_Data::CategoryInfo& category )
+bool ADN_FuneralPackagingResources_GUI::Contains( ADN_Resources_Data::CategoryInfo& category )
 {
     for( int row = 0; row < dataModel_.rowCount(); ++row )
     {
@@ -119,7 +119,7 @@ bool ADN_FuneralPackagingResources_GUI::Contains( ADN_Equipement_Data::CategoryI
 // Name: ADN_FuneralPackagingResources_GUI::AddNewDotation
 // Created: AGN 2003-12-04
 // -----------------------------------------------------------------------------
-void ADN_FuneralPackagingResources_GUI::AddNewDotation( ADN_Equipement_Data::CategoryInfo& category )
+void ADN_FuneralPackagingResources_GUI::AddNewDotation( ADN_Resources_Data::CategoryInfo& category )
 {
     ADN_FuneralPackagingResource* pNewInfo = new ADN_FuneralPackagingResource();
     pNewInfo->resource_ = &category;

@@ -8,15 +8,15 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Equipement_AttritionTable.h"
-#include "ADN_Equipement_Data.h"
-#include "ADN_Equipement_GUI.h"
+#include "ADN_Resources_AttritionTable.h"
+#include "ADN_Resources_Data.h"
+#include "ADN_Resources_GUI.h"
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionTable constructor
+// Name: ADN_Resources_AttritionTable constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
+ADN_Resources_AttritionTable::ADN_Resources_AttritionTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /*= 0*/ )
     : ADN_Table( objectName, connector, pParent )
 {
     dataModel_.setColumnCount( 4 );
@@ -45,19 +45,19 @@ ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( const QString& obj
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionTable destructor
+// Name: ADN_Resources_AttritionTable destructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Equipement_AttritionTable::~ADN_Equipement_AttritionTable()
+ADN_Resources_AttritionTable::~ADN_Resources_AttritionTable()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionTable::AddRow
+// Name: ADN_Resources_AttritionTable::AddRow
 // Created: JSR 2012-10-31
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionTable::AddRow( int row, void* data )
+void ADN_Resources_AttritionTable::AddRow( int row, void* data )
 {
     helpers::AttritionInfos* pAttrition = static_cast< helpers::AttritionInfos* >( data );
     if( !pAttrition )
@@ -70,12 +70,12 @@ void ADN_Equipement_AttritionTable::AddRow( int row, void* data )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_AttritionTable::dataChanged
+// Name: ADN_Resources_AttritionTable::dataChanged
 // Created: JSR 2012-10-31
 // -----------------------------------------------------------------------------
-void ADN_Equipement_AttritionTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
+void ADN_Resources_AttritionTable::dataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
     ADN_Table::dataChanged( topLeft, bottomRight );
     if( topLeft == bottomRight )
-        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+        ADN_Workspace::GetWorkspace().GetResources().GetGui().UpdateGraph();
 }

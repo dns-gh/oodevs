@@ -13,7 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_RefWithName.h"
 #include "ADN_Types.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 // =============================================================================
 /** @class  ADN_ResourceNetworks_Data
@@ -46,7 +46,7 @@ public:
         //@{
         ADN_Type_String strColor_;
         ADN_Type_Int nProduction_;
-        ADN_TypePtr_InVector_ABC< ADN_Equipement_Data::CategoryInfo > ptrCategory_;
+        ADN_TypePtr_InVector_ABC< ADN_Resources_Data::CategoryInfo > ptrCategory_;
         //@}
     };
 
@@ -69,7 +69,7 @@ public:
     void Reset();
     T_ResourceNetworkInfosVector& GetResourceNetworksInfos();
     ResourceNetworkInfos* FindResourceNetwork( const std::string& strName );
-    QStringList GetResourceNetworksThatUse( ADN_Equipement_Data::CategoryInfo& category );
+    QStringList GetResourceNetworksThatUse( ADN_Resources_Data::CategoryInfo& category );
     //@}
 
 private:

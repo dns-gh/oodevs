@@ -944,7 +944,7 @@ void ADN_Composantes_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& 
 // Name: CategoryInfos::CategoryInfos
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-ADN_Composantes_Data::CategoryInfos::CategoryInfos( ADN_Equipement_Data::ResourceInfos& parentDotation )
+ADN_Composantes_Data::CategoryInfos::CategoryInfos( ADN_Resources_Data::ResourceInfos& parentDotation )
     : ptrDotation_( &parentDotation )
     , ptrCategory_( parentDotation.categories_, 0 )
     , rNormalizedConsumption_( 0 )
@@ -980,7 +980,7 @@ void ADN_Composantes_Data::CategoryInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "capacity", rNbr_ )
           >> xml::attribute( "logistic-threshold", rLogThreshold_ )
           >> xml::optional >> xml::attribute( "normalized-consumption", rNormalizedConsumption_ );
-    ADN_Equipement_Data::CategoryInfo* pCat = ptrDotation_.GetData()->FindCategory( strCategory );
+    ADN_Resources_Data::CategoryInfo* pCat = ptrDotation_.GetData()->FindCategory( strCategory );
     if( !pCat )
         throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data",  "Equipment - Invalid resource type '%1'" ).arg( strCategory.c_str() ).toStdString() );
     ptrCategory_ = pCat;
@@ -1029,7 +1029,7 @@ void ADN_Composantes_Data::ResourceInfos::ReadCategory( xml::xistream& input )
 {
     std::string name = input.attribute< std::string >( "name" );
     E_DotationFamily family = ENT_Tr::ConvertToDotationFamily( name );
-    ADN_Equipement_Data::ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( family );
+    ADN_Resources_Data::ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetResources().GetData().GetResource( family );
 
     input >> xml::list( "resource", *this, &ADN_Composantes_Data::ResourceInfos::ReadDotation, dotation );
 }
@@ -1038,7 +1038,7 @@ void ADN_Composantes_Data::ResourceInfos::ReadCategory( xml::xistream& input )
 // Name: ADN_Composantes_Data::ResourceInfos::ReadDotation
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ResourceInfos::ReadDotation( xml::xistream& input, ADN_Equipement_Data::ResourceInfos& dotation )
+void ADN_Composantes_Data::ResourceInfos::ReadDotation( xml::xistream& input, ADN_Resources_Data::ResourceInfos& dotation )
 {
     std::auto_ptr< CategoryInfos > pInfo( new CategoryInfos( dotation ) );
     pInfo->ReadArchive( input );
@@ -1216,7 +1216,7 @@ void ADN_Composantes_Data::ObjectInfos::WriteArchive( xml::xostream& output ) co
 // Name: ConsumptionItem::ConsumptionItem
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-ADN_Composantes_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Equipement_Data::CategoryInfo& category )
+ADN_Composantes_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Resources_Data::CategoryInfo& category )
     : nConsumptionType_    ( nConsumptionType )
     , ptrCategory_         ( category.parentResource_.categories_, &category )
     , nQuantityUsedPerHour_( 0 )
@@ -1298,7 +1298,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input
     std::string category, name;
     input >> xml::attribute( "category", category )
           >> xml::attribute( "name", name );
-    ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( category, name );
+    ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( category, name );
     if( !pCategory )
         throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toStdString(), tools::translate( "Composante_Data",  "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).toStdString() );
     std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( type, *pCategory ) );
@@ -2116,7 +2116,7 @@ QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_ActiveProtections_D
 // Name: ADN_Composantes_Data::GetComposantesThatUse
 // Created: ABR 2012-08-02
 // -----------------------------------------------------------------------------
-QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Equipement_Data::CategoryInfo& category )
+QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Resources_Data::CategoryInfo& category )
 {
     QStringList result;
     for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )

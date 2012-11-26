@@ -8,15 +8,15 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Equipement_GUI.h"
-#include "moc_ADN_Equipement_GUI.cpp"
+#include "ADN_Resources_GUI.h"
+#include "moc_ADN_Resources_GUI.cpp"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_DataException.h"
-#include "ADN_Equipement_AmmoListView.h"
-#include "ADN_Equipement_AttritionGraph.h"
-#include "ADN_Equipement_AttritionTable.h"
-#include "ADN_Equipement_GenericListView.h"
-#include "ADN_Equipement_Postures_GUI.h"
+#include "ADN_Resources_AmmoListView.h"
+#include "ADN_Resources_AttritionGraph.h"
+#include "ADN_Resources_AttritionTable.h"
+#include "ADN_Resources_GenericListView.h"
+#include "ADN_Resources_Postures_GUI.h"
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_HtmlBuilder.h"
@@ -27,14 +27,14 @@
 #include "ADN_UrbanModifiersTable.h"
 #include "ENT/ENT_Tr.h"
 
-class ADN_Equipement_UrbanModifiersTable : public helpers::ADN_UrbanModifiersTable
+class ADN_Resources_UrbanModifiersTable : public helpers::ADN_UrbanModifiersTable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Equipement_UrbanModifiersTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 )
+             ADN_Resources_UrbanModifiersTable( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0 )
                  : ADN_UrbanModifiersTable( objectName, connector, pParent ) {}
-    virtual ~ADN_Equipement_UrbanModifiersTable() {}
+    virtual ~ADN_Resources_UrbanModifiersTable() {}
     //@}
 
 protected:
@@ -44,7 +44,7 @@ protected:
     {
         ADN_UrbanModifiersTable::dataChanged( topLeft, bottomRight );
         if( topLeft == bottomRight )
-            ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+            ADN_Workspace::GetWorkspace().GetResources().GetGui().UpdateGraph();
     }
     //@}
 };
@@ -58,11 +58,11 @@ public:
     {
         dataModel_.setColumnCount( 5 );
         QStringList horizontalHeaders;
-        horizontalHeaders << tools::translate( "ADN_Equipement_GUI", "Ammunition" )
-                          << tools::translate( "ADN_Equipement_GUI", "Target armor" )
-                          << tools::translate( "ADN_Equipement_GUI", "On site fixable" )
-                          << tools::translate( "ADN_Equipement_GUI", "Maintenance support needed" )
-                          << tools::translate( "ADN_Equipement_GUI", "Destroyed" );
+        horizontalHeaders << tools::translate( "ADN_Resources_GUI", "Ammunition" )
+                          << tools::translate( "ADN_Resources_GUI", "Target armor" )
+                          << tools::translate( "ADN_Resources_GUI", "On site fixable" )
+                          << tools::translate( "ADN_Resources_GUI", "Maintenance support needed" )
+                          << tools::translate( "ADN_Resources_GUI", "Destroyed" );
         dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
         horizontalHeader()->setResizeMode( QHeaderView::Stretch );
         verticalHeader()->setVisible( false );
@@ -84,11 +84,11 @@ public:
 };
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI constructor
+// Name: ADN_Resources_GUI constructor
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
-ADN_Equipement_GUI::ADN_Equipement_GUI( ADN_Equipement_Data& data )
-    : ADN_Tabbed_GUI_ABC( "ADN_Equipement_GUI" )
+ADN_Resources_GUI::ADN_Resources_GUI( ADN_Resources_Data& data )
+    : ADN_Tabbed_GUI_ABC( "ADN_Resources_GUI" )
     , data_           ( data )
     , buttonGroup_( 0 )
     , pExplosiveParametersGroup_( 0 )
@@ -101,19 +101,19 @@ ADN_Equipement_GUI::ADN_Equipement_GUI( ADN_Equipement_Data& data )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI destructor
+// Name: ADN_Resources_GUI destructor
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
-ADN_Equipement_GUI::~ADN_Equipement_GUI()
+ADN_Resources_GUI::~ADN_Resources_GUI()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::Build
+// Name: ADN_Resources_GUI::Build
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::Build()
+void ADN_Resources_GUI::Build()
 {
     assert( pMainWidget_ == 0 );
 
@@ -135,10 +135,10 @@ void ADN_Equipement_GUI::Build()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::BuildGeneric
+// Name: ADN_Resources_GUI::BuildGeneric
 // Created: APE 2004-12-28
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
+void ADN_Resources_GUI::BuildGeneric( E_DotationFamily nType )
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -154,7 +154,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT8" ), vConnectors[ eGenEMAT8Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code EMAT6" ), vConnectors[ eGenEMAT6Code ] );
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Code LFRIL" ), vConnectors[ eGenLFRILCode ] );
-    if( ADN_Equipement_Data::IsMineOrExplosive( nType ) )
+    if( ADN_Resources_Data::IsMineOrExplosive( nType ) )
         builder.AddEnumField( pInfoHolder, tr( "Type" ), vConnectors[ eGenType ] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Nature" ), vConnectors[ eGenNature] );
     builder.AddField< ADN_ComboBox_Vector >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
@@ -170,11 +170,11 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
 
     // Attritions
     Q3GroupBox* pDirectGroup = 0;
-    if( ADN_Equipement_Data::IsMineOrExplosive( nType ) )
+    if( ADN_Resources_Data::IsMineOrExplosive( nType ) )
     {
         pDirectGroup = new Q3GroupBox( tr( "Attritions" ) );
-        pAttritionTables_[ nType ] = new ADN_Equipement_AttritionTable( strClassName_ + "MunitionsAttritionsTable", vConnectors[ eGenAttritions ], pDirectGroup );
-        ADN_Equipement_UrbanModifiersTable* pUrbanTable = new ADN_Equipement_UrbanModifiersTable( strClassName_ + "MunitionsUrbanTable", vConnectors[ eGenUrbanAttritions ], pDirectGroup );
+        pAttritionTables_[ nType ] = new ADN_Resources_AttritionTable( strClassName_ + "MunitionsAttritionsTable", vConnectors[ eGenAttritions ], pDirectGroup );
+        ADN_Resources_UrbanModifiersTable* pUrbanTable = new ADN_Resources_UrbanModifiersTable( strClassName_ + "MunitionsUrbanTable", vConnectors[ eGenUrbanAttritions ], pDirectGroup );
 
         QGroupBox* pAttritionVisualisation = new QGroupBox( tr( "Simulation" ) );
         QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
@@ -182,7 +182,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
         connect( pArmorCombos_[ nType ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
         pMaterialCombos_[ nType ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Urban material" ), vConnectors[ eGenMaterial ] );
         connect( pMaterialCombos_[ nType ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
-        pAttritionGraphs_[ nType ] = new ADN_Equipement_AttritionGraph( pAttritionVisualisation );
+        pAttritionGraphs_[ nType ] = new ADN_Resources_AttritionGraph( pAttritionVisualisation );
         vConnectors[ eGenAttritionGraph ] = &pAttritionGraphs_[ nType ]->GetConnector();
 
         QVBoxLayout* pAttritionVisualisationLayout = new QVBoxLayout();
@@ -208,11 +208,11 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
     pContentLayout->setAlignment( Qt::AlignTop );
     pContentLayout->addWidget( pInfoHolder );
     pContentLayout->addWidget( pPackagingGroup );
-    if( ADN_Equipement_Data::IsMineOrExplosive( nType ) )
+    if( ADN_Resources_Data::IsMineOrExplosive( nType ) )
         pContentLayout->addWidget( pDirectGroup );
 
     // List view
-    ADN_SearchListView< ADN_Equipement_GenericListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_GenericListView >( this, nType, data_.GetDotation( nType ).categories_, vConnectors, nType );
+    ADN_SearchListView< ADN_Resources_GenericListView >* pSearchListView = new ADN_SearchListView< ADN_Resources_GenericListView >( this, nType, data_.GetResource( nType ).categories_, vConnectors, nType );
     pSearchListView->GetListView()->setObjectName( builderName + "List" );
     vListViews_.push_back( pSearchListView->GetListView() );
     assert( nType == static_cast< int >( vListViews_.size() - 1) );
@@ -225,7 +225,7 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
 namespace
 {
     void CreateCheckbox( Q3GroupBox* parent, T_ConnectorVector& vConnectors, QString name,
-                         QButtonGroup* group, ADN_Equipement_GUI::E_AmmoGuiElements id )
+                         QButtonGroup* group, ADN_Resources_GUI::E_AmmoGuiElements id )
     {
         ADN_CheckBox* checkbox = new ADN_CheckBox( name, parent );
         checkbox->setObjectName( "ADN_Equipement_GUI_Ammunition" + name );
@@ -234,10 +234,10 @@ namespace
     }
 }
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::BuildAmmunition
+// Name: ADN_Resources_GUI::BuildAmmunition
 // Created: APE 2004-12-28
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::BuildAmmunition()
+void ADN_Resources_GUI::BuildAmmunition()
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -271,8 +271,8 @@ void ADN_Equipement_GUI::BuildAmmunition()
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( tr( "Attritions" ) );
     pDirectGroup->setObjectName( strClassName_ + "MunitionsAttritions" );
     vConnectors[ eDirect ] = &pDirectGroup->GetConnector();
-    pAttritionTables_[ eDotationFamily_Munition ] = new ADN_Equipement_AttritionTable( strClassName_ + "MunitionsAttritionsTable", vConnectors[ eAttritions ], pDirectGroup );
-    ADN_Equipement_UrbanModifiersTable* pUrbanTable = new ADN_Equipement_UrbanModifiersTable( strClassName_ + "MunitionsUrbanTable", vConnectors[ eUrbanAttritions ], pDirectGroup );
+    pAttritionTables_[ eDotationFamily_Munition ] = new ADN_Resources_AttritionTable( strClassName_ + "MunitionsAttritionsTable", vConnectors[ eAttritions ], pDirectGroup );
+    ADN_Resources_UrbanModifiersTable* pUrbanTable = new ADN_Resources_UrbanModifiersTable( strClassName_ + "MunitionsUrbanTable", vConnectors[ eUrbanAttritions ], pDirectGroup );
 
     QGroupBox* pAttritionVisualisation = new QGroupBox( tr( "Simulation" ) );
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
@@ -280,7 +280,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
     connect( pArmorCombos_[ eDotationFamily_Munition ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
     pMaterialCombos_[ eDotationFamily_Munition ] = builder.AddField< ADN_ComboBox_Vector >( pComboGroup, tr( "Urban material" ), vConnectors[ eMaterial ] );
     connect( pMaterialCombos_[ eDotationFamily_Munition ], SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated() ) );
-    pAttritionGraphs_[ eDotationFamily_Munition ] = new ADN_Equipement_AttritionGraph( pAttritionVisualisation );
+    pAttritionGraphs_[ eDotationFamily_Munition ] = new ADN_Resources_AttritionGraph( pAttritionVisualisation );
     vConnectors[ eAttritionGraph ] = &pAttritionGraphs_[ eDotationFamily_Munition ]->GetConnector();
 
     QVBoxLayout* pAttritionVisualisationLayout = new QVBoxLayout();
@@ -319,7 +319,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
     {
         // Explosive parameters
         pExplosiveParametersGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Explosive ammo parameters" ), pEffectsInfo );
-        new ADN_Equipement_Postures_GUI( strClassName_ + "AmmunitionsStance", tr( "Stance" ), vConnectors[ eModifStances ], pExplosiveParametersGroup_ );
+        new ADN_Resources_Postures_GUI( strClassName_ + "AmmunitionsStance", tr( "Stance" ), vConnectors[ eModifStances ], pExplosiveParametersGroup_ );
         QWidget* pExplosiveParametersGroupHolder = builder.AddFieldHolder( pExplosiveParametersGroup_ );
         builder.AddField< ADN_EditLine_Double >( pExplosiveParametersGroupHolder, tr( "Neutralization ratio" ), vConnectors[ eNeutralizationRatio ] );
         builder.SetValidator( new ADN_DoubleValidator( 1, INT_MAX, 2, this ) );
@@ -381,7 +381,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
     pContentLayout->addWidget( pGuidanceGroup );
 
     // List view
-    ADN_SearchListView< ADN_Equipement_AmmoListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_AmmoListView >( this, data_.GetDotation( eDotationFamily_Munition ).categories_, vConnectors, eDotationFamily_Munition );
+    ADN_SearchListView< ADN_Resources_AmmoListView >* pSearchListView = new ADN_SearchListView< ADN_Resources_AmmoListView >( this, data_.GetResource( eDotationFamily_Munition ).categories_, vConnectors, eDotationFamily_Munition );
     pSearchListView->GetListView()->setObjectName( strClassName_ + "_Ammunition_List" );
     vListViews_.push_back( pSearchListView->GetListView() );
     assert( eDotationFamily_Munition == vListViews_.size() - 1 );
@@ -394,20 +394,20 @@ void ADN_Equipement_GUI::BuildAmmunition()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::UpdateGraph
+// Name: ADN_Resources_GUI::UpdateGraph
 // Created: JSR 2010-05-03
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::UpdateGraph()
+void ADN_Resources_GUI::UpdateGraph()
 {
     if( pAttritionGraphs_[ currentTab_ ] )
         pAttritionGraphs_[ currentTab_ ]->Update();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::InitializeArmorCombo
+// Name: ADN_Resources_GUI::InitializeArmorCombo
 // Created: JSR 2010-05-03
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::InitializeSimulationCombos()
+void ADN_Resources_GUI::InitializeSimulationCombos()
 {
     if( pArmorCombos_[ currentTab_ ] )
     {
@@ -430,10 +430,10 @@ void ADN_Equipement_GUI::InitializeSimulationCombos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::GetSelectedArmor
+// Name: ADN_Resources_GUI::GetSelectedArmor
 // Created: JSR 2010-04-30
 // -----------------------------------------------------------------------------
-helpers::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
+helpers::ArmorInfos* ADN_Resources_GUI::GetSelectedArmor() const
 {
     std::map< E_DotationFamily, ADN_ComboBox_Vector* >::const_iterator it = pArmorCombos_.find( currentTab_ );
     if( it == pArmorCombos_.end() )
@@ -442,10 +442,10 @@ helpers::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::GetSelectedMaterial
+// Name: ADN_Resources_GUI::GetSelectedMaterial
 // Created: JSR 2010-05-03
 // -----------------------------------------------------------------------------
-helpers::ADN_UrbanAttritionInfos* ADN_Equipement_GUI::GetSelectedMaterial() const
+helpers::ADN_UrbanAttritionInfos* ADN_Resources_GUI::GetSelectedMaterial() const
 {
     std::map< E_DotationFamily, ADN_ComboBox_Vector* >::const_iterator it = pMaterialCombos_.find( currentTab_ );
     if( it == pMaterialCombos_.end() )
@@ -454,10 +454,10 @@ helpers::ADN_UrbanAttritionInfos* ADN_Equipement_GUI::GetSelectedMaterial() cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::IndirectTypeChanged
+// Name: ADN_Resources_GUI::IndirectTypeChanged
 // Created: LGY 2012-02-21
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::IndirectTypeChanged()
+void ADN_Resources_GUI::IndirectTypeChanged()
 {
     pExplosiveParametersGroup_->setVisible( buttonGroup_->button( eExplosivePresent )->isChecked() );
     pSmokeParametersGroup_->setVisible( buttonGroup_->button( eSmokePresent )->isChecked() );
@@ -468,30 +468,30 @@ void ADN_Equipement_GUI::IndirectTypeChanged()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::SimulationCombosActivated
+// Name: ADN_Resources_GUI::SimulationCombosActivated
 // Created: JSR 2010-04-29
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::SimulationCombosActivated()
+void ADN_Resources_GUI::SimulationCombosActivated()
 {
     UpdateGraph();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::CreatePKTable
+// Name: ADN_Resources_GUI::CreatePKTable
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-ADN_Table* ADN_Equipement_GUI::CreatePKTable()
+ADN_Table* ADN_Resources_GUI::CreatePKTable()
 {
     helpers::T_ArmorInfos_Vector& armorInfos = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos();
 
     ADN_Table* pTable = new ADN_PK_Table( tr( "PKs" ) );
     // Fill the table.
-    ADN_Equipement_Data::ResourceInfos& ammo = data_.GetDotation( eDotationFamily_Munition );
+    ADN_Resources_Data::ResourceInfos& ammo = data_.GetResource( eDotationFamily_Munition );
     int nRowSize = static_cast< int >( armorInfos.size() );
     int nRow = 0;
-    for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = ammo.categories_.begin(); it != ammo.categories_.end(); ++it )
+    for( ADN_Resources_Data::IT_CategoryInfos_Vector it = ammo.categories_.begin(); it != ammo.categories_.end(); ++it )
     {
-        ADN_Equipement_Data::AmmoCategoryInfo& ammoCategory = *static_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( *it );
+        ADN_Resources_Data::AmmoCategoryInfo& ammoCategory = *static_cast< ADN_Resources_Data::AmmoCategoryInfo* >( *it );
         if( !ammoCategory.bDirect_.GetData() )
             continue;
         pTable->setNumRows( nRow + nRowSize );
@@ -514,19 +514,19 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::RegisterTable
+// Name: ADN_Resources_GUI::RegisterTable
 // Created: APE 2005-03-30
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::RegisterTable( ADN_MainWindow& mainWindow )
+void ADN_Resources_GUI::RegisterTable( ADN_MainWindow& mainWindow )
 {
-    mainWindow.AddTable( tr( "PKs" ), new ADN_Callback< ADN_Table*, ADN_Equipement_GUI >( this, &ADN_Equipement_GUI::CreatePKTable ) );
+    mainWindow.AddTable( tr( "PKs" ), new ADN_Callback< ADN_Table*, ADN_Resources_GUI >( this, &ADN_Resources_GUI::CreatePKTable ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::ExportPKs
+// Name: ADN_Resources_GUI::ExportPKs
 // Created: APE 2005-04-21
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Data::AmmoCategoryInfo& infos )
+void ADN_Resources_GUI::ExportPKs( ADN_HtmlBuilder& builder, ADN_Resources_Data::AmmoCategoryInfo& infos )
 {
     if( !infos.bDirect_.GetData() )
         return;
@@ -538,21 +538,21 @@ void ADN_Equipement_GUI::ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Dat
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::NetworkUsableActivated
+// Name: ADN_Resources_GUI::NetworkUsableActivated
 // Created: ABR 2012-02-29
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::NetworkUsableActivated( int state )
+void ADN_Resources_GUI::NetworkUsableActivated( int state )
 {
     assert( pTabWidget_ );
     int currentIndex = pTabWidget_->currentIndex();
-    ADN_Equipement_Data::T_CategoryInfos_Vector& networkUsableVector = data_.GetNetworkUsableDotation();
+    ADN_Resources_Data::T_CategoryInfos_Vector& networkUsableVector = data_.GetNetworkUsableResources();
     assert( vListViews_[ currentIndex ] && vNetworkUsableCheckBoxs_[ currentIndex ] );
-    ADN_Equipement_Data::CategoryInfo* current = static_cast< ADN_Equipement_Data::CategoryInfo* >( vListViews_[ currentIndex ]->GetCurrentData() );
+    ADN_Resources_Data::CategoryInfo* current = static_cast< ADN_Resources_Data::CategoryInfo* >( vListViews_[ currentIndex ]->GetCurrentData() );
     if( !current )
         return;
 
     bool founded = false;
-    for( ADN_Equipement_Data::CIT_CategoryInfos_Vector it = networkUsableVector.begin(); it != networkUsableVector.end() && !founded; ++it )
+    for( ADN_Resources_Data::CIT_CategoryInfos_Vector it = networkUsableVector.begin(); it != networkUsableVector.end() && !founded; ++it )
         if( ( *it )->nId_.GetData() == current->nId_.GetData() )
             founded = true;
 
@@ -569,7 +569,7 @@ void ADN_Equipement_GUI::NetworkUsableActivated( int state )
             ADN_ResourceNetworks_Data::ResourceNetworkInfos* networkInfo = *it;
             if( networkInfo )
             {
-                ADN_Equipement_Data::CategoryInfo* equipmentInfo = networkInfo->ptrCategory_.GetData();
+                ADN_Resources_Data::CategoryInfo* equipmentInfo = networkInfo->ptrCategory_.GetData();
                 if( equipmentInfo && equipmentInfo->nId_.GetData() == current->nId_.GetData() )
                     associatedResourceNetwork += ((*it)->strName_.GetData() + '\n').c_str();
             }
@@ -591,10 +591,10 @@ void ADN_Equipement_GUI::NetworkUsableActivated( int state )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::OnCurrentTabChanged
+// Name: ADN_Resources_GUI::OnCurrentTabChanged
 // Created: ABR 2012-11-14
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::OnCurrentTabChanged( int tab )
+void ADN_Resources_GUI::OnCurrentTabChanged( int tab )
 {
     currentTab_ = static_cast< E_DotationFamily >( tab );
 }

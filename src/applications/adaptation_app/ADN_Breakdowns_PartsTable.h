@@ -11,7 +11,7 @@
 #define __ADN_Breakdowns_PartsTable_h_
 
 #include "ADN_Table.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 // =============================================================================
 /** @class  ADN_Breakdowns_PartsTable
@@ -34,7 +34,7 @@ private:
     //@{
     virtual void AddRow( int row, void* data );
     virtual void OnContextMenu( const QPoint& pt );
-    bool Contains( ADN_Equipement_Data::CategoryInfo& category );
+    bool Contains( ADN_Resources_Data::CategoryInfo& category );
     //@}
 };
 

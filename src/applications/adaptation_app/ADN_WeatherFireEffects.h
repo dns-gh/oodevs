@@ -10,7 +10,7 @@
 #ifndef __ADN_WeatherFireEffects_h_
 #define __ADN_WeatherFireEffects_h_
 
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 
 // =============================================================================
 /** @class  ADN_WeatherFireEffects
@@ -43,7 +43,7 @@ public:
     //@}
 
 public:
-    typedef ADN_Equipement_Data::CategoryInfo T_Item;
+    typedef ADN_Resources_Data::CategoryInfo T_Item;
 
     class Cmp : public std::unary_function< ADN_WeatherFireEffects* , bool >
     {

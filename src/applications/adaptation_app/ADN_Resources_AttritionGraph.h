@@ -7,21 +7,21 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Equipement_AttritionGraph_h_
-#define __ADN_Equipement_AttritionGraph_h_
+#ifndef __ADN_Resources_AttritionGraph_h_
+#define __ADN_Resources_AttritionGraph_h_
 
 #include "ADN_Gfx_ABC.h"
-#include "ADN_Equipement_Data.h"
+#include "ADN_Resources_Data.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_AttritionInfos.h"
 
 // =============================================================================
-/** @class  ADN_Equipement_AttritionGraph
-    @brief  ADN_Equipement_AttritionGraph
+/** @class  ADN_Resources_AttritionGraph
+    @brief  ADN_Resources_AttritionGraph
 */
 // Created: JSR 2010-04-29
 // =============================================================================
-class ADN_Equipement_AttritionGraph : public QWidget , public ADN_Gfx_ABC
+class ADN_Resources_AttritionGraph : public QWidget , public ADN_Gfx_ABC
 {
     Q_OBJECT
 
@@ -52,8 +52,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Equipement_AttritionGraph( QWidget* pParent = 0 );
-    virtual ~ADN_Equipement_AttritionGraph();
+    explicit ADN_Resources_AttritionGraph( QWidget* pParent = 0 );
+    virtual ~ADN_Resources_AttritionGraph();
     //@}
 
     //! @name Operations
@@ -89,4 +89,4 @@ private:
     //@}
 };
 
-#endif // __ADN_Equipement_AttritionGraph_h_
+#endif // __ADN_Resources_AttritionGraph_h_

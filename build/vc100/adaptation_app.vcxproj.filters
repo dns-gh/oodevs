@@ -50,18 +50,6 @@
     <Filter Include="Source Files\Workspace\Categories\Categories GUI">
       <UniqueIdentifier>{025c200c-dbd3-4692-8839-9743fa0e3898}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Workspace\Equipement">
-      <UniqueIdentifier>{74f36202-9392-4a4f-a747-ef339fac15d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Equipement\Equipement Data">
-      <UniqueIdentifier>{61a6853e-837d-4ba7-8504-48ff4890b367}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Equipement\Equipement GUI">
-      <UniqueIdentifier>{6e453dfe-0e7d-44fa-8020-a891b751625e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard">
-      <UniqueIdentifier>{99e857e9-c5bb-4dab-9837-8f866e611285}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Workspace\Object">
       <UniqueIdentifier>{21172fc2-6cc7-4278-a15e-37b65a6bd6e2}</UniqueIdentifier>
     </Filter>
@@ -389,6 +377,18 @@
     <Filter Include="Source Files\Workspace\Crowds\Crowds Data">
       <UniqueIdentifier>{9ce6c9b2-89c0-48e7-bb8f-132fb22f4619}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Resources">
+      <UniqueIdentifier>{97cbf9d3-163e-441b-8484-13e17a182898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Resources\Resources Data">
+      <UniqueIdentifier>{bbc99981-bea4-4a1e-b1bd-d6d0df9d6627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Resources\Resources GUI">
+      <UniqueIdentifier>{c568d4ca-e1b7-4b36-a462-365fa6a91944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Resources\Resources GUI\Resources Wizard">
+      <UniqueIdentifier>{b0aba9e8-22f1-42a6-826f-8b90caf8e588}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -513,27 +513,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Size.cpp">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Data.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement Data</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AmmoListView.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionGraph.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionTable.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_GenericListView.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_GUI.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipement_Postures_GUI.cpp">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.cpp">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
@@ -1201,6 +1180,27 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Crowds_UrbanEffect_Attitude_ListView.cpp">
       <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_AmmoListView.cpp">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionGraph.cpp">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionTable.cpp">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_GenericListView.cpp">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_GUI.cpp">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_Postures_GUI.cpp">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Resources_Data.cpp">
+      <Filter>Source Files\Workspace\Resources\Resources Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1304,24 +1304,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_Categories_Size.h">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Data.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_AmmoListView.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionTable.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_GenericListView.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Postures_GUI.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_Wizard.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data.h">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
@@ -1731,9 +1713,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Weapons_WizardPage.h">
       <Filter>Source Files\Workspace\Weapons\Weapons GUI\Weapon Wizard</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipement_WizardPage.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI\Equipement Wizard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
     </ClInclude>
@@ -1844,6 +1823,27 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Crowds_UrbanEffect_Attitude_ListView.h">
       <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_Wizard.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI\Resources Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_WizardPage.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI\Resources Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_AmmoListView.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionTable.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_GenericListView.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_Postures_GUI.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Resources_Data.h">
+      <Filter>Source Files\Workspace\Resources\Resources Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1963,12 +1963,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Categories_GUI.h">
       <Filter>Source Files\Workspace\Categories\Categories GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipement_AttritionGraph.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipement_GUI.h">
-      <Filter>Source Files\Workspace\Equipement\Equipement GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Objects_GUI.h">
       <Filter>Source Files\Workspace\Object\Objects GUI</Filter>
@@ -2182,6 +2176,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Crowds_GUI.h">
       <Filter>Source Files\Workspace\Crowds\Crowds GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Resources_AttritionGraph.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Resources_GUI.h">
+      <Filter>Source Files\Workspace\Resources\Resources GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

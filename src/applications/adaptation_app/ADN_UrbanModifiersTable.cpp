@@ -9,8 +9,8 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_UrbanModifiersTable.h"
-#include "ADN_Equipement_Data.h"
-#include "ADN_Equipement_GUI.h"
+#include "ADN_Resources_Data.h"
+#include "ADN_Resources_GUI.h"
 #include "ADN_Connector_Table_ABC.h"
 
 using namespace helpers;
