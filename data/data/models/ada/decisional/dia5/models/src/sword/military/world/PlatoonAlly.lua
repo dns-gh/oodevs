@@ -945,7 +945,7 @@ return
         end,
     } ),
     startImmuniserNbc = function( self )
-        integration.immuniserNbc( self )
+        integration.startImmuniserNbc( self )
     end,
     stopImmuniserNbc = function( self )
         integration.stopImmuniserNbc( self )
