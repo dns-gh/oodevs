@@ -9,9 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MessageLoader.h"
-#include "Config.h"
 #include "MessageHandler_ABC.h"
-#include "Config.h"
 #include "WaitEvent.h"
 #include "tools/InputBinaryStream.h"
 #include "protocol/ClientPublisher_ABC.h"
