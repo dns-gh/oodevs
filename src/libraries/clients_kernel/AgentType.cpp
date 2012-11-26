@@ -28,8 +28,9 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
     : nature_            ( 0 )
     , nbrOfficers_       ( 0 )
     , nbrWarrantOfficers_( 0 )
+    , nbcSuit_           ( eAgentNone )
 {
-    std::string modelName;
+    std::string modelName, nbcSuit;
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "type", type_ )
         >> xml::attribute( "id", id_ )
@@ -43,6 +44,9 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
         >> xml::start( "crew-ranks" )
             >> xml::list( "crew-rank", *this, &AgentType::ReadCrewRank )
         >> xml::end
+        >> xml::start( "nbc" )
+            >> xml::attribute( "suit", nbcSuit )
+        >> xml::end
         >> xml::optional
         >> xml::start( "logistics" )
             >> xml::list( "category", *this, &AgentType::ReadResourcesCategory )
@@ -52,6 +56,7 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
             >> xml::list( "stock", *this, &AgentType::ReadStock )
         >> xml::end;
 
+    nbcSuit_ = ENT_Tr::ConvertToAgentNbcSuit( nbcSuit );
     symbol_      = symbolFactory.CreateSymbol( nature->GetNature() );
     levelSymbol_ = symbolFactory.CreateLevelSymbol( nature->GetLevel() );
     hqSymbol_    = symbolFactory.CreateAutomatSymbol();
@@ -303,4 +308,13 @@ bool AgentType::IsStockCategoryDefined( const LogisticSupplyClass& logClass ) co
 bool AgentType::HasStocks() const
 {
     return !stocks_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetNbcSuit
+// Created: LGY 2012-11-26
+// -----------------------------------------------------------------------------
+E_AgentNbcSuit AgentType::GetNbcSuit() const
+{
+    return nbcSuit_;
 }

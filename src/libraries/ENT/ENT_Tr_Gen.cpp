@@ -419,12 +419,12 @@ ENT_Tr::T_ConverterPreparationMode ENT_Tr::PreparationModeConverter_ [] =
 
 ENT_Tr::T_ConverterAgentNbcSuit ENT_Tr::AgentNbcSuitConverter_[] =
 {
-    T_ConverterAgentNbcSuit( "none",   QT_TRANSLATE_NOOP( "ADN_Tr", "None" ),    eAgentNone ),
-    T_ConverterAgentNbcSuit( "level1", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 1" ), eAgentNbcSuitLevel1 ),
-    T_ConverterAgentNbcSuit( "level2", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 2" ), eAgentNbcSuitLevel2 ),
-    T_ConverterAgentNbcSuit( "level3", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 3" ), eAgentNbcSuitLevel3 ),
-    T_ConverterAgentNbcSuit( "level4", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 4" ), eAgentNbcSuitLevel4 ),
-    T_ConverterAgentNbcSuit( "level5", QT_TRANSLATE_NOOP( "ADN_Tr", "Level 5" ), eAgentNbcSuitLevel5 ),
+    T_ConverterAgentNbcSuit( "none",   QT_TRANSLATE_NOOP( "ENT_Tr", "None" ),    eAgentNone ),
+    T_ConverterAgentNbcSuit( "level1", QT_TRANSLATE_NOOP( "ENT_Tr", "Level 1" ), eAgentNbcSuitLevel1 ),
+    T_ConverterAgentNbcSuit( "level2", QT_TRANSLATE_NOOP( "ENT_Tr", "Level 2" ), eAgentNbcSuitLevel2 ),
+    T_ConverterAgentNbcSuit( "level3", QT_TRANSLATE_NOOP( "ENT_Tr", "Level 3" ), eAgentNbcSuitLevel3 ),
+    T_ConverterAgentNbcSuit( "level4", QT_TRANSLATE_NOOP( "ENT_Tr", "Level 4" ), eAgentNbcSuitLevel4 ),
+    T_ConverterAgentNbcSuit( "level5", QT_TRANSLATE_NOOP( "ENT_Tr", "Level 5" ), eAgentNbcSuitLevel5 ),
     T_ConverterAgentNbcSuit( "", "", (E_AgentNbcSuit)-1 )
 };
 

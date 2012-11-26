@@ -27,6 +27,7 @@ namespace kernel
     class NBCAgent;
     class PropertiesDictionary;
     class Entity_ABC;
+    class AgentType;
 }
 
 // =============================================================================
@@ -42,7 +43,8 @@ class Contaminations : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Contaminations( kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, kernel::PropertiesDictionary& dico );
+             Contaminations( kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::NBCAgent >& resolver,
+                             kernel::PropertiesDictionary& dico, const kernel::AgentType& type );
     virtual ~Contaminations();
     //@}
 
@@ -66,7 +68,6 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     virtual void DoUpdate( const sword::UnitAttributes& message );
     //@}
 
@@ -81,6 +82,7 @@ public:
     int nContamination_;
     double quantity_;
     double dose_;
+    const QString suit_;
     //@}
 };
 

@@ -2,33 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr" sourcelanguage="en">
 <context>
-    <name>ADN_Tr</name>
-    <message>
-        <source>None</source>
-        <translation>Aucun</translation>
-    </message>
-    <message>
-        <source>Level 1</source>
-        <translation>Niveau 1</translation>
-    </message>
-    <message>
-        <source>Level 2</source>
-        <translation>Niveau 2</translation>
-    </message>
-    <message>
-        <source>Level 3</source>
-        <translation>Niveau 3</translation>
-    </message>
-    <message>
-        <source>Level 4</source>
-        <translation>Niveau 4</translation>
-    </message>
-    <message>
-        <source>Level 5</source>
-        <translation>Niveau 5</translation>
-    </message>
-</context>
-<context>
     <name>ENT_Tr</name>
     <message>
         <source>circle</source>
@@ -869,6 +842,26 @@
     <message>
         <source>All</source>
         <translation>Tous</translation>
+    </message>
+    <message>
+        <source>Level 1</source>
+        <translation>Niveau 1</translation>
+    </message>
+    <message>
+        <source>Level 2</source>
+        <translation>Niveau 2</translation>
+    </message>
+    <message>
+        <source>Level 3</source>
+        <translation>Niveau 3</translation>
+    </message>
+    <message>
+        <source>Level 4</source>
+        <translation>Niveau 4</translation>
+    </message>
+    <message>
+        <source>Level 5</source>
+        <translation>Niveau 5</translation>
     </message>
 </context>
 </TS>

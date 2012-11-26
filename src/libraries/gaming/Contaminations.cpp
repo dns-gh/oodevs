@@ -16,17 +16,27 @@
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/AgentType.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
 #include <boost/foreach.hpp>
 
 using namespace kernel;
 
-// -----------------------------------------------------------------------------
+namespace
+{
+    QString Convert( E_AgentNbcSuit suit )
+    {
+        return suit == eAgentNone ? "" : tools::ToString( suit );
+    }
+}
+
+// -----------------------------------------------------------------------------<
 // Name: Contaminations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< NBCAgent >& resolver, PropertiesDictionary& dico )
+Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< NBCAgent >& resolver,
+                                PropertiesDictionary& dico, const kernel::AgentType& type )
     : controller_            ( controller )
     , entity_                ( entity )
     , resolver_              ( resolver )
@@ -34,8 +44,15 @@ Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& enti
     , nContamination_        ( 0 )
     , quantity_              ( 0 )
     , dose_                  ( 0.f )
+    , suit_                  ( Convert( type.GetNbcSuit() ) )
 {
-    CreateDictionary( dico );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_ );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_ );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_ );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_ );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Dose" ), dose_ );
+    if( suit_ != "" )
+        dico.Register( entity_, tools::translate( "NBC", "NBC/Suit" ), suit_, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,19 +62,6 @@ Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& enti
 Contaminations::~Contaminations()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Contaminations::CreateDictionary
-// Created: SBO 2006-10-19
-// -----------------------------------------------------------------------------
-void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
-{
-    dico.Register( entity_, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_ );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_ );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_ );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_ );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Dose" ), dose_ );
 }
 
 // -----------------------------------------------------------------------------

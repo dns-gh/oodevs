@@ -396,6 +396,15 @@ QString tools::ToString( E_LocationType nType )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Tools::ToString
+// Created: LGY 2012-11-26
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_AgentNbcSuit nType )
+{
+    return ENT_Tr::ConvertFromAgentNbcSuit( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: ABR 2011-07-19
 // -----------------------------------------------------------------------------

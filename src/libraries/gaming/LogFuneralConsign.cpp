@@ -18,7 +18,6 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DotationType.h"
-// #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DisplayExtractor_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"

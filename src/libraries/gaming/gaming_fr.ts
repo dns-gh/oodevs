@@ -928,6 +928,10 @@
         <source>Dose:</source>
         <translation>Dose</translation>
     </message>
+    <message>
+        <source>NBC/Suit</source>
+        <translation>NBC/Protection</translation>
+    </message>
 </context>
 <context>
     <name>Network</name>

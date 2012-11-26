@@ -11,6 +11,7 @@
 #define __AgentType_h_
 
 #include <boost/noncopyable.hpp>
+#include "ENT/ENT_Tr.h"
 
 namespace xml { class xistream; };
 
@@ -62,6 +63,7 @@ public:
     const std::string& GetHQSymbol() const;
     const std::string& GetTypeName() const;
     const float GetComposantesWeight() const;
+    E_AgentNbcSuit GetNbcSuit() const;
 
     unsigned int GetNbrOfficers() const;
     unsigned int GetNbrWarrantOfficers() const;
@@ -108,6 +110,7 @@ private:
     std::string symbol_; // $$$$ AGE 2006-10-24: devrait etre dans nature
     std::string levelSymbol_;
     std::string hqSymbol_;
+    E_AgentNbcSuit nbcSuit_;
 
     unsigned int nbrOfficers_;
     unsigned int nbrWarrantOfficers_;
