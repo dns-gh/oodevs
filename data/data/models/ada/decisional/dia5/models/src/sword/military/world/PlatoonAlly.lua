@@ -750,7 +750,7 @@ return
     deploy = masalife.brain.integration.startStopAction( 
     { 
         start = integration.startDeploy,
-        started = integration.deployed,
+        started = integration.isDeployed,
         stop = integration.undeploy
     } ),
     isDeployed = function( self )
