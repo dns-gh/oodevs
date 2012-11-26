@@ -1906,7 +1906,7 @@ void PHY_RolePion_Composantes::GiveComposante( unsigned int id, int quantity, PH
         if( composante.CanBeLent() && composante.GetType().GetMosID().id() == id )
         {
             --quantity;
-            composante.TransferComposante( borrower );
+            LendComposante( const_cast< MIL_Agent_ABC& >( borrower.GetPion() ), composante );
             it = composantes_.rbegin(); // TransfertComposante modifie composantes_
         }
         else
