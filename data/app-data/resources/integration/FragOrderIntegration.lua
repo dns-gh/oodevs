@@ -191,3 +191,8 @@ integration.getFireParameters = function( self )
     params.interventionType = integration.getNbItParameter( self )
     return params
 end
+
+integration.createFragOrder = function( fragOrderType )
+    return CreateFragOrder( fragOrderType )
+end
+
