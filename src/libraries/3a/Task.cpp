@@ -17,6 +17,7 @@
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <boost/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Task constructor
@@ -200,6 +201,28 @@ void Task::Commit()
         result_->Commit( firstTick_ - firstTickRead_, firstTick_ );
 }
 
+namespace
+{
+    struct Transaction
+    {
+        Transaction( boost::shared_ptr< Task > task )
+            : task( task )
+        {
+            // NOTHING
+        }
+        ~Transaction()
+        {
+            task->Commit();
+        }
+        boost::shared_ptr< Task > task;
+    };
+
+    void Commit( boost::shared_ptr< Transaction > ptr )
+    {
+        // NOTHING
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Task::Process
 // Created: AGE 2007-09-17
@@ -211,8 +234,9 @@ void Task::Process( dispatcher::MessageLoader_ABC& loader )
     firstTickRead_ = loader.FindKeyFrame( firstTick_ );
     firstTick_ = std::max( firstTick_, firstTickRead_ );
     const unsigned int ticks = std::min( lastTick_, loader.GetTickNumber() - 1 ) + 1;
-    loader.LoadKeyFrame( firstTickRead_, *this );
-    for( unsigned int i = firstTickRead_; i < ticks - 1; ++i )
-        loader.LoadFrame( i, *this );
-    loader.LoadFrame( ticks - 1, *this, boost::bind( &Task::Commit, shared_from_this() ) );
+    boost::shared_ptr< Transaction > transaction = boost::make_shared< Transaction >( shared_from_this() );
+    const dispatcher::MessageLoader_ABC::T_Callback callback = boost::bind( &::Commit, transaction );
+    loader.LoadKeyFrame( firstTickRead_, *this, callback );
+    for( unsigned int i = firstTickRead_; i < ticks; ++i )
+        loader.LoadFrame( i, *this, callback );
 }
