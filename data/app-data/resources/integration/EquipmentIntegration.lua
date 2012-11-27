@@ -786,7 +786,7 @@ end
 -- -------------------------------------------------------------------------------- 
 -- Activate special sensors on area
 -- --------------------------------------------------------------------------------  
-integration.activateSpecialSensors = function ( area, eType )
+integration.activateSpecialSensors = function( area, eType )
     area[ myself ] = area[ myself ] or {}
     area[ myself ].actionRadar = DEC_Perception_ActiverRadarSurLocalisation( eType, area.source )
     meKnowledge:RC( eRC_DebutSurveillance )
@@ -796,7 +796,7 @@ end
 -- -------------------------------------------------------------------------------- 
 -- deactivate special sensors on area
 -- -------------------------------------------------------------------------------- 
-integration.deactivateSpecialSensors = function ( area, eType )
+integration.deactivateSpecialSensors = function( area, eType )
     if area[ myself ].actionRadar then
         area[ myself ].actionRadar = DEC_Perception_DesactiverRadarSurLocalisation( eType, area[ myself ].actionRadar )
         meKnowledge:RC( eRC_FinSurveillance )
@@ -818,7 +818,7 @@ integration.deactivateSpecialSensorForCBRN = function ()
 end
 
 -- -------------------------------------------------------------------------------- 
--- collidung with a toxic plume
+-- colliding with a toxic plume
 -- -------------------------------------------------------------------------------- 
 integration.isToxicPlumeDetected = function( agent )
     -- $$$ GGE Wait lgy DEC function meanwhile test with NBC
