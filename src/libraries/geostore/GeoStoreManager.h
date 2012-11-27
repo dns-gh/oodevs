@@ -46,7 +46,7 @@ public:
     //@{
     void Initialize( const boost::filesystem::path& path );
     void LoadTerrainFiles();
-    void CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent );
+    void CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent, double roadWidth );
     bool BlockAutoProcess( const geometry::Polygon2f& footprint );
     bool IsInitialized() const;
     //@}

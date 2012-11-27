@@ -26,12 +26,14 @@ using namespace geostore;
 // Name: CreateBlockAutoProcess constructor
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-CreateBlockAutoProcess::CreateBlockAutoProcess( const Database& database )
+CreateBlockAutoProcess::CreateBlockAutoProcess( const Database& database, double roadWidth )
     : database_         ( database )
+    , roadWidth_        ( roadWidth )
     , blocks_           ( 0 )
     , geometryFactory_  ( new GeometryFactory() )
 {
-    // NOTHING
+    // TODO: Compute the actual value for the road width !!!
+    roadWidth_ = 0.00001;
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +143,7 @@ void CreateBlockAutoProcess::PrepareTerrainComponents( gaiaGeomCollPtr selection
                 continue;
             }
 
-            gaiaGeomCollPtr temp = gaiaGeomCollBuffer( lines, 0.00001, 3 );
+            gaiaGeomCollPtr temp = gaiaGeomCollBuffer( lines, roadWidth_, 3 );
             gaiaFreeGeomColl( lines );
             if( ! buffers )
             {

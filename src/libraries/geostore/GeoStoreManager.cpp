@@ -101,11 +101,11 @@ void GeoStoreManager::LoadTerrainFiles()
 // Name: GeoStoreManager::CreateUrbanBlocksOnCities
 // Created: AME 2010-07-21
 // -----------------------------------------------------------------------------
-void GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent )
+void GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent, double roadWidth )
 {
     try
     {
-        CreateBlockAutoProcess process( *spatialDb_ );
+        CreateBlockAutoProcess process( *spatialDb_, roadWidth );
         process.Run( footprint, urbanModel_, parent, *trans_ );
     }
     catch( ... ) // Created: AME 2010-08-02 Improve exception catching
