@@ -1962,6 +1962,7 @@
         <mission name="PION MELEE Interdire"/>
         <mission name="PION MELEE Couvrir"/>
         <mission name="PION MELEE Harceler"/>
+        <mission name="PION MELEE Defendre"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7547,4 +7548,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1541642258" -->
+<!-- signature="1607099786" -->
