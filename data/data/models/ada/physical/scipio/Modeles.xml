@@ -3968,6 +3968,7 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Mener Un Entretien"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7304,6 +7305,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE RENS Reconnaitre"/>
+        <mission name="AUTOMATE COMMUNES Mener Un Entretien"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En NBC4"/>
@@ -7548,4 +7550,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1607099786" -->
+<!-- signature="0519670854" -->
