@@ -106,12 +106,11 @@ void UserProfileControls_ABC::ReadRights( gui::ValuedListItem* item, bool contro
     if( control )
     {
         SetItem( item, eControl );
-        SelectParent( item );
         listView_->ensureItemVisible( item );
         ValuedListItem* child = static_cast< ValuedListItem* >( item->firstChild() );
         while( child )
         {            
-            ReadRights( child, control );
+            ReadRights( child, IsControlled( child ) );
             child = static_cast< ValuedListItem* >( child->nextSibling() );
         }
     }
@@ -154,15 +153,9 @@ bool UserProfileControls_ABC::CanWrite( const kernel::Entity_ABC* /*entity*/ ) c
 void UserProfileControls_ABC::UpdateRights( gui::ValuedListItem* item, bool control )
 {
     if( control )
-    {
         SelectChild( item );
-        SelectParent( item );
-    }
     else
-    {
-        DeselectParent( item );
         DeselectChild( item );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -195,11 +188,14 @@ void UserProfileControls_ABC::SelectChild( gui::ValuedListItem* item )
 {
     SetItem( item, eControl );
 
-    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-    while( value )
+    if( gui::ValuedListItem* parent = static_cast< ValuedListItem* >( item->parent() ) )
     {
-        SelectChild( value );
-        value = static_cast< ValuedListItem* >( value->nextSibling() );
+        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+        while( value )
+        {
+            SelectChild( value );
+            value = static_cast< ValuedListItem* >( value->nextSibling() );
+        }
     }
 }
 
@@ -221,12 +217,15 @@ void UserProfileControls_ABC::DeselectParent( gui::ValuedListItem* item )
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::DeselectChild( gui::ValuedListItem* item )
 {
-    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-    while( value )
+    SetItem( item, eNothing );
+    if( gui::ValuedListItem* parent = static_cast< ValuedListItem* >( item->parent() ) )
     {
-        SetItem( value, eNothing );
-        DeselectChild( value );
-        value = static_cast< ValuedListItem* >( value->nextSibling() );
+        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+        while( value )
+        {
+            DeselectChild( value );
+            value = static_cast< ValuedListItem* >( value->nextSibling() );
+        }
     }
 }
 
