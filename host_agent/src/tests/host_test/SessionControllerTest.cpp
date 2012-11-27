@@ -199,3 +199,13 @@ BOOST_FIXTURE_TEST_CASE( session_controller_stops, Fixture )
     SessionController::T_Session session = control.Stop( idNode, idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
 }
+
+BOOST_FIXTURE_TEST_CASE( session_controller_starts_with_right_app, Fixture )
+{
+    Reload();
+    MOCK_EXPECT( idle->Start ).once().with( simulation, mock::any ).returns( true );
+    control.Start( idNode, idIdle, std::string() );
+    MOCK_EXPECT( idle->IsReplay ).once().returns( true );
+    MOCK_EXPECT( idle->Start ).once().with( replayer, mock::any ).returns( true );
+    control.Start( idNode, idIdle, std::string() );
+}

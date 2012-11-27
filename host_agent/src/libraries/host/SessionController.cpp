@@ -296,14 +296,24 @@ SessionController::T_Session SessionController::Dispatch( const Uuid& node, cons
     return ptr;
 }
 
+namespace
+{
+    bool StartSession( const boost::shared_ptr< Session_ABC >& session,
+                       const Path& simulation, const Path& replayer,
+                       const std::string& checkpoint )
+    {
+        return session->Start( session->IsReplay() ? replayer : simulation, checkpoint );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: SessionController::Start
 // Created: BAX 2012-04-20
 // -----------------------------------------------------------------------------
 SessionController::T_Session SessionController::Start( const Uuid& node, const Uuid& id, const std::string& checkpoint ) const
 {
-    return Dispatch( node, id, boost::bind( &Session_ABC::Start, _1,
-                     boost::cref( simulation_ ), boost::cref( checkpoint ) ) );
+    return Dispatch( node, id, boost::bind( &StartSession, _1, simulation_,
+                     replayer_, checkpoint ) );
 }
 
 // -----------------------------------------------------------------------------
