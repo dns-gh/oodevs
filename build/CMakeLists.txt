@@ -4,7 +4,7 @@ project( sword )
 enable_testing()
 include( ${MASA_MACROS} )
 
-set( root_dir ${CMAKE_SOURCE_DIR}/.. )
+get_filename_component( root_dir "${CMAKE_SOURCE_DIR}/.." REALPATH )
 include_directories( ${root_dir}/src/libraries )
 add_definitions( -DBOOST_SPIRIT_THREADSAFE )
 
