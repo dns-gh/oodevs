@@ -783,8 +783,12 @@ integration.getAgentsWithHQ = function()
     return DEC_Pion_PionsAvecPC()
 end
 
-integration.isDroneExploited = function( drone )
+integration.isUAVExploited = function( drone )
     return drone:GetbEnExploitation_()
+end
+
+integration.isUAVDeployed = function( drone )
+    return drone:GetbMiseEnOeuvre_()
 end
 
 -- -------------------------------------------------------------------------------- 
