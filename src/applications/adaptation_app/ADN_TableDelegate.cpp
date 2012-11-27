@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_TableDelegate.h"
-#include "ADN_CheckBox.h"
 #include "ADN_ComboBox_Enum.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_EditLine.h"
@@ -361,9 +360,23 @@ void ADN_TableDelegate::setModelData( QWidget* editor, QAbstractItemModel* /*mod
         guiConnector->Disconnect( data );
 }
 
-void ADN_TableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void ADN_TableDelegate::paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const
 {
-    QItemDelegate::paint( painter, option, index );
+     Qt::ItemFlags flags = index.flags();
+     if( ( flags & Qt::ItemIsUserCheckable ) && ( flags & Qt::ItemIsEnabled ) )
+     {
+         QStyleOptionViewItemV4 viewItemOption( option );
+         const int textMargin = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
+         QRect newRect = QStyle::alignedRect( option.direction, Qt::AlignCenter,
+                                              QSize( option.decorationSize.width() + 5, option.decorationSize.height() ),
+                                              QRect( option.rect.x() + textMargin, option.rect.y(),
+                                                     option.rect.width() - ( 2 * textMargin ), option.rect.height() ) );
+         viewItemOption.rect = newRect;
+         QItemDelegate::paint( painter, viewItemOption, index );
+     }
+     else
+         QItemDelegate::paint( painter, option, index );
+
     QPen oldPen = painter->pen();
     painter->setPen( gridPen_ );
     if( boldGridRowIndexes_.find( index.row() ) != boldGridRowIndexes_.end() )
@@ -371,4 +384,42 @@ void ADN_TableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
     if( boldGridColIndexes_.find( index.column() )!= boldGridColIndexes_.end() )
         painter->drawLine( option.rect.topLeft(), option.rect.bottomLeft () );
     painter->setPen( oldPen );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDelegate::editorEvent
+// Created: LGY 2012-11-27
+// -----------------------------------------------------------------------------
+bool ADN_TableDelegate::editorEvent( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index )
+{
+    Qt::ItemFlags flags = model->flags( index );
+    if( ( flags & Qt::ItemIsUserCheckable ) && ( flags & Qt::ItemIsEnabled ) )
+    {
+        QVariant value = index.data(Qt::CheckStateRole);
+        if( !value.isValid() )
+            return false;
+        if( event->type() == QEvent::MouseButtonRelease )
+        {
+            const int textMargin = QApplication::style()->pixelMetric( QStyle::PM_FocusFrameHMargin ) + 1;
+            QRect checkRect = QStyle::alignedRect( option.direction, Qt::AlignCenter,
+                                                   option.decorationSize,
+                                                   QRect( option.rect.x() + ( 2 * textMargin ), option.rect.y(),
+                                                   option.rect.width() - ( 2 * textMargin ),
+                                                   option.rect.height() ) );
+            if( !checkRect.contains( static_cast< QMouseEvent* >( event )->pos() ) )
+                return false;
+        } else if( event->type() == QEvent::KeyPress )
+        {
+            if( static_cast< QKeyEvent* >( event )->key() != Qt::Key_Space &&
+                static_cast<QKeyEvent*>( event )->key() != Qt::Key_Select )
+                return false;
+        } else
+        {
+            return false;
+        }
+        Qt::CheckState state =( static_cast< Qt::CheckState >( value.toInt() ) == Qt::Checked
+                                                             ? Qt::Unchecked : Qt::Checked );
+        return model->setData( index, state, Qt::CheckStateRole );
+    }
+    return QItemDelegate::editorEvent( event, model, option, index );
 }
