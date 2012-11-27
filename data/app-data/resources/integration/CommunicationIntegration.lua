@@ -324,11 +324,11 @@ integration.setRadioState = function( agent, radioState )
     F_Pion_SeteEtatRadio( agent, radioState )
 end
 
-integration.getDecisionalState = function( agent )
+integration.getAgentDecisionalState = function( agent )
     return F_Pion_GeteEtatDec( agent )
 end
 
-integration.setDecisionalState = function( agent, decisionalState )
+integration.setAgentDecisionalState = function( agent, decisionalState )
     F_Pion_SeteEtatDec( agent, decisionalState )
 end
 
