@@ -152,10 +152,10 @@ integration.readyForLoad = function( unit, distanceMin )
     local unitSrc = unit.source
     local mission = DEC_GetRawMission( unitSrc )
     if mission ~= nil and ( 
-           mission:GetType() == "T_Task_Pion_SeFaireTransporter" 
-        or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" 
-        or mission:GetType() == "platoon.tasks.SeFaireTransporter"
-        or mission:GetType() == "agent.tasks.GetTransported" ) then
+           integration.getAnyType( mission ) == "T_Task_Pion_SeFaireTransporter" 
+        or integration.getAnyType( mission ) == "T_Mission_Pion_SeFaireTransporter" 
+        or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
+        or integration.getAnyType( mission ) == "agent.tasks.GetTransported" ) then
         if DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < distanceMin then -- $$$$ HARD CODDED VALUE
             return true 
         end
@@ -166,10 +166,10 @@ end
 integration.knowledgeReadyForLoad = function( knowledge, distanceMin )
     local knowledgeSrc = knowledge.source
     local mission = DEC_Connaissance_GetRawMission( knowledgeSrc )
-    if mission ~= nil and ( mission:GetType() == "T_Task_Pion_SeFaireTransporter" 
-                         or mission:GetType() == "T_Mission_Pion_SeFaireTransporter" 
-                         or mission:GetType() == "platoon.tasks.SeFaireTransporter"
-                         or mission:GetType() == "agent.tasks.GetTransported" ) then
+    if mission ~= nil and ( integration.getAnyType( mission ) == "T_Task_Pion_SeFaireTransporter" 
+                         or integration.getAnyType( mission ) == "T_Mission_Pion_SeFaireTransporter" 
+                         or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
+                         or integration.getAnyType( mission ) == "agent.tasks.GetTransported" ) then
         if DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < distanceMin then -- $$$$ HARD CODDED VALUE
             return true 
         end

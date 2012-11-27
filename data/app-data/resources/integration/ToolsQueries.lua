@@ -82,7 +82,7 @@ integration.query.getFirstFireOrder = function( )
     local DEC_RemoveFromOrdersCategory = DEC_RemoveFromOrdersCategory
     local DEC_DeleteRepresentation = DEC_DeleteRepresentation
     for _,x in pairs( ordres_recus or emptyTable ) do
-        if x:GetType() == "platoon.combat.support.art.tasks.AppliquerFeux" 
+        if integration.getAnyType( x ) == "platoon.combat.support.art.tasks.AppliquerFeux" 
            or "Rep_OrderConduite_Pion_AppliquerFeux" then
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
             DEC_RemoveFromOrdersCategory( x )
@@ -132,7 +132,7 @@ integration.query.getFirstFragOrderFromType = function( fragOrderType )
     local DEC_RemoveFromOrdersCategory = DEC_RemoveFromOrdersCategory
     local DEC_DeleteRepresentation = DEC_DeleteRepresentation
     for _,x in pairs( ordres_recus or emptyTable ) do
-        if x:GetType() == fragOrderType then
+        if integration.getAnyType( x ) == fragOrderType then
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
             DEC_RemoveFromOrdersCategory( x )
             DEC_DeleteRepresentation( x )
@@ -140,7 +140,7 @@ integration.query.getFirstFragOrderFromType = function( fragOrderType )
         end
     end
     for k,x in pairs( myself.fragOrders or emptyTable ) do
-        if x.source:GetType() == fragOrderType then
+        if integration.getAnyType( x ) == fragOrderType then
             myself.fragOrders[k] = nil
             return x
         end

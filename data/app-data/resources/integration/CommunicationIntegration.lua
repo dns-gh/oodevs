@@ -335,3 +335,7 @@ end
 integration.setRadarState = function( agent, radarState )
     F_Pion_SeteEtatRadar( agent, radarState )
 end
+
+integration.getAnyType = function( any )
+    return any:GetType()
+end

@@ -174,7 +174,7 @@ integration.getObjectKnowledgeParameter = function( fragorder )
 end
 
 integration.getOrderType = function( fragorder )
-    return fragorder.source:GetType()
+    return integration.getAnyType( fragorder.source )
 end
 
 integration.getOrdersCategory = function( )
