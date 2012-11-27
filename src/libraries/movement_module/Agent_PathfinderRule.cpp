@@ -148,7 +148,8 @@ double Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D
     if( ! path_.GetUnitSpeeds().IsPassable( nToTerrainType ) )
         return IMPOSSIBLE_DESTINATION( "Terrain type" );
 
-    const double rAltitudeCost = GET_HOOK( GetAltitudeCost )( entity_, path_.shared_from_this(), from, to, rAltitudeCostPerMeter_ );
+    const boost::shared_ptr< sword::movement::Path_ABC > path = path_.shared_from_this();
+    const double rAltitudeCost = GET_HOOK( GetAltitudeCost )( entity_, path, from, to, rAltitudeCostPerMeter_ );
     if( rAltitudeCost < 0 )
         return IMPOSSIBLE_WAY( "Slope" );
 
@@ -159,7 +160,7 @@ double Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D
     rDynamicCost += rAltitudeCost;
 
     // Fuseaux
-    const double rFuseauxCost = GET_HOOK( GetFuseauxCost )( entity_, path_.shared_from_this(), from, to,
+    const double rFuseauxCost = GET_HOOK( GetFuseauxCost )( entity_, path, from, to,
         path_.GetPathClass().GetMaximumFuseauDistance(), path_.GetPathClass().GetMaximumFuseauDistanceWithAutomata(), // $$$$ MCO : all those configuration values should stay out of the movement module
         rFuseauCostPerMeterOut_, rComfortFuseauDistance_, rFuseauCostPerMeterIn_,
         path_.GetPathClass().GetMaximumAutomataFuseauDistance(), rAutomataFuseauCostPerMeterOut_ );
@@ -176,7 +177,7 @@ double Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D
     rDynamicCost += rDangerDirectionCost;
 
     //urban blocks
-    const double rUrbanBlockCost = path_.GetPathClass().IsFlying() ? 0 : GET_HOOK( GetUrbanBlockCost )( entity_, path_.shared_from_this(), from, to );
+    const double rUrbanBlockCost = path_.GetPathClass().IsFlying() ? 0 : GET_HOOK( GetUrbanBlockCost )( entity_, path, from, to );
 
     if( rUrbanBlockCost < 0. )
         return IMPOSSIBLE_WAY( "Urban" );
@@ -185,26 +186,26 @@ double Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vector2D
     // objects
     const double rObjectsCost =
         (! path_.GetPathClass().AvoidObjects() || path_.GetPathClass().IsFlying() )
-        ? 0 : GET_HOOK( GetObjectsCost )( entity_, path_.shared_from_this(), from, to, nToTerrainType, nLinkTerrainType );
+        ? 0 : GET_HOOK( GetObjectsCost )( entity_, path, from, to, nToTerrainType, nLinkTerrainType );
     if( rObjectsCost < 0 || rSpeed <= 0. )
         return IMPOSSIBLE_WAY( "Objects" );
     rDynamicCost += rObjectsCost;
 
     // enemies
-    const double rEnemiesCost = GET_HOOK( GetEnemiesCost )( entity_, path_.shared_from_this(), from, to, nToTerrainType, nLinkTerrainType, rEnemyMaximumCost_ );
+    const double rEnemiesCost = GET_HOOK( GetEnemiesCost )( entity_, path, from, to, nToTerrainType, nLinkTerrainType, rEnemyMaximumCost_ );
     if( rEnemiesCost < 0 )
         return IMPOSSIBLE_WAY( "Enemies" );
     rDynamicCost += rEnemiesCost;
 
     // populations
     const double rPopulationsCost = path_.GetPathClass().HandlePopulations()
-        ? GET_HOOK( GetPopulationsCost )( entity_, path_.shared_from_this(), from, to, nToTerrainType, nLinkTerrainType, path_.GetPathClass().GetPopulationMaximumCost() )
+        ? GET_HOOK( GetPopulationsCost )( entity_, path, from, to, nToTerrainType, nLinkTerrainType, path_.GetPathClass().GetPopulationMaximumCost() )
         : 0;
     if( rPopulationsCost < 0 )
         return IMPOSSIBLE_WAY( "Populations" );
     rDynamicCost += rPopulationsCost;
 
-    const double rDistance     = from.Distance( to );
+    const double rDistance = from.Distance( to );
     const double rBaseCost = bShort_ ? rDistance : ( rDistance / rSpeed );
     return rBaseCost * ( 1 + rDynamicCost );
 }

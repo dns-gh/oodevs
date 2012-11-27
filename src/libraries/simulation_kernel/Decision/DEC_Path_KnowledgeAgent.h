@@ -20,6 +20,46 @@
 class DEC_Path_KnowledgeAgent
 {
 public:
+    //! @name Types
+    //@{
+    struct BoundingBox
+    {
+        BoundingBox( const MT_Vector2D& from, const MT_Vector2D& to )
+        {
+            if( from.rX_ < to.rX_ )
+            {
+                x1_ = from.rX_ - maxFireDistance_;
+                x2_ = to.rX_ + maxFireDistance_;
+            }
+            else
+            {
+                x1_ = to.rX_ - maxFireDistance_;
+                x2_ = from.rX_ + maxFireDistance_;
+            }
+            if( from.rY_ < to.rY_ )
+            {
+                y1_ = from.rY_ - maxFireDistance_;
+                y2_ = to.rY_ + maxFireDistance_;
+            }
+            else
+            {
+                y1_ = to.rY_ - maxFireDistance_;
+                y2_ = from.rY_ + maxFireDistance_;
+            }
+        }
+        bool IsOutside( const MT_Vector2D& point ) const
+        {
+            return point.rX_ < x1_ || point.rX_ > x2_
+                || point.rY_ < y1_ || point.rY_ > y2_;
+        }
+        double x1_;
+        double y1_;
+        double x2_;
+        double y2_;
+    };
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              DEC_Path_KnowledgeAgent( const MT_Vector2D& position, double enemyCostAtSecurityRange, double enemyCostOnContact, double maxRangeToFire );
@@ -28,18 +68,13 @@ public:
 
     //! @name Operations
     //@{
-    double ComputeCost( const MT_Line& lineLink, const MT_Rect& boundingBox ) const;
-    //@}
-
-public:
-    //! @name Member data
-    //@{
-    static const double maxFireDistance_;
+    double ComputeCost( const MT_Line& lineLink, const BoundingBox& box ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    static const double maxFireDistance_;
     MT_Vector2D vEnemyPosition_;
     double rSquareSecurityDistance_;
     double rFactor_;
