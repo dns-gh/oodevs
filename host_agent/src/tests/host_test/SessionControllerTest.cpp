@@ -205,6 +205,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_starts_with_right_app, Fixture )
     Reload();
     MOCK_EXPECT( idle->Start ).once().with( simulation, mock::any ).returns( true );
     control.Start( idNode, idIdle, std::string() );
+    MOCK_RESET( idle->IsReplay );
     MOCK_EXPECT( idle->IsReplay ).once().returns( true );
     MOCK_EXPECT( idle->Start ).once().with( replayer, mock::any ).returns( true );
     control.Start( idNode, idIdle, std::string() );
