@@ -488,6 +488,7 @@ namespace dispatcher
 // -----------------------------------------------------------------------------
 void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, MessageHandler_ABC& handler, const T_Callback& callback, const bfs::path& filename )
 {
+    in.clear();
     in.seekg( from );
     BufPtr buf = MakeBuffer( in, size, filename );
     if( buf )
