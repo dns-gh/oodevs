@@ -380,7 +380,7 @@ end
 integration.startedActivateDrone = function ( self )
     if not myself.Deployed and meKnowledge:isDeployed() and myself.droneAvailable then
         myself.Deployed = true
-        myself.droneAvailable:SetbMiseEnOeuvre_( true ) -- mandatory to permit the flight
+        integration.setUAVDeployed( myself.droneAvailable, true ) -- mandatory to permit the flight
         local droneKn = CreateKnowledge( integration.ontology.types.agent, myself.droneAvailable )
         meKnowledge:RC( eRC_FinMiseEnOeuvreDrone )
         meKnowledge:sendRC( droneKn, eRC_DroneDisponible )
@@ -397,7 +397,7 @@ integration.setAvailableDrones = function ( self )
         -- if DEC_GetSzName( pion ) == "Masalife.RENS.Drone SDTI" and operationalLevel ~= 0 and fuelDotationNumber > 0 then
         if operationalLevel ~= 0 and fuelDotationNumber > 3 then -- Le drone doit être opérationnel et avoir un minimum de carburant
             if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < 80 and  not pion:GetbMiseEnOeuvre_() then
-                pion:SetbMiseEnOeuvre_( true ) -- mandatory to permit the flight
+                integration.setUAVDeployed( pion, true ) -- mandatory to permit the flight
                 DEC_Transport_DebarquerPionSansDelais( pion )
                 myself.droneAvailable = pion
                 break
@@ -789,6 +789,10 @@ end
 
 integration.isUAVDeployed = function( drone )
     return drone:GetbMiseEnOeuvre_()
+end
+
+integration.setUAVDeployed = function( drone, boolean )
+    drone:SetbMiseEnOeuvre_( boolean )
 end
 
 -- -------------------------------------------------------------------------------- 
