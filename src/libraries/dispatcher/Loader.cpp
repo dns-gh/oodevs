@@ -69,7 +69,7 @@ void Loader::SkipToFrame( unsigned int frame )
         currentKeyFrame_ = keyFrame;
     }
     while( currentFrame_ + 1 < frame && Tick() )
-        ;
+        continue;
     if( requiresKeyFrame )
         model_.EndSynchronisation();
     if( currentFrame_ < frame )
@@ -84,13 +84,10 @@ bool Loader::Tick()
 {
     if( currentFrame_ > GetTickNumber() )
         return false;
-    bool ret = false;
-    if( loader_->LoadFrame( currentFrame_, handler_ ) )
-    {
+    const bool valid = loader_->LoadFrame( currentFrame_, handler_ );
+    if( valid )
         ++currentFrame_;
-        ret = true;
-    }
-    return ret;
+    return valid;
 }
 
 // -----------------------------------------------------------------------------
