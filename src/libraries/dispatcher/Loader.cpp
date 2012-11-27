@@ -22,11 +22,11 @@ using namespace dispatcher;
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Config& config, ClientPublisher_ABC* clients )
-    : model_          ( model )
-    , handler_        ( handler )
-    , loader_         ( new MessageLoader( config.GetRecordDirectory(), false, clients ) )
-    , currentFrame_   ( 0 )
-    , currentKeyFrame_( ~0u )
+    : model_   ( model )
+    , handler_ ( handler )
+    , loader_  ( new MessageLoader( config.GetRecordDirectory(), false, clients ) )
+    , keyFrame_( ~0u )
+    , frame_   ( 0 )
 {
     // NOTHING
 }
@@ -60,15 +60,15 @@ void Loader::Start()
 void Loader::SkipToFrame( unsigned int frame )
 {
     unsigned int keyFrame = loader_->FindKeyFrame( frame );
-    const bool resync = currentKeyFrame_ != keyFrame || frame < currentFrame_;
+    const bool resync = keyFrame_ != keyFrame || frame < frame_;
     if( resync )
     {
         model_.StartSynchronisation();
         loader_->LoadKeyFrame( keyFrame, handler_ );
-        currentFrame_ = keyFrame;
-        currentKeyFrame_ = keyFrame;
+        keyFrame_ = keyFrame;
+        frame_    = keyFrame;
     }
-    while( currentFrame_ <= frame && Tick() )
+    while( frame_ <= frame && Tick() )
         continue;
     if( resync )
         model_.EndSynchronisation();
@@ -80,11 +80,11 @@ void Loader::SkipToFrame( unsigned int frame )
 // -----------------------------------------------------------------------------
 bool Loader::Tick()
 {
-    if( currentFrame_ > GetTickNumber() )
+    if( frame_ > GetTickNumber() )
         return false;
-    const bool valid = loader_->LoadFrame( currentFrame_, handler_ );
+    const bool valid = loader_->LoadFrame( frame_, handler_ );
     if( valid )
-        ++currentFrame_;
+        ++frame_;
     return valid;
 }
 
@@ -94,7 +94,7 @@ bool Loader::Tick()
 // -----------------------------------------------------------------------------
 unsigned Loader::GetCurrentTick() const
 {
-    return currentFrame_;
+    return frame_;
 }
 
 // -----------------------------------------------------------------------------
