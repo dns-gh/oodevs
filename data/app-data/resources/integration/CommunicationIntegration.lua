@@ -307,3 +307,7 @@ end
 integration.getAgentEscort = function( agent )
     return F_Pion_GetpionEnEscorte( agent )
 end
+
+integration.setAgentNewEscorted = function( agent, boolean )
+    F_Pion_SetNewEscorted( agent, boolean )
+end
