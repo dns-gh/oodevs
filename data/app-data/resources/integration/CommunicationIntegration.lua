@@ -323,3 +323,7 @@ end
 integration.getDecisionalState = function( agent )
     return F_Pion_GeteEtatDec( agent )
 end
+
+integration.setDecisionalState = function( agent, decisionalState )
+    F_Pion_SeteEtatDec( agent, decisionalState )
+end
