@@ -37,16 +37,6 @@ using runtime::Utf8;
 
 namespace
 {
-#if 0
-    std::string GetApp( const Path& apps, bool replace = true )
-    {
-        std::string reply = Utf8( apps / "simulation_app.exe" );
-        if( replace )
-            std::replace( reply.begin(), reply.end(), '\\', '/' );
-        return reply;
-    }
-#endif
-
     struct SubFixture
     {
         SubFixture( const Path& root, const Path& simulation, const Path& replayer )
