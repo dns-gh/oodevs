@@ -292,3 +292,7 @@ integration.getAORWidth = function( AOR )
     return DEC_Fuseau_Width( AOR )
 end
 
+integration.setEchelonState = function( agent, echelonState )
+    F_Pion_SeteEtatEchelon( agent, echelonState )
+end
+
