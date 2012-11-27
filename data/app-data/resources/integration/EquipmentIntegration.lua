@@ -783,6 +783,10 @@ integration.getAgentsWithHQ = function()
     return DEC_Pion_PionsAvecPC()
 end
 
+integration.isDroneExploited = function( drone )
+    return drone:GetbEnExploitation_()
+end
+
 -- -------------------------------------------------------------------------------- 
 -- Activate special sensors on area
 -- --------------------------------------------------------------------------------  
