@@ -19,6 +19,7 @@
 #include "Urban/MIL_UrbanObject_ABC.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/DisasterCapacity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
@@ -439,6 +440,25 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsCollidingFromType
         }
     }
 
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetDisastersColliding
+// Created: LGY 2012-11-27
+// -----------------------------------------------------------------------------
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetDisastersColliding( const MIL_AgentPion& callerAgent )
+{
+    T_KnowledgeObjectDiaIDVector result;
+    T_KnowledgeObjectDiaIDVector objectsColliding;
+    callerAgent.GetKnowledge().GetObjectsColliding( objectsColliding );
+    for( CIT_KnowledgeObjectDiaIDVector it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
+        if( *it )
+        {
+            const MIL_ObjectType_ABC& type = (*it)->GetType();
+            if( type.GetCapacity< DisasterCapacity >() )
+                result.push_back( *it );
+        }
     return result;
 }
 
