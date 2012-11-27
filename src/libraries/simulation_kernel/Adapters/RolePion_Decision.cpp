@@ -920,7 +920,7 @@ namespace
     double GetMaxRangeToFire( const MIL_Agent_ABC& agent, const core::Model& model, float rWantedPH )
     {
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
-        const double range = GET_HOOK( GetMaxRangeToFire )( core::Convert( &entity ), &IsMajor, rWantedPH );
+        const double range = GET_HOOK( GetMaxRangeToFire )( core::Convert( &entity ), &True, rWantedPH );
         if( range == std::numeric_limits< double >::max() )
             return -1;
         return range;

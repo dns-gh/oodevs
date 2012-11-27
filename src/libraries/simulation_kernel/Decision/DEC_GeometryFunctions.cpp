@@ -39,6 +39,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Random.h"
+#include <boost/make_shared.hpp>
 #include <boost/foreach.hpp>
 
 #define PRECISION 0.0000001
@@ -948,7 +949,6 @@ unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& l
         return eNoError;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::SplitLocalisation
 // Created: JVT 2004-11-04
@@ -956,6 +956,11 @@ unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& l
 std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, MT_Vector2D vOrigin, const MT_Vector2D& vDirection, double rSectionLength )
 {
     T_LocalisationPtrVector splitLocVector;
+    if( rSectionLength == 0 )
+    {
+        splitLocVector.push_back( boost::make_shared< TER_Localisation >( boost::cref( localisation ) ) );
+        return splitLocVector;
+    }
 
     const MT_Vector2D vTranslation   = rSectionLength * vDirection;
     const MT_Vector2D vLineDirection = vDirection.Rotated90();
@@ -972,7 +977,7 @@ std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::Spli
         if( points.empty() )
             return splitLocVector;
 
-        splitLocVector.push_back( boost::shared_ptr< TER_Localisation >( new TER_Localisation( TER_Localisation::ePolygon, points ) ) );
+        splitLocVector.push_back( boost::make_shared< TER_Localisation >( TER_Localisation::ePolygon, boost::cref( points ) ) );
 
         vOrigin += vTranslation;
         backBound  = frontBound;
