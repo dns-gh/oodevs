@@ -11,8 +11,6 @@
     </parameters>
     <links>
         <link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition"/>
-        <link name="decoller" skill="france.military.platoon.combat.support.air.skills.Decoller"/>
-        <link name="atterir" skill="france.military.platoon.combat.support.air.skills.Atterrir"/>
         <link name="moveAlong" skill="france.military.platoon.skills.MoveAlong"/>
     </links>
 </skill>
