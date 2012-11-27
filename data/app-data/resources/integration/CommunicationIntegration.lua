@@ -300,7 +300,10 @@ integration.getEchelonState = function( agent )
     return F_Pion_GeteEtatEchelon( agent )
 end
 
-integration.getAgentMovement = funstion( agent )
+integration.getAgentMovement = function( agent )
     return F_Pion_GetitMvt( agent)
 end
 
+integration.getAgentEscort = function( agent )
+    return F_Pion_GetpionEnEscorte( agent )
+end
