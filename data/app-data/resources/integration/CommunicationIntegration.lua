@@ -312,6 +312,10 @@ integration.setAgentNewEscorted = function( agent, boolean )
     F_Pion_SetNewEscorted( agent, boolean )
 end
 
+integration.getAgentNewEscorted = function( agent )
+    return F_Pion_GetNewEscorted( agent )
+end
+
 integration.setRadioState = function( agent, radioState )
     F_Pion_SeteEtatRadio( agent, radioState )
 end
