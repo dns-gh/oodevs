@@ -154,9 +154,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , pProfile_        ( new ProfileFilter( controllers, p ) )
 {
     controllers_.modes_->SetMainWindow( this );
-    QSettings settings( "MASA Group", "SWORD" );
-    settings.beginGroup( "/Gaming" );
-    restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
 
     setAttribute( Qt::WA_DeleteOnClose, true );
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
@@ -365,7 +362,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     {
         QToolBar* messagePanel = new MessagePanel( this, controllers_, publisher, network.GetCommands(), *factory );
         addToolBar( messagePanel );
-        messagePanel->hide();
     }
     // ResourceNetwork panel
     {
@@ -401,8 +397,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pMissionPanel_->hide();
     replayerToolbar->hide();
     aar_->SetStartup();
-
-    restoreState( settings.value( "mainWindowState" ).toByteArray() );
 
     controllers_.ChangeMode( eGamingMode_Default );
 

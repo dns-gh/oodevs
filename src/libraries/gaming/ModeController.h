@@ -24,7 +24,7 @@ class ModeController : public kernel::ModeController< E_GamingMode >
 public:
     //! @name Constructors/Destructor
     //@{
-             ModeController() : kernel::ModeController< E_GamingMode >( eGamingMode_Exercise, "Gaming" ) {}
+             ModeController() : kernel::ModeController< E_GamingMode >( eGamingMode_Default, "Gaming" ) {}
     virtual ~ModeController() {}
     //@}
 };

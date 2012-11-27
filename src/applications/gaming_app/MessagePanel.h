@@ -35,7 +35,7 @@ class Publisher_ABC;
 */
 // Created: SBO 2009-03-04
 // =============================================================================
-class MessagePanel : public QToolBar
+class MessagePanel : public gui::RichToolBar
                    , public CommandHandler_ABC
 {
     Q_OBJECT;
@@ -72,6 +72,7 @@ private:
     void Clear();
     void ClearButtons();
     virtual QSize sizeHint() const;
+    virtual void NotifyModeChanged( int newMode, bool useDefault, bool firstChangeToSavedMode );
     //@}
 
 private:
@@ -84,6 +85,7 @@ private:
     gui::RichLabel* text_;
     QWidget* buttons_;
     std::string activePrompt_;
+    bool isVisible_;
     //@}
 };
 

@@ -23,11 +23,12 @@
 // Created: SBO 2009-03-04
 // -----------------------------------------------------------------------------
 MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, CommandHandler& handler, gui::ItemFactory_ABC& factory )
-    : QToolBar( tools::translate( "MessagePanel", "Messages" ) )
+    : gui::RichToolBar( controllers, mainWindow, "MessagePanel", tools::translate( "MessagePanel", "Messages" ) )
     , mainWindow_( mainWindow )
     , handler_( handler )
     , factory_( factory )
     , publisher_( new CommandPublisher( controllers, publisher ) )
+    , isVisible_( false )
 {
     setObjectName( "message" );
     setPaletteBackgroundColor( QColor( 255, 255, 225 ) );
@@ -62,6 +63,10 @@ MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& contro
 
      handler_.Register( "display", *this );
      handler_.Register( "prompt", *this );
+
+     toggleViewAction()->setCheckable( false );
+     toggleViewAction()->setChecked( false );
+     toggleViewAction()->setVisible( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,8 +75,17 @@ MessagePanel::MessagePanel( QMainWindow* mainWindow, kernel::Controllers& contro
 // -----------------------------------------------------------------------------
 MessagePanel::~MessagePanel()
 {
-     handler_.Unregister( "display", *this );
-     handler_.Unregister( "prompt", *this );
+    handler_.Unregister( "display", *this );
+    handler_.Unregister( "prompt", *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessagePanel::NotifyModeChanged
+// Created: NPT 2012-11-27
+// -----------------------------------------------------------------------------
+void MessagePanel::NotifyModeChanged( int /*newMode*/, bool /*useDefault*/, bool /*firstChangeToSavedMode*/ )
+{
+    setVisible( isVisible_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +112,7 @@ void MessagePanel::Receive( const Command& command )
         const QStringList buttons = QStringList::split( '|', command.Argument( 3 ).c_str() );
         for( QStringList::const_iterator it = buttons.begin(); it != buttons.end(); ++it )
             AddButton( *it );
-        buttons_->show();
+        buttons_->setVisible( true );
     }
 }
 
@@ -111,7 +125,8 @@ void MessagePanel::Display( const QString& message )
     QString formatted( message );
     formatted.replace( '\n', "<br>" );
     text_->setText( formatted );
-    setVisible( true );
+    isVisible_ = true;
+    setVisible( isVisible_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +150,8 @@ void MessagePanel::Clear()
 {
     Display( "" );
     ClearButtons();
-    hide();
+    isVisible_ = false;
+    setVisible( isVisible_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +166,7 @@ void MessagePanel::ClearButtons()
         buttons_->layout()->remove( *it );
         (*it)->deleteLater();
     }
-    buttons_->hide();
+    buttons_->setVisible( false );
 }
 
 // -----------------------------------------------------------------------------
