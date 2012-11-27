@@ -349,7 +349,7 @@ integration.updateMoveToIt = function( objective, pathType )
                 end
                 local it = DEC_CreerItineraireBM( objective.destination, pathType )
                 F_Pion_SetitMvt( meKnowledge.source, it )
-                local escort = F_Pion_GetpionEnEscorte( meKnowledge.source )
+                local escort = integration.getAgentEscort( meKnowledge.source )
                 if escort then -- Une unité m'escorte, la mission MoveToward devient StayClose
                     local escortUnit = CreateKnowledge( integration.ontology.types.agent, escort )
                     escortUnit:sendNeedRoute( meKnowledge, true )
