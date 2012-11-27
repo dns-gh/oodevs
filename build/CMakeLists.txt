@@ -402,7 +402,7 @@ target_link_libraries( simulation_kernel_test simulation_kernel )
 # replayer_app
 add_target( replayer_app server "applications/replayer_app" OPTIONS win32 executable )
 target_link_libraries( replayer_app
-    dispatcher
+    dispatcher_dll
     license_gui
 )
 
