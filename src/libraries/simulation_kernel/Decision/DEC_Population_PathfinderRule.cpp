@@ -135,6 +135,8 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
 
     // terrain type
     const float rTerrainCost = GetTerrainCost( terrainTo, terrainBetween );
+    if( rTerrainCost < 0 )
+        return -1.f;
     rDynamicCost += rTerrainCost;
 
     // population channel
