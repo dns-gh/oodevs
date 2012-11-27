@@ -86,7 +86,8 @@ bool DEC_AgentFunctions::UpdateUnderIndirectFire( MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::WearNbcProtectionSuit( MIL_Agent_ABC& callerAgent )
 {
-    callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().WearNbcProtectionSuit();
+    if( GetNbcSuitLevel( callerAgent) != 0 )
+        callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().WearNbcProtectionSuit();
 }
 
 // -----------------------------------------------------------------------------
