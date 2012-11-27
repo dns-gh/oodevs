@@ -10,6 +10,11 @@
                 </list>
             </type>
         </parameter>
+        <parameter name="retrogradeContext">
+            <type>
+                <simple name="boolean"/>
+            </type>
+        </parameter>
         <parameter name="dynamic">
             <type>
                 <simple name="boolean"/>

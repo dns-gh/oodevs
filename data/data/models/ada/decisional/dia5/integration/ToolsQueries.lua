@@ -471,23 +471,6 @@ integration.query.getEnemiesToIndirectFireWhenSupport = function( friends )
     return enemies
 end
 
--- -------------------------------------------------------------------------------- 
--- Param ally unit to support
--- Param retrograde way
--- Return positions to support unit
--- @author GGE
--- @release 2012-07-31
--- --------------------------------------------------------------------------------
-integration.query.getPositionsToSupport = function( retrogradeWay, friendToSupport )
-    local positions = {}
-    if retrogradeWay then
-        positions = { integration.getPositionToSupportFriend( friendToSupport ) } 
-    else
-        positions = sword.military.queries.tactical.getPositionsToSupport[ "execute" ]({elementsToSupport = { friendToSupport }, dynamic = true})
-    end
-    return positions
-end
-
 integration.query.getNearestPositionInAOR = function( objective )
     local target = objective:getPosition()
     local simPos = DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( DEC_Geometrie_ConvertirPointEnLocalisation( target ) )
