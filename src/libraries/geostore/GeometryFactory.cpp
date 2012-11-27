@@ -63,7 +63,7 @@ gaiaGeomCollPtr GeometryFactory::Validate( gaiaGeomCollPtr geom )
 {
     if( geom )
     {
-        if( ! gaiaIsValid( geom ) || gaiaDimension( geom ) == -1 )
+        if( gaiaDimension( geom ) == -1 || ! gaiaIsValid( geom ) )
         {
             gaiaFreeGeomColl( geom );
             geom = 0;
