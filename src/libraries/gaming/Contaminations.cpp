@@ -39,11 +39,11 @@ Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& enti
     , type_                  ( type.GetNbcSuit() )
     , suit_                  ( tools::ToString( type_ ) )
 {
-    dico.Register( entity_, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_ );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_ );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_ );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_ );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Dose" ), dose_ );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_, true  );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_, true  );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_, true  );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_, true  );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Dose" ), dose_, true  );
     if( type_ != eAgentNone )
         dico.Register( entity_, tools::translate( "NBC", "NBC/Suit" ), suit_, true );
 }
