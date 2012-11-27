@@ -13,6 +13,8 @@
 #include "ConnectionCallback_ABC.h"
 #pragma warning( disable : 4503 )
 #include <boost/bind.hpp>
+#include <boost/ref.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 using namespace tools;
 
@@ -94,7 +96,7 @@ void Connector::DoConnect( const boost::asio::ip::tcp::endpoint& endpoint )
 {
     if( closed_ )
         return;
-    boost::shared_ptr< boost::asio::ip::tcp::socket > socket( new boost::asio::ip::tcp::socket( service_ ) );
+    boost::shared_ptr< boost::asio::ip::tcp::socket > socket = boost::make_shared< boost::asio::ip::tcp::socket >( boost::ref( service_ ) );
     socket->async_connect( endpoint, boost::bind( &Connector::OnConnect, this, socket, endpoint, boost::asio::placeholders::error ) );
 }
 

@@ -12,6 +12,8 @@
 #include "Socket.h"
 #include "ConnectionCallback_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/ref.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 using namespace tools;
 
@@ -79,7 +81,7 @@ void SocketManager::Disconnect( const std::string& endpoint )
 void SocketManager::Add( const boost::shared_ptr< boost::asio::ip::tcp::socket >& socket )
 {
     const std::string address = ToString( socket->remote_endpoint() );
-    boost::shared_ptr< Socket > pSocket( new Socket( socket, message_, address ) );
+    boost::shared_ptr< Socket > pSocket = boost::make_shared< Socket >( socket, message_, address );
     SOCKET nativeSock = socket->native();
     if( nativeSock !=0 )
     {

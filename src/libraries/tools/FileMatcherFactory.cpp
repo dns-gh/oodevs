@@ -14,7 +14,8 @@
 #include "FileMatcherFileName.h"
 #include "FileMatcherNonVersionedSchema.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem/path.hpp>
+#include <boost/ref.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 using namespace tools;
 
@@ -43,10 +44,10 @@ FileMatcherFactory::~FileMatcherFactory()
 boost::shared_ptr< FileMatcher_ABC > FileMatcherFactory::CreateFileMatcher( xml::xistream& xis ) const
 {
     if( xis.has_attribute( "root-node" ) )
-        return boost::shared_ptr< FileMatcher_ABC >( new FileMatcherRootNode( xis ) );
+        return boost::make_shared< FileMatcherRootNode >( boost::ref( xis ) );
     else if( xis.has_attribute( "filename" ) )
-        return boost::shared_ptr< FileMatcher_ABC >( new FileMatcherFileName( xis ) );
+        return boost::make_shared< FileMatcherFileName >( boost::ref( xis ) );
     else if( xis.has_attribute( "non-versioned-schema" ) )
-        return boost::shared_ptr< FileMatcher_ABC >( new FileMatcherNonVersionedSchema( xis ) );
+        return boost::make_shared< FileMatcherNonVersionedSchema >( boost::ref( xis ) );
     throw std::runtime_error( "Invalid file matcher" );
 }

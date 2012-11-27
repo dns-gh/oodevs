@@ -24,6 +24,8 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <boost/iterator/reverse_iterator.hpp>
+#include <boost/ref.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 using namespace tools;
 namespace bfs = boost::filesystem;
@@ -86,7 +88,7 @@ void RealFileLoader::ReadAddedFile( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void RealFileLoader::ReadMigration( xml::xistream& xis )
 {
-    boost::shared_ptr< FileMigration_ABC > newMigration( new FileMigration( xis ) );
+    boost::shared_ptr< FileMigration_ABC > newMigration = boost::make_shared< FileMigration >( boost::ref( xis ) );
     if( !migrations_.empty() && migrations_.back()->GetToVersion() != newMigration->GetFromVersion() )
         throw std::runtime_error( "Invalid migration chain: no migration between version " + migrations_.back()->GetToVersion() + " and version " + newMigration->GetFromVersion() );
 
