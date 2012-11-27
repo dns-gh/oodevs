@@ -18,6 +18,7 @@
 #include "Checkpoints/SerializationTools.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -321,9 +322,11 @@ void PHY_RolePion_Communications::DeactivateBlackout()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Communications::GetKnowledgeGroup() const
 {
-    if( !pJammingKnowledgeGroup_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", entity_.GetID() ) );
-    return pJammingKnowledgeGroup_;
+    if( pJammingKnowledgeGroup_ ) // pion is jammed
+        return pJammingKnowledgeGroup_;
+    else if( entity_.IsDead() ) // if pion is dead, it cannot emit, but it is not jammed
+        return entity_.GetAutomate().GetKnowledgeGroup();
+    throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", entity_.GetID() ) );
 }
 
 // -----------------------------------------------------------------------------
