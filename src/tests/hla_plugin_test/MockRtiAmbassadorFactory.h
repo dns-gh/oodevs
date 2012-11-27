@@ -24,7 +24,7 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockRtiAmbassadorFactory, plugins::hla::RtiAmbassadorFactory_ABC )
 {
-    MOCK_METHOD( CreateAmbassador, 5 );
+    MOCK_METHOD( CreateAmbassador, 4 );
     MOCK_METHOD( DeleteAmbassador, 1 );
 
 };

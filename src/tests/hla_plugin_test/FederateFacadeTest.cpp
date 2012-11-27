@@ -55,7 +55,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications_with_ne
 {
     xml::xistringstream xis( "<root disaggregate='1'/>" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "", "" ).returns( new ::hla::MockRtiAmbassador() );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "" ).returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().in( s ).with( mock::any, "SWORD", -1 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Connect ).once().in( s ).returns( true );
     MOCK_EXPECT( federate->Join ).once().in( s ).with( "Federation", true, true ).returns( true );
@@ -126,10 +126,10 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_xml_options_overrides_default_values, BuildFixture )
 {
-    xml::xistringstream xis( "<root name='name' federation='federation' host='host' port='1337'"
+    xml::xistringstream xis( "<root name='name' federation='federation' lrcSettings='crcHost=localhost;crcPort=8989'"
                              "      time-constrained='false' time-regulating='false' lookahead='3' />" );
     xis >> xml::start( "root" );
-    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "host", "1337" ).returns( new ::hla::MockRtiAmbassador() );
+    MOCK_EXPECT( rtiFactory.CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "crcHost=localhost;crcPort=8989" ).returns( new ::hla::MockRtiAmbassador() );
     MOCK_EXPECT( federateFactory.Create ).once().with( mock::any, "name", 3 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate->Join ).once().with( "federation", false, false ).returns( true );
     FederateFacade facade( xis, controller, subject, localResolver, rtiFactory, federateFactory, "directory", callsignResolver, 

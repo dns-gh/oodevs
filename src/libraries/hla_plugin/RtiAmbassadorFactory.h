@@ -40,14 +40,14 @@ public:
     //@{
     virtual ::hla::RtiAmbassador_ABC* CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
                                                                         ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
-                                                                        const std::string& host, const std::string& port ) const;
+                                                                        const std::string& lrcSettings ) const;
     virtual void DeleteAmbassador( ::hla::RtiAmbassador_ABC* ambassador ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef ::hla::RtiAmbassador_ABC* (*T_CreateAmbassador)( ::hla::TimeFactory_ABC&, ::hla::TimeIntervalFactory_ABC&, ::hla::RtiAmbassador_ABC::E_MessagePolicy, const std::string&, const std::string& );
+    typedef ::hla::RtiAmbassador_ABC* (*T_CreateAmbassador)( ::hla::TimeFactory_ABC&, ::hla::TimeIntervalFactory_ABC&, ::hla::RtiAmbassador_ABC::E_MessagePolicy, const std::string& );
     typedef void (*T_DeleteAmbassador)( ::hla::RtiAmbassador_ABC* );
     //@}
 

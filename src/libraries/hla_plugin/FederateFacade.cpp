@@ -76,7 +76,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, tools::MessageController_A
     , markingFactory_    ( new MarkingFactory( xis ) )
     , timeFactory_       ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_   ( new ::hla::SimpleTimeIntervalFactory() )
-    , ambassador_        ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "" ), xis.attribute< std::string >( "port", "" ) ) )
+    , ambassador_        ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "lrcSettings", "" ) ) )
     , federate_          ( FederateFactory::CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
     , destructor_        ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
     , nameFactory_       ( new HlaObjectNameFactory( xis.attribute< std::string >( "name", "SWORD" ),

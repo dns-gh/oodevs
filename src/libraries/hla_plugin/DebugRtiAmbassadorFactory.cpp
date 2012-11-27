@@ -40,9 +40,9 @@ DebugRtiAmbassadorFactory::~DebugRtiAmbassadorFactory()
 // -----------------------------------------------------------------------------
 ::hla::RtiAmbassador_ABC* DebugRtiAmbassadorFactory::CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
                                                                                        ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
-                                                                                       const std::string& host, const std::string& port ) const
+                                                                                       const std::string& lrcSettings ) const
 {
-    ::hla::RtiAmbassador_ABC* ambassador = factory_.CreateAmbassador( timeFactory, timeIntervalFactory, policy, host, port );
+    ::hla::RtiAmbassador_ABC* ambassador = factory_.CreateAmbassador( timeFactory, timeIntervalFactory, policy, lrcSettings );
     ::hla::RtiAmbassador_ABC* retval = new DebugRtiAmbassador( ambassador, logger_, resolver_ );
     ambassadors_[ retval ] = ambassador;
     return retval;

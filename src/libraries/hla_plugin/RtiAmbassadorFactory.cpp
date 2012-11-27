@@ -81,9 +81,9 @@ RtiAmbassadorFactory::~RtiAmbassadorFactory()
 // -----------------------------------------------------------------------------
 ::hla::RtiAmbassador_ABC* RtiAmbassadorFactory::CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
                                                                                   ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
-                                                                                  const std::string& host, const std::string& port ) const
+                                                                                  const std::string& lrcSettings ) const
 {
-    return createAmbassador( timeFactory, timeIntervalFactory, policy, host, port );
+    return createAmbassador( timeFactory, timeIntervalFactory, policy, lrcSettings );
 }
 
 // -----------------------------------------------------------------------------

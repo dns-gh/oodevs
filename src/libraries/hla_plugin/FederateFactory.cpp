@@ -27,7 +27,7 @@ std::auto_ptr< Federate_ABC > FederateFactory::CreateFederate( xml::xisubstream 
 {
     std::auto_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
     if( !federate->Connect() )
-        throw std::runtime_error( "Could not connect to '" + xis.attribute< std::string >( "host", "default" ) + ":" + xis.attribute< std::string >( "port", "default" ) + "'" );
+        throw std::runtime_error( "Could not connect to '" + xis.attribute< std::string >( "lrcSettings", "" ) + "'" );
     const std::string name = xis.attribute< std::string >( "federation", "Federation" );
     const bool joined = federate->Join( name, xis.attribute< bool >( "time-constrained", true ), xis.attribute< bool >( "time-regulating", true ) );
     if( !joined )

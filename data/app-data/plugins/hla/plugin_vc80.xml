@@ -34,16 +34,10 @@
                         <description lang="fr" name="DIS Application ID"/>
                     </descriptions>
                 </setting>
-                <setting attribute="@host" type="string" default="localhost">
+                <setting attribute="@lrcSettings" type="string" default="crcHost=localhost;crcPort=8989">
                     <descriptions>
-                        <description lang="en" name="Host Name"><![CDATA[RTI CRC host name]]></description>
-                        <description lang="fr" name="Nom de l'hôte"><![CDATA[Nom de l'hôte RTI CRC]]></description>
-                    </descriptions>
-                </setting>
-                <setting attribute="@port" type="integer" default="8989" min="0" max="65535">
-                    <descriptions>
-                        <description lang="en" name="Port"><![CDATA[Host port]]></description>
-                        <description lang="fr" name="Port"><![CDATA[Port de l'hôte]]></description>
+                        <description lang="en" name="LRC settings"><![CDATA[RTI CRC host name]]></description>
+                        <description lang="fr" name="Configuration LRC"><![CDATA[Nom de l'hôte RTI CRC]]></description>
                     </descriptions>
                 </setting>
                 <setting attribute="@creation" type="boolean" default="false">
