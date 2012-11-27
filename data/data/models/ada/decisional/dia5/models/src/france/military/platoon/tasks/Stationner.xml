@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Stationner" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Park">
-  <description>Stationnement sur un objectif.</description>
-  <parameters>
-    <parameter name="position">
-      <description>L'élément ou stationner.</description>
-      <type>
-        <class name="sword.military.knowledge.decisional.Positionable"/>
-      </type>
-    </parameter>
-  </parameters>
-  <next-task name="sword.military.platoon.tasks.MoveToward">
-    <parameter name="objectives">
-      <value>
-        <list>
-          <parameter>position</parameter>
-        </list>
-      </value>
-    </parameter>
-  </next-task>
+    <description>Stationnement sur un objectif.</description>
+    <parameters>
+        <parameter name="position">
+            <description>L'élément ou stationner.</description>
+            <type>
+                <class name="sword.military.knowledge.decisional.Positionable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Mouvement vers l'objectif">
+            <description>Utilisation du skill moveToward pour atteindre les objectifs.</description>
+            <goal>
+                <description>Atteindre l'un des objectifs.</description>
+            </goal>
+            <skills>
+                <skill name="sword.military.platoon.skills.MoveToward" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>position</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="En stationnement" permanent="true"/>
+    </stages>
 </task>
