@@ -369,7 +369,6 @@ namespace
         {
             MT_LOG_WARNING_MSG( "Unable to read index file completely" );
         }
-        file.clear();
     }
 
     void LoadIndexes( MessageLoader::T_KeyFrames& frames, std::ifstream& file )
@@ -390,7 +389,17 @@ namespace
         {
             MT_LOG_WARNING_MSG( "Unable to read key index file completely" );
         }
-        file.clear();
+    }
+
+    template< typename T >
+    T LoadIndexesFrom( const bfs::path& filename )
+    {
+        T reply;
+        std::ifstream stream;
+        const bool valid = OpenFile( stream, filename );
+        if( valid )
+            LoadIndexes( reply, stream );
+        return reply;
     }
 }
 
@@ -417,14 +426,11 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
         if( frameNumber >= it->second.first && frameNumber <= it->second.second )
         {
             currentOpenFolder_ = it->first;
-            std::ifstream index, keyIndex;
             const bfs::path dir = records_ / currentOpenFolder_;
-            OpenFile( index,    dir / indexFileName );
-            OpenFile( keyIndex, dir / keyIndexFileName );
             OpenFile( updates_, dir / updateFileName );
             OpenFile( keys_,    dir / keyFileName );
-            LoadIndexes( frames_, index );
-            LoadIndexes( keyFrames_, keyIndex );
+            frames_    = LoadIndexesFrom< T_Frames >   ( dir / indexFileName );
+            keyFrames_ = LoadIndexesFrom< T_KeyFrames >( dir / keyIndexFileName );
             return true;
         }
     return false;
@@ -464,6 +470,16 @@ namespace dispatcher
             MT_LOG_WARNING_MSG( "[dispatcher] Skipping invalid file " + filename.string() );
         return valid ? next : BufPtr();
     }
+
+    BufPtr MakeBufferFrom( const bfs::path& filename, unsigned offset, unsigned size )
+    {
+        std::ifstream stream;
+        const bool valid = OpenFile( stream, filename );
+        if( !valid )
+            return BufPtr();
+        stream.seekg( offset );
+        return MakeBuffer( stream, size, filename );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -484,11 +500,7 @@ void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, Messa
 // -----------------------------------------------------------------------------
 void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
 {
-    std::ifstream index;
-    OpenFile( index, records_ / folder / indexFileName );
-    T_Frames frames;
-    LoadIndexes( frames, index );
-    index.close();
+    const T_Frames frames = LoadIndexesFrom< T_Frames >( records_ / folder / indexFileName );
 
     boost::mutex::scoped_lock dataLock( access_ );
     T_FragmentsInfos::const_iterator it = fragmentsInfos_.find( folder );
@@ -500,15 +512,9 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
         return;
 
     const Frame& current = frames[ next ];
-    std::ifstream file;
-    OpenFile( file, records_ / folder / updateFileName );
-    file.seekg( current.offset_ );
-    BufPtr buf = MakeBuffer( file, current.size_, bfs::path( folder ) / updateFileName );
-    file.close();
-    if( !buf )
-        return;
-
-    cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
+    BufPtr buf = MakeBufferFrom( records_ / folder / updateFileName, current.offset_, current.size_ );
+    if( buf )
+        cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -517,25 +523,14 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
 // -----------------------------------------------------------------------------
 void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
 {
-    std::ifstream index;
-    OpenFile( index, records_ / folder / keyIndexFileName );
-    T_KeyFrames keyFrames;
-    LoadIndexes( keyFrames, index );
-    index.close();
-
+    const T_KeyFrames keyFrames = LoadIndexesFrom< T_KeyFrames >( records_ / folder / keyIndexFileName );
     const KeyFrame* next = ::FindKeyFrame( keyFrames, frameNumber );
     if( !next )
         return;
 
-    std::ifstream file;
-    OpenFile( file, records_ / folder / keyFileName );
-    file.seekg( next->offset_ );
-    BufPtr buf = MakeBuffer( file, next->size_, bfs::path( folder ) / keyFileName );
-    file.close();
-    if( !buf )
-        return;
-
-    cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
+    BufPtr buf = MakeBufferFrom( records_ / folder / keyFileName, next->offset_, next->size_ );
+    if( buf )
+        cpu_->Post( boost::bind( &MessageLoader::LoadBuffer, this, buf, boost::ref( handler ), callback, synchronisation_ ) );
 }
 
 // -----------------------------------------------------------------------------
