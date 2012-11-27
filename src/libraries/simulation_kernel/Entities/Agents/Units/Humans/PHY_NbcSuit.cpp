@@ -73,3 +73,12 @@ const std::string& PHY_NbcSuit::GetName() const
 {
     return strName_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_NbcSuit::GetType
+// Created: LGY 2012-11-27
+// -----------------------------------------------------------------------------
+PHY_NbcSuit::E_AgentNbcSuit PHY_NbcSuit::GetType() const
+{
+    return suit_;
+}

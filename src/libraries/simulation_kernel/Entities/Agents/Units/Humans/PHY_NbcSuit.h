@@ -26,6 +26,16 @@ public:
     //@{
     typedef std::map< std::string, const PHY_NbcSuit*, sCaseInsensitiveLess > T_NbcSuitMap;
     typedef T_NbcSuitMap::const_iterator                                    CIT_NbcSuitMap;
+
+    enum E_AgentNbcSuit
+    {
+        eAgentNone,
+        eAgentNbcSuitLevel1,
+        eAgentNbcSuitLevel2,
+        eAgentNbcSuitLevel3,
+        eAgentNbcSuitLevel4,
+        eAgentNbcSuitLevel5
+    };
     //@}
 
 public:
@@ -49,22 +59,10 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
+    E_AgentNbcSuit GetType() const;
     //@}
 
 private:
-    //! @name Types
-    //@{
-    enum E_AgentNbcSuit
-    {
-        eAgentNone,
-        eAgentNbcSuitLevel1,
-        eAgentNbcSuitLevel2,
-        eAgentNbcSuitLevel3,
-        eAgentNbcSuitLevel4,
-        eAgentNbcSuitLevel5
-    };
-    //@}
-
     //! @name Constructors/Destructor
     //@{
              PHY_NbcSuit( const std::string& strName, E_AgentNbcSuit suit );

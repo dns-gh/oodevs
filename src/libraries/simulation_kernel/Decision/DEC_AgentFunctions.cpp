@@ -36,6 +36,7 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Units/Humans/PHY_NbcSuit.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
@@ -290,6 +291,15 @@ double DEC_AgentFunctions::GetMajorOperationalState( const MIL_Agent_ABC& caller
 boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetPosition( const MIL_Agent_ABC& callerAgent )
 {
     return callerAgent.GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetNbcSuitLevel
+// Created: LGY 2012-11-27
+// -----------------------------------------------------------------------------
+int DEC_AgentFunctions::GetNbcSuitLevel( const MIL_Agent_ABC& callerAgent )
+{
+    return static_cast< int >( callerAgent.GetType().GetUnitType().GetNbcSuit().GetType() );
 }
 
 // -----------------------------------------------------------------------------
