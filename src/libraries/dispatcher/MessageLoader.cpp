@@ -97,7 +97,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
             return false;
         const Frame& current = frames_[ next ];
         Load( updates_, current.offset_, current.size_, handler, callback,
-              bfs::path( currentFolderName ) / updateFileName );
+              bfs::path( currentOpenFolder_ ) / updateFileName );
     }
     return true;
 }
@@ -134,7 +134,7 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
             keyFrame = *it;
         }
         Load( keys_, keyFrame.offset_, keyFrame.size_, handler, callback,
-              bfs::path( currentFolderName ) / keyFileName );
+              bfs::path( currentOpenFolder_ ) / keyFileName );
     }
 }
 
