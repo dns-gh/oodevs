@@ -296,3 +296,7 @@ integration.setEchelonState = function( agent, echelonState )
     F_Pion_SeteEtatEchelon( agent, echelonState )
 end
 
+integration.getEchelonState = function( agent )
+    return F_Pion_GeteEtatEchelon( agent )
+end
+
