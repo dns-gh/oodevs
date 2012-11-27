@@ -19,6 +19,8 @@ namespace xml
     class xistream;
 }
 
+class PHY_NbcSuit;
+
 // =============================================================================
 /** @class  MIL_DisasterType
     @brief  MIL Disaster type
@@ -59,6 +61,8 @@ private:
     typedef boost::shared_ptr< const MIL_DisasterType > T_DisasterType;
     typedef std::map< std::string, T_DisasterType >     T_DisasterTypes;
     typedef T_DisasterTypes::const_iterator           CIT_DisasterTypes;
+
+    typedef std::map< const PHY_NbcSuit*, double > T_Protections;
     //@}
 
 private:
@@ -66,12 +70,14 @@ private:
     //@{
     struct LoadingWrapper;
     static void ReadDisaster( xml::xistream& xis );
+    void ReadProtection( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
     const std::string strName_;
+    T_Protections protections_;
     static T_DisasterTypes disasterTypes_;
     //@}
 };

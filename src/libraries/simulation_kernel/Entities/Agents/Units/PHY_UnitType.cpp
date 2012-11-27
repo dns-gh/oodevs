@@ -15,6 +15,7 @@
 #include "Composantes/PHY_ComposanteTypePion.h"
 #include "Composantes/PHY_ComposantePion.h"
 #include "Humans/PHY_HumanRank.h"
+#include "Humans/PHY_NbcSuit.h"
 #include "Dotations/PHY_DotationLogisticType.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
@@ -60,6 +61,7 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     , nEngineeringReconEfficiency_      ( 50 )
     , nUrbanAreaEfficiency_             ( 50 )
     , crossingHeight_                   ( eCrossingHeightLowAreas )
+    , suit_                             ( &PHY_NbcSuit::none_ )
 {
     xis >> xml::optional
             >> xml::attribute( "can-fly", bCanFly_ )
@@ -163,6 +165,10 @@ void PHY_UnitType::InitializeNBC( xml::xistream& xis )
     xis >> xml::start( "nbc" );
     tools::ReadTimeAttribute( xis, "decontamination-delay", rTmp );
     rTmp = std::max<float>( 1.0, rTmp );
+
+    const PHY_NbcSuit* suit = PHY_NbcSuit::Find( xis.attribute< std::string>( "suit" ) );
+    if( suit )
+        suit_ = suit;
 
     rCoefDecontaminationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rTmp );
     xis >> xml::end;
@@ -466,4 +472,13 @@ unsigned int PHY_UnitType::GetPionEfficiency( E_PionEfficiency pionEfficiency ) 
 E_CrossingHeight PHY_UnitType::GetCrossingHeight() const
 {
     return crossingHeight_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetNbcSuit
+// Created: LGY 2012-11-26
+// -----------------------------------------------------------------------------
+const PHY_NbcSuit& PHY_UnitType::GetNbcSuit() const
+{
+    return *suit_;
 }

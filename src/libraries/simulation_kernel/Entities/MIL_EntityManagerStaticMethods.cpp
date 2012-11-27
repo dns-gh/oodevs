@@ -44,6 +44,7 @@
 #include "Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Agents/Units/Humans/PHY_HumanRank.h"
 #include "Agents/Units/Humans/PHY_HumanWound.h"
+#include "Agents/Units/Humans/PHY_NbcSuit.h"
 #include "Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Agents/Units/HumanFactors/PHY_Stress.h"
 #include "Agents/Units/HumanFactors/PHY_Tiredness.h"
@@ -131,6 +132,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     PHY_ComposanteState          ::Initialize();
     PHY_HumanRank                ::Initialize();
     PHY_HumanWound               ::Initialize();
+    PHY_NbcSuit                  ::Initialize();
     PHY_ConsumptionType          ::Initialize();
     PHY_Posture                  ::Initialize();
     PHY_IndirectFireDotationClass::Initialize();

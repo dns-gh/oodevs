@@ -184,6 +184,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPullFlowRequestBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPushFlowRequestBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockRequestBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_NbcSuit.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.cpp" />
@@ -979,6 +980,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockRequestBuilder.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplySupplier_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\NBC\ToxicEffectHandler_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_NbcSuit.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeAgent_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.h" />

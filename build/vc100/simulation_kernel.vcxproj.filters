@@ -2664,6 +2664,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DisasterType.cpp">
       <Filter>Source Files\Entities\Objects\Models</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_NbcSuit.cpp">
+      <Filter>Source Files\Entities\Agents\Units\Humans\Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5452,6 +5455,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DisasterType.h">
       <Filter>Source Files\Entities\Objects\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_NbcSuit.h">
+      <Filter>Source Files\Entities\Agents\Units\Humans\Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_DisasterType.h"
+#include "Entities/Agents/Units/Humans/PHY_NbcSuit.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -60,10 +61,23 @@ void MIL_DisasterType::ReadDisaster( xml::xistream& xis )
 // Name: MIL_DisasterType constructor
 // Created: LGY 2012-11-21
 // -----------------------------------------------------------------------------
-MIL_DisasterType::MIL_DisasterType( const std::string& strName, xml::xistream& /*xis*/ )
+MIL_DisasterType::MIL_DisasterType( const std::string& strName, xml::xistream& xis )
     : strName_( strName )
 {
-    // NOTHING
+    xis >> xml::start( "protections" )
+            >> xml::list( "protection", *this, &MIL_DisasterType::ReadProtection )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DisasterType::ReadProtection
+// Created: LGY 2012-11-26
+// -----------------------------------------------------------------------------
+void MIL_DisasterType::ReadProtection( xml::xistream& xis )
+{
+    const PHY_NbcSuit* suit = PHY_NbcSuit::Find( xis.attribute< std::string >( "type" ) );
+    if( suit )
+        protections_[ suit ] = xis.attribute< float >( "value" );
 }
 
 // -----------------------------------------------------------------------------

@@ -23,6 +23,7 @@ class PHY_Posture;
 class PHY_ComposanteTypePion;
 class PHY_RolePion_Composantes;
 class PHY_HumanRank;
+class PHY_NbcSuit;
 class PHY_DotationLogisticType;
 enum E_PionEfficiency;
 enum E_CrossingHeight;
@@ -67,6 +68,7 @@ public:
     bool IsAutonomous() const;
     unsigned int GetPionEfficiency( E_PionEfficiency pionEfficiency ) const;
     E_CrossingHeight GetCrossingHeight() const;
+    const PHY_NbcSuit& GetNbcSuit() const;
     //@}
 
 private:
@@ -138,6 +140,7 @@ private:
     unsigned int nEngineeringReconEfficiency_;
     unsigned int nUrbanAreaEfficiency_;
     E_CrossingHeight crossingHeight_;
+    const PHY_NbcSuit* suit_;
     //@}
 };
 
