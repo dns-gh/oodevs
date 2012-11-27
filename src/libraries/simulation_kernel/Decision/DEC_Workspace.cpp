@@ -16,7 +16,6 @@
 #include "Entities/Orders/MIL_FragOrderType.h"
 #include "Entities/Orders/MIL_FragOrder.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
-#include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_DIAFunctions.h"
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
