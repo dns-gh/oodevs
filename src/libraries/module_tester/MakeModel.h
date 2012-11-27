@@ -21,14 +21,7 @@ namespace sword
 {
 namespace test
 {
-    struct Assign
-    {
-        Assign( const Model& lhs, Model& rhs, core::ModelListener_ABC* )
-        {
-            rhs = lhs;
-        }
-    };
-    typedef core::ModelBuilder< Model, Assign > ModelBuilder;
+    typedef core::ModelBuilder< Model > ModelBuilder;
 
     inline bool operator==( const SWORD_Model* actual, const ModelBuilder& expected )
     {
