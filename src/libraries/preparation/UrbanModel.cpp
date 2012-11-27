@@ -548,13 +548,15 @@ void UrbanModel::ExportShapeFile( const std::string& exportDirectory, const tool
     boost::shared_ptr< Translator > trans = boost::make_shared< Translator >( boost::ref( *new PlanarCartesianProjector( config.GetTerrainLatitude(), config.GetTerrainLongitude() ) ), geometry::Vector2d( config.GetTerrainWidth() / 2.f, config.GetTerrainHeight() / 2.f ) );
 
     SetProgression( progressDialog, 0, tools::translate( "UrbanModel", "Exporting terrain data..." ) );
-    std::auto_ptr< TerrainExportManager > pTerrainExportManager( new TerrainExportManager( config.GetTerrainDir( config.GetTerrainName() ), exportDirectory, *trans ) );
-    pTerrainExportManager->Run();
-    pTerrainExportManager.release();
+    {
+        TerrainExportManager manager( config.GetTerrainDir( config.GetTerrainName() ), exportDirectory, *trans );
+        manager.Run();
+    }
     SetProgression( progressDialog, 50, tools::translate( "UrbanModel", "Exporting urban data..." ) );
-    std::auto_ptr< UrbanExportManager > pUrbanExportManager( new UrbanExportManager( exportDirectory, *trans, *this ) );
-    pUrbanExportManager->Run();
-    pUrbanExportManager.release();
+    {
+        UrbanExportManager manager( exportDirectory, *trans, *this );
+        manager.Run();
+    }
     SetProgression( progressDialog, 100, "" );
 }
 
