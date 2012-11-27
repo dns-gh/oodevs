@@ -2997,8 +2997,8 @@
     <direct-fire>
       <hit-probabilities target="Drone">
         <hit-probability distance="0" percentage="1"/>
-        <hit-probability distance="800" percentage="0.4"/>
-        <hit-probability distance="1600" percentage="0.1"/>
+        <hit-probability distance="800" percentage="0.65"/>
+        <hit-probability distance="1600" percentage="0.45"/>
         <hit-probability distance="2130" percentage="0.01"/>
       </hit-probabilities>
       <hit-probabilities target="Gros">
@@ -3182,4 +3182,4 @@
     </direct-fire>
   </weapon-system>
 </weapons>
-<!-- signature="0434439095" -->
+<!-- signature="4038603519" -->
