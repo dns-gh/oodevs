@@ -3846,7 +3846,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Masalife.AIR.Patrouille Assaut" id="132" name="GLAISE - ALFT . Patrouille SU 25" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/fixed wing/attack"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SU 25"/>
     </equipments>
@@ -18068,4 +18068,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1673670115" -->
+<!-- signature="2787533454" -->
