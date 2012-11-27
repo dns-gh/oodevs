@@ -33,7 +33,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
     if( type.HasSpawn() )
         idManager.GetNextId(); // we need to skip one ID for dynamic created object.
 //    RegisterSelf( *this );
-    name_ = name.isEmpty() ? tools::translate( "Object", "%1 [%L2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
+    name_ = name.isEmpty() ? type.GetName().c_str() : name;
     CreateDictionary();
 }
 

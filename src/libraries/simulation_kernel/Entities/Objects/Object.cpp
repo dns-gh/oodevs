@@ -35,18 +35,6 @@ Object::Object( xml::xistream& xis, const MIL_ObjectType_ABC& type, MIL_Army_ABC
         Initialize( *pLocation );
 }
 
-namespace
-{
-    std::string FormatName( const std::string& name, const std::string& realName, int id )
-    {
-        if( !name.empty() )
-            return name;
-        std::stringstream stream;
-        stream << realName << "[" << id << "]";
-        return stream.str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Object constructor
 // Created: SBO 2009-12-14
@@ -54,7 +42,7 @@ namespace
 Object::Object( const MIL_ObjectType_ABC& type, MIL_Army_ABC* army, const TER_Localisation* pLocation,
                 unsigned int externalIdentifier, const std::string& name /*= std::string()*/, unsigned int forcedId /*= 0u*/ )
     : MIL_Object( army, type, forcedId )
-    , name_( FormatName( name, type.GetRealName(), GetID() ) )
+    , name_( !name.empty()? name : type.GetRealName() )
     , externalIdentifier_( externalIdentifier )
 {
     MIL_Object_ABC::Register();

@@ -30,7 +30,7 @@ Object::Object( const sword::ObjectCreation& message, Controller& controller, co
     , type_             ( typeResolver.Get( message.type().id() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.object().id() );
+        name_ = QString( type_.GetName().c_str() );
     RegisterSelf( *this );
 }
 

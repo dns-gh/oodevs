@@ -37,7 +37,7 @@ Population::Population( const PopulationType& type, int number, Controller& cont
     repartition_->female_ = static_cast< unsigned int >( type.GetFemale() * 100 );
     repartition_->children_ = static_cast< unsigned int >( type.GetChildren() * 100 );
     RegisterSelf( *this );
-    name_ = ( type.GetName().c_str() + QString( " [%L1]" ) ).arg( id_ );
+    name_ = type.GetName().c_str();
     CreateDictionary();
 }
 
