@@ -327,3 +327,7 @@ end
 integration.setDecisionalState = function( agent, decisionalState )
     F_Pion_SeteEtatDec( agent, decisionalState )
 end
+
+integration.setRadarState = function( agent, radarState )
+    F_Pion_SeteEtatRadar( agent, radarState )
+end
