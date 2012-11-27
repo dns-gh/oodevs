@@ -64,7 +64,7 @@ node "SupportElement"
     end,
 
     create = function( self )
-        self.positions = queries.getPositionsToSupport[ "execute" ]( { retrogradeContext = self.params.retrogradeContext, elementsToSupport = { self.params.entity }, dynamic = true})
+        self.positions = sword.military.queries.tactical.getPositionsToSupport[ "execute" ]( { retrogradeContext = self.params.retrogradeContext, elementsToSupport = { self.params.entity }, dynamic = true})
     end,
     -- --------------------------------------------------------------------------------
     -- Move toward a destroying element and edstroy the entity
@@ -97,7 +97,7 @@ node "SupportElement"
         -- If the bestPosition is not enought good for supporting the entity
         self.efficiencies = {}
         self.maxEfficiency = 0
-        self.positions = queries.getPositionsToSupport[ "execute" ]( { retrogradeContext = self.params.retrogradeContext,elementsToSupport = { self.params.entity }, dynamic = true})
+        self.positions = sword.military.queries.tactical.getPositionsToSupport[ "execute" ]( { retrogradeContext = self.params.retrogradeContext,elementsToSupport = { self.params.entity }, dynamic = true})
         for i = 1, #self.positions do
             local position = self.positions[i]
             local efficiency = position:supportEfficiency( self.params.entity )
