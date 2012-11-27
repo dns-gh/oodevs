@@ -55,7 +55,7 @@ MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config )
     boost::filesystem::create_directories( config.BuildSessionChildFile( "checkpoints" ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
-    if( nMaxCheckPointNbr_ )
+    if( nMaxCheckPointNbr_ == 0 )
         MT_LOG_INFO_MSG( "No Checkpoints kept. No automatic checkpoint will be saved");
     UpdateNextCheckPointTick();
 }
@@ -256,26 +256,27 @@ void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
 {
-    if( nMaxCheckPointNbr_ != 0 )
-        if( currentCheckPoints_.size() == nMaxCheckPointNbr_ )
+    if( nMaxCheckPointNbr_ == 0 )
+        return;
+    if( currentCheckPoints_.size() == nMaxCheckPointNbr_ )
+    {
+        try
         {
-            try
-            {
-                std::string oldName = currentCheckPoints_.front();
-                std::string oldFile = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", oldName );
-                const boost::filesystem::path oldPath( oldFile );
-                boost::filesystem::remove_all( oldPath );
-                client::ControlCheckPointSaveDelete message;
-                message().set_name( oldName );
-                message.Send( NET_Publisher_ABC::Publisher() );
-            }
-            catch( std::exception& exception )
-            {
-                MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing old checkpoint ( '%s' )", exception.what() ) );
-            }
-            currentCheckPoints_.pop();
+            std::string oldName = currentCheckPoints_.front();
+            std::string oldFile = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", oldName );
+            const boost::filesystem::path oldPath( oldFile );
+            boost::filesystem::remove_all( oldPath );
+            client::ControlCheckPointSaveDelete message;
+            message().set_name( oldName );
+            message.Send( NET_Publisher_ABC::Publisher() );
         }
-        currentCheckPoints_.push( newName );
+        catch( std::exception& exception )
+        {
+            MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing old checkpoint ( '%s' )", exception.what() ) );
+        }
+        currentCheckPoints_.pop();
+    }
+    currentCheckPoints_.push( newName );
 }
 
 // -----------------------------------------------------------------------------
