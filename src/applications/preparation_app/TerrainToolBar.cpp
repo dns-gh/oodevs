@@ -33,6 +33,35 @@ namespace
         button->setCheckable( isCheckable );
         return button;
     }
+
+    QDoubleSpinBox* CreateSwitchModeButtonContextMenu( QToolButton* button )
+    {
+        QWidget* holder = new QWidget;
+        QHBoxLayout* hLayout = new QHBoxLayout;
+        hLayout->setContentsMargins( 1, 1, 1, 1 );
+        holder->setLayout( hLayout );
+
+        // Description label
+        hLayout->addWidget( new QLabel( button->tr( "Road width (m):" ) ) );
+
+        // Spin box
+        QDoubleSpinBox* spinBox = new QDoubleSpinBox;
+        spinBox->setRange( 2.0, 20.0 );
+        spinBox->setValue( 10.0 );
+        spinBox->setSingleStep( 1.0 );
+        hLayout->addWidget( spinBox );
+
+        QMenu* menu = new kernel::ContextMenu( button );
+        QWidgetAction* action = new QWidgetAction( menu );
+        action->setDefaultWidget( holder );
+        menu->addAction( action );
+
+        button->setPopupDelay( 0 );
+        button->setPopupMode( QToolButton::MenuButtonPopup );
+        button->setPopup( menu );
+
+        return spinBox;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +78,8 @@ TerrainToolBar::TerrainToolBar( QWidget* parent, kernel::Controllers& controller
 {
     // Terrain button
     switchModeButton_ = AddButton( this, this, SLOT( OnSwitchMode() ), tr( "Edit urban area" ), "resources/images/preparation/livingArea.png", true );
+    roadWidthSpinBox_ = CreateSwitchModeButtonContextMenu( switchModeButton_ );
+
     // Block creation button
     blockCreationButton_ = AddButton( this, this, SLOT( OnBlockCreation() ), tr( "Manual block creation" ), "resources/images/preparation/CreateBlock.png", true );
     // Multi blocks creation button
@@ -137,7 +168,7 @@ void TerrainToolBar::Handle( kernel::Location_ABC& location )
 {
     if( !selected_ )
         return;
-    urbanModel_.CreateUrbanBlocks( location, *selected_.ConstCast(), isAuto_ );
+    urbanModel_.CreateUrbanBlocks( location, *selected_.ConstCast(), isAuto_, roadWidthSpinBox_->value() );
 }
 
 // -----------------------------------------------------------------------------

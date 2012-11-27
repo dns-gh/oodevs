@@ -380,7 +380,7 @@ void UrbanModel::CreateCityOrDistrict( kernel::Entity_ABC* parent )
 // Name: UrbanModel::CreateUrbanBlocs
 // Created: ABR 2012-06-01
 // -----------------------------------------------------------------------------
-void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto )
+void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel::UrbanObject_ABC& parent, bool isAuto, double roadWidth /* = 5.0 */ )
 {
     T_PointVector points = static_cast< const kernel::Polygon& >( location ).GetPoints();
     if( points.front() == points.back() )
@@ -394,7 +394,7 @@ void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel
             Create( polygon, &parent );
     }
     else
-        geostore_->CreateUrbanBlocksOnCities( polygon, parent );
+        geostore_->CreateUrbanBlocksOnCities( polygon, parent, roadWidth );
 }
 
 // -----------------------------------------------------------------------------

@@ -91,6 +91,7 @@ private:
     QToolButton*                                   blockCreationButton_;
     QToolButton*                                   blockCreationAutoButton_;
     QToolButton*                                   blockRemoveButton_;
+    QDoubleSpinBox*                                roadWidthSpinBox_;
     bool                                           isAuto_;
     //@}
 };
