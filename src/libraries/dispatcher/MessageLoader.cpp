@@ -436,31 +436,31 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
     return false;
 }
 
-namespace dispatcher
+struct dispatcher::Buffer
 {
-    struct Buffer
+    Buffer( size_t size )
+        : data_( size )
     {
-        Buffer( size_t size )
-            : data_( size )
+        // NOTHING
+    }
+    bool Read( std::ifstream& src )
+    {
+        size_t len = 0;
+        const size_t size = data_.size();
+        while( !IsEof( src ) && src.good() && len < size )
         {
-            // NOTHING
+            src.read( &data_[len], size - len );
+            len += static_cast< size_t >( src.gcount() );
         }
-        bool Read( std::ifstream& src )
-        {
-            size_t len = 0;
-            const size_t size = data_.size();
-            while( !IsEof( src ) && src.good() && len < size )
-            {
-                src.read( &data_[len], size - len );
-                len += static_cast< size_t >( src.gcount() );
-            }
-            data_.resize( len );
-            return len == size;
-        }
-        std::vector< char > data_;
-    };
+        data_.resize( len );
+        return len == size;
+    }
+    std::vector< char > data_;
+};
 
-    typedef boost::shared_ptr< Buffer > BufPtr;
+namespace
+{
+    typedef boost::shared_ptr< dispatcher::Buffer > BufPtr;
 
     BufPtr MakeBuffer( std::ifstream& src, size_t size, const bfs::path& filename )
     {
