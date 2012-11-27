@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    bool CheckValidity( gaiaGeomCollPtr& geom );
+    static gaiaGeomCollPtr Validate( gaiaGeomCollPtr geom );
     gaiaGeomCollPtr InitGeometryCollection();
     gaiaGeomCollPtr CreatePolygonGeometry( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector );
     void AddPolygonGeometryToCollection( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaGeomCollPtr& geomColl );
@@ -40,7 +40,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void FillPolygon( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaPolygonPtr& polyg );
+    void FillPolygon( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaPolygonPtr& polyg ) const;
     //@}
 };
 

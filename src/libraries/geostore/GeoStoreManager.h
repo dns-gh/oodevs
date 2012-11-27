@@ -10,6 +10,7 @@
 #ifndef __GeoStoreManager_h_
 #define __GeoStoreManager_h_
 
+#include "geostore_pch.h"
 #include <geometry/Types.h>
 
 namespace kernel
@@ -36,34 +37,35 @@ class GeoStoreManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             GeoStoreManager( const std::string& path, UrbanModel& model );
+             GeoStoreManager( const boost::filesystem::path& path, UrbanModel& model );
     explicit GeoStoreManager( UrbanModel& model );
     virtual ~GeoStoreManager();
     //@}
 
     //! @name Operations
     //@{
+    void Initialize( const boost::filesystem::path& path );
     void LoadTerrainFiles();
-    SpatialRequestStatus* CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent );
+    void CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent );
     bool BlockAutoProcess( const geometry::Polygon2f& footprint );
-    void Initialize( const std::string& path );
     bool IsInitialized() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void InitProjector( const std::string& terrainFile ) ;
-    void InitProjectorOld( const std::string& worldfile ) ;
+    void InitProjector( const boost::filesystem::path& terrainFile ) ;
+    void InitProjectorOld( const boost::filesystem::path& worldfile ) ;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string         path_;
-    Database*           spatialDb_;
-    PointProjector_ABC* trans_;
-    UrbanModel&         urbanModel_;
+    boost::filesystem::path             path_;
+    std::auto_ptr< Database >           spatialDb_;
+    std::auto_ptr< PointProjector_ABC > proj_;
+    std::auto_ptr< PointProjector_ABC > trans_;
+    UrbanModel&                         urbanModel_;
     //@}
 };
 

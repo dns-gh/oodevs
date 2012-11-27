@@ -26,11 +26,10 @@ using namespace geostore;
 // Name: CreateBlockAutoProcess constructor
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-CreateBlockAutoProcess::CreateBlockAutoProcess( const Database& database, SpatialRequestStatus& status )
-    : database_( database )
-    , blocks_  ( 0 )
-    , status_  ( status )
-    , geometryFactory_( new GeometryFactory() )
+CreateBlockAutoProcess::CreateBlockAutoProcess( const Database& database )
+    : database_         ( database )
+    , blocks_           ( 0 )
+    , geometryFactory_  ( new GeometryFactory() )
 {
     // NOTHING
 }
@@ -41,7 +40,8 @@ CreateBlockAutoProcess::CreateBlockAutoProcess( const Database& database, Spatia
 // -----------------------------------------------------------------------------
 CreateBlockAutoProcess::~CreateBlockAutoProcess()
 {
-    // NOTHING
+    gaiaFreeGeomColl( blocks_ ); // It's okay to pass NULL!
+    blocks_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -50,28 +50,45 @@ CreateBlockAutoProcess::~CreateBlockAutoProcess()
 // -----------------------------------------------------------------------------
 void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector )
 {
-    blocks_ = geometryFactory_->InitGeometryCollection();
-    gaiaGeomCollPtr poly( geometryFactory_->CreatePolygonGeometry( footprint , projector ) );
-    gaiaGeomCollPtr urbans( 0 );
-    gaiaGeomCollPtr buffers( 0 );
-    gaiaGeomCollPtr buildings( 0 );
-    gaiaGeomCollPtr areas( 0 );
-    Database::CIT_Tables it = database_.tables_.find( "urban" );
+    gaiaGeomCollPtr poly        = geometryFactory_->CreatePolygonGeometry( footprint , projector );
+    gaiaGeomCollPtr buildings   = 0;
+    gaiaGeomCollPtr urbans      = 0;
+
+    Database::CIT_Tables it;
+
+    // Find intersecting urban areas
+    it = database_.tables_.find( "urban" );
     if( it != database_.tables_.end() )
-        urbans = it->second->GetFeaturesIntersectsWith( poly );
-    if( !geometryFactory_->CheckValidity( urbans ) )
-    {   
-        status_.UpdateSpatialStatus( 0, true );
+    {
+        urbans = GeometryFactory::Validate( it->second->GetFeaturesIntersectsWith( poly ) );
+    }
+
+    if( ! urbans )
+    {
         return;
     }
+
+    // Find intersecting buildings
     it = database_.tables_.find( "building" );
     if( it != database_.tables_.end() )
-        buildings = it->second->GetFeaturesIntersectsWith( poly );
+    {
+        buildings = GeometryFactory::Validate( it->second->GetFeaturesIntersectsWith( poly ) );
+    }
+
+    gaiaGeomCollPtr buffers = 0;
+    gaiaGeomCollPtr areas   = 0;
     PrepareTerrainComponents( poly, areas, buffers );
     gaiaFreeGeomColl( poly );
+
     ClippingUrbanAreaWithTerrainComponent( buffers, areas, urbans );
-    UpdateBuildingTable( buildings ); //Update building tables
-    UpdateUrbanModel( model, parent, projector, footprint ); //Update urban blocks
+    gaiaFreeGeomColl( areas );
+    gaiaFreeGeomColl( urbans );
+
+    // Update building tables
+    UpdateBuildingTable( buildings );
+
+    // Update urban blocks
+    UpdateUrbanModel( model, parent, projector, footprint );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,53 +97,64 @@ void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, UrbanMod
 // -----------------------------------------------------------------------------
 void CreateBlockAutoProcess::PrepareTerrainComponents( gaiaGeomCollPtr selection, gaiaGeomCollPtr& areas, gaiaGeomCollPtr& buffers )
 {
-    gaiaGeomCollPtr temp( 0 );
-    gaiaGeomCollPtr temp2( 0 );
-    gaiaGeomCollPtr lines( 0 );
+    // Initialize...
+    areas = 0;
+    buffers = 0;
+
     for( Database::CIT_Tables it = database_.tables_.begin(); it != database_.tables_.end(); ++it )
     {
         if( it->first == "urban" || it->first == "building" )
+        {
             continue;
-        
+        }
+
         if( it->second->GetGeometry() == "POLYGON" ) //Aggreagation des surfaces;
         {
-            temp = it->second->GetFeaturesIntersectsWith( selection );
-            if( !geometryFactory_->CheckValidity( temp ) )
-                continue;
-
-            if( geometryFactory_->CheckValidity( areas ) ) 
+            gaiaGeomCollPtr inter = GeometryFactory::Validate( it->second->GetFeaturesIntersectsWith( selection ) );
+            if( ! inter )
             {
-                temp2 = gaiaGeometryUnion( temp, areas );
-                if( geometryFactory_->CheckValidity( temp2 ) )
-                {
-                    gaiaFreeGeomColl( areas );
-                    areas = gaiaCloneGeomColl( temp2 );
-                }
-                gaiaFreeGeomColl( temp2 );
+                continue;
+            }
+
+            if( ! areas )
+            {
+                // Set the initial areas.
+                areas = inter;
             }
             else
             {
-                areas = gaiaCloneGeomColl( temp );
-                gaiaFreeGeomColl( temp );
+                // Incorporate the intersection in the areas.
+                gaiaGeomCollPtr merged = GeometryFactory::Validate( gaiaGeometryUnion( inter, areas ) );
+                gaiaFreeGeomColl( inter );
+                if( merged )
+                {
+                    gaiaFreeGeomColl( areas );
+                    areas = merged;
+                }
             }
         }
         else //if ( it->second->GetGeometry() == "LINESTRING" ) 
         {
-            lines = it->second->GetFeaturesIntersectsWith( selection );
-            if( geometryFactory_->CheckValidity( lines ) )
+            gaiaGeomCollPtr lines = GeometryFactory::Validate( it->second->GetFeaturesIntersectsWith( selection ) );
+            if( ! lines )
             {
-                temp = gaiaGeomCollBuffer( lines, 0.0001, 3 );
-                gaiaFreeGeomColl( lines ); 
-                if( !geometryFactory_->CheckValidity(  buffers ) )
-                    buffers = gaiaCloneGeomColl( temp );
-                else
-                {
-                    temp2 = gaiaGeometryUnion( buffers, temp );
-                    gaiaFreeGeomColl( buffers );
-                    buffers = gaiaCloneGeomColl( temp2 );
-                    gaiaFreeGeomColl( temp2 );
-                }
+                continue;
+            }
+
+            gaiaGeomCollPtr temp = gaiaGeomCollBuffer( lines, 0.00001, 3 );
+            gaiaFreeGeomColl( lines );
+            if( ! buffers )
+            {
+                // Set the initial buffers
+                buffers = temp;
+            }
+            else
+            {
+                // Merge
+                gaiaGeomCollPtr merged = gaiaGeometryUnion( buffers, temp );
+                gaiaFreeGeomColl( buffers );
                 gaiaFreeGeomColl( temp );
+                buffers = merged;
             }
         }
     }
@@ -138,21 +166,27 @@ void CreateBlockAutoProcess::PrepareTerrainComponents( gaiaGeomCollPtr selection
 // -----------------------------------------------------------------------------
 void CreateBlockAutoProcess::ClippingUrbanAreaWithTerrainComponent( gaiaGeomCollPtr buffers, gaiaGeomCollPtr areas, gaiaGeomCollPtr urbans )
 {
-    gaiaGeomCollPtr temp( 0 );
-    if( geometryFactory_->CheckValidity( buffers ) ) //clipping urban area with buffers
-    {   
-        blocks_ = gaiaGeometryDifference( urbans, buffers );
-        gaiaFreeGeomColl( buffers ); 
+    // clipping urban area with buffers
+    blocks_ = buffers
+        ? gaiaGeometryDifference( urbans, buffers )
+        : gaiaCloneGeomColl( urbans );
+
+    // clipping blocks with others areas 
+    if( gaiaDimension( areas ) == 2 )
+    {
+        gaiaGeomCollPtr temp = gaiaGeometryDifference( blocks_, areas );
+
+        // geometry valid and type POLYGON
+        if( gaiaDimension( temp ) == 2 )
+        {
+            gaiaFreeGeomColl( blocks_ );
+            blocks_ = temp;
+        }
+        else
+        {
+            gaiaFreeGeomColl( temp );
+        }
     }
-    else
-        blocks_ = gaiaCloneGeomColl( urbans ); 
-    gaiaFreeGeomColl( urbans );
-    if( gaiaDimension( areas ) == 2 ) //clipping blocks with others areas 
-        temp = gaiaGeometryDifference( blocks_, areas );
-    if( gaiaDimension( temp ) == 2 ) //geometry valid and type POLYGON
-        blocks_ = gaiaCloneGeomColl( temp ); 
-    gaiaFreeGeomColl( areas );
-    gaiaFreeGeomColl( temp );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,26 +195,29 @@ void CreateBlockAutoProcess::ClippingUrbanAreaWithTerrainComponent( gaiaGeomColl
 // -----------------------------------------------------------------------------
 void CreateBlockAutoProcess::UpdateUrbanModel( UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector, const geometry::Polygon2f& footprint )
 {
-    //Cas particuliers des polygones à trous. Pas encore traité; créer une médiane pour couper le batiment...
-    if( !geometryFactory_->CheckValidity( blocks_ ) )
+    // Cas particuliers des polygones à trous. Pas encore traité; créer une médiane pour couper le batiment...
+    if( ! blocks_ )
+    {
         return;
-    gaiaGeomCollPtr getBlocksFromFiles = GetUrbanBlockInArea( model, projector, footprint );
+    }
+
+    gaiaGeomCollPtr getBlocksFromFiles = GeometryFactory::Validate( GetUrbanBlockInArea( model, projector, footprint ) );
     gaiaPolygonPtr block = blocks_->FirstPolygon;
-    gaiaGeomCollPtr blockIntersect; 
-    bool existingBlocks = geometryFactory_->CheckValidity( getBlocksFromFiles );
     bool addNewBlock;
     int count = 0;
     while( block )
     {
         addNewBlock = true;
-        if( existingBlocks )
+        if( getBlocksFromFiles )
         {
-            blockIntersect = geometryFactory_->InitGeometryCollection();
+            gaiaGeomCollPtr blockIntersect = geometryFactory_->InitGeometryCollection();
             gaiaPolygonPtr cloneBlock = gaiaClonePolygon( block );
             gaiaInsertPolygonInGeomColl( blockIntersect, cloneBlock->Exterior );
             gaiaMbrGeometry( blockIntersect );
             if( gaiaGeomCollIntersects( blockIntersect, getBlocksFromFiles ) == 1 )
+            {
                 addNewBlock = false;
+            }
             gaiaFreeGeomColl( blockIntersect );
         }
         if( addNewBlock )
@@ -194,17 +231,16 @@ void CreateBlockAutoProcess::UpdateUrbanModel( UrbanModel& model, kernel::UrbanO
                 geometry::Point2d outPoint( projector.Project( y, x ) );
                 points.push_back( geometry::Point2f( static_cast< float >( outPoint.X() ), static_cast< float >( outPoint.Y() ) ) );
             }
+            
             const geometry::Polygon2f polygon( points );
-            kernel::UrbanObject_ABC* newBlock = model.Create( polygon, &parent );
-            if( newBlock )
+            if( model.Create( polygon, &parent ) )
+            {
                 ++count;
+            }
         }
         block = block->Next;
     }
-    if( existingBlocks )
-        gaiaFreeGeomColl( getBlocksFromFiles );
-    gaiaFreeGeomColl( blocks_ );
-    status_.UpdateSpatialStatus( count, true );
+    gaiaFreeGeomColl( getBlocksFromFiles );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,9 +258,12 @@ gaiaGeomCollPtr CreateBlockAutoProcess::GetUrbanBlockInArea( const UrbanModel& m
     std::vector< const kernel::UrbanObject_ABC* > urbanBlocks;
     model.GetListWithinCircle( center, radius, urbanBlocks ); // to add more blocks (quatree accuracy not very good)
     for( std::vector< const kernel::UrbanObject_ABC* >::const_iterator it = urbanBlocks.begin(); it != urbanBlocks.end(); ++it )
+    {
         if( const kernel::UrbanPositions_ABC* attribute = ( *it )->Retrieve< kernel::UrbanPositions_ABC >() )
+        {
             geometryFactory_->AddPolygonGeometryToCollection( attribute->Polygon(), projector, getBlocksFromFiles );
-
+        }
+    }
     return getBlocksFromFiles;
 }
 
@@ -234,26 +273,26 @@ gaiaGeomCollPtr CreateBlockAutoProcess::GetUrbanBlockInArea( const UrbanModel& m
 // -----------------------------------------------------------------------------
 void CreateBlockAutoProcess::UpdateBuildingTable( gaiaGeomCollPtr buildings )
 {
-    //Not Checked
-    //TODO: Update and Export building.bin
-    if( !geometryFactory_->CheckValidity( buildings ) )
+    if( ! buildings )
+    {
         return;
+    }
 
-    gaiaGeomCollPtr temp;
     gaiaPolygonPtr block = blocks_->FirstPolygon;
     gaiaPolygonPtr prev = 0;
 
+    gaiaGeomCollPtr geom;
     while( block )
     {
         // Create an empty collection
-        temp = geometryFactory_->InitGeometryCollection();
+        geom = geometryFactory_->InitGeometryCollection();
+
         // Insert a copy of the block in that collection
-        gaiaInsertPolygonInGeomColl( temp, gaiaCloneRing( block->Exterior ) );
-        // Go figure...
-        gaiaMbrGeometry( temp );
+        gaiaInsertPolygonInGeomColl( geom, gaiaCloneRing( block->Exterior ) );
+        gaiaMbrGeometry( geom );
 
         // If the buildings and this block (copy) intersect, remove the block from the collection
-        if( gaiaGeomCollIntersects( temp, buildings ) == 1 )
+        if( 1 == gaiaGeomCollIntersects( geom, buildings ) )
         {
             // If it is the first polygon in the geometry set
             if( block == blocks_->FirstPolygon )
@@ -274,8 +313,7 @@ void CreateBlockAutoProcess::UpdateBuildingTable( gaiaGeomCollPtr buildings )
 
             gaiaPolygonPtr next = block->Next;
             // Free the polygon, it is not needed anymore
-            gaiaFreePolygon( block );   // Would this call be enough ?
-                                        // Does it take care of removing from the linked list ?
+            gaiaFreePolygon( block );
             block = next;
         }
         else
@@ -284,6 +322,6 @@ void CreateBlockAutoProcess::UpdateBuildingTable( gaiaGeomCollPtr buildings )
             prev = block;
             block = block->Next;
         }
-        gaiaFreeGeomColl( temp );
+        gaiaFreeGeomColl( geom );
     }
 }

@@ -57,7 +57,7 @@ private:
     std::string name_;
     std::string geometry_;
     gaiaGeomCollPtr geo_;
-    char* err_msg;
+    char* err_msg_;
     //@}
 };
 

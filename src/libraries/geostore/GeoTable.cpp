@@ -61,7 +61,7 @@ void GeoTable::CreateStructure()
     std::string sqlRequest = "CREATE TABLE " + name_ + "(";
     sqlRequest += "id INTEGER NOT NULL PRIMARY KEY,";
     sqlRequest += "name VARCHAR(256) );";
-    sqlite3_exec(db_, sqlRequest.c_str(), NULL, NULL, &err_msg );
+    sqlite3_exec( db_, sqlRequest.c_str(), NULL, NULL, &err_msg_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ void GeoTable::AddGeometryColumn( int geom_type )
             break;
     }
     sqlRequest = "SELECT AddGeometryColumn('" + name_ + "', 'geom', 4326, '" + geometry_ + "', 2 )";
-    sqlite3_exec( db_, sqlRequest.c_str(), NULL, NULL, &err_msg );
+    sqlite3_exec( db_, sqlRequest.c_str(), NULL, NULL, &err_msg_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ void GeoTable::CreateLineGeometry( const TerrainObject& shape )
 void GeoTable::MbrSpatialIndex()
 {
     std::string sqlRequest( "SELECT CreateMbrCache('" + name_ + "', 'geom')" );
-    sqlite3_exec( db_, sqlRequest.c_str(), NULL, NULL, &err_msg );
+    sqlite3_exec( db_, sqlRequest.c_str(), NULL, NULL, &err_msg_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +170,7 @@ void GeoTable::Fill( std::vector< TerrainObject* > features )
     unsigned char* blob;
     int blob_size;
     int i( 0 );
-    int ret = sqlite3_exec(db_, "BEGIN", NULL, NULL, &err_msg );
+    int ret = sqlite3_exec( db_, "BEGIN", NULL, NULL, &err_msg_ );
     std::string sqlRequest = "INSERT INTO " + name_ + "(id, name, geom) VALUES (?, ?, ?)";
     ret = sqlite3_prepare_v2( db_, sqlRequest.c_str(), static_cast< int >( sqlRequest.size() ), &stmt, NULL );    
     std::vector< TerrainObject* >::const_iterator it;
@@ -180,7 +180,7 @@ void GeoTable::Fill( std::vector< TerrainObject* > features )
             continue;
         ++i;
         CreateGeometry( **it );
-        if( !gaiaIsValid( geo_ ) )
+        if( ! gaiaIsValid( geo_ ) )
         {
             std::cout << name_ << " invalid geometryfor :" << i << std::endl;
             gaiaFreeGeomColl( geo_ );
@@ -192,7 +192,7 @@ void GeoTable::Fill( std::vector< TerrainObject* > features )
         sqlite3_clear_bindings( stmt );
         sqlite3_bind_int64( stmt, 1, i );
         sqlite3_bind_text( stmt, 2, ( *it )->GetText().c_str(), -1, SQLITE_TRANSIENT );
-        sqlite3_bind_blob(stmt, 3, blob, blob_size, free );
+        sqlite3_bind_blob( stmt, 3, blob, blob_size, &free );
         ret = sqlite3_step( stmt );
         if( ret == SQLITE_DONE || ret == SQLITE_ROW )
             continue;
@@ -203,10 +203,10 @@ void GeoTable::Fill( std::vector< TerrainObject* > features )
         }
     }
     sqlite3_finalize( stmt );
-    ret = sqlite3_exec(db_, "COMMIT" , NULL, NULL, &err_msg );
+    ret = sqlite3_exec( db_, "COMMIT" , NULL, NULL, &err_msg_ );
     MbrSpatialIndex(); 
     sqlRequest = "ANALYSE " + name_ + ";";
-    ret = sqlite3_exec(db_, sqlRequest.c_str() , NULL, NULL, &err_msg );
+    ret = sqlite3_exec( db_, sqlRequest.c_str() , NULL, NULL, &err_msg_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,9 +239,9 @@ gaiaGeomCollPtr GeoTable::GetFeaturesIntersectsWith( gaiaGeomCollPtr poly )
                          + boost::lexical_cast< std::string >( poly->MaxX  ) + ", " 
                          + boost::lexical_cast< std::string >( poly->MaxY ); 
     std::string sqlRequest = "SELECT GUnion( geom ) FROM " + name_ + " WHERE MbrIntersects( geom, BuildMbr(" + mbrStr + ") );";
-    int ret = sqlite3_prepare_v2(db_, sqlRequest.c_str(), static_cast< int >( sqlRequest.size() ), &stmt, NULL );
+    int ret = sqlite3_prepare_v2( db_, sqlRequest.c_str(), static_cast< int >( sqlRequest.size() ), &stmt, NULL );
     sqlite3_reset( stmt );
-    sqlite3_clear_bindings(stmt);
+    sqlite3_clear_bindings( stmt );
     ret = sqlite3_step( stmt );
     if( ret == SQLITE_ROW )
     {

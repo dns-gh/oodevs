@@ -35,7 +35,7 @@ class CreateBlockAutoProcess : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateBlockAutoProcess( const Database& database, SpatialRequestStatus& status );
+             CreateBlockAutoProcess( const Database& database );
     virtual ~CreateBlockAutoProcess();
     //@}
 
@@ -60,7 +60,6 @@ private:
     const Database&                     database_;
     std::auto_ptr< GeometryFactory >    geometryFactory_;
     gaiaGeomCollPtr                     blocks_;
-    SpatialRequestStatus&               status_;
     //@}
 };
 

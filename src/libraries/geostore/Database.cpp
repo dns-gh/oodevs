@@ -22,21 +22,33 @@ namespace bfs = boost::filesystem;
 // Name: Database constructor
 // Created: AME 2010-07-19
 // -----------------------------------------------------------------------------
-Database::Database( const std::string& path )
-    : path_  ( path )
-    , err_msg( 0 )
+Database::Database( const bfs::path& path )
+    : path_     ( path )
+    , db_       ( 0 )
+    , err_msg   ( 0 )
 {
-    bfs::path directory( path_ );
-    bfs::path file( directory / "Graphics" / "geostore.sqlite" );    
+    bfs::path file( path_ / "Graphics" / "geostore.sqlite" );
     spatialite_init( 0 );
-    int ret = sqlite3_open_v2( file.string().c_str(), &db_, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL );
+
+    int ret = sqlite3_open_v2(
+        file.string().c_str(),
+        &db_,
+        SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
+        NULL );
+
     if( ret == SQLITE_OK )
     {
+        // Initialize the projection table in the database
         ProjectionTable projTable( db_ );
-        logTable_ = new LogTable( db_ );
+
+        logTable_.reset( new LogTable( db_ ) );
     }
-    else 
+    else
+    {
         sqlite3_close( db_ );
+        db_ = 0;
+        throw std::runtime_error( "Could not open Sqlite DB: " + file.string() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -45,10 +57,9 @@ Database::Database( const std::string& path )
 // -----------------------------------------------------------------------------
 Database::~Database()
 {
-    sqlite3_close( db_ );
     for( IT_Tables it = tables_.begin(); it != tables_.end(); ++it )
         delete it->second;
-    delete logTable_;
+    sqlite3_close( db_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,11 +67,11 @@ Database::~Database()
 // Created: AME 2010-07-20
 // -----------------------------------------------------------------------------
 void Database::CreateTable( const TerrainFileReader& file )
-{    
+{
     GeoTable* table = new GeoTable( db_, file.name_ );
     table->AddGeometryColumn( file.geomType_ );
     table->Fill( file.features_ );
-    tables_[ file.name_] = table;
+    tables_[ file.name_ ] = table;
 }
 
 // -----------------------------------------------------------------------------

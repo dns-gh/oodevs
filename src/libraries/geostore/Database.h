@@ -29,7 +29,7 @@ class Database : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Database( const std::string& path );
+    explicit Database( const boost::filesystem::path& path );
     virtual ~Database();
     //@}
 
@@ -47,13 +47,13 @@ public:
     typedef T_Tables::iterator                IT_Tables;
     typedef T_Tables::const_iterator         CIT_Tables;
     T_Tables tables_;
-    LogTable* logTable_;
+    std::auto_ptr< LogTable > logTable_;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string path_;
+    boost::filesystem::path path_;
     char* err_msg;
     sqlite3* db_;
     //@}

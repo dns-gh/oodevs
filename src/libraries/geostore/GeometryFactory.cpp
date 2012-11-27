@@ -51,7 +51,7 @@ gaiaGeomCollPtr GeometryFactory::CreatePolygonGeometry(const geometry::Polygon2f
 gaiaGeomCollPtr GeometryFactory::InitGeometryCollection()
 {
     gaiaGeomCollPtr geom = gaiaAllocGeomColl();
-    geom->Srid = 4326;
+    geom->Srid = 4326; // Set the Spatial Reference ID !!
     return geom;
 }
 
@@ -59,12 +59,17 @@ gaiaGeomCollPtr GeometryFactory::InitGeometryCollection()
 // Name: GeometryFactory::CheckValidity
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-bool GeometryFactory::CheckValidity( gaiaGeomCollPtr& geom )
+gaiaGeomCollPtr GeometryFactory::Validate( gaiaGeomCollPtr geom )
 {
-    if( !geom || gaiaDimension( geom ) == -1 || !gaiaIsValid( geom ) )
-        return false;
-    else
-        return true;
+    if( geom )
+    {
+        if( ! gaiaIsValid( geom ) || gaiaDimension( geom ) == -1 )
+        {
+            gaiaFreeGeomColl( geom );
+            geom = 0;
+        }
+    }
+    return geom;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,8 +78,11 @@ bool GeometryFactory::CheckValidity( gaiaGeomCollPtr& geom )
 // -----------------------------------------------------------------------------
 void GeometryFactory::AddPolygonGeometryToCollection( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaGeomCollPtr& geomColl )
 {
-    if( !CheckValidity( geomColl ) )
+    geomColl = Validate( geomColl );
+    if( ! geomColl )
+    {
         geomColl = CreatePolygonGeometry( footPrint, projector );
+    }
     else
     {
         gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( geomColl, static_cast< int >( footPrint.Vertices().size() + 1 ), 0 );
@@ -87,20 +95,22 @@ void GeometryFactory::AddPolygonGeometryToCollection( const geometry::Polygon2f&
 // Name: GeometryFactory::FillPolygon
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-void GeometryFactory::FillPolygon( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaPolygonPtr& polyg )
+void GeometryFactory::FillPolygon( const geometry::Polygon2f& footPrint, PointProjector_ABC& projector, gaiaPolygonPtr& polyg ) const
 {
-    gaiaRingPtr ring = polyg->Exterior;    
+    gaiaRingPtr ring = polyg->Exterior;
     double rLatitudeInDegrees;
     double rLongitudeInDegrees;
     int count = 0;
-    int numVertices = static_cast< int >( footPrint.Vertices().size() );
+    const int numVertices = static_cast< int >( footPrint.Vertices().size() );
     for( geometry::Polygon2f::CIT_Vertices it = footPrint.Vertices().begin(); it != footPrint.Vertices().end(); ++it )
     {
         geometry::Point2d point( ( *it ).X(), ( *it ).Y() );
         projector.Unproject( point, rLatitudeInDegrees, rLongitudeInDegrees );
         gaiaSetPoint( ring->Coords, count, rLongitudeInDegrees, rLatitudeInDegrees );
         if( it == footPrint.Vertices().begin() )
+        {
             gaiaSetPoint( ring->Coords, numVertices, rLongitudeInDegrees, rLatitudeInDegrees );
+        }
         ++count;
     }
     gaiaMbrPolygon( polyg );

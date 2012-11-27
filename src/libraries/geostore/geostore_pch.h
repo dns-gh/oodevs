@@ -20,6 +20,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/variant.hpp>
+#include <boost/locale.hpp>
 #pragma warning ( pop )
 
 #pragma warning ( push, 0 )
