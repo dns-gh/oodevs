@@ -174,6 +174,20 @@ unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
     return next ? next->frameNumber_ : 0;
 }
 
+namespace
+{
+    bool OpenFile( std::ifstream& stream, const bfs::path& file )
+    {
+        if( !bfs::exists( file ) )
+            return false;
+        // istream open()/close() are not supposed to clear the file state,
+        // it must be done manually, nice move C++.
+        stream.clear();
+        stream.open( file.string().c_str(), std::ios_base::binary | std::ios_base::in );
+        return stream.good();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::FillTimeTable
 // Created: JSR 2011-07-25
@@ -196,7 +210,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
                     unsigned int end;
                     std::string simTime;
                     std::string realTime;
-                    if( OpenFile( infoFile, it->first, infoFileName ) )
+                    if( OpenFile( infoFile, records_ / it->first / infoFileName ) )
                     {
                         tools::InputBinaryWrapper wrapper( infoFile );
                         wrapper >> start;
@@ -313,7 +327,7 @@ void MessageLoader::AddFolder( const std::string& folderName )
     std::ifstream infoFile;
     unsigned int start;
     unsigned int end;
-    if( !OpenFile( infoFile, folderName, infoFileName ) )
+    if( !OpenFile( infoFile, records_ / folderName / infoFileName ) )
         return;
     tools::InputBinaryWrapper wrapper( infoFile );
     wrapper >> start;
@@ -328,22 +342,6 @@ void MessageLoader::AddFolder( const std::string& folderName )
         msg().set_last_tick( tickCount_ );
         msg.Send( *clients_ );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MessageLoader::OpenFile
-// Created: JSR 2010-10-29
-// -----------------------------------------------------------------------------
-bool MessageLoader::OpenFile( std::ifstream& stream, const std::string& folder, const std::string& file ) const
-{
-    const bfs::path dir = records_ / folder / file;
-    if( !bfs::exists( dir ) )
-        return false;
-    // istream open()/close() are not supposed to clear the file state,
-    // it must be done manually, nice move C++.
-    stream.clear();
-    stream.open( dir.string().c_str(), std::ios_base::binary | std::ios_base::in );
-    return true;
 }
 
 namespace
@@ -420,10 +418,11 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
         {
             currentOpenFolder_ = it->first;
             std::ifstream index, keyIndex;
-            OpenFile( index, currentOpenFolder_, indexFileName );
-            OpenFile( keyIndex, currentOpenFolder_, keyIndexFileName );
-            OpenFile( updates_, currentOpenFolder_, updateFileName );
-            OpenFile( keys_, currentOpenFolder_, keyFileName );
+            const bfs::path dir = records_ / currentOpenFolder_;
+            OpenFile( index,    dir / indexFileName );
+            OpenFile( keyIndex, dir / keyIndexFileName );
+            OpenFile( updates_, dir / updateFileName );
+            OpenFile( keys_,    dir / keyFileName );
             LoadIndexes( frames_, index );
             LoadIndexes( keyFrames_, keyIndex );
             return true;
@@ -486,7 +485,7 @@ void MessageLoader::Load( std::ifstream& in, unsigned from, unsigned size, Messa
 void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
 {
     std::ifstream index;
-    OpenFile( index, folder, indexFileName );
+    OpenFile( index, records_ / folder / indexFileName );
     T_Frames frames;
     LoadIndexes( frames, index );
     index.close();
@@ -502,7 +501,7 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
 
     const Frame& current = frames[ next ];
     std::ifstream file;
-    OpenFile( file, folder, updateFileName );
+    OpenFile( file, records_ / folder / updateFileName );
     file.seekg( current.offset_ );
     BufPtr buf = MakeBuffer( file, current.size_, bfs::path( folder ) / updateFileName );
     file.close();
@@ -519,7 +518,7 @@ void MessageLoader::LoadFrameInThread( const std::string& folder, unsigned int f
 void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback )
 {
     std::ifstream index;
-    OpenFile( index, folder, keyIndexFileName );
+    OpenFile( index, records_ / folder / keyIndexFileName );
     T_KeyFrames keyFrames;
     LoadIndexes( keyFrames, index );
     index.close();
@@ -529,7 +528,7 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
         return;
 
     std::ifstream file;
-    OpenFile( file, folder, keyFileName );
+    OpenFile( file, records_ / folder / keyFileName );
     file.seekg( next->offset_ );
     BufPtr buf = MakeBuffer( file, next->size_, bfs::path( folder ) / keyFileName );
     file.close();
