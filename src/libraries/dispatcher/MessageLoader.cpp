@@ -101,6 +101,18 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
     return true;
 }
 
+namespace
+{
+    const KeyFrame* FindKeyFrame( const MessageLoader::T_KeyFrames& keyFrames, unsigned frame )
+    {
+        const KeyFrame* next = 0;
+        for( MessageLoader::CIT_KeyFrames it = keyFrames.begin(); it != keyFrames.end(); ++it )
+            if( it->frameNumber_ <= frame )
+                next = &*it;
+        return next;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MessageLoader::LoadKeyFrame
 // Created: AGE 2007-07-09
@@ -122,17 +134,10 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
     {
         if( !SwitchToFragment( frameNumber ) )
             return;
-        if( keyFrames_.empty() )
-            return;
-        KeyFrame keyFrame = *keyFrames_.begin();
-        for( CIT_KeyFrames it = keyFrames_.begin(); it != keyFrames_.end(); ++it )
-        {
-            if( it->frameNumber_ > frameNumber )
-                break;
-            keyFrame = *it;
-        }
-        Load( keys_, keyFrame.offset_, keyFrame.size_, handler, callback,
-              bfs::path( currentOpenFolder_ ) / keyFileName );
+        const KeyFrame* next = ::FindKeyFrame( keyFrames_, frameNumber );
+        if( next )
+            Load( keys_, next->offset_, next->size_, handler, callback,
+                  bfs::path( currentOpenFolder_ ) / keyFileName );
     }
 }
 
@@ -165,12 +170,8 @@ unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
     boost::mutex::scoped_lock lock( access_ );
     if( !SwitchToFragment( frameNumber ) )
         return 0;
-    if( keyFrames_.empty() )
-        return 0;
-    unsigned int ret = keyFrames_.begin()->frameNumber_;
-    for( CIT_KeyFrames it = keyFrames_.begin(); it != keyFrames_.end() && it->frameNumber_ <= frameNumber; ++it )
-        ret = it->frameNumber_;
-    return ret;
+    const KeyFrame* next = ::FindKeyFrame( keyFrames_, frameNumber );
+    return next ? next->frameNumber_ : 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -522,16 +523,15 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     T_KeyFrames keyFrames;
     LoadIndexes( keyFrames, index );
     index.close();
-    if( keyFrames.empty() )
+
+    const KeyFrame* next = ::FindKeyFrame( keyFrames, frameNumber );
+    if( !next )
         return;
 
-    KeyFrame& keyFrame = *keyFrames.begin();
-    for( CIT_KeyFrames it = keyFrames.begin(); it != keyFrames.end() && it->frameNumber_ <= frameNumber; ++it )
-        keyFrame = *it;
     std::ifstream file;
     OpenFile( file, folder, keyFileName );
-    file.seekg( keyFrame.offset_ );
-    BufPtr buf = MakeBuffer( file, keyFrame.size_, bfs::path( folder ) / keyFileName );
+    file.seekg( next->offset_ );
+    BufPtr buf = MakeBuffer( file, next->size_, bfs::path( folder ) / keyFileName );
     file.close();
     if( !buf )
         return;
