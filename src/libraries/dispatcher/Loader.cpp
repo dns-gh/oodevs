@@ -26,7 +26,7 @@ Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Confi
     , handler_        ( handler )
     , loader_         ( new MessageLoader( config.GetRecordDirectory(), false, clients ) )
     , currentFrame_   ( 0 )
-    , currentKeyFrame_( 0 )
+    , currentKeyFrame_( ~0u )
 {
     // NOTHING
 }
@@ -60,20 +60,18 @@ void Loader::Start()
 void Loader::SkipToFrame( unsigned int frame )
 {
     unsigned int keyFrame = loader_->FindKeyFrame( frame );
-    const bool requiresKeyFrame = keyFrame == 0  || currentKeyFrame_ != keyFrame || frame < currentFrame_;
-    if( requiresKeyFrame )
+    const bool resync = currentKeyFrame_ != keyFrame || frame < currentFrame_;
+    if( resync )
     {
         model_.StartSynchronisation();
         loader_->LoadKeyFrame( keyFrame, handler_ );
         currentFrame_ = keyFrame;
         currentKeyFrame_ = keyFrame;
     }
-    while( currentFrame_ + 1 < frame && Tick() )
+    while( currentFrame_ <= frame && Tick() )
         continue;
-    if( requiresKeyFrame )
+    if( resync )
         model_.EndSynchronisation();
-    if( currentFrame_ < frame )
-        Tick();
 }
 
 // -----------------------------------------------------------------------------

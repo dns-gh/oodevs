@@ -65,27 +65,28 @@ namespace
     const TestCase default_tests[] =
     {
         { "invalid_path",       ~0u,  0, 0,   0,   0 },
-        { "just_5",               1,  5, 5, 256, 461 },
-        { "just_5_offset",       91, 95, 5, 170, 773 },
-        { "single_current",       1,  5, 5, 256, 461 },
-        { "truncated_info",       1,  5, 5, 256, 461 },
-        { "truncated_index",      1,  5, 1, 130, 461 },
+        { "just_5",               1,  5, 5, 763, 461 },
+        { "just_5_offset",       91, 95, 5, 224, 773 },
+        { "single_current",       1,  5, 5, 763, 461 },
+        { "truncated_info",       1,  5, 5, 763, 461 },
+        { "truncated_index",      1,  5, 2, 637, 461 },
         { "truncated_update",     1,  5, 5,   0, 461 },
-        { "truncated_key",        1,  5, 5, 256,   0 },
-        { "truncated_keyindex",   1,  5, 5, 256,   0 },
+        { "truncated_key",        1,  5, 5, 763,   0 },
+        { "truncated_keyindex",   1,  5, 5, 763,   0 },
     };
 
+    // $$$$ BAX 2012-11-23: *5 is probably a bug...
     const TestCase thread_tests[] =
     {
-        { "invalid_path",       ~0u,  0, 0,   0,    0 },
-        { "just_5",               1,  5, 5, 256, 1844 },
-        { "just_5_offset",       91, 95, 5, 170, 3092 },
-        { "single_current",       1,  5, 5, 256, 1844 },
-        { "truncated_info",       1,  5, 5, 256, 1844 },
-        { "truncated_index",      1,  5, 5, 130, 1844 },
-        { "truncated_update",     1,  5, 5,   0, 1844 },
-        { "truncated_key",        1,  5, 5, 256,    0 },
-        { "truncated_keyindex",   1,  5, 5, 256,    0 },
+        { "invalid_path",       ~0u,  0, 0,   0,     0 },
+        { "just_5",               1,  5, 5, 763, 461*5 },
+        { "just_5_offset",       91, 95, 5, 224, 773*5 },
+        { "single_current",       1,  5, 5, 763, 461*5 },
+        { "truncated_info",       1,  5, 5, 763, 461*5 },
+        { "truncated_index",      1,  5, 5, 637, 461*5 },
+        { "truncated_update",     1,  5, 5,   0, 461*5 },
+        { "truncated_key",        1,  5, 5, 763,     0 },
+        { "truncated_keyindex",   1,  5, 5, 763,     0 },
     };
 
     #define COUNT_OF( X ) (sizeof(X)/sizeof*(X))

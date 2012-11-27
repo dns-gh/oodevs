@@ -78,7 +78,6 @@ MessageLoader::~MessageLoader()
 bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& handler, const T_Callback& callback /*= T_Callback()*/ )
 {
     boost::mutex::scoped_lock lock( access_ );
-    ++frameNumber;
     if( disk_.get() )
     {
         for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
@@ -110,7 +109,6 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
 {
     boost::mutex::scoped_lock lock( access_ );
     synchronisation_ = frameNumber != 0;
-    ++frameNumber;
     if( disk_.get() )
     {
         for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
@@ -165,7 +163,6 @@ unsigned int MessageLoader::GetFirstTick() const
 unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
 {
     boost::mutex::scoped_lock lock( access_ );
-    ++frameNumber;
     if( !SwitchToFragment( frameNumber ) )
         return 0;
     if( keyFrames_.empty() )
@@ -173,7 +170,7 @@ unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
     unsigned int ret = keyFrames_.begin()->frameNumber_;
     for( CIT_KeyFrames it = keyFrames_.begin(); it != keyFrames_.end() && it->frameNumber_ <= frameNumber; ++it )
         ret = it->frameNumber_;
-    return ret - 1;
+    return ret;
 }
 
 // -----------------------------------------------------------------------------
