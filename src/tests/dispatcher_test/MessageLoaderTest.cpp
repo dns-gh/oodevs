@@ -42,12 +42,15 @@ namespace
     {
         MOCK_EXPECT( msg.OnReceiveMessageSimToClient ).exactly( num_msg );
         MOCK_EXPECT( keymsg.OnReceiveMessageSimToClient ).exactly( num_keymsg );
+        std::set< unsigned > keyframes;
+        for( unsigned i = loader.GetFirstTick(); i <= loader.GetTickNumber(); ++i )
+            keyframes.insert( loader.FindKeyFrame( i ) );
         for( unsigned i = loader.GetFirstTick(); i <= loader.GetTickNumber(); ++i )
         {
-            bool valid = loader.LoadFrame( i, msg );
-            if( valid )
+            if( keyframes.count( i ) )
+                loader.LoadKeyFrame( i, keymsg );
+            if( loader.LoadFrame( i, msg ) )
                 --num_valid;
-            loader.LoadKeyFrame( i, keymsg );
         }
         BOOST_CHECK_EQUAL( num_valid, 0 );
     }
@@ -75,18 +78,17 @@ namespace
         { "truncated_keyindex",   1,  5, 5, 763,   0 },
     };
 
-    // $$$$ BAX 2012-11-23: *5 is probably a bug...
     const TestCase thread_tests[] =
     {
-        { "invalid_path",       ~0u,  0, 0,   0,     0 },
-        { "just_5",               1,  5, 5, 763, 461*5 },
-        { "just_5_offset",       91, 95, 5, 224, 773*5 },
-        { "single_current",       1,  5, 5, 763, 461*5 },
-        { "truncated_info",       1,  5, 5, 763, 461*5 },
-        { "truncated_index",      1,  5, 5, 637, 461*5 },
-        { "truncated_update",     1,  5, 5,   0, 461*5 },
-        { "truncated_key",        1,  5, 5, 763,     0 },
-        { "truncated_keyindex",   1,  5, 5, 763,     0 },
+        { "invalid_path",       ~0u,  0, 0,   0,   0 },
+        { "just_5",               1,  5, 5, 763, 461 },
+        { "just_5_offset",       91, 95, 5, 224, 773 },
+        { "single_current",       1,  5, 5, 763, 461 },
+        { "truncated_info",       1,  5, 5, 763, 461 },
+        { "truncated_index",      1,  5, 5, 637, 461 },
+        { "truncated_update",     1,  5, 5,   0, 461 },
+        { "truncated_key",        1,  5, 5, 763,   0 },
+        { "truncated_keyindex",   1,  5, 5, 763,   0 },
     };
 
     #define COUNT_OF( X ) (sizeof(X)/sizeof*(X))
