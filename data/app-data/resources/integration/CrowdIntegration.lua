@@ -331,6 +331,9 @@ integration.isCivilian = function( pion )
 end
 
 integration.getNearbyConcentration = function ( crowd, position, distance )
+    if not distance then
+        distance = 300
+    end
     return DEC_GetConcentrationLaPlusProche( myself, crowd.source, position:getPosition(), distance )
 end
 
