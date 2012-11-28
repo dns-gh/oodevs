@@ -106,7 +106,7 @@ void MIL_DisasterType::ReadThreshold( xml::xistream& xis )
     ReadWound( xis, wounds, "u2" );
     ReadWound( xis, wounds, "u3" );
     ReadWound( xis, wounds, "ue" );
-    attritions_[ xis.attribute< double >( "value" ) ] = boost::tuples::make_tuple( xis.attribute< std::string >( "name" ), wounds,
+    attritions_[ xis.attribute< double >( "value" ) ] = boost::tuples::make_tuple( xis.attribute< std::string >( "name", "" ), wounds,
                                                                                    xis.attribute< bool >( "contamination" ) );
 }
 
