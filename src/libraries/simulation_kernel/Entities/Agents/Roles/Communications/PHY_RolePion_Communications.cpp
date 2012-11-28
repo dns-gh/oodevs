@@ -383,7 +383,7 @@ void PHY_RolePion_Communications::Execute( firing::WeaponReloadingComputer_ABC& 
 void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception )
 {
     MIL_Object_ABC& object = perception.GetObjectPerceived();
-    if( object.IsMarkedForDestruction() )
+    if( object.IsMarkedForDestruction() || !pJammingKnowledgeGroup_ )
         return;
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( object );
 
