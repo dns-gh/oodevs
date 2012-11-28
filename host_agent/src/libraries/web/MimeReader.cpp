@@ -309,7 +309,6 @@ typename T::value_type NextPart( T& data, const std::string& name )
 // -----------------------------------------------------------------------------
 void MimeReader::PutHeader( const std::string& name, const std::string& value )
 {
-    std::vector< char > data;
     const std::string key = boost::to_lower_copy( name );
     std::string val; T_Optionals opt;
     if( key != "content-type" )
