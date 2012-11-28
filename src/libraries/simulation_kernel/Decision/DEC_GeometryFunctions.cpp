@@ -956,11 +956,9 @@ unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& l
 std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, MT_Vector2D vOrigin, const MT_Vector2D& vDirection, double rSectionLength )
 {
     T_LocalisationPtrVector splitLocVector;
-    if( rSectionLength == 0 )
-    {
-        splitLocVector.push_back( boost::make_shared< TER_Localisation >( boost::cref( localisation ) ) );
+    
+    if( rSectionLength == 0 || vDirection.SquareMagnitude() == 0. )
         return splitLocVector;
-    }
 
     const MT_Vector2D vTranslation   = rSectionLength * vDirection;
     const MT_Vector2D vLineDirection = vDirection.Rotated90();
