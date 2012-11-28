@@ -221,7 +221,10 @@ void Saver::Flush()
         wrapper << current_.offset_;
         wrapper << current_.size_;
         current_.Reset();
-        index_.flush(); keyIndex_.flush(); key_.flush(); update_.flush();
+        key_.flush();
+        update_.flush();
+        keyIndex_.flush();
+        index_.flush();
     }
     catch( std::exception& exception )
     {
