@@ -122,7 +122,6 @@ namespace
         {
             const Tree tree = FromJson( data );
             boost::shared_ptr< MockNode > node = boost::make_shared< MockNode >( id, tree );
-            const std::string idText = tree.get< std::string >( "id" );
             if( path.empty() )
             {
                 web::node::Config cfg;
