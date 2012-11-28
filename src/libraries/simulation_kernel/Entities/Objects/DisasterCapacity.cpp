@@ -12,9 +12,13 @@
 #include "Object.h"
 #include "DisasterAttribute.h"
 #include "MIL_DisasterType.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentType_ABC.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Agents/Units/Humans/PHY_NbcSuit.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DisasterCapacity )
@@ -110,6 +114,14 @@ void DisasterCapacity::Update( MIL_Object_ABC& object, unsigned int time )
         disaster->UpdateLocalisation( object, time );
 }
 
+namespace
+{
+    float GetProtection( const MIL_Agent_ABC& agent, const MIL_DisasterType& type )
+    {
+        return type.GetProtectionCoefficient( agent.GetType().GetUnitType().GetNbcSuit() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DisasterCapacity::ProcessAgentInside
 // Created: LGY 2012-11-21
@@ -117,9 +129,11 @@ void DisasterCapacity::Update( MIL_Object_ABC& object, unsigned int time )
 void DisasterCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
     DisasterAttribute* disaster = object.RetrieveAttribute< DisasterAttribute >();
-    if( disaster )
+    if( disaster && disasterType_ )
     {
         float dose = disaster->GetDose( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+        int step = MIL_AgentServer::GetWorkspace().GetTimeStepDuration();
+        dose = std::pow( dose * GetProtection( agent, *disasterType_ ), disasterType_->GetToxicityExponent() ) * step;
         if( dose > 0.f )
             agent.GetRole< nbc::PHY_RoleInterface_NBC >().Afflict( dose );
     }

@@ -48,6 +48,8 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
+    float GetToxicityExponent() const;
+    float GetProtectionCoefficient( const PHY_NbcSuit& suit ) const;
     //@}
 
     //! @name Constructors/Destructor
@@ -63,7 +65,8 @@ private:
     typedef std::map< std::string, T_DisasterType >     T_DisasterTypes;
     typedef T_DisasterTypes::const_iterator           CIT_DisasterTypes;
 
-    typedef std::map< const PHY_NbcSuit*, double > T_Protections;
+    typedef std::map< const PHY_NbcSuit*, float > T_Protections;
+    typedef T_Protections::const_iterator       CIT_Protections;
 
     typedef std::map< unsigned int, double >            T_Wounds;
     typedef boost::tuple< std::string, T_Wounds, bool > T_threshold;
@@ -85,7 +88,7 @@ private:
     const std::string strName_;
     T_Protections protections_;
     T_Attritions attritions_;
-    double toxicityExponent_;
+    float toxicityExponent_;
     static T_DisasterTypes disasterTypes_;
     //@}
 };

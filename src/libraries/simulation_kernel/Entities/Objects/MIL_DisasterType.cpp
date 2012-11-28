@@ -128,3 +128,24 @@ const std::string& MIL_DisasterType::GetName() const
 {
     return strName_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DisasterType::GetToxicityExponent
+// Created: LGY 2012-11-28
+// -----------------------------------------------------------------------------
+float MIL_DisasterType::GetToxicityExponent() const
+{
+    return toxicityExponent_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DisasterType::GetProtectionCoefficient
+// Created: LGY 2012-11-28
+// -----------------------------------------------------------------------------
+float MIL_DisasterType::GetProtectionCoefficient( const PHY_NbcSuit& suit ) const
+{
+    for( CIT_Protections it = protections_.begin(); it != protections_.end(); ++it )
+        if( it->first->GetType() == suit.GetType() )
+            return it->second;
+    return 1.f;
+}
