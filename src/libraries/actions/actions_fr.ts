@@ -129,6 +129,10 @@
         <source>Density</source>
         <translation>Densité</translation>
     </message>
+    <message>
+        <source>Lodging</source>
+        <translation type="unfinished">Hébergement</translation>
+    </message>
 </context>
 <context>
     <name>FragOrder</name>

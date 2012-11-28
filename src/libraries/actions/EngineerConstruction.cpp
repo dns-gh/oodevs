@@ -172,12 +172,18 @@ void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateCo
         AddParameter( *new Automat( xis, entities, controller ) );
     else if( type == "string" )
         AddParameter( *new String( OrderParameter( tools::translate( "Parameter", "Name" ).toStdString(), "string", true ), xis ) );
-    else if(type=="quantity")
+    else if( type == "quantity" )
     {
         std::string identifier = xis.attribute( "identifier", std::string() );
         if( identifier == "altitude_modifier" )
         {
-            Numeric* numeric = new Numeric( OrderParameter( tools::translate( "EngineerConstruction", "Altitude modifier" ).toStdString(), "integer", true ), xis );
+            Quantity* numeric = new Quantity( OrderParameter( tools::translate( "EngineerConstruction", "Altitude modifier" ).toStdString(), "integer", true ), xis );
+            numeric->SetKeyName( identifier );
+            AddParameter( *numeric );
+        }
+        else if( identifier == "lodging" )
+        {
+            Quantity* numeric = new Quantity( OrderParameter( tools::translate( "EngineerConstruction", "Lodging" ).toStdString(), "integer", true ), xis );
             numeric->SetKeyName( identifier );
             AddParameter( *numeric );
         }
@@ -272,21 +278,21 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
             message.mutable_combat_train()->set_id( static_cast< const Automat* >( it->second )->GetValue()->GetId() );
         else if( type == "string" )
             static_cast< const String* >( it->second )->CommitTo( *message.mutable_name() );
-        else if( type == "integer" )
+        else if( type == "integer" || type == "quantity" )
         {
             if( keyName == "ActivityTime" )
                 static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_activity_time, boost::ref( message ), _1 ) );
             else if( keyName == "ActivationTime" )
                 static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_activation_time, boost::ref( message ), _1 ) );
+            else if( keyName == "altitude_modifier" )
+                static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_altitude_modifier, boost::ref( message ), _1 ) );
+            else if( keyName == "lodging" )
+                static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_lodging, boost::ref( message ), _1 ) );
         }
-        else if( keyName == "altitude_modifier" && type == "quantity" )
-            static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_altitude_modifier, boost::ref( message ), _1 ) );
         else if( keyName == "obstacle_mining" && type == "boolean" )
             static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_mining, boost::ref( message ), _1 ) );
         else if( keyName == "time_limit" && type == "time" )
             static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_time_limit, boost::ref( message ), _1 )  );
-        else if( keyName == "lodging" && type == "quantity" )
-            static_cast< const Quantity* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_lodging, boost::ref( message ), _1 ) );
     }
 }
 

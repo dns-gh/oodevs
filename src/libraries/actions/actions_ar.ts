@@ -129,6 +129,10 @@
         <source>Density</source>
         <translation type="unfinished">الكثافة</translation>
     </message>
+    <message>
+        <source>Lodging</source>
+        <translation type="unfinished">السكن</translation>
+    </message>
 </context>
 <context>
     <name>FragOrder</name>
