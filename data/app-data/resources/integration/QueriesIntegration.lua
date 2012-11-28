@@ -107,7 +107,7 @@ integration.getImplantationObjects = function( area, nbAreas )
             localisation = DEC_Geometrie_ConvertirPointEnLocalisation( barycentre )
         end
         
-        local name = integration.getName( meKnowledge.source )
+        local name = integration.getName( meKnowledge )
         local eTypeObject = eTypeObjectGunArtilleryDeploymentArea
         if string.find(name, "COBRA") ~= nil then
             eTypeObject = eTypeObjectCOBRADeploymentArea

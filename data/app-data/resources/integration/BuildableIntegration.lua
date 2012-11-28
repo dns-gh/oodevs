@@ -41,6 +41,9 @@ end
 -- comments: -- $$$ MIA TODO merge with security
 -- ============================================================================
 integration.startBuildIt = function( object, objectType )
+    if not objectType then
+        objectType = integration.ontology.types.object
+    end
     local checkpoint = integration.obtenirObjetProcheDe( object:getLocalisation(), 
                         object:getType(), 10 )
     object[ myself ] = object[ myself ] or {}
