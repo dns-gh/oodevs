@@ -129,6 +129,7 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
     local bestTask = nil
     local bestTaskName = nil
     local bestParams = nil
+    local noEntityHaveMainTask = true
     myself.leadData.nbUnitsByObstacle ={}
     myself.leadData.platoonHasTask = {}
     for _, entity in pairs( entities ) do
@@ -138,6 +139,7 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
         for _, taskName in pairs( tasks ) do
             local task = integration.RetrievePionTask( entity, taskName ) -- Save the task object if  the entity can do it
             if task then
+               noEntityHaveMainTask = false
                 efficiency = entity:computePhysicalEfficiencyForEffect( task:getPionEfficiency() ) -- Efficiency for this entity to do this task
                 if efficiency > bestEfficiency then
                     efficiencyFind = true
@@ -179,25 +181,28 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marche
             end
         end
     end
-    local maxNbrFront = 0
-    if  next(myself.leadData.nbUnitsByObstacle) then
-      for _, obstacle in pairs ( myself.leadData.obstacles ) do
-          maxNbrFront =  math.max( myself.leadData.nbUnitsByObstacle[ obstacle ], maxNbrFront )
-      end
-    else
-      maxNbrFront = nbrFront
-    end
-    if isMain then
-        -- methode qui rempli la liste si les aucun pion n'a de dotation pour construire un obstacle donné
-        fillWorkMap()
-        if myself.leadData.workMap then
-            params.maxNbrFront = math.min( maxNbrFront, nbrFront )
-            if params.maxNbrFront~= 0 then
-                optimizeWorkMap( params.maxNbrFront, myself.leadData.nbrTotalObstacle )
+    if not noEntityHaveMainTask then
+        local maxNbrFront = 0
+        if next(myself.leadData.nbUnitsByObstacle) then
+            for _, obstacle in pairs ( myself.leadData.obstacles ) do
+                maxNbrFront =  math.max( myself.leadData.nbUnitsByObstacle[ obstacle ], maxNbrFront )
+            end
+        else
+            maxNbrFront = nbrFront
+        end
+        if isMain then
+            -- methode qui rempli la liste si les aucun pion n'a de dotation pour construire un obstacle donné
+            fillWorkMap()
+            if myself.leadData.workMap then
+                params.maxNbrFront = math.min( maxNbrFront, nbrFront )
+                if params.maxNbrFront~= 0 then
+                    optimizeWorkMap( params.maxNbrFront, myself.leadData.nbrTotalObstacle )
+                end
             end
         end
+        return fillParameters( bestList, companyTask, params, nbrFront, marcheRetrograde, isMain, objectif )
     end
-    return fillParameters( bestList, companyTask, params, nbrFront, marcheRetrograde, isMain, objectif )
+    return {}
 end
 
 -- Find which unit will do the task
