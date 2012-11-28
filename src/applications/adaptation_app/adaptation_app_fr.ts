@@ -4348,6 +4348,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Remove</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>Contamination</source>
+        <translation>Contamination</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ThresholdConcentrationsTable</name>

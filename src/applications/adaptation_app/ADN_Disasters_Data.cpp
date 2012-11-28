@@ -61,12 +61,13 @@ void ADN_Disasters_Data::NbcSuitRatioInfos::WriteArchive( xml::xostream& output 
 // Created: LGY 2012-11-16
 // -----------------------------------------------------------------------------
 ADN_Disasters_Data::AttritionThresholdInfos::AttritionThresholdInfos()
-    : threshold_( 0. )
-    , u1_       ( 0 )
-    , u2_       ( 0 )
-    , u3_       ( 0 )
-    , ue_       ( 0 )
-    , dead_     ( 0 )
+    : threshold_    ( 0. )
+    , u1_           ( 0 )
+    , u2_           ( 0 )
+    , u3_           ( 0 )
+    , ue_           ( 0 )
+    , dead_         ( 0 )
+    , contamination_( false )
 {
     // NOTHING
 }
@@ -94,6 +95,7 @@ ADN_Disasters_Data::AttritionThresholdInfos* ADN_Disasters_Data::AttritionThresh
     pCopy->u3_ = u3_.GetData();
     pCopy->ue_ = ue_.GetData();
     pCopy->dead_ = dead_.GetData();
+    pCopy->contamination_ = contamination_.GetData();
     return pCopy;
 }
 
@@ -122,6 +124,7 @@ void ADN_Disasters_Data::AttritionThresholdInfos::ReadArchive( xml::xistream& in
           >> xml::attribute( "u3", u3 )
           >> xml::attribute( "ue", ue )
           >> xml::attribute( "dead", dead )
+          >> xml::attribute( "contamination", contamination_ )
           >> xml::optional
             >> xml::attribute( "name", name_ );
     u1_ = LoadWound( u1 );
@@ -143,7 +146,8 @@ void ADN_Disasters_Data::AttritionThresholdInfos::WriteArchive( xml::xostream& o
                << xml::attribute( "u2", SaveWound( u2_.GetData() ) )
                << xml::attribute( "u3", SaveWound( u3_.GetData() ) )
                << xml::attribute( "ue", SaveWound( ue_.GetData() ) )
-               << xml::attribute( "dead", SaveWound( dead_.GetData() ) );
+               << xml::attribute( "dead", SaveWound( dead_.GetData() ) )
+               << xml::attribute( "contamination", contamination_ );
     if( !name_.GetData().empty() )
     output     << xml::attribute( "name", name_ );
     output << xml::end;

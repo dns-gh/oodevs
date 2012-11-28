@@ -1,4 +1,4 @@
-// *****************************************************************************
+g// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -19,7 +19,7 @@ ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objec
                                                             QWidget* pParent )
     : ADN_Table( objectName, connector, pParent )
 {
-    dataModel_.setColumnCount( 7 );
+    dataModel_.setColumnCount( 8 );
     setShowGrid( false );
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Name" )
@@ -28,7 +28,8 @@ ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objec
                       << tr( "U2 (%)" )
                       << tr( "U3 (%)" )
                       << tr( "U4 (%)" )
-                      << tr( "Dead (%)" );
+                      << tr( "Dead (%)" )
+                      << tr( "Contamination" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
     horizontalHeader()->setResizeMode( QHeaderView::Stretch );
     verticalHeader()->setVisible( false );
@@ -37,6 +38,7 @@ ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objec
     delegate_.AddDoubleSpinBoxOnColumn( 1, 0., std::numeric_limits< double >::max() );
     for( std::size_t i = 2; i<= 6; ++i )
         delegate_.AddSpinBoxOnColumn( static_cast< int >( i ) );
+    delegate_.AddCheckBoxOnColumn( 7 );
     proxyModel_.setDynamicSortFilter( true );
     proxyModel_.sort( 1, Qt::AscendingOrder );
     setSortingEnabled( false );
@@ -68,6 +70,7 @@ void ADN_ThresholdAttritionsTable::AddRow( int row, void* data )
     AddItem( row, 4, data, &pEventInfos->u3_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     AddItem( row, 5, data, &pEventInfos->ue_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
     AddItem( row, 6, data, &pEventInfos->dead_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
+    AddItem( row, 7, data, &pEventInfos->contamination_, ADN_StandardItem::eBool, Qt::ItemIsUserCheckable );
 }
 
 // -----------------------------------------------------------------------------

@@ -75,8 +75,8 @@ void ADN_Disasters_GUI::Build()
     pContentLayout->setAlignment( Qt::AlignTop );
     pContentLayout->addWidget( pInfoHolder, 0, 0, 1, 2 );
     pContentLayout->addWidget( pNbcSuit, 1, 0 );
-    pContentLayout->addWidget( pConcentrationThresholds, 2, 0 );
-    pContentLayout->addWidget( pAttritionThresholds, 2, 1 );
+    pContentLayout->addWidget( pConcentrationThresholds, 1, 1 );
+    pContentLayout->addWidget( pAttritionThresholds, 2, 0, 1, 2 );
     pContentLayout->setRowStretch( 3, 1 );
 
     // ListView

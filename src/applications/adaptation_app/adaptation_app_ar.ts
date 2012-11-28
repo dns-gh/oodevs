@@ -4332,6 +4332,10 @@ Make sure that the file is not write-protected.</source>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Contamination</source>
+        <translation type="unfinished">تلوث</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ThresholdConcentrationsTable</name>

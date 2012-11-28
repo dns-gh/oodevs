@@ -32,6 +32,7 @@
 												<xs:attribute name="u3" type="T_ZeroToOneDouble" use="required"/>
 												<xs:attribute name="ue" type="T_ZeroToOneDouble" use="required"/>
 												<xs:attribute name="dead" type="T_ZeroToOneDouble" use="required"/>
+												<xs:attribute name="contamination" type="xs:boolean" use="required"/>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>

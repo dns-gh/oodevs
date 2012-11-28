@@ -4346,6 +4346,10 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Contamination</source>
+        <translation type="unfinished">Contaminación</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ThresholdConcentrationsTable</name>

@@ -83,6 +83,7 @@ public:
         ADN_Type_Int u3_;
         ADN_Type_Int ue_;
         ADN_Type_Int dead_;
+        ADN_Type_Bool contamination_;
         //@}
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< AttritionThresholdInfos >, AttritionThresholdInfosVector )
