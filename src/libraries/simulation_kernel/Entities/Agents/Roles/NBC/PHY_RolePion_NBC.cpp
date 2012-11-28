@@ -116,7 +116,8 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
          & poisoned_
          & intoxicated_
          & immune_
-         & forcedImmuneByDecisional_;
+         & forcedImmuneByDecisional_
+         & dose_;
 }
 
 // -----------------------------------------------------------------------------
