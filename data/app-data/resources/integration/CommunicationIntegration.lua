@@ -67,9 +67,9 @@ local AssignMissionParameterList = function ( missionPion, parameterName, value 
     if DEC_Mission_IsPath( missionPion, parameterName ) then
         for i = 1, nValues do
             local currentValue = value[i]
-            if InferType( currentValue ) ~= "integration.ontology.types.point" then
+            if InferType( currentValue ) ~= integration.ontology.types.point then
                 currentValue = value[i]:getMyPosition() -- Transform the parameter into a point
-                if InferType( currentValue ) ~= "integration.ontology.types.point" then
+                if InferType( currentValue ) ~= integration.ontology.types.point then
                     error( "Expected point in path, received something else: "..tostring( InferType( currentValue ) ) )
                 end
             end
