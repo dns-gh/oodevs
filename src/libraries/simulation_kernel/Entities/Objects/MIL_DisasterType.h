@@ -85,6 +85,7 @@ private:
     const std::string strName_;
     T_Protections protections_;
     T_Attritions attritions_;
+    double toxicityExponent_;
     static T_DisasterTypes disasterTypes_;
     //@}
 };

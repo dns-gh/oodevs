@@ -65,7 +65,8 @@ void MIL_DisasterType::ReadDisaster( xml::xistream& xis )
 MIL_DisasterType::MIL_DisasterType( const std::string& strName, xml::xistream& xis )
     : strName_( strName )
 {
-    xis >> xml::start( "protections" )
+    xis >> xml::attribute( "toxicity-exponent", toxicityExponent_ )
+        >> xml::start( "protections" )
             >> xml::list( "protection", *this, &MIL_DisasterType::ReadProtection )
         >> xml::end
         >> xml::start( "attrition" )
