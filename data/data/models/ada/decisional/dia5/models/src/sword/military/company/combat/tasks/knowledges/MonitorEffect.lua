@@ -6,6 +6,10 @@ return
         myself.leadData.currentMonitorPosition = myself.leadData.currentMonitorPosition % #params.positions + 1
         return { params.positions[myself.leadData.currentMonitorPosition] }
     end,
+    
+    getPeiObjectives = function( self, params )
+       return params.objective
+    end,
 
     getObjectives = function( self, params )
        return params.positions
