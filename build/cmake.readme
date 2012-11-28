@@ -31,12 +31,7 @@ which contains both 32 and 64-bit configurations.
 
 Caveats of current solution :
 
-* Qt translations give different results from current configuration
-* Qt translations force recompilation of all linked source files
-* A command-line popup appears with Qt applications
 * You need to close visual studio, run ant cmake.msvc when adding a file
-* Library/Binary names, while consistent may not be exactly the same as current
-  configuration
 * Most version defines are not present
 
 Most of those deficiencies will be fixed as time permits
