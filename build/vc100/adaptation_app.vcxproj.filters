@@ -2036,9 +2036,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\GQ_PlotData.h">
       <Filter>Source Files\GQ</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_CheckBox.h">
-      <Filter>Source Files\Common widgets</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_FileChooser.h">
       <Filter>Source Files\Common widgets</Filter>
     </CustomBuild>
@@ -2180,5 +2177,10 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ListView_Equipments_Objects.h">
       <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Qt_file_Mocing Include="..\..\src\applications\adaptation_app\ADN_CheckBox.h">
+      <Filter>Source Files\Common widgets</Filter>
+    </Qt_file_Mocing>
   </ItemGroup>
 </Project>
