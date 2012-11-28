@@ -218,6 +218,7 @@ void ADN_Disasters_Data::ConcentrationThresholdInfos::WriteArchive( xml::xostrea
 // Created: LGY 2012-11-13
 //-----------------------------------------------------------------------------
 ADN_Disasters_Data::DisasterInfos::DisasterInfos()
+    : toxicityExponent_( 0. )
 {
     for( unsigned int i = 0; i< eNbrAgentNbcSuit; ++i )
     {
@@ -257,6 +258,8 @@ ADN_Disasters_Data::DisasterInfos* ADN_Disasters_Data::DisasterInfos::CreateCopy
 
     for( unsigned int i= 0 ; i< eNbrAgentNbcSuit; ++i )
         pCopy->nbcSuitRatio_[ i ]->rCoeff_ = nbcSuitRatio_[ i ]->rCoeff_.GetData();
+
+    pCopy->toxicityExponent_ = toxicityExponent_.GetData();
     return pCopy;
 }
 
@@ -267,6 +270,7 @@ ADN_Disasters_Data::DisasterInfos* ADN_Disasters_Data::DisasterInfos::CreateCopy
 void ADN_Disasters_Data::DisasterInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ )
+              >> xml::attribute( "toxicity-exponent", toxicityExponent_ )
               >> xml::start( "contamination" )
                   >> xml::list( "threshold", *this, &ADN_Disasters_Data::DisasterInfos::ReadContamination )
               >> xml::end
@@ -323,6 +327,7 @@ void ADN_Disasters_Data::DisasterInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "disaster" )
                << xml::attribute( "name", strName_ )
+               << xml::attribute( "toxicity-exponent", toxicityExponent_ )
                    << xml::start( "contamination" );
     for( IT_ConcentrationThresholdInfosVector it = concentrationThresholds_.begin(); it != concentrationThresholds_.end(); ++it )
         (*it)->WriteArchive( output );

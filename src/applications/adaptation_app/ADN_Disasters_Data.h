@@ -144,6 +144,7 @@ public:
         T_ConcentrationThresholdInfosVector concentrationThresholds_;
         T_AttritionThresholdInfosVector attritionThresholds_;
         T_NbcSuitRatioInfosVector nbcSuitRatio_;
+        ADN_Type_Double toxicityExponent_;
         //@}
     };
 public:

@@ -892,6 +892,10 @@ Parked engine running</source>
         <source>NBC protection</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Toxicity exponent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>

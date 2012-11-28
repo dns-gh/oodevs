@@ -904,6 +904,10 @@ Arrêt moteur allumé</translation>
         <source>NBC protection</source>
         <translation>Protection NBC</translation>
     </message>
+    <message>
+        <source>Toxicity exponent</source>
+        <translation>Coefficient de protection</translation>
+    </message>
 </context>
 <context>
     <name>ADN_EquipementSelector</name>

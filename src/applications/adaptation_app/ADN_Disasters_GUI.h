@@ -29,6 +29,7 @@ public:
         eConcentrationThresholds,
         eAttritionThresholds,
         eNbcSuitRatio,
+        eToxicityExponent,
         eNbrGuiElements
     };
 
