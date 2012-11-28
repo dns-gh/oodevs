@@ -75,7 +75,7 @@ void Acceptor::Listen()
 {
     if( accept_ )
     {
-        boost::shared_ptr< boost::asio::ip::tcp::socket > socket = boost::make_shared< boost::asio::ip::tcp::socket >( boost::ref( service_ ) );
+        boost::shared_ptr< boost::asio::ip::tcp::socket > socket( new boost::asio::ip::tcp::socket( service_ ) );
         acceptor_.async_accept( *socket, boost::bind( &Acceptor::OnAccepted, this, socket, boost::asio::placeholders::error ) );
     }
 }
