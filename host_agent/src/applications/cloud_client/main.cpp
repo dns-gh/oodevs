@@ -30,6 +30,10 @@ const QString g_Name = "Sword Client";
 
 struct QtLog : public cpplog::BaseLogger
 {
+    QtLog() : cpplog::BaseLogger()
+    {
+        // NOTHING
+    }
     virtual bool sendLogMessage( cpplog::LogData* data )
     {
         qDebug() << data->stream.str().c_str();
