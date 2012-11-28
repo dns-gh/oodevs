@@ -8,7 +8,7 @@ return
     end,
     
     getPeiObjectives = function( self, params )
-       return params.objective
+       return { params.objective }
     end,
 
     getObjectives = function( self, params )
