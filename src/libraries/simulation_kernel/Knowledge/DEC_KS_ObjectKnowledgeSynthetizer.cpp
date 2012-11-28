@@ -127,6 +127,8 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
             for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
+                if( pion.IsDead() )
+                    continue;
                 PHY_RoleInterface_Communications& communication = pion.Get< PHY_RoleInterface_Communications >();
                 DEC_KnowledgeBlackBoard_AgentPion& blackboard = pion.GetKnowledge();
                 DEC_BlackBoard_CanContainKnowledgeObjectPerception& perceptions = blackboard.GetKnowledgeObjectPerceptionContainer();
