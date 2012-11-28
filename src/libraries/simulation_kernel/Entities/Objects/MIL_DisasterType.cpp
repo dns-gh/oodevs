@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_DisasterType.h"
 #include "Entities/Agents/Units/Humans/PHY_NbcSuit.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -66,6 +67,9 @@ MIL_DisasterType::MIL_DisasterType( const std::string& strName, xml::xistream& x
 {
     xis >> xml::start( "protections" )
             >> xml::list( "protection", *this, &MIL_DisasterType::ReadProtection )
+        >> xml::end
+        >> xml::start( "attrition" )
+            >> xml::list( "threshold", *this, &MIL_DisasterType::ReadThreshold )
         >> xml::end;
 }
 
@@ -78,6 +82,32 @@ void MIL_DisasterType::ReadProtection( xml::xistream& xis )
     const PHY_NbcSuit* suit = PHY_NbcSuit::Find( xis.attribute< std::string >( "type" ) );
     if( suit )
         protections_[ suit ] = xis.attribute< float >( "value" );
+}
+
+namespace
+{
+    void ReadWound( xml::xistream& xis, std::map< unsigned int, double >& wounds, const std::string& tag )
+    {
+        const PHY_HumanWound* wound = PHY_HumanWound::Find( tag );
+        if( wound )
+            wounds[ wound->GetID() ] = xis.attribute< double >( tag );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DisasterType::ReadThreshold
+// Created: LGY 2012-11-28
+// -----------------------------------------------------------------------------
+void MIL_DisasterType::ReadThreshold( xml::xistream& xis )
+{
+    T_Wounds wounds;
+    ReadWound( xis, wounds, "dead" );
+    ReadWound( xis, wounds, "u1" );
+    ReadWound( xis, wounds, "u2" );
+    ReadWound( xis, wounds, "u3" );
+    ReadWound( xis, wounds, "ue" );
+    attritions_[ xis.attribute< double >( "value" ) ] = boost::tuples::make_tuple( xis.attribute< std::string >( "name" ), wounds,
+                                                                                   xis.attribute< bool >( "contamination" ) );
 }
 
 // -----------------------------------------------------------------------------

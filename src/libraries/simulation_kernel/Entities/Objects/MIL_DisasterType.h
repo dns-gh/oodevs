@@ -13,6 +13,7 @@
 #include <map>
 #include <boost/shared_array.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/tuple/tuple.hpp>
 
 namespace xml
 {
@@ -63,6 +64,10 @@ private:
     typedef T_DisasterTypes::const_iterator           CIT_DisasterTypes;
 
     typedef std::map< const PHY_NbcSuit*, double > T_Protections;
+
+    typedef std::map< unsigned int, double >            T_Wounds;
+    typedef boost::tuple< std::string, T_Wounds, bool > T_threshold;
+    typedef std::map< double, T_threshold >             T_Attritions;
     //@}
 
 private:
@@ -71,6 +76,7 @@ private:
     struct LoadingWrapper;
     static void ReadDisaster( xml::xistream& xis );
     void ReadProtection( xml::xistream& xis );
+    void ReadThreshold( xml::xistream& xis );
     //@}
 
 private:
@@ -78,6 +84,7 @@ private:
     //@{
     const std::string strName_;
     T_Protections protections_;
+    T_Attritions attritions_;
     static T_DisasterTypes disasterTypes_;
     //@}
 };
