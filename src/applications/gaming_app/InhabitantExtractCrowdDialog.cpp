@@ -54,8 +54,8 @@ InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, ke
     woundedSpinBox_ = new gui::RichSpinBox( this, 0, std::numeric_limits< int >::max(), 10 );
     grid->addWidget( woundedSpinBox_, 2, 1 );
     grid->addWidget( new QLabel( tools::translate( "InhabitantExtractCrowdDialog", "Dead:" ), this ), 3, 0 );
-    deadSizeLabel_ = new QLabel ( "0", this );
-    grid->addWidget( deadSizeLabel_, 3, 1 );
+    deadSpinBox_ = new gui::RichSpinBox( this, 0, std::numeric_limits< int >::max(), 10 );
+    grid->addWidget( deadSpinBox_, 3, 1 );
     // Separator
     Q3Frame* hline = new Q3Frame( this );
     hline->setFrameStyle( Q3Frame::HLine | Q3Frame::Sunken );
@@ -85,6 +85,7 @@ InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, ke
     connect( cancelButton    , SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( healthySpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( OnValuesChanged( int ) ) );
     connect( woundedSpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( OnValuesChanged( int ) ) );
+    connect( deadSpinBox_    , SIGNAL( valueChanged( int ) ), SLOT( OnValuesChanged( int ) ) );
 
     selected_ = 0;
     controllers_.Register( *this );
@@ -114,9 +115,12 @@ void InhabitantExtractCrowdDialog::Show()
     woundedSpinBox_->setValue( 0 );
     woundedSpinBox_->setMaxValue( selected_->GetWounded() );
     woundedSpinBox_->setEnabled( selected_->GetWounded() != 0 );
+    deadSpinBox_->setValue( 0 );
+    deadSpinBox_->setMaxValue( selected_->GetDead() );
+    deadSpinBox_->setEnabled( selected_->GetDead() != 0 );
     QToolTip::add( healthySpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %L1" ).arg( selected_->GetHealthy() ) ) );
     QToolTip::add( woundedSpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %L1" ).arg( selected_->GetWounded() ) ) );
-    deadSizeLabel_->setText( locale().toString( selected_->GetDead() ) );
+    QToolTip::add( deadSpinBox_,    tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %L1" ).arg( selected_->GetDead() ) ) );
     crowdTypeLabel_->setText( selected_->Get< kernel::EntityType< kernel::InhabitantType > >().GetType().GetCrowdType().GetName().c_str() );
     originalInhabitantSize_ = selected_->GetHealthy() + selected_->GetWounded() + selected_->GetDead();
     OnValuesChanged();
@@ -134,7 +138,7 @@ void InhabitantExtractCrowdDialog::Validate()
     accept();
     // Throw Inhabitant_Change_Health_State Magic Action
     {
-        actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeHealthStateAction( selected_->GetHealthy() - healthySpinBox_->value(), selected_->GetWounded() - woundedSpinBox_->value(), selected_->GetDead(), *selected_ );
+        actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeHealthStateAction( selected_->GetHealthy() - healthySpinBox_->value(), selected_->GetWounded() - woundedSpinBox_->value(), selected_->GetDead() - deadSpinBox_->value(), *selected_ );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( selected_, false ) );
         action->Polish();
@@ -144,7 +148,7 @@ void InhabitantExtractCrowdDialog::Validate()
     {
         const Inhabitant& entity = static_cast< const Inhabitant& > ( *( selected_.ConstCast() ) );
         const kernel::Entity_ABC& top = entity.Get< kernel::TacticalHierarchies >().GetTop();
-        actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( entity.Get< kernel::EntityType< kernel::InhabitantType > >().GetType().GetCrowdType(), healthySpinBox_->value() + woundedSpinBox_->value(), entity.GetPosition(), top );
+        actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( entity.Get< kernel::EntityType< kernel::InhabitantType > >().GetType().GetCrowdType(), healthySpinBox_->value(), woundedSpinBox_->value(), deadSpinBox_->value(), entity.GetPosition(), top );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( &top, false ) );
         action->Polish();
@@ -178,8 +182,8 @@ void InhabitantExtractCrowdDialog::closeEvent( QCloseEvent * /* e */ )
 // -----------------------------------------------------------------------------
 void InhabitantExtractCrowdDialog::OnValuesChanged( int /* newValue */ )
 {
-    crowdSizeLabel_->setText( locale().toString( healthySpinBox_->value() + woundedSpinBox_->value() ) );
-    remainingInhabitantLabel_->setText( locale().toString( originalInhabitantSize_ - ( healthySpinBox_->value() + woundedSpinBox_->value() ) ) );
+    crowdSizeLabel_->setText( locale().toString( healthySpinBox_->value() + woundedSpinBox_->value() + deadSpinBox_->value() ) );
+    remainingInhabitantLabel_->setText( locale().toString( originalInhabitantSize_ - ( healthySpinBox_->value() + woundedSpinBox_->value() + deadSpinBox_->value() ) ) );
 }
 
 // -----------------------------------------------------------------------------

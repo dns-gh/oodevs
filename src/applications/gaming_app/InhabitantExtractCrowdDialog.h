@@ -80,9 +80,10 @@ private:
 
     QSpinBox* healthySpinBox_;
     QSpinBox* woundedSpinBox_;
+    QSpinBox* deadSpinBox_;
+
     QLabel*   crowdTypeLabel_;
     QLabel*   crowdSizeLabel_;
-    QLabel*   deadSizeLabel_;
     QLabel*   remainingInhabitantLabel_;
     int       originalInhabitantSize_;
     //@}

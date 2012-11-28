@@ -129,9 +129,9 @@ Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel
 // Name: ActionsModel::CreateCrowdCreationAction
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
+Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationType& type, int numberHealthy, int numberWounded, int numberDead, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateCrowdCreationAction( type, number, point, selected );
+    Action_ABC* action = factory_.CreateCrowdCreationAction( type, numberHealthy, numberWounded, numberDead, point, selected );
     Register( action->GetId(), *action );
     return action;
 }

@@ -1264,12 +1264,15 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
 {
     client::MagicActionAck ack;
     ack().set_error_code( MagicActionAck::no_error );
-    if( !message.has_parameters() || message.parameters().elem_size() != 4
+    if( !message.has_parameters() || message.parameters().elem_size() != 6
         || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr()
         || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
-        || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get( 0 ).has_quantity() )
+        || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get( 0 ).has_quantity()
+        || message.parameters().elem( 3 ).value_size() != 1 || !message.parameters().elem( 3 ).value().Get( 0 ).has_quantity()
+        || message.parameters().elem( 4 ).value_size() != 1 || !message.parameters().elem( 4 ).value().Get( 0 ).has_quantity() )
     {
         ack().set_error_code( MagicActionAck::error_invalid_parameter );
+        ack.Send( NET_Publisher_ABC::Publisher(), context );
         return;
     }
     const ::MissionParameters& parameters = message.parameters();
@@ -1278,19 +1281,24 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     if( !location.has_coordinates() )
     {
         ack().set_error_code( MagicActionAck::error_invalid_parameter );
+        ack.Send( NET_Publisher_ABC::Publisher(), context );
         return;
     }
-    ack.Send( NET_Publisher_ABC::Publisher(), context );
     MT_Vector2D point;
     MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
-    int number = parameters.elem( 2 ).value().Get( 0 ).quantity();
+    int number = parameters.elem( 2 ).value().Get( 0 ).quantity() + parameters.elem( 3 ).value().Get( 0 ).quantity() + parameters.elem( 4 ).value().Get( 0 ).quantity();
     if( number == 0 )
     {
         ack().set_error_code( MagicActionAck::error_invalid_parameter );
+        ack.Send( NET_Publisher_ABC::Publisher(), context );
         return;
     }
+    else
+        ack.Send( NET_Publisher_ABC::Publisher(), context );
+
     std::string name = ( parameters.elem( 3 ).value_size() == 1 && parameters.elem( 3 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 3 ).value().Get( 0 ).acharstr() : std::string();
-    populationFactory_->Create( type, point, number, name, army, 0, context );
+    MIL_Population& popu = populationFactory_->Create( type, point, number, name, army, 0, context );
+    popu.ChangeComposition( parameters.elem( 2 ).value().Get( 0 ).quantity(), parameters.elem( 3 ).value().Get( 0 ).quantity(), 0, parameters.elem( 4 ).value().Get( 0 ).quantity() );
 }
 
 // -----------------------------------------------------------------------------
