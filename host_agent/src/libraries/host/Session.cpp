@@ -723,11 +723,10 @@ bool Session::RefreshSize()
     runtime::Scoper unsize( boost::bind( &ResetBool, boost::ref( lock ), boost::ref( sizing_ ), false ) );
     lock.unlock();
 
-    bool modified = false;
     const size_t next = deps_.fs.GetDirectorySize( paths_.root )
                       + deps_.fs.GetDirectorySize( GetOutput() );
     lock.lock();
-    modified = next != size_;
+    const bool modified = next != size_;
     size_ = next;
     sizing_ = false;
     lock.unlock();
