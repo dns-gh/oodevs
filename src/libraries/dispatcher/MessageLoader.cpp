@@ -558,15 +558,25 @@ size_t MessageLoader::LoadSimToClientMessage( const char* input, size_t size,
                                               bool synchronized )
 {
     unsigned msgSize = 0;
-    if( size < sizeof msgSize )
-        throw std::runtime_error( __FUNCTION__" not enough data for message size" );
+    const size_t header = sizeof msgSize;
+    if( size < header )
+    {
+        MT_LOG_WARNING_MSG( "[dispatcher] Skipping message due to missing header data" );
+        return size;
+    }
+
     msgSize = *reinterpret_cast< const unsigned* >( input );
-    if( msgSize + sizeof msgSize > size )
-        throw std::runtime_error( __FUNCTION__" not enough data for message payload" );
+    size_t payload = std::min( size - header, msgSize );
+    if( msgSize > payload )
+        MT_LOG_WARNING_MSG( "[dispatcher] Truncating message due to truncated payload or corrupted header" );
     sword::SimToClient message;
-    const bool valid = message.ParseFromArray( input + sizeof msgSize, msgSize );
+    const bool valid = message.ParseFromArray( input + header, payload );
     if( !valid )
-        throw std::runtime_error( __FUNCTION__" invalid message" );
+    {
+        MT_LOG_WARNING_MSG( "[dispatcher] Skipping message due to corrupted payload" );
+        return header + payload;
+    }
+
     // $$$$ JSR 2010-07-01: In synchronisation mode, we must not send order messages, as they were already sent,
     // to avoid them to be displayed several times in timeline (mantis 3725)
     if( synchronized && message.has_message() )
@@ -579,7 +589,7 @@ size_t MessageLoader::LoadSimToClientMessage( const char* input, size_t size,
             message.mutable_message()->mutable_crowd_order()->mutable_type()->set_id( 0 );
     }
     handler.Receive( message );
-    return msgSize + sizeof msgSize;
+    return header + payload;
 }
 
 // -----------------------------------------------------------------------------
