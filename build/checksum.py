@@ -1,4 +1,5 @@
 # Simple utility to make checksums of directories and compare them
+import difflib
 import hashlib
 import optparse
 import os
@@ -32,15 +33,31 @@ def parse_paths(src, root, filename):
     return full, key
 
 def parse_checksums(src):
+    print os.path.abspath(src)
     for root, dirs, files in os.walk(src):
         for filename in sorted(files):
             full, key = parse_paths(src, root, filename)
             print key + ";" + get_checksum(full)
     return 0
 
+def get_lines(src):
+    fh = open(src, "rb")
+    lines = fh.readlines()
+    fh.close()
+    if not lines[-1].endswith("\n"):
+        lines[-1] += "\n"
+    return lines
+
+def print_diff(src, dst):
+    src = get_lines(src)
+    dst = get_lines(dst)
+    diff = difflib.unified_diff(src, dst)
+    sys.stderr.writelines(diff)
+
 def check_checksums(src, filename):
     fh = open(filename, "rb")
     checksums = {}
+    dst = fh.readline().rstrip("\r\n")
     for line in fh:
         name, checksum = line.rstrip("\r\n").split(";")
         checksums[name] = checksum
@@ -55,6 +72,7 @@ def check_checksums(src, filename):
                 continue
             if checksums[key] != get_checksum(full):
                 sys.stderr.write("Invalid file " + full + "\n")
+                print_diff(os.path.join(dst, key), full)
                 err = -1
             del checksums[key]
     for it in checksums:
