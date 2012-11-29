@@ -25,7 +25,6 @@
 #include <core/MakeModel.h>
 #include <core/NamedChildrenVisitor.h>
 #include <core/IdentifiedChildrenVisitor.h>
-#include <core/MergeVisitor.h>
 #include <turtle/mock.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/bind.hpp>
@@ -275,7 +274,7 @@ namespace core
             TRY
                 BOOST_REQUIRE( source );
                 BOOST_REQUIRE( target );
-                MergeVisitor( *Convert( source ), *Convert( target ), 0 );
+                *Convert( target ) = *Convert( source );
                 return true;
             CATCH
                 return false;
