@@ -1568,6 +1568,17 @@
         </exec>
     </target>
 
+    <target name="checkdec" description="check models knows about our DEC functions">
+        <exec executable="python" failonerror="true">
+            <arg value="${root.dir}/build/listdec.py"/>
+            <arg value="check"/>
+            <arg value="${data.dir}/data/models/decfunctions.txt"/>
+            <arg value="${src.dir}/libraries/simulation_kernel"/>
+        </exec>
+    </target>
+
+    <target name="check" depends="checkproject,checkreports,checkdec"
+        description="perform various static checks on codebase"/>
     <!--
     ============================================================================
     main
@@ -1627,7 +1638,7 @@
 
     <target name="build" depends="libraries,applications,modules"/>
 
-    <target name="all" depends="configure,checkproject,checkreports,build,test,documentation,package" description="build and package distribution"/>
+    <target name="all" depends="configure,check,build,test,documentation,package" description="build and package distribution"/>
 
     <target name="cmake.update" depends="configure,generate-license">
         <update name="cmake"/>
