@@ -802,7 +802,7 @@ void MIL_EntityManager::UpdateKnowledges()
         int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
         sink_->ExecutePerceptions();
-        armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, boost::ref( currentTimeStep ) ) );
+        armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, currentTimeStep ) );
         populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
         armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanKnowledges, _1 ) );
         populationFactory_->Apply( boost::bind( &MIL_Population::CleanKnowledges, _1 ) );
