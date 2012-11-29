@@ -55,7 +55,6 @@ public:
     int GetCurrentThread() const;
     unsigned int GetNbrShortRequests() const;
     unsigned int GetNbrLongRequests() const;
-    unsigned int GetNbrRequests() const;
     unsigned int GetNbrTreatedRequests() const;
     unsigned int GetMaxComputationDuration() const;
     //@}

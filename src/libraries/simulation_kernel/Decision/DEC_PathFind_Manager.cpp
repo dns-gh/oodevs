@@ -141,16 +141,6 @@ unsigned int DEC_PathFind_Manager::GetNbrTreatedRequests() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFind_Manager::GetNbrRequests
-// Created: AGE 2005-05-10
-// -----------------------------------------------------------------------------
-unsigned int DEC_PathFind_Manager::GetNbrRequests() const
-{
-    boost::mutex::scoped_lock locker( mutex_ );
-    return static_cast< unsigned int >( longRequests_.size() + shortRequests_.size() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager::AddPendingJob
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
