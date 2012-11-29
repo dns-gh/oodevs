@@ -274,6 +274,5 @@ if __name__ == '__main__':
                 set(intids.values())):
             result = 1
 
-    dumpusedreports(ui, intids, cppids, 'usedreports.txt')
     sys.exit(result)
 
