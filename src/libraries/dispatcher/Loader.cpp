@@ -25,8 +25,8 @@ Loader::Loader( ReplayModel_ABC& model, MessageHandler_ABC& handler, const Confi
     : model_   ( model )
     , handler_ ( handler )
     , loader_  ( new MessageLoader( config.GetRecordDirectory(), false, clients ) )
-    , keyFrame_( ~0u )
-    , frame_   ( 0 )
+    , keyFrame_( UINT_MAX )
+    , frame_   ( UINT_MAX )
 {
     // NOTHING
 }

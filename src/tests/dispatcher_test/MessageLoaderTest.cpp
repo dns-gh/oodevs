@@ -67,7 +67,7 @@ namespace
 
     const TestCase default_tests[] =
     {
-        { "invalid_path",       ~0u,  0, 0,   0,   0 },
+        { "invalid_path",  UINT_MAX,  0, 0,   0,   0 },
         { "just_5",               1,  5, 5, 763, 461 },
         { "just_5_offset",       91, 95, 5, 224, 773 },
         { "single_current",       1,  5, 5, 763, 461 },
@@ -80,7 +80,7 @@ namespace
 
     const TestCase thread_tests[] =
     {
-        { "invalid_path",       ~0u,  0, 0,   0,   0 },
+        { "invalid_path",  UINT_MAX,  0, 0,   0,   0 },
         { "just_5",               1,  5, 5, 763, 461 },
         { "just_5_offset",       91, 95, 5, 224, 773 },
         { "single_current",       1,  5, 5, 763, 461 },
