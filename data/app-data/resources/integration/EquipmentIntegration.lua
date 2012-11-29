@@ -328,7 +328,7 @@ end
 -- @release 2012-10-22
 -- --------------------------------------------------------------------------------
 integration.boardElementWithoutDelay = function( unit, transportOnlyLoadable )
-    DEC_Transport_EmbarquerPionsSansDelais( unit, transportOnlyLoadable )
+    DEC_Transport_EmbarquerPionSansDelais( unit, transportOnlyLoadable )
 end
 
 -- -------------------------------------------------------------------------------- 
@@ -363,7 +363,7 @@ end
 -- @author GGE
 -- @release 2011-12-16
 -- --------------------------------------------------------------------------------
-integration.startActivateDrone = function ( self )
+integration.startActivateDrone = function ( self, alreadyDeployed )
     integration.setAvailableDrones()
 	myself.Deployed = false
     if myself.droneAvailable == nil then
@@ -372,7 +372,9 @@ integration.startActivateDrone = function ( self )
             meKnowledge:sendNoDisponibleDrone( meKnowledge:getAutomat() )
         end
 	else
-		DEC_Agent_Deploy()
+	    if alreadyDeployed == nil or alreadyDeployed == false then
+		    DEC_Agent_Deploy()
+		end
 		meKnowledge:RC( eRC_DebutMiseEnOeuvreDrone )
 	end
 end
@@ -385,6 +387,9 @@ integration.startedActivateDrone = function ( self )
         meKnowledge:RC( eRC_FinMiseEnOeuvreDrone )
         meKnowledge:sendRC( droneKn, eRC_DroneDisponible )
         meKnowledge:sendDisponibleDrone(meKnowledge:getAutomat(), droneKn)
+        return true
+    elseif myself.droneAvailable == nil then
+        return false
     end
 end
 
@@ -406,9 +411,10 @@ integration.setAvailableDrones = function ( self )
     end
 end
 
-integration.stopActivateDrone = function( self )
-    DEC_Agent_Undeploye()
-    return true
+integration.stopActivateDrone = function( self, alreadyUnDeployed )
+    if alreadyUnDeployed == nil or alreadyUnDeployed == false then
+        DEC_Agent_Undeploye()
+    end
 end
 
 -- -------------------------------------------------------------------------------- 
