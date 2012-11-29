@@ -227,13 +227,18 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
     }
     sword::ObjectMagicActionAck_ErrorCode errorCode = sword::ObjectMagicActionAck::no_error;
     MIL_Object_ABC* pObject = factory_.CreateObject( sink_, message, pArmy, errorCode );
-    if( pObject && pObject->RetrieveAttribute< AltitudeModifierAttribute >() )
+    if( pObject )
     {
-        const TER_Localisation& localisation = pObject->GetLocalisation();
-        for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-            if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
-                if( localisation.IsIntersecting( flood->GetLocalisation() ) )
-                    flood->GenerateFlood( floodModel );
+        if( FloodAttribute* flood = pObject->RetrieveAttribute< FloodAttribute >() )
+            flood->GenerateFlood( floodModel );
+        if( pObject->RetrieveAttribute< AltitudeModifierAttribute >() )
+        {
+            const TER_Localisation& localisation = pObject->GetLocalisation();
+            for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+                if( FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >() )
+                    if( localisation.IsIntersecting( flood->GetLocalisation() ) )
+                        flood->GenerateFlood( floodModel );
+        }
     }
     RegisterObject( pObject );
     return errorCode;
