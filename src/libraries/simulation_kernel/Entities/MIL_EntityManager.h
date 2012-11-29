@@ -13,7 +13,6 @@
 #define __MIL_EntityManager_h_
 
 #include "MIL.h"
-#include "MT_Tools/MT_Profiler.h"
 #include "MIL_EntityManager_ABC.h"
 #include "MIL_EntityManagerStaticMethods.h"
 #include "tools/Resolver.h"
@@ -290,7 +289,6 @@ private:
 
     // Profiling
     MIL_ProfilerMgr& profilerManager_;
-    MT_Profiler profiler_;
     unsigned int nRandomBreakdownsNextTimeStep_;
     double rKnowledgesTime_;
     double rAutomatesDecisionTime_;

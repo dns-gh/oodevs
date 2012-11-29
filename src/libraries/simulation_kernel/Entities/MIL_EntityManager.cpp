@@ -281,13 +281,13 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , effectManager_                ( effects )
     , profilerManager_              ( profiler )
     , nRandomBreakdownsNextTimeStep_( 0  )
-    , rKnowledgesTime_              ( 0. )
-    , rAutomatesDecisionTime_       ( 0. )
-    , rPionsDecisionTime_           ( 0. )
-    , rPopulationsDecisionTime_     ( 0. )
-    , rActionsTime_                 ( 0. )
-    , rEffectsTime_                 ( 0. )
-    , rStatesTime_                  ( 0. )
+    , rKnowledgesTime_              ( 0 )
+    , rAutomatesDecisionTime_       ( 0 )
+    , rPionsDecisionTime_           ( 0 )
+    , rPopulationsDecisionTime_     ( 0 )
+    , rActionsTime_                 ( 0 )
+    , rEffectsTime_                 ( 0 )
+    , rStatesTime_                  ( 0 )
     , idManager_                    ( new MIL_IDManager() )
     , missionController_            ( new MissionController() )
     , inhabitantFactory_            ( new InhabitantFactory() )
@@ -317,13 +317,13 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , effectManager_                ( effects )
     , profilerManager_              ( profiler )
     , nRandomBreakdownsNextTimeStep_( 0  )
-    , rKnowledgesTime_              ( 0. )
-    , rAutomatesDecisionTime_       ( 0. )
-    , rPionsDecisionTime_           ( 0. )
-    , rPopulationsDecisionTime_     ( 0. )
-    , rActionsTime_                 ( 0. )
-    , rEffectsTime_                 ( 0. )
-    , rStatesTime_                  ( 0. )
+    , rKnowledgesTime_              ( 0 )
+    , rAutomatesDecisionTime_       ( 0 )
+    , rPionsDecisionTime_           ( 0 )
+    , rPopulationsDecisionTime_     ( 0 )
+    , rActionsTime_                 ( 0 )
+    , rEffectsTime_                 ( 0 )
+    , rStatesTime_                  ( 0 )
     , idManager_                    ( new MIL_IDManager() )
     , missionController_            ( new MissionController() )
     , inhabitantFactory_            ( new InhabitantFactory() )
@@ -822,7 +822,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateKnowledges()
 {
-    profiler_.Start();
+    Profiler profiler( rKnowledgesTime_ );
     try
     {
         int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
@@ -850,24 +850,23 @@ void MIL_EntityManager::UpdateKnowledges()
     {
         MT_LOG_ERROR_MSG( "Error updating knowledges: " << e.what() );
     }
-    rKnowledgesTime_ = profiler_.Stop();
 }
 
 namespace
 {
-    void UpdateAutomate( MT_Profiler& profiler, float duration, MIL_Automate& automate )
+    void UpdateAutomate( float duration, MIL_Automate& automate, MT_Profiler& profiler )
     {
         profiler.Start();
         automate.UpdateDecision( duration );
         MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( automate, profiler.Stop() );
     }
-    void UpdatePion( MT_Profiler& profiler, float duration, MIL_AgentPion& pion )
+    void UpdatePion( float duration, MIL_AgentPion& pion, MT_Profiler& profiler )
     {
         profiler.Start();
         pion.UpdateDecision( duration );
         MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( pion, profiler.Stop() );
     }
-    void UpdatePopulation( MT_Profiler& profiler, float duration, MIL_Population& population )
+    void UpdatePopulation( float duration, MIL_Population& population, MT_Profiler& profiler )
     {
         profiler.Start();
         population.UpdateDecision( duration );
@@ -885,32 +884,33 @@ void MIL_EntityManager::UpdateDecisions()
     if( profilerManager_.IsProfilingEnabled() )
     {
         MT_Profiler decisionUpdateProfiler;
-
-        profiler_.Start();
-        automateFactory_->Apply( boost::bind( &UpdateAutomate, boost::ref(decisionUpdateProfiler), duration, _1 ) );
-        rAutomatesDecisionTime_ = profiler_.Stop();
-
-        profiler_.Start();
-        sink_->Apply( boost::bind( &UpdatePion, boost::ref(decisionUpdateProfiler), duration, _1 ) );
-        rPionsDecisionTime_ = profiler_.Stop();
-
-        profiler_.Start();
-        populationFactory_->Apply( boost::bind( &UpdatePopulation, boost::ref(decisionUpdateProfiler), duration, _1 ) );
-        rPopulationsDecisionTime_ = profiler_.Stop();
+        {
+            Profiler profiler( rAutomatesDecisionTime_ );
+            automateFactory_->Apply( boost::bind( &UpdateAutomate, duration, _1, boost::ref( decisionUpdateProfiler ) ) );
+        }
+        {
+            Profiler profiler( rPionsDecisionTime_ );
+            sink_->Apply( boost::bind( &UpdatePion, duration, _1, boost::ref( decisionUpdateProfiler ) ) );
+        }
+        {
+            Profiler profiler( rPopulationsDecisionTime_ );
+            populationFactory_->Apply( boost::bind( &UpdatePopulation, duration, _1, boost::ref( decisionUpdateProfiler ) ) );
+        }
     }
     else
     {
-        profiler_.Start();
-        automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateDecision, _1, duration ) );
-        rAutomatesDecisionTime_ = profiler_.Stop();
-
-        profiler_.Start();
-        sink_->Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
-        rPionsDecisionTime_ = profiler_.Stop();
-
-        profiler_.Start();
-        populationFactory_->Apply( boost::bind( &MIL_Population::UpdateDecision, _1, duration ) );
-        rPopulationsDecisionTime_ = profiler_.Stop();
+        {
+            Profiler profiler( rAutomatesDecisionTime_ );
+            automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateDecision, _1, duration ) );
+        }
+        {
+            Profiler profiler( rPionsDecisionTime_ );
+            sink_->Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
+        }
+        {
+            Profiler profiler( rPopulationsDecisionTime_ );
+            populationFactory_->Apply( boost::bind( &MIL_Population::UpdateDecision, _1, duration ) );
+        }
     }
 }
 
@@ -920,14 +920,13 @@ void MIL_EntityManager::UpdateDecisions()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateActions()
 {
-    profiler_.Start();
+    Profiler profiler( rActionsTime_ );
     sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
     sink_->ExecuteCommands();
     formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateActions, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateActions, _1 ) );
     sink_->Apply( boost::bind( &MIL_AgentPion::UpdateActions, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateActions, _1 ) );
-    rActionsTime_ = profiler_.Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -936,11 +935,10 @@ void MIL_EntityManager::UpdateActions()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateEffects()
 {
-    profiler_.Start();
+    Profiler profiler( rEffectsTime_ );
     pObjectManager_->ProcessEvents();
     sink_->ApplyEffects();
     effectManager_.Update();
-    rEffectsTime_ = profiler_.Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -949,7 +947,7 @@ void MIL_EntityManager::UpdateEffects()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateStates()
 {
-    profiler_.Start();
+    Profiler profiler( rStatesTime_ );
     // !! Automate avant Pions (?? => LOG ??)
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
     sink_->Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
@@ -961,7 +959,6 @@ void MIL_EntityManager::UpdateStates()
     pObjectManager_->UpdateStates( *pFloodModel_ );
     inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::UpdateState, _1 ) ); // $$$$ LDC: Must be done after pObjectManager_ because otherwise objects are destroyed too early
     inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::UpdateNetwork, _1 ) );
-    rStatesTime_ = profiler_.Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -985,7 +982,7 @@ void MIL_EntityManager::PreprocessRandomBreakdowns()
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::UpdateKnowledgeGroups()
 {
-    profiler_.Start();
+    Profiler profiler( rStatesTime_ ); // $$$$ MCO 2012-11-28: again ?
     try
     {
         const std::map< unsigned long, boost::shared_ptr< MIL_KnowledgeGroup > >& groups = knowledgeGroupFactory_->GetElements();
@@ -996,7 +993,6 @@ void MIL_EntityManager::UpdateKnowledgeGroups()
     {
         MT_LOG_ERROR_MSG( "Error updating knowledge groups: " << e.what() );
     }
-    rStatesTime_ = profiler_.Stop();
 }
 
 // -----------------------------------------------------------------------------
