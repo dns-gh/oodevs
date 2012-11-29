@@ -111,6 +111,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
         >> xml::optional >> xml::start( "critical-intelligence" )
             >> xml::attribute( "content", criticalIntelligence_ )
         >> xml::end;
+    rNewArmedIndividuals_ = rArmedIndividuals_;
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult ) );
     RegisterRole( *new DEC_Representations() );
@@ -162,6 +163,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     , pArmy_                      ( &army )
     , pDefaultAttitude_           ( 0 )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
+    , rNewArmedIndividuals_       ( rArmedIndividuals_ )
     , rMale_                      ( type.GetMale() )
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
@@ -234,6 +236,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
     assert( pDefaultAttitude_ );
     file >> rArmedIndividuals_
+         >> rNewArmedIndividuals_
          >> rMale_
          >> rFemale_
          >> rChildren_
@@ -275,6 +278,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << pArmy_
          << attitude
          << rArmedIndividuals_
+         << rNewArmedIndividuals_
          << rMale_
          << rFemale_
          << rChildren_
@@ -1321,6 +1325,7 @@ void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicA
     if( parametre.value_size() != 1 || !parametre.value().Get( 0 ).has_quantity() )
         throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     rArmedIndividuals_ = 0.01 * parametre.value().Get( 0 ).quantity();
+    rNewArmedIndividuals_ = rArmedIndividuals_;
     armedIndividualsChanged_ = true;
 }
 
