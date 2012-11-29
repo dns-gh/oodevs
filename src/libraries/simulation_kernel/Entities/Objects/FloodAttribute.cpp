@@ -21,8 +21,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( FloodAttribute )
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > )
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > )
 
-using namespace geometry;
-
 // -----------------------------------------------------------------------------
 // Name: FloodAttribute constructor
 // Created: JSR 2010-12-15
@@ -39,9 +37,10 @@ FloodAttribute::FloodAttribute()
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation )
-    : depth_        ( xis.attribute< int >( "depth" ) )
-    , refDist_      ( xis.attribute< int >( "reference-distance" ) )
-    , location_     ( objectLocation.ComputeBarycenter(), refDist_ )
+    : depth_( xis.attribute< int >( "depth" ) )
+    , refDist_( xis.attribute< int >( "reference-distance" ) )
+    , floodCenter_( objectLocation.ComputeBarycenter() )
+    , location_( floodCenter_, refDist_ )
 {
     // NOTHING
 }
@@ -51,9 +50,10 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const TER_Localisation& obje
 // Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation )
-    : depth_        ( attributes.list( 1 ).quantity() )
-    , refDist_      ( attributes.list( 2 ).quantity() )
-    , location_     ( objectLocation.ComputeBarycenter(), refDist_ )
+    : depth_( attributes.list( 1 ).quantity() )
+    , refDist_( attributes.list( 2 ).quantity() )
+    , floodCenter_( objectLocation.ComputeBarycenter() )
+    , location_( floodCenter_, refDist_ )
 {
     // NOTHING
 }
@@ -75,6 +75,7 @@ FloodAttribute& FloodAttribute::operator=( const FloodAttribute& from )
 {
     depth_ = from.depth_;
     refDist_ = from.refDist_;
+    floodCenter_ = from.floodCenter_;
     location_.Reset( from.location_ );
     return *this;
 }
@@ -90,6 +91,7 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
         NotifyAttributeUpdated( eOnUpdate );
         depth_ = rhs.depth_;
         refDist_ = rhs.refDist_;
+        floodCenter_ = rhs.floodCenter_;
         location_.Reset( rhs.location_ );
     }
     return NeedUpdate( eOnUpdate );
@@ -104,6 +106,7 @@ void FloodAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
          >> depth_
          >> refDist_
+         >> floodCenter_
          >> location_;
 }
 
@@ -116,6 +119,7 @@ void FloodAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     file << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
          << depth_
          << refDist_
+         << floodCenter_
          << location_;
 }
 
@@ -180,8 +184,7 @@ bool FloodAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void FloodAttribute::GenerateFlood( const propagation::FloodModel_ABC& model )
 {
-    MT_Vector2D center = location_.ComputeBarycenter();
-    model.GenerateFlood( Point2d( center.rX_, center.rY_ ), deepAreas_, lowAreas_, depth_, refDist_ );
+    model.GenerateFlood( geometry::Point2d( floodCenter_.rX_, floodCenter_.rY_ ), deepAreas_, lowAreas_, depth_, refDist_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +201,7 @@ const TER_Localisation& FloodAttribute::GetLocalisation() const
 // Name: FloodAttribute::GetDeepAreas
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-const std::vector< Polygon2f* >& FloodAttribute::GetDeepAreas() const
+const std::vector< geometry::Polygon2f* >& FloodAttribute::GetDeepAreas() const
 {
     return deepAreas_;
 }
@@ -207,7 +210,7 @@ const std::vector< Polygon2f* >& FloodAttribute::GetDeepAreas() const
 // Name: FloodAttribute::GetLowAreas
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-const std::vector< Polygon2f* >& FloodAttribute::GetLowAreas() const
+const std::vector< geometry::Polygon2f* >& FloodAttribute::GetLowAreas() const
 {
     return lowAreas_;
 }

@@ -96,6 +96,7 @@ private:
     //@{
     int depth_;
     int refDist_;
+    MT_Vector2D floodCenter_;
     TER_Localisation location_;
     std::vector< geometry::Polygon2f* > deepAreas_;
     std::vector< geometry::Polygon2f* > lowAreas_;
