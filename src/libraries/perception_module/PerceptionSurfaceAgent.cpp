@@ -103,9 +103,9 @@ const PerceptionLevel& PerceptionSurfaceAgent::ComputePointPerception( const wra
 // -----------------------------------------------------------------------------
 const PerceptionLevel& PerceptionSurfaceAgent::ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target, const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const
 {
-    if( GET_HOOK( IsKnown )( perceiver, target )
+    if( IsInside( vTargetPos )
         || pSensorType_->CanScan() && perceiver[ "perceptions/peripherical-vision/activated" ]
-        || IsInside( vTargetPos ) )
+        || GET_HOOK( IsKnown )( perceiver, target ) )
     {
         const PerceptionLevel& level = pSensorType_->ComputeAgentPerception( perceiver, target, vSourcePos, vTargetPos, rHeight_ );
         return GetLevelWithDelay( level, target[ "identifier" ] );
