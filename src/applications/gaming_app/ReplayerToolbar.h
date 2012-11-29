@@ -54,6 +54,7 @@ private slots:
     //! @name Slots
     //@{
     void OnSliderMoved( int );
+    void OnSliderPressed();
     void OnSliderReleased();
     void OnTimeTable();
     void OnRefresh();
@@ -67,7 +68,8 @@ private:
     unsigned int maxTick_;
     QSlider* slider_;
     QLabel* value_;
-    bool userMove_;
+    bool isPlayingBeforeMove_;
+    bool replayPaused_;
     //@}
 };
 

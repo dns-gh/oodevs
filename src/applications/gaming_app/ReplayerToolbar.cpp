@@ -26,10 +26,11 @@ using namespace sword;
 ReplayerToolbar::ReplayerToolbar( QMainWindow* pParent, kernel::Controllers& controllers, Publisher_ABC& network )
     : QToolBar( pParent, "replay control toolbar" )
     , controllers_( controllers )
-    , network_    ( network )
-    , maxTick_    ( 0 )
-    , slider_     ( 0 )
-    , userMove_   ( true )
+    , network_( network )
+    , maxTick_( 0 )
+    , slider_( 0 )
+    , isPlayingBeforeMove_( false )
+    , replayPaused_( true )
 {
     setWindowTitle( tr( "Replay control" ) );
     QLabel* label = new QLabel( this );
@@ -79,25 +80,25 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
             pRefreshButton->setIconSet( MAKE_ICON( refresh ) );
             pRefreshButton->setTextLabel( tr( "Refresh" ) );
             addWidget( pRefreshButton );
+            connect( slider_, SIGNAL( sliderPressed() ), SLOT( OnSliderPressed() ) );
             connect( slider_, SIGNAL( sliderReleased() ), SLOT( OnSliderReleased() ) );
             connect( slider_, SIGNAL( valueChanged( int ) ), SLOT( OnSliderMoved( int ) ) );
             connect( pTimeTableButton, SIGNAL( clicked() ), SLOT( OnTimeTable() ) );
             connect( pRefreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
         }
-        userMove_ = false;
+        replayPaused_ = simulation.IsPaused();
         slider_->setMaxValue( maxTick_ );
         slider_->setTickInterval( slider_->maxValue() / 20 );
-        slider_->setValue( simulation.GetCurrentTick() );
-        OnSliderMoved( slider_->value() );
-        userMove_ = true;
-        if( ! isVisible() )
+        if( const unsigned int currentTick = simulation.GetCurrentTick() )
+            slider_->setValue( currentTick );
+        if( !isVisible() )
         {
-            show();
+            setVisible( true );
             setProperty( "notAppropriate", QVariant() );
         }
     }
     else if( isVisible() )
-        hide();
+        setVisible( false );
 }
 
 namespace
@@ -113,14 +114,12 @@ namespace
             QLayout* layout = new QVBoxLayout( this );
             layout->setMargin( 5 );
             setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-            Q3VBox* box = new Q3VBox( this );
-            layout->add( box );
 
-            QTableWidget* table = new QTableWidget( box );
+            QTableWidget* table = new QTableWidget();
+            layout->addWidget( table );
             table->setRowCount( timeTable.time_table_item_size() );
             table->setColumnCount( 3 );
             table->verticalHeader()->hide();
-            //table->setLeftMargin( 0 );
             QStringList headers;
             headers << tools::translate( "TimeTableDialog", "Tick" )
                     << tools::translate( "TimeTableDialog", "Sim time" )
@@ -139,7 +138,9 @@ namespace
                 table->item( i, 1 )->setFlags( Qt::ItemIsEnabled );
                 table->item( i, 2 )->setFlags( Qt::ItemIsEnabled );
             }
-            connect( new QPushButton(  tools::translate( "TimeTableDialog", "Ok" ), box ), SIGNAL( clicked() ), SLOT( accept() ) );
+            QPushButton* okButton = new QPushButton(  tools::translate( "TimeTableDialog", "Ok" ) );
+            layout->addWidget( okButton );
+            connect( okButton, SIGNAL( clicked() ), SLOT( accept() ) );
         }
     };
 }
@@ -163,16 +164,33 @@ void ReplayerToolbar::OnSliderMoved( int frame )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ReplayerToolbar::OnSliderPressed
+// Created: JSR 2012-11-28
+// -----------------------------------------------------------------------------
+void ReplayerToolbar::OnSliderPressed()
+{
+    isPlayingBeforeMove_ = !replayPaused_;
+    if( isPlayingBeforeMove_ )
+    {
+        replay::ControlPause message;
+        message.Send( network_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ReplayerToolbar::OnSliderReleased
 // Created: SBO 2007-06-20
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnSliderReleased()
 {
-    if( userMove_ )
+    replay::ControlSkipToTick skip;
+    skip().set_tick( slider_->value() - 1 );
+    skip.Send( network_ );
+    if( isPlayingBeforeMove_ )
     {
-        replay::ControlSkipToTick skip;
-        skip().set_tick( slider_->value() - 1 );
-        skip.Send( network_ );
+        replay::ControlResume message;
+        message().set_tick( 1 );
+        message.Send( network_ );
     }
 }
 
@@ -193,4 +211,4 @@ void ReplayerToolbar::OnRefresh()
 {
     replay::ForceRefreshDataRequest reload;
     reload.Send( network_ );
-};
+}
