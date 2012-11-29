@@ -70,10 +70,10 @@ namespace sword // $$$$ _RC_ SLI 2012-10-22: DRY with wrapper/Hook.h
 }
 
 #define DECLARE_HOOK( Hook, result, parameters ) \
-    static struct Hook ## Wrapper : private sword::Hook_ABC \
+    static struct Hook ## _DeclarationWrapper : private sword::Hook_ABC \
     { \
         typedef result result_type; \
-        Hook ## Wrapper() \
+        Hook ## _DeclarationWrapper() \
         { \
             sword::Hooks::Use( this ); \
         } \
@@ -113,10 +113,10 @@ namespace detail
     ( HOOK_PARAMS(n, S ) )
 
 #define DEFINE_HOOK( Hook, arity, result, parameters ) \
-    static struct Hook ## Wrapper : private sword::Hook_ABC \
+    static struct Hook ## _DefinitionWrapper : private sword::Hook_ABC \
     { \
         typedef result result_type; \
-        Hook ## Wrapper() \
+        Hook ## _DefinitionWrapper() \
         { \
             BOOST_MPL_ASSERT_RELATION( arity, ==, \
                 boost::function_types::function_arity< result parameters >::value );\
@@ -172,7 +172,7 @@ namespace detail
             return profiler; \
         } \
     } Hook##_; \
-    result Hook ## Wrapper::Implement parameters
+    result Hook ## _DefinitionWrapper::Implement parameters
 
 #define GET_HOOK( Hook ) Hook##_.current_
 

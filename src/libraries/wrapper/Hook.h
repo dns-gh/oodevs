@@ -89,10 +89,10 @@ namespace wrapper
 }
 
 #define DECLARE_HOOK( Hook, result, parameters ) \
-    static struct Hook ## Wrapper : private sword::wrapper::Hook_ABC \
+    static struct Hook ## _DeclarationWrapper : private sword::wrapper::Hook_ABC \
     { \
         typedef result result_type; \
-        Hook ## Wrapper() \
+        Hook ## _DeclarationWrapper() \
         { \
             sword::wrapper::Hooks::Use( this ); \
         } \
@@ -128,18 +128,16 @@ namespace detail
 
 #define HOOK_PARAM(z, n, d) \
     BOOST_PP_COMMA_IF(n) d, n >::type p##n
-#define HOOK_PARAM_CALL(z, n, d) \
-    BOOST_PP_COMMA_IF(n) d##n
-#define HOOK_PARAMS(n, S ) \
-    BOOST_PP_REPEAT(n, HOOK_PARAM, sword::wrapper::detail::parameter< S)
-#define HOOK_DECL( n, S ) \
-    ( HOOK_PARAMS(n, S ) )
+#define HOOK_PARAMS(n, S) \
+    BOOST_PP_REPEAT( n, HOOK_PARAM, sword::wrapper::detail::parameter< S )
+#define HOOK_DECL(n, S) \
+    ( HOOK_PARAMS( n, S ) )
 
 #define DEFINE_HOOK( Hook, arity, result, parameters ) \
-    static struct Hook ## Wrapper : private sword::wrapper::Hook_ABC \
+    static struct Hook ## _DefinitionWrapper : private sword::wrapper::Hook_ABC \
     { \
         typedef result result_type; \
-        Hook ## Wrapper() \
+        Hook ## _DefinitionWrapper() \
         { \
             BOOST_MPL_ASSERT_RELATION( arity, ==, \
                 boost::function_types::function_arity< result parameters >::value );\
@@ -152,13 +150,13 @@ namespace detail
         static result SafeProfiledImplement HOOK_DECL( arity, result parameters ) \
         { \
             MT_ProfilerGuard guard( GetProfiler() ); \
-            return SafeImplement( BOOST_PP_REPEAT( arity, HOOK_PARAM_CALL, p ) ); \
+            return SafeImplement( BOOST_PP_ENUM_PARAMS( arity, p ) ); \
         } \
         static result SafeImplement HOOK_DECL( arity, result parameters ) \
         { \
             try \
             { \
-                return Implement( BOOST_PP_REPEAT( arity, HOOK_PARAM_CALL, p ) ); \
+                return Implement( BOOST_PP_ENUM_PARAMS( arity, p ) ); \
             } \
             catch( std::exception& e ) \
             { \
@@ -194,7 +192,7 @@ namespace detail
             return profiler; \
         } \
     } Hook; \
-    result Hook ## Wrapper::Implement parameters
+    result Hook ## _DefinitionWrapper::Implement parameters
 
 #define GET_HOOK( Hook ) Hook.current_
 
