@@ -18,6 +18,7 @@
 #include "MIL_EntityManagerStaticMethods.h"
 #include "tools/Resolver.h"
 #include "propagation/ElevationGetter_ABC.h"
+#include <map>
 
 namespace sword
 {
@@ -276,6 +277,8 @@ private:
     typedef std::vector< const MIL_UrbanObject_ABC* > T_Cities;
     typedef T_Cities::iterator                      IT_Cities;
     typedef T_Cities::const_iterator               CIT_Cities;
+
+    typedef std::map< std::string, double > T_Profilers;
     //@}
 
 private:
@@ -315,6 +318,7 @@ private:
 
     unsigned int  gcPause_;
     unsigned int  gcMult_;
+    T_Profilers profilers_;
     //@}
 };
 

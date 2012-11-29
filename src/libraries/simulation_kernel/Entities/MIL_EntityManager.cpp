@@ -653,6 +653,14 @@ void MIL_EntityManager::LogInfo( bool profiling )
         pObjectManager_->Count(), visitor.Count(), visitor.agents_, visitor.objects_, visitor.populations_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "%d Agents - %d Automats - %d Crowds" ,
         sink_->Count(), automateFactory_->Count(), populationFactory_->Count() ) );
+    {
+        std::stringstream s;
+        s.setf( std::ios::fixed, std::ios::floatfield );
+        s.precision( 3 );
+        for( T_Profilers::const_iterator it = profilers_.begin(); it != profilers_.end(); ++it )
+            s << it->first << " " << it->second << " ms ";
+        MT_LOG_INFO_MSG( s.str() );
+    }
     if( profiling )
         sink_->LogProfiling();
 }
@@ -790,6 +798,24 @@ MIL_Object_ABC* MIL_EntityManager::FindObject( unsigned int nID ) const
     return pObjectManager_->Find( nID );
 }
 
+namespace
+{
+    struct Profiler : boost::noncopyable
+    {
+        Profiler( double& time )
+            : time_( time )
+        {
+            profiler_.Start();
+        }
+        ~Profiler()
+        {
+            time_ = profiler_.Stop();
+        }
+        double& time_;
+        MT_Profiler profiler_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::UpdateKnowledges
 // Created: NLD 2004-08-19
@@ -800,13 +826,25 @@ void MIL_EntityManager::UpdateKnowledges()
     try
     {
         int currentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-        sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
-        sink_->ExecutePerceptions();
-        armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, currentTimeStep ) );
-        populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
-        armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanKnowledges, _1 ) );
-        populationFactory_->Apply( boost::bind( &MIL_Population::CleanKnowledges, _1 ) );
-        sink_->UpdateKnowledges();
+        {
+            Profiler profiler( profilers_[ "update model" ] );
+            sink_->UpdateModel( time_.GetCurrentTick(), time_.GetTickDuration(), *pObjectManager_, effectManager_ );
+        }
+        {
+            Profiler profiler( profilers_[ "execute perceptions" ] );
+            sink_->ExecutePerceptions();
+        }
+        {
+            Profiler profiler( profilers_[ "update knowledges" ] );
+            armyFactory_->Apply( boost::bind( &MIL_Army_ABC::UpdateKnowledges, _1, currentTimeStep ) );
+            populationFactory_->Apply( boost::bind( &MIL_Population::UpdateKnowledges, _1 ) );
+            armyFactory_->Apply( boost::bind( &MIL_Army_ABC::CleanKnowledges, _1 ) );
+            populationFactory_->Apply( boost::bind( &MIL_Population::CleanKnowledges, _1 ) );
+        }
+        {
+            Profiler profiler( profilers_[ "synchronize knowledges" ] );
+            sink_->UpdateKnowledges();
+        }
     }
     catch( std::exception& e )
     {
