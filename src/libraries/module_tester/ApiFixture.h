@@ -363,6 +363,7 @@ namespace core
 }
 
 #define HOOKS( APPLY ) \
+    AUTO_REGISTERED_HOOKS( APPLY ) \
     REGISTERED_HOOKS( APPLY ) \
     USED_HOOKS( APPLY ) \
     REGISTERED_AND_USED_HOOKS( APPLY )
@@ -387,6 +388,9 @@ namespace core
 #define INITIALIZE_HOOK( hook, number, result, parameters ) \
     , hook##_( 0 )
 
+#define AUTO_REGISTERED_HOOKS( APPLY ) \
+    APPLY( Tick, 0, void, () ) \
+
 #define HOOK_FIXTURE( APPLY_HOOKS ) \
 namespace core \
 { \
@@ -396,6 +400,7 @@ struct HookFixture : core::ApiFixture \
         : ApiFixture( name ) \
         APPLY_HOOKS( INITIALIZE_HOOK ) \
     { \
+        AUTO_REGISTERED_HOOKS( EXPECT_REGISTER_HOOK ) \
         REGISTERED_HOOKS( EXPECT_REGISTER_HOOK ) \
         USED_HOOKS( EXPECT_USE_HOOK ) \
         REGISTERED_AND_USED_HOOKS( EXPECT_REGISTER_HOOK ) \

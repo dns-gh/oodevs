@@ -461,6 +461,12 @@ namespace
     }
 }
 
+DEFINE_HOOK( Tick, 0, void, () )
+{
+    if( GET_PREVIOUS_HOOK( Tick ) )
+        GET_PREVIOUS_HOOK( Tick )();
+}
+
 // -----------------------------------------------------------------------------
 // Name: Sink::UpdateModel
 // Created: SLI 2012-01-13
@@ -478,6 +484,7 @@ void Sink::UpdateModel( unsigned int tick, int duration, const MIL_ObjectManager
         MIL_AgentPion& pion = const_cast< MIL_AgentPion& >( it.NextElement() );
         UpdateAgent( pion, entities[ pion.GetID() ] );
     }
+    GET_HOOK( Tick )();
 }
 
 // -----------------------------------------------------------------------------

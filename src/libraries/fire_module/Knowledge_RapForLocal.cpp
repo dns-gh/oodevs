@@ -17,8 +17,8 @@
 using namespace sword;
 using namespace sword::fire;
 
-DECLARE_HOOK( EvaluateDangerosity, double, ( const SWORD_Model* agent, const SWORD_Model* target ) ) // agent->GetDangerosity( *pPion_, false ) * agent->GetOperationalState()
-DECLARE_HOOK( EvaluateDangerosity2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) ) // agent->GetDangerosity( *target, true ) * agent->GetOperationalState()
+DECLARE_HOOK( EvaluateDangerosity, double, ( const SWORD_Model* agent, const SWORD_Model* target ) )
+DECLARE_CACHED_HOOK( EvaluateDangerosity2, 2, double, ( const SWORD_Model* agent, const SWORD_Model* target ) )
 
 double Knowledge_RapForLocal::rRapForIncreasePerTimeStepDefaultValue_ = 0;
 
@@ -44,38 +44,8 @@ namespace
         return ( rRapForBoundMax - rRapForBoundMin ) / rBaseTimeValue;
     }
 
-    class HookCache // $$$$ MCO 2012-11-13: generalize to use with any hook !
-    {
-    public:
-        HookCache()
-            : tick_( 0 )
-        {}
-        void Clear( unsigned int tick )
-        {
-            if( tick_ != tick )
-            {
-                tick_ = tick;
-                data.clear();
-            }
-        }
-        double Get( const SWORD_Model* m1, const SWORD_Model* m2 )
-        {
-            boost::optional< double >& result = data[ std::make_pair( m1, m2 ) ];
-            if( ! result )
-                result = GET_HOOK( EvaluateDangerosity2 )( m1, m2 );
-            return *result;
-        }
-    private:
-        typedef std::pair< const SWORD_Model*, const SWORD_Model* > T_Key;
-    private:
-        unsigned int tick_;
-        std::map< T_Key, boost::optional< double > > data;
-    };
-    HookCache cache;
-
     double GetRapForLocal( const wrapper::View& model, const wrapper::View& entity, Knowledge_RapForLocal::T_KnowledgeAgents& dangerousEnemies, bool(*filter)( const SWORD_Model* knowledge, void* userData ), void* userData, double defaultValue )
     {
-        cache.Clear( model[ "tick" ] );
         const unsigned int id = entity[ "knowledges" ];
         const wrapper::View& knowledges = model[ "knowledges" ][ id ];
         double rTotalFightScoreEnemy  = 0;
@@ -104,7 +74,7 @@ namespace
             if( ! filter( knowledgeFriend, userData ) )
                 continue;
             for( Knowledge_RapForLocal::CIT_KnowledgeAgents it = dangerousEnemies.begin(); it != dangerousEnemies.end(); ++it )
-                rTotalFightScoreFriend += cache.Get( knowledgeFriend, *it );
+                rTotalFightScoreFriend += GET_HOOK( EvaluateDangerosity2 )( knowledgeFriend, *it );
         }
         return ( rTotalFightScoreFriend / dangerousEnemies.size() ) / rTotalFightScoreEnemy;
     }

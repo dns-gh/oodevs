@@ -105,8 +105,6 @@ namespace detail
 
 #define HOOK_PARAM(z, n, d) \
     BOOST_PP_COMMA_IF(n) d, n >::type p##n
-#define HOOK_PARAM_CALL(z, n, d) \
-    BOOST_PP_COMMA_IF(n) d##n
 #define HOOK_PARAMS(n, S ) \
     BOOST_PP_REPEAT(n, HOOK_PARAM, sword::detail::parameter< S)
 #define HOOK_DECL( n, S ) \
@@ -133,13 +131,13 @@ namespace detail
         static result SafeProfiledImplement HOOK_DECL( arity, result parameters ) \
         { \
             MT_ProfilerGuard guard( GetProfiler() ); \
-            return SafeImplement( BOOST_PP_REPEAT( arity, HOOK_PARAM_CALL, p ) ); \
+            return SafeImplement( BOOST_PP_ENUM_PARAMS( arity, p ) ); \
         } \
         static result SafeImplement HOOK_DECL( arity, result parameters ) \
         { \
             try \
             { \
-                return Implement( BOOST_PP_REPEAT( arity, HOOK_PARAM_CALL, p ) ); \
+                return Implement( BOOST_PP_ENUM_PARAMS( arity, p ) ); \
             } \
             catch( std::exception& e ) \
             { \
