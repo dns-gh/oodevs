@@ -20,8 +20,6 @@
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
-#include "simulation_terrain/TER_PathFindManager.h"
-#include "simulation_terrain/TER_DynamicData.h"
 #include "MT_Tools/MT_Polyline.h"
 #include "MT_Tools/MT_Droite.h"
 
