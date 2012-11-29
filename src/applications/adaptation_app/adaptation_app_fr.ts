@@ -906,7 +906,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Toxicity exponent</source>
-        <translation>Coefficient de protection</translation>
+        <translation>Coefficient de toxicité</translation>
     </message>
 </context>
 <context>
