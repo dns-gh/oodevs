@@ -78,13 +78,12 @@ void PerceptionSurfaceAgent::AddDirection( const MT_Vector2D& vDir )
 // Name: PerceptionSurfaceAgent::IsInside
 // Created: NLD 2004-08-20
 // -----------------------------------------------------------------------------
-inline
 bool PerceptionSurfaceAgent::IsInside( const MT_Vector2D& vPoint ) const
 {
     if( vOrigin_.SquareDistance( vPoint ) <= pSensorType_->GetSquareProximityDistance() )
         return true;
-    for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
-        if( itSector->IsInSector( vPoint ) )
+    for( CIT_SectorVector it = sectors_.begin(); it != sectors_.end(); ++it )
+        if( it->IsInSector( vPoint ) )
             return true;
     return false;
 }
@@ -104,10 +103,14 @@ const PerceptionLevel& PerceptionSurfaceAgent::ComputePointPerception( const wra
 // -----------------------------------------------------------------------------
 const PerceptionLevel& PerceptionSurfaceAgent::ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target, const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const
 {
-    if( !( GET_HOOK( IsKnown )( perceiver, target ) || ( perceiver[ "perceptions/peripherical-vision/activated" ] && pSensorType_->CanScan() ) || IsInside( vTargetPos ) ) )
-        return PerceptionLevel::notSeen_;
-    const PerceptionLevel& level = pSensorType_->ComputeAgentPerception( perceiver, target, vSourcePos, vTargetPos, rHeight_ );
-    return GetLevelWithDelay( level, target[ "identifier" ] );
+    if( GET_HOOK( IsKnown )( perceiver, target )
+        || pSensorType_->CanScan() && perceiver[ "perceptions/peripherical-vision/activated" ]
+        || IsInside( vTargetPos ) )
+    {
+        const PerceptionLevel& level = pSensorType_->ComputeAgentPerception( perceiver, target, vSourcePos, vTargetPos, rHeight_ );
+        return GetLevelWithDelay( level, target[ "identifier" ] );
+    }
+    return PerceptionLevel::notSeen_;
 }
 
 // -----------------------------------------------------------------------------
