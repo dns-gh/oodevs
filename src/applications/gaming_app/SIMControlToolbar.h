@@ -107,6 +107,7 @@ private:
     ConnectDialog*      pConnectDlg_;
     DisconnectDialog*   pDisconnectDlg_;
     int speed_;
+    unsigned int tickCount_;
     bool connected_, paused_;
     bool hasReplay_, hasSimulation_;
     bool gamingPaused_;

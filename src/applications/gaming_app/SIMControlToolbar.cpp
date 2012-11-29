@@ -103,6 +103,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     , controllers_( controllers )
     , publisher_( publisher )
     , speed_( 4212 )
+    , tickCount_( 0 )
     , connected_( false )
     , paused_( false )
     , hasReplay_( false )
@@ -382,6 +383,19 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
         speed_ = simulation.GetSpeed();
         pSpeedSpinBox_->setValue( speed_ );
         pSpeedButton_->setEnabled( false );
+    }
+    if( hasReplay_ )
+    {
+        if( tickCount_ != simulation.GetTickCount() )
+        {
+            if( !gamingPaused_ && simulation.GetCurrentTick() >= tickCount_ )
+            {
+                replay::ControlResume message;
+                message().set_tick( 1 );
+                message.Send( publisher_ );
+            }
+            tickCount_ = simulation.GetTickCount();
+        }
     }
 }
 
