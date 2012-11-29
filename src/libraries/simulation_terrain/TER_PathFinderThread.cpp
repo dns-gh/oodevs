@@ -12,12 +12,12 @@
 #include "TER_PathFindRequest_ABC.h"
 #include "TER_DynamicData.h"
 #include "TER_StaticData.h"
-#include "simulation_kernel/MIL_AgentServer.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
-#include "simulation_kernel/Decision/DEC_PathFind_Manager.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
+#include "simulation_kernel/MIL_AgentServer.h"
+#include "simulation_kernel/Decision/DEC_PathFind_Manager_ABC.h"
 #include <pathfind/TerrainPathfinder.h>
 #include <pathfind/TerrainRetractationHandle.h>
 #include <boost/filesystem/convenience.hpp>

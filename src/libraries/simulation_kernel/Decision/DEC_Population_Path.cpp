@@ -21,7 +21,7 @@
 #include "Decision/DEC_Population_PathSection.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_PathFind_Manager_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/FloodCapacity.h"

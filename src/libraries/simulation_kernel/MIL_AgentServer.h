@@ -35,7 +35,7 @@ namespace xml
 }
 
 class DEC_Workspace;
-class DEC_PathFind_Manager;
+class DEC_PathFind_Manager_ABC;
 class MIL_Agent_ABC;
 class MIL_CheckPointManager;
 class MIL_EffectManager;
@@ -117,7 +117,7 @@ public:
     DEC_Workspace& GetWorkspaceDIA() const;
     NET_AgentServer& GetAgentServer() const;
     MIL_TacticalLineManager& GetTacticalLineManager() const;
-    DEC_PathFind_Manager& GetPathFindManager() const;
+    DEC_PathFind_Manager_ABC& GetPathFindManager() const;
     PHY_MeteoDataManager& GetMeteoDataManager() const;
     MIL_ProfilerMgr& GetProfilerManager() const;
     MIL_CheckPointManager& GetCheckPointManager() const;
@@ -198,7 +198,7 @@ private:
     PHY_MeteoDataManager* pMeteoDataManager_;
     MT_TimerManager timerManager_;
     MIL_TacticalLineManager* pTacticalLineManager_;
-    DEC_PathFind_Manager* pPathFindManager_;
+    DEC_PathFind_Manager_ABC* pPathFindManager_;
     MIL_ProfilerMgr* pProfilerMgr_;
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;

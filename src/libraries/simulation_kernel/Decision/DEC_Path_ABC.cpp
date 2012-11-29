@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_ABC.h"
 #include "MIL_AgentServer.h"
-#include "DEC_PathFind_Manager.h"
+#include "DEC_PathFind_Manager_ABC.h"
 
 unsigned int DEC_Path_ABC::nIDIdx_ = 0;
 

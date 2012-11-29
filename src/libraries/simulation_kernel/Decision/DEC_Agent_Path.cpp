@@ -19,7 +19,7 @@
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
-#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_PathFind_Manager_ABC.h"
 #include "Decision/DEC_Rep_PathPoint_Front.h"
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"

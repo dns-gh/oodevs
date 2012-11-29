@@ -18,7 +18,7 @@
 #include "OnComponentComputer_ABC.h"
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
-#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_PathFind_Manager_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_InterfaceMoving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"

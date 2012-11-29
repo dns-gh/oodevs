@@ -66,7 +66,7 @@ PHY_MeteoDataManager& MIL_AgentServer::GetMeteoDataManager() const
 // Created: JDY 03-02-12
 //-----------------------------------------------------------------------------
 inline
-DEC_PathFind_Manager& MIL_AgentServer::GetPathFindManager() const
+DEC_PathFind_Manager_ABC& MIL_AgentServer::GetPathFindManager() const
 {
     assert( pPathFindManager_ );
     return *pPathFindManager_;
