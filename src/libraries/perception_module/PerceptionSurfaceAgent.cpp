@@ -102,12 +102,11 @@ const PerceptionLevel& PerceptionSurfaceAgent::ComputePointPerception( const wra
 // Name: PerceptionSurfaceAgent::ComputeAgentPerception
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const PerceptionLevel& PerceptionSurfaceAgent::ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target ) const
+const PerceptionLevel& PerceptionSurfaceAgent::ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target, const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const
 {
-    const MT_Vector2D vTargetPos( target[ "movement/position/x" ], target[ "movement/position/y" ] );
     if( !( GET_HOOK( IsKnown )( perceiver, target ) || ( perceiver[ "perceptions/peripherical-vision/activated" ] && pSensorType_->CanScan() ) || IsInside( vTargetPos ) ) )
         return PerceptionLevel::notSeen_;
-    const PerceptionLevel& level = pSensorType_->ComputeAgentPerception( perceiver, target, rHeight_ );
+    const PerceptionLevel& level = pSensorType_->ComputeAgentPerception( perceiver, target, vSourcePos, vTargetPos, rHeight_ );
     return GetLevelWithDelay( level, target[ "identifier" ] );
 }
 
@@ -201,10 +200,10 @@ void PerceptionSurfaceAgent::NotifyCone( wrapper::Effect& effect ) const
     cone[ "origin/y" ] = vOrigin_.rY_;
     cone[ "height" ] = rHeight_;
     cone[ "sensor" ] = pSensorType_->GetType().GetName();
-    for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )
+    for( CIT_SectorVector it = sectors_.begin(); it != sectors_.end(); ++it )
     {
         wrapper::Node sector = cone[ "sectors" ].AddElement();
-        const MT_Vector2D& direction = itSector->GetDirection();
+        const MT_Vector2D& direction = it->GetDirection();
         sector[ "direction/x" ] = direction.GetX();
         sector[ "direction/y" ] = direction.GetY();
     }

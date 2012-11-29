@@ -63,7 +63,7 @@ public:
     //! @name Operations
     //@{
     const PerceptionLevel& ComputePointPerception( const wrapper::View& perceiver, const MT_Vector2D& target, double rSensorHeight ) const;
-    const PerceptionLevel& ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
+    const PerceptionLevel& ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target, const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos, double rSensorHeight ) const;
     const PerceptionLevel& ComputeConcentrationPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;
     const PerceptionLevel& ComputeFlowPerception( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight, std::vector< MT_Vector2D >& shape ) const;
     double ComputePerceptionAccuracy( const wrapper::View& perceiver, const wrapper::View& target, double rSensorHeight ) const;

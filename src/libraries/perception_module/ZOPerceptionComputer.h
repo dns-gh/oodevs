@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    const PerceptionLevel& ComputePerception( const wrapper::View& perceiver, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const;
+    const PerceptionLevel& ComputePerception( const wrapper::View& source, const SurfacesAgent_ABC& surfaces, const wrapper::View& target ) const;
     //@}
 };
 

@@ -47,7 +47,7 @@ public:
     //@{
     void Apply( TargetPerceptionVisitor_ABC& visitor ) const;
     const PerceptionLevel& ComputePointPerception( const wrapper::View& perceiver, const MT_Vector2D& target ) const;
-    const PerceptionLevel& ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target ) const;
+    const PerceptionLevel& ComputeAgentPerception( const wrapper::View& perceiver, const wrapper::View& target, const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
     const PerceptionLevel& ComputeConcentrationPerception( const wrapper::View& perceiver, const wrapper::View& target ) const;
     const PerceptionLevel& ComputeFlowPerception( const wrapper::View& perceiver, const wrapper::View& target, T_PointVector& shape ) const;
     double ComputePerceptionAccuracy( const wrapper::View& perceiver, const wrapper::View& target ) const;

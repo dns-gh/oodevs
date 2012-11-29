@@ -492,9 +492,10 @@ const PerceptionLevel& SensorTypeAgent::ComputePointPerception( const wrapper::V
 // Created: NLD 2004-08-30
 // Modified: JVT 2004-09-28
 // -----------------------------------------------------------------------------
-const PerceptionLevel& SensorTypeAgent::ComputeAgentPerception( const wrapper::View& source, const wrapper::View& target, double rSensorHeight ) const
+const PerceptionLevel& SensorTypeAgent::ComputeAgentPerception( const wrapper::View& source, const wrapper::View& target, const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos, double rSensorHeight ) const
 {
-    const MT_Vector2D vTargetPos( target[ "movement/position/x" ], target[ "movement/position/y" ] );
+    if( vSourcePos.SquareDistance( vTargetPos ) > rDetectionDist_ * rDetectionDist_ )
+        return PerceptionLevel::notSeen_;
 
     if( target[ "is-dead" ] )
         return ComputePointPerception( source, vTargetPos, rSensorHeight );
@@ -507,7 +508,6 @@ const PerceptionLevel& SensorTypeAgent::ComputeAgentPerception( const wrapper::V
            rDistanceMaxModificator *= GetTargetFactor( target );
            rDistanceMaxModificator *= GetSourceFactor( source );
 
-    const MT_Vector2D vSourcePos( source[ "movement/position/x" ], source[ "movement/position/y" ] );
     const double     rSourceAltitude = static_cast< double >( source[ "movement/height" ] ) + rSensorHeight + GET_HOOK( GetAltitude )( vSourcePos.rX_, vSourcePos.rY_ );
     const double     rTargetAltitude = GET_HOOK( GetAltitude )( vTargetPos.rX_, vTargetPos.rY_ ) + 2;
 
