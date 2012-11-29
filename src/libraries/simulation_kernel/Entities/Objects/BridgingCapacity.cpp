@@ -12,8 +12,6 @@
 #include "Object.h"
 #include "TimeLimitedAttribute.h"
 #include "simulation_terrain/TER_DynamicData.h"
-#include "simulation_terrain/TER_Localisation.h"
-#include "simulation_terrain/TER_PathFindManager.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BridgingCapacity )
