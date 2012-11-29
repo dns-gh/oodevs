@@ -11,6 +11,7 @@
 #define __TER_LimitData_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
+#include "Entities/Objects/MIL_DynamicPathDataHandler.h"
 
 class TER_DynamicData;
 class MIL_Fuseau;
@@ -69,9 +70,9 @@ private:
 
 private:
     const T_PointVector    points_;
-          TER_DynamicData* pPathFindData_;
           T_DistancesData  distancesData_;
     mutable unsigned int           nNbRefs_;
+    MIL_DynamicPathDataHandler handler_;
 };
 
 #endif // __TER_LimitData_h_
