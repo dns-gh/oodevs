@@ -11,8 +11,8 @@
 #define fire_module_Knowledge_RapForLocal_h
 
 #include <wrapper/View.h>
-#include <vector>
 #include <boost/noncopyable.hpp>
+#include <vector>
 
 namespace xml
 {
