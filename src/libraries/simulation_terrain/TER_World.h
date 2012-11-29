@@ -37,7 +37,6 @@ class TER_CoordinateManager;
 class TER_GraphManager;
 class TER_PathFindManager;
 class TER_AnalyzerManager;
-class TER_PathFinderThread;
 class MT_Rect;
 
 namespace tools
