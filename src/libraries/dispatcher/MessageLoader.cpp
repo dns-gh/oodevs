@@ -169,9 +169,9 @@ unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
 {
     boost::mutex::scoped_lock lock( access_ );
     if( !SwitchToFragment( frameNumber ) )
-        return 0;
+        return UINT_MAX;
     const KeyFrame* next = ::FindKeyFrame( keyFrames_, frameNumber );
-    return next ? next->frameNumber_ : 0;
+    return next ? next->frameNumber_ : UINT_MAX;
 }
 
 namespace

@@ -44,22 +44,27 @@ Loader::~Loader()
 // Name: Loader::Start
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void Loader::Start()
+bool Loader::Start()
 {
-    SkipToFrame( 0 );
+    const bool done = SkipToFrame( 0 );
+    if( !done )
+        return false;
     // simulates the end of the initialization
     sword::SimToClient wrapper;
     wrapper.mutable_message()->mutable_control_send_current_state_end();
     handler_.Receive( wrapper );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Loader::SkipToFrame
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void Loader::SkipToFrame( unsigned int frame )
+bool Loader::SkipToFrame( unsigned int frame )
 {
     unsigned int keyFrame = loader_->FindKeyFrame( frame );
+    if( keyFrame == UINT_MAX )
+        return false;
     const bool resync = keyFrame_ != keyFrame || frame < frame_;
     if( resync )
     {
@@ -72,6 +77,7 @@ void Loader::SkipToFrame( unsigned int frame )
         continue;
     if( resync )
         model_.EndSynchronisation();
+    return true;
 }
 
 // -----------------------------------------------------------------------------

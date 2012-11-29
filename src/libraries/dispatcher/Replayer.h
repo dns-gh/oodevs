@@ -88,6 +88,7 @@ private:
     boost::shared_ptr< plugins::replay::ReplayPlugin > plugin_;
     std::auto_ptr< Shield >                            shield_;
     std::auto_ptr< SimulationPublisher_ABC >           publisher_;
+    bool                                               started_;
     //@}
 };
 }

@@ -84,6 +84,7 @@ Replayer::Replayer( const Config& config )
     , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
     , shield_          ( new Shield( config, *model_, *clientsNetworker_, *clientsNetworker_ ) )
     , publisher_       ( new NullPublisher() )
+    , started_         ( false )
 {
     handler_.AddHandler( model_ );
     handler_.AddHandler( clientsNetworker_ );
@@ -101,7 +102,7 @@ Replayer::Replayer( const Config& config )
                     >> xml::start( "plugins" )
                         >> xml::list("web_control", *this, &Replayer::OnWebControl );
     handler_.Register( *services_ );
-    loader_->Start();
+    started_ = loader_->Start();
 }
 
 // -----------------------------------------------------------------------------
@@ -119,6 +120,8 @@ Replayer::~Replayer()
 // -----------------------------------------------------------------------------
 void Replayer::Update()
 {
+    if( !started_ )
+        started_ = loader_->Start();
     clientsNetworker_->Update();
     handler_.Update();
     shield_->Update();
