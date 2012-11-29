@@ -175,7 +175,7 @@ namespace detail
         { \
             SWORD_RegisterHook( reinterpret_cast< SWORD_Hook* >( &current_ ), \
                                 reinterpret_cast< SWORD_Hook* >( &previous_ ), \
-                                reinterpret_cast< SWORD_Hook >( profiling ? &SafeProfiledImplement : &SafeProfiledImplement ), \
+                                reinterpret_cast< SWORD_Hook >( profiling ? &SafeProfiledImplement : &SafeImplement ), \
                                 #Hook, #result #parameters ); \
         } \
         virtual void Log() \
