@@ -62,7 +62,8 @@ void ReplayerToolbar::NotifyUpdated( const Simulation& simulation )
         {
             slider_ = new QSlider( Qt::Horizontal, this );
             addWidget( slider_ );
-            slider_->setMinValue( simulation.GetFirstTick() );
+            const unsigned int firstTick = simulation.GetFirstTick();
+            slider_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? maxTick_ : firstTick );
             slider_->setPageStep( 1 );
             slider_->setMinimumWidth( 200 );
             slider_->setTickmarks( QSlider::TicksBelow );

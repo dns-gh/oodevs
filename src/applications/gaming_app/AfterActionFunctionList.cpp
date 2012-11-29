@@ -89,10 +89,12 @@ AfterActionFunctionList::~AfterActionFunctionList()
 // -----------------------------------------------------------------------------
 void AfterActionFunctionList::NotifyUpdated( const Simulation& simulation )
 {
-    firstTick_->setMinValue( simulation.GetFirstTick() );
-    firstTick_->setMaxValue( simulation.GetTickCount() );
+    const unsigned int tickCount = simulation.GetTickCount();
+    const unsigned int firstTick = simulation.GetFirstTick();
+    firstTick_->setMinValue( firstTick == std::numeric_limits< unsigned int >::max() ? tickCount : firstTick );
+    firstTick_->setMaxValue( tickCount );
     duration_->setMinValue( 0 );
-    duration_->setMaxValue( simulation.GetTickCount() );
+    duration_->setMaxValue( tickCount );
 }
 
 // -----------------------------------------------------------------------------
