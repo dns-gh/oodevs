@@ -31,6 +31,5 @@ BOOST_FIXTURE_TEST_CASE( split_localisation_cannot_split_when_increment_is_zero,
     const TER_Localisation localisation( MT_Vector2D( 0, 0 ), 42 );
     TER_Localisation::T_LocalisationPtrVector result =
         DEC_GeometryFunctions::SplitLocalisation( localisation, MT_Vector2D( 0, 0 ), MT_Vector2D( 0, 1 ), 0 );
-    BOOST_REQUIRE_EQUAL( 1u, result.size() );
-    BOOST_CHECK( localisation == *result[0] );
+    BOOST_CHECK( result.empty() );
 }
