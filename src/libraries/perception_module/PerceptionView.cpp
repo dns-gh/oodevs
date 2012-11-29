@@ -131,9 +131,9 @@ void PerceptionView::ExecuteAgents( const wrapper::View& model, const wrapper::V
     if( IsEnabled( perceiver ) )
     {
         bool civiliansEncountered = false;
-        for ( T_AgentPtrVector::const_iterator itAgent = perceivableAgents.begin(); itAgent != perceivableAgents.end(); ++itAgent )
+        for ( T_AgentPtrVector::const_iterator it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
-            const wrapper::View& agent = *itAgent;
+            const wrapper::View& agent = *it;
             if( GET_HOOK( BelongsToKnowledgeGroup )( perceiver, agent ) )
                 continue;
 
@@ -146,8 +146,9 @@ void PerceptionView::ExecuteAgents( const wrapper::View& model, const wrapper::V
             {
                 const PerceptionLevel& level = ComputeAgent( model, perceiver, surfaces, agent );
                 observer_.NotifyAgentPerception( agent, level );
-                if( GET_HOOK( IsAgentNewlyPerceived )( perceiver, agent, level.GetID() ) 
-                    && !civiliansEncountered && agent[ "is-civilian" ] )
+                if( !civiliansEncountered
+                    && agent[ "is-civilian" ]
+                    && GET_HOOK( IsAgentNewlyPerceived )( perceiver, agent, level.GetID() ) )
                 {
                     PostReport( perceiver, MIL_Report::eRC_CiviliansEncountered );
                     civiliansEncountered = true;
