@@ -14,7 +14,6 @@
 #include "Entities/MIL_EntityManager.h"
 #include "MIL_TacticalLineManager.h"
 #include "MIL_AgentServer.h"
-#include "simulation_terrain/TER_AnalyzerManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
 #include "MIL_Singletons.h"
 
@@ -55,7 +54,7 @@ TER_LimitData::TER_LimitData( const T_PointVector& points )
     , nNbRefs_( 0 )
 {
     InitializeDistancesData();
-    handler_.Reset( new TER_DynamicData( points_, TER_AnalyzerManager::DefaultTerrainData() ) );
+    handler_.Reset( new TER_DynamicData( points_ ) );
 }
 
 // -----------------------------------------------------------------------------

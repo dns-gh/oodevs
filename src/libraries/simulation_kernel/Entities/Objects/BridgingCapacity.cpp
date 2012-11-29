@@ -57,16 +57,9 @@ BridgingCapacity::~BridgingCapacity()
 
 namespace
 {
-    bool IsBridge( const std::string& type ) { return type == "bridge"; }
-
-    TerrainData Convert( const std::string& type )
+    bool IsBridge( const std::string& type )
     {
-        if( type == "highway" )             return TerrainData::Motorway();
-        else if( type == "main road" )      return TerrainData::LargeRoad();
-        else if( type == "secondary road" ) return TerrainData::MediumRoad();
-        else if( type == "country road" )   return TerrainData::SmallRoad();
-        else if( IsBridge( type ) )         return TerrainData::Bridge();
-        return TerrainData::Bridge();
+        return type == "bridge";
     }
 }
 
@@ -133,7 +126,7 @@ void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void BridgingCapacity::CreatePathData()
 {
-    handler_.Reset( new TER_DynamicData( bridge_, Convert( type_ ) ) );
+    handler_.Reset( new TER_DynamicData( bridge_, type_ ) );
 }
 
 // -----------------------------------------------------------------------------

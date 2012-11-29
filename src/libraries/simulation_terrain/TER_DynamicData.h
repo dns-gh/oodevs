@@ -26,7 +26,8 @@ class TerrainRetractationHandle;
 class TER_DynamicData
 {
 public:
-    TER_DynamicData( const T_PointVector& points, const TerrainData& terrainData );
+    explicit TER_DynamicData( const T_PointVector& points );
+             TER_DynamicData( const T_PointVector& points, const std::string& type );
 
     //! @name Notifications
     //@{

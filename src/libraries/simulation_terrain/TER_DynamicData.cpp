@@ -10,6 +10,7 @@
 #include "simulation_terrain_pch.h"
 #include "TER_DynamicData.h"
 #include "TER_PathFinderThread.h"
+#include "TER_AnalyzerManager.h"
 #include "MT_Tools/MT_Logger.h"
 #include <pathfind/TerrainRetractationHandle.h>
 
@@ -17,10 +18,38 @@
 // Name: TER_DynamicData constructor
 // Created: NLD 2005-10-10
 // -----------------------------------------------------------------------------
-TER_DynamicData::TER_DynamicData( const T_PointVector& points, const TerrainData& terrainData )
+TER_DynamicData::TER_DynamicData( const T_PointVector& points )
     : nNbrRefs_   ( 0 )
     , points_     ( points )
-    , terrainData_( terrainData )
+    , terrainData_( TER_AnalyzerManager::DefaultTerrainData() )
+{
+    // NOTHING
+}
+
+namespace
+{
+    TerrainData Convert( const std::string& type )
+    {
+        if( type == "highway" )
+            return TerrainData::Motorway();
+        if( type == "main road" )
+            return TerrainData::LargeRoad();
+        if( type == "secondary road" )
+            return TerrainData::MediumRoad();
+        if( type == "country road" )
+            return TerrainData::SmallRoad();
+        return TerrainData::Bridge();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_DynamicData constructor
+// Created: MCO 2012-11-29
+// -----------------------------------------------------------------------------
+TER_DynamicData::TER_DynamicData( const T_PointVector& points, const std::string& type )
+    : nNbrRefs_   ( 0 )
+    , points_     ( points )
+    , terrainData_( Convert( type ) )
 {
     // NOTHING
 }
