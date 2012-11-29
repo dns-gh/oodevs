@@ -73,6 +73,9 @@ def cmdcheckdec(args):
         return 1
     # Cannot really blame models for using this one
     names.remove('LoadResourcesFile')
+    # DEC_* can be found automatically, it is not necessary to add them
+    # to the list in models.
+    names = [n for n in names if not n.startswith('DEC_')]
     # models list must be a superset of the actual DEC set
     result = 0
     missing = sorted(set(names) - set(refnames))
