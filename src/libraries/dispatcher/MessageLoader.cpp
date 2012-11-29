@@ -566,11 +566,11 @@ size_t MessageLoader::LoadSimToClientMessage( const char* input, size_t size,
     }
 
     msgSize = *reinterpret_cast< const unsigned* >( input );
-    size_t payload = std::min( size - header, msgSize );
+    size_t payload = std::min( size - header, static_cast< size_t >( msgSize ) );
     if( msgSize > payload )
         MT_LOG_WARNING_MSG( "[dispatcher] Truncating message due to truncated payload or corrupted header" );
     sword::SimToClient message;
-    const bool valid = message.ParseFromArray( input + header, payload );
+    const bool valid = message.ParseFromArray( input + header, static_cast< int >( payload ) );
     if( !valid )
     {
         MT_LOG_WARNING_MSG( "[dispatcher] Skipping message due to corrupted payload" );
