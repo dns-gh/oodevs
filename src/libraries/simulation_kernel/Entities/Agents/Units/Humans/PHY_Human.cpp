@@ -545,7 +545,7 @@ bool PHY_Human::IsDead() const
 bool PHY_Human::IsSeriouslyPhysicallyWounded() const
 {
     assert( pWound_ );
-    return *pWound_ == PHY_HumanWound::woundedU2_ || *pWound_ == PHY_HumanWound::woundedU3_ || *pWound_ == PHY_HumanWound::woundedUE_;
+    return *pWound_ == PHY_HumanWound::woundedU2_ || *pWound_ == PHY_HumanWound::woundedU1_ || *pWound_ == PHY_HumanWound::woundedUE_;
 }
 
 // -----------------------------------------------------------------------------
