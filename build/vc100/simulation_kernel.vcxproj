@@ -927,7 +927,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFind_Manager_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\ComposanteLending\PHY_ActionLendSpecificComposantes.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h" />

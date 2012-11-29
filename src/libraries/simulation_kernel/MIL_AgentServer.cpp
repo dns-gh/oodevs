@@ -219,7 +219,7 @@ void MIL_AgentServer::OnTimer()
 
 namespace
 {
-    double UpdatePathfind( DEC_PathFind_Manager_ABC& manager )
+    double UpdatePathfind( DEC_PathFind_Manager& manager )
     {
         MT_Profiler profiler;
         profiler.Start();

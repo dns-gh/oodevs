@@ -5459,8 +5459,5 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_NbcSuit.h">
       <Filter>Source Files\Entities\Agents\Units\Humans\Types</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathFind_Manager_ABC.h">
-      <Filter>Source Files\Decision\Path</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
