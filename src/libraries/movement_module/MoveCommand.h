@@ -16,7 +16,6 @@
 #include <memory>
 
 class KnowledgeCache;
-class MIL_AgentPion;
 
 namespace sword
 {
@@ -37,12 +36,6 @@ namespace movement
 // =============================================================================
 class MoveCommand : private boost::noncopyable
 {
-public:
-    //! @name Types
-    //@{
-    typedef MIL_AgentPion ActorType;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
