@@ -15,6 +15,7 @@
 #include "wrapper/Hook.h"
 #include "wrapper/View.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/range/algorithm/find.hpp>
 
 using namespace sword;
 using namespace sword::perception;
@@ -378,27 +379,24 @@ bool SensorTypeAgent::IsLimitedToSensors( const wrapper::View& target ) const
 {
     if( !isLimitedToSensors_ )
         return false;
-
     const wrapper::View& surfaces = target[ "perceptions/surfaces-agent" ];
     for( std::size_t surface = 0; surface < surfaces.GetSize(); ++surface )
     {
         const std::string sensorName = surfaces.GetElement( surface )[ "sensor-type-name" ];
-        for( std::vector< std::string >::const_iterator it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
-            if( *it == sensorName )
-                return false;
+        if( boost::find( limitedToSensorsList_, sensorName ) != limitedToSensorsList_.end() )
+            return false;
     }
     RadarClass::T_RadarClassMap radarClasses = RadarClass::GetRadarClasses();
-    for( RadarClass::CIT_RadarClassMap itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
+    for( RadarClass::CIT_RadarClassMap it = radarClasses.begin(); it != radarClasses.end(); ++it )
     {
-        if( !GET_HOOK( IsUsingSpecializedActiveRadar )( target, itRadarClass->first.c_str() ) )
+        if( !GET_HOOK( IsUsingSpecializedActiveRadar )( target, it->first.c_str() ) )
             continue;
-        const wrapper::View& radars = target[ "perceptions/radars" ][ itRadarClass->first.c_str() ][ "list" ];
+        const wrapper::View& radars = target[ "perceptions/radars" ][ it->first.c_str() ][ "list" ];
         for( std::size_t radar = 0; radar < radars.GetSize(); ++radar )
         {
             const std::string radarName = radars.GetElement( radar )[ "name" ];
-            for( std::vector< std::string >::const_iterator it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
-                if( *it == radarName )
-                    return false;
+            if( boost::find( limitedToSensorsList_, radarName ) != limitedToSensorsList_.end() )
+                return false;
         }
     }
     return true;
