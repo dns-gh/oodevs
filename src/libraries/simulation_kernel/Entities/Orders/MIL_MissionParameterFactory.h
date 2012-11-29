@@ -61,6 +61,7 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateInteger( int id );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePopulationKnowledge( boost::shared_ptr< DEC_Knowledge_Population > populationKnowledge );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePopulationKnowledge( DEC_Decision_ABC* caller, int knowledgeId );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const std::string& message );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateTir( int id );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePoint( const MT_Vector2D& point );

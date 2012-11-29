@@ -306,6 +306,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( sword::Brain& brain )
             boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_AssignMissionCrowdParameter",
             boost::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, this, _1, _2, _3 ) ) );
+    brain.RegisterFunction( "DEC_AssignMissionCrowdListParameter",
+            boost::function< void( int ) >( boost::bind( &MIL_MissionParameterFactory::CreatePopulationKnowledge, this, _1 ) ) );
 
     // MRT / conduite
     brain.RegisterFunction( "DEC_MRT_CreerMissionPion",
