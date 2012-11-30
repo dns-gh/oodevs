@@ -8,6 +8,9 @@ class Ui(object):
 class ParseError(Exception):
     pass
 
+class Abort(Exception):
+    pass
+
 def parseenum(ui, headerpath, lineno, lines, restart, reval):
     """Return (lineno, reports) where lineno is the last line number read by
     the enumeration parser, and reports is a mapping of enumeration symbols
@@ -220,15 +223,6 @@ def checkluacpp(ui, luaids, cppids):
             result = 1
     return result
 
-def dumpusedreports(ui, intids, cppids, path):
-    reports = dict(intids)
-    reports.update(cppids)
-    reports = [(v,k) for k,v in reports.iteritems()]
-    fp = file(path, 'wb')
-    for i, n in sorted(reports):
-        fp.write('%d\t%s\n' % (i, n))
-    fp.close()
-
 def cmdcheck(ui, args):
     swordpath, = args
     result = 0
@@ -274,8 +268,40 @@ def cmdcheck(ui, args):
             result = 1
     return result
 
+def cmddump(ui, args):
+    swordpath, outpath = args
+    res, cppids = parsecpp(ui, swordpath)
+    if res:
+        raise Abort('failed to parse c++ enumerations')
+    luapath = os.path.join(swordpath,
+            'data/data/models/ada/decisional/dia5/Types_CR.lua')
+    res, luaids = parseluaids(ui, luapath)
+    if res:
+        raise Abort('failed to parse lua identifiers')
+
+    intpath = os.path.join(swordpath,
+            'data/app-data/resources/integration')
+    res, intnames = parseintegration(ui, intpath)
+    if res:
+        raise Abort('failed to parse integration layer')
+    intids = dict((n, luaids[n]) for n in intnames)
+    simids = dict(intids)
+    simids.update(cppids)
+    fp = file(outpath, 'wb')
+    msg = """\
+# This file was generated automatically by sword. Please update it when new
+# reports are being emitted by the simulation.
+
+"""
+    fp.write(msg)
+    for n in sorted(simids):
+        fp.write('%s\t%d\n' % (n, simids[n]))
+    fp.close()
+    return 0
+
 _commands = {
     'check': cmdcheck,
+    'dump': cmddump,
     }
 
 if __name__ == '__main__':
@@ -285,6 +311,10 @@ if __name__ == '__main__':
         sys.stderr.write('error: command expected\n')
         sys.exit(1)
     cmd, args = args[0], args[1:]
-    ret = _commands[cmd](ui, args)
+    try:
+        ret = _commands[cmd](ui, args)
+    except Abort, e:
+        sys.stderr.write('error: %s\n' % e)
+        sys.exit(1)
     sys.exit(ret)
 
