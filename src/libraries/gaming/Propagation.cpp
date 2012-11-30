@@ -98,7 +98,10 @@ void Propagation::Draw() const
         return;
     glPushAttrib( GL_TEXTURE_BIT );
 
-    glColor4f( 1, 1, 1, 1 );
+    float color[ 4 ];
+    glGetFloatv( GL_CURRENT_COLOR, color );
+
+    glColor4f( 1, 1, 1, color[ 3 ] );
     VisitorProxy visitor( globalExtent_ );
     pTree_->Accept( visitor );
     glPopAttrib();
