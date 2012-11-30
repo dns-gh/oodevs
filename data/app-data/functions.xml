@@ -708,26 +708,6 @@
     </indicator>
   </function>  
  
-  <function name="Dead people in crowd">
-    <descriptions>
-      <description name="Dead people in crowds" lang="en">
-        <![CDATA[Quantity of dead people in a specified list of crowds.]]>
-      </description>
-      <description name="Nombre de morts pour des foules" lang="fr">
-        <![CDATA[Nombre de morts dans une liste de foules.]]>
-      </description>
-    </descriptions>
-    <parameters>
-      <parameter name='Crowds' type='crowd list'/>
-    </parameters>
-    <indicator>
-      <extract function='crowdstates' states='dead' id='crowds'/>
-      <transform function='domain' type='int' select='${Crowds}' input='crowds' id='domained-crowds'/>	  
-      <reduce type='int' function='sum' input='domained-crowds' id='sum'/>
-      <result function='plot' input='sum' type='int'/>
-    </indicator>
-  </function>  
- 
  <function name="Functional state of infrastructures">
     <descriptions>
       <description name="Functional state of infrastructures" lang="en">

@@ -64,7 +64,7 @@ AfterActionFunction::~AfterActionFunction()
 void AfterActionFunction::ReadDescription( xml::xistream& xis )
 {
     std::string comments;
-    if( xis.attribute< std::string >( "lang" ) == tools::readLang() )
+    if( xis.attribute< std::string >( "lang" ) == tools::readLang() || ( name_.isEmpty() && xis.attribute< std::string >( "lang" ) == "en" ) )
     {
         xis >> comments;
         name_ = xis.attribute< std::string >( "name" ).c_str();
