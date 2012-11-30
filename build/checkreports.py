@@ -203,7 +203,7 @@ def parsephysical(ui, path):
 def checkphyids(ui, phyname, phids, othername, otherids):
     result = 0;
     for rid in otherids:
-        if rid not in phyids:
+        if rid not in phids:
             ui.error('error: cannot find %s %d in physical db %s\n'
                     % (othername, rid, phyname))
             result = 1
