@@ -48,7 +48,7 @@ FlyingShellPerceptionEventListener::~FlyingShellPerceptionEventListener()
 // -----------------------------------------------------------------------------
 void FlyingShellPerceptionEventListener::Notify( const core::Model& perception )
 {
-    const MIL_AgentPion& entity = perception[ "entity" ].GetUserData< MIL_AgentPion >();
-    const MIL_Effect_IndirectFire& flyingShell = perception[ "flying-shell" ].GetUserData< MIL_Effect_IndirectFire >();
+    const MIL_AgentPion& entity = perception[ "entity/data" ].GetUserData< MIL_AgentPion >();
+    const MIL_Effect_IndirectFire& flyingShell = perception[ "flying-shell/data" ].GetUserData< MIL_Effect_IndirectFire >();
     MIL_Report::PostEvent( entity, MIL_Report::eRC_ObservationTirIndirect, flyingShell );
 }
