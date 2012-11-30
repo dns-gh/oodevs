@@ -42,7 +42,7 @@ BOOST_FIXTURE_TEST_CASE( control_pause_from_client_is_converted, ContextFixture<
 
 BOOST_FIXTURE_TEST_CASE( control_resume_from_client_is_converted, ContextFixture< MsgsClientToReplay::MsgClientToReplay > )
 {
-    content.mutable_control_resume();
-    MOCK_EXPECT( server, SendClientToReplay ).once().with( constraint( msg, "context: 42 message { control_resume { } }" ) );
+    content.mutable_control_resume()->set_tick( 42 );
+    MOCK_EXPECT( server, SendClientToReplay ).once().with( constraint( msg, "context: 42 message { control_resume { tick: 42 } }" ) );
     converter.ReceiveClientToReplay( msg );
 }

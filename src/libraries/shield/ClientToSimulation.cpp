@@ -43,9 +43,9 @@ void ClientToSimulation::Convert( const Common::MsgControlPause& /*from*/, sword
 // Name: ClientToSimulation::Convert
 // Created: MCO 2010-11-25
 // -----------------------------------------------------------------------------
-void ClientToSimulation::Convert( const Common::MsgControlResume& /*from*/, sword::ControlResume* /*to*/ )
+void ClientToSimulation::Convert( const Common::MsgControlResume& from, sword::ControlResume* to )
 {
-    // NOTHING
+    CONVERT( tick );
 }
 
 // -----------------------------------------------------------------------------
