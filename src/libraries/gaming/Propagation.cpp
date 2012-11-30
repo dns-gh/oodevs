@@ -27,13 +27,13 @@ Propagation::Propagation( const std::string& file, const PropagationManager& man
      ASCExtractor extractor( file, manager.GetProjectionFile() );
     const ASCExtractor::T_Values& values = extractor.GetValues();
     std::vector< unsigned char > rgba( values.size() * 4 );
-    const size_t rowsCount = extractor.GetRows();
-    const size_t colsCount = extractor.GetCols();
+    const int rowsCount = extractor.GetRows();
+    const int colsCount = extractor.GetCols();
 
-    for( size_t i = 0; i < rowsCount; i++ )
+    for( int i = 0; i < rowsCount; i++ )
     {
         const size_t rowOffset = ( rowsCount - i - 1 ) * ( colsCount * 4 );
-        for( size_t j = 0; j < colsCount; j++ )
+        for( int j = 0; j < colsCount; j++ )
         {
             const float value = values[ i * colsCount + j ];
             QColor color = disasterType.GetColor( value );
