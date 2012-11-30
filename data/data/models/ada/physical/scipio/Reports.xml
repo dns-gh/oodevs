@@ -663,5 +663,20 @@
     <parameter type="EquipmentType"/>
   </report>
   <report category="operational" id="450" message="Donneur indisponible"/>
+  <report category="operational" id="454" message="Début de dévalorisation pour l'objet : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="455" message="Fin de dévalorisation pour l'objet : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="456" message="Pas de position trafficable dans la zone"/>
+  <report category="operational" id="457" message="Pris sous tir d'IED"/>
+  <report category="operational" id="458" message="L'objectif n'est plus alerté"/>
+  <report category="operational" id="459" message="Objectif confiné"/>
+  <report category="operational" id="461" message="Incendie en cours de traitement"/>
+  <report category="operational" id="462" message="%1 déposé">
+    <parameter type="AgentKnowledge"/>
+  </report>
+  <report category="operational" id="465" message="Impossible d'obtenir le renseignement critique : rapport de force trop faible"/>
 </reports>
-<!-- signature="1985116679" -->
+<!-- signature="0059379224" -->
