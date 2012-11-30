@@ -794,7 +794,7 @@
     </target>
 
     <target name="tools_test" depends="library.tools">
-        <build-test name="tools" depends="boost,xerces,xalan" 
+        <build-test name="tools" depends="boost,xerces,xalan,protobuf" 
             libs="lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   tools,
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}"/>
