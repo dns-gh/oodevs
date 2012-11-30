@@ -28,7 +28,7 @@ namespace
             return StartCommand( "move",
                 core::MakeModel( "action", action )
                                ( "identifier", identifier )
-                               ( "path", core::MakeUserData( path ) ) );
+                               ( "path/data", core::MakeUserData( path ) ) );
         }
         void ConfigurePathfind( const T_Points& points )
         {
@@ -142,7 +142,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_canceled_path_sends_not_allowed_callback_and_
     command = StartCommand( "move",
         core::MakeModel( "action", action )
             ( "identifier", identifier )
-            ( "path", core::MakeUserData( path ) ) );
+            ( "path/data", core::MakeUserData( path ) ) );
     mock::verify();
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );
@@ -157,7 +157,7 @@ BOOST_FIXTURE_TEST_CASE( moving_on_impossible_path_sends_not_allowed_callback_an
     command = StartCommand( "move",
         core::MakeModel( "action", action )
             ( "identifier", identifier )
-            ( "path", core::MakeUserData( path ) ) );
+            ( "path/data", core::MakeUserData( path ) ) );
     mock::verify();
     mock::reset();
     ExpectCallbackEvent( sword::movement::PathWalker::eNotAllowed );

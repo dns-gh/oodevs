@@ -412,7 +412,7 @@ namespace
     {
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
-        parameters[ "path" ].SetUserData( path );
+        parameters[ "path/data" ].SetUserData( path );
         return StartCommand( sink, pion, "move", parameters );
     }
     void Orientate( Sink& sink, MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D > direction )

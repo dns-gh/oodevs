@@ -42,7 +42,7 @@ namespace
 MoveCommand::MoveCommand( ModuleFacade& module, const wrapper::View& parameters, const wrapper::View& /*model*/ )
     : action_            ( parameters[ "action" ] )
     , identifier_        ( parameters[ "identifier" ] )
-    , pMainPath_         ( boost::dynamic_pointer_cast< Agent_Path >( *static_cast< boost::shared_ptr< Path_ABC >* >( parameters[ "path" ].GetUserData() ) ) )
+    , pMainPath_         ( boost::dynamic_pointer_cast< Agent_Path >( *static_cast< boost::shared_ptr< Path_ABC >* >( parameters[ "path/data" ].GetUserData() ) ) )
     , executionSuspended_( false )
     , isBlockedByObject_ ( false )
     , blockedTickCounter_( 0 )
