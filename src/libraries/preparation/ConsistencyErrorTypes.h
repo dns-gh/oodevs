@@ -62,6 +62,7 @@ enum E_ConsistencyCheck
     eDeletedPopulationUrbanBlocks,
     eDiffusionListCleaned,
     eSignature,
+    eCityAreaLimitExceeded,
     eOthers,
     eOthersMask,
 };

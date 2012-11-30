@@ -1475,6 +1475,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unknown type &apos;%1&apos;, a ghost unit has been created instead.</source>
         <translation>Type inconnu &apos;%1&apos;, un fantôme a été créé à la place.</translation>
     </message>
+    <message>
+        <source>City area exceeds %1 km²</source>
+        <translation>Surface de ville dépassant %1 km²</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

@@ -28,7 +28,8 @@ namespace
             || type ==  eNoKnowledgeGroup || type ==  eScoreError || type ==  eSuccessFactorError
             || type == eProfileNoRole || type == eNoOrbat || type == eSignature
             || type == eBadLogisticSubordinate || type == eUnknownInfrastructure || type == eUnknownResourceNetwork
-            || type == eDiffusionList || type == eMelmil || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks;
+            || type == eDiffusionList || type == eMelmil || type == eDeletedUrbanBlocks || type == eDeletedPopulationUrbanBlocks
+            || type == eCityAreaLimitExceeded;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
@@ -126,6 +127,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eDeletedPopulationUrbanBlocks ] = "%1";
     errorDescriptions_[ eDiffusionListCleaned ] = tools::translate( "ModelConsistencyDialog", "Invalid unit removed from diffusion list." );
     errorDescriptions_[ eSignature ] = "%1";
+    errorDescriptions_[ eCityAreaLimitExceeded ] = tools::translate( "ModelConsistencyDialog", "City area exceeds %1 km²" );
     errorDescriptions_[ eOthers ] = "%1";
 }
 

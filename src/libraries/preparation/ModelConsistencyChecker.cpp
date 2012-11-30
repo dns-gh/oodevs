@@ -28,7 +28,9 @@
 #include "SuccessFactorsModel.h"
 #include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
+#include "UrbanHierarchies.h"
 #include "UrbanModel.h"
+#include "UrbanPositions.h"
 #include "UserProfile.h"
 #include "clients_gui/LongNameHelper.h"
 #include "clients_gui/DiffusionListFunctors.h"
@@ -67,9 +69,9 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <boost/filesystem/operations.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
 #include <xeuseuleu/xsl.hpp>
 
 using namespace kernel;
@@ -818,6 +820,13 @@ void ModelConsistencyChecker::CheckLogisticSubordinates()
     }
 }
 
+namespace
+{
+    const int cityAreaLimitSqrKm = 45;
+    const int cityAreaLimit = cityAreaLimitSqrKm * 1000000;
+    const std::string strCityAreaLimit = boost::lexical_cast< std::string >( cityAreaLimitSqrKm );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::CheckUrban
 // Created: JSR 2012-06-28
@@ -836,6 +845,16 @@ void ModelConsistencyChecker::CheckUrban()
             if( !network->GetInvalidResources().empty() )
                 for( std::set< std::string >::const_iterator itResource = network->GetInvalidResources().begin(); itResource != network->GetInvalidResources().end(); ++itResource )
                     unknownNetworks.insert( *itResource );
+        if( const UrbanHierarchies* hierarchies = static_cast< const UrbanHierarchies* >( object.Retrieve< kernel::Hierarchies >() ) )
+        {
+            if( hierarchies->GetLevel() == eUrbanLevelCity )
+            {
+                const kernel::UrbanPositions* urbanPosition = static_cast< const kernel::UrbanPositions* >( object.Retrieve< kernel::UrbanPositions_ABC >() );
+                int cityArea = static_cast< int >( urbanPosition->ComputeArea() );
+                if( cityArea > cityAreaLimit )
+                    AddError( eCityAreaLimitExceeded, &object, strCityAreaLimit );
+            }
+        }
     }
     Iterator< const kernel::Object_ABC& > itObject = model_.GetObjectResolver().CreateIterator();
     while( itObject.HasMoreElements() )

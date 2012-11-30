@@ -1470,6 +1470,10 @@ This data can&apos;t be projected.</source>
         <source>Unknown type &apos;%1&apos;, a ghost unit has been created instead.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>City area exceeds %1 km²</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
