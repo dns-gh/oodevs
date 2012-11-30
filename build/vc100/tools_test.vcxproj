@@ -46,6 +46,7 @@
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -55,6 +56,7 @@
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -64,6 +66,7 @@
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -73,6 +76,7 @@
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>

@@ -48,6 +48,7 @@
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
@@ -57,6 +58,7 @@
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'" Label="PropertySheets">
@@ -66,6 +68,7 @@
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
@@ -75,6 +78,7 @@
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_geocoord.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_qt.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />

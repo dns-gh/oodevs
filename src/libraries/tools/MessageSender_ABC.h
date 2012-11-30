@@ -52,8 +52,10 @@ public:
     void Serialize( const google::protobuf::Message& m, Message& message ) const
     {
         if( !m.IsInitialized() )
-            throw std::runtime_error( "Message of type \"" + m.GetDescriptor()->full_name()
+            throw std::runtime_error(  "Message \"" + m.ShortDebugString()
+                + "\" of type \"" + m.GetDescriptor()->full_name()
                 + "\" is missing required fields: " + m.InitializationErrorString() );
+
         boost::shared_array< google::protobuf::uint8 > buffer( new google::protobuf::uint8[ m.ByteSize() ] );
         if( !m.SerializeWithCachedSizesToArray( buffer.get() ) )
             throw std::runtime_error( "Error serializing message of type \"" + m.GetDescriptor()->full_name() + '"' );
