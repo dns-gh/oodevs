@@ -53,6 +53,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\link_graphics.props" />
@@ -68,6 +69,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\link_graphics.props" />
@@ -83,6 +85,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\link_graphics.props" />
@@ -98,6 +101,7 @@
     <Import Project="Property sheets\link_xalan.props" />
     <Import Project="Property sheets\link_xerces.props" />
     <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_protobuf.props" />
     <Import Project="Property sheets\link_opengl.props" />
     <Import Project="Property sheets\link_zip.props" />
     <Import Project="Property sheets\link_graphics.props" />
