@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "UrbanTreeView.h"
 #include "moc_UrbanTreeView.cpp"
+#include "clients_gui/DragAndDropHelpers.h"
 #include "clients_gui/ItemPixmapDelegate.h"
 #include "clients_gui/ModelObserver_ABC.h"
 #include "clients_gui/StandardModelVisitor_ABC.h"
@@ -373,48 +374,22 @@ QMimeData* UrbanTreeView::MimeData( const QModelIndexList& indexes, bool& overri
 void UrbanTreeView::dragMoveEvent( QDragMoveEvent *pEvent )
 {
     QTreeView::dragMoveEvent( pEvent );
-    if( IsReadOnly() )
-    {
-        pEvent->ignore();
-        return;
-    }
-    QPoint position = viewport()->mapFromParent( pEvent->pos() );
     kernel::UrbanObject_ABC* target = dataModel_.GetDataFromIndex< kernel::UrbanObject_ABC >( indexAt( pEvent->pos() ) );
-    if( !target )
+    bool accept = false;
+    if( !IsReadOnly() && target )
     {
-        pEvent->ignore();
-        return;
-    }
-    EUrbanLevel levelTarget = static_cast< const UrbanHierarchies& >( target->Get< kernel::Hierarchies >() ).GetLevel();
-    const QMimeData* mimeData = pEvent->mimeData();
-    QStringList formats = mimeData->formats();
-    foreach( QString format, formats )
-    {
-        if( format != mimeType_ )
-            continue;
-        QByteArray encodedData = mimeData->data( format );
-        QDataStream stream( &encodedData, QIODevice::ReadOnly );
-        while( !stream.atEnd() )
+        EUrbanLevel levelTarget = static_cast< const UrbanHierarchies& >( target->Get< kernel::Hierarchies >() ).GetLevel();
+        if( const kernel::UrbanObject_ABC* entity = dnd::FindSafeData< kernel::UrbanObject_ABC >( pEvent ) )
         {
-            int ptr = 0;
-            stream >> ptr;
-            kernel::SafePointer< const kernel::UrbanObject_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::UrbanObject_ABC >* >( ptr );
-            if( safePtr )
-            {
-                const kernel::UrbanObject_ABC* entity = *safePtr;
-                if( entity )
-                {
-                    EUrbanLevel level = static_cast< const UrbanHierarchies& >( entity->Get< kernel::Hierarchies >() ).GetLevel();
-                    if( ( level == eUrbanLevelBlock && levelTarget == eUrbanLevelDistrict ) || ( level == eUrbanLevelDistrict && levelTarget == eUrbanLevelCity ) )
-                    {
-                        pEvent->accept();
-                        return;
-                    }
-                }
-            }
+            EUrbanLevel level = static_cast< const UrbanHierarchies& >( entity->Get< kernel::Hierarchies >() ).GetLevel();
+            if( ( level == eUrbanLevelBlock && levelTarget == eUrbanLevelDistrict ) || ( level == eUrbanLevelDistrict && levelTarget == eUrbanLevelCity ) )
+                accept = true;
         }
     }
-    pEvent->ignore();
+    if( accept )
+        pEvent->accept();
+    else
+        pEvent->ignore();
 }
 
 // -----------------------------------------------------------------------------
@@ -437,8 +412,14 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
         if( !object )
             return;
         UrbanHierarchies& hierarchies = static_cast< UrbanHierarchies& >( object->Get< kernel::Hierarchies >() );
+        UrbanHierarchies& targetHierarchies = static_cast< UrbanHierarchies& >( entityTarget->Get< kernel::Hierarchies >() );
         kernel::Entity_ABC* superior = const_cast< kernel::Entity_ABC* >( hierarchies.GetSuperior() );
         if( !superior || superior == entityTarget )
+            return;
+        EUrbanLevel objectLevel = hierarchies.GetLevel();
+        EUrbanLevel targetLevel = targetHierarchies.GetLevel();
+        if( objectLevel == eUrbanLevelCity || ( objectLevel == eUrbanLevelBlock && targetLevel != eUrbanLevelDistrict )
+                                           || ( objectLevel == eUrbanLevelDistrict && targetLevel != eUrbanLevelCity ) )
             return;
         superior->Get< kernel::UrbanPositions_ABC >().ResetConvexHull();
         QStandardItem* superiorItem = dataModel_.FindDataItem( *superior );
@@ -448,7 +429,7 @@ void UrbanTreeView::Drop( const QString& mimeType, void* data, QStandardItem& ta
         QList< QStandardItem* > rowItems = superiorItem->takeRow( index.row() );
         for( QList< QStandardItem *>::iterator it = rowItems.begin(); it != rowItems.end(); ++it )
             delete *it;
-        static_cast< UrbanHierarchies& >( object->Get< kernel::Hierarchies >() ).ChangeSuperior( *entityTarget );
+        hierarchies.ChangeSuperior( *entityTarget );
         NotifyCreated( *object );
         tools::Iterator< const kernel::Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
         while( subIt.HasMoreElements() )

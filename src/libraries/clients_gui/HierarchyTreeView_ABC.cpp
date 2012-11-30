@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "HierarchyTreeView_ABC.h"
 #include "moc_HierarchyTreeView_ABC.cpp"
+#include "DragAndDropHelpers.h"
 #include "EntitySymbols.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -321,73 +322,23 @@ void HierarchyTreeView_ABC::Drop( const QString& mimeType, void* data, QStandard
 void HierarchyTreeView_ABC::dragMoveEvent( QDragMoveEvent *pEvent )
 {
     QTreeView::dragMoveEvent( pEvent );
-    // TODO factoriser la méthode
-    if( IsReadOnly()  )
-    {
-        pEvent->ignore();
-        return;
-    }
-    //EntityTreeView_ABC::dragMoveEvent( pEvent );
     kernel::Entity_ABC* target = dataModel_.GetDataFromIndex< kernel::Entity_ABC >( indexAt( pEvent->pos() ) );
-    const QMimeData* mimeData = pEvent->mimeData();
-
-    if( !target )
+    bool accept = false;
+    if( !IsReadOnly() && target )
     {
+        const kernel::Ghost_ABC* ghost = dynamic_cast< const kernel::Ghost_ABC* >( target );
+        if( ghost && ghost->GetGhostType() == eGhostType_Agent && dnd::HasData< kernel::AgentType >( pEvent ) )
+            accept = true;
+        else if( ghost && ghost->GetGhostType() == eGhostType_Automat && dnd::HasData< kernel::AutomatType >( pEvent ) )
+            accept = true;
+        else if( const kernel::Entity_ABC* entity = dnd::FindSafeEntityData< kernel::Agent_ABC, kernel::Automat_ABC, kernel::Formation_ABC, kernel::Ghost_ABC, kernel::KnowledgeGroup_ABC >( pEvent ) )
+            if( entity->GetId() != target->GetId() && CanChangeSuperior( *entity, *target ) && profile_.CanDoMagic( *entity ) && profile_.CanDoMagic( *target ) )
+                accept = true;
+    }
+    if( accept )
+        pEvent->accept();
+    else
         pEvent->ignore();
-        return;
-    }
-
-    QStringList formats = mimeData->formats();
-    foreach( QString format, formats )
-    {
-        QByteArray encodedData = mimeData->data( format );
-        QDataStream stream( &encodedData, QIODevice::ReadOnly );
-        while( !stream.atEnd() )
-        {
-            int ptr = 0;
-            stream >> ptr;
-            if( format == typeid( kernel::AgentType ).name() )
-            {
-                kernel::AgentType* type = reinterpret_cast< kernel::AgentType* >( ptr );
-                if( type )
-                {
-                    if( const kernel::Ghost_ABC* ghost = dynamic_cast< const kernel::Ghost_ABC* >( target ) )
-                        if( ghost->GetGhostType() == eGhostType_Agent )
-                        {
-                            pEvent->accept();
-                            return;
-                        }
-                }
-            }
-            else if( format == typeid( kernel::AutomatType ).name() )
-            {
-                kernel::AutomatType* type = reinterpret_cast< kernel::AutomatType* >( ptr );
-                if( type )
-                {
-                    if( const kernel::Ghost_ABC* ghost = dynamic_cast< const kernel::Ghost_ABC* >( target ) )
-                        if( ghost->GetGhostType() == eGhostType_Automat )
-                        {
-                            pEvent->accept();
-                            return;
-                        }
-                }
-            }
-            else
-            {
-                kernel::SafePointer< const kernel::Entity_ABC >* safePtr = reinterpret_cast< kernel::SafePointer< const kernel::Entity_ABC >* >( ptr );
-                if( safePtr && *safePtr )
-                {
-                    const kernel::Entity_ABC* entity = *safePtr;
-                    if( entity->GetId() != target->GetId() && CanChangeSuperior( *entity, *target ) && profile_.CanDoMagic( *entity ) && profile_.CanDoMagic( *target ) )
-                    {
-                        pEvent->accept();
-                        return;
-                    }
-                }
-            }
-        }
-    }
-    pEvent->ignore();
 }
 
 // -----------------------------------------------------------------------------
