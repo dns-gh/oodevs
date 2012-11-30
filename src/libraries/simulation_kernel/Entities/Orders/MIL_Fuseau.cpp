@@ -458,18 +458,6 @@ void MIL_Fuseau::Reset( const MT_Vector2D* vOrientationRefPos, const T_PointVect
     // Fuseau global orientation
     vStartGlobalDirection_ = MT_Line( *pLeftLimit_->GetPoints().begin (), *pRightLimit_->GetPoints().begin () ).GetCenter();
     vEndGlobalDirection_   = MT_Line( *pLeftLimit_->GetPoints().rbegin(), *pRightLimit_->GetPoints().rbegin() ).GetCenter();
-
-    // DEBUG
-    /*printf( "MIL_Fuseau::Reset BEGIN\n" );
-    printf("\tLEFT\n");
-    for( IT_PointVector itPoint = leftPointVector_.begin(); itPoint != leftPointVector_.end(); ++itPoint )
-        printf("\t\t %.2f\n", itPoint->rX_, itPoint->rY_ );
-
-    printf("\tRIGHT\n");
-    for( itPoint = rightPointVector_.begin(); itPoint != rightPointVector_.end(); ++itPoint )
-        printf("\t\t %.2f\n", itPoint->rX_, itPoint->rY_ );
-    printf( "MIL_Fuseau::Reset END\n" );*/
-    // DEBUG
 }
 
 //-----------------------------------------------------------------------------
