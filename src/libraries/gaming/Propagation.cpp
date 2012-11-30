@@ -27,8 +27,8 @@ Propagation::Propagation( const std::string& file, const PropagationManager& man
      ASCExtractor extractor( file, manager.GetProjectionFile() );
     const ASCExtractor::T_Values& values = extractor.GetValues();
     std::vector< unsigned char > rgba( values.size() * 4 );
-    const int rowsCount = extractor.GetRows();
-    const int colsCount = extractor.GetCols();
+    const size_t rowsCount = extractor.GetRows();
+    const size_t colsCount = extractor.GetCols();
 
     for( size_t i = 0; i < rowsCount; i++ )
     {
