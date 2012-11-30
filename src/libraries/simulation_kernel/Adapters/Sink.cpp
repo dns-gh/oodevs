@@ -253,6 +253,7 @@ void Sink::Initialize()
     listeners_.push_back( new DirectFirePopulationEventListener( *facade_ ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire pion callback" ) );
     listeners_.push_back( new CallbackEventListener( *model_, *facade_, "direct fire population callback" ) );
+    listeners_.push_back( new FlyingShellPerceptionEventListener( *facade_ ) );
     FireHooks::Initialize();
     PerceptionHooks::Initialize();
     MovementHooks::Initialize();

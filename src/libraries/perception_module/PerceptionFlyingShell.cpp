@@ -62,7 +62,7 @@ PerceptionFlyingShell::~PerceptionFlyingShell()
 // -----------------------------------------------------------------------------
 void PerceptionFlyingShell::AddLocalisation( const wrapper::View& perception )
 {
-    zones_.push_back( perception );
+    zones_.push_back( perception[ "localization" ] );
 }
 
 namespace

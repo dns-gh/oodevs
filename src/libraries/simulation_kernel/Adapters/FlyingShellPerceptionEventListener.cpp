@@ -26,9 +26,8 @@ namespace
 // Name: FlyingShellPerceptionEventListener constructor
 // Created: MCO 2012-06-15
 // -----------------------------------------------------------------------------
-FlyingShellPerceptionEventListener::FlyingShellPerceptionEventListener( const core::Model& model, core::Facade& facade )
-    : model_ ( model )
-    , facade_( facade )
+FlyingShellPerceptionEventListener::FlyingShellPerceptionEventListener( core::Facade& facade )
+    : facade_( facade )
 {
     facade.Register( event, *this );
 }
