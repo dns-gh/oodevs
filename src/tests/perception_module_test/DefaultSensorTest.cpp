@@ -37,7 +37,6 @@ BOOST_FIXTURE_TEST_CASE( agents_in_list_are_identified_with_default_sensor, Perc
     MOCK_EXPECT( IsAgentPerceptionDistanceHacked ).once().with( perceiver, other ).returns( false );
     MOCK_EXPECT( CanBeSeen ).once().with( perceiver, other ).returns( true );
     MOCK_EXPECT( IsAgentNewlyPerceived ).returns( true );
-    MOCK_EXPECT( IsKnown ).once().with( perceiver, other ).returns( true );
     MOCK_EXPECT( GetSignificantVolume ).once().returns( significantVolume );
     MOCK_EXPECT( GetVolumeIdentifierFromInstance ).once().with( significantVolume ).returns( 0u );
     MOCK_EXPECT( GetAltitude ).once().with( 0, 1 ).returns( 0u );
