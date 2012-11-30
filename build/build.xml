@@ -1261,7 +1261,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.otpacks,package.decisional,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.hla,package.plugin.bml,package.plugin.dis" description="package plugin individual installers"/>
@@ -1414,6 +1414,27 @@
             <include name="data/models/ada/decisional/decisional.xml"/>
             <include name="data/models/ada/physical/scipio/**"/>
         </pack>
+    </target>
+
+    <target name="package.decisional" description="package.decisional without integration layer">
+        <!-- Why not use ScipioStab-RefSim?
+             We want to fetch and extract scipio decisional, if possible
+             without its integration layer, from another project, using
+             poney.
+             - Poney "update" does not extract .otpacks
+             - ScipioStab-RefSim contains the integration layer
+             - Having a filename no including version numbers makes it
+               easier to pull programmatically.
+        -->
+        <zip destfile="${dist.dir}/decisional.zip" filesonly="true">
+            <fileset dir="${data.dir}">
+                <include name="data/models/ada/decisional/bms/**"/>
+                <include name="data/models/ada/decisional/dia5/**"/>
+                <exclude name="data/models/ada/decisional/dia5/integration/**"/>
+                <include name="data/models/ada/decisional/decisional.xml"/>
+                <include name="data/models/ada/physical/scipio/**"/>
+            </fileset>
+        </zip>
     </target>
 
     <target name="package.otpack.defense.scipio.VA" description="package du defense-scipio Validation Amont otpack">
