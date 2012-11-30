@@ -392,7 +392,15 @@ void MainWindow::DoLoad( QString filename, bool checkConsistency /*= true*/ )
     SetProgression( 0, tr( "Initialize data ..." ) );
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
-    config_.LoadExercise( filename.toStdString() );
+    try
+    {
+        config_.LoadExercise( filename.toStdString() );
+    }
+    catch( ... )
+    {
+        SetProgression( 100, "" );
+        throw;
+    }
     if( Load() )
     {
         SetWindowTitle( true );
