@@ -181,17 +181,20 @@ def checkluacpp(ui, luaids, cppids):
 
 def parsereportlist(path):
     reports = {}
+    simnames = set()
     for line in file(path):
         line = line.strip()
         if not line or line[0] == '#':
             continue
-        name, code = line.split('\t', 1)
+        name, code, sim = line.split('\t')
         reports[name] = int(code)
-    return reports
+        if sim == 'sim':
+            simnames.add(name)
+    return reports, simnames
 
 def cmdcheck(ui, args):
     swordpath, reportpath = args
-    reports = parsereportlist(reportpath)
+    reports, simnames = parsereportlist(reportpath)
     result = 0
     res, cppids = parsecpp(ui, swordpath)
     if res:
@@ -232,6 +235,9 @@ def cmdcheck(ui, args):
                     'integration layer and in models (check reports.txt) '
                     '%d != %d\n' % (n, c, cc))
             result = 1
+    for n in (set(cppids) - simnames):
+        ui.error('error: %s is not marked as a simulation identifier in '
+                'models reports.txt' % n)
     return result
 
 def cmddump(ui, args):
@@ -261,7 +267,8 @@ def cmddump(ui, args):
 """
     fp.write(msg)
     for n in sorted(simids):
-        fp.write('%s\t%d\n' % (n, simids[n]))
+        fp.write('%s\t%d\t%s\n' % (n, simids[n],
+            n in cppids and 'sim' or 'notsim'))
     fp.close()
     return 0
 
