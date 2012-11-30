@@ -19,8 +19,8 @@ using namespace sword;
 using namespace sword::movement;
 
 DECLARE_HOOK( EntityManagerFindObject, bool, ( unsigned int nID ) )
-DECLARE_HOOK( GetKnowledgeObjectRealName, const char*, ( boost::shared_ptr< DEC_Knowledge_Object > object ) )
-DECLARE_HOOK( GetObjectKnownId, int, ( boost::shared_ptr< DEC_Knowledge_Object > obstacle ) )
+DECLARE_HOOK( GetKnowledgeObjectRealName, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) )
+DECLARE_HOOK( GetObjectKnownId, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) )
 DECLARE_HOOK( UpdateObjectsToAvoid, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) )
 
 namespace

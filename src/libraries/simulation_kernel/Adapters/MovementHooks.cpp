@@ -435,7 +435,7 @@ namespace
     {
         GET_PION( entity ).Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, GET_DATA( object, MIL_Object_ABC ) );
     }
-    DEFINE_HOOK( GetObjectKnownId, 1, int, ( boost::shared_ptr< DEC_Knowledge_Object > obstacle ) )
+    DEFINE_HOOK( GetObjectKnownId, 1, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) )
     {
         assert( obstacle && obstacle->IsValid() );
         return obstacle->GetObjectKnown() ? obstacle->GetObjectKnown()->GetID() : 0;
@@ -491,7 +491,7 @@ namespace
     {
         return MIL_Tools::GetLandTypeName( terrain ).c_str();
     }
-    DEFINE_HOOK( GetKnowledgeObjectRealName, 1, const char*, ( boost::shared_ptr< DEC_Knowledge_Object > object ) )
+    DEFINE_HOOK( GetKnowledgeObjectRealName, 1, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) )
     {
         return object->GetType().GetRealName().c_str();
     }

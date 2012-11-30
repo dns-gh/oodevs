@@ -116,8 +116,8 @@ namespace movement
     APPLY( ObjectIsInside, 2, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) ) \
     APPLY( ObjectIsOnBorder, 2, bool, ( const SWORD_Model* object, const MT_Vector2D& point ) ) \
     APPLY( EntityManagerFindObject, 1, bool, ( unsigned int nID ) ) \
-    APPLY( GetKnowledgeObjectRealName, 1, const char*, ( boost::shared_ptr< DEC_Knowledge_Object > object ) ) \
-    APPLY( GetObjectKnownId, 1, int, ( boost::shared_ptr< DEC_Knowledge_Object > obstacle ) ) \
+    APPLY( GetKnowledgeObjectRealName, 1, const char*, ( const boost::shared_ptr< DEC_Knowledge_Object >& object ) ) \
+    APPLY( GetObjectKnownId, 1, int, ( const boost::shared_ptr< DEC_Knowledge_Object >& obstacle ) ) \
     APPLY( StartComputePathfind, 2, void, ( const SWORD_Model* entity, const boost::shared_ptr< sword::movement::Path_ABC >& path ) ) \
     APPLY( UpdateObjectsToAvoid, 2, bool, ( boost::shared_ptr< KnowledgeCache >& cache, const SWORD_Model* entity ) ) \
     APPLY( ConvertSpeedMosToSim, 1, double, ( double speed ) ) \
