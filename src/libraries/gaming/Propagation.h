@@ -14,18 +14,12 @@
 #include <graphics/RGBATextureFactory.h>
 #include <graphics/TextureTree.h>
 
-namespace
-{
-    class ColorFactory;
-}
-
 namespace kernel
 {
     class CoordinateConverter_ABC;
     class DisasterType;
 }
 
-class ASCExtractor;
 class PropagationManager;
 
 // =============================================================================
@@ -52,10 +46,9 @@ public:
 private:
     //! @name Member data
     //@{
-    const kernel::CoordinateConverter_ABC& converter_;
-    std::auto_ptr< ASCExtractor > pExtractor_;
     std::auto_ptr< RGBATextureFactory > pFactory_;
     std::auto_ptr< TextureTree > pTree_;
+    geometry::Rectangle2f globalExtent_;
     //@}
 };
 

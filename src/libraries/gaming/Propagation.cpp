@@ -1,4 +1,4 @@
-// *****************************************************************************
+﻿// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -23,23 +23,32 @@
 // -----------------------------------------------------------------------------
 Propagation::Propagation( const std::string& file, const PropagationManager& manager,
                           const kernel::CoordinateConverter_ABC& converter, const kernel::DisasterType& disasterType )
-    : converter_ ( converter )
-    , pExtractor_( new ASCExtractor( file, manager.GetProjectionFile() ) )
 {
-    const ASCExtractor::T_Values& values = pExtractor_->GetValues();
+     ASCExtractor extractor( file, manager.GetProjectionFile() );
+    const ASCExtractor::T_Values& values = extractor.GetValues();
     std::vector< unsigned char > rgba( values.size() * 4 );
-    for( unsigned int i = 0; i < values.size(); ++i )
+    const int rowsCount = extractor.GetRows();
+    const int colsCount = extractor.GetCols();
+
+    for( size_t i = 0; i < rowsCount; i++ )
     {
-        float value = values[ i ];
-        QColor color = disasterType.GetColor( value );
-        rgba[ 4 * i ] = static_cast< char >( color.red() );
-        rgba[ 4 * i + 1] = static_cast< char >(  color.green() );
-        rgba[ 4 * i + 2 ] = static_cast< char >( color.blue() );
-        rgba[ 4 * i + 3 ] = static_cast< char >( value > 0.f ? 255 : 0 );
+        const size_t rowOffset = ( rowsCount - i - 1 ) * ( colsCount * 4 );
+        for( size_t j = 0; j < colsCount; j++ )
+        {
+            const float value = values[ i * colsCount + j ];
+            QColor color = disasterType.GetColor( value );
+            rgba[ rowOffset + 4 * j ]       = static_cast< char >( color.red() );
+            rgba[ rowOffset + 4 * j + 1 ]   = static_cast< char >( color.green() );
+            rgba[ rowOffset + 4 * j + 2 ]   = static_cast< char >( color.blue() );
+            rgba[ rowOffset + 4 * j + 3 ]   = static_cast< char >( value > 0.f ? 255 : 0 );
+        }
     }
 
-    pFactory_.reset( new RGBATextureFactory( &rgba[ 0 ], pExtractor_->GetCols(), pExtractor_->GetPixelSize().X() ) );
-    pTree_.reset( new TextureTree( *pFactory_, pExtractor_->GetCols(), pExtractor_->GetRows() ) );
+    pFactory_.reset( new RGBATextureFactory( &rgba[ 0 ], colsCount, extractor.GetPixelSize().X() ) );
+    pTree_.reset( new TextureTree( *pFactory_, colsCount, rowsCount ) );
+    const geometry::Rectangle2d& extent = extractor.GetExtent();
+    globalExtent_= geometry::Rectangle2f( converter.ConvertFromGeo( extent.BottomLeft() ),
+                                          converter.ConvertFromGeo( extent.TopRight() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,31 +65,26 @@ namespace
     struct VisitorProxy : public TextureVisitor_ABC
                         , private boost::noncopyable
     {
-        VisitorProxy( ASCExtractor& extractor, const kernel::CoordinateConverter_ABC& converter )
-            : extractor_( extractor )
-            , converter_( converter )
+        explicit VisitorProxy( const geometry::Rectangle2f& globalExtent )
+            : globalExtent_( globalExtent )
         {};
         virtual ~VisitorProxy()
         {};
-        virtual void Visit( const geometry::Rectangle2f&, unsigned int, unsigned int )
+        virtual void Visit( const geometry::Rectangle2f& extent, unsigned int, unsigned int )
         {
-            const geometry::Rectangle2d& extent = extractor_.GetExtent();
-            const geometry::Rectangle2f project( converter_.ConvertFromGeo( extent.BottomLeft() ),
-                                                 converter_.ConvertFromGeo( extent.TopRight() ) );
             glBegin( GL_QUADS );
             glTexCoord2d( 0., 0. );
-            glVertex2d( project.Left(), project.Top() );
+            glVertex2d( extent.Left()  + globalExtent_.Left(), extent.Bottom() + globalExtent_.Bottom() );
             glTexCoord2d( 1., 0. );
-            glVertex2d( project.Right(), project.Top() );
+            glVertex2d( extent.Right() + globalExtent_.Left(), extent.Bottom() + globalExtent_.Bottom() );
             glTexCoord2d( 1.,1. );
-            glVertex2d( project.Right(), project.Bottom() );
+            glVertex2d( extent.Right() + globalExtent_.Left(), extent.Top()    + globalExtent_.Bottom() );
             glTexCoord2d(0., 1. );
-            glVertex2d( project.Left(), project.Bottom() );
+            glVertex2d( extent.Left() + globalExtent_.Left(), extent.Top()     + globalExtent_.Bottom() );
             glEnd();
         }
     private:
-        ASCExtractor& extractor_;
-        const kernel::CoordinateConverter_ABC& converter_;
+        const geometry::Rectangle2f& globalExtent_;
     };
 }
 
@@ -95,7 +99,7 @@ void Propagation::Draw() const
     glPushAttrib( GL_TEXTURE_BIT );
 
     glColor4f( 1, 1, 1, 1 );
-    VisitorProxy visitor( *pExtractor_, converter_ );
+    VisitorProxy visitor( globalExtent_ );
     pTree_->Accept( visitor );
     glPopAttrib();
 }
