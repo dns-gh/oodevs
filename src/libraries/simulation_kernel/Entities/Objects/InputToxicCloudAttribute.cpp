@@ -146,10 +146,10 @@ void InputToxicCloudAttribute::LoadConfig()
     if( !filename_.empty() )
     {
         xml::xifstream fxis( filename_ );
-        fxis >> xml::start( "étude" )
-                >> xml::start( "résultats" )
+        fxis >> xml::start( "etude" )
+                >> xml::start( "resultats" )
                     >> xml::content( dataField_, field_ )
-                    >> xml::start( "échéances" )
+                    >> xml::start( "echeances" )
                         >> xml::list( "heure", *this, &InputToxicCloudAttribute::ReadFiles );
     }
 }
