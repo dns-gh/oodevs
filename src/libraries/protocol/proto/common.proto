@@ -1446,26 +1446,28 @@ enum UnitMagicActionType {
     formation_creation                = 28; //!< A formation creation magic action
     crowd_creation                    = 29; //!< A crowd creation magic action
     log_supply_pull_flow              = 30; //!< A log supply pull flow magic action
-    create_wound                      = 31; //!< A create wound magic action
-    inhabitant_change_health_state    = 32; //!< A change of health state on inhabitant magic action
-    inhabitant_change_affinities      = 33; //!< A change of affinities on inhabitant magic action
-    inhabitant_change_alerted_state   = 34; //!< A change of alerted state on inhabitant magic action
-    inhabitant_change_confined_state  = 35; //!< A change of confined state on inhabitant magic action
-    unit_change_affinities            = 36; //!< A change of affinities on unit magic action
-    change_extension                  = 37; //!< An extension change magic action
-    change_critical_intelligence      = 38; //!< Change critical intelligence magic action
-    transfer_equipment                = 39; //!< An equipment transfer magic action
-    change_equipment_human_size       = 40; //!< A change equipment human size magic action
-    create_breakdowns                 = 41; //!< A create breakdowns magic action
-    create_wounds                     = 42; //!< A create wounds magic action
-    reload_brain                      = 43; //!< A magic action forcing to reload the brain of the entity
-    log_finish_handlings              = 44; //!< No parameters, magically finish the current logistic actions
+    inhabitant_change_health_state    = 31; //!< A change of health state on inhabitant magic action
+    inhabitant_change_affinities      = 32; //!< A change of affinities on inhabitant magic action
+    unit_change_affinities            = 33; //!< A change of affinities on unit magic action
+    change_extension                  = 34; //!< An extension change magic action
+    change_critical_intelligence      = 35; //!< Change critical intelligence magic action
+    transfer_equipment                = 36; //!< An equipment transfer magic action
+    // knowledge_creation             = 37; //!< Not used (kept for ids consistency with Shield)
+    change_equipment_human_size       = 38; //!< A change equipment human size magic action
+    create_breakdowns                 = 39; //!< A create breakdowns magic action
+    create_wounds                     = 40; //!< A create wounds magic action
+    log_finish_handlings              = 41; //!< No parameters, magically finish the current logistic actions
+    // change_symbol                  = 42; //!< Not used (kept for ids consistency with Shield)
+    create_wound                      = 43; //!< A create wound magic action
+    reload_brain                      = 44; //!< A magic action forcing to reload the brain of the entity
     change_equipment_state            = 45; //!< A change equipment state magic action
     change_human_state                = 46; //!< A change human state magic action
     change_dotation                   = 47; //!< A create dotation magic action
     create_direct_fire_order          = 48; //!< A direct fire order creation magic action
     load_unit                         = 49; //!< A unit loading magic action
     unload_unit                       = 50; //!< A unit unloading magic action
+    inhabitant_change_alerted_state   = 51; //!< A change of alerted state on inhabitant magic action
+    inhabitant_change_confined_state  = 52; //!< A change of confined state on inhabitant magic action
 }
 
 enum ObjectMagicActionType
