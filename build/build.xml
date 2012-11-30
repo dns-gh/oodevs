@@ -1564,6 +1564,7 @@
     <target name="checkreports" description="check simulation reports">
         <exec executable="python" failonerror="true">
             <arg value="${root.dir}/build/checkreports.py"/>
+            <arg value="check"/>
             <arg value="${root.dir}"/>
         </exec>
     </target>

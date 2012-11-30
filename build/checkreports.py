@@ -229,9 +229,8 @@ def dumpusedreports(ui, intids, cppids, path):
         fp.write('%d\t%s\n' % (i, n))
     fp.close()
 
-if __name__ == '__main__':
-    ui = Ui()
-    swordpath = sys.argv[1]
+def cmdcheck(ui, args):
+    swordpath, = args
     result = 0
     res, cppids = parsecpp(ui, swordpath)
     if res:
@@ -273,6 +272,19 @@ if __name__ == '__main__':
         if checkphyids(ui, phyname, phyids, 'integration report',
                 set(intids.values())):
             result = 1
+    return result
 
-    sys.exit(result)
+_commands = {
+    'check': cmdcheck,
+    }
+
+if __name__ == '__main__':
+    ui = Ui()
+    args = sys.argv[1:]
+    if not args:
+        sys.stderr.write('error: command expected\n')
+        sys.exit(1)
+    cmd, args = args[0], args[1:]
+    ret = _commands[cmd](ui, args)
+    sys.exit(ret)
 
