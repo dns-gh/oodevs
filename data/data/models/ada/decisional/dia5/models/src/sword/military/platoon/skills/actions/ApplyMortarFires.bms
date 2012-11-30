@@ -23,11 +23,24 @@ rootnode
     
     create = function( self )
         self.dangerousEnemies = {}
+        self.platoonsToSupport = {}
+        self.selfCommanding = true
         self.alliedUnits = copyTable( self.params.alliedUnits )
+        if not meKnowledge:isSelfCommanding() then -- if support automat : support all first echelon platoons
+             self.selfCommanding = false
+             self.commanderToSupport = integration.GetSuperiorKnowledge( self.alliedUnits[1] )
+             self.entitiesInFirstEchelon = integration.filterPionWithEchelon( 
+                        integration.getEntitiesFromAutomatCommunication( self.commanderToSupport, "none", true), eEtatEchelon_First )
+             if next(self.entitiesInFirstEchelon) then
+                 self.platoonsToSupport = self.entitiesInFirstEchelon
+             else -- no platoon in first echelon, return input allies
+                 self.platoonsToSupport = self.alliedUnits
+             end
+        end
     end,
 
     -- --------------------------------------------------------------------------------
-    -- For each objective of the skill, try to observe it.
+    -- For each objective of the skill, try to shoot it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
         
@@ -36,8 +49,8 @@ rootnode
         end
         
         -- Apply fire when supporting allies who need help and not self commanding
-        if not meKnowledge:isSelfCommanding() then
-            self.dangerousEnemies = integration.query.getEnemiesToIndirectFireWhenSupport( self.alliedUnits )
+        if not self.selfCommanding then
+            self.dangerousEnemies = integration.query.getEnemiesToIndirectFireWhenSupport( self.platoonsToSupport )
             self.automaticTarget = integration.findEnemyToMortarIndirectFire( self.dangerousEnemies ) -- unit should be unload to have result
         end
         if self.order or ( self.dangerousEnemies and #self.dangerousEnemies > 0 ) then --Need to dismount before firing

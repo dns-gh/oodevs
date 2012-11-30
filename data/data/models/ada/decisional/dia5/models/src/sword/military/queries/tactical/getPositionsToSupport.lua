@@ -23,8 +23,18 @@ local AddCoverPositions = function( length, knowledges, objective )
     local compartments = {}
     if DEC_Agent_AutomateEstEmbraye() then
         compartments = DEC_Geometrie_DecoupeFuseauEnTroncons( length )
-        for _, compartment in pairs ( compartments ) do            
+        for _, compartment in pairs ( compartments ) do
             knowledges[ #knowledges + 1 ] = CreateKnowledge( sword.military.world.Area, compartment )
+        end
+    end
+end
+
+local createAndCheckPositionsKnowledge = function( knowledges, newResult, objective )
+    for _, element in pairs ( knowledges ) do
+        if element:isSupportingFor( objective ) then
+            if not exists( newResult, element ) then
+                newResult[ #newResult + 1 ] = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CopiePoint(element:getPosition()))
+            end
         end
     end
 end
@@ -60,40 +70,37 @@ queryImplementation "getPositionsToSupport"
                local rangeDistance = integration.firingRangeToSupport( self )
                local rangeDistanceMin = rangeDistance[1]
                local rangeDistanceMax = rangeDistance[2]
-                -- Pour toutes les connaissances, garder celles qui sont bonnes pour soutenir
+                -- For each objective to support, find position
                 for _, objective in pairs ( params.elementsToSupport ) do
                     local foundAPositionForThisObjective = false
                     if not objective:isNearby() then 
                         knowledges[ #knowledges + 1 ] = CreateProxyKnowledge( 
                            sword.military.world.SupportingArea, objective,{distanceMin = rangeDistanceMin , distanceMax = rangeDistanceMax } )
                     else
-                        -- Les blocs urbains
+                        -- Urbans blocks
                         local urbanknowledges = DEC_Connaissances_BlocUrbainDansCercle( objective:getPosition(), 100 )
                         -- Les positions autours des BUs et son barycentre (un point dans le BU)
                         for _, bu in pairs ( urbanknowledges ) do
                             AddPointKnowledge( DEC_Geometrie_CalculerLocalisationsBU( bu ), result, newResult, knowledges )
                         end
                     end
-                    AddCoverPositions( rangeDistanceMin, knowledges, objective )
     
-                    -- Verify that position are good to support unit
-                    for _, element in pairs ( knowledges ) do
-                        if element:isSupportingFor( objective ) then
-                            foundAPositionForThisObjective = true
-                            if not exists( newResult, element ) then
-                                newResult[ #newResult + 1 ] = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CopiePoint(element:getPosition()))
-                            end
-                        end
-                    end
+                    -- check that positions are good to support unit
+                    createAndCheckPositionsKnowledge( knowledges, newResult, objective )
                     
-                     -- si pas de position
-                    if not foundAPositionForThisObjective then
+                     -- no position found before
+                    if #newResult < 1 then
                         local lastOption = CreateProxyKnowledge( 
                            sword.military.world.SupportingArea, objective, {distanceMin = rangeDistanceMin , distanceMax = rangeDistanceMax } )
                         if integration.isElementInAOR( lastOption.proxy ) then
                             newResult[ #newResult + 1 ] = lastOption
                         else
-                            newResult[ #newResult + 1 ] = integration.query.getNearestPositionInAOR( lastOption.proxy )                          
+                            local compartmentPositions = {}
+                            AddCoverPositions( rangeDistanceMin, compartmentPositions, objective )
+                            createAndCheckPositionsKnowledge( compartmentPositions, newResult, objective )
+                            if #newResult < 1 then -- the less worst
+                                newResult[ #newResult + 1 ] = integration.query.getNearestPositionInAOR( lastOption.proxy )
+                            end
                         end
                     end
                 end
