@@ -11,6 +11,7 @@
 #define __NBC_Toxic_Effect_Handler_ABC__
 
 class MIL_ToxicEffectManipulator;
+class MIL_DisasterEffectManipulator;
 
 namespace nbc
 {
@@ -32,6 +33,7 @@ public:
     //@{
     virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination ) = 0;
+    virtual void ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect ) = 0;
     //@}
 };
 

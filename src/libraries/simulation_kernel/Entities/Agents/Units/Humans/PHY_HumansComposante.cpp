@@ -261,6 +261,16 @@ void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& con
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::ApplyDisasterEffect
+// Created: LGY 2012-11-29
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect )
+{
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+        ( **it ).ApplyDisasterEffect( effect );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::ApplyBurn
 // Created: BCI 2010-12-14
 // -----------------------------------------------------------------------------

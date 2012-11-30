@@ -9,12 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_DisasterType.h"
+#include "MIL_Random.h"
 #include "Entities/Agents/Units/Humans/PHY_NbcSuit.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_DisasterType::T_DisasterTypes MIL_DisasterType::disasterTypes_;
+unsigned int MIL_DisasterType::thresholdIds_ = 0;
 
 struct MIL_DisasterType::LoadingWrapper
 {
@@ -87,11 +89,11 @@ void MIL_DisasterType::ReadProtection( xml::xistream& xis )
 
 namespace
 {
-    void ReadWound( xml::xistream& xis, std::map< unsigned int, double >& wounds, const std::string& tag )
+    void ReadWound( xml::xistream& xis, std::map< unsigned int, float >& wounds, const std::string& tag )
     {
         const PHY_HumanWound* wound = PHY_HumanWound::Find( tag );
         if( wound )
-            wounds[ wound->GetID() ] = xis.attribute< double >( tag );
+            wounds[ wound->GetID() ] = xis.attribute< float >( tag );
     }
 }
 
@@ -107,8 +109,8 @@ void MIL_DisasterType::ReadThreshold( xml::xistream& xis )
     ReadWound( xis, wounds, "u2" );
     ReadWound( xis, wounds, "u3" );
     ReadWound( xis, wounds, "ue" );
-    attritions_[ xis.attribute< double >( "value" ) ] = boost::tuples::make_tuple( xis.attribute< std::string >( "name", "" ), wounds,
-                                                                                   xis.attribute< bool >( "contamination" ) );
+    attritions_[ thresholdIds_++  ] = boost::tuples::make_tuple( xis.attribute< float >( "value" ), xis.attribute< std::string >( "name", "" ),
+                                                                 wounds, xis.attribute< bool >( "contamination" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,4 +150,53 @@ float MIL_DisasterType::GetProtectionCoefficient( const PHY_NbcSuit& suit ) cons
         if( it->first->GetType() == suit.GetType() )
             return it->second;
     return 1.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DisasterType::GetAttritionThreshold
+// Created: LGY 2012-11-29
+// -----------------------------------------------------------------------------
+int MIL_DisasterType::GetAttritionThreshold( float dose ) const
+{
+    int result = -1;
+    float current = 0.f;
+    for( CIT_Attritions it = attritions_.begin(); it != attritions_.end(); ++it )
+    {
+        float threshold = it->second.get< 0 >();
+        if( dose >= threshold  && threshold >= current )
+        {
+            result = it->first;
+            current = threshold;
+        }
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DisasterType::GetRandomWound
+// Created: LGY 2012-11-29
+// -----------------------------------------------------------------------------
+const PHY_HumanWound& MIL_DisasterType::GetRandomWound( int threshold ) const
+{
+    CIT_Attritions it = attritions_.find( threshold );
+    if( it != attritions_.end() )
+    {
+        const T_Wounds& wounds = it->second.get< 2 >();
+        const double rRand = MIL_Random::rand_ii( MIL_Random::eWounds );
+
+        double rSumCoefs = 0.;
+        const PHY_HumanWound::T_HumanWoundMap& humanWounds = PHY_HumanWound::GetHumanWounds();
+        for( PHY_HumanWound::CIT_HumanWoundMap itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
+        {
+            const PHY_HumanWound& wound = *itWound->second;
+            CIT_Wounds it = wounds.find( wound.GetID() );
+            if( it != wounds.end() )
+            {
+                rSumCoefs += it->second;
+                if( rSumCoefs >= rRand )
+                    return wound;
+            }
+        }
+    }
+    return PHY_HumanWound::notWounded_;
 }

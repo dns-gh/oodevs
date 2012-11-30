@@ -55,8 +55,9 @@ public:
     //@{
     bool ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
 
-    void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
-    void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect );
     void ApplyBurn( const MIL_BurnEffectManipulator& burn );
     void ApplyFlood( const MIL_FloodEffectManipulator& flood );
     void ApplyInjury( MIL_Injury_ABC& injury );

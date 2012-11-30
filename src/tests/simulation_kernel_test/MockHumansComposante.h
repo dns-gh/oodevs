@@ -24,6 +24,7 @@ MOCK_BASE_CLASS( MockHumansComposante, HumansComposante_ABC )
     MOCK_METHOD( RemoveHealthyHumans, 2 );
     MOCK_METHOD( ApplyContamination, 1 );
     MOCK_METHOD( ApplyPoisonous, 1 );
+    MOCK_METHOD( ApplyDisasterEffect, 1 );
     MOCK_METHOD( ApplyInjury, 1 );
     MOCK_METHOD( ApplyWounds, 2 );
     MOCK_METHOD( ApplyBurn, 1 );

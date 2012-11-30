@@ -135,6 +135,6 @@ void DisasterCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC
         int step = MIL_AgentServer::GetWorkspace().GetTimeStepDuration();
         dose = std::pow( dose * GetProtection( agent, *disasterType_ ), disasterType_->GetToxicityExponent() ) * step;
         if( dose > 0.f )
-            agent.GetRole< nbc::PHY_RoleInterface_NBC >().Afflict( dose );
+            agent.GetRole< nbc::PHY_RoleInterface_NBC >().Afflict( dose, *disasterType_ );
     }
 }

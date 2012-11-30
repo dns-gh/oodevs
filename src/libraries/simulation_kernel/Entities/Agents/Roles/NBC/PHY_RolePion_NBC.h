@@ -18,6 +18,7 @@
 class MIL_ToxicEffectManipulator;
 class MIL_NbcAgentType;
 class MIL_AgentPion;
+class MIL_DisasterType;
 
 namespace firing
 {
@@ -62,7 +63,7 @@ public:
     //@{
     virtual void Poison( const MIL_ToxicEffectManipulator& nbcAgent );
     virtual void Contaminate( const MIL_ToxicEffectManipulator& nbcAgent );
-    virtual void Afflict( float dose );
+    virtual void Afflict( float dose, const MIL_DisasterType& type );
     virtual void Decontaminate();
     virtual void Decontaminate( double rRatioAgentsWorking );
     void WearNbcProtectionSuit();
@@ -101,6 +102,7 @@ private:
     //@{
     bool HasChanged() const;
     void ContaminateOtherUnits();
+    void ApplyWound( const MIL_DisasterType& type );
     std::vector< const MIL_NbcAgentType* > GetContaminating() const;
     //@}
 
@@ -123,6 +125,7 @@ private:
     bool intoxicated_;
     bool immune_;
     bool forcedImmuneByDecisional_;
+    int currentAttritionThreshold_;
     //@}
 };
 

@@ -188,6 +188,7 @@ public:
     virtual void ApplyExplosion                   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
     virtual void ApplyContamination               ( const MIL_ToxicEffectManipulator& contamination );
     virtual void ApplyPoisonous                   ( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyDisasterEffect              ( const MIL_DisasterEffectManipulator& effect );
     virtual void ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
     virtual void ApplyBurn                        ( const MIL_BurnEffectManipulator& burn );
     virtual void ApplyFlood                       ( const MIL_FloodEffectManipulator& flood );

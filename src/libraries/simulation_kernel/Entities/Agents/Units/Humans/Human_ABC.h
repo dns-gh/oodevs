@@ -10,8 +10,9 @@
 #ifndef __Human_ABC_h_
 #define __Human_ABC_h_
 
+#include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
+
 class MIL_AutomateLOG;
-class MIL_ToxicEffectManipulator;
 class MIL_BurnEffectManipulator;
 class MIL_FloodEffectManipulator;
 class PHY_HumanRank;
@@ -23,7 +24,7 @@ class MIL_Agent_ABC;
 // @class  Human_ABC
 // Created: MGD 2010-03-17
 // =============================================================================
-class Human_ABC : private boost::noncopyable
+class Human_ABC : public nbc::ToxicEffectHandler_ABC
 {
 public:
     //! @name Types
@@ -49,8 +50,6 @@ public:
     virtual bool SetRank( const PHY_HumanRank&  newRank  ) = 0; // Force rank change
     virtual bool SetWound( const PHY_HumanWound& newWound ) = 0; // Don't test 'usability' or aggravation => force wound change
     virtual bool ApplyWound( const PHY_HumanWound& newWound ) = 0; // Test 'usability'
-    virtual bool ApplyPoisonous( const MIL_ToxicEffectManipulator& nbcAgent ) = 0; // NBC effects
-    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& nbcAgent ) = 0; // NBC effects
     virtual void ApplyBurn( const MIL_BurnEffectManipulator& burn ) = 0;
     virtual void ApplyFlood( const MIL_FloodEffectManipulator& flood ) = 0;
     virtual void ApplyMentalDisease() = 0;

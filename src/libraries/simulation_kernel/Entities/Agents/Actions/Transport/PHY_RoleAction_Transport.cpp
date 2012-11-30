@@ -286,7 +286,16 @@ void PHY_RoleAction_Transport::ApplyContamination  ( const MIL_ToxicEffectManipu
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::ApplyPoisonous( const MIL_ToxicEffectManipulator& /*contamination*/ )
 {
-    // nothing ??
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::ApplyDisasterEffect
+// Created: LGY 2012-11-29
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Transport::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& /*effect*/ )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

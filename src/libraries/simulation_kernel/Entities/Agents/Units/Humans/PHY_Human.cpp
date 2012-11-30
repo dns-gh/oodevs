@@ -22,6 +22,7 @@
 #include "Entities/Agents/Roles/Logistic/FuneralRequest.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
+#include "Entities/Objects/MIL_DisasterEffectManipulator.h"
 #include "Entities/Objects/MIL_BurnEffectManipulator.h"
 #include "Entities/Objects/MIL_FloodEffectManipulator.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -266,9 +267,18 @@ bool PHY_Human::ApplyWound( const PHY_HumanWound& newWound )
 // Name: PHY_Human::ApplyPoisonous
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-bool PHY_Human::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
+void PHY_Human::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
 {
-    return contamination.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
+    contamination.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::ApplyDisasterEffect
+// Created: LGY 2012-11-29
+// -----------------------------------------------------------------------------
+void PHY_Human::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect )
+{
+    effect.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

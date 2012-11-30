@@ -844,6 +844,20 @@ void PHY_RolePion_Composantes::ApplyPoisonous( const MIL_ToxicEffectManipulator&
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyDisasterEffect
+// Created: LGY 2012-11-29
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect )
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.GetState().IsUsable() )
+            composante.ApplyDisasterEffect( effect );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ApplyInjury
 // Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------

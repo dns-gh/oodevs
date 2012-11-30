@@ -121,8 +121,9 @@ public:
 
     //! @name Notifications on transporter
     //@{
-    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination ) ;
-    virtual void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination ) ;
+    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect );
     //@}
 
     //! @name Network

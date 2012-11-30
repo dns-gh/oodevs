@@ -21,6 +21,7 @@ namespace xml
 }
 
 class PHY_NbcSuit;
+class PHY_HumanWound;
 
 // =============================================================================
 /** @class  MIL_DisasterType
@@ -50,6 +51,8 @@ public:
     const std::string& GetName() const;
     float GetToxicityExponent() const;
     float GetProtectionCoefficient( const PHY_NbcSuit& suit ) const;
+    int GetAttritionThreshold( float dose ) const;
+    const PHY_HumanWound& GetRandomWound( int threshold ) const;
     //@}
 
     //! @name Constructors/Destructor
@@ -68,9 +71,11 @@ private:
     typedef std::map< const PHY_NbcSuit*, float > T_Protections;
     typedef T_Protections::const_iterator       CIT_Protections;
 
-    typedef std::map< unsigned int, double >            T_Wounds;
-    typedef boost::tuple< std::string, T_Wounds, bool > T_threshold;
-    typedef std::map< double, T_threshold >             T_Attritions;
+    typedef std::map< unsigned int, float >                    T_Wounds;
+    typedef T_Wounds::const_iterator                         CIT_Wounds;
+    typedef boost::tuple< float, std::string, T_Wounds, bool > T_threshold;
+    typedef std::map< unsigned int, T_threshold >              T_Attritions;
+    typedef T_Attritions::const_iterator                     CIT_Attritions;
     //@}
 
 private:
@@ -90,6 +95,7 @@ private:
     T_Attritions attritions_;
     float toxicityExponent_;
     static T_DisasterTypes disasterTypes_;
+    static unsigned int thresholdIds_;
     //@}
 };
 

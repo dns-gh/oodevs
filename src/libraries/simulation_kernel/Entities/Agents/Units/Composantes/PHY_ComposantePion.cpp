@@ -421,6 +421,16 @@ void PHY_ComposantePion::ApplyPoisonous( const MIL_ToxicEffectManipulator& conta
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyDisasterEffect
+// Created: LGY 2012-11-29
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ApplyDisasterEffect( const MIL_DisasterEffectManipulator& effect )
+{
+    assert( pHumans_ );
+    pHumans_->ApplyDisasterEffect( effect );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyBurn
 // Created: BCI 2010-12-13
 // -----------------------------------------------------------------------------

@@ -15,6 +15,8 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
+#include "Entities/Objects/MIL_DisasterEffectManipulator.h"
+#include "Entities/Objects/MIL_DisasterType.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
@@ -78,16 +80,17 @@ namespace nbc
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
-    : owner_                   ( pion )
-    , rContaminationState_     ( 0. )
-    , rContaminationQuantity_  ( 0. )
-    , dose_                    ( 0. )
-    , bNbcProtectionSuitWorn_  ( false )
-    , bHasChanged_             ( true )
-    , poisoned_                ( false )
-    , intoxicated_             ( false )
-    , immune_                  ( false )
-    , forcedImmuneByDecisional_( false )
+    : owner_                    ( pion )
+    , rContaminationState_      ( 0. )
+    , rContaminationQuantity_   ( 0. )
+    , dose_                     ( 0. )
+    , bNbcProtectionSuitWorn_   ( false )
+    , bHasChanged_              ( true )
+    , poisoned_                 ( false )
+    , intoxicated_              ( false )
+    , immune_                   ( false )
+    , forcedImmuneByDecisional_ ( false )
+    , currentAttritionThreshold_( -1 )
 {
     // NOTHING
 }
@@ -117,7 +120,8 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
          & intoxicated_
          & immune_
          & forcedImmuneByDecisional_
-         & dose_;
+         & dose_
+         & currentAttritionThreshold_;
 }
 
 // -----------------------------------------------------------------------------
@@ -415,10 +419,26 @@ double PHY_RolePion_NBC::GetContaminationQuantity() const
 // Name: PHY_RolePion_NBC::Afflict
 // Created: LGY 2012-11-22
 // -----------------------------------------------------------------------------
-void PHY_RolePion_NBC::Afflict( float dose )
+void PHY_RolePion_NBC::Afflict( float dose, const MIL_DisasterType& type )
 {
     dose_ += dose;
+    ApplyWound( type );
     bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::ApplyWound
+// Created: LGY 2012-11-29
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::ApplyWound( const MIL_DisasterType& type )
+{
+    int currentAttritionThreshold = type.GetAttritionThreshold( dose_ );
+    if( currentAttritionThreshold != currentAttritionThreshold_ )
+    {
+        MIL_DisasterEffectManipulator manipulator( currentAttritionThreshold, type );
+        owner_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyDisasterEffect, manipulator );
+        currentAttritionThreshold_ = currentAttritionThreshold;
+    }
 }
 
 }
