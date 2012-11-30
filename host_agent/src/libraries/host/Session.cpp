@@ -940,6 +940,7 @@ void Session::DetachReplay( const Session_ABC& replay )
 // -----------------------------------------------------------------------------
 void Session::ParseCheckpoints()
 {
+    checkpoints_.clear();
     deps_.fs.Walk( GetOutput() / "checkpoints", false, boost::bind( &Attach< T_Checkpoints >,
                   boost::cref( deps_.fs ), _1, boost::ref( checkpoints_ ) ) );
 }

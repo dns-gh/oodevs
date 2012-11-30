@@ -18,6 +18,7 @@
 #include "web/HttpException.h"
 #include "web/Plugins.h"
 
+#include <boost/assign/list_of.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -142,13 +143,13 @@ namespace
             return boost::make_shared< Session >( deps, node, paths, tree );
         }
 
-        ProcessPtr StartSession( Session& session, int pid, const std::string& name )
+        ProcessPtr StartSession( Session& session, int pid, const std::string& name, const std::string& checkpoint = std::string() )
         {
             ProcessPtr process = boost::make_shared< MockProcess >( pid, name );
             MOCK_EXPECT( runtime.Start ).once().returns( process );
             MOCK_EXPECT( fs.WriteFile ).once().returns( true );
             MOCK_EXPECT( node->StartSession ).once().returns( boost::make_shared< host::node::Token >() );
-            BOOST_REQUIRE( session.Start( apps, std::string() ) );
+            BOOST_REQUIRE( session.Start( apps, checkpoint ) );
             return process;
         }
 
@@ -411,4 +412,58 @@ BOOST_FIXTURE_TEST_CASE( replay_session_cannot_be_replayed, Fixture )
     ProcessPtr process = StartSession( *session, processPid, processName );
     Session_ABC::T_Ptr replay = ReplaySession( *session );
     BOOST_CHECK_THROW( replay->Replay(), web::HttpException );
+}
+
+namespace
+{
+    bool EndsWith( host::Path suffix, host::Path path )
+    {
+        for( ; !suffix.empty(); suffix.remove_filename(), path.remove_filename() )
+            if( path.empty() )
+                return false;
+            else if( suffix.filename() != path.filename() )
+                return false;
+        return true;
+    }
+
+    void ReadCheckpoints( const host::Path& path, bool /*recurse*/,
+                          const MockFileSystem& fs,
+                          const FileSystem_ABC::T_Predicate& predicate )
+    {
+        if( !EndsWith( "checkpoints", path ) )
+            return;
+        MOCK_EXPECT( fs.IsFile ).with( path / "uno" / "data" ).returns( true );
+        predicate( path / "uno" );
+    }
+
+    void CheckList( const Tree& tree, std::vector< std::string > items )
+    {
+        BOOST_REQUIRE_EQUAL( items.size(), static_cast< size_t >( std::distance( tree.begin(), tree.end() ) ) );
+        for( Tree::const_iterator it = tree.begin(); it != tree.end(); ++it )
+        {
+            BOOST_CHECK_EQUAL( it->first, std::string() );
+            BOOST_CHECK_EQUAL( Get< std::string >( it->second, std::string() ), items.front() );
+            items.erase( items.begin() );
+        }
+    }
+
+    void CheckCheckpoints( const Session_ABC& session )
+    {
+        const Tree tree = session.GetProperties();
+        const std::vector< std::string > tokens = boost::assign::list_of( "checkpoints" )( "list" );
+        std::vector< std::string > items = boost::assign::list_of( "uno" );
+        Walk( tree, tokens.begin(), tokens.end(), boost::bind( &CheckList, _1, items ) );
+    }
+}
+
+BOOST_FIXTURE_TEST_CASE( session_parses_checkpoints, Fixture )
+{
+    const Tree save = MakeSession()->Save();
+    MOCK_RESET( fs.Walk );
+    MOCK_EXPECT( fs.Walk ).calls( boost::bind( ReadCheckpoints, _1, _2, boost::ref( fs ), _3 ) );
+    SessionPtr next = ReloadSession( save );
+    CheckCheckpoints( *next );
+    ProcessPtr process = StartSession( *next, processPid, processName, "uno" );
+    StopSession( *next, process );
+    CheckCheckpoints( *next );
 }
