@@ -117,7 +117,7 @@ void InfoEventsWidget::SetContaminations( const Contaminations& attributes )
         EventWidget* label = events_["nbc suit"];
         label->setText( locale().toString( attributes.type_ ) );
     }
-    ToggleEvent( "contamination", !attributes.contaminatingNbcAgents_.empty() );
+    ToggleEvent( "contamination", !attributes.contaminatingNbcAgents_.empty() || attributes.contaminated_ );
     if( !attributes.contaminatingNbcAgents_.empty() )
     {
         EventWidget* label = events_["contamination"];

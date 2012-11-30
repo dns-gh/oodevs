@@ -932,6 +932,14 @@
         <source>NBC/Suit</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>NBC/Contaminated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation type="unfinished">الملوثة:</translation>
+    </message>
 </context>
 <context>
     <name>Network</name>

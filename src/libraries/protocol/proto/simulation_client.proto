@@ -1079,11 +1079,13 @@ message HumanDotations {
 */
 message ContaminationState {
     //! @todo What's this ?
-    optional int32 percentage = 1;
+    optional int32 percentage  = 1;
     //! @todo What's this ?
-    optional float quantity   = 2;
+    optional float quantity    = 2;
     //! The contamination dose
-    optional float dose       = 3;
+    optional float dose        = 3;
+    //! If pion is contaminated
+    optional bool contaminated = 4;
 }
 
 /** @struct NBCAgents

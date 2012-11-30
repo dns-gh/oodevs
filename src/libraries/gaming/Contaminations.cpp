@@ -33,17 +33,19 @@ Contaminations::Contaminations( Controller& controller, kernel::Entity_ABC& enti
     , entity_                ( entity )
     , resolver_              ( resolver )
     , bNbcProtectionSuitWorn_( false )
+    , contaminated_          ( false )
     , nContamination_        ( 0 )
     , quantity_              ( 0 )
     , dose_                  ( 0.f )
     , type_                  ( type.GetNbcSuit() )
     , suit_                  ( tools::ToString( type_ ) )
 {
-    dico.Register( entity_, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_, true  );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_, true  );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_, true  );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_, true  );
-    dico.Register( entity_, tools::translate( "NBC", "NBC/Dose" ), dose_, true  );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_, true );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_, true );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_, true );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contamination quantity" ), quantity_, true );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Dose" ), dose_, true );
+    dico.Register( entity_, tools::translate( "NBC", "NBC/Contaminated" ), contaminated_, true );
     if( type_ != eAgentNone )
         dico.Register( entity_, tools::translate( "NBC", "NBC/Suit" ), suit_, true );
 }
@@ -68,6 +70,7 @@ void Contaminations::DoUpdate( const sword::UnitAttributes& message )
     UPDATE_SUBPROPERTY( message, nContamination_, contamination_state, percentage, "NBC/Contamination level", updated );
     UPDATE_SUBPROPERTY( message, quantity_, contamination_state, quantity, "NBC/Contamination quantity", updated );
     UPDATE_SUBPROPERTY( message, dose_, contamination_state, dose, "NBC/Dose", updated );
+    UPDATE_SUBPROPERTY( message, contaminated_, contamination_state, contaminated, "NBC/Contaminated", updated );
 
     if( nContamination_ == 0 )
         contaminatingNbcAgents_.clear();
@@ -101,6 +104,7 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "NBC", "Contaminating agents:" ), contaminatingNbcAgents_ )
                 .Display( tools::translate( "NBC", "Contamination level:" ), nContamination_ )
                 .Display( tools::translate( "NBC", "Contamination quantity:" ), quantity_ )
+                .Display( tools::translate( "NBC", "Contaminated:" ), contaminated_ )
                 .Display( tools::translate( "NBC", "Dose:" ), dose_ );
 }
 

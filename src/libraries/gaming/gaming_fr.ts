@@ -932,6 +932,14 @@
         <source>NBC/Suit</source>
         <translation>NBC/Protection</translation>
     </message>
+    <message>
+        <source>NBC/Contaminated</source>
+        <translation>NBC/Contaminé</translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation>Contaminé:</translation>
+    </message>
 </context>
 <context>
     <name>Network</name>

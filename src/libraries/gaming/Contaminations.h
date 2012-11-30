@@ -78,6 +78,7 @@ public:
     kernel::Entity_ABC& entity_;
     const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;
     bool bNbcProtectionSuitWorn_;
+    bool contaminated_;
     T_NbcAgents contaminatingNbcAgents_;
     int nContamination_;
     double quantity_;

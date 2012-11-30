@@ -52,6 +52,7 @@ public:
     float GetToxicityExponent() const;
     float GetProtectionCoefficient( const PHY_NbcSuit& suit ) const;
     int GetAttritionThreshold( float dose ) const;
+    bool IsContaminated( float dose ) const;
     const PHY_HumanWound& GetRandomWound( int threshold ) const;
     //@}
 
