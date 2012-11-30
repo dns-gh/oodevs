@@ -32,7 +32,7 @@ DECLARE_HOOK( GetAgentListWithinLocalisation, void, ( const SWORD_Model* root, c
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
 PerceptionRecoUrbanBlockReco::PerceptionRecoUrbanBlockReco( const wrapper::View& perception )
-    : pUrbanBlock_ ( perception[ "localization" ][ "block" ] )
+    : pUrbanBlock_ ( perception[ "localization/block" ] )
     , localisation_( perception[ "localization" ] )
 {
     // NOTHING
