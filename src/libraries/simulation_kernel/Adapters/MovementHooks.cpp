@@ -96,7 +96,7 @@ namespace
     {
         const core::Model& rootNode = *core::Convert( root );
         TER_Agent_ABC::T_AgentPtrVector agentsDetected;
-        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *core::Convert( localization )->GetUserData< const TER_Localisation* >(), agentsDetected );
+        TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *GET_DATA( localization, boost::shared_ptr< TER_Localisation > ), agentsDetected );
         BOOST_FOREACH( TER_Agent_ABC* agent, agentsDetected )
             callback( core::Convert( &rootNode[ "entities" ][ static_cast< const PHY_RoleInterface_Location* >( agent )->GetAgent().GetID() ] ), userData );
     }

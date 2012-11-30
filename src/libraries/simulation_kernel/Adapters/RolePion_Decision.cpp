@@ -574,7 +574,6 @@ void RolePion_Decision::RegisterItinerary()
 }
 
 SWORD_USER_DATA_EXPORT( const MIL_UrbanObject_ABC* )
-SWORD_USER_DATA_EXPORT( const TER_Localisation* )
 SWORD_USER_DATA_EXPORT( boost::shared_ptr< TER_Localisation > )
 
 namespace
@@ -595,8 +594,7 @@ namespace
         parameters[ "radar-class" ] = radar;
         sink.PostCommand( "toggle radar", parameters );
     }
-    template< typename T >
-    int EnableLocalizedRadar( Sink& sink, MIL_AgentPion& pion, int radar, T localisation ) // $$$$ _RC_ SLI 2012-03-28: DRY with ToggleRadar
+    int EnableRadar( Sink& sink, MIL_AgentPion& pion, int radar, boost::shared_ptr< TER_Localisation > localisation ) // $$$$ _RC_ SLI 2012-03-28: DRY with ToggleRadar
     {
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling radar." );
@@ -606,7 +604,7 @@ namespace
         parameters[ "activated" ] = true;
         parameters[ "radar-class" ] = radar;
         parameters[ "perception-id" ] = perceptionId;
-        parameters[ "localization" ].SetUserData( localisation );
+        parameters[ "localization/data" ].SetUserData( localisation );
         sink.PostCommand( "toggle localized radar", parameters );
         return perceptionId;
     }
@@ -614,7 +612,13 @@ namespace
     {
         if( !point )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling radar." );
-        return EnableLocalizedRadar< boost::shared_ptr< TER_Localisation > >( sink, pion, radar, boost::make_shared< TER_Localisation >( TER_Localisation::ePoint, boost::assign::list_of( *point ) ) );
+        return EnableRadar( sink, pion, radar, boost::make_shared< TER_Localisation >( TER_Localisation::ePoint, boost::assign::list_of( *point ) ) );
+    }
+    int EnableLocalizedRadar( Sink& sink, MIL_AgentPion& pion, int radar, const TER_Localisation* localisation )
+    {
+        if( !localisation )
+            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling radar." );
+        return EnableRadar( sink, pion, radar, boost::make_shared< TER_Localisation >( *localisation ) );
     }
     void DisableLocalizedRadar( Sink& sink, MIL_AgentPion& pion, int radar, int perceptionId )
     {
@@ -636,20 +640,12 @@ namespace
         sink.PostCommand( "toggle localized perception", parameters );
         return perceptionId;
     }
-    int EnableLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const TER_Localisation* localisation )
-    {
-        if( !localisation )
-            throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
-        core::Model parameter;
-        parameter.SetUserData( localisation );
-        return EnableLocalizedDetectionId( sink, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
-    }
     int EnableSharedLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, boost::shared_ptr< TER_Localisation > localisation )
     {
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
         core::Model parameter;
-        parameter.SetUserData( localisation );
+        parameter[ "data" ].SetUserData( localisation );
         return EnableLocalizedDetectionId( sink, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
     }
     int EnableUrbanLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const MIL_UrbanObject_ABC* block )
@@ -657,8 +653,8 @@ namespace
         if( !block )
             throw std::runtime_error( __FUNCTION__ ": invalid urban block parameter while enabling localized detection." );
         core::Model parameter;
-        parameter.SetUserData( block->GetLocalisation() );
-        parameter[ "block" ].SetUserData( block );
+        parameter[ "data" ].SetUserData( boost::make_shared< TER_Localisation >( block->GetLocalisation() ) );
+        parameter[ "block/data" ].SetUserData( block );
         return EnableLocalizedDetectionId( sink, pion, perception, parameter, GET_HOOK( GetPerceptionId )() );
     }
     int EnableAlatLocalizedDetection( Sink& sink, MIL_AgentPion& pion, const std::string& perception, const TER_Localisation* localisation )
@@ -666,7 +662,7 @@ namespace
         if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while enabling localized detection." );
         core::Model parameter;
-        parameter.SetUserData( localisation );
+        parameter[ "data" ].SetUserData( boost::make_shared< TER_Localisation >( *localisation ) );
         return EnableLocalizedDetectionId( sink, pion, perception, parameter, 0 );
     }
     int EnableAlatMonitoring( Sink& sink, MIL_AgentPion& pion, const TER_Localisation* localisation )
@@ -678,7 +674,7 @@ namespace
         parameters[ "identifier" ] = pion.GetID();
         parameters[ "activated" ] = true;
         parameters[ "perception-id" ] = perceptionId;
-        parameters[ "localization" ].SetUserData( localisation );
+        parameters[ "localization/data" ].SetUserData( boost::make_shared< TER_Localisation >( *localisation ) );
         sink.PostCommand( "toggle alat monitoring", parameters );
         return perceptionId;
     }
@@ -702,7 +698,7 @@ namespace
         parameters[ "perception-id" ] = perceptionId;
         parameters[ "has-growth-speed" ] = static_cast< bool >( growthSpeed );
         parameters[ "growth-speed" ] = growthSpeed ? *growthSpeed : 0;
-        parameters[ "localization" ].SetUserData( localisation );
+        parameters[ "localization/data" ].SetUserData( boost::make_shared< TER_Localisation >( *localisation ) );
         sink.PostCommand( "toggle reco", parameters );
         return perceptionId;
     }
@@ -726,7 +722,7 @@ namespace
         parameters[ "center/x" ] = center->rX_;
         parameters[ "center/y" ] = center->rY_;
         parameters[ "growth-speed" ] = speed;
-        parameters[ "localization" ].SetUserData( localisation );
+        parameters[ "localization/data" ].SetUserData( localisation );
         sink.PostCommand( "toggle object detection", parameters );
         return perceptionId;
     }
@@ -761,13 +757,13 @@ namespace
         const core::Model& entity = model[ "entities" ][ pion.GetID() ];
         return GET_HOOK( IsPointVisible )( core::Convert( &model ), core::Convert( &entity ), pPt );
     }
-    void IdentifyAllAgentsInZone( Sink& sink, MIL_AgentPion& pion, const TER_Localisation* localization )
+    void IdentifyAllAgentsInZone( Sink& sink, MIL_AgentPion& pion, const TER_Localisation* localisation )
     {
-        if( !localization )
+        if( !localisation )
             throw std::runtime_error( __FUNCTION__ ": invalid localization parameter while identifying all agents in zone." );
         core::Model parameters;
         parameters[ "identifier" ] = pion.GetID();
-        parameters[ "localization" ].SetUserData( localization );
+        parameters[ "localization/data" ].SetUserData( boost::make_shared< TER_Localisation >( *localisation ) );
         sink.PostCommand( "identify all agents in zone", parameters );
     }
     bool AgentHasRadar( const core::Model& model, const DEC_Decision_ABC* agent, int typeRadar )
@@ -804,7 +800,7 @@ void RolePion_Decision::RegisterPerception()
     RegisterCommand< void() >                                      ( "DEC_Perception_DesactiverModeEnregistrement", &TogglePerception, "record-mode", false );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_ActiverRadar", &ToggleRadar, true, _1 );
     RegisterCommand< void( int ) >                                 ( "DEC_Perception_DesactiverRadar", &ToggleRadar, false, _1 );
-    RegisterCommand< int( int, const TER_Localisation* ) >         ( "DEC_Perception_ActiverRadarSurLocalisation", &EnableLocalizedRadar< const TER_Localisation* >, _1, _2 );
+    RegisterCommand< int( int, const TER_Localisation* ) >         ( "DEC_Perception_ActiverRadarSurLocalisation", &EnableLocalizedRadar, _1, _2 );
     RegisterCommand< int( int, boost::shared_ptr< MT_Vector2D > ) >( "DEC_Perception_ActiverRadarSurPointPtr", &EnableLocalizedRadarOnPoint, _1, _2 );
     RegisterCommand< void( int, int ) >                            ( "DEC_Perception_DesactiverRadarSurLocalisation", &DisableLocalizedRadar, _1, _2 );
     RegisterCommand< int( boost::shared_ptr< TER_Localisation> ) > ( "DEC_Perception_ActiverPerceptionTirsIndirect", &EnableSharedLocalizedDetection, "flying-shell/zones", _1 );

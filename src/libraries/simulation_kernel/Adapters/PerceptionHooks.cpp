@@ -391,7 +391,7 @@ namespace
     }
     DEFINE_HOOK( CanUrbanBlockBeSeen, 2, bool, ( const SWORD_Model* perceiver, const SWORD_Model* urbanBlock ) )
     {
-        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = GET_PION( perceiver ).GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *core::Convert( urbanBlock )->GetUserData< const MIL_UrbanObject_ABC* >() );
+        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = GET_PION( perceiver ).GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( GET_DATA( urbanBlock, MIL_UrbanObject_ABC ) );
         if( pKnowledge )
             return pKnowledge->GetCurrentRecceProgress() >= ( 1. - MIL_Random::rand_ii( MIL_Random::ePerception ) );
         return false;
@@ -512,7 +512,7 @@ namespace
     }
     DEFINE_HOOK( GetVisionObjectsInSurface, 4, void, ( const SWORD_Model* localisation, unsigned int& emptySurface, unsigned int& forestSurface, unsigned int& urbanSurface ) )
     {
-        MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( *core::Convert( localisation )->GetUserData< const TER_Localisation* >(), emptySurface, forestSurface, urbanSurface );
+        MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( *GET_DATA( localisation, boost::shared_ptr< TER_Localisation > ), emptySurface, forestSurface, urbanSurface );
     }
     DEFINE_HOOK( GetVisionObject, 1, unsigned char, ( const MT_Vector2D* point ) )
     {
@@ -520,12 +520,12 @@ namespace
     }
     DEFINE_HOOK( IsPointInsideLocalisation, 2, bool, ( const SWORD_Model* localisation, const MT_Vector2D* point ) )
     {
-        return core::Convert( localisation )->GetUserData< const TER_Localisation* >()->IsInside( *point );
+        return GET_DATA( localisation, boost::shared_ptr< TER_Localisation > )->IsInside( *point );
     }
     DEFINE_HOOK( IsLocalizationInsideCircle, 3, bool, ( const SWORD_Model* localization, const MT_Vector2D* center, double radius ) )
     {
         const TER_Localisation circle( *center, radius );
-        const T_PointVector& pointLocalisationFinale = core::Convert( localization )->GetUserData< boost::shared_ptr< TER_Localisation > >()->GetPoints();
+        const T_PointVector& pointLocalisationFinale = GET_DATA( localization, boost::shared_ptr< TER_Localisation > )->GetPoints();
         bool result = true;
         for( CIT_PointVector it = pointLocalisationFinale.begin(); result && it != pointLocalisationFinale.end(); ++it )
             result = circle.IsInside( *it );
@@ -535,11 +535,11 @@ namespace
     {
         const TER_Localisation& knowledgeLocalization = GET_DATA( knowledgeObject, DEC_Knowledge_Object ).GetLocalisation();
         const TER_Localisation circle( *center, radius );
-        return core::Convert( localization )->GetUserData< boost::shared_ptr< TER_Localisation > >()->IsIntersecting( knowledgeLocalization ) && circle.IsIntersecting( knowledgeLocalization );
+        return GET_DATA( localization, boost::shared_ptr< TER_Localisation > )->IsIntersecting( knowledgeLocalization ) && circle.IsIntersecting( knowledgeLocalization );
     }
     DEFINE_HOOK( IsObjectIntersectingLocalization, 2, bool, ( const SWORD_Model* localization, const SWORD_Model* object ) )
     {
-        return core::Convert( localization )->GetUserData< boost::shared_ptr< TER_Localisation > >()->IsIntersecting( GET_DATA( object, MIL_Object_ABC ).GetLocalisation() );
+        return GET_DATA( localization, boost::shared_ptr< TER_Localisation > )->IsIntersecting( GET_DATA( object, MIL_Object_ABC ).GetLocalisation() );
     }
     DEFINE_HOOK( IsKnowledgeObjectIntersectingWithCircle, 3, bool, ( const MT_Vector2D* center, double radius, const SWORD_Model* knowledgeObject ) )
     {
@@ -547,7 +547,7 @@ namespace
     }
     DEFINE_HOOK( GetLocalizationRadius, 1, double, ( const SWORD_Model* localization ) )
     {
-        const MT_Rect& boundingBox = core::Convert( localization )->GetUserData< const TER_Localisation* >()->GetBoundingBox();
+        const MT_Rect& boundingBox = GET_DATA( localization, boost::shared_ptr< TER_Localisation > )->GetBoundingBox();
         return boundingBox.GetCenter().Distance( boundingBox.GetPointUpLeft() );
     }
     DEFINE_HOOK( CanFlyingShellBePerceived, 4, bool, ( const SWORD_Model* flyingShell, const SWORD_Model* zone, const MT_Vector2D* source, double radius ) )

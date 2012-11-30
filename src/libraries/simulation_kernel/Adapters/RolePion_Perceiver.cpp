@@ -131,10 +131,6 @@ void RolePion_Perceiver::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< PHY_RoleInterface_Perceiver >( *this );
 }
 
-// =============================================================================
-// PERCEPTIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::EnableSensors
 // Created: JVT 2005-04-28
@@ -266,7 +262,7 @@ int RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& localisa
                                                      ( "perception-id", perceptionId )
                                                      ( "has-growth-speed", true )
                                                      ( "growth-speed", rGrowthSpeed )
-                                                     ( "localization", core::MakeUserData( localisation ) ) );
+                                                     ( "localization/data", core::MakeUserData( boost::make_shared< TER_Localisation >(  localisation ) ) ) );
     return perceptionId;
 }
 
@@ -290,7 +286,7 @@ int RolePion_Perceiver::EnableControlLocalisation( const TER_Localisation& local
                                                      ( "activated", true )
                                                      ( "perception-id", perceptionId )
                                                      ( "has-growth-speed", false )
-                                                     ( "localization", core::MakeUserData( localisation ) ) );
+                                                     ( "localization/data", core::MakeUserData( boost::make_shared< TER_Localisation >(  localisation ) ) ) );
     return perceptionId;
 }
 
