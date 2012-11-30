@@ -1084,8 +1084,6 @@ message ContaminationState {
     optional float quantity    = 2;
     //! The contamination dose
     optional float dose        = 3;
-    //! If pion is contaminated
-    optional bool contaminated = 4;
 }
 
 /** @struct NBCAgents

@@ -91,7 +91,6 @@ PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
     , immune_                   ( false )
     , forcedImmuneByDecisional_ ( false )
     , currentAttritionThreshold_( -1 )
-    , contaminated_             ( false )
 {
     // NOTHING
 }
@@ -122,8 +121,7 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
          & immune_
          & forcedImmuneByDecisional_
          & dose_
-         & currentAttritionThreshold_
-         & contaminated_;
+         & currentAttritionThreshold_;
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +234,6 @@ void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
     msg().mutable_contamination_state()->set_percentage( static_cast< unsigned int >( rContaminationState_ * 100. ) );
     msg().mutable_contamination_state()->set_quantity( static_cast< float >( rContaminationQuantity_ ) );
     msg().mutable_contamination_state()->set_dose( dose_ );
-    msg().mutable_contamination_state()->set_contaminated( contaminated_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,7 +252,7 @@ void PHY_RolePion_NBC::SendChangedState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_NBC::IsContaminated() const
 {
-    return !nbcAgentTypesContaminating_.empty();
+    return !nbcAgentTypesContaminating_.empty() || rContaminationState_ != 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -441,7 +438,8 @@ void PHY_RolePion_NBC::ApplyWound( const MIL_DisasterType& type )
         MIL_DisasterEffectManipulator manipulator( currentAttritionThreshold, type );
         owner_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyDisasterEffect, manipulator );
         currentAttritionThreshold_ = currentAttritionThreshold;
-        contaminated_ = type.IsContaminated( dose_ );
+        if( type.IsContaminated( dose_ ) )
+            rContaminationState_ = 1.;
     }
 }
 

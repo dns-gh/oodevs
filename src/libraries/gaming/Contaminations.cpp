@@ -70,7 +70,12 @@ void Contaminations::DoUpdate( const sword::UnitAttributes& message )
     UPDATE_SUBPROPERTY( message, nContamination_, contamination_state, percentage, "NBC/Contamination level", updated );
     UPDATE_SUBPROPERTY( message, quantity_, contamination_state, quantity, "NBC/Contamination quantity", updated );
     UPDATE_SUBPROPERTY( message, dose_, contamination_state, dose, "NBC/Dose", updated );
-    UPDATE_SUBPROPERTY( message, contaminated_, contamination_state, contaminated, "NBC/Contaminated", updated );
+    bool contaminated = nContamination_ != 0;
+    if( contaminated != contaminated_ )
+    {
+        contaminated_ = contaminated;
+        updated.insert( "NBC/Contaminated" );
+    }
 
     if( nContamination_ == 0 )
         contaminatingNbcAgents_.clear();

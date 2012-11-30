@@ -118,7 +118,6 @@ private:
     T_NbcAgentTypeSet nbcAgentTypesContaminating_;
     double rContaminationState_;
     double rContaminationQuantity_;
-    bool contaminated_;
     float dose_;
     bool bNbcProtectionSuitWorn_;
     bool bHasChanged_;

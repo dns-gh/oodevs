@@ -194,7 +194,6 @@ private:
     bool                                       bRadarEnabled_;
     bool                                       bPrisonner_;
     bool                                       bRefugeeManaged_;
-    bool                                       contaminated_;
     sword::UnitAttributes::Posture             nLastPosture_;
     sword::UnitAttributes::Posture             nCurrentPosture_;
     unsigned int                               nPostureCompletion_;
