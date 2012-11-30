@@ -168,50 +168,6 @@ def checkluaintegration(ui, luaids, intnames):
         intids[r] = luaids[r]
     return result, intids
 
-class ReportParam(object):
-    def __init__(self, type, values=None):
-        self.type = type
-        self.values = sorted(values or [])
-
-class Report(object):
-    def __init__(self, id, msg, params):
-        self.id = id
-        self.msg = msg
-        self.params = params
-
-def parsephysical(ui, path):
-    result = 0
-    reports = {}
-    tree = ETree.parse(path)
-    xpath = './report'
-    for e in tree.findall(xpath):
-        id = int(e.attrib['id'])
-        msg = e.attrib['message'].encode('utf-8')
-        params = []
-        for p in e.findall('parameter'):
-            values = []
-            type = p.attrib['type']
-            for v in p.findall('value'):
-                vid = int(v.attrib['id'])
-                vname = v.attrib['name'].encode('utf-8')
-                values.append((vid, vname))
-            params.append(ReportParam(type, values))
-        r = Report(id, msg, params)
-        if r.id in reports:
-            ui.error('error: duplicate found for physical report %s\n' % r.id)
-            result = 1
-        reports[r.id] = r
-    return result, reports
-
-def checkphyids(ui, phyname, phids, othername, otherids):
-    result = 0;
-    for rid in otherids:
-        if rid not in phids:
-            ui.error('error: cannot find %s %d in physical db %s\n'
-                    % (othername, rid, phyname))
-            result = 1
-    return result
-
 def checkluacpp(ui, luaids, cppids):
     result = 0
     luanames = dict((v, k) for k,v in luaids.iteritems())
@@ -275,24 +231,6 @@ def cmdcheck(ui, args):
             ui.error('error: %s has not the same value in the simulation/'
                     'integration layer and in models (check reports.txt) '
                     '%d != %d\n' % (n, c, cc))
-            result = 1
-
-    # Cross-check cpp/integration ids with several physical dbs
-    phypaths = [
-        'data/data/models/ada/physical/scipio/Reports.xml',
-        'data/data/models/ada/physical/worldwide/Reports.xml',
-        ]
-    for p in phypaths:
-        phypath = os.path.join(swordpath, p)
-        phyname = os.path.split(os.path.dirname(phypath))[1]
-        res, phyids = parsephysical(ui, phypath)
-        if res:
-            result = 1
-        if checkphyids(ui, phyname, phyids, 'sim report',
-                set(cppids.values())):
-            result = 1
-        if checkphyids(ui, phyname, phyids, 'integration report',
-                set(intids.values())):
             result = 1
     return result
 
