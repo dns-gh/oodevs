@@ -223,8 +223,19 @@ def checkluacpp(ui, luaids, cppids):
             result = 1
     return result
 
+def parsereportlist(path):
+    reports = {}
+    for line in file(path):
+        line = line.strip()
+        if not line or line[0] == '#':
+            continue
+        name, code = line.split('\t', 1)
+        reports[name] = int(code)
+    return reports
+
 def cmdcheck(ui, args):
-    swordpath, = args
+    swordpath, reportpath = args
+    reports = parsereportlist(reportpath)
     result = 0
     res, cppids = parsecpp(ui, swordpath)
     if res:
@@ -248,6 +259,23 @@ def cmdcheck(ui, args):
     res, intids = checkluaintegration(ui, luaids, intnames)
     if res:
         result = 1
+
+    # Check the list of simulation reports owned by models is a superset
+    # of the real one
+    simreports = dict((n, luaids[n]) for n in intids)
+    simreports.update(cppids)
+    for n, c in simreports.iteritems():
+        if n not in reports:
+            ui.error('error: %d/%s is not defined in models reports.txt\n'
+                    % (c, n))
+            result = 1
+            continue
+        cc = reports[n]
+        if cc != c:
+            ui.error('error: %s has not the same value in the simulation/'
+                    'integration layer and in models (check reports.txt) '
+                    '%d != %d\n' % (n, c, cc))
+            result = 1
 
     # Cross-check cpp/integration ids with several physical dbs
     phypaths = [

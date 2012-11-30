@@ -1566,6 +1566,7 @@
             <arg value="${root.dir}/build/checkreports.py"/>
             <arg value="check"/>
             <arg value="${root.dir}"/>
+            <arg value="${root.dir}/data/data/models/reports.txt"/>
         </exec>
     </target>
 
