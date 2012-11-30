@@ -49,13 +49,13 @@ AdvancedConfigPanel::AdvancedConfigPanel( QWidget* parent, const tools::GeneralC
     {
         Q3HBox* stepBox = new Q3HBox( timeBox_ );
         stepLabel_ = new QLabel( stepBox );
-        stepSpin_ = new QSpinBox( 1, 100, 1, stepBox );
+        stepSpin_ = new QSpinBox( 1, std::numeric_limits< int >::max(), 1, stepBox );
         stepSpin_->setValue( 10 );
     }
     {
         Q3HBox* factorBox = new Q3HBox( timeBox_ );
         factorLabel_ = new QLabel( factorBox );
-        factorSpin_ = new QSpinBox( 1, 100, 1, factorBox );
+        factorSpin_ = new QSpinBox( 1, std::numeric_limits< int >::max(), 1, factorBox );
         factorSpin_->setValue( 10 );
     }
     {
