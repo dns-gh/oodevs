@@ -761,7 +761,6 @@ void PHY_RolePionLOG_Maintenance::SendChangedState() const
 // -----------------------------------------------------------------------------
 const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Maintenance::GetPion() const
 {
-
     return pion_;
 }
 

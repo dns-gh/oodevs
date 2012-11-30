@@ -236,7 +236,7 @@ bool PHY_RolePionLOG_Supply::CanReserveStock( const PHY_DotationCategory& dotati
 { 
     assert( pStocks_ );
     if( !bSystemEnabled_ && !pion_.IsDead() ) // <== Stock à terre quand pion mort = libre service
-        return 0.;
+        return false;
     return GetStockValue( dotationCategory ) > 0;
 }
 
