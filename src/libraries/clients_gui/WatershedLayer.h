@@ -80,7 +80,7 @@ private:
     bool ignore_;
     bool updateGradient_;
     unsigned gradientTexture_;
-    const unsigned short gradientSize_;
+    unsigned short gradientSize_;
     unsigned short height_;
     bool enabled_;
     bool inverted_;

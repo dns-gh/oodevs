@@ -34,7 +34,7 @@ WatershedLayer::WatershedLayer( kernel::Controllers& controllers, const kernel::
     , ignore_         ( false )
     , updateGradient_ ( true )
     , gradientTexture_( 0 )
-    , gradientSize_   ( 1024 ) // $$$$ SBO 2010-03-23: hard coded maximum
+    , gradientSize_   ( 0 )
     , height_         ( 0 )
     , enabled_        ( false )
     , inverted_       ( false )
@@ -218,6 +218,9 @@ void WatershedLayer::MakeGlTexture()
     unsigned short maxElevation = elevation_.MaximumElevation();
     if( maxElevation == 0 )
         return;
+    gradientSize_ = 1024;
+    while( maxElevation > gradientSize_ )
+        gradientSize_ *= 2;
     height_ = std::min( height_, maxElevation );
     std::vector< Color > colors;
     colors.resize( gradientSize_ );
