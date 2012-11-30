@@ -148,8 +148,13 @@ HANDLE MakeFileHandle( const wchar_t* file )
     SECURITY_ATTRIBUTES sec = {};
     sec.nLength = sizeof sec;
     sec.bInheritHandle = true;
-    HANDLE reply = CreateFileW( file, GENERIC_WRITE, FILE_SHARE_READ, &sec, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-    return reply == INVALID_HANDLE_VALUE ? NULL : reply;
+    HANDLE reply = CreateFileW( file, FILE_APPEND_DATA, FILE_SHARE_READ, &sec, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+    if( reply == INVALID_HANDLE_VALUE )
+        return NULL;
+    DWORD dummy;
+    if( GetLastError() == ERROR_ALREADY_EXISTS )
+        WriteFile( reply, "\n", 1, &dummy, 0 );
+    return reply;
 }
 
 HANDLE MakeProcess( const wchar_t* app, wchar_t* args, const wchar_t* run, STARTUPINFOW* ex, int& pid )
