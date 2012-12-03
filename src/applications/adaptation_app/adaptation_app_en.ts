@@ -3656,10 +3656,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <translation>Illumination shell</translation>
     </message>
     <message>
-        <source>Mine</source>
-        <translation>Mine</translation>
-    </message>
-    <message>
         <source>Effect</source>
         <translation>Effect</translation>
     </message>

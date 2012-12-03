@@ -780,9 +780,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire_ABC.cpp">
       <Filter>Source Files\Entities\Agents\Units\Dotations\Dotations\Ammos\IndirectFire</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectMineFire.cpp">
-      <Filter>Source Files\Entities\Agents\Units\Dotations\Dotations\Ammos\IndirectFire</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationCategory_IndirectObjectCreationFire.cpp">
       <Filter>Source Files\Entities\Agents\Units\Dotations\Dotations\Ammos\IndirectFire</Filter>
     </ClCompile>
@@ -2964,9 +2961,6 @@
       <Filter>Source Files\Entities\Agents\Units\Dotations\Dotations\Ammos\IndirectFire</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire_ABC.h">
-      <Filter>Source Files\Entities\Agents\Units\Dotations\Dotations\Ammos\IndirectFire</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectMineFire.h">
       <Filter>Source Files\Entities\Agents\Units\Dotations\Dotations\Ammos\IndirectFire</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationCategory_IndirectObjectCreationFire.h">

@@ -310,7 +310,6 @@ void ADN_Resources_GUI::BuildAmmunition()
         CreateCheckbox( pEffects, vConnectors, tr( "Explosive" ), buttonGroup_, eExplosivePresent );
         CreateCheckbox( pEffects, vConnectors, tr( "Smoke" ), buttonGroup_, eSmokePresent );
         CreateCheckbox( pEffects, vConnectors, tr( "Illumination shell" ), buttonGroup_, eFlarePresent );
-        CreateCheckbox( pEffects, vConnectors, tr( "Mine" ), buttonGroup_, eMinePresent );
         CreateCheckbox( pEffects, vConnectors, tr( "Effect" ), buttonGroup_, eEffectPresent );
         connect( buttonGroup_, SIGNAL( buttonClicked( int ) ), this, SLOT( IndirectTypeChanged() ) );
     }
@@ -462,7 +461,6 @@ void ADN_Resources_GUI::IndirectTypeChanged()
     pExplosiveParametersGroup_->setVisible( buttonGroup_->button( eExplosivePresent )->isChecked() );
     pSmokeParametersGroup_->setVisible( buttonGroup_->button( eSmokePresent )->isChecked() );
     pEffectParametersGroup_->setVisible( buttonGroup_->button( eEffectPresent )->isChecked() );
-    pMineParametersGroup_->setVisible( buttonGroup_->button( eMinePresent )->isChecked() );
     pFlareParametersGroup_->setVisible( buttonGroup_->button( eFlarePresent )->isChecked() );
     data_.Initialize();
 }

@@ -130,7 +130,7 @@
 							<xs:sequence/>
 							<xs:element name="indirect-fires" minOccurs="0">
 								<xs:annotation>
-									<xs:documentation xml:lang="en">TODO</xs:documentation>
+									<xs:documentation xml:lang="en">Indirect fire specific data, depending on the fire effect</xs:documentation>
 									<xs:documentation xml:lang="fr">Données spécifiques au tir indirect, dépendant de l’effet indirect</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>

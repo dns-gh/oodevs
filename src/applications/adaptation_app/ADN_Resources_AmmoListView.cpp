@@ -97,7 +97,6 @@ void ADN_Resources_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Resources_GUI::eExplosivePresent]->Connect( &pInfos->indirectAmmoInfos_.bExplosive_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eSmokePresent]->Connect( &pInfos->indirectAmmoInfos_.bSmoke_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eFlarePresent]->Connect( &pInfos->indirectAmmoInfos_.bFlare_, bConnect );
-    vItemConnectors_[ADN_Resources_GUI::eMinePresent]->Connect( &pInfos->indirectAmmoInfos_.bMine_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eEffectPresent]->Connect( &pInfos->indirectAmmoInfos_.bEffect_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eIntervention]->Connect( &pInfos->indirectAmmoInfos_.nIntervention_, bConnect );
     vItemConnectors_[ADN_Resources_GUI::eDispersionX]->Connect( &pInfos->indirectAmmoInfos_.rDispersionX_, bConnect );

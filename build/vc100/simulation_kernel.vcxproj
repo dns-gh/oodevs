@@ -324,7 +324,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_AmmoDotationClass.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectMineFire.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationCategory_IndirectObjectCreationFire.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectWeatherFire.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_IndirectFireDotationClass.cpp" />
@@ -1104,7 +1103,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_AmmoDotationClass.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectFire_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectMineFire.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Dotations\PHY_DotationCategory_IndirectObjectCreationFire.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_DotationCategory_IndirectWeatherFire.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\entities\agents\units\dotations\PHY_IndirectFireDotationClass.h" />

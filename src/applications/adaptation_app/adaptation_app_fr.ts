@@ -3660,10 +3660,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
         <translation>Fusée éclairante</translation>
     </message>
     <message>
-        <source>Mine</source>
-        <translation>Mine</translation>
-    </message>
-    <message>
         <source>Effect</source>
         <translation>Effet</translation>
     </message>

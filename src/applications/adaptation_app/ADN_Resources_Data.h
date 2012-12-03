@@ -117,7 +117,6 @@ public:
         ADN_Type_Bool bExplosive_;
         ADN_Type_Bool bSmoke_;
         ADN_Type_Bool bFlare_;
-        ADN_Type_Bool bMine_;
         ADN_Type_Bool bEffect_;
 
         ADN_Type_Int nIntervention_;

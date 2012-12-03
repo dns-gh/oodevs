@@ -61,7 +61,6 @@ public:
         eExplosivePresent,
         eSmokePresent,
         eFlarePresent,
-        eMinePresent,
         eEffectPresent,
         eNeutralizationRatio,
         eDispersionFactor,

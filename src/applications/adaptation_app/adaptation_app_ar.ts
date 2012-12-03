@@ -3643,10 +3643,6 @@ When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the 
         <translation type="unfinished">قذيفة إنارة</translation>
     </message>
     <message>
-        <source>Mine</source>
-        <translation type="unfinished">الأعمال المتعلقة بالألغام</translation>
-    </message>
-    <message>
         <source>Effect</source>
         <translation type="unfinished">تأثير</translation>
     </message>

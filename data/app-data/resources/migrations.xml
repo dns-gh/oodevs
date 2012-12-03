@@ -169,7 +169,8 @@
   </migration>
   <migration from="5.1.0" to="5.2.0">
     <upgrade schema="schemas/5.1.0/physical/Physical.xsd" apply="schemas/5.2.0/xsl/physical_5.1.0-5.2.0.xsl"/>
-    <upgrade schema="schemas/5.1.0/physical/UrbanTypes.xsd" apply="schemas/5.2.0/xsl/urban_types_5.1.0-5.2.0.xsl"/>
+    <upgrade schema="schemas/5.1.0/physical/Resources.xsd" apply="schemas/5.2.0/xsl/resources_5.1.0-5.2.0.xsl"/>
     <upgrade schema="schemas/5.1.0/physical/Units.xsd" apply="schemas/5.2.0/xsl/units_5.1.0-5.2.0.xsl"/>
+    <upgrade schema="schemas/5.1.0/physical/UrbanTypes.xsd" apply="schemas/5.2.0/xsl/urban_types_5.1.0-5.2.0.xsl"/>
   </migration>
 </migrations>

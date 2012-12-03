@@ -22,7 +22,6 @@
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::explosif_  ( "Explosif"  , eExplosif  , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::fumigene_  ( "Fumigene"  , eFumigene  , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire       ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::eclairant_ ( "Eclairant" , eEclairant , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire       ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::mine_      ( "Mine"      , eMine      , /*NeedPH*/false, &PHY_DotationCategory_IndirectMineFire          ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::effect_    ( "Effect"    , eEffect    , /*NeedPH*/false, &PHY_DotationCategory_IndirectObjectCreationFire::Create );
 
 PHY_IndirectFireDotationClass::T_TypeMap PHY_IndirectFireDotationClass::types_;

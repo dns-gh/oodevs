@@ -218,7 +218,6 @@ ADN_Resources_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     : bExplosive_          ( false )
     , bSmoke_              ( false )
     , bFlare_              ( false )
-    , bMine_               ( false )
     , bEffect_             ( false )
     , nIntervention_       ( 1 )
     , rDispersionX_        ( 1.0 )
@@ -251,7 +250,6 @@ void ADN_Resources_Data::IndirectAmmoInfos::CopyFrom( ADN_Resources_Data::Indire
     bExplosive_ = ammoInfos.bExplosive_.GetData();
     bSmoke_ = ammoInfos.bSmoke_.GetData();
     bFlare_ = ammoInfos.bFlare_.GetData();
-    bMine_ = ammoInfos.bMine_.GetData();
     bEffect_ = ammoInfos.bEffect_.GetData();
 
     rDispersionX_ = ammoInfos.rDispersionX_.GetData();
@@ -330,10 +328,6 @@ void ADN_Resources_Data::IndirectAmmoInfos::ReadIndirectFire( xml::xistream& inp
             input >> xml::attribute( "setup-time", flareDeployTime_ )
                   >> xml::attribute( "life-time", flareLifeTime_ );
             break;
-        case eTypeMunitionTirIndirect_Mine:
-            bMine_ = true;
-            input >> xml::attribute( "mine-count", nMineNumber_ );
-            break;
         case eTypeMunitionTirIndirect_Effect:
             bEffect_ = true;
             input >> xml::attribute( "object-type", strObjectType_ )
@@ -377,13 +371,6 @@ void ADN_Resources_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output 
                     << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Eclairant ) )
                     << xml::attribute( "setup-time", flareDeployTime_ )
                     << xml::attribute( "life-time", flareLifeTime_ )
-                << xml::end;
-    }
-    if( bMine_.GetData() )
-    {
-        output << xml::start( "indirect-fire" )
-                    << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Mine ) )
-                    << xml::attribute( "mine-count", nMineNumber_ )
                 << xml::end;
     }
     if( bEffect_.GetData() )

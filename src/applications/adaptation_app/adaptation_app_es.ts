@@ -3657,10 +3657,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Effect</source>
         <translation type="unfinished">Efecto</translation>
     </message>
