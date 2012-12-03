@@ -901,12 +901,12 @@ Parked engine running</translation>
         <translation>Attrition thresholds</translation>
     </message>
     <message>
-        <source>NBC protection</source>
-        <translation>NBC protection</translation>
-    </message>
-    <message>
         <source>Toxicity exponent</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Protections</source>
+        <translation type="unfinished">Protection</translation>
     </message>
 </context>
 <context>

@@ -59,7 +59,7 @@ void ADN_Disasters_GUI::Build()
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
-    Q3GroupBox* pNbcSuit = new Q3VGroupBox( tr( "NBC protection" ) );
+    Q3GroupBox* pNbcSuit = new Q3VGroupBox( tr( "Protections" ) );
     new ADN_NbcSuitTable( strClassName_ + "NbcSuitTable", vConnectors[ eNbcSuitRatio ], pNbcSuit );
 
     Q3GroupBox* pConcentrationThresholds = new Q3VGroupBox( tr( "Concentration thresholds" ) );

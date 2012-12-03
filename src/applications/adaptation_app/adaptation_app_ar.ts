@@ -889,12 +889,12 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NBC protection</source>
+        <source>Toxicity exponent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toxicity exponent</source>
-        <translation type="unfinished"></translation>
+        <source>Protections</source>
+        <translation type="unfinished">سبل الحماية</translation>
     </message>
 </context>
 <context>

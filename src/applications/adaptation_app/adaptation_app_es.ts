@@ -901,12 +901,12 @@ estacionado con motor encendido</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NBC protection</source>
+        <source>Toxicity exponent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toxicity exponent</source>
-        <translation type="unfinished"></translation>
+        <source>Protections</source>
+        <translation type="unfinished">Protecciones</translation>
     </message>
 </context>
 <context>

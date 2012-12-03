@@ -901,12 +901,12 @@ Arrêt moteur allumé</translation>
         <translation>Seuils d&apos;attrition</translation>
     </message>
     <message>
-        <source>NBC protection</source>
-        <translation>Protection NBC</translation>
-    </message>
-    <message>
         <source>Toxicity exponent</source>
         <translation>Coefficient de toxicité</translation>
+    </message>
+    <message>
+        <source>Protections</source>
+        <translation>Protections</translation>
     </message>
 </context>
 <context>
