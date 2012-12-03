@@ -74,6 +74,7 @@ TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& contro
     : QTreeWidget( parent )
     , controllers_( controllers )
     , filter_     ( 0 )
+    , blockSelect_( false )
 {
     setMinimumWidth( 200 );
     setColumnCount( 1 );
@@ -254,6 +255,23 @@ void TimelineListView::NotifyDeleted( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineListView::NotifySelected
+// Created: JSR 2012-12-03
+// -----------------------------------------------------------------------------
+void TimelineListView::NotifySelected( const kernel::Entity_ABC* entity )
+{
+    blockSelect_ = true;
+    selectionModel()->clearSelection();
+    if( QTreeWidgetItem* item = FindItem( entity ) )
+    {
+        const QModelIndex index = indexFromItem( item );
+        selectionModel()->select( index, QItemSelectionModel::Select );
+        scrollTo( index );
+    }
+    blockSelect_ = false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineListView::SetContentsPos
 // Created: JSR 2012-10-26
 // -----------------------------------------------------------------------------
@@ -279,9 +297,18 @@ void TimelineListView::OnVScrollbarChanged( int y )
 // -----------------------------------------------------------------------------
 void TimelineListView::OnSelectionChange( const QItemSelection&, const QItemSelection& )
 {
-    QTreeWidgetItem* item = currentItem();
+    if( blockSelect_ )
+        return;
+    QList< QTreeWidgetItem* > items = selectedItems();
+    QTreeWidgetItem* item = 0;
+    if( items.size() > 0 )
+        item = items[ 0 ];
     if( item && item->data( 0, Qt::UserRole ).isValid() )
-        controllers_.actions_.Select( *item->data( 0, Qt::UserRole ).value< const kernel::Entity_ABC* >() );
+    {
+        kernel::ActionController::T_Selectables list;
+        list.push_back( item->data( 0, Qt::UserRole ).value< const kernel::Entity_ABC* >() );
+        controllers_.actions_.SetMultipleSelection( list );
+    }
 }
 
 // -----------------------------------------------------------------------------

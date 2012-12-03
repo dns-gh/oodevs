@@ -11,6 +11,7 @@
 #define __TimelineListView_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -36,6 +37,7 @@ class TimelineListView : public QTreeWidget
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< actions::Action_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                       , public tools::SelectionObserver< kernel::Entity_ABC >
                        , private boost::noncopyable
 {
     Q_OBJECT
@@ -76,6 +78,7 @@ private:
     virtual void NotifyCreated( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
+    virtual void NotifySelected( const kernel::Entity_ABC* entity );
     //@}
 
     //! @name Types
@@ -96,6 +99,7 @@ private:
     QTreeWidgetItem* magicItem_;
     QTreeWidgetItem* weatherItem_;
     QTreeWidgetItem* objectItem_;
+    bool blockSelect_;
     //@}
 };
 
