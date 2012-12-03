@@ -1648,6 +1648,10 @@
 
     <target name="cmake.msvc">
         <cmake_msvc input="${root.dir}/build"/>
+        <exec taskname="fixmsvc" executable="python" failonerror="true">
+            <arg value="fixmsvc.py"/>
+            <arg value="${out.dir}/msvc"/>
+        </exec>
     </target>
 
     <target name="cmake.configure">
