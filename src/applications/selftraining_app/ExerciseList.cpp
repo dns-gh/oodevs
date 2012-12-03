@@ -48,7 +48,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     QVBoxLayout* leftBoxLayout = new QVBoxLayout();
     {
         exercises_ = new ExerciseListView( leftBox, config, fileLoader );
-        connect( exercises_, SIGNAL( clicked( const QModelIndex& ) ), this, SLOT( SelectExercise( const QModelIndex& ) ) );
+        connect( exercises_->selectionModel(), SIGNAL( currentChanged( const QModelIndex&, const QModelIndex& ) ), this, SLOT( SelectExercise( const QModelIndex&, const QModelIndex& ) ) );
         profiles_ = new ProfileList( leftBox, config, fileLoader );
         profiles_->setVisible( showProfile );
         connect( profiles_ , SIGNAL( Select( const frontend::Profile& ) ), this, SLOT( SelectProfile( const frontend::Profile& ) ) );
@@ -135,11 +135,11 @@ void ExerciseList::SetFilter( const frontend::ExerciseFilter_ABC& filter )
 // Name: ExerciseList::SelectExercise
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-void ExerciseList::SelectExercise( const QModelIndex& index )
+void ExerciseList::SelectExercise( const QModelIndex& current, const QModelIndex& /*previous*/ )
 {
     if( const frontend::Exercise_ABC* selected = GetSelectedExercise() )
     {
-        profiles_->Update( exercises_->GetExerciseName( index ) );
+        profiles_->Update( exercises_->GetExerciseName( current ) );
         properties_->Select( selected );
         emit Select( *selected, frontend::Profile() );
     }
