@@ -112,7 +112,6 @@ public:
         eMobilityCapacity_MaxAgentSpeed,
         eMobilityCapacity_SpeedModifier,
         eMobilityCapacityPresent,
-        eOccupableCapacityPresent,
         ePerceptionCapacity_Blinded,
         ePerceptionCapacityPresent,
         ePopulationCapacity_Density,

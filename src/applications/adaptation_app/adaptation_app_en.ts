@@ -2906,10 +2906,6 @@ The spawn capacity will be disabled.</translation>
         <translation>Interference</translation>
     </message>
     <message>
-        <source>Occupable</source>
-        <translation>Occupable</translation>
-    </message>
-    <message>
         <source>Supply</source>
         <translation>Supply</translation>
     </message>

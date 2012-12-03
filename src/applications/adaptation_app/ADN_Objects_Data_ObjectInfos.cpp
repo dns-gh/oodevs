@@ -84,7 +84,6 @@ void ADN_Objects_Data_ObjectInfos::InitializeCapacities()
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Logistic::TAG ].reset(                 new ADN_Objects_Data::ADN_CapacityInfos_Logistic() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Mobility::TAG ].reset(                 new ADN_Objects_Data::ADN_CapacityInfos_Mobility() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Trafficability::TAG ].reset(           new ADN_Objects_Data::ADN_CapacityInfos_Trafficability() );
-    capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Occupable::TAG ].reset(                new ADN_Objects_Data::ADN_CapacityInfos_Occupable() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Population::TAG ].reset(               new ADN_Objects_Data::ADN_CapacityInfos_Population() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Propagation::TAG ].reset(              new ADN_Objects_Data::ADN_CapacityInfos_Propagation() );
     capacities_[ ADN_Objects_Data::ADN_CapacityInfos_Protection::TAG ].reset(               new ADN_Objects_Data::ADN_CapacityInfos_Protection() );

@@ -1232,7 +1232,6 @@ INIT_DATA( ADN_CapacityInfos_Intoxication,            "intoxication" );
 INIT_DATA( ADN_CapacityInfos_Logistic,                "logistic" );
 INIT_DATA( ADN_CapacityInfos_Mobility,                "mobility" );
 INIT_DATA( ADN_CapacityInfos_Trafficability,          "trafficability" );
-INIT_DATA( ADN_CapacityInfos_Occupable,               "occupable" );
 INIT_DATA( ADN_CapacityInfos_Population,              "population-filter" );
 INIT_DATA( ADN_CapacityInfos_Propagation,             "propagation" );
 INIT_DATA( ADN_CapacityInfos_Protection,              "protection" );

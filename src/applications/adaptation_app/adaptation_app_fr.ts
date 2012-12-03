@@ -2998,10 +2998,6 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
         <translation>Mobilité</translation>
     </message>
     <message>
-        <source>Occupable</source>
-        <translation>Occupable</translation>
-    </message>
-    <message>
         <source>Propagation</source>
         <translation>Propagation</translation>
     </message>

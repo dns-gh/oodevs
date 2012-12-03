@@ -68,7 +68,6 @@ enum E_Capacities
     eLogisticCapacity,
     eMedicalCapacity,
     eMobilityCapacity,
-    eOccupableCapacity,
     ePerceptionCapacity,
     ePopulationCapacity,
     ePropagationCapacity,

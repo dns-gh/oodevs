@@ -2893,10 +2893,6 @@ The spawn capacity will be disabled.</source>
         <translation type="unfinished">التدخل</translation>
     </message>
     <message>
-        <source>Occupable</source>
-        <translation type="unfinished">أوككوبابل</translation>
-    </message>
-    <message>
         <source>Supply</source>
         <translation type="unfinished">إمدادات</translation>
     </message>

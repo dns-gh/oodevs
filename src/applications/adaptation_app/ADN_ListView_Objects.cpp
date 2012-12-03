@@ -228,8 +228,6 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     CONNECT_HELPER( InteractWithSide, Enemy, bEnemySide_ );
     CONNECT_HELPER( InteractWithSide, Neutral, bNeutralSide_ );
 
-    BUILDER_HELPER( Occupable );
-
     BUILDER_HELPER( Supply );
 
     BUILDER_HELPER( Protection );

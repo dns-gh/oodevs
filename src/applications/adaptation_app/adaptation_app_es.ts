@@ -3035,10 +3035,6 @@ The spawn capacity will be disabled.</source>
         <translation>Ingeniería preparada</translation>
     </message>
     <message>
-        <source>Occupable</source>
-        <translation>Ocupable</translation>
-    </message>
-    <message>
         <source>Supply</source>
         <translation>Suministro</translation>
     </message>
