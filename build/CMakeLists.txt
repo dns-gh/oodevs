@@ -95,7 +95,12 @@ function( add_target target group dir )
             masa_set_target_output_name( ${target} ${debug} ${release} )
         endif()
     elseif( test )
-        # nothing
+        if( MSVC AND CMAKE_CONFIGURATION_TYPES )
+            add_custom_command( TARGET ${target} POST_BUILD COMMAND ${target}
+                --temp_directory=${CMAKE_CURRENT_BINARY_DIR}/${target}.tmp
+                --data_directory=${root_dir}/data/${dir}                            
+                WORKING_DIRECTORY ${MASA_RUN} )
+        endif()
     else()
         # add lib prefix
         masa_get_library_full_name( lib${target} debug release )
