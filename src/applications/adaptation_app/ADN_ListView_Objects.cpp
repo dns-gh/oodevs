@@ -135,6 +135,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     LinkBuilder builder( vItemConnectors_, *pInfos, bConnect );
 
     vItemConnectors_[ ADN_Objects_GUI::eName ]->Connect( &pInfos->strName_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eType ]->Connect( &pInfos->strType_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eSymbolPolygon ]->Connect( &pInfos->symbols_[ 0 ], bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eSymbolPoint ]->Connect( &pInfos->symbols_[ 1 ], bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eSymbolLine ]->Connect( &pInfos->symbols_[ 2 ], bConnect );

@@ -655,6 +655,10 @@ Parked engine running</source>
         <source>Duplicate type for missions %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Duplicate type for objects %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

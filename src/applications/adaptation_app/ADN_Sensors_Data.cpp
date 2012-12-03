@@ -1107,7 +1107,7 @@ QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Objects_Data_ObjectInfos& o
     {
         SensorInfos* pComp = *it;
         for( T_TargetsInfos_Vector::iterator itTarget = pComp->vTargets_.begin(); itTarget != pComp->vTargets_.end(); ++itTarget )
-            if( (*itTarget)->ptrObject_.GetData()->strType_.GetData() == object.strType_.GetData() )
+            if( (*itTarget)->ptrObject_.GetData()->strName_.GetData() == object.strName_.GetData() )
                 result << pComp->strName_.GetData().c_str();
     }
     return result;

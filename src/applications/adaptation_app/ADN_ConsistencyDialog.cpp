@@ -29,7 +29,8 @@ namespace
                type == eMissingPCOnAutomat ||
                type == eMissingArmor ||
                type == eMissingDisaster ||
-               type == eMissionTypeUniqueness;
+               type == eMissionTypeUniqueness ||
+               type == eObjectTypeUniqueness;
     }
 
 #define CONVERT_TO_MASK( mask ) { if( type < mask ) return mask; }
@@ -70,6 +71,7 @@ ADN_ConsistencyDialog::ADN_ConsistencyDialog( QWidget* parent )
     errorDescriptions_[ eMissingChoiceComposite ] = tr( "The mission %1 has no type defined for a localisation composite parameter." );
 
     errorDescriptions_[ eMissionTypeUniqueness ]  = tr( "Duplicate type for missions %1" ) + error;
+    errorDescriptions_[ eObjectTypeUniqueness ]   = tr( "Duplicate type for objects %1" ) + error;
 
     errorDescriptions_[ eMissingPart ]            = tr( "The breakdown %1 has no replacement part" ) + error;
     errorDescriptions_[ eMissingBreakdown ]       = tr( "Equipment %1 requires at least one breakdown" ) + error;

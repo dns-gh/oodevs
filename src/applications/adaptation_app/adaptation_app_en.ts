@@ -667,6 +667,10 @@ Parked engine running</translation>
         <source>Duplicate type for missions %1</source>
         <translation>Duplicate type for missions %1</translation>
     </message>
+    <message>
+        <source>Duplicate type for objects %1</source>
+        <translation>Duplicate type for objects %1</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

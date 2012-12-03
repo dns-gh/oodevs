@@ -15,6 +15,7 @@ enum E_ConsistencyCheck
     eNNoUniqueness,
     eEmatUniqueness,
     eMissionTypeUniqueness,
+    eObjectTypeUniqueness,
     eUniquenessMask,
 
     eMissingNNo,

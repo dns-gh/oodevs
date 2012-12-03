@@ -665,7 +665,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Duplicate type for missions %1</source>
-        <translation>&gt;Les missions %1 possèdent le même type</translation>
+        <translation>Les missions %1 possèdent le même type</translation>
+    </message>
+    <message>
+        <source>Duplicate type for objects %1</source>
+        <translation>Les objets %1 possèdent le même type</translation>
     </message>
 </context>
 <context>

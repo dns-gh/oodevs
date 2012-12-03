@@ -35,6 +35,7 @@ public:
     enum E_GuiElements
     {
         eName = 0,
+        eType,
         eGeometryPolygon,
         eGeometryPoint,
         eGeometryLine,

@@ -887,7 +887,8 @@ QStringList ADN_Resources_Data::GetResourcesThatUse( ADN_Objects_Data_ObjectInfo
         ResourceInfos* pComp = *it;
         for( CIT_CategoryInfos_Vector itCategory = pComp->categories_.begin(); itCategory != pComp->categories_.end(); ++itCategory )
             if( AmmoCategoryInfo* ammoCategory = dynamic_cast< AmmoCategoryInfo* >( *itCategory ) )
-                if( ammoCategory->bIndirect_.GetData() && ammoCategory->indirectAmmoInfos_.objectType_.GetData()->strType_.GetData() == object.strType_.GetData() )
+                if( ammoCategory->bIndirect_.GetData() && ammoCategory->indirectAmmoInfos_.bEffect_.GetData()
+                 && ammoCategory->indirectAmmoInfos_.objectType_.GetData()->strName_.GetData() == object.strName_.GetData() )
                     result << ( *itCategory )->strName_.GetData().c_str();
     }
     return result;

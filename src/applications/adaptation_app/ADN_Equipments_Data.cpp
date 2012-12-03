@@ -2056,7 +2056,7 @@ QStringList ADN_Equipments_Data::GetEquipmentsThatUse( ADN_Objects_Data_ObjectIn
     {
         EquipmentInfos* pComp = *it;
         for( IT_ObjectInfos_Vector itObject = pComp->vObjects_.begin(); itObject != pComp->vObjects_.end(); ++itObject )
-            if( (*itObject)->ptrObject_.GetData()->strType_.GetData() == object.strType_.GetData() )
+            if( (*itObject)->ptrObject_.GetData()->strName_.GetData() == object.strName_.GetData() )
                 result << pComp->strName_.GetData().c_str();
     }
     return result;

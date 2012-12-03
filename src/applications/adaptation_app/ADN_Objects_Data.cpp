@@ -1282,6 +1282,22 @@ ADN_Objects_Data::~ADN_Objects_Data()
     vObjectInfos_.Reset();
 }
 
+namespace
+{
+    void CheckObjectTypeUniqueness( ADN_ConsistencyChecker& checker, const ADN_Objects_Data::CIT_ObjectsInfos_Vector& rhs, const ADN_Objects_Data::T_ObjectsInfos_Vector& objects )
+    {
+        for( ADN_Objects_Data::CIT_ObjectsInfos_Vector lhs = rhs + 1; lhs != objects.end(); ++lhs )
+            if( (*lhs)->strName_.GetData() != (*rhs)->strName_.GetData() &&
+                (*lhs)->strType_.GetData() == (*rhs)->strType_.GetData() )
+            {
+                ADN_ConsistencyChecker::ConsistencyError error( eObjectTypeUniqueness );
+                error.items_.push_back( checker.CreateGotoInfo( (*rhs)->strName_.GetData(), eObjects ) );
+                error.items_.push_back( checker.CreateGotoInfo( (*lhs)->strName_.GetData(), eObjects ) );
+                checker.AddError( error );
+            }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::CheckDatabaseValidity
 // Created: JSR 2012-02-16
@@ -1289,7 +1305,10 @@ ADN_Objects_Data::~ADN_Objects_Data()
 void ADN_Objects_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
     for( CIT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    {
         ( *it )->CheckDatabaseValidity( checker );
+        CheckObjectTypeUniqueness( checker, it, vObjectInfos_ );
+    }
 }
 
 //-----------------------------------------------------------------------------

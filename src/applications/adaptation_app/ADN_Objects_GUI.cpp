@@ -96,6 +96,7 @@ void ADN_Objects_GUI::Build()
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
 
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name"), vInfosConnectors[ eName ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type"), vInfosConnectors[ eType ] );
     pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ], 0, eGreaterEqualZero );
     pPointDistance_->SetAutoEnabled( false );
     builder.AddField< ADN_TextEdit_String >( pInfoHolder, tr( "Description"), vInfosConnectors[ eDescription ] );
