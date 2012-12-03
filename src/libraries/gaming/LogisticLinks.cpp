@@ -190,8 +190,11 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const kernel::Viewport
     glColor4f( COLOR_YELLOW );
 
     if( superiorLinks_.empty() )
-        tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
-    else
+    {
+        if( displayMissing )
+            tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
+    }
+    else if( displayLinks )
     {
         BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
         {
