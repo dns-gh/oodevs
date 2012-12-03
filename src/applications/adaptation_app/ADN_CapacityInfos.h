@@ -57,7 +57,6 @@ enum E_Capacities
     eDecontaminationCapacity,
     eDelayCapacity,
     eDetectionCapacity,
-    eExtinguishableCapacity,
     eFirePropagationModifierCapacity,
     eFloodCapacity,
     eImprovableCapacity,

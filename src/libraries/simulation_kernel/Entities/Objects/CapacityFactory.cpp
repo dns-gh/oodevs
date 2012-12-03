@@ -27,7 +27,6 @@
 #include "DecontaminationCapacity.h"
 #include "DelayCapacity.h"
 #include "DetectionCapacity.h"
-#include "ExtinguishableCapacity.h"
 #include "FireForbiddenCapacity.h"
 #include "FirePropagationModifierCapacity.h"
 #include "FloodCapacity.h"
@@ -157,7 +156,6 @@ CapacityFactory::CapacityFactory()
     DoRegister( "decontamination", boost::bind( &AddBuilder< DecontaminationCapacity >::Add, _1, _2 ) );
     DoRegister( "delay", boost::bind( &AddBuilder< DelayCapacity >::Add, _1, _2 ) );
     DoRegister( "detection", boost::bind( &AddBuilder< DetectionCapacity >::Add, _1, _2 ) );
-    DoRegister( "extinguishable", boost::bind( &AddBuilder< ExtinguishableCapacity >::Add, _1, _2 ) );
     DoRegister( "fire-forbidden", boost::bind( &AddBuilder< FireForbiddenCapacity >::Add, _1, _2 ) );
     DoRegister( "fire-propagation-modifier", boost::bind( &AddBuilder< FirePropagationModifierCapacity >::Add, _1, _2 ) );
     DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );

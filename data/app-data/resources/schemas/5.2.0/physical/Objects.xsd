@@ -349,7 +349,6 @@
 					<!-- meters -->
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="extinguishable" minOccurs="0"/>
 			<xs:element name="workable" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="max-animator" type="xs:nonNegativeInteger"/>

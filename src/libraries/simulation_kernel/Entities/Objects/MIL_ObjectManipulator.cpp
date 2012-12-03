@@ -21,7 +21,6 @@
 #include "ConstructionAttribute.h"
 #include "CrowdCapacity.h"
 #include "DetectionCapacity.h"
-#include "ExtinguishableCapacity.h"
 #include "ImprovableCapacity.h"
 #include "InteractWithSideCapacity.h"
 #include "MineAttribute.h"
@@ -182,15 +181,6 @@ void MIL_ObjectManipulator::Bypass( double rDeltaPercentage )
 void MIL_ObjectManipulator::Activate()
 {
     object_.Get< ActivableCapacity >().Activate( object_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManipulator::Extinguish
-// Created: JCR 2008-06-06
-// -----------------------------------------------------------------------------
-void MIL_ObjectManipulator::Extinguish( int agent, int nHose )
-{
-    object_.Get< ExtinguishableCapacity >().Extinguish( object_, agent, nHose );
 }
 
 // -----------------------------------------------------------------------------

@@ -95,7 +95,6 @@ public:
 
     typedef helpers::ADN_CapacityInfos_Default< helpers::eActivableCapacity >               ADN_CapacityInfos_Activable;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eDelayCapacity >                   ADN_CapacityInfos_Delay;
-    typedef helpers::ADN_CapacityInfos_Default< helpers::eExtinguishableCapacity >          ADN_CapacityInfos_Extinguishable;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eInterferenceCapacity >            ADN_CapacityInfos_Interference;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eLogisticCapacity >                ADN_CapacityInfos_Logistic;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eSupplyCapacity >                  ADN_CapacityInfos_Supply;

@@ -2902,10 +2902,6 @@ The spawn capacity will be disabled.</translation>
         <translation>Decontamination</translation>
     </message>
     <message>
-        <source>Extinguishable</source>
-        <translation>Extinguishable</translation>
-    </message>
-    <message>
         <source>Interference</source>
         <translation>Interference</translation>
     </message>

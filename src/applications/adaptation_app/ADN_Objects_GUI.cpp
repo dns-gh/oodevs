@@ -138,7 +138,6 @@ void ADN_Objects_GUI::Build()
         CreateCapacityCheckBox( tr( "Logistic" ), vInfosConnectors[ eLogisticCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Supply-Route" ), vInfosConnectors[ eSupplyRouteCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Decontamination" ), vInfosConnectors[ eDecontaminationCapacityPresent ], capacitiesGroup );
-        CreateCapacityCheckBox( tr( "Extinguishable" ), vInfosConnectors[ eExtinguishableCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Interference" ), vInfosConnectors[ eInterferenceCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Occupable" ), vInfosConnectors[ eOccupableCapacityPresent ], capacitiesGroup );
         CreateCapacityCheckBox( tr( "Supply" ), vInfosConnectors[ eSupplyCapacityPresent ], capacitiesGroup );

@@ -37,7 +37,6 @@
 #include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/FireAttribute.h"
 #include "Entities/Objects/BurnAttribute.h"
-#include "Entities/Objects/ExtinguishableCapacity.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
@@ -326,9 +325,6 @@ int PHY_RoleAction_Objects::Extinguish( const boost::shared_ptr< DEC_Knowledge_O
         return eImpossible;
 
     MIL_Object_ABC& object = *pObject;
-    ExtinguishableCapacity* capacity = object.Retrieve< ExtinguishableCapacity >();
-    if( !capacity )
-        return eNoCapacity;
 
     FireAttribute* fireAttribute = object.RetrieveAttribute< FireAttribute >();
     if( !fireAttribute )

@@ -219,8 +219,6 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     BUILDER_HELPER( Decontamination );
 
-    BUILDER_HELPER( Extinguishable );
-
     BUILDER_HELPER( Medical );
 
     BUILDER_HELPER( Interference );

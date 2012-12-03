@@ -85,7 +85,6 @@ public:
         eDetectionCapacity_IdentificationTime, // LTO
         eDetectionCapacity_RecoTime, // LTO
         eDetectionCapacityPresent,
-        eExtinguishableCapacityPresent,
         eFireForbiddenCapacityPresent,
         eFirePropagationModifierCapacity_Modifiers,
         eFirePropagationModifierCapacityPresent,

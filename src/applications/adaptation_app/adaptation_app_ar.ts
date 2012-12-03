@@ -2889,10 +2889,6 @@ The spawn capacity will be disabled.</source>
         <translation type="unfinished">إزالة التلوث</translation>
     </message>
     <message>
-        <source>Extinguishable</source>
-        <translation type="unfinished">اكستينجويشابل</translation>
-    </message>
-    <message>
         <source>Interference</source>
         <translation type="unfinished">التدخل</translation>
     </message>

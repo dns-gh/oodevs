@@ -23,7 +23,6 @@
 #include "DecontaminationCapacity.h"
 #include "DelayCapacity.h"
 #include "DetectionCapacity.h"
-#include "ExtinguishableCapacity.h"
 #include "FireForbiddenCapacity.h"
 #include "FirePropagationModifierCapacity.h"
 #include "FloodCapacity.h"
@@ -82,7 +81,6 @@ const ObjectCapacity_ABC* CapacityRetriever::RetrieveCapacity( const MIL_ObjectT
     RETRIEVE( "decontamination", DecontaminationCapacity );
     RETRIEVE( "delay", DelayCapacity );
     RETRIEVE( "detection", DetectionCapacity );
-    RETRIEVE( "extinguishable", ExtinguishableCapacity );
     RETRIEVE( "fire-forbidden", FireForbiddenCapacity );
     RETRIEVE( "fire-propagation-modifier", FirePropagationModifierCapacity );
     RETRIEVE( "flood", FloodCapacity );

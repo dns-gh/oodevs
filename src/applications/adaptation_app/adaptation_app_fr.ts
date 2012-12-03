@@ -2978,10 +2978,6 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
         <translation>Décontamination</translation>
     </message>
     <message>
-        <source>Extinguishable</source>
-        <translation>Eteignable</translation>
-    </message>
-    <message>
         <source>Interference</source>
         <translation>Interférence</translation>
     </message>

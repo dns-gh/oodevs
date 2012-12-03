@@ -3019,10 +3019,6 @@ The spawn capacity will be disabled.</source>
         <translation>Rango de acción</translation>
     </message>
     <message>
-        <source>Extinguishable</source>
-        <translation>Extinguible</translation>
-    </message>
-    <message>
         <source>Interference</source>
         <translation>Interferencia</translation>
     </message>

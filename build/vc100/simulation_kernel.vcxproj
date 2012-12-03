@@ -530,7 +530,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DecontaminationCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DelayCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DetectionCapacity.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ExtinguishableCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FirePropagationModifierCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FloodCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ImprovableCapacity.cpp" />
@@ -1393,7 +1392,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DecontaminationCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DelayCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\DetectionCapacity.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ExtinguishableCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FirePropagationModifierCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\FloodCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\ImprovableCapacity.h" />

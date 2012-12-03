@@ -45,7 +45,7 @@ integration.stopExtinguish = function( fire )
 end
 
 integration.canBeExtinguished = function( object )
-    if DEC_ObjectKnowledge_HasCapacity( object.source, "extinguishable" ) then
+    if DEC_ObjectKnowledge_HasCapacity( object.source, "burn" ) then
         return true
     else
         meKnowledge:sendReport( eRC_ImpossibleToExtinguishFire )
