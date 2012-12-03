@@ -135,6 +135,15 @@ void ObjectKnowledge::DisplayInSummary( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::DisplayInTooltip
+// Created: JSR 2012-12-03
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "Object", "Type:" ), type_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::GetName
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------

@@ -66,6 +66,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:
