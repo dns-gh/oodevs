@@ -364,7 +364,6 @@
 			</xs:element>
 			<xs:element name="lodging" minOccurs="0"/>
 			<xs:element name="medical" minOccurs="0"/>
-			<xs:element name="occupable" minOccurs="0"/>
 			<xs:element name="structural" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="value" type="xs:nonNegativeInteger"/>
