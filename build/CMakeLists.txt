@@ -122,7 +122,7 @@ target_link_libraries( mt_tools
 )
 
 # sword_tools
-add_target( sword_tools common "libraries/tools" )
+add_target( sword_tools common "libraries/tools" OPTIONS protocol )
 target_link_libraries( sword_tools
     mt_tools
     ${QT_LIBRARIES}
