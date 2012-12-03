@@ -27,7 +27,7 @@ ADN_ThresholdAttritionsTable::ADN_ThresholdAttritionsTable( const QString& objec
                       << tr( "U1 (%)" )
                       << tr( "U2 (%)" )
                       << tr( "U3 (%)" )
-                      << tr( "U4 (%)" )
+                      << tr( "UE (%)" )
                       << tr( "Dead (%)" )
                       << tr( "Contamination" );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );

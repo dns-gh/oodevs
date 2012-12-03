@@ -4335,10 +4335,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>U4 (%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dead (%)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4353,6 +4349,10 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Contamination</source>
         <translation type="unfinished">Contaminación</translation>
+    </message>
+    <message>
+        <source>UE (%)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

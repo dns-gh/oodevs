@@ -4334,10 +4334,6 @@ Make sure that the file is not write-protected.</translation>
         <translation>U3 (%)</translation>
     </message>
     <message>
-        <source>U4 (%)</source>
-        <translation>U4 (%)</translation>
-    </message>
-    <message>
         <source>Dead (%)</source>
         <translation>Dead (%)</translation>
     </message>
@@ -4352,6 +4348,10 @@ Make sure that the file is not write-protected.</translation>
     <message>
         <source>Contamination</source>
         <translation type="unfinished">Contamination</translation>
+    </message>
+    <message>
+        <source>UE (%)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
