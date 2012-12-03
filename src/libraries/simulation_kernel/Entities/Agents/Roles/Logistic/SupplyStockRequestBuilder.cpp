@@ -9,12 +9,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "SupplyStockRequestBuilder.h"
+#include "SupplyConvoyRealFactory.h"
 #include "SupplyRequestContainer_ABC.h"
 #include "SupplyResourceStock.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "SupplyConvoyConfig.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/Automates/MIL_Automate.h" //$$$ A GICLER
-#include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 
 using namespace logistic;
 
@@ -47,7 +49,13 @@ SupplyStockRequestBuilder::~SupplyStockRequestBuilder()
 void SupplyStockRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
     automate_.Apply2( (boost::function< void( PHY_DotationStock& ) >)boost::bind( &SupplyStockRequestBuilder::VisitStock, this, _1, boost::ref( container ) ) );
-    container.SetTransportersProvider( automate_.FindLogisticManager() );
+    
+    // If TC2: pulled flow. If BL: Pushed flow. cf. http://jira.masagroup.net/browse/SWBUG-9331
+    MIL_AutomateLOG* logisticManager = automate_.FindLogisticManager();
+    bool pushFlow = ( logisticManager && logisticManager->GetLogisticHierarchy().HasSuperior()&& !automate_.GetBrainLogistic() );
+    if( pushFlow )
+        logisticManager = logisticManager->GetLogisticHierarchy().GetPrimarySuperior();
+    container.SetTransportersProvider( logisticManager );
     container.SetConvoyFactory( SupplyConvoyConfig::GetStockSupplyConvoyFactory() );
 }
 
