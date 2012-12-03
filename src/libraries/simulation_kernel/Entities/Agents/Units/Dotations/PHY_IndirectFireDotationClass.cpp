@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_IndirectFireDotationClass.h"
 #include "PHY_DotationCategory_IndirectFire.h"
-#include "PHY_DotationCategory_IndirectMineFire.h"
 #include "PHY_DotationCategory_IndirectObjectCreationFire.h"
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
 #include "MT_Tools/MT_Logger.h"
@@ -36,7 +35,6 @@ void PHY_IndirectFireDotationClass::Initialize()
     types_[ explosif_  .GetID() ] = &explosif_;
     types_[ fumigene_  .GetID() ] = &fumigene_;
     types_[ eclairant_ .GetID() ] = &eclairant_;
-    types_[ mine_      .GetID() ] = &mine_;
     types_[ effect_    .GetID() ] = &effect_;
 }
 

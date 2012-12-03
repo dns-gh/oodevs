@@ -33,7 +33,6 @@ public:
     static const PHY_IndirectFireDotationClass explosif_;
     static const PHY_IndirectFireDotationClass fumigene_;
     static const PHY_IndirectFireDotationClass eclairant_;
-    static const PHY_IndirectFireDotationClass mine_;
     static const PHY_IndirectFireDotationClass effect_;
     //@}
 
