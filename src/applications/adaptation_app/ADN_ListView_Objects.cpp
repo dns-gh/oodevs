@@ -173,7 +173,6 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     CONNECT_HELPER( Mobility, SpeedModifier, nSpeedModifier_ );
 
     BUILDER_HELPER( Trafficability );
-    CONNECT_HELPER( Trafficability, Limited, limited_ );
     CONNECT_HELPER( Trafficability, MaxWeight, maxWeight_ );
 
     BUILDER_HELPER( Activable );

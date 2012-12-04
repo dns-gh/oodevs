@@ -3221,10 +3221,6 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
         <translation>tonnes</translation>
     </message>
     <message>
-        <source>Default Limitation</source>
-        <translation>Limitation par défaut</translation>
-    </message>
-    <message>
         <source>Attrition surface</source>
         <translation>Surface d&apos;attrition</translation>
     </message>

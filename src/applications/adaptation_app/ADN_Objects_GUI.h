@@ -136,7 +136,6 @@ public:
         eTerrainHeuristicCapacity_LocationScore,
         eTerrainHeuristicCapacityPresent,
         eTimeLimitedCapacityPresent,
-        eTrafficabilityCapacity_Limited,
         eTrafficabilityCapacity_MaxWeight,
         eTrafficabilityCapacityPresent,
         eUndergroundNetworkCapacityPresent,

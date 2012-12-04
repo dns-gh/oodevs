@@ -3219,10 +3219,6 @@ The spawn capacity will be disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Default Limitation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Attrition surface</source>
         <translation type="unfinished"></translation>
     </message>

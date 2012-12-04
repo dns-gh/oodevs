@@ -3045,10 +3045,6 @@ The spawn capacity will be disabled.</source>
         <translation type="unfinished">ترافيكابيليتي</translation>
     </message>
     <message>
-        <source>Default Limitation</source>
-        <translation type="unfinished">الحد الافتراضي</translation>
-    </message>
-    <message>
         <source>Max Weight</source>
         <translation type="unfinished">وزن ماكس</translation>
     </message>

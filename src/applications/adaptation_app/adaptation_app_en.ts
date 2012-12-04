@@ -3058,10 +3058,6 @@ The spawn capacity will be disabled.</translation>
         <translation>Trafficability</translation>
     </message>
     <message>
-        <source>Default Limitation</source>
-        <translation>Default Limitation</translation>
-    </message>
-    <message>
         <source>Max Weight</source>
         <translation>Max Weight</translation>
     </message>

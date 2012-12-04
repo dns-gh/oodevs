@@ -206,8 +206,7 @@ void ADN_Objects_GUI::Build()
         // Trafficability
         ADN_GroupBox* trafficability = CreateCapacityGroupBox( 3, tr( "Trafficability" ), vInfosConnectors[ eTrafficabilityCapacityPresent ] );
         // Limitation
-        ADN_GroupBox* limitation = CreateCapacityGroupBox( 4, tr( "Default Limitation" ), vInfosConnectors[ eTrafficabilityCapacity_Limited ], trafficability );
-        builder.AddField< ADN_EditLine_Double >( limitation, tr( "Max Weight" ), vInfosConnectors[ eTrafficabilityCapacity_MaxWeight ], tr( "tons" ), eGreaterEqualZero );
+        builder.AddField< ADN_EditLine_Double >( trafficability, tr( "Max Weight" ), vInfosConnectors[ eTrafficabilityCapacity_MaxWeight ], tr( "tons" ), eGreaterEqualZero );
 
         // Workable
         ADN_GroupBox* workable = CreateCapacityGroupBox( 3, tr( "Workable" ), vInfosConnectors[ eWorkableCapacityPresent ] );

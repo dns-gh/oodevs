@@ -359,6 +359,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::ReadArchive( xml::xistr
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Trafficability::WriteArchive( xml::xostream& xos )
 {
+    limited_ = maxWeight_.GetData() != 0;
     xos << xml::attribute( "default", limited_.GetData() );
     if( limited_.GetData() )
         xos << xml::attribute( "max-weight", maxWeight_.GetData() );
