@@ -711,7 +711,7 @@ integration.creerItineraireAPartirListePoint = function( listPoint )
     for i=1,#listPoint do 
         listPointSource[#listPointSource + 1] = listPoint[i].source
     end
-    return CreateKnowledge( world.Itinerary, DEC_CreerItineraireListe(listPointSource, eTypeItiMouvement) )
+    return CreateKnowledge( integration.ontology.types.itinerary, DEC_CreerItineraireListe(listPointSource, eTypeItiMouvement) )
 end
 
 integration.isElementInAOR = function( self )
