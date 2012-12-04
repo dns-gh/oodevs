@@ -21,6 +21,7 @@
 MOCK_BASE_CLASS( MockLogisticHierarchyOwner_ABC, logistic::LogisticHierarchyOwner_ABC )
 {
     MOCK_METHOD( NotifyQuotaThresholdReached, 1 );
+    MOCK_METHOD( NotifyQuotaExceeded, 2 );
     MOCK_METHOD( Serialize, 1 );
     MOCK_METHOD( GetID, 0 );
 };
