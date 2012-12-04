@@ -141,7 +141,7 @@ integration.query.getFirstFragOrderFromType = function( fragOrderType )
         end
     end
     for k,x in pairs( myself.fragOrders or emptyTable ) do
-        if integration.getAnyType( x ) == fragOrderType then
+        if integration.getAnyType( x.source ) == fragOrderType then
             myself.fragOrders[k] = nil
             return x
         end
