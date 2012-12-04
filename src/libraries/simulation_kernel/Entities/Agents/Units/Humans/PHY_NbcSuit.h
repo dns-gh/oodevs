@@ -12,6 +12,7 @@
 
 #include "MT_Tools/MT_String.h"
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 // =============================================================================
 /** @class  PHY_NbcSuit
@@ -24,8 +25,9 @@ class PHY_NbcSuit : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_NbcSuit*, sCaseInsensitiveLess > T_NbcSuitMap;
-    typedef T_NbcSuitMap::const_iterator                                    CIT_NbcSuitMap;
+    typedef boost::shared_ptr< const PHY_NbcSuit >                   T_NbcSuit;
+    typedef std::map< std::string, T_NbcSuit, sCaseInsensitiveLess > T_NbcSuitMap;
+    typedef T_NbcSuitMap::const_iterator                           CIT_NbcSuitMap;
 
     enum E_AgentNbcSuit
     {
@@ -39,34 +41,23 @@ public:
     //@}
 
 public:
-    //! @name Static
+    //! @name Constructors/Destructor
     //@{
-    static const PHY_NbcSuit none_;
-    static const PHY_NbcSuit level1_;
-    static const PHY_NbcSuit level2_;
-    static const PHY_NbcSuit level3_;
-    static const PHY_NbcSuit level4_;
-    static const PHY_NbcSuit level5_;
+             PHY_NbcSuit( const std::string& strName, E_AgentNbcSuit suit );
+    virtual ~PHY_NbcSuit();
     //@}
 
 public:
     //! @name Manager
     //@{
     static void Initialize();
-    static const PHY_NbcSuit* Find( const std::string& strName );
+    static boost::shared_ptr< const PHY_NbcSuit > Find( const std::string& strName );
     //@}
 
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-    E_AgentNbcSuit GetType() const;
-    //@}
-
-private:
-    //! @name Constructors/Destructor
-    //@{
-             PHY_NbcSuit( const std::string& strName, E_AgentNbcSuit suit );
-    virtual ~PHY_NbcSuit();
+    unsigned int GetType() const;
     //@}
 
 private:

@@ -140,7 +140,7 @@ private:
     unsigned int nEngineeringReconEfficiency_;
     unsigned int nUrbanAreaEfficiency_;
     E_CrossingHeight crossingHeight_;
-    const PHY_NbcSuit* suit_;
+    boost::shared_ptr< const PHY_NbcSuit > suit_;
     //@}
 };
 

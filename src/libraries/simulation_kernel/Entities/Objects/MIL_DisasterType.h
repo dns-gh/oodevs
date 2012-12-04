@@ -69,8 +69,8 @@ private:
     typedef std::map< std::string, T_DisasterType >     T_DisasterTypes;
     typedef T_DisasterTypes::const_iterator           CIT_DisasterTypes;
 
-    typedef std::map< const PHY_NbcSuit*, float > T_Protections;
-    typedef T_Protections::const_iterator       CIT_Protections;
+    typedef std::map< unsigned int, float > T_Protections;
+    typedef T_Protections::const_iterator CIT_Protections;
 
     typedef std::map< unsigned int, float >                    T_Wounds;
     typedef T_Wounds::const_iterator                         CIT_Wounds;

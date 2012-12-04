@@ -61,7 +61,7 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     , nEngineeringReconEfficiency_      ( 50 )
     , nUrbanAreaEfficiency_             ( 50 )
     , crossingHeight_                   ( eCrossingHeightLowAreas )
-    , suit_                             ( &PHY_NbcSuit::none_ )
+    , suit_                             ( PHY_NbcSuit::Find( "none" ) )
 {
     xis >> xml::optional
             >> xml::attribute( "can-fly", bCanFly_ )
@@ -166,8 +166,8 @@ void PHY_UnitType::InitializeNBC( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "decontamination-delay", rTmp );
     rTmp = std::max<float>( 1.0, rTmp );
 
-    const PHY_NbcSuit* suit = PHY_NbcSuit::Find( xis.attribute< std::string>( "suit" ) );
-    if( suit )
+    boost::shared_ptr< const PHY_NbcSuit > suit = PHY_NbcSuit::Find( xis.attribute< std::string>( "suit" ) );
+    if( suit.get() )
         suit_ = suit;
 
     rCoefDecontaminationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rTmp );

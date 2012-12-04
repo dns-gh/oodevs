@@ -82,9 +82,9 @@ MIL_DisasterType::MIL_DisasterType( const std::string& strName, xml::xistream& x
 // -----------------------------------------------------------------------------
 void MIL_DisasterType::ReadProtection( xml::xistream& xis )
 {
-    const PHY_NbcSuit* suit = PHY_NbcSuit::Find( xis.attribute< std::string >( "type" ) );
-    if( suit )
-        protections_[ suit ] = xis.attribute< float >( "value" );
+    boost::shared_ptr< const PHY_NbcSuit > suit = PHY_NbcSuit::Find( xis.attribute< std::string >( "type" ) );
+    if( suit.get() )
+        protections_[ suit->GetType() ] = xis.attribute< float >( "value" );
 }
 
 namespace
@@ -147,7 +147,7 @@ float MIL_DisasterType::GetToxicityExponent() const
 float MIL_DisasterType::GetProtectionCoefficient( const PHY_NbcSuit& suit ) const
 {
     for( CIT_Protections it = protections_.begin(); it != protections_.end(); ++it )
-        if( it->first->GetType() == suit.GetType() )
+        if( it->first == suit.GetType() )
             return it->second;
     return 1.f;
 }
