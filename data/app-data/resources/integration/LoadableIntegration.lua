@@ -155,7 +155,8 @@ integration.readyForLoad = function( unit, distanceMin )
            integration.getAnyType( mission ) == "T_Task_Pion_SeFaireTransporter" 
         or integration.getAnyType( mission ) == "T_Mission_Pion_SeFaireTransporter" 
         or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
-        or integration.getAnyType( mission ) == "agent.tasks.GetTransported" ) then
+        or integration.getAnyType( mission ) == "agent.tasks.GetTransported"
+        or integration.getAnyType( mission ) == "france.military.platoon.tasks.SeFaireTransporter" ) then
         if DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < distanceMin then -- $$$$ HARD CODDED VALUE
             return true 
         end
@@ -169,8 +170,9 @@ integration.knowledgeReadyForLoad = function( knowledge, distanceMin )
     if mission ~= nil and ( integration.getAnyType( mission ) == "T_Task_Pion_SeFaireTransporter" 
                          or integration.getAnyType( mission ) == "T_Mission_Pion_SeFaireTransporter" 
                          or integration.getAnyType( mission ) == "platoon.tasks.SeFaireTransporter"
-                         or integration.getAnyType( mission ) == "agent.tasks.GetTransported" ) then
-        if DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < distanceMin then -- $$$$ HARD CODDED VALUE
+                         or integration.getAnyType( mission ) == "agent.tasks.GetTransported"
+                         or integration.getAnyType( mission ) == "france.military.platoon.tasks.SeFaireTransporter" ) then
+       if DEC_Geometrie_Distance( meKnowledge:getPosition() , unit:getPosition() ) < distanceMin then -- $$$$ HARD CODDED VALUE
             return true 
         end
     end

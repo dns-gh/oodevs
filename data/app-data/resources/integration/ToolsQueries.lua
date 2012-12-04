@@ -83,7 +83,8 @@ integration.query.getFirstFireOrder = function( )
     local DEC_DeleteRepresentation = DEC_DeleteRepresentation
     for _,x in pairs( ordres_recus or emptyTable ) do
         if integration.getAnyType( x ) == "platoon.combat.support.art.tasks.AppliquerFeux" 
-           or integration.getAnyType( x ) == "Rep_OrderConduite_Pion_AppliquerFeux" then
+           or integration.getAnyType( x ) == "Rep_OrderConduite_Pion_AppliquerFeux" 
+           or integration.getAnyType( x ) == "france.military.platoon.combat.support.art.tasks.AppliquerFeux" then
             local res = CreateKnowledge( integration.ontology.types.fragOrder, x )
             DEC_RemoveFromOrdersCategory( x )
             DEC_DeleteRepresentation( x )
