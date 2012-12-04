@@ -11,28 +11,13 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Connector_Table_ABC.h"
 
-class DataComparison2 : public ADN_BinaryPredicate
-{
-public:
-    DataComparison2( const ADN_Connector_Table_ABC& tab ) : ADN_BinaryPredicate(), tab_( tab ) {};
-    bool operator()( void* pL, void* pR ) const
-    {
-        return tab_.LessComparison( pL, pR );
-    }
-
-    const DataComparison2& operator=( const DataComparison2& );
-
-    const ADN_Connector_Table_ABC& tab_;
-};
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC constructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
-ADN_Connector_Table_ABC::ADN_Connector_Table_ABC(ADN_Table& tab, bool bWithSort )
+ADN_Connector_Table_ABC::ADN_Connector_Table_ABC( ADN_Table& tab )
     : tab_(tab)
     , bIsConnected_(false)
-    , bWithSort_( bWithSort )
 {
     if( tab_.IsAutoEnabled())
         tab_.setEnabled(false);
@@ -58,7 +43,6 @@ void ADN_Connector_Table_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarg
     connect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
     connect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
     connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
-    connect( pTarget, SIGNAL(Sorted( ADN_BinaryPredicateWrapper&)), this, SLOT(Sort(ADN_BinaryPredicateWrapper&)));
 
     if( tab_.IsAutoEnabled() )
         tab_.setEnabled(true);
@@ -79,7 +63,6 @@ void ADN_Connector_Table_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pT
     disconnect( pTarget, SIGNAL(ItemRemoved(void*)),   this, SLOT(RemItemNoEmit(void*)));
     disconnect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
     disconnect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
-    disconnect( pTarget, SIGNAL(Sorted( ADN_BinaryPredicateWrapper&)), this, SLOT(Sort(ADN_BinaryPredicateWrapper&)));
 
     bIsConnected_=false;
     if( tab_.IsAutoEnabled() )
@@ -97,27 +80,15 @@ bool ADN_Connector_Table_ABC::AddItemPrivate( void* obj )
     if( obj)
     {
         // add just item
-        vDatas_.push_back(obj);
+        vDatas_.push_back( obj );
     }
     else
     {
-        tab_.setUpdatesEnabled( true );
-        if( bWithSort_ )
-        {
-            DataComparison2 comparor( *this );
-            ADN_BinaryPredicateWrapper wrapper( comparor );
-            std::sort( vDatas_.begin(), vDatas_.end(), wrapper );
-            emit Sorted( wrapper );
-        }
-
         // end of the list of items -> build tab
-        if( (size_t)tab_.numRows()!=vDatas_.size())
-            tab_.setNumRows(static_cast< int >(vDatas_.size()));
-        int i=0;
-        for( std::vector<void*>::iterator it=vDatas_.begin();it!=vDatas_.end();++it,++i)
-            AddSubItems(i,*it);
+        tab_.setNumRows( 0 );
+        for( int i = 0; i < vDatas_.size(); ++i )
+            AddSubItems( i, vDatas_[ i ] );
     }
-
     return true;
 }
 
@@ -139,16 +110,6 @@ bool ADN_Connector_Table_ABC::RemItemPrivate( void* pItem )
 
     // Remove it from the table (which can be user sorted, and thus not match the order of vData_
     tab_.RemoveItem( pItem );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Table_ABC::LessComparison
-// Created: AGN 2003-10-30
-// -----------------------------------------------------------------------------
-bool ADN_Connector_Table_ABC::LessComparison( void* , void* ) const
-{
-    assert( false );
     return true;
 }
 

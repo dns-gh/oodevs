@@ -44,7 +44,7 @@ ADN_Table::ADN_Table( const QString& objectName, ADN_Ref_ABC& vector, QWidget* p
 {
     Initialize( objectName );
 
-    pConnector_ = new ADN_Connector_Table_ABC( *this, false );
+    pConnector_ = new ADN_Connector_Table_ABC( *this );
     pConnector_->Connect( &vector );
 }
 
@@ -59,7 +59,7 @@ ADN_Table::ADN_Table( const QString& objectName, ADN_Connector_ABC*& connector, 
 {
     Initialize( objectName );
 
-    pConnector_ = new ADN_Connector_Table_ABC( *this, false );
+    pConnector_ = new ADN_Connector_Table_ABC( *this );
     connector = pConnector_;
 }
 

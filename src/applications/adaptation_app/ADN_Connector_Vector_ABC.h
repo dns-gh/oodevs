@@ -59,14 +59,12 @@ public slots:
     void RemItemNoEmit( void* pObj );
 
     void SwapItem( int i, int j );
-    void Sort( ADN_BinaryPredicateWrapper& lessComp );
     void Clear( bool bInConnection = false );
 
 signals:
     void ItemAdded( void* pObj );
     void ItemRemoved( void* pObj );
     void ItemSwapped( int i, int j );
-    void Sorted( ADN_BinaryPredicateWrapper& lessComp );
     void Cleared( bool bInConnection = false);
 
 public:
@@ -86,7 +84,6 @@ public:
     virtual bool AddItemPrivate( void* pObj );
     virtual bool RemItemPrivate( void* pObj);
     virtual void SwapItemPrivate( int i, int j );
-    virtual void SortPrivate( ADN_BinaryPredicateWrapper& lessComp );
     virtual void ClearPrivate( bool bInConnection = false );
 
 protected:

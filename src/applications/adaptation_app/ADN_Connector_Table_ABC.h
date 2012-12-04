@@ -20,14 +20,12 @@
 // Created: JDY 03-07-09
 //*****************************************************************************
 class ADN_Connector_Table_ABC : public ADN_Connector_Vector_ABC
-                               , private boost::noncopyable
+                              , private boost::noncopyable
 {
 
 public:
-             ADN_Connector_Table_ABC( ADN_Table& tab, bool bWithSort );
+             ADN_Connector_Table_ABC( ADN_Table& tab );
     virtual ~ADN_Connector_Table_ABC();
-
-    virtual bool LessComparison( void* pL, void* pR ) const;
 
     bool IsConnected() const;
 
@@ -41,15 +39,13 @@ private:
     virtual bool AddItemPrivate( void* item );
     virtual bool RemItemPrivate( void* item );
 
-    void ClearPrivate(bool bInConnection=false);
-    void SetDataPrivate(void *data);
+    void ClearPrivate( bool bInConnection = false );
+    void SetDataPrivate( void* data );
 
 protected:
-    std::vector<void*> vDatas_;
+    std::vector< void* > vDatas_;
     ADN_Table& tab_;
-
     bool bIsConnected_;
-    bool bWithSort_;
 };
 
 // -----------------------------------------------------------------------------

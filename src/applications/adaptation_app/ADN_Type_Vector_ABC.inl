@@ -131,19 +131,6 @@ void ADN_Type_Vector_ABC<T>::SwapItemPrivate(int i,int j)
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Type_Vector_ABC::SortPrivate
-// Created: APE 2005-01-14
-// -----------------------------------------------------------------------------
-template <class T>
-void ADN_Type_Vector_ABC<T>::SortPrivate( ADN_BinaryPredicateWrapper& lessComp )
-{
-    if( empty() )
-        return;
-    std::sort( begin(), end(), lessComp );
-    emit Sorted( lessComp );
-}
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_Vector_ABC<T>::InvalidatePrivate
 // Created: JDY 03-08-25

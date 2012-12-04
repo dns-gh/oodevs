@@ -40,7 +40,6 @@ protected:
     virtual bool AddItemPrivate( void* pObj );
     virtual bool RemItemPrivate( void* pObj );
     virtual void SwapItemPrivate( int i, int j );
-    virtual void SortPrivate( ADN_BinaryPredicateWrapper& lessComp );
     virtual void ClearPrivate( bool bInConnection = false );
     virtual void InvalidatePrivate( void* pObj, bool bDel = false );
     virtual void push_back( T* const & x );

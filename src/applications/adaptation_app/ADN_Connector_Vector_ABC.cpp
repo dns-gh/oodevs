@@ -245,29 +245,6 @@ void  ADN_Connector_Vector_ABC::SwapItemPrivate( int i, int j )
     emit ItemSwapped( i, j );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Vector_ABC::Sort
-// Created: APE 2005-01-14
-// -----------------------------------------------------------------------------
-void ADN_Connector_Vector_ABC::Sort( ADN_BinaryPredicateWrapper& lessComp )
-{
-    if( ! SlotsBlocked() )
-    {
-        BlockSlots( true );
-        SortPrivate( lessComp );
-        BlockSlots( false );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Connector_Vector_ABC::SortPrivate
-// Created: APE 2005-01-14
-// -----------------------------------------------------------------------------
-void ADN_Connector_Vector_ABC::SortPrivate( ADN_BinaryPredicateWrapper& lessComp )
-{
-    emit Sorted( lessComp );
-}
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Vector_ABC::Clear
 // Created: JDY 03-07-04
