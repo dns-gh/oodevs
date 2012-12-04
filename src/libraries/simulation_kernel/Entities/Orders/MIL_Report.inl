@@ -75,6 +75,19 @@ void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: template< typename T > static void MIL_Report::PostEvent
+// Created: MCO 2012-12-03
+// -----------------------------------------------------------------------------
+template< typename T >
+void MIL_Report::PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_DotationCategory& parameter, const MIL_AgentPion& pion )
+{
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    parameters.push_back( MIL_MissionParameterFactory::CreateDotationType( &parameter ) );
+    parameters.push_back( MIL_MissionParameterFactory::CreateAgent( pion ) );
+    PostEvent( receiver, nReport, parameters );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Report::PostEvent
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------

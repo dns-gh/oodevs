@@ -36,7 +36,7 @@ public:
     //@{
     virtual MIL_AutomateLOG& GetSuperior() const { return *superior_; }
 
-    virtual double ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity );
+    virtual double ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Agents& requesters );
     virtual void   ReturnQuota ( const PHY_DotationCategory& dotationCategory, double quantity );
     //@}
 

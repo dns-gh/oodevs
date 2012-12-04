@@ -10,6 +10,10 @@
 #ifndef __LogisticHierarchyOwner_ABC_h_
 #define __LogisticHierarchyOwner_ABC_h_
 
+#include <vector>
+
+class MIL_AgentPion;
+
 namespace sword
 {
     class ParentEntity;
@@ -28,6 +32,12 @@ namespace logistic {
 class LogisticHierarchyOwner_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::vector< const MIL_AgentPion* > T_Agents;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              LogisticHierarchyOwner_ABC() {}
@@ -37,6 +47,7 @@ public:
     //! @name Events
     //@{
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const = 0;
+    virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Agents& requesters ) const = 0;
     //@}
 
     //! @name Accessors

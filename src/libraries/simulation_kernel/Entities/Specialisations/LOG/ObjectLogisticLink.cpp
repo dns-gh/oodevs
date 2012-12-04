@@ -57,7 +57,7 @@ ObjectLogisticLink::~ObjectLogisticLink()
 // Name: ObjectLogisticLink::ConsumeQuota
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
-double ObjectLogisticLink::ConsumeQuota( const PHY_DotationCategory&, double quantity )
+double ObjectLogisticLink::ConsumeQuota( const PHY_DotationCategory&, double quantity, const T_Agents& )
 {
     return quantity;
 }

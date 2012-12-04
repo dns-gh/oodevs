@@ -11,6 +11,7 @@
 #define __SupplyRequest_ABC_h_
 
 class PHY_DotationCategory;
+class MIL_AgentPion;
 
 namespace sword {
     class SupplyResourceRequest;
@@ -38,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, double quantity ) = 0;
+    virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, const MIL_AgentPion& pion, double quantity ) = 0;
     virtual bool   AffectSupplier( SupplySupplier_ABC& supplier ) = 0;
     virtual bool   AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier ) = 0;
 

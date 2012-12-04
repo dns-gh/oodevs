@@ -56,12 +56,13 @@ SupplyRequest::~SupplyRequest()
 // Name: SupplyRequest::AddResource
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-void SupplyRequest::AddResource( boost::shared_ptr< SupplyResource_ABC > resource, double quantity )
+void SupplyRequest::AddResource( boost::shared_ptr< SupplyResource_ABC > resource, const MIL_AgentPion& pion, double quantity )
 {
     assert( quantity > 0 );
     if( quantity <= 0 )
         return;
     resourceRequests_.push_back( std::make_pair( resource, quantity ) );
+    pionRequests_.push_back( &pion );
     requestedQuantity_ += quantity;
     if( resource->HasReachedSupplyThreshold() )
         complementarySupply_ = false;
@@ -95,20 +96,20 @@ bool SupplyRequest::AffectSupplier( boost::shared_ptr< LogisticLink_ABC > suppli
     if( !AffectSupplier( supplier->GetSuperior() ) )
         return false;
 
-    double authorizedQuantity_ = supplier->ConsumeQuota( dotationCategory_, requestedQuantity_ );
-    if( authorizedQuantity_ <= 0 )
+    const double authorizedQuantity = supplier->ConsumeQuota( dotationCategory_, requestedQuantity_, pionRequests_ );
+    if( authorizedQuantity <= 0 )
     {
         supplier_ = 0;
         return false;
     }
-    assert( authorizedQuantity_ <= requestedQuantity_ );
+    assert( authorizedQuantity <= requestedQuantity_ );
 
     // Update the requested quantities according to the quota limitations
-    const double ratio = authorizedQuantity_ / requestedQuantity_;
+    const double ratio = authorizedQuantity / requestedQuantity_;
     BOOST_FOREACH( T_ResourceRequests::value_type& data, resourceRequests_ )
         data.second *= ratio;
     supplierQuotas_ = supplier;
-    requestedQuantity_ = authorizedQuantity_;
+    requestedQuantity_ = authorizedQuantity;
     return true;
 }
 

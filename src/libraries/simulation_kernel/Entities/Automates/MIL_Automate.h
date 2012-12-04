@@ -140,8 +140,8 @@ public:
     //@{
     virtual void Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const;
     virtual void Apply( MIL_EntitiesVisitor_ABC& visitor ) const;
-            void Apply2( boost::function< void( PHY_Dotation& ) > visitor ) const;
-            void Apply2( boost::function< void( PHY_DotationStock& ) > visitor ) const;
+            void Apply2( boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) > visitor ) const;
+            void Apply2( boost::function< void( const MIL_AgentPion&, PHY_DotationStock& ) > visitor ) const;
     //@}
 
     //! @name Operations
@@ -223,6 +223,7 @@ public:
     //! @name Logistic : supply
     //@{
     virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const;
+    virtual void NotifyQuotaExceeded( const PHY_DotationCategory& dotationCategory, const T_Agents& requesters ) const;
 
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
     void RequestDotationSupply     ();

@@ -47,12 +47,12 @@ SupplyRequestContainer::~SupplyRequestContainer()
 // Name: SupplyRequestContainer::AddResource
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-void SupplyRequestContainer::AddResource( SupplyRecipient_ABC& recipient, boost::shared_ptr< SupplyResource_ABC > resource, double quantity )
+void SupplyRequestContainer::AddResource( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion, boost::shared_ptr< SupplyResource_ABC > resource, double quantity )
 {
     boost::shared_ptr< SupplyRequest_ABC >& supplyRequest = requests_[ &recipient ][ &resource->GetCategory() ];
     if( !supplyRequest.get() )
         supplyRequest.reset( new SupplyRequest( resource->GetCategory() ) );
-    supplyRequest->AddResource( resource, quantity );
+    supplyRequest->AddResource( resource, pion, quantity );
 }
 
 // -----------------------------------------------------------------------------

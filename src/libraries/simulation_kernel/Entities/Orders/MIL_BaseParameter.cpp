@@ -188,7 +188,7 @@ bool MIL_BaseParameter::ToAutomatList( std::vector< DEC_Decision_ABC* >& ) const
 // Name: MIL_BaseParameter::ToAgent
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgent( DEC_Decision_ABC*& ) const
+bool MIL_BaseParameter::ToAgent( const DEC_Decision_ABC*& ) const
 {
     return false;
 }
@@ -197,7 +197,7 @@ bool MIL_BaseParameter::ToAgent( DEC_Decision_ABC*& ) const
 // Name: MIL_BaseParameter::ToAgentList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgentList( std::vector< DEC_Decision_ABC* >& ) const
+bool MIL_BaseParameter::ToAgentList( std::vector< const DEC_Decision_ABC* >& ) const
 {
     return false;
 }

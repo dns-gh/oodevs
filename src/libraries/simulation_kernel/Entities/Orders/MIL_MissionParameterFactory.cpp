@@ -42,6 +42,7 @@
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
@@ -245,10 +246,19 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateO
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePion
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePion( DEC_Decision_ABC* pion )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePion( const DEC_Decision_ABC* pion )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AgentParameter( pion ) );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAgent
+// Created: MCO 2012-12-03
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAgent( const MIL_AgentPion& pion )
+{
+    return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_AgentParameter( &pion.GetDecision() ) );
 }
 
 // -----------------------------------------------------------------------------

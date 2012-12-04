@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "SupplyDotationRequestBuilder.h"
 #include "SupplyRequestContainer_ABC.h"
-#include "SupplyRequest.h"
 #include "SupplyResourceDotation.h"
 #include "SupplyConvoyConfig.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -46,7 +45,7 @@ SupplyDotationRequestBuilder::~SupplyDotationRequestBuilder()
 // -----------------------------------------------------------------------------
 void SupplyDotationRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
-    automate_.Apply2( (boost::function< void( PHY_Dotation& ) >)boost::bind( &SupplyDotationRequestBuilder::VisitDotation, this, _1, boost::ref( container ) ) );
+    automate_.Apply2( (boost::function< void( const MIL_AgentPion&, PHY_Dotation& ) >)boost::bind( &SupplyDotationRequestBuilder::VisitDotation, this, _1, _2, boost::ref( container ) ) );
     container.SetConvoyFactory( SupplyConvoyConfig::GetDotationSupplyConvoyFactory() );
 }
 
@@ -54,11 +53,11 @@ void SupplyDotationRequestBuilder::Process( SupplyRequestContainer_ABC& containe
 // Name: SupplyDotationRequestBuilder::VisitDotation
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-void SupplyDotationRequestBuilder::VisitDotation( PHY_Dotation& dotation, SupplyRequestContainer_ABC& container ) const
+void SupplyDotationRequestBuilder::VisitDotation( const MIL_AgentPion& pion, PHY_Dotation& dotation, SupplyRequestContainer_ABC& container ) const
 {
     if( dotation.NeedSupply() )
     {
         double quantityToRequest = std::max( 0., dotation.GetCapacity() - dotation.GetValue() ); //$$ devrait être le retour de NeedSupply() ?
-        container.AddResource( recipient_, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceDotation( dotation ) ), quantityToRequest );
+        container.AddResource( recipient_, pion, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceDotation( dotation ) ), quantityToRequest );
     }
 }

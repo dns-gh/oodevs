@@ -200,11 +200,11 @@ bool MIL_ListParameter::ToAutomatList( std::vector< DEC_Decision_ABC* >& result 
 // Name: MIL_ListParameter::ToAgentList
 // Created: MGD 2010-11-15
 // -----------------------------------------------------------------------------
-bool MIL_ListParameter::ToAgentList( std::vector< DEC_Decision_ABC* >& result ) const
+bool MIL_ListParameter::ToAgentList( std::vector< const DEC_Decision_ABC* >& result ) const
 {
     for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
     {
-        DEC_Decision_ABC* param;
+        const DEC_Decision_ABC* param;
         if( !(*it)->ToAgent( param ) )
             return false;
         result.push_back( param );

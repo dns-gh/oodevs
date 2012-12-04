@@ -14,10 +14,10 @@
 
 class PHY_Dotation;
 class MIL_Automate;
+class MIL_AgentPion;
 
 namespace logistic {
     class SupplyRecipient_ABC;
-    class SupplyRequest;
 
 // =============================================================================
 /** @class  SupplyDotationRequestBuilder
@@ -42,7 +42,7 @@ public:
 private:
     //! @name Operations
     //@{
-    void VisitDotation( PHY_Dotation& dotation, SupplyRequestContainer_ABC& container ) const;
+    void VisitDotation( const MIL_AgentPion& pion, PHY_Dotation& dotation, SupplyRequestContainer_ABC& container ) const;
     //@}
 
 private:

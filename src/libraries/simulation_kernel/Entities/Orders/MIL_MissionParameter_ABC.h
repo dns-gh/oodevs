@@ -124,8 +124,8 @@ public:
     virtual bool ToNatureAtlas( int& atlas ) const = 0;
     virtual bool ToAutomat( DEC_Decision_ABC*& ) const = 0;
     virtual bool ToAutomatList( std::vector< DEC_Decision_ABC* >& ) const = 0;
-    virtual bool ToAgent( DEC_Decision_ABC*& ) const = 0;
-    virtual bool ToAgentList( std::vector< DEC_Decision_ABC* >& ) const = 0;
+    virtual bool ToAgent( const DEC_Decision_ABC*& ) const = 0;
+    virtual bool ToAgentList( std::vector< const DEC_Decision_ABC* >& ) const = 0;
     virtual bool ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& ) const = 0;
     virtual bool ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) const = 0;
     virtual bool ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& ) const = 0;

@@ -171,14 +171,14 @@ namespace
         throw std::runtime_error( std::string( "Unknown parameter: " ) + name );
     }
 
-    DEC_Decision_ABC* GetAgentParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
+    const DEC_Decision_ABC* GetAgentParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
     {
         unsigned int parametersNumber = static_cast< unsigned >( parameters.size() );
         for (unsigned int i = 0; i < parametersNumber; ++i )
         {
             if( type.GetParameterName( i ) == name )
             {
-                DEC_Decision_ABC* result = 0;
+                const DEC_Decision_ABC* result = 0;
                 if( parameters[i]->ToAgent( result ) )
                     return result;
                 else
@@ -433,7 +433,7 @@ int MIL_FragOrder::GetOrderConduitePopulationChangerAttitude() const
 // Name: MIL_FragOrder::GetPionARenforcer
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* MIL_FragOrder::GetPionARenforcer() const
+const DEC_Decision_ABC* MIL_FragOrder::GetPionARenforcer() const
 {
     static const std::string parameterName( "pionARenforcer_" );
     return GetAgentParameter( parameterName, parameters_, type_ );
@@ -443,7 +443,7 @@ DEC_Decision_ABC* MIL_FragOrder::GetPionARenforcer() const
 // Name: MIL_FragOrder::GetPionRenforce
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* MIL_FragOrder::GetPionRenforce() const
+const DEC_Decision_ABC* MIL_FragOrder::GetPionRenforce() const
 {
     static const std::string parameterName( "pionRenforce_" );
     return GetAgentParameter( parameterName, parameters_, type_ );
@@ -547,7 +547,7 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > MIL_FragOrder::GetObjec
 // Name: MIL_FragOrder::GetAgent
 // Created: MGD 2010-02-27
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* MIL_FragOrder::GetAgent() const
+const DEC_Decision_ABC* MIL_FragOrder::GetAgent() const
 {
   static const std::string parameterName( "agent_" );
   return GetAgentParameter( parameterName, parameters_, type_ );

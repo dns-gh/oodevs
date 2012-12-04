@@ -894,7 +894,7 @@ bool AutomatListFunctionBM( sword::Brain& brain, directia::tools::binders::Scrip
 }
 bool AgentFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
+    const DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
     if( element.ToAgent( value ) )
     {
         refMission[ name ] = value;
@@ -904,7 +904,7 @@ bool AgentFunction( const directia::tools::binders::ScriptRef& refMission, const
 }
 bool AgentFunctionBM( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
+    const DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
     if( element.ToAgent( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptRef( "integration.ontology.types.agent" ), name, value, false );
@@ -914,7 +914,7 @@ bool AgentFunctionBM( sword::Brain& brain, directia::tools::binders::ScriptRef& 
 }
 bool AgentListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    std::vector< DEC_Decision_ABC* > value;
+    std::vector< const DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
     {
         refMission[ name ] = value;
@@ -924,7 +924,7 @@ bool AgentListFunction( const directia::tools::binders::ScriptRef& refMission, c
 }
 bool AgentListFunctionBM( sword::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    std::vector< DEC_Decision_ABC* > value;
+    std::vector< const DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
     {
         knowledgeCreateFunction( refMission, brain.GetScriptRef( "integration.ontology.types.agent" ), name, value, true );
@@ -1303,10 +1303,10 @@ bool LocationCompositeListFunction( const directia::tools::binders::ScriptRef& r
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > list;
     if( element.ToList( list ) )
     {
-        std::vector< DEC_Decision_ABC* > result;
+        std::vector< const DEC_Decision_ABC* > result;
         for( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >::const_iterator it = list.begin(); it != list.end(); ++it )
         {
-            DEC_Decision_ABC* value = 0;
+            const DEC_Decision_ABC* value = 0;
             if( (*it)->ToAgent( value ) )
                 result.push_back( value );
             else
