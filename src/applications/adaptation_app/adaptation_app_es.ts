@@ -3354,6 +3354,13 @@ The spawn capacity will be disabled.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Radars_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Radars_GUI</name>
     <message>
         <source>Name</source>
@@ -3408,6 +3415,18 @@ The spawn capacity will be disabled.</source>
 When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
         <translation>Cuando  &apos;Duraciones&apos; no está seleccionado, las unidades se reconocen instantáneamente.
 Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detección para HQs son los mismos que los otros.</translation>
+    </message>
+    <message>
+        <source>Collisions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameters</source>
+        <translation type="unfinished">Parámetros</translation>
+    </message>
+    <message>
+        <source>Detection threshold</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3891,6 +3910,21 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
     <message>
         <source>Crowd Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Sensors_DisastersListView</name>
+    <message>
+        <source>Disasters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add disaster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove disaster</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6232,6 +6266,13 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     <message>
         <source>s</source>
         <translation type="unfinished">s</translation>
+    </message>
+</context>
+<context>
+    <name>Radar_Data</name>
+    <message>
+        <source>Radars - Invalid disaster &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

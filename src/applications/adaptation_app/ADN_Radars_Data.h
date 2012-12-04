@@ -15,6 +15,7 @@
 #include "ADN_Enums.h"
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
+#include "ADN_Disasters_Data.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include <boost/noncopyable.hpp>
 
@@ -48,6 +49,27 @@ public:
     };
 
 //*****************************************************************************
+
+    class DisasterInfos : public ADN_Ref_ABC
+    {
+    public:
+                 DisasterInfos();
+        virtual ~DisasterInfos();
+
+        DisasterInfos* CreateCopy();
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        ADN_TypePtr_InVector_ABC< ADN_Disasters_Data::DisasterInfos > ptrDisaster_;
+        ADN_Type_Double                                               rDetectionThreshold_;
+    };
+
+    typedef ADN_Type_Vector_ABC< DisasterInfos > T_DisasterInfos_Vector;
+    typedef T_DisasterInfos_Vector::iterator    IT_DisasterInfos_Vector;
+
+//*****************************************************************************
+
     class RadarInfos : public ADN_RefWithName
     {
     public:
@@ -57,6 +79,7 @@ public:
         RadarInfos* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void ReadDetectableActivity( xml::xistream& input );
+        void ReadDisasterDetection( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
     public:
@@ -69,9 +92,11 @@ public:
         ADN_Type_Bool bHasDetectableActivities_;
         ADN_Type_Bool detectableActivities_[eNbrConsumptionType];
         ADN_Type_Bool bHasDetectTimes_;
+        ADN_Type_Bool bHasCollisions_;
         DetectTimes detectTimes_;
         ADN_Type_Bool bHasHQDetectTimes_;
         DetectTimes hqDetectTimes_;
+        T_DisasterInfos_Vector vDisasters_;
     };
 
     typedef ADN_Type_Vector_ABC<RadarInfos > T_RadarInfos_Vector;

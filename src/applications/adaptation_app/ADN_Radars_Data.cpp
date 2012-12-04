@@ -108,6 +108,66 @@ void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::DisasterInfos
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+ADN_Radars_Data::DisasterInfos::DisasterInfos()
+    : ptrDisaster_        ( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0 )
+    , rDetectionThreshold_( 0.)
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::~DisasterInfos
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+ADN_Radars_Data::DisasterInfos::~DisasterInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::CreateCopy
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+ADN_Radars_Data::DisasterInfos* ADN_Radars_Data::DisasterInfos::CreateCopy()
+{
+    DisasterInfos* pNew = new DisasterInfos();
+    pNew->ptrDisaster_ = ptrDisaster_.GetData();
+    pNew->rDetectionThreshold_ = rDetectionThreshold_.GetData();
+    return pNew;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::ReadArchive
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+void ADN_Radars_Data::DisasterInfos::ReadArchive( xml::xistream& input )
+{
+    std::string strType;
+    input >> xml::attribute( "type", strType )
+          >> xml::attribute( "value", rDetectionThreshold_ );
+
+    ADN_Disasters_Data::DisasterInfos* pDisaster = ADN_Workspace::GetWorkspace().GetDisasters().GetData().FindDisaster( strType );
+    if( !pDisaster )
+        throw ADN_DataException( tools::translate( "ADN_Radars_Data", "Invalid data" ).toStdString(),tools::translate( "Radar_Data", "Radars - Invalid disaster '%1'" ).arg( strType.c_str() ).toStdString() );
+    ptrDisaster_ = pDisaster;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::WriteArchive
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+void ADN_Radars_Data::DisasterInfos::WriteArchive( xml::xostream& output )
+{
+    output << xml::start( "disaster-detection" )
+               << xml::attribute( "type", ptrDisaster_.GetData()->strName_ )
+               << xml::attribute( "value", rDetectionThreshold_ )
+           << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: RadarInfos::RadarInfos
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
@@ -121,6 +181,7 @@ ADN_Radars_Data::RadarInfos::RadarInfos()
     , bHasDetectableActivities_( false )
     , bHasDetectTimes_         ( false )
     , bHasHQDetectTimes_       ( false )
+    , bHasCollisions_          ( false )
 {
     for( int n = 0; n < eNbrConsumptionType; ++n )
         detectableActivities_[ n ] = false;
@@ -152,6 +213,7 @@ ADN_Radars_Data::RadarInfos* ADN_Radars_Data::RadarInfos::CreateCopy()
     for( int n = 0; n < eNbrConsumptionType; ++n )
         pCopy->detectableActivities_[ n ] = detectableActivities_[ n ].GetData();
     pCopy->bHasDetectTimes_ = bHasDetectTimes_.GetData();
+    pCopy->bHasCollisions_ = bHasCollisions_.GetData();
     pCopy->detectTimes_.bDetectTime_ = detectTimes_.bDetectTime_.GetData();
     pCopy->detectTimes_.detectTime_ = detectTimes_.detectTime_.GetData();
     pCopy->detectTimes_.bIdentTime_ = detectTimes_.bIdentTime_.GetData();
@@ -165,6 +227,13 @@ ADN_Radars_Data::RadarInfos* ADN_Radars_Data::RadarInfos::CreateCopy()
     pCopy->hqDetectTimes_.recoTime_ = hqDetectTimes_.recoTime_.GetData();
     pCopy->hqDetectTimes_.bRecoTime_ = hqDetectTimes_.bRecoTime_.GetData();
     pCopy->hqDetectTimes_.identTime_ = hqDetectTimes_.identTime_.GetData();
+
+    for( IT_DisasterInfos_Vector it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
+    {
+        DisasterInfos* pNew = (*it)->CreateCopy();
+        pCopy->vDisasters_.AddItem( pNew );
+    }
+
     return pCopy;
 }
 
@@ -190,6 +259,10 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
     input >> xml::optional
           >> xml::start( "detectable-activities" )
             >> xml::list( "detectable-activity", *this, &ADN_Radars_Data::RadarInfos::ReadDetectableActivity )
+          >> xml::end
+          >> xml::optional
+          >> xml::start( "disasters-detection" )
+               >> xml::list( "disaster-detection", *this, &ADN_Radars_Data::RadarInfos::ReadDisasterDetection )
           >> xml::end;
     detectTimes_.ReadArchive( input, false );
     hqDetectTimes_.ReadArchive( input, true );
@@ -199,6 +272,18 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
     bHasHQDetectTimes_ = hqDetectTimes_.bDetectTime_.GetData()
                     || hqDetectTimes_.bIdentTime_.GetData()
                     || hqDetectTimes_.bRecoTime_.GetData();
+    bHasCollisions_ = !vDisasters_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::ReadDisasterDetection
+// Created: LGY 2012-12-04
+// -----------------------------------------------------------------------------
+void ADN_Radars_Data::RadarInfos::ReadDisasterDetection( xml::xistream& input )
+{
+    std::auto_ptr< DisasterInfos > spNew( new DisasterInfos() );
+    spNew->ReadArchive( input );
+    vDisasters_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,6 +337,15 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
         hqDetectTimes_.WriteArchive( output, true );
         output << xml::end;
     }
+
+    if( bHasCollisions_.GetData() )
+    {
+        output << xml::start( "disasters-detection" );
+        for( IT_DisasterInfos_Vector it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
+            (*it)->WriteArchive( output );
+        output << xml::end;
+    }
+
     output << xml::end;
 }
 

@@ -78,6 +78,8 @@ void ADN_Radars_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Radars_GUI::eHasIdentificationTime]->Connect( &pInfos->detectTimes_.bIdentTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasRecoTime]->Connect( &pInfos->detectTimes_.bRecoTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasDetectionTimes]->Connect( &pInfos->bHasDetectTimes_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eCollisions]->Connect( &pInfos->vDisasters_, bConnect );
+    vItemConnectors_[ADN_Radars_GUI::eHasCollisions]->Connect( &pInfos->bHasCollisions_, bConnect );
 }
 
 // -----------------------------------------------------------------------------
