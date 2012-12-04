@@ -47,7 +47,7 @@ SupplyStockRequestBuilder::~SupplyStockRequestBuilder()
 // -----------------------------------------------------------------------------
 void SupplyStockRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 {
-    automate_.Apply2( (boost::function< void( PHY_DotationStock& ) >)boost::bind( &SupplyStockRequestBuilder::VisitStock, this, _1, boost::ref( container ) ) );
+    automate_.Apply2( (boost::function< void( const MIL_AgentPion& pion, PHY_DotationStock& ) >)boost::bind( &SupplyStockRequestBuilder::VisitStock, this, _1, _2, boost::ref( container ) ) );
     
     // If TC2: pulled flow. If BL: Pushed flow. cf. http://jira.masagroup.net/browse/SWBUG-9331
     MIL_AutomateLOG* logisticManager = automate_.FindLogisticManager();
@@ -62,12 +62,11 @@ void SupplyStockRequestBuilder::Process( SupplyRequestContainer_ABC& container )
 // Name: SupplyStockRequestBuilder::VisitStock
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-void SupplyStockRequestBuilder::VisitStock( PHY_DotationStock& stock, SupplyRequestContainer_ABC& container ) const
+void SupplyStockRequestBuilder::VisitStock( const MIL_AgentPion& pion, PHY_DotationStock& stock, SupplyRequestContainer_ABC& container ) const
 {
     if( stock.NeedSupply() )
     {
         double quantityToRequest = std::max( 0., stock.GetCapacity() - stock.GetValue() ); //$$ devrait être le retour de NeedSupply() ?
-        container.AddResource( recipient_, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceStock( stock ) ), quantityToRequest );
+        container.AddResource( recipient_, pion, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceStock( stock ) ), quantityToRequest );
     }
 }
-

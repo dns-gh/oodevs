@@ -45,7 +45,7 @@ public:
     virtual MIL_AutomateLOG& GetSuperior() const { return *superior_; }
     bool operator==( const LogisticLink& rhs ) const;
 
-    virtual double ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity ); // Return quantity consumed
+    virtual double ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Agents& requesters ); // Return quantity consumed
     virtual void   ReturnQuota ( const PHY_DotationCategory& dotationCategory, double quantity );
     //@}
 
@@ -73,6 +73,8 @@ private:
     void WriteQuotas( xml::xostream& xos ) const;
     void ReadQuota( xml::xistream& xis );
     void SendQuotas( unsigned int context = 0 ) const;
+
+    T_Agents ComputeNotifications( T_Agents& notifications, T_Agents requesters ) const;
     //@}
 
 public:
@@ -82,8 +84,12 @@ public:
     {
         double quota_;
         double quotaThreshold_;
+        T_Agents notifications_;
 
-        bool operator==( const struct sDotationQuota& rhs ) const { return quota_ == rhs.quota_ && quotaThreshold_ == rhs.quotaThreshold_; }
+        bool operator==( const struct sDotationQuota& rhs ) const
+        {
+            return quota_ == rhs.quota_ && quotaThreshold_ == rhs.quotaThreshold_;
+        }
     };
 
     typedef std::map< const PHY_DotationCategory*, sDotationQuota > T_DotationQuotas;

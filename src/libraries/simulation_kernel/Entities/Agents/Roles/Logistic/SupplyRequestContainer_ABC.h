@@ -14,6 +14,7 @@
 
 class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
+class MIL_AgentPion;
 
 namespace logistic {
     class SupplyResource_ABC;
@@ -51,7 +52,7 @@ public:
     virtual void SetPathToTransportersProvider( const T_PointVector& wayPoints ) = 0;
     virtual void SetPathToSupplier            ( const T_PointVector& wayPoints ) = 0;
     virtual void SetConvoyFactory             ( const SupplyConvoyFactory_ABC& convoyFactory ) = 0;
-    virtual void AddResource                  ( SupplyRecipient_ABC& recipient, boost::shared_ptr< SupplyResource_ABC > resource, double quantity ) = 0;
+    virtual void AddResource                  ( SupplyRecipient_ABC& recipient, const MIL_AgentPion& pion, boost::shared_ptr< SupplyResource_ABC > resource, double quantity ) = 0;
     //@}
 };
 

@@ -32,7 +32,7 @@ MIL_AgentParameter::MIL_AgentParameter()
 // Name: MIL_AgentParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-MIL_AgentParameter::MIL_AgentParameter( DEC_Decision_ABC* pAgent )
+MIL_AgentParameter::MIL_AgentParameter( const DEC_Decision_ABC* pAgent )
     : pDecision_( pAgent )
 {
     // NOTHING
@@ -75,7 +75,7 @@ bool MIL_AgentParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 // Name: MIL_AgentParameter::ToAgent
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentParameter::ToAgent( DEC_Decision_ABC*& value ) const
+bool MIL_AgentParameter::ToAgent( const DEC_Decision_ABC*& value ) const
 {
     value = pDecision_;
     return true;

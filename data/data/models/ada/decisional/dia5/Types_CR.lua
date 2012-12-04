@@ -462,4 +462,6 @@ eRC_OfficersKilled = 447
 eRC_UnitNotCaptured = 448
 eRC_RepairEvacuationNoMeans = 449
 eRC_SupplierUnavailable = 450
-eNbr = 451
+eRC_LogQuotaExceeded = 451
+eRC_LogQuotaExceededForAgent = 452
+eNbr = 453

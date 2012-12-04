@@ -13,6 +13,7 @@
 #include "SupplyRequestBuilder_ABC.h"
 
 class MIL_Automate;
+class MIL_AgentPion;
 class PHY_DotationStock;
 
 namespace logistic {
@@ -41,7 +42,7 @@ public:
 private:
     //! @name Operations
     //@{
-    void VisitStock( PHY_DotationStock& stock, SupplyRequestContainer_ABC& container ) const;
+    void VisitStock( const MIL_AgentPion& pion, PHY_DotationStock& stock, SupplyRequestContainer_ABC& container ) const;
     //@}
 
 private:

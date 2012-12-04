@@ -663,5 +663,11 @@
     <parameter type="Automat"/>
   </report>
   <report category="operational" id="450" message="Supplier is unavailable"/>
-</reports>
-<!-- signature="3835751164" -->
+  <report category="operational" id="451" message="%1 stock supply quota exceeded">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="452" message="%1 stock supply quota exceeded for %2">
+    <parameter type="ResourceType"/>
+    <parameter type="Agent"/>
+  </report>
+</reports><!-- signature="0843018188" -->

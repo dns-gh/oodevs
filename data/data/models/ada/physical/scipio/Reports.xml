@@ -663,5 +663,12 @@
     <parameter type="EquipmentType"/>
   </report>
   <report category="operational" id="450" message="Donneur indisponible"/>
+  <report category="operational" id="451" message="Dépassement des quotas logistiques en %1">
+    <parameter type="ResourceType"/>
+  </report>
+  <report category="operational" id="452" message="Dépassement des quotas logistiques en %1 pour %2">
+    <parameter type="ResourceType"/>
+    <parameter type="Agent"/>
+  </report>
 </reports>
-<!-- signature="1985116679" -->
+<!-- signature="2983756064" -->

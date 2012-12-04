@@ -46,7 +46,7 @@ public:
     virtual bool ToPolygonList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
     virtual bool ToLocationList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
     virtual bool ToAutomatList( std::vector< DEC_Decision_ABC* >& ) const;
-    virtual bool ToAgentList( std::vector< DEC_Decision_ABC* >& ) const;
+    virtual bool ToAgentList( std::vector< const DEC_Decision_ABC* >& ) const;
     virtual bool ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& ) const;
     virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const;
     virtual bool ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen_Object > >& ) const;

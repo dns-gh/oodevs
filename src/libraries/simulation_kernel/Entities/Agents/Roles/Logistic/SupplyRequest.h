@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, double quantity );
+    virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, const MIL_AgentPion& pion, double quantity );
     virtual bool   AffectSupplier( SupplySupplier_ABC& supplier );
     virtual bool   AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier );
 
@@ -62,11 +62,13 @@ private:
     //! @name Types
     //@{
     typedef std::vector< std::pair< boost::shared_ptr< SupplyResource_ABC > , double /*quantity requested*/ > > T_ResourceRequests;
+    typedef std::vector< const MIL_AgentPion* > T_PionRequests;
     //@}
 
 private:
     const PHY_DotationCategory& dotationCategory_;
     T_ResourceRequests resourceRequests_;
+    T_PionRequests pionRequests_;
     SupplySupplier_ABC* supplier_;
     double requestedQuantity_;
     double grantedQuantity_;

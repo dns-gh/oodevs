@@ -29,7 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AgentParameter();
-    explicit MIL_AgentParameter( DEC_Decision_ABC* pAgent );
+    explicit MIL_AgentParameter( const DEC_Decision_ABC* pAgent );
              MIL_AgentParameter( const sword::UnitId&, const MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AgentParameter();
     //@}
@@ -41,7 +41,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToAgent( DEC_Decision_ABC*& ) const;
+    virtual bool ToAgent( const DEC_Decision_ABC*& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
@@ -55,7 +55,7 @@ public:
 private:
     //! @name Member data
     //@{
-    DEC_Decision_ABC* pDecision_;
+    const DEC_Decision_ABC* pDecision_;
     //@}
 };
 

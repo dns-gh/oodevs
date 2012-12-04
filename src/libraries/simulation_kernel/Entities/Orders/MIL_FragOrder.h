@@ -100,11 +100,11 @@ public:
     std::vector< DEC_Decision_ABC* > GetOrderConduiteModifierPrioritesTactiquesReparations() const;
     int GetOrderConduiteModifierRegimeTravailMaintenance() const;
     int GetOrderConduitePopulationChangerAttitude() const;
-    DEC_Decision_ABC* GetPionARenforcer() const;
-    DEC_Decision_ABC* GetPionRenforce() const;
+    const DEC_Decision_ABC* GetPionARenforcer() const;
+    const DEC_Decision_ABC* GetPionRenforce() const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetAgentKnowledge() const;
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > GetObjectKnowledge() const;
-    DEC_Decision_ABC* GetAgent() const;
+    const DEC_Decision_ABC* GetAgent() const;
     boost::shared_ptr< MT_Vector2D > GetPointCible() const;
     boost::shared_ptr< TER_Localisation > GetZoneCible() const;
     int GetPorteeAction() const;

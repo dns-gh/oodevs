@@ -36,6 +36,7 @@ class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
 class TER_Localisation;
 class UrbanObjectWrapper;
+class MIL_AgentPion;
 
 // =============================================================================
 /** @class  MIL_MissionParameterFactory
@@ -70,7 +71,8 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateDirection( boost::shared_ptr< MT_Vector2D > direction );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateGenObject( boost::shared_ptr< DEC_Gen_Object > param );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateResourceNetwork( boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePion( DEC_Decision_ABC* pion );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePion( const DEC_Decision_ABC* pion );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateAgent( const MIL_AgentPion& pion );
 
 //    static void Copy( const MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
 

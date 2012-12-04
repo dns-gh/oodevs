@@ -159,8 +159,11 @@ public:
         eRC_DetectedObject = 446,
         eRC_RepairEvacuationNoMeans = 449,
         eRC_SupplierUnavailable = 450,
+        eRC_LogQuotaExceeded = 451,
+        eRC_LogQuotaExceededForAgent = 452,
     };
     //@}
+
 public:
     //! @name Factory
     //@{
@@ -178,6 +181,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_ComposanteTypePion& parameter );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_DotationCategory& parameter );
+    template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const PHY_DotationCategory& parameter, const MIL_AgentPion& pion );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, double nParam1, double nParam2 );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, int nParam );
     template< typename T > static void PostEvent( const T& receiver, E_DecisionalReport nReport, const std::string& nParam );

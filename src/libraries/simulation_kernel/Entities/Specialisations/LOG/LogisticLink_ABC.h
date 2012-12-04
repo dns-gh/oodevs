@@ -11,10 +11,12 @@
 #define __LogisticLink_ABC_h_
 
 #include "NetworkMessageSender_ABC.h"
+#include <vector>
 
 //$$$ TMP, remplacer par une interface
 class MIL_AutomateLOG;
 class PHY_DotationCategory;
+class MIL_AgentPion;
 
 namespace sword
 {
@@ -32,6 +34,11 @@ namespace logistic {
 class LogisticLink_ABC : public network::NetworkMessageSender_ABC
                        , private boost::noncopyable
 {
+protected:
+    //! @name Types
+    //@{
+    typedef std::vector< const MIL_AgentPion* > T_Agents;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -43,7 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual MIL_AutomateLOG& GetSuperior () const = 0;
-    virtual double           ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity ) = 0; // Return quantity consumed
+    virtual double           ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Agents& requesters ) = 0; // Return quantity consumed
     virtual void             ReturnQuota ( const PHY_DotationCategory& dotationCategory, double quantity ) = 0;
     //@}
 

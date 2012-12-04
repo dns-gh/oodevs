@@ -9,13 +9,13 @@
 
 #include "simulation_kernel_pch.h"
 #include "LogisticLink.h"
-
 #include "MIL_AutomateLOG.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
+#include <boost/range/algorithm.hpp>
 
 using namespace logistic;
 
@@ -141,7 +141,7 @@ bool LogisticLink::operator==( const LogisticLink& rhs ) const
 // Name: LogisticLink::ConsumeQuota
 // Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
-double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity )
+double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory, double quantity, const T_Agents& requesters )
 {
     if( useQuotas_ )
     {
@@ -158,11 +158,26 @@ double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory,
                 quota.quota_ -= quantity;
                 quotasUpdated_ = true;
             }
+            else
+                owner_->NotifyQuotaExceeded( dotationCategory, ComputeNotifications( quota.notifications_, requesters ) );
             if( quota.quota_ <= quota.quotaThreshold_ && oldQuota > quota.quotaThreshold_ )
                 owner_->NotifyQuotaThresholdReached( dotationCategory );
         }
     }
     return quantity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLink::ComputeNotifications
+// Created: MCO 2012-12-03
+// -----------------------------------------------------------------------------
+LogisticLink::T_Agents LogisticLink::ComputeNotifications( T_Agents& notifications, T_Agents requesters ) const
+{
+    T_Agents result;
+    boost::set_difference( boost::sort( requesters ), notifications, std::back_inserter( result ) );
+    boost::copy( result, std::back_inserter( notifications ) );
+    boost::sort( notifications );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -243,6 +258,7 @@ void LogisticLink::OnReceiveChangeQuotas( const sword::MissionParameter& message
         sDotationQuota& quota = quotas_[ pDotationCategory ];
         quota.quota_          = number;
         quota.quotaThreshold_ = number * 0.1; //$$ fichier de conf cpp ;)
+        quota.notifications_.clear();
     }
     quotasUpdated_ = true;
 }
