@@ -169,6 +169,7 @@ void ADN_Connector_Vector_ABC::AddItemNoEmit( void* pObj )
     {
         BlockSlots( true );
         AddItemPrivate( pObj );
+        AddItemPrivate( 0 );
         BlockSlots( false );
     }
 }
