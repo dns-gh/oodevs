@@ -115,7 +115,7 @@ ADN_Radars_Data::DisasterInfos::DisasterInfos()
     : ptrDisaster_        ( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0 )
     , rDetectionThreshold_( 0.)
 {
-    // NOTHING
+    BindExistenceTo( &ptrDisaster_ );
 }
 
 // -----------------------------------------------------------------------------
