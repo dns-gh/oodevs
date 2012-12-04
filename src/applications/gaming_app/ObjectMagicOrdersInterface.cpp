@@ -187,7 +187,9 @@ void ObjectMagicOrdersInterface::AddIntValuedMagic( kernel::ContextMenu* parent,
 {
     kernel::ContextMenu* valueMenu = new kernel::ContextMenu( parent );
     QLineEdit* valueEditor = new InitializedIntLineEdit( valueMenu, value );
-    valueMenu->insertItem( valueEditor->text() );
+    QWidgetAction* action = new QWidgetAction( valueMenu );
+    action->setDefaultWidget( valueEditor );
+    valueMenu->addAction( action );
     parent->insertItem( label, valueMenu );
     QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
     connect( valueEditor, SIGNAL( returnPressed() ), this, slot );
@@ -202,7 +204,9 @@ void ObjectMagicOrdersInterface::AddDoubleValuedMagic( kernel::ContextMenu* pare
 {
     kernel::ContextMenu* valueMenu = new kernel::ContextMenu( parent );
     QLineEdit* valueEditor = new InitializedDoubleLineEdit( valueMenu, value );
-    valueMenu->insertItem( valueEditor->text() );
+    QWidgetAction* action = new QWidgetAction( valueMenu );
+    action->setDefaultWidget( valueEditor );
+    valueMenu->addAction( action );
     parent->insertItem( label, valueMenu );
     QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
     connect( valueEditor, SIGNAL( returnPressed() ), this, slot );
