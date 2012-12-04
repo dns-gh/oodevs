@@ -22,7 +22,8 @@ integration.ontology = {
         limaStatique = sword.military.world.LimaStatique,
         fragOrder = sword.military.world.FragOrder, 
         resourceNetwork = sword.military.world.ResourceNetwork,
-        fuseau = sword.military.world.Fuseau
+        fuseau = sword.military.world.Fuseau,
+        itinerary = france.military.ontologie.classe.Itinerary
         }
 }
 
