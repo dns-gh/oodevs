@@ -4163,7 +4163,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Add disaster</source>
-        <translatio>Ajouter un désastre</translation>
+        <translation>Ajouter un désastre</translation>
     </message>
     <message>
         <source>Remove disaster</source>
