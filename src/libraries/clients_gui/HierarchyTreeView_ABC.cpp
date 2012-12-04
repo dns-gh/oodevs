@@ -165,9 +165,9 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
             if( newSuperiorItem )
             {
                 QStandardItem* currentSuperiorItem = entityItem->parent();
-                if( currentSuperiorItem && currentSuperiorItem != newSuperiorItem )
+                if( currentSuperiorItem != newSuperiorItem )
                 {
-                    QList< QStandardItem* > rowItems = currentSuperiorItem->takeRow( entityItem->row() );
+                    QList< QStandardItem* > rowItems = currentSuperiorItem ? currentSuperiorItem->takeRow( entityItem->row() ) : dataModel_.invisibleRootItem()->takeRow( entityItem->row() );
                     newSuperiorItem->appendRow( rowItems );
                 }
             }
@@ -176,7 +176,9 @@ void HierarchyTreeView_ABC::InternalNotifyUpdated( const kernel::Hierarchies& hi
         }
     }
     else
-        throw std::exception( __FUNCTION__ "Error, entity not found." );
+    {
+        InternalNotifyCreated( hierarchy );
+    }
     proxyModel_->invalidate();
 }
 
