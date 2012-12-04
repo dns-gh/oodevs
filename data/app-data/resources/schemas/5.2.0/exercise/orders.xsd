@@ -195,6 +195,11 @@
 					<xs:documentation xml:lang="en">DIA5 list of engineered objects.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="heading">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Direction.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="identifier">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Generic identifier.</xs:documentation>
