@@ -86,7 +86,7 @@ bool ADN_Connector_Table_ABC::AddItemPrivate( void* obj )
     {
         // end of the list of items -> build tab
         tab_.setNumRows( 0 );
-        for( int i = 0; i < vDatas_.size(); ++i )
+        for( unsigned i = 0; i < vDatas_.size(); ++i )
             AddSubItems( i, vDatas_[ i ] );
     }
     return true;
