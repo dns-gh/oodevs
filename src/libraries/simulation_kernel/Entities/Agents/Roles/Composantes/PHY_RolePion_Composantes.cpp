@@ -146,7 +146,6 @@ PHY_RolePion_Composantes::~PHY_RolePion_Composantes()
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         delete *it;
-    composantes_.clear();
 }
 
 namespace boost
