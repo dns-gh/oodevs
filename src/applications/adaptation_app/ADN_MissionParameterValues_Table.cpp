@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_MissionParameterValues_Table.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_CommonGfx.h"
 

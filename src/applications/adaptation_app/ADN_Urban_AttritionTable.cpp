@@ -11,7 +11,6 @@
 #include "ADN_Urban_AttritionTable.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
-#include "ADN_Connector_Table_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Urban_AttritionTable constructor

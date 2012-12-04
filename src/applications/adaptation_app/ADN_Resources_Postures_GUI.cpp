@@ -11,7 +11,6 @@
 #include "ADN_Resources_Postures_GUI.h"
 #include "ADN_App.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Resources_Data.h"
 #include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"

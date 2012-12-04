@@ -20,7 +20,6 @@
 #include "ADN_Table_Objects_LocationScore.h"
 
 #include "ADN_App.h"
-// #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"

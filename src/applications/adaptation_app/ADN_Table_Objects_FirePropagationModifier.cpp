@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Table_Objects_FirePropagationModifier.h"
 #include "ADN_Objects_Data.h"
-#include "ADN_Connector_Table_ABC.h"
 
 typedef ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass ModifierByFireClass;
 

@@ -14,7 +14,6 @@
 #include <Qt3Support/q3popupmenu.h>
 
 #include "ADN_Equipments_Data.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Workspace.h"
 
 typedef ADN_Equipments_Data::BreakdownInfos BreakdownInfos;

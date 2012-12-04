@@ -10,7 +10,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_MissionGenObjectTypes_Table.h"
 #include "moc_ADN_MissionGenObjectTypes_Table.cpp"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_MissionGenObjectTypes_Infos.h"
 
 // -----------------------------------------------------------------------------

@@ -14,7 +14,6 @@
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Units_Data.h"
 #include "ADN_Tr.h"
 
