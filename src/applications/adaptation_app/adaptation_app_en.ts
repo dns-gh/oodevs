@@ -3922,6 +3922,14 @@ Make sure that the file is not write-protected.</translation>
         <source>Remove disaster</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add object</source>
+        <translation type="unfinished">Add object</translation>
+    </message>
+    <message>
+        <source>Remove object</source>
+        <translation type="unfinished">Remove object</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
@@ -4151,12 +4159,12 @@ Make sure that the file is not write-protected.</translation>
         <translation>Targets</translation>
     </message>
     <message>
-        <source>Add object</source>
-        <translation>Add object</translation>
+        <source>Add disaster</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove object</source>
-        <translation>Remove object</translation>
+        <source>Remove disaster</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

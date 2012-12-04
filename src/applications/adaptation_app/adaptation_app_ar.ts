@@ -3909,6 +3909,14 @@ Make sure that the file is not write-protected.</source>
         <source>Remove disaster</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add object</source>
+        <translation type="unfinished">إضافة كائن</translation>
+    </message>
+    <message>
+        <source>Remove object</source>
+        <translation type="unfinished">قم بإزالة الكائن</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
@@ -4138,12 +4146,12 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished">الأهداف</translation>
     </message>
     <message>
-        <source>Add object</source>
-        <translation type="unfinished">إضافة كائن</translation>
+        <source>Add disaster</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove object</source>
-        <translation type="unfinished">قم بإزالة الكائن</translation>
+        <source>Remove disaster</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
