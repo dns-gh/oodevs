@@ -14,7 +14,6 @@
 using namespace sword;
 
 Brain::T_Profilers Brain::profilers_;
-bool Brain::profiling_ = false;
 
 // -----------------------------------------------------------------------------
 // Name: Brain constructor

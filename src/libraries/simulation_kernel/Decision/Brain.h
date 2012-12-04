@@ -199,7 +199,6 @@ private:
     //@{
     std::auto_ptr< directia::brain::Brain > brain_;
     static T_Profilers profilers_;
-    static bool profiling_;
     //@}
 };
 
