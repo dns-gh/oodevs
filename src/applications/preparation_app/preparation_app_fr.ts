@@ -1420,6 +1420,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>Unknown type &apos;%1&apos;, a ghost unit has been created instead.</source>
         <translation>Type inconnu &apos;%1&apos;, un fantôme a été créé à la place.</translation>
     </message>
+    <message>
+        <source>Entity &apos;%1&apos; is outside the map. It will be repositioned to the origin.</source>
+        <translation>L'entité &apos;%1&apos; est à l'extérieur de la carte. Elle sera repositionnée à l'origine.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

@@ -56,6 +56,7 @@ enum E_ConsistencyCheck
     eDeletedUrbanBlocks,
     eDeletedPopulationUrbanBlocks,
     eSignature,
+    eUnitOutsideMap,
     eOthers,
     eOthersMask,
 };

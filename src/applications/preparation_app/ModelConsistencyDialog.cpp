@@ -117,9 +117,10 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eUnknownInfrastructure]            = tools::translate( "ModelConsistencyDialog", "Unknown infrastructure \"%1\". It will be deleted at next save." );
     errorDescriptions_[ eUnknownResourceNetwork]           = tools::translate( "ModelConsistencyDialog", "Unknown resource network type \"%1\". Related networks will deleted at next save." );
     errorDescriptions_[ eDeletedUrbanBlocks ]              = tools::translate( "ModelConsistencyDialog", "Some resource network nodes point on nonexistent urban blocks. They will be deleted at next save.");
-    errorDescriptions_[ eDeletedPopulationUrbanBlocks ] = "%1";
+    errorDescriptions_[ eDeletedPopulationUrbanBlocks ]    = "%1";
     errorDescriptions_[ eNoOrbat ]                         = tools::translate( "ModelConsistencyDialog", "No orbat.xml found" );
-    errorDescriptions_[ eSignature ] = "%1";
+    errorDescriptions_[ eSignature ]                       = "%1";
+    errorDescriptions_[ eUnitOutsideMap ]                  = tools::translate( "ModelConsistencyDialog", "Entity '%1' is outside the map. It will be repositioned to the origin." );
     errorDescriptions_[ eOthers ]                          = "%1";
 }
 

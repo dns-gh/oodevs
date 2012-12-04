@@ -37,6 +37,7 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
@@ -99,6 +100,9 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     , ghosts_               ( *new GhostModel( controllers, ghostFactory_ ) )
     , symbolsFactory_       ( *new SymbolFactory() )
     , performanceIndicator_ ( *new PerformanceIndicator( *this ) )
+    , width_                ( 0.f )
+    , height_               ( 0.f )
+
 {
     // NOTHING
 }
@@ -283,6 +287,8 @@ namespace
 // -----------------------------------------------------------------------------
 void Model::Load( const tools::ExerciseConfig& config )
 {
+    width_ = config.GetTerrainWidth();
+    height_ = config.GetTerrainHeight();
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
     const std::string urbanFile = config.GetUrbanFile();
@@ -363,9 +369,16 @@ void Model::SaveExercise( const tools::ExerciseConfig& config )
 // Name: Model::AppendLoadingError
 // Created: JSR 2012-01-05
 // -----------------------------------------------------------------------------
-void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& error )
+void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& errorMsg, kernel::Entity_ABC* entity /* = 0 */ )
 {
-    loadingErrors_.insert( std::make_pair< E_ConsistencyCheck, std::string>( type, error) );
+    ModelConsistencyChecker::ConsistencyError error( type );
+    if( entity )
+    {
+        kernel::SafePointer< kernel::Entity_ABC >* safePtr = ( entity ) ? new kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity ) : 0;
+        error.items_.push_back( safePtr );
+    }
+    error.optional_ = errorMsg;
+    loadingErrors_.push_back( error );
 }
 
 // -----------------------------------------------------------------------------
@@ -381,7 +394,7 @@ void Model::SetExerciseValidity( bool valid )
 // Name: Model::GetLoadingErrors
 // Created: JSR 2012-01-05
 // -----------------------------------------------------------------------------
-const Model::T_LoadingErrors& Model::GetLoadingErrors() const
+const ModelConsistencyChecker::T_ConsistencyErrors& Model::GetLoadingErrors() const
 {
     return loadingErrors_;
 }
@@ -463,4 +476,21 @@ bool Model::IsLoaded() const
 void Model::SetLoaded( bool status )
 {
     loaded_ = status;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ReadPosition
+// Created: ABR 2012-12-04
+// -----------------------------------------------------------------------------
+geometry::Point2f Model::ReadPosition( xml::xistream& xis, kernel::Entity_ABC* entity )
+{
+    const std::string position = xis.attribute< std::string >( "position" );
+    geometry::Point2f result = staticModel_.coordinateConverter_.ConvertToXY( position );
+    if( result.X() < 0.f || result.X() > width_ ||
+        result.Y() < 0.f || result.Y() > height_ )
+    {
+        AppendLoadingError( eUnitOutsideMap, ( entity ) ? entity->GetName().toStdString() : "", entity );
+        return geometry::Point2f( 0.f, 0.f );
+    }
+    return result;
 }

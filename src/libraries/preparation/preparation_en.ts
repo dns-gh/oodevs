@@ -469,10 +469,6 @@
         <translation>Improvable:</translation>
     </message>
     <message>
-        <source>%1 [%L2]</source>
-        <translation>%1 [%L2]</translation>
-    </message>
-    <message>
         <source>Identifier:</source>
         <translation>Identifier:</translation>
     </message>

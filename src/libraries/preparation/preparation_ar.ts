@@ -469,10 +469,6 @@
         <translation type="unfinished">إيمبروفابل:</translation>
     </message>
     <message>
-        <source>%1 [%L2]</source>
-        <translation type="unfinished">%1 [% L2]</translation>
-    </message>
-    <message>
         <source>Identifier:</source>
         <translation type="unfinished">المعرف:</translation>
     </message>
