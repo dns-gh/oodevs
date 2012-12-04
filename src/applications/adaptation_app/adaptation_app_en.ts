@@ -679,6 +679,10 @@ Parked engine running</translation>
         <source>Duplicate type for objects %1</source>
         <translation>Duplicate type for objects %1</translation>
     </message>
+    <message>
+        <source>%1 has lower case EMAT8 code.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

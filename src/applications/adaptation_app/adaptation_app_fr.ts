@@ -679,6 +679,10 @@ Arrêt moteur allumé</translation>
         <source>Duplicate type for objects %1</source>
         <translation>Les objets %1 possèdent le même type</translation>
     </message>
+    <message>
+        <source>%1 has lower case EMAT8 code.</source>
+        <translation>%1 a un code emat8 en minuscules.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

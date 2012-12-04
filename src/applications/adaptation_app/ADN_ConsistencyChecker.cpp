@@ -119,11 +119,16 @@ void ADN_ConsistencyChecker::CheckNNOConsistency()
     {
         NNOElement& firstElement = *itFirst;
 
+        const std::string& emat8 = firstElement.codeEMAT8_;
         // Check initialization
         if( firstElement.codeNNO_.empty() )
             AddError( eMissingNNo, firstElement.name_, firstElement.tab_, firstElement.subTab_ );
-        if( firstElement.codeEMAT8_.empty() )
+        if( emat8.empty() )
             AddError( eMissingEmat, firstElement.name_, firstElement.tab_, firstElement.subTab_ );
+        std::string upperEmat8 = emat8;
+        std::transform( upperEmat8.begin(), upperEmat8.end(), upperEmat8.begin(), toupper);
+        if( upperEmat8 != emat8 )
+            AddError( eLowerCaseEmat, firstElement.name_, firstElement.tab_, firstElement.subTab_ );
 
         // Check uniqueness
         std::vector< NNOElement > NNOelements;
@@ -135,7 +140,7 @@ void ADN_ConsistencyChecker::CheckNNOConsistency()
                 NNOElement& secondElement = *itSecond;
                 if( !firstElement.codeNNO_.empty() && !secondElement.codeNNO_.empty() && firstElement.codeNNO_ == secondElement.codeNNO_ && !IsAlreadyRegistered( secondElement.codeNNO_, eNNoUniqueness ) )
                     NNOelements.push_back( secondElement );
-                if( !firstElement.codeEMAT8_.empty() && !secondElement.codeEMAT8_.empty() && firstElement.codeEMAT8_ == secondElement.codeEMAT8_ && !IsAlreadyRegistered( secondElement.codeEMAT8_, eEmatUniqueness ) )
+                if( !emat8.empty() && !secondElement.codeEMAT8_.empty() && emat8 == secondElement.codeEMAT8_ && !IsAlreadyRegistered( secondElement.codeEMAT8_, eEmatUniqueness ) )
                     EMATelements.push_back( secondElement );
             }
         }
