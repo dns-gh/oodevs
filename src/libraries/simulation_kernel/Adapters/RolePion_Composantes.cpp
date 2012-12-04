@@ -103,8 +103,6 @@ void RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& composante
     component[ "major" ] = composante.IsMajor();
     component[ "volume" ] = composante.GetType().GetVolume().GetID();
     component[ "score" ] = composante.GetMajorScore();
-    component[ "radars" ];
-    component[ "sensors" ];
     component[ "type/sensor-rotation-angle" ] = composante.GetType().GetSensorRotationAngle(); // $$$$ MCO 2012-07-09: type/ ?!
     components_[ &composante ] = &component;
     composante.ApplyOnSensors( boost::bind( &AddSensor, boost::ref( component[ "sensors" ] ), _1 ) );
