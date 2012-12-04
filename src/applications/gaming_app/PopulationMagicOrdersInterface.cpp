@@ -253,7 +253,9 @@ void PopulationMagicOrdersInterface::AddValuedMagic( kernel::ContextMenu* parent
 {
     kernel::ContextMenu* valueMenu = new kernel::ContextMenu( parent );
     QLineEdit* valueEditor = new InitializedLineEdit( valueMenu, tr( "Enter value" ) );
-    valueMenu->insertItem( valueEditor->text() );
+    QWidgetAction* action = new QWidgetAction( valueMenu );
+    action->setDefaultWidget( valueEditor );
+    valueMenu->addAction( action );
     parent->insertItem( label, valueMenu );
     QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
     connect( valueEditor, SIGNAL( returnPressed() ), this, slot );
