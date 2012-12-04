@@ -120,8 +120,8 @@ integration.isUrbanBlockEvacuated = function( urbanBlock )
 end
 
 -- Decontamination
-integration.decontaminateUrbanBlock = function( urbanBlock )            
-    integration.decontaminateArea( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
+integration.decontaminateUrbanBlock = function( urbanBlock )
+    DEC_DecontaminerZone( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
     integration.pionRC( eRC_DecontaminationDone )        
     return true
 end
