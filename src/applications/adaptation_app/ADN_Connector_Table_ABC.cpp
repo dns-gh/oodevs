@@ -77,7 +77,7 @@ void ADN_Connector_Table_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pT
 // -----------------------------------------------------------------------------
 bool ADN_Connector_Table_ABC::AddItemPrivate( void* obj )
 {
-    if( obj)
+    if( obj )
     {
         // add just item
         vDatas_.push_back( obj );

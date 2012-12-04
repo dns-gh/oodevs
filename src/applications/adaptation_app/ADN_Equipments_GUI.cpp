@@ -24,6 +24,7 @@
 #include "ADN_Equipments_Dotations_GUI.h"
 #include "ADN_Equipments_ConsumptionsTable.h"
 #include "ADN_Equipments_BreakdownsTable.h"
+#include "ADN_Equipments_Resources_Tables.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_DateEdit.h"
 #include "ADN_GroupBox.h"
@@ -46,10 +47,9 @@ ADN_Equipments_GUI::ADN_Equipments_GUI( ADN_Equipments_Data& data )
     , pSpeeds_( 0 )
     , pSensors_( 0 )
     , pRadars_( 0 )
-    , pDotations_( 0 )
-    , pConsumptions_( 0 )
     , pWeapons_( 0 )
     , pActiveProtections_( 0 )
+    , pResources_( 0 )
 {
     // NOTHING
 }
@@ -173,13 +173,12 @@ void ADN_Equipments_GUI::Build()
     pActiveProtections_->setObjectName( strClassName_ + "_ActiveProtections" );
     pActiveProtections_->SetGoToOnDoubleClick( ::eActiveProtections );
     vInfosConnectors[ eActiveProtections ] = &pActiveProtections_->GetConnector();
-    // Dotations
-    Q3HGroupBox* pDotationGroup = new Q3HGroupBox( tr( "Resources" ) );
-    pDotations_ = new ADN_Equipments_Dotations_GUI( strClassName_ + "_Resources", vInfosConnectors[ eDotations ], true, pDotationGroup );
-    pDotations_->SetGoToOnDoubleClick( ::eResources ); // $$$$ ABR 2012-03-09: TODO, GOOD TAB
-    // Consumptions
-    Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
-    pConsumptions_ = new ADN_Equipments_ConsumptionsTable( strClassName_ + "_Consumptions", vInfosConnectors[ eConsumptions ], pConsumptionsGroup );
+
+    // Resources allocation & consumptions
+    Q3HGroupBox* pResourcesGroup = new Q3HGroupBox( tr( "Resources" ) );
+    pResourcesGroup->setMargin( 5 );
+    pResources_ = new ADN_Equipments_Resources_Tables( strClassName_ + "_ResourcesTables", vInfosConnectors[ eDotations ], vInfosConnectors[ eDotationsAllocation ], vInfosConnectors[ eConsumptions ], pResourcesGroup );
+
     // Objects
     Q3HGroupBox* pObjectsGroup = new Q3HGroupBox( tr( "Objects" ) );
     ADN_ListView_Equipments_Objects* pListObjects = new ADN_ListView_Equipments_Objects( pObjectsGroup );
@@ -232,29 +231,27 @@ void ADN_Equipments_GUI::Build()
     // Layouts
     // -------------------------------------------------------------------------
     // Content layout
-    // Content
     QWidget* pContent = new QWidget();
-    QGridLayout* pDataPageLayout = new QGridLayout( pContent, 7, 4, 5 );
+    QGridLayout* pDataPageLayout = new QGridLayout( pContent );
     pDataPageLayout->setMargin( 10 );
     pDataPageLayout->setSpacing( 10 );
     pDataPageLayout->setAlignment( Qt::AlignTop );
 
-    pDataPageLayout->addMultiCellWidget( pInfoHolder       , 0, 0, 0, 0 );
-    pDataPageLayout->addMultiCellWidget( pIdGroupBox       , 1, 1, 0, 0 );
-    pDataPageLayout->addMultiCellWidget( pInfoGroupBox     , 2, 2, 0, 0 );
-    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup, 3, 3, 0, 0 );
-    pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 4, 5, 0, 0 );
+    pDataPageLayout->addWidget( pInfoHolder         , 0, 0 );
+    pDataPageLayout->addWidget( pIdGroupBox         , 1, 0 );
+    pDataPageLayout->addWidget( pInfoGroupBox       , 2, 0 );
+    pDataPageLayout->addWidget( pBreakdownsGroup_   , 3, 0, 2, 1 );
 
-    pDataPageLayout->addMultiCellWidget( pTroopGroupBox         , 0, 3, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pSensorsGroup          , 3, 3, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pRadarsGroup           , 4, 4, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pWeaponsGroup          , 5, 5, 1, 1 );
+    pDataPageLayout->addWidget( pTroopGroupBox      , 0, 1, 3, 1 );
+    pDataPageLayout->addWidget( pSensorsGroup       , 3, 1 );
+    pDataPageLayout->addWidget( pRadarsGroup        , 4, 1 );
 
-    pDataPageLayout->addMultiCellWidget( pSpeedGroup   , 0, 2, 2, 2 );
-    pDataPageLayout->addMultiCellWidget( pDotationGroup, 3, 4, 2, 2 );
-    pDataPageLayout->addMultiCellWidget( pActiveProtectionsGroup, 5, 5, 2, 2 );
+    pDataPageLayout->addWidget( pSpeedGroup             , 0, 2, 3, 1 );
+    pDataPageLayout->addWidget( pWeaponsGroup           , 3, 2 );
+    pDataPageLayout->addWidget( pActiveProtectionsGroup , 4, 2 );
 
-    pDataPageLayout->addMultiCellWidget( pObjectsGroup , 6, 6, 0, 2 );
+    pDataPageLayout->addWidget( pResourcesGroup     , 5, 0, 1, 3 );
+    pDataPageLayout->addWidget( pObjectsGroup       , 6, 0, 1, 3 );
 
     // List view
     ADN_SearchListView< ADN_ListView_Equipments >* pSearchListView = new ADN_SearchListView< ADN_ListView_Equipments >( this, data_.GetEquipments(), vInfosConnectors );
@@ -262,8 +259,6 @@ void ADN_Equipments_GUI::Build()
     pListView_->setObjectName( strClassName_ + "_List" );
     connect( pListView_->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ), this, SLOT( OnProtectionTypeChanged() ) );
     connect( pListView_, SIGNAL( ItemSelected( void* ) ), pSpeeds_, SLOT( OnItemSelected( void* ) ) );
-
-    pConsumptions_->SetListView( pListView_ );
 
     // Tab widget
     QTabWidget* pTabWidget = new QTabWidget();
@@ -556,9 +551,9 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QS
         builder.Section( tr("Radars") );
         builder.CreateTableFrom( *pRadars_ );
         builder.Section( tr("Contenance") );
-        builder.CreateTableFrom( *pDotations_ );
+        builder.CreateTableFrom( pResources_->GetAllocationTable() );
         builder.Section( tr("Consumptions") );
-        builder.CreateTableFrom( *pConsumptions_ );
+        builder.CreateTableFrom( pResources_->GetConsumptionTable() );
         builder.Section( tr("Weapon systems") );
         builder.CreateTableFrom( *pWeapons_ );
         builder.Section( tr("Active protection") );

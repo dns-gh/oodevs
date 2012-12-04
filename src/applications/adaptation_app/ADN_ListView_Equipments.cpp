@@ -85,6 +85,7 @@ void ADN_ListView_Equipments::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipments_GUI::eWeapons]->Connect( &pInfos->vWeapons_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eActiveProtections]->Connect( &pInfos->vActiveProtections_, bConnect );
 
+    vItemConnectors_[ADN_Equipments_GUI::eDotationsAllocation]->Connect( &pInfos->resources_.categories_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eDotations]->Connect( &pInfos->resources_.categories_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eConsumptions]->Connect( &pInfos->consumptions_.vConsumptions_, bConnect );
     vItemConnectors_[ADN_Equipments_GUI::eObjects]->Connect( &pInfos->vObjects_, bConnect );

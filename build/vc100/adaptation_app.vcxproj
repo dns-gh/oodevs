@@ -183,6 +183,8 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Data_Container.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Disasters_Data.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Disasters_GUI.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_Resources_ListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_Resources_Tables.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResource.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Funeral_Data.cpp" />
@@ -219,6 +221,8 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_Resources_ListView.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_Resources_Tables.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MenuListView.inl">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -2333,7 +2337,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_ConsumptionsTable.h">
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_ConsumptionsTable.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp
@@ -2350,7 +2354,7 @@
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
+    </ClInclude>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Equipments_Dotations_GUI.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>

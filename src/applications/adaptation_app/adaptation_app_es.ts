@@ -951,29 +951,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_ConsumptionsTable</name>
-    <message>
-        <source>Activity</source>
-        <translation>Actividad</translation>
-    </message>
-    <message>
-        <source>Consumed item</source>
-        <translation>Objeto consumido</translation>
-    </message>
-    <message>
-        <source>Qty/hour</source>
-        <translation>Cant./hora</translation>
-    </message>
-    <message>
-        <source>Add consumption</source>
-        <translation>Agregar consumo</translation>
-    </message>
-    <message>
-        <source>Remove consumption</source>
-        <translation>Remover consumo</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <source>Category</source>
@@ -1456,6 +1433,33 @@ estacionado con motor encendido</translation>
     <message>
         <source>Remove sensor</source>
         <translation>Remover un sensor</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Resources_ListView</name>
+    <message id="0">
+        <source>Resources</source>
+        <oldsource>Categories</oldsource>
+        <translation type="unfinished">ADN_Sensors_Environments_GU</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">Agregar dotación</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">Remover dotación</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Resources_Tables</name>
+    <message>
+        <source>Allocation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation type="unfinished">Consumos</translation>
     </message>
 </context>
 <context>
@@ -3880,11 +3884,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 </context>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
-    <message id="0">
-        <source>Environments</source>
-        <oldsource>ADN_Sensors_Environments_GUI</oldsource>
-        <translation type="unfinished">ADN_Sensors_Environments_GU</translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation>Modificadores</translation>
@@ -4979,7 +4978,7 @@ Click &quot;Ok&quot; to destroy it and all its references.</source>
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ADN_Sensors_Environments_GU</translation>
     </message>
     <message>
         <source>Symbols</source>

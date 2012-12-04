@@ -906,7 +906,7 @@ Parked engine running</translation>
     </message>
     <message>
         <source>Toxicity exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxicity exponent</translation>
     </message>
     <message>
         <source>Protections</source>
@@ -948,29 +948,6 @@ Parked engine running</translation>
     <message>
         <source>Delete</source>
         <translation>Delete</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipments_ConsumptionsTable</name>
-    <message>
-        <source>Activity</source>
-        <translation>Activity</translation>
-    </message>
-    <message>
-        <source>Consumed item</source>
-        <translation>Consumed item</translation>
-    </message>
-    <message>
-        <source>Qty/hour</source>
-        <translation>Qty/hour</translation>
-    </message>
-    <message>
-        <source>Add consumption</source>
-        <translation>Add consumption</translation>
-    </message>
-    <message>
-        <source>Remove consumption</source>
-        <translation>Remove consumption</translation>
     </message>
 </context>
 <context>
@@ -1452,6 +1429,33 @@ Parked engine running</translation>
     <message>
         <source>Remove sensor</source>
         <translation>Remove sensor</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Resources_ListView</name>
+    <message id="0">
+        <source>Resources</source>
+        <oldsource>Categories</oldsource>
+        <translation>Environments</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation>Add resource</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation>Remove resource</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Resources_Tables</name>
+    <message>
+        <source>Allocation</source>
+        <translation>Allocation</translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation>Consumptions</translation>
     </message>
 </context>
 <context>
@@ -3879,11 +3883,6 @@ Make sure that the file is not write-protected.</translation>
 </context>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
-    <message id="0">
-        <source>Environments</source>
-        <oldsource>ADN_Sensors_Environments_GUI</oldsource>
-        <translation>Environments</translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation>Modifiers</translation>
@@ -4339,7 +4338,7 @@ Make sure that the file is not write-protected.</translation>
     </message>
     <message>
         <source>Contamination</source>
-        <translation type="unfinished">Contamination</translation>
+        <translation>Contamination</translation>
     </message>
     <message>
         <source>UE (%)</source>
@@ -6247,19 +6246,19 @@ Click &quot;Ok&quot; to delete it.</translation>
     <name>Resources_Data</name>
     <message>
         <source>Invalid data</source>
-        <translation type="unfinished">Invalid data</translation>
+        <translation>Invalid data</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation type="unfinished">Equipment - Invalid resource nature &apos;%1&apos;</translation>
+        <translation>Equipment - Invalid resource nature &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Equipment - Invalid resource logistic supply class &apos;%1&apos;</source>
-        <translation type="unfinished">Equipment - Invalid resource logistic supply class &apos;%1&apos;</translation>
+        <translation>Equipment - Invalid resource logistic supply class &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Object type - Invalid object &apos;%1&apos;</source>
-        <translation type="unfinished">Object type - Invalid object &apos;%1&apos;</translation>
+        <translation>Object type - Invalid object &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

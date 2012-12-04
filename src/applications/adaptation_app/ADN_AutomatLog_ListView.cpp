@@ -173,7 +173,7 @@ uint ADN_AutomatLog_ListView::AddUnit( ADN_Rich_ListViewItem* parent, const QStr
         {
             ADN_Equipments_Data::IT_CategoryInfos_Vector itCategory = categories.begin();
             for( ; itCategory != categories.end(); ++itCategory )
-                if( (*itCategory)->ptrCategory_.GetData() == (*itCompCons)->ptrCategory_.GetData() )
+                if( ( *itCategory ) == ( *itCompCons )->ptrCategory_.GetData() )
                     break;
             if( itCategory != categories.end() )
                 InsertCategory( *pCompItem, **itCategory, **itCompCons );
@@ -204,9 +204,9 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
                                               ADN_Equipments_Data::CategoryInfos&   category,
                                               ADN_Equipments_Data::ConsumptionItem& conso )
 {
-    if( conso.nConsumptionType_ != eMoving
-        && conso.nConsumptionType_ != eEngineStopped
-        && conso.nConsumptionType_ != eEngineStarted )
+    ADN_Resources_Data::CategoryInfo* ptrCategory = conso.ptrCategory_.GetData() ? conso.ptrCategory_.GetData()->ptrCategory_.GetData() : 0;
+
+    if( !ptrCategory || ( conso.nConsumptionType_ != eMoving && conso.nConsumptionType_ != eEngineStopped && conso.nConsumptionType_ != eEngineStarted ) )
         return;
 
     ADN_Rich_ListViewItem* pItem = 0;
@@ -215,7 +215,7 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
     for( int row = 0; row < rowCount; ++row )
     {
         QStandardItem* pTmpItem = parent.child( row, eColumnTarget );
-        if( pTmpItem && pTmpItem->text().toStdString() == conso.ptrCategory_.GetData()->strName_.GetData() )
+        if( pTmpItem && pTmpItem->text().toStdString() == ptrCategory->strName_.GetData() )
         {
             pItem = static_cast< ADN_Rich_ListViewItem* >( parent.child( row ) );
             break;
@@ -225,7 +225,7 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
     if( pItem == 0 )
     {
         pItem = new ADN_Rich_ListViewItem( &parent, Qt::AlignCenter );
-        pItem->setText( eColumnTarget         , conso.ptrCategory_.GetData()->strName_.GetData().c_str() );
+        pItem->setText( eColumnTarget         , ptrCategory->strName_.GetData().c_str() );
         pItem->setText( eColumnContenance     , QString::number( category.rNbr_.GetData() ) );
         pItem->setText( eColumnNormalizedConso, QString::number( category.rNormalizedConsumption_.GetData() ) );
     }
@@ -234,32 +234,32 @@ void ADN_AutomatLog_ListView::InsertCategory( QStandardItem&                    
     if( conso.nQuantityUsedPerHour_.GetData() > 0 )
         rAutonomy = category.rNbr_.GetData() / conso.nQuantityUsedPerHour_.GetData();
 
-    if( compTotal_[ conso.ptrCategory_.GetData() ] == 0 )
-        compTotal_[ conso.ptrCategory_.GetData() ] = new ADN_AutomatLog_Entry();
+    if( compTotal_[ ptrCategory ] == 0 )
+        compTotal_[ ptrCategory ] = new ADN_AutomatLog_Entry();
 
-    compTotal_[ conso.ptrCategory_.GetData() ]->rNbr_ = category.rNbr_.GetData();
-    compTotal_[ conso.ptrCategory_.GetData() ]->rNormalizedConsumption_ = category.rNormalizedConsumption_.GetData();
+    compTotal_[ ptrCategory ]->rNbr_ = category.rNbr_.GetData();
+    compTotal_[ ptrCategory ]->rNormalizedConsumption_ = category.rNormalizedConsumption_.GetData();
 
     if( conso.nConsumptionType_ == eMoving )
     {
         pItem->SetValueGreaterThan( eColumnMoveAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
         pItem->setText( eColumnMoveConso, QString::number( conso.nQuantityUsedPerHour_.GetData() ) );
-        compTotal_[ conso.ptrCategory_.GetData() ]->rMoveAutonomy_ = std::min( compTotal_[ conso.ptrCategory_.GetData() ]->rMoveAutonomy_, rAutonomy );
-        compTotal_[ conso.ptrCategory_.GetData() ]->rMoveQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
+        compTotal_[ ptrCategory ]->rMoveAutonomy_ = std::min( compTotal_[ ptrCategory ]->rMoveAutonomy_, rAutonomy );
+        compTotal_[ ptrCategory ]->rMoveQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
     }
     else if( conso.nConsumptionType_ == eEngineStopped )
     {
         pItem->SetValueGreaterThan( eColumnEngineStoppedAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
         pItem->setText( eColumnEngineStoppedConso, QString::number( conso.nQuantityUsedPerHour_.GetData() ) );
-        compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStoppedAutonomy_ = std::min( compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStoppedAutonomy_, rAutonomy );
-        compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStoppedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
+        compTotal_[ ptrCategory ]->rEngineStoppedAutonomy_ = std::min( compTotal_[ ptrCategory ]->rEngineStoppedAutonomy_, rAutonomy );
+        compTotal_[ ptrCategory ]->rEngineStoppedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
     }
     else if( conso.nConsumptionType_ == eEngineStarted )
     {
         pItem->SetValueGreaterThan( eColumnEngineStartedAutonomy, rAutonomy, 2., 3., ADN_Rich_ListViewItem::eUnitHour );
         pItem->setText( eColumnEngineStartedConso, QString::number( conso.nQuantityUsedPerHour_.GetData() ) );
-        compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedAutonomy_ = std::min( compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedAutonomy_, rAutonomy );
-        compTotal_[ conso.ptrCategory_.GetData() ]->rEngineStartedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
+        compTotal_[ ptrCategory ]->rEngineStartedAutonomy_ = std::min( compTotal_[ ptrCategory ]->rEngineStartedAutonomy_, rAutonomy );
+        compTotal_[ ptrCategory ]->rEngineStartedQuantityUsedPerHour_ = conso.nQuantityUsedPerHour_.GetData();
     }
 }
 

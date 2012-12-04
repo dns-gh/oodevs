@@ -171,13 +171,13 @@ void ADN_Objects_GUI::Build()
         builder.AddEnumField( constr, tr( "Model" ), vInfosConnectors[ eConstructorCapacity_UnitType ] );
         // Buildable
         ADN_GroupBox* buildable = CreateCapacityGroupBox( 3, tr( "Buildable" ), vInfosConnectors[ eBuildableCapacityPresent], constructor );
-        ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( strClassName_ +"_BuildableDotations", vInfosConnectors[ eBuildableCapacity_Dotation ], false, buildable, false );
+        ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( strClassName_ +"_BuildableDotations", vInfosConnectors[ eBuildableCapacity_Dotation ], buildable, ADN_Equipments_Dotations_GUI::eColumn_Category | ADN_Equipments_Dotations_GUI::eColumn_Quantity );
         pDotations->SetGoToOnDoubleClick( ::eResources );
 
         // Improvable
         ADN_GroupBox* improvable = CreateCapacityGroupBox( 3, tr( "Improvable" ), vInfosConnectors[ eImprovableCapacityPresent ], constructor );
         {
-            ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( strClassName_ +"_ImprovableDotations", vInfosConnectors[ eImprovableCapacity_Dotation ], false, improvable, false );
+            ADN_Equipments_Dotations_GUI* pDotations = new ADN_Equipments_Dotations_GUI( strClassName_ +"_ImprovableDotations", vInfosConnectors[ eImprovableCapacity_Dotation ], improvable, ADN_Equipments_Dotations_GUI::eColumn_Category | ADN_Equipments_Dotations_GUI::eColumn_Quantity );
             pDotations->SetGoToOnDoubleClick( ::eResources );
         }
 

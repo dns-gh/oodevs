@@ -24,8 +24,18 @@ class ADN_Equipments_Dotations_GUI : public ADN_Table
     Q_OBJECT
 
 public:
-             ADN_Equipments_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector,
-                                            bool bIncludeNormalizedConsumption, QWidget* pParent = 0, bool bIncludeThreshold = true );
+    enum eColumn
+    {
+        eColumn_Category    = 0x01,
+        eColumn_Quantity    = 0x02,
+        eColumn_Threshold   = 0x04,
+        eColumn_Consumption = 0x08,
+
+        eColumn_All         = 0x0F
+    };
+
+public:
+             ADN_Equipments_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent = 0, int visibleColumns = eColumn_All, QHeaderView::ResizeMode resizeMode = QHeaderView::Stretch );
     virtual ~ADN_Equipments_Dotations_GUI();
 
 private:
@@ -34,10 +44,6 @@ private:
     void RemoveCurrentDotation();
     bool Contains( ADN_Resources_Data::CategoryInfo& category );
     virtual void AddRow( int row, void* data );
-
-public:
-    bool bIncludeNormalizedConsumption_;
-    bool bIncludeThreshold_;
 };
 
 #endif // __ADN_Equipments_Dotations_GUI_h_

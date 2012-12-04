@@ -217,7 +217,7 @@ void ADN_HtmlBuilder::WriteToFile( const char* strFileName )
 // Name: ADN_HtmlBuilder::CreateTableFrom
 // Created: APE 2005-04-20
 // -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::CreateTableFrom( ADN_ListView& listView )
+void ADN_HtmlBuilder::CreateTableFrom( const ADN_ListView& listView )
 {
     listView.CreateTableFrom( strOutput_ );
 }
@@ -226,7 +226,7 @@ void ADN_HtmlBuilder::CreateTableFrom( ADN_ListView& listView )
 // Name: ADN_HtmlBuilder::CreateTableFrom
 // Created: JSR 2012-10-31
 // -----------------------------------------------------------------------------
-void ADN_HtmlBuilder::CreateTableFrom( QTableView& table )
+void ADN_HtmlBuilder::CreateTableFrom( const QTableView& table )
 {
     strOutput_ << "<table border = 1>\n";
 

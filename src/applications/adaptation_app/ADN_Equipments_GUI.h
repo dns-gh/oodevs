@@ -21,10 +21,9 @@ class ADN_ListView_Equipments;
 class ADN_Equipments_Speeds_GUI;
 class ADN_Equipments_Sensors_GUI;
 class ADN_Equipments_RadarsListView;
-class ADN_Equipments_Dotations_GUI;
-class ADN_Equipments_ConsumptionsTable;
 class ADN_Equipments_WeaponsListView;
 class ADN_Equipments_ActiveProtectionsListView;
+class ADN_Equipments_Resources_Tables;
 
 // =============================================================================
 /** @class  ADN_Equipments_GUI
@@ -81,6 +80,7 @@ public:
         eWeapons,
         eActiveProtections,
         eDotations,
+        eDotationsAllocation,
         eConsumptions,
         eObjects,
         eAttritionBreakdowns,
@@ -196,10 +196,9 @@ private:
     ADN_Equipments_Speeds_GUI* pSpeeds_;
     ADN_Equipments_Sensors_GUI* pSensors_;
     ADN_Equipments_RadarsListView* pRadars_;
-    ADN_Equipments_Dotations_GUI* pDotations_;
-    ADN_Equipments_ConsumptionsTable* pConsumptions_;
     ADN_Equipments_WeaponsListView* pWeapons_;
     ADN_Equipments_ActiveProtectionsListView* pActiveProtections_;
+    ADN_Equipments_Resources_Tables* pResources_;
     //@}
 };
 

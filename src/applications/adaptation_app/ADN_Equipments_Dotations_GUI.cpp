@@ -13,45 +13,48 @@
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Equipments_Data.h"
 #include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"
 
 typedef ADN_Equipments_Data::CategoryInfos CategoryInfos;
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: ADN_Equipments_Dotations_GUI constructor
-// Created: JDY 03-07-03
-//-----------------------------------------------------------------------------
-ADN_Equipments_Dotations_GUI::ADN_Equipments_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector,
-                                                              bool bIncludeNormalizedConsumption, QWidget* pParent, bool bIncludeThreshold )
+// Created: ABR 2012-11-30
+// -----------------------------------------------------------------------------
+ADN_Equipments_Dotations_GUI::ADN_Equipments_Dotations_GUI( const QString& objectName, ADN_Connector_ABC*& connector, QWidget* pParent /* = 0 */, int visibleColumns /*= eColumn_All*/, QHeaderView::ResizeMode resizeMode /* = QHeaderView::Stretch */ )
     : ADN_Table( objectName, connector, pParent )
-    , bIncludeNormalizedConsumption_( bIncludeNormalizedConsumption )
-    , bIncludeThreshold_( bIncludeThreshold )
 {
     // Setup the columns.
-    const int cols = 2 + static_cast< int >( bIncludeNormalizedConsumption_ ) + static_cast< int >( bIncludeThreshold );
-    dataModel_.setColumnCount( cols );
+    dataModel_.setColumnCount( 4 );
 
     QStringList horizontalHeaders;
     horizontalHeaders << tr( "Category" )
-                      << tr( "Qty" );
+                      << tr( "Qty" )
+                      << tr( "Log threshold (%)" )
+                      << tr( "Normalized consumption" );
+
     delegate_.AddSpinBoxOnColumn( 1, 1, INT_MAX );
-    if( bIncludeThreshold )
-    {
-        horizontalHeaders << tr( "Log threshold (%)" );
-        delegate_.AddDoubleSpinBoxOnColumn( 2, 0.0, 100.0, 0.01, 2 );
-    }
-    if( bIncludeNormalizedConsumption )
-    {
-        horizontalHeaders << tr( "Normalized consumption" );
-        delegate_.AddDoubleSpinBoxOnColumn( 2 + static_cast< int >( bIncludeThreshold ), 0.001, INT_MAX, 0.001, 3 );
-    }
+    delegate_.AddDoubleSpinBoxOnColumn( 2, 0.0, 100.0, 0.01, 2 );
+    delegate_.AddDoubleSpinBoxOnColumn( 3, 0.001, INT_MAX, 0.001, 3 );
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders );
-    horizontalHeader()->setResizeMode( ( dataModel_.columnCount() > 2) ? QHeaderView::ResizeToContents : QHeaderView::Stretch );
+    horizontalHeader()->setResizeMode( resizeMode );
     verticalHeader()->setVisible( false );
     setMaximumHeight( 270 );
+
+    proxyModel_.setDynamicSortFilter( true );
+    proxyModel_.sort( 0, Qt::AscendingOrder );
+    setSortingEnabled( false );
+
+    if( !( visibleColumns & eColumn_Category ) )
+        hideColumn( 0 );
+    if( !( visibleColumns & eColumn_Quantity ) )
+        hideColumn( 1 );
+    if( !( visibleColumns & eColumn_Threshold ) )
+        hideColumn( 2 );
+    if( !( visibleColumns & eColumn_Consumption ) )
+        hideColumn( 3 );
 }
 
 //-----------------------------------------------------------------------------
@@ -69,6 +72,9 @@ ADN_Equipments_Dotations_GUI::~ADN_Equipments_Dotations_GUI()
 //-----------------------------------------------------------------------------
 void ADN_Equipments_Dotations_GUI::OnContextMenu( const QPoint& pt )
 {
+    if( isColumnHidden( 0 ) )
+        return;
+
     Q3PopupMenu menu( this );
     Q3PopupMenu targetMenu( &menu );
 
@@ -161,11 +167,8 @@ void ADN_Equipments_Dotations_GUI::AddRow( int row, void* data )
     CategoryInfos* pCategory = static_cast< CategoryInfos* >( data );
     if( !pCategory )
         return;
-
     AddItem( row, 0, data, &pCategory->ptrCategory_.GetData()->strName_, ADN_StandardItem::eString );
     AddItem( row, 1, data, &pCategory->rNbr_, ADN_StandardItem::eInt, Qt::ItemIsEditable );
-    if( bIncludeThreshold_ )
-        AddItem( row, 2, data, &pCategory->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
-    if( bIncludeNormalizedConsumption_ )
-        AddItem( row, 2 + static_cast< int >( bIncludeThreshold_ ), data, &pCategory->rNormalizedConsumption_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 2, data, &pCategory->rLogThreshold_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
+    AddItem( row, 3, data, &pCategory->rNormalizedConsumption_, ADN_StandardItem::eDouble, Qt::ItemIsEditable );
 }

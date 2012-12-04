@@ -380,9 +380,9 @@ public:
     public:
         ADN_TypePtr_InVector_ABC<ADN_Resources_Data::ResourceInfos> ptrDotation_;
         ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo>  ptrCategory_;
-        ADN_Type_Int                                                 rNbr_;
-        ADN_Type_Double                                              rLogThreshold_;
-        ADN_Type_Double                                              rNormalizedConsumption_;
+        ADN_Type_Int                                                rNbr_;
+        ADN_Type_Double                                             rLogThreshold_;
+        ADN_Type_Double                                             rNormalizedConsumption_;
     };
 
     typedef ADN_Type_Vector_ABC<CategoryInfos>       T_CategoryInfos_Vector;
@@ -452,16 +452,16 @@ public:
     {
 
     public:
-        ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Resources_Data::CategoryInfo& category );
+        ConsumptionItem( E_ConsumptionType nConsumptionType, T_CategoryInfos_Vector& resources, ADN_Equipments_Data::CategoryInfos& equipmentCategory );
 
         ConsumptionItem* CreateCopy();
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
-        E_ConsumptionType                                           nConsumptionType_;
-        ADN_TypePtr_InVector_ABC<ADN_Resources_Data::CategoryInfo> ptrCategory_;
-        ADN_Type_Double                                             nQuantityUsedPerHour_;
+        E_ConsumptionType                                            nConsumptionType_;
+        ADN_TypePtr_InVector_ABC<ADN_Equipments_Data::CategoryInfos> ptrCategory_;
+        ADN_Type_Double                                              nQuantityUsedPerHour_;
     };
 
     typedef ADN_Type_Vector_ABC<ConsumptionItem>       T_ConsumptionItem_Vector;
@@ -476,9 +476,10 @@ public:
         ConsumptionsInfos();
 
         void CopyFrom( ConsumptionsInfos& source );
-        void ReadArchive( xml::xistream& input );
-        void ReadConsumption( xml::xistream& input );
-        void ReadDotation( xml::xistream& input, const E_ConsumptionType& type );
+        void ReadArchive( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories );
+        void ReadConsumption( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories );
+        void ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories );
+        void FillMissingConsumptions( T_CategoryInfos_Vector& equipmentCategories );
         void WriteArchive( xml::xostream& output ) const;
 
     public:
@@ -505,6 +506,7 @@ public:
         void ReadObject( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
         void CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const;
+        void FillMissingConsumptions();
 
     public:
         ADN_Type_Int    nId_;

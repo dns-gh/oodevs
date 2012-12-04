@@ -939,29 +939,6 @@ Parked engine running</source>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_ConsumptionsTable</name>
-    <message>
-        <source>Activity</source>
-        <translation type="unfinished">النشاط</translation>
-    </message>
-    <message>
-        <source>Consumed item</source>
-        <translation type="unfinished">البند المستهلكة</translation>
-    </message>
-    <message>
-        <source>Qty/hour</source>
-        <translation type="unfinished">الكمية لكل ساعة</translation>
-    </message>
-    <message>
-        <source>Add consumption</source>
-        <translation type="unfinished">إضافة الاستهلاك</translation>
-    </message>
-    <message>
-        <source>Remove consumption</source>
-        <translation type="unfinished">إزالة الاستهلاك</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <source>Category</source>
@@ -1440,6 +1417,33 @@ Parked engine running</source>
     <message>
         <source>Remove sensor</source>
         <translation type="unfinished">إزالة أجهزة الاستشعار</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Resources_ListView</name>
+    <message id="0">
+        <source>Resources</source>
+        <oldsource>Categories</oldsource>
+        <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">إضافة مورد</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">إزالة مورد</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Resources_Tables</name>
+    <message>
+        <source>Allocation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation type="unfinished">استهلاكها</translation>
     </message>
 </context>
 <context>
@@ -3866,11 +3870,6 @@ Make sure that the file is not write-protected.</source>
 </context>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
-    <message id="0">
-        <source>Environments</source>
-        <oldsource>ADN_Sensors_Environments_GUI</oldsource>
-        <translation type="unfinished">ADN_Sensors_Environments_GUI</translation>
-    </message>
     <message>
         <source>Modifiers</source>
         <translation type="unfinished">المعدلات</translation>

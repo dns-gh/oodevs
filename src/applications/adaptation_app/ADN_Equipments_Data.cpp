@@ -1215,10 +1215,10 @@ void ADN_Equipments_Data::ObjectInfos::WriteArchive( xml::xostream& output ) con
 // Name: ConsumptionItem::ConsumptionItem
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-ADN_Equipments_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsumptionType, ADN_Resources_Data::CategoryInfo& category )
+ADN_Equipments_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsumptionType, T_CategoryInfos_Vector& equipmentCategories, CategoryInfos& equipmentCategory )
     : nConsumptionType_    ( nConsumptionType )
-    , ptrCategory_         ( category.parentResource_.categories_, &category )
     , nQuantityUsedPerHour_( 0 )
+    , ptrCategory_( equipmentCategories, &equipmentCategory )
 {
     this->BindExistenceTo( &ptrCategory_ );
 }
@@ -1229,7 +1229,7 @@ ADN_Equipments_Data::ConsumptionItem::ConsumptionItem( E_ConsumptionType nConsum
 // -----------------------------------------------------------------------------
 ADN_Equipments_Data::ConsumptionItem* ADN_Equipments_Data::ConsumptionItem::CreateCopy()
 {
-    ConsumptionItem* pCopy = new ConsumptionItem( nConsumptionType_, *ptrCategory_.GetData() );
+    ConsumptionItem* pCopy = new ConsumptionItem( nConsumptionType_, ptrCategory_.GetVector(), *ptrCategory_.GetData() );
     pCopy->nQuantityUsedPerHour_ = nQuantityUsedPerHour_.GetData();
     return pCopy;
 }
@@ -1250,8 +1250,8 @@ void ADN_Equipments_Data::ConsumptionItem::ReadArchive( xml::xistream& input )
 void ADN_Equipments_Data::ConsumptionItem::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource" )
-            << xml::attribute( "category", ptrCategory_.GetData()->parentResource_.strName_ )
-            << xml::attribute( "name", ptrCategory_.GetData()->strName_ )
+            << xml::attribute( "category", ptrCategory_.GetData()->ptrCategory_.GetData()->parentResource_.strName_ )
+            << xml::attribute( "name", ptrCategory_.GetData()->ptrCategory_.GetData()->strName_ )
             << xml::attribute( "value", nQuantityUsedPerHour_ )
            << xml::end;
 }
@@ -1278,29 +1278,45 @@ void ADN_Equipments_Data::ConsumptionsInfos::CopyFrom( ConsumptionsInfos& source
 // Name: ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption( xml::xistream& input )
+void ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories )
 {
     std::string status;
     input >> xml::attribute( "status", status );
     E_ConsumptionType type = ADN_Tr::ConvertToConsumptionType( status );
     if( type == E_ConsumptionType( -1 ) )
         throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid activty '%1'" ).arg( status.c_str() ).toStdString() );
-    input >> xml::list( "resource", *this, &ADN_Equipments_Data::ConsumptionsInfos::ReadDotation, type );
+    input >> xml::list( "resource", *this, &ADN_Equipments_Data::ConsumptionsInfos::ReadDotation, type, equipmentCategories );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipments_Data::ConsumptionsInfos::ReadDotation
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input, const E_ConsumptionType& type )
+void ADN_Equipments_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input, const E_ConsumptionType& type, T_CategoryInfos_Vector& equipmentCategories )
 {
     std::string category, name;
     input >> xml::attribute( "category", category )
           >> xml::attribute( "name", name );
     ADN_Resources_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetResources().GetData().FindResourceCategory( category, name );
     if( !pCategory )
-        throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).toStdString() );
-    std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( type, *pCategory ) );
+        throw ADN_DataException( tools::translate( "Equipments_Data", "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).toStdString() );
+
+    ADN_Equipments_Data::CategoryInfos* pEquipmentCategory = 0;
+    for( CIT_CategoryInfos_Vector it = equipmentCategories.begin(); it != equipmentCategories.end(); ++it )
+    {
+        if( ( *it )->ptrCategory_.GetData() == pCategory )
+        {
+            pEquipmentCategory = *it;
+            break;
+        }
+    }
+    if( !pEquipmentCategory )
+    {
+        // Inform user that this equipment does not own that resource, so the consumption will be removed.
+        return;
+    }
+
+    std::auto_ptr<ConsumptionItem> spNew( new ConsumptionItem( type, /**pCategory, */equipmentCategories, *pEquipmentCategory ) );
     spNew->ReadArchive( input );
     vConsumptions_.AddItem( spNew.release() );
 }
@@ -1309,11 +1325,38 @@ void ADN_Equipments_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input,
 // Name: ConsumptionsInfos::ReadArchive
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Equipments_Data::ConsumptionsInfos::ReadArchive( xml::xistream& input )
+void ADN_Equipments_Data::ConsumptionsInfos::ReadArchive( xml::xistream& input, T_CategoryInfos_Vector& equipmentCategories )
 {
     input >> xml::start( "consumptions" )
-            >> xml::list( "consumption", *this, &ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption )
+            >> xml::list( "consumption", *this, &ADN_Equipments_Data::ConsumptionsInfos::ReadConsumption, equipmentCategories )
           >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipments_Data::ConsumptionsInfos::FillMissingConsumptions
+// Created: ABR 2012-12-03
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::ConsumptionsInfos::FillMissingConsumptions( T_CategoryInfos_Vector& equipmentCategories )
+{
+    for( IT_CategoryInfos_Vector it = equipmentCategories.begin(); it != equipmentCategories.end(); ++it )
+    {
+        if( *it == 0 )
+            continue;
+        for( int i = 0; i < eNbrConsumptionType; ++i )
+        {
+            bool found = false;
+            for( CIT_ConsumptionItem_Vector itConso = vConsumptions_.begin(); !found && itConso != vConsumptions_.end(); ++itConso )
+            {
+                if( ( *itConso )->nConsumptionType_ == i && ( *itConso )->ptrCategory_.GetData() == ( *it ) )
+                    found = true;
+            }
+            if( !found )
+            {
+                std::auto_ptr< ConsumptionItem > spNew( new ConsumptionItem( static_cast< E_ConsumptionType >( i ), equipmentCategories, **it ) );
+                vConsumptions_.AddItem( spNew.release() );
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1327,9 +1370,9 @@ void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output
     {
         bool entered = false;
         for( CIT_ConsumptionItem_Vector it = vConsumptions_.begin(); it != vConsumptions_.end(); ++it )
-            if( (*it)->nConsumptionType_ == nType )
+            if( (*it)->nConsumptionType_ == nType && (*it)->nQuantityUsedPerHour_.GetData() != 0. )
             {
-                if( ! entered )
+                if( !entered )
                 {
                     output << xml::start( "consumption" )
                             << xml::attribute( "status", ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)nType ) );
@@ -1338,7 +1381,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output
                 (*it)->WriteArchive( output );
             }
         if( entered )
-            output << xml::end;
+            output << xml::end; // !consumption
     }
     output << xml::end;
 }
@@ -1450,6 +1493,15 @@ void ADN_Equipments_Data::EquipmentInfos::Initialize()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Equipments_Data::FillMissingConsumptions
+// Created: ABR 2012-12-03
+// -----------------------------------------------------------------------------
+void ADN_Equipments_Data::EquipmentInfos::FillMissingConsumptions()
+{
+    consumptions_.FillMissingConsumptions( resources_.categories_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EquipmentInfos::CreateCopy
 // Created: AGN 2003-11-03
 // -----------------------------------------------------------------------------
@@ -1508,8 +1560,8 @@ ADN_Equipments_Data::EquipmentInfos* ADN_Equipments_Data::EquipmentInfos::Create
         pCopy->vObjects_.AddItem( pNew );
     }
 
-    pCopy->consumptions_.CopyFrom( consumptions_ );
     pCopy->resources_.CopyFrom( resources_ );
+    pCopy->consumptions_.CopyFrom( consumptions_ );
 
     pCopy->bTroopEmbarkingTimes_ = bTroopEmbarkingTimes_.GetData();
     pCopy->embarkingTimePerPerson_ = embarkingTimePerPerson_.GetData();
@@ -1683,7 +1735,8 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
     bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
     bCanCarryCrowd_ = nCrowdTransportCapacity_ != 0;
 
-    consumptions_.ReadArchive( input );
+    consumptions_.ReadArchive( input, resources_.categories_ );
+    FillMissingConsumptions();
 
     input >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &ADN_Equipments_Data::EquipmentInfos::ReadWeapon )

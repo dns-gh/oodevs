@@ -53,8 +53,8 @@ public:
 
     std::stringstream& Stream();
 
-    void CreateTableFrom( ADN_ListView& listView );
-    void CreateTableFrom( QTableView& table );
+    void CreateTableFrom( const ADN_ListView& listView );
+    void CreateTableFrom( const QTableView& table );
 
     void WriteToFile( const char* strFileName );
     //@}

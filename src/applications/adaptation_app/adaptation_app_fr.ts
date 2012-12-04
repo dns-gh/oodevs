@@ -951,29 +951,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipments_ConsumptionsTable</name>
-    <message>
-        <source>Activity</source>
-        <translation>Activité</translation>
-    </message>
-    <message>
-        <source>Consumed item</source>
-        <translation>Objet consommé</translation>
-    </message>
-    <message>
-        <source>Qty/hour</source>
-        <translation>Qté/heure</translation>
-    </message>
-    <message>
-        <source>Add consumption</source>
-        <translation>Ajouter une consommation</translation>
-    </message>
-    <message>
-        <source>Remove consumption</source>
-        <translation>Enlever cette consommation</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipments_Dotations_GUI</name>
     <message>
         <source>Category</source>
@@ -1456,6 +1433,32 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Remove sensor</source>
         <translation>Enlever un capteur</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Resources_ListView</name>
+    <message id="0">
+        <source>Resources</source>
+        <translation>Ressources</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation>Ajouter une ressource</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation>Supprimer la ressource</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Equipments_Resources_Tables</name>
+    <message>
+        <source>Allocation</source>
+        <translation>Allocation</translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation>Consommations</translation>
     </message>
 </context>
 <context>
@@ -3886,10 +3889,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Modifiers</source>
         <translation>Modificateurs</translation>
-    </message>
-    <message id="0">
-        <source>Environments</source>
-        <translation>Type terrain</translation>
     </message>
 </context>
 <context>

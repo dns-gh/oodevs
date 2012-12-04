@@ -190,7 +190,7 @@ void ADN_AutomatLogCategory_ListView::FillComponentItem( ADN_Rich_ListViewItem& 
     for( ADN_Equipments_Data::IT_ConsumptionItem_Vector itConso = consumptions.begin(); itConso != consumptions.end(); ++itConso )
     {
         ADN_Equipments_Data::ConsumptionItem& conso = **itConso;
-        if( conso.ptrCategory_.GetData() == &category )
+        if( conso.ptrCategory_.GetData()->ptrCategory_.GetData() == &category )
         {
             if( conso.nConsumptionType_ != eMoving && conso.nConsumptionType_ != eEngineStopped )
                 continue;
