@@ -135,9 +135,9 @@ public:
     { throw; }
     virtual bool ToAutomatList( std::vector< DEC_Decision_ABC* >& ) const
     { throw; }
-    virtual bool ToAgent( DEC_Decision_ABC*& ) const
+    virtual bool ToAgent( const DEC_Decision_ABC*& ) const
     { throw; }
-    virtual bool ToAgentList( std::vector< DEC_Decision_ABC* >& ) const
+    virtual bool ToAgentList( std::vector< const DEC_Decision_ABC* >& ) const
     { throw; }
     virtual bool ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& ) const
     { throw; }
