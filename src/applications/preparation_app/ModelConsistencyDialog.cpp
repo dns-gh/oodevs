@@ -143,6 +143,9 @@ void ModelConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
     if( entity && *entity )
     {
         ( *entity )->Select( actionController_ );
+        std::vector< const kernel::Selectable_ABC* > elements;
+        elements.push_back( *entity );
+        ( *entity )->MultipleSelect( actionController_, elements );
         ( *entity )->Activate( actionController_ );
     }
 }
