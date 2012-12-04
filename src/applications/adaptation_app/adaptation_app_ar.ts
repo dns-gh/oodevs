@@ -1823,6 +1823,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Effect on detection ranges</source>
         <translation type="unfinished">تأثير على الكشف عن نطاقات</translation>
     </message>
+    <message>
+        <source>Fatigue</source>
+        <translation type="unfinished">التعب</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Inhabitants_GUI</name>

@@ -79,7 +79,7 @@ void ADN_HumanFactors_GUI::Build()
     // Evolution
     Q3GroupBox* pEvolutionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Automatic evolution" ), pMainWidget_ );
     {
-        Q3GroupBox* vBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Tiredness" ), pEvolutionBox );
+        Q3GroupBox* vBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Fatigue" ), pEvolutionBox );
         BuildThresholds( vBox, data_.tirednessThresholds_, tr( "Thresholds" ), tr( "Tiredness" ), tr( "Exhaustion" ) );
         {
             Q3GroupBox* hBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Evolution (per hour)" ), vBox );

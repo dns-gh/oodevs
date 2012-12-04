@@ -1765,7 +1765,7 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     </message>
     <message>
         <source>Tiredness</source>
-        <translation>Fatigue</translation>
+        <translation>Tiredness</translation>
     </message>
     <message>
         <source>Thresholds</source>
@@ -1834,6 +1834,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</translation>
     <message>
         <source>Effect on detection ranges</source>
         <translation>Effect on detection range</translation>
+    </message>
+    <message>
+        <source>Fatigue</source>
+        <translation>Fatigue</translation>
     </message>
 </context>
 <context>

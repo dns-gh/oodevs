@@ -1838,6 +1838,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>Decrease per hour</source>
         <translation>Diminution par heure</translation>
     </message>
+    <message>
+        <source>Fatigue</source>
+        <translation>Fatigue</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Inhabitants_GUI</name>

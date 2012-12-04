@@ -1838,6 +1838,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</source>
         <source>Decrease per hour</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Fatigue</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Inhabitants_GUI</name>
