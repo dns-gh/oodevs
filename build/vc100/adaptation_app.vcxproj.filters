@@ -880,9 +880,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GroupBox.cpp">
       <Filter>Source Files\Common widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_RadioButton.cpp">
-      <Filter>Source Files\Common widgets</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TimeField.cpp">
       <Filter>Source Files\Common widgets</Filter>
     </ClCompile>
@@ -2061,9 +2058,6 @@
       <Filter>Source Files\Common widgets</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_GroupBox.h">
-      <Filter>Source Files\Common widgets</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_RadioButton.h">
       <Filter>Source Files\Common widgets</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TimeField.h">
