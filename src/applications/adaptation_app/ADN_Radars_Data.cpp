@@ -439,3 +439,20 @@ ADN_Radars_Data::T_RadarInfos_Vector& ADN_Radars_Data::GetRadars()
 {
     return vRadars_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_Data::GetRadarsThatUse
+// Created: LGY 2012-12-04
+// -----------------------------------------------------------------------------
+QStringList ADN_Radars_Data::GetRadarsThatUse( ADN_Disasters_Data::DisasterInfos& disaster )
+{
+    QStringList result;
+    for( IT_RadarInfos_Vector it = vRadars_.begin(); it != vRadars_.end(); ++it )
+    {
+        RadarInfos* pComp = *it;
+        for( IT_DisasterInfos_Vector itDisaster = pComp->vDisasters_.begin(); itDisaster != pComp->vDisasters_.end(); ++itDisaster )
+            if( (*itDisaster)->ptrDisaster_.GetData()->strName_.GetData() == disaster.strName_.GetData() )
+                result << pComp->strName_.GetData().c_str();
+    }
+    return result;
+}

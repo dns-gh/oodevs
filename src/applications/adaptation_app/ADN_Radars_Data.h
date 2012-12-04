@@ -113,13 +113,15 @@ public:
     T_RadarInfos_Vector& GetRadars();
     RadarInfos* FindRadar( const std::string& strName );
 
+    QStringList GetRadarsThatUse( ADN_Disasters_Data::DisasterInfos& disaster );
+
 public:
     void ReadArchive( xml::xistream& input );
     void ReadRadar( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
 
 public:
-    T_RadarInfos_Vector  vRadars_;
+    T_RadarInfos_Vector vRadars_;
 };
 
 #endif // __ADN_Radars_Data_h_

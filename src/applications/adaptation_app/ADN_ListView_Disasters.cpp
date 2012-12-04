@@ -83,6 +83,8 @@ std::string ADN_ListView_Disasters::GetToolTipFor( const QModelIndex& index )
     std::string result;
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
         ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
+        ADN_Workspace::GetWorkspace().GetSensors().GetData().radarData_.GetRadarsThatUse( *pCastData ), result );
 
     if( result.empty() )
         result = tr( "<b>Unused</b>" ).toStdString();

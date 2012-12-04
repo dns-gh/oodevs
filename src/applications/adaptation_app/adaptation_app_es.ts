@@ -3923,14 +3923,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <source>Remove disaster</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Add object</source>
-        <translation type="unfinished">Agregar objetos</translation>
-    </message>
-    <message>
-        <source>Remove object</source>
-        <translation type="unfinished">Borrar objetos</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
@@ -4160,12 +4152,12 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation></translation>
     </message>
     <message>
-        <source>Add disaster</source>
-        <translation type="unfinished"></translation>
+        <source>Add object</source>
+        <translation type="unfinished">Agregar objetos</translation>
     </message>
     <message>
-        <source>Remove disaster</source>
-        <translation type="unfinished"></translation>
+        <source>Remove object</source>
+        <translation type="unfinished">Borrar objetos</translation>
     </message>
 </context>
 <context>
