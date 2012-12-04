@@ -137,6 +137,14 @@
         <source>Decisional threshold</source>
         <translation>Seuil Décisionnel</translation>
     </message>
+    <message>
+        <source>Force ratio feedback time</source>
+        <translation>Temps de remontée du rapport de force</translation>
+    </message>
+    <message>
+        <source>Default force ratio feedback time</source>
+        <translation>Temps de remontée du rapport de force par défaut</translation>
+    </message>
 </context>
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>

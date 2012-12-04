@@ -137,6 +137,14 @@
         <source>Decisional threshold</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Force ratio feedback time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default force ratio feedback time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>

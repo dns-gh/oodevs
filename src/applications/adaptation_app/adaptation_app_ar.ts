@@ -137,6 +137,14 @@
         <source>Captured</source>
         <translation type="unfinished">القبض على</translation>
     </message>
+    <message>
+        <source>Force ratio feedback time</source>
+        <translation type="unfinished">الوقت التغذية المرتدة نسبة القوة</translation>
+    </message>
+    <message>
+        <source>Default force ratio feedback time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>

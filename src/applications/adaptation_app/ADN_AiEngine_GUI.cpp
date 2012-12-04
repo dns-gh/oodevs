@@ -76,7 +76,7 @@ void ADN_AiEngine_GUI::Build()
     // Urban area effect on fire
     Q3GroupBox* pUrbanStateBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Urban combat computation" ) );
     builder.AddField< ADN_EditLine_Double >( pUrbanStateBox, tr( "Urban combat hit ratio" ), data_.rUrbanCombatWeight_, tr( "%" ), ePercentage );
-
+    
     // Critical Intelligence
     Q3GroupBox* pCriticalIntelligenceBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Time to acquire critical intelligence" ) );
     builder.AddField< ADN_TimeField >( pCriticalIntelligenceBox, tr( "Minimum affinity" ), data_.rMinimumAffinity_ );
@@ -90,6 +90,10 @@ void ADN_AiEngine_GUI::Build()
     builder.AddField< ADN_EditLine_Double >( pWoundEffectsBox, tr( "Repairable" ), data_.rRepairableModificator_, tr( "%" ), ePercentage );
     builder.AddField< ADN_EditLine_Double >( pWoundEffectsBox, tr( "Repairing" ), data_.rRepairingModificator_, tr( "%" ), ePercentage );
     builder.AddField< ADN_EditLine_Double >( pWoundEffectsBox, tr( "Captured" ), data_.rCapturedModificator_, tr( "%" ), ePercentage );
+    
+    // Force ratio
+    Q3GroupBox* pForceRatioBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Force ratio feedback time" ) );
+    builder.AddField< ADN_TimeField >( pForceRatioBox, tr( "Default force ratio feedback time" ), data_.rDefaultFeedbackTime_ );
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -105,6 +109,7 @@ void ADN_AiEngine_GUI::Build()
     pContentLayout->addWidget( pUrbanStateBox );
     pContentLayout->addWidget( pCriticalIntelligenceBox );
     pContentLayout->addWidget( pWoundEffectsBox );
+    pContentLayout->addWidget( pForceRatioBox );
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent );
