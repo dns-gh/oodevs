@@ -68,11 +68,12 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
 {
     PropagationManager::T_Files files = pManager_->GetFiles( simulation.GetDateTime()
                                                             .toString(  "yyyyMMdd'T'HHmmss" ).toStdString() );
-    if( ! files.empty() )
+    if( files_ != files )
     {
         propagations_.clear();
         for( std::size_t i = 0; i < files.size(); ++i )
             propagations_.push_back( boost::make_shared< Propagation >( files[ i ], *pManager_, converter_, disasterType_ ) );
+        files_ = files;
     }
 }
 

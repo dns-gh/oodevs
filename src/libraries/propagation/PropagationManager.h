@@ -63,7 +63,6 @@ private:
     //@{
     std::string projection_;
     T_Schedule schedule_;
-    T_Files currentFiles_;
     //@}
 };
 

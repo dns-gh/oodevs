@@ -15,6 +15,7 @@
 #include "tools/ElementObserver_ABC.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/shared_array.hpp>
+#include <vector>
 
 namespace sword
 {
@@ -89,6 +90,7 @@ private:
     std::auto_ptr< PropagationManager > pManager_;
     const kernel::DisasterType& disasterType_;
     T_Propagations propagations_;
+    std::vector< std::string > files_;
     //@}
 };
 

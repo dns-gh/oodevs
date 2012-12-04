@@ -93,7 +93,8 @@ void DisasterAttribute::load( MIL_CheckPointInArchive& archive, const unsigned i
 {
     archive >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
             >> model_
-            >> date_;
+            >> date_
+            >> files_;
     pManager_->Initialize( model_, date_ );
 }
 
@@ -105,7 +106,8 @@ void DisasterAttribute::save( MIL_CheckPointOutArchive& archive, const unsigned 
 {
     archive << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
             << model_
-            << date_;
+            << date_
+            << files_;
 }
 
 namespace
@@ -131,7 +133,7 @@ void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int
 {
     const bpt::ptime realTime( bpt::from_time_t( MIL_AgentServer::GetWorkspace().TickToRealTime( time ) ) );
     PropagationManager::T_Files files = pManager_->GetFiles( boost::posix_time::to_iso_string( realTime ) );
-    if( !files.empty() )
+    if( files_ != files )
     {
         values_.clear();
         std::vector< geometry::Point2d > points;
@@ -145,6 +147,8 @@ void DisasterAttribute::UpdateLocalisation( MIL_Object_ABC& object, unsigned int
         TER_Polygon polygon;
         polygon.Reset( Convert( points ), true );
         object.UpdateLocalisation( polygon );
+
+        files_ = files;
     }
 }
 

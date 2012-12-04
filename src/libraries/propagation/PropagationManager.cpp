@@ -99,10 +99,5 @@ PropagationManager::T_Files PropagationManager::GetFiles( const std::string& tim
     for( CIT_Schedule it = schedule_.begin(); it != schedule_.end(); ++it )
         if( ptime >= it->first )
             files = it->second;
-    if( files != currentFiles_ )
-    {
-        currentFiles_ = files;
-        return files;
-    }
-    return T_Files();
+    return files;
 }

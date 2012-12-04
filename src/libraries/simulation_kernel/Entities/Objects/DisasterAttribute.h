@@ -72,6 +72,7 @@ private:
     std::string date_;
     std::auto_ptr< PropagationManager > pManager_;
     std::vector< T_Extractor > values_;
+    std::vector< std::string > files_;
     //@}
 };
 

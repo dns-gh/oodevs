@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE( extract_information )
     BOOST_CHECK( manager.GetFiles( "20100901T121500" ).empty() );
 
     CheckVector( manager.GetFiles( "20100901T122100" ), boost::assign::list_of( BOOST_RESOLVE( "fileA" ) ) );
-    BOOST_CHECK( manager.GetFiles( "20100901T122900" ).empty() );
+    CheckVector( manager.GetFiles( "20100901T122900" ), boost::assign::list_of( BOOST_RESOLVE( "fileA" ) ) );
     CheckVector( manager.GetFiles( "20100901T123000" ), boost::assign::list_of( BOOST_RESOLVE( "fileB" ) ) );
     CheckVector( manager.GetFiles( "20100901T125100" ), boost::assign::list_of( BOOST_RESOLVE( "fileC" ) )( BOOST_RESOLVE( "fileD" ) ) );
 }
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( extract_information_with_a_different_start_time )
     BOOST_CHECK( manager.GetFiles( "20100901T141010" ).empty() );
 
     CheckVector( manager.GetFiles( "20100901T141011" ), boost::assign::list_of( BOOST_RESOLVE( "fileA" ) ) );
-    BOOST_CHECK( manager.GetFiles( "20100901T141811" ).empty() );
+    CheckVector( manager.GetFiles( "20100901T141811" ), boost::assign::list_of( BOOST_RESOLVE( "fileA" ) ) );
     CheckVector( manager.GetFiles( "20100901T141911" ), boost::assign::list_of( BOOST_RESOLVE( "fileB" ) ) );
     CheckVector( manager.GetFiles( "20100901T143911" ), boost::assign::list_of( BOOST_RESOLVE( "fileC" ) )( BOOST_RESOLVE( "fileD" ) ) );
 }
