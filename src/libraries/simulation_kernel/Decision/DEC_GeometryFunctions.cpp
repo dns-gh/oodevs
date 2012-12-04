@@ -39,7 +39,8 @@
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Random.h"
-#include <boost/make_shared.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 #include <boost/foreach.hpp>
 
 #define PRECISION 0.0000001
@@ -50,7 +51,7 @@
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAgentsBarycenter( const std::vector< DEC_Decision_ABC* >& selection )
 {
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D );
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >();
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = selection.begin(); it != selection.end(); ++it )
     {
         DEC_Decision_ABC* pKnow = *it;
@@ -82,7 +83,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForPion(
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForFuseau( MIL_Fuseau& fuseau )
 {
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() ); //$$$$ RAM
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >(); //$$$$ RAM
     fuseau.ComputeFurthestExtremityPoint( *pResult );
     return pResult;
 }
@@ -93,7 +94,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeDestPointForFusea
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateLocalisation()
 {
-    boost::shared_ptr< TER_Localisation > pLoc( new TER_Localisation() );
+    boost::shared_ptr< TER_Localisation > pLoc = boost::make_shared< TER_Localisation >();
     return pLoc;
 }
 
@@ -112,7 +113,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::CreateLis
 //-----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreatePoint()
 {
-    boost::shared_ptr< MT_Vector2D > pVect( new MT_Vector2D() );
+    boost::shared_ptr< MT_Vector2D > pVect = boost::make_shared< MT_Vector2D >();
     return pVect;
 }
 
@@ -124,7 +125,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyPoint( boost::shared
 {
     if( !point )
         throw std::runtime_error( "Invalid position" );
-    boost::shared_ptr< MT_Vector2D > pVect( new MT_Vector2D( *point ) );
+    boost::shared_ptr< MT_Vector2D > pVect = boost::make_shared< MT_Vector2D >( *point );
     return pVect;
 }
 
@@ -176,7 +177,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT
     if( !pDir || !( MT_IsZero( pDir->SquareMagnitude() - 1. ) ) )
         throw std::runtime_error( "Invalid direction" );
 
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( *pDir ) );
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( *pDir );
 
     if( bCounterClockwise )
         pResult->Rotate90();
@@ -217,7 +218,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndReverseDirection(
     if( !pDir )
         throw std::runtime_error( "Invalid direction" );
 
-    boost::shared_ptr< MT_Vector2D > pNewDir( new MT_Vector2D( *pDir ) );
+    boost::shared_ptr< MT_Vector2D > pNewDir = boost::make_shared< MT_Vector2D >( *pDir );
     *pNewDir *= -1.;
     return pNewDir;
 }
@@ -231,7 +232,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyAndRotateDirection( 
     if( !pDir )
         throw std::runtime_error( "Invalid direction" );
 
-    boost::shared_ptr< MT_Vector2D > pNewDir( new MT_Vector2D( *pDir ) );
+    boost::shared_ptr< MT_Vector2D > pNewDir = boost::make_shared< MT_Vector2D >( *pDir );
     const double rAngle = - ( angle * MT_PI / 180. );
     pNewDir->Rotate( rAngle );
     return pNewDir;
@@ -322,7 +323,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
     // Nombre impaire => un pion est au barycentre
     if( pions.size() % 2 )
     {
-        boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( vBarycenter ) );
+        boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( vBarycenter );
         result.push_back( point );
     }
 
@@ -334,7 +335,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
     vDir.Normalize();
     for( std::size_t i = 1; i <= nNbrPointsPerSide; ++i )
     {
-        boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( vBarycenter + vDir * ( rIncr * i ) ) );
+        boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( vBarycenter + vDir * ( rIncr * i ) );
         result.push_back( point );
     }
 
@@ -344,7 +345,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
     vDir.Normalize();
     for( std::size_t j = 1; j <= nNbrPointsPerSide; ++j )
     {
-        boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( vBarycenter + vDir * ( rIncr * j ) ) );
+        boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( vBarycenter + vDir * ( rIncr * j ) );
         result.push_back( point );
     }
 
@@ -369,7 +370,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertPointToLocal
 {
     if( !pPos )
         throw std::runtime_error( "Invalid position" );
-    boost::shared_ptr< TER_Localisation > pLoc( new TER_Localisation() );
+    boost::shared_ptr< TER_Localisation > pLoc = boost::make_shared< TER_Localisation >();
     pLoc->Reset( *pPos );
     return pLoc;
 }
@@ -408,7 +409,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePosition( MT_Ve
     if( !p1 || !p2 )
         throw std::runtime_error( "Invalid position" );
 
-    boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
+    boost::shared_ptr< MT_Vector2D > res = boost::make_shared< MT_Vector2D >();
     if( (*p1) == (*p2) )
         *res = *p1;
     else
@@ -427,7 +428,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInDirec
     if( !( MT_IsZero( p2->SquareMagnitude() - 1. ) ) )
         throw std::runtime_error( "Invalid magnitude" );
 
-    boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
+    boost::shared_ptr< MT_Vector2D > res = boost::make_shared< MT_Vector2D >();
     *res = *p1 + d * (*p2);
     return res;
 }
@@ -440,7 +441,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInVecto
 {
     if( !position || !offset )
         throw std::runtime_error( "Invalid position" );
-    boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
+    boost::shared_ptr< MT_Vector2D > res = boost::make_shared< MT_Vector2D >();
     *res = *position + *offset;
     return res;
 }
@@ -478,7 +479,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSupportPosition( 
 
     vDirLooked.Rotate90ClockWise();
 
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >();
 
     // $$$$ Position dans le fuseau : devrait être générique
     MT_Vector2D vSupportPos1( vUnitToSupportPos + vDirLooked * rDist );
@@ -522,7 +523,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAmbushPosition( c
     if( !pAmbushPosition || !pRetreatPosition )
         throw std::runtime_error( "Invalid position" );;
 
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >();
 
     MT_Vector2D vDirAmbushPos = callerAgent.GetOrderManager().GetDirDanger();
     vDirAmbushPos.Rotate90ClockWise();
@@ -624,7 +625,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
 //-----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestFuseauEntryPoint( const MIL_AgentPion& callerAgent )
 {
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D() );
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >();
     callerAgent.GetOrderManager().GetFuseau().ComputeEntryPoint( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), *pResult );
     return pResult;
 }
@@ -645,7 +646,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
         result.reserve( positionCount );
         while( positionCount-- )
         {
-            result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *center + vDir ) ) );
+            result.push_back( boost::make_shared< MT_Vector2D >( *center + vDir ) );
             vDir.Rotate( rAngle );
         }
     }
@@ -675,17 +676,17 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     result.reserve( positionCount );
     if( positionCount % 2 )
     {    // cas impair : on a en plus un point au centre
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( vCenter ) ) );
+        result.push_back( boost::make_shared< MT_Vector2D >( vCenter ) );
         if( !--positionCount )
             return result;
     }
 
-    result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( vCenter + vSupport1 ) ) );
-    result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( vCenter + vSupport2 ) ) );
+    result.push_back( boost::make_shared< MT_Vector2D >( vCenter + vSupport1 ) );
+    result.push_back( boost::make_shared< MT_Vector2D >( vCenter + vSupport2 ) );
     for( positionCount -= 2; positionCount; positionCount -= 2 )
     {
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( **( result.rbegin() + 1 ) + vSupport1 ) ) );
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( **( result.rbegin() + 1 ) + vSupport2 ) ) );
+        result.push_back( boost::make_shared< MT_Vector2D >( **( result.rbegin() + 1 ) + vSupport1 ) );
+        result.push_back( boost::make_shared< MT_Vector2D >( **( result.rbegin() + 1 ) + vSupport2 ) );
     }
     return result;
  }
@@ -712,10 +713,10 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     MT_Vector2D vSupport2( -vSupport1 );
 
     result.reserve( positionCount );
-    result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *center + initialDistance * vDirection + ( pointSpacing * .5 ) * vSupport1 ) ) );
+    result.push_back( boost::make_shared< MT_Vector2D >( *center + initialDistance * vDirection + ( pointSpacing * .5 ) * vSupport1 ) );
     if( !--positionCount )
         return result;
-    result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *center + initialDistance * vDirection + ( pointSpacing * .5 ) * vSupport2 ) ) );
+    result.push_back( boost::make_shared< MT_Vector2D >( *center + initialDistance * vDirection + ( pointSpacing * .5 ) * vSupport2 ) );
 
     vDirection *= lineSpacing;
     vSupport1  *= pointSpacing;
@@ -723,14 +724,14 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
 
     while( --positionCount )
     {
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( **( result.rbegin() + 1 ) + vDirection ) ) );
+        result.push_back( boost::make_shared< MT_Vector2D >( **( result.rbegin() + 1 ) + vDirection ) );
         if( !--positionCount ) break;
         // $$$$ _RC_ SBO 2009-07-31: Really? seems like the same point is pushed twice
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( **( result.rbegin() + 1 ) + vDirection ) ) );
+        result.push_back( boost::make_shared< MT_Vector2D >( **( result.rbegin() + 1 ) + vDirection ) );
         if( !--positionCount ) break;
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( **( result.rbegin() + 3 ) + vSupport1 ) ) );
+        result.push_back( boost::make_shared< MT_Vector2D >( **( result.rbegin() + 3 ) + vSupport1 ) );
         if( !--positionCount ) break;
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( **( result.rbegin() + 3 ) + vSupport2 ) ) );
+        result.push_back( boost::make_shared< MT_Vector2D >( **( result.rbegin() + 3 ) + vSupport2 ) );
     }
     return result;
 }
@@ -750,7 +751,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
         callerAutomate.GetOrderManager().GetFuseau().ComputePointsBeforeLima( *pLima, rDistBeforeLima, nNbrPoints, tempVector );
         for( CIT_PointVector it = tempVector.begin(); it != tempVector.end(); ++it )
         {
-            boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( *it ) );
+            boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( *it );
             result.push_back( point );
         }
     }
@@ -991,7 +992,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
 {
     if( !pLocalisation )
         throw std::runtime_error( "Invalid location" );
-    boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
+    boost::shared_ptr< MT_Vector2D > pBarycenter = boost::make_shared< MT_Vector2D >( MT_ComputeBarycenter( pLocalisation->GetPoints() ) );
     assert( TER_World::GetWorld().IsValidPosition( *pBarycenter ) );
     return pBarycenter;
 }
@@ -1006,7 +1007,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUr
     T_Vectors result;
     if( pUrbanObject )
     {
-        boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
+        boost::shared_ptr< MT_Vector2D > position = boost::make_shared< MT_Vector2D >( pUrbanObject->GetLocalisation().ComputeBarycenter() );
         result.push_back( position );
         const T_Vectors& area = pUrbanObject->ComputeLocalisationsInsideBlock();
         for( T_Vectors::const_iterator it = area.begin(); it != area.end(); ++it )
@@ -1024,7 +1025,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
 {
     if( !pLocalisation )
         throw std::runtime_error( "Compute barycenter of null position" );
-    boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
+    boost::shared_ptr< MT_Vector2D > pBarycenter = boost::make_shared< MT_Vector2D >( MT_ComputeBarycenter( pLocalisation->GetPoints() ) );
     if( pBarycenter.get() )
     {
         const MIL_UrbanObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( *pBarycenter );
@@ -1078,7 +1079,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
     {
         // $$$$ JSR 2011-06-13 optimiser pour ne pas passer un tableau d'un seul point
         std::vector< boost::shared_ptr< MT_Vector2D > > result;
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point ) ));
+        result.push_back( boost::make_shared< MT_Vector2D >( point ));
         return result;
     }
 }
@@ -1187,7 +1188,7 @@ double DEC_GeometryFunctions::ComputeAreaDiameter( TER_Localisation* pLocalisati
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( const std::vector< MT_Vector2D* >& selection )
 {
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 0. ) );
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( 0., 0. );
 
     if( selection.empty() )
     {
@@ -1221,7 +1222,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeMeanDirection( co
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter( const MIL_AgentPion& /*caller*/, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& vKnowledges )
 {
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 0. ) );
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( 0., 0. );
 
     unsigned int nNbr = 0;
     for( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >::const_iterator it = vKnowledges.begin(); it != vKnowledges.end(); ++it )
@@ -1338,7 +1339,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointOnCirc
 {    
     if( !pCenter )
         throw std::runtime_error( "Invalid center" );
-    boost::shared_ptr< MT_Vector2D > pResult( new MT_Vector2D( 0., 1. ) );
+    boost::shared_ptr< MT_Vector2D > pResult = boost::make_shared< MT_Vector2D >( 0., 1. );
     pResult->Rotate( MIL_Random::rand_io( 0., 2. * MT_PI ) );
     *pResult *= ( MIL_Tools::ConvertMeterToSim( radius ) );
     *pResult += *pCenter;
@@ -1360,7 +1361,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCirc
     const double rAlpha = MIL_Random::rand_ii( -MT_PI, MT_PI );
     const double rMod   = MIL_Random::rand_oi();
 
-    boost::shared_ptr< MT_Vector2D > pRandomPosition( new MT_Vector2D( *pCenter ) );
+    boost::shared_ptr< MT_Vector2D > pRandomPosition = boost::make_shared< MT_Vector2D >( *pCenter );
     (*pRandomPosition) += MT_Vector2D( rMod * rRadius_ * cos( rAlpha ), rMod * rRadius_ * sin( rAlpha ) );
 
     TER_World::GetWorld().ClipPointInsideWorld( *pRandomPosition );
@@ -1457,7 +1458,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateCircleLocalis
 {
     if( !pCenter )
         throw std::runtime_error( "Invalid center" );
-    boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( *pCenter, rRadius ) );
+    boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( *pCenter, rRadius );
     return pResult;
 }
 
@@ -1472,7 +1473,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateLineLocalisat
     T_PointVector pointVector;
     pointVector.push_back( *pPoint1 );
     pointVector.push_back( *pPoint2 );
-    boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( TER_Localisation::eLine, pointVector ) );
+    boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( TER_Localisation::eLine, pointVector );
     return pResult;
 }
 
@@ -1489,7 +1490,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolylineLocal
             throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         pointsVector.push_back( **it );
     }
-    boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( TER_Localisation::eLine, pointsVector ) );
+    boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( TER_Localisation::eLine, pointsVector );
     return pResult;
 }
 
@@ -1506,7 +1507,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolygonLocali
             throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
         pointsVector.push_back( **it );
     }
-    boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( TER_Localisation::ePolygon, pointsVector ) );
+    boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( TER_Localisation::ePolygon, pointsVector );
     return pResult;
 }
 
@@ -1518,7 +1519,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateScaledLocalis
 {    
     if( !location )
         throw std::runtime_error( "Invalid location" );
-    boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( *location ) );
+    boost::shared_ptr< TER_Localisation > pResult = boost::make_shared< TER_Localisation >( *location );
     pResult->Scale( length );
     return pResult;
 }
@@ -1534,7 +1535,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ListLocal
     const std::vector< MT_Vector2D >& points = pLocalisation->GetPoints();
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it ) ) );
+        result.push_back( boost::make_shared< MT_Vector2D >( *it ) );
     return result;
 }
 
@@ -1605,14 +1606,14 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitLoca
     {
         MT_Vector2D ptResult;
         splittedLocation->ComputeNearestPoint( splittedLocation->ComputeBarycenter(), ptResult );
-        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ptResult ) ) );
+        result.push_back( boost::make_shared< MT_Vector2D >( ptResult ) );
     }
 
     if( result.size() < nbr )
     {
         MT_Vector2D ptResult;
         location->ComputeNearestPoint( location->ComputeBarycenter(), ptResult );
-        result.insert( result.end(), nbr - result.size(), boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ptResult ) ) );
+        result.insert( result.end(), nbr - result.size(), boost::make_shared< MT_Vector2D >( ptResult ) );
     }
     return result;
 }
@@ -1637,7 +1638,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitList
 
         if( nNbrParts <= 0 )
         {
-            boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( polyLine.GetPointAt( polyLine.Magnitude() / 2. ) ) );
+            boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( polyLine.GetPointAt( polyLine.Magnitude() / 2. ) );
             result.push_back(  point );
         }
         else
@@ -1647,7 +1648,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitList
             double rDist = 0.;
             for( unsigned int i = 0; i < nNbrParts + 1; ++i, rDist+= rPartSize )
             {
-                boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( polyLine.GetPointAt( rDist ) ) );
+                boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( polyLine.GetPointAt( rDist ) );
                 result.push_back( point );
             }
         }
@@ -1750,7 +1751,7 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertFuseauToLoca
     if( !pFuseau )
         throw std::runtime_error( "Invalid fuseau" );
 
-    boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation( *pFuseau ) );
+    boost::shared_ptr< TER_Localisation > pLocalisation = boost::make_shared< TER_Localisation >( *pFuseau );
     return pLocalisation;
 }
 
@@ -1885,7 +1886,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetPointAlongFuseau( con
 {
     if( !pFuseau )
         throw std::runtime_error( "Invalid fuseau" );
-    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( pFuseau->GetPositionAtAdvance( advance ) ) );
+    return boost::make_shared< MT_Vector2D >( pFuseau->GetPositionAtAdvance( advance ) );
 }
 
 namespace
@@ -1924,7 +1925,7 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
                     std::vector< boost::shared_ptr< MT_Vector2D > > sharedVector;
                     for( std::vector< MT_Vector2D >::const_iterator vit = nextPoints.begin(); vit != nextPoints.end(); ++vit )
                     {
-                        boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( *vit ) );
+                        boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( *vit );
                         sharedVector.push_back( point );
                     }
                     if( !sharedVector.empty() )

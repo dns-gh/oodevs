@@ -50,6 +50,8 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
@@ -57,7 +59,7 @@
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& /*type*/ )
 {
-    return boost::shared_ptr<MIL_MissionParameter_ABC>( new MIL_NullParameter() );
+    return boost::make_shared< MIL_NullParameter >();
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +180,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AgentKnowledgeParameter( agentKnowledge) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_AgentKnowledgeParameter >( agentKnowledge);
     return result;
 }
 
@@ -188,7 +190,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateA
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDotationType( const PHY_DotationCategory* dotationType )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_DotationTypeParameter( dotationType ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_DotationTypeParameter >( dotationType );
     return result;
 }
 
@@ -198,7 +200,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateD
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateEquipmentType( const PHY_ComposanteTypePion* equipmentType )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_EquipmentTypeParameter( equipmentType ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_EquipmentTypeParameter >( equipmentType );
     return result;
 }
 
@@ -208,7 +210,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateE
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( float param )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_RealParameter( param ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_RealParameter >( param );
     return result;
 }
 
@@ -218,7 +220,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( int id )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_EnumerationParameter( id ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_EnumerationParameter >( id );
     return result;
 }
 
@@ -228,7 +230,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateInteger( int id )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_IntegerParameter( id ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_IntegerParameter >( id );
     return result;
 }
 
@@ -238,7 +240,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateI
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_ObjectKnowledgeParameter( pKnowledge ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_ObjectKnowledgeParameter >( pKnowledge );
     return result;
 }
 
@@ -248,7 +250,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateO
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePion( const DEC_Decision_ABC* pion )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AgentParameter( pion ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_AgentParameter >( pion );
     return result;
 }
 
@@ -258,7 +260,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAgent( const MIL_AgentPion& pion )
 {
-    return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_AgentParameter( &pion.GetDecision() ) );
+    return boost::make_shared< MIL_AgentParameter >( &pion.GetDecision() );
 }
 
 // -----------------------------------------------------------------------------
@@ -267,7 +269,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateA
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePopulationKnowledge( boost::shared_ptr< DEC_Knowledge_Population > populationKnowledge )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PopulationKnowledgeParameter( populationKnowledge ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_PopulationKnowledgeParameter >( populationKnowledge );
     return result;
 }
 
@@ -287,7 +289,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const std::string& message )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_StringParameter( message ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_StringParameter >( message );
     return result;
 }
 
@@ -299,7 +301,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateT
 {
     sword::FireId msg;
     msg.set_id( id );
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_TirIndirectParameter( msg ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_TirIndirectParameter >( msg );
     return result;
 }
 
@@ -309,7 +311,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateT
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePoint( const MT_Vector2D& point )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PointParameter( point ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_PointParameter >( point );
     return result;
 }
 
@@ -319,7 +321,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateLocation( boost::shared_ptr< TER_Localisation > pLocation )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_LocationParameter( pLocation ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_LocationParameter >( pLocation );
     return result;
 }
 
@@ -329,7 +331,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateL
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateUrbanBlock( MIL_UrbanObject_ABC* pUrbanblock )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_UrbanBlockParameter( pUrbanblock ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_UrbanBlockParameter >( pUrbanblock );
     return result;
 }
 
@@ -339,7 +341,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateU
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetworkNode( boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_ResourceNetworkNodeParameter( resourceNetwork ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_ResourceNetworkNodeParameter >( resourceNetwork );
     return result;
 }
 
@@ -349,7 +351,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateR
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetworkType( const PHY_ResourceNetworkType* resourceNetworkType )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_ResourceNetworkTypeParameter( resourceNetworkType ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_ResourceNetworkTypeParameter >( resourceNetworkType );
     return result;
 }
 
@@ -371,7 +373,7 @@ void MIL_MissionParameterFactory::Copy( const MIL_OrderType_ABC& orderType, cons
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePathConst( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PathParameter( pointList ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_PathParameter >( pointList );
     return result;
 }
 
@@ -383,7 +385,7 @@ void MIL_MissionParameterFactory::AssignPathConst( boost::shared_ptr< MIL_Missio
 {
     if( !pMission.get() )
         throw std::runtime_error( "Invalid mission" );
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PathParameter( pointList ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_PathParameter >( pointList );
     pMission->SetParameter( parameter, result );
 }
 
@@ -393,7 +395,7 @@ void MIL_MissionParameterFactory::AssignPathConst( boost::shared_ptr< MIL_Missio
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreatePath( boost::shared_ptr< MT_Vector2D > point )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PathParameter( point ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_PathParameter >( point );
     return result;
 }
 
@@ -403,7 +405,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateDirection( boost::shared_ptr< MT_Vector2D > direction )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_DirectionParameter( direction ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_DirectionParameter >( direction );
     return result;
 }
 
@@ -413,7 +415,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateD
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateGenObject( boost::shared_ptr< DEC_Gen_Object > param )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_PlannedWorkParameter( param ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_PlannedWorkParameter >( param );
     return result;
 }
 
@@ -434,7 +436,7 @@ void MIL_MissionParameterFactory::SetPawnParameter( boost::shared_ptr< MIL_Missi
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateAutomat( DEC_Decision_ABC* automat )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_AutomatParameter( automat ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result = boost::make_shared< MIL_AutomatParameter >( automat );
     return result;
 }
 
@@ -479,7 +481,7 @@ void MIL_MissionParameterFactory::SetBoolParameter( boost::shared_ptr< MIL_Missi
 {
     if( !pMission.get() )
         throw std::runtime_error( "Invalid mission" );
-    boost::shared_ptr< MIL_BoolParameter > boolParam( new MIL_BoolParameter( value ) );
+    boost::shared_ptr< MIL_BoolParameter > boolParam = boost::make_shared< MIL_BoolParameter >( value );
     pMission->SetParameter( parameter, boolParam );
 }
 
@@ -502,7 +504,7 @@ void MIL_MissionParameterFactory::SetNatureAtlasTypeParameter( boost::shared_ptr
 {
     if( !pMission.get() )
         throw std::runtime_error( "Invalid mission" );
-    boost::shared_ptr< MIL_AtlasNatureParameter > natureParam( new MIL_AtlasNatureParameter( natureAtlas ) );
+    boost::shared_ptr< MIL_AtlasNatureParameter > natureParam = boost::make_shared< MIL_AtlasNatureParameter >( natureAtlas );
     pMission->SetParameter( parameter, natureParam );
 }
 
@@ -624,6 +626,6 @@ void MIL_MissionParameterFactory::AssignMissionListParameter( boost::shared_ptr<
 {
     if( !pMission.get() )
         throw std::runtime_error( "Invalid mission" );
-    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( params ) );
+    boost::shared_ptr< MIL_ListParameter > listParam = boost::make_shared< MIL_ListParameter >( params );
     pMission->SetParameter( parameter, listParam );
 }
