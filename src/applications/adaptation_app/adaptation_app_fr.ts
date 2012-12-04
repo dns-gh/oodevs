@@ -1254,6 +1254,10 @@ Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vit
         <source>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</source>
         <translation>La mission &apos;%1&apos; n&apos;as pas de type définit pour un paramètre de type localisation composite.</translation>
     </message>
+    <message>
+        <source>%1 has lower case EMAT8 code.</source>
+        <translation>%1 a un code emat8 en minuscules.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>

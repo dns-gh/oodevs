@@ -1253,6 +1253,10 @@ Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
         <source>The mission &apos;%1&apos; has no type defined for a localisation composite parameter.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 has lower case EMAT8 code.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Consumptions_Table</name>
