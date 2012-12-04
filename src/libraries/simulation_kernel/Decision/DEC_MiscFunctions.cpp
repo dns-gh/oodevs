@@ -419,9 +419,8 @@ void DEC_MiscFunctions::ReportPion( DEC_Decision_ABC& caller, int type, int repo
 {
     if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
     {
-        DEC_RolePion_Decision* pionDec = static_cast< DEC_RolePion_Decision* >( pion ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
         std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
-        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::CreatePion( pionDec ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::CreatePion( pion ) );
         params.push_back( missionParam );
         pReport->Send( caller, MIL_Report::E_Type( type ), params );
     }
