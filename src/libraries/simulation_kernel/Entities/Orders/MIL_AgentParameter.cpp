@@ -99,8 +99,10 @@ bool MIL_AgentParameter::ToElement( sword::MissionParameter_Value& elem ) const
 // -----------------------------------------------------------------------------
 void MIL_AgentParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    DEC_Decision_ABC* pDecision = 0;
     file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
-         >> const_cast< DEC_Decision_ABC* >( pDecision_ );
+         >> pDecision;
+    pDecision_ = pDecision;
 }
 
 // -----------------------------------------------------------------------------
