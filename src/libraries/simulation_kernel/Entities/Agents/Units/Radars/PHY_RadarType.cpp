@@ -116,9 +116,10 @@ PHY_RadarType::PHY_RadarType( const std::string& strName, const PHY_RadarClass& 
     , rPcRecognitionTime_   ( std::numeric_limits< double >::max() )
     , rPcIdentificationTime_( std::numeric_limits< double >::max() )
 {
-    InitializeRange           ( xis );
-    InitializeActivities      ( xis );
-    InitializeAcquisitionTimes( xis );
+    InitializeRange             ( xis );
+    InitializeActivities        ( xis );
+    InitializeAcquisitionTimes  ( xis );
+    InitializeDisastersDetection( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,6 +197,27 @@ void PHY_RadarType::ReadActivity( xml::xistream& xis )
         xis >> xml::optional >> xml::attribute( "value", bValue );
         detectableActivities_[ conso.GetID() ] = bValue;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::InitializeDisastersDetection
+// Created: LGY 2012-12-05
+// -----------------------------------------------------------------------------
+void PHY_RadarType::InitializeDisastersDetection( xml::xistream& xis )
+{
+    xis >> xml::optional
+        >> xml::start( "disasters-detection" )
+            >> xml::list( "disaster-detection", *this, &PHY_RadarType::ReadDisasterDetection )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RadarType::ReadDisasterDetection
+// Created: LGY 2012-12-05
+// -----------------------------------------------------------------------------
+void PHY_RadarType::ReadDisasterDetection( xml::xistream& xis )
+{
+    disastersDetection_[ xis.attribute< std::string >( "type" ) ] = xis.attribute< float >( "value" );
 }
 
 // -----------------------------------------------------------------------------

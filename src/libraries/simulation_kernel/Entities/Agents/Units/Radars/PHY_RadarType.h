@@ -59,6 +59,8 @@ private:
     typedef std::map< std::string, const PHY_RadarType* > T_RadarTypeMap;
     typedef T_RadarTypeMap::const_iterator             CIT_RadarTypeMap;
 
+    typedef std::map< std::string, float > T_DisastersDetection;
+
     typedef std::vector< bool > T_ActivityVector;
     //@}
 
@@ -68,13 +70,15 @@ private:
 
     //! @name Init
     //@{
-    void InitializeRange           ( xml::xistream& xis );
-    void InitializeActivities      ( xml::xistream& xis );
-    void InitializeAcquisitionTimes( xml::xistream& xis );
-    void ReadDetectableActivity    ( xml::xistream& xis, bool& bIsActivity );
-    void ReadActivity              ( xml::xistream& xis );
-    void ReadAcquisitionTime       ( xml::xistream& xis, bool& bIsTime );
-    void ReadTime                  ( xml::xistream& xis, bool& bIsPCTime );
+    void InitializeRange             ( xml::xistream& xis );
+    void InitializeActivities        ( xml::xistream& xis );
+    void InitializeAcquisitionTimes  ( xml::xistream& xis );
+    void InitializeDisastersDetection( xml::xistream& xis );
+    void ReadDetectableActivity      ( xml::xistream& xis, bool& bIsActivity );
+    void ReadActivity                ( xml::xistream& xis );
+    void ReadDisasterDetection       ( xml::xistream& xis );
+    void ReadAcquisitionTime         ( xml::xistream& xis, bool& bIsTime );
+    void ReadTime                    ( xml::xistream& xis, bool& bIsPCTime );
     //@}
 
     //! @name Helpers
@@ -95,6 +99,7 @@ private:
     double rMaxHeight_;
 
     T_ActivityVector detectableActivities_;
+    T_DisastersDetection disastersDetection_;
 
     // Acquistion times
     double rDetectionTime_;
