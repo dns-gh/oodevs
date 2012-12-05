@@ -59,15 +59,6 @@ MIL_EntityManager_ABC& MIL_Singletons::GetEntityManager()
     return MIL_EntityManager_ABC::GetSingleton();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_Singletons::GetProfiler
-// Created: AGE 2007-08-13
-// -----------------------------------------------------------------------------
-MIL_ProfilerMgr& MIL_Singletons::GetProfiler()
-{
-    return MIL_AgentServer::GetWorkspace().GetProfilerManager();
-}
-
 MIL_TacticalLineManager& MIL_Singletons::GetTacticalLineManager()
 {
     return MIL_TacticalLineManager::GetSingleton();

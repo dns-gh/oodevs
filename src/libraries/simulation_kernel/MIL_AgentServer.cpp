@@ -23,7 +23,6 @@
 #include "resource_network/ResourceNetworkModel.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
-#include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/ExerciseSettings.h"
 #include "tools/Loader_ABC.h"
@@ -312,7 +311,6 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 //         << timerManager_         // pas de données ( MIL_AgentServer::Initialize )
 //         << pTacticalLineManager_ // plus de limit et de lima
 //         << pPathFindManager_     // pas stockés
-//         << pProfilerMgr_         // pas de données
          << pCheckPointManager_
 //         << pAgentServer_         // moi-même ( static )
          << nInitialRealTime_
@@ -339,7 +337,6 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 //         >> timerManager_
 //         >> pTacticalLineManager_
 //         >> pPathFindManager_
-//         >> pProfilerMgr_
          >> pCheckPointManager_
 //         >> pAgentServer_
          >> nInitialRealTime_

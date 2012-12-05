@@ -40,7 +40,6 @@ class MIL_Agent_ABC;
 class MIL_CheckPointManager;
 class MIL_EffectManager;
 class MIL_EntityManager;
-class MIL_ProfilerMgr;
 class MIL_TacticalLineManager;
 class NET_AgentServer;
 class PHY_MeteoDataManager;
@@ -119,7 +118,6 @@ public:
     MIL_TacticalLineManager& GetTacticalLineManager() const;
     DEC_PathFind_Manager& GetPathFindManager() const;
     PHY_MeteoDataManager& GetMeteoDataManager() const;
-    MIL_ProfilerMgr& GetProfilerManager() const;
     MIL_CheckPointManager& GetCheckPointManager() const;
     resource::ResourceNetworkModel& GetResourceNetworkModel() const;
     resource::ResourceTools_ABC& GetResourceTools() const;
@@ -199,7 +197,6 @@ private:
     MT_TimerManager timerManager_;
     MIL_TacticalLineManager* pTacticalLineManager_;
     DEC_PathFind_Manager* pPathFindManager_;
-    MIL_ProfilerMgr* pProfilerMgr_;
     MIL_CheckPointManager* pCheckPointManager_;
     NET_AgentServer* pAgentServer_;
     MIL_UrbanCache* pUrbanCache_;

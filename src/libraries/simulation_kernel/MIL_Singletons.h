@@ -12,7 +12,6 @@
 
 class MIL_Time_ABC;
 class MIL_EntityManager_ABC;
-class MIL_ProfilerMgr;
 class MIL_TacticalLineManager;
 
 // =============================================================================
@@ -28,7 +27,6 @@ public:
     //@{
     static const MIL_Time_ABC& GetTime();
     static MIL_EntityManager_ABC& GetEntityManager();
-    static MIL_ProfilerMgr& GetProfiler();
     static MIL_TacticalLineManager& GetTacticalLineManager();
 
     static void RegisterTime( const MIL_Time_ABC& time );

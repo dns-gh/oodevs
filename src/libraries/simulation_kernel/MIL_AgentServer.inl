@@ -72,17 +72,6 @@ DEC_PathFind_Manager& MIL_AgentServer::GetPathFindManager() const
     return *pPathFindManager_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetProfilerManager
-// Created: AML 03-05-21
-//-----------------------------------------------------------------------------
-inline
-MIL_ProfilerMgr& MIL_AgentServer::GetProfilerManager() const
-{
-    assert( pProfilerMgr_ );
-    return *pProfilerMgr_;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetCheckPointManager
 // Created: NLD 2003-08-05
