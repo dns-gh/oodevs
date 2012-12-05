@@ -81,7 +81,6 @@ ReportListView::ReportListView( QWidget* pParent, kernel::Controllers& controlle
     setItemDelegateForColumn( 1, delegate_ );
     //filter regexp
     toDisplay_.insert( Report::eRC );
-    toDisplay_.insert( Report::eTrace );
     toDisplay_.insert( Report::eEvent );
     toDisplay_.insert( Report::eMessage );
     toDisplay_.insert( Report::eWarning );
