@@ -62,6 +62,19 @@ bool GhostsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& /*poi
 }
 
 // -----------------------------------------------------------------------------
+// Name: GhostsLayer::HandleEnterDragEvent
+// Created: JSR 2012-12-05
+// -----------------------------------------------------------------------------
+bool GhostsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
+{
+    oldPosition_ = geometry::Point2f();
+    const kernel::Entity_ABC* entity = dnd::FindSafeData< kernel::Ghost_ABC >( event );
+    if( entity )
+        oldPosition_ = entity->Retrieve< kernel::Positions >()->GetPosition();
+    return gui::EntityLayer< kernel::Ghost_ABC >::HandleEnterDragEvent( event, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GhostsLayer::HandleMoveDragEvent
 // Created: ABR 2011-10-26
 // -----------------------------------------------------------------------------
@@ -79,6 +92,16 @@ bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
                 positions->Move( newPosition );
                 draggingPoint_ = point;
             }
+        }
+        return true;
+    }
+    kernel::Entity_ABC* entity = dnd::FindSafeData< kernel::Ghost_ABC >( event );
+    if( entity )
+    {
+        if( kernel::Moveable_ABC* position = dynamic_cast< kernel::Moveable_ABC* >( entity->Retrieve< kernel::Positions >() ) )
+        {
+            position->Move( point );
+            draggingPoint_ = point;
         }
         return true;
     }
@@ -104,11 +127,31 @@ bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
         controllers_.actions_.OverFly( point );
     }
     return ( dnd::HasData< kernel::GhostPrototype >( event ) && ( selectedAutomat_ || selectedFormation_ ) ) ||
-           ( dnd::HasData< kernel::Ghost_ABC >( event ) && selectedGhost_ ) ||
            ( dnd::HasData< kernel::AgentType >( event ) && ( highLightedGhost_ && highLightedGhost_->GetGhostType() == eGhostType_Agent ||
                                                                                     selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Agent ) ) ||
            ( dnd::HasData< kernel::AutomatType >( event ) && ( highLightedGhost_ && highLightedGhost_->GetGhostType() == eGhostType_Automat ||
                                                                                     selectedGhost_ && selectedGhost_->GetGhostType() == eGhostType_Automat ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GhostsLayer::HandleLeaveDragEvent
+// Created: JSR 2012-12-05
+// -----------------------------------------------------------------------------
+bool GhostsLayer::HandleLeaveDragEvent( QDragLeaveEvent* /*event*/ )
+{
+    if( oldPosition_.IsZero() )
+        return false;
+    if( selectedGhost_ )
+    {
+        kernel::Moveable_ABC* position = dynamic_cast< kernel::Moveable_ABC* >( selectedGhost_.ConstCast()->Retrieve< kernel::Positions >() );
+        if( position )
+        {
+            position->Move( oldPosition_ );
+            oldPosition_ = geometry::Point2f();
+            return true;
+        }
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

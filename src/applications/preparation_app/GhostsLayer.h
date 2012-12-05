@@ -46,7 +46,9 @@ public:
     virtual bool CanDrop( QDragMoveEvent* event, const geometry::Point2f& point ) const;
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
     virtual bool HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point );
+    virtual bool HandleLeaveDragEvent( QDragLeaveEvent* event );
     virtual bool HandleKeyPress( QKeyEvent* key );
     //@}
 
@@ -72,6 +74,7 @@ private:
     kernel::SafePointer< kernel::Ghost_ABC >     highLightedGhost_;
     geometry::Point2f draggingPoint_;
     geometry::Point2f draggingOffset_;
+    geometry::Point2f oldPosition_;
     std::auto_ptr< QWidget > dummy_;
     //@}
 };
