@@ -72,7 +72,6 @@
 #include <Qt3Support/q3vbox.h>
 #include <Qt3Support/q3widgetstack.h>
 #include <Qt3Support/q3popupmenu.h>
-#include <Qt3Support/q3filedialog.h>
 #include <Qt3Support/q3mainwindow.h>
 #include <Qt3Support/q3groupbox.h>
 #include <Qt3Support/q3button.h>

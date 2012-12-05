@@ -48,7 +48,6 @@
 #include <Qt3Support/q3button.h>
 #include <Qt3Support/q3canvas.h>
 #include <Qt3Support/q3datetimeedit.h>
-#include <Qt3Support/q3filedialog.h>
 #include <Qt3Support/q3frame.h>
 #include <Qt3Support/q3valuelist.h>
 #include <Qt3Support/q3groupbox.h>

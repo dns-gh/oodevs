@@ -37,7 +37,6 @@
 
 #include <Qt3Support/q3button.h>
 #include <Qt3Support/q3buttongroup.h>
-#include <Qt3Support/q3filedialog.h>
 #include <Qt3Support/q3frame.h>
 #include <Qt3Support/q3grid.h>
 #include <Qt3Support/q3groupbox.h>

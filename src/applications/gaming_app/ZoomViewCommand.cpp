@@ -17,6 +17,7 @@
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
+#include <Qt3Support/q3url.h>
 
 // -----------------------------------------------------------------------------
 // Name: ZoomViewCommand constructor

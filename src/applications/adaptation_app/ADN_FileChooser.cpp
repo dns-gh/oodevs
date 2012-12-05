@@ -14,12 +14,6 @@
 
 #include "ADN_Tools.h"
 
-#include <QtGui/qlayout.h>
-#include <QtGui/qlineedit.h>
-#include <Qt3Support/q3filedialog.h>
-#include <QtGui/qpushbutton.h>
-#include <QtGui/qmessagebox.h>
-
 QString ADN_FileChooser::szDefaultFilter_="All Files (*.*)";
 
 class ADN_FileChooser_Connector
@@ -122,24 +116,15 @@ std::string GetPartPath( const std::string& szWorking, const std::string& full )
 //-----------------------------------------------------------------------------
 void ADN_FileChooser::ChooseFile()
 {
-    QString qfilename= eMode_==eDirectory ? Q3FileDialog::getExistingDirectory(
-                                                        szDirectory_,
-                                                        this,
-                                                        "get existing directory"
-                                                        "Choose a directory")
-                                             : Q3FileDialog::getOpenFileName(
-                                                                szDirectory_,
-                                                                szFilter_,
-                                                                this,
-                                                                "open file dialog",
-                                                                "Choose a file to open" );
+    QString qfilename= eMode_ == eDirectory ? QFileDialog::getExistingDirectory( this, "Choose a directory", szDirectory_ )
+                                            : QFileDialog::getOpenFileName( this, "Choose a file to open", szDirectory_, szFilter_ );
 
-    if (qfilename==QString::null)
+    if( qfilename == QString::null )
         return;
     std::string res( qfilename.toStdString() );
     std::replace( res.begin(), res.end(), '\\','/' );
     std::string szPartialPath=GetPartPath( szDirectory_.toStdString(), res );
-    if (szPartialPath.empty())
+    if( szPartialPath.empty() )
     {
         QMessageBox::information( this, "ADN",
                                         "Unable to set file.\n"
@@ -147,7 +132,7 @@ void ADN_FileChooser::ChooseFile()
 
         return;
     }
-    pLineEdit_->setText(szPartialPath.c_str());
+    pLineEdit_->setText( szPartialPath.c_str() );
 }
 
 //-----------------------------------------------------------------------------

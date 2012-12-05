@@ -99,7 +99,8 @@ bool FilterOrbatReIndexer::IsValid() const
 void FilterOrbatReIndexer::OnBrowse()
 {
     assert( !orbatFile_.empty() );
-    QString filename = Q3FileDialog::getOpenFileName( orbatFile_.c_str(), "Orbat (*.xml)", QApplication::activeModalWidget(), 0, tools::translate( "FilterOrbatReIndexer", "Load orbat file" ) );
+    QString filename = QFileDialog::getOpenFileName( QApplication::activeModalWidget(), tools::translate( "FilterOrbatReIndexer", "Load orbat file" )
+                                                   , orbatFile_.c_str(), "Orbat (*.xml)" );
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
     filename_->setText( filename );

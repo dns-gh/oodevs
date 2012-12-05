@@ -19,6 +19,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
 #pragma warning( pop )
+#include <Qt3Support/q3url.h>
 
 namespace bfs = boost::filesystem;
 

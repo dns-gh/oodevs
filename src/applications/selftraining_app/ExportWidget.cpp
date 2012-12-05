@@ -452,7 +452,7 @@ void ExportWidget::ExportPackage()
 // -----------------------------------------------------------------------------
 bool ExportWidget::BrowseClicked()
 {
-    const QString filename = QFileDialog::getSaveFileName( package_.second.c_str(), "SWORD packages (*.otpak)", this, "", tools::translate( "ExportWidget", "Select a package" ) );
+    const QString filename = QFileDialog::getSaveFileName( this, tools::translate( "ExportWidget", "Select a package" ), package_.second.c_str(), "SWORD packages (*.otpak)" );
     if( filename.isEmpty() )
         return false;
     const bfs::path file = bfs::path( std::string( filename.toStdString() ) );

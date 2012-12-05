@@ -357,7 +357,7 @@ QSize ExerciseDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnAddResource()
 {
-    const QString filename = Q3FileDialog::getOpenFileName( config_.GetExerciseFile().c_str() );
+    const QString filename = QFileDialog::getOpenFileName( this, QString(), config_.GetExerciseFile().c_str() );
     if( !filename.isNull() )
         AddResource( QFileInfo( filename ).baseName(), filename );
 }
@@ -379,7 +379,7 @@ void ExerciseDialog::OnDeleteResource()
 // -----------------------------------------------------------------------------
 void ExerciseDialog::OnAddOrderFile()
 {
-    const QString filename = Q3FileDialog::getOpenFileName( "", tr( "Order files (*.ord)" ) );
+    const QString filename = QFileDialog::getOpenFileName( this, QString(), QString(), tr( "Order files (*.ord)" ) );
     if( !filename.isNull() )
         AddOrderFile( filename );
 }

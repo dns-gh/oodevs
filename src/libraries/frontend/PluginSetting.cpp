@@ -19,6 +19,7 @@
 #pragma warning( push, 0 )
 #include <Qt/qapplication.h>
 #include <QtGui/qcheckbox.h>
+#include <QtGui/qfiledialog.h>
 #include <QtGui/qlabel.h>
 #include <QtGui/qlineedit.h>
 #include <QtCore/qsettings.h>
@@ -26,7 +27,6 @@
 #include <QtGui/qtooltip.h>
 #include <QtGui/qcombobox.h>
 #include <QtGui/qpushbutton.h>
-#include <Qt3Support/q3filedialog.h>
 #include <Qt3Support/q3datetimeedit.h>
 #pragma warning( pop )
 
@@ -184,15 +184,13 @@ void PluginSetting::Accept( PluginSettingVisitor_ABC& visitor )
 // -----------------------------------------------------------------------------
 void PluginSetting::OnFileClicked()
 {
-    const int max_size = 20;
+    const std::string::size_type max_size = 20;
 
-    QString fileName = Q3FileDialog::getOpenFileName(
-                                QString( config_.GetExercisesDir().c_str() ), "Order File (*.ord)",
-                                0, "Select", "Select recorded orders" );
+    QString fileName = QFileDialog::getOpenFileName( 0, "Select recorded orders", config_.GetExercisesDir().c_str(), "Order File (*.ord)" );
     if( !fileName.isNull() && !fileName.isEmpty() )
     {
         fileName_ = fileName;
-        std::string::size_type size = fileName_.length() - std::min( max_size, (int)fileName_.length() );
+        std::string::size_type size = fileName_.length() - std::min( max_size, fileName_.length() );
         std::string msg( fileName_, size, size );
         if( fileName_.size() > max_size + 2 )
             fileValue_->SetText( ".." + msg );

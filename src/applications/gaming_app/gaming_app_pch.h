@@ -50,7 +50,6 @@
 #include <Qt3Support/q3pointarray.h>
 #include <Qt3Support/q3popupmenu.h>
 #include <Qt3Support/q3progressbar.h>
-#include <Qt3Support/q3filedialog.h>
 #include <Qt3Support/q3simplerichtext.h>
 #include <Qt3Support/q3textedit.h>
 #include <Qt3Support/q3buttongroup.h>

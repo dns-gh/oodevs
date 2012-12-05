@@ -104,8 +104,8 @@ IndicatorReportDialog::~IndicatorReportDialog()
 void IndicatorReportDialog::OnBrowseTemplate()
 {
     const QString startPath( config_.BuildExerciseChildFile( "reports/" ).c_str() );
-    QString filename = Q3FileDialog::getOpenFileName( startPath, tools::translate( "IndicatorReports", "Report template (*.html)" ), topLevelWidget()
-                                                    , 0, tools::translate( "IndicatorReports", "Load report template file" ) );
+    QString filename = QFileDialog::getOpenFileName( topLevelWidget(), tools::translate( "IndicatorReports", "Load report template file" )
+                                                   , startPath, tools::translate( "IndicatorReports", "Report template (*.html)" ) );
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )
@@ -120,8 +120,8 @@ void IndicatorReportDialog::OnBrowseTemplate()
 void IndicatorReportDialog::OnBrowseOutput()
 {
     const QString startPath = templateFile_->text().isEmpty() ? config_.BuildExerciseChildFile( "reports/" ).c_str() : QDir( templateFile_->text() ).absPath();
-    QString filename = Q3FileDialog::getSaveFileName( startPath, tools::translate( "IndicatorReports", "Report (*.html)" ), topLevelWidget()
-                                                   , 0, tools::translate( "IndicatorReports", "Save report to" ) );
+    QString filename = QFileDialog::getSaveFileName( topLevelWidget(), tools::translate( "IndicatorReports", "Save report to" )
+                                                    , startPath, tools::translate( "IndicatorReports", "Report (*.html)" ) );
     if( filename == QString::null )
         return;
     if( !filename.endsWith( ".html" ) )

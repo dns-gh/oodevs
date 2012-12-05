@@ -81,7 +81,7 @@ void ADN_ConfigDialog::OnCancel()
 // -----------------------------------------------------------------------------
 void ADN_ConfigDialog::OnBrowsePath()
 {
-    QString strSimPath = Q3FileDialog::getOpenFileName( pSimPath_->text(), tr( "Sword executable (*.exe)" ) , this, "", tr( "Select SIM to use for data test" ) );
+    QString strSimPath = QFileDialog::getOpenFileName( this, tr( "Select SIM to use for data test" ), pSimPath_->text(), tr( "Sword executable (*.exe)" ) );
     if( strSimPath == QString::null )
         return;
     pSimPath_->setText( strSimPath );

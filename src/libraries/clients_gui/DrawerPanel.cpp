@@ -252,7 +252,7 @@ void DrawerPanel::StartDrawing()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Open()
 {
-    QString filename = Q3FileDialog::getOpenFileName( config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ), this, 0, tr( "Load drawings file" ) );
+    QString filename = QFileDialog::getOpenFileName( this, tr( "Load drawings file" ), config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ) );
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )
@@ -273,7 +273,7 @@ void DrawerPanel::Open()
 // -----------------------------------------------------------------------------
 void DrawerPanel::Save()
 {
-    QString filename = Q3FileDialog::getSaveFileName( config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ), this, 0, tr( "Save drawings to file" ) );
+    QString filename = QFileDialog::getSaveFileName( this, tr( "Save drawings to file" ), config_.BuildExerciseChildFile( "" ).c_str(), tr( "Drawings (*.xml)" ) );
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )

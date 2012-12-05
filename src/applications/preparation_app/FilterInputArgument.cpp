@@ -118,8 +118,8 @@ void FilterInputArgument::Update()
 void FilterInputArgument::OnBrowse()
 {
     QString path = ( type_ == eFile )
-        ? QFileDialog::getOpenFileName( exerciseDir_.c_str(), QString(), QApplication::activeModalWidget(), "FilterInputArgument_FileDialog", tools::translate( "FilterInputArgument", "Select a file" ) )
-        : QFileDialog::getExistingDirectory( exerciseDir_.c_str(), QApplication::activeModalWidget(), "FilterInputArgument_DirectoryDialog", tools::translate( "FilterInputArgument", "Select a directory" ) );
+        ? QFileDialog::getOpenFileName( QApplication::activeModalWidget(), tools::translate( "FilterInputArgument", "Select a file" ), exerciseDir_.c_str() )
+        : QFileDialog::getExistingDirectory( QApplication::activeModalWidget(), tools::translate( "FilterInputArgument", "Select a directory" ), exerciseDir_.c_str() );
     path.replace( "/", "\\" );
     line_->setText( path );
 }

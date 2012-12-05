@@ -108,7 +108,7 @@ const std::string FilterXsl::GetName() const
 void FilterXsl::OnBrowse()
 {
     assert( !exerciseFile_.empty() );
-    QString directory = Q3FileDialog::getExistingDirectory( exerciseFile_.c_str(), QApplication::activeModalWidget(), 0, tools::translate( "FilterXsl", "Select output directory" ) );
+    QString directory = QFileDialog::getExistingDirectory( QApplication::activeModalWidget(), tools::translate( "FilterXsl", "Select output directory" ), exerciseFile_.c_str() );
     if( directory.startsWith( "//" ) )
         directory.replace( "/", "\\" );
     output_->setText( directory );

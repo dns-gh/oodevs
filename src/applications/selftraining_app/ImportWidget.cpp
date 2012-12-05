@@ -175,7 +175,7 @@ bool ImportWidget::ReadPackageContentFile()
 // -----------------------------------------------------------------------------
 void ImportWidget::PackageBrowseClicked()
 {
-    const QString filename = Q3FileDialog::getOpenFileName( "", "Officer Training packages (*.otpak)", this, "", tools::translate( "ImportWidget", "Select a package" ) );
+    const QString filename = QFileDialog::getOpenFileName( this, tools::translate( "ImportWidget", "Select a package" ), QString(), "Officer Training packages (*.otpak)" );
     SelectPackage( filename );
 }
 

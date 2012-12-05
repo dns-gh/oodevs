@@ -84,7 +84,7 @@ void IndicatorExportDialog::Export()
 // -----------------------------------------------------------------------------
 void IndicatorExportDialog::OnBrowse()
 {
-    QString filename = Q3FileDialog::getSaveFileName( 0, tools::translate( "Scores", "CSV (*.csv)" ), topLevelWidget(), 0, tools::translate( "Scores", "Export data" ) );
+    QString filename = QFileDialog::getSaveFileName( topLevelWidget(), tools::translate( "Scores", "Export data" ), QString(), tools::translate( "Scores", "CSV (*.csv)" ) );
     if( filename == QString::null )
         return;
     if( !filename.endsWith( ".csv" ) )

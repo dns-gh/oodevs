@@ -301,7 +301,7 @@ void ADN_MainWindow::DoSaveProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::SaveAsProject()
 {
-    QString strDirectoryName = QFileDialog::getExistingDirectory( generalConfig_->GetModelsDir().c_str(), this, "", tr( "Save project as" ), true );
+    QString strDirectoryName = QFileDialog::getExistingDirectory( this, tr( "Save project as" ), generalConfig_->GetModelsDir().c_str() );
     if( strDirectoryName.isEmpty() )
         return;
 
@@ -355,7 +355,7 @@ void ADN_MainWindow::SaveAsProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::NewProject()
 {
-    QString qfilename = Q3FileDialog::getSaveFileName( generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ), this, "", tr( "Create new project" ) );
+    QString qfilename = QFileDialog::getSaveFileName( this, tr( "Create new project" ), generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ) );
     if( qfilename == QString::null )
         return;
 
@@ -384,7 +384,7 @@ void ADN_MainWindow::NewProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::OpenProject()
 {
-    QString qfilename = Q3FileDialog::getOpenFileName( generalConfig_->GetModelsDir().c_str(), tr("Physical model file (physical.xml)"), this, "", tr("Open physical model project"));
+    QString qfilename = QFileDialog::getOpenFileName( this, tr( "Open physical model project" ), generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ) );
     if( qfilename == QString::null )
         return;
     try
@@ -455,7 +455,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::ExportHtml()
 {
-    QString strPath = Q3FileDialog::getExistingDirectory( ADN_Workspace::GetWorkspace().GetProject().GetWorkDirInfos().GetWorkingDirectory().GetData().c_str(), this );
+    QString strPath = QFileDialog::getExistingDirectory( this, QString(), ADN_Workspace::GetWorkspace().GetProject().GetWorkDirInfos().GetWorkingDirectory().GetData().c_str() );
     if( strPath == QString::null )
         return;
 

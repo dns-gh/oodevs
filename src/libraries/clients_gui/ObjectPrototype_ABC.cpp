@@ -353,13 +353,7 @@ void ObjectPrototype_ABC::LoadFromFile( bool mustLoadFromFile )
         if( type )
         {
 
-            QString filename = QFileDialog::getOpenFileName(
-                QString::null,
-                "Shapefile (*.shp)",
-                this,
-                "open file dialog",
-                tr( "Choose a file" ) );
-
+            QString filename = QFileDialog::getOpenFileName( this, tr( "Choose a file" ), QString::null, "Shapefile (*.shp)" );
             if( !filename.isNull() )
             {
                 try

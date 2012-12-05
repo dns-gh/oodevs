@@ -141,7 +141,7 @@ void ActionsToolbar::SetFilter( const actions::ActionsFilter_ABC& filter )
 void ActionsToolbar::Load()
 {
     const std::string rootDir = config_.BuildExerciseChildFile( "orders.ord" );
-    filename_ = Q3FileDialog::getOpenFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Load" ) ).toStdString();
+    filename_ = QFileDialog::getOpenFileName( topLevelWidget(), tr( "Load" ), rootDir.c_str(), tr( "Actions files (*.ord)" ) ).toStdString();
     DoLoad( filename_ );
     emit activeRefreshButton( !filename_.empty() );
 }
@@ -171,7 +171,7 @@ void ActionsToolbar::DoLoad( const std::string& filename )
 void ActionsToolbar::Save()
 {
     const std::string rootDir = config_.BuildExerciseChildFile( "orders" );
-    QString filename = Q3FileDialog::getSaveFileName( rootDir.c_str(), tr( "Actions files (*.ord)" ), topLevelWidget(), 0, tr( "Save" ) );
+    QString filename = QFileDialog::getSaveFileName( topLevelWidget(), tr( "Save" ), rootDir.c_str(), tr( "Actions files (*.ord)" ) );
     if( filename == QString::null )
         return;
     if( filename.right( 4 ) != ".ord" )

@@ -12,6 +12,8 @@
 
 #include "tools/Resolver_ABC.h"
 
+class Q3Url;
+
 namespace kernel
 {
     class ActionController;
@@ -53,12 +55,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LinkInterpreter_ABC( const LinkInterpreter_ABC& );            //!< Copy constructor
-    LinkInterpreter_ABC& operator=( const LinkInterpreter_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool Interprete( const Q3Url& url );

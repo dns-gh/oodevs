@@ -131,8 +131,8 @@ bool FilterCsv::NeedToReloadExercise() const
 // -----------------------------------------------------------------------------
 void FilterCsv::OnBrowse()
 {
-    QString directory = Q3FileDialog::getExistingDirectory( exerciseFile_.c_str(), QApplication::activeModalWidget(),
-                                                            0, tools::translate( "FilterCsv", "Select output directory" ) );
+    QString directory = QFileDialog::getExistingDirectory( QApplication::activeModalWidget()
+                                                         , tools::translate( "FilterCsv", "Select output directory" ), exerciseFile_.c_str() );
     if( directory.startsWith( "//" ) )
         directory.replace( "/", "\\" );
     output_->setText( directory );

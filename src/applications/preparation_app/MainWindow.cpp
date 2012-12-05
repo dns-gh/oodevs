@@ -453,7 +453,7 @@ void MainWindow::MigrateExercises()
 void MainWindow::Open()
 {
     // Open exercise file dialog
-    QString filename = Q3FileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
+    QString filename = QFileDialog::getOpenFileName( this, tr( "Load exercise definition file (exercise.xml)" ), config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)" );
     if( filename.isEmpty() || !Close() )
         return;
     // Load exercise
