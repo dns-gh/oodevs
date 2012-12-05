@@ -281,7 +281,7 @@ void MIL_AgentServer::SendMsgEndTick() const
     assert( pProcessMonitor_ );
     client::ControlEndTick msgEndTick;
     msgEndTick().set_current_tick( GetCurrentTimeStep() );
-    msgEndTick().set_tick_duration ( static_cast< int >( pProfilerMgr_->GetLastTickDuration() ) );
+    msgEndTick().set_tick_duration ( static_cast< int >( loopTimer_.GetLastTime() ) );
     msgEndTick().set_long_pathfinds( pPathFindManager_->GetNbrLongRequests() );
     msgEndTick().set_short_pathfinds( pPathFindManager_->GetNbrShortRequests() );
     msgEndTick().set_memory( static_cast< int >( pProcessMonitor_->GetMemory() ) );
