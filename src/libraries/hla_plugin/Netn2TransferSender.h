@@ -16,7 +16,6 @@
 #include <hla/InteractionNotification_ABC.h>
 #include <memory>
 #include <map>
-#include <boost/uuid/uuid.hpp>
 
 namespace dispatcher
 {
