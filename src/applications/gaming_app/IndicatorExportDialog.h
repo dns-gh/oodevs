@@ -1,5 +1,3 @@
-//Added by qt3to4:
-#include <Qt3Support/q3button.h>
 // *****************************************************************************
 //
 // This file is part of a MASA library or program.
@@ -12,8 +10,6 @@
 #ifndef __IndicatorExportDialog_h_
 #define __IndicatorExportDialog_h_
 
-#include <boost/noncopyable.hpp>
-
 class IndicatorRequest;
 
 // =============================================================================
@@ -23,7 +19,6 @@ class IndicatorRequest;
 // Created: SBO 2009-04-30
 // =============================================================================
 class IndicatorExportDialog : public QDialog
-                            , private boost::noncopyable
 {
     Q_OBJECT
 

@@ -51,7 +51,6 @@
 #include <Qt3Support/q3vbox.h>
 #include <Qt3Support/q3vgroupbox.h>
 #include <Qt3Support/q3boxlayout.h>
-#include <Qt3Support/q3button.h>
 #include <Qt3Support/q3gridlayout.h>
 #include <Qt3Support/q3textbrowser.h>
 

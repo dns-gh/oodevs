@@ -22,8 +22,6 @@
 #include "clients_kernel/tools.h"
 #include "clients_gui/RichSpinBox.h"
 #include "gaming/Inhabitant.h"
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantExtractCrowdDialog constructor

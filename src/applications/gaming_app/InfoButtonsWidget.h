@@ -1,5 +1,3 @@
-//Added by qt3to4:
-#include <Qt3Support/q3button.h>
 // *****************************************************************************
 //
 // This file is part of a MASA library or program.
@@ -11,8 +9,6 @@
 
 #ifndef __InfoButtonsWidget_h_
 #define __InfoButtonsWidget_h_
-
-#include <boost/noncopyable.hpp>
 
 namespace actions
 {
@@ -41,7 +37,6 @@ class StaticModel;
 // Created: SBO 2007-02-05
 // =============================================================================
 class InfoButtonsWidget : public Q3GroupBox
-                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

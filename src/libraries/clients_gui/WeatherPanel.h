@@ -100,7 +100,6 @@ protected:
     weather::MeteoLocal*    selectedLocal_;
     QDateTimeEdit*          startTime_;
     QDateTimeEdit*          endTime_;
-    Q3Button*               positionBtn_;
     //@}
 
 };

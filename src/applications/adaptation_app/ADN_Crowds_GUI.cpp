@@ -35,8 +35,6 @@
 #include <QtGui/qdialog.h>
 #include <Qt3Support/q3vbox.h>
 #include <Qt3Support/q3grid.h>
-//Added by qt3to4:
-#include <Qt3Support/q3gridlayout.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Crowds_GUI constructor

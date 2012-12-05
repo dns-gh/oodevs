@@ -45,7 +45,6 @@
 #include <QtCore/qsignalmapper.h>
 #include <QtCore/qtimer.h>
 
-#include <Qt3Support/q3button.h>
 #include <Qt3Support/q3canvas.h>
 #include <Qt3Support/q3frame.h>
 #include <Qt3Support/q3groupbox.h>

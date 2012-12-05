@@ -37,7 +37,7 @@ class InhabitantExtractCrowdDialog : public QDialog
                                    , public tools::Observer_ABC
                                    , public kernel::ContextMenuObserver_ABC< kernel::Inhabitant_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -59,13 +59,6 @@ private slots:
     void Reject();
     void closeEvent( QCloseEvent * e );
     void OnValuesChanged( int newValue = 0 );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    InhabitantExtractCrowdDialog( const InhabitantExtractCrowdDialog& );            //!< Copy constructor
-    InhabitantExtractCrowdDialog& operator=( const InhabitantExtractCrowdDialog& ); //!< Assignment operator
     //@}
 
 private:

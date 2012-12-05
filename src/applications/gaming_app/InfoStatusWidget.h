@@ -13,8 +13,6 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-//Added by qt3to4:
-#include <Qt3Support/q3button.h>
 
 namespace kernel
 {
@@ -48,7 +46,7 @@ class InfoStatusWidget : public Q3VBox
                        , public tools::ElementObserver_ABC< kernel::HumanFactors_ABC >
                        , public tools::ElementObserver_ABC< Reinforcements >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -65,12 +63,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InfoStatusWidget( const InfoStatusWidget& );            //!< Copy constructor
-    InfoStatusWidget& operator=( const InfoStatusWidget& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
