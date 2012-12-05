@@ -854,23 +854,23 @@ void MIL_EntityManager::UpdateKnowledges()
 
 namespace
 {
-    void UpdateAutomate( float duration, MIL_Automate& automate, MT_Profiler& profiler )
+    void UpdateAutomate( float duration, MIL_Automate& automate, MT_Profiler& profiler, MIL_ProfilerMgr& profilerManager )
     {
         profiler.Start();
         automate.UpdateDecision( duration );
-        MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( automate, profiler.Stop() );
+        profilerManager.NotifyDecisionUpdated( automate, profiler.Stop() );
     }
-    void UpdatePion( float duration, MIL_AgentPion& pion, MT_Profiler& profiler )
+    void UpdatePion( float duration, MIL_AgentPion& pion, MT_Profiler& profiler, MIL_ProfilerMgr& profilerManager )
     {
         profiler.Start();
         pion.UpdateDecision( duration );
-        MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( pion, profiler.Stop() );
+        profilerManager.NotifyDecisionUpdated( pion, profiler.Stop() );
     }
-    void UpdatePopulation( float duration, MIL_Population& population, MT_Profiler& profiler )
+    void UpdatePopulation( float duration, MIL_Population& population, MT_Profiler& profiler, MIL_ProfilerMgr& profilerManager )
     {
         profiler.Start();
         population.UpdateDecision( duration );
-        MIL_AgentServer::GetWorkspace().GetProfilerManager().NotifyDecisionUpdated( population, profiler.Stop() );
+        profilerManager.NotifyDecisionUpdated( population, profiler.Stop() );
     }
 }
 
@@ -886,15 +886,15 @@ void MIL_EntityManager::UpdateDecisions()
         MT_Profiler decisionUpdateProfiler;
         {
             Profiler profiler( rAutomatesDecisionTime_ );
-            automateFactory_->Apply( boost::bind( &UpdateAutomate, duration, _1, boost::ref( decisionUpdateProfiler ) ) );
+            automateFactory_->Apply( boost::bind( &UpdateAutomate, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
         }
         {
             Profiler profiler( rPionsDecisionTime_ );
-            sink_->Apply( boost::bind( &UpdatePion, duration, _1, boost::ref( decisionUpdateProfiler ) ) );
+            sink_->Apply( boost::bind( &UpdatePion, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
         }
         {
             Profiler profiler( rPopulationsDecisionTime_ );
-            populationFactory_->Apply( boost::bind( &UpdatePopulation, duration, _1, boost::ref( decisionUpdateProfiler ) ) );
+            populationFactory_->Apply( boost::bind( &UpdatePopulation, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
         }
     }
     else
