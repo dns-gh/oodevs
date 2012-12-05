@@ -46,44 +46,46 @@ public:
 
     //! @name Accessors
     //@{
-    bool               UseOnlyDIAArchive         () const;
-    bool               CheckAutomateComposition  () const;
-    bool               UseDecDebug               () const;
-    bool               UsePathDebug              () const;
-    bool               IsProfilingEnabled        () const;
-    bool               IsDataTestMode            () const;
-    bool               IsTestMode                () const;
-    bool               IsSaveCheckpointTestMode  () const;
-    bool               IsDeleteCheckpointTestMode() const;
-    bool               IsFrozenMode              () const;
-    bool               IsDispatcherEmbedded      () const;
-    unsigned short     GetNetworkPort            () const;
-    unsigned long      GetNetworkTimeout         () const;
-    bool               IsThreadedNetwork         () const;
-    bool               IsLegacy                  () const;
+    bool               UseOnlyDIAArchive           () const;
+    bool               CheckAutomateComposition    () const;
+    bool               UseDecDebug                 () const;
+    bool               UsePathDebug                () const;
+    bool               IsDecisionalProfilingEnabled() const;
+    bool               IsHookProfilingEnabled      () const;
+    bool               IsCommandProfilingEnabled   () const;
+    bool               IsDataTestMode              () const;
+    bool               IsTestMode                  () const;
+    bool               IsSaveCheckpointTestMode    () const;
+    bool               IsDeleteCheckpointTestMode  () const;
+    bool               IsFrozenMode                () const;
+    bool               IsDispatcherEmbedded        () const;
+    unsigned short     GetNetworkPort              () const;
+    unsigned long      GetNetworkTimeout           () const;
+    bool               IsThreadedNetwork           () const;
+    bool               IsLegacy                    () const;
 
-    bool               UseCheckPointCRC          () const;
-    bool               UseDiaDebugger            () const;
-    unsigned short     GetDiaDebuggerPort        () const;
-    bool               UseNetworkLogger          () const;
-    unsigned short     GetNetworkLoggerPort      () const;
-    unsigned int       GetCheckPointsFrequency   () const;
-    unsigned int       GetCheckPointsKept        () const;
-    unsigned int       GetTimeStep               () const;
-    unsigned int       GetTimeFactor             () const;
-    unsigned int       GetEndTick                () const;
-    unsigned int       GetTickLatency            () const;
-    bool               GetPausedAtStartup        () const;
-    unsigned int       GetPathFinderThreads      () const;
-    const std::string& GetCheckpointNameTestMode () const;
-    const std::string& GetIntegrationDir         () const;
+    bool               UseCheckPointCRC            () const;
+    bool               UseDiaDebugger              () const;
+    unsigned short     GetDiaDebuggerPort          () const;
+    bool               UseNetworkLogger            () const;
+    unsigned short     GetNetworkLoggerPort        () const;
+    unsigned int       GetCheckPointsFrequency     () const;
+    unsigned int       GetCheckPointsKept          () const;
+    unsigned int       GetTimeStep                 () const;
+    unsigned int       GetTimeFactor               () const;
+    unsigned int       GetEndTick                  () const;
+    unsigned int       GetTickLatency              () const;
+    bool               GetPausedAtStartup          () const;
+    unsigned int       GetPathFinderThreads        () const;
+    const std::string& GetCheckpointNameTestMode   () const;
+    const std::string& GetIntegrationDir           () const;
 
-    int                GetRandomSeed             () const;
-    const bool*        GetRandomGaussian         () const;
-    const double*      GetRandomDeviation        () const;
-    const double*      GetRandomMean             () const;
-    unsigned int ReadGCParameter_setPause() const;
-    unsigned int ReadGCParameter_setStepMul() const;
+    int                GetRandomSeed               () const;
+    const bool*        GetRandomGaussian           () const;
+    const double*      GetRandomDeviation          () const;
+    const double*      GetRandomMean               () const;
+    unsigned int       ReadGCParameter_setPause    () const;
+    unsigned int       ReadGCParameter_setStepMul  () const;
     //@}
 
     //! @name Operations
@@ -148,7 +150,9 @@ private:
     bool           bUsePathDebug_;
     bool           bUseDiaDebugger_;
     bool           bUseNetworkLogger_;
-    bool           bProfilingEnabled_;
+    bool           bDecisionalProfilingEnabled_;
+    bool           bHookProfilingEnabled_;
+    bool           bCommandProfilingEnabled_;
     bool           bDataTestMode_;
     bool           bTestMode_;
     bool           bSaveCheckpointTestMode_;

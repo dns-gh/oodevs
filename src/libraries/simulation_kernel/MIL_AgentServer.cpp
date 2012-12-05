@@ -249,7 +249,7 @@ void MIL_AgentServer::MainSimLoop()
         rWaitTime_, waitTicks_, pPathFindManager_->GetNbrShortRequests(), pPathFindManager_->GetNbrLongRequests(), pPathFindManager_->GetNbrTreatedRequests(), pathfindTime,
         pEntityManager_->GetModelCount(), pProcessMonitor_->GetMemory() / 1048576., pProcessMonitor_->GetVirtualMemory() / 1048576. ) );
     pEntityManager_->LogInfo();
-    sword::Brain::ResetProfiling( config_.IsProfilingEnabled() );
+    sword::Brain::ResetProfiling( config_.IsDecisionalProfilingEnabled() );
     pEntityManager_->Clean();
     pCheckPointManager_->Update();
     Wait();
@@ -403,7 +403,7 @@ void MIL_AgentServer::SendControlInformation() const
     message().set_status( sword::EnumSimulationState( nSimState_ == eSimWait ? eSimRunning : nSimState_ ) );
     message().set_checkpoint_frequency( GetCheckPointManager().GetCheckPointFrequency() );
     message().set_send_vision_cones( GetAgentServer().MustSendUnitVisionCones() );
-    message().set_profiling_enabled( config_.IsProfilingEnabled() );
+    message().set_profiling_enabled( config_.IsDecisionalProfilingEnabled() );
     if( !localTime_.empty() )
         message().mutable_checkpoint_real_time()->set_data( localTime_ );
     message.Send( NET_Publisher_ABC::Publisher() );

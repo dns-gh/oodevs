@@ -104,7 +104,7 @@ namespace detail
     protected:
         Commands( const View& model )
         {
-            IsProfiling() = model[ "profiling" ];
+            IsProfiling() = model[ "profiling/command" ];
             if( IsProfiling() )
                 SWORD_RegisterHook( 0, &GetPrevious(), &LogProfiling, "LogProfiling", "void()" );
         }

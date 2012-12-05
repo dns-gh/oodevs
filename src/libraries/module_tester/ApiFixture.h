@@ -322,7 +322,8 @@ namespace core
             : LoadFixture( name )
             , commands( model )
         {
-            model[ "profiling" ] = false;
+            model = core::MakeModel( "profiling/command", false )
+                                   ( "profiling/hook", false );
         }
         virtual ~ApiFixture()
         {

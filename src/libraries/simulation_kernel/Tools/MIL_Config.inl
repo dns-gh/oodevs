@@ -60,13 +60,33 @@ unsigned short MIL_Config::GetDiaDebuggerPort() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::IsProfilingEnabled
-// Created: NLD 2004-07-15
+// Name: MIL_Config::IsDecisionalProfilingEnabled
+// Created: SLI 2012-12-04
 // -----------------------------------------------------------------------------
 inline
-bool MIL_Config::IsProfilingEnabled() const
+bool MIL_Config::IsDecisionalProfilingEnabled() const
 {
-    return bProfilingEnabled_;
+    return bDecisionalProfilingEnabled_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::IsHookProfilingEnabled
+// Created: SLI 2012-12-04
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsHookProfilingEnabled() const
+{
+    return bHookProfilingEnabled_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::IsCommandProfilingEnabled
+// Created: SLI 2012-12-04
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsCommandProfilingEnabled() const
+{
+    return bCommandProfilingEnabled_;
 }
 
 // -----------------------------------------------------------------------------

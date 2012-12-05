@@ -25,7 +25,7 @@
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
 MIL_ProfilerManager::MIL_ProfilerManager( const MIL_Config& config )
-    : bEnabled_( config.IsProfilingEnabled() )
+    : bEnabled_( config.IsDecisionalProfilingEnabled() )
 {
     if( bEnabled_ )
         MT_LOG_INFO_MSG( "Profiling mode enabled at startup time : dec functions profiled" )

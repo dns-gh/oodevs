@@ -61,7 +61,7 @@ namespace wrapper
     protected:
         Hooks( const View& model )
         {
-            const bool profiling = model[ "profiling" ];
+            const bool profiling = model[ "profiling/hook" ];
             std::for_each( GetUses().begin(), GetUses().end(), boost::bind( &Hook_ABC::Apply, _1, profiling ) );
             std::for_each( GetRegistrations().begin(), GetRegistrations().end(), boost::bind( &Hook_ABC::Apply, _1, profiling ) );
             if( profiling )
