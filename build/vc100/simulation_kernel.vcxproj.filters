@@ -5173,9 +5173,6 @@
     <None Include="..\..\src\libraries\simulation_kernel\tools\MIL_Config.inl">
       <Filter>Source Files\Tools</Filter>
     </None>
-    <None Include="..\..\src\libraries\simulation_kernel\tools\MIL_ProfilerMgr.inl">
-      <Filter>Source Files\Tools</Filter>
-    </None>
     <None Include="..\..\src\libraries\simulation_kernel\MIL_Random.inl">
       <Filter>Source Files\Tools</Filter>
     </None>
