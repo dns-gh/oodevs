@@ -5450,5 +5450,11 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_ProfilerManager.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\BrainIterate.h">
+      <Filter>Source Files\Decision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\BrainTemplate.h">
+      <Filter>Source Files\Decision</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

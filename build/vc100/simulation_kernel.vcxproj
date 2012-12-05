@@ -923,6 +923,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Adapters\Sink_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\Brain.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\BrainIterate.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\BrainTemplate.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Agent_PathClass_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_PathClass.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h" />
