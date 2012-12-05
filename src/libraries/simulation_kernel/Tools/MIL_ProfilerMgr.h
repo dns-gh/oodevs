@@ -18,6 +18,7 @@
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Population;
+class MIL_Config;
 
 //*****************************************************************************
 // Created: AML 03-05-21
@@ -27,7 +28,7 @@ class MIL_ProfilerMgr : private boost::noncopyable
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit MIL_ProfilerMgr( bool bEnabled );
+    explicit MIL_ProfilerMgr( const MIL_Config& config );
     virtual ~MIL_ProfilerMgr();
     //@}
 

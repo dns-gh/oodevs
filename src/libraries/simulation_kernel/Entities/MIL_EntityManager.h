@@ -96,8 +96,7 @@ class MIL_EntityManager : public MIL_EntityManager_ABC
                         , public MIL_EntityManagerStaticMethods
 {
 public:
-             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
-                                MIL_ProfilerMgr& profiler, bool isLegacy, unsigned int gcPause, unsigned int gcMult );
+             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, const MIL_Config& config );
     virtual ~MIL_EntityManager();
 
     //! @name Factory
@@ -207,7 +206,7 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, MIL_ProfilerMgr& profiler, std::auto_ptr< sword::Sink_ABC > sink, unsigned int gcPause, unsigned int gcMult );
+    MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, std::auto_ptr< sword::Sink_ABC > sink, const MIL_Config& config );
 
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
@@ -284,11 +283,13 @@ private:
     //! @name Member data
     //@{
     const MIL_Time_ABC& time_;
+    const unsigned int  gcPause_;
+    const unsigned int  gcMult_;
     MIL_EffectManager& effectManager_;
     T_Cities cities_;
 
     // Profiling
-    MIL_ProfilerMgr& profilerManager_;
+    std::auto_ptr< MIL_ProfilerMgr > profilerManager_;
     unsigned int nRandomBreakdownsNextTimeStep_;
     double rKnowledgesTime_;
     double rAutomatesDecisionTime_;
@@ -314,8 +315,6 @@ private:
     std::auto_ptr< KnowledgeGroupFactory_ABC >    knowledgeGroupFactory_;  // have to be declared before armyFactory
     std::auto_ptr< ArmyFactory_ABC >              armyFactory_;
 
-    unsigned int  gcPause_;
-    unsigned int  gcMult_;
     T_Profilers profilers_;
     //@}
 };

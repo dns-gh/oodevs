@@ -261,10 +261,8 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
     std::auto_ptr< Sink_ABC > pSink( sink );
     ::new( manager )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
                                        MIL_AgentServer::GetWorkspace().GetObjectFactory(),
-                                       MIL_Singletons::GetProfiler(),
                                        pSink,
-                                       MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(),
-                                       MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
+                                       MIL_AgentServer::GetWorkspace().GetConfig() );
 }
 
 // =============================================================================
@@ -275,11 +273,12 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
-                                      MIL_ProfilerMgr& profiler, bool isLegacy, unsigned int gcPause, unsigned int gcMult )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, const MIL_Config& config )
     : time_                         ( time )
+    , gcPause_                      ( config.ReadGCParameter_setPause() )
+    , gcMult_                       ( config.ReadGCParameter_setStepMul() )
     , effectManager_                ( effects )
-    , profilerManager_              ( profiler )
+    , profilerManager_              ( new MIL_ProfilerMgr( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0 )
     , rAutomatesDecisionTime_       ( 0 )
@@ -291,18 +290,16 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , idManager_                    ( new MIL_IDManager() )
     , missionController_            ( new MissionController() )
     , inhabitantFactory_            ( new InhabitantFactory() )
-    , populationFactory_            ( new PopulationFactory( *missionController_, gcPause, gcMult ) )
+    , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_ ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
-    , sink_                         ( isLegacy ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause, gcMult ) )
-                                               : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, *populationFactory_, gcPause, gcMult, objectFactory.GetDangerousObjects() ) ) )
+    , sink_                         ( config.IsLegacy() ? std::auto_ptr< sword::Sink_ABC >( new sword::legacy::Sink( *agentFactory_, gcPause_, gcMult_ ) )
+                                                        : std::auto_ptr< sword::Sink_ABC >( new sword::Sink( *agentFactory_, *populationFactory_, gcPause_, gcMult_, objectFactory.GetDangerousObjects() ) ) )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
-    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
+    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause_, gcMult_ ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *sink_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
-    , gcPause_                      ( gcPause )
-    , gcMult_                       ( gcMult )
 {
     // NOTHING
 }
@@ -312,10 +309,12 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
 // Created: MCO 2012-09-12
 // -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
-                                      MIL_ProfilerMgr& profiler, std::auto_ptr< sword::Sink_ABC > sink, unsigned int gcPause, unsigned int gcMult )
+                                      std::auto_ptr< sword::Sink_ABC > sink, const MIL_Config& config )
     : time_                         ( time )
+    , gcPause_                      ( config.ReadGCParameter_setPause() )
+    , gcMult_                       ( config.ReadGCParameter_setStepMul() )
     , effectManager_                ( effects )
-    , profilerManager_              ( profiler )
+    , profilerManager_              ( new MIL_ProfilerMgr( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0 )
     , rAutomatesDecisionTime_       ( 0 )
@@ -327,17 +326,15 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , idManager_                    ( new MIL_IDManager() )
     , missionController_            ( new MissionController() )
     , inhabitantFactory_            ( new InhabitantFactory() )
-    , populationFactory_            ( new PopulationFactory( *missionController_, gcPause, gcMult ) )
+    , populationFactory_            ( new PopulationFactory( *missionController_, gcPause_, gcMult_ ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_ ) )
     , sink_                         ( sink )
     , pObjectManager_               ( new MIL_ObjectManager( objectFactory, *sink_ ) )
     , pFloodModel_                  ( sink_->CreateFloodModel() )
-    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
+    , automateFactory_              ( new AutomateFactory( *idManager_, gcPause_, gcMult_ ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
     , armyFactory_                  ( new ArmyFactory( *automateFactory_, *sink_, *formationFactory_, *pObjectManager_, *populationFactory_, *inhabitantFactory_, *knowledgeGroupFactory_ ) )
-    , gcPause_                      ( gcPause )
-    , gcMult_                       ( gcMult )
 {
     // NOTHING
 }
@@ -884,15 +881,15 @@ void MIL_EntityManager::UpdateDecisions()
     MT_Profiler decisionUpdateProfiler;
     {
         Profiler profiler( rAutomatesDecisionTime_ );
-        automateFactory_->Apply( boost::bind( &UpdateAutomate, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
+        automateFactory_->Apply( boost::bind( &UpdateAutomate, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
     }
     {
         Profiler profiler( rPionsDecisionTime_ );
-        sink_->Apply( boost::bind( &UpdatePion, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
+        sink_->Apply( boost::bind( &UpdatePion, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
     }
     {
         Profiler profiler( rPopulationsDecisionTime_ );
-        populationFactory_->Apply( boost::bind( &UpdatePopulation, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
+        populationFactory_->Apply( boost::bind( &UpdatePopulation, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( *profilerManager_ ) ) );
     }
 }
 

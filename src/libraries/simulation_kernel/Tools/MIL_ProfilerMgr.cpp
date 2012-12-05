@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ProfilerMgr.h"
 #include "MIL_AgentServer.h"
+#include "MIL_Config.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
@@ -23,8 +24,8 @@
 // Name: MIL_ProfilerMgr constructor
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
-MIL_ProfilerMgr::MIL_ProfilerMgr( bool bEnabled )
-    : bEnabled_( bEnabled )
+MIL_ProfilerMgr::MIL_ProfilerMgr( const MIL_Config& config )
+    : bEnabled_( config.IsProfilingEnabled() )
 {
     if( bEnabled_ )
         MT_LOG_INFO_MSG( "Profiling mode enabled at startup time : dec functions profiled" )

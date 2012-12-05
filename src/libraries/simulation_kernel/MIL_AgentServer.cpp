@@ -65,7 +65,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pMeteoDataManager_    ( 0 )
     , pTacticalLineManager_ ( new MIL_TacticalLineManager() )
     , pPathFindManager_     ( 0 )
-    , pProfilerMgr_         ( new MIL_ProfilerMgr( config.IsProfilingEnabled() ) )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
     , pUrbanCache_          ( new MIL_UrbanCache() )
@@ -93,7 +92,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
-        pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_, *pProfilerMgr_, config_.IsLegacy(), config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
+        pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pObjectFactory_, config_ );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->ReadODB( config_ );
         pEntityManager_->LoadUrbanModel( config_ );
@@ -126,7 +125,6 @@ MIL_AgentServer::~MIL_AgentServer()
 //    delete pWorkspaceDIA_;
 //    MT_LOG_INFO_MSG( "Terminating Network" );
 //    delete pAgentServer_;
-//    delete pProfilerMgr_;
 //    delete pCheckPointManager_;
     delete pProcessMonitor_;
     delete settings_;
@@ -235,7 +233,6 @@ namespace
 //-----------------------------------------------------------------------------
 void MIL_AgentServer::MainSimLoop()
 {
-    pProfilerMgr_->NotifyTickBegin( GetCurrentTimeStep() );
     SendMsgBeginTick();
     GetUrbanCache().Clear();
     pEntityManager_->Update();
@@ -244,7 +241,6 @@ void MIL_AgentServer::MainSimLoop()
     const double pathfindTime = UpdatePathfind( *pPathFindManager_ );
     SendMsgEndTick();
     pProcessMonitor_->MonitorProcess();
-    pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     const double lastTime = loopTimer_.Stop();
     loopTimer_.Start();
     MT_LOG_INFO_MSG( MT_FormatString( "**** Time tick %d %.2fms - Profiling (K/D/A/E/S) : %.2fms %.2fms (A:%.2f P:%.2f Pop:%.2f DEC:%.2f) %.2fms %.2fms %.2fms - Wait %.2fms %d ticks - PathFind : %d short %d long %d done %.2fms - Model : %d nodes - RAM : %.3f MB / %.3f MB (VM)",
