@@ -160,7 +160,7 @@ public:
     void Clean();
     void Finalize();
     void Synchronize();
-    void LogInfo( bool profiling );
+    void LogInfo();
     //@}
 
     //! @external helper

@@ -521,6 +521,8 @@ DEFINE_HOOK( LogProfiling, 0, void, () )
 // -----------------------------------------------------------------------------
 void Sink::LogProfiling()
 {
+    if( !(*model_)[ "profiling" ] )
+        return;
     Hooks::LogProfiling();
     GET_HOOK( LogProfiling )();
 }

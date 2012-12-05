@@ -642,7 +642,7 @@ namespace
 // Name: MIL_EntityManager::LogInfo
 // Created: MCO 2012-11-12
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::LogInfo( bool profiling )
+void MIL_EntityManager::LogInfo()
 {
     KnowledgesVisitor visitor;
     Accept( visitor );
@@ -658,8 +658,7 @@ void MIL_EntityManager::LogInfo( bool profiling )
             s << it->first << " " << it->second << " ms ";
         MT_LOG_INFO_MSG( s.str() );
     }
-    if( profiling )
-        sink_->LogProfiling();
+    sink_->LogProfiling();
 }
 
 // -----------------------------------------------------------------------------
