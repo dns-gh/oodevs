@@ -15,7 +15,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
-#include <boost/range/algorithm.hpp>
+#include <algorithm>
 
 using namespace logistic;
 
@@ -174,9 +174,10 @@ double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory,
 LogisticLink::T_Agents LogisticLink::ComputeNotifications( T_Agents& notifications, T_Agents requesters ) const
 {
     T_Agents result;
-    boost::set_difference( boost::sort( requesters ), notifications, std::back_inserter( result ) );
-    boost::copy( result, std::back_inserter( notifications ) );
-    boost::sort( notifications );
+    std::sort( requesters.begin(), requesters.end() );
+    std::set_difference( requesters.begin(), requesters.end(), notifications.begin(), notifications.end(), std::back_inserter( result ) );
+    std::copy( result.begin(), result.end(), std::back_inserter( notifications ) );
+    std::sort( notifications.begin(), notifications.end() );
     return result;
 }
 
