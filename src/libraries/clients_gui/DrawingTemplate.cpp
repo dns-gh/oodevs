@@ -193,7 +193,7 @@ DrawingTemplate::Unit DrawingTemplate::ReadUnit( xml::xistream& input )
 // Name: DrawingTemplate::Draw
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools ) const
+void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, float zoom ) const
 {
     if( points.size() < 2 )
         return;
@@ -202,17 +202,17 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
         for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )
             DrawSegment( context, tools, *it, *(it+1) );
     if( markerStart_ )
-        DrawStartMarker( context, tools, points[0], points[1] );
+        DrawStartMarker( context, tools, points[0], points[1], zoom );
     if( markerMiddle_ )
         for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )
         {
             const geometry::Point2f& start = *it;
             const geometry::Point2f& end = *(it + 1);
             geometry::Point2f middle( (start.X() + end.X())/2, (start.Y() + end.Y())/2 );
-            DrawMiddleMarker( context, tools, middle, start, end );
+            DrawMiddleMarker( context, tools, middle, start, end, zoom );
         }
     if( markerEnd_ )
-        DrawEndMarker( context, tools, points.back(), points[ points.size() - 2 ] );
+        DrawEndMarker( context, tools, points.back(), points[ points.size() - 2 ], zoom );
     if( marker_ )
     {
         geometry::Rectangle2f boundingBox;
@@ -223,7 +223,7 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
             boundingBox.Incorporate( *it );
             center += geometry::Vector2f( it->X() / count, it->Y() / count );
         }
-        DrawMarker( context, tools, *marker_, markerUnit, center, geometry::Vector2f( 1.f, 0.f ) * std::max( count == 2 ? 90.f : 0, boundingBox.Width() ) );
+        DrawMarker( context, tools, *marker_, markerUnit, center, geometry::Vector2f( 1.f, 0.f ) * std::max( count == 2 ? 90.f : 0, boundingBox.Width() ), zoom );
     }
 }
 
@@ -231,12 +231,12 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
 // Name: DrawingTemplate::Draw
 // Created: SBO 2007-03-07
 // -----------------------------------------------------------------------------
-void DrawingTemplate::Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools ) const
+void DrawingTemplate::Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, float zoom ) const
 {
     if( markerStart_ )
     {
         const geometry::Point2f secondPoint = point + geometry::Vector2f( 1.f, 0.f ) * 10.f;
-        DrawStartMarker( context, tools, point, secondPoint );
+        DrawStartMarker( context, tools, point, secondPoint, zoom );
     }
 }
 
@@ -277,43 +277,43 @@ float DrawingTemplate::ComputeFactor( Unit u, float base, const kernel::GlTools_
 // Name: DrawingTemplate::DrawStartMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawStartMarker( svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& towards ) const
+void DrawingTemplate::DrawStartMarker( svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& towards, float zoom ) const
 {
-    DrawMarker( context, tools, *markerStart_, startUnit, at, geometry::Vector2f( at, towards ) );
+    DrawMarker( context, tools, *markerStart_, startUnit, at, geometry::Vector2f( at, towards ), zoom );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawingTemplate::DrawMiddleMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawMiddleMarker( svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to ) const
+void DrawingTemplate::DrawMiddleMarker( svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, const geometry::Point2f& to, float zoom ) const
 {
     const geometry::Vector2f u( from, at );
     const geometry::Vector2f v( at, to );
     const geometry::Vector2f n = u + v;
     const geometry::Vector2f t( n.Y(), -n.X() );
-    DrawMarker( context, tools, *markerMiddle_, middleUnit, at, t );
+    DrawMarker( context, tools, *markerMiddle_, middleUnit, at, t, zoom );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawingTemplate::DrawEndMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawEndMarker( svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from ) const
+void DrawingTemplate::DrawEndMarker( svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, const geometry::Point2f& at, const geometry::Point2f& from, float zoom ) const
 {
-    DrawMarker( context, tools, *markerEnd_, endUnit, at, geometry::Vector2f( from, at ) );
+    DrawMarker( context, tools, *markerEnd_, endUnit, at, geometry::Vector2f( from, at ), zoom );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawingTemplate::DrawMarker
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawingTemplate::DrawMarker( svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction ) const
+void DrawingTemplate::DrawMarker( svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools, svg::Node_ABC& node, Unit unit, const geometry::Point2f& at, geometry::Vector2f direction, float zoom ) const
 {
     glPushMatrix();
     glTranslatef( at.X(), at.Y(), 0 );
     Align( direction );
-    const float ratio = ComputeFactor( unit, direction.Length(), tools ); // $$$$ AGE 2006-09-01:
+    const float ratio = zoom * ComputeFactor( unit, direction.Length(), tools ); // $$$$ AGE 2006-09-01:
     glScalef( ratio, ratio, 1 );
     node.Draw( context, *references_ );
     glPopMatrix();

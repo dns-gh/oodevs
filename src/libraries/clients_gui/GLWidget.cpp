@@ -871,7 +871,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
 // -----------------------------------------------------------------------------
 void GlWidget::DrawTacticalGraphics( const std::string& symbol, const kernel::Location_ABC& location, bool overlined ) const
 {
-    Base().DrawTacticalGraphics( symbol, location, viewport_, overlined );
+    Base().DrawTacticalGraphics( symbol, location, viewport_, overlined, GetAdaptiveZoomFactor() );
 }
 
 // -----------------------------------------------------------------------------
