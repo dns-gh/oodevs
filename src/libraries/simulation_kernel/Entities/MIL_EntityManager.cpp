@@ -881,36 +881,18 @@ namespace
 void MIL_EntityManager::UpdateDecisions()
 {
     float duration = static_cast< float >( MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
-    if( profilerManager_.IsProfilingEnabled() )
+    MT_Profiler decisionUpdateProfiler;
     {
-        MT_Profiler decisionUpdateProfiler;
-        {
-            Profiler profiler( rAutomatesDecisionTime_ );
-            automateFactory_->Apply( boost::bind( &UpdateAutomate, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
-        }
-        {
-            Profiler profiler( rPionsDecisionTime_ );
-            sink_->Apply( boost::bind( &UpdatePion, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
-        }
-        {
-            Profiler profiler( rPopulationsDecisionTime_ );
-            populationFactory_->Apply( boost::bind( &UpdatePopulation, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
-        }
+        Profiler profiler( rAutomatesDecisionTime_ );
+        automateFactory_->Apply( boost::bind( &UpdateAutomate, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
     }
-    else
     {
-        {
-            Profiler profiler( rAutomatesDecisionTime_ );
-            automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateDecision, _1, duration ) );
-        }
-        {
-            Profiler profiler( rPionsDecisionTime_ );
-            sink_->Apply( boost::bind( &MIL_AgentPion::UpdateDecision, _1, duration ) );
-        }
-        {
-            Profiler profiler( rPopulationsDecisionTime_ );
-            populationFactory_->Apply( boost::bind( &MIL_Population::UpdateDecision, _1, duration ) );
-        }
+        Profiler profiler( rPionsDecisionTime_ );
+        sink_->Apply( boost::bind( &UpdatePion, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
+    }
+    {
+        Profiler profiler( rPopulationsDecisionTime_ );
+        populationFactory_->Apply( boost::bind( &UpdatePopulation, duration, _1, boost::ref( decisionUpdateProfiler ), boost::ref( profilerManager_ ) ) );
     }
 }
 
