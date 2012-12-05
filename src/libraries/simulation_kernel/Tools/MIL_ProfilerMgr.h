@@ -31,11 +31,6 @@ public:
     virtual ~MIL_ProfilerMgr();
     //@}
 
-    //! @name Accessors
-    //@{
-    bool IsProfilingEnabled() const;
-    //@}
-
     //! @name Operations
     //@{
     void NotifyTickBegin( unsigned int nTick );

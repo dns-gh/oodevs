@@ -61,15 +61,6 @@ double MIL_ProfilerMgr::GetLastTickDuration()
     return tickDurationProfiler_.GetLastTime();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_ProfilerMgr::IsProfilingEnabled
-// Created: NLD 2005-03-15
-// -----------------------------------------------------------------------------
-bool MIL_ProfilerMgr::IsProfilingEnabled() const
-{
-    return bEnabled_;
-}
-
 //-----------------------------------------------------------------------------
 // Name: MIL_ProfilerMgr::NotifyTickEnd
 // Created: AML 03-05-21
