@@ -93,7 +93,7 @@
 #include "Populations/MIL_Population.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Config.h"
-#include "Tools/MIL_ProfilerMgr.h"
+#include "Tools/MIL_ProfilerManager.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "tools/SchemaWriter.h"
@@ -278,7 +278,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , gcPause_                      ( config.ReadGCParameter_setPause() )
     , gcMult_                       ( config.ReadGCParameter_setStepMul() )
     , effectManager_                ( effects )
-    , profilerManager_              ( new MIL_ProfilerMgr( config ) )
+    , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0 )
     , rAutomatesDecisionTime_       ( 0 )
@@ -314,7 +314,7 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , gcPause_                      ( config.ReadGCParameter_setPause() )
     , gcMult_                       ( config.ReadGCParameter_setStepMul() )
     , effectManager_                ( effects )
-    , profilerManager_              ( new MIL_ProfilerMgr( config ) )
+    , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0 )
     , rAutomatesDecisionTime_       ( 0 )
@@ -851,19 +851,19 @@ void MIL_EntityManager::UpdateKnowledges()
 
 namespace
 {
-    void UpdateAutomate( float duration, MIL_Automate& automate, MT_Profiler& profiler, MIL_ProfilerMgr& profilerManager )
+    void UpdateAutomate( float duration, MIL_Automate& automate, MT_Profiler& profiler, MIL_ProfilerManager& profilerManager )
     {
         profiler.Start();
         automate.UpdateDecision( duration );
         profilerManager.NotifyDecisionUpdated( automate, profiler.Stop() );
     }
-    void UpdatePion( float duration, MIL_AgentPion& pion, MT_Profiler& profiler, MIL_ProfilerMgr& profilerManager )
+    void UpdatePion( float duration, MIL_AgentPion& pion, MT_Profiler& profiler, MIL_ProfilerManager& profilerManager )
     {
         profiler.Start();
         pion.UpdateDecision( duration );
         profilerManager.NotifyDecisionUpdated( pion, profiler.Stop() );
     }
-    void UpdatePopulation( float duration, MIL_Population& population, MT_Profiler& profiler, MIL_ProfilerMgr& profilerManager )
+    void UpdatePopulation( float duration, MIL_Population& population, MT_Profiler& profiler, MIL_ProfilerManager& profilerManager )
     {
         profiler.Start();
         population.UpdateDecision( duration );

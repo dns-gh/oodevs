@@ -74,7 +74,7 @@ class MIL_ObjectBuilder_ABC;
 class MIL_UrbanObject_ABC;
 class MIL_Population;
 class MIL_Inhabitant;
-class MIL_ProfilerMgr;
+class MIL_ProfilerManager;
 class MIL_Time_ABC;
 class MissionController_ABC;
 class InhabitantFactory_ABC;
@@ -289,7 +289,7 @@ private:
     T_Cities cities_;
 
     // Profiling
-    std::auto_ptr< MIL_ProfilerMgr > profilerManager_;
+    std::auto_ptr< MIL_ProfilerManager > profilerManager_;
     unsigned int nRandomBreakdownsNextTimeStep_;
     double rKnowledgesTime_;
     double rAutomatesDecisionTime_;

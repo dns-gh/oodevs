@@ -350,6 +350,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\moving\PHY_RoleAction_Moving.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Moving\SpeedComputerStrategy.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_HumanRepartition.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_ProfilerManager.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputerFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\TransportNotificationHandler_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\entities\agents\actions\flying\PHY_ActionFly.cpp" />
@@ -817,7 +818,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_DictionaryExtensions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_Geometry.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_IDManager.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\tools\MIL_ProfilerMgr.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_Random.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\tools\MIL_Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Decision.cpp" />
@@ -1006,6 +1006,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\simulation_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_HumanRepartition.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_ProfilerManager.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\TransportCapacityComputerFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tristate.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\network\NET_AgentServer.h" />
@@ -1696,7 +1697,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_DictionaryExtensions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_Geometry.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_IDManager.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\tools\MIL_ProfilerMgr.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Random.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\tools\MIL_Tools.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Decision.h" />

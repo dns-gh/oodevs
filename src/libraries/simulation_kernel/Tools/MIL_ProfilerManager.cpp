@@ -1,16 +1,16 @@
 //*****************************************************************************
 //
 // $Created: AML 03-05-21 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Tools/MIL_ProfilerMgr.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/Src/Tools/MIL_ProfilerManager.cpp $
 // $Author: Nld $
 // $Modtime: 21/04/05 12:04 $
 // $Revision: 5 $
-// $Workfile: MIL_ProfilerMgr.cpp $
+// $Workfile: MIL_ProfilerManager.cpp $
 //
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "MIL_ProfilerMgr.h"
+#include "MIL_ProfilerManager.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Config.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -21,10 +21,10 @@
 #include <direct.h>
 
 //-----------------------------------------------------------------------------
-// Name: MIL_ProfilerMgr constructor
+// Name: MIL_ProfilerManager constructor
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
-MIL_ProfilerMgr::MIL_ProfilerMgr( const MIL_Config& config )
+MIL_ProfilerManager::MIL_ProfilerManager( const MIL_Config& config )
     : bEnabled_( config.IsProfilingEnabled() )
 {
     if( bEnabled_ )
@@ -36,19 +36,19 @@ MIL_ProfilerMgr::MIL_ProfilerMgr( const MIL_Config& config )
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_ProfilerMgr destructor
+// Name: MIL_ProfilerManager destructor
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
-MIL_ProfilerMgr::~MIL_ProfilerMgr()
+MIL_ProfilerManager::~MIL_ProfilerManager()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ProfilerMgr::NotifyDecisionUpdated
+// Name: MIL_ProfilerManager::NotifyDecisionUpdated
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_AgentPion& pion, double rTime )
+void MIL_ProfilerManager::NotifyDecisionUpdated( const MIL_AgentPion& pion, double rTime )
 {
     if( !bEnabled_ )
         return;
@@ -56,10 +56,10 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_AgentPion& pion, double r
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ProfilerMgr::NotifyDecisionUpdated
+// Name: MIL_ProfilerManager::NotifyDecisionUpdated
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, double rTime )
+void MIL_ProfilerManager::NotifyDecisionUpdated( const MIL_Automate& automate, double rTime )
 {
     if( !bEnabled_ )
         return;
@@ -67,10 +67,10 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, doubl
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ProfilerMgr::NotifyDecisionUpdated
+// Name: MIL_ProfilerManager::NotifyDecisionUpdated
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Population& population, double rTime )
+void MIL_ProfilerManager::NotifyDecisionUpdated( const MIL_Population& population, double rTime )
 {
     if( !bEnabled_ )
         return;

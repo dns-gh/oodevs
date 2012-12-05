@@ -2190,9 +2190,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_IDManager.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\tools\MIL_ProfilerMgr.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_Random.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -2663,6 +2660,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DisasterEffectManipulator.cpp">
       <Filter>Source Files\Entities\Objects\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_ProfilerManager.cpp">
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4694,9 +4694,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_IDManager.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\tools\MIL_ProfilerMgr.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_Random.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
@@ -5449,6 +5446,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\MIL_DisasterEffectManipulator.h">
       <Filter>Source Files\Entities\Objects\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Tools\MIL_ProfilerManager.h">
+      <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
