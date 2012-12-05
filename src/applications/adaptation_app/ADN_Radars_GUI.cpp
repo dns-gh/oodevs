@@ -16,7 +16,6 @@
 #include "ADN_Radars_Data.h"
 #include "ADN_Radars_ListView.h"
 #include "ADN_SearchListView.h"
-#include "ADN_Sensors_DisastersListView.h"
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
@@ -93,31 +92,6 @@ void ADN_Radars_GUI::Build()
     pLabel->setText( tr( "When 'Durations' is unchecked, units are recognized instantly.\n"
                          "When 'HQ Durations' is unchecked, the detection times for HQs are the same as the others." ) );
 
-    // Collisions
-    ADN_GroupBox* pCollisions = new ADN_GroupBox( tr( "Collisions" ) );
-    pCollisions->setObjectName( strClassName_+ "_Collisions" );
-    vConnectors[ eHasCollisions ] = &pCollisions->GetConnector();
-
-    ADN_Sensors_DisastersListView* pDisastersListView = new ADN_Sensors_DisastersListView( 0 );
-    pDisastersListView->setObjectName( strClassName_ + "_DisastersList" );
-    vConnectors[ eCollisions ] = &pDisastersListView->GetConnector();
-    T_ConnectorVector vDisasterConnectors( eNbrDisasterElements, static_cast< ADN_Connector_ABC* >( 0 ) );
-
-    QGroupBox* pDisasterParamsGroupBox = new QGroupBox( tr( "Parameters" ), 0 );
-    QWidget* pDisasterHolder = builder.AddFieldHolder( pDisasterParamsGroupBox );
-    builder.AddField< ADN_EditLine_Double >( pDisasterHolder, tr( "Detection threshold" ), vDisasterConnectors[ eDetectionThreshold ], "", eGreaterEqualZero );
-
-    QHBoxLayout* pDisasterParamGroupBoxLayout = new QHBoxLayout( pDisasterParamsGroupBox );
-    pDisasterParamGroupBoxLayout->setSpacing( 5 );
-    pDisasterParamGroupBoxLayout->addWidget( pDisasterHolder );
-
-    QHBoxLayout* pDisasterParamGroupLayout = new QHBoxLayout( pCollisions );
-    pDisasterParamGroupLayout->setSpacing( 5 );
-    pDisasterParamGroupLayout->addWidget( pDisastersListView, 2 );
-    pDisasterParamGroupLayout->addWidget( pDisasterParamsGroupBox, 1 );
-
-    pDisastersListView->SetItemConnectors( vDisasterConnectors );
-
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
@@ -130,7 +104,6 @@ void ADN_Radars_GUI::Build()
     pContentLayout->addWidget( pInfoHolder );
     pContentLayout->addWidget( pDetectableActivitiesGroup );
     pContentLayout->addWidget( pDetectTimesGroup );
-    pContentLayout->addWidget( pCollisions );
 
     // List view
     ADN_SearchListView< ADN_Radars_ListView >* pSearchListView = new ADN_SearchListView< ADN_Radars_ListView >( this, data_.vRadars_, vConnectors );

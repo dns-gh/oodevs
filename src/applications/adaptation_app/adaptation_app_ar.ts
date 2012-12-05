@@ -3340,13 +3340,6 @@ The spawn capacity will be disabled.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Radars_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">بيانات غير صالحة</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Radars_GUI</name>
     <message>
         <source>Name</source>
@@ -3401,18 +3394,6 @@ The spawn capacity will be disabled.</source>
 When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
         <translation type="unfinished">عندما &apos;مدد&apos; دون رادع، وحدات يتم التعرف عليها على الفور.
 عند &apos;HQ المدد&apos; دون رادع، مرات الكشف للمقار هي نفسها كالآخرين.</translation>
-    </message>
-    <message>
-        <source>Collisions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameters</source>
-        <translation type="unfinished">المعلمات</translation>
-    </message>
-    <message>
-        <source>Detection threshold</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3897,21 +3878,6 @@ Make sure that the file is not write-protected.</source>
     <message>
         <source>Cannot be selected.</source>
         <translation type="unfinished">لا يمكن تحديدها.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Sensors_DisastersListView</name>
-    <message>
-        <source>Disasters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add disaster</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove disaster</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6250,13 +6216,6 @@ Click &quot;Ok&quot; to delete it.</source>
     <message>
         <source>s</source>
         <translation type="unfinished">s</translation>
-    </message>
-</context>
-<context>
-    <name>Radar_Data</name>
-    <message>
-        <source>Radars - Invalid disaster &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

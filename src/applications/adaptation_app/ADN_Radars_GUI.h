@@ -49,16 +49,9 @@ public:
         eHQRecoTime,
         eHasHQIdentificationTime,
         eHQIdentificationTime,
-        eHasCollisions,
-        eCollisions,
         eNbrGuiElements
     };
 
-    enum E_DisasterElements
-    {
-        eDetectionThreshold,
-        eNbrDisasterElements
-    };
 public:
     //! @name Constructors/Destructor
     //@{

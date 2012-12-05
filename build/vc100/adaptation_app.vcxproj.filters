@@ -1201,9 +1201,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Equipments_Resources_ListView.cpp">
       <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_DisastersListView.cpp">
-      <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1856,9 +1853,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Equipments_ConsumptionsTable.h">
       <Filter>Source Files\Workspace\Equipments\Equipments GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_DisastersListView.h">
-      <Filter>Source Files\Workspace\Radars\Radars GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

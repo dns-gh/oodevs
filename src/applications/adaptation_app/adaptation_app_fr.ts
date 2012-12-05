@@ -3356,13 +3356,6 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
     </message>
 </context>
 <context>
-    <name>ADN_Radars_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Radars_GUI</name>
     <message>
         <source>Name</source>
@@ -3417,18 +3410,6 @@ La capacité d&apos;engendrer un autre objet vas être désactivée.</translatio
 When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
         <translation>Si &apos;Durées&apos; n&apos;est pas renseigné, les pions sont détectés instantanément.
 SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de détection d&apos;un PC est la même que pour les autres pions.</translation>
-    </message>
-    <message>
-        <source>Collisions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameters</source>
-        <translation type="unfinished">Paramètres</translation>
-    </message>
-    <message>
-        <source>Detection threshold</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3913,21 +3894,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Unseen</source>
         <translation>Non perçu</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Sensors_DisastersListView</name>
-    <message>
-        <source>Disasters</source>
-        <translation>Désastre</translation>
-    </message>
-    <message>
-        <source>Add disaster</source>
-        <translation>Ajouter un désastre</translation>
-    </message>
-    <message>
-        <source>Remove disaster</source>
-        <translation>Enlever ce désastre</translation>
     </message>
 </context>
 <context>
@@ -6277,13 +6243,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     <message>
         <source>s</source>
         <translation>s</translation>
-    </message>
-</context>
-<context>
-    <name>Radar_Data</name>
-    <message>
-        <source>Radars - Invalid disaster &apos;%1&apos;</source>
-        <translation type="unfinished">Radars - Désastre &apos;%1&apos; invalide</translation>
     </message>
 </context>
 <context>

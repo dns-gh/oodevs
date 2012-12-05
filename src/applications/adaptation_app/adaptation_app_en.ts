@@ -3353,13 +3353,6 @@ The spawn capacity will be disabled.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Radars_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation type="unfinished">Invalid data</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Radars_GUI</name>
     <message>
         <source>Name</source>
@@ -3414,18 +3407,6 @@ The spawn capacity will be disabled.</translation>
 When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
         <translation>When &apos;Durations&apos; is unchecked, units are recognized instantly.
 When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</translation>
-    </message>
-    <message>
-        <source>Collisions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameters</source>
-        <translation type="unfinished">Parameters</translation>
-    </message>
-    <message>
-        <source>Detection threshold</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3913,21 +3894,6 @@ Make sure that the file is not write-protected.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Sensors_DisastersListView</name>
-    <message>
-        <source>Disasters</source>
-        <translation type="unfinished">Disasters</translation>
-    </message>
-    <message>
-        <source>Add disaster</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove disaster</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Sensors_Environments_GUI</name>
     <message>
         <source>Modifiers</source>
@@ -4156,11 +4122,11 @@ Make sure that the file is not write-protected.</translation>
     </message>
     <message>
         <source>Add object</source>
-        <translation type="unfinished">Add object</translation>
+        <translation>Add object</translation>
     </message>
     <message>
         <source>Remove object</source>
-        <translation type="unfinished">Remove object</translation>
+        <translation>Remove object</translation>
     </message>
 </context>
 <context>
@@ -6263,13 +6229,6 @@ Click &quot;Ok&quot; to delete it.</translation>
     <message>
         <source>s</source>
         <translation>s</translation>
-    </message>
-</context>
-<context>
-    <name>Radar_Data</name>
-    <message>
-        <source>Radars - Invalid disaster &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
