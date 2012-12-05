@@ -24,6 +24,7 @@
 #include "ADN_Sensors_Illumination_GUI.h"
 #include "ADN_Sensors_Environments_GUI.h"
 #include "ADN_Sensors_UrbanBlockMaterial_GUI.h"
+#include "ADN_Sensors_DisastersListView.h"
 #include "ADN_Sensors_Postures_GUI.h"
 #include "ADN_Sensors_LimitedToSensorsListView.h" // LTO
 #include "ADN_Sensors_TargetsListView.h"
@@ -289,6 +290,33 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // Set the connectors.
     pTargetListView->SetItemConnectors( vTargetConnectors );
 
+
+    // disaster
+    ADN_GroupBox* pCollisions = new ADN_GroupBox( tr( "Can detect disasters" ) );
+    pCollisions->setMinimumHeight( 150 );
+    pCollisions->setObjectName( strClassName_+ "_CanDetectDisasters" );
+    vConnectors[ eCanDetectDiasters ] = &pCollisions->GetConnector();
+
+    ADN_Sensors_DisastersListView* pDisastersListView = new ADN_Sensors_DisastersListView( 0 );
+    pDisastersListView->setObjectName( strClassName_ + "_DisastersList" );
+    vConnectors[ eDisasters ] = &pDisastersListView->GetConnector();
+    T_ConnectorVector vDisasterConnectors( eNbrDisasterElements, static_cast< ADN_Connector_ABC* >( 0 ) );
+
+    QGroupBox* pDisasterParamsGroupBox = new QGroupBox( tr( "Parameters" ), 0 );
+    QWidget* pDisasterHolder = builder.AddFieldHolder( pDisasterParamsGroupBox );
+    builder.AddField< ADN_EditLine_Double >( pDisasterHolder, tr( "Detection threshold" ), vDisasterConnectors[ eDetectionThreshold ], "", eGreaterEqualZero );
+
+    QHBoxLayout* pDisasterParamGroupBoxLayout = new QHBoxLayout( pDisasterParamsGroupBox );
+    pDisasterParamGroupBoxLayout->setSpacing( 5 );
+    pDisasterParamGroupBoxLayout->addWidget( pDisasterHolder );
+
+    QHBoxLayout* pDisasterParamGroupLayout = new QHBoxLayout( pCollisions );
+    pDisasterParamGroupLayout->setSpacing( 5 );
+    pDisasterParamGroupLayout->addWidget( pDisastersListView, 2 );
+    pDisasterParamGroupLayout->addWidget( pDisasterParamsGroupBox, 1 );
+
+    pDisastersListView->SetItemConnectors( vDisasterConnectors );
+
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
@@ -331,6 +359,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pContentLayout->addWidget( pInfoHolder );
     pContentLayout->addWidget( pAgentParamGroupBox );
     pContentLayout->addLayout( pLimitedAndObjectsGroupLayout );
+    pContentLayout->addWidget( pCollisions );
 
     // List view
     ADN_SearchListView< ADN_ListView_Sensors >* pSearchListView = new ADN_SearchListView< ADN_ListView_Sensors >( this, data_.GetSensorsInfos(), vConnectors );

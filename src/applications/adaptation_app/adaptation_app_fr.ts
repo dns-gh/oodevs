@@ -3818,6 +3818,17 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Sensors_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid disaster &apos;%1&apos;</source>
+        <translation>Capteurs - Désastre invalide  &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Sensors_DetectionAlgorithmPrevision</name>
     <message>
         <source>Simulation</source>
@@ -3894,6 +3905,21 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Unseen</source>
         <translation>Non perçu</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Sensors_DisastersListView</name>
+    <message>
+        <source>Disasters</source>
+        <translation type="unfinished">Désastre</translation>
+    </message>
+    <message>
+        <source>Add disaster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove disaster</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4068,6 +4094,14 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Target stance modifiers</source>
         <translation>Modificateurs dus à la posture cible</translation>
+    </message>
+    <message>
+        <source>Can detect disasters</source>
+        <translation>Détecte les désastres</translation>
+    </message>
+    <message>
+        <source>Detection threshold</source>
+        <translation>Seuil de détection</translation>
     </message>
 </context>
 <context>

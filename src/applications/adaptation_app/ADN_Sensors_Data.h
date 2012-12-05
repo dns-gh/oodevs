@@ -19,6 +19,7 @@
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Categories_Data.h"
+#include "ADN_Disasters_Data.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Radars_Data.h"
 
@@ -316,6 +317,27 @@ public:
     typedef T_TargetsInfos_Vector::iterator  IT_TargetsInfos_Vector;
 
 //*****************************************************************************
+
+    class DisasterInfos : public ADN_Ref_ABC
+    {
+    public:
+        DisasterInfos();
+        virtual ~DisasterInfos();
+
+        DisasterInfos* CreateCopy();
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        ADN_TypePtr_InVector_ABC< ADN_Disasters_Data::DisasterInfos > ptrDisaster_;
+        ADN_Type_Double                                               rDetectionThreshold_;
+    };
+
+    typedef ADN_Type_Vector_ABC< DisasterInfos > T_DisasterInfos_Vector;
+    typedef T_DisasterInfos_Vector::iterator    IT_DisasterInfos_Vector;
+
+//*****************************************************************************
+
     class SensorInfos : public ADN_RefWithName
     {
     public:
@@ -327,7 +349,9 @@ public:
         void ReadLimitedToSensorsList( xml::xistream& input ); // LTO
         void ReadBaseDistance( xml::xistream& input );
         void ReadObject( xml::xistream& input );
+        void ReadDisaster( xml::xistream& input );
         void ReadObjectDetection( xml::xistream& input );
+        void ReadDisasterDetection( xml::xistream& input );
         void ReadUnitDetection( xml::xistream& input );
         void ReadSize( xml::xistream& input );
         void ReadPrecipitation( xml::xistream& input );
@@ -362,6 +386,8 @@ public:
 
         ADN_Type_Bool                           bCanDetectObjects_;
         T_TargetsInfos_Vector                   vTargets_;
+        ADN_Type_Bool                           bCanDetectDisasters_;
+        T_DisasterInfos_Vector                  vDisasters_;
     };
 
     typedef ADN_Type_Vector_ABC<SensorInfos> T_SensorsInfos_Vector;
@@ -411,6 +437,7 @@ public:
     CobraInfos& GetCobraInfos();
 
     QStringList GetSensorsThatUse( ADN_Objects_Data_ObjectInfos& object );
+    QStringList GetSensorsThatUse( ADN_Disasters_Data::DisasterInfos& disaster );
 
 private:
     void ReadSensor( xml::xistream& input );

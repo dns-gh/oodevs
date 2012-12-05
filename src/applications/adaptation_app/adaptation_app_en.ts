@@ -3815,6 +3815,17 @@ Make sure that the file is not write-protected.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Sensors_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Invalid data</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid disaster &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Sensors_DetectionAlgorithmPrevision</name>
     <message>
         <source>Identified</source>
@@ -3891,6 +3902,21 @@ Make sure that the file is not write-protected.</translation>
     <message>
         <source>Cannot be selected.</source>
         <translation>Cannot be selected.</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Sensors_DisastersListView</name>
+    <message>
+        <source>Disasters</source>
+        <translation type="unfinished">Disasters</translation>
+    </message>
+    <message>
+        <source>Add disaster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove disaster</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4065,6 +4091,14 @@ Make sure that the file is not write-protected.</translation>
     <message>
         <source>Detection distance (m)</source>
         <translation>Detection distance (m)</translation>
+    </message>
+    <message>
+        <source>Can detect disasters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detection threshold</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

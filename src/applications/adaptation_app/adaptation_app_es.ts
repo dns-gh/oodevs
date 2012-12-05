@@ -3816,6 +3816,17 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Sensors_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid disaster &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Sensors_DetectionAlgorithmPrevision</name>
     <message>
         <source>Simulation</source>
@@ -3891,6 +3902,21 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
     <message>
         <source>Crowd Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Sensors_DisastersListView</name>
+    <message>
+        <source>Disasters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add disaster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove disaster</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4066,6 +4092,14 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Target stance modifiers</source>
         <translation type="unfinished">Modificadores de postura de blanco</translation>
+    </message>
+    <message>
+        <source>Can detect disasters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detection threshold</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

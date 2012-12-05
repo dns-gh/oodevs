@@ -399,6 +399,70 @@ void ADN_Sensors_Data::TargetInfos::WriteArchive( xml::xostream& output )
 }
 
 // =============================================================================
+//
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::DisasterInfos
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::DisasterInfos::DisasterInfos()
+    : ptrDisaster_        ( ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), 0 )
+    , rDetectionThreshold_( 0.)
+{
+    BindExistenceTo( &ptrDisaster_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::~DisasterInfos
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::DisasterInfos::~DisasterInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::CreateCopy
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::DisasterInfos* ADN_Sensors_Data::DisasterInfos::CreateCopy()
+{
+    DisasterInfos* pNew = new DisasterInfos();
+    pNew->ptrDisaster_ = ptrDisaster_.GetData();
+    pNew->rDetectionThreshold_ = rDetectionThreshold_.GetData();
+    return pNew;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::ReadArchive
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::DisasterInfos::ReadArchive( xml::xistream& input )
+{
+    std::string strType;
+    input >> xml::attribute( "type", strType )
+          >> xml::attribute( "detection-threshold", rDetectionThreshold_ );
+
+    ADN_Disasters_Data::DisasterInfos* pDisaster = ADN_Workspace::GetWorkspace().GetDisasters().GetData().FindDisaster( strType );
+    if( !pDisaster )
+        throw ADN_DataException( tools::translate( "ADN_Sensors_Data", "Invalid data" ).toStdString(),tools::translate( "ADN_Sensors_Data", "Sensors - Invalid disaster '%1'" ).arg( strType.c_str() ).toStdString() );
+    ptrDisaster_ = pDisaster;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::WriteArchive
+// Created: LGY 2012-12-03
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::DisasterInfos::WriteArchive( xml::xostream& output )
+{
+    output << xml::start( "disaster" )
+               << xml::attribute( "type", ptrDisaster_.GetData()->strName_ )
+               << xml::attribute( "detection-threshold", rDetectionThreshold_ )
+           << xml::end;
+}
+
+// =============================================================================
 // ADN_Sensor_Data::PopulationInfos
 // =============================================================================
 
@@ -476,6 +540,7 @@ void ADN_Sensors_Data::PopulationInfos::WriteArchive( xml::xostream& output )
 ADN_Sensors_Data::SensorInfos::SensorInfos()
     : bCanDetectAgents_    ( false )
     , bCanDetectObjects_   ( false )
+    , bCanDetectDisasters_ ( false )
     , bCanScan_            ( false )
     , rFirerDetectionRange_( 0 )
     , rAngle_              ( 0 )
@@ -532,6 +597,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 ADN_Sensors_Data::SensorInfos::~SensorInfos()
 {
     vTargets_.Reset();
+    vDisasters_.Reset();
     vLimitedToSensorsInfos_.Reset(); // LTO
     vModifIlluminations_.Reset();
     vModifWeather_.Reset();
@@ -558,6 +624,7 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     pCopy->bCanDetectAgents_    = bCanDetectAgents_.GetData();
     pCopy->bLimitedToSensors_   = bLimitedToSensors_.GetData(); // LTO
     pCopy->bCanDetectObjects_   = bCanDetectObjects_.GetData();
+    pCopy->bCanDetectDisasters_   = bCanDetectDisasters_.GetData();
     pCopy->detectionDelay_ = detectionDelay_.GetData();
     pCopy->populationInfos_.CopyFrom( populationInfos_ );
 
@@ -565,6 +632,12 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     {
         TargetInfos* pNewInfo = (*itTarget)->CreateCopy();
         pCopy->vTargets_.AddItem( pNewInfo );
+    }
+
+    for( IT_DisasterInfos_Vector it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
+    {
+        DisasterInfos* pNewInfo = (*it)->CreateCopy();
+        pCopy->vDisasters_.AddItem( pNewInfo );
     }
 
     // LTO begin
@@ -783,6 +856,8 @@ void ADN_Sensors_Data::SensorInfos::ReadItem( const std::string& name, xml::xist
         ReadUnitDetection( input );
     else if( name == "object-detection" )
         ReadObjectDetection( input );
+    else if( name == "disaster-detection" )
+        ReadDisasterDetection( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -804,6 +879,27 @@ void ADN_Sensors_Data::SensorInfos::ReadObjectDetection( xml::xistream& input )
 {
     bCanDetectObjects_ = true;
     input >> xml::list( "object", *this, &ADN_Sensors_Data::SensorInfos::ReadObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::ReadDisasterDetection
+// Created: LGY 2012-12-05
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::SensorInfos::ReadDisasterDetection( xml::xistream& input )
+{
+    bCanDetectDisasters_ = true;
+    input >> xml::list( "disaster", *this, &ADN_Sensors_Data::SensorInfos::ReadDisaster );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::ReadDisaster
+// Created: LGY 2012-12-05
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::SensorInfos::ReadDisaster( xml::xistream& input )
+{
+    std::auto_ptr< DisasterInfos > spNew( new DisasterInfos() );
+    spNew->ReadArchive( input );
+    vDisasters_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -904,6 +1000,14 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
     {
         output << xml::start( "object-detection" );
         for( IT_TargetsInfos_Vector it = vTargets_.begin(); it != vTargets_.end(); ++it )
+            (*it)->WriteArchive( output );
+        output << xml::end;
+    }
+
+    if( bCanDetectDisasters_.GetData() )
+    {
+        output << xml::start( "disaster-detection" );
+        for( IT_DisasterInfos_Vector it = vDisasters_.begin(); it != vDisasters_.end(); ++it )
             (*it)->WriteArchive( output );
         output << xml::end;
     }
@@ -1108,6 +1212,23 @@ QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Objects_Data_ObjectInfos& o
         SensorInfos* pComp = *it;
         for( T_TargetsInfos_Vector::iterator itTarget = pComp->vTargets_.begin(); itTarget != pComp->vTargets_.end(); ++itTarget )
             if( (*itTarget)->ptrObject_.GetData()->strName_.GetData() == object.strName_.GetData() )
+                result << pComp->strName_.GetData().c_str();
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::GetSensorsThatUse
+// Created: LGY 2012-12-05
+// -----------------------------------------------------------------------------
+QStringList ADN_Sensors_Data::GetSensorsThatUse( ADN_Disasters_Data::DisasterInfos& disaster )
+{
+    QStringList result;
+    for( IT_SensorsInfos_Vector it = vSensors_.begin(); it != vSensors_.end(); ++it )
+    {
+        SensorInfos* pComp = *it;
+        for( IT_DisasterInfos_Vector it = pComp->vDisasters_.begin(); it != pComp->vDisasters_.end(); ++it )
+            if( (*it)->ptrDisaster_.GetData()->strName_.GetData() == disaster.strName_.GetData() )
                 result << pComp->strName_.GetData().c_str();
     }
     return result;

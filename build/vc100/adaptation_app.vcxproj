@@ -238,6 +238,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_NbcSuitTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchListView.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_DisastersListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_StandardItem.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDelegate.cpp" />
@@ -1785,6 +1786,7 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NbcSuitTable.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_RefWithName.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_DisastersListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_StandardItem.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TableDelegate.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.h" />

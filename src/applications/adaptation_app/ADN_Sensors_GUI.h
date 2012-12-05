@@ -59,6 +59,8 @@ public:
         ePreviewModifUrbanBlockMaterial,
         ePreviewModifStances,
         ePreviewModifTargetStances,
+        eCanDetectDiasters,
+        eDisasters,
         eNbrGuiElements
     };
 
@@ -69,6 +71,12 @@ public:
         eObjPopulationDensity,
         eObjPopulationModifier,
         eNbrObjGuiElements
+    };
+
+    enum E_DisasterElements
+    {
+        eDetectionThreshold,
+        eNbrDisasterElements
     };
 
 public:

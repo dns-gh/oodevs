@@ -65,6 +65,17 @@ void ADN_ListView_Disasters::OnContextMenu( const QPoint& point )
     Q3PopupMenu popupMenu( this );
     ADN_Wizard< ADN_Disasters_Data::DisasterInfos > wizard( ADN_Tr::ConvertFromWorkspaceElement( eDisasters ).c_str(), ADN_Workspace::GetWorkspace().GetDisasters().GetData().GetDisastersInfos(), this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        ADN_Disasters_Data::DisasterInfos* pCastData = static_cast< ADN_Disasters_Data::DisasterInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                      ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), eSensors );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(),
+                                      ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
+                                      ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), eObjects );
+    }
     popupMenu.exec( point );
 }
 
@@ -83,6 +94,8 @@ std::string ADN_ListView_Disasters::GetToolTipFor( const QModelIndex& index )
     std::string result;
     FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eObjects ).c_str(),
         ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectsThatUse( *pCastData ), result );
+    FillMultiUsersList( ADN_Tr::ConvertFromWorkspaceElement( eSensors ).c_str(),
+        ADN_Workspace::GetWorkspace().GetSensors().GetData().GetSensorsThatUse( *pCastData ), result );
 
     if( result.empty() )
         result = tr( "<b>Unused</b>" ).toStdString();
