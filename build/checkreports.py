@@ -237,7 +237,7 @@ def cmdcheck(ui, args):
             result = 1
     for n in (set(cppids) - simnames):
         ui.error('error: %s is not marked as a simulation identifier in '
-                'models reports.txt' % n)
+                'models reports.txt\n' % n)
     return result
 
 def cmddump(ui, args):
