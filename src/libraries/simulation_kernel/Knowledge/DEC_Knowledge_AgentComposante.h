@@ -46,6 +46,7 @@ public:
 
     //! @name Accessors
     //@{
+    const PHY_ComposantePion& GetComposante() const;
     const PHY_ComposanteType_ABC& GetType() const;
     unsigned int GetMajorScore() const;
     bool IsMajor() const;
@@ -61,6 +62,7 @@ public:
 private:
     //! @name Member data
     //@{
+    const PHY_ComposantePion* pComposante_;
     const PHY_ComposanteType_ABC* pType_;
     bool bCanFire_;
     bool bMajor_;
