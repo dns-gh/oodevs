@@ -36,6 +36,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , rWeight_              ( 0. )
     , rVolume_              ( 0. )
     , fRange_               ( 0.)
+    , ied_                  ( false )
     , bIlluminating_        ( false )
     , bMaintainIllumination_( false )
     , bGuided_              ( false )
