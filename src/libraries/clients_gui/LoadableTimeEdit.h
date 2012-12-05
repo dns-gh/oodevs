@@ -11,7 +11,6 @@
 #define __LoadableTimeEdit_h_
 
 #include "LoadableField.h"
-#include <Qt3Support/q3datetimeedit.h>
 
 namespace gui
 {
@@ -22,7 +21,7 @@ namespace gui
 */
 // Created: BCI 2011-05-09
 // =============================================================================
-class LoadableTimeEdit : public LoadableFieldTemplate< Q3TimeEdit >
+class LoadableTimeEdit : public LoadableFieldTemplate< QTimeEdit >
 {
 public:
 

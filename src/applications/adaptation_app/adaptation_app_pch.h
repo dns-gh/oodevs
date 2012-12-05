@@ -44,7 +44,6 @@
 #include <Qt3Support/q3progressbar.h>
 #include <Qt3Support/q3textedit.h>
 #include <Qt3Support/q3textview.h>
-#include <Qt3Support/q3valuelist.h>
 #include <Qt3Support/q3boxlayout.h>
 #include <Qt3Support/q3vgroupbox.h>
 #include <Qt3Support/q3hgroupbox.h>

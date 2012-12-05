@@ -164,7 +164,7 @@ namespace
             pLayout->setMargin( 10 );
             pLayout->setSpacing( 10 );
 
-            time_ = new Q3DateTimeEdit( this );
+            time_ = new QDateTimeEdit( this );
             pLayout->addMultiCellWidget( time_, 0, 0, 0, 1 );
             text_ = new QLineEdit( this );
             pLayout->addWidget( text_, 0, 2 );
@@ -202,11 +202,10 @@ namespace
             QDialog::accept();
         }
     private:
-        AlarmEditor& operator=( const AlarmEditor& );
         const Simulation& simulation_;
         QTreeWidgetItem* item_;
-        Q3DateTimeEdit* time_;
-        QLineEdit*     text_;
+        QDateTimeEdit* time_;
+        QLineEdit* text_;
     };
 }
 

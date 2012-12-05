@@ -31,7 +31,7 @@ ClockEditDialog::ClockEditDialog( QWidget* parent, kernel::Controllers& controll
     Q3GroupBox* box = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "ClockEditDialog", "Set current date and time: " ), this );
     {
         new QLabel( tools::translate( "ClockEditDialog", "New date and time: " ), box );
-        editor_ = new Q3DateTimeEdit( box );
+        editor_ = new QDateTimeEdit( box );
     }
     pLayout->addWidget( box, 0, 0 );
     Q3HBox* buttons = new Q3HBox( this );

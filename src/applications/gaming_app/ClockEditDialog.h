@@ -19,7 +19,6 @@ namespace kernel
 }
 
 class ActionsScheduler;
-class Q3DateTimeEdit;
 class Simulation;
 
 // =============================================================================
@@ -49,12 +48,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ClockEditDialog( const ClockEditDialog& );            //!< Copy constructor
-    ClockEditDialog& operator=( const ClockEditDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );
@@ -65,7 +58,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ActionsScheduler& scheduler_;
-    Q3DateTimeEdit* editor_;
+    QDateTimeEdit* editor_;
     //@}
 };
 
