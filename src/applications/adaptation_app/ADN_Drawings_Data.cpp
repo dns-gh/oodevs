@@ -418,7 +418,7 @@ void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& nam
 // -----------------------------------------------------------------------------
 ADN_Drawings_Data::DrawingInfo* const ADN_Drawings_Data::GetDrawing( const std::string& code ) const
 {
-    for( CIT_DrawingInfoVector it = drawings_.begin(); it != drawings_.end(); ++it )
+    for( auto it = drawings_.begin(); it != drawings_.end(); ++it )
         if( (*it)->GetCode() == code )
             return *it;
     return 0;

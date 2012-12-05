@@ -155,7 +155,7 @@ namespace
 
         virtual void VisitLines( const T_PointVector& points )
         {
-            for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+            for( auto it = points.begin(); it != points.end(); ++it )
                 location_.AddPoint( *it );
         }
 

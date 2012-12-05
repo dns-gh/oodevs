@@ -824,7 +824,7 @@ PHY_ComposantePion& PHY_ComposanteTypePion::InstanciateComposante( PHY_RolePion_
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InstanciateWeapons( std::back_insert_iterator < std::vector< PHY_Weapon* > > inserter ) const
 {
-    for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {
         const PHY_WeaponType& weaponType = *it->first;
         const bool             bMajor     =  it->second;
@@ -838,7 +838,7 @@ void PHY_ComposanteTypePion::InstanciateWeapons( std::back_insert_iterator < std
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::InstanciateSensors( std::back_insert_iterator < std::vector< PHY_Sensor* > > inserter ) const
 {
-    for( CIT_SensorTypeMap it = sensorTypes_.begin(); it != sensorTypes_.end(); ++it )
+    for( auto it = sensorTypes_.begin(); it != sensorTypes_.end(); ++it )
     {
         const PHY_SensorType&  sensorType = *it->first;
         const double         rHeight    =  it->second;
@@ -848,7 +848,7 @@ void PHY_ComposanteTypePion::InstanciateSensors( std::back_insert_iterator < std
 
 void PHY_ComposanteTypePion::InstanciateProtections( std::back_insert_iterator < std::vector< PHY_HumanProtection* > > inserter ) const
 {
-    for( CIT_ListOfHumanProtection it = humanProtections_.begin(); it != humanProtections_.end(); ++it )
+    for( auto it = humanProtections_.begin(); it != humanProtections_.end(); ++it )
     {
         const PHY_HumanProtection&  humanProtection = *(*it);
         inserter = &humanProtection.InstanciateHumanProtection();
@@ -1177,7 +1177,7 @@ double PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& f
 {
     double rRange = -1.;
 
-    for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {
         if( it->first->GetDotationCategory() == dotationCategory )
             rRange = std::max( rRange, it->first->GetMaxRangeToIndirectFire( firer, bCheckDotationsAvailability ) );
@@ -1192,7 +1192,7 @@ double PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& f
 double PHY_ComposanteTypePion::GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer ) const
 {
     double rRange = -1.;
-    for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
         if( it->first->GetDotationCategory().CanBeUsedForIndirectFire() )
             rRange = std::max( rRange, it->first->GetMaxRangeToIndirectFire( firer, false ) );
     return rRange;
@@ -1206,7 +1206,7 @@ double PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC& f
 {
     double rRange = std::numeric_limits< double >::max();
 
-    for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
     {
         if( it->first->GetDotationCategory() == dotationCategory )
             rRange = std::min( rRange, it->first->GetMinRangeToIndirectFire( firer, bCheckDotationsAvailability ) );
@@ -1233,7 +1233,7 @@ double PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC& f
 double PHY_ComposanteTypePion::GetMaxRangeToDirectFire() const
 {
     double rRange = 0.;
-    for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
         rRange = std::max( rRange, it->first->GetMaxRangeToDirectFire() );
     return rRange;
 }
@@ -1248,7 +1248,7 @@ double PHY_ComposanteTypePion::GetMaxRangeToDirectFire() const
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CanRepair( const PHY_Breakdown& breakdown ) const
 {
-    for( CIT_NTICapabilitySet it = ntiCapabilities_.begin(); it != ntiCapabilities_.end(); ++it )
+    for( auto it = ntiCapabilities_.begin(); it != ntiCapabilities_.end(); ++it )
         if( it->CanRepair( breakdown ) )
             return true;
     return false;
@@ -1414,7 +1414,7 @@ bool PHY_ComposanteTypePion::CanTransportStock( const PHY_DotationCategory& dota
 // -----------------------------------------------------------------------------
 void PHY_ComposanteTypePion::UseAmmunition( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
 {
-    for( CIT_ActiveProtectionVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+    for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         (*it)->UseAmmunition( category, pion );
 }
 
@@ -1425,7 +1425,7 @@ void PHY_ComposanteTypePion::UseAmmunition( const PHY_DotationCategory& category
 double PHY_ComposanteTypePion::GetPHModifier( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
 {
     double result = 1.;
-    for( CIT_ActiveProtectionVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+    for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         result *= (*it)->GetPHModifier( category, pion );
     return result;
 }
@@ -1436,7 +1436,7 @@ double PHY_ComposanteTypePion::GetPHModifier( const PHY_DotationCategory& catego
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::CounterIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
 {
-    for( CIT_ActiveProtectionVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+    for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         if( (*it)->CounterIndirectFire( category, pion ) )
             return true;
     return false;
@@ -1448,7 +1448,7 @@ bool PHY_ComposanteTypePion::CounterIndirectFire( const PHY_DotationCategory& ca
 // -----------------------------------------------------------------------------
 bool PHY_ComposanteTypePion::DestroyIndirectFire( const PHY_DotationCategory& category, MIL_Agent_ABC& pion ) const
 {
-    for( CIT_ActiveProtectionVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+    for( auto it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         if( (*it)->DestroyIndirectFire( category, pion ) )
             return true;
     return false;
@@ -1461,7 +1461,7 @@ bool PHY_ComposanteTypePion::DestroyIndirectFire( const PHY_DotationCategory& ca
 double PHY_ComposanteTypePion::GetAttritionIndexComposante( const PHY_MaterialCompositionType& material ) const
 {
     double rRange = 0.;
-    for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+    for( auto it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
         rRange = std::max( rRange, it->first->GetDotationCategory().GetUrbanAttritionScore( material ) );
     return rRange;
 }

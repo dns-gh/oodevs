@@ -93,9 +93,9 @@ void DEC_Knowledge_PopulationCollision::Update( MIL_PopulationConcentration& con
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationCollision::PublishKnowledges( DEC_Knowledge_Population& knowledge ) const
 {
-    for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         knowledge.Update( *this, **it  );
-    for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         knowledge.Update( *this, **it );
 }
 
@@ -109,13 +109,13 @@ double DEC_Knowledge_PopulationCollision::GetPionMaxSpeed() const
     T_ComposanteVolumeSet volumes_;
     pAgentColliding_->GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes( volumes_ );
     double rMaxSpeed = std::numeric_limits< double >::max();
-    for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
     {
         const MIL_PopulationFlow& flow = **it;
         for( CIT_ComposanteVolumeSet itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
             rMaxSpeed = std::min( rMaxSpeed, flow.GetPionMaxSpeed( **itVolume ) );
     }
-    for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         const MIL_PopulationConcentration& concentration = **it;
         for( CIT_ComposanteVolumeSet itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
@@ -133,9 +133,9 @@ double DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor() const
     assert( pAgentColliding_ );
     T_ComposanteVolumeSet volumes_;
     double rFactor = 1.;
-    for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         rFactor = std::max( rFactor, (**it).GetPionReloadingTimeFactor() );
-    for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         rFactor = std::max( rFactor, (**it).GetPionReloadingTimeFactor() );
     return rFactor;
 }
@@ -147,9 +147,9 @@ double DEC_Knowledge_PopulationCollision::GetPionReloadingTimeFactor() const
 double DEC_Knowledge_PopulationCollision::GetMaxPopulationDensity() const
 {
     double rMaxDensity = 0.;
-    for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         rMaxDensity = std::max( rMaxDensity, (**it).GetDensity() );
-    for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         rMaxDensity = std::max( rMaxDensity, (**it).GetDensity() );
     return rMaxDensity;
 }

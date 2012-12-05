@@ -527,7 +527,7 @@ namespace
         const TER_Localisation circle( *center, radius );
         const T_PointVector& pointLocalisationFinale = GET_DATA( localization, boost::shared_ptr< TER_Localisation > )->GetPoints();
         bool result = true;
-        for( CIT_PointVector it = pointLocalisationFinale.begin(); result && it != pointLocalisationFinale.end(); ++it )
+        for( auto it = pointLocalisationFinale.begin(); result && it != pointLocalisationFinale.end(); ++it )
             result = circle.IsInside( *it );
         return result;
     }

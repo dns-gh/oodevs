@@ -69,7 +69,7 @@ void PHY_RolePion_Population::Execute( moving::SpeedComputer_ABC& algorithm ) co
     T_KnowledgePopulationCollisionVector collisions;
     owner_.GetKnowledge().GetPopulationsColliding( collisions );
 
-    for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
+    for( auto it = collisions.begin(); it != collisions.end(); ++it )
     {
         const DEC_Knowledge_PopulationCollision& population = **it;
         algorithm.ApplyOnPopulation(population );
@@ -88,7 +88,7 @@ void PHY_RolePion_Population::Execute( firing::WeaponReloadingComputer_ABC& algo
     owner_.GetKnowledge().GetPopulationsColliding( collisions );
 
     double rFactor = 1.;
-    for( CIT_KnowledgePopulationCollisionVector it = collisions.begin(); it != collisions.end(); ++it )
+    for( auto it = collisions.begin(); it != collisions.end(); ++it )
     {
         const DEC_Knowledge_PopulationCollision& population = **it;
         rFactor = std::max( rFactor, population.GetPionReloadingTimeFactor() );
@@ -110,7 +110,7 @@ double PHY_RolePion_Population::GetCollidingPopulationDensity() const
         owner_.GetKnowledge().GetPopulationsColliding( populationsColliding );
 
         rPopulationDensity_ = 0.;
-        for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
+        for( auto it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
             rPopulationDensity_ = std::max( rPopulationDensity_, (**it).GetMaxPopulationDensity() );
 
         std::vector< TER_Object_ABC* > objects;

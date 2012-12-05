@@ -111,7 +111,7 @@ void ParamResourceNetworkNode::OnMenuClick( QAction* action )
 {
     selected_ = current_;
     if( selected_ )
-        for( CIT_Actions it = actions_.begin(); it != actions_.end(); ++it )
+        for( auto it = actions_.begin(); it != actions_.end(); ++it )
         {
             if( *it == action )
             {

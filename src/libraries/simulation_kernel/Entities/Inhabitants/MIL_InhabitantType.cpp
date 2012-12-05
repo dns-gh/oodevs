@@ -58,7 +58,7 @@ void MIL_InhabitantType::ReadInhabitant( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_InhabitantType::Terminate()
 {
-    for( CIT_InhabitantMap it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+    for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
         delete it->second;
     inhabitants_.clear();
 }
@@ -206,7 +206,7 @@ const MIL_InhabitantType* MIL_InhabitantType::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const MIL_InhabitantType* MIL_InhabitantType::Find( unsigned int nID )
 {
-    for( CIT_InhabitantMap it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+    for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
         if( it->second->nID_ == nID )
             return it->second;
     return 0;

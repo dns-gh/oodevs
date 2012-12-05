@@ -72,12 +72,12 @@ void DEC_FrontAndBackLinesComputer::Compute()
     TER_DistanceLess cmp ( fuseauGlobalDirLine.GetPosStart() );
     T_PointSet projectedPointSet( cmp );
     // Project all the positions on the fuseau global direction
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
     {
         if( !(**it).IsDead() )
             projectedPointSet.insert( fuseauGlobalDirLine.ClosestPointOnLine( (**it).GetRole< PHY_RoleInterface_Location >().GetPosition() ) );
     }
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
     {
         MT_Vector2D barycenter;
         if( (**it).GetAlivePionsBarycenter( barycenter ) )

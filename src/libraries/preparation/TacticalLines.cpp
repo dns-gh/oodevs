@@ -45,7 +45,7 @@ void TacticalLines::AddLine( TacticalLine_ABC& line )
 // -----------------------------------------------------------------------------
 void TacticalLines::SerializeAttributes( xml::xostream& xos ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( it->second->IsLimit() ? "limit" : "lima" );
         it->second->Apply( &Serializable_ABC::SerializeAttributes, xos );

@@ -46,7 +46,7 @@ SvglRenderer::SvglRenderer()
 // -----------------------------------------------------------------------------
 SvglRenderer::~SvglRenderer()
 {
-    for( CIT_Lists it = lists_.begin(); it != lists_.end(); ++it )
+    for( auto it = lists_.begin(); it != lists_.end(); ++it )
         glDeleteLists( it->second, 1 );
     if( colorList_ )
     {

@@ -104,7 +104,7 @@ void DEC_Knowledge_AgentDataRecognition::WriteKnowledges( xml::xostream& xos ) c
     if( rMajorOperationalState_ != std::numeric_limits< double >::max() )
         xos << xml::attribute( "major-op-state", rMajorOperationalState_ );
     unsigned int number = 1;
-    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         CIT_KnowledgeComposanteVector itNext = it + 1;
         if( itNext == composantes_.end() || ( it->GetType().GetMosID().id() != itNext->GetType().GetMosID().id() ) )
@@ -150,7 +150,7 @@ void DEC_Knowledge_AgentDataRecognition::DoUpdate( const T& data )
     rMajorOperationalState_ = data.GetMajorOperationalState();
     composantes_ = data.GetComposantes();
     double maxRange = 0;
-    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
         maxRange = std::max( maxRange, it->GetMaxRange() );
     maxSquareRange_ = maxRange * maxRange;
     if( !pAgentType_ )
@@ -231,7 +231,7 @@ const PHY_NatureAtlas& DEC_Knowledge_AgentDataRecognition::GetNatureAtlas() cons
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_AgentDataRecognition::IsHuman() const
 {
-    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
         if( it->GetType().GetProtection().IsHuman() )
             return true;
     return false;

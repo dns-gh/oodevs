@@ -111,9 +111,9 @@ MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::Order
 // -----------------------------------------------------------------------------
 MissionInterface_ABC::~MissionInterface_ABC()
 {
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         (*it)->RemoveFromController();
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         delete *it;
 }
 
@@ -124,7 +124,7 @@ MissionInterface_ABC::~MissionInterface_ABC()
 bool MissionInterface_ABC::CheckValidity()
 {
     bool b = true;
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         b = (*it)->CheckValidity() && b;
     return b;
 }
@@ -206,7 +206,7 @@ void MissionInterface_ABC::AddParameter( Param_ABC& parameter )
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CommitTo( actions::Action_ABC& action ) const
 {
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         (*it)->CommitTo( action );
 }
 
@@ -216,7 +216,7 @@ void MissionInterface_ABC::CommitTo( actions::Action_ABC& action ) const
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const
 {
-    for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end() ; ++it )
+    for( auto it = parameters_.begin() ; it != parameters_.end() ; ++it )
     {
         const geometry::Point2f p = entity_.Get< kernel::Positions >().GetPosition();
         extent.SetHotpoint( p );

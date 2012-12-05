@@ -59,7 +59,7 @@ bool PropertiesDictionary::HasKey( const QString& name ) const
 // -----------------------------------------------------------------------------
 void PropertiesDictionary::Display( Displayer_ABC& displayer )
 {
-    for( CIT_Properties it = properties_.begin(); it != properties_.end(); ++it )
+    for( auto it = properties_.begin(); it != properties_.end(); ++it )
         displayer.Display( it->second );
 }
 

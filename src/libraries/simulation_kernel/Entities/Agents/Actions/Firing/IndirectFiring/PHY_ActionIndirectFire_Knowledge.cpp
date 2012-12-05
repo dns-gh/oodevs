@@ -76,7 +76,7 @@ PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Knowledge::StopAction()
 {
-    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it  )
+    for( auto it = effects_.begin(); it != effects_.end(); ++it  )
     {
         (*it)->ForceFlying();
         (*it)->DecRef();
@@ -91,7 +91,7 @@ void PHY_ActionIndirectFire_Knowledge::StopAction()
 void PHY_ActionIndirectFire_Knowledge::Execute()
 {
     int nResult = firing::PHY_RoleAction_IndirectFiring::eRunning;
-    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it )
+    for( auto it = effects_.begin(); it != effects_.end(); ++it )
         nResult = role_.Fire( *it );
     Callback( nResult );
 }

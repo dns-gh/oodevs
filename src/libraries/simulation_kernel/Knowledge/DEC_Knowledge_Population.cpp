@@ -134,9 +134,9 @@ void DEC_Knowledge_Population::WriteKnowledges( xml::xostream& xos ) const
         xos << xml::attribute( "critical-intelligence", criticalIntelligence_ );
     xos     << xml::attribute( "id", nID_ );
 
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->WriteKnowledges( xos );
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         it->second->WriteKnowledges( xos );
 
     if( rDominationState_ )
@@ -154,9 +154,9 @@ void DEC_Knowledge_Population::WriteKnowledges( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::Prepare()
 {
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->Prepare();
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         it->second->Prepare();
     bDecStateUpdated_ = false;
     bCriticalIntelligenceUpdated_ = false;
@@ -240,9 +240,9 @@ void DEC_Knowledge_Population::Update( const DEC_Knowledge_PopulationFlowPercept
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::UpdateRelevance()
 {
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateRelevance();
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         it->second->UpdateRelevance();
 }
 
@@ -436,9 +436,9 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
             asnMsg().set_critical_intelligence( criticalIntelligence_ );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateOnNetwork();
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         it->second->UpdateOnNetwork();
 }
 
@@ -458,9 +458,9 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
         asnMsg().set_critical_intelligence( criticalIntelligence_ );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->SendStateToNewClient();
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         it->second->SendStateToNewClient();
 }
 
@@ -553,9 +553,9 @@ void DEC_Knowledge_Population::SetCriticalIntelligenceFromPopulationKnown()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowledge )
 {
-    for( CIT_ConcentrationMap it = knowledge.concentrations_.begin(); it != knowledge.concentrations_.end(); ++it )
+    for( auto it = knowledge.concentrations_.begin(); it != knowledge.concentrations_.end(); ++it )
         concentrations_[ it->first ] = new DEC_Knowledge_PopulationConcentration( *this, *it->second );
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         flows_[ it->first ] = new DEC_Knowledge_PopulationFlow( *this, *it->second );
     bIsRecon_ = knowledge.bIsRecon_;
     bReconAttributesValid_ = knowledge.bReconAttributesValid_;
@@ -574,9 +574,9 @@ void DEC_Knowledge_Population::HackPerceptionLevel( const PHY_PerceptionLevel* p
     if( *pPerceptionLevel > *pHackedPerceptionLevel_ )
     {
         pHackedPerceptionLevel_ = pPerceptionLevel;
-        for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
             it->second->HackPerceptionLevel( pPerceptionLevel );
-        for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        for( auto it = flows_.begin(); it != flows_.end(); ++it )
             it->second->HackPerceptionLevel( pPerceptionLevel );
     }
 }

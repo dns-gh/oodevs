@@ -31,7 +31,7 @@ SymbolRule::SymbolRule( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 SymbolRule::~SymbolRule()
 {
-    for( CIT_Cases it = cases_.begin(); it != cases_.end(); ++it )
+    for( auto it = cases_.begin(); it != cases_.end(); ++it )
         delete it->second;
 }
 
@@ -99,7 +99,7 @@ std::string SymbolRule::ConvertToNature( std::string symbol ) const
 // -----------------------------------------------------------------------------
 void SymbolRule::InternalConvertToNature( std::string& symbol, std::string& result ) const
 {
-    for( CIT_Cases it = cases_.begin(); !symbol.empty() && it != cases_.end(); ++it )
+    for( auto it = cases_.begin(); !symbol.empty() && it != cases_.end(); ++it )
         if( it->second->GetValue() == symbol.substr( 0, 1 ) )
         {
             result = result + it->first + '/';
@@ -117,7 +117,7 @@ void SymbolRule::InternalConvertToNature( std::string& symbol, std::string& resu
 void SymbolRule::Accept( SymbolVisitor_ABC& visitor ) const
 {
     visitor.StartCategory( name_ );
-    for( CIT_Cases it = cases_.begin(); it != cases_.end(); ++it )
+    for( auto it = cases_.begin(); it != cases_.end(); ++it )
         it->second->Accept( visitor );
     visitor.EndCategory();
 }

@@ -102,7 +102,7 @@ void Path::AddPoints( const sword::Location& message )
 void Path::VisitLines( const T_PointVector& points )
 {
     unsigned int i = 0;
-    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+    for( auto it = points.begin(); it != points.end(); ++it )
         AddPoint( *it, i++, points.size() );
 }
 
@@ -201,7 +201,7 @@ void Path::Accept( ParameterVisitor_ABC& visitor ) const
 void Path::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     Parameter< QString >::DisplayTooltip( viewport, tools );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
 }
 

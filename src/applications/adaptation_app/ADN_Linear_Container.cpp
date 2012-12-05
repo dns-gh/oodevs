@@ -50,7 +50,7 @@ void ADN_Linear_Container::Build()
     pLayout->setSpacing( 0 );
     pLayout->setAlignment( ( orientation_ == Qt::Vertical ) ? Qt::AlignTop : Qt::AlignLeft );
 
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         it->second.second->GetMainWidget()->reparent( pMainWidget_, QPoint( 0, 0 ) );
         pLayout->addWidget( it->second.second->GetMainWidget() );

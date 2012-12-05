@@ -76,7 +76,7 @@ const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( const std::string&
 // -----------------------------------------------------------------------------
 const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( unsigned int id )
 {
-    for( CIT_ResourceNetworkMap it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
+    for( auto it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
         if( it->second->GetId() == id )
             return it->second;
     return 0;
@@ -88,7 +88,7 @@ const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( unsigned int id )
 // -----------------------------------------------------------------------------
 const PHY_ResourceNetworkType* PHY_ResourceNetworkType::FindByDotation( const PHY_DotationCategory& dotation )
 {
-    for( CIT_ResourceNetworkMap it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
+    for( auto it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
         if( &it->second->GetDotationCategory() == &dotation )
             return it->second;
     return 0;

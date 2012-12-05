@@ -123,7 +123,7 @@ void TacticalObjectController::CreateObject( dispatcher::Object_ABC& object )
         if( !objectResolver_.Find( typeName, entityType ) )
             logger_.LogWarning( std::string( "Could not find EntityType for object type " ) + typeName );
         const rpr::ForceIdentifier forceIdentifier = GetForce( object );
-        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+        for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->ObjectCreated( *(itObject->second), object.GetId(), object.GetName().toStdString(), forceIdentifier, entityType );
     }
 }

@@ -89,9 +89,9 @@ void SummariesDisplayer::EndDisplay()
 // -----------------------------------------------------------------------------
 void SummariesDisplayer::Hide()
 {
-    for( CIT_Labels it = names_.begin(); it != names_.end(); ++it )
+    for( auto it = names_.begin(); it != names_.end(); ++it )
         it->second->hide();
-    for( CIT_Labels it = values_.begin(); it != values_.end(); ++it )
+    for( auto it = values_.begin(); it != values_.end(); ++it )
         it->second->hide();
     parent_->hide();
 }

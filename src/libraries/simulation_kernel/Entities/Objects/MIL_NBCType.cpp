@@ -50,7 +50,7 @@ void MIL_NBCType::Initialize( xml::xistream& xis )
         >> xml::end;
     //We set the propagation angle in radian
     propagationAngle_ *= static_cast< unsigned int >( MT_PI / 180. );
-    for( CIT_NBCTypeMap it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
+    for( auto it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
         if( ! ids.insert( it->second->GetID() ).second )
             throw std::runtime_error( "NBC agent id of " + it->second->GetName() + " already exists" );
 }
@@ -77,7 +77,7 @@ void MIL_NBCType::ReadAgent( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_NBCType::Terminate()
 {
-    for( CIT_NBCTypeMap it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
+    for( auto it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
         delete it->second;
     nbcAgentTypes_.clear();
 }
@@ -140,7 +140,7 @@ const MIL_NBCType* MIL_NBCType::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const MIL_NBCType* MIL_NBCType::Find( unsigned int nID )
 {
-    for( CIT_NBCTypeMap it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
+    for( auto it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;

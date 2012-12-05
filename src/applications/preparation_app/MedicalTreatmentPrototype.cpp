@@ -53,7 +53,7 @@ void MedicalTreatmentPrototype::Commit( const kernel::Team_ABC& )
         MedicalTreatmentAttribute* attribute = new MedicalTreatmentAttribute( resolver_, dictionary );
         attribute->SetDoctors( doctors_->value() );
         attribute->SetReferenceID( std::string( referenceID_->text().toStdString() ) );
-        for( CIT_Capacities it = capacities_.begin(); it != capacities_.end(); ++it )
+        for( auto it = capacities_.begin(); it != capacities_.end(); ++it )
         {
             int value = it->baseline_->value();
             attribute->UpdateTreatmentCapacity( std::string( it->name_ ), value );

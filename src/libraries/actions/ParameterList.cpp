@@ -104,7 +104,7 @@ void ParameterList::Display( kernel::Displayer_ABC& displayer ) const
 void ParameterList::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     Parameter< QString >::DisplayTooltip( viewport, tools );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
 }
 
@@ -116,7 +116,7 @@ void ParameterList::CommitTo( sword::MissionParameter_Value& message ) const
 {
     ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >* list = message.mutable_list();
 
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         sword::MissionParameter_Value* elementValue = list->Add();
         it->second->CommitTo( *elementValue );
@@ -129,7 +129,7 @@ void ParameterList::CommitTo( sword::MissionParameter_Value& message ) const
 // -----------------------------------------------------------------------------
 void ParameterList::CommitTo( std::string& content ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         if( it != elements_.begin() )
             content += ',';

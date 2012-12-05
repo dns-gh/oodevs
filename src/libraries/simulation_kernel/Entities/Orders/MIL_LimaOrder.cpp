@@ -122,7 +122,7 @@ void MIL_LimaOrder::Serialize( sword::PhaseLineOrder& asn ) const
     NET_ASN_Tools::WriteLine( *localisation_, *asn.mutable_line() );
     NET_ASN_Tools::WriteTick( nSchedule_, *asn.mutable_time() );
 
-    for( CIT_LimaFunctions it = functions_.begin(); it != functions_.end(); ++it )
+    for( auto it = functions_.begin(); it != functions_.end(); ++it )
         asn.add_fonctions( (*it)->GetAsnID() );
 }
 
@@ -238,7 +238,7 @@ namespace boost
         {
             std::size_t size = functions.size();
             file << size;
-            for( CIT_LimaFunctions it = functions.begin(); it != functions.end(); ++it )
+            for( auto it = functions.begin(); it != functions.end(); ++it )
             {
                 unsigned id = (*it)->GetID();
                 file << id;

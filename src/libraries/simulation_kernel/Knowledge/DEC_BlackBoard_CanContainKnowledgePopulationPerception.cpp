@@ -61,7 +61,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPoin
 {
     std::size_t size = knowledgePopulationPerceptionMap_.size();
     file << size;
-    for( CIT_KnowledgePopulationPerceptionMap it = knowledgePopulationPerceptionMap_.begin(); it != knowledgePopulationPerceptionMap_.end(); ++it )
+    for( auto it = knowledgePopulationPerceptionMap_.begin(); it != knowledgePopulationPerceptionMap_.end(); ++it )
     {
         file << it->first
              << it->second;

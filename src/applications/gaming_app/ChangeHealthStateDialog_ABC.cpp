@@ -134,7 +134,7 @@ void ChangeHealthStateDialog_ABC::Show()
     if( !selected_ )
         return;
     unsigned int total = 0;
-    for( CIT_Spinboxes it = spinboxes_.begin(); it != spinboxes_.end(); ++it )
+    for( auto it = spinboxes_.begin(); it != spinboxes_.end(); ++it )
     {
         it->second->setValue( GetValue( it->first ) );
         total += it->second->value();
@@ -187,7 +187,7 @@ void ChangeHealthStateDialog_ABC::closeEvent( QCloseEvent * /* e */ )
 void ChangeHealthStateDialog_ABC::OnValuesChanged()
 {
     unsigned int total = 0;
-    for( CIT_Spinboxes it = spinboxes_.begin(); it != spinboxes_.end(); ++it )
+    for( auto it = spinboxes_.begin(); it != spinboxes_.end(); ++it )
         total += it->second->value();
     newTotalLabel_->setText( locale().toString( total ) );
 }

@@ -80,7 +80,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
     boost::mutex::scoped_lock lock( access_ );
     if( disk_.get() )
     {
-        for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+        for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
                 disk_->Post( boost::bind( &MessageLoader::LoadFrameInThread, this, it->first, frameNumber, boost::ref( handler ), callback ) );
@@ -123,7 +123,7 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
     synchronisation_ = frameNumber != 0;
     if( disk_.get() )
     {
-        for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+        for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
                 disk_->Post( boost::bind( &MessageLoader::LoadKeyFrameInThread, this, it->first, frameNumber, boost::ref( handler ), callback ) );
@@ -201,7 +201,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
         {
             bool incremented = false;
             boost::mutex::scoped_lock lock( access_ );
-            for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+            for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             {
                 if( tick >= it->second.first && tick <= it->second.second )
                 {
@@ -422,7 +422,7 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
     keys_.close();
     currentOpenFolder_.clear();
 
-    for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+    for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
         if( frameNumber >= it->second.first && frameNumber <= it->second.second )
         {
             currentOpenFolder_ = it->first;

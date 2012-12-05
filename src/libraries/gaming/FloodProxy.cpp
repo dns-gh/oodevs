@@ -91,7 +91,7 @@ unsigned int FloodProxy::GenerateFlood( unsigned int floodId, const geometry::Po
 // -----------------------------------------------------------------------------
 unsigned int FloodProxy::FindFlood( const geometry::Point2f& point, int depth, int refDist ) const
 {
-    for( CIT_Floods it = floods_.begin(); it != floods_.end(); ++it )
+    for( auto it = floods_.begin(); it != floods_.end(); ++it )
     {
         const FloodDrawer& drawer = *it->second;
         if( drawer.GetCenter() == point && drawer.GetDepth() == depth && drawer.GetReferenceDistance() == refDist )

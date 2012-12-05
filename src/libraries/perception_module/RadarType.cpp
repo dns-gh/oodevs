@@ -86,7 +86,7 @@ void RadarType::ReadRadar( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void RadarType::Terminate()
 {
-    for( CIT_RadarTypeMap it = radarTypes_.begin(); it != radarTypes_.end(); ++it )
+    for( auto it = radarTypes_.begin(); it != radarTypes_.end(); ++it )
         delete it->second;
     radarTypes_.clear();
 }

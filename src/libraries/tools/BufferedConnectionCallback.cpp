@@ -62,7 +62,7 @@ void BufferedConnectionCallback::Commit( ConnectionCallback_ABC& callback )
         boost::mutex::scoped_lock locker( mutex_ );
         std::swap( events, events_ );
     }
-    for( CIT_Events it = events.begin(); it != events.end(); ++it )
+    for( auto it = events.begin(); it != events.end(); ++it )
     {
         const Event& event = *it;
         if( ! event.error_.empty() )

@@ -184,7 +184,7 @@ void MIL_FireClass::ReadSurface( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_FireClass::Terminate()
 {
-    for( CIT_FireClassMap it = classes_.begin(); it != classes_.end(); ++it )
+    for( auto it = classes_.begin(); it != classes_.end(); ++it )
         delete it->second;
     classes_.clear();
 }

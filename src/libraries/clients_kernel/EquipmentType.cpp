@@ -48,9 +48,9 @@ EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< Wea
 // -----------------------------------------------------------------------------
 EquipmentType::~EquipmentType()
 {
-    for( CIT_Breakdowns it = breakdowns_.begin(); it != breakdowns_.end(); ++it )
+    for( auto it = breakdowns_.begin(); it != breakdowns_.end(); ++it )
         delete *it;
-    for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
         delete *it;
 }
 

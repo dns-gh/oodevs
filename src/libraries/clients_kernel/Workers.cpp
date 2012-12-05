@@ -90,7 +90,7 @@ void Workers::CommitTasks()
         std::swap( toDeal, finished_ );
     }
 
-    for( CIT_Tasks it = toDeal.begin(); it != toDeal.end(); ++it )
+    for( auto it = toDeal.begin(); it != toDeal.end(); ++it )
     {
         (*it)->Commit();
         delete *it;

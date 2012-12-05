@@ -32,12 +32,12 @@ struct VisionCones::Updater : public kernel::WorkerTask_ABC
         cones.current_ = this;
         cones.needUpdating_ = false;
         surfaces_.reserve( cones.surfaces_.size() );
-        for( CIT_Surfaces it = cones.surfaces_.begin(); it != cones.surfaces_.end(); ++it )
+        for( auto it = cones.surfaces_.begin(); it != cones.surfaces_.end(); ++it )
             surfaces_.push_back( new Surface( **it ) );
     };
     virtual ~Updater()
     {
-        for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+        for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
             delete *it;
         delete map_;
     }
@@ -53,10 +53,10 @@ struct VisionCones::Updater : public kernel::WorkerTask_ABC
     {
         if( cancelled_ || deprecated_ )
             return;
-        for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+        for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Initialize( *map_ );
         map_->Initialize();
-        for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+        for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Update( *map_ );
         computed_ = true;
     };
@@ -173,7 +173,7 @@ void VisionCones::Update() const
 void VisionCones::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( tools.ShouldDisplay( "VisionCones" ) )
-        for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+        for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( viewport, tools );
 
     if( tools.ShouldDisplay( "VisionSurfaces" ) && map_->IsVisible( viewport ) )
@@ -194,7 +194,7 @@ void VisionCones::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& v
 // -----------------------------------------------------------------------------
 void VisionCones::DrawFill( const kernel::Viewport_ABC& viewport ) const
 {
-    for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+    for( auto it = surfaces_.begin(); it != surfaces_.end(); ++it )
         (*it)->DrawFill( viewport );
 }
 

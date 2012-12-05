@@ -66,7 +66,7 @@ const weather::Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordi
     const weather::Meteo* meteo = meteoModel_.GetMeteo( terrainCoordinates );
     if( meteo )
         currentMeteo_->Update( *meteo );
-    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it )
+    for( auto it = effects_.begin(); it != effects_.end(); ++it )
         if( (*it)->IsInside( terrainCoordinates ) )
             (*it)->ApplyEffect( *currentMeteo_ );
     return currentMeteo_;

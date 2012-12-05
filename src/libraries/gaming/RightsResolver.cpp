@@ -201,7 +201,7 @@ bool RightsResolver::IsInHierarchy( const Entity_ABC& entityToTest, const T_Enti
             return false;
         if( IsInSpecificHierarchy( entityToTest, communication, entities, childOnly ) )
             return true;
-        for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+        for( auto it = entities.begin(); it != entities.end(); ++it )
         {
             const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
             if( !hierarchy ) // = (*it) est une formation ?
@@ -209,7 +209,7 @@ bool RightsResolver::IsInHierarchy( const Entity_ABC& entityToTest, const T_Enti
         }
         return false;
     }
-    for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+    for( auto it = entities.begin(); it != entities.end(); ++it )
     {
         const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
         if( hierarchy && tactical && hierarchy->GetSuperior() == 0 && tactical->IsSubordinateOf( **it ) )
@@ -294,7 +294,7 @@ bool RightsResolver::IsInSpecificHierarchy( const Entity_ABC& entity, const Hier
 {
     if( !hierarchy )
         return false;
-    for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+    for( auto it = entities.begin(); it != entities.end(); ++it )
         if( IsInHierarchy( entity, *hierarchy, **it, childOnly ) )
             return true;
     return false;

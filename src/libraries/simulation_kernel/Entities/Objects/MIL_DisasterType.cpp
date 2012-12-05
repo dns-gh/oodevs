@@ -146,7 +146,7 @@ float MIL_DisasterType::GetToxicityExponent() const
 // -----------------------------------------------------------------------------
 float MIL_DisasterType::GetProtectionCoefficient( const PHY_NbcSuit& suit ) const
 {
-    for( CIT_Protections it = protections_.begin(); it != protections_.end(); ++it )
+    for( auto it = protections_.begin(); it != protections_.end(); ++it )
         if( it->first == suit.GetType() )
             return it->second;
     return 1.f;
@@ -160,7 +160,7 @@ int MIL_DisasterType::GetAttritionThreshold( float dose ) const
 {
     int result = -1;
     float current = 0.f;
-    for( CIT_Attritions it = attritions_.begin(); it != attritions_.end(); ++it )
+    for( auto it = attritions_.begin(); it != attritions_.end(); ++it )
     {
         float threshold = it->second.get< 0 >();
         if( dose >= threshold  && threshold >= current )
@@ -208,7 +208,7 @@ const PHY_HumanWound& MIL_DisasterType::GetRandomWound( int threshold ) const
 bool MIL_DisasterType::IsContaminated( float dose ) const
 {
     bool result = false;
-    for( CIT_Attritions it = attritions_.begin(); it != attritions_.end(); ++it )
+    for( auto it = attritions_.begin(); it != attritions_.end(); ++it )
         if( dose >= it->second.get< 0 >() )
             result = result || it->second.get< 3 >();
     return result;

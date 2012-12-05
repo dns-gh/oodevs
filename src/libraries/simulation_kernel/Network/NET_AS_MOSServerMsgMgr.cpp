@@ -65,7 +65,7 @@ bool NET_AS_MOSServerMsgMgr::RemoveClient( const std::string& client )
 //-----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::Send( sword::SimToClient& wrapper )
 {
-    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+    for( auto it = clients_.begin(); it != clients_.end(); ++it )
         agentServer_.Send( *it, wrapper );
 }
 

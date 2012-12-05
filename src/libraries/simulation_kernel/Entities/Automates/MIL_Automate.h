@@ -162,9 +162,9 @@ public:
     template< typename T > void ApplyOnHierarchy( T& functor )
     {
         functor(*this);
-        for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        for( auto it = automates_.begin(); it != automates_.end(); ++it )
             (**it).ApplyOnHierarchy( functor );
-        for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        for( auto it = pions_.begin(); it != pions_.end(); ++it )
             functor( **it );
     }
 

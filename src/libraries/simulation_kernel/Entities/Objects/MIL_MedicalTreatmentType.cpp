@@ -127,7 +127,7 @@ void MIL_MedicalTreatmentType::ReadInjury( xml::xistream& xis, InjuryTreatment& 
 // -----------------------------------------------------------------------------
 void MIL_MedicalTreatmentType::Terminate()
 {
-    for( CIT_MedicalTreatmentTypeMap it = types_.begin(); it != types_.end(); ++it )
+    for( auto it = types_.begin(); it != types_.end(); ++it )
         if( it->second )
             delete it->second;
     types_.clear();
@@ -154,7 +154,7 @@ const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( const std::strin
 // -----------------------------------------------------------------------------
 const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( unsigned int nID )
 {
-    for( CIT_MedicalTreatmentTypeMap it = types_.begin(); it != types_.end(); ++it )
+    for( auto it = types_.begin(); it != types_.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;

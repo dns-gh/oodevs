@@ -135,7 +135,7 @@ void DirectFireData::ChooseBestWeapon( const wrapper::View& target, const wrappe
     double rBestScore = 0;
     pBestFirer  = 0;
     pBestWeapon = 0;
-    for( CIT_ComposanteWeaponsMap it = composantesWeapons_.begin(); it != composantesWeapons_.end(); ++it )
+    for( auto it = composantesWeapons_.begin(); it != composantesWeapons_.end(); ++it )
     {
         const sComposanteWeapons& data = it->second;
         bool bUpdated = data.GetBestWeapon( rBestScore, firer_, target, compTarget, pBestWeapon );

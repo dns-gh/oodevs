@@ -231,7 +231,7 @@ const std::string PHY_HumanProtection::GetName() const
 // -----------------------------------------------------------------------------
 bool PHY_HumanProtection::IsProtectionAgainstThisType( const std::string& type , T_InjuryTypes injuryTypesList ) const
 {
-    for( CIT_InjuryTypes it = injuryTypesList.begin() ; it != injuryTypesList.end() ; ++it)
+    for( auto it = injuryTypesList.begin() ; it != injuryTypesList.end() ; ++it)
     {
         if( (*it) == type )
             return true;

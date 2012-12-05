@@ -182,7 +182,7 @@ namespace
     DEFINE_HOOK( GetLimas, 3, void, ( const SWORD_Model* entity, void(*visitor)( const MIL_LimaOrder& lima, void* userData ), void* userData ) )
     {
         const T_LimaVector& limas = GET_PION( entity ).GetOrderManager().GetLimas();
-        for( CIT_LimaVector it = limas.begin(); it != limas.end(); ++it )
+        for( auto it = limas.begin(); it != limas.end(); ++it )
             visitor( *it, userData );
     }
     DEFINE_HOOK( UsePathDebug, 0, bool, () )

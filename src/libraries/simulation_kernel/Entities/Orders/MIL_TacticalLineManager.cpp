@@ -35,7 +35,7 @@ MIL_TacticalLineManager::MIL_TacticalLineManager()
 // -----------------------------------------------------------------------------
 MIL_TacticalLineManager::~MIL_TacticalLineManager()
 {
-    for( CIT_LimitDataMap it = limitsData_.begin(); it != limitsData_.end(); ++it )
+    for( auto it = limitsData_.begin(); it != limitsData_.end(); ++it )
         delete it->second;
     singleton = 0;
 }

@@ -322,7 +322,7 @@ void PathAdapter::InitializePathKnowledges( const core::Model& entity, const MIL
         T_KnowledgePopulationVector knowledgesPopulation;
         pion.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
-        for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
+        for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
             pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( **it, *this, !pion.GetType().IsTerrorist() ) );
     }
 }
@@ -455,7 +455,7 @@ double PathAdapter::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& 
     double rEnemyCost = 0.;
     const MT_Line lineLink( from, to );
     const DEC_Path_KnowledgeAgent::BoundingBox box( from, to );
-    for( CIT_PathKnowledgeAgentVector it = pathKnowledgeAgents_.begin(); it != pathKnowledgeAgents_.end(); ++it )
+    for( auto it = pathKnowledgeAgents_.begin(); it != pathKnowledgeAgents_.end(); ++it )
     {
         double rCurrentEnemyCost = it->ComputeCost( lineLink, box );
         if( rCurrentEnemyCost < 0. ) // Impossible move (for example destroyed bridge)
@@ -473,7 +473,7 @@ double PathAdapter::GetPopulationsCost( const MT_Vector2D& from, const MT_Vector
     const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, double rPopulationMaximumCost ) const
 {
     double rCost = 0.;
-    for( CIT_PathKnowledgePopulationVector it = pathKnowledgePopulations_.begin(); it != pathKnowledgePopulations_.end(); ++it )
+    for( auto it = pathKnowledgePopulations_.begin(); it != pathKnowledgePopulations_.end(); ++it )
     {
         double rCurrentCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
         if( rCurrentCost < 0. ) // Impossible move

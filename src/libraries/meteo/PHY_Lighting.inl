@@ -39,7 +39,7 @@ const PHY_Lighting* PHY_Lighting::FindLighting( const std::string& strName )
 inline
 const PHY_Lighting* PHY_Lighting::FindLighting( sword::WeatherAttributes::EnumLightingType nAsnID )
 {
-    for( CIT_LightingMap it = lightings_.begin(); it != lightings_.end(); ++it )
+    for( auto it = lightings_.begin(); it != lightings_.end(); ++it )
     {
         const PHY_Lighting& lighting = *it->second;
         if( lighting.GetAsnID() == nAsnID )

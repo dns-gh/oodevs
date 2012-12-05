@@ -85,7 +85,7 @@ void MIL_PopulationType::ReadPopulation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::Terminate()
 {
-    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
+    for( auto it = populations_.begin(); it != populations_.end(); ++it )
         delete it->second;
     populations_.clear();
 }
@@ -496,7 +496,7 @@ const MIL_PopulationType* MIL_PopulationType::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const MIL_PopulationType* MIL_PopulationType::Find( unsigned int nID )
 {
-    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
+    for( auto it = populations_.begin(); it != populations_.end(); ++it )
         if( it->second->nID_ == nID )
             return it->second;
     return 0;

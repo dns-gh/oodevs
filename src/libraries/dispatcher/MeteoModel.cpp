@@ -103,7 +103,7 @@ void MeteoModel::Accept( kernel::ModelVisitor_ABC& visitor )
 {
     if( MeteoGlobal* global = static_cast< MeteoGlobal* >( globalMeteo_.get() ) )
         visitor.Visit( *global );
-    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
         visitor.Visit( static_cast< MeteoLocal& >( **it ) );
 }
 

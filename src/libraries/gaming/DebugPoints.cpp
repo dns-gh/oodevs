@@ -58,7 +58,7 @@ void DebugPoints::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& v
         glGetFloatv( GL_CURRENT_COLOR, color );
         glPushAttrib( GL_LINE_BIT );
         glLineWidth( 6.f );
-        for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        for( auto it = points_.begin(); it != points_.end(); ++it )
             if( viewport.IsVisible( *it ) )
             {
                 glColor4f( 0, 0, 0, color[3] * 0.5f );

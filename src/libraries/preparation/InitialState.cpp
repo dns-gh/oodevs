@@ -86,7 +86,7 @@ void InitialState::ReadEquipment( xml::xistream& xis )
 {
     InitialStateEquipment equipment = InitialStateEquipment( xis );
     bool found = false;
-    for( CIT_Equipments it = originalEquipments_.begin(); it != originalEquipments_.end(); ++it )
+    for( auto it = originalEquipments_.begin(); it != originalEquipments_.end(); ++it )
         if( it->name_ == equipment.name_ )
         {
             equipment.breakdowns_ = it->breakdowns_;
@@ -147,7 +147,7 @@ void InitialState::SerializeAttributes( xml::xostream& xos ) const
     if( IsEquipmentsSaveNeeded() )
     {
         xos.start( "equipments" );
-        for( CIT_Equipments it = equipments_.begin(); it != equipments_.end(); ++it )
+        for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
             it->Serialize( xos );
         xos.end();
     }
@@ -155,14 +155,14 @@ void InitialState::SerializeAttributes( xml::xostream& xos ) const
     {
         assert( crews_.size() > 3 );
         xos.start( "humans" );
-        for( CIT_Crews it = crews_.begin() + 3; it != crews_.end(); ++it )
+        for( auto it = crews_.begin() + 3; it != crews_.end(); ++it )
             it->Serialize( xos );
         xos.end();
     }
     if( IsResourcesSaveNeeded() )
     {
         xos.start( "resources" );
-        for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+        for( auto it = resources_.begin(); it != resources_.end(); ++it )
             it->Serialize( xos );
         xos.end();
     }

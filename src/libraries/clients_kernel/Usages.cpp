@@ -70,7 +70,7 @@ bool Usages::IsDefault() const
 void Usages::UpdateDefault()
 {
     unsigned int total = 0;
-    for( CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
+    for( auto it = usages_.begin(); it != usages_.end(); ++it )
         if( it->first != defaultStr_ )
             total += it->second;
     usages_[ defaultStr_ ] = 100 - total;
@@ -106,7 +106,7 @@ void Usages::UpdateDefault()
 void Usages::UpdateMotivations( float livingSpace )
 {
     livingSpace_ = livingSpace;
-    for( CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
+    for( auto it = usages_.begin(); it != usages_.end(); ++it )
     {
         const std::string usageName = it->first.c_str() != defaultStr_ ? it->first : tools::translate( "Block", "Default" ).toStdString();
         const QString motivationString = tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + usageName.c_str();

@@ -61,7 +61,7 @@ MIL_ListParameter::~MIL_ListParameter()
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
         if( !(*it)->IsOfType( type ) )
             return false;
     return true;
@@ -73,7 +73,7 @@ bool MIL_ListParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& message ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
         if( !(*it)->ToElement( *message.Add() ) )
             return false;
     return true;
@@ -94,7 +94,7 @@ bool MIL_ListParameter::ToElement( sword::MissionParameter_Value& message ) cons
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
         result.push_back( *it );
     return true;
 }
@@ -105,7 +105,7 @@ bool MIL_ListParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParame
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToNumericList( std::vector< float >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         float param = 0.0f;
         if( !(*it)->ToNumeric( param ) )
@@ -122,7 +122,7 @@ bool MIL_ListParameter::ToNumericList( std::vector< float >& result ) const
 bool MIL_ListParameter::ToPathList( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& result ) const
 {
     // $$$$ MGD 2010-11-15 ALL ToList can be merge with a refactor in DEC_Decision
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         std::vector< boost::shared_ptr< MT_Vector2D > > param;
         if( !(*it)->ToPath( param ) )
@@ -138,7 +138,7 @@ bool MIL_ListParameter::ToPathList( std::vector< std::vector< boost::shared_ptr<
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         boost::shared_ptr< MT_Vector2D > param;
         if( !(*it)->ToPoint( param ) )
@@ -154,7 +154,7 @@ bool MIL_ListParameter::ToPointList( std::vector< boost::shared_ptr< MT_Vector2D
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToPolygonList( std::vector< boost::shared_ptr< TER_Localisation > >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         boost::shared_ptr< TER_Localisation > param;
         if( !(*it)->ToPolygon( param ) )
@@ -170,7 +170,7 @@ bool MIL_ListParameter::ToPolygonList( std::vector< boost::shared_ptr< TER_Local
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToLocationList( std::vector< boost::shared_ptr< TER_Localisation > >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         boost::shared_ptr< TER_Localisation > param;
         if( !(*it)->ToLocation( param ) )
@@ -186,7 +186,7 @@ bool MIL_ListParameter::ToLocationList( std::vector< boost::shared_ptr< TER_Loca
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToAutomatList( std::vector< DEC_Decision_ABC* >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         DEC_Decision_ABC* param;
         if( !(*it)->ToAutomat( param ) )
@@ -202,7 +202,7 @@ bool MIL_ListParameter::ToAutomatList( std::vector< DEC_Decision_ABC* >& result 
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToAgentList( std::vector< const DEC_Decision_ABC* >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         const DEC_Decision_ABC* param;
         if( !(*it)->ToAgent( param ) )
@@ -218,7 +218,7 @@ bool MIL_ListParameter::ToAgentList( std::vector< const DEC_Decision_ABC* >& res
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToAgentKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > param;
         if( !(*it)->ToAgentKnowledge( param ) )
@@ -234,7 +234,7 @@ bool MIL_ListParameter::ToAgentKnowledgeList( std::vector< boost::shared_ptr< DE
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         boost::shared_ptr< DEC_Knowledge_Object >  param;
         if( !(*it)->ToObjectKnowledge( param ) )
@@ -250,7 +250,7 @@ bool MIL_ListParameter::ToObjectKnowledgeList( std::vector< boost::shared_ptr< D
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen_Object > >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         boost::shared_ptr< DEC_Gen_Object > param;
         if( !(*it)->ToGenObject( param ) )
@@ -266,7 +266,7 @@ bool MIL_ListParameter::ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToDotationTypeList( std::vector< const PHY_DotationCategory* >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         const PHY_DotationCategory* param = 0;
         if( !(*it)->ToDotationType( param ) )
@@ -282,7 +282,7 @@ bool MIL_ListParameter::ToDotationTypeList( std::vector< const PHY_DotationCateg
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToResourceNetworkNodeList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         boost::shared_ptr< DEC_ResourceNetwork > param;
         if( !(*it)->ToResourceNetworkNode( param ) )
@@ -298,7 +298,7 @@ bool MIL_ListParameter::ToResourceNetworkNodeList( std::vector< boost::shared_pt
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToResourceNetworkTypeList( std::vector< const PHY_ResourceNetworkType* >& result ) const
 {
-    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    for( auto it = list_.begin(); it != list_.end(); ++it )
     {
         const PHY_ResourceNetworkType* param = 0;
         if( !(*it)->ToResourceNetworkType( param ) )

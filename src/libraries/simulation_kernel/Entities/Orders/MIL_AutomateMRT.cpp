@@ -82,7 +82,7 @@ void MIL_AutomateMRT::Activate()
     assert( !bActivated_ );
 
     // Affectation des fuseaux à chaque mission pion
-    for( CIT_MissionPionMap it = missionsPion_.begin(); it != missionsPion_.end(); ++it )
+    for( auto it = missionsPion_.begin(); it != missionsPion_.end(); ++it )
     {
         MIL_AgentPion&   pion    = *it->first;
         boost::shared_ptr< MIL_Mission_ABC > mission = it->second;
@@ -94,7 +94,7 @@ void MIL_AutomateMRT::Activate()
     }
     missionsPion_.clear();
     bActivated_ = true;
-    for( CIT_FuseauPionMap it = fuseauxPion_.begin(); it != fuseauxPion_.end(); ++it )
+    for( auto it = fuseauxPion_.begin(); it != fuseauxPion_.end(); ++it )
         delete it->second;
     fuseauxPion_.clear();
 }
@@ -106,11 +106,11 @@ void MIL_AutomateMRT::Activate()
 void MIL_AutomateMRT::Cancel()
 {
     bActivated_ = false;
-    for( CIT_MissionPionMap it = missionsPion_.begin(); it != missionsPion_.end(); ++it )
+    for( auto it = missionsPion_.begin(); it != missionsPion_.end(); ++it )
         it->second->Stop( it->second );
     missionsPion_.clear();
 
-    for( CIT_FuseauPionMap it = fuseauxPion_.begin(); it != fuseauxPion_.end(); ++it )
+    for( auto it = fuseauxPion_.begin(); it != fuseauxPion_.end(); ++it )
         delete it->second;
     fuseauxPion_ .clear();
 }

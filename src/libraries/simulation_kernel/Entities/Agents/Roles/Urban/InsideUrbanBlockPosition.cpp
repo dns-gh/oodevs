@@ -106,7 +106,7 @@ double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
     const T_PointVector& urbanBlockVertices = urbanObject_.GetLocalisation().GetPoints();
     bg::model::polygon< bg::model::d2::point_xy< double > > blockGeometry;
     std::vector< bg::model::d2::point_xy< double > > vectorTemp;
-    for( CIT_PointVector it = urbanBlockVertices.begin(); it != urbanBlockVertices.end(); ++it )
+    for( auto it = urbanBlockVertices.begin(); it != urbanBlockVertices.end(); ++it )
     {
         bg::model::d2::point_xy< double > p( it->rX_, it->rY_ );
         vectorTemp.push_back( p );

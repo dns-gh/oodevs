@@ -57,7 +57,7 @@ bool Services::HasService( const std::string& name ) const
 void Services::Send( ClientPublisher_ABC& publisher ) const
 {
     dispatcher::ServicesDescription services;
-    for( CIT_Services it = services_.begin(); it != services_.end(); ++it )
+    for( auto it = services_.begin(); it != services_.end(); ++it )
         services().add_services( *it );
     services.Send( publisher );
 }

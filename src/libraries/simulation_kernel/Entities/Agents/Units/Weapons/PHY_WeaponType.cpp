@@ -76,7 +76,7 @@ void PHY_WeaponType::ReadWeapon( xml::xistream& xis, const MIL_Time_ABC& time )
 // -----------------------------------------------------------------------------
 void PHY_WeaponType::Terminate()
 {
-    for( CIT_WeaponTypeMap it = weaponTypes_.begin() ; it != weaponTypes_.end(); ++it )
+    for( auto it = weaponTypes_.begin() ; it != weaponTypes_.end(); ++it )
         delete it->second;
     weaponTypes_.clear();
 }

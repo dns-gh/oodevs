@@ -26,7 +26,7 @@ namespace
     {
         bool bFound = false;
         double rMaxProjection = 0;
-        for( CIT_PointVector it = vertices.begin(); it != vertices.end(); ++it )
+        for( auto it = vertices.begin(); it != vertices.end(); ++it )
         {
             const double rProjection = CrossProduct( direction, MT_Vector2D( *it - from ) );
             if( rProjection < -1 ) // epsilon
@@ -53,7 +53,7 @@ void MIL_Geometry::Scale( TER_Polygon& result, const T_PointVector& polygon, dou
     T_PointVector hull;
     ComputeHull( hull, polygon );
     MT_Vector2D barycenter = MT_ComputeBarycenter( hull );
-    for( CIT_PointVector it = hull.begin(); it != hull.end(); ++it )
+    for( auto it = hull.begin(); it != hull.end(); ++it )
     {
         MT_Vector2D scaleVector( barycenter - *it );
         ret.push_back( barycenter + scaleVector + scaleVector.Normalized() * distance );
@@ -71,7 +71,7 @@ void MIL_Geometry::ComputeHull( T_PointVector& hull, const T_PointVector& vertic
         return;
     CIT_PointVector maxLeft = vertices.begin();
     CIT_PointVector maxRight = vertices.begin();
-    for( CIT_PointVector it = vertices.begin(); it != vertices.end() ; ++it )
+    for( auto it = vertices.begin(); it != vertices.end() ; ++it )
     {
         if( it->rX_ < maxLeft->rX_ )
             maxLeft = it;
@@ -122,7 +122,7 @@ double MIL_Geometry::IntersectionArea( const TER_Localisation& localisation1, co
     {
         CT_PointVector& vertices1 = localisation1.GetPoints();
         std::vector< bg::model::d2::point_xy< double > > vectorTemp;
-        for( CIT_PointVector it = vertices1.begin(); it != vertices1.end(); ++it )
+        for( auto it = vertices1.begin(); it != vertices1.end(); ++it )
             vectorTemp.push_back( bg::model::d2::point_xy< double >( it->rX_, it->rY_ ) );
         bg::assign_points( poly1, vectorTemp );
         bg::correct( poly1 );
@@ -130,7 +130,7 @@ double MIL_Geometry::IntersectionArea( const TER_Localisation& localisation1, co
     {
         CT_PointVector& vertices2 = localisation2.GetPoints();
         std::vector< bg::model::d2::point_xy< double > > vectorTemp;
-        for( CIT_PointVector it = vertices2.begin(); it != vertices2.end(); ++it )
+        for( auto it = vertices2.begin(); it != vertices2.end(); ++it )
             vectorTemp.push_back( bg::model::d2::point_xy< double >( it->rX_, it->rY_ ) );
         bg::assign_points( poly2, vectorTemp );
         bg::correct( poly2 );

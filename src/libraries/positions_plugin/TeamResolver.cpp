@@ -72,7 +72,7 @@ void TeamResolver::AddUnit( unsigned int automatId, unsigned int unitId, const s
 // -----------------------------------------------------------------------------
 void TeamResolver::UpdatePosition( unsigned int unitId, const sword::CoordLatLong& coord )
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->UpdatePosition( unitId, coord );
 }
 

@@ -63,7 +63,7 @@ void LocationProximityComputer::VisitPolygon( const T_PointVector& points )
     if( points.size() == 1 )
         isAt_ = points.front().SquareDistance( point_ ) < squarePrecision_;
     else
-        for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )
+        for( auto it = points.begin(); it != points.end() - 1; ++it )
         {
             const geometry::Segment2f segment( *it, *(it+1) );
             if( segment.SquareDistance( point_ ) < squarePrecision_ )

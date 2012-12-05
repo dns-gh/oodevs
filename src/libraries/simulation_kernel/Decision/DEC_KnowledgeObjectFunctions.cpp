@@ -140,7 +140,7 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& calle
     filter.Set( "nbc cloud" );
     T_KnowledgeObjectVector knownObjects;
     callerAgent.GetArmy().GetKnowledge().GetObjects( knownObjects, filter );
-    for( CIT_KnowledgeObjectVector it = knownObjects.begin(); it != knownObjects.end(); ++it )
+    for( auto it = knownObjects.begin(); it != knownObjects.end(); ++it )
         if( *it && location->IsIntersecting( ( *it )->GetLocalisation() ) )
         {
             if( ContaminationCapacity* pContaminationCapacity = IsValidObjectCapacity< ContaminationCapacity >( *it ) )

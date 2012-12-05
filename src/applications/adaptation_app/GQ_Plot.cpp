@@ -285,7 +285,7 @@ int GQ_Plot::GetMaxDepth() const
 // -----------------------------------------------------------------------------
 GQ_Plot::iterator GQ_Plot::begin() const
 {
-    for( CIT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         const T_PlotLayer& layer = it->second;
         if( !layer.empty() )
@@ -402,7 +402,7 @@ void GQ_Plot::UpdateDataRange()
 
     GQ_PlotDataBBox bbox;
 
-    for( CIT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         const T_PlotLayer& layer = it->second;
         UpdateLayerBBox( layer, bbox );
@@ -781,7 +781,7 @@ GQ_PlotData* GQ_Plot::GetPlotData( uint nPlotIndex, int nDepth ) const
 // -----------------------------------------------------------------------------
 GQ_PlotData* GQ_Plot::FindPlotData( uint nUserID ) const
 {
-    for( CIT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         const T_PlotLayer& layer = it->second;
 
@@ -808,7 +808,7 @@ GQ_PlotData* GQ_Plot::FindPlotData( uint nUserID ) const
 // -----------------------------------------------------------------------------
 GQ_PlotData* GQ_Plot::FindPlotData( const QString& name ) const
 {
-    for( CIT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         const T_PlotLayer& layer = it->second;
 
@@ -922,7 +922,7 @@ bool GQ_Plot::GetToolTips( const QPoint& refPoint, QRect& tipRect, QStringList& 
 
     bool bToolTipFound = false;
 
-    for( CIT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    for( auto it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         const T_PlotLayer& layer = it->second;
 

@@ -91,7 +91,7 @@ void ExtensionList::CommitTo( sword::MissionParameter_Value& message ) const
 // -----------------------------------------------------------------------------
 void ExtensionList::CommitTo( sword::Extension& message ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         sword::Extension_Entry& entry = *message.add_entries();
         const ParameterList* extension = static_cast< const ParameterList* >( it->second );

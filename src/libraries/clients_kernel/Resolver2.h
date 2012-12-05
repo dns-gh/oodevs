@@ -47,7 +47,7 @@ public:
     template< typename Functor >
     void Apply( const Functor& functor ) const
     {
-        for( CIT_Elements1 it = elements1_.begin(); it != elements1_.end(); ++it )
+        for( auto it = elements1_.begin(); it != elements1_.end(); ++it )
         {
             const T& element = *it->second;
             functor( element );

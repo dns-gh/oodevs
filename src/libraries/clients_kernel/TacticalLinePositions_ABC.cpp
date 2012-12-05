@@ -143,14 +143,14 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const kernel::Vi
         tools.DrawLines( pointList_ );
     }
     if( tools.ShouldDisplay() )
-        for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
             tools.DrawDisc( *it, 5.f, kernel::GlTools_ABC::pixels );
     glPopAttrib();
 
     if( !symbol.empty() )
     {
         kernel::Lines location;
-        for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
         {
             const geometry::Point2f& point = *it;
             location.AddPoint( point );
@@ -166,7 +166,7 @@ void TacticalLinePositions_ABC::Draw( const geometry::Point2f&, const kernel::Vi
 void TacticalLinePositions_ABC::ComputeBoundingBox()
 {
     boundingBox_ = geometry::Rectangle2f();
-    for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+    for( auto it = pointList_.begin(); it != pointList_.end(); ++it )
         boundingBox_.Incorporate( *it );
 }
 

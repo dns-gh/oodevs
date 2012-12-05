@@ -271,7 +271,7 @@ void MedicalCapacityUpdateDialog::FillAttributes( actions::parameters::Parameter
 
     actions::parameters::ParameterList& capacities = attribute.AddList( "BedCapacities" );
     int i = 0;
-    for( CIT_Capacities it = capacities_.begin(); it != capacities_.end(); ++it, ++i )
+    for( auto it = capacities_.begin(); it != capacities_.end(); ++it, ++i )
     {
         actions::parameters::ParameterList& capacity = capacities.AddList( "Capacity" );
         capacity.AddIdentifier( "TypeId", it->id_ );

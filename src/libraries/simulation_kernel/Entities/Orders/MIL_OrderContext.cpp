@@ -151,7 +151,7 @@ void MIL_OrderContext::ReadDirection( const sword::MissionParameter& asn )
 void MIL_OrderContext::WritePhaseLines( sword::MissionParameter& asn ) const
 {
     asn.set_null_value( limas_.empty() );
-    for( CIT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
+    for( auto it = limas_.begin(); it != limas_.end(); ++it )
         it->Serialize( *asn.mutable_value()->Add()->mutable_phaseline()->add_elem() );
 }
 

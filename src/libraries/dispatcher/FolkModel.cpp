@@ -78,9 +78,9 @@ void FolkModel::SendCreation( ClientPublisher_ABC& publisher ) const
         asn().set_container_size ( container_size );
         asn().set_edge_number    ( edge_number );
         std::vector< std::string > act, pro;
-        for( CIT_Names it = activities_.begin(); it != activities_.end(); ++it )
+        for( auto it = activities_.begin(); it != activities_.end(); ++it )
             act.push_back( it->c_str() );
-        for( CIT_Names it = profiles_.begin(); it != profiles_.end(); ++it )
+        for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
             pro.push_back( it->c_str() );
 
         for (std::vector< std::string >::const_iterator iter(act.begin()); iter != act.end(); ++iter)

@@ -397,7 +397,7 @@ void MIL_UrbanObject::WriteCapacity( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_UrbanObject::WritePointVector( xml::xostream& xos , const T_PointVector& vector ) const
 {
-    for( CIT_PointVector it = vector.begin(); it != vector.end(); it++ )
+    for( auto it = vector.begin(); it != vector.end(); it++ )
     {
         std::string stringCoord;
         TER_World::GetWorld().SimToMosMgrsCoord( ( *it ), stringCoord );
@@ -468,7 +468,7 @@ void MIL_UrbanObject::WriteUrban( xml::xostream& xos ) const
     if( Count() )
     {
         xos << xml::start( "urban-objects" );
-        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        for( auto it = elements_.begin(); it != elements_.end(); ++it )
             it->second->WriteUrban( xos );
         xos     << xml::end;
     }
@@ -605,7 +605,7 @@ const std::vector< boost::shared_ptr< MT_Vector2D > >& MIL_UrbanObject::ComputeL
     {
         const T_PointVector& points = GetLocalisation().GetPoints();
         const MT_Vector2D barycenter = GetLocalisation().ComputeBarycenter();
-        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        for( auto it = points.begin(); it != points.end(); ++it )
             stretchedArea_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) ) );
     }
     return stretchedArea_;
@@ -631,7 +631,7 @@ void MIL_UrbanObject::UpdateInhabitants( MIL_LivingArea& livingArea, const std::
     {
         inhabitants_[ &livingArea ].erase( motivation );
         unsigned int total = 0;
-        for( CIT_Motivations it = inhabitants_[ &livingArea ].begin(); it != inhabitants_[ &livingArea ].end(); ++it )
+        for( auto it = inhabitants_[ &livingArea ].begin(); it != inhabitants_[ &livingArea ].end(); ++it )
             total += it->second;
         if( total == 0 )
             inhabitants_.erase( &livingArea );
@@ -645,7 +645,7 @@ void MIL_UrbanObject::UpdateInhabitants( MIL_LivingArea& livingArea, const std::
 unsigned int MIL_UrbanObject::GetTotalInhabitants() const
 {
     unsigned int ret = 0;
-    for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+    for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
         for( CIT_Motivations it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             ret += it2->second;
     return ret;
@@ -658,7 +658,7 @@ unsigned int MIL_UrbanObject::GetTotalInhabitants() const
 unsigned int MIL_UrbanObject::GetTotalInhabitantsForMotivation( const std::string& motivation ) const
 {
     unsigned int ret = 0;
-    for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+    for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
         for( CIT_Motivations it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             if( it2->first == motivation )
                 ret += it2->second;
@@ -704,7 +704,7 @@ void MIL_UrbanObject::OnReceiveSetAlerted( const sword::MissionParameter_Value& 
     if( attribute.list_size() > 1 )
     {
         bool alerted = attribute.list( 1 ).booleanvalue();
-        for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+        for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
             it->first->SetAlerted( alerted, this );
     }
 }
@@ -718,7 +718,7 @@ void MIL_UrbanObject::OnReceiveSetConfined( const sword::MissionParameter_Value&
     if( attribute.list_size() > 1 )
     {
         bool confined = attribute.list( 1 ).booleanvalue();
-        for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+        for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
             it->first->SetConfined( confined, this );
     }
 }

@@ -327,7 +327,7 @@ bool ADN_Urban_Data::UrbanMaterialInfos::operator==( const std::string& str )
 inline
 ADN_Urban_Data::UrbanMaterialInfos* ADN_Urban_Data::FindMaterial( const std::string& strName )
 {
-    for( CIT_UrbanMaterialInfos_Vector it = vMaterials_.begin(); it != vMaterials_.end(); ++it )
+    for( auto it = vMaterials_.begin(); it != vMaterials_.end(); ++it )
         if( **it == strName )
             return *it;
     return 0;
@@ -350,7 +350,7 @@ ADN_Urban_Data::T_RoofShapeInfos_Vector& ADN_Urban_Data::GetRoofShapesInfos()
 inline
 ADN_Urban_Data::RoofShapeInfos* ADN_Urban_Data::FindRoofShape( const std::string& strName )
 {
-    for( CIT_RoofShapeInfos_Vector it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
+    for( auto it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
         if( **it == strName )
             return *it;
     return 0;

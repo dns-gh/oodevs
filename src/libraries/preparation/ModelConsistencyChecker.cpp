@@ -425,7 +425,7 @@ void ModelConsistencyChecker::CheckMaxStockExceeded()
                 currentCapacities[ dotation.type_.GetNature() ].second += dotation.quantity_ * dotation.type_.GetUnitVolume();
             }
 
-            for( CIT_StockCapacities it = currentCapacities.begin(); it != currentCapacities.end(); ++it )
+            for( auto it = currentCapacities.begin(); it != currentCapacities.end(); ++it )
             {
                 CIT_StockCapacities maxIt = maxCapacities.find( it->first );
                 if( maxIt == maxCapacities.end() || it->second.first > maxIt->second.first || it->second.second > maxIt->second.second )
@@ -625,7 +625,7 @@ void ModelConsistencyChecker::CheckSuccessFactors()
 void ModelConsistencyChecker::CheckLoadingErrors()
 {
     T_ConsistencyErrors errors = model_.GetLoadingErrors();
-    for( CIT_ConsistencyErrors it = errors.begin(); it != errors.end(); ++it )
+    for( auto it = errors.begin(); it != errors.end(); ++it )
         T_Parent::AddError( it->type_, ( it->items_.size() > 0 ) ? it->items_[ 0 ] : 0, it->optional_ );
 }
 

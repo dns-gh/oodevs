@@ -123,7 +123,7 @@ void UrbanLayer::NotifySelectionChanged( const std::vector< const kernel::UrbanO
 void UrbanLayer::DeselectAll()
 {
     static const bool bFalse = false;
-    for( CIT_Entities it = entities_.begin(); it != entities_.end(); ++it )
+    for( auto it = entities_.begin(); it != entities_.end(); ++it )
         ( *it )->Interface().Apply( &kernel::UrbanPositions_ABC::SetSelection, bFalse );
     actualSelection_.clear();
 }

@@ -101,7 +101,7 @@ namespace
     {
         bool bFound = false;
         float rMaxProjection = 0;
-        for( CIT_PointVector it = begin; it != end; ++it )
+        for( auto it = begin; it != end; ++it )
         {
             const Vector2f v( from, *it );
             const float rProjection = direction.CrossProduct( v );

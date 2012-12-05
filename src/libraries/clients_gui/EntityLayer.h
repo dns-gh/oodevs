@@ -74,7 +74,7 @@ protected:
     template< typename Functor >
     void Apply( Functor& functor ) const
     {
-        for( CIT_Entities it = entities_.begin(); it != entities_.end(); ++it )
+        for( auto it = entities_.begin(); it != entities_.end(); ++it )
             functor( **it );
     }
 

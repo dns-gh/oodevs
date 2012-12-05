@@ -631,7 +631,7 @@ bool MIL_Fuseau::Split( unsigned int nNbrSubFuseau, T_PointVectorVector& interme
     // Limits creation
 //    limitVector.reserve( 2 + limitsPoints.size() );
 //    limitVector.push_back( pLeftLimit_ );
-//    for( CIT_PointVectorVector it = limitsPoints.begin(); it != limitsPoints.end(); ++it )
+//    for( auto it = limitsPoints.begin(); it != limitsPoints.end(); ++it )
 //        limitVector.push_back( &MIL_Singletons::GetTacticalLineManager().CreateLimitData( *it ) );
 //    limitVector.push_back( pRightLimit_ );
     return true;
@@ -658,7 +658,7 @@ bool MIL_Fuseau::SplitIntoSubFuseaux( unsigned int nNbrSubFuseau, T_FuseauPtrLis
     if( !pLeftLimit_ || !pRightLimit_ )
         return false;
     const T_PointVector* pPrevLimit = &pLeftLimit_->GetPoints();
-    for( CIT_PointVectorVector it = intermediateLimits.begin(); it != intermediateLimits.end(); ++it )
+    for( auto it = intermediateLimits.begin(); it != intermediateLimits.end(); ++it )
     {
         const T_PointVector* pCurLimit = &*it;
         MIL_Fuseau* pNewSubFuseau = new MIL_Fuseau( *pPrevLimit, *pCurLimit );
@@ -1041,7 +1041,7 @@ double MIL_Fuseau::ComputeAdvance( const MT_Vector2D& position ) const
         MT_Vector2D nearestPoint;
         std::vector< double > advances;
         std::vector< double > distances;
-        for( CIT_PointVector it = points.begin(); ++it != points.end(); )
+        for( auto it = points.begin(); ++it != points.end(); )
         {
             MT_Vector2D firstPoint = startPoint;
             MT_Line line( firstPoint, *it );

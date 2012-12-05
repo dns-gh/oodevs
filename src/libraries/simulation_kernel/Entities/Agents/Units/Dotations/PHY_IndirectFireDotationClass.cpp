@@ -87,7 +87,7 @@ const PHY_IndirectFireDotationClass* PHY_IndirectFireDotationClass::Find( int nI
 // -----------------------------------------------------------------------------
 const PHY_IndirectFireDotationClass* PHY_IndirectFireDotationClass::Find( const std::string& strName )
 {
-    for( CIT_TypeMap it = types_.begin(); it != types_.end(); ++it )
+    for( auto it = types_.begin(); it != types_.end(); ++it )
     {
         if( sCaseInsensitiveEqual()( strName, it->second->GetName() ) )
             return it->second;

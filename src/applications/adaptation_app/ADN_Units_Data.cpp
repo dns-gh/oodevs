@@ -203,7 +203,7 @@ void ADN_Units_Data::StockInfos::ReadArchive( xml::xistream& input, ADN_Type_Boo
 void ADN_Units_Data::StockInfos::WriteArchive( const std::string& strName, xml::xostream& output ) const
 {
     output << xml::start( strName );
-    for( CIT_StockLogThresholdInfos_Vector it = vLogThresholds_.begin(); it != vLogThresholds_.end(); ++it )
+    for( auto it = vLogThresholds_.begin(); it != vLogThresholds_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -897,7 +897,7 @@ void ADN_Units_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "units" );
     ADN_Tools::AddSchema( output, "Units" );
-    for( CIT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+    for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -958,6 +958,6 @@ QStringList ADN_Units_Data::GetUnitsThatUse( helpers::LogisticSupplyClass& suppl
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    for( CIT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+    for( auto it = vUnits_.begin(); it != vUnits_.end(); ++it )
         (*it)->CheckDatabaseValidity( checker );
 }

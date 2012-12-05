@@ -58,7 +58,7 @@ PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Position::StopAction()
 {
-    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it  )
+    for( auto it = effects_.begin(); it != effects_.end(); ++it  )
     {
         (*it)->ForceFlying();
         (*it)->DecRef();
@@ -73,7 +73,7 @@ void PHY_ActionIndirectFire_Position::StopAction()
 void PHY_ActionIndirectFire_Position::Execute()
 {
     int nResult = PHY_RoleAction_IndirectFiring::eRunning;
-    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it )
+    for( auto it = effects_.begin(); it != effects_.end(); ++it )
         nResult = role_.Fire( *it );
     Callback( nResult );
 }

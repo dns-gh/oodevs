@@ -428,7 +428,7 @@ void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
 void DEC_Knowledge_Agent::WriteMsgPerceptionSources( sword::UnitKnowledgeUpdate& asnMsg ) const
 {
     asnMsg.mutable_perceptions();
-    for( CIT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
+    for( auto it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
     {
         sword::AutomatPerception& perception = *asnMsg.mutable_perceptions()->add_elem();
         perception.mutable_automat()->set_id( it->first->GetID() );
@@ -695,7 +695,7 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
     const DEC_Knowledge_AgentComposante* pMajorComposante = 0;
     unsigned int nMajorScore = 0;
     const T_KnowledgeComposanteVector& composantes = dataRecognition_.GetComposantes();
-    for( CIT_KnowledgeComposanteVector it = composantes.begin(); it != composantes.end(); ++it )
+    for( auto it = composantes.begin(); it != composantes.end(); ++it )
     {
         const DEC_Knowledge_AgentComposante& composante = *it;
         if( composante.GetMajorScore() >= nMajorScore )
@@ -764,7 +764,7 @@ const PHY_Volume* DEC_Knowledge_Agent::GetSignificantVolume( const PHY_SensorTyp
     const PHY_Volume* pSignificantVolume = 0;
     double rSignificantVolumeFactor     = 0.;
     const T_ComposanteVolumeSet& visionVolumes = dataDetection_.GetVisionVolumes();
-    for( CIT_ComposanteVolumeSet it = visionVolumes.begin(); it != visionVolumes.end(); ++it )
+    for( auto it = visionVolumes.begin(); it != visionVolumes.end(); ++it )
     {
         const PHY_Volume& volume = **it;
         double rVolumeFactor = sensorType.GetFactor( volume );

@@ -122,7 +122,7 @@ void ADN_Urban_Data::Save()
 {
     T_StringList fileList;
     FilesNeeded( fileList );
-    for( CIT_StringList it = fileList.begin(); it != fileList.end(); ++it )
+    for( auto it = fileList.begin(); it != fileList.end(); ++it )
     {
         std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + *it;
         ADN_Tools::CreatePathToFile( strFile );
@@ -145,7 +145,7 @@ void ADN_Urban_Data::Load( const tools::Loader_ABC& fileLoader )
 {
     T_StringList fileList;
     FilesNeeded( fileList );
-    for( CIT_StringList it = fileList.begin(); it != fileList.end(); ++it )
+    for( auto it = fileList.begin(); it != fileList.end(); ++it )
     {
         const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + (*it);
         if( *it == "Urban.xml" )
@@ -207,7 +207,7 @@ void ADN_Urban_Data::WriteTemplates( xml::xostream& output )
 {
     output << xml::start( "templates" );
     ADN_Tools::AddSchema( output, "UrbanTemplates" );
-        for( CIT_UrbanTemplateInfos_Vector it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
+        for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
             ( *it )->Write( output );
     output << xml::end;
 }
@@ -248,7 +248,7 @@ void ADN_Urban_Data::ReadMaterial( xml::xistream& input  )
 void ADN_Urban_Data::WriteMaterials( xml::xostream& output ) const
 {
     output << xml::start( "material-composition-types" );
-    for( CIT_UrbanMaterialInfos_Vector it = vMaterials_.begin(); it != vMaterials_.end(); ++it )
+    for( auto it = vMaterials_.begin(); it != vMaterials_.end(); ++it )
         ( *it )->WriteMaterial( output );
     output << xml::end;
 }
@@ -354,7 +354,7 @@ void ADN_Urban_Data::ReadRoofShape( xml::xistream& input )
 void ADN_Urban_Data::WriteRoofShapes( xml::xostream& output ) const
 {
     output << xml::start( "roof-shape-types" );
-    for( CIT_RoofShapeInfos_Vector it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
+    for( auto it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
         ( *it )->WriteRoofShape( output );
     output << xml::end;
 }
@@ -397,7 +397,7 @@ void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
                 << xml::attribute( "nominal-capacity", defaultNominalCapacity_.GetData() )
                 << xml::attribute( "max-capacity", defaultMaxCapacity_.GetData() )
             << xml::end;
-    for( CIT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
+    for( auto it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
         ( *it )->WriteAccommodation( output );
     output << xml::end;
 }
@@ -489,7 +489,7 @@ void ADN_Urban_Data::ReadInfrastructure( xml::xistream& input  )
 void ADN_Urban_Data::WriteInfrastructures( xml::xostream& output ) const
 {
     output << xml::start( "infrastructures" );
-    for( CIT_InfrastructureInfos_Vector it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
+    for( auto it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
         ( *it )->WriteInfrastructure( output );
     output << xml::end;
 }
@@ -711,7 +711,7 @@ void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output )
                    << xml::attribute( "red", color.red() )
                << xml::end
                << xml::start( "usages" );
-    for( CIT_UsageTemplateInfosVector it = usages_.begin(); usages_.end() != it; ++it )
+    for( auto it = usages_.begin(); usages_.end() != it; ++it )
             (*it)->Write( output );
     output     << xml::end
            << xml::end;
@@ -735,7 +735,7 @@ ADN_Urban_Data::UrbanTemplateInfos* ADN_Urban_Data::UrbanTemplateInfos::CreateCo
     result->trafficability_ = trafficability_.GetData();
     result->ptrMaterial_ = ptrMaterial_.GetData();
     result->ptrRoofShape_ = ptrRoofShape_.GetData();
-    for( CIT_UsageTemplateInfosVector it = usages_.begin(); it != usages_.end(); ++it )
+    for( auto it = usages_.begin(); it != usages_.end(); ++it )
         result->usages_.AddItem( ( *it )->CreateCopy() );
 
     return result;
@@ -863,7 +863,7 @@ ADN_Urban_Data::UsageTemplateInfos* ADN_Urban_Data::UsageTemplateInfos::CreateCo
 QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( UrbanMaterialInfos& infos )
 {
     QStringList result;
-    for( CIT_UrbanTemplateInfos_Vector it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
+    for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
         if( ( *it )->ptrMaterial_.GetData()->strName_.GetData() == infos.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     return result;
@@ -876,7 +876,7 @@ QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( UrbanMaterialInfos& infos )
 QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( RoofShapeInfos& infos )
 {
     QStringList result;
-    for( CIT_UrbanTemplateInfos_Vector it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
+    for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
         if( ( *it )->ptrRoofShape_.GetData()->strName_.GetData() == infos.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     return result;
@@ -889,7 +889,7 @@ QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( RoofShapeInfos& infos )
 QStringList ADN_Urban_Data::GetUrbanTemplateThatUse( AccommodationInfos& infos )
 {
     QStringList result;
-    for( CIT_UrbanTemplateInfos_Vector it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
+    for( auto it = vTemplates_.begin(); it != vTemplates_.end(); ++it )
         for( CIT_UsageTemplateInfosVector itUsage = ( *it )->usages_.begin(); itUsage != ( *it )->usages_.end(); ++itUsage )
             if( ( *itUsage )->accommodation_.GetData()->strName_.GetData() == infos.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();

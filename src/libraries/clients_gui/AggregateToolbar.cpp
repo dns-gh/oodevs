@@ -95,7 +95,7 @@ AggregateToolbar::~AggregateToolbar()
 void AggregateToolbar::Aggregate()
 {
     DisaggregateAll();
-    for( CIT_Automats it = automats_.begin(); it != automats_.end(); ++it )
+    for( auto it = automats_.begin(); it != automats_.end(); ++it )
         automatsLayer_.Aggregate( **it );
 }
 
@@ -107,7 +107,7 @@ void AggregateToolbar::DisaggregateAll()
 {
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
         menu_->setItemChecked( i, false );
-    for( CIT_Formations it = formations_.begin(); it != formations_.end(); ++it )
+    for( auto it = formations_.begin(); it != formations_.end(); ++it )
         formationsLayer_.Disaggregate( **it );
 }
 

@@ -749,7 +749,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
     {
         T_PointVector tempVector;
         callerAutomate.GetOrderManager().GetFuseau().ComputePointsBeforeLima( *pLima, rDistBeforeLima, nNbrPoints, tempVector );
-        for( CIT_PointVector it = tempVector.begin(); it != tempVector.end(); ++it )
+        for( auto it = tempVector.begin(); it != tempVector.end(); ++it )
         {
             boost::shared_ptr< MT_Vector2D > point = boost::make_shared< MT_Vector2D >( *it );
             result.push_back( point );
@@ -1039,7 +1039,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
                     const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
                     const T_PointVector& points = object->GetLocalisation().GetPoints();
                     const MT_Vector2D barycenter = object->GetLocalisation().ComputeBarycenter();
-                    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+                    for( auto it = points.begin(); it != points.end(); ++it )
                     {
                         const MT_Vector2D point( *it + MT_Vector2D( *it - barycenter ).Normalize() * distance );
                         if( DEC_GeometryFunctions::IsUrbanBlockTrafficable( point, myWeight ) && pLocalisation->IsInside( point ) )
@@ -1910,7 +1910,7 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
         const MT_Line line = fuseau.GetGlobalDirection();
         MT_Vector2D direction = line.GetPosEnd() - line.GetPosStart();
         const T_LimaVector& limas = callerAutomate.GetOrderManager().GetLimas();
-        for( CIT_LimaVector it = limas.begin(); it != limas.end(); ++it )
+        for( auto it = limas.begin(); it != limas.end(); ++it )
         {
             const MIL_LimaOrder::T_LimaFunctions& functions = it->GetFunctions();
             for( MIL_LimaOrder::CIT_LimaFunctions fit = functions.begin(); fit != functions.end(); ++fit )

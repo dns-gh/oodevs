@@ -61,7 +61,7 @@ const VALUE& MT_Converter< KEY, VALUE, CMP >::Convert( const KEY& key ) const
 template< typename KEY, typename VALUE, typename CMP >
 const KEY& MT_Converter< KEY, VALUE, CMP >::RevertConvert( const VALUE& value ) const
 {
-    for( CIT_Map it = map_.begin(); it != map_.end(); ++it )
+    for( auto it = map_.begin(); it != map_.end(); ++it )
         if( it->second == value )
             return it->first;
     return nullKey_;
@@ -95,7 +95,7 @@ void MT_Converter< KEY, VALUE, CMP >::save( Archive& archive, const unsigned int
 {
     std::size_t size = map_.size();
     archive << size;
-    for( CIT_Map it = map_.begin(); it != map_.end(); ++it )
+    for( auto it = map_.begin(); it != map_.end(); ++it )
         archive << it->first
                 << it->second;
 }

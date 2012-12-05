@@ -245,7 +245,7 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
     {
         xml::xofstream xos( strFileName );
         xos << xml::start( "files" );
-        for( CIT_CRCMap it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
+        for( auto it = CRCMap_.begin(); it != CRCMap_.end(); ++it )
             xos << xml::start( "file" )
                     << xml::attribute( "name", it->first )
                     << xml::attribute( "crc", it->second )

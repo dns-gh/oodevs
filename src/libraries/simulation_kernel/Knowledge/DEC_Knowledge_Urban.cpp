@@ -186,7 +186,7 @@ void DEC_Knowledge_Urban::UpdateRelevance()
 void DEC_Knowledge_Urban::WriteMsgPerceptionSources( sword::UrbanKnowledgeUpdate& message ) const
 {
     message.mutable_automat_perceptions();
-    for( CIT_PerceptionSource it = perceivedByAutomate_.begin(); it != perceivedByAutomate_.end(); ++it )
+    for( auto it = perceivedByAutomate_.begin(); it != perceivedByAutomate_.end(); ++it )
         message.mutable_automat_perceptions()->add_elem()->set_id( ( *it )->GetID() );
 }
 

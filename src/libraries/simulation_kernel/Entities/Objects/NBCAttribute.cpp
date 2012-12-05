@@ -134,13 +134,13 @@ void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
     file << danger_;
     file << nForm_;
     std::size_t size = agents_.size();
-    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( auto it = agents_.begin(); it != agents_.end(); ++it )
     {
         if( !*it )
             --size;
     }
     file << size;
-    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( auto it = agents_.begin(); it != agents_.end(); ++it )
     {
         if( !*it )
             continue;
@@ -175,7 +175,7 @@ void NBCAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_nbc()->set_danger_level( danger_ );
     asn.mutable_nbc()->mutable_nbc_agents();
-    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( auto it = agents_.begin(); it != agents_.end(); ++it )
     {
         sword::NBCAgentType& data = *asn.mutable_nbc()->add_nbc_agents();
         data.set_id( (*it)->GetID() ) ;
@@ -209,7 +209,7 @@ void NBCAttribute::WriteODB( xml::xostream& xos ) const
     else
         xos << xml::attribute( "state", "gaseous" );
     xos << xml::attribute( "danger", danger_ );
-    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( auto it = agents_.begin(); it != agents_.end(); ++it )
         xos << xml::start( "nbc-agent" ) << xml::attribute( "type", (*it)->GetName() )
             << xml::end;
     xos << xml::end;
@@ -292,7 +292,7 @@ bool NBCAttribute::ReadAgents( const std::string& strAgents )
 std::string NBCAttribute::WriteAgents() const
 {
     std::string strAgents;
-    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( auto it = agents_.begin(); it != agents_.end(); ++it )
         strAgents += (*it)->GetName() + '\n';
     return strAgents;
 }
@@ -328,7 +328,7 @@ bool NBCAttribute::Update( const NBCAttribute& rhs )
 bool NBCAttribute::UpdateCloudAttribute( const NBCAttribute& rhs )
 {
     agents_.clear();
-    for( CIT_NBCAgents it = rhs.agents_.begin(); it != rhs.agents_.end(); ++it )
+    for( auto it = rhs.agents_.begin(); it != rhs.agents_.end(); ++it )
         if( (*it)->IsGasContaminating() || (*it)->IsGasPoisonous() )
             agents_.push_back( *it );
     if( !agents_.empty() )

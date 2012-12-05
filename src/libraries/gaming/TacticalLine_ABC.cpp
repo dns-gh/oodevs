@@ -86,7 +86,7 @@ namespace
         virtual void VisitLines( const T_PointVector& points )
         {
             loc_.set_type( sword::Location_Geometry_line );
-            for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+            for( auto it = points.begin(); it != points.end(); ++it )
                 converter_.ConvertToGeo( *it, *loc_.mutable_coordinates()->add_elem() );
         }
 

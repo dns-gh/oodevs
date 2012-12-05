@@ -430,7 +430,7 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsCollidingFromType
     T_KnowledgeObjectDiaIDVector result;
     T_KnowledgeObjectDiaIDVector objectsColliding;
     callerAgent.GetKnowledge().GetObjectsColliding( objectsColliding );
-    for( CIT_KnowledgeObjectDiaIDVector it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
+    for( auto it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
     {
         if( *it )
         {
@@ -452,7 +452,7 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetCollidingDisasters( cons
     T_KnowledgeObjectDiaIDVector result;
     T_KnowledgeObjectDiaIDVector objectsColliding;
     callerAgent.GetKnowledge().GetObjectsColliding( objectsColliding );
-    for( CIT_KnowledgeObjectDiaIDVector it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
+    for( auto it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
         if( *it )
         {
             const MIL_ObjectType_ABC& type = (*it)->GetType();

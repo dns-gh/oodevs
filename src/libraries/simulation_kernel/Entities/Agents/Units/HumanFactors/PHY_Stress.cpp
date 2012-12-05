@@ -107,7 +107,7 @@ PHY_Stress::~PHY_Stress()
 // -----------------------------------------------------------------------------
 const PHY_Stress* PHY_Stress::Find( sword::UnitAttributes::EnumUnitStress nAsnID )
 {
-    for( CIT_StressMap it = stresses_.begin(); it != stresses_.end(); ++it )
+    for( auto it = stresses_.begin(); it != stresses_.end(); ++it )
         if( it->second->GetAsnID() == nAsnID )
             return it->second;
     return 0;
@@ -119,7 +119,7 @@ const PHY_Stress* PHY_Stress::Find( sword::UnitAttributes::EnumUnitStress nAsnID
 // -----------------------------------------------------------------------------
 const PHY_Stress* PHY_Stress::Find( unsigned int nID )
 {
-    for( CIT_StressMap it = stresses_.begin(); it != stresses_.end(); ++it )
+    for( auto it = stresses_.begin(); it != stresses_.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;

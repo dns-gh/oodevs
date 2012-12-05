@@ -123,7 +123,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::ReserveConsumptions()
         return;
     assert( pPion_ );
     const PHY_ConsumptionType* pConsumptionMode = 0;
-    for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
+    for( auto it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
     {
         const PHY_ConsumptionType& composanteConsumptionMode = it->first->GetConsumptionMode( pObject_->GetType() );
         if( !pConsumptionMode || *pConsumptionMode < composanteConsumptionMode  )
@@ -189,7 +189,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::GetTotalOperationSpeed( double
     if( !bConsumptionReserved_ )
         return;
 
-    for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
+    for( auto it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
     {
         if( it->second != 0 )
             rOperationTime += ( 1.0 / it->second );

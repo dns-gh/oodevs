@@ -162,9 +162,9 @@ void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, c
 void DEC_Knowledge_PopulationPerception::Prepare()
 {
     bAttacker_ = false;
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->Prepare();
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         it->second->Prepare();
 }
 
@@ -241,10 +241,10 @@ bool DEC_Knowledge_PopulationPerception::IsIdentified( const MIL_PopulationConce
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_PopulationPerception::IsPerceived() const
 {
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         if( it->second->IsPerceived() )
             return true;
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         if( it->second->IsPerceived() )
             return true;
     return false;
@@ -256,9 +256,9 @@ bool DEC_Knowledge_PopulationPerception::IsPerceived() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationPerception::PublishKnowledges( DEC_Knowledge_Population& knowledge ) const
 {
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         knowledge.Update( *it->second );
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         knowledge.Update( *it->second );
 }
 
@@ -268,9 +268,9 @@ void DEC_Knowledge_PopulationPerception::PublishKnowledges( DEC_Knowledge_Popula
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationPerception::UpdateOnNetwork() const
 {
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->UpdateOnNetwork();
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         it->second->UpdateOnNetwork();
 }
 
@@ -280,9 +280,9 @@ void DEC_Knowledge_PopulationPerception::UpdateOnNetwork() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationPerception::SendStateToNewClient( unsigned int nCtx ) const
 {
-    for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         it->second->SendStateToNewClient( nCtx );
-    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         it->second->SendStateToNewClient( nCtx );
 }
 

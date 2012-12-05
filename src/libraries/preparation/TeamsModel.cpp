@@ -81,7 +81,7 @@ void TeamsModel::CreateTeam()
 // -----------------------------------------------------------------------------
 Team_ABC* TeamsModel::FindTeam( const QString& name ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->GetName() == name )
             return it->second;
     return 0;
@@ -93,7 +93,7 @@ Team_ABC* TeamsModel::FindTeam( const QString& name ) const
 // -----------------------------------------------------------------------------
 Team_ABC* TeamsModel::FindTeam( unsigned int id ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->GetId() == id )
             return it->second;
     return 0;
@@ -124,7 +124,7 @@ void TeamsModel::NotifyDeleted( const Team_ABC& team )
 void TeamsModel::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "parties" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "party" );
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
@@ -139,7 +139,7 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
     }
     xos << xml::end;
     xos << xml::start( "diplomacy" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "party" );
         static_cast< const Diplomacies& >( it->second->Get< Diplomacies_ABC >() ).Serialize( xos ); // $$$$ SBO 2008-12-09: !

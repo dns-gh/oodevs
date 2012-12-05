@@ -113,7 +113,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
         if( !( *it ) )
             --size;
     file << size;
-    for( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
+    for( auto it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
     {
         if( (*it) )
         {

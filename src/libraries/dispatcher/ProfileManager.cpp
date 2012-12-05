@@ -161,7 +161,7 @@ namespace
 void ProfileManager::Reset()
 {
     MT_LOG_INFO_MSG( "Loading profiles" );
-    for( CIT_ProfileMap it = profiles_.begin(); it != profiles_.end(); ++it )
+    for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
         delete it->second;
     profiles_.clear();
 
@@ -207,7 +207,7 @@ Profile* ProfileManager::Authenticate( const std::string& strName, const std::st
 // -----------------------------------------------------------------------------
 void ProfileManager::Send( ClientPublisher_ABC& publisher ) const
 {
-    for( CIT_ProfileMap it = profiles_.begin(); it != profiles_.end(); ++it )
+    for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
         it->second->SendCreation( publisher );
 }
 
@@ -217,7 +217,7 @@ void ProfileManager::Send( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void ProfileManager::Send( sword::AuthenticationResponse& message ) const
 {
-    for( CIT_ProfileMap it = profiles_.begin(); it != profiles_.end(); ++it )
+    for( auto it = profiles_.begin(); it != profiles_.end(); ++it )
         it->second->Send( *message.mutable_profiles()->add_elem() );
 }
 

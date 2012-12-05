@@ -133,7 +133,7 @@ PHY_RolePion_Perceiver::PHY_RolePion_Perceiver( MIL_Agent_ABC& pion )
 // -----------------------------------------------------------------------------
 PHY_RolePion_Perceiver::~PHY_RolePion_Perceiver()
 {
-    for( CIT_PerceptionVector it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
+    for( auto it = activePerceptions_.begin(); it != activePerceptions_.end(); ++it )
         delete *it;
     activePerceptions_.clear();
 }
@@ -1195,7 +1195,7 @@ void PHY_RolePion_Perceiver::SendDebugState() const
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = owner_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
     message().set_elongation( static_cast< float >( owner_.Execute( *algorithm ).GetElongationFactor() ) ); //@TODO MGD share
     message().mutable_cones();
-    for( CIT_SurfaceAgentMap it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
+    for( auto it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
         it->second.SendFullState( *message().mutable_cones()->add_elem() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }

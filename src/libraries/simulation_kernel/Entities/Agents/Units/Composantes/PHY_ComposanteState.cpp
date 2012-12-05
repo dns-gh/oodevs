@@ -148,7 +148,7 @@ const PHY_ComposanteState& PHY_ComposanteState::Find( unsigned int nID )
 // -----------------------------------------------------------------------------
 const PHY_ComposanteState* PHY_ComposanteState::Find( const std::string& strName )
 {
-    for( CIT_ComposanteStateVector it = composanteStates_.begin(); it != composanteStates_.end(); ++it )
+    for( auto it = composanteStates_.begin(); it != composanteStates_.end(); ++it )
         if( sCaseInsensitiveEqual()( (**it).GetName(), strName ) )
             return *it;
     return 0;

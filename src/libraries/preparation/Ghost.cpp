@@ -214,7 +214,7 @@ void Ghost::SerializeAttributes( xml::xostream& xos ) const
         nature = nature.substr( 8, nature.length() - 8 );
     xos << xml::attribute( "nature", nature )
         << xml::attribute( "level", level_ );
-    for( CIT_Children it = children_.begin(); it != children_.end(); ++it )
+    for( auto it = children_.begin(); it != children_.end(); ++it )
         xos << xml::start( "phantom" )
                 << xml::attribute( "name", it->first )
                 << xml::attribute( "position", converter_.ConvertToMgrs( it->second ) )
@@ -307,7 +307,7 @@ void Ghost::FinalizeDotations( const ::StaticModel& staticModel, const Entity_AB
     if( dotations_.find( entity.GetId() ) != dotations_.end() )
     {
         T_DotationsList& dotationList = dotations_[ entity.GetId() ];
-        for( CIT_DotationsList it = dotationList.begin(); it != dotationList.end(); ++it )
+        for( auto it = dotationList.begin(); it != dotationList.end(); ++it )
             if( DotationType* dotationType = staticModel.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( it->first ) )
                 logHierarchy.SetDotation( *dotationType, it->second );
     }

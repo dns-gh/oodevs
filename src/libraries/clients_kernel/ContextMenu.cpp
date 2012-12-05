@@ -131,7 +131,7 @@ void ContextMenu::InternalFillMenu( const ContextMenu::CIT_Menus& currentMenu )
 ContextMenu* ContextMenu::FillMenu()
 {
     // Add base categories first
-    for( CIT_BaseCategories it = baseCategories_.begin(); it != baseCategories_.end(); ++it )
+    for( auto it = baseCategories_.begin(); it != baseCategories_.end(); ++it )
         for( CIT_Menus menu = menus_.begin(); menu != menus_.end(); ++menu )
             if( menu->first.name_ == *it )
             {

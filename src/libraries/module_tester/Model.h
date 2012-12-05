@@ -207,7 +207,7 @@ private:
         virtual void Serialize( const Model& expected, std::ostream& os, std::size_t indent ) const
         {
             os << shift( indent ) << "{" << std::endl;
-            for( CIT_Children it = expected.children_.begin(); it != expected.children_.end(); )
+            for( auto it = expected.children_.begin(); it != expected.children_.end(); )
             {
                 os << shift( indent + 2 ) << it->first << ": ";
                 it->second.Serialize( os, indent + 2 );
@@ -250,7 +250,7 @@ private:
         virtual void Serialize( const Model& expected, std::ostream& os, std::size_t indent ) const
         {
             os << shift( indent ) << '[' << std::endl;
-            for( CIT_Elements it = expected.elements_.begin(); it != expected.elements_.end(); )
+            for( auto it = expected.elements_.begin(); it != expected.elements_.end(); )
             {
                 it->Serialize( os, indent + 2 );
                 if( ++it != expected.elements_.end() )

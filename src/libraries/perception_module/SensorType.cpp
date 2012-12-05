@@ -56,7 +56,7 @@ void SensorType::ReadSensor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void SensorType::Terminate()
 {
-    for( CIT_SensorTypeMap it = sensorTypes_.begin(); it != sensorTypes_.end(); ++it )
+    for( auto it = sensorTypes_.begin(); it != sensorTypes_.end(); ++it )
         delete it->second;
     sensorTypes_.clear();
 }

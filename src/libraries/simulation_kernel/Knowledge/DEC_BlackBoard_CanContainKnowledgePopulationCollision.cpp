@@ -61,7 +61,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPoint
 {
     std::size_t size = knowledgePopulationCollisionMap_.size();
     file << size;
-    for( CIT_KnowledgePopulationCollisionMap it = knowledgePopulationCollisionMap_.begin(); it != knowledgePopulationCollisionMap_.end(); ++it )
+    for( auto it = knowledgePopulationCollisionMap_.begin(); it != knowledgePopulationCollisionMap_.end(); ++it )
     {
         file << it->first
              << it->second;

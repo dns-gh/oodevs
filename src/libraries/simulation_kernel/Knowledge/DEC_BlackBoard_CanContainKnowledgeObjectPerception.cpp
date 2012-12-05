@@ -61,7 +61,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOut
 {
     std::size_t size = knowledgeObjectPerceptionMap_.size();
     file << size;
-    for( CIT_KnowledgeObjectPerceptionMap it = knowledgeObjectPerceptionMap_.begin(); it != knowledgeObjectPerceptionMap_.end(); ++it )
+    for( auto it = knowledgeObjectPerceptionMap_.begin(); it != knowledgeObjectPerceptionMap_.end(); ++it )
     {
         file << it->first
              << it->second;

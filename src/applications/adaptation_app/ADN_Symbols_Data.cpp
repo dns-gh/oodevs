@@ -139,7 +139,7 @@ ADN_Symbols_Data::T_SymbolsInfra_Vector& ADN_Symbols_Data::GetSymbolsInfras()
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::SymbolsInfra* ADN_Symbols_Data::FindSymbolInfra( const std::string& strName ) const
 {
-    for( CIT_SymbolsInfra_Vector it = infras_.begin(); it != infras_.end(); ++it )
+    for( auto it = infras_.begin(); it != infras_.end(); ++it )
         if( **it == strName )
             return *it;
     return 0;

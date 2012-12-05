@@ -101,7 +101,7 @@ unsigned int ADN_TableDelegate::AddColorEdit( int fromRow, int toRow, int fromCo
 // -----------------------------------------------------------------------------
 const std::pair< double, double >* ADN_TableDelegate::GetColorType( int row, int col ) const
 {
-    for( CIT_Positions it = colorPositions_.begin(); it != colorPositions_.end(); ++it )
+    for( auto it = colorPositions_.begin(); it != colorPositions_.end(); ++it )
         if( ( it->fromRow_ == -1 || row >= it->fromRow_ ) &&
             ( it->toRow_ == -1   || row <= it->toRow_   ) &&
             ( it->fromCol_ == -1 || col >= it->fromCol_ ) &&

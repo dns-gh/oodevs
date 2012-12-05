@@ -82,7 +82,7 @@ bool PerceptionSurfaceAgent::IsInside( const MT_Vector2D& vPoint ) const
 {
     if( vOrigin_.SquareDistance( vPoint ) <= pSensorType_->GetSquareProximityDistance() )
         return true;
-    for( CIT_SectorVector it = sectors_.begin(); it != sectors_.end(); ++it )
+    for( auto it = sectors_.begin(); it != sectors_.end(); ++it )
         if( it->IsInSector( vPoint ) )
             return true;
     return false;
@@ -203,7 +203,7 @@ void PerceptionSurfaceAgent::NotifyCone( wrapper::Effect& effect ) const
     cone[ "origin/y" ] = vOrigin_.rY_;
     cone[ "height" ] = rHeight_;
     cone[ "sensor" ] = pSensorType_->GetType().GetName();
-    for( CIT_SectorVector it = sectors_.begin(); it != sectors_.end(); ++it )
+    for( auto it = sectors_.begin(); it != sectors_.end(); ++it )
     {
         wrapper::Node sector = cone[ "sectors" ].AddElement();
         const MT_Vector2D& direction = it->GetDirection();

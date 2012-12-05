@@ -65,6 +65,6 @@ namespace
 void MT_TimerManager::Update() const
 {
     const long long int current = GetSystemTime();
-    for( CIT_Timers it = timers_.begin(); it != timers_.end(); ++it )
+    for( auto it = timers_.begin(); it != timers_.end(); ++it )
         (*it)->Process( current );
 }

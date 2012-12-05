@@ -53,7 +53,7 @@ AttributeType::AttributeType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 AttributeType::~AttributeType()
 {
-    for( CIT_Entries it = labels_.begin(); it != labels_.end(); ++it )
+    for( auto it = labels_.begin(); it != labels_.end(); ++it )
         delete *it;
 }
 
@@ -75,7 +75,7 @@ bool AttributeType::Extends( const std::string& type ) const
 // -----------------------------------------------------------------------------
 const std::string& AttributeType::GetLabel( const std::string& language, const std::string& kind ) const
 {
-    for( CIT_Entries it = labels_.begin(); it != labels_.end(); ++it )
+    for( auto it = labels_.begin(); it != labels_.end(); ++it )
         if( ( *it )->Matches( language, kind ) )
             return ( *it )->GetText();
     return name_;

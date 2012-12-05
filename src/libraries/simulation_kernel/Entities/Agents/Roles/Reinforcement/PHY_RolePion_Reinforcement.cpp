@@ -167,7 +167,7 @@ void PHY_RolePion_Reinforcement::SendFullState( client::UnitAttributes& msg ) co
     msg().mutable_reinforced_unit()->set_id( pPionReinforced_ ? pPionReinforced_->GetID() : 0 );
     if( !reinforcements_.empty() )
     {
-        for( CIT_PionSet it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
             msg().mutable_reinforcements()->add_elem()->set_id( (**it).GetID() );
     }
 }
@@ -183,7 +183,7 @@ void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg )
     if( bReinforcementsChanged_ )
     {
         msg().mutable_reinforcements();
-        for( CIT_PionSet it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+        for( auto it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
             msg().mutable_reinforcements()->add_elem()->set_id( (**it).GetID() );
     }
 }
@@ -300,7 +300,7 @@ void PHY_RolePion_Reinforcement::ChangeConsumptionMode(dotation::ConsumptionMode
 void PHY_RolePion_Reinforcement::NotifyMovingInsideObject( MIL_Object_ABC& object )
 {
     const T_PionSet& reinforcements = GetReinforcements();
-    for( CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+    for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingInsideObject, object );
 }
 
@@ -311,7 +311,7 @@ void PHY_RolePion_Reinforcement::NotifyMovingInsideObject( MIL_Object_ABC& objec
 void PHY_RolePion_Reinforcement::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
     const T_PionSet& reinforcements = GetReinforcements();
-    for( CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+    for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
         (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
 }
 
@@ -322,7 +322,7 @@ void PHY_RolePion_Reinforcement::NotifyMovingOutsideObject( MIL_Object_ABC& obje
 void PHY_RolePion_Reinforcement::NotifyPutInsideObject( MIL_Object_ABC& object )
 {
     const T_PionSet& reinforcements = GetReinforcements();
-        for( CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+        for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
             (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
 }
 
@@ -333,7 +333,7 @@ void PHY_RolePion_Reinforcement::NotifyPutInsideObject( MIL_Object_ABC& object )
 void PHY_RolePion_Reinforcement::NotifyPutOutsideObject( MIL_Object_ABC& object )
 {
     const T_PionSet& reinforcements = GetReinforcements();
-        for( CIT_PionSet it = reinforcements.begin(); it != reinforcements.end(); ++it )
+        for( auto it = reinforcements.begin(); it != reinforcements.end(); ++it )
             (**it).Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
 }
 

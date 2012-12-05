@@ -116,7 +116,7 @@ void LocationEditorToolbar::CreateBookmark()
         bookmarks_.push_back( Bookmark( name.toStdString(), utm ) );
         layer_.AddLocation( menuPoint_ );
         unsigned int i = 0;
-        for( CIT_Bookmarks it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
+        for( auto it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
             bookmarksMenu_->insertItem( it->name_.c_str(), this, SLOT( GotoBookmark( int ) ), 0, i );
         bookmarksMenu_->insertSeparator();
         bookmarksMenu_->insertItem( tr( "Clear bookmarks" ), this, SLOT( ClearBookmarks() ) );

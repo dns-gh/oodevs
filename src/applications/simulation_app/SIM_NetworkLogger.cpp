@@ -85,7 +85,7 @@ void SIM_NetworkLogger::OnWrite( T_Socket socket, const boost::system::error_cod
 void SIM_NetworkLogger::WriteString( const std::string& s )
 {
     boost::lock_guard< boost::mutex > locker( *mutex_ );
-    for( CIT_Sockets it = sockets_.begin(); it != sockets_.end(); ++it )
+    for( auto it = sockets_.begin(); it != sockets_.end(); ++it )
         boost::asio::async_write( **it, boost::asio::buffer( s.data(), s.size() ),
                                   boost::bind( &SIM_NetworkLogger::OnWrite, this, *it, boost::asio::placeholders::error ) ) ;
 }

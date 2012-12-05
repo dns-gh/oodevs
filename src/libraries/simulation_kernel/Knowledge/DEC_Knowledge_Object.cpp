@@ -260,13 +260,13 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
          << bSkipPreparation_;
     // On stocke les types selon leur nom
     std::size_t size = reconByAgentTypes_.size();
-    for( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
+    for( auto it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
     {
         if( !*it )
             --size;
     }
     file << size;
-    for( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
+    for( auto it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
     {
         if( !*it )
             continue;
@@ -512,7 +512,7 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( sword::ObjectKnowledgeUpda
 {
     if( !IsAttributeUpdated( eAttr_PerceptionSources ) )
         return;
-    for( CIT_PerceptionSourceSet it = perceptionPerAutomateSet_.begin(); it != perceptionPerAutomateSet_.end(); ++it )
+    for( auto it = perceptionPerAutomateSet_.begin(); it != perceptionPerAutomateSet_.end(); ++it )
         asn.mutable_perceiving_automats()->add_elem()->set_id( ( *it )->GetID() );
 }
 
@@ -896,7 +896,7 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
             const std::vector< geometry::Polygon2f* >& deepAreas = flood->GetDeepAreas();
             const std::vector< geometry::Polygon2f* >& lowAreas = flood->GetLowAreas();
             std::vector< geometry::Polygon2f* >::const_iterator polygonIt;
-            for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
+            for( auto it = pathPoints.begin(); it != pathPoints.end(); ++it )
                 if( localisation.IsInside( *it, epsilon ) )
                 {
                     geometry::Point2f point( static_cast< float>( ( *it ).rX_ ), static_cast< float >( ( *it ).rY_ ) );
@@ -910,7 +910,7 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
                 }
             return false;
         }
-    for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
+    for( auto it = pathPoints.begin(); it != pathPoints.end(); ++it )
         if( localisation_.IsInside( *it, epsilon ) && ( !pObjectKnown_ || pObjectKnown_->GetLocalisation().IsInside( *it, epsilon ) ) )
             return true;
     return false;

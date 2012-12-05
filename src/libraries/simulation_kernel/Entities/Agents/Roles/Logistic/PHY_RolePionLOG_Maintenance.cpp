@@ -435,7 +435,7 @@ void PHY_RolePionLOG_Maintenance::InsertConsigns( const T_MaintenanceConsigns& o
 PHY_RolePionLOG_Maintenance::T_AutomateVector PHY_RolePionLOG_Maintenance::GetAutomatePriorities() const
 {
     T_AutomateVector result;
-    for( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
+    for( auto it = consigns_.begin(); it != consigns_.end(); ++it )
         if( (*it).first )
             result.push_back( (*it).first );
     return result;

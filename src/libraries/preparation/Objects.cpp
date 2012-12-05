@@ -46,7 +46,7 @@ void Objects::AddObject( const Object& object )
 void Objects::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "objects" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "object" );
         it->second->SerializeAttributes( xos );

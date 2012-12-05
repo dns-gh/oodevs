@@ -578,7 +578,7 @@ void PHY_RolePion_Composantes::Clean()
     bTransportHasChanged_     = false;
     bOperationalStateChanged_ = false;
 
-    for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
+    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
         ( **it ).Clean();
 }
 
@@ -698,7 +698,7 @@ const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_Sens
 {
     const PHY_Volume* pSignificantVolume = 0;
     double rSignificantVolumeFactor = 0.;
-    for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+    for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
     {
         const PHY_Volume& compTypeVolume = it->first->GetVolume();
         const T_ComposanteTypeProperties& compProp = it->second;
@@ -721,7 +721,7 @@ const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_Sens
 void PHY_RolePion_Composantes::GetVisibleVolumes( T_ComposanteVolumeSet& volumes ) const
 {
     volumes.clear();
-    for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
+    for( auto it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
     {
         const PHY_Volume& compTypeVolume = it->first->GetVolume();
         const T_ComposanteTypeProperties& compProp = it->second;
@@ -1079,7 +1079,7 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendChangedState() const
 {
-    for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
+    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
         ( **it ).SendChangedState();
 }
 
@@ -1089,7 +1089,7 @@ void PHY_RolePion_Composantes::SendChangedState() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendFullState( unsigned int context ) const
 {
-    for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
+    for( auto it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
         ( **it ).SendFullState( context );
 }
 
@@ -1106,7 +1106,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
     // Lent composantes
     {
         T_LoanCountMap loanData;
-        for( CIT_LoanMap it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
+        for( auto it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
         {
             const MIL_Agent_ABC& pion = *it->first;
             const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
@@ -1114,7 +1114,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
                 ++loanData[ T_Key( &pion, &( **itComp ).GetType() ) ];
         }
         sword::LentEquipments& lentEquipements = *message().mutable_lent_equipments();
-        for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
+        for( auto it = loanData.begin(); it != loanData.end(); ++it )
         {
             sword::LentEquipments_LentEquipment& loan = *lentEquipements.add_elem();
             loan.mutable_borrower()->set_id( it->first.first ->GetID() );
@@ -1126,7 +1126,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
     // Borrowed composantes
     {
         T_LoanCountMap loanData;
-        for( CIT_LoanMap it = borrowedComposantes_.begin(); it != borrowedComposantes_.end(); ++it )
+        for( auto it = borrowedComposantes_.begin(); it != borrowedComposantes_.end(); ++it )
         {
             const MIL_Agent_ABC& pion = *it->first;
             const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
@@ -1134,7 +1134,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
                 ++loanData[ T_Key( &pion, &( **itComp ).GetType() ) ];
         }
         sword::BorrowedEquipments& borrowedEquipements = *message().mutable_borrowed_equipments();
-        for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
+        for( auto it = loanData.begin(); it != loanData.end(); ++it )
         {
             sword::BorrowedEquipments_BorrowedEquipment& loan = *borrowedEquipements.add_elem();
             loan.mutable_owner()->set_id( it->first.first ->GetID() );

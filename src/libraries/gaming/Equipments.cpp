@@ -124,7 +124,7 @@ void Equipments::SetSuperior( const kernel::Entity_ABC& automat )
 {
     std::vector< Equipment > differences;
     differences.reserve( elements_.size() );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         differences.push_back( *it->second );
     if( Equipments* equipments = const_cast< Equipments* >( automat.Retrieve< Equipments >() ) )
         equipments->Update( differences );

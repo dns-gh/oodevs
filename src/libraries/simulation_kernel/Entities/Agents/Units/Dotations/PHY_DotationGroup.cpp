@@ -52,7 +52,7 @@ PHY_DotationGroup::PHY_DotationGroup()
 // -----------------------------------------------------------------------------
 PHY_DotationGroup::~PHY_DotationGroup()
 {
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         delete it->second;
     dotations_.clear();
 }
@@ -143,7 +143,7 @@ void PHY_DotationGroup::ReadValues( xml::xistream& xis, const PHY_DotationCatego
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::WriteODB( xml::xostream& xos ) const
 {
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
     {
         xos << xml::start( "resource" )
                 << xml::attribute( "name", it->first->GetName() )
@@ -280,7 +280,7 @@ double PHY_DotationGroup::Supply( const PHY_DotationCategory& category, double r
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::Resupply( double rFactor /* = 1.*/ )
 {
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         it->second->Resupply( rFactor );
 }
 
@@ -290,7 +290,7 @@ void PHY_DotationGroup::Resupply( double rFactor /* = 1.*/ )
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::Resupply( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor )
 {
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
     {
         PHY_Dotation& dotation = *it->second;
         if( !dotation.GetCategory().GetAmmoDotationClass() || *dotation.GetCategory().GetAmmoDotationClass() != ammoDotationClass )
@@ -315,7 +315,7 @@ double PHY_DotationGroup::AddConsumptionReservation( const PHY_DotationCategory&
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::CancelConsumptionReservations()
 {
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         it->second->CancelConsumptionReservation();
 }
 
@@ -325,7 +325,7 @@ void PHY_DotationGroup::CancelConsumptionReservations()
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::ConsumeConsumptionReservations()
 {
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         it->second->ConsumeConsumptionReservation();
 }
 
@@ -345,7 +345,7 @@ double PHY_DotationGroup::AddFireReservation( const PHY_DotationCategory& catego
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::ConsumeFireReservations()
 {
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         it->second->ConsumeFireReservation();
 }
 
@@ -359,7 +359,7 @@ void PHY_DotationGroup::ConsumeFireReservations()
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::Apply( boost::function< void( PHY_Dotation& ) > visitor ) const
 {
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         visitor( *it->second );
 }
 
@@ -369,7 +369,7 @@ void PHY_DotationGroup::Apply( boost::function< void( PHY_Dotation& ) > visitor 
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::ChangeDotationsValueUsingTC2( const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor, MIL_AutomateLOG& tc2 ) const
 {
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
     {
         PHY_Dotation& dotation = *it->second;
         if( pAmmoDotationClass )
@@ -396,7 +396,7 @@ void PHY_DotationGroup::NotifyCaptured()
     if( pType_ == PHY_DotationType::ration_ )
         return;
 
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         it->second->NotifyCaptured();
 }
 
@@ -411,7 +411,7 @@ void PHY_DotationGroup::NotifyReleased()
     if( pType_ == PHY_DotationType::ration_ )
         return;
 
-    for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
+    for( auto it = dotations_.begin(); it != dotations_.end(); ++it )
         it->second->NotifyReleased();
 }
 

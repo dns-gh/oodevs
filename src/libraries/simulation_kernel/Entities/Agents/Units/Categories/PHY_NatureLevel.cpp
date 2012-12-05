@@ -83,7 +83,7 @@ const PHY_NatureLevel* PHY_NatureLevel::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_NatureLevel* PHY_NatureLevel::Find( unsigned int nID )
 {
-    for( CIT_NatureLevelMap it = natureLevels_.begin(); it != natureLevels_.end(); ++it )
+    for( auto it = natureLevels_.begin(); it != natureLevels_.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;

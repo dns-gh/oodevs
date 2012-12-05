@@ -212,7 +212,7 @@ void ResourceNetworkAttribute::SerializeObjectAttributes( xml::xostream& xos ) c
     if( !isUrban_ || !resourceNodes_.empty() )
     {
         xos << xml::start( "resources" );
-        for( CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+        for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         {
             const ResourceNetwork_ABC::ResourceNode& node = it->second;
             xos << xml::start( "node" )

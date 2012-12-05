@@ -44,7 +44,7 @@ void RoleAction_DirectFiring::FirePion( DirectFireData& data, const wrapper::Vie
 {
     // Pour chaque cible, choix de la meilleure arme
     unsigned int nNbrWeaponsUsed = 0;
-    for( CIT_ComposanteVector it = compTargets.begin(); it != compTargets.end(); ++it )
+    for( auto it = compTargets.begin(); it != compTargets.end(); ++it )
     {
         const wrapper::View& compTarget = *it;
         const SWORD_Model* pBestFirer = 0;
@@ -64,7 +64,7 @@ void RoleAction_DirectFiring::FirePion( DirectFireData& data, const wrapper::Vie
     {
         const wrapper::View* pBestCompTarget = 0;
         double rBestScore = 0;
-        for( CIT_ComposanteVector it = compTargets.begin(); it != compTargets.end(); ++it )
+        for( auto it = compTargets.begin(); it != compTargets.end(); ++it )
         {
             const wrapper::View& compTarget = *it;
             const double rCurrentScore = pUnusedFirerWeapon->GetDangerosity( entity, target, compTarget, true, true ); // 'true' is for 'use ph' and true for 'use ammo'

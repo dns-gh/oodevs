@@ -118,7 +118,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
     if( categories_.size() == 0 )
         return;
     xos << xml::start( "resources" );
-    for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
+    for( auto it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Equipments_Data::CategoryInfos* infos = reinterpret_cast< ADN_Equipments_Data::CategoryInfos* >( *it );
         xos << xml::start( "resource" )
@@ -178,7 +178,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
     if( categories_.size() == 0 )
         return;
     xos << xml::start( "resources" );
-    for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
+    for( auto it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Equipments_Data::CategoryInfos* infos = *it;
         xos << xml::start( "resource" )
@@ -1303,7 +1303,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    for( CIT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+    for( auto it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
     {
         ( *it )->CheckDatabaseValidity( checker );
         CheckObjectTypeUniqueness( checker, it, vObjectInfos_ );

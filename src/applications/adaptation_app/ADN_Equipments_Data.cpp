@@ -587,7 +587,7 @@ ADN_Equipments_Data::BreakdownGroupInfos::~BreakdownGroupInfos()
 // -----------------------------------------------------------------------------
 bool ADN_Equipments_Data::BreakdownGroupInfos::Contains( ADN_Breakdowns_Data::BreakdownInfo& breakdown ) const
 {
-    for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
         if( (*it)->ptrBreakdown_.GetData()->strName_.GetData() == breakdown.strName_.GetData() )
             return true;
     return false;
@@ -638,12 +638,12 @@ void ADN_Equipments_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& input
 void ADN_Equipments_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output, const std::string& composante ) const
 {
     double rSum = 0.0;
-    for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
+    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         rSum += (*it)->rPercentage_.GetData();
     if( rSum != 100.0 )
         throw ADN_DataException( tools::translate( "Equipments_Data",  "Invalid data" ).toStdString(), tools::translate( "Equipments_Data", "Equipment '%1' - Invalid breakdown data : sum != 100" ).arg( composante.c_str() ).toStdString() );
 
-    for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
+    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         (*it)->WriteArchive( strName_, output );
 }
 
@@ -1062,7 +1062,7 @@ void ADN_Equipments_Data::ResourceInfos::WriteArchive( xml::xostream& output ) c
     for( uint n = 0; n < eNbrDotationFamily; ++n )
     {
         bool entered = false;
-        for( CIT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
+        for( auto it = categories_.begin(); it != categories_.end(); ++it )
             if( (*it)->ptrDotation_.GetData()->nType_ == E_DotationFamily( n ) )
             {
                 if( !entered )
@@ -1302,7 +1302,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::ReadDotation( xml::xistream& input,
         throw ADN_DataException( tools::translate( "Equipments_Data", "Invalid data" ).toStdString(), tools::translate( "Equipments_Data",  "Equipment - Invalid resource type '%1'" ).arg( name.c_str() ).toStdString() );
 
     ADN_Equipments_Data::CategoryInfos* pEquipmentCategory = 0;
-    for( CIT_CategoryInfos_Vector it = equipmentCategories.begin(); it != equipmentCategories.end(); ++it )
+    for( auto it = equipmentCategories.begin(); it != equipmentCategories.end(); ++it )
     {
         if( ( *it )->ptrCategory_.GetData() == pCategory )
         {
@@ -1369,7 +1369,7 @@ void ADN_Equipments_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output
     for( int nType = 0; nType < eNbrConsumptionType; ++nType )
     {
         bool entered = false;
-        for( CIT_ConsumptionItem_Vector it = vConsumptions_.begin(); it != vConsumptions_.end(); ++it )
+        for( auto it = vConsumptions_.begin(); it != vConsumptions_.end(); ++it )
             if( (*it)->nConsumptionType_ == nType && (*it)->nQuantityUsedPerHour_.GetData() != 0. )
             {
                 if( !entered )
@@ -1776,7 +1776,7 @@ void ADN_Equipments_Data::EquipmentInfos::ReadArchive( xml::xistream& input )
             >> xml::optional >> xml::attribute( "information-origin", strInformationOrigin_ )
           >> xml::end;
 
-    for( CIT_WeaponInfos_Vector it = vWeapons_.begin(); it != vWeapons_.end(); ++it )
+    for( auto it = vWeapons_.begin(); it != vWeapons_.end(); ++it )
     {
         std::string name( (*it)->strName_.GetData() );
         bool ok = false;
@@ -1815,7 +1815,7 @@ void ADN_Equipments_Data::EquipmentInfos::CheckDatabaseValidity( ADN_Consistency
 // -----------------------------------------------------------------------------
 void ADN_Equipments_Data::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    for( CIT_EquipmentInfos_Vector it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
+    for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
         (*it)->CheckDatabaseValidity( checker );
 }
 
@@ -2017,7 +2017,7 @@ void ADN_Equipments_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "equipments" );
     ADN_Tools::AddSchema( output, "Equipments" );
-    for( CIT_EquipmentInfos_Vector it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
+    for( auto it = vEquipments_.begin(); it != vEquipments_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }

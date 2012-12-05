@@ -73,7 +73,7 @@ const RadarClass* RadarClass::Find( const std::string& strClass )
 // -----------------------------------------------------------------------------
 const RadarClass* RadarClass::Find( std::size_t nID )
 {
-    for( CIT_RadarClassMap it = radarClasses_.begin(); it != radarClasses_.end(); ++it )
+    for( auto it = radarClasses_.begin(); it != radarClasses_.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;

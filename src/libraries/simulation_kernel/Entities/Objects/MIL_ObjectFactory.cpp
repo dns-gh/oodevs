@@ -248,7 +248,7 @@ void MIL_ObjectFactory::ReadAttributes( const std::string& attribute, xml::xistr
 std::vector< unsigned int > MIL_ObjectFactory::GetDangerousObjects() const
 {
     std::vector< unsigned int > dangerousIDs;
-    for( CIT_Prototypes it = prototypes_.begin(); it != prototypes_.end(); ++it )
+    for( auto it = prototypes_.begin(); it != prototypes_.end(); ++it )
         if( IsDangerousObject( *it->second ))
             dangerousIDs.push_back( it->second->GetID() );
     return dangerousIDs;
@@ -261,7 +261,7 @@ std::vector< unsigned int > MIL_ObjectFactory::GetDangerousObjects() const
 double MIL_ObjectFactory::GetMaxAvoidanceDistance() const
 {
     double maxDistance = 0.;
-    for( CIT_Prototypes it = prototypes_.begin(); it != prototypes_.end(); ++it )
+    for( auto it = prototypes_.begin(); it != prototypes_.end(); ++it )
         if( const AvoidanceCapacity* avoidance = it->second->GetType().GetCapacity< AvoidanceCapacity >() )
             maxDistance = std::max( maxDistance, avoidance->GetDistance() );
     return maxDistance;

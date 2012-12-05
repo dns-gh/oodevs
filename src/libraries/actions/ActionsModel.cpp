@@ -285,7 +285,7 @@ void ActionsModel::Save( const std::string& filename, const ActionsFilter_ABC* f
 {
     xml::xofstream xos( filename );
     xos << xml::start( "actions" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( !filter || filter->Allows( *it->second ) )
         {
             xos << xml::start( "action" );

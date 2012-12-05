@@ -96,7 +96,7 @@ PropagationManager::T_Files PropagationManager::GetFiles( const std::string& tim
 {
     const boost::posix_time::ptime ptime( boost::posix_time::from_iso_string( time ) );
     T_Files files;
-    for( CIT_Schedule it = schedule_.begin(); it != schedule_.end(); ++it )
+    for( auto it = schedule_.begin(); it != schedule_.end(); ++it )
         if( ptime >= it->first )
             files = it->second;
     return files;

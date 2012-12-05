@@ -95,7 +95,7 @@ void MIL_NbcAgentType::ReadAgent( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_NbcAgentType::Terminate()
 {
-    for( CIT_NbcAgentTypeMap it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
+    for( auto it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
         delete it->second;
     nbcAgentTypes_.clear();
 }

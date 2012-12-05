@@ -97,14 +97,14 @@ DEC_Knowledge_PopulationCollision& DEC_KS_PopulationInteraction::GetKnowledgePop
 void DEC_KS_PopulationInteraction::Talk( int /*currentTimeStep*/ )
 {
     // Collisions
-    for( CIT_PopulationFlowVector it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
+    for( auto it = flowCollisions_.begin(); it != flowCollisions_.end(); ++it )
     {
         MIL_PopulationFlow& flow = **it;
         if( !flow.IsValid() )
             continue;
         GetKnowledgePopulationCollision( flow.GetPopulation() ).Update( flow );
     }
-    for( CIT_PopulationConcentrationVector it = concentrationCollisions_.begin(); it != concentrationCollisions_.end(); ++it )
+    for( auto it = concentrationCollisions_.begin(); it != concentrationCollisions_.end(); ++it )
     {
         MIL_PopulationConcentration& concentration = **it;
         if( !concentration.IsValid() )

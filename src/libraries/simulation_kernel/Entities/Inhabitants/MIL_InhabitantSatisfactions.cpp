@@ -105,12 +105,12 @@ void MIL_InhabitantSatisfactions::save( MIL_CheckPointOutArchive& file, const un
          << safety_
          << lodging_
          << size;
-    for( CIT_Motivations it = motivations_.begin(); it != motivations_.end(); ++it )
+    for( auto it = motivations_.begin(); it != motivations_.end(); ++it )
         file << it->first
              << it->second;
     size = resources_.size();
     file << size;
-    for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         unsigned int id = it->first->GetId();
         file << id
@@ -138,13 +138,13 @@ void MIL_InhabitantSatisfactions::SendFullState( client::PopulationUpdate& msg )
     msg().mutable_satisfaction()->set_health( health_ );
     msg().mutable_satisfaction()->set_safety( safety_ );
     msg().mutable_satisfaction()->set_lodging( lodging_ );
-    for( CIT_Motivations it = motivations_.begin(); it != motivations_.end(); ++it )
+    for( auto it = motivations_.begin(); it != motivations_.end(); ++it )
     {
         sword::PopulationUpdate_MotivationSatisfaction* motivation = msg().mutable_satisfaction()->add_motivations();
         motivation->set_motivation( it->first );
         motivation->set_percentage( it->second );
     }
-    for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
     {
         sword::PopulationUpdate_ResourceSatisfaction* resource = msg().mutable_satisfaction()->add_resources();
         resource->mutable_resource()->set_id( it->first->GetDotationCategory().GetMosID() );
@@ -175,7 +175,7 @@ void MIL_InhabitantSatisfactions::UpdateNetwork( client::PopulationUpdate& msg )
     }
     if( motivationChanged_ )
     {
-        for( CIT_Motivations it = motivations_.begin(); it != motivations_.end(); ++it )
+        for( auto it = motivations_.begin(); it != motivations_.end(); ++it )
         {
             sword::PopulationUpdate_MotivationSatisfaction* motivation = msg().mutable_satisfaction()->add_motivations();
             motivation->set_motivation( it->first );
@@ -185,7 +185,7 @@ void MIL_InhabitantSatisfactions::UpdateNetwork( client::PopulationUpdate& msg )
     }
     if( resourceChanged_ )
     {
-        for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+        for( auto it = resources_.begin(); it != resources_.end(); ++it )
         {
             sword::PopulationUpdate_ResourceSatisfaction* resource = msg().mutable_satisfaction()->add_resources();
             resource->mutable_resource()->set_id( it->first->GetDotationCategory().GetMosID() );

@@ -163,7 +163,7 @@ void ADN_ConsistencyChecker::CheckNNOConsistency()
 // -----------------------------------------------------------------------------
 bool ADN_ConsistencyChecker::IsAlreadyRegistered( const std::string& code, E_ConsistencyCheck type ) const
 {
-    for( CIT_ConsistencyErrors it = errors_.begin(); it != errors_.end(); ++it )
+    for( auto it = errors_.begin(); it != errors_.end(); ++it )
         if( it->type_ == type && it->optional_ == code )
             return true;
     return false;
@@ -177,7 +177,7 @@ void ADN_ConsistencyChecker::AddNNOError( E_ConsistencyCheck type, const T_NNOEl
 {
     assert( elements.size() > 1 );
     ConsistencyError error( type );
-    for( CIT_NNOElements it = elements.begin(); it != elements.end(); ++it )
+    for( auto it = elements.begin(); it != elements.end(); ++it )
     {
         const NNOElement& element = *it;
         error.items_.push_back( CreateGotoInfo( element.name_, element.tab_, element.subTab_ ) );

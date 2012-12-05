@@ -80,7 +80,7 @@ Server::~Server()
 void Server::Update()
 {
     tools::ServerNetworker::Update();
-    for( CIT_Errors it = errors_.begin(); it != errors_.end(); ++it )
+    for( auto it = errors_.begin(); it != errors_.end(); ++it )
         clients_.Remove( *it );
     errors_.clear();
 }

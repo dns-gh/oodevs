@@ -311,7 +311,7 @@ geometry::Point2f PopulationFlow::GetNearestPosition( const geometry::Point2f& p
 {
     geometry::Point2f result;
     float minDistance = std::numeric_limits< float >::max();
-    for( CIT_PointVector it = flow_.begin(); it != flow_.end(); ++it )
+    for( auto it = flow_.begin(); it != flow_.end(); ++it )
     {
         float distance = it->Distance( position );
         if( distance < minDistance )

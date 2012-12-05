@@ -38,7 +38,7 @@ GLSymbols::GLSymbols( SvglRenderer& renderer )
 // -----------------------------------------------------------------------------
 GLSymbols::~GLSymbols()
 {
-    for( CIT_Symbols it = symbols_.begin(); it != symbols_.end(); ++it )
+    for( auto it = symbols_.begin(); it != symbols_.end(); ++it )
     {
         delete it->second.first;
         delete it->second.second;

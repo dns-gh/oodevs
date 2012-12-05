@@ -95,7 +95,7 @@ void FloodCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
          << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
     std::size_t size = injuries_.size();
     file << size;
-    for( CIT_InjuryMap it = injuries_.begin(); it != injuries_.end(); ++it )
+    for( auto it = injuries_.begin(); it != injuries_.end(); ++it )
     {
         file << it->first->GetName();
         file << it->second;

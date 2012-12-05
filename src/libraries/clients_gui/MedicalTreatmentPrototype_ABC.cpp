@@ -97,6 +97,6 @@ void MedicalTreatmentPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader
 {
     referenceID_->SetLoader( loader );
     doctors_->SetLoader( loader );
-    for( CIT_Capacities it = capacities_.begin(); it != capacities_.end(); ++it )
+    for( auto it = capacities_.begin(); it != capacities_.end(); ++it )
         it->baseline_->SetLoader( loader );
 }

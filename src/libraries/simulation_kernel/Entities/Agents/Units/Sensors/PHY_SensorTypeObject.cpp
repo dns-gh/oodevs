@@ -61,7 +61,7 @@ void PHY_SensorTypeObject::ReadObject( xml::xistream& xis, const ObjectTypeResol
 // -----------------------------------------------------------------------------
 PHY_SensorTypeObject::~PHY_SensorTypeObject()
 {
-    for( CIT_ObjectDataVector it = objectData_.begin(); it != objectData_.end(); ++it )
+    for( auto it = objectData_.begin(); it != objectData_.end(); ++it )
         if( *it )
             delete *it;
     objectData_.clear();

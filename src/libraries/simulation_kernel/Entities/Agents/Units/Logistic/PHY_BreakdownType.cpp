@@ -118,7 +118,7 @@ void PHY_BreakdownType::ReadBreakdown( xml::xistream& xis, const PHY_Maintenance
 // -----------------------------------------------------------------------------
 void PHY_BreakdownType::Terminate()
 {
-    for( CIT_BreakdownMap it = breakdowns_.begin(); it != breakdowns_.end(); ++it )
+    for( auto it = breakdowns_.begin(); it != breakdowns_.end(); ++it )
         delete it->second;
     breakdowns_.clear();
 }

@@ -136,7 +136,7 @@ Rectangle2< int > Surface::MappedExtent() const
 // -----------------------------------------------------------------------------
 bool Surface::IsInSector( const geometry::Point2f& point ) const
 {
-    for( CIT_SectorVector it = sectors_.begin(); it != sectors_.end(); ++it )
+    for( auto it = sectors_.begin(); it != sectors_.end(); ++it )
         if( it->IsInCone( point, maxRadius_ ) )
             return true;
     return false;

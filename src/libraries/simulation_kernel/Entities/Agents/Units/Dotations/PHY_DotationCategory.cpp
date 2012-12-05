@@ -283,7 +283,7 @@ const PHY_DotationCategory::T_IndirectFireEffects& PHY_DotationCategory::GetIndi
 void PHY_DotationCategory::ApplyIndirectFireEffect( const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
-    for( CIT_IndirectFireEffects it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
+    for( auto it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
         (*it)->ApplyEffect( 0, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
 }
 
@@ -294,7 +294,7 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MT_Vector2D& vSourcePo
 void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
-    for( CIT_IndirectFireEffects it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
+    for( auto it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
         (*it)->ApplyEffect( &firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
 }
 
@@ -305,7 +305,7 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, 
 void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
-    for( CIT_IndirectFireEffects it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
+    for( auto it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
         (*it)->ApplyEffect( firer, target, rInterventionTypeFired, fireResult );
 }
 
@@ -389,7 +389,7 @@ bool PHY_DotationCategory::HasAttritions() const
 // -----------------------------------------------------------------------------
 bool PHY_DotationCategory::HasIndirectWeaponCategory( const PHY_IndirectFireDotationClass& indirectWeaponCategory ) const
 {
-    for( CIT_IndirectFireEffects it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
+    for( auto it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
         if( (*it)->GetIndirectFireDotationCategory() == indirectWeaponCategory )
             return true;
     return false;

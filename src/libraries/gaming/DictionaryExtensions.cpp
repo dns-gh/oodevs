@@ -115,6 +115,6 @@ void DictionaryExtensions::FillParameterList( actions::parameters::ParameterList
 {
     actions::parameters::ExtensionList* extensions = new actions::parameters::ExtensionList( *new kernel::OrderParameter( "Extensions", "extensionlist", false ) );
     parameterList->AddParameter( *extensions );
-    for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
+    for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
         extensions->AddExtension( it->first, ( enabled_ ) ? GetValueWithDictionnaryLink( it->first ) : "" );
 }

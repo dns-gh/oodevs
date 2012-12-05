@@ -106,7 +106,7 @@ namespace boost
         {
             std::size_t size = vector.size();
             file << size;
-            for( CIT_MaintenancePriorityVector it = vector.begin(); it != vector.end(); ++it )
+            for( auto it = vector.begin(); it != vector.end(); ++it )
             {
                 sword::EquipmentType id = (*it)->GetMosID();
                 int equipment = id.id();

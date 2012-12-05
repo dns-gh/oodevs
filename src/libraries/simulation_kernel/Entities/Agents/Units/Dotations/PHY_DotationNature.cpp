@@ -51,7 +51,7 @@ void PHY_DotationNature::ReadNature( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationNature::Terminate()
 {
-    for( CIT_DotationNatureMap it = natures_.begin(); it != natures_.end(); ++it )
+    for( auto it = natures_.begin(); it != natures_.end(); ++it )
         delete it->second;
     natures_.clear();
 }

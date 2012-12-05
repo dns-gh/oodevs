@@ -43,7 +43,7 @@ Clients::Clients( tools::MessageSender_ABC& sender, tools::MessageDispatcher_ABC
 // -----------------------------------------------------------------------------
 Clients::~Clients()
 {
-    for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+    for( auto it = clients_.begin(); it != clients_.end(); ++it )
         handler_.Unregister( it->first );
 }
 
@@ -198,7 +198,7 @@ void Clients::Send( MsgsSimToClient::MsgSimToClient& message )
     static const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< MsgsSimToClient::MsgSimToClient >();
     tools::Message m;
     sender_.Serialize( message, m );
-    for( CIT_Clients it = actives_.begin(); it != actives_.end(); ++it )
+    for( auto it = actives_.begin(); it != actives_.end(); ++it )
     {
         sender_.Send( it->first, tag, m );
         listener_.Debug( DebugInfo< MsgsSimToClient::MsgSimToClient >( "Shield sent : ", message ) );

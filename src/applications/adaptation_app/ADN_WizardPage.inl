@@ -82,7 +82,7 @@ void ADN_WizardPage< T >::Build()
     view_->setEnabled( false );
 
     int row = 0;
-    for( CIT_ItemVector it = existingItems_.begin(); it != existingItems_.end(); ++it, ++row )
+    for( auto it = existingItems_.begin(); it != existingItems_.end(); ++it, ++row )
     {
         QStandardItem* item = new QStandardItem( ( *it )->strName_.GetData().c_str() );
         QVariant* variant = new QVariant();

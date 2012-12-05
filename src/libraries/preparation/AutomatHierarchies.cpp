@@ -50,7 +50,7 @@ void AutomatHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 // -----------------------------------------------------------------------------
 void AutomatHierarchies::SerializeAttributes( xml::xostream& xos ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         const kernel::Entity_ABC* child = it->second;
         if( dynamic_cast< const kernel::Agent_ABC* >( child ) )

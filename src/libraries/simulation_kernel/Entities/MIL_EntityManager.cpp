@@ -486,7 +486,7 @@ void MIL_EntityManager::WriteUrban( xml::xostream& xos ) const
     xos << xml::start( "urban" );
     schemaWriter.WriteSchema( xos, "exercise", "urban" );
     xos     << xml::start( "urban-objects" );
-        for( CIT_Cities it = cities_.begin(); it != cities_.end(); ++it )
+        for( auto it = cities_.begin(); it != cities_.end(); ++it )
             ( *it )->WriteUrban( xos );
     xos     << xml::end
         << xml::end;
@@ -2380,7 +2380,7 @@ const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const
 // -----------------------------------------------------------------------------
 unsigned int MIL_EntityManager::ConvertUrbanIdToSimId( unsigned int urbanId )
 {
-    for( CIT_Cities it = cities_.begin(); it != cities_.end(); ++it )
+    for( auto it = cities_.begin(); it != cities_.end(); ++it )
     {
         const MIL_UrbanObject_ABC* city = *it;
         if( city->GetUrbanId() == urbanId )

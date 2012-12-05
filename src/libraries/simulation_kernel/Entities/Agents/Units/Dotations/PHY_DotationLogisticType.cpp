@@ -92,7 +92,7 @@ const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( const std::strin
 // -----------------------------------------------------------------------------
 const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( unsigned int nID )
 {
-    for( CIT_DotationLogisticTypeMap it = dotationLogisticTypes_.begin(); it != dotationLogisticTypes_.end(); ++it )
+    for( auto it = dotationLogisticTypes_.begin(); it != dotationLogisticTypes_.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;

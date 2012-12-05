@@ -65,7 +65,7 @@ void Troops::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Troops::Update( const T_HumanStateVector& differences )
 {
-    for( CIT_HumanStateVector it = differences.begin(); it != differences.end(); ++it )
+    for( auto it = differences.begin(); it != differences.end(); ++it )
     {
         if( it->quantity_ == 0 )
             continue;
@@ -138,7 +138,7 @@ unsigned int Troops::GetTotalByRank( E_HumanRank rank ) const
 // -----------------------------------------------------------------------------
 HumanState* Troops::FindHumanState( T_HumanStateVector& container, const HumanState& state ) const
 {
-    for( CIT_HumanStateVector it = container.begin(); it != container.end(); ++it )
+    for( auto it = container.begin(); it != container.end(); ++it )
         if( *it == state )
         {
             unsigned int i = 0;

@@ -207,7 +207,7 @@ QColor Gradient::Compute( float density, float alpha, float min, float max )
     }
     else
     {
-        for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
+        for( auto it = colors_.begin(); it != colors_.end(); ++it )
             if( it->first <= percent )
             {
                 from = *it;
@@ -297,7 +297,7 @@ unsigned Gradient::FindBaseDistance() const
 {
     unsigned pgcd = 1024;
     unsigned previous = 0;
-    for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
+    for( auto it = colors_.begin(); it != colors_.end(); ++it )
     {
         unsigned current  = unsigned( it->first * 1024 );
         unsigned distance = current - previous;
@@ -322,7 +322,7 @@ unsigned Gradient::FindBaseDistance() const
 void Gradient::Save( kernel::Options& options, const std::string& group ) const
 {
     QStringList colors;
-    for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
+    for( auto it = colors_.begin(); it != colors_.end(); ++it )
         colors.append( QString::number( it->first ) + "," + it->second.name() );
     options.Change( group + name_.toStdString(), colors.join( ";" ) );
 }
@@ -333,7 +333,7 @@ void Gradient::Save( kernel::Options& options, const std::string& group ) const
 // -----------------------------------------------------------------------------
 void Gradient::Accept( GradientVisitor_ABC& visitor ) const
 {
-    for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
+    for( auto it = colors_.begin(); it != colors_.end(); ++it )
         visitor.Visit( it->first, it->second );
 }
 

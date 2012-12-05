@@ -74,7 +74,7 @@ MIL_ObjectManager::MIL_ObjectManager( MIL_ObjectFactory& factory, sword::Sink_AB
 // -----------------------------------------------------------------------------
 MIL_ObjectManager::~MIL_ObjectManager()
 {
-    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
         delete it->second;
 }
 
@@ -85,7 +85,7 @@ MIL_ObjectManager::~MIL_ObjectManager()
 void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> objects_;
-    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
     {
         if( dynamic_cast< MIL_UrbanObject_ABC* >( it->second ) == 0 )
             ++nbObjects_;
@@ -109,7 +109,7 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::ProcessEvents()
 {
-    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
     {
         try
         {
@@ -334,7 +334,7 @@ void MIL_ObjectManager::UpdateCapacity( const std::string& capacity, xml::xistre
 void MIL_ObjectManager::WriteODB( xml::xostream& xos ) const
 {
     bool noSideObjectsFound = false;
-    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
     {
         MIL_Object_ABC* obj = it->second;
         if( obj && dynamic_cast< MIL_UrbanObject_ABC* >( obj ) == 0 && obj->GetArmy() == 0  )

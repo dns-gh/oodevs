@@ -465,7 +465,7 @@ void UnitMagicOrdersInterface::AddSurrenderMenu( kernel::ContextMenu* parent, co
     {
         const kernel::Entity_ABC& team = entity.Get< kernel::TacticalHierarchies >().GetTop();
         kernel::ContextMenu* menu = new kernel::ContextMenu( parent );
-        for( CIT_Teams it = teams_.begin(); it != teams_.end(); ++it )
+        for( auto it = teams_.begin(); it != teams_.end(); ++it )
             if( *it != &team )
                 menu->insertItem( (*it)->GetName(), this, SLOT( SurrenderTo( int ) ), 0, ( int ) *it );
         if( menu->count() )

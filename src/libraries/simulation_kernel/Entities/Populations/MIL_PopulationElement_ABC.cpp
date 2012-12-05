@@ -118,7 +118,7 @@ void MIL_PopulationElement_ABC::FireOnPion( double rIntensity, MIL_Agent_ABC& ta
 void MIL_PopulationElement_ABC::FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult )
 {
     assert( pAttitude_ );
-    for( CIT_AgentVector it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
+    for( auto it = collidingAgents_.begin(); it != collidingAgents_.end(); ++it )
     {
         MIL_Agent_ABC& target = **it;
         if( target.GetArmy().IsAFriend( GetPopulation().GetArmy() ) == eTristate_True )

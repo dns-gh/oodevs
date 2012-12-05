@@ -307,7 +307,7 @@ template< typename BaseType, typename BaseValidator >
 BaseType ADN_PercentageValidator< BaseType, BaseValidator >::ComputeLinkedSum() const
 {
     BaseType rSum = 0;
-    for( CIT_ValuesVector it = linkedValues_.begin(); it != linkedValues_.end(); ++it )
+    for( auto it = linkedValues_.begin(); it != linkedValues_.end(); ++it )
         rSum += ( *it )->GetData();
     return rSum;
 }

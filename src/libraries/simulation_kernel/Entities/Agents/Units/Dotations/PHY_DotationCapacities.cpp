@@ -70,7 +70,7 @@ void PHY_DotationCapacities::ReadDotation( xml::xistream& xis, const PHY_Dotatio
 // -----------------------------------------------------------------------------
 PHY_DotationCapacities::~PHY_DotationCapacities()
 {
-    for( CIT_DotationCapacityMap it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
+    for( auto it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
         delete it->second;
     dotationCapacities_.clear();
 }
@@ -81,7 +81,7 @@ PHY_DotationCapacities::~PHY_DotationCapacities()
 // -----------------------------------------------------------------------------
 void PHY_DotationCapacities::RegisterCapacities( PHY_DotationGroupContainer& container, std::map< const PHY_DotationCategory*, double >* dotations ) const
 {
-    for( CIT_DotationCapacityMap it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
+    for( auto it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
     {
         double quantity = std::numeric_limits< double >::max();
         if( dotations )
@@ -101,7 +101,7 @@ void PHY_DotationCapacities::RegisterCapacities( PHY_DotationGroupContainer& con
 std::map< const PHY_DotationCategory*, double > PHY_DotationCapacities::UnregisterCapacities( PHY_DotationGroupContainer& container ) const
 {
     std::map< const PHY_DotationCategory*, double > result;
-    for( CIT_DotationCapacityMap it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
+    for( auto it = dotationCapacities_.begin(); it != dotationCapacities_.end(); ++it )
         result[ &( it->second->GetCategory() ) ] = container.RemoveCapacity( *it->second );
     return result;
 }

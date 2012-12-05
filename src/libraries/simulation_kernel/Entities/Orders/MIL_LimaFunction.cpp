@@ -91,7 +91,7 @@ const MIL_LimaFunction* MIL_LimaFunction::Find( const sword::PhaseLineOrder::Fun
 // -----------------------------------------------------------------------------
 const MIL_LimaFunction* MIL_LimaFunction::Find( unsigned int nID )
 {
-    for( CIT_LimaFunctionMap it = limaFunctions_.begin(); it != limaFunctions_.end(); ++it )
+    for( auto it = limaFunctions_.begin(); it != limaFunctions_.end(); ++it )
         if( it->second->GetID() == nID )
             return it->second;
     return 0;

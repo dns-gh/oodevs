@@ -75,7 +75,7 @@ void DictionaryExtensions::SerializeAttributes( xml::xostream& xos ) const
     if( enabled_ && !extensions_.empty() )
     {
         xos << xml::start( "extensions" );
-        for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
+        for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
             xos << xml::start( "entry" )
                     << xml::attribute( "key", it->first )
                     << xml::attribute( "value", GetValueWithDictionnaryLink( it->first ) )

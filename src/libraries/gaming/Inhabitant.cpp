@@ -169,7 +169,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 // -----------------------------------------------------------------------------
 void Inhabitant::Draw( const Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const UrbanPositions_ABC* positions = it->second->Retrieve< UrbanPositions_ABC >() )
             tools.DrawPolygon( positions->Vertices() );
 }
@@ -242,9 +242,9 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
-    for( CIT_MotivationSatisfactions it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
+    for( auto it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
         displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first.c_str() ), it->second );
-    for( CIT_ResourceSatisfactions it = resourceSatisfactions_.begin(); it != resourceSatisfactions_.end(); ++it )
+    for( auto it = resourceSatisfactions_.begin(); it != resourceSatisfactions_.end(); ++it )
         displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first->GetName().c_str() ), it->second );
 }
 
@@ -288,7 +288,7 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
 
     accomodationCapacties_.clear();
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
         const kernel::UrbanObject* pObject = static_cast< const kernel::UrbanObject* >( it->second );
         if( !pObject )

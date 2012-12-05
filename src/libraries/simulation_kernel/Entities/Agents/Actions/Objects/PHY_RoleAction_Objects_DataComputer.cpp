@@ -160,7 +160,7 @@ double PHY_RoleAction_Objects_DataComputer::ComputeWorkTime()
 {
     double rTotalOperationTime  = 0.;
     unsigned int nTotalNbrComposantes = 0;
-    for( CIT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
+    for( auto it = pionsData_.begin(); it != pionsData_.end(); ++it )
     {
         double rOperationTime;
         unsigned int nNbrComposantes;

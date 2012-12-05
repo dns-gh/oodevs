@@ -46,7 +46,7 @@ void Populations::AddPopulation( Population& population )
 void Populations::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "populations" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "population" );
         it->second->Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );

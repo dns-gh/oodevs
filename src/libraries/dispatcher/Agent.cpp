@@ -657,7 +657,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         msg.Send( publisher );
     }
 
-    for( CIT_UnitDetection it = unitDetections_.begin(); it != unitDetections_.end(); ++it )
+    for( auto it = unitDetections_.begin(); it != unitDetections_.end(); ++it )
     {
         client::UnitDetection msg;
         msg().mutable_observer()->set_id( GetId() );
@@ -666,7 +666,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         msg().set_max_visibility( it->second.maxLevel_ );
         msg.Send( publisher );
     }
-    for( CIT_ObjectDetection it = objectDetections_.begin(); it != objectDetections_.end(); ++it )
+    for( auto it = objectDetections_.begin(); it != objectDetections_.end(); ++it )
     {
         client::ObjectDetection msg;
         msg().mutable_observer()->set_id( GetId() );
@@ -674,7 +674,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         msg().set_visibility( it->second );
         msg.Send( publisher );
     }
-    for( CIT_CrowdConcentrationDetection it = crowdConcentrationDetections_.begin(); it != crowdConcentrationDetections_.end(); ++it )
+    for( auto it = crowdConcentrationDetections_.begin(); it != crowdConcentrationDetections_.end(); ++it )
     {
         client::CrowdConcentrationDetection msg;
         msg().mutable_observer()->set_id( GetId() );
@@ -683,7 +683,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         msg().set_visibility( it->second.level_ );
         msg.Send( publisher );
     }
-    for( CIT_CrowdFlowDetection it = crowdFlowDetections_.begin(); it != crowdFlowDetections_.end(); ++it )
+    for( auto it = crowdFlowDetections_.begin(); it != crowdFlowDetections_.end(); ++it )
     {
         client::CrowdFlowDetection msg;
         msg().mutable_observer()->set_id( GetId() );

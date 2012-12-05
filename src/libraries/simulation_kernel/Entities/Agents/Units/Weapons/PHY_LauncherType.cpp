@@ -61,7 +61,7 @@ void PHY_LauncherType::ReadLauncher( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_LauncherType::Terminate()
 {
-    for( CIT_LauncherTypeMap it = launcherTypes_.begin(); it != launcherTypes_.end(); ++it )
+    for( auto it = launcherTypes_.begin(); it != launcherTypes_.end(); ++it )
         delete it->second;
     launcherTypes_.clear();
 }

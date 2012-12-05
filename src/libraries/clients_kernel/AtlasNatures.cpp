@@ -59,7 +59,7 @@ void AtlasNatures::AddField( const QString& name, unsigned short value )
 AtlasNature AtlasNatures::MakeNature( unsigned short value ) const
 {
     AtlasNature nature;
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->IsSet( value ) )
             nature.Toggle( *it->second );
     return nature;

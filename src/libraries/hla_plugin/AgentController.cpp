@@ -191,7 +191,7 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
     const std::string typeName = agentType.GetName();
     rpr::EntityType entityType = ComputeEntityType( agent, logger_, aggregatesResolver_, typeName );
     const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( agent.GetSuperior().GetTeam().GetId() );
-    for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+    for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
         (*it)->AggregateCreated( *proxy, agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType, agentType.GetSymbol(), !isRemote, uniqueId );
     if( !isRemote && doDisaggregation_ )
             adapters_.push_back( T_AgentAdapter( new AgentAdapter( factory_, converter_, agent,
@@ -248,7 +248,7 @@ void AgentController::NotifyPlatformCreation( Agent_ABC& agent, dispatcher::Agen
     GenerateUniqueId( uniqueId, netnVersion_ );
     const std::string name( std::string( parent.GetName().toStdString() ) + "_" + typeName + " " + boost::lexical_cast< std::string >( childIndex ) );
 
-    for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+    for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
         (*it)->PlatformCreated( agent, identifier, name, forceIdentifier, entityType, symbol, uniqueId );
 
     T_Agents::const_iterator itAgent( agents_.find( parent.GetId() ) );
@@ -297,7 +297,7 @@ void AgentController::CreateAutomat( dispatcher::Automat_ABC& entity )
 		const rpr::ForceIdentifier forceIdentifier = sideResolver_.ResolveForce( entity.GetTeam().GetId() );
         std::string typeName = entity.GetType().GetName();
         rpr::EntityType entityType = ComputeEntityType( entity, logger_, automatEntityTypeResolver_, typeName );
-        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+        for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->AggregateCreated( *proxy, entity.GetId(), entity.GetName().toStdString(), forceIdentifier, entityType, entity.GetApp6Symbol(), true, uniqueId );
         // Must be done after HLA object was created
         unsigned long parentId = entity.GetFormation() != 0 ? 
@@ -336,7 +336,7 @@ void AgentController::CreateFormation( dispatcher::Formation_ABC& entity )
         std::string typeName = "formation"; // FIXME AHC
         rpr::EntityType entityType = ComputeEntityType( entity, logger_, automatEntityTypeResolver_, "formation" );
 
-        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+        for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->AggregateCreated( *proxy, entity.GetId(), entity.GetName().toStdString(), forceIdentifier, entityType, entity.GetApp6Symbol(), true, uniqueId );
         // Must be done after HLA object was created
         unsigned long parentId = entity.GetParent() != 0 ? entity.GetParent()->GetId() : 0;

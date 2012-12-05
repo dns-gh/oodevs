@@ -65,7 +65,7 @@ NodeProperties::NodeProperties( const NodeProperties& from )
     , tools_             ( from.tools_ )
     , needUpdate_        ( true )
 {
-    for( CIT_Elements it = from.elements_.begin(); it != from.elements_.end(); ++it )
+    for( auto it = from.elements_.begin(); it != from.elements_.end(); ++it )
         Register( it->first, *new NodeElement( *it->second ) );
 }
 
@@ -294,7 +294,7 @@ bool NodeProperties::NeedUpdate() const
 // -----------------------------------------------------------------------------
 void NodeProperties::Serialize( sword::UrbanAttributes_Infrastructures& msg ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_resource_network() );
 }
 
@@ -304,7 +304,7 @@ void NodeProperties::Serialize( sword::UrbanAttributes_Infrastructures& msg ) co
 // -----------------------------------------------------------------------------
 void NodeProperties::Serialize( sword::ObjectAttributeResourceNetwork& msg ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_network() );
 }
 
@@ -395,6 +395,6 @@ double NodeProperties::AddToStock( unsigned long resourceId, double quantity )
 // -----------------------------------------------------------------------------
 void NodeProperties::WriteODB( xml::xostream& xos ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->WriteODB( xos, *tools_ );
 }

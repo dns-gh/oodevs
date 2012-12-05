@@ -193,7 +193,7 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
     }
     xos << xml::end;
 
-    for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
+    for( auto it = capacities_.begin(); capacities_.end() != it; ++it )
         if( it->second->bPresent_.GetData() )
         {
             xos << xml::start( it->first );
@@ -209,7 +209,7 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data_ObjectInfos::CheckDatabaseValidity( ADN_ConsistencyChecker& checker ) const
 {
-    for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
+    for( auto it = capacities_.begin(); capacities_.end() != it; ++it )
         it->second->CheckDatabaseValidity( checker, strName_ );
 
     for( int i = 0; i < 4; ++i )

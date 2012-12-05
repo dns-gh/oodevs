@@ -273,7 +273,7 @@ std::pair< T, T > CommonDelegate::GetMinMax( const SpinBoxDescription< T >& spin
     if( model )
     {
         // Look for dependencies
-        for( CIT_Dependencies it = dependencies_.begin(); it != dependencies_.end(); ++it )
+        for( auto it = dependencies_.begin(); it != dependencies_.end(); ++it )
         {
             int targetRow = newIndex.row();
             int targetColumn = newIndex.column();
@@ -357,7 +357,7 @@ void CommonDelegate::Purge()
 inline
 const CommonDelegate::DelegatePosition* CommonDelegate::FindPosition( int fromRow, int toRow, int fromCol, int toCol ) const
 {
-    for( CIT_Positions it = positions_.begin(); it != positions_.end(); ++it )
+    for( auto it = positions_.begin(); it != positions_.end(); ++it )
         if( ( it->fromRow_ == -1 && fromRow == -1 || fromRow >= it->fromRow_ ) &&
             ( it->toRow_ == -1   && toRow   == -1 || toRow <= it->toRow_     ) &&
             ( it->fromCol_ == -1 && fromCol == -1 || fromCol >= it->fromCol_ ) &&
@@ -373,7 +373,7 @@ const CommonDelegate::DelegatePosition* CommonDelegate::FindPosition( int fromRo
 inline
 const CommonDelegate::DelegatePosition* CommonDelegate::IsInPosition( int row, int col ) const
 {
-    for( CIT_Positions it = positions_.begin(); it != positions_.end(); ++it )
+    for( auto it = positions_.begin(); it != positions_.end(); ++it )
         if( ( it->fromRow_ == -1 || row >= it->fromRow_ ) &&
             ( it->toRow_ == -1   || row <= it->toRow_   ) &&
             ( it->fromCol_ == -1 || col >= it->fromCol_ ) &&

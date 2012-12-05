@@ -69,7 +69,7 @@ template< typename WoundFunctor >
 bool MIL_ToxicEffectManipulator::ApplyRandomWound( WoundFunctor functor ) const
 {
     bool result = false;
-    for( CIT_NBCAgents it = types_.begin(); it != types_.end(); ++it )
+    for( auto it = types_.begin(); it != types_.end(); ++it )
         result |= functor( GetRandomWound( **it ) );
     return result;
 }

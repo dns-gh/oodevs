@@ -294,7 +294,7 @@ private:
 template< typename T >
 void ActionController::AllowMultipleSelection( int mode )
 {
-    for( CIT_Selectionners it = selectionners_.begin(); it != selectionners_.end(); ++it )
+    for( auto it = selectionners_.begin(); it != selectionners_.end(); ++it )
         if( dynamic_cast< const Selectionner< T >* >( *it ) != 0 )
         {
             multipleModes_[ mode ].push_back( *it );

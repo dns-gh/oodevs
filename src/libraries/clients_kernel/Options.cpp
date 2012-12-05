@@ -49,7 +49,7 @@ void Options::Register( tools::Observer_ABC& o )
     if( observer )
     {
         observers_.push_back( observer );
-        for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
+        for( auto it = options_.begin(); it != options_.end(); ++it )
             observer->OptionChanged( it->first, it->second.first );
     }
 }
@@ -158,7 +158,7 @@ void Options::Remove( const std::string& name )
 void Options::Save( Settings_ABC& settings )
 {
     Clear( settings );
-    for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
+    for( auto it = options_.begin(); it != options_.end(); ++it )
         if( it->second.second )
             it->second.first.Save( settings, it->first );
 }

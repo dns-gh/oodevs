@@ -217,7 +217,7 @@ void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned 
          << pGlobalMeteo_
          << pEphemeride_
          << size;
-    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         PHY_LocalMeteo* local = static_cast< PHY_LocalMeteo* >( it->get() );
         file << local;
@@ -243,7 +243,7 @@ void PHY_MeteoDataManager::WriteWeather( xml::xostream& xos ) const
                 pGlobalMeteo_->Serialize( xos );
     xos     << xml::end
             << xml::start( "local-weather" );
-    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end() ; it++ )
+    for( auto it = meteos_.begin(); it != meteos_.end() ; it++ )
     {
         xos     << xml::start( "local" );
                     ( *it )->Serialize( xos );
@@ -285,11 +285,11 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "Ephemeris is now: %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
         pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
-        for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
+        for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
             ( *it )->Update( pEphemeride_->GetLightingBase() );
     }
     pGlobalMeteo_->UpdateMeteoPatch( date, *pRawData_, boost::shared_ptr< weather::Meteo >() );
-    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
         ( *it )->UpdateMeteoPatch( date, *pRawData_, *it );
 }
 
@@ -311,7 +311,7 @@ void PHY_MeteoDataManager::SendStateToNewClient()
 boost::shared_ptr< weather::Meteo > PHY_MeteoDataManager::GetLocalWeather( const geometry::Point2f& position, boost::shared_ptr< weather::Meteo > pMeteo ) const
 {
     boost::shared_ptr< weather::Meteo > result;
-    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         if( ( *it )->IsPatched() && ( *it )->IsInside( position ) && ( !result || result->IsOlder( **it ) ) && it->get() != pMeteo.get() )
             result = *it;

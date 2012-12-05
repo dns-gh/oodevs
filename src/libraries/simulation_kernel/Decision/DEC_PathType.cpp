@@ -51,7 +51,7 @@ void DEC_PathType::Initialize()
     pathTypes_[ nbc_          .GetName() ] = &nbc_;
 
     pathTypesFromID_.assign( pathTypes_.size(), 0 );
-    for( CIT_PathTypeMap it = pathTypes_.begin(); it != pathTypes_.end(); ++it )
+    for( auto it = pathTypes_.begin(); it != pathTypes_.end(); ++it )
     {
         assert( pathTypesFromID_.size() > it->second->GetID() );
         pathTypesFromID_[ it->second->GetID() ] = it->second;

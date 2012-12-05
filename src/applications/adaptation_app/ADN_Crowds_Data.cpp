@@ -153,7 +153,7 @@ void ADN_Crowds_Data::FireEffectInfos::WriteArchive( xml::xostream& output ) con
              << xml::attribute( "population-density", rIntensityDensity_ )
              << xml::attribute( "intensity", rIntensityFactor_ )
              << xml::attribute( "population-attitude", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
-    for( CIT_FireEffectProtectionInfosVector it = vProtectionInfos_.begin(); it != vProtectionInfos_.end(); ++it )
+    for( auto it = vProtectionInfos_.begin(); it != vProtectionInfos_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -317,7 +317,7 @@ void ADN_Crowds_Data::SpeedEffectInfos::WriteArchive( xml::xostream& output ) co
 {
     output << xml::start( "slowing-effect" )
              << xml::attribute( "population-attitude" ,ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
-    for( CIT_SpeedEffectVolumeInfosVector it = vVolumeInfos_.begin(); it != vVolumeInfos_.end(); ++it )
+    for( auto it = vVolumeInfos_.begin(); it != vVolumeInfos_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -612,22 +612,22 @@ void ADN_Crowds_Data::CrowdsInfos::WriteArchive( xml::xostream& output ) const
             << xml::attribute( "armed-individuals", armedIndividuals_.GetData() / 100. );
 
     output << xml::start( "slowing-effects" );
-    for( CIT_SpeedEffectInfosVector it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )
+    for( auto it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 
     output << xml::start( "attrition-effects" );
-    for( CIT_FireEffectInfosVector it = vFireEffectInfos_.begin(); it != vFireEffectInfos_.end(); ++it )
+    for( auto it = vFireEffectInfos_.begin(); it != vFireEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 
     output << xml::start( "unit-fire-effects" );
-    for( CIT_FireEffectRoeInfosVector it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
+    for( auto it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 
     output << xml::start( "urban-destruction-effects" );
-    for( CIT_UrbanEffectInfosVector it = vUrbanEffectInfos_.begin(); it != vUrbanEffectInfos_.end(); ++it )
+    for( auto it = vUrbanEffectInfos_.begin(); it != vUrbanEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 
@@ -766,7 +766,7 @@ void ADN_Crowds_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "time-between-nbc-applications" )
             << xml::attribute( "delay", timeBetweenNbcApplication_.GetData() )
            << xml::end;
-    for( CIT_CrowdsInfosVector it = vCrowds_.begin(); it != vCrowds_.end(); ++it )
+    for( auto it = vCrowds_.begin(); it != vCrowds_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }

@@ -154,7 +154,7 @@ namespace
 void Action_ABC::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     BarycenterComputer computer;
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         computer.AddPoint( it->second->GetPosition() );
     Draw( computer.Result(), viewport, tools );
 }
@@ -165,10 +165,10 @@ void Action_ABC::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlToo
 // -----------------------------------------------------------------------------
 void Action_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Draw( where, viewport, tools );
 
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
 }
 
@@ -189,7 +189,7 @@ void Action_ABC::Display( kernel::Displayer_ABC& displayer ) const
 void Action_ABC::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "name", name_.toStdString() );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "parameter" );
         it->second->Serialize( xos );
@@ -204,7 +204,7 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 bool Action_ABC::CheckKnowledgeValidity() const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( ! ( it->second->CheckKnowledgeValidity() ) )
             return false;
     return true;
@@ -219,7 +219,7 @@ void Action_ABC::CommitTo( sword::MissionParameters& message ) const
     if( CheckKnowledgeValidity() && IsValid() )
     {
         // $$$$ FHD 2009-10-28: potential bug, parameters serialized in "map" order
-        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        for( auto it = elements_.begin(); it != elements_.end(); ++it )
             it->second->CommitTo( *message.add_elem() );
     }
     else

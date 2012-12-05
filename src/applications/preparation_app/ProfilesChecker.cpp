@@ -54,7 +54,7 @@ void ProfilesChecker::Clean()
 // -----------------------------------------------------------------------------
 bool ProfilesChecker::Exists( const QString& oldLogin, const QString& newLogin ) const
 {
-    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+    for( auto it = editors_.begin(); it != editors_.end(); ++it )
         if( it->first && it->first->GetLogin() != oldLogin && it->second && it->second->GetLogin() == newLogin )
             return true;
     return false;
@@ -66,7 +66,7 @@ bool ProfilesChecker::Exists( const QString& oldLogin, const QString& newLogin )
 // -----------------------------------------------------------------------------
 bool ProfilesChecker::Exists( const QString& login ) const
 {
-    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+    for( auto it = editors_.begin(); it != editors_.end(); ++it )
         if( it->first && it->first->GetLogin() == login && it->second && it->second->GetLogin() != login )
             return true;
     return false;

@@ -88,7 +88,7 @@ void UrbanTemplateType::Fill( kernel::UrbanObject_ABC& urbanObject ) const
     // usages
     kernel::Usages_ABC& usages = physical.GetUsages();
     usages.ClearAll();
-    for( CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
+    for( auto it = usages_.begin(); it != usages_.end(); ++it )
         usages.Add( it->first, static_cast< unsigned int >( 100.f * it->second + 0.5f ) );
 
     // architecture
@@ -137,7 +137,7 @@ bool UrbanTemplateType::Matches( const kernel::UrbanObject_ABC& urbanObject ) co
 
     // usages
     const kernel::T_Usages& usages = physical.GetUsages().GetUsages();
-    for( CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
+    for( auto it = usages_.begin(); it != usages_.end(); ++it )
     {
         kernel::CIT_Usages found = usages.find( it->first );
         if( found == usages.end() || found->second != static_cast< unsigned int >( 100.f * it->second + 0.5f ) )

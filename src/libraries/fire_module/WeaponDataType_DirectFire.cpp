@@ -117,7 +117,7 @@ double WeaponDataType_DirectFire::GetMinDistanceForPH( double ph, const wrapper:
 double WeaponDataType_DirectFire::GetMaxRangeToFire( double ph ) const
 {
     double range = 0;
-    for( CIT_PhVector it = phs_.begin(); it != phs_.end(); ++it )
+    for( auto it = phs_.begin(); it != phs_.end(); ++it )
         range = std::max( range, launcherType_.GetPHModificator() * it->GetMaxYForX( ph ) );
     return range;
 }

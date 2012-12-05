@@ -472,7 +472,7 @@ std::auto_ptr< kernel::GlTooltip_ABC > GlProxy::CreateTooltip() const
 // -----------------------------------------------------------------------------
 bool GlProxy::ShouldEdit( const kernel::Selectable_ABC& selectable ) const
 {
-    for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
         if( (*it)->IsIn( selectable ) )
             return !(*it)->IsReadOnly();
     return true;

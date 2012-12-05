@@ -80,7 +80,7 @@ void Affinities::Update( const T& message )
     {
         if( !affinities_.empty() )
         {
-            for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+            for( auto it = affinities_.begin(); it != affinities_.end(); ++it )
             {
                 kernel::Team_ABC& team = teams_.GetTeam( it->first );
                 dico_.Remove(  baseName_ + QString( "/%1" ).arg( team.GetName() ) );
@@ -106,7 +106,7 @@ void Affinities::Update( const T& message )
 // -----------------------------------------------------------------------------
 void Affinities::FillParameterList( actions::parameters::ParameterList* parameterList ) const
 {
-    for( CIT_Affinities it = changingAffinities_.begin(); it != changingAffinities_.end(); ++it )
+    for( auto it = changingAffinities_.begin(); it != changingAffinities_.end(); ++it )
     {
         actions::parameters::ParameterList& list = parameterList->AddList( "Affinity" );
         list.AddIdentifier( "ID", it->first );

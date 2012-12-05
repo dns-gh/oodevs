@@ -83,6 +83,6 @@ void PropagationAttribute::NotifyUpdated( const Simulation& simulation )
 // -----------------------------------------------------------------------------
 void PropagationAttribute::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& /*tools*/ ) const
 {
-    for( CIT_Propagations it = propagations_.begin(); it != propagations_.end(); ++it )
+    for( auto it = propagations_.begin(); it != propagations_.end(); ++it )
         (*it)->Draw();
 }

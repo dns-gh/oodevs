@@ -294,7 +294,7 @@ void UrbanModel::Serialize( const std::string& filename, const tools::SchemaWrit
     xos << xml::start( "urban" );
     schemaWriter.WriteSchema( xos, "exercise", "urban" );
     xos<< xml::start( "urban-objects" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         const UrbanHierarchies& hierarchy = *static_cast< const UrbanHierarchies* >( it->second->Retrieve< kernel::Hierarchies >() );
         if( hierarchy.GetLevel() == eUrbanLevelCity ) // only city here, UrbanHierarchy proceed the recursion
