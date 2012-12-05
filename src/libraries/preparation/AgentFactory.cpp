@@ -57,6 +57,7 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -254,8 +255,9 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
     if( !type )
         return 0;
     Agent* result = new Agent( xis, controllers_.controller_, idManager_, *type, symbolsFactory_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
-    result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_, controllers_.controller_, dico ) );
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    const geometry::Point2f position = model_.ReadPosition( xis, result );
+    result->Attach< kernel::Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, symbolsFactory_ ) );
     result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( xis, *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );
@@ -305,7 +307,9 @@ Population_ABC* AgentFactory::Create( xml::xistream& xis, Team_ABC& parent, cons
 {
     Population* result = new Population( xis, type, controllers_.controller_, idManager_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_, dictionary ) );
+    result->Attach< kernel::Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_, dictionary ) );
+    const geometry::Point2f position = model_.ReadPosition( xis, result );
+    result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );

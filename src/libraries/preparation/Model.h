@@ -11,6 +11,7 @@
 #define __Model_h_
 
 #include "ConsistencyErrorTypes.h"
+#include "ModelConsistencyChecker.h"
 #include "clients_kernel/EntityResolverFacade.h"
 #include "clients_kernel/Model_ABC.h"
 #include <set>
@@ -69,13 +70,6 @@ class Model : public kernel::Model_ABC
             , public kernel::EntityResolverFacade
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::pair< E_ConsistencyCheck, std::string > T_LoadingError;
-    typedef std::set< T_LoadingError > T_LoadingErrors;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              Model( kernel::Controllers& controllers, const StaticModel& staticModel );
@@ -100,11 +94,13 @@ public:
     void Load( const tools::ExerciseConfig& config );
     void SaveExercise( const tools::ExerciseConfig& config );
     void SaveTerrain( const tools::ExerciseConfig& config, bool saveUrban = true );
-    void AppendLoadingError( E_ConsistencyCheck type, const std::string& error );
-    const T_LoadingErrors& GetLoadingErrors() const;
+    void AppendLoadingError( E_ConsistencyCheck type, const std::string& error, kernel::Entity_ABC* entity = 0 );
+    const ModelConsistencyChecker::T_ConsistencyErrors& GetLoadingErrors() const;
     bool HasConsistencyErrorsOnLoad() const;
     void SetConsistencyErrorsOnLoad();
     void ClearLoadingErrors();
+    geometry::Point2f ReadPosition( xml::xistream& xis, kernel::Entity_ABC* entity );
+    geometry::Point2f ClipPosition( const geometry::Point2f& position, kernel::Entity_ABC* entity );
     void Purge();
     QString GetName() const;
     tools::IdManager& GetIdManager() const;
@@ -142,7 +138,9 @@ private:
     QString name_;
     bool loaded_;
     bool consistencyErrorsOnLoad_;
-    T_LoadingErrors loadingErrors_;
+    ModelConsistencyChecker::T_ConsistencyErrors loadingErrors_;
+    float width_;
+    float height_;
     //@}
 
 public:

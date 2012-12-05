@@ -485,10 +485,6 @@
         <translation>Durée d&apos;activité :</translation>
     </message>
     <message>
-        <source>%1 [%L2]</source>
-        <translation>%1 [%L2]</translation>
-    </message>
-    <message>
         <source>Information</source>
         <translation>Information</translation>
     </message>
@@ -643,6 +639,10 @@
     <message>
         <source>Info/Breaching/Value</source>
         <translation>Info/Contournement/Valeur</translation>
+    </message>
+    <message>
+        <source>%1 [%L2]</source>
+        <translation>%1 [%L2]</translation>
     </message>
 </context>
 <context>

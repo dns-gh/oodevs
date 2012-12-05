@@ -625,10 +625,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 [%L2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Obstacle activated:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -642,6 +638,10 @@
     </message>
     <message>
         <source>Info/Breaching/Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 [%L2]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

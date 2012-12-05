@@ -1479,6 +1479,10 @@ Ces données ne peuvent pas être projetées.</translation>
         <source>City area exceeds %1 km²</source>
         <translation>Surface de ville dépassant %1 km²</translation>
     </message>
+    <message>
+        <source>Entity &apos;%1&apos; is outside the map. It will be repositioned to the origin.</source>
+        <translation>L&apos;entité &apos;%1&apos; est à l&apos;extérieur de la carte. Elle sera repositionnée à l&apos;origine.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

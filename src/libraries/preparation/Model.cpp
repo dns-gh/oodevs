@@ -38,6 +38,7 @@
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/SymbolFactory.h"
@@ -100,6 +101,8 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     , ghosts_( *new GhostModel( controllers, ghostFactory_ ) )
     , symbolsFactory_( *new SymbolFactory() )
     , performanceIndicator_( *new PerformanceIndicator( *this ) )
+    , width_                ( 0.f )
+    , height_               ( 0.f )
 {
     // NOTHING
 }
@@ -277,7 +280,7 @@ namespace
     class DebugModel
     {
     public:
-        void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
+        void Serialize( const std::string& file, const tools::SchemaWriter_ABC& /* schemaWriter */ ) const
         {
             xml::xofstream xos( file );
             xos << xml::start( "debug" )
@@ -313,6 +316,8 @@ namespace
 // -----------------------------------------------------------------------------
 void Model::Load( const tools::ExerciseConfig& config )
 {
+    width_ = config.GetTerrainWidth();
+    height_ = config.GetTerrainHeight();
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
     config_ = &config;
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
@@ -403,16 +408,23 @@ void Model::SaveTerrain( const tools::ExerciseConfig& config, bool saveUrban /* 
 // Name: Model::AppendLoadingError
 // Created: JSR 2012-01-05
 // -----------------------------------------------------------------------------
-void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& error )
+void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& errorMsg, kernel::Entity_ABC* entity /* = 0 */ )
 {
-    loadingErrors_.insert( std::make_pair< E_ConsistencyCheck, std::string>( type, error) );
+    ModelConsistencyChecker::ConsistencyError error( type );
+    if( entity )
+    {
+        kernel::SafePointer< kernel::Entity_ABC >* safePtr = ( entity ) ? new kernel::SafePointer< kernel::Entity_ABC >( controllers_, entity ) : 0;
+        error.items_.push_back( safePtr );
+    }
+    error.optional_ = errorMsg;
+    loadingErrors_.push_back( error );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Model::GetLoadingErrors
 // Created: JSR 2012-01-05
 // -----------------------------------------------------------------------------
-const Model::T_LoadingErrors& Model::GetLoadingErrors() const
+const ModelConsistencyChecker::T_ConsistencyErrors& Model::GetLoadingErrors() const
 {
     return loadingErrors_;
 }
@@ -503,4 +515,30 @@ void Model::SetLoaded( bool status )
 std::string Model::GetActionPlanning() const
 {
     return config_ ? config_->BuildExerciseChildFile( exercise_.GetActionPlanning() ) : exercise_.GetActionPlanning(); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ReadPosition
+// Created: ABR 2012-12-04
+// -----------------------------------------------------------------------------
+geometry::Point2f Model::ReadPosition( xml::xistream& xis, kernel::Entity_ABC* entity )
+{
+    const std::string position = xis.attribute< std::string >( "position" );
+    geometry::Point2f result = staticModel_.coordinateConverter_.ConvertToXY( position );
+    return ClipPosition( result, entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ClipPosition
+// Created: ABR 2012-12-05
+// -----------------------------------------------------------------------------
+geometry::Point2f Model::ClipPosition( const geometry::Point2f& position, kernel::Entity_ABC* entity )
+{
+    if( position.X() < 0.f || position.X() > width_ ||
+        position.Y() < 0.f || position.Y() > height_ )
+    {
+        AppendLoadingError( eUnitOutsideMap, ( entity ) ? entity->GetName().toStdString() : "", entity );
+        return geometry::Point2f( 0.f, 0.f );
+    }
+    return position;
 }

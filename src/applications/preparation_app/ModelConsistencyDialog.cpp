@@ -127,6 +127,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eDeletedPopulationUrbanBlocks ] = "%1";
     errorDescriptions_[ eDiffusionListCleaned ] = tools::translate( "ModelConsistencyDialog", "Invalid unit removed from diffusion list." );
     errorDescriptions_[ eSignature ] = "%1";
+    errorDescriptions_[ eUnitOutsideMap ] = tools::translate( "ModelConsistencyDialog", "Entity '%1' is outside the map. It will be repositioned to the origin." );
     errorDescriptions_[ eCityAreaLimitExceeded ] = tools::translate( "ModelConsistencyDialog", "City area exceeds %1 km²" );
     errorDescriptions_[ eOthers ] = "%1";
 }

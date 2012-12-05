@@ -63,6 +63,7 @@ enum E_ConsistencyCheck
     eDiffusionListCleaned,
     eSignature,
     eCityAreaLimitExceeded,
+    eUnitOutsideMap,
     eOthers,
     eOthersMask,
 };

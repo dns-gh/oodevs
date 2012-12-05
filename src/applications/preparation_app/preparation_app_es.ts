@@ -1474,6 +1474,10 @@ This data can&apos;t be projected.</source>
         <source>City area exceeds %1 km²</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Entity &apos;%1&apos; is outside the map. It will be repositioned to the origin.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

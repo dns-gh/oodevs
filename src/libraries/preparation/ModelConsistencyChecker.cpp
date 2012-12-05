@@ -703,9 +703,9 @@ void ModelConsistencyChecker::CheckSuccessFactors()
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::CheckLoadingErrors()
 {
-    Model::T_LoadingErrors errors = model_.GetLoadingErrors();
-    for( Model::T_LoadingErrors::const_iterator it = errors.begin(); it != errors.end(); ++it )
-        AddError( it->first, 0, it->second );
+    T_ConsistencyErrors errors = model_.GetLoadingErrors();
+    for( CIT_ConsistencyErrors it = errors.begin(); it != errors.end(); ++it )
+        T_Parent::AddError( it->type_, ( it->items_.size() > 0 ) ? it->items_[ 0 ] : 0, it->optional_ );
 }
 
 // -----------------------------------------------------------------------------
