@@ -1426,7 +1426,9 @@
              - Having a filename no including version numbers makes it
                easier to pull programmatically.
         -->
-        <zip destfile="${dist.dir}/decisional.zip" filesonly="true">
+        <local name="output"/>
+        <property name="output" value="${out.dir}/decisional.zip"/>
+        <zip destfile="${output}" filesonly="true">
             <fileset dir="${data.dir}">
                 <include name="data/models/ada/decisional/bms/**"/>
                 <include name="data/models/ada/decisional/dia5/**"/>
@@ -1435,6 +1437,7 @@
                 <include name="data/models/ada/physical/scipio/**"/>
             </fileset>
         </zip>
+        <safe-move file="${output}"/>
     </target>
 
     <target name="package.otpack.defense.scipio.VA" description="package du defense-scipio Validation Amont otpack">
