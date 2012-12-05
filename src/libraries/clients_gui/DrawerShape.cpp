@@ -20,6 +20,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LocationProxy.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
@@ -166,7 +167,7 @@ void DrawerShape::Translate( const geometry::Point2f& from, const geometry::Vect
 // -----------------------------------------------------------------------------
 void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, bool overlined ) const
 {
-    drawer_->Draw( location_, viewport, tools, color_, overlined );
+    drawer_->Draw( location_, viewport, tools, color_, overlined, tools.GetAdaptiveZoomFactor() );
 }
 
 // -----------------------------------------------------------------------------
