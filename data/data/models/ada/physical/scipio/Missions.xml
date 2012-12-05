@@ -530,6 +530,19 @@
       </parameter>
       <parameter dia-name="marcheRetrograde" name="marche retrograde" optional="true" type="Boolean"/>
     </mission>
+    <mission dia-behavior="france.military.platoon.tasks.AppuyerMortier" dia-type="france.military.platoon.tasks.AppuyerMortier" id="2064" name="PION MELEE Mortier Appuyer En Mouvement" package="support" symbol="IdAppuyer_Poly-ligne">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Automat"/>
+          <parameter type="Agent"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="marcheRetrograde" name="marche retrograde" optional="true" type="Boolean"/>
+    </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Detruire" dia-type="france.military.platoon.combat.tasks.Detruire" id="2013" name="PION MELEE Detruire" package="defence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -3515,4 +3528,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ROEM_ArreterSilenceRadar" id="28801" name="Arreter Silence Radar"/>
   </fragorders>
 </missions>
-<!-- signature="1667531140" -->
+<!-- signature="1008593030" -->

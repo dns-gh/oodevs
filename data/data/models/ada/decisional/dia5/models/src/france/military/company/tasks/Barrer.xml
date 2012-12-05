@@ -58,7 +58,7 @@
         </parameter>
         <parameter name="supportTasks">
             <value>
-                <string>france.military.platoon.tasks.Appuyer</string>
+                <string>france.military.platoon.tasks.Appuyer;france.military.platoon.tasks.AppuyerMortier</string>
             </value>
         </parameter>
         <parameter name="objectives">

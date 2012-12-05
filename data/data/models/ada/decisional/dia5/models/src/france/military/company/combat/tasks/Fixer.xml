@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Fixer" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.FixEffect">
-  <parameters>
-    <parameter name="entities">
-      <description>L'objectif : l'ennemi à fixer.</description>
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Destroyable"/>
-        </list>
-      </type>
-    </parameter>
-    <parameter name="positions">
-      <description>Les positions permettant de fixer l'ennemi.</description>
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Destroying"/>
-        </list>
-      </type>
-    </parameter>
-  </parameters>
-  <stages/>
-  <next-task name="sword.military.company.combat.tasks.Fix">
-    <parameter name="companyTask">
-      <value>
-        <string>france.military.company.combat.tasks.Fixer</string>
-      </value>
-    </parameter>
-    <parameter name="mainTasks">
-      <value>
-        <string>france.military.platoon.combat.tasks.Fixer</string>
-      </value>
-    </parameter>
-    <parameter name="supportTasks">
-      <value>
-        <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
-      </value>
-    </parameter>
-    <parameter name="entities">
-      <value>
-        <parameter>entities</parameter>
-      </value>
-    </parameter>
-    <parameter name="positions">
-      <value>
-        <parameter>positions</parameter>
-      </value>
-    </parameter>
-    <parameter name="defaultTask">
-      <value>
-        <string>france.military.platoon.tasks.Suivre</string>
-      </value>
-    </parameter>
-    <parameter name="taskForSupporting">
-      <value>
-        <string>france.military.platoon.tasks.Appuyer</string>
-      </value>
-    </parameter>
-  </next-task>
+    <parameters>
+        <parameter name="entities">
+            <description>L'objectif : l'ennemi à fixer.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroyable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="positions">
+            <description>Les positions permettant de fixer l'ennemi.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages/>
+    <next-task name="sword.military.company.combat.tasks.Fix">
+        <parameter name="companyTask">
+            <value>
+                <string>france.military.company.combat.tasks.Fixer</string>
+            </value>
+        </parameter>
+        <parameter name="mainTasks">
+            <value>
+                <string>france.military.platoon.combat.tasks.Fixer</string>
+            </value>
+        </parameter>
+        <parameter name="supportTasks">
+            <value>
+                <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite;france.military.platoon.tasks.AppuyerMortier</string>
+            </value>
+        </parameter>
+        <parameter name="entities">
+            <value>
+                <parameter>entities</parameter>
+            </value>
+        </parameter>
+        <parameter name="positions">
+            <value>
+                <parameter>positions</parameter>
+            </value>
+        </parameter>
+        <parameter name="defaultTask">
+            <value>
+                <string>france.military.platoon.tasks.Suivre</string>
+            </value>
+        </parameter>
+        <parameter name="taskForSupporting">
+            <value>
+                <string>france.military.platoon.tasks.Appuyer</string>
+            </value>
+        </parameter>
+    </next-task>
 </task>

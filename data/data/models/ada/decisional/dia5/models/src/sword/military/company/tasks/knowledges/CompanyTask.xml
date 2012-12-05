@@ -92,5 +92,14 @@
                 </type>
             </return>
         </method>
+        <method name="getEntitiesToSupportDynamic">
+            <return>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

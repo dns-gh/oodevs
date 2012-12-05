@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.Couvrir" source-version="1.0.0" knowledge-class="sword.military.company.combat.tasks.knowledges.CoverEffect">
-  <parameters>
-    <parameter name="entity">
-      <type>
-        <class name="sword.military.knowledge.decisional.Reachable"/>
-      </type>
-    </parameter>
-    <parameter name="directionPoints" nullable="true">
-      <description>Objectif face auquel il faut couvrir.</description>
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Observable"/>
-        </list>
-      </type>
-    </parameter>
-    <parameter name="positions">
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Positionable"/>
-        </list>
-      </type>
-    </parameter>
-  </parameters>
-  <next-task name="sword.military.company.combat.tasks.Cover">
-    <parameter name="entity">
-      <value>
-        <parameter>entity</parameter>
-      </value>
-    </parameter>
-    <parameter name="directionPoints">
-      <value>
-        <parameter>directionPoints</parameter>
-      </value>
-    </parameter>
-    <parameter name="positions">
-      <value>
-        <parameter>positions</parameter>
-      </value>
-    </parameter>
-    <parameter name="companyTask">
-      <value>
-        <string>france.military.company.combat.tasks.Couvrir</string>
-      </value>
-    </parameter>
-    <parameter name="mainTasks">
-      <value>
-        <string>france.military.platoon.combat.tasks.Couvrir</string>
-      </value>
-    </parameter>
-    <parameter name="supportTasks">
-      <value>
-        <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
-      </value>
-    </parameter>
-    <parameter name="defaultTask">
-      <value>
-        <string>france.military.platoon.tasks.Suivre</string>
-      </value>
-    </parameter>
-    <parameter name="taskForSupporting">
-      <value>
-        <string>france.military.platoon.tasks.Appuyer</string>
-      </value>
-    </parameter>
-  </next-task>
+    <parameters>
+        <parameter name="entity">
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+        </parameter>
+        <parameter name="directionPoints" nullable="true">
+            <description>Objectif face auquel il faut couvrir.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Observable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="positions">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <next-task name="sword.military.company.combat.tasks.Cover">
+        <parameter name="entity">
+            <value>
+                <parameter>entity</parameter>
+            </value>
+        </parameter>
+        <parameter name="directionPoints">
+            <value>
+                <parameter>directionPoints</parameter>
+            </value>
+        </parameter>
+        <parameter name="positions">
+            <value>
+                <parameter>positions</parameter>
+            </value>
+        </parameter>
+        <parameter name="companyTask">
+            <value>
+                <string>france.military.company.combat.tasks.Couvrir</string>
+            </value>
+        </parameter>
+        <parameter name="mainTasks">
+            <value>
+                <string>france.military.platoon.combat.tasks.Couvrir</string>
+            </value>
+        </parameter>
+        <parameter name="supportTasks">
+            <value>
+                <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite;france.military.platoon.tasks.AppuyerMortier</string>
+            </value>
+        </parameter>
+        <parameter name="defaultTask">
+            <value>
+                <string>france.military.platoon.tasks.Suivre</string>
+            </value>
+        </parameter>
+        <parameter name="taskForSupporting">
+            <value>
+                <string>france.military.platoon.tasks.Appuyer</string>
+            </value>
+        </parameter>
+    </next-task>
 </task>

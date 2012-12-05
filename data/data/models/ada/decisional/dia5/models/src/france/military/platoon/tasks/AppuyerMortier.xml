@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.AppuyerMortier" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.CombatSupport">
+    <description>Soutien dynamique par les unités de mortier. Soutenir par la manoeuvre.</description>
+    <parameters>
+        <parameter name="objectives">
+            <description>Les unités à appuyer.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Supportable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="marcheRetrograde" nullable="true">
+            <description>Boolean indiquant s'il s'agit si c'est un contexte retrograde. Défini par défaut à false. &#xD;
+</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Rester en mesure d'appuyer (tir/observation) les objectifs.</description>
+    </goal>
+    <next-task name="sword.military.platoon.coercition.tasks.MortarCombatSupport">
+        <parameter name="objectives">
+            <value>
+                <parameter>objectives</parameter>
+            </value>
+        </parameter>
+        <parameter name="marcheRetrograde">
+            <value>
+                <parameter>marcheRetrograde</parameter>
+            </value>
+        </parameter>
+    </next-task>
+</task>

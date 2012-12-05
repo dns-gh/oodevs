@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.tasks.SEmparer" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.SeizeEffect">
-  <parameters>
-    <parameter name="objectives">
-      <type>
-        <list>
-          <class name="sword.military.knowledge.decisional.Destroying"/>
-        </list>
-      </type>
-    </parameter>
-  </parameters>
-  <stages/>
-  <next-task name="sword.military.company.combat.tasks.Seize">
-    <parameter name="companyTask">
-      <value>
-        <string>france.military.company.combat.tasks.SEmparer</string>
-      </value>
-    </parameter>
-    <parameter name="mainTasks">
-      <value>
-        <string>france.military.platoon.combat.tasks.Semparer</string>
-      </value>
-    </parameter>
-    <parameter name="supportTasks">
-      <value>
-        <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
-      </value>
-    </parameter>
-    <parameter name="objectives">
-      <value>
-        <parameter>objectives</parameter>
-      </value>
-    </parameter>
-    <parameter name="peiTasks">
-      <value>
-        <string>france.military.platoon.combat.tasks.Eclairer</string>
-      </value>
-    </parameter>
-    <parameter name="defaultTask">
-      <value>
-        <string>france.military.platoon.tasks.Suivre</string>
-      </value>
-    </parameter>
-    <parameter name="taskForSupporting">
-      <value>
-        <string>france.military.platoon.tasks.Appuyer</string>
-      </value>
-    </parameter>
-  </next-task>
+    <parameters>
+        <parameter name="objectives">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages/>
+    <next-task name="sword.military.company.combat.tasks.Seize">
+        <parameter name="companyTask">
+            <value>
+                <string>france.military.company.combat.tasks.SEmparer</string>
+            </value>
+        </parameter>
+        <parameter name="mainTasks">
+            <value>
+                <string>france.military.platoon.combat.tasks.Semparer</string>
+            </value>
+        </parameter>
+        <parameter name="supportTasks">
+            <value>
+                <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite;france.military.platoon.tasks.AppuyerMortier</string>
+            </value>
+        </parameter>
+        <parameter name="objectives">
+            <value>
+                <parameter>objectives</parameter>
+            </value>
+        </parameter>
+        <parameter name="peiTasks">
+            <value>
+                <string>france.military.platoon.combat.tasks.Eclairer</string>
+            </value>
+        </parameter>
+        <parameter name="defaultTask">
+            <value>
+                <string>france.military.platoon.tasks.Suivre</string>
+            </value>
+        </parameter>
+        <parameter name="taskForSupporting">
+            <value>
+                <string>france.military.platoon.tasks.Appuyer</string>
+            </value>
+        </parameter>
+    </next-task>
 </task>

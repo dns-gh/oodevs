@@ -32,7 +32,38 @@ return
         else -- par défaut on renvoit le PC
           return {integration.query.getPCUnit()}
         end
-    end,    
+    end,
+    
+   getEntitiesToSupportDynamic = function( self, params )
+        if not myself.leadData.objectiveDynamicSupportIndex then
+            myself.leadData.entitiesToSupport = {}
+            myself.leadData.objectiveDynamicSupportIndex = 0
+            local entityToSupport
+            if params.objective and params.objective ~= nil then
+               entityToSupport = params.objective
+            else
+               entityToSupport = meKnowledge
+            end
+            myself.leadData.entitiesToSupport = integration.filterPionWithEchelon( integration.getEntitiesFromAutomatCommunication( entityToSupport, "none", true), eEtatEchelon_First )
+            if #myself.leadData.entitiesToSupport < 1 then
+                myself.leadData.entitiesToSupport = integration.getEntitiesFromAutomatCommunication( entityToSupport, "none", true)
+            end
+            myself.leadData.nbEntities = #myself.leadData.entitiesToSupport
+        end
+        local nbrEchelon = myself.taskParams.echelonNumber or 0
+        if nbrEchelon == NIL or nbrEchelon == 0 then
+            nbrEchelon = 1 -- default value
+        end
+        local nbFront = integration.query.getNbrFront( nbrEchelon )
+        local nextObjectives = {}
+        myself.leadData.nbPions = myself.leadData.nbPions or nbFront
+        local nbcible = math.max( ( myself.leadData.nbEntities / myself.leadData.nbPions ), 1 )
+        while #nextObjectives < nbcible do
+            myself.leadData.objectiveDynamicSupportIndex = myself.leadData.objectiveDynamicSupportIndex % #myself.leadData.entitiesToSupport + 1
+            nextObjectives[ #nextObjectives + 1 ]= myself.leadData.entitiesToSupport[ myself.leadData.objectiveDynamicSupportIndex ]
+        end
+        return nextObjectives
+    end,
     
     getEntitiesToFollow = function( self, params )
         local entitiesToFollow = integration.filterPionWithEchelon( integration.getEntitiesFromAutomat( meKnowledge, "none", true ), eEtatEchelon_First )

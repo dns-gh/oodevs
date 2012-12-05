@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.circu.tasks.Reconnaitre" source-version="1.0.0" knowledge-class="france.military.company.combat.support.circu.tasks.knowledges.ReconnaitreEffect">
-	<parameters>
-		<parameter name="objectives">
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Reconnoitrable"/>
-				</list>
-			</type>
-		</parameter>
-	</parameters>
-	<stages/>
-	<next-task name="sword.military.company.tasks.Reconnoiter">
-		<parameter name="companyTask">
-			<value>
-				<string>france.military.company.combat.support.circu.tasks.Reconnaitre</string>
-			</value>
-		</parameter>
-		<parameter name="mainTasks">
-			<value>
-				<string>france.military.platoon.combat.support.circu.tasks.Reconnaitre</string>
-			</value>
-		</parameter>
-		<parameter name="supportTasks">
-			<value>
-				<string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
-			</value>
-		</parameter>
-		<parameter name="objectives">
-			<value>
-				<parameter>objectives</parameter>
-			</value>
-		</parameter>
-		<parameter name="defaultTask">
-			<value>
-				<string>france.military.platoon.tasks.Suivre</string>
-			</value>
-		</parameter>
-		<parameter name="taskForSupporting">
-			<value>
-				<string>france.military.platoon.tasks.Appuyer</string>
-			</value>
-		</parameter>
-	</next-task>
+    <parameters>
+        <parameter name="objectives">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages/>
+    <next-task name="sword.military.company.tasks.Reconnoiter">
+        <parameter name="companyTask">
+            <value>
+                <string>france.military.company.combat.support.circu.tasks.Reconnaitre</string>
+            </value>
+        </parameter>
+        <parameter name="mainTasks">
+            <value>
+                <string>france.military.platoon.combat.support.circu.tasks.Reconnaitre</string>
+            </value>
+        </parameter>
+        <parameter name="supportTasks">
+            <value>
+                <string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite;france.military.platoon.tasks.AppuyerMortier</string>
+            </value>
+        </parameter>
+        <parameter name="objectives">
+            <value>
+                <parameter>objectives</parameter>
+            </value>
+        </parameter>
+        <parameter name="defaultTask">
+            <value>
+                <string>france.military.platoon.tasks.Suivre</string>
+            </value>
+        </parameter>
+        <parameter name="taskForSupporting">
+            <value>
+                <string>france.military.platoon.tasks.Appuyer</string>
+            </value>
+        </parameter>
+    </next-task>
 </task>
