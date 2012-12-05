@@ -444,10 +444,10 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsCollidingFromType
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetDisastersColliding
+// Name: DEC_KnowledgeFunctions::GetCollidingDisasters
 // Created: LGY 2012-11-27
 // -----------------------------------------------------------------------------
-T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetDisastersColliding( const MIL_AgentPion& callerAgent )
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetCollidingDisasters( const MIL_AgentPion& callerAgent )
 {
     T_KnowledgeObjectDiaIDVector result;
     T_KnowledgeObjectDiaIDVector objectsColliding;
