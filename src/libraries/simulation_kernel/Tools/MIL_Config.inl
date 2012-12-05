@@ -210,13 +210,13 @@ unsigned int MIL_Config::GetTimeFactor() const
 }
 
 inline
-unsigned int MIL_Config::ReadGCParameter_setPause() const
+unsigned int MIL_Config::GetGarbageCollectorPause() const
 {
     return setpause_;
 }
 
 inline
-unsigned int MIL_Config::ReadGCParameter_setStepMul() const
+unsigned int MIL_Config::GetGarbageCollectorStepMul() const
 {
     return setstepmul_;
 }

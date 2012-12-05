@@ -81,8 +81,8 @@ public:
     const bool*        GetRandomGaussian           () const;
     const double*      GetRandomDeviation          () const;
     const double*      GetRandomMean               () const;
-    unsigned int       ReadGCParameter_setPause    () const;
-    unsigned int       ReadGCParameter_setStepMul  () const;
+    unsigned int       GetGarbageCollectorPause    () const;
+    unsigned int       GetGarbageCollectorStepMul  () const;
     //@}
 
     //! @name Operations

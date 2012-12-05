@@ -275,8 +275,8 @@ void load_construct_data( Archive& archive, MIL_EntityManager* manager, const un
 // -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory, const MIL_Config& config )
     : time_                         ( time )
-    , gcPause_                      ( config.ReadGCParameter_setPause() )
-    , gcMult_                       ( config.ReadGCParameter_setStepMul() )
+    , gcPause_                      ( config.GetGarbageCollectorPause() )
+    , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
     , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
@@ -311,8 +311,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
 MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ObjectFactory& objectFactory,
                                       std::auto_ptr< sword::Sink_ABC > sink, const MIL_Config& config )
     : time_                         ( time )
-    , gcPause_                      ( config.ReadGCParameter_setPause() )
-    , gcMult_                       ( config.ReadGCParameter_setStepMul() )
+    , gcPause_                      ( config.GetGarbageCollectorPause() )
+    , gcMult_                       ( config.GetGarbageCollectorStepMul() )
     , effectManager_                ( effects )
     , profilerManager_              ( new MIL_ProfilerManager( config ) )
     , nRandomBreakdownsNextTimeStep_( 0  )
