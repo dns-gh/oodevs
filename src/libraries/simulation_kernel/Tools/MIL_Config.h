@@ -46,7 +46,6 @@ public:
 
     //! @name Accessors
     //@{
-    bool               UseOnlyDIAArchive           () const;
     bool               CheckAutomateComposition    () const;
     bool               UseDecDebug                 () const;
     bool               UsePathDebug                () const;
@@ -65,8 +64,6 @@ public:
     bool               IsLegacy                    () const;
 
     bool               UseCheckPointCRC            () const;
-    bool               UseDiaDebugger              () const;
-    unsigned short     GetDiaDebuggerPort          () const;
     bool               UseNetworkLogger            () const;
     unsigned short     GetNetworkLoggerPort        () const;
     unsigned int       GetCheckPointsFrequency     () const;
@@ -138,17 +135,14 @@ private:
     unsigned int   endTick_;
     unsigned int   tickLatency_;
     unsigned int   pathFinderThreads_;
-    unsigned short diaDebuggerPort_;
     unsigned short networkLoggerPort_;
     unsigned short networkPort_;
     unsigned long  networkTimeOut_;
     bool           bCheckPointOrbat_;
     bool           bUseCheckPointCRC_;
-    bool           bUseOnlyDIAArchive_;
     bool           bCheckAutomateComposition_;
     bool           bUseDecDebug_;
     bool           bUsePathDebug_;
-    bool           bUseDiaDebugger_;
     bool           bUseNetworkLogger_;
     bool           bDecisionalProfilingEnabled_;
     bool           bHookProfilingEnabled_;

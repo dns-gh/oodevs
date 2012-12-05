@@ -20,16 +20,6 @@ bool MIL_Config::UseDecDebug() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::UseOnlyDIAArchive
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Config::UseOnlyDIAArchive() const
-{
-    return bUseOnlyDIAArchive_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::CheckAutomateComposition
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
@@ -37,26 +27,6 @@ inline
 bool MIL_Config::CheckAutomateComposition() const
 {
     return bCheckAutomateComposition_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::UseDiaDebugger
-// Created: AGN 2004-03-23
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Config::UseDiaDebugger() const
-{
-    return bUseDiaDebugger_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetDiaDebuggerPort
-// Created: NLD 2007-01-10
-// -----------------------------------------------------------------------------
-inline
-unsigned short MIL_Config::GetDiaDebuggerPort() const
-{
-    return diaDebuggerPort_;
 }
 
 // -----------------------------------------------------------------------------

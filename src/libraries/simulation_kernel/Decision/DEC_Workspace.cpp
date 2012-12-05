@@ -181,10 +181,6 @@ void DEC_Workspace::LoadDIA( MIL_Config& config, xml::xistream& xis )
 
     InitializeMissions( config );
     InitializeModels  ( config, strSourcePaths );
-
-    // Debugger
-    if( config.UseDiaDebugger() )
-        MT_LOG_INFO_MSG( MT_FormatString( "Starting DirectIA debug server on port %d", config.GetDiaDebuggerPort() ) );
 }
 
 // -----------------------------------------------------------------------------
