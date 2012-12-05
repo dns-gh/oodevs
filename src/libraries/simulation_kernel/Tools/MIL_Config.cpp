@@ -282,26 +282,6 @@ std::string MIL_Config::BuildCheckpointChildFile( const std::string& file, std::
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::IsPopulation
-// Created: JCR 2007-08-30
-// -----------------------------------------------------------------------------
-bool MIL_Config::IsPopulationEnabled() const
-{
-    return ! GetPopulationFile().empty();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetPopulationDir
-// Created: AGE 2007-09-04
-// -----------------------------------------------------------------------------
-std::string MIL_Config::GetPopulationDir() const
-{
-    if( IsPopulationEnabled() )
-        return BuildChildPath( GetPopulationFile(), "." );
-    return "";
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetIntegrationDir
 // Created: BAX 2012-11-09
 // -----------------------------------------------------------------------------

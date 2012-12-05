@@ -91,9 +91,6 @@ public:
 
     std::string BuildCheckpointChildFile( const std::string& file, std::string name = "" ) const;
 
-    bool IsPopulationEnabled() const;
-    std::string GetPopulationDir() const;
-
     virtual std::string GetOrbatFile() const;
     //@}
 
