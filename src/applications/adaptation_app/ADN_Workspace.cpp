@@ -760,9 +760,7 @@ ADN_Workspace::T_UsingElements ADN_Workspace::GetElementThatUse( ADN_Ref_ABC* da
     }
 
     if( ADN_Disasters_Data::DisasterInfos* infos = dynamic_cast< ADN_Disasters_Data::DisasterInfos* >( data ) )
-    {
         FillUsingElements( eObjects, *infos, GetObjects().GetData(), &ADN_Objects_Data::GetObjectsThatUse, result );
-        FillUsingElements( eSensors, *infos, GetSensors().GetData().radarData_, &ADN_Radars_Data::GetRadarsThatUse, result );
-    }
+
     return result;
 }
