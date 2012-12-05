@@ -46,9 +46,8 @@ class PopulationKnowledgePanel : public gui::InfoPanel_ABC
                                , public tools::ElementObserver_ABC< kernel::PopulationKnowledge_ABC >
                                , public tools::ElementObserver_ABC< PopulationFlowKnowledge >
                                , public tools::ElementObserver_ABC< PopulationConcentrationKnowledge >
-                               , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{

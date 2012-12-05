@@ -10,7 +10,6 @@
 #ifndef __FilterDialogs_h_
 #define __FilterDialogs_h_
 
-#include <boost/noncopyable.hpp>
 #include "tools/Resolver.h"
 
 namespace tools
@@ -39,7 +38,6 @@ class Model;
 // =============================================================================
 class FilterDialogs : public QObject
                     , public tools::StringResolver< FilterDialog >
-                    , private boost::noncopyable
 {
     Q_OBJECT
 

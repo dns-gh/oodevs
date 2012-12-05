@@ -10,8 +10,6 @@
 #ifndef __gui_ExpandableGroupBox_h_
 #define __gui_ExpandableGroupBox_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 
@@ -22,7 +20,6 @@ namespace gui
 // Created: ABR 2012-06-21
 // =============================================================================
 class ExpandableGroupBox : public QFrame
-                        , private boost::noncopyable
 {
     Q_OBJECT
 

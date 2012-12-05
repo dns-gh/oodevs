@@ -10,7 +10,6 @@
 #ifndef __DiffusionListEditor_h_
 #define __DiffusionListEditor_h_
 
-#include <boost/noncopyable.hpp>
 #include "VerticalHeaderTableView.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/Resolver.h"
@@ -34,7 +33,6 @@ namespace gui
 // Created: ABR 2012-02-23
 // =============================================================================
 class DiffusionListEditor : public QWidget
-                          , private boost::noncopyable
 {
     Q_OBJECT
 

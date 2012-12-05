@@ -12,7 +12,6 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include <boost/noncopyable.hpp>
 
 namespace actions
 {
@@ -37,7 +36,6 @@ class ObjectMagicOrdersInterface : public QObject
                                  , public tools::Observer_ABC
                                  , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
                                  , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
-                                 , private boost::noncopyable
 {
     Q_OBJECT
 

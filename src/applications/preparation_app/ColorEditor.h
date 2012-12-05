@@ -44,9 +44,8 @@ class ColorEditor : public QObject
                   , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                   , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
                   , public tools::ElementObserver_ABC< kernel::Team_ABC >
-                  , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

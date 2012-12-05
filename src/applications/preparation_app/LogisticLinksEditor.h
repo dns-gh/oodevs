@@ -13,7 +13,6 @@
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -37,7 +36,6 @@ class LogisticLinksEditor : public QObject
                           , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                           , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                           , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
-                          , private boost::noncopyable
 {
     Q_OBJECT
 

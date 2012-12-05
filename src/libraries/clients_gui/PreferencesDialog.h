@@ -11,7 +11,6 @@
 #define __PreferencesDialog_h_
 
 #include "ModalDialog.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -39,7 +38,6 @@ namespace gui
 // Created: SBO 2006-05-03
 // =============================================================================
 class PreferencesDialog : public ModalDialog
-                        , private boost::noncopyable
 {
     Q_OBJECT
 

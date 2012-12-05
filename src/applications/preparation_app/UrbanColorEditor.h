@@ -12,7 +12,6 @@
 
 #include "clients_kernel/ValueEditor.h"
 #include "clients_kernel/UrbanColor_ABC.h"
-#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  UrbanColorEditor
@@ -22,7 +21,6 @@
 // =============================================================================
 class UrbanColorEditor : public QColorDialog
                        , public kernel::ValueEditor< kernel::UrbanBlockColor >
-                       , private boost::noncopyable
 {
     Q_OBJECT
 

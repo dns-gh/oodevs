@@ -12,7 +12,6 @@
 
 #include "tools/ControllerObserver_ABC.h"
 #include "clients_kernel/ModesObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -63,9 +62,8 @@ class MainWindow : public QMainWindow
                  , public tools::Observer_ABC
                  , public tools::ControllerObserver_ABC
                  , public kernel::ModesObserver_ABC
-                 , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

@@ -10,8 +10,6 @@
 #ifndef __SearchButton_h_
 #define __SearchButton_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 
@@ -22,7 +20,6 @@ namespace gui
 // Created: ABR 2012-03-27
 // =============================================================================
 class SearchButton : public QPushButton
-                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

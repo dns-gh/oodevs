@@ -66,9 +66,8 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::ElementObserver_ABC< kernel::TimeLimitedAttribute_ABC >
                            , public kernel::TeamSelectionObserver
                            , public KnowledgeGroupSelectionObserver
-                           , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{

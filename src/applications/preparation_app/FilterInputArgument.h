@@ -10,8 +10,6 @@
 #ifndef __FilterInputArgument_h_
 #define __FilterInputArgument_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace tools
 {
     class ExerciseConfig;
@@ -31,7 +29,6 @@ class FilterPartiesListView;
 // Created: ABR 2011-09-28
 // =============================================================================
 class FilterInputArgument : public QObject
-                          , private boost::noncopyable
 {
     Q_OBJECT
 

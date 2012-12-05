@@ -10,8 +10,6 @@
 #ifndef __gui_SpinBoxAndSlider_h_
 #define __gui_SpinBoxAndSlider_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 
@@ -22,7 +20,6 @@ namespace gui
 // Created: ABR 2012-06-12
 // =============================================================================
 class SpinBoxAndSlider : public QWidget
-                       , private boost::noncopyable
 {
     Q_OBJECT
 

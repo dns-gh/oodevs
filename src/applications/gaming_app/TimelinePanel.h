@@ -11,7 +11,6 @@
 #define __TimelinePanel_h_
 
 #include <boost/ptr_container/ptr_vector.hpp>
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -38,9 +37,8 @@ class TimelineWidget;
 // Created: SBO 2007-07-04
 // =============================================================================
 class TimelinePanel : public QDockWidget
-                    , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

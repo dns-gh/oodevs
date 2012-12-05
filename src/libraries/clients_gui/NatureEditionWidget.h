@@ -10,9 +10,8 @@
 #ifndef __NatureEditionWidget_h_
 #define __NatureEditionWidget_h_
 
-#include <boost/noncopyable.hpp>
-
-namespace kernel {
+namespace kernel
+{
     class SymbolRule;
 }
 
@@ -27,9 +26,8 @@ namespace gui
 // Created: AGE 2006-10-24
 // =============================================================================
 class NatureEditionWidget : public QWidget
-                          , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

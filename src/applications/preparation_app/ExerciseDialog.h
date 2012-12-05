@@ -36,9 +36,8 @@ class ExerciseDialog : public QDialog
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< Exercise >
                      , public ExerciseVisitor_ABC
-                     , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

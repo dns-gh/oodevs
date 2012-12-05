@@ -10,7 +10,6 @@
 #ifndef __gui_SearchTreeView_h_
 #define __gui_SearchTreeView_h_
 
-#include <boost/noncopyable.hpp>
 #include "SearchLineEdit.h"
 #include "resources.h"
 #include "CheckComboBox.h"
@@ -28,7 +27,6 @@ namespace gui
 // Created: ABR 2012-03-27
 // =============================================================================
 class SearchTreeView_ABC : public QWidget
-                         , private boost::noncopyable
 {
     Q_OBJECT
 

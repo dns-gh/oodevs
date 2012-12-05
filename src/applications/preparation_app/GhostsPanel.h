@@ -14,7 +14,6 @@
 #include "clients_kernel/SymbolVisitor_ABC.h"
 #include "clients_kernel/GhostPrototype.h"
 #include "tools/ElementObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -47,7 +46,6 @@ class EntitySymbolEditor;
 class GhostsPanel : public gui::InfoPanel_ABC
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                  , private boost::noncopyable
 {
     Q_OBJECT
 

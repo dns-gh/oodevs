@@ -10,7 +10,6 @@
 #ifndef gui_DiffusionListLineEdit_h_
 #define gui_DiffusionListLineEdit_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -30,7 +29,6 @@ namespace gui
 // Created: ABR 2011-04-29
 // =============================================================================
 class DiffusionListLineEdit : public QLineEdit
-                            , private boost::noncopyable
 {
     Q_OBJECT
 

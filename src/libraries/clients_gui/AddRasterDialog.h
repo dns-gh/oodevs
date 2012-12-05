@@ -11,7 +11,6 @@
 #define __AddRasterDialog_h_
 
 #include "ModalDialog.h"
-#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -24,7 +23,6 @@ namespace gui
 // Created: ABR 2012-06-12
 // =============================================================================
 class AddRasterDialog : public ModalDialog
-                      , private boost::noncopyable
 {
     Q_OBJECT
 

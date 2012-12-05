@@ -10,7 +10,6 @@
 #ifndef __MissionPanel_h_
 #define __MissionPanel_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 #include "tools/Iterator.h"
@@ -74,7 +73,6 @@ class MissionPanel : public QDockWidget
                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                   , private boost::noncopyable
 {
     Q_OBJECT
 

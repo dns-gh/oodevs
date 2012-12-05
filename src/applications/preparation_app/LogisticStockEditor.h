@@ -46,7 +46,6 @@ class LogisticStockEditor : public QDialog
                           , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                           , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                           , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
-                          , private boost::noncopyable
 {
     Q_OBJECT
 

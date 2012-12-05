@@ -10,8 +10,6 @@
 #ifndef __TimeTableRequestDialog_h_
 #define __TimeTableRequestDialog_h_
 
-#include <boost/noncopyable.hpp>
-
 class Publisher_ABC;
 
 // =============================================================================
@@ -21,7 +19,6 @@ class Publisher_ABC;
 // Created: JSR 2011-07-26
 // =============================================================================
 class TimeTableRequestDialog : public QDialog
-                             , private boost::noncopyable
 {
     Q_OBJECT
 

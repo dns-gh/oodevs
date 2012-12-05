@@ -10,7 +10,6 @@
 #ifndef __ColorButton_h_
 #define __ColorButton_h_
 
-#include <boost/noncopyable.hpp>
 #include <QtGui/qcolordialog.h>
 
 namespace gui
@@ -23,7 +22,6 @@ namespace gui
 // Created: SBO 2006-04-04
 // =============================================================================
 class ColorButton : public QToolButton
-                  , private boost::noncopyable
 {
     Q_OBJECT
 

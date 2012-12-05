@@ -10,7 +10,6 @@
 #ifndef __gui_WeatherPanel_h_
 #define __gui_WeatherPanel_h_
 
-#include <boost/noncopyable.hpp>
 #include "InfoPanel_ABC.h"
 
 namespace weather
@@ -32,7 +31,6 @@ namespace gui
 // Created: ABR 2011-05-30
 // =============================================================================
 class WeatherPanel : public InfoPanel_ABC
-                   , private boost::noncopyable
 {
     Q_OBJECT
 

@@ -10,7 +10,6 @@
 #ifndef __gui_NumericLimitsEditor_h_
 #define __gui_NumericLimitsEditor_h_
 
-#include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
 #include "RichSpinBox.h"
 
@@ -30,7 +29,6 @@ namespace gui
 // Created: ABR 2012-06-20
 // =============================================================================
 class NumericLimitsEditor_ABC : public QWidget
-                              , private boost::noncopyable
 {
     Q_OBJECT
 

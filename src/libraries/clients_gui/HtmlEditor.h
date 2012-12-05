@@ -10,8 +10,6 @@
 #ifndef __HtmlEditor_h_
 #define __HtmlEditor_h_
 
-#include <boost/noncopyable.hpp>
-
 QT_FORWARD_DECLARE_CLASS( QAction )
 QT_FORWARD_DECLARE_CLASS( QComboBox )
 QT_FORWARD_DECLARE_CLASS( QFontComboBox )
@@ -28,7 +26,6 @@ namespace gui
 // Created: NPT 2012-07-27
 // =============================================================================
 class HtmlEditor : public QWidget
-                 , private boost::noncopyable
 {
     Q_OBJECT
 

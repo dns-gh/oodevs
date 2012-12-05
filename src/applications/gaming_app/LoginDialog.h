@@ -10,8 +10,6 @@
 #ifndef __LoginDialog_h_
 #define __LoginDialog_h_
 
-#include <boost/noncopyable.hpp>
-
 // =============================================================================
 /** @class  LoginDialog
     @brief  Login dialog
@@ -19,7 +17,6 @@
 // Created: AGE 2006-10-11
 // =============================================================================
 class LoginDialog : public QDialog
-                  , private boost::noncopyable
 {
     Q_OBJECT
 

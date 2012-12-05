@@ -14,7 +14,6 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/Resolver.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -43,7 +42,6 @@ namespace gui
 class DiffusionListDialog : public ModalDialog
                           , public tools::Observer_ABC
                           , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
-                          , private boost::noncopyable
 {
     Q_OBJECT
 

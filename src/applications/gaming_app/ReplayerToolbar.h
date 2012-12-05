@@ -12,7 +12,6 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -32,7 +31,6 @@ class ReplayerToolbar : public QToolBar
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< Simulation >
                       , public tools::ElementObserver_ABC< Simulation::sTimeTable >
-                      , private boost::noncopyable
 {
     Q_OBJECT
 

@@ -12,7 +12,6 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -40,7 +39,6 @@ class LongNameEditor : public QObject
                      , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                      , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                      , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
-                     , private boost::noncopyable
 {
     Q_OBJECT
 

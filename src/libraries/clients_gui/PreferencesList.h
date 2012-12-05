@@ -10,8 +10,6 @@
 #ifndef __PreferencesList_h_
 #define __PreferencesList_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
     class KeyModel;
@@ -22,7 +20,6 @@ namespace gui
 // Created: SBO 2007-01-03
 // =============================================================================
 class PreferencesList : public QTreeView
-                      , private boost::noncopyable
 {
     Q_OBJECT
 

@@ -12,7 +12,6 @@
 
 #include "clients_kernel/SymbolVisitor_ABC.h"
 #include "ENT/ENT_Enums_Gen.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -39,7 +38,6 @@ namespace gui
 // Created: ABR 2012-08-08
 // =============================================================================
 class EntitySymbolEditor : public QWidget
-                         , private boost::noncopyable
 {
     Q_OBJECT
 

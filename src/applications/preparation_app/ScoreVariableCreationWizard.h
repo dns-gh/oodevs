@@ -13,7 +13,6 @@
 #include "clients_gui/ValuedComboBox.h"
 #include "actions_gui/ParamInterface_ABC.h"
 #include <boost/shared_ptr.hpp>
-#include <boost/noncopyable.hpp>
 
 namespace actions
 {
@@ -52,7 +51,6 @@ class Q3VGroupBox;
 // =============================================================================
 class ScoreVariableCreationWizard : public QDialog
                                   , public actions::gui::ParamInterface_ABC
-                                  , private boost::noncopyable
 {
     Q_OBJECT
 

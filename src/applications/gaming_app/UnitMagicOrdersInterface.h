@@ -16,7 +16,6 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -59,9 +58,8 @@ class UnitMagicOrdersInterface : public QObject
                                , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                                , public tools::ElementObserver_ABC< kernel::Team_ABC >
                                , public gui::ShapeHandler_ABC
-                               , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

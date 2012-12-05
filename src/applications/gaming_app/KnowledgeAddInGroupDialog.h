@@ -12,7 +12,6 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -45,7 +44,6 @@ class KnowledgeAddInGroupDialog : public QDialog
     , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
     , public kernel::ContextMenuObserver_ABC< kernel::UrbanObject_ABC >
     , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
-    , private boost::noncopyable
 {
     Q_OBJECT
 

@@ -10,8 +10,6 @@
 #ifndef __ExerciseCreationDialog_h_
 #define __ExerciseCreationDialog_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace tools
 {
     class GeneralConfig;
@@ -24,9 +22,8 @@ namespace tools
 // Created: FDS 2010-11-02
 // =============================================================================
 class ExerciseCreationDialog : public QDialog
-                             , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

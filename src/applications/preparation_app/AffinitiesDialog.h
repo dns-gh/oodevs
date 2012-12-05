@@ -15,7 +15,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include <map>
 #include <vector>
-#include <boost/noncopyable.hpp>
 #include <boost/tuple/tuple.hpp>
 
 namespace gui
@@ -37,11 +36,10 @@ namespace kernel
 // Created: LGY 2011-03-16
 // =============================================================================
 class AffinitiesDialog : public QDialog
-                       , private boost::noncopyable
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< kernel::Team_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

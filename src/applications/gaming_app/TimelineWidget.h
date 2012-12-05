@@ -10,8 +10,6 @@
 #ifndef __TimelineWidget_h_
 #define __TimelineWidget_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace kernel
 {
     class Controllers;
@@ -35,7 +33,6 @@ class TimelineView;
 // Created: SBO 2007-07-04
 // =============================================================================
 class TimelineWidget : public Q3HBox
-                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

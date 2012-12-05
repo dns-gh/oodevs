@@ -32,7 +32,6 @@ class SupplyQuotasWidget : public Q3VBox
                          , public tools::Observer_ABC
                          , public tools::ElementObserver_ABC< LogisticLinks >
                          , public tools::SelectionObserver< kernel::Entity_ABC >
-                         , private boost::noncopyable
 {
     Q_OBJECT
 

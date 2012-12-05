@@ -10,8 +10,6 @@
 #ifndef __RichLineEdit_h_
 #define __RichLineEdit_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 
@@ -22,7 +20,6 @@ namespace gui
 // Created: ABR 2012-01-19
 // =============================================================================
 class SideWidget : public QWidget
-                 , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -43,7 +40,6 @@ protected:
 // Created: ABR 2012-01-19
 // =============================================================================
 class RichLineEdit : public QLineEdit
-                   , private boost::noncopyable
 {
     Q_OBJECT
     Q_PROPERTY( QString InactiveText READ InactiveText WRITE SetInactiveText ) // $$$$ ABR 2012-01-26: Replace placeholder property to be drawn on the right place.

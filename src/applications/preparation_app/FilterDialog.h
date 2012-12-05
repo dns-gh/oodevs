@@ -10,8 +10,6 @@
 #ifndef __FilterDialog_h_
 #define __FilterDialog_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace tools
 {
     class ExerciseConfig;
@@ -34,7 +32,6 @@ class QSize;
 // Created: ABR 2011-06-20
 // =============================================================================
 class FilterDialog : public QDialog
-                   , private boost::noncopyable
 {
     Q_OBJECT
 

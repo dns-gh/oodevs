@@ -13,7 +13,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -50,7 +49,6 @@ class EquipmentTransferDialog : public QDialog
                               , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                               , public tools::SelectionObserver_ABC
                               , public tools::SelectionObserver_Base< kernel::Agent_ABC >
-                              , private boost::noncopyable
 {
     Q_OBJECT
 

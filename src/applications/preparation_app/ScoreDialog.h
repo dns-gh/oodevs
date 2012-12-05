@@ -10,8 +10,6 @@
 #ifndef __ScoreDialog_h_
 #define __ScoreDialog_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace actions
 {
     namespace gui
@@ -55,9 +53,8 @@ class StaticModel;
 // Created: SBO 2009-04-16
 // =============================================================================
 class ScoreDialog : public QDialog
-                  , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

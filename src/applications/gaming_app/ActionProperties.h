@@ -13,7 +13,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -39,7 +38,6 @@ class ActionProperties : public QSplitter
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< actions::ActionTiming >
                        , public tools::SelectionObserver< actions::Action_ABC >
-                       , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

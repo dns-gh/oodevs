@@ -10,8 +10,6 @@
 #ifndef __Filter_ABC_h_
 #define __Filter_ABC_h_
 
-#include <boost/noncopyable.hpp>
-
 // =============================================================================
 /** @class  Filter_ABC
     @brief  Filter_ABC
@@ -19,7 +17,6 @@
 // Created: ABR 2011-06-17
 // =============================================================================
 class Filter_ABC : public QObject
-                 , private boost::noncopyable
 {
     Q_OBJECT
 

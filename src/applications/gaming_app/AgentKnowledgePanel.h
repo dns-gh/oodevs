@@ -47,9 +47,8 @@ class AgentKnowledgePanel : public gui::InfoPanel_ABC
                           , public tools::ElementObserver_ABC< PerceptionMap >
                           , public tools::SelectionObserver_Base< kernel::AgentKnowledge_ABC >
                           , public KnowledgeGroupSelectionObserver
-                          , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{

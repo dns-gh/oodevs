@@ -10,7 +10,6 @@
 #ifndef __gui_WeatherWidget_h_
 #define __gui_WeatherWidget_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Types.h"
 
@@ -30,7 +29,6 @@ namespace gui
 // Created: ABR 2011-05-30
 // =============================================================================
 class WeatherWidget : public Q3GroupBox
-                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

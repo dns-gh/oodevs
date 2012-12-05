@@ -10,8 +10,6 @@
 #ifndef __gui_DecimalSpinBoxAndSlider_h_
 #define __gui_DecimalSpinBoxAndSlider_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 
@@ -22,7 +20,6 @@ namespace gui
 // Created: ABR 2011-01-28
 // =============================================================================
 class DecimalSpinBoxAndSlider : public QWidget
-                              , private boost::noncopyable
 {
     Q_OBJECT
 

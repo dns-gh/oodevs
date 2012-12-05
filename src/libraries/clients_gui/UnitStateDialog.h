@@ -10,7 +10,6 @@
 #ifndef __gui_UnitStateDialog_h_
 #define __gui_UnitStateDialog_h_
 
-#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include "clients_kernel/SafePointer.h"
 #include "tools/SelectionObserver_ABC.h"
@@ -34,7 +33,6 @@ namespace gui
 class UnitStateDialog : public QDialog
                       , public tools::Observer_ABC
                       , public tools::SelectionObserver< kernel::Entity_ABC >
-                      , private boost::noncopyable
 {
     Q_OBJECT
 

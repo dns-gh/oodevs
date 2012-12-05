@@ -14,7 +14,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "tools/Resolver.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -50,7 +49,6 @@ class PopulationMagicOrdersInterface : public QObject
                                      , public tools::Observer_ABC
                                      , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                                      , public gui::ShapeHandler_ABC
-                                     , private boost::noncopyable
 {
     Q_OBJECT
 

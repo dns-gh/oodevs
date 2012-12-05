@@ -10,8 +10,6 @@
 #ifndef __gui_WeatherListView_h_
 #define __gui_WeatherListView_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace boost
 {
     template<typename T> class shared_ptr;
@@ -36,9 +34,8 @@ namespace gui
 // Created: ABR 2011-05-30
 // =============================================================================
 class WeatherListView : public QTreeView
-                      , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Types

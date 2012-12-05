@@ -13,7 +13,6 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -38,7 +37,6 @@ class PopulationOptionChooser : public QDialog
                               , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                               , public tools::ElementObserver_ABC< kernel::Inhabitant_ABC >
                               , public kernel::OptionsObserver_ABC
-                              , private boost::noncopyable
 {
     Q_OBJECT
 

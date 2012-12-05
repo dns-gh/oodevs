@@ -12,7 +12,6 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -38,7 +37,6 @@ class TimelineListView : public QTreeWidget
                        , public tools::ElementObserver_ABC< actions::Action_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                        , public tools::SelectionObserver< kernel::Entity_ABC >
-                       , private boost::noncopyable
 {
     Q_OBJECT
 

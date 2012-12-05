@@ -12,7 +12,6 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -46,7 +45,6 @@ class TimelineView : public Q3CanvasView
                    , public tools::ElementObserver_ABC< actions::Action_ABC >
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                    , public tools::SelectionObserver< actions::Action_ABC >
-                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

@@ -10,8 +10,6 @@
 #ifndef __ClearButton_h_
 #define __ClearButton_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 
@@ -22,7 +20,6 @@ namespace gui
 // Created: ABR 2012-03-27
 // =============================================================================
 class ClearButton : public QAbstractButton
-                  , private boost::noncopyable
 {
     Q_OBJECT
 

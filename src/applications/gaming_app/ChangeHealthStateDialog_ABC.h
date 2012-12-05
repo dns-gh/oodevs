@@ -11,7 +11,6 @@
 #define __ChangeHealthStateDialog_ABC_h_
 
 #include "clients_kernel/SafePointer.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -36,7 +35,6 @@ namespace actions
 // =============================================================================
 class ChangeHealthStateDialog_ABC : public QDialog
                                   , public tools::Observer_ABC
-                                  , private boost::noncopyable
 {
     Q_OBJECT
 

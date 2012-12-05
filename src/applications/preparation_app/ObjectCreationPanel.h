@@ -12,7 +12,6 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -48,7 +47,6 @@ class UrbanModel;
 class ObjectCreationPanel : public gui::InfoPanel_ABC
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                          , private boost::noncopyable
 {
     Q_OBJECT
 

@@ -13,7 +13,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/AvailableProfile.h"
 #include "gaming/Simulation.h"
-#include <boost/noncopyable.hpp>
 #include <vector>
 
 namespace kernel
@@ -34,7 +33,6 @@ class TeamsModel;
 // Created: LGY 2011-11-15
 // =============================================================================
 class ProfilesPanel : public QDockWidget
-                    , private boost::noncopyable
                     , public tools::Observer_ABC
                     , public tools::ElementObserver_ABC< UserProfile >
                     , public tools::ElementObserver_ABC< Profile >

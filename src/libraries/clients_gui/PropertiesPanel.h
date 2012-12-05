@@ -13,7 +13,6 @@
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -43,7 +42,6 @@ class PropertiesPanel : public QScrollArea
                       , public tools::SelectionObserver< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                       , public tools::ElementObserver_ABC< kernel::DictionaryUpdated >
-                      , private boost::noncopyable
 {
     Q_OBJECT
 

@@ -10,7 +10,6 @@
 #ifndef __gui_RichToolBar_h_
 #define __gui_RichToolBar_h_
 
-#include <boost/noncopyable.hpp>
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/DisplayableModesObserver_ABC.h"
 
@@ -31,7 +30,6 @@ namespace gui
 class RichToolBar : public QToolBar
                   , public tools::Observer_ABC
                   , public kernel::DisplayableModesObserver_ABC
-                  , private boost::noncopyable
 {
 
 public:

@@ -10,8 +10,6 @@
 #ifndef __VerticalHeaderTableView_h_
 #define __VerticalHeaderTableView_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 
@@ -22,7 +20,6 @@ namespace gui
 // Created: ABR 2012-02-24
 // =============================================================================
 class VerticalHeaderStyle : public QProxyStyle
-                          , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,7 +41,6 @@ public:
 // Created: ABR 2012-02-24
 // =============================================================================
 class VerticalHeaderTableView : public QTableView
-                              , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

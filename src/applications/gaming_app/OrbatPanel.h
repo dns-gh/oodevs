@@ -12,7 +12,6 @@
 
 #include "clients_gui/PreferencePanel_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -34,7 +33,6 @@ namespace gui
 class OrbatPanel : public gui::PreferencePanel_ABC
                  , public tools::Observer_ABC
                  , public kernel::OptionsObserver_ABC
-                 , private boost::noncopyable
 {
     Q_OBJECT
 

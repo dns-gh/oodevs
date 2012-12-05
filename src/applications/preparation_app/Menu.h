@@ -11,7 +11,6 @@
 #define __Menu_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 class QMainWindow;
 class QDialog;
@@ -41,7 +40,6 @@ class DialogContainer;
 // Created: SBO 2006-04-28
 // =============================================================================
 class Menu : public QMenuBar
-           , private boost::noncopyable
 {
     Q_OBJECT
 

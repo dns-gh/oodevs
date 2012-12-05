@@ -10,7 +10,6 @@
 #ifndef __SymbolDialog_h_
 #define __SymbolDialog_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -42,7 +41,6 @@ class SymbolDialog : public QDialog
                    , public tools::Observer_ABC
                    , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
-                   , private boost::noncopyable
 {
     Q_OBJECT
 

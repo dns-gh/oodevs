@@ -10,7 +10,6 @@
 #ifndef __gui_UnitStateTable_ABC_h_
 #define __gui_UnitStateTable_ABC_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_kernel/Tools.h"
 #include "CommonDelegate.h"
 
@@ -29,7 +28,6 @@ namespace gui
 // Created: ABR 2011-07-05
 // =============================================================================
 class UnitStateTable_ABC : public QTableView
-                         , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

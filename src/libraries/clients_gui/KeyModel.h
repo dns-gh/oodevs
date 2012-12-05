@@ -10,8 +10,6 @@
 #ifndef gui_KeyModel_h
 #define gui_KeyModel_h
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 // =============================================================================
@@ -21,7 +19,6 @@ namespace gui
 // Created: LGY 2012-10-01
 // =============================================================================
 class KeyModel : public QStandardItemModel
-               , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

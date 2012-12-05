@@ -11,7 +11,6 @@
 #define __AfterAction_h_
 
 #include "tools/ElementObserver_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace actions
 {
@@ -47,7 +46,6 @@ class AfterAction : public QObject
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< Services >
                   , public tools::ElementObserver_ABC< AfterActionRequest >
-                  , boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

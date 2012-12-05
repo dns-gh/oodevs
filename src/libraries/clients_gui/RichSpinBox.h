@@ -10,7 +10,6 @@
 #ifndef __RichSpinBox_h_
 #define __RichSpinBox_h_
 
-#include <boost/noncopyable.hpp>
 #include <QtGui/QSpinBox>
 #include <QtGui/QDoubleSpinBox>
 #include "QtGui/QValidator.h"
@@ -26,7 +25,6 @@ namespace gui
 // Created: ABR 2012-04-05
 // =============================================================================
 class RichSpinBox : public QSpinBox
-                  , private boost::noncopyable
 {
 public:
     explicit RichSpinBox( QWidget* parent = 0, int minValue = 0, int maxValue = std::numeric_limits< int >::max(), int step = 1 )
@@ -90,7 +88,6 @@ public:
 // Created: ABR 2012-04-05
 // =============================================================================
 class RichDoubleSpinBox : public QDoubleSpinBox
-                        , private boost::noncopyable
 {
 public:
     RichDoubleSpinBox( QWidget* parent = 0, double minValue = 0, double maxValue = std::numeric_limits< double >::max(), double step = 1, int decimals = 2 )

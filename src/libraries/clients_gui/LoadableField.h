@@ -10,8 +10,6 @@
 #ifndef __LoadableField_h_
 #define __LoadableField_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
     class ObjectPrototypeLoader_ABC;
@@ -23,7 +21,6 @@ namespace gui
 // Created: BCI 2011-05-09
 // =============================================================================
 class LoadableField : public Q3HBox
-                    , private boost::noncopyable
 {
     Q_OBJECT
 public:

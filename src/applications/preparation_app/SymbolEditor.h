@@ -49,7 +49,6 @@ class SymbolEditor: public QObject
                   , public tools::ElementObserver_ABC< kernel::Team_ABC >
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                   , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
-                  , private boost::noncopyable
 {
     Q_OBJECT
 

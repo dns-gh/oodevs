@@ -10,8 +10,6 @@
 #ifndef __RichGroupBox_h_
 #define __RichGroupBox_h_
 
-#include <boost/noncopyable.hpp>
-
 namespace gui
 {
 
@@ -22,7 +20,6 @@ namespace gui
 // Created: ABR 2011-11-21
 // =============================================================================
 class RichGroupBox : public QGroupBox
-                   , private boost::noncopyable
 {
     Q_OBJECT
 

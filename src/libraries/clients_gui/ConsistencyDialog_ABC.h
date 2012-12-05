@@ -10,7 +10,6 @@
 #ifndef __gui_ConsistencyDialog_ABC_h_
 #define __gui_ConsistencyDialog_ABC_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_kernel/VariantPointer.h"
 
 namespace kernel
@@ -29,7 +28,6 @@ namespace gui
 // Created: ABR 2012-06-06
 // =============================================================================
 class ConsistencyDialog_ABC : public QDialog
-                            , private boost::noncopyable
 {
     Q_OBJECT
 

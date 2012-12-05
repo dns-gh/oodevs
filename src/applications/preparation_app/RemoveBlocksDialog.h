@@ -10,7 +10,6 @@
 #ifndef __RemoveBlocksDialog_h_
 #define __RemoveBlocksDialog_h_
 
-#include <boost/noncopyable.hpp>
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/MultipleSelectionObserver_ABC.h"
 
@@ -31,7 +30,6 @@ class UrbanModel;
 class RemoveBlocksDialog : public QDialog
                          , public tools::Observer_ABC
                          , public kernel::MultipleSelectionObserver< kernel::UrbanObject_ABC >
-                         , private boost::noncopyable
 {
     Q_OBJECT
 

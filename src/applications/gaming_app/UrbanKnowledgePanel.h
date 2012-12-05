@@ -45,9 +45,8 @@ class UrbanKnowledgePanel : public gui::InfoPanel_ABC
                           , public tools::ElementObserver_ABC< UrbanKnowledges >
                           , public kernel::TeamSelectionObserver
                           , public KnowledgeGroupSelectionObserver
-                          , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{
