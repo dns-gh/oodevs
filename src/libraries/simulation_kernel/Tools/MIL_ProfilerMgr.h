@@ -12,7 +12,6 @@
 #ifndef __MIL_ProfilerMgr_h_
 #define __MIL_ProfilerMgr_h_
 
-#include "MT_Tools/MT_Profiler.h"
 #include <fstream>
 
 class MIL_AgentPion;
@@ -34,10 +33,6 @@ public:
 
     //! @name Operations
     //@{
-    void NotifyTickBegin( unsigned int nTick );
-    void NotifyTickEnd( unsigned int nTick );
-    double GetLastTickDuration();
-
     void NotifyDecisionUpdated( const MIL_AgentPion& pion, double rTime );
     void NotifyDecisionUpdated( const MIL_Automate& automate, double rTime );
     void NotifyDecisionUpdated( const MIL_Population& population, double rTime );
@@ -47,7 +42,6 @@ private:
     //! @name Member data
     //@{
     const bool bEnabled_;
-    MT_Profiler tickDurationProfiler_;
     std::ofstream decisionUpdateFile_;
     //@}
 };
