@@ -189,12 +189,16 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyQuota )
 
     linkBrainLog1->OnReceiveChangeQuotas( quotaParameter );
 
-    std::vector< const MIL_AgentPion* > requesters;
+    const MIL_AgentPion* pion = reinterpret_cast< const MIL_AgentPion* >( 42 );
+    const std::vector< const MIL_AgentPion* > requesters( 1, pion );
+    const std::vector< const MIL_AgentPion* > empty;
     MOCK_EXPECT( owner.NotifyQuotaThresholdReached ).once();
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 43 ), 10, requesters ), 5 );
     MOCK_EXPECT( owner.NotifyQuotaThresholdReached ).once();
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10, requesters ), 4 );
-    MOCK_EXPECT( owner.NotifyQuotaExceeded ).once();
+    MOCK_EXPECT( owner.NotifyQuotaExceeded ).once().with( mock::any, requesters );
+    BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10, requesters ), 0 );
+    MOCK_EXPECT( owner.NotifyQuotaExceeded ).once().with( mock::any, empty );
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10, requesters ), 0 );
     linkBrainLog1->ReturnQuota( *PHY_DotationType::FindDotationCategory( 42 ), 1.1 );
     MOCK_EXPECT( owner.NotifyQuotaThresholdReached ).once();
