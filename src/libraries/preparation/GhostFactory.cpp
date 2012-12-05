@@ -97,7 +97,9 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
 {
     Ghost* result = new Ghost( controllers_.controller_, model_, idManager_, staticModel_.coordinateConverter_, xis, symbolsFactory_ );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dictionary ) );
+
+    const geometry::Point2f position = model_.ReadPosition( xis, result );
+    result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Attach< kernel::TacticalHierarchies >( *new GhostHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
@@ -130,13 +132,14 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
 
     if( result->GetGhostType() == eGhostType_Agent )
     {
-        result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dictionary ) );
+        const geometry::Point2f position = model_.ReadPosition( xis, result );
+        result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
         result->Attach< kernel::CommandPostAttributes_ABC >( *new GhostCommandPostAttributes( *result, xis, controllers_.controller_, dictionary ) );
     }
     else
     {
         assert( result->GetGhostType() == eGhostType_Automat );
-        const geometry::Point2f position = ComputeAutomatPosition( xis );
+        const geometry::Point2f position = model_.ClipPosition( ComputeAutomatPosition( xis ), result );
         result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dictionary ) );
         result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
         result->Attach( *new LogisticLevelAttritube( controllers_.controller_, xis, *result, true, dictionary ) );

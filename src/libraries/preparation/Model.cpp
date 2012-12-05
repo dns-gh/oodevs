@@ -486,11 +486,20 @@ geometry::Point2f Model::ReadPosition( xml::xistream& xis, kernel::Entity_ABC* e
 {
     const std::string position = xis.attribute< std::string >( "position" );
     geometry::Point2f result = staticModel_.coordinateConverter_.ConvertToXY( position );
-    if( result.X() < 0.f || result.X() > width_ ||
-        result.Y() < 0.f || result.Y() > height_ )
+    return ClipPosition( result, entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ClipPosition
+// Created: ABR 2012-12-05
+// -----------------------------------------------------------------------------
+geometry::Point2f Model::ClipPosition( const geometry::Point2f& position, kernel::Entity_ABC* entity )
+{
+    if( position.X() < 0.f || position.X() > width_ ||
+        position.Y() < 0.f || position.Y() > height_ )
     {
         AppendLoadingError( eUnitOutsideMap, ( entity ) ? entity->GetName().toStdString() : "", entity );
         return geometry::Point2f( 0.f, 0.f );
     }
-    return result;
+    return position;
 }

@@ -99,6 +99,7 @@ public:
     void SetConsistencyErrorsOnLoad();
     void ClearLoadingErrors();
     geometry::Point2f ReadPosition( xml::xistream& xis, kernel::Entity_ABC* entity );
+    geometry::Point2f ClipPosition( const geometry::Point2f& position, kernel::Entity_ABC* entity );
     bool OldUrbanMode() const;
     void SetExerciseValidity( bool valid );
     void Purge();
