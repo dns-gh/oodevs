@@ -149,6 +149,9 @@ integration.addKnowledgeInQueue = function( knowledge, onlyLoadable )
 end
 
 integration.readyForLoad = function( unit, distanceMin )
+    if not distanceMin then
+        distanceMin = 300
+    end
     local unitSrc = unit.source
     local mission = DEC_GetRawMission( unitSrc )
     if mission ~= nil and ( 
@@ -165,6 +168,9 @@ integration.readyForLoad = function( unit, distanceMin )
 end
     
 integration.knowledgeReadyForLoad = function( knowledge, distanceMin )
+    if not distanceMin then
+        distanceMin = 300
+    end
     local knowledgeSrc = knowledge.source
     local mission = DEC_Connaissance_GetRawMission( knowledgeSrc )
     if mission ~= nil and ( integration.getAnyType( mission ) == "T_Task_Pion_SeFaireTransporter" 
