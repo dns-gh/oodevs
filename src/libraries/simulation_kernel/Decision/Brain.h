@@ -64,13 +64,13 @@ public:
     directia::tools::binders::ScriptRef GetScriptRef( const std::string& );
     directia::tools::binders::ScriptRef GetScriptRef();
 
-#define SWORD_BRAIN_FUNCTION_MAX_ARITY 7
+#define BRAIN_FUNCTION_MAX_ARITY 7
 #define BOOST_PP_FILENAME_1 "Decision/BrainIterate.h"
-#define BOOST_PP_ITERATION_LIMITS (0, SWORD_BRAIN_FUNCTION_MAX_ARITY)
+#define BOOST_PP_ITERATION_LIMITS (0, BRAIN_FUNCTION_MAX_ARITY)
 #include BOOST_PP_ITERATE()
 #undef BOOST_PP_FILENAME_1
 #undef BOOST_PP_ITERATION_LIMITS
-#undef SWORD_BRAIN_FUNCTION_MAX_ARITY
+#undef BRAIN_FUNCTION_MAX_ARITY
 
     template< typename Signature >
     void RegisterFunction( const char* const name, const boost::function< Signature >& function )
