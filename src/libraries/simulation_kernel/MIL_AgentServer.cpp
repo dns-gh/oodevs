@@ -485,10 +485,10 @@ void MIL_AgentServer::Start()
 void MIL_AgentServer::Wait()
 {
     ++waitTicks_;
-    MT_LOG_INFO_MSG( "Simulation is " << waitTicks_ << " ticks ahead of dispatcher" );
+    MT_LOG_DEBUG_MSG( "Simulation is " << waitTicks_ << " ticks ahead of dispatcher" );
     if( waitTicks_ > waitLatency_ )
     {
-        MT_LOG_INFO_MSG( "Simulation starts waiting for dispatcher" );
+        MT_LOG_DEBUG_MSG( "Simulation starts waiting for dispatcher" );
         nSimState_ = eSimWait;
         MT_Timer_ABC::Wait();
         profiler_.Start();
@@ -502,12 +502,12 @@ void MIL_AgentServer::Wait()
 void MIL_AgentServer::Continue()
 {
     --waitTicks_;
-    MT_LOG_INFO_MSG( "Simulation is " << waitTicks_ << " ticks ahead of dispatcher" );
+    MT_LOG_DEBUG_MSG( "Simulation is " << waitTicks_ << " ticks ahead of dispatcher" );
     if( waitTicks_ == waitLatency_ )
     {
         rWaitTime_ = profiler_.Stop();
         MT_Timer_ABC::Continue();
-        MT_LOG_INFO_MSG( "Simulation stops waiting for dispatcher" );
+        MT_LOG_DEBUG_MSG( "Simulation stops waiting for dispatcher" );
     }
 }
 
