@@ -527,6 +527,11 @@ void TER_Localisation::Write( xml::xostream& xos ) const
     xos << xml::end; // shape
 }
 
+std::string TER_Localisation::GetTypeString() const
+{
+    return TER_Localisation::ConvertLocalisationType( GetType() );
+}
+
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation::ConvertLocalisationType
 // Created: NLD 2003-07-22

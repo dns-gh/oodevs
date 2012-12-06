@@ -139,6 +139,7 @@ public:
     //@{
     const T_PointVector& GetPoints() const;
     E_LocationType   GetType  () const;
+    std::string GetTypeString() const;
 
     // Circle <---- $$$ C'est de la grosse merde en plastique, vraiment
           bool         WasACircle     () const;

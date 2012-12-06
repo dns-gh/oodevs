@@ -956,8 +956,12 @@ unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& l
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< TER_Localisation > > DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, MT_Vector2D vOrigin, const MT_Vector2D& vDirection, double rSectionLength )
 {
+    if( localisation.GetType() != TER_Localisation::ePolygon )
+        throw std::runtime_error(
+            "SplitLocalisation expects an input polygon not a " +
+                localisation.GetTypeString() );
+
     T_LocalisationPtrVector splitLocVector;
-    
     if( rSectionLength == 0 || vDirection.SquareMagnitude() == 0. )
         return splitLocVector;
 
