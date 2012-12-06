@@ -146,16 +146,16 @@ bool PHY_MedicalCollectionConsign::EnterStateCollectionWaitingForFullLoading()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalCollectionConsign::EnterStateSearchingForSortingArea
+// Name: PHY_MedicalCollectionConsign::EnterStateSearchingForDestinationArea
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-void PHY_MedicalCollectionConsign::EnterStateSearchingForSortingArea()
+void PHY_MedicalCollectionConsign::EnterStateSearchingForDestinationArea()
 {
     // Called by PHY_MedicalCollectionAmbulance
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
     assert( GetState() == eCollectionWaitingForFullLoading );
-    SetState( eSearchingForSortingArea );
+    SetState( pHumanState_->NeedSorting() ? eSearchingForSortingArea : eSearchingForHealingArea );
     ResetTimer( 0 );
 }
 
@@ -168,7 +168,7 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionGoingTo()
     // Called by PHY_MedicalCollectionAmbulance
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
-    assert( GetState() == eSearchingForSortingArea );
+    assert( GetState() == eSearchingForSortingArea || GetState() == eSearchingForHealingArea );
     SetState( eCollectionGoingTo );
     ResetTimer( 0 );
 }
@@ -188,17 +188,20 @@ void PHY_MedicalCollectionConsign::EnterStateCollectionUnloading()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalCollectionConsign::TransferToSortingArea
+// Name: PHY_MedicalCollectionConsign::TransferToDestinationArea
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-void PHY_MedicalCollectionConsign::TransferToSortingArea( PHY_RoleInterface_Medical& sortingArea )
+void PHY_MedicalCollectionConsign::TransferToDestinationArea( PHY_RoleInterface_Medical& destinationArea )
 {
     assert( pHumanState_ );
     assert( pCollectionAmbulance_ );
     assert( GetState() == eCollectionUnloading );
     SetState( eFinished );
     ResetTimer( 0 );
-    sortingArea.HandleHumanForSorting( *pHumanState_ );
+    if( pHumanState_->NeedSorting() )
+        destinationArea.HandleHumanForSorting( *pHumanState_ );
+    else
+        destinationArea.HandleHumanForHealing( *pHumanState_ );
     pCollectionAmbulance_ = 0;
     pHumanState_          = 0;
 }
@@ -230,13 +233,14 @@ bool PHY_MedicalCollectionConsign::Update()
 
     switch( GetState() )
     {
-        case eWaitingForCollection             : CreateCollectionAmbulance(); break; // Géré par PHY_MedicalAmbulance
-        case eCollectionGoingTo                : break;                              // Géré par PHY_MedicalAmbulance
-        case eSearchingForSortingArea          : break;                              // Géré par PHY_MedicalAmbulance
-        case eCollectionLoading                : break;                              // Géré par PHY_MedicalAmbulance
-        case eCollectionWaitingForFullLoading  : break;                              // Géré par PHY_MedicalAmbulance
-        case eCollectionUnloading              : break;                              // Géré par PHY_MedicalAmbulance
-        case eFinished                         : break;
+        case eWaitingForCollection            : CreateCollectionAmbulance(); break; // Géré par PHY_MedicalAmbulance
+        case eCollectionGoingTo               : break;                              // Géré par PHY_MedicalAmbulance
+        case eSearchingForSortingArea         : break;                              // Géré par PHY_MedicalAmbulance
+        case eSearchingForHealingArea         : break;                              // Géré par PHY_MedicalAmbulance
+        case eCollectionLoading               : break;                              // Géré par PHY_MedicalAmbulance
+        case eCollectionWaitingForFullLoading : break;                              // Géré par PHY_MedicalAmbulance
+        case eCollectionUnloading             : break;                              // Géré par PHY_MedicalAmbulance
+        case eFinished                        : break;
         default:
             assert( false );
     }

@@ -32,9 +32,10 @@ PHY_MedicalCollectionAmbulance::PHY_MedicalCollectionAmbulance( PHY_RoleInterfac
     , nState_( eWaiting )
     , nTimer_( 0 )
     , rNbrHumanHandled_( 0. )
-    , pSortingArea_( 0 )
+    , pDestinationArea_( 0 )
     , rInfoTimer_( 0 )
     , bEmergencyAmbulance_( false )
+    , bSort_( true )
 {
     pMedical_->StartUsingForLogistic( *pCompAmbulance_ );
 }
@@ -49,9 +50,10 @@ PHY_MedicalCollectionAmbulance::PHY_MedicalCollectionAmbulance()
     , nState_( eWaiting )
     , nTimer_( 0 )
     , rNbrHumanHandled_( 0. )
-    , pSortingArea_( 0 )
+    , pDestinationArea_( 0 )
     , rInfoTimer_( 0 )
     , bEmergencyAmbulance_( false )
+    , bSort_( true )
 {
 }
 
@@ -84,7 +86,8 @@ void PHY_MedicalCollectionAmbulance::serialize( Archive& file, const unsigned in
          & nTimer_
          & bEmergencyAmbulance_
          & rNbrHumanHandled_
-         & pSortingArea_;
+         & pDestinationArea_
+         & bSort_;
 }
 
 // =============================================================================
@@ -110,6 +113,11 @@ bool PHY_MedicalCollectionAmbulance::RegisterHuman( PHY_MedicalCollectionConsign
         return false;
 
     if( bEmergencyAmbulance_ && !consign.IsAnEmergency() )
+        return false;
+
+    if( 0 == GetNbrHumans() )
+        bSort_ = consign.GetHumanState().NeedSorting();
+    else if( bSort_ != consign.GetHumanState().NeedSorting() )
         return false;
 
     switch( nState_ )
@@ -152,7 +160,7 @@ void PHY_MedicalCollectionAmbulance::EnterStateLoading()
     nTimer_           = 0;
     rNbrHumanHandled_ = 0.;
     rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep();
-    for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
+    for( auto itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateCollectionLoading();
 }
 
@@ -190,24 +198,24 @@ bool PHY_MedicalCollectionAmbulance::DoLoading()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalCollectionAmbulance::EnterStateSearchingForSortingArea
+// Name: PHY_MedicalCollectionAmbulance::EnterStateSearchingForDestinationArea
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
-void PHY_MedicalCollectionAmbulance::EnterStateSearchingForSortingArea()
+void PHY_MedicalCollectionAmbulance::EnterStateSearchingForDestinationArea()
 {
-    nState_ = eSearchingForSortingArea;
+    nState_ = eSearchingForDestinationArea;
     nTimer_ = 0;
-    for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
-        (**itConsign).EnterStateSearchingForSortingArea();
+    for( auto itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
+        (**itConsign).EnterStateSearchingForDestinationArea();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalCollectionAmbulance::DoSearchForSortingArea
+// Name: PHY_MedicalCollectionAmbulance::DoSearchForDestinationArea
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
-bool PHY_MedicalCollectionAmbulance::DoSearchForSortingArea()
+bool PHY_MedicalCollectionAmbulance::DoSearchForDestinationArea()
 {
-    assert( !pSortingArea_ );
+    assert( !pDestinationArea_ );
     assert( pMedical_ );
 
     MIL_AutomateLOG* pLogisticManager = pMedical_->FindLogisticManager();
@@ -216,19 +224,20 @@ bool PHY_MedicalCollectionAmbulance::DoSearchForSortingArea()
     MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
     if( !pLogisticSuperior )
         return true; // $$$ Bof : pour sortir les human states qui ne seront jamais traités
-    pSortingArea_ = pLogisticSuperior->MedicalReserveForSorting( *this );
-    return pSortingArea_ != 0;
+    if( bSort_ )
+        pDestinationArea_ = pLogisticSuperior->MedicalReserveForSorting( *this );
+    return pDestinationArea_ != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MedicalCollectionAmbulance::ChooseStateFromSortingAreaState
+// Name: PHY_MedicalCollectionAmbulance::ChooseStateFromDestinationAreaState
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-void PHY_MedicalCollectionAmbulance::ChooseStateFromSortingAreaState()
+void PHY_MedicalCollectionAmbulance::ChooseStateFromDestinationAreaState()
 {
-    if( !pSortingArea_ )
+    if( !pDestinationArea_ )
     {
-        for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
+        for( auto itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
             (**itConsign).NotifyOutOfMedicalSystem();
         consigns_.clear();
         EnterStateFinished();
@@ -244,13 +253,13 @@ void PHY_MedicalCollectionAmbulance::ChooseStateFromSortingAreaState()
 void PHY_MedicalCollectionAmbulance::EnterStateGoingTo()
 {
     assert( !consigns_.empty() );
-    assert( pSortingArea_ );
+    assert( pDestinationArea_ );
     assert( pCompAmbulance_ );
     assert( pMedical_ );
 
     nState_ = eGoingTo;
-    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition(), pSortingArea_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition() );
-    for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
+    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition(), pDestinationArea_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition() );
+    for( auto itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateCollectionGoingTo();
 }
 
@@ -260,12 +269,12 @@ void PHY_MedicalCollectionAmbulance::EnterStateGoingTo()
 // -----------------------------------------------------------------------------
 void PHY_MedicalCollectionAmbulance::EnterStateUnloading()
 {
-    assert( pSortingArea_ );
+    assert( pDestinationArea_ );
     nState_           = eUnloading;
     nTimer_           = 0;
     rNbrHumanHandled_ = 0.;
     rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansUnloadedForCollectionPerTimeStep();
-    for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
+    for( auto itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateCollectionUnloading();
 }
 
@@ -275,7 +284,7 @@ void PHY_MedicalCollectionAmbulance::EnterStateUnloading()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalCollectionAmbulance::DoUnloading()
 {
-    assert( pSortingArea_ );
+    assert( pDestinationArea_ );
     assert( pCompAmbulance_ );
     -- rInfoTimer_;
     rNbrHumanHandled_ += pCompAmbulance_->GetType().GetNbrHumansUnloadedForCollectionPerTimeStep();
@@ -283,7 +292,7 @@ bool PHY_MedicalCollectionAmbulance::DoUnloading()
     {
         PHY_MedicalCollectionConsign& consign = *consigns_.back();
         consigns_.pop_back();
-        consign.TransferToSortingArea( *pSortingArea_ );
+        consign.TransferToDestinationArea( *pDestinationArea_ );
         rNbrHumanHandled_ -= 1.;
     }
     return consigns_.empty();
@@ -297,13 +306,14 @@ void PHY_MedicalCollectionAmbulance::EnterStateGoingFrom()
 {
     assert( pMedical_ );
     assert( pCompAmbulance_ );
-    assert( pSortingArea_ );
+    assert( pDestinationArea_ );
     assert( consigns_.empty() );
 
     nState_ = eGoingFrom;
-    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pSortingArea_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition(), pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition() );
-    pSortingArea_->CancelReservationForSorting( *this );
-    pSortingArea_ = 0;
+    nTimer_ = pCompAmbulance_->ApproximateTravelTime( pDestinationArea_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition(), pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition() );
+    if( bSort_ )
+        pDestinationArea_->CancelReservationForSorting( *this );
+    pDestinationArea_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -312,10 +322,11 @@ void PHY_MedicalCollectionAmbulance::EnterStateGoingFrom()
 // -----------------------------------------------------------------------------
 void PHY_MedicalCollectionAmbulance::EnterStateFinished()
 {
-    if( pSortingArea_ )
+    if( pDestinationArea_ )
     {
-        pSortingArea_->CancelReservationForSorting( *this );
-        pSortingArea_ = 0;
+        if( bSort_ )
+            pDestinationArea_->CancelReservationForSorting( *this );
+        pDestinationArea_ = 0;
     }
     assert( consigns_.empty() );
     nState_ = eFinished;
@@ -333,13 +344,13 @@ bool PHY_MedicalCollectionAmbulance::Update()
 
     switch( nState_ )
     {
-        case eWaiting                 :                                EnterStateLoading                (); break;
-        case eLoading                 : if( DoLoading() )              EnterStateSearchingForSortingArea(); break;
-        case eSearchingForSortingArea : if( DoSearchForSortingArea() ) ChooseStateFromSortingAreaState  (); break;
-        case eGoingTo                 :                                EnterStateUnloading              (); break;
-        case eUnloading               : if( DoUnloading() )            EnterStateGoingFrom              (); break;
-        case eGoingFrom               :                                EnterStateFinished               (); break;
-        case eFinished                :                                                                     break;
+        case eWaiting                     :                                    EnterStateLoading                    (); break;
+        case eLoading                     : if( DoLoading() )                  EnterStateSearchingForDestinationArea(); break;
+        case eSearchingForDestinationArea : if( DoSearchForDestinationArea() ) ChooseStateFromDestinationAreaState  (); break;
+        case eGoingTo                     :                                    EnterStateUnloading                  (); break;
+        case eUnloading                   : if( DoUnloading() )                EnterStateGoingFrom                  (); break;
+        case eGoingFrom                   :                                    EnterStateFinished                   (); break;
+        case eFinished                    :                                                                             break;
         default:
             assert( false );
     }
