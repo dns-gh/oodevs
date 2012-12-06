@@ -18,6 +18,8 @@
 #include "terrain/TerrainFileReader.h"
 #include "terrain/Translator.h"
 
+#include "preparation/UrbanModel.h" // TO BE REMOVED!
+
 using namespace geostore;
 
 namespace bfs = boost::filesystem;
@@ -26,24 +28,10 @@ namespace bfs = boost::filesystem;
 // Name: GeoStoreManager constructor
 // Created: AME 2010-07-19
 // -----------------------------------------------------------------------------
-GeoStoreManager::GeoStoreManager( const bfs::path& path, UrbanModel& model )
-    : urbanModel_( model )
-    , spatialDb_( 0 )
-    , trans_( 0 )
+GeoStoreManager::GeoStoreManager( const bfs::path& path, const SpatialIndexer& index )
+    : index_( index )
 {
     Initialize( path );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeoStoreManager constructor
-// Created: AME 2010-07-27
-// -----------------------------------------------------------------------------
-GeoStoreManager::GeoStoreManager( UrbanModel& model )
-    : urbanModel_( model )
-    , spatialDb_( 0 )
-    , trans_( 0 )
-{
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +41,6 @@ GeoStoreManager::GeoStoreManager( UrbanModel& model )
 void GeoStoreManager::Initialize( const bfs::path& path )
 {
     path_ = path;
-    spatialDb_.reset( new Database( path_ ) );
     try
     {
         InitProjector( path_ / "terrain.xml" );
@@ -62,7 +49,8 @@ void GeoStoreManager::Initialize( const bfs::path& path )
     {
         InitProjectorOld( path_ / "World.xml" );
     }
-    LoadTerrainFiles();
+    spatialDb_.reset( new Database( path_ ) );
+    spatialDb_->LoadLayers( *proj_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,39 +62,12 @@ GeoStoreManager::~GeoStoreManager()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: GeoStoreManager::LoadTerrainFiles
-// Created: AME 2010-07-20
-// -----------------------------------------------------------------------------
-void GeoStoreManager::LoadTerrainFiles()
-{
-    bool status = spatialDb_->logTable_->status_;
-    bfs::path directory( path_ );
-    bfs::path graphicsDirectory( directory / "graphics" );    
-    for( bfs::directory_iterator it( graphicsDirectory ); it != bfs::directory_iterator(); ++it )
-        if( bfs::extension( *it ) == ".bin" && bfs::basename( *it ) != "preview" )
-        {
-            if ( status )
-                spatialDb_->GetTable( bfs::basename( *it ) );
-            else
-            {
-                TerrainFileReader terrainFile( it->path().string(), *trans_ );
-                spatialDb_->CreateTable( terrainFile );
-            }
-        }
-    spatialDb_->logTable_->UpdateStatus( std::string( "yes" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeoStoreManager::CreateUrbanBlocksOnCities
-// Created: AME 2010-07-21
-// -----------------------------------------------------------------------------
-void GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent, double roadWidth )
+void GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, double roadWidth, std::vector< geometry::Polygon2f >& urbanBlocks )
 {
     try
     {
-        CreateBlockAutoProcess process( *spatialDb_, roadWidth );
-        process.Run( footprint, urbanModel_, parent, *trans_ );
+        CreateBlockAutoProcess process( *spatialDb_, index_, *trans_, roadWidth );
+        process.Run( footprint, urbanBlocks );
     }
     catch( ... ) // Created: AME 2010-08-02 Improve exception catching
     {
@@ -129,6 +90,12 @@ void GeoStoreManager::InitProjectorOld( const bfs::path& worldfile )
         >> xml::content( "Height", height );
     proj_.reset( new PlanarCartesianProjector( latitude, longitude ) );
     trans_.reset( new Translator( *proj_, geometry::Vector2d( 0.5 * width, 0.5 * height ) ) );
+}
+
+bool GeoStoreManager::CanCreateUrbanBlock( const geometry::Polygon2f& footprint )
+{
+    CreateBlockProcess process;
+    return process.CanCreateBlock( index_, footprint, *trans_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,23 +122,4 @@ void GeoStoreManager::InitProjector( const bfs::path& terrainFile )
             >> xml::end();
     proj_.reset( new PlanarCartesianProjector( latitude, longitude ) );
     trans_.reset( new Translator( *proj_, geometry::Vector2d( 0.5 * width, 0.5 * height ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeoStoreManager::BlockAutoProcess
-// Created: AME 2010-08-05
-// -----------------------------------------------------------------------------
-bool GeoStoreManager::BlockAutoProcess( const geometry::Polygon2f& footprint )
-{
-    CreateBlockProcess process;
-    return process.CanCreateBlock( urbanModel_, footprint, *trans_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GeoStoreManager::IsInitialized
-// Created: CMA 2011-10-19
-// -----------------------------------------------------------------------------
-bool GeoStoreManager::IsInitialized() const
-{
-    return spatialDb_.get() != 0;
 }

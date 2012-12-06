@@ -141,7 +141,6 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, const ::StaticModel& s
     , objects_            ( objects )
     , urbanDisplayOptions_( new kernel::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
     , factory_            ( new UrbanFactory( controllers_, *this, staticModel, idManager, objects_, *urbanDisplayOptions_ ) )
-    , geostore_           ( new geostore::GeoStoreManager( *this ) )
     , menuManager_        ( new UrbanMenuManager( controllers, *this, staticModel_ ) )
 {
     controllers_.Register( *this );
@@ -176,7 +175,7 @@ kernel::UrbanObject_ABC* UrbanModel::Create( const geometry::Polygon2f& location
 void UrbanModel::Purge()
 {
     quadTree_.reset();
-    geostore_.reset( new geostore::GeoStoreManager( *this ) );
+    geostore_.reset();
     DeleteAll();
     menuManager_->Unregister();
 }
@@ -203,7 +202,7 @@ void UrbanModel::Load()
 void UrbanModel::NotifyUpdated( const kernel::ModelLoaded& model )
 {
     CreateQuadTree( model.config_.GetTerrainWidth(), model.config_.GetTerrainHeight() );
-    geostore_->Initialize( model.config_.GetTerrainDir( model.config_.GetTerrainName() ) );
+    geostore_.reset( new geostore::GeoStoreManager( model.config_.GetTerrainDir( model.config_.GetTerrainName() ), *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,16 +384,26 @@ void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel
     T_PointVector points = static_cast< const kernel::Polygon& >( location ).GetPoints();
     if( points.front() == points.back() )
         points.pop_back();
-    if( points.size() < 3 || !geostore_.get() || !geostore_->IsInitialized() )
+
+    if( points.size() < 3 || !geostore_.get() )
         return;
+
     const geometry::Polygon2f polygon( points );
-    if( !isAuto )
+    if( ! isAuto )
     {
-        if( geostore_->BlockAutoProcess( polygon ) )
+        if( geostore_->CanCreateUrbanBlock( polygon ) )
             Create( polygon, &parent );
     }
     else
-        geostore_->CreateUrbanBlocksOnCities( polygon, parent, roadWidth );
+    {
+        std::vector< geometry::Polygon2f > blocks;
+        geostore_->CreateUrbanBlocksOnCities( polygon, roadWidth, blocks );
+        // Create the blocks
+        for( auto it = blocks.begin(); it != blocks.end(); ++it )
+        {
+            Create( *it, &parent );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

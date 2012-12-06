@@ -12,8 +12,7 @@
 #include "GeometryFactory.h"
 #include "clients_kernel/UrbanObject_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
-#include "preparation/UrbanModel.h"
-
+#include "SpatialIndexer.h"
 using namespace geostore;
 
 // -----------------------------------------------------------------------------
@@ -38,16 +37,16 @@ CreateBlockProcess::~CreateBlockProcess()
 // Name: CreateBlockProcess::CanCreateBlock
 // Created: AME 2010-08-05
 // -----------------------------------------------------------------------------
-bool CreateBlockProcess::CanCreateBlock( const UrbanModel& model, const geometry::Polygon2f& footprint, PointProjector_ABC& projector )
+bool CreateBlockProcess::CanCreateBlock( const SpatialIndexer& index, const geometry::Polygon2f& footprint, PointProjector_ABC& projector )
 {
-    bool create( true );
+    bool create = true;
     const geometry::Rectangle2f bbox = footprint.BoundingBox();
     float radius = sqrt( pow( bbox.Width(), 2 ) + pow( bbox.Height(), 2 ) );
     std::vector< const kernel::UrbanObject_ABC* > urbanBlocks;
     std::vector< const kernel::UrbanObject_ABC* >::const_iterator it;
-    model.GetListWithinCircle( footprint.BoundingBoxCenter(), radius , urbanBlocks );
+    index.GetListWithinCircle( footprint.BoundingBoxCenter(), radius , urbanBlocks );
 
-    if( !urbanBlocks.empty() )
+    if( ! urbanBlocks.empty() )
     {
         gaiaGeomCollPtr getBlocks = 0;
         gaiaGeomCollPtr newBlock = geometryFactory_->CreatePolygonGeometry( footprint, projector );

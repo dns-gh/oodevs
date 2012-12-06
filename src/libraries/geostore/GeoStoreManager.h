@@ -10,7 +10,7 @@
 #ifndef __GeoStoreManager_h_
 #define __GeoStoreManager_h_
 
-#include "geostore_pch.h"
+#include <boost/filesystem.hpp>
 #include <geometry/Types.h>
 
 namespace kernel
@@ -24,6 +24,7 @@ class UrbanModel;
 namespace geostore
 {
     class Database;
+    class SpatialIndexer;
     class SpatialRequestStatus;
 
 // =============================================================================
@@ -37,23 +38,17 @@ class GeoStoreManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             GeoStoreManager( const boost::filesystem::path& path, UrbanModel& model );
-    explicit GeoStoreManager( UrbanModel& model );
+             GeoStoreManager( const boost::filesystem::path& path, const SpatialIndexer& index );
     virtual ~GeoStoreManager();
     //@}
 
-    //! @name Operations
-    //@{
-    void Initialize( const boost::filesystem::path& path );
-    void LoadTerrainFiles();
-    void CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, kernel::UrbanObject_ABC& parent, double roadWidth );
-    bool BlockAutoProcess( const geometry::Polygon2f& footprint );
-    bool IsInitialized() const;
-    //@}
+    void CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, double roadWidth, std::vector< geometry::Polygon2f >& urbanBlocks );
+    bool CanCreateUrbanBlock( const geometry::Polygon2f& footprint );
 
 private:
     //! @name Helpers
     //@{
+    void Initialize( const boost::filesystem::path& path );
     void InitProjector( const boost::filesystem::path& terrainFile ) ;
     void InitProjectorOld( const boost::filesystem::path& worldfile ) ;
     //@}
@@ -62,10 +57,10 @@ private:
     //! @name Member data
     //@{
     boost::filesystem::path             path_;
+    const SpatialIndexer&               index_;
     std::auto_ptr< Database >           spatialDb_;
     std::auto_ptr< PointProjector_ABC > proj_;
     std::auto_ptr< PointProjector_ABC > trans_;
-    UrbanModel&                         urbanModel_;
     //@}
 };
 

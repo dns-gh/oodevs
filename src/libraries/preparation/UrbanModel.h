@@ -15,6 +15,7 @@
 #include "tools/Resolver.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
+#include "geostore/SpatialIndexer.h"
 #include <boost/noncopyable.hpp>
 
 namespace geostore
@@ -53,6 +54,7 @@ class UrbanMenuManager;
 class UrbanModel : public tools::Resolver< kernel::UrbanObject_ABC >
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                 , public geostore::SpatialIndexer
                  , private boost::noncopyable
 {
 public:

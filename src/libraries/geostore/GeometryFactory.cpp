@@ -83,12 +83,10 @@ void GeometryFactory::AddPolygonGeometryToCollection( const geometry::Polygon2f&
     {
         geomColl = CreatePolygonGeometry( footPrint, projector );
     }
-    else
-    {
-        gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( geomColl, static_cast< int >( footPrint.Vertices().size() + 1 ), 0 );
-        FillPolygon( footPrint, projector, polyg );
-        gaiaMbrGeometry( geomColl );
-    }
+
+    gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( geomColl, static_cast< int >( footPrint.Vertices().size() + 1 ), 0 );
+    FillPolygon( footPrint, projector, polyg );
+    gaiaMbrGeometry( geomColl );
 }
 
 // -----------------------------------------------------------------------------

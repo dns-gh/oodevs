@@ -11,11 +11,11 @@
 #define __CreateBlockProcess_h_
 
 class PointProjector_ABC;
-class UrbanModel;
 
 namespace geostore
 {
     class GeometryFactory;
+    class SpatialIndexer;
 
 // =============================================================================
 /** @class  CreateBlockProcess
@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    bool CanCreateBlock( const UrbanModel& model, const geometry::Polygon2f& footprint, PointProjector_ABC& projector );
+    bool CanCreateBlock( const SpatialIndexer& indexer, const geometry::Polygon2f& footprint, PointProjector_ABC& projector );
     //@}
 
 private:

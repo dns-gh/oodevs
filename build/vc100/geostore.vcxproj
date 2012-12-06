@@ -99,6 +99,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\geostore\DatabaseException.h" />
     <ClInclude Include="..\..\src\libraries\geostore\geostore_pch.h" />
     <ClInclude Include="..\..\src\libraries\geostore\GeoStoreManager.h" />
     <ClInclude Include="..\..\src\libraries\geostore\Database.h" />
@@ -108,9 +109,12 @@
     <ClInclude Include="..\..\src\libraries\geostore\CreateBlockAutoProcess.h" />
     <ClInclude Include="..\..\src\libraries\geostore\CreateBlockProcess.h" />
     <ClInclude Include="..\..\src\libraries\geostore\GeometryFactory.h" />
+    <ClInclude Include="..\..\src\libraries\geostore\SpatialIndexer.h" />
     <ClInclude Include="..\..\src\libraries\geostore\SpatialRequestStatus.h" />
+    <ClInclude Include="..\..\src\libraries\geostore\Table.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\geostore\DatabaseException.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\geostore_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -126,6 +130,7 @@
     <ClCompile Include="..\..\src\libraries\geostore\CreateBlockProcess.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\GeometryFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\geostore\SpatialRequestStatus.cpp" />
+    <ClCompile Include="..\..\src\libraries\geostore\Table.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

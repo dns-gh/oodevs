@@ -10,7 +10,10 @@
 #ifndef __GeoTable_h_
 #define __GeoTable_h_
 
+#include "Table.h"
+
 class TerrainObject;
+class PointProjector_ABC;
 
 namespace geostore
 {
@@ -21,9 +24,15 @@ namespace geostore
 */
 // Created: AME 2010-07-19
 // =============================================================================
-class GeoTable : private boost::noncopyable
+class GeoTable : public Table
 {
 public:
+    enum GeometryType {
+        Point       = 0,
+        Polygon     = 1,
+        LineString  = 2,
+    };
+
     //! @name Constructors/Destructor
     //@{
              GeoTable( sqlite3* db, const std::string& name );
@@ -32,32 +41,30 @@ public:
 
     //! @name Operations
     //@{
-    void Fill( std::vector< TerrainObject* > features );
-    void AddGeometryColumn( int geom_type );
-    gaiaGeomCollPtr GetFeaturesIntersectsWith( gaiaGeomCollPtr poly );
-    const std::string& GetName() const;
-    const std::string& GetGeometry() const;
-    void SetGeometry( const std::string& name );
+    void LoadTable();
+    void FillTable( const boost::filesystem::path& path, PointProjector_ABC& proj );
+
+    GeometryType GetGeometryType() const;
+    gaiaGeomCollPtr GetFeaturesIntersectingWith( gaiaGeomCollPtr poly );
     //@}
 
 private:
     //! @name Helpers
     //@{
     void CreateStructure();
-    void CreatePolygonGeometry( const TerrainObject& shape );
-    void CreateLineGeometry( const TerrainObject& shape );
-    void CreateGeometry( const TerrainObject& shape );
+    gaiaGeomCollPtr CreateGeometry( const TerrainObject& shape );
+    void CreatePolygonGeometry( gaiaGeomCollPtr geo, const TerrainObject& shape );
+    void CreateLineGeometry( gaiaGeomCollPtr geo, const TerrainObject& shape );
     void MbrSpatialIndex();
+    void SetGeometry( const std::string& name );
+    void Fill( const std::vector< TerrainObject* >& features );
+    void AddGeometryColumn( int geom_type );
     //@}
 
 private:
     //! @name Member data
     //@{
-    sqlite3* db_;
-    std::string name_;
-    std::string geometry_;
-    gaiaGeomCollPtr geo_;
-    char* err_msg_;
+    GeometryType geometryType_;
     //@}
 };
 

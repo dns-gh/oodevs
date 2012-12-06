@@ -9,6 +9,7 @@
 
 #include "geostore_pch.h"
 #include "Database.h"
+#include "DatabaseException.h"
 #include "GeoTable.h"
 #include "LogTable.h"
 #include "ProjectionTable.h"
@@ -17,37 +18,36 @@
 using namespace geostore;
 
 namespace bfs = boost::filesystem;
+namespace blc = boost::locale::conv;
 
 // -----------------------------------------------------------------------------
 // Name: Database constructor
 // Created: AME 2010-07-19
 // -----------------------------------------------------------------------------
 Database::Database( const bfs::path& path )
-    : path_     ( path )
-    , db_       ( 0 )
-    , err_msg   ( 0 )
+    : path_( path )
+    , db_  ( 0 )
 {
     bfs::path file( path_ / "Graphics" / "geostore.sqlite" );
     spatialite_init( 0 );
 
-    int ret = sqlite3_open_v2(
-        file.string().c_str(),
-        &db_,
-        SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
-        NULL );
+    int err = sqlite3_open_v2(
+            blc::utf_to_utf< char >( file.wstring() ).c_str(),
+            &db_,
+            SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
+            NULL
+        );
 
-    if( ret == SQLITE_OK )
+    if( SQLITE_OK == err )
     {
-        // Initialize the projection table in the database
-        ProjectionTable projTable( db_ );
-
+        ProjectionTable projTable( db_ ); // Just used to initialize the projection table
         logTable_.reset( new LogTable( db_ ) );
     }
     else
     {
         sqlite3_close( db_ );
         db_ = 0;
-        throw std::runtime_error( "Could not open Sqlite DB: " + file.string() );
+        throw DatabaseException( err, "Could not open Sqlite DB: " + file.string() );
     }
 }
 
@@ -62,50 +62,59 @@ Database::~Database()
     sqlite3_close( db_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Database::CreateTable
-// Created: AME 2010-07-20
-// -----------------------------------------------------------------------------
-void Database::CreateTable( const TerrainFileReader& file )
+void Database::LoadLayers( PointProjector_ABC& projector )
 {
-    GeoTable* table = new GeoTable( db_, file.name_ );
-    table->AddGeometryColumn( file.geomType_ );
-    table->Fill( file.features_ );
-    tables_[ file.name_ ] = table;
+    bfs::path graphicsDirectory( path_ / "Graphics" );
+    for( bfs::directory_iterator it( graphicsDirectory ); it != bfs::directory_iterator(); ++it )
+    {
+        std::string layerName = bfs::basename( *it );
+        if( bfs::extension( *it ) == ".bin" && layerName != "preview" )
+        {
+            std::time_t accessTime;
+            logTable_->GetLastAccessTime( layerName, accessTime );
+            if( bfs::last_write_time( *it ) > accessTime )
+            {
+                // Update the table for this layer, it was modified.
+                LoadLayer( layerName, *it, projector );
+            }
+            else
+            {
+                // The table was already loaded, just read it from the SQLite store.
+                LoadLayer( layerName );
+            }
+        }
+    }
 }
 
-// -----------------------------------------------------------------------------
-// Name: Database::GetTable
-// Created: AME 2010-07-28
-// -----------------------------------------------------------------------------
-void Database::GetTable( const std::string& name )
+void Database::LoadLayer( const std::string& name, const boost::filesystem::path& path, PointProjector_ABC& projector )
 {
-    GeoTable* table = new GeoTable( db_, name );
-    char** results;
-    int n_rows;
-    int n_columns;
-    std::string sqlRequest = "SELECT type FROM geometry_columns WHERE f_table_name='" + name + "';";
-    sqlite3_get_table( db_, sqlRequest.c_str(), &results, &n_rows, &n_columns, &err_msg );
-    if( n_rows == 1 )
-        table->SetGeometry( results[ 1 ] );
-    tables_[ name ] = table;
-    sqlite3_free_table( results );
+    // Create the table
+    std::auto_ptr< GeoTable > table( new GeoTable( db_, name ) );
+    table->FillTable( path, projector );
+
+    // Store it in the map
+    tables_[ name ] = table.release();
+
+    // Save the last modified date for the imported data.
+    logTable_->SetLastAccessTime( name, bfs::last_write_time( path ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Database::HasTable
-// Created: AME 2010-07-28
-// -----------------------------------------------------------------------------
-bool Database::HasTable( const std::string& name )
+void Database::LoadLayer( const std::string& name )
 {
-    bool tableExist = false;
-    char** results;
-    int n_rows;
-    int n_columns;
-    std::string sqlRequest = "SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = '" + name + "';"; 
-    sqlite3_get_table( db_, sqlRequest.c_str(), &results, &n_rows, &n_columns, &err_msg );
-    if( atoi ( results[ 1 ] ) != 1 )
-        tableExist = true;
-    sqlite3_free_table( results );
-    return tableExist;
+    // Create the table
+    std::auto_ptr< GeoTable > table( new GeoTable( db_, name ) );
+    table->LoadTable();
+
+    // Store in the map
+    tables_[ name ] = table.release();
+}
+
+void Database::GetTables( std::vector< GeoTable* >& tables ) const
+{
+    tables.clear();
+    tables.reserve( tables_.size() );
+    for( CIT_Tables it = tables_.begin(); it != tables_.end(); ++it )
+    {
+        tables.push_back( it->second );
+    }
 }

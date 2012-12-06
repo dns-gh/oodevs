@@ -17,18 +17,35 @@ using namespace geostore;
 // Created: AME 2010-07-28
 // -----------------------------------------------------------------------------
 LogTable::LogTable( sqlite3* db )
-    : db_( db )
-    , name_( "MasaLog" )
+    : Table( db, "MasaLog" )
 {
-    char** results;
-    int n_rows;
-    int n_columns;
-    std::string sqlRequest = "SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = '" + name_ + "';";
-    sqlite3_get_table( db_, sqlRequest.c_str(), &results, &n_rows, &n_columns, &err_msg );
-    if( atoi ( results[ 1 ] ) != 1 )
-        CreateStructure();
-    else
-        GetStatus();
+    CreateStructure();
+}
+
+bool LogTable::GetLastAccessTime( const std::string& layerName, std::time_t& time )
+{
+    std::ostringstream query;
+    query << "SELECT last_modification FROM " << GetName() << " WHERE ( table_name = '" << layerName << "' );";
+
+    T_ResultSet result;
+    ExecuteQuery( query.str(), result );
+
+    if( result.empty() )
+    {
+        time = 0;
+        return false;
+    }
+
+    std::istringstream timeResult( result.back().back() );
+    timeResult >> time;
+    return true;
+}
+
+void LogTable::SetLastAccessTime( const std::string& layerName, const std::time_t& time )
+{
+    std::ostringstream query;
+    query << "INSERT OR REPLACE INTO " << GetName() << " VALUES ( '" << layerName << "', " << time << " );";
+    ExecuteQuery( query.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,11 +57,18 @@ LogTable::~LogTable()
     // NOTHING
 }
 
+void LogTable::CreateStructure()
+{
+    std::ostringstream query;
+    query << "CREATE TABLE IF NOT EXISTS " << GetName() << " ( table_name TEXT PRIMARY KEY, last_modification INTEGER );";
+    ExecuteQuery( query.str() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogTable::CreateStructure
 // Created: AME 2010-07-28
 // -----------------------------------------------------------------------------
-void LogTable::CreateStructure()
+/*void LogTable::CreateStructure()
 {
     char* err_msg;
     std::string sqlRequest = "CREATE TABLE " + name_ + " (processing varchar(256) );";
@@ -68,7 +92,7 @@ void LogTable::CreateStructure()
     }
     ret = sqlite3_exec( db_, "COMMIT" , NULL, NULL, &err_msg );
     status_ = false;
-}
+}*/
 
 // -----------------------------------------------------------------------------
 // Name: LogTable::GetStatus
@@ -99,7 +123,7 @@ void LogTable::GetStatus()
 void LogTable::UpdateStatus( const std::string& status )
 {
     char* err_msg;  
-    sqlite3_exec(db_, "BEGIN", NULL, NULL, &err_msg );
+    sqlite3_exec( db_, "BEGIN", NULL, NULL, &err_msg );
     std::string sqlRequest = "UPDATE " + name_ + " SET processing='" + status + "';";
     sqlite3_exec( db_, sqlRequest.c_str(), NULL, NULL, &err_msg );
     sqlite3_exec( db_, "COMMIT" , NULL, NULL, &err_msg );

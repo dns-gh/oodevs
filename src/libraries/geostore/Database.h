@@ -35,10 +35,13 @@ public:
 
     //! @name Operations
     //@{
-    void CreateTable( const TerrainFileReader& file );
-    void GetTable( const std::string& name );
-    bool HasTable( const std::string& name );
+    void LoadLayers( PointProjector_ABC& projector );
+    void GetTables( std::vector< GeoTable* >& tables ) const;
     //@}
+
+private:
+    void LoadLayer( const std::string& name, const boost::filesystem::path& path, PointProjector_ABC& projector );
+    void LoadLayer( const std::string& name );
 
 public:
    //! @name Member data
@@ -54,7 +57,6 @@ private:
     //! @name Member data
     //@{
     boost::filesystem::path path_;
-    char* err_msg;
     sqlite3* db_;
     //@}
 };

@@ -10,6 +10,8 @@
 #ifndef __ProjectionTable_h_
 #define __ProjectionTable_h_
 
+#include "Table.h"
+
 namespace geostore
 {
 
@@ -19,7 +21,7 @@ namespace geostore
 */
 // Created: AME 2010-08-02
 // =============================================================================
-class ProjectionTable : private boost::noncopyable
+class ProjectionTable : public Table
 {
 public:
     //! @name Constructors/Destructor

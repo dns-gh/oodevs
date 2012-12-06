@@ -43,6 +43,15 @@
     <ClInclude Include="..\..\src\libraries\geostore\SpatialRequestStatus.h">
       <Filter>Source Files\SpatialProcess</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\SpatialIndexer.h">
+      <Filter>Source Files\SpatialProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\Table.h">
+      <Filter>Source Files\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\geostore\DatabaseException.h">
+      <Filter>Source Files\Structure</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\geostore\geostore_pch.cpp">
@@ -74,6 +83,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\geostore\SpatialRequestStatus.cpp">
       <Filter>Source Files\SpatialProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\geostore\Table.cpp">
+      <Filter>Source Files\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\geostore\DatabaseException.cpp">
+      <Filter>Source Files\Structure</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
