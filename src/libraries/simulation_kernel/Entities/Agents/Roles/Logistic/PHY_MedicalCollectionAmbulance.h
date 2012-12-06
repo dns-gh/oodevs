@@ -65,7 +65,7 @@ private:
         eWaiting,
         eGoingTo,
         eLoading,
-        eSearchingForSortingArea,
+        eSearchingForDestinationArea,
         eGoingFrom,
         eUnloading,
         eFinished
@@ -75,17 +75,18 @@ private:
 private:
     //! @name Tools
     //@{
-    void EnterStateLoading                ();
-    void EnterStateSearchingForSortingArea();
-    void ChooseStateFromSortingAreaState  ();
-    void EnterStateGoingTo                ();
-    void EnterStateUnloading              ();
-    void EnterStateGoingFrom              ();
-    void EnterStateFinished               ();
+    void EnterStateLoading();
+    void EnterStateSearchingForDestinationArea();
+    void ChooseStateFromLoading();
+    void ChooseStateFromDestinationAreaState();
+    void EnterStateGoingTo();
+    void EnterStateUnloading();
+    void EnterStateGoingFrom();
+    void EnterStateFinished();
 
     bool DoLoading             ();
     bool DoUnloading           ();
-    bool DoSearchForSortingArea();
+    bool DoSearchForDestinationArea();
     //@}
 
 private:
@@ -97,9 +98,10 @@ private:
     E_State                     nState_;
     int                         nTimer_;
     double                      rNbrHumanHandled_;
-    PHY_RoleInterface_Medical*  pSortingArea_;
+    PHY_RoleInterface_Medical*  pDestinationArea_;
     double                      rInfoTimer_;
     bool                        bEmergencyAmbulance_;
+    bool                        bSort_;
     //@}
 };
 

@@ -57,10 +57,10 @@ private:
     // Appelés par PHY_MedicalCollectionAmbulance
     void EnterStateCollectionLoading              ();
     bool EnterStateCollectionWaitingForFullLoading();
-    void EnterStateSearchingForSortingArea        ();
+    void EnterStateSearchingForDestinationArea    ();
     void EnterStateCollectionGoingTo              ();
     void EnterStateCollectionUnloading            ();
-    void TransferToSortingArea                    ( PHY_RoleInterface_Medical& sortingArea );
+    void TransferToDestinationArea                ( PHY_RoleInterface_Medical& destinationArea );
     void NotifyOutOfMedicalSystem                 ();
     //@}
 
