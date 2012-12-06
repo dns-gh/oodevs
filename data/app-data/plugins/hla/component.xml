@@ -26,16 +26,13 @@
     <entry name="Champ Operatoire" dis="1 1 225 18 1 0 1"/>
     <entry name="VAB PC 12.7" dis="1 1 225 20 1 0 1"/>
     <entry name="Fantassin Commando" dis="3 1 225 1 1 0 0"/>
-    <entry name="Eqp Rep EA BLD" dis="3 1 225 1 1 0 1"/>
-    <entry name="Eqp Rep EA BLT" dis="3 1 225 1 1 0 2"/>
-    <entry name="Eqp Rep MOB FEU BLD" dis="3 1 225 1 1 0 3"/>
     <!--entry name="Cruiser" dis="1 3 71 6 1 1 0"/-->
     <entry name="EFA" dis="1 1 225 18 1 0 2"/>
     <entry name="VAB GEN 12,7" dis="3 1 225 1 1 0 5"/>
     <!--entry name="Fire Engine" dis="1 1 225 18 1 0 3"/-->
     <!--entry name="Fire Truck" dis="1 1 225 18 1 0 4"/-->
-    <entry name="Eqp Rep MOB FEU BLT" dis="3 1 225 1 1 0 6"/>
-    <entry name="Eqp Rep MOB FEU BLD" dis="3 1 225 1 1 0 7"/>
+    <entry name="Eqp NTI2 MOB FEU" dis="3 1 225 1 1 0 6"/>
+    <entry name="Eqp NTI3 MOB FEU BLIAT" dis="3 1 225 1 1 0 7"/>
     <entry name="VTL R" dis="1 1 225 19 1 0 0"/>
     <entry name="Fantassin + FAMAS 5.56 INF" dis="3 1 225 1 1 0 8"/>
     <entry name="VAB BROMURE" dis="1 1 225 18 1 0 5"/>
@@ -58,7 +55,6 @@
     <entry name="Eqp NTI1 MOB" dis="3 1 225 1 1 0 11"/>
     <entry name="Eqp NTI1 EA" dis="3 1 225 1 1 0 12"/>
     <entry name="Eqp Med Psy" dis="3 1 225 1 1 0 13"/>
-    <entry name="CELLULE SANITAIRE 2" dis="3 1 225 1 1 0 14"/>
     <!--entry name="Medical Evacuation Helicopter" dis="1 2 225 21 1 0 0"/-->
     <entry name="Eqp diagnostic" dis="3 1 225 1 1 0 15"/>
     <entry name="BRDM 2 AT5" dis="3 1 225 1 1 0 16"/>
@@ -66,8 +62,8 @@
     <entry name="Char T62" dis="1 1 225 2 1 0 11"/>
     <entry name="PICK UP HUMUS" dis="1 1 102 6 1 0 0"/>
     <entry name="Milicien AK47" dis="3 1 102 1 1 0 0"/>
-    <entry name="Eqp Rep MOB BLD" dis="3 1 225 1 1 0 17"/>
-    <entry name="Eqp Rep MOB BLT" dis="3 1 225 1 1 0 18"/>
+    <entry name="Eqp NTI1 MOB" dis="3 1 225 1 1 0 17"/>
+    <entry name="Eqp NTI3 MOB BLIAT" dis="3 1 225 1 1 0 18"/>
     <entry name="120 RTF1" dis="1 1 225 10 1 0 0"/>
     <entry name="Eqp Mortier 81" dis="3 1 225 1 1 0 19"/>
     <entry name="Moto CAGIVA 350" dis="1 1 225 6 1 0 0"/>
@@ -103,6 +99,5 @@
     <entry name="VAB RATAC" dis="1 1 225 3 1 0 6"/>
     <entry name="VAB SAN" dis="1 1 225 3 1 0 7"/>
     <!--entry name="Very Short Range Surface To Air System" dis="1 1 225 7 1 0 2"/-->
-    <entry name="VSB" dis="1 1 225 3 1 0 8"/>
     <!--entry name="VSRAW soldier" dis="3 1 225 1 1 0 26"/-->
 </dis-mapping>

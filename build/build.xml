@@ -819,7 +819,7 @@
         </build-test>
     </target>
 
-    <target name="hla_plugin_test" depends="library.hla_plugin" if="is-vc80">
+    <target name="hla_plugin_test" depends="library.hla_plugin">
         <build-test name="hla_plugin" depends="boost,qt4,terrain,xerces,xalan,protobuf"
             libs="HLA,
                   Qt3Support4,

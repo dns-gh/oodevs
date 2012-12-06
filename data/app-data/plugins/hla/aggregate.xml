@@ -10,7 +10,7 @@
     <entry name="INF . Section CBT VBCI" dis="1 1 225 3 3 0 0"/>
     <entry name="INF . Groupe MO81 VBCI" dis="1 1 225 2 11 1 0"/>
     <entry name="GEN . Section CBT + EBG" dis="1 1 225 3 5 0 0"/>
-    <entry name="ASS . Groupe Mortier 120 OFF 4 pieces" dis="1 1 225 4 2 1 0"/>
+    <entry name="ASS . Section Mortier 120 SOFF 4 pcs Pour SIC" dis="1 1 225 4 2 1 0"/>
     <entry name="MILICE . PICK UP 10 Miliciens" dis="3 1 222 4 205 1 0"/>
     <entry name="JOINT . CDIC + 2 CTM" dis="1 3 71 11 1 1 0"/>
     <entry name="Refugies" dis="3 1 225 3 1 0 0"/>
