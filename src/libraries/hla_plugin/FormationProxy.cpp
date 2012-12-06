@@ -137,7 +137,7 @@ namespace
 void FormationProxy::UpdateLocationCallback()
 {
     ChildListener::LocationStruct loc = std::accumulate( childrenListeners_.begin(), childrenListeners_.end(), ChildListener::LocationStruct() , &addLocation );
-    loc = loc/childrenListeners_.size();
+    loc = loc / static_cast< double >(  childrenListeners_.size() );
     BOOST_FOREACH( EventListener_ABC* l, listeners_ )
         l->SpatialChanged( loc.latitude, loc.longitude, loc.altitude, loc.speed, loc.direction );
 }
