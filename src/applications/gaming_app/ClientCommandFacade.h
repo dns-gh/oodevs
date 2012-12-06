@@ -34,13 +34,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ClientCommandFacade( const ClientCommandFacade& );            //!< Copy constructor
-    ClientCommandFacade& operator=( const ClientCommandFacade& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::auto_ptr< CommandPublisher > publisher_;

@@ -32,7 +32,7 @@ namespace gui
 class SymbolIcons : public QObject
                   , private IconHandler_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

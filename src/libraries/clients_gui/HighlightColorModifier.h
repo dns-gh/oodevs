@@ -36,7 +36,7 @@ class HighlightColorModifier : public QObject
                              , public tools::ElementObserver_ABC    < kernel::Entity_ABC >
                              , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

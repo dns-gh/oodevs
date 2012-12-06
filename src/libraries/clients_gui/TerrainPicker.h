@@ -24,7 +24,7 @@ namespace gui
 // =============================================================================
 class TerrainPicker : public QObject
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -53,13 +53,6 @@ private slots:
     //! @name
     //@{
     void OnTimeOut();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    TerrainPicker( const TerrainPicker& );            //!< Copy constructor
-    TerrainPicker& operator=( const TerrainPicker& ); //!< Assignment operator
     //@}
 
 private:

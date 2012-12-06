@@ -15,7 +15,6 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/RichGroupBox.h"
-#include <boost/noncopyable.hpp>
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -64,7 +63,6 @@ namespace actions
 class Param_ABC : public QObject
                 , public tools::Observer_ABC
                 , public kernel::Drawable_ABC
-                , private boost::noncopyable
 {
     Q_OBJECT
 

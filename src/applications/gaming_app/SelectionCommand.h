@@ -38,12 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SelectionCommand( const SelectionCommand& );            //!< Copy constructor
-    SelectionCommand& operator=( const SelectionCommand& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );

@@ -51,12 +51,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CommandFacade( const CommandFacade& );            //!< Copy constructor
-    CommandFacade& operator=( const CommandFacade& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Add( CommandHandler_ABC* );

@@ -57,13 +57,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LightingProxy( const LightingProxy& );            //!< Copy constructor
-    LightingProxy& operator=( const LightingProxy& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     bool camera_;

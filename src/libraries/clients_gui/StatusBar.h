@@ -62,12 +62,6 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    StatusBar( const StatusBar& );            //!< Copy constructor
-    StatusBar& operator=( const StatusBar& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     QLabel* AddField( QStatusBar* parent, unsigned int size, const QString& title, bool checked );

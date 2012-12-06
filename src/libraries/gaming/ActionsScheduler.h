@@ -51,12 +51,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionsScheduler( const ActionsScheduler& );            //!< Copy constructor
-    ActionsScheduler& operator=( const ActionsScheduler& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );

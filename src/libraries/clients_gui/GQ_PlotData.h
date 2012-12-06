@@ -157,12 +157,6 @@ protected:
     virtual int  GetBaseline( unsigned int ); //!< returns bottom position for histograms (default = yaxis)
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GQ_PlotData( const GQ_PlotData& rhs );            //!< Copy constructor
-    GQ_PlotData& operator=( const GQ_PlotData& rhs ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void InitPointShape( unsigned int nShapeSize );

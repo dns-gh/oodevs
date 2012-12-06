@@ -52,12 +52,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    VisionConesToggler( const VisionConesToggler& );            //!< Copy constructor
-    VisionConesToggler& operator=( const VisionConesToggler& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void SendControlEnableVisionCones();

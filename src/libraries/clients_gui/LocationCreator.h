@@ -38,7 +38,7 @@ class LocationCreator : public QObject
                       , public kernel::ContextMenuObserver_ABC< kernel::Drawing_ABC >
                       , public tools::ElementObserver_ABC     < kernel::Drawing_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -72,13 +72,6 @@ private:
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const kernel::Drawing_ABC&, kernel::ContextMenu& );
     virtual void NotifyDeleted( const kernel::Drawing_ABC& );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    LocationCreator( const LocationCreator& );
-    LocationCreator& operator=( const LocationCreator& );
     //@}
 
 private:

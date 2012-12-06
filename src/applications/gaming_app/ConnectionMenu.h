@@ -51,12 +51,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ConnectionMenu( const ConnectionMenu& );            //!< Copy constructor
-    ConnectionMenu& operator=( const ConnectionMenu& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Simulation& simulation );

@@ -48,7 +48,7 @@ class GlSelector : public QObject
                  , public tools::Observer_ABC
                  , public kernel::OptionsObserver_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -75,13 +75,6 @@ signals:
     void Widget2dChanged( gui::GlWidget* );
     void MouseMove( const geometry::Point2f& );
     void MouseMove( const geometry::Point3f& );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    GlSelector( const GlSelector& );            //!< Copy constructor
-    GlSelector& operator=( const GlSelector& ); //!< Assignment operator
     //@}
 
 protected:

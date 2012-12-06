@@ -26,7 +26,7 @@ namespace gui
 // =============================================================================
 class HelpSystem : public QObject
 {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     //! @name Constructors/Destructor
     //@{

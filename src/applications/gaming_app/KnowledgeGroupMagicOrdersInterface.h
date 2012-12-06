@@ -68,12 +68,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    KnowledgeGroupMagicOrdersInterface( const KnowledgeGroupMagicOrdersInterface& );            //!< Copy constructor
-    KnowledgeGroupMagicOrdersInterface& operator=( const KnowledgeGroupMagicOrdersInterface& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     int  AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu );

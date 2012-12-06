@@ -66,12 +66,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TimelineActionItem( const TimelineActionItem& );            //!< Copy constructor
-    TimelineActionItem& operator=( const TimelineActionItem& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void setEnabled( bool enabled );

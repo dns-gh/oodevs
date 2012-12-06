@@ -56,12 +56,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    NatureEditionCategory( const NatureEditionCategory& );            //!< Copy constructor
-    NatureEditionCategory& operator=( const NatureEditionCategory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void StartCategory( const std::string& title );
