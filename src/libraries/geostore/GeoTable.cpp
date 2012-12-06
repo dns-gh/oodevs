@@ -170,50 +170,6 @@ void GeoTable::CreatePolygonGeometry( gaiaGeomCollPtr geo, const TerrainObject& 
         gaiaSetPoint( ring->Coords, numVertices, firstPoint.X(), firstPoint.Y() );
         ++numParts;
     }
-
-    /*auto coordinates = shape.GetCoordinates();
-    int numVertices = static_cast< int >( coordinates.size() );
-
-    auto innerRings = shape.GetSubPrimitives();
-
-    gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( geo, numVertices + 1, static_cast< int >( innerRings.size() ) );
-    gaiaRingPtr ring = polyg->Exterior;
-
-    if( ! coordinates.empty() )
-    {
-        for( int i = 0; i < numVertices; ++i )
-        {
-            gaiaSetPoint( ring->Coords, i, coordinates[ i ].X(), coordinates[ i ].Y() );
-        }
-        // Close the ring
-        gaiaSetPoint( ring->Coords, numVertices, coordinates[ 0 ].X(), coordinates[ 0 ].Y() );
-    }
-
-    if( innerRings.empty() )
-    {
-        // We are done...
-        return;
-    }
-
-    int ringPos = 0;
-    for( auto it = innerRings.begin(); it != innerRings.end(); ++it )
-    {
-        coordinates = ( *it )->GetCoordinates();
-        numVertices = static_cast< int >( coordinates.size() );
-        if( numVertices < 3 )
-        {
-            continue;
-        }
-
-        ring = gaiaAddInteriorRing( polyg, ringPos, numVertices + 1 );
-        for( int i = 0; i < numVertices; ++i )
-        {
-            gaiaSetPoint( ring->Coords, i, coordinates[ i ].X(), coordinates[ i ].Y() );
-        }
-        // Close the ring
-        gaiaSetPoint( ring->Coords, numVertices, coordinates[ 0 ].X(), coordinates[ 0 ].Y() );
-        ++ringPos;
-    }*/
 }
 
 // -----------------------------------------------------------------------------
@@ -308,7 +264,7 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
     MbrSpatialIndex();
 
     // Analyze of the table
-    //ExecuteQuery( "ANALYZE " + GetName() );
+    ExecuteQuery( "ANALYZE " + GetName() );
 }
 
 // -----------------------------------------------------------------------------
