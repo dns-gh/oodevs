@@ -322,6 +322,8 @@ namespace
 // -----------------------------------------------------------------------------
 double WeaponType::GetDangerosity( const wrapper::View& firer, const wrapper::View& target, double distance, bool checkAmmo ) const
 {
+    if( ! pDirectFireData_.get() || pDirectFireData_->GetMaxRange() < distance )
+        return 0;
     boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
     if( component && CheckDirectFireDotation( firer, checkAmmo ) )
         return pDirectFireData_->GetDangerosity( *component, distance );
@@ -334,8 +336,10 @@ double WeaponType::GetDangerosity( const wrapper::View& firer, const wrapper::Vi
 // -----------------------------------------------------------------------------
 double WeaponType::GetMaxRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH, const char* dotation ) const
 {
+    if( ! pDirectFireData_.get() )
+        return 0;
     boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
-    if( ! component || ! pDirectFireData_.get() )
+    if( ! component )
         return 0;
     if( dotation ) // $$$$ MCO 2012-05-09: weird that we don't check if firer has enough ammo in the else case
     {

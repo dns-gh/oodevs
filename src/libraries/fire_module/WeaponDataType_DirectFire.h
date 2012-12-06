@@ -52,6 +52,7 @@ public:
     double GetMaxRangeToFireOn           ( const wrapper::View& compTarget, double rWantedPH ) const;
     double GetMinRangeToFireOn           ( const wrapper::View& compTarget, double rWantedPH ) const;
     double GetMaxRangeToFire             ( double rWantedPH ) const;
+    double GetMaxRange                   () const;
     double GetMaxRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, double rWantedPH ) const;
     double GetMinRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, const wrapper::View& compTarget, double rWantedPH ) const;
 
@@ -88,6 +89,7 @@ private:
     const LauncherType& launcherType_;
     const DotationCategory& dotation_;
     T_PhVector phs_;
+    double maxRange_;
     //@}
 };
 

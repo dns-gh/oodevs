@@ -33,6 +33,7 @@ DECLARE_HOOK( GetPopulationElementPh, double, ( const SWORD_Model* firer, const 
 WeaponDataType_DirectFire::WeaponDataType_DirectFire( const LauncherType& launcherType, const DotationCategory& dotation, xml::xistream& xis )
     : launcherType_( launcherType )
     , dotation_    ( dotation )
+    , maxRange_    ( 0 )
 {
     xis >> xml::list( "hit-probabilities", *this, &WeaponDataType_DirectFire::InitializePH );
 }
@@ -52,6 +53,7 @@ void WeaponDataType_DirectFire::InitializePH( xml::xistream& xis )
     function.SetBeforeValue( 0 );
     function.SetAfterValue( 0 );
     xis >> xml::list( "hit-probability", *this, &WeaponDataType_DirectFire::ReadHitProbability, function );
+    maxRange_ = std::max( maxRange_, function.GetMaxYForX( 0 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +122,15 @@ double WeaponDataType_DirectFire::GetMaxRangeToFire( double ph ) const
     for( auto it = phs_.begin(); it != phs_.end(); ++it )
         range = std::max( range, launcherType_.GetPHModificator() * it->GetMaxYForX( ph ) );
     return range;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeaponDataType_DirectFire::GetMaxRange
+// Created: MCO 2012-12-06
+// -----------------------------------------------------------------------------
+double WeaponDataType_DirectFire::GetMaxRange() const
+{
+    return maxRange_;
 }
 
 // -----------------------------------------------------------------------------
