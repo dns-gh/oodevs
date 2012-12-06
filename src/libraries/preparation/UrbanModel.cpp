@@ -385,7 +385,7 @@ void UrbanModel::CreateUrbanBlocks( const kernel::Location_ABC& location, kernel
     if( points.front() == points.back() )
         points.pop_back();
 
-    if( points.size() < 3 || !geostore_.get() )
+    if( points.size() < 3 || ! geostore_.get() )
         return;
 
     const geometry::Polygon2f polygon( points );
