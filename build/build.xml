@@ -1376,7 +1376,7 @@
         </sequential>
     </macrodef>
 
-    <target name="package.otpacks" depends="package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
+    <target name="package.otpacks" depends="package.otpack.defense.scipioForTrunk,package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
                                    description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
@@ -1438,6 +1438,16 @@
             </fileset>
         </zip>
         <safe-move file="${output}"/>
+    </target>
+	 <target name="package.otpack.defense.scipioForTrunk" description="package du defense-scipio Referentiel Simulation otpack pour la simulation trunk">
+        <pack name="ScipioStabRefSim-Trunk" description="defense-scipio exercises package for trunk simulation">
+            <include name="data/models/ada/decisional/bms/**"/>
+            <include name="data/models/ada/decisional/dia5/**"/>
+            <exclude name="data/models/ada/decisional/dia5/Integration.lua"/>
+            <exclude name="data/models/ada/decisional/dia5/integration/**"/>
+            <include name="data/models/ada/decisional/decisional.xml"/>
+            <include name="data/models/ada/physical/scipio/**"/>
+        </pack>
     </target>
 
     <target name="package.otpack.defense.scipio.VA" description="package du defense-scipio Validation Amont otpack">
