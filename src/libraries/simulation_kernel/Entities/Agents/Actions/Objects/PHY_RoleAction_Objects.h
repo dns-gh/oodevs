@@ -64,6 +64,7 @@ public:
     int ResumeWork( const boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int ResumeWork( const boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool valorizeIt );
     int ResumeWork( MIL_UrbanObject_ABC* pUrbanBlock );
+    int DeteriorateUrbanBlock( MIL_UrbanObject_ABC* pUrbanBlock, double percentage );
     int Destroy( const boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int Mine( const boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int Demine( const boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
@@ -79,6 +80,7 @@ public:
     void SetCreator( MIL_Object_ABC& object );
 
     void ResumeWorkSuspended();
+    void DeteriorateUrbanBlockSuspended();
     void ConstructSuspended();
     void DestroySuspended();
     void MineSuspended();
@@ -95,10 +97,11 @@ public:
     bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
     bool CanDemineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
     bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
-    bool EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const;
+    bool EnoughDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const;
     bool CanMineTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const;
     bool CanDestroyTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const;
     bool CanBypassTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const;
+    bool CanExtinguish( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge ) const;
 
     //Getter
     double GetAgentDotationNumber( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory ) const; 
@@ -125,6 +128,7 @@ private:
     //@{
     MIL_Object_ABC* GetObject( const boost::shared_ptr< DEC_Knowledge_Object >& object );
     int Construct( MIL_Object_ABC& object );
+    int Destroy( MIL_Object_ABC& object, double finalState );
     int Mine( MIL_Object_ABC& object );
     int Demine( MIL_Object_ABC& object );
     //@}

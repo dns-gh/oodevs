@@ -106,7 +106,10 @@ void MIL_ObjectManipulator::Construct( double rDeltaPercentage )
 // -----------------------------------------------------------------------------
 void MIL_ObjectManipulator::Destroy( double rDeltaPercentage )
 {
-    object_.GetAttribute< ConstructionAttribute >().Build( -rDeltaPercentage );
+    if( StructuralCapacity* pCapacity = object_.Retrieve< StructuralCapacity >() )
+        pCapacity->Build( -rDeltaPercentage );
+    if( ConstructionAttribute* pAttribute = object_.RetrieveAttribute< ConstructionAttribute >() )
+        pAttribute->Build( -rDeltaPercentage );
 }
 
 // -----------------------------------------------------------------------------

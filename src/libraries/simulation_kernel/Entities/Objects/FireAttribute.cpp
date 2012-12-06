@@ -250,7 +250,7 @@ const MIL_FireClass& FireAttribute::GetClass() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireAttribute::function< bool
+// Name: FireAttribute::FindBestExtinguisherAgent
 // Created: BCI 2011-01-25
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* FireAttribute::FindBestExtinguisherAgent( boost::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const

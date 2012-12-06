@@ -416,7 +416,7 @@ bool DEC_AgentFunctions::CanConstructObjectWithLoadedAndLocalisation( const MIL_
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, callerAgent, true );
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, callerAgent, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -425,7 +425,7 @@ bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, con
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement( MIL_Agent_ABC& callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, callerAgent, false );
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, callerAgent, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -489,6 +489,15 @@ void DEC_AgentFunctions::EnableDiscreteMode( MIL_Agent_ABC& callerAgent )
 void DEC_AgentFunctions::DisableDiscreteMode( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Posture >().DisableDiscreteMode();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanFly
+// Created: JSR 2012-04-19
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanFly( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetType().GetUnitType().CanFly();
 }
 
 // -----------------------------------------------------------------------------
@@ -1454,6 +1463,15 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDestroyW
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanExtinguish
+// Created: JSR 2012-04-19
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanExtinguish( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanExtinguish( pKnowledge );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::AgentHasDotationForBuilding
 // Created: LMT 2011-08-25
 // -----------------------------------------------------------------------------
@@ -1461,7 +1479,7 @@ bool DEC_AgentFunctions::AgentHasDotationForBuilding( const DEC_Decision_ABC* ag
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentHasDotationForBuilding" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, agent->GetPion(), true );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, agent->GetPion(), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -1549,7 +1567,7 @@ bool DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded( const DEC_Dec
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentHasDotationForBuildingWithOutLoaded" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, agent->GetPion(), false );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughDotationForBuilding( type, agent->GetPion(), false );
 }
 
 // -----------------------------------------------------------------------------

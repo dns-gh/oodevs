@@ -2664,6 +2664,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Tools\MIL_ProfilerManager.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp">
+      <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\InteractWithSideCapacity.cpp">
@@ -5455,6 +5458,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\BrainTemplate.h">
       <Filter>Source Files\Decision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.h">
+      <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
