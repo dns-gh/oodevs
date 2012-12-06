@@ -56,7 +56,7 @@ void PHY_DotationConsumptions::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 PHY_DotationConsumptions::~PHY_DotationConsumptions()
 {
-    for( CIT_DotationConsumptionMap it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
+    for( auto it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
         delete it->second;
     dotationConsumptions_.clear();
 }
@@ -67,7 +67,7 @@ PHY_DotationConsumptions::~PHY_DotationConsumptions()
 // -----------------------------------------------------------------------------
 bool PHY_DotationConsumptions::RegisterConsumptionReservations( PHY_DotationGroupContainer& container, bool isTransported ) const
 {
-    for( CIT_DotationConsumptionMap it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
+    for( auto it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
     {
         // transported units do not consume fuel
         if( isTransported && it->first->GetType() == *PHY_DotationType::carburant_ )
@@ -85,7 +85,7 @@ bool PHY_DotationConsumptions::RegisterConsumptionReservations( PHY_DotationGrou
 // -----------------------------------------------------------------------------
 void PHY_DotationConsumptions::AddConsumptionValues( T_ConsumptionValue& result ) const
 {
-    for( CIT_DotationConsumptionMap it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
+    for( auto it = dotationConsumptions_.begin(); it != dotationConsumptions_.end(); ++it )
     {
         const PHY_DotationConsumption* pConsumption = it->second;
         if( pConsumption )

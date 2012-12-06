@@ -50,7 +50,7 @@ Usages::~Usages()
 void Usages::UpdateDefault()
 {
     unsigned int total = 0;
-    for( CIT_Usages it = usages_.begin(); it != usages_.end(); ++it )
+    for( auto it = usages_.begin(); it != usages_.end(); ++it )
         if( it->first != defaultStr_ )
             total += it->second;
     usages_[ defaultStr_ ] = 100 - total;

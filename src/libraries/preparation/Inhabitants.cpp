@@ -46,7 +46,7 @@ void Inhabitants::AddInhabitant( Inhabitant& inhabitant )
 void Inhabitants::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "inhabitants" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "inhabitant" );
         it->second->Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );

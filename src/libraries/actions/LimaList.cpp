@@ -116,7 +116,7 @@ void LimaList::CommitTo( sword::MissionParameter_Value& message ) const
 void LimaList::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     Parameter< QString >::DisplayTooltip( viewport, tools );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->DisplayTooltip( viewport, tools );
 }
 

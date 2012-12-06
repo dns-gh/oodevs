@@ -187,7 +187,7 @@ void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
     if( controllers_.modes_->GetCurrentMode() == ePreparationMode_Terrain && !resourceNodes_.empty() || IsOverriden() )
     {
         xos << xml::start( "resources" );
-        for( CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
+        for( auto it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
         {
             const ResourceNetwork_ABC::ResourceNode& node = it->second;
             xos << xml::start( "node" )

@@ -91,7 +91,7 @@ void PHY_RadarType::ReadRadar( xml::xistream& xis, const MIL_Time_ABC& time )
 // -----------------------------------------------------------------------------
 void PHY_RadarType::Terminate()
 {
-    for( CIT_RadarTypeMap it = radarTypes_.begin(); it != radarTypes_.end(); ++it )
+    for( auto it = radarTypes_.begin(); it != radarTypes_.end(); ++it )
         delete it->second;
     radarTypes_.clear();
 }

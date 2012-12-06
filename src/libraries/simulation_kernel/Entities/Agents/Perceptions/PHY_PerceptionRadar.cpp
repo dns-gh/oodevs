@@ -92,10 +92,10 @@ void PHY_PerceptionRadar::DisableRadar( const PHY_RadarClass& radarClass, int id
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRadar::HasRadarToHandle() const
 {
-    for( CIT_RadarZonesVector it = radarZones_.begin(); it != radarZones_.end(); ++it )
+    for( auto it = radarZones_.begin(); it != radarZones_.end(); ++it )
         if( !it->empty() )
             return true;
-    for( CIT_RadarOnUnitPositionVector it = radarOnUnitPosition_.begin(); it != radarOnUnitPosition_.end(); ++it )
+    for( auto it = radarOnUnitPosition_.begin(); it != radarOnUnitPosition_.end(); ++it )
         if( *it )
             return true;
     return false;

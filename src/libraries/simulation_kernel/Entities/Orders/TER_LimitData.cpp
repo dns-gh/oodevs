@@ -96,7 +96,7 @@ void TER_LimitData::InitializeDistancesData()
 double TER_LimitData::SquareDistance( const MT_Vector2D& p ) const
 {
     double rResult = std::numeric_limits< double >::max();
-    for( CIT_DistancesData it = distancesData_.begin(); it != distancesData_.end(); ++it )
+    for( auto it = distancesData_.begin(); it != distancesData_.end(); ++it )
     {
         const DistanceData& data = *it;
         const double rSquareDistance = data.SquareDistance( p );

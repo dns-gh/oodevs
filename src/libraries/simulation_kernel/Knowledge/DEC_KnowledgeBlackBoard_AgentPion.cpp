@@ -350,7 +350,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetDangerousEnemiesInZone( T_ConstKnowle
 
     assert( pKnowledgeRapForLocal_ );
     const T_ConstKnowledgeAgentVector& knowledges = pKnowledgeRapForLocal_->GetDangerousEnemies();
-    for( CIT_ConstKnowledgeAgentVector it = knowledges.begin(); it != knowledges.end(); ++it )
+    for( auto it = knowledges.begin(); it != knowledges.end(); ++it )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = *it;
         if( zone.IsInside( pKnowledge->GetPosition() ) )
@@ -490,7 +490,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsColliding( T_KnowledgePopu
 
     container.clear();
     container.reserve( populationsColliding.size() );
-    for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
+    for( auto it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
     {
         boost::shared_ptr< DEC_Knowledge_Population > pKnowledge = pPion_->GetKnowledgeGroup()->GetKnowledge().GetKnowledgePopulation( **it );
         if( !pKnowledge )

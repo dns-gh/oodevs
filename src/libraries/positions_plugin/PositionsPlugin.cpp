@@ -104,7 +104,7 @@ void PositionsPlugin::ExportData() const
 {
     boost::filesystem::ofstream file( filepath_ );
     file << "Team (id)" << separator_ << "Unit (id)";
-    for( CIT_Times it = times_.begin(); it != times_.end(); ++it )
+    for( auto it = times_.begin(); it != times_.end(); ++it )
         file << separator_ << *it;
     file << std::endl;
     teams_.Export( file );

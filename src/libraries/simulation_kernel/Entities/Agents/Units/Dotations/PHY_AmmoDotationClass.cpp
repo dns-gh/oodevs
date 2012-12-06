@@ -83,7 +83,7 @@ const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( int nID )
 // -----------------------------------------------------------------------------
 const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( const std::string& strName )
 {
-    for( CIT_TypeMap it = types_.begin(); it != types_.end(); ++it )
+    for( auto it = types_.begin(); it != types_.end(); ++it )
         if( sCaseInsensitiveEqual()( strName, it->second->GetName() ) )
             return it->second;
     return 0;

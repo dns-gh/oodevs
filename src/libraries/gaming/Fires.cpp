@@ -118,7 +118,7 @@ void Fires::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glLineWidth( 3.f );
         glColor4f( COLOR_RED );
-        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        for( auto it = elements_.begin(); it != elements_.end(); ++it )
             it->second->Draw( where, viewport, tools );
         glPopAttrib();
     }

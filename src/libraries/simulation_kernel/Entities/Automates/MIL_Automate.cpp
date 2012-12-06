@@ -439,9 +439,9 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
         xos << xml::attribute( "nature", symbol_ );
     }
     pColor_->WriteODB( xos );
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).WriteODB( xos );
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
         ( **it ).WriteODB( xos );
     pExtensions_->WriteODB( xos );
     xos << xml::end; // automat
@@ -514,7 +514,7 @@ void MIL_Automate::UpdateDecision( float duration )
 void MIL_Automate::UpdateKnowledges( int currentTimeStep )
 {
     // Pions (+ PC)
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
         ( **it ).UpdateKnowledges( currentTimeStep );
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update( currentTimeStep );
@@ -644,10 +644,10 @@ void MIL_Automate::Disengage()
 //-----------------------------------------------------------------------------
 void MIL_Automate::Engage()
 {
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).Engage();
     pOrderManager_->CancelMission();
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
         ( **it ).GetOrderManager().CancelMission();
     if( !bEngaged_ )
     {
@@ -662,7 +662,7 @@ void MIL_Automate::Engage()
 // -----------------------------------------------------------------------------
 bool MIL_Automate::IsPerceived( const DEC_Knowledge_Agent&  knowledge ) const
 {
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
         if( ( **it ).GetRole< PHY_RoleInterface_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
             return true;
     return false;
@@ -674,7 +674,7 @@ bool MIL_Automate::IsPerceived( const DEC_Knowledge_Agent&  knowledge ) const
 // -----------------------------------------------------------------------------
 bool MIL_Automate::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
         if( ( **it ).GetRole< PHY_RoleInterface_Perceiver >().ComputePerception( knowledge ) != PHY_PerceptionLevel::notSeen_ )
             return true;
     return false;
@@ -794,7 +794,7 @@ bool MIL_Automate::NotifyImprisoned( const MIL_Object_ABC& camp )
 double MIL_Automate::GetAlivePionsMaxSpeed() const
 {
     double rMaxSpeed = std::numeric_limits< double >::max();
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
     {
         const MIL_AgentPion& pion = **it;
         const double rSpeed = pion.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed();
@@ -848,9 +848,9 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     else if( pParentFormation_ )
         message().mutable_parent()->mutable_formation()->set_id( pParentFormation_->GetID() );
     message.Send( NET_Publisher_ABC::Publisher(), context );
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).SendCreation( context );
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
         ( **it ).SendCreation( context );
 }
 
@@ -875,9 +875,9 @@ void MIL_Automate::SendFullState( unsigned int contex ) const
     pDotationSupplyManager_->SendFullState();
     pStockSupplyManager_->SendFullState();
 
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).SendFullState();
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
         ( **it ).SendFullState( contex );
 }
 
@@ -889,7 +889,7 @@ void MIL_Automate::SendKnowledge( unsigned int context ) const
 {
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->SendFullState( context );
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
         ( **it ).SendKnowledge( context );
 }
 
@@ -1229,7 +1229,7 @@ MIL_AutomateLOG* MIL_Automate::FindLogisticManager() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const
 {
-    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+    for( auto it = pions_.begin(); it != pions_.end(); ++it )
         visitor.Visit( **it );
     //$$ Manque automates_
 }
@@ -1241,7 +1241,7 @@ void MIL_Automate::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) cons
 void MIL_Automate::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
 {
     if( visitor.Visit( *this ) )
-        for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        for( auto it = pions_.begin(); it != pions_.end(); ++it )
             visitor.Visit( **it );
 }
 

@@ -240,7 +240,7 @@ namespace
 void GradientButton::LoadGradient( const kernel::Gradient& gradient )
 {
     ClearSelection();
-    for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
+    for( auto it = colors_.begin(); it != colors_.end(); ++it )
         if( *it )
         {
             (*it)->hide();

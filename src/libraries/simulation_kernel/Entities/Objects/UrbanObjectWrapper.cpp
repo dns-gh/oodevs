@@ -362,7 +362,7 @@ const std::vector< boost::shared_ptr< MT_Vector2D > >& UrbanObjectWrapper::Compu
         const UrbanObjectWrapper& constThis = *this;
         const T_PointVector& points = constThis.GetLocalisation().GetPoints();
         const MT_Vector2D barycenter = constThis.GetLocalisation().ComputeBarycenter();
-        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        for( auto it = points.begin(); it != points.end(); ++it )
             strechedArea_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) ) );
     }
     return strechedArea_;
@@ -490,7 +490,7 @@ void UrbanObjectWrapper::UpdateInhabitants( MIL_LivingArea& livingArea, const st
     {
         inhabitants_[ &livingArea ].erase( motivation );
         unsigned int total = 0;
-        for( CIT_Motivations it = inhabitants_[ &livingArea ].begin(); it != inhabitants_[ &livingArea ].end(); ++it )
+        for( auto it = inhabitants_[ &livingArea ].begin(); it != inhabitants_[ &livingArea ].end(); ++it )
             total += it->second;
         if( total == 0 )
             inhabitants_.erase( &livingArea );
@@ -504,7 +504,7 @@ void UrbanObjectWrapper::UpdateInhabitants( MIL_LivingArea& livingArea, const st
 unsigned int UrbanObjectWrapper::GetTotalInhabitants() const
 {
     unsigned int ret = 0;
-    for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+    for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
         for( CIT_Motivations it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             ret += it2->second;
     return ret;
@@ -517,7 +517,7 @@ unsigned int UrbanObjectWrapper::GetTotalInhabitants() const
 unsigned int UrbanObjectWrapper::GetTotalInhabitantsForMotivation( const std::string& motivation ) const
 {
     unsigned int ret = 0;
-    for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+    for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
         for( CIT_Motivations it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
             if( it2->first == motivation )
                 ret += it2->second;
@@ -563,7 +563,7 @@ void UrbanObjectWrapper::OnReceiveSetAlerted( const sword::MissionParameter_Valu
     if( attribute.list_size() > 1 )
     {
         bool alerted = attribute.list( 1 ).booleanvalue();
-        for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+        for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
             it->first->SetAlerted( alerted, this );
     }
 }
@@ -577,7 +577,7 @@ void UrbanObjectWrapper::OnReceiveSetConfined( const sword::MissionParameter_Val
     if( attribute.list_size() > 1 )
     {
         bool confined = attribute.list( 1 ).booleanvalue();
-        for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+        for( auto it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
             it->first->SetConfined( confined, this );
     }
 }

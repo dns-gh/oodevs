@@ -153,7 +153,7 @@ NodeElement::NodeElement( const NodeElement& from )
     , needUpdate_         ( true )
     , magicChanged_       ( false )
 {
-    for( CIT_ResourceLinks it = from.links_.begin(); it != from.links_.end(); ++it )
+    for( auto it = from.links_.begin(); it != from.links_.end(); ++it )
         links_.push_back( new ResourceLink( **it ) );
 }
 
@@ -326,7 +326,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links, const ResourceNe
         // every link capacity is infinite or superior to mean, distribute everything
         int residual = immediateStock_ - static_cast< int >( links.size() ) * distributionMean;
         immediateStock_ = 0;
-        for( CIT_ResourceLinks it = links.begin(); it != links.end(); ++it )
+        for( auto it = links.begin(); it != links.end(); ++it )
         {
             int linkCapacity = ( *it )->GetEfficientCapacity();
             int distributed = distributionMean;
@@ -463,7 +463,7 @@ bool NodeElement::NeedUpdate() const
 {
     if( needUpdate_ )
         return true;
-    for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         if( ( *it )->NeedUpdate() )
             return true;
     return false;
@@ -490,7 +490,7 @@ void NodeElement::Serialize( sword::ResourceNetwork& msg ) const
     msg.set_current_consumption( currentConsumption_ );
     msg.set_functional_state( functionalState_ );
     oldFunctionalState_ = functionalState_;
-    for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         ( *it )->Serialize( *msg.add_link() );
 }
 
@@ -601,7 +601,7 @@ void NodeElement::WriteODB( xml::xostream& xos, const ResourceTools_ABC& tools )
         xos << xml::attribute( "stock", stockMaxCapacity_ );
     if( stockCapacity_ )
         xos << xml::attribute( "initial-stock", stockCapacity_ );
-    for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+    for( auto it = links_.begin(); it != links_.end(); ++it )
         ( *it )->WriteODB( xos, tools );
     xos << xml::end;
 }

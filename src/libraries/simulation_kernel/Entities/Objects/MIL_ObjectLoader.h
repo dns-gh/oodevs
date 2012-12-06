@@ -103,7 +103,7 @@ private:
     template< class UnaryFunction >
     void ApplyOnPrototypes( UnaryFunction& functor ) const
     {
-        for( CIT_Prototypes it = prototypes_.begin(); it != prototypes_.end(); ++it )
+        for( auto it = prototypes_.begin(); it != prototypes_.end(); ++it )
             functor( *it->second );
     }
 

@@ -90,7 +90,7 @@ void DecisionalStates::Draw( const geometry::Point2f& where, const kernel::Viewp
 // -----------------------------------------------------------------------------
 void DecisionalStates::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    for( CIT_Values it = values_.begin(); it != values_.end(); ++it )
+    for( auto it = values_.begin(); it != values_.end(); ++it )
         displayer.Display( it->first + ": ", it->second );
 }
 

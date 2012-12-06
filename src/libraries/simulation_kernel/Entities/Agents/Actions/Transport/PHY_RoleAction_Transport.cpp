@@ -288,7 +288,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
 void PHY_RoleAction_Transport::ApplyContamination  ( const MIL_ToxicEffectManipulator& contamination )
 {
     double rWeightDamaged = rWeightTransported_;
-    for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )
     {
         if( it->second.rTransportedWeight_ )
         {
@@ -471,7 +471,7 @@ bool PHY_RoleAction_Transport::IsLoaded( const MIL_Agent_ABC& transported ) cons
 void PHY_RoleAction_Transport::SendFullState( client::UnitAttributes& msg ) const
 {
     msg().mutable_transported_units(); // Force sending of a list, even if empty
-    for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
+    for( auto it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
         if( it->second.rTransportedWeight_ > 0. )
             msg().mutable_transported_units()->add_elem()->set_id( (*it->first).GetID() );
 }

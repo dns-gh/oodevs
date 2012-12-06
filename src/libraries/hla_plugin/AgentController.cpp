@@ -97,7 +97,7 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
         const std::string typeName = agentType.GetName();
         const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
         const rpr::ForceIdentifier forceIdentifier = GetForce( agent );
-        for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
+        for( auto it = listeners_.begin(); it != listeners_.end(); ++it )
             (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toAscii().constData(), forceIdentifier, entityType, agentType.GetSymbol() );
     }
 }

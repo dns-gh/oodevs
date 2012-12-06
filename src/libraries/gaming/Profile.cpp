@@ -345,7 +345,7 @@ bool Profile::IsInHierarchy( const Entity_ABC& entityToTest, const T_Entities& e
             return false;
         if( IsInSpecificHierarchy( entityToTest, communication, entities, childOnly ) )
             return true;
-        for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+        for( auto it = entities.begin(); it != entities.end(); ++it )
         {
             const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
             if( !hierarchy ) // = (*it) est une formation ?
@@ -353,7 +353,7 @@ bool Profile::IsInHierarchy( const Entity_ABC& entityToTest, const T_Entities& e
         }
         return false;
     }
-    for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+    for( auto it = entities.begin(); it != entities.end(); ++it )
     {
         const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
         if( hierarchy && tactical && hierarchy->GetSuperior() == 0 && tactical->IsSubordinateOf( **it ) )
@@ -439,7 +439,7 @@ bool Profile::IsInSpecificHierarchy( const Entity_ABC& entity, const Hierarchies
 {
     if( !hierarchy )
         return false;
-    for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+    for( auto it = entities.begin(); it != entities.end(); ++it )
         if( IsInHierarchy( entity, *hierarchy, **it, childOnly ) )
             return true;
     return false;

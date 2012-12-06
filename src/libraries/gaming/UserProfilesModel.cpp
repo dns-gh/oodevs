@@ -38,7 +38,7 @@ UserProfilesModel::~UserProfilesModel()
 // -----------------------------------------------------------------------------
 void UserProfilesModel::Purge()
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         delete *it;
     userProfiles_.clear();
 }

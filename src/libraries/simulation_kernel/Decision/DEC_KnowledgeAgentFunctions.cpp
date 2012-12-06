@@ -553,7 +553,7 @@ bool DEC_KnowledgeAgentFunctions::IsInObject( const MIL_Entity_ABC& callerAgent,
     {
         T_KnowledgeObjectDiaIDVector objectsColliding;
         pKnowledge->GetAgentKnown().GetKnowledge().GetObjectsColliding( objectsColliding );
-        for( CIT_KnowledgeObjectDiaIDVector it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
+        for( auto it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
         {
             const MIL_ObjectType_ABC& type = (*it)->GetType();
             if( type.GetName() == objectType && static_cast< int >( (*it)->IsAnEnemy( callerAgent.GetArmy() ) ) == isFriend )

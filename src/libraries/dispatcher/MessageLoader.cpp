@@ -71,7 +71,7 @@ bool MessageLoader::LoadFrame( unsigned int frameNumber, MessageHandler_ABC& han
     if( disk_.get() )
     {
         boost::mutex::scoped_lock lock( dataAccessMutex_ );
-        for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+        for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
                 disk_->Enqueue( boost::bind( &MessageLoader::LoadFrameInThread, this, boost::cref( it->first ), frameNumber, boost::ref( handler ), callback ) );
@@ -100,7 +100,7 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
     if( disk_.get() )
     {
         boost::mutex::scoped_lock lock( dataAccessMutex_ );
-        for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+        for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
                 disk_->Enqueue( boost::bind( &MessageLoader::LoadKeyFrameInThread, this, boost::cref( it->first ), frameNumber, boost::ref( handler ), callback ) );
@@ -112,7 +112,7 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
         if( !SwitchToFragment( frameNumber ) )
             return;
         KeyFrame keyFrame = *keyFrames_.begin();
-        for( CIT_KeyFrames it = keyFrames_.begin(); it != keyFrames_.end(); ++it )
+        for( auto it = keyFrames_.begin(); it != keyFrames_.end(); ++it )
         {
             if( it->frameNumber_ > frameNumber )
                 break;
@@ -142,7 +142,7 @@ unsigned int MessageLoader::FindKeyFrame( unsigned int frameNumber )
     if( !SwitchToFragment( frameNumber ) )
         return 0;
     unsigned int ret = keyFrames_.begin()->frameNumber_;
-    for( CIT_KeyFrames it = keyFrames_.begin(); it != keyFrames_.end() && it->frameNumber_ <= frameNumber; ++it )
+    for( auto it = keyFrames_.begin(); it != keyFrames_.end() && it->frameNumber_ <= frameNumber; ++it )
         ret = it->frameNumber_;
     return ret - 1;
 }
@@ -160,7 +160,7 @@ void MessageLoader::FillTimeTable( sword::TimeTable& msg, unsigned int beginTick
         while( tick <= endTick )
         {
             bool incremented = false;
-            for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+            for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             {
                 if( tick >= it->second.first && tick <= it->second.second )
                 {
@@ -361,7 +361,7 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
             keys_.close();
             currentOpenFolder_.clear();
         }
-        for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
+        for( auto it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
             {
                 currentOpenFolder_ = it->first;
@@ -451,7 +451,7 @@ void MessageLoader::LoadKeyFrameInThread( const std::string& folder, unsigned in
     LoadIndexes( keyFrames, index );
     index.close();
     KeyFrame& keyFrame = *keyFrames.begin();
-    for( CIT_KeyFrames it = keyFrames.begin(); it != keyFrames.end() && it->frameNumber_ <= frameNumber; ++it )
+    for( auto it = keyFrames.begin(); it != keyFrames.end() && it->frameNumber_ <= frameNumber; ++it )
         keyFrame = *it;
     std::ifstream file;
     OpenFile( file, folder, keyFileName_ );

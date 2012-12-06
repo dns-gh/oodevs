@@ -300,7 +300,7 @@ double ADN_AutomatLog_ListView::GetMinEngineStartedAutonomy( const T_CategoryEnt
 // -----------------------------------------------------------------------------
 void ADN_AutomatLog_ListView::AddEntryToTotal( const T_CategoryEntry& entry, T_CategoryEntry& total, uint nArity )
 {
-    for( CIT_CategoryEntry it = entry.begin(); it != entry.end(); ++it )
+    for( auto it = entry.begin(); it != entry.end(); ++it )
     {
         const ADN_Equipement_Data::CategoryInfo* pCat = it->first;
         if( total[ pCat ] == 0 )
@@ -336,7 +336,7 @@ void ADN_AutomatLog_ListView::ClearEntry( T_CategoryEntry& entry )
 // -----------------------------------------------------------------------------
 void ADN_AutomatLog_ListView::FillTotalItem( Q3ListViewItem& item, const T_CategoryEntry& entry ) const
 {
-    for( CIT_CategoryEntry it = entry.begin(); it != entry.end(); ++it )
+    for( auto it = entry.begin(); it != entry.end(); ++it )
     {
         ADN_Rich_ListViewItem* pSubItem = new ADN_Rich_ListViewItem( &item, true );
         pSubItem->OverrideSorting( ADN_Rich_ListViewItem::eSortingConstraint_Last );

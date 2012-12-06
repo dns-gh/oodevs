@@ -76,7 +76,7 @@ void PointCollection::Serialize( OGRFeature& feature, OGRSpatialReference* spati
 void PointCollection::Serialize( OGRLineString& points, OGRSpatialReference* spatialReference ) const
 {
     points.assignSpatialReference( spatialReference );
-    for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
+    for( auto it = points_.begin(); it != points_.end(); ++it )
     {
         OGRPoint point;
         // point.setCoordinateDimension( 2 );
@@ -93,7 +93,7 @@ void PointCollection::Serialize( std::ostream& geometry ) const
 {
     std::stringstream ss;
 
-    for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
+    for( auto it = points_.begin(); it != points_.end(); ++it )
     {
         it->SerializeCoordinates( ss, ' ' );
         if( (it + 1) != points_.end() )
@@ -109,6 +109,6 @@ void PointCollection::Serialize( std::ostream& geometry ) const
 // -----------------------------------------------------------------------------
 void PointCollection::Serialize( kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
+    for( auto it = points_.begin(); it != points_.end(); ++it )
         it->Serialize( location, converter );
 }

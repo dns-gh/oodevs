@@ -75,7 +75,7 @@ UserProfileList::~UserProfileList()
 // -----------------------------------------------------------------------------
 void UserProfileList::Save()
 {
-    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+    for( auto it = editors_.begin(); it != editors_.end(); ++it )
     {
         *const_cast< UserProfile* >( it->first ) = *it->second;
         controllers_.controller_.Update( it->first );
@@ -90,7 +90,7 @@ void UserProfileList::Save()
 // -----------------------------------------------------------------------------
 void UserProfileList::Cancel()
 {
-    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+    for( auto it = editors_.begin(); it != editors_.end(); ++it )
         delete it->second;
     editors_.clear();
     checker_.Clean();

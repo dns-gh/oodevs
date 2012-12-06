@@ -131,7 +131,7 @@ void TacticalLine_ABC::UpdateGeometry( const sword::Location& asn )
 void TacticalLine_ABC::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const
 {
     xos << xml::attribute( "name", strName_ );
-    for( CIT_PositionVector it = geometry_.begin(); it != geometry_.end(); ++it )
+    for( auto it = geometry_.begin(); it != geometry_.end(); ++it )
         WritePoint( xos, converter, *it );
 }
 

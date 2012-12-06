@@ -138,7 +138,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::ReserveConsumptions()
         return;
     assert( pPion_ );
     const PHY_ConsumptionType* pConsumptionMode = 0;
-    for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
+    for( auto it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
     {
         const PHY_ConsumptionType& composanteConsumptionMode = it->first->GetConsumptionMode( pObject_->GetType() );
         if( !pConsumptionMode || *pConsumptionMode < composanteConsumptionMode  )
@@ -203,7 +203,7 @@ double PHY_RoleAction_Objects_DataComputerPionData::GetMinOperationTime() const
     if( !bConsumptionReserved_ )
         return rMinOperationTime;
 
-    for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
+    for( auto it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
         rMinOperationTime = std::min( rMinOperationTime, it->second );
     return rMinOperationTime;
 }
@@ -219,7 +219,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::GetTotalOperationTime( double&
     if( !bConsumptionReserved_ )
         return;
 
-    for( CIT_ComposanteDataVector it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
+    for( auto it = workingComposantes_.begin(); it != workingComposantes_.end(); ++it )
     {
         rOperationTime += it->second;
         ++ nNbrComposantes;

@@ -39,7 +39,7 @@ GraphicPreferences::GraphicPreferences( kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 GraphicPreferences::~GraphicPreferences()
 {
-    for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
+    for( auto it = displays_.begin(); it != displays_.end(); ++it )
         delete *it;
 }
 

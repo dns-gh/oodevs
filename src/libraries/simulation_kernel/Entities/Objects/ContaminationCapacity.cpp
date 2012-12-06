@@ -144,7 +144,7 @@ void ContaminationCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL
 // -----------------------------------------------------------------------------
 bool ContaminationCapacity::IsInsideDecontaminatedZone( const MT_Vector2D& position ) const
 {
-    for( CIT_LocalisationVector it = decontaminatedZones_.begin(); it != decontaminatedZones_.end(); ++it )
+    for( auto it = decontaminatedZones_.begin(); it != decontaminatedZones_.end(); ++it )
         if( it->IsInside( position ) )
             return true;
     return false;

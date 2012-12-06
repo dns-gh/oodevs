@@ -104,13 +104,13 @@ namespace boost
         void save( Archive& file, const T_MedicalPriorityVector& vector, const unsigned int )
         {
             std::size_t size = vector.size();
-            for( CIT_MedicalPriorityVector it = vector.begin(); it != vector.end(); ++it )
+            for( auto it = vector.begin(); it != vector.end(); ++it )
             {
                 if( !*it )
                     --size;
             }
             file << size;
-            for( CIT_MedicalPriorityVector it = vector.begin(); it != vector.end(); ++it )
+            for( auto it = vector.begin(); it != vector.end(); ++it )
             {
                 if( !*it )
                     continue;

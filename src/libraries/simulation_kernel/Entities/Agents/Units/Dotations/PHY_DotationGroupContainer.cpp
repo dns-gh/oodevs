@@ -47,7 +47,7 @@ PHY_DotationGroupContainer::PHY_DotationGroupContainer()
 // -----------------------------------------------------------------------------
 PHY_DotationGroupContainer::~PHY_DotationGroupContainer()
 {
-    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         delete it->second;
     dotationGroups_.clear();
 }
@@ -195,7 +195,7 @@ void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis, T_DotationSet
 void PHY_DotationGroupContainer::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "resources" );
-    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->WriteODB( xos );
     xos << xml::end; // resources
 }
@@ -279,7 +279,7 @@ double PHY_DotationGroupContainer::Supply( const PHY_DotationCategory& category,
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::Resupply()
 {
-    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->Resupply();
 }
 
@@ -384,7 +384,7 @@ double PHY_DotationGroupContainer::AddConsumptionReservation( const PHY_Dotation
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::CancelConsumptionReservations()
 {
-    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->CancelConsumptionReservations();
 }
 
@@ -394,7 +394,7 @@ void PHY_DotationGroupContainer::CancelConsumptionReservations()
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ConsumeConsumptionReservations()
 {
-    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->ConsumeConsumptionReservations();
 }
 
@@ -414,7 +414,7 @@ double PHY_DotationGroupContainer::AddFireReservation( const PHY_DotationCategor
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ConsumeFireReservations()
 {
-    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->ConsumeFireReservations();
 }
 
@@ -434,7 +434,7 @@ void PHY_DotationGroupContainer::NotifySupplyNeeded( const PHY_DotationCategory&
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::Apply( boost::function< void( PHY_Dotation& ) > visitor ) const
 {
-    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->Apply( visitor );
 }
 
@@ -456,7 +456,7 @@ void PHY_DotationGroupContainer::ChangeDotationsValueUsingTC2( const PHY_Dotatio
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::NotifyCaptured()
 {
-    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->NotifyCaptured();
 }
 
@@ -466,7 +466,7 @@ void PHY_DotationGroupContainer::NotifyCaptured()
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::NotifyReleased()
 {
-    for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+    for( auto it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->NotifyReleased();
 }
 

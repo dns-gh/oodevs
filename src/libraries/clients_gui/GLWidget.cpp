@@ -487,7 +487,7 @@ void GlWidget::DrawSelectedPolygon( const T_PointVector& points ) const
     {
         color[ 3 ] *= 0.35f; // ??
         glColor4fv( color );
-        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        for( auto it = points.begin(); it != points.end(); ++it )
             DrawDisc( *it, 5, pixels );
         color[ 0 ] = 1.f;
     }

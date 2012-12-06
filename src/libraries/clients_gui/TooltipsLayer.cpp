@@ -41,7 +41,7 @@ void TooltipsLayer::Paint( kernel::Viewport_ABC& viewport )
 {
     if( !ShouldDrawPass() )
         return;
-    for( CIT_Tooltips it = tooltips_.begin(); it != tooltips_.end(); ++it )
+    for( auto it = tooltips_.begin(); it != tooltips_.end(); ++it )
         if( viewport.IsVisible( it->first ) )
             tools_.DrawImage( it->second, it->first );
     tooltips_.clear();

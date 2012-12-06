@@ -423,7 +423,7 @@ void ExtensionsPanel::Commit()
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !ext || !type )
         return;
-    for( CIT_Widgets it = widgets_.begin(); it != widgets_.end(); ++it )
+    for( auto it = widgets_.begin(); it != widgets_.end(); ++it )
     {
         AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( ( *it )->name() );
         if( attribute )
@@ -504,7 +504,7 @@ void ExtensionsPanel::UpdateDisplay()
     if( !ext || !type )
         return;
     updating_ = true;
-    for( CIT_Widgets it = widgets_.begin(); it != widgets_.end(); ++it )
+    for( auto it = widgets_.begin(); it != widgets_.end(); ++it )
     {
         AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( ( *it )->name() );
         if( attribute )

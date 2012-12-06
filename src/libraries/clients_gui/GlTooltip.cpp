@@ -257,7 +257,7 @@ void GlTooltip::GenerateImage( unsigned int width, unsigned int height )
         frameDrawer_( p, pixmap.rect() );
         int x = 4;
         int y = fontHeight;
-        for( CIT_Messages it = new_.begin(); it != new_.end(); ++it )
+        for( auto it = new_.begin(); it != new_.end(); ++it )
         {
             p.setPen( it->second.first );
             if( p.font() != it->second.second )
@@ -327,7 +327,7 @@ QPixmap GlTooltip::CreatePixmap( unsigned int width, unsigned int height )
     int w = 0;
     int h = 0;
     int x = 0;
-    for( CIT_Messages it = new_.begin(); it != new_.end(); ++it )
+    for( auto it = new_.begin(); it != new_.end(); ++it )
     {
         const QFontMetrics metrics( it->second.second );
         int fontHeight = metrics.height();

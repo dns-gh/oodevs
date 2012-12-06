@@ -53,7 +53,7 @@ MIL_ObjectManager::MIL_ObjectManager()
 // -----------------------------------------------------------------------------
 MIL_ObjectManager::~MIL_ObjectManager()
 {
-    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
         delete it->second;
 }
 
@@ -64,7 +64,7 @@ MIL_ObjectManager::~MIL_ObjectManager()
 void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> objects_;
-    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
     {
         if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( it->second ) )
             urbanObjects_.insert( std::make_pair( &wrapper->GetObject(), wrapper ) );
@@ -89,7 +89,7 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int
 void MIL_ObjectManager::WriteUrban( xml::xostream& xos ) const
 {
     xos << xml::start( "urban-objects" );
-    for( CIT_UrbanObjectMap it = urbanObjects_.begin(); it != urbanObjects_.end(); it++ )
+    for( auto it = urbanObjects_.begin(); it != urbanObjects_.end(); it++ )
         ( *it ).second->WriteUrban( xos );
     xos << xml::end;
 }
@@ -100,7 +100,7 @@ void MIL_ObjectManager::WriteUrban( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::ProcessEvents()
 {
-    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    for( auto it = objects_.begin(); it != objects_.end(); ++it )
     {
         try
         {
@@ -208,7 +208,7 @@ UrbanObjectWrapper& MIL_ObjectManager::GetUrbanObjectWrapper( const urban::Terra
 // -----------------------------------------------------------------------------
 unsigned int MIL_ObjectManager::ConvertUrbanIdToSimId( unsigned int urbanId )
 {
-    for( CIT_UrbanObjectMap it = urbanObjects_.begin(); it != urbanObjects_.end(); ++it )
+    for( auto it = urbanObjects_.begin(); it != urbanObjects_.end(); ++it )
         if( it->first->GetId() == urbanId )
             return it->second->GetID();
     throw std::exception( ( "Cannot find urban object with id = " + boost::lexical_cast< std::string >( urbanId ) ).c_str() );
@@ -220,7 +220,7 @@ unsigned int MIL_ObjectManager::ConvertUrbanIdToSimId( unsigned int urbanId )
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManager::ConvertIdToUrbanId( unsigned int& id ) const
 {
-    for( CIT_UrbanObjectMap it = urbanObjects_.begin(); it != urbanObjects_.end(); ++it )
+    for( auto it = urbanObjects_.begin(); it != urbanObjects_.end(); ++it )
         if( it->second->GetID() == id )
         {
             id = it->first->GetId();

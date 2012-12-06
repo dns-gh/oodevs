@@ -64,43 +64,43 @@ public:
 
     virtual void Receive( const sword::SimToClient& message )
     {
-        for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
+        for( auto it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Receive( message );
     }
 
     virtual void Receive( const sword::AarToClient& message )
     {
-        for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
+        for( auto it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Receive( message );
     }
 
     virtual void Receive( const sword::MessengerToClient& message )
     {
-        for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
+        for( auto it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Receive( message );
     }
 
     virtual void Register( dispatcher::Services& services )
     {
-        for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
+        for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
             (*it)->Register( services );
     }
 
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, const std::string& link, Profile_ABC& profile )
     {
-        for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
+        for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
             (*it)->NotifyClientAuthenticated( client, link, profile );
     }
 
     virtual void NotifyClientLeft( ClientPublisher_ABC& client, const std::string& link )
     {
-        for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
+        for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
             (*it)->NotifyClientLeft( client, link );
     }
 
     virtual void Update()
     {
-        for( CIT_Plugins it = plugins_.begin(); it != plugins_.end(); ++it )
+        for( auto it = plugins_.begin(); it != plugins_.end(); ++it )
             (*it)->Update();
     }
     //@}

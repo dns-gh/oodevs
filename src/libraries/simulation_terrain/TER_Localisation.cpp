@@ -516,7 +516,7 @@ void TER_Localisation::Write( xml::xostream& xos ) const
         xos << xml::attribute( "type", ConvertLocalisationType( nType_ ) )
             << xml::start( "points" );
         std::string strPoint;
-        for( CIT_PointVector it = pointVector_.begin(); it != pointVector_.end(); ++it )
+        for( auto it = pointVector_.begin(); it != pointVector_.end(); ++it )
         {
             TER_World::GetWorld().SimToMosMgrsCoord( *it, strPoint );
             xos << xml::content( "point", strPoint );
@@ -626,7 +626,7 @@ bool TER_Localisation::ComputeNearestPoint( const TER_Localisation& localisation
 {
     const T_PointVector& points = localisation.GetPoints();
     rMinDistance = std::numeric_limits< double >::max();
-    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+    for( auto it = points.begin(); it != points.end(); ++it )
     {
         MT_Vector2D nearestPointTmp;
         if( ComputeNearestPoint( *it, nearestPointTmp ) )

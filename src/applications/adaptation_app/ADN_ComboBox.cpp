@@ -202,7 +202,7 @@ void ADN_ComboBox::clear()
 int ADN_ComboBox::FindNdx( const ADN_ComboBoxItem* item ) const
 {
     int ndx = 0;
-    for( CIT_PtrComboBoxItem_Vector it = vItems_.begin(); it != vItems_.end(); ++it, ++ndx )
+    for( auto it = vItems_.begin(); it != vItems_.end(); ++it, ++ndx )
         if( ( *it ) == item )
             return ndx;
     return -1;
@@ -215,7 +215,7 @@ int ADN_ComboBox::FindNdx( const ADN_ComboBoxItem* item ) const
 int ADN_ComboBox::FindNdx( void* data) const
 {
     int ndx = 0;
-    for( CIT_PtrComboBoxItem_Vector it = vItems_.begin(); it != vItems_.end(); ++it, ++ndx )
+    for( auto it = vItems_.begin(); it != vItems_.end(); ++it, ++ndx )
         if( ( *it ) && ( *it )->GetData() == data )
             return ndx;
     return -1;

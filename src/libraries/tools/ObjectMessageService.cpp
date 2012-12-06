@@ -33,7 +33,7 @@ ObjectMessageService::ObjectMessageService()
 // -----------------------------------------------------------------------------
 ObjectMessageService::~ObjectMessageService()
 {
-    for( CIT_Callbacks it = callbacks_.begin(); it != callbacks_.end(); ++it )
+    for( auto it = callbacks_.begin(); it != callbacks_.end(); ++it )
         delete it->second;
 }
 

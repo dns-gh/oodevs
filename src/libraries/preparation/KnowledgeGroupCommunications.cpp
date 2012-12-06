@@ -40,7 +40,7 @@ KnowledgeGroupCommunications::~KnowledgeGroupCommunications()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupCommunications::SerializeAttributes( xml::xostream& xos ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         const kernel::Entity_ABC* element = it->second;
         if( element && dynamic_cast< const kernel::Automat_ABC* >( element ) == 0 && dynamic_cast< const kernel::Ghost_ABC* >( element ) == 0 )

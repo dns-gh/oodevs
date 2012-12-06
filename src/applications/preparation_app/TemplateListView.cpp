@@ -145,7 +145,7 @@ void TemplateListView::SaveTemplates( const std::string& filename ) const
     {
         xml::xofstream output( filename );
         output << xml::start( "templates" );
-        for( CIT_Templates it = templates_.begin(); it != templates_.end(); ++it )
+        for( auto it = templates_.begin(); it != templates_.end(); ++it )
             (*it)->Serialize( output );
         output << xml::end;
     }
@@ -181,7 +181,7 @@ void TemplateListView::CreateItem( HierarchyTemplate& t )
 void TemplateListView::Clear()
 {
     clear();
-    for( CIT_Templates it = templates_.begin(); it != templates_.end(); ++it )
+    for( auto it = templates_.begin(); it != templates_.end(); ++it )
         delete *it;
     templates_.clear();
 }

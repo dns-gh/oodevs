@@ -74,7 +74,7 @@ void MIL_LivingArea::Finalize()
 // -----------------------------------------------------------------------------
 MIL_LivingArea::~MIL_LivingArea()
 {
-    for( CIT_Blocks it = blocks_.begin(); it != blocks_.end(); ++it )
+    for( auto it = blocks_.begin(); it != blocks_.end(); ++it )
         delete *it;
 }
 
@@ -196,7 +196,7 @@ float MIL_LivingArea::ComputeOccupationFactor() const
     if( population_ == 0 )
         return 1.f;
     float occupationFactor = 0;
-    for( CIT_Blocks it = blocks_.begin(); it != blocks_.end(); ++it )
+    for( auto it = blocks_.begin(); it != blocks_.end(); ++it )
         occupationFactor += ( *it )->ComputeOccupationFactor();
     return occupationFactor / population_;
 }
@@ -333,7 +333,7 @@ void MIL_LivingArea::MovePeople( const std::string& motivation, int occurence )
     if( finalBlocks_.empty() )
         return;
     unsigned int totalLeaving = 0;
-    for( CIT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
+    for( auto it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
         for( CIT_PersonsPerAccomodation accomodation = it->second.begin(); accomodation != it->second.end(); ++accomodation )
         {
             unsigned int leaving = static_cast< unsigned int >( static_cast< float >( accomodation->second ) / occurence );
@@ -342,7 +342,7 @@ void MIL_LivingArea::MovePeople( const std::string& motivation, int occurence )
             currentStartingState_[ it->first ][ accomodation->first ] -= leaving;
         }
     unsigned int tmp = totalLeaving;
-    for( CIT_FinalBlockRatios it = finalBlocks_.begin(); it != finalBlocks_.end() && tmp > 0; ++it )
+    for( auto it = finalBlocks_.begin(); it != finalBlocks_.end() && tmp > 0; ++it )
     {
         unsigned int arriving = std::min( tmp, static_cast< unsigned int >( it->second.first * totalLeaving + 0.5f ) );
         tmp -= arriving;
@@ -362,7 +362,7 @@ void MIL_LivingArea::FinishMoving( const std::string& motivation )
     if( finalBlocks_.empty() )
         return;
     unsigned int totalLeaving = 0;
-    for( CIT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
+    for( auto it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
         for( CIT_PersonsPerAccomodation accomodation = it->second.begin(); accomodation != it->second.end(); ++accomodation )
         {
             unsigned int leaving = currentStartingState_[ it->first ][ accomodation->first ];
@@ -371,7 +371,7 @@ void MIL_LivingArea::FinishMoving( const std::string& motivation )
         }
     unsigned int tmp = totalLeaving;
     unsigned int remaining = 0;
-    for( CIT_FinalBlockRatios it = finalBlocks_.begin(); it != finalBlocks_.end() && tmp > 0; ++it )
+    for( auto it = finalBlocks_.begin(); it != finalBlocks_.end() && tmp > 0; ++it )
     {
         unsigned int arriving = std::min( tmp, static_cast< unsigned int >( it->second.first * totalLeaving + 0.5f ) );
         tmp -= arriving;
@@ -380,7 +380,7 @@ void MIL_LivingArea::FinishMoving( const std::string& motivation )
         tmp -= arriving;
         remaining += it->first->IncreasePeopleWhenMoving( "", arriving, *this );
     }
-    for( CIT_FinalBlockRatios it = finalBlocks_.begin(); it != finalBlocks_.end() && remaining > 0; ++it )
+    for( auto it = finalBlocks_.begin(); it != finalBlocks_.end() && remaining > 0; ++it )
     {
         remaining = it->first->IncreasePeopleWhenMoving( motivation, remaining, *this );
         remaining = it->first->IncreasePeopleWhenMoving( "", remaining, *this );
@@ -529,12 +529,12 @@ T_PointVector MIL_LivingArea::ComputeMovingArea() const
     if( startingBlocks_.empty() || finalBlocks_.empty() )
         return hull;
     T_PointVector vertices;
-    for( CIT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
+    for( auto it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
     {
         const T_PointVector& objectVertices = it->first->GetObject().GetLocalisation().GetPoints();
         vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
     }
-    for( CIT_FinalBlockRatios it = finalBlocks_.begin(); it != finalBlocks_.end(); ++it )
+    for( auto it = finalBlocks_.begin(); it != finalBlocks_.end(); ++it )
     {
         const T_PointVector& objectVertices = it->first->GetObject().GetLocalisation().GetPoints();
         vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );

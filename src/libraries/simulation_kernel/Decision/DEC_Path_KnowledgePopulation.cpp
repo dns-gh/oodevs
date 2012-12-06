@@ -107,7 +107,7 @@ double DEC_Path_KnowledgePopulation::ComputeClosestElementInRange( const MT_Vect
 {
     pResult = 0;
     double rMinDistance = std::numeric_limits< double >::max();
-    for( CIT_PopulationElements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         if( OutOfBoundingBox( it->location_.GetBoundingBox(), position, rMaxRange ) )
             continue;

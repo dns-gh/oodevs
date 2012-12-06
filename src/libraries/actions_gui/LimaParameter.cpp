@@ -179,7 +179,7 @@ void LimaParameter::OnMenuClick( QAction* action )
     int index = 0;
     if( selectedLine_ )
     {
-        for( CIT_Actions it = actions_.begin(); it != actions_.end(); ++it, ++index )
+        for( auto it = actions_.begin(); it != actions_.end(); ++it, ++index )
             if( *it == action )
             {
                 entityLabel_->setText( selectedLine_->GetName() );
@@ -207,7 +207,7 @@ namespace
 
         virtual void VisitLines( const T_PointVector& points )
         {
-            for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+            for( auto it = points.begin(); it != points.end(); ++it )
                 location_.AddPoint( *it );
         }
 

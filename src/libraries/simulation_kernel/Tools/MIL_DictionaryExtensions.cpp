@@ -64,7 +64,7 @@ void MIL_DictionaryExtensions::WriteODB( xml::xostream& xos ) const
     if( extensions_.empty() )
         return;
     bool found = false;
-    for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
+    for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
     {
         if( it->second != "" )
         {
@@ -111,7 +111,7 @@ void MIL_DictionaryExtensions::save( MIL_CheckPointOutArchive& file, const unsig
 {
     std::size_t size = extensions_.size();
     file << size;
-    for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
+    for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
         file << it->first
              << it->second;
 }

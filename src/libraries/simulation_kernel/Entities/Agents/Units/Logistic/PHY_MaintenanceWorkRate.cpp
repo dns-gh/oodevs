@@ -114,7 +114,7 @@ void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( sword::EnumLogMaintenanceWorkRate nID )
 {
-    for( CIT_WorkRateMap it = workRates_.begin(); it != workRates_.end(); ++it )
+    for( auto it = workRates_.begin(); it != workRates_.end(); ++it )
         if( it->second->GetAsnID() == nID )
             return it->second;
     return 0;

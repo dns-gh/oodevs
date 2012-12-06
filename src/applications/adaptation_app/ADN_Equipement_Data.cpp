@@ -368,7 +368,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
     case eTypeMunitionTirIndirect_Aced:
     case eTypeMunitionTirIndirect_Grenade:
         output << xml::attribute( "neutralization-ratio", rNeutralizationRatio_ );
-        for( CIT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
+        for( auto it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
             ( *it )->WriteArchive( output );
         break;
 
@@ -755,7 +755,7 @@ void ADN_Equipement_Data::ResourceInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::ResourceInfos::WriteArchive( xml::xostream& output ) const
 {
-    for( CIT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
+    for( auto it = categories_.begin(); it != categories_.end(); ++it )
         (*it)->WriteArchive( output );
 }
 
@@ -765,7 +765,7 @@ void ADN_Equipement_Data::ResourceInfos::WriteArchive( xml::xostream& output ) c
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::ResourceInfos::Initialize()
 {
-    for( CIT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
+    for( auto it = categories_.begin(); it != categories_.end(); ++it )
         (*it)->Initialize();
 }
 
@@ -955,7 +955,7 @@ QStringList ADN_Equipement_Data::GetEquipmentsThatUse( helpers::ResourceNatureIn
 {
     QStringList result;
     ResourceInfos& resourceInfos = GetDotation( familly );
-    for( CIT_CategoryInfos_Vector it = resourceInfos.categories_.begin(); it != resourceInfos.categories_.end(); ++it )
+    for( auto it = resourceInfos.categories_.begin(); it != resourceInfos.categories_.end(); ++it )
         if( ( *it )->ptrResourceNature_.GetData()->strName_.GetData() == object.strName_.GetData() )
                     result << ( *it )->strName_.GetData().c_str();
     return result;

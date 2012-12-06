@@ -105,7 +105,7 @@ void PHY_RolePion_Humans::WriteODB( xml::xostream& xos ) const
 {
     bool found = false;
     std::list< const PHY_HumanState* > unwounded;
-    for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
+    for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = **it;
         if( ( state.contaminated_ || state.psyop_ || state.state_ != &PHY_HumanWound::notWounded_ ) )
@@ -328,7 +328,7 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& message ) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
 {
-    for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
+    for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = **it;
         sword::HumanDotations::HumanDotation& personnel = *message().mutable_human_dotations()->add_elem();
@@ -385,7 +385,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         //personnel.set_rank( state.rank_.GetAsnID() );
         //personnel.set_state( state.state_->GetAsnID() );
         //personnel.set_location( state.location_->GetAsnID() );
-        //for( CIT_Injuries it = state.injuries_.begin(); state.injuries_.end(); ++it )
+        //for( auto it = state.injuries_.begin(); state.injuries_.end(); ++it )
         //{
         //    sword::Injury* injury = personnel.mutable_injuries()->Add();
         //    injury->set_id( it->first );
@@ -473,7 +473,7 @@ void PHY_RolePion_Humans::HealAllHumans()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 {
-    for( CIT_HumanSet it = humansToUpdate_.begin(); it != humansToUpdate_.end(); )
+    for( auto it = humansToUpdate_.begin(); it != humansToUpdate_.end(); )
     {
         Human_ABC& human = **it;
         ++it;
@@ -512,7 +512,7 @@ void PHY_RolePion_Humans::ChangeEvacuationMode( E_EvacuationMode nMode )
 unsigned int PHY_RolePion_Humans::GetNbrTotal( const PHY_HumanRank& rank ) const
 {
     unsigned int result = 0;
-    for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
+    for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = **it;
         if( state.rank_->GetID() == rank.GetID() )
@@ -528,7 +528,7 @@ unsigned int PHY_RolePion_Humans::GetNbrTotal( const PHY_HumanRank& rank ) const
 unsigned int PHY_RolePion_Humans::GetNbrOperational( const PHY_HumanRank& rank ) const
 {
     unsigned int result = 0;
-    for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
+    for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = **it;
         if( state.rank_->GetID() == rank.GetID() && state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ && !state.contaminated_ )
@@ -545,7 +545,7 @@ bool PHY_RolePion_Humans::HasNoMoreOperationalHumans() const
 {
     if( humansStates_.empty() )
         return false;
-    for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
+    for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = **it;
         if( state.state_->GetID() == PHY_HumanWound::notWounded_.GetID() && state.location_ != Human_ABC::eMedical && !state.psyop_ && !state.contaminated_ )
@@ -570,7 +570,7 @@ unsigned int PHY_RolePion_Humans::GetNbrUsableHumans() const
 unsigned int PHY_RolePion_Humans::GetNumber() const
 {
     unsigned int result = 0;
-    for( CIT_HumanStateVector it = humansStates_.begin(); it != humansStates_.end(); ++it )
+    for( auto it = humansStates_.begin(); it != humansStates_.end(); ++it )
     {
         const PHY_HumanState& state = **it;
         result += state.number_;

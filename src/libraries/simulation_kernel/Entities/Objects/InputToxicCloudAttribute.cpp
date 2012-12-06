@@ -229,7 +229,7 @@ void InputToxicCloudAttribute::SendFullState( sword::ObjectAttributes& asn ) con
 {
     if( bExport_ )
     {
-        for( CIT_QuantityContainer it = export_.begin() ; it != export_.end(); ++it )
+        for( auto it = export_.begin() ; it != export_.end(); ++it )
         {
             sword::LocatedQuantity* quantity = asn.mutable_toxic_cloud()->mutable_quantities()->add_elem();
             quantity->mutable_coordinate()->set_latitude( (*it).first.rX_ );

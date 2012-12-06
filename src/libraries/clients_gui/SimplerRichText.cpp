@@ -126,7 +126,7 @@ void SimplerRichText::draw( QPainter* p, int x, int y, const QRect& clipRect, co
         p->setClipRect( clipRect, Qt::ReplaceClip );
     if( paper )
         p->fillRect( clipRect, *paper );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->draw( p, x, y, cg );
 }
 
@@ -235,7 +235,7 @@ void SimplerRichText::AddLinkElement( const QString& link, const QString& text )
 QString SimplerRichText::anchorAt( const QPoint& point ) const
 {
     if( point.y() >= 0 && point.y() < height() )
-        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        for( auto it = elements_.begin(); it != elements_.end(); ++it )
             if( it->IsAt( point ) )
                 return it->Anchor();
     return "";

@@ -210,21 +210,21 @@ double PHY_Speeds::GetMaxSpeed( const TerrainData& data ) const
     {
         unsigned int nOffset = 0;
         const unsigned char area = data.Area();
-        for( CIT_Speed it = rAreaSpeeds_.begin(); it != rAreaSpeeds_.end(); ++it, ++nOffset )
+        for( auto it = rAreaSpeeds_.begin(); it != rAreaSpeeds_.end(); ++it, ++nOffset )
             if( area & ( 1 << nOffset ) && *it > rMaxArea )
                 rMaxArea = *it;
     }
     {
         unsigned int nOffset = 0;
         const unsigned char border = data.Border();
-        for( CIT_Speed it = rBorderSpeeds_.begin(); it != rBorderSpeeds_.end(); ++it, ++nOffset )
+        for( auto it = rBorderSpeeds_.begin(); it != rBorderSpeeds_.end(); ++it, ++nOffset )
             if( border & ( 1 << nOffset ) && *it > rMaxBorder )
                 rMaxBorder = *it;
     }
     {
         unsigned nOffset = 0;
         const unsigned short linear = data.Linear();
-        for( CIT_Speed it = rLinearSpeeds_.begin(); it != rLinearSpeeds_.end(); ++it, ++nOffset )
+        for( auto it = rLinearSpeeds_.begin(); it != rLinearSpeeds_.end(); ++it, ++nOffset )
             if( linear & ( 1 << nOffset ) && *it > rMaxLinear )
                 rMaxLinear = *it;
     }
@@ -266,7 +266,7 @@ bool PHY_Speeds::HasConstructionSpeeds() const
 double PHY_Speeds::GetConstructionSpeed( const TerrainData& data ) const
 {
     double ret = 1.;
-    for( CIT_ConstructionSpeed it = rConstructionSpeeds_.begin(); it != rConstructionSpeeds_.end(); ++it )
+    for( auto it = rConstructionSpeeds_.begin(); it != rConstructionSpeeds_.end(); ++it )
         if( data.ContainsOne( TerrainData::FromString( it->first ) ) )
             ret = std::min( ret, it->second );
     return ret;
@@ -282,7 +282,7 @@ void PHY_Speeds::GenerateMasks()
         nLinearPassabilityMask_ = 0;
         nLinearImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
-        for( CIT_Speed it = rLinearSpeeds_.begin(); it != rLinearSpeeds_.end(); ++it, ++nOffset )
+        for( auto it = rLinearSpeeds_.begin(); it != rLinearSpeeds_.end(); ++it, ++nOffset )
         {
             if( *it == 0. )
                 nLinearImpassabilityMask_ |= ( 1 << nOffset );
@@ -294,7 +294,7 @@ void PHY_Speeds::GenerateMasks()
         nBorderPassabilityMask_ = 0;
         nBorderImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
-        for( CIT_Speed it = rBorderSpeeds_.begin(); it != rBorderSpeeds_.end(); ++it, ++nOffset )
+        for( auto it = rBorderSpeeds_.begin(); it != rBorderSpeeds_.end(); ++it, ++nOffset )
         {
             if( *it == 0. )
                 nBorderImpassabilityMask_ |= ( 1 << nOffset );
@@ -306,7 +306,7 @@ void PHY_Speeds::GenerateMasks()
         nAreaPassabilityMask_ = 0;
         nAreaImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
-        for( CIT_Speed it = rAreaSpeeds_.begin(); it != rAreaSpeeds_.end(); ++it, ++nOffset )
+        for( auto it = rAreaSpeeds_.begin(); it != rAreaSpeeds_.end(); ++it, ++nOffset )
         {
             if( *it == 0. )
                 nAreaImpassabilityMask_ |= ( 1 << nOffset );

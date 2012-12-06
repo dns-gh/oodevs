@@ -71,11 +71,11 @@ DEC_Workspace::DEC_Workspace( MIL_Config& config )
 //-----------------------------------------------------------------------------
 DEC_Workspace::~DEC_Workspace()
 {
-    for( CIT_ModelMap it = automateModels_.begin(); it != automateModels_.end(); ++it )
+    for( auto it = automateModels_.begin(); it != automateModels_.end(); ++it )
         delete it->second;
-    for( CIT_ModelMap it = pionModels_.begin(); it != pionModels_.end(); ++it )
+    for( auto it = pionModels_.begin(); it != pionModels_.end(); ++it )
         delete it->second;
-    for( CIT_ModelMap it = populationModels_.begin(); it != populationModels_.end(); ++it )
+    for( auto it = populationModels_.begin(); it != populationModels_.end(); ++it )
         delete it->second;
 }
 

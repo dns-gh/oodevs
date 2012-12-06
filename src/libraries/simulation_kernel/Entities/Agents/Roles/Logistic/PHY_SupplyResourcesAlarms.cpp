@@ -66,7 +66,7 @@ void PHY_SupplyResourcesAlarms::Terminate()
 // -----------------------------------------------------------------------------
 bool PHY_SupplyResourcesAlarms::IsLevelReached( const T_LevelSet& levels, double rPreviousRatio, double rCurrentRatio )
 {
-    for( CIT_LevelSet it = levels.begin(); it != levels.end(); ++it )
+    for( auto it = levels.begin(); it != levels.end(); ++it )
     {
         if( rPreviousRatio > *it && rCurrentRatio <= *it )
             return true;

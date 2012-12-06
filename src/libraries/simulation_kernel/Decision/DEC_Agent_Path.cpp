@@ -287,7 +287,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         T_KnowledgePopulationVector knowledgesPopulation;
         queryMaker_.GetKnowledgeGroup()->GetKnowledge().GetPopulations( knowledgesPopulation );
         pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
-        for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
+        for( auto it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
             pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, !queryMaker_.GetType().IsTerrorist() ) );
     }
 }
@@ -546,7 +546,7 @@ void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
 void DEC_Agent_Path::InsertLimas()
 {
     const T_LimaVector& limas = queryMaker_.GetOrderManager().GetLimas();
-    for( CIT_LimaVector it = limas.begin(); it != limas.end(); ++it )
+    for( auto it = limas.begin(); it != limas.end(); ++it )
         InsertLima( *it );
 }
 

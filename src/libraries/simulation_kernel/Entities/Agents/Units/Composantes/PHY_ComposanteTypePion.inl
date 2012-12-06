@@ -29,7 +29,7 @@ const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( const std::string& s
 inline
 const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( sword::EquipmentType nAsnID )
 {
-    for( CIT_ComposanteTypeMap it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
+    for( auto it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
     {
         const PHY_ComposanteTypePion& composanteType = *it->second;
         if( composanteType.GetMosID().id() == nAsnID.id() )

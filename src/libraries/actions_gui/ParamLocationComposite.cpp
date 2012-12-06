@@ -84,7 +84,7 @@ Param_ABC* ParamLocationComposite::AddElement( const std::string& type, const st
 void ParamLocationComposite::Purge()
 {
     RemoveFromController();
-    for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
+    for( auto it = params_.begin(); it != params_.end(); ++it )
         delete *it;
     params_.clear();
     for( std::vector< QWidget* >::const_iterator it = widgets_.begin(); it != widgets_.end(); ++it )
@@ -102,7 +102,7 @@ void ParamLocationComposite::Purge()
 // -----------------------------------------------------------------------------
 void ParamLocationComposite::RemoveFromController()
 {
-    for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
+    for( auto it = params_.begin(); it != params_.end(); ++it )
         (*it)->RemoveFromController();
 }
 
@@ -112,7 +112,7 @@ void ParamLocationComposite::RemoveFromController()
 // -----------------------------------------------------------------------------
 void ParamLocationComposite::RegisterIn( kernel::ActionController& controller )
 {
-    for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
+    for( auto it = params_.begin(); it != params_.end(); ++it )
         (*it)->RegisterIn( controller );
 }
 
@@ -143,7 +143,7 @@ QWidget* ParamLocationComposite::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamLocationComposite::InternalBuildInterface()
 {
-    for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
+    for( auto it = params_.begin(); it != params_.end(); ++it )
     {
         QWidget* widget = (*it)->BuildInterface( stack_ );
         stack_->addWidget( widget );

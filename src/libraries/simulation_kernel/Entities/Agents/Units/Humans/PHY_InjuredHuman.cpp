@@ -122,7 +122,7 @@ void PHY_InjuredHuman::save( MIL_CheckPointOutArchive& file, const unsigned int 
          << pComposantePion_;
     // $$$$ LDC TODO: Serialise injuries, change MIL_Injury_ABC and subclasses so they are serialised correctly.
 //         << injuriesList_.size();
-//    for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
+//    for( auto it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
 //         file << (*it);
     file << timeOfLastUpdate_;
 }
@@ -169,7 +169,7 @@ MIL_MedicalTreatmentType::E_InjuryCategories PHY_InjuredHuman::GetInjuryCategory
 // -----------------------------------------------------------------------------
 MIL_MedicalTreatmentType::E_InjuryCategories PHY_InjuredHuman::GetInjuryCategory( unsigned int injuryID ) const
 {
-    for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
+    for( auto it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
         if( ( *it )->GetInjuryID() == injuryID )
             return ( *it )->GetInjuryCategory();
     return MIL_MedicalTreatmentType::eNone;
@@ -236,7 +236,7 @@ void PHY_InjuredHuman::UpdateInjuredHumanInfo( float currentTime )
 {
     float lifeExpectancy = -1;
     CIT_InjuriesList iter;
-    for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
+    for( auto it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
     {
         if( lifeExpectancy != -1 && ( *it )->CanInjuryBeDeadly() )
         {
@@ -265,7 +265,7 @@ void PHY_InjuredHuman::UpdateInjuredHumanInfo( float currentTime )
 // -----------------------------------------------------------------------------
 bool PHY_InjuredHuman::IsAlive() const
 {
-    for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
+    for( auto it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
         if( ( *it )->GetInjuryCategory() == MIL_MedicalTreatmentType::eDead )
             return false;
     return true;
@@ -297,7 +297,7 @@ void PHY_InjuredHuman::TreatInjuredHuman( MedicalTreatmentAttribute& attr )
 // -----------------------------------------------------------------------------
 bool PHY_InjuredHuman::FindInjury( unsigned int injuryID )
 {
-    for( CIT_InjuriesList it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
+    for( auto it = injuriesList_.begin() ; it != injuriesList_.end() ; ++it )
         if( ( *it )->GetInjuryID() == injuryID )
             return true;
     return false;

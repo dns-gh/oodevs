@@ -152,7 +152,7 @@ void IntoxicationCapacity::DesintoxicateZone( const TER_Localisation& zone )
 // -----------------------------------------------------------------------------
 bool IntoxicationCapacity::IsInsideDesintoxicatedZone( const MT_Vector2D& position ) const
 {
-    for( CIT_LocalisationVector it = desintoxicatedZones_.begin(); it != desintoxicatedZones_.end(); ++it )
+    for( auto it = desintoxicatedZones_.begin(); it != desintoxicatedZones_.end(); ++it )
         if( it->IsInside( position ) )
             return true;
     return false;

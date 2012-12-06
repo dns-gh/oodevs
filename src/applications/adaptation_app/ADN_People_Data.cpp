@@ -358,7 +358,7 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output ) const
     output  << xml::end
             << xml::start( "schedule" )
                 << xml::attribute( "transfer-time", transferTime_ );
-    for( CIT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
+    for( auto it = schedule_.begin(); it != schedule_.end(); ++it )
         it->second->WriteArchive( output );
     output  << xml::end
             << xml::start( "safety-level" )
@@ -369,7 +369,7 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output ) const
                 << xml::attribute( "people-per-facility", healthNeed_ )
             << xml::end
             << xml::start( "consumption" );
-    for( CIT_PeopleInfosConsumptionVector it = consumptions_.begin(); it != consumptions_.end(); ++it )
+    for( auto it = consumptions_.begin(); it != consumptions_.end(); ++it )
         ( *it )->WriteArchive( output );
     output  << xml::end
         << xml::end;
@@ -469,7 +469,7 @@ void ADN_People_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "populations" );
     ADN_Tools::AddSchema( output, "Inhabitants" );
-    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+    for( auto it = vPeople_.begin(); it != vPeople_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 }
@@ -481,7 +481,7 @@ void ADN_People_Data::WriteArchive( xml::xostream& output )
 QStringList ADN_People_Data::GetPeopleThatUse( ADN_Population_Data::PopulationInfos& population )
 {
     QStringList result;
-    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+    for( auto it = vPeople_.begin(); it != vPeople_.end(); ++it )
         if( ( *it )->ptrModel_.GetData()->strName_.GetData() == population.strName_.GetData() )
             result << ( *it )->strName_.GetData().c_str();
     return result;
@@ -494,7 +494,7 @@ QStringList ADN_People_Data::GetPeopleThatUse( ADN_Population_Data::PopulationIn
 QStringList ADN_People_Data::GetPeopleThatUse( ADN_ResourceNetworks_Data::ResourceNetworkInfos& network )
 {
     QStringList result;
-    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it )
+    for( auto it = vPeople_.begin(); it != vPeople_.end(); ++it )
         for( CIT_PeopleInfosConsumptionVector itConsumption = ( *it )->consumptions_.begin(); itConsumption != ( *it )->consumptions_.end(); ++itConsumption )
             if( ( *itConsumption )->ptrResource_.GetData()->strName_.GetData() == network.strName_.GetData() )
                 result << ( *it )->strName_.GetData().c_str();

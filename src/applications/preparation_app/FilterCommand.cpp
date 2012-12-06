@@ -86,7 +86,7 @@ const std::string FilterCommand::GetName() const
 bool FilterCommand::IsValid() const
 {
     bool valid = true;
-    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
+    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
         valid = valid && it->second->IsValid();
     return !command_.empty() && !path_.empty() && valid;
 }
@@ -162,7 +162,7 @@ void FilterCommand::ReadArgument( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool FilterCommand::IsInputArgument( int index ) const
 {
-    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
+    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
         if( it->first == index )
             return true;
     return false;
@@ -293,7 +293,7 @@ QWidget* FilterCommand::CreateParametersWidget( QWidget* parent )
         grid->addWidget( checkBox, row++, 1 );
     }
     // Input arguments
-    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it, ++row )
+    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it, ++row )
     {
         if( arguments_[ it->first ].displayName_.empty() )
             grid->addWidget( new QLabel( tools::translate( "FilterCommand", "Argument '%1':" ).arg( arguments_[ it->first ].name_.c_str() ), widget, "FilterCommand_CommandTitle" ), row, 0 );
@@ -354,7 +354,7 @@ void FilterCommand::NotifyError( const std::string& error, std::string /*command
 // -----------------------------------------------------------------------------
 void FilterCommand::OnValueChanged()
 {
-    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
+    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
         arguments_[ it->first ].value_ = it->second->GetText().toAscii().constData();
     ComputeArgument();
 }
@@ -365,7 +365,7 @@ void FilterCommand::OnValueChanged()
 // -----------------------------------------------------------------------------
 void FilterCommand::Update()
 {
-    for( CIT_InputArguments it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
+    for( auto it = inputArguments_.begin(); it != inputArguments_.end(); ++it )
         it->second->Update();
     for( int i = 0; i < arguments_.size(); ++i )
         if( IsInputArgument( i ) )

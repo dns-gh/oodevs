@@ -76,7 +76,7 @@ void GhostModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, E_Ghost
 // -----------------------------------------------------------------------------
 void GhostModel::Finalize( const StaticModel& staticModel )
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Finalize( staticModel );
 }
 

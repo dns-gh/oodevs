@@ -92,7 +92,7 @@ void UrbanInfosDockWidget::SelectBlocks( const kernel::UrbanObject_ABC& urbanObj
 void UrbanInfosDockWidget::NotifySelectionChanged( const T_Elements& elements )
 {
     selectedElements_.clear();
-    for( CIT_Elements it = elements.begin(); it != elements.end(); ++it )
+    for( auto it = elements.begin(); it != elements.end(); ++it )
     {
         const kernel::UrbanObject_ABC* urbanObject = *it;
         if( urbanObject )
@@ -212,7 +212,7 @@ void UrbanInfosDockWidget::Update()
         }
     }
     else
-        for( CIT_Elements it = selectedElements_.begin(); it != selectedElements_.end(); ++it )
+        for( auto it = selectedElements_.begin(); it != selectedElements_.end(); ++it )
             ComputeInformations( **it, nonMedicalInfrastructures, medicalInfrastructures, totalCapacity, motivationsCapacities, resourcesProd, resourceConso );
 
     infos_.clear();

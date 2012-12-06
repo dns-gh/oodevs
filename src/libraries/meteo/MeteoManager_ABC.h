@@ -49,14 +49,14 @@ public:
     virtual void AddMeteo( weather::Meteo& element ) = 0;
     Meteo* Find( unsigned int id ) const
     {
-        for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
+        for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
             if( ( *it )->GetId() == id )
                 return ( *it ).get();
         return 0;
     }
     bool Remove( unsigned long id )
     {
-        for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
+        for( auto it = meteos_.begin(); it != meteos_.end(); ++it )
             if( ( *it )->GetId() == id )
             {
                 meteos_.erase( it );

@@ -140,7 +140,7 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsAttacking() const
 {
     std::vector< unsigned int > container;
     container.reserve( attackers_.size() );
-    for( CIT_AgentSet it = attackers_.begin(); it != attackers_.end(); ++it )
+    for( auto it = attackers_.begin(); it != attackers_.end(); ++it )
         container.push_back( ( **it ).GetID() );
     return container;
 }
@@ -153,7 +153,7 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring() const
 {
     std::vector< unsigned int > container;
     container.reserve( securers_.size() );
-    for( CIT_AgentSet it = securers_.begin(); it != securers_.end(); ++it )
+    for( auto it = securers_.begin(); it != securers_.end(); ++it )
         container.push_back( ( **it ).GetID() );
     return container;
 }

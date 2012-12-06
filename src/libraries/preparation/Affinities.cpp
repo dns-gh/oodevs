@@ -70,7 +70,7 @@ void Affinities::Add( unsigned long team, float affinity )
 // -----------------------------------------------------------------------------
 void Affinities::Fill( std::map< unsigned long, float >& content )
 {
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    for( auto it = affinities_.begin(); it != affinities_.end(); ++it )
         content[ it->first ] = it->second;
 }
 
@@ -92,7 +92,7 @@ void Affinities::SerializeAttributes( xml::xostream& xos ) const
     if( !affinities_.empty() )
     {
         xos << xml::start( "adhesions" );
-        for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+        for( auto it = affinities_.begin(); it != affinities_.end(); ++it )
         {
             if( model_.GetTeamResolver().Find( it->first ) )
             {

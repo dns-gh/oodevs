@@ -52,7 +52,7 @@ void Unit::UpdatePosition( const sword::CoordLatLong& coord )
 void Unit::Export( boost::filesystem::ofstream& file )
 {
     file << name_ << " (" << id_ << ")";
-    for( CIT_Positions it = positions_.begin(); it != positions_.end(); ++it )
+    for( auto it = positions_.begin(); it != positions_.end(); ++it )
         file << PositionsPlugin::separator_ << *it;
     positions_.push_back( *positions_.rbegin() );
 }

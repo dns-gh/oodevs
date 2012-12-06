@@ -27,7 +27,7 @@ inline void PHY_ComposantePion::ApplyOnWeapons( T& functor ) const
 template< typename T > 
 inline void PHY_ComposantePion::ApplyOnHumanProtection( T& functor ) const
 {
-    for( CIT_HumanProtectionVector it = protections_.begin(); it != protections_.end(); ++it )
+    for( auto it = protections_.begin(); it != protections_.end(); ++it )
         functor( *this, **it );
 }
 

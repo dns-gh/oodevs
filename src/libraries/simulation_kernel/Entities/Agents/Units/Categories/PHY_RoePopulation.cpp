@@ -31,7 +31,7 @@ void PHY_RoePopulation::Initialize()
 // -----------------------------------------------------------------------------
 void PHY_RoePopulation::Terminate()
 {
-    for( CIT_RoePopulationMap it = roePopulations_.begin(); it != roePopulations_.end(); ++it )
+    for( auto it = roePopulations_.begin(); it != roePopulations_.end(); ++it )
         delete it->second;
     roePopulations_.clear();
 }
@@ -82,7 +82,7 @@ const PHY_RoePopulation* PHY_RoePopulation::Find( const std::string& strName )
 // -----------------------------------------------------------------------------
 const PHY_RoePopulation* PHY_RoePopulation::Find( unsigned int nID )
 {
-    for( CIT_RoePopulationMap it = roePopulations_.begin(); it != roePopulations_.end(); ++it )
+    for( auto it = roePopulations_.begin(); it != roePopulations_.end(); ++it )
     {
         if( it->second->GetID() == nID )
             return it->second;

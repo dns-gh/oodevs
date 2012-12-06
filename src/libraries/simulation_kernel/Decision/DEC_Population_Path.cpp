@@ -162,7 +162,7 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
         double rComputationTime = profiler_.Stop();
 
         std::stringstream stream;
-        for( CIT_PathPointList it = resultList_.begin(); it != resultList_.end(); ++it )
+        for( auto it = resultList_.begin(); it != resultList_.end(); ++it )
             stream << "[" << (**it).GetPos() << "] ";
         MT_LOG_MESSAGE_MSG( "DEC_Population_Path::Compute: " << this <<
                             ", Thread : "  << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<

@@ -50,7 +50,7 @@ ActionController::ActionController()
 // -----------------------------------------------------------------------------
 ActionController::~ActionController()
 {
-    for( CIT_Selectionners it = selectionners_.begin(); it != selectionners_.end(); ++it )
+    for( auto it = selectionners_.begin(); it != selectionners_.end(); ++it )
         delete *it;
 }
 
@@ -120,7 +120,7 @@ bool ActionController::HasMultipleSelection() const
 const Selectionner_ABC* ActionController::GetSelectionner( const Selectable_ABC* selectable ) const
 {
     if( selectable )
-        for( CIT_Selectionners it = selectionners_.begin(); it != selectionners_.end(); ++it )
+        for( auto it = selectionners_.begin(); it != selectionners_.end(); ++it )
             if( ( *it )->IsOfSameType( selectable ) )
                 return *it;
     return 0;
@@ -185,7 +185,7 @@ void ActionController::SetSelected( const Selectable_ABC& selectable, bool appen
 // -----------------------------------------------------------------------------
 void ActionController::AddToSelection( const T_Selectables& selectables )
 {
-    for( CIT_Selectables it = selectables.begin(); it != selectables.end(); ++it )
+    for( auto it = selectables.begin(); it != selectables.end(); ++it )
     {
         const Selectionner_ABC* selectionner = GetSelectionner( *it );
         assert( selectionner );
@@ -214,7 +214,7 @@ void ActionController::NotifyRectangleSelection( const geometry::Point2f& topLef
     Apply( & kernel::RectangleSelectionHandler_ABC::HandleRectangleSelection, topLeft, bottomRight );
     Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
     CleanSelectedMap(); // utile?
-    for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+    for( auto it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
     {
         it->second.front()->MultipleSelect( *this, it->second );
         if( it->second.size() == 1 )
@@ -232,7 +232,7 @@ void ActionController::SetMultipleSelection( const T_Selectables& selectables )
 {
     ClearSingleSelection();
     ClearMultipleSelection();
-    for( CIT_Selectables it = selectables.begin(); it != selectables.end(); ++it )
+    for( auto it = selectables.begin(); it != selectables.end(); ++it )
     {
         const Selectionner_ABC* selectionner = GetSelectionner( *it );
         if( selectionner )
@@ -241,7 +241,7 @@ void ActionController::SetMultipleSelection( const T_Selectables& selectables )
     CleanSelectedMap(); // utile?
     Apply( & kernel::MultipleSelectionObserver_ABC::BeforeSelection );
     if( !selectedMap_.empty() )
-        for( CIT_SelectedMap it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
+        for( auto it = selectedMap_.begin(); it!= selectedMap_.end(); ++it )
         {
             it->second.front()->MultipleSelect( *this, it->second );
             if( it->second.size() == 1 )

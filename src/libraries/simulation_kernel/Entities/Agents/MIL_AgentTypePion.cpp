@@ -180,7 +180,7 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AgentTypePion::Terminate()
 {
-    for( CIT_PionTypeMap it = pionTypes_.begin(); it != pionTypes_.end(); ++it )
+    for( auto it = pionTypes_.begin(); it != pionTypes_.end(); ++it )
         delete it->second;
     pionTypes_.clear();
 }

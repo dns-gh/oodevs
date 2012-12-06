@@ -70,7 +70,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const kernel::Viewpo
         return;
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 1.f );
-    for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
+    for( auto it = detections_.begin(); it != detections_.end(); ++it )
     {
         const Agent_ABC& agent = *it->first;
         if( ! IsSameTeam( agent ) && it->second != sword::UnitVisibility::invisible )

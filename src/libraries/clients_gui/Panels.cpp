@@ -119,7 +119,7 @@ void Panels::UpdateCombo()
 {
     combo_->clear();
     currentPanels_.clear();
-    for( CIT_Panels it = panels_.begin(); it != panels_.end(); ++it )
+    for( auto it = panels_.begin(); it != panels_.end(); ++it )
         if( panelStates_[*it] )
         {
             combo_->insertItem( static_cast< InfoPanel_ABC* >( *it )->GetName() );

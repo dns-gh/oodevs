@@ -109,7 +109,7 @@ bool UrbanDisplayOptions::SetColor( UrbanColor_ABC& color, float livingSpace, co
     {
         unsigned int nbrHumans = 0;
         for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
-            for( CIT_BlockOccupation it = human->second.persons_.begin(); it != human->second.persons_.end(); ++ it )
+            for( auto it = human->second.persons_.begin(); it != human->second.persons_.end(); ++ it )
                 nbrHumans += it->second.first;
         if( nbrHumans == 0 )
             SetUrbanColor( unoccupiedDensity_, color );

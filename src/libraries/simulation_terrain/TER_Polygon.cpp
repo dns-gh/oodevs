@@ -325,7 +325,7 @@ bool TER_Polygon::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, doubl
         return true;
 
     const MT_Vector2D* pLastPos = 0;
-    for( CIT_PointVector it = pData_->borderVector_.begin(); it != pData_->borderVector_.end(); ++it )
+    for( auto it = pData_->borderVector_.begin(); it != pData_->borderVector_.end(); ++it )
     {
         const MT_Vector2D& pos = *it;
         if( pLastPos )
@@ -489,7 +489,7 @@ namespace
     void InitializeHull( const T_PointVector& polygon, T_PointVector& hull )
     {
         MT_Vector2D min, max;
-        for( CIT_PointVector it = polygon.begin(); it != polygon.end(); ++it )
+        for( auto it = polygon.begin(); it != polygon.end(); ++it )
         {
             const MT_Vector2D& p = *it;
             if( min.IsZero() || min.rX_ > p.rX_ )
@@ -514,7 +514,7 @@ namespace
     {
         bool bFound = false;
         double rMaxProjection = 0;
-        for( CIT_PointVector it = polygon.begin(); it != polygon.end(); ++it )
+        for( auto it = polygon.begin(); it != polygon.end(); ++it )
         {
             const MT_Vector2D v = from - *it;
             const double rProjection = CrossProductTmp( direction, v );

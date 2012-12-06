@@ -118,7 +118,7 @@ void LocationBase::ReadPoint( xml::xistream& xis )
 void LocationBase::VisitLines( const T_PointVector& points )
 {
     type_ = eLocationType_Line;
-    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+    for( auto it = points.begin(); it != points.end(); ++it )
         PushBack( *it );
 }
 
@@ -129,7 +129,7 @@ void LocationBase::VisitLines( const T_PointVector& points )
 void LocationBase::VisitRectangle( const T_PointVector& points )
 {
     type_ = eLocationType_Rectangle;
-    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+    for( auto it = points.begin(); it != points.end(); ++it )
         PushBack( *it );
 }
 
@@ -140,7 +140,7 @@ void LocationBase::VisitRectangle( const T_PointVector& points )
 void LocationBase::VisitPolygon( const T_PointVector& points )
 {
     type_ = eLocationType_Polygon;
-    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+    for( auto it = points.begin(); it != points.end(); ++it )
         PushBack( *it );
 }
 
@@ -204,7 +204,7 @@ void LocationBase::Serialize( xml::xostream& xos ) const
     {
         xos << xml::start( "location" )
             << xml::attribute( "type", tools::ToString( type_ ).toAscii().constData() );
-        for( CIT_PointVector it = points_.begin(); it != points_.end(); ++it )
+        for( auto it = points_.begin(); it != points_.end(); ++it )
             xos << xml::start( "point" ) << xml::attribute( "coordinates", converter_.ConvertToMgrs( *it ) ) << xml::end;
         xos << xml::end;
     }

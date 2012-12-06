@@ -112,7 +112,7 @@ void EventToolbar::NotifyCreated( const Report& report )
 void EventToolbar::NotifyUpdated( const Profile_ABC& )
 {
     T_Agents filtered;
-    for( CIT_Agents it = messageAgents_.begin(); it != messageAgents_.end(); ++it )
+    for( auto it = messageAgents_.begin(); it != messageAgents_.end(); ++it )
         if( profile_.IsVisible( **it ) )
             filtered.push_back( *it );
     std::swap( filtered, messageAgents_ );

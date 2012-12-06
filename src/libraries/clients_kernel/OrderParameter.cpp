@@ -222,7 +222,7 @@ void OrderParameter::AddValue( int id, const std::string& name )
 // -----------------------------------------------------------------------------
 void OrderParameter::Accept( OrderParameterValueVisitor_ABC& visitor ) const
 {
-    for( CIT_OrderParameterValues it = values_.begin(); it != values_.end(); ++it )
+    for( auto it = values_.begin(); it != values_.end(); ++it )
         visitor.Visit( it->second );
 }
 
@@ -232,7 +232,7 @@ void OrderParameter::Accept( OrderParameterValueVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void OrderParameter::Accept( ChoicesVisitor_ABC& visitor ) const
 {
-    for( CIT_Aliases it = aliases_.begin(); it != aliases_.end(); ++it )
+    for( auto it = aliases_.begin(); it != aliases_.end(); ++it )
         visitor.Visit( *it );
 }
 

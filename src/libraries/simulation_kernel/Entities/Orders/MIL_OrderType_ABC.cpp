@@ -74,7 +74,7 @@ bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionP
     for( unsigned int i = 0; i < parameters_.size() + index; ++i )
         to.add_elem();
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >::const_iterator fromIt = from.begin();
-    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index, ++fromIt )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it, ++index, ++fromIt )
         if( !(**it).Copy( **fromIt, *to.mutable_elem( index ) ) )
         {
             assert( false );
@@ -90,7 +90,7 @@ bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionP
 // ----------------------------------------------------------------------------
 void MIL_OrderType_ABC::InitializeDefault( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters ) const
 {
-    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it )
+    for( auto it = parameters_.begin(); it != parameters_.end(); ++it )
         parameters.push_back( MIL_MissionParameterFactory::Create( **it ) );
 }
 

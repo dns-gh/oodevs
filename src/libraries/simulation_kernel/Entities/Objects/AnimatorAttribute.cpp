@@ -93,7 +93,7 @@ template< typename Archive > void AnimatorAttribute::save( Archive& file, const 
     file << maxAnimators_;
     std::size_t number = animators_.size();
     file << number;
-    for( CIT_AgentSet it = animators_.begin(); it != animators_.end(); ++it )
+    for( auto it = animators_.begin(); it != animators_.end(); ++it )
         file << *it;
 }
 

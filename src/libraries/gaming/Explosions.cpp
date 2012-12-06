@@ -34,9 +34,9 @@ Explosions::Explosions( Controller& controller, FireResultFactory& factory )
 // -----------------------------------------------------------------------------
 Explosions::~Explosions()
 {
-    for( CIT_AgentFires it = agentExplosions_.begin(); it != agentExplosions_.end(); ++it )
+    for( auto it = agentExplosions_.begin(); it != agentExplosions_.end(); ++it )
         delete *it;
-    for( CIT_PopulationFires it = populationExplosions_.begin(); it != populationExplosions_.end(); ++it )
+    for( auto it = populationExplosions_.begin(); it != populationExplosions_.end(); ++it )
         delete *it;
 }
 

@@ -69,7 +69,7 @@ void MIL_KnowledgeGroupType::ReadKnowledgeGroup( xml::xistream& xis, double time
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroupType::Terminate()
 {
-    for( CIT_KnowledgeGroupTypeMap it = knowledgeGroupTypes_.begin(); it != knowledgeGroupTypes_.end(); ++it )
+    for( auto it = knowledgeGroupTypes_.begin(); it != knowledgeGroupTypes_.end(); ++it )
         delete it->second;
     knowledgeGroupTypes_.clear();
 }

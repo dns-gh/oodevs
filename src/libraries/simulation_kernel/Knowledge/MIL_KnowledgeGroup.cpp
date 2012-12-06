@@ -291,7 +291,7 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "name", name_ )
             << xml::attribute( "type", type_->GetName() )
         << xml::end;
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).WriteODB( boost::ref(xos) );     // LTO
 }
 
@@ -301,9 +301,9 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 {
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
         (**it).UpdateKnowledges(currentTimeStep);
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).UpdateKnowledges(currentTimeStep); // LTO
     assert( knowledgeBlackBoard_ );
     if( createdByJamming_ )
@@ -322,7 +322,7 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 void MIL_KnowledgeGroup::UpdateObjectKnowledges(int currentTimeStep)
 {
     knowledgeBlackBoard_->UpdateUniversalObjects();
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).UpdateObjectKnowledges( currentTimeStep );
     knowledgeBlackBoard_->SendObjectChangedState();
 }
@@ -335,9 +335,9 @@ void MIL_KnowledgeGroup::CleanKnowledges()
 {
     assert( knowledgeBlackBoard_ );
     knowledgeBlackBoard_->Clean();
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).CleanKnowledges(); // LTO
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
         (**it).CleanKnowledges();
     if( jammedPion_ )
         jammedPion_->GetKnowledge().Clean();
@@ -354,7 +354,7 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Agent& knowledge ) con
     //     unité réelle se trouvent au même endroit
     if( knowledge.GetPosition() == knowledge.GetAgentKnown().GetRole< PHY_RoleInterface_Location >().GetPosition() )
         return false;
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
         if( (*it)->IsPerceived( knowledge ) )
             return true;
     return false;
@@ -366,7 +366,7 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Agent& knowledge ) con
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
         if( (*it)->IsPerceived( knowledge ) )
             return true;
     return false;
@@ -472,7 +472,7 @@ void MIL_KnowledgeGroup::SendCreation( unsigned int context /*= 0*/ ) const
     msg.Send( NET_Publisher_ABC::Publisher(), context );
     //SLG : @TODO MGD Move to factory
     // LTO begin
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         (**it).SendCreation( context );
     // LTO end
 }
@@ -483,7 +483,7 @@ void MIL_KnowledgeGroup::SendCreation( unsigned int context /*= 0*/ ) const
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::SendFullState() const
 {
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).SendFullState(); // LTO
 }
 
@@ -507,7 +507,7 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup()
         message().set_enabled( IsEnabled() );
         message.Send( NET_Publisher_ABC::Publisher() );
     }
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         (**it).UpdateKnowledgeGroup();
     hasBeenUpdated_ = false;
 }
@@ -536,9 +536,9 @@ void MIL_KnowledgeGroup::SendKnowledge( unsigned int context ) const
 {
     assert( knowledgeBlackBoard_ );
     knowledgeBlackBoard_->SendFullState( context );
-    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+    for( auto it = automates_.begin(); it != automates_.end(); ++it )
         (**it).SendKnowledge( context );
-    for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).SendKnowledge( context ); // LTO
 }
 

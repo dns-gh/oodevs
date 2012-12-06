@@ -164,7 +164,7 @@ ADN_Symbols_Data::T_SymbolsInfra_Vector& ADN_Symbols_Data::GetSymbolsInfras()
 ADN_Symbols_Data::SymbolsInfra* ADN_Symbols_Data::FindSymbolInfra( const std::string& strName ) const
 {
     const std::string label = tools::findTranslation( "infrastructures", strName.c_str() );
-    for( CIT_SymbolsInfra_Vector it = infras_.begin(); it != infras_.end(); ++it )
+    for( auto it = infras_.begin(); it != infras_.end(); ++it )
         if( **it == label )
             return *it;
     return 0;

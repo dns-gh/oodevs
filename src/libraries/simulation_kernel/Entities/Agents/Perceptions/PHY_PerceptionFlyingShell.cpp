@@ -53,7 +53,7 @@ PHY_PerceptionFlyingShell::PHY_PerceptionFlyingShell( PHY_RoleInterface_Perceive
 // -----------------------------------------------------------------------------
 PHY_PerceptionFlyingShell::~PHY_PerceptionFlyingShell()
 {
-    for( CIT_ZoneVector it = zones_.begin(); it != zones_.end(); ++it )
+    for( auto it = zones_.begin(); it != zones_.end(); ++it )
         delete *it;
     zones_.clear();
 }

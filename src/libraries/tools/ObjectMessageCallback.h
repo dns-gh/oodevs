@@ -53,7 +53,7 @@ public:
     {
         try
         {
-            for( CIT_Callbacks it = callbacks_.begin(); it != callbacks_.end(); ++it )
+            for( auto it = callbacks_.begin(); it != callbacks_.end(); ++it )
                 (*it)( link, message );
         }
         catch( std::exception& e )

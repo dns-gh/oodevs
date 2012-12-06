@@ -72,7 +72,7 @@ void PHY_RoleAction_Objects_DataComputer::operator() ( PHY_ComposantePion& compo
 void PHY_RoleAction_Objects_DataComputer::FilterData()
 {
     double rMinOperationTime = std::numeric_limits< double >::max();
-    for( CIT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
+    for( auto it = pionsData_.begin(); it != pionsData_.end(); ++it )
         rMinOperationTime = std::min( rMinOperationTime, it->GetMinOperationTime() );
     for( IT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
         it->RemoveSlowComposantes( rMinOperationTime );
@@ -161,7 +161,7 @@ double PHY_RoleAction_Objects_DataComputer::ComputeDeltaPercentage()
     double rTotalOperationTime  = 0.;
     unsigned int nTotalNbrComposantes = 0;
 
-    for( CIT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
+    for( auto it = pionsData_.begin(); it != pionsData_.end(); ++it )
     {
         double rOperationTime;
         unsigned int nNbrComposantes;
@@ -192,7 +192,7 @@ double PHY_RoleAction_Objects_DataComputer::ComputeWorkTime()
 {
     double rTotalOperationTime  = 0.;
     unsigned int nTotalNbrComposantes = 0;
-    for( CIT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
+    for( auto it = pionsData_.begin(); it != pionsData_.end(); ++it )
     {
         double rOperationTime;
         unsigned int nNbrComposantes;

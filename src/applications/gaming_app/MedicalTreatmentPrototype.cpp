@@ -53,7 +53,7 @@ void MedicalTreatmentPrototype::Commit( const kernel::Team_ABC& )
 
     int i = 0;
     actions::parameters::ParameterList& capacities = list.AddList( "BedCapacities" );
-    for( CIT_Capacities it = capacities_.begin(); it != capacities_.end(); ++it, ++i )
+    for( auto it = capacities_.begin(); it != capacities_.end(); ++it, ++i )
     {
         const int value = it->baseline_->value();
         actions::parameters::ParameterList& bed = capacities.AddList( "BedCapacity" );

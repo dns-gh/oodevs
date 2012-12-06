@@ -94,7 +94,7 @@ void Parameter_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& vi
 {
     geometry::Point2f point = GetPosition();
     point = point.IsZero() ? where : point;
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Draw( point, viewport, tools );
 }
 
@@ -139,7 +139,7 @@ void Parameter_ABC::Serialize( xml::xostream& xos ) const
     std::string id = GetIdentifier();
     if( !id.empty() )
         xos << xml::attribute( "identifier", id.c_str() );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "parameter" );
         it->second->Serialize( xos );
@@ -192,7 +192,7 @@ geometry::Point2f Parameter_ABC::GetPosition() const
 // -----------------------------------------------------------------------------
 void Parameter_ABC::CommitTo( std::string& content ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->CommitTo( content );
 }
 
@@ -204,7 +204,7 @@ void Parameter_ABC::CommitTo( sword::MissionParameter& message ) const
 {
     ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >* list =message.mutable_value();
     message.set_null_value( elements_.size() == 0 );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         if( !it->second->IsSet() )
         {
@@ -223,7 +223,7 @@ void Parameter_ABC::CommitTo( sword::MissionParameter& message ) const
 // -----------------------------------------------------------------------------
 void Parameter_ABC::Accept( ParameterVisitor_ABC& visitor ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Accept( visitor );
 }
 

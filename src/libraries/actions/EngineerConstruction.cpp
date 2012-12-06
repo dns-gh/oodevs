@@ -220,7 +220,7 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
     if( !IsSet() || !type_ )
         return;
     message.set_type( type_->GetType().c_str() );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string type = it->second->GetType();
         if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
@@ -270,7 +270,7 @@ void EngineerConstruction::Accept( ParameterVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 bool EngineerConstruction::IsSet() const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( !it->second->IsSet() && !it->second->IsOptional() )
             return false;
     return !elements_.empty();

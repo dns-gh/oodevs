@@ -48,7 +48,7 @@ TER_PathFindManager::TER_PathFindManager( const TER_StaticData& staticData )
 // -----------------------------------------------------------------------------
 TER_PathFindManager::~TER_PathFindManager()
 {
-    for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it )
+    for( auto it = threads_.begin(); it != threads_.end(); ++it )
         delete *it;
 }
 
@@ -68,7 +68,7 @@ TER_PathFinderThread& TER_PathFindManager::CreatePathFinderThread( tools::thread
 // -----------------------------------------------------------------------------
 void TER_PathFindManager::AddDynamicData( TER_DynamicData& data )
 {
-    for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it )
+    for( auto it = threads_.begin(); it != threads_.end(); ++it )
         data.AddForRegistration( **it );
 }
 
@@ -78,6 +78,6 @@ void TER_PathFindManager::AddDynamicData( TER_DynamicData& data )
 // -----------------------------------------------------------------------------
 void TER_PathFindManager::RemoveDynamicData( TER_DynamicData& data )
 {
-    for( CIT_Threads it = threads_.begin(); it != threads_.end(); ++it )
+    for( auto it = threads_.begin(); it != threads_.end(); ++it )
         data.AddForUnregistration( **it );
 }

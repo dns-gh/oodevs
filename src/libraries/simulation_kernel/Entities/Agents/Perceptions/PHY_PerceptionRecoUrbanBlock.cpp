@@ -114,7 +114,7 @@ void PHY_PerceptionRecoUrbanBlock::RemoveUrbanBlock( int id )
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MT_Vector2D& vPoint ) const
 {
-    for( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
+    for( auto it = recos_.begin(); it != recos_.end(); ++it )
         if( ( *it )->IsInside( perceiver_, vPoint ) )
             return PHY_PerceptionLevel::recognized_;
     return PHY_PerceptionLevel::notSeen_;

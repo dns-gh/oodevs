@@ -35,7 +35,7 @@ void MIL_PopulationAttitude::Initialize()
 // -----------------------------------------------------------------------------
 void MIL_PopulationAttitude::Terminate()
 {
-    for( CIT_AttitudeMap it = attitudes_.begin(); it != attitudes_.end(); ++it )
+    for( auto it = attitudes_.begin(); it != attitudes_.end(); ++it )
         delete it->second;
     attitudes_.clear();
 }

@@ -163,7 +163,7 @@ void LocationEditorToolbar::RemoveBookmark( int index )
 void LocationEditorToolbar::CreateMenu()
 {
     unsigned int i = 0;
-    for( CIT_Bookmarks it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
+    for( auto it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
     {
         QMenu* menu = bookmarksMenu_->addMenu( it->name_.c_str() );
         menu->insertItem( tr( "Center" ), this, SLOT( GotoBookmark( int ) ), 0, i );

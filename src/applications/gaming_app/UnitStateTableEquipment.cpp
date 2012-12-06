@@ -202,7 +202,7 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
     actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *parameterList );
 
-    for( CIT_Changes it = rowsChanged_.begin(); it != rowsChanged_.end(); ++it )
+    for( auto it = rowsChanged_.begin(); it != rowsChanged_.end(); ++it )
     {
         actions::parameters::ParameterList& list = parameterList->AddList( "Equipment" );
         list.AddIdentifier( "ID", it->first );

@@ -305,7 +305,7 @@ void UrbanModel::SerializeExercise( const std::string& filename, const tools::Sc
     xos << xml::start( "urban-state" );
     schemaWriter.WriteExerciseSchema( xos, "urbanstate" );
     xos << xml::start( "urban-objects" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         const UrbanHierarchies& hierarchy = static_cast< const UrbanHierarchies& >( it->second->Get< kernel::Hierarchies >() );
         if( hierarchy.GetLevel() != eUrbanLevelBlock ) // only city here, UrbanHierarchy proceed the recursion
@@ -347,7 +347,7 @@ void UrbanModel::SerializeTerrain( const std::string& filename, const tools::Sch
     xos << xml::start( "urban" );
     schemaWriter.WriteSchema( xos, "terrain", "urban" );
     xos<< xml::start( "urban-objects" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         const UrbanHierarchies& hierarchy = *static_cast< const UrbanHierarchies* >( it->second->Retrieve< kernel::Hierarchies >() );
         if( hierarchy.GetLevel() == eUrbanLevelCity ) // only city here, UrbanHierarchy proceed the recursion

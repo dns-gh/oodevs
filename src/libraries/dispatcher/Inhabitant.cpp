@@ -145,13 +145,13 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
     msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
     msg().mutable_satisfaction()->set_lodging( lodgingSatisfaction_ );
-    for( CIT_MotivationSatisfactions it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
+    for( auto it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
     {
         sword::PopulationUpdate_MotivationSatisfaction* motivation = msg().mutable_satisfaction()->add_motivations();
         motivation->set_motivation( it->first );
         motivation->set_percentage( it->second );
     }
-    for( CIT_ResourcesSatisfactions it = resourcesSatisfactions_.begin(); it != resourcesSatisfactions_.end(); ++it )
+    for( auto it = resourcesSatisfactions_.begin(); it != resourcesSatisfactions_.end(); ++it )
     {
         sword::PopulationUpdate_ResourceSatisfaction* resource = msg().mutable_satisfaction()->add_resources();
         resource->mutable_resource()->set_id( it->first );

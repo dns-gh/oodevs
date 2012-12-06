@@ -117,7 +117,7 @@ void Dotations::SetSuperior( const kernel::Entity_ABC& superior )
         // create dotation differences
         std::vector< Dotation > differences;
         differences.reserve( elements_.size() );
-        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        for( auto it = elements_.begin(); it != elements_.end(); ++it )
             differences.push_back( *it->second );
         // add dotations to new superior
         if( Dotations* dotations = dynamic_cast< Dotations* >( const_cast< kernel::Entity_ABC& >( superior ).Retrieve< Dotations_ABC >() ) )

@@ -178,7 +178,7 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
     else
         xos << xml::attribute( "type", strType_ );
 
-    for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
+    for( auto it = capacities_.begin(); capacities_.end() != it; ++it )
         if( it->second->bPresent_.GetData() )
         {
             xos << xml::start( it->first );
@@ -363,7 +363,7 @@ ADN_Objects_Data_ObjectInfos* ADN_Objects_Data_ObjectInfos::CreateCopy()
 //    else
 //        xos << xml::attribute( "type", strType_ );
 //
-//    for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
+//    for( auto it = capacities_.begin(); capacities_.end() != it; ++it )
 //        if( it->second->bPresent_.GetData() )
 //        {
 //            xos << xml::start( it->first );

@@ -199,12 +199,12 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
         return;
 
     if( line_ )
-        for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )
+        for( auto it = points.begin(); it != points.end() - 1; ++it )
             DrawSegment( context, tools, *it, *(it+1) );
     if( markerStart_ )
         DrawStartMarker( context, tools, points[0], points[1], zoom );
     if( markerMiddle_ )
-        for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )
+        for( auto it = points.begin(); it != points.end() - 1; ++it )
         {
             const geometry::Point2f& start = *it;
             const geometry::Point2f& end = *(it + 1);
@@ -218,7 +218,7 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
         geometry::Rectangle2f boundingBox;
         geometry::Point2f center;
         const std::size_t count = points.size();
-        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        for( auto it = points.begin(); it != points.end(); ++it )
         {
             boundingBox.Incorporate( *it );
             center += geometry::Vector2f( it->X() / count, it->Y() / count );

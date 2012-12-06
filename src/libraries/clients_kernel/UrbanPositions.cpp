@@ -256,7 +256,7 @@ void UrbanPositions::ComputeConvexHull( std::vector< geometry::Point2f >& points
         geometry::Point2f maxLeft = *vertices.begin();
         geometry::Point2f maxRight = maxLeft;
 
-        for( CIT_PointVector it = vertices.begin(); it != vertices.end(); ++it )
+        for( auto it = vertices.begin(); it != vertices.end(); ++it )
         {
             if( it->X() < maxLeft.X() )
                 maxLeft = *it;

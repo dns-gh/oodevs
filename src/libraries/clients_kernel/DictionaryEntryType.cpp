@@ -40,7 +40,7 @@ DictionaryEntryType::DictionaryEntryType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 DictionaryEntryType::~DictionaryEntryType()
 {
-    for( CIT_Labels it = labels_.begin(); it != labels_.end(); ++it )
+    for( auto it = labels_.begin(); it != labels_.end(); ++it )
         delete *it;
 }
 
@@ -52,7 +52,7 @@ std::string DictionaryEntryType::GetLabel( const std::string& kind, const std::s
 {
     if( kind.empty() )
         return key_;
-    for( CIT_Labels it = labels_.begin(); it != labels_.end(); ++it )
+    for( auto it = labels_.begin(); it != labels_.end(); ++it )
         if( ( *it )->Matches( language, kind ) )
             return ( *it )->GetText();
     return key_;

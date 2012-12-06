@@ -48,7 +48,7 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
 {
     if( multiRulingMode_ && !metricPoints_.empty() )
     {
-        for( CIT_MetricPoints it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
+        for( auto it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
         {
             if( metricPoints_.size() > 1 )
             {
@@ -158,7 +158,7 @@ float MetricsLayer::ComputeRuleDistance( bool b3dComputation )
     float distance = 0;
     if( b3dComputation )
     {
-        for( CIT_MetricPoints it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
+        for( auto it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
         {
             geometry::Point2f start2d = *(it - 1 );
             geometry::Point2f end2d = *(it );
@@ -173,7 +173,7 @@ float MetricsLayer::ComputeRuleDistance( bool b3dComputation )
     }
     else
     {
-        for( CIT_MetricPoints it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
+        for( auto it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
         {
             geometry::Point2f start = *(it - 1 );
             geometry::Point2f end = *(it );

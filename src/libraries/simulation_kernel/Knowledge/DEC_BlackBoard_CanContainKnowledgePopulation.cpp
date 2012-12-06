@@ -98,7 +98,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::DestroyKnowledgePopulation( D
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Population > DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID( unsigned int nID ) const
 {
-    for( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
+    for( auto it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
     {
         const boost::shared_ptr< DEC_Knowledge_Population >& knowledge = it->second;
         if( knowledge->GetID() == nID )

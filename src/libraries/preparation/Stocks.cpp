@@ -124,7 +124,7 @@ void Stocks::SerializeAttributes( xml::xostream& xos ) const
     if( !IsToSerialize() )
         return;
     xos << xml::start( "stocks" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->quantity_ > 0 )
         {
             xos << xml::start( "resource" );
@@ -201,7 +201,7 @@ void Stocks::ComputeWeightAndVolume( const std::string& dotationNature, double& 
 // -----------------------------------------------------------------------------
 bool Stocks::IsToSerialize() const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->quantity_ > 0 )
             return true;
     return false;

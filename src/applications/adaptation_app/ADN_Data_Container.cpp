@@ -35,7 +35,7 @@ ADN_Data_Container::~ADN_Data_Container()
 // -----------------------------------------------------------------------------
 void ADN_Data_Container::FilesNeeded( T_StringList& vFiles ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->FilesNeeded( vFiles );
 }
 

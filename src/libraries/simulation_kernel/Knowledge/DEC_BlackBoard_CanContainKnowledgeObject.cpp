@@ -55,7 +55,7 @@ DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObje
 : pKnowledgeGroup_( pKnowledgeGroup )
 {
     DEC_BlackBoard_CanContainKnowledgeObject& copy = army.GetKnowledge().GetKnowledgeObjectContainer();
-    for( CIT_KnowledgeObjectMap it = copy.objectMap_.begin(); it != copy.objectMap_.end(); ++it )
+    for( auto it = copy.objectMap_.begin(); it != copy.objectMap_.end(); ++it )
     {
         boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second), pKnowledgeGroup_->shared_from_this() ) );
         if( ! objectMap_.insert( std::make_pair( it->first, knowledge ) ).second )
@@ -113,7 +113,7 @@ namespace boost
 void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> objectMap_;
-    for( CIT_KnowledgeObjectMap it = objectMap_.begin(); it != objectMap_.end(); ++it )
+    for( auto it = objectMap_.begin(); it != objectMap_.end(); ++it )
     {
         boost::shared_ptr< DEC_Knowledge_Object > knowledge = it->second;
         knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) );
@@ -242,7 +242,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::GetKnowledgeObjectFromObjectID( unsigned int nID ) const
 {
-    for( CIT_KnowledgeObjectIDMap it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); ++it )
+    for( auto it = knowledgeObjectFromIDMap_.begin(); it != knowledgeObjectFromIDMap_.end(); ++it )
         if( it->second->GetObjectId() == nID )
             return it->second;
     return boost::shared_ptr< DEC_Knowledge_Object >();

@@ -200,7 +200,7 @@ namespace
         {}
         virtual void VisitLines( const T_PointVector& points )
         {
-            for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+            for( auto it = points.begin(); it != points.end(); ++it )
                 VisitPoint( *it );
         }
         virtual void VisitRectangle( const T_PointVector& points )

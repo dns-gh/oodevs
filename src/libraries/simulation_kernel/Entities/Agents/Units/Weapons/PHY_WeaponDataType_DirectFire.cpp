@@ -271,7 +271,7 @@ double PHY_WeaponDataType_DirectFire::GetMaxRangeToFire( double rWantedPH ) cons
 double PHY_WeaponDataType_DirectFire::GetMaxRange() const
 {
     double result = 0;
-    for( CIT_PhVector it = phs_.begin(); it != phs_.end(); ++it )
+    for( auto it = phs_.begin(); it != phs_.end(); ++it )
         result = std::max( result, it->GetMaxYForX( 0 ) );
     return result;
 }

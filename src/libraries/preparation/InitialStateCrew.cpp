@@ -153,7 +153,7 @@ void InitialStateCrew::LoadInjuries( const std::string& injuries )
 const std::string InitialStateCrew::SaveInjuries() const
 {
     std::string result;
-//     for( CIT_Injuries it = injuries_.begin(); it != injuries_.end(); ++it )
+//     for( auto it = injuries_.begin(); it != injuries_.end(); ++it )
 //     {
 //         unsigned int id = it->first;
 //         E_InjuriesSeriousness seriousness = it->second;

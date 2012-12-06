@@ -77,7 +77,7 @@ void HierarchyTemplate::ReadSubTemplate( xml::xistream& input, AgentsModel& agen
 // -----------------------------------------------------------------------------
 HierarchyTemplate::~HierarchyTemplate()
 {
-    for( CIT_Templates it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
+    for( auto it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
         delete *it;
 }
 
@@ -99,7 +99,7 @@ void HierarchyTemplate::Serialize( xml::xostream& output ) const
         element_->Serialize( output );
         output << xml::end;
     }
-    for( CIT_Templates it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
+    for( auto it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
         (*it)->Serialize( output );
     output << xml::end;
 }
@@ -116,7 +116,7 @@ void HierarchyTemplate::Instanciate( kernel::Entity_ABC& superior, const geometr
                                     referencePosition_.Y() + center.Y() );
         kernel::Entity_ABC* entity = element_->Instanciate( superior, position, colorController_ );
         if( entity )
-            for( CIT_Templates it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
+            for( auto it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
                 (*it)->Instanciate( *entity, center );
     }
 }
@@ -215,7 +215,7 @@ QString HierarchyTemplate::GetDisplayName() const
 // -----------------------------------------------------------------------------
 void HierarchyTemplate::SetBasePosition( geometry::Point2f center )
 {
-    for( CIT_Templates it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
+    for( auto it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
         (*it)->SetBasePosition( center );
     referencePosition_.Set( referencePosition_.X() - center.X(),
                             referencePosition_.Y() - center.Y() );

@@ -89,10 +89,10 @@ namespace
 // -----------------------------------------------------------------------------
 void Synchroniser::Commit( ClientPublisher_ABC& publisher, Model& model )
 {
-    for( CIT_Entities it = toCreate_.begin(); it != toCreate_.end(); ++it )
+    for( auto it = toCreate_.begin(); it != toCreate_.end(); ++it )
         (*it)->Apply( &EntityPublisher_ABC::SendCreation, publisher );
 
-    for( CIT_Entities it = toUpdate_.begin(); it != toUpdate_.end(); ++it )
+    for( auto it = toUpdate_.begin(); it != toUpdate_.end(); ++it )
         (*it)->Apply( &EntityPublisher_ABC::SendFullUpdate, publisher );
 
     Publisher p( publisher, model );

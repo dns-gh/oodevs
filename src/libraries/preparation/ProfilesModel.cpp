@@ -58,7 +58,7 @@ ProfilesModel::~ProfilesModel()
 // -----------------------------------------------------------------------------
 void ProfilesModel::Purge()
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         delete *it;
     userProfiles_.clear();
 }
@@ -91,7 +91,7 @@ void ProfilesModel::Serialize( const std::string& file, const tools::SchemaWrite
     xml::xofstream xos( file );
     xos << xml::start( "profiles" );
     schemaWriter.WriteExerciseSchema( xos, "profiles" );
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->Serialize( xos );
     xos << xml::end;
 }
@@ -203,7 +203,7 @@ bool ProfilesModel::CheckUnicityAndRename()
 {
     bool ret = false;
     std::map< const QString, unsigned int > logins;
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
     {
         const QString login = ( *it )->GetLogin();
         ++logins[ login ];
@@ -222,7 +222,7 @@ bool ProfilesModel::CheckUnicityAndRename()
 // -----------------------------------------------------------------------------
 bool ProfilesModel::Exists( const QString& login ) const
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( login == (*it)->GetLogin() )
             return true;
     return false;
@@ -234,7 +234,7 @@ bool ProfilesModel::Exists( const QString& login ) const
 // -----------------------------------------------------------------------------
 bool ProfilesModel::IsReadable( const kernel::Entity_ABC& entity ) const
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( (*it)->IsReadable( entity ) )
             return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
@@ -247,7 +247,7 @@ bool ProfilesModel::IsReadable( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity ) const
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( (*it)->IsWriteable( entity ) )
             return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
@@ -260,7 +260,7 @@ bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool ProfilesModel::IsWriteableByLowLevel( const kernel::Entity_ABC& entity ) const
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( (*it)->IsLowLevel() && (*it)->IsWriteable( entity ) )
             return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
@@ -273,7 +273,7 @@ bool ProfilesModel::IsWriteableByLowLevel( const kernel::Entity_ABC& entity ) co
 // -----------------------------------------------------------------------------
 bool ProfilesModel::IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( (*it)->GetLogin().toAscii().constData() == profile && (*it)->IsReadable( entity ) )
                 return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
@@ -286,7 +286,7 @@ bool ProfilesModel::IsReadable( const kernel::Entity_ABC& entity, const std::str
 // -----------------------------------------------------------------------------
 bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity, const std::string& profile ) const
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( (*it)->GetLogin().toAscii().constData() == profile && (*it)->IsWriteable( entity ) )
             return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
@@ -299,7 +299,7 @@ bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity, const std::st
 // -----------------------------------------------------------------------------
 bool ProfilesModel::IsControlledByLowLevel( const std::set< std::string >& editors, const kernel::Entity_ABC& entity )
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( editors.find( (*it)->GetLogin().toAscii().constData() ) == editors.end() && (*it)->IsLowLevel() && (*it)->IsWriteable( entity ) )
             return true;
     const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
@@ -336,7 +336,7 @@ UserProfile* ProfilesModel::Find( const std::string& name ) const
 // -----------------------------------------------------------------------------
 void ProfilesModel::NotifyDeleted( const kernel::Team_ABC& team )
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->NotifyTeamDeleted( team.GetId() );
     RemoveEmptyProfile();
 }
@@ -347,7 +347,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ProfilesModel::NotifyDeleted( const kernel::Formation_ABC& formation )
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->NotifyFormationDeleted( formation.GetId() );
     RemoveEmptyProfile();
 }
@@ -358,7 +358,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Formation_ABC& formation )
 // -----------------------------------------------------------------------------
 void ProfilesModel::NotifyDeleted( const kernel::Automat_ABC& automat )
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->NotifyAutomatDeleted( automat.GetId() );
     RemoveEmptyProfile();
 }
@@ -369,7 +369,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population )
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->NotifyPopulationDeleted( population.GetId() );
     RemoveEmptyProfile();
 }
@@ -380,7 +380,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population )
 // -----------------------------------------------------------------------------
 void ProfilesModel::NotifyDeleted( const kernel::Ghost_ABC& ghost )
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->NotifyGhostDeleted( ghost.GetId() );
     RemoveEmptyProfile();
 }
@@ -391,7 +391,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Ghost_ABC& ghost )
 // -----------------------------------------------------------------------------
 void ProfilesModel::Visit( T_Units& units ) const
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( (*it)->IsLowLevel() )
         {
             std::vector< unsigned long > ids;
@@ -407,7 +407,7 @@ void ProfilesModel::Visit( T_Units& units ) const
 // -----------------------------------------------------------------------------
 void ProfilesModel::Visit( T_Profiles& profiles ) const
 {
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         profiles.insert( (*it)->GetLogin() );
 }
 
@@ -418,7 +418,7 @@ void ProfilesModel::Visit( T_Profiles& profiles ) const
 void ProfilesModel::RemoveEmptyProfile()
 {
     std::vector< QString > emptyProfiles;
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( (*it)->GetProfilesCount() == 0 )
             emptyProfiles.push_back( (*it)->GetLogin() );
     BOOST_FOREACH( const QString& profile, emptyProfiles )
@@ -441,7 +441,7 @@ unsigned int ProfilesModel::GetProfilesCount() const
 std::vector< std::string > ProfilesModel::GetProfilesWhoCanRead( const kernel::Entity_ABC& entity ) const
 {
     std::vector< std::string > result;
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( ( *it )->IsReadable( entity ) )
             result.push_back( ( *it )->GetLogin().toAscii().constData() );
     return result;
@@ -454,7 +454,7 @@ std::vector< std::string > ProfilesModel::GetProfilesWhoCanRead( const kernel::E
 std::vector< std::string > ProfilesModel::GetProfilesWhoCanWrite( const kernel::Entity_ABC& entity ) const
 {
     std::vector< std::string > result;
-    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( auto it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( ( *it )->IsWriteable( entity ) )
             result.push_back( ( *it )->GetLogin().toAscii().constData() );
     return result;

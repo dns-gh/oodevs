@@ -91,7 +91,7 @@ BOOST_CLASS_EXPORT_KEY( MIL_DictionaryExtensions )
 template< typename T >
 void MIL_DictionaryExtensions::SendFullState( T& msg ) const
 {
-    for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
+    for( auto it = extensions_.begin(); it != extensions_.end(); ++it )
     {
         sword::Extension_Entry& entry = *msg().mutable_extension()->add_entries();
         entry.set_name( it->first );

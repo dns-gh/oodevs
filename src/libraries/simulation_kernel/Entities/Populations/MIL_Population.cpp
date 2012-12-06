@@ -436,10 +436,10 @@ void MIL_Population::UpdateState()
 {
     try
     {
-        for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+        for( auto it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
             delete *it;
         trashedConcentrations_.clear();
-        for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+        for( auto it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
             delete *it;
         trashedFlows_.clear();
         // Flows
@@ -1003,7 +1003,7 @@ MIL_PopulationFlow& MIL_Population::CreateFlow( const MIL_PopulationFlow& source
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D& position )
 {
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         if( ( **it ).IsNearPosition( position ) )
             return **it;
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, position );
@@ -1017,7 +1017,7 @@ MIL_PopulationConcentration& MIL_Population::GetConcentration( const MT_Vector2D
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration* MIL_Population::RetrieveConcentration( unsigned int concentrationId ) const
 {
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         if( ( *it )->GetID() == concentrationId )
             return *it;
     return 0;
@@ -1185,9 +1185,9 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& m
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parametre.value().Get(0).enumeration() );
     if( !pAttitude )
         throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SetAttitude( *pAttitude );
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         ( **it ).SetAttitude( *pAttitude );
 }
 
@@ -1254,12 +1254,12 @@ void MIL_Population::ChangeComposition( unsigned int healthy, unsigned int wound
     {
         float ratio = static_cast< float >( healthy + wounded + contaminated + dead ) / currentAllHumans;
         MIL_PopulationElement_ABC* last = 0;
-        for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         {
             last = *it;
             ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
         }
-        for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        for( auto it = flows_.begin(); it != flows_.end(); ++it )
         {
             last = *it;
             ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
@@ -1290,7 +1290,7 @@ double MIL_Population::ComputeUrbanBlocDestruction( UrbanObjectWrapper* pUrbanOb
     /* FIXME : Either remove completely flows or replace IntersectionArea with proper computation
      * The geometry is a line: a polygon should be constructed out of it if we want to intersect
      * or just counting the number of people inside the block (but most often that will be 0).
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
     {
         currentArea = MIL_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
         coveredArea += currentArea;
@@ -1340,13 +1340,13 @@ void MIL_Population::SendCreation( unsigned int context ) const
     asnMsg().mutable_repartition()->set_female( static_cast< float >( rFemale_ ) );
     asnMsg().mutable_repartition()->set_children( static_cast< float >( rChildren_ ) );
     asnMsg.Send( NET_Publisher_ABC::Publisher(), context );
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SendCreation( context );
-    for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+    for( auto it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
         ( **it ).SendCreation( context );
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         ( **it ).SendCreation( context );
-    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+    for( auto it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
         ( **it ).SendCreation( context );
 }
 
@@ -1371,13 +1371,13 @@ void MIL_Population::SendFullState() const
     asnMsg().set_contaminated( GetContaminatedHumans() );
     asnMsg().set_dead( GetDeadHumans() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SendFullState();
-    for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+    for( auto it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
         ( **it ).SendFullState();
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         ( **it ).SendFullState();
-    for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+    for( auto it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
         ( **it ).SendFullState();
 }
 
@@ -1411,13 +1411,13 @@ void MIL_Population::UpdateNetwork()
             }
             asnMsg.Send( NET_Publisher_ABC::Publisher() );
         }
-        for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
             ( **it ).SendChangedState();
-        for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
+        for( auto it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
             ( **it ).SendChangedState();
-        for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        for( auto it = flows_.begin(); it != flows_.end(); ++it )
             ( **it ).SendChangedState();
-        for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
+        for( auto it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
             ( **it ).SendChangedState();
     }
     catch( std::exception& e )
@@ -1432,9 +1432,9 @@ void MIL_Population::UpdateNetwork()
 // -----------------------------------------------------------------------------
 void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& visitor ) const
 {
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         visitor.Visit( **it );
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         visitor.Visit( **it );
 }
 
@@ -1571,9 +1571,9 @@ bool MIL_Population::IsBlinded() const
 void MIL_Population::UpdateBarycenter()
 {
     MT_Vector2D currentBarycenter;
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         currentBarycenter += (*it)->GetPosition();
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         currentBarycenter += (*it)->GetPosition();
     double elements = static_cast< double >( concentrations_.size() + flows_.size() );
     if( elements > 0 )
@@ -1659,10 +1659,10 @@ bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) con
 bool MIL_Population::HasReachedBlockBorder( const UrbanObjectWrapper* pUrbanKnowledge ) const
 {
     const TER_Localisation& localisation = pUrbanKnowledge->GetLocalisation();
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    for( auto it = flows_.begin(); it != flows_.end(); ++it )
         if( localisation.IsInside( (*it)->GetPosition() ) )
             return true;
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    for( auto it = concentrations_.begin(); it != concentrations_.end(); ++it )
         if( localisation.IsInside( (*it)->GetPosition() ) )
             return true;
     return false;

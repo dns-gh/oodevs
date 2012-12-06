@@ -141,7 +141,7 @@ PHY_DotationType::~PHY_DotationType()
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* PHY_DotationType::InternalFindDotationCategory( unsigned int nID ) const
 {
-    for( CIT_DotationCategoryMap it = dotationCategories_.begin(); it != dotationCategories_.end(); ++it )
+    for( auto it = dotationCategories_.begin(); it != dotationCategories_.end(); ++it )
     {
         if( it->second->GetMosID() == nID )
             return it->second;
@@ -179,7 +179,7 @@ const PHY_DotationType* PHY_DotationType::FindDotationType( const std::string& s
 // -----------------------------------------------------------------------------
 const PHY_DotationType* PHY_DotationType::FindDotationType( unsigned int nID )
 {
-    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
+    for( auto it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
     {
         if( it->second->GetID() == nID )
             return it->second;
@@ -193,7 +193,7 @@ const PHY_DotationType* PHY_DotationType::FindDotationType( unsigned int nID )
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( unsigned int nID )
 {
-    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
+    for( auto it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
     {
         const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( nID );
         if( pDotationCategory )
@@ -208,7 +208,7 @@ const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( unsigned int
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( const std::string& strName )
 {
-    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
+    for( auto it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
     {
         const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( strName );
         if( pDotationCategory )

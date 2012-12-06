@@ -43,7 +43,7 @@ ReportFactory::ReportFactory( const dispatcher::Config& config, const dispatcher
 // -----------------------------------------------------------------------------
 ReportFactory::~ReportFactory()
 {
-    for( CIT_Templates it = templates_.begin(); it != templates_.end(); ++it )
+    for( auto it = templates_.begin(); it != templates_.end(); ++it )
         delete it->second;
 }
 

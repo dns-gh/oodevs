@@ -85,7 +85,7 @@ void FormationHierarchies::UnregisterParent()
 // -----------------------------------------------------------------------------
 void FormationHierarchies::SerializeAttributes( xml::xostream& xos ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         const kernel::Entity_ABC* child = it->second;
         if( dynamic_cast< const kernel::Ghost_ABC* >( child ) )
@@ -106,7 +106,7 @@ void FormationHierarchies::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void FormationHierarchies::SerializeLogistics( xml::xostream& xos ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
 }
 

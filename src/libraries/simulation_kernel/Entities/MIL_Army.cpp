@@ -315,7 +315,7 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
     pExtensions_->WriteODB( xos );
 
     xos << xml::start( "communication" );
-    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         if( !it->second->IsJammed() )
             it->second->WriteODB( xos );
     xos << xml::end;
@@ -351,7 +351,7 @@ void MIL_Army::WriteDiplomacyODB( xml::xostream& xos ) const
 {
     xos << xml::start( "party" )
         << xml::attribute( "id", nID_ );
-    for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
+    for( auto it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         xos << xml::start( "relationship" )
                 << xml::attribute( "party", it->first->GetID() )
@@ -652,7 +652,7 @@ void MIL_Army::SendCreation() const
     pColor_->SendFullState( asn );
     pExtensions_->SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
-    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendCreation();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1, 0 ) );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendCreation, _1, 0 ) );
@@ -665,7 +665,7 @@ void MIL_Army::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Army::SendFullState() const
 {
-    for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
+    for( auto it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         client::ChangeDiplomacy asn;
         asn().mutable_party1()->set_id( nID_ );
@@ -673,7 +673,7 @@ void MIL_Army::SendFullState() const
         asn().set_diplomacy( sword::EnumDiplomacy( it->second ) );
         asn.Send( NET_Publisher_ABC::Publisher() );
     }
-    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendFullState();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1, 0 ) );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::SendFullState, _1 ) );
@@ -896,7 +896,7 @@ const std::string& MIL_Army::GetName() const
 // -----------------------------------------------------------------------------
 void MIL_Army::ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& fct )
 {
-    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+    for( auto it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         fct.visit( *it->second );
 }
 

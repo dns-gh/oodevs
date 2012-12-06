@@ -39,7 +39,7 @@ const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( const std::string
 inline
 const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( sword::WeatherAttributes::EnumPrecipitationType nAsnID )
 {
-    for( CIT_PrecipitationMap it = precipitations_.begin(); it != precipitations_.end(); ++it )
+    for( auto it = precipitations_.begin(); it != precipitations_.end(); ++it )
     {
         const PHY_Precipitation& precipitation = *it->second;
         if( precipitation.GetAsnID() == nAsnID )

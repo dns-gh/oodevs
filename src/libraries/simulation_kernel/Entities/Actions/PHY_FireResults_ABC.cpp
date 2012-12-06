@@ -44,7 +44,7 @@ PHY_FireResults_ABC::~PHY_FireResults_ABC()
 // -----------------------------------------------------------------------------
 void PHY_FireResults_ABC::Serialize( sword::UnitsFireDamages& asn ) const
 {
-    for( CIT_AgentDamagesMap it = agentsDamages_.begin(); it != agentsDamages_.end(); ++it )
+    for( auto it = agentsDamages_.begin(); it != agentsDamages_.end(); ++it )
         it->second.Serialize( *it->first, *asn.add_elem() );
 }
 
@@ -54,7 +54,7 @@ void PHY_FireResults_ABC::Serialize( sword::UnitsFireDamages& asn ) const
 // -----------------------------------------------------------------------------
 void PHY_FireResults_ABC::Serialize( sword::CrowdsFireDamages& asn ) const
 {
-    for( CIT_PopulationDamagesMap it = populationsDamages_.begin(); it != populationsDamages_.end(); ++it )
+    for( auto it = populationsDamages_.begin(); it != populationsDamages_.end(); ++it )
         it->second.Serialize( *it->first, *asn.add_elem() );
 }
 
@@ -64,7 +64,7 @@ void PHY_FireResults_ABC::Serialize( sword::CrowdsFireDamages& asn ) const
 // -----------------------------------------------------------------------------
 void PHY_FireResults_ABC::SendDamagesPion( const MIL_Agent_ABC& firer, unsigned int fireId, bool direct ) const
 {
-    for( CIT_AgentDamagesMap it = agentsDamages_.begin(); it != agentsDamages_.end(); ++it )
+    for( auto it = agentsDamages_.begin(); it != agentsDamages_.end(); ++it )
     {
         client::UnitDamagedByUnitFire msg;
         msg().mutable_unit()->set_id( it->first->GetID() );
@@ -76,7 +76,7 @@ void PHY_FireResults_ABC::SendDamagesPion( const MIL_Agent_ABC& firer, unsigned 
         it->second.SerializeDamages( msg() );
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
-    for( CIT_PopulationDamagesMap it = populationsDamages_.begin(); it != populationsDamages_.end(); ++it )
+    for( auto it = populationsDamages_.begin(); it != populationsDamages_.end(); ++it )
     {
         client::CrowdDamagedByUnitFire msg;
         msg().mutable_crowd()->set_id( it->first->GetID() );
@@ -96,7 +96,7 @@ void PHY_FireResults_ABC::SendDamagesPion( const MIL_Agent_ABC& firer, unsigned 
 // -----------------------------------------------------------------------------
 void PHY_FireResults_ABC::SendDamagesCrowd( const MIL_Population& firer, unsigned int fireId ) const
 {
-    for( CIT_AgentDamagesMap it = agentsDamages_.begin(); it != agentsDamages_.end(); ++it )
+    for( auto it = agentsDamages_.begin(); it != agentsDamages_.end(); ++it )
     {
         client::UnitDamagedByCrowdFire msg;
         msg().mutable_unit()->set_id( it->first->GetID() );

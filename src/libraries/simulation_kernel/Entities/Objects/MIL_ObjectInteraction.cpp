@@ -105,14 +105,14 @@ void MIL_ObjectInteraction::UpdateInteraction( MIL_Object_ABC& object, const TER
     std::set_difference( agentInsideSet_.begin(), agentInsideSet_.end(),
                          newInside      .begin(), newInside      .end(),
                          std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
-    for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
+    for( auto it = intersection.begin(); it != intersection.end(); ++it )
         (**it).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutOutsideObject( object );
 
     intersection.clear();
     std::set_difference( newInside      .begin(), newInside      .end(),
                          agentInsideSet_.begin(), agentInsideSet_.end(),
                          std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
-    for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
+    for( auto it = intersection.begin(); it != intersection.end(); ++it )
         (**it).GetRole< PHY_RoleInterface_Location >().NotifyTerrainPutInsideObject( object );
 
     TER_PopulationConcentration_ABC::T_PopulationConcentrationVector populationsInsideObject;
@@ -135,7 +135,7 @@ void MIL_ObjectInteraction::Update( const T_PopulationSet& last, const T_Populat
     std::set_difference( last.begin(), last.end(),
                          current.begin(), current.end(),
                          std::insert_iterator< T_PopulationSet >( result, result.end() ) );
-    for( CIT_PopulationSet it = result.begin(); it != result.end(); ++it )
+    for( auto it = result.begin(); it != result.end(); ++it )
         fun( **it );
 }
 
@@ -251,7 +251,7 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
         if( object.CanInteractWith( **itAgent ) )
             object.ProcessAgentInside( **itAgent );
 
-    for( CIT_PopulationSet it = populationInsideSet_.begin(); it != populationInsideSet_.end(); ++it )
+    for( auto it = populationInsideSet_.begin(); it != populationInsideSet_.end(); ++it )
     {
         object.PreprocessPopulation( **it );
         if( object.CanInteractWithEntity() )

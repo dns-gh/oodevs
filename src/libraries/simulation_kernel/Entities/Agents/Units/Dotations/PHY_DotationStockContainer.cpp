@@ -163,7 +163,7 @@ void PHY_DotationStockContainer::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "stocks" );
 
-    for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
+    for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
     {
         const PHY_DotationStock& dotationStock = *it->second;
 
@@ -307,7 +307,7 @@ PHY_DotationStock* PHY_DotationStockContainer::AddEmptyStock( const PHY_Dotation
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::Resupply()
 {
-    for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
+    for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
         it->second->Resupply();
 }
 
@@ -369,7 +369,7 @@ void PHY_DotationStockContainer::CheckStockCapacities()
 {
     T_NatureStockData stocksByNatures;
 
-    for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
+    for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
     {
         const PHY_DotationStock&    dotationStock    = *it->second;
         const PHY_DotationCategory& dotationCategory = dotationStock.GetCategory();
@@ -387,7 +387,7 @@ void PHY_DotationStockContainer::CheckStockCapacities()
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion.GetAlgorithms().onComponentFunctorComputerFactory_->Create( stockChecker ) );
     pion.Execute( *componentComputer );
 
-    for( CIT_NatureStockData it = stocksByNatures.begin(); it != stocksByNatures.end(); ++it )
+    for( auto it = stocksByNatures.begin(); it != stocksByNatures.end(); ++it )
     {
         const T_StockData& stock = it->second;
 
@@ -417,7 +417,7 @@ void PHY_DotationStockContainer::NotifySupplyNeeded( const PHY_DotationCategory&
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const
 {
-    for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
+    for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
         visitor( *it->second );
 }
 
@@ -509,7 +509,7 @@ void PHY_DotationStockContainer::ComputeStockWeightAndVolume( const PHY_Dotation
     rWeight = 0;
     rVolume = 0;
 
-    for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
+    for( auto it = stocks_.begin(); it != stocks_.end(); ++it )
     {
         const PHY_DotationStock&    dotationStock    = *it->second;
         const PHY_DotationCategory& dotationCategory = dotationStock.GetCategory();

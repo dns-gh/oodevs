@@ -157,7 +157,7 @@ void NotesModel::HandleRequestDestructSingle(Note* note)
     if( parent )
         parent->RemoveChild( note->GetId() );
     const T_List& noteChildren = note->GetChildren();
-    for( CIT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
+    for( auto it = noteChildren.begin(); it != noteChildren.end(); ++it )
     {
         Note* child = Find( *it );
         if( parent )
@@ -265,7 +265,7 @@ void NotesModel::WriteNote( std::ostream& os, const Note& note, int& lineNumber,
     note.WriteNote( os, parentLine );
     const T_List& noteChildren = note.GetChildren();
     int currentLine = lineNumber;
-    for( CIT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
+    for( auto it = noteChildren.begin(); it != noteChildren.end(); ++it )
         if( Note* child = Find( *it ) )
             WriteNote( os, *child, lineNumber, currentLine );
 }

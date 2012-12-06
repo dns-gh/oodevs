@@ -51,7 +51,7 @@ T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( cons
 {
     T_ConstKnowledgeAgentVector knowledges;
     const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
-    for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
+    for( auto it = enemies.begin(); it != enemies.end(); it++ )
     {
         if( !(*it) )
             continue;
@@ -85,7 +85,7 @@ boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetBarycenter( UrbanO
         const T_PointVector& points = localisation.GetPoints();
         MT_Vector2D point( pBaryventer->rX_, pBaryventer->rY_ );
         double distance = std::numeric_limits< double >::max();
-        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        for( auto it = points.begin(); it != points.end(); ++it )
         {
             double result = pBaryventer->Distance( *it );
             if( result < distance )
@@ -111,7 +111,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_UrbanObjectFunctions::GetBou
         const T_PointVector& points = pUrbanObject->GetLocalisation().GetPoints();
         const MT_Vector2D barycenter = pUrbanObject->GetLocalisation().ComputeBarycenter();
         static const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
-        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        for( auto it = points.begin(); it != points.end(); ++it )
             result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + ( *it - barycenter ).Normalize() * distance ) ) );
     }
     return result;
@@ -145,7 +145,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
     double rTotalFightScoreFriend = 0;
 
     const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetEnemies();
-    for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
+    for( auto it = enemies.begin(); it != enemies.end(); it++ )
     {
         if( !(*it) )
             continue;
@@ -159,7 +159,7 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
     if( !dangerousEnemies_.empty() )
     {
         const T_KnowledgeAgentVector& allies = callerAgent.GetKnowledgeGroup()->GetKnowledge().GetFriends();
-        for( CIT_KnowledgeAgentVector it = allies.begin(); it != allies.end(); it++ )
+        for( auto it = allies.begin(); it != allies.end(); it++ )
         {
             if( !(*it) )
                 continue;

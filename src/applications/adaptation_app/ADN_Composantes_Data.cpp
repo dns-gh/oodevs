@@ -741,7 +741,7 @@ std::string ADN_Composantes_Data::BreakdownGroupInfos::GetItemName()
 // -----------------------------------------------------------------------------
 bool ADN_Composantes_Data::BreakdownGroupInfos::Contains( ADN_Breakdowns_Data::BreakdownInfo& breakdown ) const
 {
-    for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
+    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
         if( (*it)->ptrBreakdown_.GetData()->strName_.GetData() == breakdown.strName_.GetData() )
             return true;
     return false;
@@ -792,12 +792,12 @@ void ADN_Composantes_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& inpu
 void ADN_Composantes_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output, const std::string& composante ) const
 {
     double rSum = 0.0;
-    for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
+    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         rSum += (*it)->rPercentage_.GetData();
     if( rSum != 100.0 )
         throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).toAscii().constData(), tools::translate( "Composante_Data", "Equipment '%1' - Invalid breakdown data : sum != 100" ).arg( composante.c_str() ).toAscii().constData() );
 
-    for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
+    for( auto it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         (*it)->WriteArchive( strName_, output );
 }
 
@@ -1376,7 +1376,7 @@ void ADN_Composantes_Data::ResourceInfos::WriteArchive( xml::xostream& output ) 
     for( uint n = 0; n < eNbrDotationFamily; ++n )
     {
         bool entered = false;
-        for( CIT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
+        for( auto it = categories_.begin(); it != categories_.end(); ++it )
             if( (*it)->ptrDotation_.GetData()->nType_ == E_DotationFamily( n ) )
             {
                 if( !entered )
@@ -1716,7 +1716,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& outpu
     for( int nType = 0; nType < eNbrConsumptionType; ++nType )
     {
         bool entered = false;
-        for( CIT_ConsumptionItem_Vector it = vConsumptions_.begin(); it != vConsumptions_.end(); ++it )
+        for( auto it = vConsumptions_.begin(); it != vConsumptions_.end(); ++it )
             if( (*it)->nConsumptionType_ == nType )
             {
                 if( ! entered )
@@ -2163,7 +2163,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
             >> xml::optional >> xml::attribute( "information-origin", strInformationOrigin_ )
           >> xml::end;
 
-    for( CIT_WeaponInfos_Vector it = vWeapons_.begin(); it != vWeapons_.end(); ++it )
+    for( auto it = vWeapons_.begin(); it != vWeapons_.end(); ++it )
     {
         std::string name( (*it)->strName_.GetData() );
         bool ok = false;
@@ -2203,7 +2203,7 @@ bool ADN_Composantes_Data::ComposanteInfos::IsValidDatabase() const
 // -----------------------------------------------------------------------------
 bool ADN_Composantes_Data::IsValidDatabase() const
 {
-    for( CIT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    for( auto it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
         if( !(*it)->IsValidDatabase() )
             return false;
     return true;
@@ -2409,7 +2409,7 @@ void ADN_Composantes_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "equipments" );
     ADN_Tools::AddSchema( output, "Equipments" );
-    for( CIT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    for( auto it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }

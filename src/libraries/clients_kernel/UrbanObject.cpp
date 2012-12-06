@@ -216,7 +216,7 @@ void UrbanObject::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Block", "Density:" ), density_ );
     displayer.Display( tools::translate( "Block", "Total of inhabitants:" ), GetHumans() );
-    for( CIT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++it )
+    for( auto it = motivations_.begin(); it != motivations_.end(); ++it )
         displayer.Display( tools::translate( "Block", "Occupation rate (%L1):" ).arg( it->first ), it->second.second );
 }
 
@@ -251,7 +251,7 @@ void UrbanObject::UpdateHumans( const std::string& inhabitant, const sword::Popu
     mutableHuman.angriness_ = occupation.angriness();
     const T_Human& human = mutableHuman;
     const QString keyBase = tools::translate( "Block", "Populations/" ) + inhabitant.c_str() + "/";
-    for( CIT_BlockOccupation it = human.persons_.begin(); it != human.persons_.end(); ++ it )
+    for( auto it = human.persons_.begin(); it != human.persons_.end(); ++ it )
     {
         const QString keyOccupation = keyBase + it->first + "/";
         RegisterValue( *this, keyOccupation + tools::translate( "Block", "Resident" ), it->second.first );
@@ -264,7 +264,7 @@ void UrbanObject::UpdateHumans( const std::string& inhabitant, const sword::Popu
     for( IT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++it )
         it->second.first = 0;
     for( T_Humans::const_iterator h = humans_.begin(); h != humans_.end(); ++h )
-        for( CIT_BlockOccupation it = h->second.persons_.begin(); it != h->second.persons_.end(); ++it )
+        for( auto it = h->second.persons_.begin(); it != h->second.persons_.end(); ++it )
             motivations_[ it->first ].first += it->second.first;
     for( IT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++ it )
     {
@@ -296,7 +296,7 @@ unsigned int UrbanObject::GetHumans() const
 {
     unsigned int humans = 0;
     BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
-        for( CIT_BlockOccupation it = human.second.persons_.begin(); it != human.second.persons_.end(); ++ it )
+        for( auto it = human.second.persons_.begin(); it != human.second.persons_.end(); ++ it )
             humans += it->second.first;
     return humans;
 }

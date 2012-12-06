@@ -64,7 +64,7 @@ void ClientsNetworker::Receive( const sword::SimToClient& message )
     else if( message.message().has_control_begin_tick() )
         OnNewTick();
     Broadcast( message );
-    for( CIT_Broadcasters it = broadcasters_.begin(); it != broadcasters_.end(); ++it )
+    for( auto it = broadcasters_.begin(); it != broadcasters_.end(); ++it )
         (*it)->Broadcast( message );
 }
 
@@ -97,7 +97,7 @@ void ClientsNetworker::Broadcast( const sword::SimToClient& message )
     static const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< sword::SimToClient >();
     tools::Message m;
     Serialize( message, m );
-    for( CIT_Clients it = internals_.begin(); it != internals_.end(); ++it )
+    for( auto it = internals_.begin(); it != internals_.end(); ++it )
         it->second->Send( tag, m );
 }
 
@@ -226,7 +226,7 @@ void ClientsNetworker::Send( const sword::SimToClient& msg )
 {
     try
     {
-        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it ) // $$$$ MCO : doesn't this bypass authentication ?
+        for( auto it = clients_.begin(); it != clients_.end(); ++it ) // $$$$ MCO : doesn't this bypass authentication ?
             it->second->Send( msg );
     }
     catch( std::exception& exception )
@@ -243,7 +243,7 @@ void ClientsNetworker::Send( const sword::AuthenticationToClient& msg )
 {
     try
     {
-        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
     }
     catch( std::exception& exception )
@@ -260,7 +260,7 @@ void ClientsNetworker::Send( const sword::ReplayToClient& msg )
 {
     try
     {
-        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
     }
     catch( std::exception& exception )
@@ -277,7 +277,7 @@ void ClientsNetworker::Send( const sword::AarToClient& msg )
 {
     try
     {
-        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
         plugin_.Receive( msg );
     }
@@ -295,7 +295,7 @@ void ClientsNetworker::Send( const sword::MessengerToClient& msg )
 {
     try
     {
-        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
         plugin_.Receive( msg );
     }
@@ -313,7 +313,7 @@ void ClientsNetworker::Send( const sword::DispatcherToClient& msg )
 {
     try
     {
-        for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
+        for( auto it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
     }
     catch( std::exception& exception )

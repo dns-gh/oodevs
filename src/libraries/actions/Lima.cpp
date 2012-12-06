@@ -141,7 +141,7 @@ void Lima::DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::G
 void Lima::DisplayInToolTip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", GetValue() );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->GetType() != "location" )
             it->second->DisplayInToolTip( displayer );
 }
@@ -156,7 +156,7 @@ void Lima::CommitTo( sword::PhaseLineOrder& message ) const
     for( int i = 0; i < functions.count(); ++i )
         message.add_fonctions( sword::PhaseLineOrder::Function( tools::LimaTypeFromShortString( functions[i] ) ) );
 
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string type = it->second->GetType();
         if( type == "location" )

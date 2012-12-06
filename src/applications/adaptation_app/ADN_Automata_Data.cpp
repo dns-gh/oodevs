@@ -250,7 +250,7 @@ bool ADN_Automata_Data::AutomatonInfos::IsValidDatabase() const
         return ADN_GuiTools::MissingPCOnAutomat( strName_.GetData() );
 
     const ADN_Units_Data::UnitInfos& pc = *ptrUnit_.GetData();
-    for( CIT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
+    for( auto it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
     {
         const ADN_Automata_Data::UnitInfos& unit = **it;
         assert( unit.ptrUnit_.GetData() != 0 );
@@ -404,7 +404,7 @@ QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& 
 bool ADN_Automata_Data::IsValidDatabase()
 {
     bool result = true;
-    for( CIT_AutomatonInfosVector it = vAutomata_.begin(); result && it != vAutomata_.end(); ++it )
+    for( auto it = vAutomata_.begin(); result && it != vAutomata_.end(); ++it )
         result = result && ( *it )->IsValidDatabase();
     return result;
 }

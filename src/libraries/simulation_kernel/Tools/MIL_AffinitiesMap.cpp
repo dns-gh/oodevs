@@ -68,7 +68,7 @@ void MIL_AffinitiesMap::WriteODB( xml::xostream& xos ) const
     if( affinities_.empty() )
         return;
     xos << xml::start( "adhesions" );
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    for( auto it = affinities_.begin(); it != affinities_.end(); ++it )
         xos << xml::start( "adhesion" )
                 << xml::attribute( "party", it->first )
                 << xml::attribute( "value", it->second )
@@ -104,7 +104,7 @@ void MIL_AffinitiesMap::save( MIL_CheckPointOutArchive& file, const unsigned int
 {
     std::size_t size = affinities_.size();
     file << size;
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    for( auto it = affinities_.begin(); it != affinities_.end(); ++it )
         file << it->first
              << it->second;
 }

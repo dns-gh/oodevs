@@ -144,7 +144,7 @@ void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis )
 void InhabitantPositions::ComputePosition()
 {
     geometry::Polygon2f poly;
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const kernel::UrbanPositions_ABC* positions = ( *it ).get< 2 >()->Retrieve< kernel::UrbanPositions_ABC >() )
             poly.Add( positions->Barycenter() );
     if( !poly.IsEmpty() )
@@ -158,7 +158,7 @@ void InhabitantPositions::ComputePosition()
 void InhabitantPositions::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "living-area" );
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         xos << xml::start( "urban-block" )
                 << xml::attribute( "id", ( *it ).get< 0 >() )
             << xml::end;
@@ -243,7 +243,7 @@ bool InhabitantPositions::IsAggregated() const
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const kernel::UrbanPositions_ABC* positions = ( *it ).get< 2 >()->Retrieve< kernel::UrbanPositions_ABC >() )
             tools.DrawPolygon( positions->Vertices() );
 }
@@ -256,7 +256,7 @@ void InhabitantPositions::UpdateDictionary()
 {
     accomodationCapacties_.clear();
     infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
         const kernel::UrbanObject* pProxy = static_cast< const kernel::UrbanObject* >( it->get< 2 >() );
         nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
@@ -283,7 +283,7 @@ void InhabitantPositions::UpdateDictionary()
     dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Non medical infrastructures" ), static_cast< const unsigned int& >( infrastructures_ ) );
     for( QMap< QString, unsigned int >::const_iterator it = accomodationCapacties_.constBegin(); it != accomodationCapacties_.constEnd(); ++it )
         dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Capacities/%1" ).arg( it.key() ), it.value() );
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ), ( *it ).get< 1 >() );
 }
 
@@ -350,7 +350,7 @@ void InhabitantPositions::Remove( const kernel::UrbanObject_ABC& object, const g
 // -----------------------------------------------------------------------------
 bool InhabitantPositions::Exists( unsigned long id ) const
 {
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( (*it).get< 2 >()->GetId() == id )
             return true;
     return false;
@@ -372,7 +372,7 @@ void InhabitantPositions::StartEdition()
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Accept()
 {
-    for( CIT_UrbanObjectVector it = edition_.begin(); it != edition_.end(); ++it )
+    for( auto it = edition_.begin(); it != edition_.end(); ++it )
         dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ) );
     UpdateDictionary();
     controller_.Update( inhabitant_ );
@@ -384,7 +384,7 @@ void InhabitantPositions::Accept()
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Reject()
 {
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( auto it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ) );
     livingUrbanObject_ = edition_;
     UpdateDictionary();

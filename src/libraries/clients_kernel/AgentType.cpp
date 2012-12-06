@@ -64,9 +64,9 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
 AgentType::~AgentType()
 {
     delete nature_;
-    for( CIT_Components it = equipments_.begin(); it != equipments_.end(); ++it )
+    for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
         delete *it;
-    for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+    for( auto it = resources_.begin(); it != resources_.end(); ++it )
         delete *it;
 }
 
@@ -248,7 +248,7 @@ unsigned int AgentType::GetNbrWarrantOfficers() const
 const float AgentType::GetComposantesWeight() const
 {
     float weight = 0;
-    for( CIT_Components it = equipments_.begin(); it != equipments_.end(); ++it )
+    for( auto it = equipments_.begin(); it != equipments_.end(); ++it )
         weight += ( *it )->GetType().GetWeight() * ( *it )->GetCount();
     return weight;
 }

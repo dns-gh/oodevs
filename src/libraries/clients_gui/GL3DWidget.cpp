@@ -49,7 +49,7 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, float width,
 // -----------------------------------------------------------------------------
 Gl3dWidget::~Gl3dWidget()
 {
-    for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
         delete *it;
 }
 
@@ -84,7 +84,7 @@ void Gl3dWidget::initializeGL()
         const Rectangle2f viewport( 0, 0, width_, height_ );
         Widget3D::initializeGL();
         glEnableClientState( GL_VERTEX_ARRAY );
-        for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        for( auto it = layers_.begin(); it != layers_.end(); ++it )
             (*it)->Initialize( viewport );
         isInitialized_ = true;
         CenterView();
@@ -102,7 +102,7 @@ void Gl3dWidget::Paint( const ViewFrustum& view )
     glLineWidth( 1.f );
     glColor3f( 1, 1, 1 );
     glBindTexture( GL_TEXTURE_2D, 0 );
-    for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+    for( auto it = layers_.begin(); it != layers_.end(); ++it )
         (*it)->Paint( view );
 }
 
@@ -216,7 +216,7 @@ void Gl3dWidget::DrawLines( const T_PointVector& points ) const
 {
     if( points.size() < 2 )
         return;
-    for( CIT_PointVector it = points.begin(); it + 1 != points.end(); ++it )
+    for( auto it = points.begin(); it + 1 != points.end(); ++it )
         DrawLine( *it, *(it+1) );
 }
 

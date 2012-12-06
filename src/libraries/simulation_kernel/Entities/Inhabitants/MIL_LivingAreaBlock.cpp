@@ -76,7 +76,7 @@ void MIL_LivingAreaBlock::SendFullState( client::PopulationUpdate& msg ) const
 {
     sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
     block.mutable_object()->set_id( urbanObject_->GetID() );
-    for( CIT_Persons it = persons_.begin(); it != persons_.end(); ++it )
+    for( auto it = persons_.begin(); it != persons_.end(); ++it )
     {
         sword::PopulationUpdate_BlockOccupation_UsageOccupation* occupation = block.add_persons();
         occupation->set_usage( it->first );
@@ -204,7 +204,7 @@ unsigned int MIL_LivingAreaBlock::GetPersonsForAccomodation( const std::string& 
 unsigned int MIL_LivingAreaBlock::GetTotalNumberOfPersons() const
 {
     unsigned int sum = 0;
-    for( CIT_Persons it = persons_.begin(); it != persons_.end(); ++it )
+    for( auto it = persons_.begin(); it != persons_.end(); ++it )
         sum += it->second;
     return sum;
 }
@@ -276,7 +276,7 @@ void MIL_LivingAreaBlock::DistributeHumans( unsigned int persons, MIL_LivingArea
     if( blockTmp && !firstAccommodation.empty() )
         persons_[ firstAccommodation ] += blockTmp;
 
-    for( CIT_Persons it = persons_.begin(); it != persons_.end(); ++it )
+    for( auto it = persons_.begin(); it != persons_.end(); ++it )
         urbanObject_->UpdateInhabitants( livingArea, it->first, it->second );
 
     hasChanged_ = true;

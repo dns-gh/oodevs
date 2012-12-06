@@ -139,7 +139,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
     if( categories_.size() == 0 )
         return;
     xos << xml::start( "resources" );
-    for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
+    for( auto it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >( *it );
         xos << xml::start( "resource" )
@@ -199,7 +199,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
     if( categories_.size() == 0 )
         return;
     xos << xml::start( "resources" );
-    for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
+    for( auto it = categories_.begin(); it != categories_.end(); ++it )
     {
         ADN_Composantes_Data::CategoryInfos* infos = *it;
         xos << xml::start( "resource" )

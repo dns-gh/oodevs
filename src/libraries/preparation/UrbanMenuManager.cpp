@@ -118,7 +118,7 @@ void UrbanMenuManager::CreateInfrastructuresMenu( kernel::ContextMenu& menu ) co
     else
     {
         bool noInfrastructureDetected = false;
-        for( CIT_Elements it = selected_.begin(); it != selected_.end(); ++it )
+        for( auto it = selected_.begin(); it != selected_.end(); ++it )
         {
             if( ( *it )->Retrieve< kernel::Infrastructure_ABC >() )
             {
@@ -191,7 +191,7 @@ void UrbanMenuManager::CreateTemplatesMenu( kernel::ContextMenu& menu ) const
             else
             {
                 bool sameTemplate = true;
-                for( CIT_Elements it = selected_.begin(); it != selected_.end(); ++it )
+                for( auto it = selected_.begin(); it != selected_.end(); ++it )
                 {
                     if( !type.Matches( **it ) )
                     {
@@ -217,7 +217,7 @@ void UrbanMenuManager::CreateTemplatesMenu( kernel::ContextMenu& menu ) const
 // -----------------------------------------------------------------------------
 void UrbanMenuManager::OnCreateDistrict()
 {
-    for( CIT_Elements it = selected_.begin(); it != selected_.end(); ++it )
+    for( auto it = selected_.begin(); it != selected_.end(); ++it )
     {
         const kernel::UrbanObject_ABC& object = **it;
         const UrbanHierarchies& hierarchies = static_cast< const UrbanHierarchies& >( object.Get< kernel::Hierarchies >() );

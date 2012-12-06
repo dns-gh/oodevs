@@ -135,7 +135,7 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AutomateType::Terminate()
 {
-    for( CIT_AutomateTypeMap it = automateTypes_.begin(); it != automateTypes_.end(); ++it )
+    for( auto it = automateTypes_.begin(); it != automateTypes_.end(); ++it )
         delete it->second;
     automateTypes_.clear();
 }
@@ -267,7 +267,7 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
             return false;
     }
 
-    for( CIT_CompositionMap it = composition_.begin(); it != composition_.end(); ++it )
+    for( auto it = composition_.begin(); it != composition_.end(); ++it )
     {
         const sCompositionBounds& bounds   = it->second;
         const unsigned int&               nRealNbr = currentComposition[ it->first ];

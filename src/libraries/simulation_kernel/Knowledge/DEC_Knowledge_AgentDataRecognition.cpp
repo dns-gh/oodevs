@@ -119,7 +119,7 @@ void DEC_Knowledge_AgentDataRecognition::DoUpdate( const T& data )
     rMajorOperationalState_ = data.GetMajorOperationalState();
     composantes_ = data.GetComposantes();
     double maxRange = 0;
-    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
         maxRange = std::max( maxRange, it->GetMaxRange() );
     maxSquareRange_ = maxRange * maxRange;
     if( !pAgentType_ )
@@ -200,7 +200,7 @@ const PHY_NatureAtlas& DEC_Knowledge_AgentDataRecognition::GetNatureAtlas() cons
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_AgentDataRecognition::IsHuman() const
 {
-    for( CIT_KnowledgeComposanteVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    for( auto it = composantes_.begin(); it != composantes_.end(); ++it )
         if( it->GetType().GetProtection().IsHuman() )
             return true;
     return false;

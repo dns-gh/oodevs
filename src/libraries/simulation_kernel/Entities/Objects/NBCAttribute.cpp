@@ -175,7 +175,7 @@ void NBCAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_nbc()->set_danger_level( danger_ );
     asn.mutable_nbc()->mutable_nbc_agents();
-    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( auto it = agents_.begin(); it != agents_.end(); ++it )
     {
         sword::NBCAgentType& data = *asn.mutable_nbc()->add_nbc_agents();
         data.set_id( (*it)->GetID() ) ;
@@ -292,7 +292,7 @@ bool NBCAttribute::ReadAgents( const std::string& strAgents )
 std::string NBCAttribute::WriteAgents() const
 {
     std::string strAgents;
-    for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+    for( auto it = agents_.begin(); it != agents_.end(); ++it )
         strAgents += (*it)->GetName() + '\n';
     return strAgents;
 }
@@ -328,7 +328,7 @@ bool NBCAttribute::Update( const NBCAttribute& rhs )
 bool NBCAttribute::UpdateCloudAttribute( const NBCAttribute& rhs )
 {
     agents_.clear();
-    for( CIT_NBCAgents it = rhs.agents_.begin(); it != rhs.agents_.end(); ++it )
+    for( auto it = rhs.agents_.begin(); it != rhs.agents_.end(); ++it )
         if( (*it)->IsGasContaminating() || (*it)->IsGasPoisonous() )
             agents_.push_back( *it );
     if( !agents_.empty() )

@@ -151,7 +151,7 @@ void ExerciseSettings::Serialize( const std::string& filename, const tools::Sche
     xml::xofstream xos( filename );
     xos << xml::start( "settings" );
     schemaWriter.WriteExerciseSchema( xos, "settings" );
-    for( CIT_Settings it = settings_.begin(); it != settings_.end(); ++it )
+    for( auto it = settings_.begin(); it != settings_.end(); ++it )
         it->second->Serialize( xos );
     xos << xml::end;
 }

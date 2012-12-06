@@ -185,7 +185,7 @@ void ResourceNetwork::ReadParameter( xml::xistream& xis )
 void ResourceNetwork::CommitTo( sword::ResourceNetworkElement& resourceNetwork ) const
 {
     Entity< kernel::Entity_ABC >::CommitTo( *resourceNetwork.mutable_object() );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( auto it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->GetType() == "resource" )
             static_cast< const Resource* >( it->second )->CommitTo( *resourceNetwork.mutable_resource()->mutable_name() );
 }

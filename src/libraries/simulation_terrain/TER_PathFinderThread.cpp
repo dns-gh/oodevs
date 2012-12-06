@@ -69,7 +69,7 @@ void TER_PathFinderThread::ProcessDynamicData()
         MT_Profiler profiler;
         profiler.Start();
 
-        for( CIT_DynamicDataVector it = tmpDynamicDataToRegister.begin(); it != tmpDynamicDataToRegister.end(); ++it )
+        for( auto it = tmpDynamicDataToRegister.begin(); it != tmpDynamicDataToRegister.end(); ++it )
         {
             TER_DynamicData* pData = *it;
             assert( pData );
@@ -83,7 +83,7 @@ void TER_PathFinderThread::ProcessDynamicData()
         MT_Profiler profiler;
         profiler.Start();
 
-        for( CIT_DynamicDataVector it = tmpDynamicDataToUnregister.begin(); it != tmpDynamicDataToUnregister.end(); ++it )
+        for( auto it = tmpDynamicDataToUnregister.begin(); it != tmpDynamicDataToUnregister.end(); ++it )
         {
             TER_DynamicData* pData = *it;
             assert( pData );
@@ -139,7 +139,7 @@ TerrainRetractationHandle& TER_PathFinderThread::CreateLineTree( const T_PointVe
 {
     std::vector< geometry::Point2f > geometryPoints;
     geometryPoints.reserve( points.size() );
-    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+    for( auto it = points.begin(); it != points.end(); ++it )
         geometryPoints.push_back( MakePoint( *it ) );
     return pPathfinder_->CreateDynamicData( geometryPoints.begin(), geometryPoints.end(), terrainData );
 }
