@@ -27,7 +27,7 @@ namespace
         }
     }
 
-    int ResultCallback( void* context, int colsNb, char** colsNames, char** colsValues )
+    int ResultCallback( void* context, int colsNb, char** colsValues, char** colsNames )
     {
         Table::T_ResultSet* set = static_cast< Table::T_ResultSet* >( context );
 
@@ -93,10 +93,18 @@ int Table::StepStatement( sqlite3_stmt* stmt ) const
 {
     int err = sqlite3_step( stmt );
 
-    if( SQLITE_OK == err || SQLITE_ROW == err )
+    switch( err )
     {
+    case SQLITE_OK:
+    case SQLITE_ROW:
+    case SQLITE_DONE:
+        // Nominal cases
+        break;
+    default:
+        // Well, something unexpected happened...
         sqlite3_finalize( stmt );
         throw DatabaseException( err, sqlite3_errmsg( db_ ) );
+        break;
     }
 
     return err;

@@ -33,32 +33,8 @@ public:
     bool GetLastAccessTime( const std::string& layerName, std::time_t& time );
     void SetLastAccessTime( const std::string& layerName, const std::time_t& time );
 
-    //! @name Operations
-    //@{
-    void UpdateStatus( const std::string& status );
-    //@}
-
 private:
-    //! @name Helpers
-    //@{
-    void GetStatus();
     void CreateStructure();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    sqlite3* db_;
-    std::string name_;
-    char* err_msg;
-    //@}
-
-public:
-    //! @name Member data
-    //@{
-    bool status_;
-    //@}
-    
 };
 
 } //! namespace geostore

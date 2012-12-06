@@ -18,8 +18,6 @@
 #include "terrain/TerrainFileReader.h"
 #include "terrain/Translator.h"
 
-#include "preparation/UrbanModel.h" // TO BE REMOVED!
-
 using namespace geostore;
 
 namespace bfs = boost::filesystem;
@@ -50,7 +48,7 @@ void GeoStoreManager::Initialize( const bfs::path& path )
         InitProjectorOld( path_ / "World.xml" );
     }
     spatialDb_.reset( new Database( path_ ) );
-    spatialDb_->LoadLayers( *proj_ );
+    spatialDb_->LoadLayers( *trans_ );
 }
 
 // -----------------------------------------------------------------------------

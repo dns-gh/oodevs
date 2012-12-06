@@ -55,8 +55,11 @@ bool CreateBlockProcess::CanCreateBlock( const SpatialIndexer& index, const geom
             if( const kernel::UrbanPositions_ABC* attribute = ( *it )->Retrieve< kernel::UrbanPositions_ABC >() )
                 geometryFactory_->AddPolygonGeometryToCollection( attribute->Polygon(), projector, getBlocks );
         }
-        if( gaiaGeomCollIntersects( newBlock, getBlocks ) == 1 ) //don't keep blocks
-            create = false;
+
+        create = gaiaGeomCollIntersects( newBlock, getBlocks ) == 1;
+
+        gaiaFreeGeomColl( newBlock );
+        gaiaFreeGeomColl( getBlocks );
     }
     return create;
 }

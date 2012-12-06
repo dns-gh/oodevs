@@ -74,7 +74,7 @@ void GeoTable::SetGeometry( const std::string& name )
 // -----------------------------------------------------------------------------
 void GeoTable::CreateStructure()
 {
-    std::ostringstream query;
+    std::stringstream query;
     query   << "CREATE TABLE IF NOT EXISTS " << GetName()
             << " ( id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(256) )";
     ExecuteQuery( query.str() );
@@ -106,21 +106,26 @@ void GeoTable::FillTable( const boost::filesystem::path& path, PointProjector_AB
 // -----------------------------------------------------------------------------
 void GeoTable::AddGeometryColumn( int geom_type )
 {
-    std::ostringstream query;
-    query << "SELECT AddGeometryColumn( '" << GetName() << ", 'geom', 4326, '";
+    std::stringstream query;
+    query << "SELECT AddGeometryColumn( '" << GetName() << "', 'geom', 4326, '";
     switch( geom_type )
     {
-    case Point: 
+    case Point:
         query << "POINT";
+        geometryType_ = Point;
         break;
     case Polygon:
         query << "POLYGON";
+        geometryType_ = Polygon;
         break;
     case LineString:
-    default:
         query << "LINESTRING";
+        geometryType_ = LineString;
         break;
+    default:
+        throw std::runtime_error( __FUNCTION__ );
     }
+
     query << "', 2 )";
 
     ExecuteQuery( query.str() );
@@ -132,17 +137,49 @@ void GeoTable::AddGeometryColumn( int geom_type )
 // -----------------------------------------------------------------------------
 void GeoTable::CreatePolygonGeometry( gaiaGeomCollPtr geo, const TerrainObject& shape )
 {
-    auto coordinates = shape.GetCoordinates();
+    gaiaPolygonPtr polyg;
+    gaiaRingPtr ring;
+    geometry::Point2d firstPoint;
+    int numVertices = static_cast< int >( shape.GetCoordinates().size() );
+    int numRings = static_cast< int >( shape.GetSubPrimitives().size() );
+    polyg = gaiaAddPolygonToGeomColl( geo, numVertices + 1, numRings );
+    ring = polyg->Exterior;
+    for( int i = 0; i < numVertices; ++i )
+    {
+        gaiaSetPoint( ring->Coords, i, shape.GetCoordinates()[ i ].X(), shape.GetCoordinates()[ i ].Y() );
+        if( i == 0 )
+            firstPoint.Set( shape.GetCoordinates()[ i ].X(), shape.GetCoordinates()[ i ].Y() );
+    }
+    gaiaSetPoint( ring->Coords, numVertices, firstPoint.X(), firstPoint.Y() );    
+    if( numRings == 0 )
+        return;
+    geodata::Primitive_ABC::T_Vector innerRing = shape.GetSubPrimitives();
+    int numParts = 0;
+    for( geodata::Primitive_ABC::CIT_Vector it = innerRing.begin(); it != innerRing.end(); ++it )
+    {
+        numVertices = static_cast< int >( ( *it )->GetCoordinates().size() );
+        if( numVertices < 3 )
+            continue;
+        ring = gaiaAddInteriorRing( polyg, numParts, numVertices + 1 );
+        for( int i = 0; i < numVertices; ++i )
+        {
+            gaiaSetPoint( ring->Coords, i, ( *it )->GetCoordinates()[ i ].X(), ( *it )->GetCoordinates()[ i ].Y() );
+            if( i == 0 )
+                firstPoint.Set( ( *it )->GetCoordinates()[ i ].X(), ( *it )->GetCoordinates()[ i ].Y() );
+        }
+        gaiaSetPoint( ring->Coords, numVertices, firstPoint.X(), firstPoint.Y() );
+        ++numParts;
+    }
+
+    /*auto coordinates = shape.GetCoordinates();
     int numVertices = static_cast< int >( coordinates.size() );
 
     auto innerRings = shape.GetSubPrimitives();
 
-    geometry::Point2d firstPoint;
-
     gaiaPolygonPtr polyg = gaiaAddPolygonToGeomColl( geo, numVertices + 1, static_cast< int >( innerRings.size() ) );
     gaiaRingPtr ring = polyg->Exterior;
 
-    if( numVertices != 0 )
+    if( ! coordinates.empty() )
     {
         for( int i = 0; i < numVertices; ++i )
         {
@@ -176,7 +213,7 @@ void GeoTable::CreatePolygonGeometry( gaiaGeomCollPtr geo, const TerrainObject& 
         // Close the ring
         gaiaSetPoint( ring->Coords, numVertices, coordinates[ 0 ].X(), coordinates[ 0 ].Y() );
         ++ringPos;
-    }
+    }*/
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +236,7 @@ void GeoTable::CreateLineGeometry( gaiaGeomCollPtr geo, const TerrainObject& sha
 // -----------------------------------------------------------------------------
 void GeoTable::MbrSpatialIndex()
 {
-    std::ostringstream query;
+    std::stringstream query;
     query << "SELECT CreateMbrCache( '" << GetName() << "', 'geom' )";
     ExecuteQuery( query.str() );
 }
@@ -213,21 +250,18 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
     // Begin transaction
     ExecuteQuery( "BEGIN" );
 
-    std::ostringstream query;
-    query << "INSERT INTO " << GetName() << "( id, name, geom ) VALUES ( ?, ?, ? )";
+    std::stringstream query;
+    query << "REPLACE INTO " << GetName() << "( id, name, geom ) VALUES ( ?, ?, ? )";
     sqlite3_stmt* stmt = CreateStatement( query.str() );
 
-    // Index count
+    // ID
     int i = 0;
-    int err;
 
     for( auto it = features.begin(); it != features.end(); ++it )
     {
-        if( ( ( *it )->GetCoordinates().size() == 1 ) || ( geometryType_ == Polygon && ( *it )->GetCoordinates().size() < 3 ) )
+        const size_t verticesCount = ( *it )->GetCoordinates().size();
+        if( ( verticesCount == 1 ) || ( geometryType_ == Polygon && verticesCount < 3 ) )
             continue;
-
-        // Increment index
-        ++i;
 
         gaiaGeomCollPtr geo = CreateGeometry( **it );
         if( ! gaiaIsValid( geo ) )
@@ -239,6 +273,9 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
             continue;
         }
 
+        // Increment ID
+        ++i;
+
         // Create a blob for the geomColl
         unsigned char* blob;
         int blob_size;
@@ -248,21 +285,17 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
 
         sqlite3_reset( stmt );
         sqlite3_clear_bindings( stmt );
+
+        // ID
         sqlite3_bind_int( stmt, 1, i );
+        // NAME
         std::string text = ( *it )->GetText();
         sqlite3_bind_text( stmt, 2, text.c_str(), static_cast< int >( text.length() ), SQLITE_TRANSIENT );
+        // Spatialite BLOB
         sqlite3_bind_blob( stmt, 3, blob, blob_size, &free ); // Will be freed!
-        err = sqlite3_step( stmt );
 
-        if( err == SQLITE_DONE /*|| err == SQLITE_ROW*/ )
-        {
-            continue;
-        }
-        else
-        {
-            sqlite3_finalize( stmt );
-            throw std::runtime_error( __FUNCTION__ ); // It failed!
-        }
+        // Step the query
+        StepStatement( stmt );
     }
 
     // Free all the resources for that statement
@@ -274,8 +307,8 @@ void GeoTable::Fill( const std::vector< TerrainObject* >& features )
     // Create spatial index
     MbrSpatialIndex();
 
-    // Start analyze of the table
-    ExecuteQuery( "ANALYZE " + GetName() );
+    // Analyze of the table
+    //ExecuteQuery( "ANALYZE " + GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,22 +344,31 @@ gaiaGeomCollPtr GeoTable::GetFeaturesIntersectingWith( gaiaGeomCollPtr poly )
 {
     gaiaGeomCollPtr result = nullptr;
 
-    sqlite3_stmt* stmt = CreateStatement( "SELECT GUnion( geom ) FROM ? WHERE MbrIntersects( geom, BuildMbr( ?, ?, ?, ? ) )" );
+    /*std::string mbrStr = boost::lexical_cast< std::string >( poly->MinX ) + ", "
+        + boost::lexical_cast< std::string >( poly->MinY ) + ", "
+        + boost::lexical_cast< std::string >( poly->MaxX  ) + ", "
+        + boost::lexical_cast< std::string >( poly->MaxY );*/
+
+    std::ostringstream query;
+    query << "SELECT GUnion( geom ) FROM " << GetName() << " WHERE MbrIntersects( geom, BuildMbr( ?, ?, ?, ? ) );";
+
+    sqlite3_stmt* stmt = CreateStatement( query.str() );
     sqlite3_reset( stmt );
     sqlite3_clear_bindings( stmt );
-    sqlite3_bind_text( stmt, 1, GetName().c_str(), static_cast< int >( GetName().length() ), SQLITE_TRANSIENT );
-    sqlite3_bind_double( stmt, 2, poly->MinX );
-    sqlite3_bind_double( stmt, 3, poly->MinY );
-    sqlite3_bind_double( stmt, 4, poly->MaxX );
-    sqlite3_bind_double( stmt, 5, poly->MaxY );
+
+    sqlite3_bind_double( stmt, 1, poly->MinX );
+    sqlite3_bind_double( stmt, 2, poly->MinY );
+    sqlite3_bind_double( stmt, 3, poly->MaxX );
+    sqlite3_bind_double( stmt, 4, poly->MaxY );
 
     if( StepStatement( stmt ) == SQLITE_ROW )
     {
         // Retrieve the data...
-        gaiaGeomCollPtr temp = gaiaFromSpatiaLiteBlobWkb(
-                static_cast< const unsigned char * >( sqlite3_column_blob( stmt, 0 ) ),
-                sqlite3_column_bytes( stmt, 0 )
-            );
+        const unsigned char* blob = static_cast< const unsigned char * >( sqlite3_column_blob( stmt, 0 ) );
+        unsigned int blobSize = sqlite3_column_bytes( stmt, 0 );
+
+        // Create the geometry...
+        gaiaGeomCollPtr temp = gaiaFromSpatiaLiteBlobWkb( blob, blobSize );
 
         // Clip with the polygon
         result = gaiaGeometryIntersection( temp, poly );

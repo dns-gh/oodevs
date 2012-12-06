@@ -9,6 +9,7 @@
 
 #include "geostore_pch.h"
 #include "ProjectionTable.h"
+#include "DatabaseException.h"
 
 using namespace geostore;
 
@@ -20,11 +21,11 @@ ProjectionTable::ProjectionTable( sqlite3* db )
     : Table( db, "spatial_ref_sys" )
 {
     ExecuteQuery( "SELECT InitSpatialMetadata()" );
-    ExecuteQuery( 
-            "INSERT INTO"
-            "   spatial_ref_sys ( srid, auth_name, auth_srid, ref_sys_name, proj4text )"
-            "VALUES"
-            "   ( 4326, 'epgs', 4326, 'WGS 84', '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs' )"
+    ExecuteQuery(
+        "REPLACE INTO"
+        "   spatial_ref_sys ( srid, auth_name, auth_srid, ref_sys_name, proj4text ) "
+        "VALUES"
+        "   ( 4326, 'epgs', 4326, 'WGS 84', '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs' )"
         );
 }
 
