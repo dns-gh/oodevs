@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     void CreateTable( const TerrainFileReader& file );
-    void GetTable( const std::string& name );     
+    void GetTable( const std::string& name );
     bool HasTable( const std::string& name );
     //@}
 

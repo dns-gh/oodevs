@@ -21,6 +21,7 @@
 #include <math.h>
 
 using namespace geostore;
+using namespace geometry;
 
 // -----------------------------------------------------------------------------
 // Name: CreateBlockAutoProcess constructor
@@ -32,8 +33,7 @@ CreateBlockAutoProcess::CreateBlockAutoProcess( const Database& database, double
     , blocks_           ( 0 )
     , geometryFactory_  ( new GeometryFactory() )
 {
-    // TODO: Compute the actual value for the road width !!!
-    roadWidth_ = 0.00001;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,11 +50,17 @@ CreateBlockAutoProcess::~CreateBlockAutoProcess()
 // Name: CreateBlockAutoProcess::Run
 // Created: AME 2010-08-02
 // -----------------------------------------------------------------------------
-void CreateBlockAutoProcess::Run( const geometry::Polygon2f& footprint, UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector )
+void CreateBlockAutoProcess::Run( const Polygon2f& footprint, UrbanModel& model, kernel::UrbanObject_ABC& parent, PointProjector_ABC& projector )
 {
     gaiaGeomCollPtr poly        = geometryFactory_->CreatePolygonGeometry( footprint , projector );
     gaiaGeomCollPtr buildings   = 0;
     gaiaGeomCollPtr urbans      = 0;
+
+    // Compute the road width
+    double lat0, lon0, lat1, lon1;
+    projector.Unproject( Point2d( 0.0, 0.0 ), lat0, lon0 );
+    projector.Unproject( Point2d( 0.0 + roadWidth_, 0.0 ), lat1, lon1 );
+    roadWidth_ = std::abs( lon1 - lon0 );
 
     Database::CIT_Tables it;
 
