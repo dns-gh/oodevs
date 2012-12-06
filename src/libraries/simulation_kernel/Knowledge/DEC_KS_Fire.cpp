@@ -18,6 +18,7 @@
 #include "Entities/Agents/Perceptions/PHY_ZURBPerceptionComputer.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -90,6 +91,10 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
     for( CIT_PionSet itAttacker = pionsAttacking_.begin(); itAttacker != pionsAttacking_.end(); ++itAttacker )
     {
         MIL_AgentPion& attacker = **itAttacker;
+
+        // Si le pion qui attaque est furtif
+        if( attacker.GetRole< PHY_RolePion_Posture>().IsStealth() )
+            continue;
 
         // On ne gére la connaissance que lorsque le tireur est à distance inférieure de la distance max de détection
         if( agentInteracting.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance() <= agentInteracting.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( attacker.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
