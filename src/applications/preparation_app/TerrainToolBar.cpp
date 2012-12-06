@@ -46,7 +46,7 @@ namespace
 
         // Spin box
         QDoubleSpinBox* spinBox = new QDoubleSpinBox;
-        spinBox->setRange( 2.0, 20.0 );
+        spinBox->setRange( 2.0, 100.0 );
         spinBox->setValue( 10.0 );
         spinBox->setSingleStep( 1.0 );
         hLayout->addWidget( spinBox );
