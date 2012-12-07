@@ -535,8 +535,6 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
     double rMinDistance = std::numeric_limits< double >::max();
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
     {
-        if( ( **itConcentration ).IsDead() )
-            continue;
         MT_Vector2D nearestPointTmp = ( **itConcentration ).GetLocation().ComputeBarycenter();
         double rDistance = refPos.Distance( nearestPointTmp );
         if( rDistance < rMinDistance )
@@ -547,8 +545,6 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
     }
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
     {
-        if( ( **itFlow ).IsDead() )
-            continue;
         MT_Vector2D nearestPointTmp;
         if( !( **itFlow ).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
             continue;
