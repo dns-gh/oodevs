@@ -476,6 +476,7 @@ integration.activateLogisticChains = function( self )
         DEC_Sante_ActiverChaine()
         DEC_Maintenance_ActiverChaine()
         DEC_Ravitaillement_ActiverChaine()
+        DEC_Sante_ActiverFonctionSoin()
     end
 end
 
@@ -484,6 +485,7 @@ integration.desactivateLogisticChains = function( self )
         DEC_Sante_DesactiverChaine()
         DEC_Maintenance_DesactiverChaine()
         DEC_Ravitaillement_DesactiverChaine()
+        DEC_Sante_DesactiverFonctionSoin()
     end
 end
 
