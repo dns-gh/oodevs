@@ -351,7 +351,10 @@ integration.crowdIsContamined = function ()
 end
 
 integration.extractVictimsFromCrowd = function( crowd )
-    local position = DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 )
+    local position = DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 ) -- /!\ can returns a nil value!
+    if not position then
+        position = DEC_Agent_Position() -- extract wounded creating a new crowd on my own position
+    end
     return DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, position )
 end
 
