@@ -15,10 +15,12 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
     class DecisionalState;
+    class UnitAttributes;
 }
 
 // =============================================================================
@@ -29,9 +31,11 @@ namespace sword
 // =============================================================================
 class DecisionalStates : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< sword::DecisionalState >
+                       , public kernel::Updatable_ABC< sword::UnitAttributes >
                        , public kernel::Drawable_ABC
                        , public kernel::Displayable_ABC
                        , public kernel::Aggregatable_ABC
+                       , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -43,17 +47,12 @@ public:
     //! @name Operations
     //@{
     virtual void DoUpdate( const sword::DecisionalState& message );
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DecisionalStates( const DecisionalStates& );            //!< Copy constructor
-    DecisionalStates& operator=( const DecisionalStates& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< QString, QString > T_Values;

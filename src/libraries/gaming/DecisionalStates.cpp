@@ -48,8 +48,6 @@ void DecisionalStates::DoUpdate( const sword::DecisionalState& message )
     static const std::string echelon   ( "Echelon" );
     static const std::string first     ( "eEtatEchelon_Premier" );
     static const std::string eclairage ( "eEtatEchelon_Eclairage" );
-    static const std::string etat      ( "EtatOps" );
-    static const std::string none      ( "eEtatDestruction_None" );
 
     // $$$$ AGE 2007-05-31:
     if( message.key() == contact )
@@ -59,10 +57,18 @@ void DecisionalStates::DoUpdate( const sword::DecisionalState& message )
         draw1stEchelon_ = message.value() == first;
         drawEclairage_  = message.value() == eclairage;
     }
-    else if( message.key() == etat )
-        drawEtatOps_    = message.value() != none;
     else
         values_[ QString( message.key().c_str() ) ] = QString( message.value().c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DecisionalStates::DoUpdate
+// Created: JSR 2012-12-07
+// -----------------------------------------------------------------------------
+void DecisionalStates::DoUpdate( const sword::UnitAttributes& message )
+{
+    if( message.has_operational_state() )
+        drawEtatOps_ = message.operational_state() != sword::operational;
 }
 
 // -----------------------------------------------------------------------------
