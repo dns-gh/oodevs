@@ -25,6 +25,7 @@ LogTable::LogTable( sqlite3* db )
 bool LogTable::GetLastAccessTime( const std::string& layerName, std::time_t& time )
 {
     bool result = false;
+    time = 0;
 
     std::ostringstream query;
     query << "SELECT last_modification FROM " << GetName() << " WHERE table_name = '" << layerName << "'";
