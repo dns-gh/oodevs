@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
-#include "MIL_InteractiveContainer_ABC.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -34,7 +33,6 @@ class MIL_Agent_ABC;
 // Created: JCR 2008-05-30
 // =============================================================================
 class AttritionCapacity : public ObjectCapacity_ABC
-                        , public MIL_InteractiveContainer_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -57,7 +55,6 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
 
-    virtual void CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& agent, bool& canInteract );
     virtual void ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     virtual void ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent );
     //@}
