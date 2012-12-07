@@ -839,7 +839,7 @@
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,web_control_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,simulation_kernel_test,
                                  integration_decisionnal_test,checkpoint_test,protocol_test,positions_plugin_test,
-                                 actions_test,launcher_test,propagation_test,client_proxy_test,
+                                 actions_test,launcher_test,propagation_test,client_proxy_test,geostore_test,
                                  app_test" description="run all tests"/>
 
     <target name="3a_test" depends="3a">
