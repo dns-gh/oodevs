@@ -12,6 +12,7 @@
 
 class PointProjector_ABC;
 class TerrainFileReader;
+struct sqlite3;
 
 namespace geostore
 {
