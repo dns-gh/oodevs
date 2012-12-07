@@ -289,7 +289,7 @@ void CreateBlockAutoProcess::FillPolygonVector( gaiaGeomCollPtr blocks, std::vec
 {
     gaiaPolygonPtr block = blocks->FirstPolygon;
     double x, y;
-    std::vector< geometry::Point2f > points;
+    std::vector< Point2f > points;
     while( block )
     {
         points.resize( 0 );
@@ -298,9 +298,9 @@ void CreateBlockAutoProcess::FillPolygonVector( gaiaGeomCollPtr blocks, std::vec
         {
             gaiaGetPoint( block->Exterior->Coords, i, &x, &y );
             const geometry::Point2d outPoint( projector_.Project( y, x ) );
-            points.push_back( geometry::Point2f( static_cast< float >( outPoint.X() ), static_cast< float >( outPoint.Y() ) ) );
+            points.emplace_back( Point2f( static_cast< float >( outPoint.X() ), static_cast< float >( outPoint.Y() ) ) );
         }
-        vec.push_back( Polygon2f( points ) );
+        vec.emplace_back( Polygon2f( points ) );
         block = block->Next;
     }
 }
