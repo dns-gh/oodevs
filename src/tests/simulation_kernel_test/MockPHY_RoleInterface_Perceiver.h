@@ -24,8 +24,8 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD_EXT( NotifyPerception, 2, bool( MIL_PopulationConcentration&, const PHY_PerceptionLevel& ), NotifyPopulationConcentrationPerception );
     MOCK_METHOD_EXT( NotifyPerception, 3, bool( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const T_PointVector& ), NotifyPopulationFlowPerception );
     MOCK_METHOD_EXT( NotifyPerception, 1, void( const MIL_Effect_IndirectFire& ), NotifyIndirectFirePerception );
+    MOCK_METHOD_EXT( NotifyPerception, 3, void( MIL_Object_ABC&, const MT_Vector2D&, const MT_Vector2D& ), NotifyDisasterCollision );
     MOCK_METHOD_EXT( NotifyPerceptionUrban, 2, void( const MIL_UrbanObject_ABC&, const PHY_PerceptionLevel& ), NotifyUrbanBlockPerception );
-    MOCK_METHOD( NotifyDisasterCollision, 3 );
 
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );

@@ -648,10 +648,10 @@ void RolePion_Perceiver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC& /*obj
 }
 
 // -----------------------------------------------------------------------------
-// Name: RolePion_Perceiver::NotifyDisasterCollision
+// Name: RolePion_Perceiver::NotifyPerception
 // Created: LGY 2012-12-06
 // -----------------------------------------------------------------------------
-void RolePion_Perceiver::NotifyDisasterCollision( MIL_Object_ABC& /*object*/, const MT_Vector2D& /*vPosition*/, const MT_Vector2D& /*vDirection*/ )
+void RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& /*object*/, const MT_Vector2D& /*vPosition*/, const MT_Vector2D& /*vDirection*/ )
 {
     throw std::runtime_error( __FUNCTION__ );
 }

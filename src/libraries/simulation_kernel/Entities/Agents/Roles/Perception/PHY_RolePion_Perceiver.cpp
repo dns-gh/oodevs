@@ -1191,10 +1191,10 @@ void PHY_RolePion_Perceiver::NotifyExternalPerception( MIL_Agent_ABC& agent , co
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::NotifyDisasterCollision
+// Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: LGY 2012-12-06
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
+void PHY_RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
 {
     owner_.GetKnowledge().GetKsObjectInteraction().NotifyDisasterCollision( object, vPosition, vDirection );
 }

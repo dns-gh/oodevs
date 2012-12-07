@@ -58,7 +58,7 @@ void PHY_PerceptionDisaster::Execute( const TER_Object_ABC::T_ObjectVector& perc
     {
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
         if( object.Retrieve< DisasterCapacity >() && Compute( object, position ) > PHY_PerceptionLevel::notSeen_ )
-            perceiver_.NotifyDisasterCollision( object, position, location.GetDirection() );
+            perceiver_.NotifyPerception( object, position, location.GetDirection() );
     }
 }
 
