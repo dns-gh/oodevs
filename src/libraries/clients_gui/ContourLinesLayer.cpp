@@ -34,7 +34,7 @@ ContourLinesLayer::ContourLinesLayer( Controllers& controllers, DetectionMap& ma
     , enabled_      ( false )
     , color_        ( 245, 245, 220 )
     , callListId_   ( 0 )
-    , linesHeight_  ( 20 )
+    , linesHeight_  ( 100 )
     , stopThread_   ( false )
     , threadRunning_( false )
     , computed_     ( false )
