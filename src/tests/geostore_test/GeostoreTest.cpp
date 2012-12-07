@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE( Database_Test )
     GeoStoreManager manager( BOOST_RESOLVE( "terrain" ), index );
     std::vector< GeoTable* > tables;
     manager.GetDatabase().GetTables( tables );
-    BOOST_REQUIRE( tables.size() == 11 );
+    BOOST_CHECK_EQUAL( tables.size(), 11u );
 }
 
 BOOST_AUTO_TEST_CASE( UrbanBlockAutoGeneration_Test )
@@ -51,5 +51,5 @@ BOOST_AUTO_TEST_CASE( UrbanBlockAutoGeneration_Test )
     std::vector< geometry::Polygon2f > blocks;
     manager.CreateUrbanBlocksOnCities( extent, 10., blocks );
 
-    BOOST_REQUIRE( blocks.size() == 17 );
+    BOOST_CHECK_EQUAL( blocks.size(), 17u );
 }
