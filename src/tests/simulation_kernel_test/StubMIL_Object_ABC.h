@@ -65,6 +65,7 @@ public:
     virtual void ApplyStructuralState( float /*structuralState*/ ) const {}
     virtual void Instanciate( MIL_Object_ABC& /*object*/ ) const {}
     virtual void Finalize() {}
+    virtual bool CanBeSeen() const { return true; }
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& /*attributes*/ ) { throw; }
     virtual const std::string& GetName() const { return name_; };
     //@}

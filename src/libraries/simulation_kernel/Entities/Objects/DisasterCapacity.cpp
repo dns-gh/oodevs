@@ -158,3 +158,12 @@ const MIL_DisasterType& DisasterCapacity::GetDisasterType() const
 {
     return *disasterType_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity::CanBeSeen
+// Created: LGY 2012-12-07
+// -----------------------------------------------------------------------------
+bool DisasterCapacity::CanBeSeen() const
+{
+    return false;
+}

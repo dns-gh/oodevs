@@ -98,6 +98,7 @@ public:
     //@{
     virtual bool CanInteractWith      ( const MIL_Entity_ABC& agent ) const;
     virtual bool CanInteractWithEntity() const;
+    virtual bool CanBeSeen() const = 0;
     //@}
 
     //! @name Interaction events

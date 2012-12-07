@@ -44,6 +44,7 @@ public:
     //! @name InteractiveContainer
     //@{
     virtual bool CanInteractWith         ( const MIL_Entity_ABC& agent ) const;
+    virtual bool CanBeSeen               () const;
     virtual void Register                ( MIL_InteractiveContainer_ABC* capacity );
     virtual void PreprocessAgent         ( MIL_Agent_ABC& agent );
     virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent );

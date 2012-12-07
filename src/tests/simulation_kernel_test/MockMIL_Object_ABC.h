@@ -33,6 +33,7 @@ MOCK_BASE_CLASS( MockMIL_Object_ABC, MIL_Object_ABC )
     MOCK_METHOD( ApplyDirectFire, 0 );
     MOCK_METHOD( ApplyDestruction, 2 );
     MOCK_METHOD( IsUniversal, 0 );
+    MOCK_METHOD( CanBeSeen, 0 );
     MOCK_METHOD_EXT( CreateKnowledge, 1, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_Army_ABC& ) , CreateKnowledgeArmy );
     MOCK_METHOD_EXT( CreateKnowledge, 1, boost::shared_ptr< DEC_Knowledge_Object >( const boost::shared_ptr< MIL_KnowledgeGroup >& ) , CreateKnowledgeKnowledgeGroup );
     MOCK_CONST_METHOD_EXT( operator(), 0, const MIL_ObjectManipulator_ABC&(), OperatorConst );

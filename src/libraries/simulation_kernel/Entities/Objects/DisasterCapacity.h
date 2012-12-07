@@ -55,6 +55,11 @@ public:
     virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
     //@}
 
+    //! @name Perception
+    //@{
+    virtual bool CanBeSeen() const;
+    //@}
+
     //! @name Accessors
     //@{
     float GetDose( const MIL_Object_ABC& object, const MT_Vector2D& position ) const;

@@ -55,6 +55,13 @@ public:
     {}
     //@}
 
+    //! @name Perception
+    //@{
+    virtual bool CanBeSeen() const
+    {
+        return true;
+    }
+    //@}
     //! @name Update
     //@{
     virtual void Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ )

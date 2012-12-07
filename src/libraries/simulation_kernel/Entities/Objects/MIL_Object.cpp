@@ -182,6 +182,18 @@ bool MIL_Object::CanInteractWith( const MIL_Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Object::CanBeSeen
+// Created: LGY 2012-12-07
+// -----------------------------------------------------------------------------
+bool MIL_Object::CanBeSeen() const
+{
+    for( T_Capacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+        if( ! (*it)->CanBeSeen() )
+            return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Object::PreprocessAgent
 // Created: JSR 2010-07-07
 // -----------------------------------------------------------------------------

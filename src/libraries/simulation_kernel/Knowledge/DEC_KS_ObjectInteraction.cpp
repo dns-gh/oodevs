@@ -186,7 +186,7 @@ void DEC_KS_ObjectInteraction::NotifyDisasterCollision( MIL_Object_ABC& object, 
 void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
 {
     // Detect object but no disaster without sensors
-    if( !object.Retrieve< DisasterCapacity >() )
+    if( object.CanBeSeen() )
         NotifyCollision( object, vPosition, vDirection );
 }
 
