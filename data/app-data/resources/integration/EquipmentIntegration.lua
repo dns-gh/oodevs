@@ -827,14 +827,14 @@ end
 -- activate special sensors on toxic CBRN plume
 -- --------------------------------------------------------------------------------  
 integration.activateSpecialSensorForCBRN = function ()
-    -- $$$ GGE TODO wait lgy DEC function
+    DEC_Perception_ActiverDesastre()
 end
 
 -- -------------------------------------------------------------------------------- 
 -- deactivate special sensors on toxic CBRN plume
 -- -------------------------------------------------------------------------------- 
 integration.deactivateSpecialSensorForCBRN = function ()
-    -- $$$ GGE TODO wait lgy DEC function
+    DEC_Perception_DesactiverDesastre()
 end
 
 -- -------------------------------------------------------------------------------- 
