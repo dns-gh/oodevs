@@ -16,6 +16,8 @@
 using namespace geostore;
 using namespace geometry;
 
+namespace bfs = boost::filesystem;
+
 namespace
 {
     class DummyIndexer : public SpatialIndexer
@@ -29,8 +31,13 @@ namespace
 
 BOOST_AUTO_TEST_CASE( Database_Test )
 {
+    bfs::path terrainPath( BOOST_RESOLVE( "terrain" ) );
+
+    // Destroy existing database...
+    bfs::remove( terrainPath / "Graphics" / "geostore.sqlite" );
+
     DummyIndexer index;
-    GeoStoreManager manager( BOOST_RESOLVE( "terrain" ), index );
+    GeoStoreManager manager( terrainPath, index );
     std::vector< GeoTable* > tables;
     manager.GetDatabase().GetTables( tables );
     BOOST_CHECK_EQUAL( tables.size(), 11u );
