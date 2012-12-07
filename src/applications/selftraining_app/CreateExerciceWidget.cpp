@@ -63,7 +63,7 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
             copyLabel_ = new QLabel();
             exerciseList_ = new QListWidget();
             exerciseList_->setFont( QFont( "Calibri", 12, QFont::Bold ) );
-            connect( exerciseList_, SIGNAL( itemClicked( QListWidgetItem* ) ), SLOT( OnSelectionChanged( QListWidgetItem* ) ) );
+            connect( exerciseList_, SIGNAL( itemSelectionChanged() ), SLOT( OnSelectionChanged() ) );
 
             contentList_ = new QTreeView();
             contentList_->setModel( &contentListModel_ );
@@ -152,10 +152,10 @@ void CreateExerciceWidget::OnLanguageChanged()
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::Update()
 {
-    QListWidgetItem* item = exerciseList_->currentItem();
-    if( item )
+    QList< QListWidgetItem* > items = exerciseList_->selectedItems();
+    if( !items.empty() )
     {
-        std::string exercise( item->text().toStdString() );
+        std::string exercise( items[ 0 ]->text().toStdString() );
         contentListModel_.clear();
         frontend::BuildExerciseFeatures( exercise, config_, contentListModel_ );
         contentList_->expandAll();
@@ -165,15 +165,16 @@ void CreateExerciceWidget::Update()
         if( !sessionList_->count() )
             sessionList_->addItem( tools::translate( "CreateExerciceWidget", "No session" ) );
         sessionList_->setCurrentRow( 0 );
-        UpdateExercises();
     }
+    if( exerciseList_->count() != frontend::commands::ListExercises( config_ ).size() )
+        UpdateExercises( items.empty()? 0 : items[ 0 ]->text() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CreateExerciceWidget::UpdateExercises
 // Created: ABR 2011-04-14
 // -----------------------------------------------------------------------------
-void CreateExerciceWidget::UpdateExercises()
+void CreateExerciceWidget::UpdateExercises( QString selectedItem /*= ""*/ )
 {
     editTerrainList_->clear();
     editTerrainList_->addItem( tools::translate( "CreateExerciceWidget", "Terrain:" ) );
@@ -193,6 +194,9 @@ void CreateExerciceWidget::UpdateExercises()
 
     exerciseList_->clear();
     exerciseList_->addItems( frontend::commands::ListExercises( config_ ) );
+    QList< QListWidgetItem* > items = exerciseList_->findItems( selectedItem, Qt::MatchExactly );
+    if( !items.isEmpty() )
+        exerciseList_->setItemSelected( items[ 0 ], true );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,11 +261,12 @@ bool CreateExerciceWidget::EnableEditButton()
 // Name: CreateExerciceWidget::OnSelectionChanged
 // Created: ABR 2011-04-14
 // -----------------------------------------------------------------------------
-void CreateExerciceWidget::OnSelectionChanged( QListWidgetItem* item )
+void CreateExerciceWidget::OnSelectionChanged()
 {
-    if( !item )
+    QList< QListWidgetItem* > items = exerciseList_->selectedItems();
+    if( items.empty() )
         return;
-    std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( item->text().toStdString() ) );
+    std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( items[ 0 ]->text().toStdString() ) );
     std::string terrain, physical, dataSet;
     *xis >> xml::start( "exercise" )
             >> xml::start( "terrain" )

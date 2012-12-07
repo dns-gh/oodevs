@@ -55,13 +55,13 @@ private:
     //! @name Helpers
     //@{
     virtual void OnLanguageChanged();
-    void UpdateExercises();
+    void UpdateExercises( QString selectedItem = "" );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void OnSelectionChanged( QListWidgetItem* item );
+    void OnSelectionChanged();
     void OnSessionSelected( const QString& session );
     void OnCheckpointSelected( const QString& checkpoint );
     void CurrentTabChanged( int );
