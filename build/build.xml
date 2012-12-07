@@ -964,6 +964,15 @@
             <defineset define="QT3_SUPPORT"/>
         </build-test>
     </target>
+    
+    <target name="geostore_test" depends="geostore">
+        <build-test name="geostore" depends="boost,xerces,xalan,terrain"
+            libs="gdal_i,gdal_ogr,log4cxx,svgl,zipstream,zlib1,bugtrap,glew-${platform}-mt,
+                         geodata,geos_i,spatialite,proj_i,libiconv,terrainextractor-${platform}-mt,
+                         lib${ant.project.name}_geostore-${platform}-mt"
+            failonwarning="${failonwarning}">
+        </build-test>
+    </target>
 
     <target name="launcher_test" depends="launcher_dll,frontend">
         <build-test name="launcher" depends="boost,qt4,xerces,protobuf"

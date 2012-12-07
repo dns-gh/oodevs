@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<terrain model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/terrain/terrain.xsd">
+  <data>
+    <location>
+      <center latitude="43.531" longitude="5.49591"/>
+      <dimension height="116446" width="120910"/>
+      <extent x-max="32TKN7495665659" x-min="31TFH4287863450" y-max="32TKP7879881312" y-min="31TFJ4044079098"/>
+    </location>
+    <pathfind directory="Pathfind"/>
+    <detection directory="Detection"/>
+    <graphics directory="Graphics"/>
+  </data>
+</terrain>
+<!-- signature="1990133865" -->
