@@ -14,3 +14,4 @@ syntax: glob
 *.user
 *.vcxproj.user
 build/build.local.properties
+data/tests/geostore_test/terrain/Graphics/geostore.sqlite
