@@ -1664,7 +1664,7 @@ Do you want to remove it?</translation>
     </message>
     <message>
         <source>Temperature: %L2°C</source>
-        <translation>Température: %L2°C</translation>
+        <translation>Temperature: %L2°C</translation>
     </message>
 </context>
 <context>
