@@ -23,12 +23,6 @@
 #include <boost/locale.hpp>
 #pragma warning ( pop )
 
-#pragma warning ( push, 0 )
-#pragma warning ( disable : 4127 )
-#include <QtGui/qcolor.h>
-#include <QtCore/qstring.h>
-#pragma warning ( pop )
-
 #include <cassert>
 #include <map>
 #include <set>

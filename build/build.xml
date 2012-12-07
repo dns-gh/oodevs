@@ -320,9 +320,8 @@
     </target>
 
     <target name="geostore" description="build geostore static library">
-        <build-lib name="geostore" depends="qt4" pattern="lib${ant.project.name}_geostore-${platform}-mt@{suffix}" suffix="-gd"
+        <build-lib name="geostore" pattern="lib${ant.project.name}_geostore-${platform}-mt@{suffix}" suffix="-gd"
                    failonwarning="${failonwarning}">
-            <defineset define="QT3_SUPPORT"/>
         </build-lib>
     </target>
 
