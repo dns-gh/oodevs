@@ -583,11 +583,11 @@ target_link_libraries( preparation
 
 # preparation_app
 add_target( preparation_app clients "applications/preparation_app" OPTIONS qt3 qt protocol executable )
-masa_add_target_library( preparation_app terrainextractor )
 target_link_libraries( preparation_app
     actions_gui
     frontend
     preparation
+    ${TERRAINEXTRACTOR_LIBRARIES}
 )
 
 # selftraining_app
