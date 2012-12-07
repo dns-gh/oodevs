@@ -58,6 +58,8 @@ MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config )
     bfs::create_directories( config.BuildSessionChildFile( "checkpoints" ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
+    if( nMaxCheckPointNbr_ == 0 )
+        MT_LOG_INFO_MSG( "No Checkpoints kept. No automatic checkpoint will be saved");
     UpdateNextCheckPointTick();
 }
 
@@ -287,6 +289,8 @@ void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
 {
+    if( nMaxCheckPointNbr_ == 0 )
+        return;
     if( currentCheckPoints_.size() == nMaxCheckPointNbr_ )
     {
         try
