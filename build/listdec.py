@@ -6,6 +6,12 @@ them with an existing list.
 or
 
   $ python listdec.py check decfunctions.txt src/libraries/simulation_kernel
+
+or
+
+  $ python listdec.py match decfunctions src/libraries/simulation_kernel
+
+to check all functions in decfunctions are defined in the simulation
 """
 import sys, os, re
 
@@ -90,9 +96,30 @@ error: upstream mode project does not know about several DEC functions
             sys.stderr.write('    %s\n' % n)
     return missing and 1 or 0
 
+def cmdmatchdec(args):
+    declist, srcpath = args
+    names = listalldecs(srcpath)
+    refnames = set(parsedeclist(declist))
+
+    w = sys.stderr.write
+    if not names:
+        w('error: failed to parse DEC registrations\n')
+        return 1
+    if not refnames:
+        w('error: failed to parse DEC list\n')
+        return 1
+
+    # Check all used DECs exist in the simulation
+    result = 0
+    for n in sorted(refnames - names):
+        w('error: %s is used by models but not defined in simulation\n' % n)
+        result = 1
+    return result
+
 _commands = {
     'list': cmdlistdec,
     'check': cmdcheckdec,
+    'match': cmdmatchdec,
     }
 
 if __name__ == '__main__':
