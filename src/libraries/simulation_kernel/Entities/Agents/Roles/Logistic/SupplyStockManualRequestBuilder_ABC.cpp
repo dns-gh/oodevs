@@ -45,9 +45,9 @@ SupplyStockManualRequestBuilder_ABC::~SupplyStockManualRequestBuilder_ABC()
 
 namespace
 {
-    struct SupplyRequest
+    struct SupplyStockQuantity
     {
-        SupplyRequest( MIL_AgentPion* pion, PHY_DotationStock* stock )
+        SupplyStockQuantity( MIL_AgentPion* pion, PHY_DotationStock* stock )
             : pion_    ( pion )
             , stock_   ( stock )
             , quantity_( 0 )
@@ -70,7 +70,7 @@ void SupplyStockManualRequestBuilder_ABC::CreateRequest( MIL_Automate& recipient
 
     double rTotalValue = resource.quantity();
 
-    typedef std::vector< SupplyRequest > T_PionStockVector;
+    typedef std::vector< SupplyStockQuantity > T_PionStockVector;
 
     T_PionStockVector pionStocks;
     BOOST_FOREACH( MIL_AgentPion* pion, recipient.GetPions() )
@@ -80,18 +80,25 @@ void SupplyStockManualRequestBuilder_ABC::CreateRequest( MIL_Automate& recipient
         {
             PHY_DotationStock* pStock = stockPion->GetStock( *pDotationCategory );
             if( pStock )
-                pionStocks.push_back( SupplyRequest( pion, pStock ) );
+                pionStocks.push_back( SupplyStockQuantity( pion, pStock ) );
         }
     }
     // Add dynamically a slot for the dotation category, if no initial stock received can hold this kind of dotation
     if( pionStocks.empty() )
     {
-        boost::optional< SupplyRequest > request;
+        boost::optional< SupplyStockQuantity > request;
         BOOST_FOREACH( MIL_AgentPion* pion, recipient.GetPions() )
         {
             PHY_RoleInterface_Supply* stockPion = pion->RetrieveRole< PHY_RoleInterface_Supply >();
             if( stockPion )
-                request = SupplyRequest( pion, stockPion->AddStock( *pDotationCategory ) );
+            {
+                PHY_DotationStock* pStock = stockPion->AddStock( *pDotationCategory );
+                if( pStock )
+                {
+                    request = SupplyStockQuantity( pion, pStock );
+                    break;
+                }
+            }
         }
         if( request )
             pionStocks.push_back( *request );
@@ -114,7 +121,7 @@ void SupplyStockManualRequestBuilder_ABC::CreateRequest( MIL_Automate& recipient
             it->quantity_ += rAffectedValue;
     }
 
-    BOOST_FOREACH( SupplyRequest& request, pionStocks )
+    BOOST_FOREACH( SupplyStockQuantity& request, pionStocks )
         container.AddResource( recipient.GetStockSupplyManager(), *request.pion_, boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceStock( *request.stock_ ) ), request.quantity_ );
 }
 
