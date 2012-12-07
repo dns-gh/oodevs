@@ -85,13 +85,10 @@ rootnode
 
         -- Etat décisionnel sur la destruction
         if meKnowledge:isDestroyed() then
-            Activate( skill.nodes.DecisionalState, 1, { category = "EtatOps", value = "eEtatDestruction_Total" } )
             Activate( skill.nodes.ChangeEtatOperationnel, 1, { value = 0 } ) -- $$$ MIA TODO trouver l'enum!
         elseif not meKnowledge:isOperational() then
-            Activate( skill.nodes.DecisionalState, 1, { category = "EtatOps", value = "eEtatDestruction_Tactique" } )
             Activate( skill.nodes.ChangeEtatOperationnel, 1, { value = 1 } ) -- $$$ MIA TODO trouver l'enum!
         else -- operational
-            Activate( skill.nodes.DecisionalState, 1, { category = "EtatOps", value = "eEtatDestruction_None" } )
             Activate( skill.nodes.ChangeEtatOperationnel, 1, { value = 2 } ) -- $$$ MIA TODO trouver l'enum!
         end
         
