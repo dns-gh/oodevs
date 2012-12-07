@@ -48,6 +48,7 @@ masa_set_external_library( SPATIALCONTAINER_LIBRARIES spatialcontainer_d spatial
 masa_set_external_library( SPATIALITE_LIBRARIES       spatialite_d spatialite )
 masa_set_external_library( SVGL_LIBRARIES             svgl_d svgl )
 masa_set_external_library( TERRAIN_LIBRARIES          terrain_d terrain )
+masa_set_standard_library( TERRAINEXTRACTOR_LIBRARIES terrainextractor )
 masa_set_external_library( TOOLS_LIBRARIES            tools_d tools )
 masa_set_external_library( XALAN_LIBRARIES            Xalan-C_1D Xalan-C_1 )
 masa_set_external_library( XERCES_LIBRARIES           xerces-c_3D xerces-c_3 )
@@ -203,11 +204,22 @@ target_link_libraries( shield_app shield )
 add_target( geostore common "libraries/geostore" )
 target_link_libraries( geostore
     libiconv
+    ${GEOCOORD_LIBRARIES}
     ${GEODATA_LIBRARIES}
     ${GEOS_I_LIBRARIES}
+    ${GRAPHICS_LIBRARIES}
+    ${OPENGL_LIBRARIES}
     ${PROJ_I_LIBRARIES}
+    ${SPATIALCONTAINER_LIBRARIES}
     ${SPATIALITE_LIBRARIES}
+    ${TERRAIN_LIBRARIES}
+    ${TOOLS_LIBRARIES}
+    ${XERCES_LIBRARIES}
 )
+
+# geostore_test
+add_target( geostore_test tests "tests/geostore_test" OPTIONS test )
+target_link_libraries( geostore_test geostore )
 
 # 3a_test
 add_target( 3a_test tests "tests/3a_test" OPTIONS protocol test )
