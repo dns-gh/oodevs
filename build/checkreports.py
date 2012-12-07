@@ -186,7 +186,7 @@ def parsereportlist(path):
         line = line.strip()
         if not line or line[0] == '#':
             continue
-        name, code, sim = line.split('\t')
+        name, code, sim = [p.strip() for p in line.split()]
         reports[name] = int(code)
         if sim == 'sim':
             simnames.add(name)
