@@ -60,6 +60,11 @@ GeoStoreManager::~GeoStoreManager()
     // NOTHING
 }
 
+const Database& GeoStoreManager::GetDatabase() const
+{
+    return *spatialDb_;
+}
+
 void GeoStoreManager::CreateUrbanBlocksOnCities( const geometry::Polygon2f& footprint, double roadWidth, std::vector< geometry::Polygon2f >& urbanBlocks )
 {
     try
