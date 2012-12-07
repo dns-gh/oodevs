@@ -31,6 +31,8 @@ class PHY_PerceptionRecoUrbanBlock;
 class PHY_PerceptionRadar;
 class PHY_PerceptionAlat;
 class PHY_PerceptionFlyingShell;
+class PHY_PerceptionDisaster;
+class PHY_SensorTypeDisaster;
 class TER_Agent_ABC;
 class TER_Object_ABC;
 class TER_PopulationConcentration_ABC;
@@ -100,6 +102,7 @@ public:
     virtual bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape );
     virtual void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
     virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC& block, const PHY_PerceptionLevel& level ) const;
+    virtual void NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection );
     //@}
 
     //! @name Operations
@@ -140,6 +143,8 @@ public:
     virtual void  DisableRecoAlat                ();
     virtual void  EnableCoupDeSonde              ();
     virtual void  DisableCoupDeSonde             ();
+    virtual void  EnableDisasterPerception       ();
+    virtual void  DisableDisasterPerception      ();
     virtual int   EnableRecoPoint                ( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent );
     virtual void  DisableRecoPoint               ( int );
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
@@ -173,9 +178,10 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const T_SurfaceAgentMap&  GetSurfacesAgent () const;
-    virtual const T_SurfaceObjectMap& GetSurfacesObject() const;
-    virtual const T_RadarSet&         GetRadars        ( const PHY_RadarClass& radarClass );
+    virtual const T_SurfaceAgentMap&   GetSurfacesAgent () const;
+    virtual const T_SurfaceObjectMap&  GetSurfacesObject() const;
+    virtual const T_DisasterDetectors& GetDisasterDetectors() const;
+    virtual const T_RadarSet&          GetRadars        ( const PHY_RadarClass& radarClass );
     //@}
 
     //! @name Tools
@@ -249,6 +255,7 @@ private:
     T_RadarsPerClassMap radars_;
     T_SurfaceAgentMap surfacesAgent_;
     T_SurfaceObjectMap surfacesObject_;
+    T_DisasterDetectors disasterDetectors_;
     double rMaxAgentPerceptionDistance_;
 
     PHY_PerceptionView*             pPerceptionView_;
@@ -261,6 +268,7 @@ private:
     PHY_PerceptionRadar*            pPerceptionRadar_;
     PHY_PerceptionAlat*             pPerceptionAlat_;
     PHY_PerceptionFlyingShell*      pPerceptionFlyingShell_;
+    PHY_PerceptionDisaster*         pPerceptionDisaster_;
     T_PerceptionVector              activePerceptions_;
 
     E_SensorMode nSensorMode_;

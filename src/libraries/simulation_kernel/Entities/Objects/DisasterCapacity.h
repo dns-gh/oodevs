@@ -21,6 +21,7 @@ namespace xml
 class MIL_DisasterType;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
+class MT_Vector2D;
 
 // =============================================================================
 /** @class  DisasterCapacity
@@ -52,6 +53,12 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Update( MIL_Object_ABC& object, unsigned int time );
     virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    //@}
+
+    //! @name Accessors
+    //@{
+    float GetDose( const MIL_Object_ABC& object, const MT_Vector2D& position ) const;
+    const MIL_DisasterType& GetDisasterType() const;
     //@}
 
 private:

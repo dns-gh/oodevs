@@ -21,6 +21,7 @@ namespace xml
 
 class PHY_SensorTypeObject;
 class PHY_SensorTypeAgent;
+class PHY_SensorTypeDisaster;
 class PHY_Sensor;
 class ObjectTypeResolver_ABC;
 
@@ -47,11 +48,12 @@ public:
 
     //! @name Accessors
     //@{
-    const PHY_SensorTypeObject* GetTypeObject() const;
-    const PHY_SensorTypeAgent*  GetTypeAgent () const;
-    const std::string&          GetName      () const;
-          unsigned int                  GetID() const;
-    const unsigned int GetDelay() const;
+    const PHY_SensorTypeObject*   GetTypeObject() const;
+    const PHY_SensorTypeAgent*    GetTypeAgent() const;
+    const PHY_SensorTypeDisaster* GetTypeDisaster() const;
+    const std::string&            GetName() const;
+          unsigned int            GetID() const;
+    const unsigned int            GetDelay() const;
     //@}
 
 private:
@@ -68,17 +70,19 @@ private:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadSensor  ( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
-    void newSensorTypeAgent ( xml::xistream& xis );
-    void newSensorTypeObject( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
+    static void ReadSensor    ( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
+    void newSensorTypeAgent   ( xml::xistream& xis );
+    void newSensorTypeObject  ( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver );
+    void newSensorTypeDisaster( xml::xistream& xis );
     //@}
 
 private:
-    const unsigned int          nID_;
-    const std::string           strName_;
-    const PHY_SensorTypeObject* pTypeObject_;
-    const PHY_SensorTypeAgent*  pTypeAgent_;
-    unsigned int                delay_;
+    const unsigned int            nID_;
+    const std::string             strName_;
+    const PHY_SensorTypeObject*   pTypeObject_;
+    const PHY_SensorTypeAgent*    pTypeAgent_;
+    const PHY_SensorTypeDisaster* pTypeDisaster_;
+    unsigned int                  delay_;
 
 private:
     static T_SensorTypeMap sensorTypes_;

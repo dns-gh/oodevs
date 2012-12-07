@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_RoleAction_CrowdTransport.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDemineObject.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionDisaster.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Humans\PHY_HumanState.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\FuneralConfig.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockPushFlowRequestBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Logistic\SupplyStockRequestBuilder.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_NbcSuit.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.cpp" />
@@ -938,6 +940,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDemineObject.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Moving\PHY_RoleAction_InterfaceMoving.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDeteriorateUrbanBlock.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Perceptions\PHY_PerceptionDisaster.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RoleInterface_Deployment.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Deployment\PHY_RolePion_Deployment.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\Humans\PHY_HumanState.h" />
@@ -985,6 +988,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Roles\NBC\ToxicEffectHandler_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Humans\PHY_NbcSuit.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeAgent_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Sensors\PHY_SensorTypeDisaster.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Units\Weapons\PHY_UrbanAttritionData.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\BorderCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\CapacityRetriever.h" />

@@ -25,6 +25,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD_EXT( NotifyPerception, 3, bool( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const T_PointVector& ), NotifyPopulationFlowPerception );
     MOCK_METHOD_EXT( NotifyPerception, 1, void( const MIL_Effect_IndirectFire& ), NotifyIndirectFirePerception );
     MOCK_METHOD_EXT( NotifyPerceptionUrban, 2, void( const MIL_UrbanObject_ABC&, const PHY_PerceptionLevel& ), NotifyUrbanBlockPerception );
+    MOCK_METHOD( NotifyDisasterCollision, 3 );
 
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );
@@ -47,6 +48,8 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( DisableRecoAlat, 0 );
     MOCK_METHOD( EnableCoupDeSonde, 0 );
     MOCK_METHOD( DisableCoupDeSonde, 0 );
+    MOCK_METHOD( EnableDisasterPerception, 0 );
+    MOCK_METHOD( DisableDisasterPerception, 0 );
     MOCK_METHOD( EnableRecoPoint, 4 );
     MOCK_METHOD( DisableRecoPoint, 1 );
     MOCK_METHOD_EXT( EnableRecoLocalisation, 3, int( const TER_Localisation&, float, DEC_Decision_ABC& callerAgent ), EnableRecoLocalisationWithRadius );
@@ -70,6 +73,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD( DisableAllPerceptions, 0 );
     MOCK_METHOD( GetSurfacesAgent, 0 );
     MOCK_METHOD( GetSurfacesObject, 0 );
+    MOCK_METHOD( GetDisasterDetectors, 0 );
     MOCK_METHOD( GetRadars, 1 );
 
     MOCK_METHOD( GetKnowledgeGroup, 0 );

@@ -67,6 +67,24 @@ void DEC_PerceptionFunctions::DisableCoupDeSonde( MIL_Agent_ABC& callerAgent )
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableCoupDeSonde();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::EnableDisasterPerception
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+void DEC_PerceptionFunctions::EnableDisasterPerception( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableDisasterPerception();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::DisableDisasterPerception
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+void DEC_PerceptionFunctions::DisableDisasterPerception( MIL_Agent_ABC& callerAgent )
+{
+    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableDisasterPerception();
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_PerceptionFunctions::IsPointVisible
 // Created: AGN 03-01-21

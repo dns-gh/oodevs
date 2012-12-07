@@ -18,6 +18,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_terrain/TER_World.h"
+#include "Entities/Objects/DisasterCapacity.h"
 #include "MT_Tools/MT_Stl.h"
 #include <boost/serialization/utility.hpp>
 #include <boost/serialization/vector.hpp>
@@ -169,10 +170,31 @@ void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectInteraction::NotifyDisasterCollision
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectInteraction::NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
+{
+    // Detect disaster with a sensor
+    NotifyCollision( object, vPosition, vDirection );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_ObjectInteraction::NotifyObjectCollision
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
+{
+    // Detect object but no disaster without sensors
+    if( !object.Retrieve< DisasterCapacity >() )
+        NotifyCollision( object, vPosition, vDirection );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_ObjectInteraction::NotifyCollision
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+void DEC_KS_ObjectInteraction::NotifyCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
 {
     static const double epsilon = 1e-8;
     static const double lineFactor = 2 * TER_World::GetWorld().GetWeldValue();

@@ -62,6 +62,7 @@ public:
     virtual bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape );
     virtual void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
     virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC& block, const PHY_PerceptionLevel& level ) const;
+    virtual void NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection );
     //@}
 
     //! @name Operations
@@ -92,6 +93,8 @@ public:
     virtual void  DisableRecoAlat                ();
     virtual void  EnableCoupDeSonde              ();
     virtual void  DisableCoupDeSonde             ();
+    virtual void  EnableDisasterPerception       ();
+    virtual void  DisableDisasterPerception      ();
     virtual int   EnableRecoPoint                ( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent );
     virtual void  DisableRecoPoint               ( int );
     virtual int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
@@ -127,6 +130,7 @@ public:
     //@{
     virtual const T_SurfaceAgentMap&  GetSurfacesAgent () const;
     virtual const T_SurfaceObjectMap& GetSurfacesObject() const;
+    virtual const T_DisasterDetectors& GetDisasterDetectors() const;
     virtual const T_RadarSet&         GetRadars        ( const PHY_RadarClass& radarClass );
     //@}
 

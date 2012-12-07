@@ -27,6 +27,7 @@ class DEC_Knowledge_Object;
 class PHY_PerceptionLevel;
 class PHY_RadarClass;
 class PHY_RadarType;
+class PHY_SensorTypeDisaster;
 class MIL_Effect_IndirectFire;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
@@ -57,6 +58,9 @@ public:
     typedef std::set< const PHY_RadarType* > T_RadarSet;
     typedef T_RadarSet::const_iterator     CIT_RadarSet;
 
+    typedef std::vector< const PHY_SensorTypeDisaster* > T_DisasterDetectors;
+    typedef T_DisasterDetectors::const_iterator        CIT_DisasterDetectors;
+
     typedef std::map< const PHY_RadarClass*, T_RadarSet > T_RadarsPerClassMap;
     typedef T_RadarsPerClassMap::const_iterator         CIT_RadarsPerClassMap;
     //@}
@@ -80,6 +84,7 @@ public:
     virtual bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape ) = 0;
     virtual void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const = 0;
     virtual void NotifyPerceptionUrban( const MIL_UrbanObject_ABC& block, const PHY_PerceptionLevel& level ) const = 0;
+    virtual void NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection ) = 0;
     //@}
 
     //! @name Operations
@@ -105,6 +110,8 @@ public:
     virtual void DisableRecoAlat() = 0;
     virtual void EnableCoupDeSonde() = 0;
     virtual void DisableCoupDeSonde() = 0;
+    virtual void EnableDisasterPerception() = 0;
+    virtual void DisableDisasterPerception() = 0;
     virtual int EnableRecoPoint( const MT_Vector2D& center, double rSize, double rSpeed, DEC_Decision_ABC& callerAgent ) = 0;
     virtual void DisableRecoPoint( int ) = 0;
     virtual int EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent ) = 0;
@@ -140,6 +147,7 @@ public:
     //@{
     virtual const T_SurfaceAgentMap& GetSurfacesAgent () const = 0;
     virtual const T_SurfaceObjectMap& GetSurfacesObject() const = 0;
+    virtual const T_DisasterDetectors& GetDisasterDetectors() const = 0;
     virtual const T_RadarSet& GetRadars( const PHY_RadarClass& radarClass ) = 0;
     //@}
 

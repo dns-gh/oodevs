@@ -12,6 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "MIL.h"
 #include <boost/shared_ptr.hpp>
 #include <vector>
@@ -34,8 +35,14 @@ class ASCExtractor;
 // Created: LGY 2012-10-05
 // =============================================================================
 class DisasterAttribute : public ObjectAttribute_ABC
-                                , public UpdatableAttribute_ABC
+                        , public UpdatableAttribute_ABC
 {
+public:
+    //! @name Types
+    //@{
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< DisasterAttribute > T_KnowledgeProxyType;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -53,8 +60,12 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
+    virtual void Register( MIL_Object_ABC& object ) const;
+
     void SendFullState( sword::ObjectAttributes& asn ) const;
     void UpdateLocalisation( MIL_Object_ABC& object, unsigned int time );
+    bool Update( const DisasterAttribute& rhs );
     float GetDose( const MT_Vector2D& position ) const;
     DisasterAttribute& operator=( const DisasterAttribute& ); //!< Assignment operator
     //@}

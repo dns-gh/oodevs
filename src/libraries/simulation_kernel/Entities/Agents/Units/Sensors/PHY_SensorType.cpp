@@ -13,6 +13,7 @@
 #include "PHY_SensorType.h"
 #include "PHY_SensorTypeAgent.h"
 #include "PHY_SensorTypeObject.h"
+#include "PHY_SensorTypeDisaster.h"
 #include "PHY_Sensor.h"
 #include "Tools/MIL_Tools.h"
 #include "MT_Tools/MT_Stl.h"
@@ -74,14 +75,16 @@ void PHY_SensorType::Terminate()
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
 PHY_SensorType::PHY_SensorType( const std::string& strName, xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
-    : nID_        ( nNextID_++ )
-    , strName_    ( strName )
-    , pTypeObject_( 0 )
-    , pTypeAgent_ ( 0 )
+    : nID_          ( nNextID_++ )
+    , strName_      ( strName )
+    , pTypeObject_  ( 0 )
+    , pTypeAgent_   ( 0 )
+    , pTypeDisaster_( 0 )
 {
     std::string time;
     xis >> xml::list( "unit-detection", *this, &PHY_SensorType::newSensorTypeAgent )
         >> xml::list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject, resolver )
+        >> xml::list( "disaster-detection", *this, &PHY_SensorType::newSensorTypeDisaster )
         >> xml::attribute( "detection-delay", time );
     tools::DecodeTime( time, delay_ );
     delay_ = static_cast< unsigned int>( MIL_Tools::ConvertSecondsToSim( delay_ ) );
@@ -103,6 +106,15 @@ void PHY_SensorType::newSensorTypeAgent( xml::xistream& xis )
 void PHY_SensorType::newSensorTypeObject( xml::xistream& xis, const ObjectTypeResolver_ABC& resolver )
 {
     pTypeObject_ = new PHY_SensorTypeObject( *this, xis, resolver );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::newSensorTypeDisaster
+// Created: LGY 2012-12-05
+// -----------------------------------------------------------------------------
+void PHY_SensorType::newSensorTypeDisaster( xml::xistream& xis )
+{
+    pTypeDisaster_ = new PHY_SensorTypeDisaster( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,4 +205,13 @@ unsigned int PHY_SensorType::GetID() const
 const unsigned int PHY_SensorType::GetDelay() const
 {
     return delay_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::GetTypeDisaster
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+const PHY_SensorTypeDisaster* PHY_SensorType::GetTypeDisaster() const
+{
+    return pTypeDisaster_;
 }

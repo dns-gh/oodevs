@@ -114,6 +114,18 @@ void DisasterCapacity::Update( MIL_Object_ABC& object, unsigned int time )
         disaster->UpdateLocalisation( object, time );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity::GetDose
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+float DisasterCapacity::GetDose( const MIL_Object_ABC& object, const MT_Vector2D& position ) const
+{
+    const DisasterAttribute* disaster = object.RetrieveAttribute< DisasterAttribute >();
+    if( !disaster )
+        return 0.f;
+    return disaster->GetDose( position );
+}
+
 namespace
 {
     float GetProtection( const MIL_Agent_ABC& agent, const MIL_DisasterType& type )
@@ -128,13 +140,21 @@ namespace
 // -----------------------------------------------------------------------------
 void DisasterCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    DisasterAttribute* disaster = object.RetrieveAttribute< DisasterAttribute >();
-    if( disaster && disasterType_ )
+    float dose = GetDose( object, agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    if( dose > 0.f )
     {
-        float dose = disaster->GetDose( agent.GetRole< PHY_RoleInterface_Location >().GetPosition() );
         int step = MIL_AgentServer::GetWorkspace().GetTimeStepDuration();
         dose = std::pow( dose * GetProtection( agent, *disasterType_ ), disasterType_->GetToxicityExponent() ) * step;
         if( dose > 0.f )
             agent.GetRole< nbc::PHY_RoleInterface_NBC >().Afflict( dose, *disasterType_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterCapacity::GetDisasterType
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+const MIL_DisasterType& DisasterCapacity::GetDisasterType() const
+{
+    return *disasterType_;
 }

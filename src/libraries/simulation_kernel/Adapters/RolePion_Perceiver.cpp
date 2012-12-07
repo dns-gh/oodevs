@@ -648,6 +648,15 @@ void RolePion_Perceiver::NotifyPerceptionUrban( const MIL_UrbanObject_ABC& /*obj
 }
 
 // -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::NotifyDisasterCollision
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::NotifyDisasterCollision( MIL_Object_ABC& /*object*/, const MT_Vector2D& /*vPosition*/, const MT_Vector2D& /*vDirection*/ )
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::NotifytExternalPerception
 // Created: NLD 2005-03-23
 // -----------------------------------------------------------------------------
@@ -816,6 +825,15 @@ const RolePion_Perceiver::T_SurfaceObjectMap& RolePion_Perceiver::GetSurfacesObj
 }
 
 // -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::GetDisasterDetectors
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+const RolePion_Perceiver::T_DisasterDetectors& RolePion_Perceiver::GetDisasterDetectors() const
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RolePion_Perceiver::GetRadars
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
@@ -860,3 +878,23 @@ bool RolePion_Perceiver::IsFireObserver() const
 {
     return entity_[ "perceptions/fire-observer/activated" ];
 }
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::EnableDisasterPerception
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::EnableDisasterPerception()
+{
+    throw std::runtime_error( __FUNCTION__ );
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: RolePion_Perceiver::DisableDisasterPerception
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+void RolePion_Perceiver::DisableDisasterPerception()
+{
+    throw std::runtime_error( __FUNCTION__ );
+}
+

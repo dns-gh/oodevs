@@ -48,6 +48,7 @@ public:
     //@{
     void NotifyObjectInteraction( MIL_Object_ABC& object );
     void NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection );
+    void NotifyDisasterCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection );
     //@}
 
     //! @name CheckPoints
@@ -73,9 +74,10 @@ private:
     DEC_Knowledge_ObjectCollision&  GetKnowledgeObjectCollision ( MIL_Object_ABC& object ) const;
     //@}
 
-    //! @name Tools
+    //! @name Helpers
     //@{
     void CleanKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge );
+    void NotifyCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection );
     //@}
 
 private:

@@ -21,6 +21,9 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DisasterAttribute )
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< DisasterAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< DisasterAttribute > )
+
 namespace bpt = boost::posix_time;
 
 // -----------------------------------------------------------------------------
@@ -168,4 +171,39 @@ float DisasterAttribute::GetDose( const MT_Vector2D& position ) const
             return dose;
     }
     return 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterAttribute::Register
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+void DisasterAttribute::Register( MIL_Object_ABC& object ) const
+{
+    object.SetAttribute< DisasterAttribute, DisasterAttribute >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterAttribute::Instanciate
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+void DisasterAttribute::Instanciate( DEC_Knowledge_Object& object ) const
+{
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< DisasterAttribute > >( *new T_KnowledgeProxyType() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisasterAttribute::Update
+// Created: LGY 2012-12-06
+// -----------------------------------------------------------------------------
+bool DisasterAttribute::Update( const DisasterAttribute& rhs )
+{
+    if( files_ != rhs.files_ || model_ != rhs.model_ || date_ != rhs.date_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        files_ = rhs.files_;
+        values_ = rhs.values_;
+        date_ = rhs.date_;
+        model_ = rhs.model_;
+    }
+    return NeedUpdate( eOnUpdate );
 }
