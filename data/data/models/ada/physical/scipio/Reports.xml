@@ -670,5 +670,6 @@
     <parameter type="ResourceType"/>
     <parameter type="Agent"/>
   </report>
+  <report category="operational" id="453" message="Impossible de recevoir une mission en étant transporté"/>
 </reports>
-<!-- signature="2983756064" -->
+<!-- signature="3019849993" -->

@@ -21,6 +21,7 @@
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
@@ -55,7 +56,10 @@ void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
     if( pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported() )
+    {
+        MIL_Report::PostEvent( pion_, MIL_Report::eRC_TransportedUnitCannotReceiveOrder );
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
+    }
     if( pion_.IsImmobilized() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )

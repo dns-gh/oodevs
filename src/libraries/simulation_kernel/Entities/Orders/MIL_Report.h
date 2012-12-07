@@ -161,6 +161,7 @@ public:
         eRC_SupplierUnavailable = 450,
         eRC_LogQuotaExceeded = 451,
         eRC_LogQuotaExceededForAgent = 452,
+        eRC_TransportedUnitCannotReceiveOrder = 453,
     };
     //@}
 

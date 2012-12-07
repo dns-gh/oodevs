@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<reports model-version="4.9.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
+<reports model-version="4.9.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Reports.xsd">
   <report category="information" id="0" message="ras"/>
   <report category="operational" id="1" message="En poste face à obstacle : %1">
     <parameter type="ObjectKnowledge"/>
@@ -662,7 +662,7 @@
   <report category="operational" id="449" message="Pas de moyens pour réparer %1">
     <parameter type="EquipmentType"/>
   </report>
-  <report category="operational" id="450" message="Donneur indisponible/>
+  <report category="operational" id="450" message="Donneur indisponible"/>
   <report category="operational" id="451" message="Dépassement des quotas logistiques en %1">
     <parameter type="ResourceType"/>
   </report>
@@ -670,5 +670,6 @@
     <parameter type="ResourceType"/>
     <parameter type="Agent"/>
   </report>
+  <report category="operational" id="453" message="Impossible de recevoir une mission en étant transporté"/>
 </reports>
-<!-- signature="0375630353" -->
+<!-- signature="3019849993" -->

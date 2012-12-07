@@ -464,4 +464,5 @@ eRC_RepairEvacuationNoMeans = 449
 eRC_SupplierUnavailable = 450
 eRC_LogQuotaExceeded = 451
 eRC_LogQuotaExceededForAgent = 452
-eNbr = 453
+eRC_TransportedUnitCannotReceiveOrder = 453
+eNbr = 454
