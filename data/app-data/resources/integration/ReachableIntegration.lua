@@ -607,7 +607,6 @@ integration.updateMoveToItCrowd = function( objective, pathType, inertness )
     if inertness == true then
         local distance = DEC_Geometrie_DistanceBetweenPoints( objective.destination, objective:getPosition() )
         if DEC_Population_HasReachedDestination( objective.destination ) then
-            DEC_Trace( "Distance = "..tostring( distance ) )
             -- if the initial objective has moved (the crowd is moving to an agent for instance) re-compute the path and update movement.
             if distance > 0 then
                 integration.stopMoveToItCrowd( objective )
