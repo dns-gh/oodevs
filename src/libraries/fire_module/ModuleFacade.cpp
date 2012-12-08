@@ -56,15 +56,22 @@ ModuleFacade::ModuleFacade( const wrapper::View& model )
 
 namespace
 {
-    template< typename T >
-    const sword::fire::Knowledge_RapForLocal& GetCache( T& cache, const wrapper::View& model, const wrapper::View& entity )
+    std::map< std::size_t, boost::shared_ptr< Knowledge_RapForLocal > > rapforCache;
+
+    const sword::fire::Knowledge_RapForLocal& GetCache( const wrapper::View& model, const wrapper::View& entity )
     {
-        boost::shared_ptr< Knowledge_RapForLocal >& rapfor = cache[ entity[ "identifier" ] ];
+        boost::shared_ptr< Knowledge_RapForLocal >& rapfor = rapforCache[ entity[ "identifier" ] ];
         if( !rapfor )
-            rapfor.reset( new Knowledge_RapForLocal() );
-        rapfor->Update( model, entity );
+            rapfor.reset( new Knowledge_RapForLocal( model, entity ) );
         return *rapfor;
     }
+}
+
+DEFINE_HOOK( Tick, 0, void, () )
+{
+    rapforCache.clear();
+    if( GET_PREVIOUS_HOOK( Tick ) )
+        GET_PREVIOUS_HOOK( Tick )();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +80,7 @@ namespace
 // -----------------------------------------------------------------------------
 double ModuleFacade::GetForceRatio( const wrapper::View& model, const wrapper::View& entity )
 {
-    return GetCache( rapforCache_, model, entity ).GetValue();
+    return GetCache( model, entity ).GetValue();
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +90,7 @@ double ModuleFacade::GetForceRatio( const wrapper::View& model, const wrapper::V
 void ModuleFacade::GetDangerousEnemies( const wrapper::View& model, const wrapper::View& entity,
                                         void(*visitor)( const SWORD_Model* knowledge, void* userData ), void* userData )
 {
-    const sword::fire::Knowledge_RapForLocal& rapfor = GetCache( rapforCache_, model, entity );
+    const sword::fire::Knowledge_RapForLocal& rapfor = GetCache( model, entity );
     const Knowledge_RapForLocal::T_KnowledgeAgents& enemies = rapfor.GetDangerousEnemies();
     std::for_each( enemies.begin(), enemies.end(), boost::bind( visitor, _1, userData ) );
 }

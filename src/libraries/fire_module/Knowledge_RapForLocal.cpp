@@ -85,17 +85,22 @@ namespace
         std::vector< const SWORD_Model* > agents;
         return GetRapForLocal( model, entity, agents, filter, userData, 1 );
     }
+
+    bool FilterNothing( const SWORD_Model* /*knowledge*/, void* /*userData*/ )
+    {
+        return true;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Knowledge_RapForLocal constructor
 // Created: SLI 2012-10-17
 // -----------------------------------------------------------------------------
-Knowledge_RapForLocal::Knowledge_RapForLocal()
-    : rRapForValue_        ( rRapForBoundMax )
-    , nLastCacheUpdateTick_( 0 )
+Knowledge_RapForLocal::Knowledge_RapForLocal( const wrapper::View& model, const wrapper::View& entity )
+    : rRapForValue_( rRapForBoundMax )
 {
-    // NOTHING
+    const double ratio = GetRapForLocal( model, entity, dangerousEnemies_, &FilterNothing, 0, std::numeric_limits< double >::max() );
+    ApplyValue( ratio, entity[ "fire/force-ratio/feedback-time" ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,14 +113,6 @@ void Knowledge_RapForLocal::Initialize( xml::xisubstream xis, double tickDuratio
     double rTmp = 0;
     tools::ReadTimeAttribute( xis, "default-feedback-time", rTmp );
     rRapForIncreasePerTimeStepDefaultValue_ = ComputeRapForIncreasePerTimeStepValue( rTmp / tickDuration );
-}
-
-namespace
-{
-    bool FilterNothing( const SWORD_Model* /*knowledge*/, void* /*userData*/ )
-    {
-        return true;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -134,20 +131,6 @@ void Knowledge_RapForLocal::ApplyValue( double rNewRapForValue, double rFeedback
         rRapForValue_ = rNewRapForValue;
     else
         rRapForValue_ += std::min( rNewRapForValue - rRapForValue_, ComputeRapForIncreasePerTimeStepValue( rFeedbackTime ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Knowledge_RapForLocal::Update
-// Created: NLD 2004-04-07
-// -----------------------------------------------------------------------------
-void Knowledge_RapForLocal::Update( const wrapper::View& model, const wrapper::View& entity )
-{
-    if( nLastCacheUpdateTick_ >= model[ "tick" ] )
-        return;
-    nLastCacheUpdateTick_ = model[ "tick" ];
-    dangerousEnemies_.clear();
-    const double ratio = GetRapForLocal( model, entity, dangerousEnemies_, FilterNothing, 0, std::numeric_limits< double >::max() );
-    ApplyValue( ratio, entity[ "fire/force-ratio/feedback-time" ] );
 }
 
 // -----------------------------------------------------------------------------

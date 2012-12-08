@@ -45,7 +45,6 @@ public:
     //! @name Member data
     //@{
     std::map< const SWORD_Model*, std::pair< double, std::size_t > > weapons;
-    std::map< std::size_t, boost::shared_ptr< Knowledge_RapForLocal > > rapforCache_;
     //@}
 };
 

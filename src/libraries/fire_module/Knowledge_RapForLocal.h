@@ -41,12 +41,11 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    Knowledge_RapForLocal();
+    Knowledge_RapForLocal( const wrapper::View& model, const wrapper::View& entity );
     //@}
 
     //! @name Accessors
     //@{
-    void Update( const wrapper::View& model, const wrapper::View& entity );
     double GetValue() const;
     const T_KnowledgeAgents& GetDangerousEnemies() const;
     //@}
@@ -65,7 +64,6 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int nLastCacheUpdateTick_;
     double rRapForValue_;
     T_KnowledgeAgents dangerousEnemies_;
     static double rRapForIncreasePerTimeStepDefaultValue_;
