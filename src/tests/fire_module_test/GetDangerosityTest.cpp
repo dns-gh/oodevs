@@ -44,69 +44,57 @@ BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_enemy_has_no_component, QueryF
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
+    target[ "major" ] = -1;
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, filter, 500, true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_firer_has_no_ammunition, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_firer_has_no_ammunition, EnemyFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
-    core::Model& component_2 = target[ "components" ].AddElement();
-    component_2[ "score" ] = 2;
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( false );
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, filter, 500, true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_volume_is_invalid, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_volume_is_invalid, EnemyFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
-    core::Model& component_2 = target[ "components" ].AddElement();
-    component_2[ "score" ] = 2;
     component_2[ "volume" ] = 42;
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
     MOCK_EXPECT( Log ).once().with( SWORD_LOG_LEVEL_ERROR, "Exception in GetDangerosity hook: Invalid target volume identifier in GetDangerosity : 42" );
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, filter, 500, true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_ph_modificator_returns_zero, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_ph_modificator_returns_zero, EnemyFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
-    core::Model& component_2 = target[ "components" ].AddElement();
-    component_2[ "score" ] = 2;
-    component_2[ "volume" ] = volume_1;
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
     MOCK_EXPECT( GetPhModificator2 ).once().with( "launcher_1" ).returns( 0 );
     MOCK_EXPECT( ModifyDangerosity ).once().with( core::Convert( &component_2 ), ammo_1 ).returns( 1 );
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, filter, 500, true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_modify_dangerosity_returns_zero, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_zero_when_modify_dangerosity_returns_zero, EnemyFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
-    core::Model& component_2 = target[ "components" ].AddElement();
-    component_2[ "score" ] = 2;
-    component_2[ "volume" ] = volume_1;
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
     MOCK_EXPECT( GetPhModificator2 ).once().with( "launcher_1" ).returns( 1 );
     MOCK_EXPECT( ModifyDangerosity ).once().with( core::Convert( &component_2 ), ammo_1 ).returns( 0 );
     BOOST_CHECK_EQUAL( 0, GetDangerosity( firer, enemy, filter, 500, true ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( dangerosity_is_non_zero, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( dangerosity_is_non_zero, EnemyFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
-    core::Model& component_2 = target[ "components" ].AddElement();
-    component_2[ "score" ] = 2;
-    component_2[ "volume" ] = volume_1;
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
     MOCK_EXPECT( GetPhModificator2 ).once().with( "launcher_1" ).returns( 2 );
     MOCK_EXPECT( ModifyDangerosity ).once().with( core::Convert( &component_2 ), ammo_1 ).returns( 3 );

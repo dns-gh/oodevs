@@ -298,21 +298,12 @@ double WeaponType::GetDangerosity( const wrapper::View& firer, const wrapper::Vi
 
 namespace
 {
-    boost::optional< wrapper::View > GetMajorComponent( const wrapper::View& components )
+    boost::optional< wrapper::View > GetMajorComponent( const wrapper::View& target )
     {
-        boost::optional< wrapper::View > result;
-        std::size_t major = 0;
-        for( std::size_t i = 0; i < components.GetSize(); ++i )
-        {
-            const wrapper::View& component = components.GetElement( i );
-            const std::size_t score = component[ "score" ];
-            if( score >= major )
-            {
-                result = component;
-                major = score;
-            }
-        }
-        return result;
+        const int major = target[ "major" ];
+        if( major == -1 )
+            return boost::none;
+        return target[ "components" ].GetElement( major );
     }
 }
 
@@ -324,7 +315,7 @@ double WeaponType::GetDangerosity( const wrapper::View& firer, const wrapper::Vi
 {
     if( ! pDirectFireData_.get() || pDirectFireData_->GetMaxRange() < distance )
         return 0;
-    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
+    boost::optional< wrapper::View > component = GetMajorComponent( target );
     if( component && CheckDirectFireDotation( firer, checkAmmo ) )
         return pDirectFireData_->GetDangerosity( *component, distance );
     return 0;
@@ -338,8 +329,8 @@ double WeaponType::GetMaxRangeToFireOn( const wrapper::View& firer, const wrappe
 {
     if( ! pDirectFireData_.get() )
         return 0;
-    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
-    if( ! component )
+    const int major = target[ "major" ];
+    if( major == -1 )
         return 0;
     if( dotation ) // $$$$ MCO 2012-05-09: weird that we don't check if firer has enough ammo in the else case
     {
@@ -348,7 +339,7 @@ double WeaponType::GetMaxRangeToFireOn( const wrapper::View& firer, const wrappe
         if( ! dotation_->HasDotation( firer ) )
             return 0;
     }
-    return pDirectFireData_->GetMaxRangeToFireOn( *component, rWantedPH );
+    return pDirectFireData_->GetMaxRangeToFireOn( target[ "components" ].GetElement( major ), rWantedPH );
 }
 
 // -----------------------------------------------------------------------------
@@ -357,7 +348,7 @@ double WeaponType::GetMaxRangeToFireOn( const wrapper::View& firer, const wrappe
 // -----------------------------------------------------------------------------
 double WeaponType::GetMinRangeToFireOn( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const
 {
-    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
+    boost::optional< wrapper::View > component = GetMajorComponent( target );
     if( component && CheckDirectFireDotation( firer, true ) )
         return pDirectFireData_->GetMinRangeToFireOn( *component, rWantedPH );
     return std::numeric_limits< double >::max();
@@ -380,7 +371,7 @@ double WeaponType::GetMaxRangeToFire( double rWantedPH ) const
 // -----------------------------------------------------------------------------
 double WeaponType::GetMaxRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const
 {
-    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
+    boost::optional< wrapper::View > component = GetMajorComponent( target );
     if( component && CheckDirectFireDotation( firer, true ) )
         return pDirectFireData_->GetMaxRangeToFireOnWithPosture( firer, target, *component, rWantedPH );
     return 0;
@@ -392,7 +383,7 @@ double WeaponType::GetMaxRangeToFireOnWithPosture( const wrapper::View& firer, c
 // -----------------------------------------------------------------------------
 double WeaponType::GetMinRangeToFireOnWithPosture( const wrapper::View& firer, const wrapper::View& target, double rWantedPH ) const
 {
-    boost::optional< wrapper::View > component = GetMajorComponent( target[ "components" ] );
+    boost::optional< wrapper::View > component = GetMajorComponent( target );
     if( component && CheckDirectFireDotation( firer, true ) )
         return pDirectFireData_->GetMinRangeToFireOnWithPosture( firer, target, *component, rWantedPH );
     return std::numeric_limits< double >::max();

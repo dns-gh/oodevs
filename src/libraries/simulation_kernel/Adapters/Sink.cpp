@@ -326,12 +326,18 @@ namespace
         knowledge[ "dead" ] = agent->IsDead();
         core::Model& components = knowledge[ "components" ];
         const T_KnowledgeComposanteVector& composantes = agent->GetComposantes();
+        unsigned int score = 0;
+        knowledge[ "major" ] = -1;
         for( std::size_t i = 0; i < composantes.size(); ++i )
         {
             core::Model& component = components.AddElement();
             const DEC_Knowledge_AgentComposante& composante = composantes[ i ];
             component[ "volume" ] = composante.GetType().GetVolume().GetID();
-            component[ "score" ] = composante.GetMajorScore();
+            if( composante.GetMajorScore() >= score )
+            {
+                score = composante.GetMajorScore();
+                knowledge[ "major" ] = i;
+            }
             component[ "major" ] = composante.IsMajor();
             component[ "data" ].SetUserData( &composante.GetComposante() );
             composante.GetComposante().ApplyOnWeapons( boost::bind( &AddWeapon, boost::ref( component[ "weapons" ] ), _2 ) );
@@ -446,11 +452,17 @@ namespace
         UpdatePerceptions( entity[ "perceptions/notifications" ] );
         core::Model& components = entity[ "components" ];
         const transport::PHY_RoleAction_Loading* loading = pion.RetrieveRole< transport::PHY_RoleAction_Loading >();
+        unsigned int score = 0;
+        entity[ "major" ] = -1;
         for( std::size_t c = 0; c < components.GetSize(); ++c )
         {
             core::Model& component = components.GetElement( c );
             const PHY_ComposantePion& composante = component[ "data" ].GetUserData< PHY_ComposantePion >();
-            component[ "score" ] = composante.GetMajorScore();
+            if( composante.GetMajorScore() >= score )
+            {
+                score = composante.GetMajorScore();
+                entity[ "major" ] = c;
+            }
             component[ "can-perceive" ] = composante.CanPerceive( loading );
         }
     }

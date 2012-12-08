@@ -24,6 +24,17 @@ namespace
             MOCK_RESET( filter );
         }
     };
+
+    struct EnemyFixture : QueryFixture
+    {
+        EnemyFixture()
+            : component_2( target[ "components" ].AddElement() )
+        {
+            component_2[ "volume" ] = volume_1;
+            target[ "major" ] = 0;
+        }
+        core::Model& component_2;
+    };
 }
 
 #endif // QUERY_FIXTURE_H

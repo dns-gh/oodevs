@@ -43,27 +43,24 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_enemy_ha
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
+    target[ "major" ] = -1;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToFireOnWithPosture( firer, enemy, filter, 0.5 ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_firer_has_no_ammunition, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_firer_has_no_ammunition, EnemyFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
-    core::Model& component_2 = target[ "components" ].AddElement();
-    component_2[ "score" ] = 2;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( false );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToFireOnWithPosture( firer, enemy, filter, 0.5 ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_volume_is_invalid, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_volume_is_invalid, EnemyFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
-    core::Model& component_2 = target[ "components" ].AddElement();
-    component_2[ "score" ] = 2;
     component_2[ "volume" ] = 42;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
@@ -71,26 +68,20 @@ BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_volume_i
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToFireOnWithPosture( firer, enemy, filter, 0.5 ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_ph_modificator_is_zero, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_zero_when_ph_modificator_is_zero, EnemyFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
-    core::Model& component_2 = target[ "components" ].AddElement();
-    component_2[ "score" ] = 2;
-    component_2[ "volume" ] = volume_1;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
     MOCK_EXPECT( GetPhModificator ).once().with( firer, enemy, "launcher_1" ).returns( 0 );
     BOOST_CHECK_EQUAL( 0, GetMaxRangeToFireOnWithPosture( firer, enemy, filter, 0.5 ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_non_zero, QueryFixture )
+BOOST_FIXTURE_TEST_CASE( max_range_to_fire_on_with_posture_is_non_zero, EnemyFixture )
 {
     core::Model& component_1 = entity[ "components" ].AddElement();
     component_1[ "weapons" ].AddElement()[ "type" ] = "launcher_1/ammo_1";
-    core::Model& component_2 = target[ "components" ].AddElement();
-    component_2[ "score" ] = 2;
-    component_2[ "volume" ] = volume_1;
     MOCK_EXPECT( filter ).once().with( core::Convert( &component_1 ) ).returns( true );
     MOCK_EXPECT( HasDotation ).once().with( firer, ammo_1 ).returns( true );
     MOCK_EXPECT( GetPhModificator ).once().with( firer, enemy, "launcher_1" ).returns( 1 );
