@@ -25,6 +25,7 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
@@ -32,6 +33,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
+#include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -1169,6 +1171,9 @@ namespace
     }
     double GetRapForLocal( const MIL_AgentPion& agent, const core::Model& model )
     {
+        const PHY_Morale& morale = agent.GetRole< PHY_RoleInterface_HumanFactors >().GetMorale();
+        if( &morale == &PHY_Morale::fanatique_ )
+            return 5.0; // $$$$ _RC_ SLG 2010-05-28: Facteur moral max
         const core::Model& entity = model[ "entities" ][ agent.GetID() ];
         return GET_HOOK( GetForceRatio )( Convert( &model ), Convert( &entity ) );
     }
