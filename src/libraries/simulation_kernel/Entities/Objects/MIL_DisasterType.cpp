@@ -87,28 +87,21 @@ void MIL_DisasterType::ReadProtection( xml::xistream& xis )
         protections_[ suit->GetType() ] = xis.attribute< float >( "value" );
 }
 
-namespace
-{
-    void ReadWound( xml::xistream& xis, std::map< unsigned int, float >& wounds, const std::string& tag )
-    {
-        const PHY_HumanWound* wound = PHY_HumanWound::Find( tag );
-        if( wound )
-            wounds[ wound->GetID() ] = xis.attribute< float >( tag );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_DisasterType::ReadThreshold
 // Created: LGY 2012-11-28
 // -----------------------------------------------------------------------------
 void MIL_DisasterType::ReadThreshold( xml::xistream& xis )
 {
+    static const char* const kinds[] = { "dead", "u1", "u2", "u3", "ue", 0 };
+
     T_Wounds wounds;
-    ReadWound( xis, wounds, "dead" );
-    ReadWound( xis, wounds, "u1" );
-    ReadWound( xis, wounds, "u2" );
-    ReadWound( xis, wounds, "u3" );
-    ReadWound( xis, wounds, "ue" );
+    for( const char* const* k = kinds; *k; ++k )
+    {
+        const PHY_HumanWound* wound = PHY_HumanWound::Find( *k );
+        if( wound )
+            wounds[ wound->GetID() ] = xis.attribute< float >( *k );
+    }
     attritions_[ thresholdIds_++  ] = boost::tuples::make_tuple( xis.attribute< float >( "value" ), xis.attribute< std::string >( "name", "" ),
                                                                  wounds, xis.attribute< bool >( "contamination" ) );
 }
