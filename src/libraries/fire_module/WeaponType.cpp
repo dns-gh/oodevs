@@ -19,6 +19,7 @@
 #include <module_api/Log.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
+#include <unordered_map>
 #include <cassert>
 
 DEFINE_HOOK( InitializeWeaponSystems, 2, void, ( const char* xml, double tickDuration ) )
@@ -32,7 +33,10 @@ DEFINE_HOOK( InitializeWeaponSystems, 2, void, ( const char* xml, double tickDur
 using namespace sword;
 using namespace sword::fire;
 
-WeaponType::T_WeaponTypeMap WeaponType::weaponTypes_;
+namespace
+{
+    std::unordered_map< std::string, boost::shared_ptr< WeaponType > > types;
+}
 
 // -----------------------------------------------------------------------------
 // Name: WeaponType::Initialize
@@ -54,7 +58,7 @@ void WeaponType::ReadWeapon( xml::xistream& xis, double tickDuration )
     std::string strLauncher, strAmmunition;
     xis >> xml::attribute( "launcher", strLauncher )
         >> xml::attribute( "munition", strAmmunition );
-    boost::shared_ptr< WeaponType >& pWeaponType = weaponTypes_[ strLauncher + "/" + strAmmunition ];
+    boost::shared_ptr< WeaponType >& pWeaponType = types[ strLauncher + "/" + strAmmunition ];
     if( pWeaponType )
         xis.error( "Weapon " + strLauncher + "/" + strAmmunition + " already registered" );
     pWeaponType.reset( new WeaponType( strLauncher, strAmmunition, xis, tickDuration ) );
@@ -417,8 +421,8 @@ double WeaponType::GetMinRangeToIndirectFire( const wrapper::View& firer, boost:
 // -----------------------------------------------------------------------------
 boost::shared_ptr< WeaponType > WeaponType::FindWeaponType( const std::string& strType )
 {
-    CIT_WeaponTypeMap it = weaponTypes_.find( strType );
-    if( it == weaponTypes_.end() )
+    auto it = types.find( strType );
+    if( it == types.end() )
         return boost::shared_ptr< WeaponType >();
     return it->second;
 }

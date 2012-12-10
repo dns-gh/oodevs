@@ -104,13 +104,6 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, boost::shared_ptr< WeaponType > > T_WeaponTypeMap;
-    typedef T_WeaponTypeMap::const_iterator                        CIT_WeaponTypeMap;
-    //@}
-
-private:
     //! @name Member data
     //@{
     const boost::shared_ptr< LauncherType > pLauncherType_;
@@ -121,7 +114,6 @@ private:
     double rReloadingDuration_;
     std::auto_ptr< WeaponDataType_DirectFire > pDirectFireData_;
     std::auto_ptr< WeaponDataType_IndirectFire > pIndirectFireData_;
-    static T_WeaponTypeMap weaponTypes_;
     //@}
 };
 
