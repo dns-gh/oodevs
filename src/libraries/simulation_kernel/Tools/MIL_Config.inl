@@ -120,16 +120,6 @@ bool MIL_Config::IsDeleteCheckpointTestMode() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::IsTestMode
-// Created: RPD 2009-06-12
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Config::IsFrozenMode() const
-{
-    return bFrozenMode_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::IsDispatcherEmbedded
 // Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------

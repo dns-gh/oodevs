@@ -55,7 +55,6 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , bTestMode_( false )
     , bSaveCheckpointTestMode_( false )
     , bDeleteCheckpointTestMode_( false )
-    , bFrozenMode_( false )
     , bEmbeddedDispatcher_( false )
     , bPausedAtStartup_( false )
     , bLegacy_( false )
@@ -123,10 +122,6 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
     xis >> xml::start( "session" )
             >> xml::start( "config" )
                 >> xml::start( "simulation" )
-                    >> xml::optional
-                    >> xml::start( "experimental" )
-                        >> xml::attribute( "frozenmode", bFrozenMode_ )
-                    >> xml::end
                     >> xml::start( "orbat" )
                         >> xml::attribute( "checkcomposition", bCheckAutomateComposition_ )
                     >> xml::end

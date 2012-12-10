@@ -55,7 +55,6 @@ public:
     bool               IsTestMode                  () const;
     bool               IsSaveCheckpointTestMode    () const;
     bool               IsDeleteCheckpointTestMode  () const;
-    bool               IsFrozenMode                () const;
     bool               IsDispatcherEmbedded        () const;
     unsigned short     GetNetworkPort              () const;
     unsigned long      GetNetworkTimeout           () const;
@@ -149,7 +148,6 @@ private:
     bool           bTestMode_;
     bool           bSaveCheckpointTestMode_;
     bool           bDeleteCheckpointTestMode_;
-    bool           bFrozenMode_;
     bool           bEmbeddedDispatcher_;
     bool           bPausedAtStartup_;
     bool           bLegacy_;
