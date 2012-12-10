@@ -39,7 +39,9 @@ return
             myself.leadData.entitiesToSupport = {}
             myself.leadData.objectiveDynamicSupportIndex = 0
             local entityToSupport
-            if params.objective and params.objective ~= nil then
+            if params.objective and params.objective ~= nil
+             and ( masalife.brain.core.class.isOfType( params.objective, integration.ontology.types.automat)
+             or masalife.brain.core.class.isOfType( params.objective, integration.ontology.types.agent) ) then
                entityToSupport = params.objective
             else
                entityToSupport = meKnowledge
