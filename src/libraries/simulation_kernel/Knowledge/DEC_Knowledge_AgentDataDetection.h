@@ -71,6 +71,7 @@ public:
     bool IsPrisoner() const;
     bool IsRefugeeManaged() const;
     bool IsDead() const;
+    bool IsWounded() const;
     double GetPopulationDensity() const;
     //@}
 
@@ -103,6 +104,7 @@ private:
     const PHY_Posture* pCurrentPosture_;
     double rPostureCompletionPercentage_;
     bool bDead_;
+    bool bWounded_;
     bool bPrisoner_;
     bool bRefugeeManaged_;
     bool bDirectionUpdated_;

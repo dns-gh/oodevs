@@ -19,6 +19,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
+#include "Entities/Agents/Roles/Humans/PHY_RoleInterface_Humans.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -42,6 +43,7 @@ DEC_Knowledge_AgentPerceptionDataDetection::DEC_Knowledge_AgentPerceptionDataDet
     , bPrisoner_                   ( false )
     , bRefugeeManaged_             ( false )
     , bDead_                       ( false )
+    , bWounded_                    ( false )
 {
     // NOTHING
 }
@@ -70,6 +72,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
          >> bPrisoner_
          >> bRefugeeManaged_
          >> bDead_
+         >> bWounded_
          >> rPostureCompletionPercentage_
          >> rPopulationDensity_;
     // Desérialisation des volumes par nom ( données "statiques" )
@@ -105,6 +108,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << bPrisoner_
          << bRefugeeManaged_
          << bDead_
+         << bWounded_
          << rPostureCompletionPercentage_
          << rPopulationDensity_;
     // Serialisation des volumes par nom ( données "statiques" )
@@ -165,6 +169,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Update( const MIL_Agent_ABC& ag
     bPrisoner_ = roleSurrender.IsPrisoner();
     bRefugeeManaged_ = agentPerceived.GetRole< PHY_RoleInterface_Refugee >().IsManaged();
     bDead_ = agentPerceived.IsDead();
+    bWounded_ = agentPerceived.GetRole< human::PHY_RoleInterface_Humans >().HasWoundedHumansToEvacuate();
 }
 
 // -----------------------------------------------------------------------------
@@ -293,4 +298,13 @@ bool DEC_Knowledge_AgentPerceptionDataDetection::IsRefugeeManaged() const
 double DEC_Knowledge_AgentPerceptionDataDetection::GetPopulationDensity() const
 {
     return rPopulationDensity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::IsWounded
+// Created: LGY 2012-12-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentPerceptionDataDetection::IsWounded() const
+{
+    return bWounded_;
 }

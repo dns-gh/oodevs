@@ -62,6 +62,7 @@ public:
     bool IsPrisoner() const;
     bool IsRefugeeManaged() const;
     bool IsDead() const;
+    bool IsWounded() const;
     double GetPopulationDensity() const;
     //@}
 
@@ -83,6 +84,7 @@ private:
     bool bDead_;
     bool bPrisoner_;
     bool bRefugeeManaged_;
+    bool bWounded_;
     //@}
 };
 

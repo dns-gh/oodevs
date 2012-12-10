@@ -42,6 +42,7 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     , bPrisoner_                   ( false )
     , bRefugeeManaged_             ( false )
     , bDead_                       ( false )
+    , bWounded_                    ( false )
     , bDirectionUpdated_           ( true )
     , bSpeedUpdated_               ( true )
     , bPositionUpdated_            ( true )
@@ -78,6 +79,7 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> bPrisoner_
          >> bRefugeeManaged_
          >> bDead_
+         >> bWounded_
          >> rPopulationDensity_;
     vPosition_.reset( new MT_Vector2D( positionTmp ) );
     std::size_t nNbr;
@@ -119,6 +121,7 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << bPrisoner_
          << bRefugeeManaged_
          << bDead_
+         << bWounded_
          << rPopulationDensity_;
     std::size_t size = visionVolumes_.size();
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
@@ -255,6 +258,7 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
         bDead_ = bNewDead;
         bDeadUpdated_ = true;
     }
+    bWounded_ = data.IsWounded();
     rPopulationDensity_ = data.GetPopulationDensity();
     rAltitude_ = data.GetAltitude();
     pLastPosture_ = &data.GetLastPosture();
@@ -487,4 +491,13 @@ bool DEC_Knowledge_AgentDataDetection::HasChanged() const
 double DEC_Knowledge_AgentDataDetection::GetPopulationDensity() const
 {
     return rPopulationDensity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::IsWounded
+// Created: LGY 2012-12-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_AgentDataDetection::IsWounded() const
+{
+    return bWounded_;
 }

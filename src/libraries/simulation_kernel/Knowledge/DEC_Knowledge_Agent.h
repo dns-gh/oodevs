@@ -104,6 +104,7 @@ public:
     bool IsPrisoner() const;
     bool IsRefugeeManaged() const;
     bool IsDead() const;
+    bool IsWounded() const;
     bool IsInCrowd() const;
     unsigned int GetID() const;
     unsigned int GetGroupID() const;

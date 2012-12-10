@@ -529,6 +529,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( sword::Brain& brain )
         boost::function< T_ConstKnowledgeAgentVector( TER_Localisation* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesInZone, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesDansCercle",
         boost::function< T_ConstKnowledgeAgentVector( const MT_Vector2D*, float ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesInCircle, boost::ref( GetPion() ), _1, _2 ) ) );
+    RegisterFunction( "DEC_Connaissances_UnitesEnnemiesBlesseesDansCercle",
+        boost::function< T_ConstKnowledgeAgentVector( const MT_Vector2D*, float ) >( boost::bind( &DEC_KnowledgeFunctions::GetWoundedUnitsInCircle, boost::ref( GetPion() ), _1, _2 ) ) );
     RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain",
         boost::function< T_ConstKnowledgeAgentVector( MIL_UrbanObject_ABC* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetLivingEnemiesInBU, boost::ref( GetPion() ), _1 ) ) );
     RegisterFunction( "DEC_Connaissances_RefugiesAProximite",

@@ -229,6 +229,21 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( co
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetWoundedUnitsInCircle
+// Created: LGY 2012-12-10
+// -----------------------------------------------------------------------------
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetWoundedUnitsInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius )
+{
+    if( !pCenter )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+
+    T_ConstKnowledgeAgentVector knowledges;
+    callerAgent.GetKnowledgeGroup()->GetKnowledge().GetWoundedUnitsInCircle( knowledges, *pCenter, radius );
+
+    return knowledges;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetObservableKnowledge
 // Created: MGD 2010-02-09
 // -----------------------------------------------------------------------------

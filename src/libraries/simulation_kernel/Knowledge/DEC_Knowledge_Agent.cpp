@@ -1010,6 +1010,15 @@ bool DEC_Knowledge_Agent::IsDead() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsWounded
+// Created: LGY 2012-12-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsWounded() const
+{
+    return dataDetection_.IsWounded();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::IsInCrowd
 // Created: DDA 2011-05-13
 // -----------------------------------------------------------------------------
