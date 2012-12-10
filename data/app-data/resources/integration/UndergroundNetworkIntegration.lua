@@ -21,10 +21,12 @@ integration.ExitFromUndergroundNetwork = function()
     return true
 end
 integration.EnableUndergroundNetwork = function( self )
+    DEC_RC( eRC_UndergroundNetworkExitActivated )
     DEC_ConnaissanceObjet_ActiverIssueDeReseauSouterrain( self.source )
     return true
 end
 integration.DisableUndergroundNetwork = function( self )
+    DEC_RC( eRC_UndergroundNetworkExitDeactivated )
     DEC_ConnaissanceObjet_DesactiverIssueDeReseauSouterrain( self.source )
     return true
 end
