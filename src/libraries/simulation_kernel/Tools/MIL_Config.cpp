@@ -286,3 +286,13 @@ const std::string& MIL_Config::GetIntegrationDir() const
 {
     return integrationDir_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetPathFinderMaxComputationTime
+// Created: MCO 2012-12-10
+// -----------------------------------------------------------------------------
+boost::optional< unsigned int > MIL_Config::GetPathFinderMaxComputationTime() const
+{
+    return pathFinderMaxComputationTime_;
+}
+
