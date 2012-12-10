@@ -39,16 +39,34 @@ end
 -- @author MGD
 -- @release 2010-04-27
 integration.equipNBCOutfitSecu = function()
-    meKnowledge:sendReport( eRC_TenueProtectionNBCMise )
-    DEC_Agent_MettreTenueProtectionNBC()
+    local RNBCLevel = integration.getRNBCProtectionLevel()
+    if RNBCLevel and RNBCLevel ~= 0 then
+        meKnowledge:sendReport( eRC_TenueProtectionNiveauNRBC, RNBCLevel )
+        DEC_Agent_MettreTenueProtectionNBC()
+    else
+        meKnowledge:sendReport( eRC_PasTenueNBC )
+    end
 end
 
 --- UnequipNBC outfit
 -- @author MGD
 -- @release 2010-04-27
 integration.unequipNBCOutfitSecu = function()
-    meKnowledge:sendReport( eRC_TenueProtectionNBCEnlevee )
-    DEC_Agent_EnleverTenueProtectionNBC()
+    local RNBCLevel = integration.getRNBCProtectionLevel()
+    if RNBCLevel and RNBCLevel ~= 0 then
+        meKnowledge:sendReport( eRC_TenueProtectionNBCEnlevee )
+        DEC_Agent_EnleverTenueProtectionNBC()
+    else
+        meKnowledge:sendReport( eRC_PasTenueNBC )
+    end
+end
+
+--- Return the RNBC protection level defined in ADN
+-- @author LMT
+-- @release 2012-11-27
+integration.getRNBCProtectionLevel = function()
+    meKnowledge.RNBCProtectionLevel = meKnowledge.RNBCProtectionLevel or DEC_Agent_NiveauProtectionNBC()
+    return meKnowledge.RNBCProtectionLevel
 end
 
 --- Define nbc alert enumeration
