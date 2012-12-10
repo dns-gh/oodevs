@@ -50,8 +50,7 @@ void UrbanExportManager::Run() const
         throw std::exception( "export directory doesn't exist" );
 
     RemoveOldFile( name_ );
-    std::auto_ptr< UrbanFileExporter > exporter( new UrbanFileExporter( exportPath.string(), name_, projector_, model_ ) );
-    exporter.release();
+    UrbanFileExporter( exportPath.string(), name_, projector_, model_ );
 }
 
 // -----------------------------------------------------------------------------
