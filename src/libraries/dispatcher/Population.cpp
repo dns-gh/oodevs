@@ -173,7 +173,7 @@ void Population::DoUpdate( const sword::CrowdFlowDestruction& msg )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const sword::CrowdOrder& message )
 {
-    order_.release();
+    order_.reset();
     if( message.type().id() != 0 )
         order_.reset( new PopulationOrder( message ) );
 }
