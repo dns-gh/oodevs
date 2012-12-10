@@ -156,8 +156,10 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                         >> xml::attribute( "setstepmul", setstepmul_ )
                     >> xml::end
                     >> xml::start( "pathfinder" )
-                        >> xml::attribute( "threads", pathFinderThreads_ )
-                    >> xml::end
+                        >> xml::attribute( "threads", pathFinderThreads_ );
+    if( xis.has_attribute( "max-calculation-time" ) )
+        tools::ReadTimeAttribute( xis, "max-calculation-time", *pathFinderMaxComputationTime_ );
+    xis             >> xml::end
                     >> xml::optional
                     >> xml::start( "random" )
                         >> xml::attribute( "seed", randomSeed_ )

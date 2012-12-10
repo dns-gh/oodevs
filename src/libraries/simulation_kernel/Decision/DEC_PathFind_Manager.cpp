@@ -36,9 +36,9 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoida
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, dangerousObjects ) );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder",
+        boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, boost::ref( config ), boost::cref( dangerousObjects ) ) );
     config.AddFileToCRC( fileLoaded );
-
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
     if( bUseInSameThread_ ) // juste one "thread" that will never start
@@ -52,13 +52,18 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config, double maxAvoida
 // Name: DEC_PathFind_Manager::ReadPathfind
 // Created: LDC 2010-11-30
 // -----------------------------------------------------------------------------
-void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, const std::vector< unsigned int >& dangerousObjects )
+void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, MIL_Config& config, const std::vector< unsigned int >& dangerousObjects )
 {
     xis >> xml::start( "pathfind" )
             >> xml::start( "configuration" )
                 >> xml::attribute( "distance-threshold", rDistanceThreshold_ );
-    if( tools::ReadTimeAttribute( xis, "max-calculation-time", nMaxComputationDuration_ ) && nMaxComputationDuration_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-calculation-time w<= 0" );
+    boost::optional< unsigned int > duration = config.GetPathFinderMaxComputationTime();
+    if( duration )
+        nMaxComputationDuration_ = *duration;
+    else
+        tools::ReadTimeAttribute( xis, "max-calculation-time", nMaxComputationDuration_ );
+    if( nMaxComputationDuration_ <= 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-calculation-time <= 0" );
 
     xis         >> xml::attribute( "max-end-connections", nMaxEndConnections_ )
             >> xml::end;

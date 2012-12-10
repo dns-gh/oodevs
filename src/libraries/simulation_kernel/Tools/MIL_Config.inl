@@ -282,6 +282,16 @@ unsigned int MIL_Config::GetPathFinderThreads() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::GetPathFinderMaxComputationTime
+// Created: MCO 2012-12-10
+// -----------------------------------------------------------------------------
+inline
+boost::optional< unsigned int > MIL_Config::GetPathFinderMaxComputationTime() const
+{
+    return pathFinderMaxComputationTime_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetCheckpointTestName
 // Created: JSR 2010-03-11
 // -----------------------------------------------------------------------------

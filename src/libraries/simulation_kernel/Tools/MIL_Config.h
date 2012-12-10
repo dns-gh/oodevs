@@ -13,14 +13,13 @@
 #define __MIL_Config_h_
 
 #include "MIL_Random.h"
-
 #include "tools/SessionConfig.h"
-#include <map>
-
+#include <boost/optional.hpp>
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )
 #include <boost/CRC.hpp>
 #pragma warning ( pop )
+#include <map>
 
 namespace xml
 {
@@ -74,6 +73,7 @@ public:
     unsigned int       GetTickLatency              () const;
     bool               GetPausedAtStartup          () const;
     unsigned int       GetPathFinderThreads        () const;
+    boost::optional< unsigned int > GetPathFinderMaxComputationTime() const;
     const std::string& GetCheckpointNameTestMode   () const;
     const std::string& GetIntegrationDir           () const;
 
@@ -132,6 +132,7 @@ private:
     unsigned int   endTick_;
     unsigned int   tickLatency_;
     unsigned int   pathFinderThreads_;
+    boost::optional< unsigned int > pathFinderMaxComputationTime_;
     unsigned short networkLoggerPort_;
     unsigned short networkPort_;
     unsigned long  networkTimeOut_;
