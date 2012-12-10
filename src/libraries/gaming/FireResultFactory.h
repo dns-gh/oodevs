@@ -10,10 +10,15 @@
 #ifndef __FireResultFactory_h_
 #define __FireResultFactory_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace sword
 {
     class UnitFireDamages;
     class CrowdFireDamages;
+    class Explosion;
+    class StopUnitFire;
+    class StopCrowdFire;
 }
 
 class AgentFireResult;
@@ -27,7 +32,7 @@ class Simulation;
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class FireResultFactory
+class FireResultFactory : private::boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -38,15 +43,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual AgentFireResult*      CreateFireResult( const sword::UnitFireDamages& message );
-    virtual PopulationFireResult* CreateFireResult( const sword::CrowdFireDamages& message );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    FireResultFactory( const FireResultFactory& );            //!< Copy constructor
-    FireResultFactory& operator=( const FireResultFactory& ); //!< Assignment operator
+    virtual AgentFireResult*      CreateFireResult( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer );
+    virtual PopulationFireResult* CreateFireResult( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer );
+    const kernel::Entity_ABC*     GetFirer( const sword::Explosion& message ) const;
+    const kernel::Entity_ABC*     GetFirer( const sword::StopUnitFire& message ) const;
+    const kernel::Entity_ABC*     GetFirer( const sword::StopCrowdFire& message ) const;
     //@}
 
 private:

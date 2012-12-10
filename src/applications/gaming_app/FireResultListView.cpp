@@ -17,6 +17,7 @@
 #include "gaming/Tools.h"
 #include "clients_gui/SubItemDisplayer.h"
 #include "clients_gui/ItemFactory_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace kernel;
@@ -35,10 +36,12 @@ FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& co
     setFrameStyle( Q3Frame::Plain );
     setMargin( 2 );
     AddColumn( tools::translate( "FireResultListView", "Date" ) );
+    AddColumn( tools::translate( "FireResultListView", "Firer" ) );
     AddColumn( tools::translate( "FireResultListView", "Target" ) );
-    AddColumn( tools::translate( "FireResultListView", "Attrition" ) );
 
-    subDisplayer_ = new SubItemDisplayer( tools::translate( "FireResultListView", "Target" ), factory );
+    header()->setVisible( true );
+
+    subDisplayer_ = new SubItemDisplayer( tools::translate( "FireResultListView", "Firer" ), factory );
     subDisplayer_->AddChild( tools::translate( "FireResultListView", "Equipments" ) );
     subDisplayer_->AddChild( tools::translate( "FireResultListView", "Troops" ) );
 
@@ -56,20 +59,39 @@ FireResultListView::~FireResultListView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireResultListView::DisplayFirer
+// Created: JSR 2012-12-07
+// -----------------------------------------------------------------------------
+void FireResultListView::DisplayFirer( kernel::Displayer_ABC& displayer, const kernel::Entity_ABC* firer )
+{
+    if( !firer )
+        return;
+    const std::string& typeName = firer->GetTypeName();
+    if( typeName == kernel::Agent_ABC::typeName_ )
+        displayer.Display( tools::translate( "FireResultListView", "Firer" ), static_cast< const kernel::Agent_ABC* >( firer ) );
+    else if( typeName == kernel::Population_ABC::typeName_ )
+        displayer.Display( tools::translate( "FireResultListView", "Firer" ), static_cast< const kernel::Population_ABC* >( firer ) );
+    else if( typeName == kernel::Object_ABC::typeName_ )
+        displayer.Display( tools::translate( "FireResultListView", "Firer" ), static_cast< const kernel::Object_ABC* >( firer ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireResultListView::Display
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const PopulationFireResult* result, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( ! result ) {
+    if( !result )
+    {
         RemoveItem( item );
         return;
     }
     // $$$$ AGE 2006-03-10: Move in PopulationFireResult
     item->SetValue( result );
     displayer.Display( tools::translate( "FireResultListView", "Date" ), result->time_ );
+    DisplayFirer( displayer, result->firer_ );
     displayer.Display( tools::translate( "FireResultListView", "Target" ), result->target_ );
-    displayer.Item( tools::translate( "FireResultListView", "Attrition" ) );
+    displayer.Item( tools::translate( "FireResultListView", "Target" ) );
     if( result->deadPeople_ )
         displayer.Start( tools::translate( "FireResultListView", "Dead:" ) ).Add( result->deadPeople_ );
     if( result->woundedPeople_ )
@@ -85,7 +107,8 @@ void FireResultListView::Display( const PopulationFireResult* result, Displayer_
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC& rootDisplayer, ValuedListItem* item )
 {
-    if( ! result ) {
+    if( !result )
+    {
         RemoveItem( item );
         return;
     }
@@ -95,6 +118,7 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC& 
     Displayer_ABC& displayer = (*subDisplayer_)( item );
 
     rootDisplayer.Display( tools::translate( "FireResultListView", "Date" ), result->time_ );
+    DisplayFirer( rootDisplayer, result->firer_ );
     rootDisplayer.Display( tools::translate( "FireResultListView", "Target" ), result->target_ );
     displayer.Display( tools::translate( "FireResultListView", "Equipments" ), tools::translate( "FireResultListView", " (avail, unavail, repairable):" ) );
     displayer.Display( tools::translate( "FireResultListView", "Troops" ), tools::translate( "FireResultListView", " (officer, warrant-off., private)" ) );
@@ -116,8 +140,8 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC& 
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( tools::translate( "FireResultListView", "Target" ), equipment.type_ );
-    displayer.Item( tools::translate( "FireResultListView", "Attrition" ) ).Start( equipment.available_ )
+    displayer.Display( tools::translate( "FireResultListView", "Firer" ), equipment.type_ );
+    displayer.Item( tools::translate( "FireResultListView", "Target" ) ).Start( equipment.available_ )
                     .Add( " / " ).Add( equipment.unavailable_ )
                     .Add( " / " ).Add( equipment.repairable_ + equipment.onSiteFixable_ ).End();
 }
@@ -128,8 +152,8 @@ void FireResultListView::Display( const Equipment& equipment, Displayer_ABC& dis
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const Casualties& casualties, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( tools::translate( "FireResultListView", "Target" ), casualties.wound_ );
-    displayer.Item( tools::translate( "FireResultListView", "Attrition" ) ).Start( casualties.officers_ )
+    displayer.Display( tools::translate( "FireResultListView", "Firer" ), casualties.wound_ );
+    displayer.Item( tools::translate( "FireResultListView", "Target" ) ).Start( casualties.officers_ )
                     .Add( " / " ).Add( casualties.subOfficers_ )
                     .Add( " / " ).Add( casualties.troopers_ ).End();
 }

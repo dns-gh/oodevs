@@ -779,10 +779,6 @@ Raison: %3
         <translation>Cible</translation>
     </message>
     <message>
-        <source>Attrition</source>
-        <translation>Attrition</translation>
-    </message>
-    <message>
         <source>Equipments</source>
         <translation>Equipements</translation>
     </message>
@@ -813,6 +809,10 @@ Raison: %3
     <message>
         <source>Scattered:</source>
         <translation>Dispersés:</translation>
+    </message>
+    <message>
+        <source>Firer</source>
+        <translation>Tireur</translation>
     </message>
 </context>
 <context>

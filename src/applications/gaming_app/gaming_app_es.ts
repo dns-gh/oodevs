@@ -777,10 +777,6 @@ Reason: %3
         <translation>Blanco</translation>
     </message>
     <message>
-        <source>Attrition</source>
-        <translation>Daño</translation>
-    </message>
-    <message>
         <source>Equipments</source>
         <translation>Equipos</translation>
     </message>
@@ -810,6 +806,10 @@ Reason: %3
     </message>
     <message>
         <source>Scattered:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Firer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -22,8 +22,7 @@ InfoConflictsTab::InfoConflictsTab( QTabWidget* parent, kernel::Controllers& con
     , parent_( parent )
 {
     setMargin( 0 );
-    FireResultListView* conflicts = new FireResultListView( this, controllers, factory );
-    conflicts->header()->hide();
+    new FireResultListView( this, controllers, factory );
     controllers_.Register( *this );
 }
 

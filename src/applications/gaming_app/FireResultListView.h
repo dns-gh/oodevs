@@ -58,16 +58,11 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FireResultListView( const FireResultListView& );            //!< Copy constructor
-    FireResultListView& operator=( const FireResultListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyUpdated( const Explosions& results );
+    void DisplayFirer( kernel::Displayer_ABC& displayer, const kernel::Entity_ABC* firer );
     //@}
 
 private:
