@@ -765,27 +765,39 @@ Reason: %3
         <translation type="unfinished">المنتشرة:</translation>
     </message>
     <message>
-        <source>unavail,</source>
+        <source>unavail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>warrant-off.,</source>
+        <source>repairable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>( avail, </source>
+        <source>officer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>repairable )</source>
+        <source>warrant-off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>( officer,</source>
+        <source>private</source>
+        <translation type="unfinished">القطاع الخاص</translation>
+    </message>
+    <message>
+        <source>avail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>private )</source>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Firer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

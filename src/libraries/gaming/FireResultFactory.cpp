@@ -11,10 +11,12 @@
 #include "FireResultFactory.h"
 #include "AgentFireResult.h"
 #include "AgentsModel.h"
+#include "FiresModel.h"
 #include "Model.h"
 #include "PopulationFireResult.h"
 #include "Simulation.h"
 #include "StaticModel.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
@@ -38,19 +40,46 @@ FireResultFactory::~FireResultFactory()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireResultFactory::CreateFireResult
-// Created: AGE 2006-03-10
+// Name: FireResultFactory::GetObject
+// Created: JSR 2012-12-07
 // -----------------------------------------------------------------------------
-AgentFireResult* FireResultFactory::CreateFireResult( const sword::UnitFireDamages& message )
+const kernel::Entity_ABC* FireResultFactory::GetFirer( const sword::Explosion& message ) const
 {
-    return new AgentFireResult( message, model_.agents_, model_.static_.objectTypes_, simulation_.GetDateTime() );
+    return model_.FindObject( message.object().id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultFactory::GetFirer
+// Created: JSR 2012-12-07
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* FireResultFactory::GetFirer( const sword::StopUnitFire& message ) const
+{
+    return model_.fires_.FindFirer( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultFactory::GetFirer
+// Created: JSR 2012-12-07
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* FireResultFactory::GetFirer( const sword::StopCrowdFire& message ) const
+{
+    return model_.fires_.FindFirer( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireResultFactory::CreateFireResult
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-PopulationFireResult* FireResultFactory::CreateFireResult( const sword::CrowdFireDamages& message )
+AgentFireResult* FireResultFactory::CreateFireResult( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer )
 {
-    return new PopulationFireResult( message, model_.agents_, simulation_.GetDateTime() );
+    return new AgentFireResult( message, model_.agents_, model_.static_.objectTypes_, simulation_.GetDateTime(), firer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultFactory::CreateFireResult
+// Created: AGE 2006-03-10
+// -----------------------------------------------------------------------------
+PopulationFireResult* FireResultFactory::CreateFireResult( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer )
+{
+    return new PopulationFireResult( message, model_.agents_, simulation_.GetDateTime(), firer );
 }

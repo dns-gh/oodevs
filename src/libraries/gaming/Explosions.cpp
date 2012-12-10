@@ -65,11 +65,13 @@ const Explosions::T_PopulationFires& Explosions::GetPopulationExplosions() const
 template< typename T >
 void Explosions::UpdateData( const T& message )
 {
+    const kernel::Entity_ABC* firer = factory_.GetFirer( message );
+
     for( int i = 0; i < message.units_damages().elem_size(); ++i )
-        Update( message.units_damages().elem( i ) );
+        Update( message.units_damages().elem( i ), firer );
 
     for( int i = 0; i < message.crowds_damages().elem_size(); ++i )
-        Update( message.crowds_damages().elem( i ) );
+        Update( message.crowds_damages().elem( i ), firer );
 
     controller_.Update( *this );
 }
@@ -98,8 +100,9 @@ void Explosions::DoUpdate( const sword::StopUnitFire& message )
 // -----------------------------------------------------------------------------
 void Explosions::DoUpdate( const sword::StopCrowdFire& message )
 {
+    const kernel::Entity_ABC* firer = factory_.GetFirer( message );
     for( int i = 0; i < message.units_damages().elem_size(); ++i )
-        Update( message.units_damages().elem( i ) );
+        Update( message.units_damages().elem( i ), firer );
     controller_.Update( *this );
 }
 
@@ -107,9 +110,9 @@ void Explosions::DoUpdate( const sword::StopCrowdFire& message )
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const sword::UnitFireDamages& message )
+void Explosions::Update( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer )
 {
-    agentExplosions_.push_back( factory_.CreateFireResult( message ) );
+    agentExplosions_.push_back( factory_.CreateFireResult( message, firer ) );
     if( agentExplosions_.size() > 20 )
     {
         delete agentExplosions_.front();
@@ -121,9 +124,9 @@ void Explosions::Update( const sword::UnitFireDamages& message )
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const sword::CrowdFireDamages& message )
+void Explosions::Update( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer )
 {
-    populationExplosions_.push_back( factory_.CreateFireResult( message ) );
+    populationExplosions_.push_back( factory_.CreateFireResult( message, firer ) );
     if( populationExplosions_.size() > 20 )
     {
         delete populationExplosions_.front();

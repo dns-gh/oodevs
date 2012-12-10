@@ -653,7 +653,7 @@ Reason: %3
     </message>
     <message>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Notifications</translation>
     </message>
 </context>
 <context>
@@ -765,28 +765,40 @@ Reason: %3
         <translation>Scattered:</translation>
     </message>
     <message>
-        <source>unavail,</source>
-        <translation type="unfinished"></translation>
+        <source>unavail</source>
+        <translation>unavail</translation>
     </message>
     <message>
-        <source>warrant-off.,</source>
-        <translation type="unfinished"></translation>
+        <source>repairable</source>
+        <translation>repairable</translation>
     </message>
     <message>
-        <source>( avail, </source>
-        <translation type="unfinished"></translation>
+        <source>officer</source>
+        <translation>officer</translation>
     </message>
     <message>
-        <source>repairable )</source>
-        <translation type="unfinished"></translation>
+        <source>warrant-off.</source>
+        <translation>warrant-off.</translation>
     </message>
     <message>
-        <source>( officer,</source>
-        <translation type="unfinished"></translation>
+        <source>private</source>
+        <translation>private</translation>
     </message>
     <message>
-        <source>private )</source>
-        <translation type="unfinished"></translation>
+        <source>avail</source>
+        <translation>avail</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Date</translation>
+    </message>
+    <message>
+        <source>Firer</source>
+        <translation>Firer</translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>Target</translation>
     </message>
 </context>
 <context>
@@ -1398,11 +1410,11 @@ Reason: %3
     <name>LogisticConsignsWidget_ABC</name>
     <message>
         <source>Logistic requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistic requests</translation>
     </message>
     <message>
         <source>Processing consigns</source>
-        <translation type="unfinished"></translation>
+        <translation>Processing consigns</translation>
     </message>
 </context>
 <context>
@@ -2116,7 +2128,7 @@ This data can&apos;t be projected.</source>
     <name>MessagePanel</name>
     <message>
         <source>Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Messages</translation>
     </message>
 </context>
 <context>
@@ -2830,7 +2842,7 @@ This data can&apos;t be projected.</source>
     <name>SupplyQuotasWidget</name>
     <message>
         <source>Logistic superior</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistic superior</translation>
     </message>
 </context>
 <context>

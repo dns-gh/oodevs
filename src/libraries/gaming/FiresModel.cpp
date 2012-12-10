@@ -72,7 +72,7 @@ void FiresModel::AddFire( const sword::StartCrowdFire& message )
 // -----------------------------------------------------------------------------
 void FiresModel::AddTarget( const sword::StartUnitFire& message )
 {
-    if( firers_.find( message.fire().id() ) == firers_.end() && !message.target().has_position() )
+    if( targets_.find( message.fire().id() ) == targets_.end() && !message.target().has_position() )
     {
         if( message.target().has_unit() )
             targets_[ message.fire().id() ] = message.target().unit().id();

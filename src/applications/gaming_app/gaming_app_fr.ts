@@ -767,28 +767,40 @@ Raison: %3
         <translation>Dispersés:</translation>
     </message>
     <message>
-        <source>unavail,</source>
-        <translation>non dispo.,</translation>
+        <source>unavail</source>
+        <translation>non dispo.</translation>
     </message>
     <message>
-        <source>warrant-off.,</source>
-        <translation> sous-off.,</translation>
+        <source>repairable</source>
+        <translation>réparable</translation>
     </message>
     <message>
-        <source>( avail, </source>
-        <translation>( dispo.,</translation>
+        <source>officer</source>
+        <translation>officier</translation>
     </message>
     <message>
-        <source>repairable )</source>
-        <translation>réparable )</translation>
+        <source>warrant-off.</source>
+        <translation>sous-off.</translation>
     </message>
     <message>
-        <source>( officer,</source>
-        <translation>(officier,</translation>
+        <source>private</source>
+        <translation>militaires du rang</translation>
     </message>
     <message>
-        <source>private )</source>
-        <translation>militaires du rang )</translation>
+        <source>avail</source>
+        <translation>dispo.</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Date</translation>
+    </message>
+    <message>
+        <source>Firer</source>
+        <translation>Tireur</translation>
+    </message>
+    <message>
+        <source>Target</source>
+        <translation>Cible</translation>
     </message>
 </context>
 <context>

@@ -12,8 +12,10 @@
 #include "moc_FireResultListView.cpp"
 #include "clients_gui/DisplayExtractor.h"
 #include "clients_gui/LinkItemDelegate.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "gaming/PopulationFireResult.h"
 #include "gaming/AgentFireResult.h"
@@ -34,13 +36,19 @@ FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& co
     setFrameStyle( Q3Frame::Plain );
     setMouseTracking( true );
     setColumnCount( 4 );
+    QStringList headers;
+    headers << tools::translate( "FireResultListView", "Date" )
+            << tools::translate( "FireResultListView", "Firer" )
+            << tools::translate( "FireResultListView", "Target" )
+            << "";
+    setHeaderLabels( headers );
     setHeaderHidden( true );
     setRootIsDecorated( false );
     gui::LinkItemDelegate* delegate = new gui::LinkItemDelegate( this );
     setItemDelegateForColumn( 1, delegate );
+    setItemDelegateForColumn( 2, delegate );
     setAllColumnsShowFocus( true );
-    header()->setResizeMode( 0, QHeaderView::ResizeToContents );
-    header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+    header()->setResizeMode( QHeaderView::ResizeToContents );
     connect( delegate, SIGNAL( LinkClicked( const QString&, const QModelIndex& ) ), SLOT( OnLinkClicked( const QString&, const QModelIndex& ) ) );
     controllers_.Register( *this );
 }
@@ -91,6 +99,23 @@ void FireResultListView::OnLinkClicked( const QString& url, const QModelIndex& i
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireResultListView::DisplayFirer
+// Created: JSR 2012-12-10
+// -----------------------------------------------------------------------------
+void FireResultListView::DisplayFirer( QTreeWidgetItem* item, const kernel::Entity_ABC* firer )
+{
+    if( !firer )
+        return;
+    const std::string& typeName = firer->GetTypeName();
+    if( typeName == kernel::Agent_ABC::typeName_ )
+        item->setText( 2, extractor_.GetDisplayName( *static_cast< const kernel::Agent_ABC* >( firer ) ) );
+    else if( typeName == kernel::Population_ABC::typeName_ )
+        item->setText( 2, extractor_.GetDisplayName( *static_cast< const kernel::Population_ABC* >( firer ) ) );
+    else if( typeName == kernel::Object_ABC::typeName_ )
+        item->setText( 2, extractor_.GetDisplayName( *static_cast< const kernel::Object_ABC* >( firer ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireResultListView::Display
 // Created: JSR 2012-10-24
 // -----------------------------------------------------------------------------
@@ -101,20 +126,33 @@ void FireResultListView::Display( const AgentFireResult& result, QTreeWidgetItem
         return;
     item->setText( 0, extractor_.GetDisplayName( result.time_ ) );
     item->setText( 1, extractor_.GetDisplayName( result.target_ ) );
+    DisplayFirer( item, result.firer_ );
     if( item->childCount() == 0 )
     {
         QStringList equipments;
         equipments << tools::translate( "FireResultListView", "Equipments" )
-                   << tools::translate( "FireResultListView", "( avail, " )
-                   << tools::translate( "FireResultListView", "unavail," )
-                   << tools::translate( "FireResultListView", "repairable )" );
-        item->addChild( new QTreeWidgetItem( equipments ) );
+                   << tools::translate( "FireResultListView", "avail" )
+                   << tools::translate( "FireResultListView", "unavail" )
+                   << tools::translate( "FireResultListView", "repairable" );
+        QTreeWidgetItem* subItem = new QTreeWidgetItem( equipments );
+        QFont font = subItem->font( 0 );
+        font.setBold( true );
+        subItem->setFont( 0, font );
+        subItem->setFont( 1, font );
+        subItem->setFont( 2, font );
+        subItem->setFont( 3, font );
+        item->addChild( subItem );
         QStringList troops;
         troops << tools::translate( "FireResultListView", "Troops" )
-               << tools::translate( "FireResultListView", "( officer," )
-               << tools::translate( "FireResultListView", "warrant-off.," )
-               << tools::translate( "FireResultListView", "private )" );
-        item->addChild( new QTreeWidgetItem( troops ) );
+               << tools::translate( "FireResultListView", "officer" )
+               << tools::translate( "FireResultListView", "warrant-off." )
+               << tools::translate( "FireResultListView", "private" );
+        subItem = new QTreeWidgetItem( troops );
+        subItem->setFont( 0, font );
+        subItem->setFont( 1, font );
+        subItem->setFont( 2, font );
+        subItem->setFont( 3, font );
+        item->addChild( subItem );
         item->child( 0 )->setTextAlignment( 1, Qt::AlignCenter );
         item->child( 0 )->setTextAlignment( 2, Qt::AlignCenter );
         item->child( 0 )->setTextAlignment( 3, Qt::AlignCenter );
@@ -145,6 +183,7 @@ void FireResultListView::Display( const PopulationFireResult& result, QTreeWidge
         return;
     item->setText( 0, extractor_.GetDisplayName( result.time_ ) );
     item->setText( 1, extractor_.GetDisplayName( result.target_ ) );
+    DisplayFirer( item, result.firer_ );
     int lines = ( result.deadPeople_ == 0 ? 0 : 1 ) + ( result.woundedPeople_ == 0 ? 0 : 1 ) + ( result.scatteredPeople_ == 0 ? 0 : 1 );
     SetNumberOfChildren( item, lines );
     int row = 0;
@@ -207,10 +246,11 @@ void FireResultListView::NotifySelected( const kernel::Entity_ABC* element )
     {
         selected_ = element;
         const Explosions* results = selected_ ? selected_->Retrieve< Explosions >() : 0;
+        setHeaderHidden( true );
         if( results )
             NotifyUpdated( *results );
         else
-            clear();
+            model()->removeRows( 0, model()->rowCount() );
     }
 }
 
@@ -223,6 +263,7 @@ void FireResultListView::NotifyUpdated( const Explosions& results )
     if( selected_ && selected_->Retrieve< Explosions >() == &results )
     {
         const int count = GetCount( results.GetAgentExplosions() ) + GetCount( results.GetPopulationExplosions() );
+        setHeaderHidden( count == 0 );
         SetNumberOfChildren( invisibleRootItem(), count );
         int row = 0;
         for( Explosions::CIT_AgentFires it = results.GetAgentExplosions().begin(); it != results.GetAgentExplosions().end(); ++it )

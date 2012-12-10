@@ -70,6 +70,7 @@ private:
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyUpdated( const Explosions& results );
+    void DisplayFirer( QTreeWidgetItem* item, const kernel::Entity_ABC* firer );
     //@}
 
 private:

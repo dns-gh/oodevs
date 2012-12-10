@@ -78,8 +78,8 @@ private:
     virtual void DoUpdate( const sword::StopUnitFire& message );
     virtual void DoUpdate( const sword::StopCrowdFire& message );
 
-    void Update( const sword::UnitFireDamages& message );
-    void Update( const sword::CrowdFireDamages& message );
+    void Update( const sword::UnitFireDamages& message, const kernel::Entity_ABC* firer );
+    void Update( const sword::CrowdFireDamages& message, const kernel::Entity_ABC* firer );
     //@}
 
 private:
