@@ -341,26 +341,26 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetLivingEnemiesInCircle( T_ConstKn
 
 namespace
 {
-    void GetWoundedUnits( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius, const T_KnowledgeAgentVector& units )
+    void GetWoundedOrDeadUnits( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius, const T_KnowledgeAgentVector& units )
     {
         for( auto it = units.begin(); it != units.end(); ++it )
         {
             boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
-            if( knowledge->IsWounded() && center.Distance( knowledge->GetPosition() ) <= rRadius )
+            if( ( knowledge->IsWounded() || knowledge->IsDead() ) && center.Distance( knowledge->GetPosition() ) <= rRadius )
                 container.push_back( knowledge );
         }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetWoundedUnitsInCircle
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetWoundedOrDeadUnitsInCircle
 // Created: LGY 2012-12-10
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetWoundedUnitsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetWoundedOrDeadUnitsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, double rRadius ) const
 {
     container.clear();
-    GetWoundedUnits( container, center, rRadius, GetEnemies() );
-    GetWoundedUnits( container, center, rRadius, GetFriends() );
+    GetWoundedOrDeadUnits( container, center, rRadius, GetEnemies() );
+    GetWoundedOrDeadUnits( container, center, rRadius, GetFriends() );
 }
 
 // -----------------------------------------------------------------------------
