@@ -70,6 +70,8 @@ void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, MIL_Config& config,
     if( nMaxEndConnections_ <= 0 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-end-connections <= 0" );
 
+    MT_LOG_INFO_MSG( MT_FormatString(
+        "Setting pathfind.max-calculation-time=%u", nMaxComputationDuration_))
     DEC_PathType   ::Initialize();
     DEC_PathFactory::Initialize( xis, dangerousObjects );
 

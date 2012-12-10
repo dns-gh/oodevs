@@ -152,8 +152,11 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                     >> xml::end
                     >> xml::start( "pathfinder" )
                         >> xml::attribute( "threads", pathFinderThreads_ );
-    if( xis.has_attribute( "max-calculation-time" ) )
-        tools::ReadTimeAttribute( xis, "max-calculation-time", *pathFinderMaxComputationTime_ );
+    if( xis.has_attribute( "max-calculation-time" ) ) {
+        unsigned int t;
+        if( tools::ReadTimeAttribute( xis, "max-calculation-time", t ))
+            pathFinderMaxComputationTime_ = t;
+    }
     xis             >> xml::end
                     >> xml::optional
                     >> xml::start( "random" )
