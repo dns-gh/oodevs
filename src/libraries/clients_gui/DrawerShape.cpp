@@ -77,7 +77,6 @@ DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xm
 {
     std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
-    location.release();
     xis >> xml::list( "point", *this, &DrawerShape::ReadPoint );
     RegisterSelf( *this );
     Create();
