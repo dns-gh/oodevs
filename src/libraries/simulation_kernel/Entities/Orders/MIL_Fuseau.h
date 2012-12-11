@@ -13,6 +13,7 @@
 
 #include "simulation_terrain/TER_Polygon.h"
 #include "MIL.h"
+#include <boost/shared_ptr.hpp>
 
 class TER_Localisation;
 class TER_LimitData;
@@ -79,8 +80,8 @@ public:
 
     //! @name Accessors
     //@{
-    const TER_LimitData* GetLeftLimit () const;
-    const TER_LimitData* GetRightLimit() const;
+    const T_PointVector& GetLeftLimit () const;
+    const T_PointVector& GetRightLimit() const;
 
     bool             IsNull            () const;
     const MT_Line&   GetGlobalDirection() const;
@@ -131,9 +132,9 @@ private:
     //@}
 
 private:
-    const TER_LimitData* pLeftLimit_;
-    const TER_LimitData* pRightLimit_;
-    const TER_LimitData* pMiddleLimit_;
+    boost::shared_ptr< TER_LimitData > pLeftLimit_;
+    boost::shared_ptr< TER_LimitData > pRightLimit_;
+    boost::shared_ptr< TER_LimitData > pMiddleLimit_;
 
     // Fuseau global direction
     MT_Vector2D vStartGlobalDirection_;

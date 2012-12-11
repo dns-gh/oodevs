@@ -12,8 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Fuseau.h"
 #include "MIL_LimaOrder.h"
-#include "MIL_Singletons.h"
-#include "MIL_TacticalLineManager.h"
 #include "TER_LimitData.h"
 #include "Decision/DEC_Objective.h"
 #include "Meteo/PHY_MeteoDataManager.h"
@@ -34,13 +32,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Fuseau )
 // Created: NLD 2004-05-21
 // -----------------------------------------------------------------------------
 MIL_Fuseau::MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima )
-    : TER_Polygon           ()
-    , pLeftLimit_           ( 0 )
-    , pRightLimit_          ( 0 )
-    , pMiddleLimit_         ( 0 )
-    , vStartGlobalDirection_()
-    , vEndGlobalDirection_  ()
-    , globalDirectionLine_  ( vStartGlobalDirection_, vEndGlobalDirection_ )
+    : globalDirectionLine_  ( vStartGlobalDirection_, vEndGlobalDirection_ )
 {
     Reset( &vOrientationRefPos, leftLimit, rightLimit, pBeginMissionLima, pEndMissionLima );
 }
@@ -51,19 +43,14 @@ MIL_Fuseau::MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVect
 // -----------------------------------------------------------------------------
 MIL_Fuseau::MIL_Fuseau( const MIL_Fuseau& rhs )
     : TER_Polygon( rhs )
-    , pLeftLimit_( rhs.pLeftLimit_ )
-    , pRightLimit_( rhs.pRightLimit_ )
-    , pMiddleLimit_( rhs.pMiddleLimit_ )
+    , pLeftLimit_           ( rhs.pLeftLimit_ )
+    , pRightLimit_          ( rhs.pRightLimit_ )
+    , pMiddleLimit_         ( rhs.pMiddleLimit_ )
     , vStartGlobalDirection_( rhs.vStartGlobalDirection_ )
-    , vEndGlobalDirection_( rhs.vEndGlobalDirection_ )
-    , globalDirectionLine_( vStartGlobalDirection_, vEndGlobalDirection_ )
+    , vEndGlobalDirection_  ( rhs.vEndGlobalDirection_ )
+    , globalDirectionLine_  ( vStartGlobalDirection_, vEndGlobalDirection_ )
 {
-    if( pLeftLimit_ )
-        pLeftLimit_->AddRef( *this );
-    if( pRightLimit_ )
-        pRightLimit_->AddRef( *this );
-    if( pMiddleLimit_ )
-        pMiddleLimit_->AddRef( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,13 +58,7 @@ MIL_Fuseau::MIL_Fuseau( const MIL_Fuseau& rhs )
 // Created: LDC 2012-08-06
 // -----------------------------------------------------------------------------
 MIL_Fuseau::MIL_Fuseau( const T_PointVector& leftLimit, const T_PointVector& rightLimit )
-    : TER_Polygon           ()
-    , pLeftLimit_           ( 0 )
-    , pRightLimit_          ( 0 )
-    , pMiddleLimit_         ( 0 )
-    , vStartGlobalDirection_()
-    , vEndGlobalDirection_  ()
-    , globalDirectionLine_  ( vStartGlobalDirection_, vEndGlobalDirection_ )
+    : globalDirectionLine_( vStartGlobalDirection_, vEndGlobalDirection_ )
 {
     Reset( 0, leftLimit, rightLimit, 0, 0 );
 }
@@ -87,13 +68,7 @@ MIL_Fuseau::MIL_Fuseau( const T_PointVector& leftLimit, const T_PointVector& rig
 // Created: NLD 2003-01-14
 //-----------------------------------------------------------------------------
 MIL_Fuseau::MIL_Fuseau()
-    : TER_Polygon           ()
-    , pLeftLimit_           ( 0 )
-    , pRightLimit_          ( 0 )
-    , pMiddleLimit_         ( 0 )
-    , vStartGlobalDirection_()
-    , vEndGlobalDirection_  ()
-    , globalDirectionLine_( vStartGlobalDirection_, vEndGlobalDirection_ )
+    : globalDirectionLine_( vStartGlobalDirection_, vEndGlobalDirection_ )
 {
     Reset();
 }
@@ -104,7 +79,7 @@ MIL_Fuseau::MIL_Fuseau()
 //-----------------------------------------------------------------------------
 MIL_Fuseau::~MIL_Fuseau()
 {
-    Reset();
+    // NOTHING
 }
 
 //=============================================================================
@@ -424,8 +399,7 @@ void MIL_Fuseau::InitializeMiddleLimit()
         middle.push_back( leftPointVectorTmp[j] + ( rightPointVectorTmp[j] - leftPointVectorTmp[j] ) / 2 );
 
     assert( !pMiddleLimit_ );
-    pMiddleLimit_ = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( middle );
-    pMiddleLimit_ ->AddRef( *this );
+    pMiddleLimit_.reset( new TER_LimitData( middle ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -447,10 +421,8 @@ void MIL_Fuseau::Reset( const MT_Vector2D* vOrientationRefPos, const T_PointVect
 
     TruncateAndReorientLimits( vOrientationRefPos, leftLimitTmp, rightLimitTmp, pBeginMissionLima, pEndMissionLima  );
 
-    pLeftLimit_  = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( leftLimitTmp  );
-    pRightLimit_ = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( rightLimitTmp );
-    pLeftLimit_ ->AddRef( *this );
-    pRightLimit_->AddRef( *this );
+    pLeftLimit_.reset( new TER_LimitData( leftLimitTmp ) );
+    pRightLimit_.reset( new TER_LimitData( rightLimitTmp ) );
 
     InitializeMiddleLimit();
     InitializePolygon    ();
@@ -471,16 +443,9 @@ void MIL_Fuseau::Reset()
     vStartGlobalDirection_.Reset();
     vEndGlobalDirection_  .Reset();
 
-    if( pLeftLimit_ )
-        pLeftLimit_->DecRef( *this );
-    if( pRightLimit_ )
-        pRightLimit_->DecRef( *this );
-    if( pMiddleLimit_ )
-        pMiddleLimit_->DecRef( *this );
-
-    pLeftLimit_   = 0;
-    pRightLimit_  = 0;
-    pMiddleLimit_ = 0;
+    pLeftLimit_.reset();
+    pRightLimit_.reset();
+    pMiddleLimit_.reset();
 }
 
 //=============================================================================
@@ -628,12 +593,6 @@ bool MIL_Fuseau::Split( unsigned int nNbrSubFuseau, T_PointVectorVector& interme
         }
     }
 
-    // Limits creation
-//    limitVector.reserve( 2 + limitsPoints.size() );
-//    limitVector.push_back( pLeftLimit_ );
-//    for( auto it = limitsPoints.begin(); it != limitsPoints.end(); ++it )
-//        limitVector.push_back( &MIL_Singletons::GetTacticalLineManager().CreateLimitData( *it ) );
-//    limitVector.push_back( pRightLimit_ );
     return true;
 }
 
@@ -1117,23 +1076,9 @@ MIL_Fuseau& MIL_Fuseau::operator=( const MIL_Fuseau& fuseau )
     vStartGlobalDirection_  = fuseau.vStartGlobalDirection_;
     vEndGlobalDirection_    = fuseau.vEndGlobalDirection_;
 
-    if( pLeftLimit_ )
-        pLeftLimit_->DecRef( *this );
-    if( pRightLimit_ )
-        pRightLimit_->DecRef( *this );
-    if( pMiddleLimit_ )
-        pMiddleLimit_->DecRef( *this );
-
     pLeftLimit_   = fuseau.pLeftLimit_;
     pRightLimit_  = fuseau.pRightLimit_;
     pMiddleLimit_ = fuseau.pMiddleLimit_;
-
-    if( pLeftLimit_ )
-        pLeftLimit_->AddRef( *this );
-    if( pRightLimit_ )
-        pRightLimit_->AddRef( *this );
-    if( pMiddleLimit_ )
-        pMiddleLimit_->AddRef( *this );
 
     return *this;
 }
@@ -1193,7 +1138,7 @@ double MIL_Fuseau::GetCost( const MT_Vector2D&, const MT_Vector2D& to, double rM
 // -----------------------------------------------------------------------------
 bool MIL_Fuseau::IsLeftFlank( const MIL_Fuseau& fuseau ) const
 {
-    return pLeftLimit_ && fuseau.GetLeftLimit() == pLeftLimit_;
+    return pLeftLimit_ && fuseau.pLeftLimit_ == pLeftLimit_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1202,7 +1147,7 @@ bool MIL_Fuseau::IsLeftFlank( const MIL_Fuseau& fuseau ) const
 // -----------------------------------------------------------------------------
 bool MIL_Fuseau::IsRightFlank( const MIL_Fuseau& fuseau ) const
 {
-    return pRightLimit_ && fuseau.GetRightLimit() == pRightLimit_;
+    return pRightLimit_ && fuseau.pRightLimit_ == pRightLimit_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1222,18 +1167,18 @@ bool MIL_Fuseau::IsOnFlank( const MT_Vector2D& position, bool left, bool right )
 // Name: MIL_Fuseau::GetLeftLimit
 // Created: NLD 2003-04-23
 //-----------------------------------------------------------------------------
-const TER_LimitData* MIL_Fuseau::GetLeftLimit() const
+const T_PointVector& MIL_Fuseau::GetLeftLimit() const
 {
-    return pLeftLimit_;
+    return pLeftLimit_->GetPoints();
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau::GetRightLimit
 // Created: NLD 2003-04-23
 //-----------------------------------------------------------------------------
-const TER_LimitData* MIL_Fuseau::GetRightLimit() const
+const T_PointVector& MIL_Fuseau::GetRightLimit() const
 {
-    return pRightLimit_;
+    return pRightLimit_->GetPoints();
 }
 
 // -----------------------------------------------------------------------------
@@ -1351,10 +1296,8 @@ void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
     globalDirectionLine_ = MT_Line( vStartGlobalDirection_, vEndGlobalDirection_ );
     if( !pLeftLimit.empty() && !pRightLimit.empty() )
     {
-        pLeftLimit_  = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( pLeftLimit  );
-        pRightLimit_ = &MIL_Singletons::GetTacticalLineManager().CreateLimitData( pRightLimit );
-        pLeftLimit_ ->AddRef( *this );
-        pRightLimit_->AddRef( *this );
+        pLeftLimit_.reset( new TER_LimitData( pLeftLimit ) );
+        pRightLimit_.reset( new TER_LimitData( pRightLimit ) );
         InitializeMiddleLimit();
         InitializePolygon();
     }

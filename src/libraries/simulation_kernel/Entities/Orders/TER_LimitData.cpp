@@ -9,13 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "TER_LimitData.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Entities/MIL_Formation.h"
-#include "Entities/MIL_EntityManager.h"
-#include "MIL_TacticalLineManager.h"
-#include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_DynamicData.h"
-#include "MIL_Singletons.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_LimitData::DistanceData constructor
@@ -50,8 +44,7 @@ double TER_LimitData::DistanceData::SquareDistance( const MT_Vector2D& p ) const
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
 TER_LimitData::TER_LimitData( const T_PointVector& points )
-    : points_ ( points )
-    , nNbRefs_( 0 )
+    : points_( points )
 {
     InitializeDistancesData();
     handler_.Reset( new TER_DynamicData( points_ ) );
@@ -63,7 +56,7 @@ TER_LimitData::TER_LimitData( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 TER_LimitData::~TER_LimitData()
 {
-    assert( nNbRefs_ == 0 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -106,28 +99,6 @@ double TER_LimitData::SquareDistance( const MT_Vector2D& p ) const
 double TER_LimitData::Distance( const MT_Vector2D& p ) const
 {
     return std::sqrt( SquareDistance( p ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_LimitData::AddRef
-// Created: NLD 2006-11-16
-// -----------------------------------------------------------------------------
-void TER_LimitData::AddRef( const MIL_Fuseau& /*fuseau*/ ) const
-{
-    ++ nNbRefs_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_LimitData::DecRef
-// Created: NLD 2006-11-16
-// -----------------------------------------------------------------------------
-void TER_LimitData::DecRef( const MIL_Fuseau& /*fuseau*/ ) const
-{
-    assert( nNbRefs_ > 0 );
-    --nNbRefs_;
-    if( nNbRefs_ == 0 )
-        MIL_Singletons::GetTacticalLineManager().DestroyLimitData( *this );
-    // delete this ...
 }
 
 // -----------------------------------------------------------------------------

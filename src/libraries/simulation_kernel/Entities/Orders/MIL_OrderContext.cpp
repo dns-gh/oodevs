@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_OrderContext.h"
 #include "MIL_LimaFunction.h"
-#include "TER_LimitData.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
@@ -161,13 +160,13 @@ void MIL_OrderContext::WritePhaseLines( sword::MissionParameter& asn ) const
 // -----------------------------------------------------------------------------
 void MIL_OrderContext::WriteLimits( sword::MissionParameter& limit1, sword::MissionParameter& limit2 ) const
 {
-    const bool isValid = fuseau_.GetLeftLimit() && fuseau_.GetRightLimit();
+    const bool isValid = !fuseau_.IsNull();
     limit1.set_null_value( !isValid );
     limit2.set_null_value( !isValid );
     if( !limit1.null_value() )
     {
-        NET_ASN_Tools::WriteLine( fuseau_.GetLeftLimit ()->GetPoints(), *limit1.mutable_value()->Add()->mutable_limit() );
-        NET_ASN_Tools::WriteLine( fuseau_.GetRightLimit()->GetPoints(), *limit2.mutable_value()->Add()->mutable_limit() );
+        NET_ASN_Tools::WriteLine( fuseau_.GetLeftLimit (), *limit1.mutable_value()->Add()->mutable_limit() );
+        NET_ASN_Tools::WriteLine( fuseau_.GetRightLimit(), *limit2.mutable_value()->Add()->mutable_limit() );
     }
 }
 

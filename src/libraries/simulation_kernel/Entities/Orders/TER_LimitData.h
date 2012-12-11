@@ -14,7 +14,6 @@
 #include "Entities/Objects/MIL_DynamicPathDataHandler.h"
 
 class TER_DynamicData;
-class MIL_Fuseau;
 
 //=============================================================================
 // Created: NLD 2002-08-06
@@ -29,12 +28,6 @@ public:
     //! @name Accessors
     //@{
     const T_PointVector& GetPoints() const;
-    //@}
-
-    //! @name Operations
-    //@{
-    void AddRef( const MIL_Fuseau& fuseau ) const;
-    void DecRef( const MIL_Fuseau& fuseau ) const;
     //@}
 
     //! @name Geometry - $$$ A GICLER
@@ -71,7 +64,6 @@ private:
 private:
     const T_PointVector    points_;
           T_DistancesData  distancesData_;
-    mutable unsigned int           nNbRefs_;
     MIL_DynamicPathDataHandler handler_;
 };
 
