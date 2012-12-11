@@ -34,7 +34,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
 #include "Urban/PHY_MaterialCompositionType.h"
@@ -76,7 +76,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const boost::shared_ptr< MIL_Knowledge
     if( bCreatedOnNetwork_ )
         SendMsgCreation();
     if( rRelevance_ < 0. || rRelevance_ > 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Relevance: major-component not in [0..1]" );
+        throw MASA_EXCEPTION_MT( "Relevance: major-component not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> bCriticalIntelligenceUpdated_
          >> bPerceptionDistanceHacked_;
     if( rRelevance_ < 0. || rRelevance_ > 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Relevance: major-component not in [0..1]" );
+        throw MASA_EXCEPTION_MT( "Relevance: major-component not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------

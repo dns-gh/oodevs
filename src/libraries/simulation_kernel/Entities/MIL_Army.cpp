@@ -25,7 +25,6 @@
 #include "MIL_EntityManager.h"
 #include "MIL_Formation.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_DictionaryExtensions.h"
@@ -432,9 +431,9 @@ void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& popula
     {
         populationFactory.Create( xis, *this );
     }
-    catch( const MT_ScipioException& e)
+    catch( const std::exception& e)
     {
-        MT_LOG_ERROR_MSG( e.GetMsg() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 
@@ -448,9 +447,9 @@ void MIL_Army::ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabi
     {
         inhabitantFactory.Create( xis, *this );
     }
-    catch( const MT_ScipioException& e)
+    catch( const std::exception& e)
     {
-        MT_LOG_ERROR_MSG( e.GetMsg() );
+        MT_LOG_ERROR_MSG( tools::GetExceptionMsg( e ) );
     }
 }
 

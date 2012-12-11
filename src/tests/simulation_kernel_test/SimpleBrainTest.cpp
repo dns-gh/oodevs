@@ -7,7 +7,6 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "Fixture.h"
 #include "MockMIL_MissionType_ABC.h"
 #include "MockArmy.h"

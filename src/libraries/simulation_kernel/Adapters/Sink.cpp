@@ -71,7 +71,8 @@
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "tools/Loader_ABC.h"
 #include <core/Facade.h>
 #include <core/Model.h>
@@ -603,10 +604,15 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
     {
         pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, *this ) );
     }
-    catch( const MT_ScipioException& e )
+    catch( const MT_Exception& e )
     {
         e.SendToLogger();
     }
+    catch( const std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( MT_FormatString( "Can't configure Sink ( '%s' )", tools::GetExceptionMsg( e ) ) );
+    }
+
     pion.RegisterRole( *new sword::RoleAction_Moving( pion ) );
     pion.RegisterRole( *new sword::RolePion_Perceiver( *this, *model_, pion, entity ) );
     pion.RegisterRole( *new sword::RolePion_Composantes( pion, entity ) );

@@ -99,7 +99,7 @@
 #include "tools/SchemaWriter.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"
 #include "resource_network/ResourceNetworkModel.h"
@@ -378,7 +378,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
         {
             const MIL_Automate& automate = it.NextElement();
             if( !automate.CheckComposition() )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "The effective composition of the automate '%d' ('%s') is not consistent with the composition described in the type '%s'", automate.GetID(), automate.GetName().c_str(), automate.GetType().GetName().c_str() ) );
+                throw MASA_EXCEPTION_MT( MT_FormatString( "The effective composition of the automate '%d' ('%s') is not consistent with the composition described in the type '%s'", automate.GetID(), automate.GetName().c_str(), automate.GetType().GetName().c_str() ) );
         }
 }
 

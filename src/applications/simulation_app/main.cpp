@@ -2,7 +2,7 @@
 #include "SIM_App.h"
 #include "SIM_NetworkLogger.h"
 #include "license_gui/LicenseDialog.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_FileLogger.h"
@@ -123,14 +123,13 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app->Execute();
     }
-    catch( const MT_ScipioException& e )
+    catch( const MT_Exception& e )
     {
         std::stringstream strMsg;
-        strMsg << "Context : "     << e.GetContext()     << std::endl
-               << "File : "        << e.GetFile()        << std::endl
-               << "Line : "        << e.GetLine()        << std::endl
-               << "Message : "     << e.GetMsg()         << std::endl
-               << "Description : " << e.GetDescription() << std::endl;
+        strMsg << "File : "     << e.GetFile()      << std::endl
+               << "Function : " << e.GetFunction()  << std::endl
+               << "Line : "     << e.GetLine()      << std::endl
+               << "Message : "  << e.what()         << std::endl;
         MT_LOG_ERROR_MSG( strMsg.str().c_str() );
         if( verbose )
             MessageBox( 0, strMsg.str().c_str(), "SWORD - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );

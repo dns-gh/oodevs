@@ -21,7 +21,7 @@
 #include "tools/Loader_ABC.h"
 #include "tools/Codec.h"
 #include "MT_Tools/MT_FormatString.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -63,12 +63,12 @@ void DEC_PathFind_Manager::ReadPathfind( xml::xistream& xis, MIL_Config& config,
     else
         tools::ReadTimeAttribute( xis, "max-calculation-time", nMaxComputationDuration_ );
     if( nMaxComputationDuration_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-calculation-time <= 0" );
+        throw MASA_EXCEPTION_MT( "Pathfind configuration : max-calculation-time <= 0" );
 
     xis         >> xml::attribute( "max-end-connections", nMaxEndConnections_ )
             >> xml::end;
     if( nMaxEndConnections_ <= 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pathfind configuration : max-end-connections <= 0" );
+        throw MASA_EXCEPTION_MT( "Pathfind configuration : max-end-connections <= 0" );
 
     MT_LOG_INFO_MSG( MT_FormatString(
         "Setting pathfind.max-calculation-time=%u", nMaxComputationDuration_))

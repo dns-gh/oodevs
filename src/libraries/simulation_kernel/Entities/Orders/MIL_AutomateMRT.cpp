@@ -11,7 +11,6 @@
 #include "MIL_AutomateMRT.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMRT constructor

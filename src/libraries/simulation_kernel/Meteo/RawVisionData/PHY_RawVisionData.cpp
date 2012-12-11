@@ -12,7 +12,7 @@
 #include "PHY_AmmoEffect.h"
 #include "MIL_AgentServer.h"
 #include "meteo/PHY_MeteoDataManager.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
@@ -212,10 +212,10 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
 {
     tools::InputBinaryStream archive( strFile.c_str() );
     if( !archive )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strFile.c_str() ) );
+        throw MASA_EXCEPTION_MT( MT_FormatString( "Cannot open file %s", strFile.c_str() ) );
 
     if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
-       throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
+       throw MASA_EXCEPTION_MT( MT_FormatString( "Error reading file %s", strFile.c_str() ) );
 
     assert( !ppCells_ );
     ppCells_ = new sCell*[ nNbrCol_ ];
@@ -231,7 +231,7 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
             pTmp->pEffects = 0;
             archive.Read( reinterpret_cast< char* >( pTmp++ ), 4 );
             if( !archive )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
+                throw MASA_EXCEPTION_MT( MT_FormatString( "Error reading file %s", strFile.c_str() ) );
         }
     }
     CalcMinMaxAltitude();

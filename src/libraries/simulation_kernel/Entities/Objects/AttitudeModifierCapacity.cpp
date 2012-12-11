@@ -14,7 +14,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -30,7 +30,7 @@ AttitudeModifierCapacity::AttitudeModifierCapacity( xml::xistream& xis )
     xis >> xml::attribute( "attitude", sAttitude );
     attitude_ = MIL_PopulationAttitude::Find( sAttitude );
     if( !attitude_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Attitude modifier '%s' unknown", sAttitude.c_str() ) );
+        throw MASA_EXCEPTION_MT( MT_FormatString( "Attitude modifier '%s' unknown", sAttitude.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------

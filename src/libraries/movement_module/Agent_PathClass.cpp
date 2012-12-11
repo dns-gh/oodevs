@@ -10,7 +10,7 @@
 #include "Agent_PathClass.h"
 #include "PathType.h"
 #include "wrapper/View.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "wrapper/Hook.h"
 #include <module_api/Log.h>
 #include <xeumeuleu/xml.hpp>
@@ -41,13 +41,13 @@ void Agent_PathClass::CheckRulesExistence()
     {
         const std::string& strTypeName = it->second->GetName();
         if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( false, false ) ) ) == rules_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for non flying, inhabited units"  );
+            throw MASA_EXCEPTION_MT( "Rule '" + strTypeName + "' is not defined for non flying, inhabited units"  );
         if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( true, false ) ) ) == rules_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for flying, inhabited units" );
+            throw MASA_EXCEPTION_MT( "Rule '" + strTypeName + "' is not defined for flying, inhabited units" );
         if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( false, true ) ) ) == rules_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for non flying, autonomous units" );
+            throw MASA_EXCEPTION_MT( "Rule '" + strTypeName + "' is not defined for non flying, autonomous units" );
         if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( true, true ) ) ) == rules_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for flying, autonomous units" );
+            throw MASA_EXCEPTION_MT( "Rule '" + strTypeName + "' is not defined for flying, autonomous units" );
     }
 }
 // -----------------------------------------------------------------------------

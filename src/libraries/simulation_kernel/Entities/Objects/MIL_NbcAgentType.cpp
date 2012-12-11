@@ -15,7 +15,7 @@
 #include "Entities/Populations/MIL_IntoxicationEffect.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Codec.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 #include <numeric>
@@ -134,7 +134,7 @@ void MIL_NbcAgentType::SortEffectType( xml::xistream& xis )
     else if( effectType == "gaseous" )
         ReadGaz( xis );
     else
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "effects: unknow type" );
+        throw MASA_EXCEPTION_MT( "effects: unknow type" );
 }
 
 // -----------------------------------------------------------------------------

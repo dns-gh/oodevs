@@ -93,6 +93,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Assert.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Converter.h" />
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Exception.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_FormatString.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Profiler.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ProfilerGuard.h" />
@@ -108,7 +109,6 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_GaussianRandom.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Random.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_CrashHandler.h" />
-    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ScipioException.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Circle.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Droite.h" />
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Ellipse.h" />
@@ -135,7 +135,6 @@
     <None Include="..\..\src\libraries\MT_Tools\MT_Converter.inl" />
     <None Include="..\..\src\libraries\MT_Tools\MT_Profiler.inl" />
     <None Include="..\..\src\libraries\MT_Tools\MT_Random.inl" />
-    <None Include="..\..\src\libraries\MT_Tools\MT_ScipioException.inl" />
     <None Include="..\..\src\libraries\MT_Tools\MT_Circle.inl" />
     <None Include="..\..\src\libraries\MT_Tools\MT_Droite.inl" />
     <None Include="..\..\src\libraries\MT_Tools\MT_Ellipse.inl" />
@@ -150,12 +149,12 @@
     <None Include="..\..\src\libraries\MT_Tools\MT_LogManager.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Exception.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_FormatString.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Profiler.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_GaussianRandom.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Random.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_CrashHandler.cpp" />
-    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_ScipioException.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Circle.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Droite.cpp" />
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Ellipse.cpp" />

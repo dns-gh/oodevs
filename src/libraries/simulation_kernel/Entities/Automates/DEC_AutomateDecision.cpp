@@ -28,7 +28,7 @@
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_FireFunctions.h"
 #include "Decision/DEC_AgentFunctions.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
 
@@ -65,7 +65,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int
     }
     catch( const std::exception& e )
     {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, tools::GetExceptionMsg( e ) );
+        throw MASA_EXCEPTION_MT( tools::GetExceptionMsg( e ) );
     }
     StartDefaultBehavior();
 }

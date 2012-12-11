@@ -15,7 +15,7 @@
 #include "tools/Codec.h"
 #include "tools/Loader.h"
 #include "tools/ExerciseConfig.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
@@ -254,7 +254,7 @@ boost::crc_32_type::value_type MIL_Config::serialize( const std::string& strFile
     }
     catch( const xml::exception& e )
     {
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot create file '%s'", strFileName.c_str() ), tools::GetExceptionMsg( e ) );
+        throw MASA_EXCEPTION_MT( MT_FormatString( "Cannot create file '%s', %s", strFileName.c_str(), tools::GetExceptionMsg( e ) ) );
     }
     return MIL_Tools::ComputeCRC( strFileName );
 }

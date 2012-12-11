@@ -72,9 +72,6 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_CrashHandler.h">
       <Filter>Source Files\Error Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ScipioException.h">
-      <Filter>Source Files\Error Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Circle.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
@@ -144,6 +141,9 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ProfilerGuard.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Exception.h">
+      <Filter>Source Files\Error Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\MT_Tools\MT_Converter.inl">
@@ -154,9 +154,6 @@
     </None>
     <None Include="..\..\src\libraries\MT_Tools\MT_Random.inl">
       <Filter>Source Files\Random</Filter>
-    </None>
-    <None Include="..\..\src\libraries\MT_Tools\MT_ScipioException.inl">
-      <Filter>Source Files\Error Manager</Filter>
     </None>
     <None Include="..\..\src\libraries\MT_Tools\MT_Circle.inl">
       <Filter>Source Files\Geometry</Filter>
@@ -211,9 +208,6 @@
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_CrashHandler.cpp">
       <Filter>Source Files\Error Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_ScipioException.cpp">
-      <Filter>Source Files\Error Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Circle.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
@@ -257,5 +251,8 @@
       <Filter>Source Files\Logger</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\MT_Tools\TemporaryDirectory.cpp" />
+    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Exception.cpp">
+      <Filter>Source Files\Error Manager</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -21,7 +21,6 @@
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Version.h"
-#include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Version.h"
@@ -86,9 +85,9 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */, LPSTR lpCm
             pNetworkLogger_.reset( new SIM_NetworkLogger( startupConfig_->GetNetworkLoggerPort(), MT_Logger_ABC::eLogLevel_All ) );
             MT_LOG_REGISTER_LOGGER( *pNetworkLogger_ );
         }
-        catch( const MT_ScipioException& e )
+        catch( const std::exception& e )
         {
-            MT_LOG_WARNING_MSG( MT_FormatString( "Network logger (telnet) not registered - Reason : '%s'", e.GetMsg().c_str() ) );
+            MT_LOG_WARNING_MSG( MT_FormatString( "Network logger (telnet) not registered - Reason : '%s'", tools::GetExceptionMsg( e ) ) );
             pNetworkLogger_.reset();
         }
     }
@@ -130,9 +129,9 @@ int SIM_App::Initialize()
     {
         MIL_AgentServer::CreateWorkspace( *startupConfig_ );
     }
-    catch( const MT_ScipioException& e )
+    catch( const std::exception& e )
     {
-        MT_LOG_ERROR_MSG( MT_FormatString( "Error initializing workspace : '%s'", e.GetMsg().c_str() ) );
+        MT_LOG_ERROR_MSG( MT_FormatString( "Error initializing workspace : '%s'", tools::GetExceptionMsg( e ) ) );
         throw;
         //return EXIT_FAILURE;
     }
@@ -393,22 +392,13 @@ namespace
 // -----------------------------------------------------------------------------
 int SIM_App::Test()
 {
-    static const std::string prefix( "ERROR: " );
+    static const std::string prefix( "ERROR: " ); // $$$$ ABR 2012-12-10: Needed ?
     try
     {
         Initialize();
         CheckpointTest();
         Cleanup();
         return EXIT_SUCCESS;
-    }
-    catch( const MT_ScipioException& e )
-    {
-        std::cerr << Wrap( e.GetMsg(), prefix ) << std::endl
-                  << Wrap( e.GetDescription(), prefix ) << std::endl;
-    }
-    catch( const xml::exception& e )
-    {
-        std::cerr << Wrap( tools::GetExceptionMsg( e ), prefix ) << std::endl;
     }
     catch( const std::bad_alloc& /*exception*/ )
     {

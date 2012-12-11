@@ -12,7 +12,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -81,7 +81,7 @@ const DEC_Population_PathClass& DEC_Population_PathClass::GetPathClass( const st
 {
     const DEC_Population_PathClass* pClass = rules_[ type ];
     if( !pClass )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unable to find PathClass matching PathType: " + type );
+        throw MASA_EXCEPTION_MT( "Unable to find PathClass matching PathType: " + type );
     return *pClass;
 }
 

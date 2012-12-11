@@ -39,7 +39,7 @@
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
 #include "Entities/Automates/MIL_StockSupplyManager.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
@@ -336,16 +336,16 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
         >> xml::list( "automat", *this, &MIL_Automate::ReadAutomatSubordinate );
     pExtensions_.reset( new MIL_DictionaryExtensions( xis ) );
     if( !pPionPC_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automat with id %d has no command post", nID_ ) );
+        throw MASA_EXCEPTION_MT( MT_FormatString( "Automat with id %d has no command post", nID_ ) );
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
     if( !pKnowledgeGroup_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automat with id %d has no knowledge group", nID_ ) );
+        throw MASA_EXCEPTION_MT( MT_FormatString( "Automat with id %d has no knowledge group", nID_ ) );
 
     std::string logLevelStr( PHY_LogisticLevel::none_.GetName() );
     xis >> xml::optional() >> xml::attribute( "logistic-level", logLevelStr );
     const PHY_LogisticLevel* pLogLevel = PHY_LogisticLevel::Find( logLevelStr );
     if( !pLogLevel )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automat with id %d has an invalid logistic level", nID_ ) );
+        throw MASA_EXCEPTION_MT( MT_FormatString( "Automat with id %d has an invalid logistic level", nID_ ) );
     if( *pLogLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *pLogLevel ) );

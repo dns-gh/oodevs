@@ -12,7 +12,7 @@
 #include "FormationFactory_ABC.h"
 #include "MissionController_ABC.h"
 #include "Entities/Populations/MIL_PopulationType.h"
-#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_Exception.h"
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/vector.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -48,7 +48,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
 {
     const MIL_PopulationType* pType = MIL_PopulationType::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type" );
+        throw MASA_EXCEPTION_MT( "Unknown population type" );
     MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_ );
     Register( population.GetID(), population );
     population.Register( missionController_ );
