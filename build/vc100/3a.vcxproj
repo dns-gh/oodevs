@@ -95,6 +95,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\3a\Carriers.h" />
+    <ClInclude Include="..\..\src\libraries\3a\Damages.h" />
     <ClInclude Include="..\..\src\libraries\3a\DPRESatisfaction.h" />
     <ClInclude Include="..\..\src\libraries\3a\FilterHelper.h" />
     <ClInclude Include="..\..\src\libraries\3a\FirerIdentifierValue.h" />
@@ -121,7 +122,6 @@
     <ClInclude Include="..\..\src\libraries\3a\CrowdHumanDamages.h" />
     <ClInclude Include="..\..\src\libraries\3a\CrowdStates.h" />
     <ClInclude Include="..\..\src\libraries\3a\Equipments.h" />
-    <ClInclude Include="..\..\src\libraries\3a\Events.h" />
     <ClInclude Include="..\..\src\libraries\3a\Existences.h" />
     <ClInclude Include="..\..\src\libraries\3a\Extractors.h" />
     <ClInclude Include="..\..\src\libraries\3a\FireComponentDamages.h" />

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Events_h_
-#define __Events_h_
+#ifndef __Damages_h_
+#define __Damages_h_
 
 #include "Values.h"
 #include "FireComponentDamages.h"
@@ -16,21 +16,21 @@
 #include "CrowdHumanDamages.h"
 
 // =============================================================================
-/** @namespace  events
-    @brief      Model values linked to fire/reports/whatever events
+/** @namespace  damages
+    @brief      Model values linked to Damages events
 */
 // Created: AGE 2007-10-02
 // =============================================================================
-namespace events
+namespace damages
 {
     template< typename Extractor >
-    struct TickPeriod : public PoolValue< typename Extractor::Type >
+    struct DamagesBase : public PoolValue< typename Extractor::Type >
     {
         enum { has_parameter = Extractor::has_parameter };
 
-        explicit TickPeriod()
+        explicit DamagesBase()
             : extractor_() {}
-        explicit TickPeriod( xml::xistream& xis )
+        explicit DamagesBase( xml::xistream& xis )
             : extractor_( xis ) {}
         void Receive( const sword::SimToClient& message )
         {
@@ -40,10 +40,10 @@ namespace events
         Extractor extractor_;
     };
 
-typedef TickPeriod< extractors::FireComponentDamages > FireComponentDamages;
-typedef TickPeriod< extractors::FireHumanDamages >     FireHumanDamages;
-typedef TickPeriod< extractors::CrowdHumanDamages >    CrowdHumanDamages;
-typedef TickPeriod< extractors::DamageIndirectFire >   DamageIndirectFire;
+typedef DamagesBase< extractors::FireComponentDamages > FireComponentDamages;
+typedef DamagesBase< extractors::FireHumanDamages >     FireHumanDamages;
+typedef DamagesBase< extractors::CrowdHumanDamages >    CrowdHumanDamages;
+typedef DamagesBase< extractors::DamageIndirectFire >   DamageIndirectFire;
 }
 
-#endif // __Events_h_
+#endif // __Damages_h_

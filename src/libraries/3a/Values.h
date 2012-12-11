@@ -136,16 +136,15 @@ struct PulsedValue : public ContinuousValue< T >
 };
 
 // =============================================================================
-/** @class  TickValue
+/** @class  PoolValue
     @brief  Sums all the values that are "set" in one tick, push this sum, then reset.
 */
 // Created: FPO 2011-05-19
 // =============================================================================
-// $$$$ _RC_ JSR 2012-12-11: to rename
 template< typename T >
-struct TickValue : public ContinuousValue< T >
+struct PoolValue : public ContinuousValue< T >
 {
-    TickValue()
+    PoolValue()
     {
         // NOTHING
     }
