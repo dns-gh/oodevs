@@ -333,12 +333,12 @@ void OptionsPage::CreateDataDirectory()
         selectedDataDir_ = directory;
         bfs::create_directories( std::string( directory ) );
     }
-    catch ( std::exception& e )
+    catch( const std::exception& e )
     {
         selectedDataDir_ = config_.GetRootDir();
         dataDirectory_->setText( selectedDataDir_.c_str() );
         MessageDialog message( parent_, tools::translate( "OptionsPage", "Error" ),
-            tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.c_str() ).arg( e.what() ), QMessageBox::Ok );
+            tools::translate( "OptionsPage", "Can't create directory \'%1\', error \'%2\' happen." ).arg( directory.c_str() ).arg( tools::GetExceptionMsg( e ).c_str() ), QMessageBox::Ok );
         message.exec();
     }
 }

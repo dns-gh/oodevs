@@ -69,11 +69,11 @@ void CompositeProcessWrapper::Run()
             first_.reset();
             second_.reset();
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
             current_.reset();
             Stop();
-            observer_.NotifyError( e.what() );
+            observer_.NotifyError( tools::GetExceptionMsg( e ) );
         }
     }
 }

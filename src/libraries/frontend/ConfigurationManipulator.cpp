@@ -83,7 +83,7 @@ void ConfigurationManipulator::Commit()
                 tools::WriteXmlCrc32Signature( outputPath_ );
                 ok = true;
             }
-            catch( std::exception& e )
+            catch( const std::exception& e )
             {
                 if( ++nbError == 42 )   // avoid endless loop
                     throw e;

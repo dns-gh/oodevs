@@ -104,7 +104,7 @@ void SpawnCommand::Start()
                          &internal_->pid_) )                    // lpProcessInformation
     {
         DWORD errCode = GetLastError();
-        throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).toStdString().c_str() );
+        throw MASA_EXCEPTION( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).toStdString().c_str() );
     }
 
     if ( HANDLE jobObject = OpenJobObject( JOB_OBJECT_ALL_ACCESS, TRUE, jobName_.c_str() ) )

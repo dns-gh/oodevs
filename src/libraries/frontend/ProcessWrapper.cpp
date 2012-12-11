@@ -62,10 +62,10 @@ void ProcessWrapper::Run()
             while( process_->Wait() ) {}
             process_.reset();
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
             Stop();
-            observer_.NotifyError( e.what(), process_->GetCommanderEndpoint() );
+            observer_.NotifyError( tools::GetExceptionMsg( e ), process_->GetCommanderEndpoint() );
             return;
         }
     }
@@ -96,10 +96,10 @@ void ProcessWrapper::RunBlockingMainThread()
             process_->Start();
             while( process_->Wait() ) {}
         }
-        catch( std::exception& e )
+        catch( const std::exception& e )
         {
             Stop();
-            observer_.NotifyError( e.what(), process_->GetCommanderEndpoint() );
+            observer_.NotifyError( tools::GetExceptionMsg( e ), process_->GetCommanderEndpoint() );
             return;
         }
     }

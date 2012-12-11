@@ -21,13 +21,13 @@ int main( int argc, char* argv[] )
         Application app( monitor, argc, argv );
         return app.Run();
     }
-    catch( std::runtime_error& e )
+    catch( const std::exception& e )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "Unhandled error" ), e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::GetExceptionMsg( e ).c_str() );
     }
-    catch( std::exception& e )
+    catch( ... )
     {
-        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "Error" ), tools::translate( "Application", "Unhandled error" ) );
     }
     return EXIT_FAILURE;
 }

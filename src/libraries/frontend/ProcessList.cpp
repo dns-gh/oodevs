@@ -34,14 +34,14 @@ ProcessList::ProcessList()
     // Take a snapshot of all processes in the system.
     HANDLE hProcessSnap = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
     if( hProcessSnap == INVALID_HANDLE_VALUE )
-        throw std::runtime_error( "Unable to retrieve process list" );
+        throw MASA_EXCEPTION( "Unable to retrieve process list" );
 
     PROCESSENTRY32 pe32;
     pe32.dwSize = sizeof( PROCESSENTRY32 );
     if( !Process32First( hProcessSnap, &pe32 ) )
     {
         CloseHandle( hProcessSnap );
-        throw std::runtime_error( "Unable to retrieve process list" );
+        throw MASA_EXCEPTION( "Unable to retrieve process list" );
     }
 
     DWORD currentProcessID = GetCurrentProcessId();

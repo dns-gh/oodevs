@@ -162,7 +162,7 @@ bool ImportWidget::ReadPackageContentFile()
         packageVersion_->setText( version.c_str() );
         packageDescription_->setText( description.c_str() );
     }
-    catch( xml::exception& )
+    catch( const xml::exception& )
     {
         return false;
     }

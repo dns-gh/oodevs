@@ -207,7 +207,7 @@ bool XmlNode::GetValue<bool>( const std::string& path ) const
         return boost::lexical_cast< bool >( str );
     }
     else
-        throw std::exception( "XmlNode impossible to find path" );
+        throw MASA_EXCEPTION( "XmlNode impossible to find path" );
 }
 
 // -----------------------------------------------------------------------------

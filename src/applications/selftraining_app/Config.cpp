@@ -31,7 +31,7 @@ bool CheckSingleFeature( const std::string& feature, bool silent )
             }
         license_gui::LicenseDialog::CheckLicense( feature, silent, 0, 0 );
     }
-    catch( std::exception& /*e*/ )
+    catch( const std::exception& /*e*/ )
     {
         rpy = false;
     }

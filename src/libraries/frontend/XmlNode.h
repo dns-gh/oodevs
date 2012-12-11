@@ -112,7 +112,7 @@ T XmlNode::GetValue( const std::string& path ) const
     if( GetStringValue( path, str ) )
         return boost::lexical_cast< T >(str);
     else
-        throw std::exception( "XmlNode impossible to find path" );
+        throw MASA_EXCEPTION( "XmlNode impossible to find path" );
 }
 
 template<>
