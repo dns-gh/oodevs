@@ -1440,10 +1440,19 @@
         <safe-move file="${output}"/>
     </target>
 	 <target name="package.otpack.defense.scipioForTrunk" description="package du defense-france Referentiel Simulation otpack pour la simulation trunk">
-       <local name="output"/>
+        
+	   <local name="output"/>
         <property name="output" value="${out.dir}/decisionalFrance.otpak"/>
+		<sequential>
+            <echoxml file="${data.dir}/content.xml">
+                <content>
+                    <name>"Package France"</name>
+                    <description>"Decisionnel et base physique France"</description>
+                </content>
+            </echoxml>
 		  <zip destfile="${output}" filesonly="true">
             <zipfileset dir="${data.dir}">
+			  <include name="content.xml"/>	
               <include name="data/models/ada/decisional/bms/**"/>
               <include name="data/models/ada/decisional/dia5/**"/>
               <exclude name="data/models/ada/decisional/dia5/Integration.lua"/>
@@ -1454,6 +1463,8 @@
 			  <include name="**"/>
 			</zipfileset>
          </zip>
+		 <delete file="${data.dir}/content.xml"/>
+		 </sequential>
 		 <safe-move file="${output}"/>
     </target>
 
