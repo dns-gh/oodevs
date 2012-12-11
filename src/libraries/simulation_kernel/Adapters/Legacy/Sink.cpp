@@ -21,7 +21,6 @@
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "simulation_kernel/Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
-#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 
 using namespace sword::legacy;
@@ -194,9 +193,9 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion )
     {
         pion.RegisterRole( *new sword::legacy::RolePion_Decision( pion, gcPause_, gcMult_ ) );
     }
-    catch( const MT_Exception& e )
+    catch( const tools::Exception& e )
     {
-        e.SendToLogger();
+        MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
     }
     catch( const std::exception& e )
     {

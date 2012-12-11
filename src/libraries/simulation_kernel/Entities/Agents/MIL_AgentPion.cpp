@@ -79,7 +79,6 @@
 #include "Tools/MIL_IDManager.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
@@ -673,7 +672,7 @@ boost::shared_ptr< MIL_KnowledgeGroup > MIL_AgentPion::GetKnowledgeGroup() const
     if( GetRole< PHY_RolePion_Communications >().CanEmit() )
     {
         if( ! pAutomate_ )
-            throw MASA_EXCEPTION_MT( MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
+            throw MASA_EXCEPTION( MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
         return pAutomate_->GetKnowledgeGroup();
     }
     return GetRole< PHY_RolePion_Communications >().GetKnowledgeGroup();

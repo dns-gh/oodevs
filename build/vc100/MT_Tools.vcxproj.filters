@@ -141,9 +141,6 @@
     <ClInclude Include="..\..\src\libraries\MT_Tools\MT_ProfilerGuard.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MT_Tools\MT_Exception.h">
-      <Filter>Source Files\Error Manager</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\MT_Tools\MT_Converter.inl">
@@ -251,8 +248,5 @@
       <Filter>Source Files\Logger</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\MT_Tools\TemporaryDirectory.cpp" />
-    <ClCompile Include="..\..\src\libraries\MT_Tools\MT_Exception.cpp">
-      <Filter>Source Files\Error Manager</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

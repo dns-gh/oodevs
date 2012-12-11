@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ParameterType_ABC.h"
 #include "MT_Tools/MT_FormatString.h"
-#include "MT_Tools/MT_Exception.h"
 
 // =============================================================================
 // FACTORY
@@ -27,7 +26,7 @@ void MIL_ParameterType_ABC::RegisterParameterType( const std::string& name, E_Ty
     const MIL_ParameterType_ABC* pParameter = new MIL_ParameterType_ABC( name, type );
     const MIL_ParameterType_ABC*& pTmp = parameters_[ pParameter->GetName() ];
     if( pTmp )
-        throw MASA_EXCEPTION_MT( MT_FormatString( "Parameter type %s already defined", pParameter->GetName() ) );
+        throw MASA_EXCEPTION( MT_FormatString( "Parameter type %s already defined", pParameter->GetName() ) );
     pTmp = pParameter;
 }
 

@@ -11,7 +11,6 @@
 #include "DEC_PathFactory.h"
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_Population_PathClass.h"
-#include "MT_Tools/MT_Exception.h"
 
 DEC_PathFactory* DEC_PathFactory::pInstance_ = 0;
 
@@ -41,7 +40,7 @@ void DEC_PathFactory::Terminate()
 const DEC_PathFactory& DEC_PathFactory::GetInstance()
 {
     if( !pInstance_ )
-        throw MASA_EXCEPTION_MT( "DEC_PathFactory singleton not initialized" );
+        throw MASA_EXCEPTION( "DEC_PathFactory singleton not initialized" );
     return *pInstance_;
 }
 

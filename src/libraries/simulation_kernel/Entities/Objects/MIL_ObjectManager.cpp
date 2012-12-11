@@ -27,7 +27,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "protocol/ClientSenders.h"
 #include "Urban/MIL_UrbanObject_ABC.h"
@@ -199,7 +198,7 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 {
     MIL_Object_ABC* pObject = factory_.CreateObject( sink_, xis, army );
     if( !pObject )
-        throw MASA_EXCEPTION_MT( "Unknown object" ); //@TODO MGD propagate reference
+        throw MASA_EXCEPTION( "Unknown object" ); //@TODO MGD propagate reference
     RegisterObject( pObject );
     return *pObject;
 }

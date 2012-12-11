@@ -12,7 +12,6 @@
 #include "TER_World.h"
 #include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_Droite.h"
-#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
@@ -476,7 +475,7 @@ void TER_Localisation::Read( xml::xistream& xis )
             >> xml::end// points
         >> xml::end; // shape
     if( !Initialize() )
-        throw MASA_EXCEPTION_MT( "Invalid location" ); // $$$$ ABL 2007-07-09: error context
+        throw MASA_EXCEPTION( "Invalid location" ); // $$$$ ABL 2007-07-09: error context
 }
 
 // -----------------------------------------------------------------------------
@@ -553,7 +552,7 @@ TER_Localisation::E_LocationType TER_Localisation::ConvertLocalisationType( cons
     else if( !::_strcmpi( strType.c_str(), "secteur" ) )
         return eSector;
     else
-        throw MASA_EXCEPTION_MT( MT_FormatString( "Invalid location type: '%s'", strType.c_str() ) );
+        throw MASA_EXCEPTION( MT_FormatString( "Invalid location type: '%s'", strType.c_str() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -572,7 +571,7 @@ std::string TER_Localisation::ConvertLocalisationType( E_LocationType nType )   
         case eSector  : return std::string( "secteur" );
         default : break;
     }
-    throw MASA_EXCEPTION_MT( MT_FormatString( "Invalid location type: '%d'", nType ) );
+    throw MASA_EXCEPTION( MT_FormatString( "Invalid location type: '%d'", nType ) );
 }
 
 //-----------------------------------------------------------------------------

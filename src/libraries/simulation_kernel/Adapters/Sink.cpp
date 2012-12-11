@@ -71,7 +71,6 @@
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
-#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "tools/Loader_ABC.h"
 #include <core/Facade.h>
@@ -604,9 +603,9 @@ MIL_AgentPion& Sink::Configure( MIL_AgentPion& pion, const MT_Vector2D& position
     {
         pion.RegisterRole( *new sword::RolePion_Decision( pion, *model_, gcPause_, gcMult_, *this ) );
     }
-    catch( const MT_Exception& e )
+    catch( const tools::Exception& e )
     {
-        e.SendToLogger();
+        MT_LOG_ERROR_MSG( e.CreateLoggerMsg() );
     }
     catch( const std::exception& e )
     {

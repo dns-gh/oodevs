@@ -23,7 +23,6 @@
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_AgentFunctions.h"
 #include "NetworkNotificationHandler_ABC.h"
-#include "MT_Tools/MT_Exception.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_RolePion_Decision )
@@ -77,7 +76,7 @@ DEC_RolePion_Decision::DEC_RolePion_Decision( MIL_AgentPion& pion, unsigned int 
     }
     catch( const std::exception& e )
     {
-        throw MASA_EXCEPTION_MT( tools::GetExceptionMsg( e ) );
+        throw MASA_EXCEPTION( tools::GetExceptionMsg( e ) );
     }
     // Parameters list for calling default behavior
     StartDefaultBehavior();

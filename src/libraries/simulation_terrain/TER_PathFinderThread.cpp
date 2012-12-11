@@ -13,7 +13,6 @@
 #include "TER_DynamicData.h"
 #include "TER_StaticData.h"
 #include "simulation_kernel/MIL_AgentServer.h"
-#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "simulation_kernel/Decision/DEC_PathFind_Manager.h"
 #include "MT_Tools/MT_Logger.h"
@@ -151,7 +150,7 @@ TerrainRetractationHandle& TER_PathFinderThread::CreateLineTree( const T_PointVe
 void TER_PathFinderThread::ProcessInSimulationThread( const boost::shared_ptr< TER_PathFindRequest_ABC >& pRequest )
 {
     if( !bUseSameThread_ )
-        throw MASA_EXCEPTION_MT( "Pathfind : Process in same thread than simulation not expected." );
+        throw MASA_EXCEPTION( "Pathfind : Process in same thread than simulation not expected." );
     Process( pRequest );
 }
 

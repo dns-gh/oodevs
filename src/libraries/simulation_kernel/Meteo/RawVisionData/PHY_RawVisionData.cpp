@@ -12,7 +12,6 @@
 #include "PHY_AmmoEffect.h"
 #include "MIL_AgentServer.h"
 #include "meteo/PHY_MeteoDataManager.h"
-#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
@@ -212,10 +211,10 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
 {
     tools::InputBinaryStream archive( strFile.c_str() );
     if( !archive )
-        throw MASA_EXCEPTION_MT( MT_FormatString( "Cannot open file %s", strFile.c_str() ) );
+        throw MASA_EXCEPTION( MT_FormatString( "Cannot open file %s", strFile.c_str() ) );
 
     if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
-       throw MASA_EXCEPTION_MT( MT_FormatString( "Error reading file %s", strFile.c_str() ) );
+       throw MASA_EXCEPTION( MT_FormatString( "Error reading file %s", strFile.c_str() ) );
 
     assert( !ppCells_ );
     ppCells_ = new sCell*[ nNbrCol_ ];
@@ -231,7 +230,7 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
             pTmp->pEffects = 0;
             archive.Read( reinterpret_cast< char* >( pTmp++ ), 4 );
             if( !archive )
-                throw MASA_EXCEPTION_MT( MT_FormatString( "Error reading file %s", strFile.c_str() ) );
+                throw MASA_EXCEPTION( MT_FormatString( "Error reading file %s", strFile.c_str() ) );
         }
     }
     CalcMinMaxAltitude();

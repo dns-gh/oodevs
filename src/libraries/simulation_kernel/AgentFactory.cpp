@@ -16,7 +16,6 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
-#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/map.hpp>
@@ -53,7 +52,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 {
     MIL_AgentPion* pPion = tools::Resolver< MIL_AgentPion >::Find( xis.attribute< unsigned long >( "id" ) );
     if( pPion )
-        throw MASA_EXCEPTION_MT( MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
+        throw MASA_EXCEPTION( MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
     pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
     type.RegisterRoles( *pPion );
     pPion->Register( missionController_ );

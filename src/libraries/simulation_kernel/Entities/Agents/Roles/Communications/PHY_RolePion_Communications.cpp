@@ -25,7 +25,6 @@
 #include "Knowledge/DEC_Knowledge_ObjectCollision.h"
 #include "Knowledge/DEC_Knowledge_ObjectPerception.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "MT_Tools/MT_Exception.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "NetworkNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -314,7 +313,7 @@ void PHY_RolePion_Communications::DeactivateBlackout()
 // Name: PHY_RolePion_Communications::GetKnowledgeGroup
 // Returns the jamming knowledge group if it is defined, the caller must check with
 // CanCommunicate to check if the jamming knowledge group is defined.
-// Throws MT_Exception if the jamming knowledge group is undefined
+// Throws Exception if the jamming knowledge group is undefined
 // Created: FDS 2010-03-15
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Communications::GetKnowledgeGroup() const
@@ -323,7 +322,7 @@ boost::shared_ptr< MIL_KnowledgeGroup > PHY_RolePion_Communications::GetKnowledg
         return pJammingKnowledgeGroup_;
     else if( owner_.IsDead() ) // if pion is dead, it cannot emit, but it is not jammed
         return owner_.GetAutomate().GetKnowledgeGroup();
-    throw MASA_EXCEPTION_MT( MT_FormatString( "Jamming knowledge group undefined for agent %d ", owner_.GetID() ) );
+    throw MASA_EXCEPTION( MT_FormatString( "Jamming knowledge group undefined for agent %d ", owner_.GetID() ) );
 }
 
 // -----------------------------------------------------------------------------
