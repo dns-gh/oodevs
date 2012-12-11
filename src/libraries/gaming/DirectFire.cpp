@@ -36,7 +36,7 @@ DirectFire::DirectFire( const sword::StartUnitFire& message, const tools::Resolv
     else if( message.target().has_crowd() )
         target = populationResolver.Find( message.target().crowd().id() );
     if( !target )
-        throw std::runtime_error( "DirectFire on position..." );
+        throw MASA_EXCEPTION( "DirectFire on position..." );
 
     isTarget_ = target->GetId() == entityId;
 

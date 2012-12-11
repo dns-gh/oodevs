@@ -161,5 +161,5 @@ const kernel::InfrastructureType* InfrastructureAttribute::GetType() const
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::SetType( kernel::InfrastructureType* /*infrastructure*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }

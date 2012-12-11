@@ -917,7 +917,7 @@ namespace
         else if( id.has_crowd() )
             model.GetPopulation( id.crowd().id() ).Update( message );
         else
-            throw std::exception( std::string( std::string( typeid( Message ).name() ) + ": unknown message source entity" ).c_str() );
+            throw MASA_EXCEPTION( std::string( typeid( Message ).name() ) + ": unknown message source entity" );
     }
 }
 
@@ -1697,7 +1697,7 @@ namespace
         BOOST_FOREACH( const T_Fields::value_type& field, fields )
             if( reflect->HasField( *message, field ) )
                 m << "Unhandled message  " << message->GetDescriptor()->full_name() << " of type: " << field->name() << std::endl;
-        throw std::runtime_error( m.str() );
+        throw MASA_EXCEPTION( m.str() );
     }
 }
 
@@ -2190,7 +2190,7 @@ Entity_ABC& AgentServerMsgMgr::GetTasker( const sword::Tasker& tasker ) const
         return GetModel().agents_.GetPopulation( tasker.crowd().id() );
     else if( tasker.has_formation() )
         return GetModel().teams_.GetFormation( tasker.formation().id() );
-    throw std::runtime_error( "Invalid tasker type" );
+    throw MASA_EXCEPTION( "Invalid tasker type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -2200,7 +2200,7 @@ Entity_ABC& AgentServerMsgMgr::GetTasker( const sword::Tasker& tasker ) const
 Model& AgentServerMsgMgr::GetModel() const
 {
     if( !model_ )
-        throw std::runtime_error( "No model set for AgentServerMsgMgr" );
+        throw MASA_EXCEPTION( "No model set for AgentServerMsgMgr" );
     return *model_;
 }
 
@@ -2211,7 +2211,7 @@ Model& AgentServerMsgMgr::GetModel() const
 Profile& AgentServerMsgMgr::GetProfile() const
 {
     if( !profile_ )
-        throw std::runtime_error( "No profile set for AgentServerMsgMgr" );
+        throw MASA_EXCEPTION( "No profile set for AgentServerMsgMgr" );
     return *profile_;
 }
 

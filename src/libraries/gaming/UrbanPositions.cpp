@@ -20,7 +20,7 @@ namespace
         for( int i = 0; i < location.coordinates().elem_size(); ++i )
             positions.push_back( converter.ConvertToXY( location.coordinates().elem( i ) ) );
         if( positions.empty() )
-            throw std::runtime_error( "UrbanPositions cannot be created with empty location" );
+            throw MASA_EXCEPTION( "UrbanPositions cannot be created with empty location" );
         return positions;
     }
 }

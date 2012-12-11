@@ -123,9 +123,9 @@ void Application::UpdateData()
         workers_->CommitTasks();
         network_->Update();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         network_->Disconnect();
-        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), e.what() );
+        QMessageBox::critical( 0, tools::translate( "Application", "SWORD" ), tools::GetExceptionMsg( e ).c_str() );
     }
 }

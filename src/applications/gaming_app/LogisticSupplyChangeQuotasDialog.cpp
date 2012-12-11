@@ -137,7 +137,7 @@ const std::string LogisticSupplyChangeQuotasDialog::SelectedHolder::GetMagicActi
     else if( selectedFormation_ )
         return "formation_log_supply_change_quotas";
     else
-        throw std::runtime_error( __FUNCTION__ "SelectedHolder: nor automat nor formation set." );
+        throw MASA_EXCEPTION( "SelectedHolder: nor automat nor formation set." );
 }
 
 // -----------------------------------------------------------------------------

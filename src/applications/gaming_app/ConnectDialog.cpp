@@ -84,11 +84,11 @@ void ConnectDialog::Validate()
         SaveConfig();
         accept();
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         logger_.Info() << tr( "Not connected to %1:%2\nReason: %3\n" ).arg( pHostNameComboBox_->currentText() )
                                                                       .arg( pPortSpinBox_->value() )
-                                                                      .arg( e.what() );
+                                                                      .arg( tools::GetExceptionMsg( e ).c_str() );
         reject();
     }
 }

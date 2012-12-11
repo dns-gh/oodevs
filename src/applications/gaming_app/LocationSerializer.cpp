@@ -72,7 +72,7 @@ void LocationSerializer::Serialize( const Location_ABC& location, Location& loca
 void LocationSerializer::SetPoints( const T_PointVector& points )
 {
     if( ! location_ )
-        throw std::runtime_error( "localisation not set" );
+        throw MASA_EXCEPTION( "localisation not set" );
     location_->mutable_coordinates()->Clear();
     for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
         converter_.ConvertToGeo( *it, *location_->mutable_coordinates()->add_elem() );

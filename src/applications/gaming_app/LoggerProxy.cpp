@@ -46,7 +46,7 @@ LoggerProxy::LogElement LoggerProxy::Info()
 {
     if( base_ )
         return base_->Info();
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION( "Invalid logger." );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ LoggerProxy::LogElement LoggerProxy::Warning()
 {
     if( base_ )
         return base_->Warning();
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION( "Invalid logger." );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ LoggerProxy::LogElement LoggerProxy::Error()
 {
     if( base_ )
         return base_->Error();
-    throw std::runtime_error( __FUNCTION__ );
+    throw MASA_EXCEPTION( "Invalid logger." );
 }
 
 // -----------------------------------------------------------------------------

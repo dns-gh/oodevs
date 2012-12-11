@@ -111,7 +111,7 @@ void IndicatorExportDialog::OnAccept()
     {
         std::ofstream file( file_->text().toStdString().c_str() );
         if( !file )
-            throw std::exception(tools::translate( "IndicatorExportDialog", "Impossible to create file in specified directory" ) );
+            throw MASA_EXCEPTION( tools::translate( "IndicatorExportDialog", "Impossible to create file in specified directory" ).toStdString() );
         const std::string sep = separator_->text().toStdString();
         if( header_->isChecked() )
         {
@@ -141,8 +141,8 @@ void IndicatorExportDialog::OnAccept()
         requests_.clear();
         accept();
     }
-    catch ( std::exception& e )
+    catch( const std::exception& e )
     {
-        QMessageBox::critical( this, tr( "Can not save indicator file :" ), e.what() );
+        QMessageBox::critical( this, tr( "Can not save indicator file :" ), tools::GetExceptionMsg( e ).c_str() );
     }
 }

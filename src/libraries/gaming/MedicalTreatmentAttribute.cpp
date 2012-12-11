@@ -117,7 +117,7 @@ void MedicalTreatmentAttribute::UpdateData( const sword::ObjectAttributeMedicalT
         {
             const kernel::MedicalTreatmentType* type = resolver_.Find( capacity.type_id() );
             if( !type )
-                throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( capacity.type_id() ) );
+                throw MASA_EXCEPTION( "Unknown injury id: " + boost::lexical_cast< std::string >( capacity.type_id() ) );
             ::UpdateCapacity( *type, capacity, capacities_[ capacity.type_id() ] );
         }
     }
@@ -172,7 +172,7 @@ void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
                 services.Display( name.c_str(),
                            std::string( boost::lexical_cast<std::string>( it->second.available_ ) + " (" + boost::lexical_cast<std::string>( it->second.baseline_ ) + ")" ) );
             }
-            catch( std::runtime_error& )
+            catch( const std::exception& )
             {
                 // Cannot display this stuff because it is dependant on the physical database and the displayer has been built before the database is loaded...
                 gui::GroupDisplayer* group = dynamic_cast< gui::GroupDisplayer* >( &services );

@@ -47,7 +47,7 @@ Fire_ABC* FireFactory::CreateFire( const sword::StartUnitFire& message, unsigned
         return new DirectFire( message, model_.agents_, model_.agents_, id );
     if( message.target().has_position() )
         return new IndirectFire( message, model_.agents_, model_.static_.coordinateConverter_ );
-    throw std::runtime_error( "Invalid target type" );
+    throw MASA_EXCEPTION( "Invalid target type" );
 }
 
 // -----------------------------------------------------------------------------

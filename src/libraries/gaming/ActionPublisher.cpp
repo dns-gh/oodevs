@@ -50,7 +50,7 @@ void ActionPublisher::Send( const sword::ClientToSim& msg )
 // -----------------------------------------------------------------------------
 void ActionPublisher::Send( const sword::ClientToAuthentication& /*message*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void ActionPublisher::Send( const sword::ClientToAuthentication& /*message*/ )
 // -----------------------------------------------------------------------------
 void ActionPublisher::Send( const sword::ClientToReplay& /*message*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void ActionPublisher::Send( const sword::ClientToReplay& /*message*/ )
 // -----------------------------------------------------------------------------
 void ActionPublisher::Send( const sword::ClientToAar& /*message*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ void ActionPublisher::Send( const sword::ClientToAar& /*message*/ )
 // -----------------------------------------------------------------------------
 void ActionPublisher::Send( const sword::ClientToMessenger& /*message*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------

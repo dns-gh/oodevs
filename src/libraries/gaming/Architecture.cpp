@@ -44,7 +44,7 @@ Architecture::~Architecture()
 // -----------------------------------------------------------------------------
 void Architecture::SetMaterial( kernel::MaterialCompositionType& /*material*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ void Architecture::SetMaterial( kernel::MaterialCompositionType& /*material*/ )
 // -----------------------------------------------------------------------------
 void Architecture::SetRoofShape( kernel::RoofShapeType& /*roofShape*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void Architecture::SetRoofShape( kernel::RoofShapeType& /*roofShape*/ )
 // -----------------------------------------------------------------------------
 void Architecture::SetFloorNumber( unsigned int /*floorNumber*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ void Architecture::SetFloorNumber( unsigned int /*floorNumber*/ )
 // -----------------------------------------------------------------------------
 void Architecture::SetParkingFloors( unsigned int /*parkingFloors*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void Architecture::SetParkingFloors( unsigned int /*parkingFloors*/ )
 // -----------------------------------------------------------------------------
 void Architecture::SetOccupation( unsigned int /*occupation*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ void Architecture::SetOccupation( unsigned int /*occupation*/ )
 // -----------------------------------------------------------------------------
 void Architecture::SetHeight( unsigned int /*height*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,5 +98,5 @@ void Architecture::SetHeight( unsigned int /*height*/ )
 // -----------------------------------------------------------------------------
 void Architecture::SetTrafficability( float /*trafficability*/ )
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+    throw MASA_EXCEPTION( "not to be called." );
 }

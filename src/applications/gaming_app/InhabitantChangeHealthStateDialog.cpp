@@ -69,6 +69,6 @@ unsigned int InhabitantChangeHealthStateDialog::GetValue( unsigned int index ) c
     case 2:
         return selected.GetDead();
     default:
-        throw std::exception( "InhabitantChangeHealthStateDialog : bad Id" );
+        throw MASA_EXCEPTION( "InhabitantChangeHealthStateDialog : bad Id" );
     }
 }

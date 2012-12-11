@@ -198,7 +198,7 @@ void EquipmentTransferDialog::InitializeEquipments()
 {
     const Equipments* equipments = selectedFrom_->Retrieve< Equipments >();
     if( !equipments )
-        throw std::runtime_error( __FUNCTION__ " cannot find Equipments extension.");
+        throw MASA_EXCEPTION( "Cannot find Equipments extension.");
     equipmentTable_->clearContents();
     equipmentIdMap_.clear();
     tools::Iterator< const Equipment& > it = equipments->CreateIterator();

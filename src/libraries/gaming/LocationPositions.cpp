@@ -160,7 +160,7 @@ namespace
         case sword::Location_Geometry_rectangle: location.reset( new kernel::Rectangle() ); break;
         case sword::Location_Geometry_polygon: location.reset( new kernel::Polygon() ); break;
         case sword::Location_Geometry_circle:  location.reset( new kernel::Circle() ); break;
-        default: throw std::runtime_error( __FUNCTION__ " unsupported location type." ); break;
+        default: throw MASA_EXCEPTION( "Unsupported location type." ); break;
         }
         for( int i = 0; i < message.coordinates().elem_size(); ++i )
             location->AddPoint( converter.ConvertToXY( message.coordinates().elem(i) ) );

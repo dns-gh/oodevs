@@ -27,7 +27,7 @@ IndirectFire::IndirectFire( const sword::StartUnitFire& message, const tools::Re
     , target_( converter.ConvertToXY( message.target().position() ) )
 {
     if( !message.target().has_position() )
-        throw std::runtime_error( "Indirect fire on an agent..." );
+        throw MASA_EXCEPTION( "Indirect fire on an agent..." );
 }
 
 // -----------------------------------------------------------------------------

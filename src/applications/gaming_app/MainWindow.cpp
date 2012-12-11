@@ -555,11 +555,11 @@ void MainWindow::Load()
         ReadOptions();
         controllers_.ChangeMode( eGamingMode_Exercise );
     }
-    catch( xml::exception& e )
+    catch( const xml::exception& e )
     {
         Close();
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
-                                   , ( tools::translate( "MainWindow", "Error loading exercise: " ) + e.what() ) );
+                                   , tools::translate( "MainWindow", "Error loading exercise: " ) + tools::GetExceptionMsg( e ).c_str() );
     }
 }
 
@@ -811,12 +811,12 @@ void MainWindow::OnAddRaster()
             process_->start( bfs::path( workingDirectory / "raster_app.exe" ).string().c_str(), parameters );
         }
     }
-    catch( geodata::ProjectionException& )
+    catch( const geodata::ProjectionException& )
     {
         QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing spatial reference information.\nThis data can't be projected.") ) ;
         // Created: AME 2010-09-16 : TODO->allow user to set the projection in UI
     }
-    catch( geodata::ExtentException& )
+    catch( const geodata::ExtentException& )
     {
         QMessageBox::information( this, tr( "Error loading image file" ), tr( "The following raster you add is missing extent information.") ) ;
     }

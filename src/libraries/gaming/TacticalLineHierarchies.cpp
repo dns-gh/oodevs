@@ -94,7 +94,7 @@ void TacticalLineHierarchies::DoUpdate( const sword::LimitUpdate& message )
 void TacticalLineHierarchies::WriteTo( sword::Diffusion& message ) const
 {
     if( !GetSuperior() )
-        throw std::runtime_error( __FUNCTION__ );
+        throw MASA_EXCEPTION( "Invalid superior." );
 
     if( superiorIsAutomat_ )
         message.mutable_automat()->set_id( GetSuperior()->GetId() );

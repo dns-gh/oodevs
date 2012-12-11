@@ -260,7 +260,7 @@ kernel::PopulationPart_ABC& PopulationPartResolver::Get( const unsigned long& id
 {
     kernel::PopulationPart_ABC* element = Find( id );
     if( !element )
-        throw std::runtime_error( "Element does not exist" );
+        throw MASA_EXCEPTION( "Element does not exist" );
     return *element;
 }
 
@@ -270,5 +270,5 @@ kernel::PopulationPart_ABC& PopulationPartResolver::Get( const unsigned long& id
 // -----------------------------------------------------------------------------
 tools::Iterator< const kernel::PopulationPart_ABC& > PopulationPartResolver::CreateIterator() const
 {
-    throw std::runtime_error( "PopulationPart_ABC CreateIterator Not implemented" );
+    throw MASA_EXCEPTION( "Not implemented" );
 }

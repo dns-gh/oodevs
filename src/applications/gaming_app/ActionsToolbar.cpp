@@ -158,9 +158,9 @@ void ActionsToolbar::DoLoad( const std::string& filename )
     {
         actions_.Load( filename, config_.GetLoader(), hasReplay_ );
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
-        QMessageBox::critical( this, tr( "Error loading actions file" ), e.what() );
+        QMessageBox::critical( this, tr( "Error loading actions file" ), tools::GetExceptionMsg( e ).c_str() );
     }
 }
 

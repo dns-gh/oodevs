@@ -96,7 +96,7 @@ unsigned int ChangeHealthStateDialog_ABC::GetSpinboxValue( unsigned int line ) c
 {
     CIT_Spinboxes it = spinboxes_.find( line );
     if( it == spinboxes_.end() )
-        throw std::exception( "ChangeHealthStateDialog_ABC : line not found" );
+        throw MASA_EXCEPTION( "ChangeHealthStateDialog_ABC : line not found" );
     return it->second->value();
 }
 
@@ -107,7 +107,7 @@ unsigned int ChangeHealthStateDialog_ABC::GetSpinboxValue( unsigned int line ) c
 const kernel::Entity_ABC& ChangeHealthStateDialog_ABC::GetSelected() const
 {
     if( !selected_ )
-        throw std::exception( "ChangeHealthStateDialog_ABC - entity not referenced" );
+        throw MASA_EXCEPTION( "ChangeHealthStateDialog_ABC - entity not referenced" );
     return *selected_;
 }
 

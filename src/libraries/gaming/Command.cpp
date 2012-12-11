@@ -21,7 +21,7 @@ Command::Command( const std::string& from, const std::string& to, const std::str
 {
     Parse( text );
     if( arguments_.empty() )
-        throw std::runtime_error( __FUNCTION__ ": Invalid command: " + text );
+        throw MASA_EXCEPTION( "Invalid command: " + text );
 }
 
 // -----------------------------------------------------------------------------

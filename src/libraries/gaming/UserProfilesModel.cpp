@@ -90,5 +90,5 @@ UserProfile& UserProfilesModel::Get( const QString& login )
     for( T_UserProfiles::const_iterator it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( login == (*it)->GetLogin() )
             return **it;
-    throw std::runtime_error( tools::translate( "UserProfilesModel", "Profile '%1' does not exist." ).arg( login ).toStdString() );
+    throw MASA_EXCEPTION( tools::translate( "UserProfilesModel", "Profile '%1' does not exist." ).arg( login ).toStdString() );
 }

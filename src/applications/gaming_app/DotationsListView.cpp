@@ -44,7 +44,7 @@ void DotationsListView::NotifyUpdated( const kernel::Dotations_ABC& a )
     {
         const Dotations* dotations = dynamic_cast< const Dotations* >( &a );
         if( !dotations )
-            throw std::runtime_error( __FUNCTION__ ": Unhandled Dotations_ABC" );
+            throw MASA_EXCEPTION( "Unhandled Dotations_ABC" );
 
         ResizeModelOnNewContent( dotations->Count() );
         int i = 0;

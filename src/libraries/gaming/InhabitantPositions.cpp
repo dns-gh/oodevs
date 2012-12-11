@@ -54,7 +54,7 @@ bool InhabitantPositions::IsAt( const geometry::Point2f& /*pos*/, float /*precis
 // -----------------------------------------------------------------------------
 bool InhabitantPositions::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ geometry::Rectangle2f InhabitantPositions::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Accept( kernel::LocationVisitor_ABC& /*visitor*/ ) const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    throw MASA_EXCEPTION_NOT_IMPLEMENTED;
 }
 
 // -----------------------------------------------------------------------------

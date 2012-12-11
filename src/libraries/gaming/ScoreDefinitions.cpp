@@ -55,10 +55,10 @@ void ScoreDefinitions::Update( const sword::AarInformation& asnMsg )
                 >> xml::list( "score", *this, &ScoreDefinitions::ReadDefinition )
             >> xml::end;
     }
-    catch( std::exception& e )
+    catch( const std::exception& e )
     {
         std::cout << asnMsg.information() << std::endl << std::endl;
-        std::cout << "Error reading indicator definitions: " << e.what() << std::endl;
+        std::cout << "Error reading indicator definitions: " << tools::GetExceptionMsg( e ) << std::endl;
     }
 }
 

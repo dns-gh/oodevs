@@ -71,6 +71,6 @@ unsigned int PopulationChangeHealthStateDialog::GetValue( unsigned int index ) c
     case 3:
         return selected.GetDeadHumans();
     default:
-        throw std::exception( "PopulationChangeHealthStateDialog : bad Id" );
+        throw MASA_EXCEPTION( "PopulationChangeHealthStateDialog : bad Id" );
     }
 }
