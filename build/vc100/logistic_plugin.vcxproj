@@ -96,6 +96,7 @@
     <ClCompile Include="..\..\src\libraries\logistic_plugin\LogisticPlugin.cpp" />
     <ClCompile Include="..\..\src\libraries\logistic_plugin\MaintenanceResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\logistic_plugin\MedicalResolver.cpp" />
+    <ClCompile Include="..\..\src\libraries\logistic_plugin\NameResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\logistic_plugin\SupplyResolver.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +113,8 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\logistic_plugin\NameResolver.h" />
+    <ClInclude Include="..\..\src\libraries\logistic_plugin\NameResolver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\logistic_plugin\SupplyResolver.h" />
   </ItemGroup>
   <ItemGroup>

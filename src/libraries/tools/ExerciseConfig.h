@@ -124,6 +124,8 @@ public:
     virtual unsigned int GetLoggerPluginLogFiles() const;
     virtual int GetLoggerPluginLogLevel() const;
     virtual int GetLoggerPluginLogSize() const;
+    virtual int GetLogisticFiles() const;
+    virtual int GetLogisticLogSize() const;
 
     virtual bool IsSimLogInBytes() const;
     virtual bool IsShieldLogInBytes() const;
@@ -166,11 +168,13 @@ protected:
         };
 
         LogSettings(): logLevel_( elogLevel_all ), maxFiles_( 1 ), maxFileSize_( -1 ), sizeUnit_( eLogSizeType_Lines ), set_( false ) {}
-        void SetLogSettings( const std::string& name, xml::xistream& xis );
+        void SetLogSettings( const std::string& name, xml::xistream& xis, int defaultFiles = 1, int defaultSize = -1 );
         void SetLogSettings( int level, int files, int size, const std::string& sizeUnit );
         eLogLevel GetLogLevel() const { return logLevel_; }
         unsigned int GetMaxFiles() const { return maxFiles_; }
         int GetMaxSize() const { return maxFileSize_; }
+        void SetMaxFiles( unsigned int maxFiles ) { maxFiles_ = maxFiles; }
+        void SetMaxSize( unsigned int maxFileSize ) { maxFileSize_ = maxFileSize; }
         bool IsSizeInBytes() const { return sizeUnit_ == eLogSizeType_Bytes; }
         bool IsSet() const { return set_; }
 
@@ -225,6 +229,7 @@ private:
     LogSettings dispatcherLogSettings_;
     LogSettings simLogSettings_;
     LogSettings simLoggerPluginSettings_;
+    LogSettings logisticLogSettings_;
 
     int maxTicksNotResponding_;
     int queueMaxSize_;

@@ -27,6 +27,12 @@ namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
 using namespace tools;
 
+namespace
+{
+    const int logisticDefaultLogFiles = 2;
+    const int logisticDefaultMaxSize = 50000;
+}
+
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig constructor
 // Created: AGE 2008-03-13
@@ -37,10 +43,10 @@ ExerciseConfig::ExerciseConfig( RealFileLoaderObserver_ABC& observer )
     , maxTicksNotResponding_( 60 )
     , queueMaxSize_         ( 200000 )
 {
+    logisticLogSettings_.SetMaxFiles( logisticDefaultLogFiles );
+    logisticLogSettings_.SetMaxSize( logisticDefaultMaxSize );
     po::options_description desc( "Exercise options" );
-    desc.add_options()
-        ( "exercise", po::value< std::string >( &exerciseName_ ), "specify exercise name" )
-    ;
+    desc.add_options()( "exercise", po::value< std::string >( &exerciseName_ ), "specify exercise name" );
     AddOptions( desc );
 }
 
@@ -77,6 +83,7 @@ void ExerciseConfig::Parse( int argc, char** argv )
                 dispatcherLogSettings_.SetLogSettings( "dispatcherlog", xis );
                 simLogSettings_.SetLogSettings( "sim", xis );
                 simLoggerPluginSettings_.SetLogSettings( "messages", xis );
+                logisticLogSettings_.SetLogSettings( "logistic", xis, logisticDefaultLogFiles, logisticDefaultMaxSize );
                 xis >> xml::optional >> xml::start( "network" )
                         >> xml::attribute( "max-ticks-not-responding", maxTicksNotResponding_ )
                         >> xml::attribute( "max-queue-size", queueMaxSize_ )
@@ -481,17 +488,17 @@ void ExerciseConfig::LogSettings::SetLogSettings( int level, int files, int size
 // Name: ExerciseConfig::LogSettings::SetLogSettings
 // Created: MMC 2012-02-27
 // -----------------------------------------------------------------------------
-void ExerciseConfig::LogSettings::SetLogSettings( const std::string& name, xml::xistream& xis )
+void ExerciseConfig::LogSettings::SetLogSettings( const std::string& name, xml::xistream& xis, int defaultFiles /*= 1*/, int defaultSize /*= -1*/ )
 {
     if( !xis.has_child( name ) )
         return;
     xis >> xml::start( name );
     std::string sizeUnit;
-    int files = 1, size = -1, logLevel = static_cast< int >( LogSettings::elogLevel_all );
+    int files = defaultFiles, size = defaultSize, logLevel = static_cast< int >( LogSettings::elogLevel_all );
     xis >> xml::optional >> xml::attribute( "loglevel", logLevel )
         >> xml::optional >> xml::attribute( "logfiles", files )
         >> xml::optional >> xml::attribute( "logsize", size )
-        >> xml::optional >> xml::attribute( "sizeunit", sizeUnit);
+        >> xml::optional >> xml::attribute( "sizeunit", sizeUnit );
     SetLogSettings( logLevel, files, size, sizeUnit );
     xis >> xml::end;
 }
@@ -661,6 +668,24 @@ int ExerciseConfig::GetLoggerPluginLogSize() const
 int ExerciseConfig::GetLoggerPluginLogLevel() const
 {
     return MT_Logger_ABC::ConvertConfigLevel( simLoggerPluginSettings_.GetLogLevel() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetLogisticFiles
+// Created: MMC 2012-11-29
+// -----------------------------------------------------------------------------
+int ExerciseConfig::GetLogisticFiles() const
+{
+    return logisticLogSettings_.GetMaxFiles();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetLogisticLogSize
+// Created: MMC 2012-11-29
+// -----------------------------------------------------------------------------
+int ExerciseConfig::GetLogisticLogSize() const
+{
+    return logisticLogSettings_.GetMaxSize();
 }
 
 // -----------------------------------------------------------------------------

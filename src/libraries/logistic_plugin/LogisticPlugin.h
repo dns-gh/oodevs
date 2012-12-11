@@ -12,8 +12,12 @@
 
 #include "dispatcher/Plugin_ABC.h"
 #include "ConsignResolver_ABC.h"
+#include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
+#include <vector>
 
-
+class QApplication;
 namespace tools
 {
     class SessionConfig;
@@ -24,21 +28,21 @@ namespace xml
     class xistream;
 }
 
-namespace dispatcher
+namespace boost
 {
-    class Model_ABC;
-}
-
-namespace kernel
-{
-    class StaticModel;
+    namespace gregorian
+    {
+        class date;
+    }
 }
 
 namespace plugins
 {
 namespace logistic
 {
-     class ConsignResolver_ABC;
+
+class ConsignResolver_ABC;
+class NameResolver_ABC;
 
 // =============================================================================
 /** @class  LogisticPlugin
@@ -51,13 +55,31 @@ class LogisticPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticPlugin( const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, const tools::SessionConfig& config );
+             LogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver,
+                 const std::string& maintenanceFile, const std::string& supplyFile,
+                 const std::string& funeralFile, const std::string& medicalFile,
+                 int maxHistoricFiles, int maxFileLines );
     virtual ~LogisticPlugin();
+    //@}
+
+    //! @name Types
+    //@{
+    enum E_LogisticType
+    {
+        eLogisticType_Maintenance,
+        eLogisticType_Supply,
+        eLogisticType_Funeral,
+        eLogisticType_Medical,
+        eNbrLogisticType
+    };
     //@}
 
     //! @name Operations
     //@{
     virtual void Receive( const sword::SimToClient& message );
+    virtual void Receive( const sword::SimToClient& message, const boost::gregorian::date& today );
+    virtual int GetConsignCount( E_LogisticType eLogisticType ) const;
+    virtual void SetMaxLinesInFile( int maxLines );
     //@}
 
 private:
@@ -69,17 +91,15 @@ private:
 
 private:
     //! @name Member data
-    //@{
-    int currentTick_;
-    std::string simTime_;
-    const tools::SessionConfig&    sessionConfig_;
-    const kernel::StaticModel&     staticModel_;
-    std::auto_ptr< ConsignResolver_ABC >    maintenanceResolver_;
-    std::auto_ptr< ConsignResolver_ABC >    supplyResolver_;
-    std::auto_ptr< ConsignResolver_ABC >    funeralResolver_;
-    std::auto_ptr< ConsignResolver_ABC >    medicalResolver_;
+    //@{    
+    std::vector< ConsignResolver_ABC* >         resolvers_;
+    boost::scoped_ptr< QApplication >           localAppli_;
+    boost::shared_ptr<const NameResolver_ABC>   nameResolver_;
     //@}
 };
+
+LogisticPlugin* CreateLogisticPlugin( const boost::shared_ptr<const NameResolver_ABC>& nameResolver, const tools::SessionConfig& config, int maxHistoricFiles, int maxFileLines );
+
 }
 }
 

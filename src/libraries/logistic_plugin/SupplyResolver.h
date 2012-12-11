@@ -64,7 +64,6 @@ public:
 public:
     //! @name Member data
     //@{
-    std::string tick_;
     std::string creationTick_;
     std::string stateEndTick_;
     std::map< int, std::string > recipientAutomats_;
@@ -73,7 +72,6 @@ public:
     std::string transportProviderId_;
     std::string conveyorId_;
     std::string stateId_;
-    std::string simTime_;
     std::string recipientAutomat_;
     std::string provider_;
     std::string transportProvider_;
@@ -94,7 +92,7 @@ class SupplyResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
+             SupplyResolver( const std::string& name, const NameResolver_ABC& nameResolver, int maxHistoricFiles, int maxFileLines );
     virtual ~SupplyResolver();
     //@}
 
@@ -107,6 +105,7 @@ protected:
     //! @name Operations
     //@{
     virtual bool IsManageable( const sword::SimToClient& message );
+    virtual bool IsEmptyLineMessage( const sword::SimToClient& message );
     virtual void ManageMessage( const sword::SimToClient& message );
     virtual ConsignData_ABC* CreateConsignData( int requestId );
     //@}

@@ -21,6 +21,7 @@
 #include "rights_plugin/RightsPlugin.h"
 #include "logger_plugin/LoggerPlugin.h"
 #include "logistic_plugin/LogisticPlugin.h"
+#include "logistic_plugin/NameResolver.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "MT_Tools/MT_Logger.h"
 #include "saver_plugin/SaverPlugin.h"
@@ -86,8 +87,12 @@ void PluginFactory::Instanciate()
     handler_.Add( new messenger::MessengerPlugin( clients_, clients_, clients_, config_, registrables_ ) );
     handler_.Add( new script::ScriptPlugin( model_, staticModel_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
     handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_, registrables_ ) );
-    handler_.Add( new logger::LoggerPlugin( model_, staticModel_, config_, services_ ) );
-    handler_.Add( new logistic::LogisticPlugin( model_, staticModel_, config_ ) );
+    handler_.Add( new logger::LoggerPlugin( model_, staticModel_, config_, services_ ) );    
+    if( config_.GetLogisticFiles() > 0 )
+    {
+        boost::shared_ptr< plugins::logistic::NameResolver > nameResolver( new plugins::logistic::NameResolver( model_, staticModel_ ) );
+        handler_.Add( CreateLogisticPlugin( nameResolver, config_, config_.GetLogisticFiles() - 1, config_.GetLogisticLogSize() ) );
+    }
     xml::xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )

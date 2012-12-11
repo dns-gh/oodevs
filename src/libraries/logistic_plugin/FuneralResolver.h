@@ -42,7 +42,6 @@ public:
 public:
     //! @name Member data
     //@{
-    std::string tick_;
     std::string creationTick_;
     std::string stateEndTick_;
     std::string unitId_;
@@ -50,7 +49,6 @@ public:
     std::string conveyingUnitId_;
     std::string packagingResourceId_;
     std::string stateId_;
-    std::string simTime_;
     std::string unit_;
     std::string handlingUnit_;
     std::string conveyingUnit_;
@@ -71,7 +69,7 @@ class FuneralResolver : public ConsignResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FuneralResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
+             FuneralResolver( const std::string& name, const NameResolver_ABC& nameResolver, int maxHistoricFiles, int maxFileLines );
     virtual ~FuneralResolver();
     //@}
 
@@ -84,6 +82,7 @@ protected:
     //! @name Operations
     //@{
     virtual bool IsManageable( const sword::SimToClient& message );
+    virtual bool IsEmptyLineMessage( const sword::SimToClient& message );
     virtual void ManageMessage( const sword::SimToClient& message );
     virtual ConsignData_ABC* CreateConsignData( int requestId );
     //@}

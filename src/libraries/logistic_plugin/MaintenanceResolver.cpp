@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "MaintenanceResolver.h"
+#include "NameResolver_ABC.h"
 #include "clients_kernel/Tools.h"
 
 using namespace plugins::logistic;
@@ -19,14 +20,14 @@ using namespace plugins::logistic;
 void MaintenanceConsignData::operator>>( std::stringstream& output ) const
 {
     output  << requestId_    << separator_
-            << tick_         << separator_
-            << simTime_      << separator_   // << creationTick_     << separator_    << unitId_  << separator_
-            << unit_         << separator_   // << providerId_       << separator_
-            << provider_     << separator_   // << equipmentId_      << separator_
-            << equipment_    << separator_   // << breakdownId_      << separator_
-            << breakdown_    << separator_   // << stateId_          << separator_
-            << state_        << separator_
-            << stateEndTick_ << std::endl;
+        << tick_         << separator_
+        << simTime_      << separator_   // << creationTick_     << separator_    << unitId_  << separator_
+        << unit_         << separator_   // << providerId_       << separator_
+        << provider_     << separator_   // << equipmentId_      << separator_
+        << equipment_    << separator_   // << breakdownId_      << separator_
+        << breakdown_    << separator_   // << stateId_          << separator_
+        << state_        << separator_
+        << stateEndTick_ << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -35,25 +36,25 @@ void MaintenanceConsignData::operator>>( std::stringstream& output ) const
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingCreation& msg, ConsignResolver_ABC& resolver )
 {
-    resolver.GetSimTime( simTime_, tick_ );
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_tick() )
         creationTick_ = boost::lexical_cast< std::string >( msg.tick() );
     if( msg.has_unit() )
     {
         int unitId = msg.unit().id();
         unitId_ = boost::lexical_cast< std::string >( unitId );
-        resolver.GetAgentName( unitId, unit_ );
+        nameResolver.GetAgentName( unitId, unit_ );
     }
     if( msg.has_equipement() )
     {
         equipmentId_ = boost::lexical_cast< std::string >( msg.equipement().id() );
-        resolver.GetEquipmentName( msg.equipement(), equipment_ );
+        nameResolver.GetEquipmentName( msg.equipement(), equipment_ );
     }
     if( msg.has_breakdown() )
     {
         int breakdownId = msg.breakdown().id();
         breakdownId_ = boost::lexical_cast< std::string >( breakdownId );
-        resolver.GetBreakdownName( msg.breakdown(), breakdown_ );
+        nameResolver.GetBreakdownName( msg.breakdown(), breakdown_ );
     }
     resolver.AddToLineIndex( 1 );
     return *this;
@@ -65,7 +66,7 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
 // -----------------------------------------------------------------------------
 const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::LogMaintenanceHandlingUpdate& msg, ConsignResolver_ABC& resolver )
 {
-    resolver.GetSimTime( simTime_, tick_ );
+    const NameResolver_ABC& nameResolver = resolver.GetNameResolver();
     if( msg.has_current_state_end_tick() )
     {
         int entTick = msg.current_state_end_tick();
@@ -76,18 +77,18 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
     {
         int unitId = msg.unit().id();
         unitId_ = boost::lexical_cast< std::string >( unitId );
-        resolver.GetAgentName( unitId, unit_ );
+        nameResolver.GetAgentName( unitId, unit_ );
     }
     if( msg.has_provider() )
     {
         int providerId = msg.provider().id();
         providerId_ = boost::lexical_cast< std::string >( providerId );
-        resolver.GetAgentName( providerId, provider_ );
+        nameResolver.GetAgentName( providerId, provider_ );
     }
     if( msg.has_state() )
     {
         sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus eState = msg.state();
-        resolver.GetMaintenanceName( eState, state_ );
+        nameResolver.GetMaintenanceName( eState, state_ );
         stateId_ = boost::lexical_cast< std::string >( static_cast< int >( eState ) );
     }
     resolver.AddToLineIndex( 1 );
@@ -98,8 +99,8 @@ const ConsignData_ABC& MaintenanceConsignData::ManageMessage( const ::sword::Log
 // Name: MaintenanceResolver constructor
 // Created: MMC 2012-08-06
 // -----------------------------------------------------------------------------
-MaintenanceResolver::MaintenanceResolver( const std::string& name, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel )
-    : ConsignResolver_ABC( name, model, staticModel )
+MaintenanceResolver::MaintenanceResolver( const std::string& name, const NameResolver_ABC& nameResolver, int maxHistoricFiles, int maxFileLines )
+    : ConsignResolver_ABC( name, nameResolver, maxHistoricFiles, maxFileLines )
 {
     // NOTHING
 }
@@ -119,9 +120,18 @@ MaintenanceResolver::~MaintenanceResolver()
 // -----------------------------------------------------------------------------
 bool MaintenanceResolver::IsManageable( const sword::SimToClient& message )
 {
-    return      message.message().has_log_maintenance_handling_creation()
-            ||  message.message().has_log_maintenance_handling_update()
-            ||  message.message().has_log_maintenance_handling_destruction();
+    return  message.message().has_log_maintenance_handling_creation()
+        ||  message.message().has_log_maintenance_handling_update()
+        ||  message.message().has_log_maintenance_handling_destruction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceResolver::IsEmptyLineMessage
+// Created: MMC 2012-09-11
+// -----------------------------------------------------------------------------
+bool MaintenanceResolver::IsEmptyLineMessage( const sword::SimToClient& message )
+{
+    return message.message().has_log_maintenance_handling_destruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -144,21 +154,21 @@ void MaintenanceResolver::ManageMessage( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void MaintenanceResolver::InitHeader()
 {
-    MaintenanceConsignData consign( tools::translate( "logistic", "request id" ).toAscii().constData() );
-    consign.tick_           = tools::translate( "logistic", "tick" ).toAscii().constData();
-    consign.creationTick_   = tools::translate( "logistic", "creation tick" ).toAscii().constData();
-    consign.stateEndTick_   = tools::translate( "logistic", "state end tick" ).toAscii().constData();
-    consign.unitId_         = tools::translate( "logistic", "unit id" ).toAscii().constData();
-    consign.providerId_     = tools::translate( "logistic", "provider id" ).toAscii().constData();
-    consign.stateId_        = tools::translate( "logistic", "state id" ).toAscii().constData();
-    consign.equipmentId_    = tools::translate( "logistic", "equipment id" ).toAscii().constData();
-    consign.breakdownId_    = tools::translate( "logistic", "breakdown id" ).toAscii().constData();
-    consign.simTime_        = tools::translate( "logistic", "GDH" ).toAscii().constData();
-    consign.unit_           = tools::translate( "logistic", "unit" ).toAscii().constData();
-    consign.provider_       = tools::translate( "logistic", "provider" ).toAscii().constData();
-    consign.equipment_      = tools::translate( "logistic", "equipment" ).toAscii().constData();
-    consign.breakdown_      = tools::translate( "logistic", "breakdown" ).toAscii().constData();
-    consign.state_          = tools::translate( "logistic", "state" ).toAscii().constData();
+    MaintenanceConsignData consign( tools::translate( "logistic", "request id" ).toStdString() );
+    consign.tick_           = tools::translate( "logistic", "tick" ).toStdString();
+    consign.creationTick_   = tools::translate( "logistic", "creation tick" ).toStdString();
+    consign.stateEndTick_   = tools::translate( "logistic", "state end tick" ).toStdString();
+    consign.unitId_         = tools::translate( "logistic", "unit id" ).toStdString();
+    consign.providerId_     = tools::translate( "logistic", "provider id" ).toStdString();
+    consign.stateId_        = tools::translate( "logistic", "state id" ).toStdString();
+    consign.equipmentId_    = tools::translate( "logistic", "equipment id" ).toStdString();
+    consign.breakdownId_    = tools::translate( "logistic", "breakdown id" ).toStdString();
+    consign.simTime_        = tools::translate( "logistic", "GDH" ).toStdString();
+    consign.unit_           = tools::translate( "logistic", "unit" ).toStdString();
+    consign.provider_       = tools::translate( "logistic", "provider" ).toStdString();
+    consign.equipment_      = tools::translate( "logistic", "equipment" ).toStdString();
+    consign.breakdown_      = tools::translate( "logistic", "breakdown" ).toStdString();
+    consign.state_          = tools::translate( "logistic", "state" ).toStdString();
     SetHeader( consign );
 }
 

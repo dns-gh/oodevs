@@ -28,6 +28,9 @@
     <ClCompile Include="..\..\src\libraries\logistic_plugin\ConsignResolver_ABC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\logistic_plugin\NameResolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\logistic_plugin\LogisticPlugin.h">
@@ -49,6 +52,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\logistic_plugin\MedicalResolver.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\logistic_plugin\NameResolver.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\logistic_plugin\NameResolver_ABC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
