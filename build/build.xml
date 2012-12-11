@@ -1421,49 +1421,45 @@
              We want to fetch and extract scipio decisional, if possible
              without its integration layer, from another project, using
              poney.
-             - Poney "update" does not extract .otpacks
+             - Poney "update" does not extract .otpack files
              - ScipioStab-RefSim contains the integration layer
-             - Having a filename no including version numbers makes it
+             - Having a filename not including version numbers makes it
                easier to pull programmatically.
         -->
-        <local name="output"/>
-        <property name="output" value="${out.dir}/decisional.zip"/>
-        <zip destfile="${output}" filesonly="true">
-            <fileset dir="${data.dir}">
-                <include name="data/models/ada/decisional/bms/**"/>
-                <include name="data/models/ada/decisional/dia5/**"/>
-                <exclude name="data/models/ada/decisional/dia5/integration/**"/>
-                <include name="data/models/ada/decisional/decisional.xml"/>
-                <include name="data/models/ada/physical/scipio/**"/>
-            </fileset>
-        </zip>
-        <safe-move file="${output}"/>
+        <safe-move file="${out.dir}/decisional.zip">
+            <zip destfile="@{file}" filesonly="true">
+                <fileset dir="${data.dir}">
+                    <include name="data/models/ada/decisional/bms/**"/>
+                    <include name="data/models/ada/decisional/dia5/**"/>
+                    <exclude name="data/models/ada/decisional/dia5/integration/**"/>
+                    <include name="data/models/ada/decisional/decisional.xml"/>
+                    <include name="data/models/ada/physical/scipio/**"/>
+                </fileset>
+            </zip>
+        </safe-move>
     </target>
 
     <target name="package.otpack.defense.scipioForTrunk" description="package du defense-france Referentiel Simulation otpack pour la simulation trunk">
-        <local name="output"/>
-        <property name="output" value="${out.dir}/decisionalFrance.otpak"/>
-        <sequential>
-            <echoxml file="${data.dir}/content.xml">
+        <safe-move file="${out.dir}/decisionalFrance.otpak">
+            <echoxml file="${out.dir}/content.xml">
                 <content>
                     <name>"Package France"</name>
                     <description>"Decisionnel et base physique France"</description>
                 </content>
             </echoxml>
-            <zip destfile="${output}" filesonly="true">
+            <zip destfile="@{file}" filesonly="true">
                 <zipfileset dir="${data.dir}">
-                    <include name="content.xml"/>
                     <include name="data/models/ada/decisional/bms/**"/>
                     <include name="data/models/ada/decisional/dia5/**"/>
                     <exclude name="data/models/ada/decisional/dia5/Integration.lua"/>
                     <exclude name="data/models/ada/decisional/dia5/integration/**"/>
                     <include name="data/models/ada/decisional/decisional.xml"/>
                 </zipfileset>
+                <fileset dir="${out.dir}" includes="content.xml"/>
                 <zipfileset dir="${data.dir}/data/models/ada/physical/scipio" prefix="data/models/ada/physical/france"/>
             </zip>
-            <delete file="${data.dir}/content.xml"/>
-        </sequential>
-        <safe-move file="${output}"/>
+            <delete file="${out.dir}/content.xml"/>
+        </safe-move>
     </target>
 
     <target name="package.otpack.defense.scipio.VA" description="package du defense-scipio Validation Amont otpack">
